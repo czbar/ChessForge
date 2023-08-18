@@ -726,7 +726,7 @@ StartTrainingFromHere=Rozpocznij tu Trening
 
 #description: Start training from a bookmark
 #english: StartTrainingFromBookmark=Start Training from a Bookmark
-StartTrainingFromBookmark=Trening od Zakładki
+StartTrainingFromBookmark=Trening od zakładki
 
 #description: Create Exercise starting at the current position
 #english: CreateExerciseFromHere=Create Exercise from Here...
@@ -738,7 +738,7 @@ CopyFENtoClipboard=Wpisz Kod FEN do Schowka
 
 #description: Bookmark the current position
 #english: BookmarkThisPosition=Bookmark This Position
-BookmarkThisPosition=Utwórz tu Zakładkę
+BookmarkThisPosition=Utwórz tu zakładkę
 
 #description: Replay the selected line
 #english: Replay=Replay
@@ -948,7 +948,7 @@ CreateNewChapterFromLine=Utwórz Nowy Rozdział z Wariantu
 
 #description: Bookmark the current position and position for all alternative moves
 #english: BookmarkAllOptionsHere=Bookmark All Options Here
-BookmarkAllOptionsHere=Utwórz Zakładki dla Wszystkich Opcji
+BookmarkAllOptionsHere=Utwórz zakładki dla wszystkich opcji
 
 #description: Mark the current position as a thumbnail
 #english: MarkAsThumbnail=Mark as Thumbnail
@@ -1020,15 +1020,15 @@ GoToPosition= Idź do Pozycji
 
 #description: Generate bookmarks
 #english: GenerateBookmarks=Generate Bookmarks
-GenerateBookmarks=Generuj Zakładki
+GenerateBookmarks=Generuj zakładki
 
 #description: Delete the selected bookmark
 #english: DeleteThisBookmark=Delete This Bookmark
-DeleteThisBookmark=Usuń Zakładkę
+DeleteThisBookmark=Usuń zakładkę
 
 #description: Delete all bookmarks
 #english: DeleteAllBookmarks=Delete All Bookmarks
-DeleteAllBookmarks=Usuń Wszystkie Zakładki
+DeleteAllBookmarks=Usuń wszystkie zakładki
 
 #description: Page counter
 #english: Page0of0=Page $0 of $1
@@ -1271,7 +1271,7 @@ ErrorLichess=Błąd w dostępie do lichess.org
 
 #description: Bookmarks already exist
 #english: BookmarksAlreadyExist=Bookmarks already exist
-BookmarksAlreadyExist=Zakładki już Istnieją
+BookmarksAlreadyExist=Zakładki już istnieją
 
 #description: Error saving file
 #english: FailedToSaveFile=Failed to save file
@@ -2174,24 +2174,25 @@ cbEditCommands=CTRL+B pogrubione, CTRL+I kursywa
 cbClickForContextMenu=Naciśnij prawy przycisk, by wywołać menu
 
 #description: Click thru the moves
-#english: cbClickThruMoves=Click through the moves
-cbClickThruMoves=Kliknij na dowolne posunięcie
+#english: cbClickThruMoves=Keyboard: ←/→ (back/forth); SHIFT←/→ or Home/End (go to start/end); ↑↓ (choose a move at fork)
+cbClickThruMoves=Klawiatura: ←/→ (naprzód/wstecz); SHIFT←/→ or Home/End (początek/koniec); ↑↓ (wybierz ruch w rozgałęzieniu)
+
 
 #description: Double click to annotate
-#english: cbDoubleClickToAnnotate=Double click to annotate move
-cbDoubleClickToAnnotate=Dwukrotnie kliknij, by wprowadzić komentarz
+#english: cbDoubleClickToAnnotate=Click through the moves. Double click to annotate.
+cbDoubleClickToAnnotate=Kliknij na dowolne posunięcie. Dwukrotnie kliknij, by wprowadzić komentarz.
 
 #description: Right click for context menu
-#english: cbAdvancedEditig=Right click to open menu for advanced editing, FEN, creating exercise
-cbAdvancedEditig=Naciśnij prawy przycisk, by wywołać menu do edycji, kopiowania FEN i inne
+#english: cbAdvancedEditig=Right click to open menu for advanced editing, FEN, creating exercise and more.
+cbAdvancedEditig=Naciśnij prawy przycisk, by wywołać menu do edycji, kopiowania FEN i inne.
 
 #description: Double click to auto replay
-#english: cbDoubleClickAutoReplay=Double click in the Scoresheet for auto-replay
+#english: cbDoubleClickAutoReplay=Double click in the Scoresheet for auto-replay.
 cbDoubleClickAutoReplay=Dwukrotnie kliknij posunięcie w Zapisie, by rozpocząć auto-odtwarzanie
 
 #description: Click bookmark to start training
 #english: cbClickBookmarkToTrain=Click a bookmark to navigate to the bookmarked position
-cbClickBookmarkToTrain=Kliknij zakładkę, aby przejść do zapamiętanej pozycji 
+cbClickBookmarkToTrain=Kliknij zakładkę, aby przejść do zapamiętanej pozycji. 
 
 #description: Right click to open bookmarks menu
 #english: cbRightClickBookmarkManager=Right click to open menu for Bookmark management options

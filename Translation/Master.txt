@@ -1673,16 +1673,17 @@ cbEditCommands=CTRL+B bold, CTRL+I italics
 cbClickForContextMenu=Right click to open context menu
 
 #Click thru the moves
-cbClickThruMoves=Click through the moves
+cbClickThruMoves=Keyboard: ←/→ (back/forth); SHIFT←/→ or Home/End (go to start/end); ↑↓ (choose a move at fork)
+
 
 #Double click to annotate
-cbDoubleClickToAnnotate=Double click to annotate move
+cbDoubleClickToAnnotate=Click through the moves. Double click to annotate.
 
 #Right click for context menu
-cbAdvancedEditig=Right click to open menu for advanced editing, FEN, creating exercise
+cbAdvancedEditig=Right click to open menu for advanced editing, FEN, creating exercise and more.
 
 #Double click to auto replay
-cbDoubleClickAutoReplay=Double click in the Scoresheet for auto-replay
+cbDoubleClickAutoReplay=Double click in the Scoresheet for auto-replay.
 
 #Click bookmark to start training
 cbClickBookmarkToTrain=Click a bookmark to navigate to the bookmarked position

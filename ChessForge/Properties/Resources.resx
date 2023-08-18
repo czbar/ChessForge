@@ -1622,16 +1622,16 @@
     <value>Right click to open context menu</value>
   </data>
   <data name="cbClickThruMoves" xml:space="preserve">
-    <value>Click through the moves</value>
+    <value>Keyboard: ←/→ (back/forth); SHIFT←/→ or Home/End (go to start/end); ↑↓ (choose a move at fork)</value>
   </data>
   <data name="cbDoubleClickToAnnotate" xml:space="preserve">
-    <value>Double click to annotate move</value>
+    <value>Click through the moves. Double click to annotate.</value>
   </data>
   <data name="cbAdvancedEditig" xml:space="preserve">
-    <value>Right click to open menu for advanced editing, FEN, creating exercise</value>
+    <value>Right click to open menu for advanced editing, FEN, creating exercise and more.</value>
   </data>
   <data name="cbDoubleClickAutoReplay" xml:space="preserve">
-    <value>Double click in the Scoresheet for auto-replay</value>
+    <value>Double click in the Scoresheet for auto-replay.</value>
   </data>
   <data name="cbClickBookmarkToTrain" xml:space="preserve">
     <value>Click a bookmark to navigate to the bookmarked position</value>

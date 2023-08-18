@@ -616,7 +616,7 @@
     <value>Rozpocznij tu Trening</value>
   </data>
   <data name="StartTrainingFromBookmark" xml:space="preserve">
-    <value>Trening od Zakładki</value>
+    <value>Trening od zakładki</value>
   </data>
   <data name="CreateExerciseFromHere" xml:space="preserve">
     <value>Utwórz tu Ćwiczenie</value>
@@ -625,7 +625,7 @@
     <value>Wpisz Kod FEN do Schowka</value>
   </data>
   <data name="BookmarkThisPosition" xml:space="preserve">
-    <value>Utwórz tu Zakładkę</value>
+    <value>Utwórz tu zakładkę</value>
   </data>
   <data name="Replay" xml:space="preserve">
     <value>Powtórz Wariant</value>
@@ -769,7 +769,7 @@
     <value>Utwórz Nowy Rozdział z Wariantu</value>
   </data>
   <data name="BookmarkAllOptionsHere" xml:space="preserve">
-    <value>Utwórz Zakładki dla Wszystkich Opcji</value>
+    <value>Utwórz zakładki dla wszystkich opcji</value>
   </data>
   <data name="MarkAsThumbnail" xml:space="preserve">
     <value>Zaznacz jako Wizytówkę Rozdziału</value>
@@ -817,13 +817,13 @@
     <value>Idź do Pozycji</value>
   </data>
   <data name="GenerateBookmarks" xml:space="preserve">
-    <value>Generuj Zakładki</value>
+    <value>Generuj zakładki</value>
   </data>
   <data name="DeleteThisBookmark" xml:space="preserve">
-    <value>Usuń Zakładkę</value>
+    <value>Usuń zakładkę</value>
   </data>
   <data name="DeleteAllBookmarks" xml:space="preserve">
-    <value>Usuń Wszystkie Zakładki</value>
+    <value>Usuń wszystkie zakładki</value>
   </data>
   <data name="Page0of0" xml:space="preserve">
     <value>Strona $0 z $1</value>
@@ -967,7 +967,7 @@
     <value>Błąd w dostępie do lichess.org</value>
   </data>
   <data name="BookmarksAlreadyExist" xml:space="preserve">
-    <value>Zakładki już Istnieją</value>
+    <value>Zakładki już istnieją</value>
   </data>
   <data name="FailedToSaveFile" xml:space="preserve">
     <value>Błąd przy zapisie pliku</value>
@@ -1621,19 +1621,19 @@
     <value>Naciśnij prawy przycisk, by wywołać menu</value>
   </data>
   <data name="cbClickThruMoves" xml:space="preserve">
-    <value>Kliknij na dowolne posunięcie</value>
+    <value>Klawiatura: ←/→ (naprzód/wstecz); SHIFT←/→ or Home/End (początek/koniec); ↑↓ (wybierz ruch w rozgałęzieniu)</value>
   </data>
   <data name="cbDoubleClickToAnnotate" xml:space="preserve">
-    <value>Dwukrotnie kliknij, by wprowadzić komentarz</value>
+    <value>Kliknij na dowolne posunięcie. Dwukrotnie kliknij, by wprowadzić komentarz.</value>
   </data>
   <data name="cbAdvancedEditig" xml:space="preserve">
-    <value>Naciśnij prawy przycisk, by wywołać menu do edycji, kopiowania FEN i inne</value>
+    <value>Naciśnij prawy przycisk, by wywołać menu do edycji, kopiowania FEN i inne.</value>
   </data>
   <data name="cbDoubleClickAutoReplay" xml:space="preserve">
     <value>Dwukrotnie kliknij posunięcie w Zapisie, by rozpocząć auto-odtwarzanie</value>
   </data>
   <data name="cbClickBookmarkToTrain" xml:space="preserve">
-    <value>Kliknij zakładkę, aby przejść do zapamiętanej pozycji </value>
+    <value>Kliknij zakładkę, aby przejść do zapamiętanej pozycji. </value>
   </data>
   <data name="cbRightClickBookmarkManager" xml:space="preserve">
     <value>Naciśnij prawy przycisk, by otworzyć menu zakładek</value>
