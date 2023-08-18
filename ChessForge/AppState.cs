@@ -1149,8 +1149,8 @@ namespace ChessForge
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "_mnExerc_EvalLine":
+                            case "UiMnExerc_EvalMove":
                                 menuItem.Visibility = Visibility.Collapsed;
-                                menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "_mnExerc_MarkThumbnail":
                                 menuItem.IsEnabled = exerciseIndex >= 0;
@@ -1169,7 +1169,6 @@ namespace ChessForge
                             case "UiMnExerc_ImportExercises":
                             case "UiMnExercSelectHighlighted":
                             case "UiMnExercSelectSubtree":
-                            case "UiMnExerc_EvalMove":
                             case "UiMnExercFindIdentical":
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
