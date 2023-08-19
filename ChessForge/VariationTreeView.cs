@@ -1788,11 +1788,6 @@ namespace ChessForge
                 List<CommentPart> parts = CommentProcessor.SplitCommentTextAtUrls(nd.Comment);
                 if (nd.QuizPoints != 0)
                 {
-                    if (parts == null)
-                    {
-                        parts = new List<CommentPart>();
-                    }
-
                     parts.Add(new CommentPart(CommentPartType.QUIZ_POINTS, " *" + Properties.Resources.QuizPoints + ": " + nd.QuizPoints.ToString() + "* "));
                 }
 
@@ -1823,7 +1818,17 @@ namespace ChessForge
                     switch (part.Type)
                     {
                         case CommentPartType.THUMBNAIL_SYMBOL:
-                            inl = new Run(Constants.CHAR_SQUARED_SQUARE.ToString());
+                            // if this is not the second last part, insert extra space
+                            string thmb;
+                            if (i < parts.Count - 2)
+                            {
+                                thmb = Constants.CHAR_SQUARED_SQUARE.ToString() + " ";
+                            }
+                            else
+                            {
+                                thmb = Constants.CHAR_SQUARED_SQUARE.ToString();
+                            }
+                            inl = new Run(thmb);
                             inl.ToolTip = nd.IsThumbnail ? Properties.Resources.ChapterThumbnail : null;
                             inl.FontStyle = FontStyles.Normal;
                             inl.Foreground = Brushes.Black;
