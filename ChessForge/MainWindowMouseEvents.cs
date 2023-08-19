@@ -380,7 +380,10 @@ namespace ChessForge
         /// <param name="e"></param>
         private void OnPreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
-            if (Configuration.AllowMouseWheelForMoves && LearningMode.CurrentMode != LearningMode.Mode.TRAINING && LearningMode.CurrentMode != LearningMode.Mode.ENGINE_GAME)
+            if (Configuration.AllowMouseWheelForMoves 
+                && LearningMode.CurrentMode != LearningMode.Mode.TRAINING 
+                && LearningMode.CurrentMode != LearningMode.Mode.ENGINE_GAME
+                && (AppState.ActiveTab == WorkbookManager.TabViewType.STUDY || AppState.ActiveTab == WorkbookManager.TabViewType.MODEL_GAME || AppState.ActiveTab == WorkbookManager.TabViewType.EXERCISE))
             {
                 if (e.Delta > 0)
                 {
