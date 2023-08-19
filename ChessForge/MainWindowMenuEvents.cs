@@ -91,7 +91,7 @@ namespace ChessForge
 
             if (WorkbookManager.SessionWorkbook != null && AppState.IsDirty)
             {
-                proceed = WorkbookManager.PromptAndSaveWorkbook(false);
+                proceed = WorkbookManager.PromptAndSaveWorkbook(false, out _);
             }
 
             if (proceed && ChangeAppModeWarning(LearningMode.Mode.MANUAL_REVIEW))
@@ -146,7 +146,7 @@ namespace ChessForge
 
             if (WorkbookManager.SessionWorkbook != null && AppState.IsDirty)
             {
-                proceed = WorkbookManager.PromptAndSaveWorkbook(false);
+                proceed = WorkbookManager.PromptAndSaveWorkbook(false, out _);
             }
 
             if (proceed && ChangeAppModeWarning(LearningMode.Mode.MANUAL_REVIEW))
@@ -461,7 +461,7 @@ namespace ChessForge
             {
                 try
                 {
-                    WorkbookManager.PromptAndSaveWorkbook(false, true);
+                    WorkbookManager.PromptAndSaveWorkbook(false, out _, true);
                 }
                 catch (Exception ex)
                 {
@@ -494,7 +494,7 @@ namespace ChessForge
             Mouse.SetCursor(Cursors.Wait);
             try
             {
-                WorkbookManager.PromptAndSaveWorkbook(true);
+                WorkbookManager.PromptAndSaveWorkbook(true, out _);
             }
             catch (Exception ex)
             {
@@ -2462,7 +2462,7 @@ namespace ChessForge
                 try
                 {
                     UiTrainingView.CleanupVariationTree();
-                    if (WorkbookManager.PromptAndSaveWorkbook(false))
+                    if (WorkbookManager.PromptAndSaveWorkbook(false, out bool saved))
                     {
                         EngineMessageProcessor.StopEngineEvaluation();
                         EvaluationManager.Reset();
@@ -2477,14 +2477,17 @@ namespace ChessForge
                         }
                         AppState.SetupGuiForCurrentStates();
 
-                        // at this point the source tree is set.
-                        // Find the last node in EngineGame that we can find in the ActiveTree too 
-                        TreeNode lastNode = UiTrainingView.LastTrainingNodePresentInActiveTree();
+                        if (saved)
                         {
-                            if (lastNode != null)
+                            // at this point the source tree is set.
+                            // Find the last node in EngineGame that we can find in the ActiveTree too 
+                            TreeNode lastNode = UiTrainingView.LastTrainingNodePresentInActiveTree();
                             {
-                                SetActiveLine(lastNode.LineId, lastNode.NodeId);
-                                ActiveTreeView.SelectLineAndMove(lastNode.LineId, lastNode.NodeId);
+                                if (lastNode != null)
+                                {
+                                    SetActiveLine(lastNode.LineId, lastNode.NodeId);
+                                    ActiveTreeView.SelectLineAndMove(lastNode.LineId, lastNode.NodeId);
+                                }
                             }
                         }
 
