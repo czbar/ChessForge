@@ -73,7 +73,9 @@ namespace ChessForge
             else
             {
                 nodeIndex = GetNodeIndexFromRowColumn(row, column);
-                SelectPly(row, column == 1 ? PieceColor.White : PieceColor.Black);
+
+                int moveNo = column == 1 ? row : row + 1;
+                SelectPly(moveNo, column == 1 ? PieceColor.White : PieceColor.Black);
             }
 
             TreeNode nd = GetNodeAtIndex(nodeIndex);
