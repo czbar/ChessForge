@@ -648,7 +648,10 @@ namespace ChessForge
             }
 
             // prevent "cheating" in exercises
-            if (_mainWin.ActiveVariationTree == null || !_mainWin.ActiveVariationTree.ShowTreeLines || AppState.CurrentSolvingMode == VariationTree.SolvingMode.GUESS_MOVE)
+            if (_mainWin.ActiveVariationTree == null 
+                || !_mainWin.ActiveVariationTree.ShowTreeLines 
+                || AppState.CurrentSolvingMode == VariationTree.SolvingMode.GUESS_MOVE
+                || AppState.ActiveTab == WorkbookManager.TabViewType.BOOKMARKS)
             {
                 return true;
             }
