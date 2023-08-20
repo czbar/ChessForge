@@ -192,7 +192,7 @@
                     <ColumnDefinition Width="600" />
                     <ColumnDefinition Width="1" />
                 </Grid.ColumnDefinitions>
-                <Viewbox x:Name="MainBoard" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Height="680" Margin="0,0,0,0" VerticalAlignment="Top" Width="680">
+                <Viewbox x:Name="MainBoard" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Height="680" Margin="0,0,0,0" VerticalAlignment="Top" Width="680" PreviewMouseWheel="OnPreviewMouseWheel">
                     <Canvas x:Name="MainCanvas" Grid.Column="0" HorizontalAlignment="Left" Height="680" Margin="0,0,0,0" VerticalAlignment="Top" Width="680" ContextMenuOpening="MainCanvas_ContextMenuOpening">
                         <Canvas.ContextMenu>
                             <ContextMenu  x:Name="UiMnMainBoard">
@@ -218,7 +218,7 @@
                         <Canvas.Background>
                             <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
                         </Canvas.Background>
-                        <Image x:Name="UiImgMainChessboard" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBlue.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="640" Height="640" Grid.Column="0" PreviewMouseWheel="OnPreviewMouseWheel"/>
+                        <Image x:Name="UiImgMainChessboard" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBlue.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="640" Height="640" Grid.Column="0" />
                         <Label x:Name="UiLblEvalBarHost" Content=""  FontSize="8" Padding="0,8,0,8" HorizontalContentAlignment="Center" Foreground="White" Canvas.Left="663" Canvas.Top="20" Width="14" Height="640" Background="SlateGray" Panel.ZIndex="1" Visibility="Collapsed" MouseMove="UiLblEvalBarHost_MouseMove" MouseLeave="UiLblEvalBarHost_MouseLeave" />
                         <Label x:Name="UiLblEvalBarWhite" Content="" FontSize="8" Padding="0,8,0,8" HorizontalContentAlignment="Center" Foreground="Black" Canvas.Left="663" Canvas.Top="20" Width="14" Height="320" Background="WhiteSmoke" Panel.ZIndex="2" Visibility="Collapsed" MouseMove="UiLblEvalBarWhite_MouseMove" MouseLeave="UiLblEvalBarWhite_MouseLeave"/>
                         <Label x:Name="UiLblEvalFloat" Style="{StaticResource RoundedBorder}" Content="" FontSize="10" FontWeight="Bold" Padding="0,0,0,0" HorizontalContentAlignment="Center" Canvas.Left="654" Canvas.Top="332" Width="32" Height="16" Background="WhiteSmoke" Panel.ZIndex="3" Visibility="Collapsed" MouseMove="UiLblEvalFloat_MouseMove" MouseLeave="UiLblEvalFloat_MouseLeave"/>
