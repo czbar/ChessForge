@@ -337,6 +337,11 @@ namespace ChessForge
                 return;
             }
 
+            if (string.IsNullOrEmpty(_mainVariationTree.RootNode.LineId))
+            {
+                _mainVariationTree.BuildLines();
+            }
+
             contentType = _mainVariationTree.Header.GetContentType(out _);
 
             Clear(GameData.ContentType.GENERIC);
