@@ -377,7 +377,7 @@ namespace GameTree
         {
             VariationLines.Clear();
             Nodes = nodes;
-
+            CalculateMaxNodeId();
             BuildLines();
         }
 

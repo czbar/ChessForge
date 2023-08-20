@@ -3,12 +3,7 @@ using GameTree;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Xml.Linq;
 
 namespace ChessPosition
 {
@@ -421,6 +416,7 @@ namespace ChessPosition
             root.Parent = null;
             tree.AddNode(root);
             AddChildrenToTree(root, tree);
+            tree.CalculateMaxNodeId();
             RestartMoveNumbering(tree);
             return tree;
         }
@@ -614,7 +610,6 @@ namespace ChessPosition
                     AddChildrenToTree(child, tree);
                 }
             }
-            tree.CalculateMaxNodeId();
         }
 
     }
