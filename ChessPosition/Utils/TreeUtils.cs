@@ -614,6 +614,7 @@ namespace ChessPosition
                     AddChildrenToTree(child, tree);
                 }
             }
+            tree.CalculateMaxNodeId();
         }
 
     }
