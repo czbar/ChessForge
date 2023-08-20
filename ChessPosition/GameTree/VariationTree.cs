@@ -849,6 +849,25 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Calculates and sets the current highest NodeId.
+        /// This needs to be set after e.g. after cloning a tree.
+        /// </summary>
+        /// <returns></returns>
+        public int CalculateMaxNodeId()
+        {
+            _maxNodeId = 0;
+            foreach (TreeNode nd in Nodes)
+            {
+                if (nd.NodeId > _maxNodeId)
+                {
+                    _maxNodeId = nd.NodeId;
+                }
+            }
+
+            return _maxNodeId;
+        }
+
+        /// <summary>
         /// Inserts an external subtree into this tree.
         /// Recursively clones the nodes from the external tree,
         /// assigns NodeIds, sets parent object, adds to the parent's
