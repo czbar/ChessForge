@@ -786,59 +786,66 @@ namespace ChessForge
             postKeyDownColumn = -1;
             postKeyDownRow = -1;
 
-            switch (key)
+            try
             {
-                case Key.Left:
-                    postKeyDownColumn = currColumn == _dgActiveLineWhitePlyColumn ? _dgActiveLineBlackPlyColumn : _dgActiveLineWhitePlyColumn;
-                    postKeyDownRow = currColumn == _dgActiveLineWhitePlyColumn ? currRow - 1 : currRow;
-                    // check for Exercise starting with Black move
-                    if (Line.NodeList[0].ColorToMove == PieceColor.Black && postKeyDownRow == -1)
-                    {
-                        postKeyDownRow = 0;
-                        postKeyDownColumn = _dgActiveLineWhitePlyColumn;
-                    }
-                    break;
-                case Key.Right:
-                    postKeyDownColumn = currColumn == _dgActiveLineWhitePlyColumn ? _dgActiveLineBlackPlyColumn : 1;
-                    postKeyDownRow = currColumn == _dgActiveLineWhitePlyColumn ? currRow : currRow + 1;
-                    // if we went beyond the last move (because it is White's and Black cell is empty.)
-                    // switch back to the White column
-                    int selectedPlyIndex = (postKeyDownRow * 2) + (postKeyDownColumn == _dgActiveLineWhitePlyColumn ? 0 : 1) + 1;
+                switch (key)
+                {
+                    case Key.Left:
+                        postKeyDownColumn = currColumn == _dgActiveLineWhitePlyColumn ? _dgActiveLineBlackPlyColumn : _dgActiveLineWhitePlyColumn;
+                        postKeyDownRow = currColumn == _dgActiveLineWhitePlyColumn ? currRow - 1 : currRow;
+                        // check for Exercise starting with Black move
+                        if (Line.NodeList[0].ColorToMove == PieceColor.Black && postKeyDownRow == -1)
+                        {
+                            postKeyDownRow = 0;
+                            postKeyDownColumn = _dgActiveLineWhitePlyColumn;
+                        }
+                        break;
+                    case Key.Right:
+                        postKeyDownColumn = currColumn == _dgActiveLineWhitePlyColumn ? _dgActiveLineBlackPlyColumn : 1;
+                        postKeyDownRow = currColumn == _dgActiveLineWhitePlyColumn ? currRow : currRow + 1;
+                        // if we went beyond the last move (because it is White's and Black cell is empty.)
+                        // switch back to the White column
+                        int selectedPlyIndex = (postKeyDownRow * 2) + (postKeyDownColumn == _dgActiveLineWhitePlyColumn ? 0 : 1) + 1;
 
-                    // check for Exercise starting with Black move
-                    if (selectedPlyIndex != 0 && Line.NodeList[0].ColorToMove == PieceColor.Black)
-                    {
-                        selectedPlyIndex--;
-                    }
-                    if (selectedPlyIndex >= Line.GetPlyCount())
-                    {
-                        postKeyDownColumn = _dgActiveLineWhitePlyColumn;
-                    }
-                    break;
-                case Key.Up:
-                    if (Keyboard.Modifiers == ModifierKeys.Shift)
-                    {
-                        postKeyDownColumn = _dgActiveLineWhitePlyColumn;
-                        postKeyDownRow = 0;
-                    }
-                    break;
-                case Key.Home:
-                    postKeyDownRow = -1;
-                    break;
-                case Key.Down:
-                    if (Keyboard.Modifiers == ModifierKeys.Shift)
-                    {
+                        // check for Exercise starting with Black move
+                        if (selectedPlyIndex != 0 && Line.NodeList[0].ColorToMove == PieceColor.Black)
+                        {
+                            selectedPlyIndex--;
+                        }
+                        if (selectedPlyIndex >= Line.GetPlyCount())
+                        {
+                            postKeyDownColumn = _dgActiveLineWhitePlyColumn;
+                        }
+                        break;
+                    case Key.Up:
+                        if (Keyboard.Modifiers == ModifierKeys.Shift)
+                        {
+                            postKeyDownColumn = _dgActiveLineWhitePlyColumn;
+                            postKeyDownRow = 0;
+                        }
+                        break;
+                    case Key.Home:
+                        postKeyDownRow = -1;
+                        break;
+                    case Key.Down:
+                        if (Keyboard.Modifiers == ModifierKeys.Shift)
+                        {
+                            postKeyDownRow = _dgActiveLine.Items.Count - 1;
+                            postKeyDownColumn = (Line.GetPlyCount() % 2) == 0 ? _dgActiveLineWhitePlyColumn : _dgActiveLineBlackPlyColumn;
+                        }
+                        break;
+                    case Key.End:
                         postKeyDownRow = _dgActiveLine.Items.Count - 1;
                         postKeyDownColumn = (Line.GetPlyCount() % 2) == 0 ? _dgActiveLineWhitePlyColumn : _dgActiveLineBlackPlyColumn;
-                    }
-                    break;
-                case Key.End:
-                    postKeyDownRow = _dgActiveLine.Items.Count - 1;
-                    postKeyDownColumn = (Line.GetPlyCount() % 2) == 0 ? _dgActiveLineWhitePlyColumn : _dgActiveLineBlackPlyColumn;
-                    break;
-                default:
-                    validKey = false;
-                    break;
+                        break;
+                    default:
+                        validKey = false;
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("CalculatePostKeyDownSelection()", ex);
             }
 
             return validKey;
