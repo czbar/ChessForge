@@ -589,7 +589,7 @@ namespace ChessForge
                     {
                         VariationTree newTree = TreeUtils.CreateNewTreeFromNode(lstNodes[0], GameData.ContentType.STUDY_TREE);
                         Chapter chapter = WorkbookManager.SessionWorkbook.CreateNewChapter(newTree, false);
-                        chapter.SetTitle(Properties.Resources.Chapter + " " + chapter.Index.ToString() + ": " + MoveUtils.BuildSingleMoveText(nd, true, true));
+                        chapter.SetTitle(Properties.Resources.Chapter + " " + (chapter.Index + 1).ToString() + ": " + MoveUtils.BuildSingleMoveText(nd, true, true));
 
                         ChapterFromLineDialog dlg = new ChapterFromLineDialog(chapter)
                         {
