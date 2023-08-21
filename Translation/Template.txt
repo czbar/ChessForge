@@ -1273,6 +1273,11 @@ ErrorLichess=
 #english: BookmarksAlreadyExist=Bookmarks already exist
 BookmarksAlreadyExist=
 
+
+#description: A bookmark has been added
+#english: BookmarkAdded=The bookmark has been added
+BookmarkAdded=
+
 #description: Error saving file
 #english: FailedToSaveFile=Failed to save file
 FailedToSaveFile=
@@ -1340,6 +1345,10 @@ UnrecognizedFileFormat=
 #description: Select move from which to start a game against the engine
 #english: SelectEngineStartMove=Select the move from which to start.
 SelectEngineStartMove=
+
+#description: Select a position
+#english: SelectPosition=A position must be selected.
+SelectPosition=
 
 #description: Delete chapter
 #english: DeleteChapter=Delete Chapter

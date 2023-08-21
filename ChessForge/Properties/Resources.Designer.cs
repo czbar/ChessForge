@@ -241,6 +241,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The bookmark has been added.
+        /// </summary>
+        public static string BookmarkAdded {
+            get {
+                return ResourceManager.GetString("BookmarkAdded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bookmark All Options Here.
         /// </summary>
         public static string BookmarkAllOptionsHere {
@@ -4072,6 +4081,15 @@ namespace ChessForge.Properties {
         public static string SelectOption {
             get {
                 return ResourceManager.GetString("SelectOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A position must be selected..
+        /// </summary>
+        public static string SelectPosition {
+            get {
+                return ResourceManager.GetString("SelectPosition", resourceCulture);
             }
         }
         

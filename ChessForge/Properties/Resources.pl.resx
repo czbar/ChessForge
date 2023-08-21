@@ -969,6 +969,9 @@
   <data name="BookmarksAlreadyExist" xml:space="preserve">
     <value>Zakładki już istnieją</value>
   </data>
+  <data name="BookmarkAdded" xml:space="preserve">
+    <value>Zakładka została zapisana</value>
+  </data>
   <data name="FailedToSaveFile" xml:space="preserve">
     <value>Błąd przy zapisie pliku</value>
   </data>
@@ -1019,6 +1022,9 @@
   </data>
   <data name="SelectEngineStartMove" xml:space="preserve">
     <value>Wybierz początkowe posunięcie do gry z silnikiem</value>
+  </data>
+  <data name="SelectPosition" xml:space="preserve">
+    <value>Pozycja musi być wybrana.</value>
   </data>
   <data name="DeleteChapter" xml:space="preserve">
     <value>Usuń Rozdział</value>

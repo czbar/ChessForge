@@ -1273,6 +1273,11 @@ ErrorLichess=Błąd w dostępie do lichess.org
 #english: BookmarksAlreadyExist=Bookmarks already exist
 BookmarksAlreadyExist=Zakładki już istnieją
 
+
+#description: A bookmark has been added
+#english: BookmarkAdded=The bookmark has been added
+BookmarkAdded=Zakładka została zapisana
+
 #description: Error saving file
 #english: FailedToSaveFile=Failed to save file
 FailedToSaveFile=Błąd przy zapisie pliku
@@ -1340,6 +1345,10 @@ UnrecognizedFileFormat=Nieznany format pliku
 #description: Select move from which to start a game against the engine
 #english: SelectEngineStartMove=Select the move from which to start.
 SelectEngineStartMove=Wybierz początkowe posunięcie do gry z silnikiem
+
+#description: Select a position
+#english: SelectPosition=A position must be selected.
+SelectPosition=Pozycja musi być wybrana.
 
 #description: Delete chapter
 #english: DeleteChapter=Delete Chapter

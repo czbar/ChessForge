@@ -969,6 +969,9 @@
   <data name="BookmarksAlreadyExist" xml:space="preserve">
     <value>Bookmarks already exist</value>
   </data>
+  <data name="BookmarkAdded" xml:space="preserve">
+    <value>The bookmark has been added</value>
+  </data>
   <data name="FailedToSaveFile" xml:space="preserve">
     <value>Failed to save file</value>
   </data>
@@ -1019,6 +1022,9 @@
   </data>
   <data name="SelectEngineStartMove" xml:space="preserve">
     <value>Select the move from which to start.</value>
+  </data>
+  <data name="SelectPosition" xml:space="preserve">
+    <value>A position must be selected.</value>
   </data>
   <data name="DeleteChapter" xml:space="preserve">
     <value>Delete Chapter</value>
