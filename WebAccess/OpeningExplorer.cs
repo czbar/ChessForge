@@ -44,10 +44,10 @@ namespace WebAccess
         private static string _lastRequestedFen;
 
         /// <summary>
-        /// Blocks the usage of the cache which, somewhat paradoxically, negatively impacts performance.
-        /// TODO: review the sync vs async behavior
+        /// Blocks/allows  the usage of the cache which, somewhat paradoxically, negatively impacts performance.
+        /// TODO: review the sync vs async behavior. Needs investigation.
         /// </summary>
-        private static readonly bool _useCache = false;
+        private static readonly bool _useCache = true;
 
         /// <summary>
         /// Requests Opening Stats from lichess
