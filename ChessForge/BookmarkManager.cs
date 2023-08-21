@@ -324,9 +324,10 @@ namespace ChessForge
         /// Sorts the bookmarks and updates the GUI.
         /// </summary>
         /// <returns>newly created bookmark on success or null if operation failed</returns>
-        public static Bookmark AddBookmark(VariationTree tree, TreeNode nd, int articleIndex)
+        public static Bookmark AddBookmark(VariationTree tree, TreeNode nd, int articleIndex, out bool alreadyExists)
         {
             Bookmark bm = null;
+            alreadyExists = false;
 
             if (tree != null && nd != null)
             {
@@ -340,6 +341,10 @@ namespace ChessForge
                     ResyncBookmarks(_currentPage);
                     AppState.IsDirty = true;
                 }
+                else
+                {
+                    alreadyExists = true;
+                }
             }
 
             return bm;
@@ -349,12 +354,14 @@ namespace ChessForge
         /// Adds a bookmark to the list of bookmarks.
         /// </summary>
         /// <returns>newly created bookmark or null if the operation failed</returns>
-        public static Bookmark AddBookmark(VariationTree tree, int nodeId, int index)
+        public static Bookmark AddBookmark(VariationTree tree, int nodeId, int index, out bool alreadyExists)
         {
+            alreadyExists = false;
+
             TreeNode nd = tree.GetNodeFromNodeId(nodeId);
             if (nd != null)
             {
-                return AddBookmark(tree, nd, index);
+                return AddBookmark(tree, nd, index, out alreadyExists);
             }
             else
             {

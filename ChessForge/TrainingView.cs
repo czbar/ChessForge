@@ -415,7 +415,7 @@ namespace ChessForge
         /// <summary>
         /// Find the last move in training that is in ActiveTree.
         /// Note that if the user chose not to add the last training line ot the tree,
-        /// this won't me the last movein training bu the last one that aligned with the Workbook source.
+        /// this won't be the last move in training but the last one that aligned with the Workbook source.
         /// </summary>
         /// <returns></returns>
         public TreeNode LastTrainingNodePresentInActiveTree()

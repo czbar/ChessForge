@@ -91,7 +91,7 @@ namespace ChessForge
 
             if (WorkbookManager.SessionWorkbook != null && AppState.IsDirty)
             {
-                proceed = WorkbookManager.PromptAndSaveWorkbook(false);
+                proceed = WorkbookManager.PromptAndSaveWorkbook(false, out _);
             }
 
             if (proceed && ChangeAppModeWarning(LearningMode.Mode.MANUAL_REVIEW))
@@ -146,7 +146,7 @@ namespace ChessForge
 
             if (WorkbookManager.SessionWorkbook != null && AppState.IsDirty)
             {
-                proceed = WorkbookManager.PromptAndSaveWorkbook(false);
+                proceed = WorkbookManager.PromptAndSaveWorkbook(false, out _);
             }
 
             if (proceed && ChangeAppModeWarning(LearningMode.Mode.MANUAL_REVIEW))
@@ -461,7 +461,7 @@ namespace ChessForge
             {
                 try
                 {
-                    WorkbookManager.PromptAndSaveWorkbook(false, true);
+                    WorkbookManager.PromptAndSaveWorkbook(false, out _, true);
                 }
                 catch (Exception ex)
                 {
@@ -494,7 +494,7 @@ namespace ChessForge
             Mouse.SetCursor(Cursors.Wait);
             try
             {
-                WorkbookManager.PromptAndSaveWorkbook(true);
+                WorkbookManager.PromptAndSaveWorkbook(true, out _);
             }
             catch (Exception ex)
             {
@@ -2210,35 +2210,6 @@ namespace ChessForge
         //**********************
 
         /// <summary>
-        /// The user requested to bookmark the currently selected position.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnBookmarkPosition_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                int moveIndex = ActiveLine.GetSelectedPlyNodeIndex(false);
-                if (moveIndex < 0)
-                {
-                    return;
-                }
-                else
-                {
-                    int posIndex = moveIndex;
-                    TreeNode nd = ActiveLine.GetNodeAtIndex(posIndex);
-                    Bookmark bm = BookmarkManager.AddBookmark(ActiveVariationTree, nd, AppState.ActiveArticleIndex);
-                    BookmarkManager.SetLastAddedBookmark(bm);
-
-                    UiTabBookmarks.Focus();
-                }
-            }
-            catch
-            {
-            }
-        }
-
-        /// <summary>
         /// Copies FEN of the selected position to the Clipboard.
         /// </summary>
         /// <param name="sender"></param>
@@ -2279,17 +2250,26 @@ namespace ChessForge
             {
                 if (!AppState.IsUserSolving())
                 {
-                    Bookmark bm = BookmarkManager.AddBookmark(AppState.ActiveVariationTree, AppState.ActiveVariationTree.SelectedNodeId, AppState.ActiveArticleIndex);
+                    Bookmark bm = BookmarkManager.AddBookmark(AppState.ActiveVariationTree, AppState.ActiveVariationTree.SelectedNodeId, AppState.ActiveArticleIndex, out bool alreadyExists);
                     BookmarkManager.SetLastAddedBookmark(bm);
 
                     if (bm == null)
                     {
-                        MessageBox.Show(Properties.Resources.BookmarkAlreadyExists, Properties.Resources.Bookmarks, MessageBoxButton.OK);
+                        if (alreadyExists)
+                        {
+                            MessageBox.Show(Properties.Resources.BookmarkAlreadyExists, Properties.Resources.Bookmarks, MessageBoxButton.OK);
+                        }
+                        else
+                        {
+                            MessageBox.Show(Properties.Resources.SelectPosition, Properties.Resources.Bookmarks, MessageBoxButton.OK);
+                        }
                     }
                     else
                     {
                         AppState.IsDirty = true;
-                        UiTabBookmarks.Focus();
+                        SoundPlayer.PlayConfirmationSound();
+                        BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.BookmarkAdded, System.Windows.Media.Brushes.Green);
+                       //  UiTabBookmarks.Focus();
                     }
                 }
                 else
@@ -2308,31 +2288,6 @@ namespace ChessForge
         //  TRAINING
         // 
         //**********************
-
-        /// <summary>
-        /// Re-directs the user to the bookmark page where they can
-        /// select a bookmarked position.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnStartTraining_Click(object sender, RoutedEventArgs e)
-        {
-            if (AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
-            {
-                StopEngineGame();
-            }
-            else if (EvaluationManager.IsRunning)
-            {
-                EngineMessageProcessor.StopEngineEvaluation();
-            }
-
-            LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
-            EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
-
-            AppState.SwapCommentBoxForEngineLines(false);
-
-            UiTabBookmarks.Focus();
-        }
 
         /// <summary>
         /// Strips all the comments from the currently shown tree. 
@@ -2462,7 +2417,7 @@ namespace ChessForge
                 try
                 {
                     UiTrainingView.CleanupVariationTree();
-                    if (WorkbookManager.PromptAndSaveWorkbook(false))
+                    if (WorkbookManager.PromptAndSaveWorkbook(false, out bool saved))
                     {
                         EngineMessageProcessor.StopEngineEvaluation();
                         EvaluationManager.Reset();
@@ -2477,14 +2432,17 @@ namespace ChessForge
                         }
                         AppState.SetupGuiForCurrentStates();
 
-                        // at this point the source tree is set.
-                        // Find the last node in EngineGame that we can find in the ActiveTree too 
-                        TreeNode lastNode = UiTrainingView.LastTrainingNodePresentInActiveTree();
+                        if (saved)
                         {
-                            if (lastNode != null)
+                            // at this point the source tree is set.
+                            // Find the last node in EngineGame that we can find in the ActiveTree too 
+                            TreeNode lastNode = UiTrainingView.LastTrainingNodePresentInActiveTree();
                             {
-                                SetActiveLine(lastNode.LineId, lastNode.NodeId);
-                                ActiveTreeView.SelectLineAndMove(lastNode.LineId, lastNode.NodeId);
+                                if (lastNode != null)
+                                {
+                                    SetActiveLine(lastNode.LineId, lastNode.NodeId);
+                                    ActiveTreeView.SelectLineAndMove(lastNode.LineId, lastNode.NodeId);
+                                }
                             }
                         }
 

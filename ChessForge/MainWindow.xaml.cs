@@ -2863,8 +2863,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// TODO: DELETE THIS FUNCTION?
-        /// 
         /// Upon start up or when returning from Training the tab control will receive an IsVisibleChanged 
         /// notification.  We store the active tab when losing visibility and send focus to it when regaining it.
         /// </summary>
@@ -2872,34 +2870,34 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTabCtrlManualReview_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            //bool visible = (bool)e.NewValue;
-            //if (visible == true)
-            //{
-            //    switch (AppState.LastActiveManualReviewTab)
-            //    {
-            //        case WorkbookManager.TabViewType.CHAPTERS:
-            //            UiTabChapters_GotFocus(null, null);
-            //            break;
-            //        case WorkbookManager.TabViewType.STUDY:
-            //            UiTabStudyTree_GotFocus(null, null);
-            //            break;
-            //        case WorkbookManager.TabViewType.MODEL_GAME:
-            //            UiTabModelGames_GotFocus(null, null);
-            //            break;
-            //        case WorkbookManager.TabViewType.EXERCISE:
-            //            UiTabExercises_GotFocus(null, null);
-            //            break;
-            //        case WorkbookManager.TabViewType.BOOKMARKS:
-            //            UiTabBookmarks_GotFocus(null, null);
-            //            break;
-            //        default:
-            //            break;
-            //    }
-            //}
-            //else
-            //{
-            //    AppState.LastActiveManualReviewTab = WorkbookManager.ActiveTab;
-            //}
+            bool visible = (bool)e.NewValue;
+            if (visible == true)
+            {
+                switch (AppState.LastActiveManualReviewTab)
+                {
+                    case WorkbookManager.TabViewType.CHAPTERS:
+                        UiTabChapters_GotFocus(null, null);
+                        break;
+                    case WorkbookManager.TabViewType.STUDY:
+                        UiTabStudyTree_GotFocus(null, null);
+                        break;
+                    case WorkbookManager.TabViewType.MODEL_GAME:
+                        UiTabModelGames_GotFocus(null, null);
+                        break;
+                    case WorkbookManager.TabViewType.EXERCISE:
+                        UiTabExercises_GotFocus(null, null);
+                        break;
+                    case WorkbookManager.TabViewType.BOOKMARKS:
+                        UiTabBookmarks_GotFocus(null, null);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                AppState.LastActiveManualReviewTab = WorkbookManager.ActiveTab;
+            }
         }
 
         /// <summary>

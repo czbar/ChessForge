@@ -377,7 +377,7 @@ namespace GameTree
         {
             VariationLines.Clear();
             Nodes = nodes;
-
+            CalculateMaxNodeId();
             BuildLines();
         }
 
@@ -845,6 +845,25 @@ namespace GameTree
         {
             int currentMax = Math.Max(_maxNodeId, Nodes[Nodes.Count - 1].NodeId);
             _maxNodeId = currentMax + 1;
+            return _maxNodeId;
+        }
+
+        /// <summary>
+        /// Calculates and sets the current highest NodeId.
+        /// This needs to be set after e.g. after cloning a tree.
+        /// </summary>
+        /// <returns></returns>
+        public int CalculateMaxNodeId()
+        {
+            _maxNodeId = 0;
+            foreach (TreeNode nd in Nodes)
+            {
+                if (nd.NodeId > _maxNodeId)
+                {
+                    _maxNodeId = nd.NodeId;
+                }
+            }
+
             return _maxNodeId;
         }
 

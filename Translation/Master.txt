@@ -989,6 +989,10 @@ ErrorLichess=Error accessing lichess.org
 #Bookmarks already exist
 BookmarksAlreadyExist=Bookmarks already exist
 
+
+#A bookmark has been added
+BookmarkAdded=The bookmark has been added
+
 #Error saving file
 FailedToSaveFile=Failed to save file
 
@@ -1039,6 +1043,9 @@ UnrecognizedFileFormat=Unrecognized file format
 
 #Select move from which to start a game against the engine
 SelectEngineStartMove=Select the move from which to start.
+
+#Select a position
+SelectPosition=A position must be selected.
 
 #Delete chapter
 DeleteChapter=Delete Chapter
@@ -1673,7 +1680,7 @@ cbEditCommands=CTRL+B bold, CTRL+I italics
 cbClickForContextMenu=Right click to open context menu
 
 #Click thru the moves
-cbClickThruMoves=Keyboard: ←/→ (back/forth); SHIFT←/→ or Home/End (go to start/end); ↑↓ (choose a move at fork)
+cbClickThruMoves=Keyboard: ←/→ (back/forth); SHIFT ↑↓ or Home/End (go to start/end); ↑↓ (choose a move at fork)
 
 
 #Double click to annotate

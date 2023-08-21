@@ -337,6 +337,11 @@ namespace ChessForge
                 return;
             }
 
+            if (string.IsNullOrEmpty(_mainVariationTree.RootNode.LineId))
+            {
+                _mainVariationTree.BuildLines();
+            }
+
             contentType = _mainVariationTree.Header.GetContentType(out _);
 
             Clear(GameData.ContentType.GENERIC);
@@ -584,7 +589,7 @@ namespace ChessForge
                     {
                         VariationTree newTree = TreeUtils.CreateNewTreeFromNode(lstNodes[0], GameData.ContentType.STUDY_TREE);
                         Chapter chapter = WorkbookManager.SessionWorkbook.CreateNewChapter(newTree, false);
-                        chapter.SetTitle(Properties.Resources.Chapter + " " + chapter.Index.ToString() + ": " + MoveUtils.BuildSingleMoveText(nd, true, true));
+                        chapter.SetTitle(Properties.Resources.Chapter + " " + (chapter.Index + 1).ToString() + ": " + MoveUtils.BuildSingleMoveText(nd, true, true));
 
                         ChapterFromLineDialog dlg = new ChapterFromLineDialog(chapter)
                         {
@@ -1788,11 +1793,6 @@ namespace ChessForge
                 List<CommentPart> parts = CommentProcessor.SplitCommentTextAtUrls(nd.Comment);
                 if (nd.QuizPoints != 0)
                 {
-                    if (parts == null)
-                    {
-                        parts = new List<CommentPart>();
-                    }
-
                     parts.Add(new CommentPart(CommentPartType.QUIZ_POINTS, " *" + Properties.Resources.QuizPoints + ": " + nd.QuizPoints.ToString() + "* "));
                 }
 
@@ -1823,7 +1823,17 @@ namespace ChessForge
                     switch (part.Type)
                     {
                         case CommentPartType.THUMBNAIL_SYMBOL:
-                            inl = new Run(Constants.CHAR_SQUARED_SQUARE.ToString());
+                            // if this is not the second last part, insert extra space
+                            string thmb;
+                            if (i < parts.Count - 2)
+                            {
+                                thmb = Constants.CHAR_SQUARED_SQUARE.ToString() + " ";
+                            }
+                            else
+                            {
+                                thmb = Constants.CHAR_SQUARED_SQUARE.ToString();
+                            }
+                            inl = new Run(thmb);
                             inl.ToolTip = nd.IsThumbnail ? Properties.Resources.ChapterThumbnail : null;
                             inl.FontStyle = FontStyles.Normal;
                             inl.Foreground = Brushes.Black;

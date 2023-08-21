@@ -1002,13 +1002,19 @@ namespace ChessForge
         /// </summary>
         /// <returns> Returns true if the user chooses yes or no,
         /// returns false if the user cancels. </returns>
-        public static bool PromptAndSaveWorkbook(bool userRequest, bool isAppClosing = false)
+        public static bool PromptAndSaveWorkbook(bool userRequest, out bool saved, bool isAppClosing = false)
         {
+            saved = false;
+
             MessageBoxResult res = MessageBoxResult.None;
 
             if (AppState.ActiveVariationTree != null && AppState.ActiveVariationTree.HasTrainingMoves())
             {
                 res = PromptAndSaveTrainingMoves(userRequest, isAppClosing);
+                if (res == MessageBoxResult.Yes)
+                {
+                    saved = true;
+                }
             }
 
             if (res != MessageBoxResult.OK && res != MessageBoxResult.Cancel)
@@ -1172,7 +1178,7 @@ namespace ChessForge
         /// <returns></returns>
         public static bool AskToSaveWorkbookOnClose()
         {
-            if (!PromptAndSaveWorkbook(false))
+            if (!PromptAndSaveWorkbook(false, out _))
             {
                 // the user chose cancel so we are not closing after all
                 return false;

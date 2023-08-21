@@ -1,6 +1,7 @@
 ﻿using ChessPosition;
 using GameTree;
 using System;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -380,7 +381,10 @@ namespace ChessForge
         /// <param name="e"></param>
         private void OnPreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
-            if (Configuration.AllowMouseWheelForMoves && LearningMode.CurrentMode != LearningMode.Mode.TRAINING && LearningMode.CurrentMode != LearningMode.Mode.ENGINE_GAME)
+            if (Configuration.AllowMouseWheelForMoves
+                && LearningMode.CurrentMode != LearningMode.Mode.TRAINING
+                && LearningMode.CurrentMode != LearningMode.Mode.ENGINE_GAME
+                && (AppState.ActiveTab == WorkbookManager.TabViewType.STUDY || AppState.ActiveTab == WorkbookManager.TabViewType.MODEL_GAME || AppState.ActiveTab == WorkbookManager.TabViewType.EXERCISE))
             {
                 if (e.Delta > 0)
                 {
@@ -1198,9 +1202,19 @@ namespace ChessForge
                             // under some circumstamces we may be showing the tree from the wrong chapter so check...
                             if (chapter.ActiveVariationTree != _studyTreeView.ShownVariationTree)
                             {
+                                // TODO we should not have to do all this here: can we prevent the special circumstances where
+                                // this is not in ActiveChapter when we are calling ApplyStates() ??
                                 _studyTreeView.BuildFlowDocumentForVariationTree();
+                                string lineId = "1";
+                                int nodeId = 0;
+                                ObservableCollection<TreeNode> lineToSelect = _studyTreeView.ShownVariationTree.SelectLine(lineId);
+                                SetActiveLine(lineToSelect, nodeId);
+                                _studyTreeView.SelectLineAndMove(lineId, nodeId);
                             }
-                            RestoreSelectedLineAndMoveInActiveView();
+                            else
+                            {
+                                RestoreSelectedLineAndMoveInActiveView();
+                            }
                         }
                         MainChessBoard.FlipBoard(EffectiveBoardOrientation(WorkbookManager.ItemType.STUDY));
 

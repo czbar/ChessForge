@@ -15,45 +15,47 @@ namespace ChessPosition.Utils
         /// so that we save performance by not creating a list where it is not necessary.
         /// </summary>
         /// <param name="comment"></param>
-        /// <returns></returns>
+        /// <returns>A list of comment parts that can be empty but never null.</returns>
         public static List<CommentPart> SplitCommentTextAtUrls(string comment)
         {
-            try
-            {
-                List<CommentPart> parts = new List<CommentPart>();
+            List<CommentPart> parts = new List<CommentPart>();
 
-                List<string> urls = TextUtils.MatchUrls(comment);
-                if (urls == null || urls.Count == 0)
+            if (!string.IsNullOrEmpty(comment))
+            {
+                try
                 {
-                    parts.Add(new CommentPart(CommentPartType.TEXT, comment));
-                }
-                else
-                {
-                    int firstUnprocessedChar = 0;
-                    for (int i = 0; i < urls.Count; i++)
+                    List<string> urls = TextUtils.MatchUrls(comment);
+                    if (urls == null || urls.Count == 0)
                     {
-                        int pos_start = comment.IndexOf(urls[i]);
-                        int pos_end = pos_start + urls[i].Length - 1;
-                        if (pos_start > firstUnprocessedChar)
+                        parts.Add(new CommentPart(CommentPartType.TEXT, comment));
+                    }
+                    else
+                    {
+                        int firstUnprocessedChar = 0;
+                        for (int i = 0; i < urls.Count; i++)
                         {
-                            parts.Add(new CommentPart(CommentPartType.TEXT, comment.Substring(firstUnprocessedChar, pos_start - firstUnprocessedChar)));
+                            int pos_start = comment.IndexOf(urls[i]);
+                            int pos_end = pos_start + urls[i].Length - 1;
+                            if (pos_start > firstUnprocessedChar)
+                            {
+                                parts.Add(new CommentPart(CommentPartType.TEXT, comment.Substring(firstUnprocessedChar, pos_start - firstUnprocessedChar)));
+                            }
+                            parts.Add(new CommentPart(CommentPartType.URL, urls[i]));
+                            firstUnprocessedChar = pos_end + 1;
                         }
-                        parts.Add(new CommentPart(CommentPartType.URL, urls[i]));
-                        firstUnprocessedChar = pos_end + 1;
-                    }
-                    if (firstUnprocessedChar < comment.Length)
-                    {
-                        parts.Add(new CommentPart(CommentPartType.TEXT, comment.Substring(firstUnprocessedChar)));
+                        if (firstUnprocessedChar < comment.Length)
+                        {
+                            parts.Add(new CommentPart(CommentPartType.TEXT, comment.Substring(firstUnprocessedChar)));
+                        }
                     }
                 }
+                catch
+                {
+                    parts.Clear();
+                }
+            }
 
-                return parts;
-            }
-            catch
-            {
-                return null;
-            }
+            return parts;
         }
-
     }
 }

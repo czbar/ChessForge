@@ -44,6 +44,12 @@ namespace WebAccess
         private static string _lastRequestedFen;
 
         /// <summary>
+        /// Blocks the usage of the cache which, somewhat paradoxically, negatively impacts performance.
+        /// TODO: review the sync vs async behavior
+        /// </summary>
+        private static readonly bool _useCache = false;
+
+        /// <summary>
         /// Requests Opening Stats from lichess
         /// </summary>
         /// <returns></returns>
@@ -64,7 +70,7 @@ namespace WebAccess
             eventArgs.TreeId = treeId;
             eventArgs.NodeId = nd.NodeId;
 
-             if (_dictCachedStats.ContainsKey(fen))
+            if (_useCache && _dictCachedStats.ContainsKey(fen))
             {
                 eventArgs.OpeningStats = await Task.Run(() =>
                 {
@@ -88,13 +94,15 @@ namespace WebAccess
                     {
                         eventArgs.OpeningStats = JsonConvert.DeserializeObject<LichessOpeningsStats>(json);
 
-                        if (_dictCachedStats.Count >= STATS_CACHE_SIZE)
+                        if (_useCache)
                         {
-                            MakeRoomInCache();
+                            if (_dictCachedStats.Count >= STATS_CACHE_SIZE)
+                            {
+                                MakeRoomInCache();
+                            }
+                            _dictCachedStats[fen] = eventArgs.OpeningStats;
+                            _dictLastTouch[fen] = DateTime.Now.Ticks;
                         }
-
-                        _dictCachedStats[fen] = eventArgs.OpeningStats;
-                        _dictLastTouch[fen] = DateTime.Now.Ticks;
 
                         eventArgs.Success = true;
                         OpeningStatsReceived?.Invoke(null, eventArgs);
@@ -130,11 +138,14 @@ namespace WebAccess
         /// </summary>
         private static void MakeRoomInCache()
         {
-            var keysToRemove = _dictLastTouch.OrderBy(x => x.Value).Select(x => x.Key).Take(COUNT_TO_FREE_ON_FULL);
-            foreach (string key in keysToRemove)
+            if (_useCache)
             {
-                _dictLastTouch.Remove(key);
-                _dictCachedStats.Remove(key);
+                var keysToRemove = _dictLastTouch.OrderBy(x => x.Value).Select(x => x.Key).Take(COUNT_TO_FREE_ON_FULL);
+                foreach (string key in keysToRemove)
+                {
+                    _dictLastTouch.Remove(key);
+                    _dictCachedStats.Remove(key);
+                }
             }
         }
     }
