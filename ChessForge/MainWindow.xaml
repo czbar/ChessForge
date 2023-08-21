@@ -207,7 +207,7 @@
                                 <MenuItem x:Name="UiMnciEvalLine" Header="{x:Static p:Resources.EvaluateLine}" Click="UiMnEvaluateLine_Click" />
                                 <MenuItem x:Name="UiMnciFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}" Click="UiMnFindIdenticalPosition_Click" />
                                 <Separator x:Name="UiMncMainBoardSepar_2" />
-                                <MenuItem x:Name="UiMnciBookmarkPosition" Header="{x:Static p:Resources.BookmarkThisPosition}" Click="UiMnBookmarkPosition_Click" />
+                                <MenuItem x:Name="UiMnciBookmarkPosition" Header="{x:Static p:Resources.BookmarkThisPosition}" Click="UiMnMarkBookmark_Click" />
                                 <Separator x:Name="UiMncMainBoardSepar_4" />
                                 <MenuItem x:Name="UiMnciReplay" Header="{x:Static p:Resources.Replay}"  Click="UiMnReplayLine_Clicked"/>
                                 <Separator x:Name="UiMncMainBoardSepar_3" />
