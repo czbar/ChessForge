@@ -32,8 +32,11 @@ namespace ChessForge
         // plays the End of Line sound
         private static MediaPlayer _soundEndOfLine = new MediaPlayer();
 
-        // plays Not in the Workbook sound
+        // plays the Not in the Workbook sound
         private static MediaPlayer _soundNotInWorkbook = new MediaPlayer();
+
+        // plays the Confirmation sound
+        private static MediaPlayer _soundConfirmation = new MediaPlayer();
 
 
         // indicates if the players have been initialized yet
@@ -49,6 +52,7 @@ namespace ChessForge
             _soundWrongMove.Open(SoundSources.InvalidMove);
             _soundEndOfLine.Open(SoundSources.EndOfLine);
             _soundNotInWorkbook.Open(SoundSources.NotInWorkbook);
+            _soundConfirmation.Open(SoundSources.Confirmation);
         }
 
         /// <summary>
@@ -63,6 +67,7 @@ namespace ChessForge
                 _soundWrongMove.Close();
                 _soundEndOfLine.Close();
                 _soundNotInWorkbook.Close();
+                _soundConfirmation.Close();
             }
             catch { }
         }
@@ -105,7 +110,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Playes the wormg move (error) sound.
+        /// Plays the wrong move (error) sound.
         /// </summary>
         public static void PlayWrongMoveSound()
         {
@@ -127,6 +132,34 @@ namespace ChessForge
             });
         }
 
+
+        /// <summary>
+        /// Playes the Confirmation sound.
+        /// </summary>
+        public static void PlayConfirmationSound()
+        {
+            if (!Configuration.SoundOn)
+            {
+                return;
+            }
+
+            if (!_isInitialized)
+            {
+                Initialize();
+                _isInitialized = true;
+            }
+
+            _soundConfirmation.Dispatcher.Invoke(() =>
+            {
+                _soundConfirmation.Position = TimeSpan.FromMilliseconds(0);
+                _soundConfirmation.Play();
+            });
+        }
+
+        /// <summary>
+        /// Plays one of the sounds in the training session
+        /// </summary>
+        /// <param name="sound"></param>
         public static void PlayTrainingSound(Sound sound)
         {
             if (!Configuration.SoundOn)
