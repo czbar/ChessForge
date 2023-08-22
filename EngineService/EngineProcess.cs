@@ -354,6 +354,21 @@ namespace EngineService
         }
 
         /// <summary>
+        /// Make sure there are no remnants blocking new messages.
+        /// E.g. when we exit a game or a training session.
+        /// </summary>
+        public void ClearState()
+        {
+            SendStopCommand(false);
+            _activeEvaluationMode = GoFenCommand.EvaluationMode.NONE;
+            lock (_lockSendCommand)
+            {
+                _goFenQueued = null;
+                _goFenCurrent = null;
+            }
+        }
+
+        /// <summary>
         /// More than a few bad messages indicate a problem with the engine.
         /// The actual definition of "a few" is rather arbitrary.
         /// </summary>
