@@ -42,8 +42,8 @@ namespace ChessForge
                 if (TrainingSession.IsContinuousEvaluation)
                 {
                     _lastClickedNode = nd;
-                    // TODO remove after proved unnecessary
-                    //StartEvaluationInContinuousMode(true);
+                    // request evaluation while user is thinking
+                    StartEvaluationInContinuousMode(true);
                 }
             }
         }
