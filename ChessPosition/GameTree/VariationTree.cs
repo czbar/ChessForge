@@ -1203,14 +1203,42 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Returns the TreeNode with a given id.
-        /// Returns null if node not found.
+        /// Returns the TreeNode with a given id or null if node not found.
+        /// 
+        /// TODO: the while loop is a temporary fix to protect against the "collection modified"
+        /// exception which will occur e.g. if the node had its EngineEvaluation
+        /// changed at the same time in the line display thread. This needs to be
+        /// sorted out properly with locks though.
         /// </summary>
         /// <param name="nodeId"></param>
         /// <returns></returns>
         public TreeNode GetNodeFromNodeId(int nodeId)
         {
-            return Nodes.FirstOrDefault(x => x.NodeId == nodeId);
+            TreeNode nd = null;
+
+            bool done = false;
+            int attempt_count = 0;
+
+            while (!done)
+            {
+                try
+                {
+                    nd = Nodes.FirstOrDefault(x => x.NodeId == nodeId);
+                    done = true;
+                }
+                catch (Exception ex)
+                {
+                    AppLog.Message(2, "Exception in GetNodeFromNodeId() " + ex.Message);
+                    attempt_count++;
+                    if (attempt_count > 100)
+                    {
+                        done = true;
+                        AppLog.Message("GetNodeFromNodeId() failed, returning null", ex);
+                    }
+                }
+            }
+
+            return nd;
         }
 
         /// <summary>
@@ -1560,8 +1588,8 @@ namespace GameTree
                     nd.SetNags(nac.Nags);
                 }
             }
-            catch 
-            { 
+            catch
+            {
             }
         }
 
