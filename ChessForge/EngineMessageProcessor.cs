@@ -49,6 +49,13 @@ namespace ChessForge
         /// </summary>
         private static object InfoMessageProcessLock = new object();
 
+        /// <summary>
+        /// Keeps the Game Eval state counter.
+        /// It is increased when in game eval request is received
+        /// and decreased when Best Move message is received. 
+        /// </summary>
+        private static int _isGameEval = 0;
+
         // main application window
         private static MainWindow _mainWin;
 
@@ -628,8 +635,6 @@ namespace ChessForge
             string fen = AppState.PrepareMoveEvaluation(node.Position, false);
             RequestEngineEvaluation(GoFenCommand.EvaluationMode.GAME, node, treeId, fen, Configuration.EngineMpv, Configuration.EngineMoveTime);
         }
-
-        private static int _isGameEval = 0;
 
         /// <summary>
         /// Sends a sequence of commands to the engine to request evaluation
