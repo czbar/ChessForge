@@ -766,6 +766,9 @@ namespace ChessForge
             {
                 AppLog.Message("ERROR: processing engine message: " + ex.Message);
                 DebugUtils.ShowDebugMessage("Error processing engine message: " + ex.Message);
+                // TODO need to do better than this.  Check the state and take a more appropriate action
+                StopEngineEvaluation();
+                ResetEngineEvaluation();
             }
         }
 
