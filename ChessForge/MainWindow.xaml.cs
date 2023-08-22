@@ -2183,7 +2183,7 @@ namespace ChessForge
         {
             bool handled = false;
 
-            if (Keyboard.Modifiers != ModifierKeys.Shift && ActiveTreeView != null && AppState.IsVariationTreeTabType)
+            if (Keyboard.Modifiers == 0 && ActiveTreeView != null && AppState.IsVariationTreeTabType)
             {
                 TreeNode node = null;
                 switch (e.Key)
@@ -2201,6 +2201,23 @@ namespace ChessForge
                 if (node != null)
                 {
                     SetActiveLine(node.LineId, node.NodeId);
+                }
+            }
+            else if ((Keyboard.Modifiers & ModifierKeys.Alt) != 0)
+            {
+                var key = (e.Key == Key.System ? e.SystemKey : e.Key);
+                switch (key)
+                {
+                    case Key.Left:
+                        UiImgNavigateBack_MouseDown(null, null);
+                        handled = true;
+                        break;
+                    case Key.Right:
+                        UiImgNavigateForward_MouseDown(null, null);
+                        handled = true;
+                        break;
+                    default:
+                        break;
                 }
             }
 
