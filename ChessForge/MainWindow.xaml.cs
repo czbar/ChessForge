@@ -2117,6 +2117,8 @@ namespace ChessForge
 
             EvaluationManager.Reset();
             EngineMessageProcessor.StopEngineEvaluation();
+            EngineMessageProcessor.ResetEngineEvaluation();
+
             LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
             EngineGame.ChangeCurrentState(EngineGame.GameState.IDLE);
 
