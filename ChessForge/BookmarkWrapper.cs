@@ -98,7 +98,7 @@ namespace ChessForge
 
             if (this.ChapterIndex != bm.ChapterIndex)
             {
-                return bm.ChapterIndex - bm.ChapterIndex;
+                return this.ChapterIndex - bm.ChapterIndex;
             }
 
             if (this.ContentType == bm.ContentType && this.ArticleIndex != bm.ArticleIndex)
