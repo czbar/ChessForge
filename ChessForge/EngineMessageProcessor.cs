@@ -177,6 +177,15 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Stops any ongoing evaluation and resets state.
+        /// </summary>
+        public static void ResetEngineEvaluation()
+        {
+            _isGameEval = 0;
+            ChessEngineService.ClearState();
+        }
+
+        /// <summary>
         /// Stops engine evaluation and changes Evaluation Mode to IDLE.
         /// </summary>
         public static void ExitEngineEvaluationMode()
@@ -869,14 +878,14 @@ namespace ChessForge
             {
                 AppLog.Message("ProcessBestMoveMessage() move=" + (nd == null ? "null" : nd.LastMoveAlgebraicNotation) + " GoFenCommandMode=" + mode.ToString());
 
+                if (mode == GoFenCommand.EvaluationMode.GAME)
+                {
+                    _isGameEval--;
+                }
+
                 // make sure the last lines are shown before we stop the timer.
                 if (message.Contains(UciCommands.ENG_BESTMOVE_NONE) || message.Contains(UciCommands.ENG_BESTMOVE_NONE_LEILA))
                 {
-                    if (mode == GoFenCommand.EvaluationMode.GAME)
-                    {
-                        _isGameEval--;
-                    }
-
                     if (nd == null)
                     {
                         EngineLinesBox.ShowEngineLines("---", null);
