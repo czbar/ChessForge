@@ -2265,6 +2265,8 @@ namespace ChessForge
                 return;
             }
 
+            AppLog.Message("Starting Training Session");
+
             // Set up the training mode
             StopEvaluation(true);
             StopReplayIfActive();
