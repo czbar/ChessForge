@@ -348,11 +348,11 @@ Seconds=
 Proceed=
 
 #description: Go forward
-#english: GoForward=Go forward 
+#english: GoForward=Go forward (ALT + →)  
 GoForward=
 
-#description: Go back
-#english: GoBack=Go back 
+#description: Go back 
+#english: GoBack=Go back (ALT + ←)
 GoBack=
 
 

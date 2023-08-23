@@ -266,10 +266,10 @@ Seconds=seconds
 Proceed=Proceed?
 
 #Go forward
-GoForward=Go forward 
+GoForward=Go forward (ALT + →)  
 
-#Go back
-GoBack=Go back 
+#Go back 
+GoBack=Go back (ALT + ←)
 
 
 ##################################

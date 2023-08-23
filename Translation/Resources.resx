@@ -364,10 +364,10 @@
     <value>Proceed?</value>
   </data>
   <data name="GoForward" xml:space="preserve">
-    <value>Go forward </value>
+    <value>Go forward (ALT + →)  </value>
   </data>
   <data name="GoBack" xml:space="preserve">
-    <value>Go back </value>
+    <value>Go back (ALT + ←)</value>
   </data>
   <data name="FontBold" xml:space="preserve">
     <value>Bold</value>
