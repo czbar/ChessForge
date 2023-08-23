@@ -1536,6 +1536,10 @@ namespace ChessForge
                     {
                         SoundPlayer.PlayMoveSound(_lastClickedNode.LastMoveAlgebraicNotation);
                         EngineGame.RestartAtEngineMove(nd);
+                        if (TrainingSession.IsContinuousEvaluation)
+                        {
+                            RequestMoveEvaluation(_mainWin.ActiveVariationTreeId, true);
+                        }
                         _mainWin.BoardCommentBox.GameMoveMade(nd, false);
                     }
                     _mainWin.DisplayPosition(nd);
