@@ -2410,7 +2410,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Go back .
+        ///   Looks up a localized string similar to Go back (ALT + ←).
         /// </summary>
         public static string GoBack {
             get {
@@ -2419,7 +2419,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Go forward .
+        ///   Looks up a localized string similar to Go forward (ALT + →)  .
         /// </summary>
         public static string GoForward {
             get {

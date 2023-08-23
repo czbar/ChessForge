@@ -851,7 +851,7 @@ namespace ChessForge
                     para.Inlines.Add(r_prefix);
                 }
 
-                Run r = CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, true) + " ", runName, Brushes.Black);
+                Run r = CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, true, true) + " ", runName, Brushes.Black);
                 para.Inlines.Add(r);
 
                 if (!userMove)
@@ -1337,7 +1337,7 @@ namespace ChessForge
             foreach (TreeNode nd in moves)
             {
                 Brush brush = isUserMove ? _userBrush : _workbookBrush;
-                para.Inlines.Add(CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, true), _run_wb_move_ + nd.NodeId.ToString(), brush));
+                para.Inlines.Add(CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, true, true), _run_wb_move_ + nd.NodeId.ToString(), brush));
                 Run r_semi = new Run("; ");
                 para.Inlines.Add(r_semi);
             }
@@ -1377,7 +1377,7 @@ namespace ChessForge
         /// <returns></returns>
         private string BuildMoveTextForMenu(TreeNode nd)
         {
-            return MoveUtils.BuildSingleMoveText(nd, true);
+            return MoveUtils.BuildSingleMoveText(nd, true, true);
         }
 
         /// <summary>
@@ -1536,6 +1536,10 @@ namespace ChessForge
                     {
                         SoundPlayer.PlayMoveSound(_lastClickedNode.LastMoveAlgebraicNotation);
                         EngineGame.RestartAtEngineMove(nd);
+                        if (TrainingSession.IsContinuousEvaluation)
+                        {
+                            RequestMoveEvaluation(_mainWin.ActiveVariationTreeId, true);
+                        }
                         _mainWin.BoardCommentBox.GameMoveMade(nd, false);
                     }
                     _mainWin.DisplayPosition(nd);

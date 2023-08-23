@@ -49,6 +49,13 @@ namespace ChessForge
         /// </summary>
         private static object InfoMessageProcessLock = new object();
 
+        /// <summary>
+        /// Keeps the Game Eval state counter.
+        /// It is increased when in game eval request is received
+        /// and decreased when Best Move message is received. 
+        /// </summary>
+        private static int _isGameEval = 0;
+
         // main application window
         private static MainWindow _mainWin;
 
@@ -174,6 +181,15 @@ namespace ChessForge
         {
             AppLog.Message("StopEngineEvaluation() - sending STOP command");
             ChessEngineService.SendStopCommand(ignoreNextBestMove);
+        }
+
+        /// <summary>
+        /// Stops any ongoing evaluation and resets state.
+        /// </summary>
+        public static void ResetEngineEvaluation()
+        {
+            _isGameEval = 0;
+            ChessEngineService.ClearState();
         }
 
         /// <summary>
@@ -620,8 +636,6 @@ namespace ChessForge
             RequestEngineEvaluation(GoFenCommand.EvaluationMode.GAME, node, treeId, fen, Configuration.EngineMpv, Configuration.EngineMoveTime);
         }
 
-        private static int _isGameEval = 0;
-
         /// <summary>
         /// Sends a sequence of commands to the engine to request evaluation
         /// of the position.
@@ -752,6 +766,9 @@ namespace ChessForge
             {
                 AppLog.Message("ERROR: processing engine message: " + ex.Message);
                 DebugUtils.ShowDebugMessage("Error processing engine message: " + ex.Message);
+                // TODO need to do better than this.  Check the state and take a more appropriate action
+                StopEngineEvaluation();
+                ResetEngineEvaluation();
             }
         }
 
@@ -869,14 +886,14 @@ namespace ChessForge
             {
                 AppLog.Message("ProcessBestMoveMessage() move=" + (nd == null ? "null" : nd.LastMoveAlgebraicNotation) + " GoFenCommandMode=" + mode.ToString());
 
+                if (mode == GoFenCommand.EvaluationMode.GAME)
+                {
+                    _isGameEval--;
+                }
+
                 // make sure the last lines are shown before we stop the timer.
                 if (message.Contains(UciCommands.ENG_BESTMOVE_NONE) || message.Contains(UciCommands.ENG_BESTMOVE_NONE_LEILA))
                 {
-                    if (mode == GoFenCommand.EvaluationMode.GAME)
-                    {
-                        _isGameEval--;
-                    }
-
                     if (nd == null)
                     {
                         EngineLinesBox.ShowEngineLines("---", null);

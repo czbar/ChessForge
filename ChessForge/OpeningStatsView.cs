@@ -260,13 +260,18 @@ namespace ChessForge
         {
             Paragraph para = new Paragraph();
 
-            Run rIntro = new Run(Properties.Resources.ErrorLichess + ": ");
-            rIntro.FontSize = 14 + Configuration.FontSizeDiff;
-            para.Inlines.Add(rIntro);
+            if (string.IsNullOrEmpty(errorMessage) || !errorMessage.ToLower().Contains("too many requests"))
+            {
+                Run rIntro = new Run(Properties.Resources.ErrorLichess + ": ");
+                rIntro.FontSize = 14 + Configuration.FontSizeDiff;
+                para.Inlines.Add(rIntro);
 
-            Run rError = new Run("    " + errorMessage ?? ("[" + Properties.Resources.UnknownError + "]"));
-            rError.FontSize = 12 + Configuration.FontSizeDiff;
-            para.Inlines.Add(rError);
+                Run rError = new Run("    " + errorMessage ?? ("[" + Properties.Resources.UnknownError + "]"));
+                rError.FontSize = 12 + Configuration.FontSizeDiff;
+                para.Inlines.Add(rError);
+            }
+
+            AppLog.Message("Error in lichess access: " + errorMessage ?? "[empty message]");
 
             return para;
         }

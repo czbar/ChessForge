@@ -426,7 +426,10 @@ namespace ChessForge
         private void UiImgNavigateBack_MouseDown(object sender, MouseButtonEventArgs e)
         {
             WorkbookLocationNavigator.MoveToPreviousLocation();
-            e.Handled = true;
+            if (e != null)
+            {
+                e.Handled = true;
+            }
         }
 
         /// <summary>
@@ -437,7 +440,10 @@ namespace ChessForge
         private void UiImgNavigateForward_MouseDown(object sender, MouseButtonEventArgs e)
         {
             WorkbookLocationNavigator.MoveToNextLocation();
-            e.Handled = true;
+            if (e != null)
+            {
+                e.Handled = true;
+            }
         }
 
 

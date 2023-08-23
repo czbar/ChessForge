@@ -47,7 +47,10 @@ namespace ChessForge
         /// Whether continuous engine evaluation is on during Training.
         /// </summary>
         public static bool IsContinuousEvaluation
-        { get => _isContinuousEvaluation; set => _isContinuousEvaluation = value; }
+        {
+            get => _isContinuousEvaluation; 
+            set => _isContinuousEvaluation = value;
+        }
 
         /// <summary>
         /// Whether takeback is currently available. 

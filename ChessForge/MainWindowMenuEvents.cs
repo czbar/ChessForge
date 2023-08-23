@@ -2416,6 +2416,9 @@ namespace ChessForge
             {
                 try
                 {
+                    AppLog.Message("Stopping Training Session");
+                    EngineMessageProcessor.ResetEngineEvaluation();
+                    
                     UiTrainingView.CleanupVariationTree();
                     if (WorkbookManager.PromptAndSaveWorkbook(false, out bool saved))
                     {

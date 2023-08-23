@@ -348,12 +348,12 @@ Seconds=sekundy
 Proceed=Kontynuować?
 
 #description: Go forward
-#english: GoForward=Go forward 
-GoForward=Idź do przodu 
+#english: GoForward=Go forward (ALT + →)  
+GoForward=Idź do przodu (ALT + →) 
 
-#description: Go back
-#english: GoBack=Go back 
-GoBack=Idź wstecz 
+#description: Go back 
+#english: GoBack=Go back (ALT + ←)
+GoBack=Idź wstecz (ALT + ←)
 
 
 ##################################
