@@ -1336,7 +1336,6 @@ namespace ChessForge
             if (RichTextBoxUtilities.GetDiagramFromParagraph(para, out InlineUIContainer diagram))
             {
                 CleanupDiagramPara(para, diagram);
-                AppState.DoEvents();
             }
             else
             {
