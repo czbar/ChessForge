@@ -405,7 +405,7 @@ namespace ChessForge
 
             ArticleSelected += EventSelectArticle;
 
-            Timers.Start(AppTimers.TimerId.EVALUATION_BAR);
+            Timers.Start(AppTimers.TimerId.PULSE);
             AppLog.LogAvailableThreadsCounts();
         }
 
@@ -2048,12 +2048,20 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// In response to the EVALUATION_BAR timer event
+        /// In response to the PULSE timer event
         /// checks if the evaluation bar should be shown, and if so, updates its value.
         /// </summary>
         /// <param name="source"></param>
         /// <param name="e"></param>
-        public void UpdateEvaluationBar(object source, ElapsedEventArgs e)
+        public void PulseEventHandler(object source, ElapsedEventArgs e)
+        {
+            UpdateEvaluationBar();
+        }
+
+        /// <summary>
+        /// Updates the position of the evaluation bar.
+        /// </summary>
+        private void UpdateEvaluationBar()
         {
             Dispatcher.Invoke(() =>
             {
