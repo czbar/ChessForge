@@ -20,8 +20,8 @@ namespace ChessForge
         /// </summary>
         public static bool IsEnabledExplorerQueries
         {
-            get => WebAccessExplorersState.IsEnabledExplorerQueries;
-            set => WebAccessExplorersState.IsEnabledExplorerQueries = value;
+            get => WebAccessState.IsEnabledExplorerQueries;
+            set => WebAccessState.IsEnabledExplorerQueries = value;
         }
 
         /// <summary>
@@ -35,20 +35,20 @@ namespace ChessForge
             {
                 if (IsEnabledExplorerQueries)
                 {
-                    if (!WebAccessExplorersState.IsExplorerQueriesInitialized)
+                    if (!WebAccessState.IsExplorerQueriesInitialized)
                     {
                         InitializeExplorerQueries();
                     }
 
-                    if (WebAccessExplorersState.IsExplorerRequestInProgress)
+                    if (WebAccessState.IsExplorerRequestInProgress)
                     {
-                        WebAccessExplorersState.QueuedNode = nd;
-                        WebAccessExplorersState.QueuedNodeTreeId = treeId;
+                        WebAccessState.QueuedNode = nd;
+                        WebAccessState.QueuedNodeTreeId = treeId;
                     }
                     else
                     {
-                        WebAccessExplorersState.IsExplorerRequestInProgress = true;
-                        WebAccessExplorersState.QueuedNode = null;
+                        WebAccessState.IsExplorerRequestInProgress = true;
+                        WebAccessState.QueuedNode = null;
                         int pieceCount = PositionUtils.GetPieceCount(nd.Position);
                         if (pieceCount > 7)
                         {
@@ -65,15 +65,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Helper function to pause execution 
-        /// </summary>
-        /// <returns></returns>
-        static async Task UseDelay(int millisec)
-        {
-            await Task.Delay(millisec);
-        }
-
-        /// <summary>
         /// Sets the event handling delegate.
         /// </summary>
         private static void InitializeExplorerQueries()
@@ -81,7 +72,7 @@ namespace ChessForge
             OpeningExplorer.OpeningStatsReceived += ExplorerRequestCompleted;
             OpeningExplorer.OpeningStatsRequestIgnored += ExplorerRequestCompleted;
             TablebaseExplorer.TablebaseReceived += ExplorerRequestCompleted;
-            WebAccessExplorersState.IsExplorerQueriesInitialized = true;
+            WebAccessState.IsExplorerQueriesInitialized = true;
         }
 
         /// <summary>
@@ -91,13 +82,13 @@ namespace ChessForge
         /// <param name="e"></param>
         private static void ExplorerRequestCompleted(object sender, WebAccessEventArgs e)
         {
-            WebAccessExplorersState.IsExplorerRequestInProgress = false;
+            WebAccessState.IsExplorerRequestInProgress = false;
 
             // check if we have anything queued and if so run it
-            if (WebAccessExplorersState.QueuedNode != null)
+            if (WebAccessState.QueuedNode != null)
             {
-                ExplorerRequest(0, WebAccessExplorersState.QueuedNode);
-                WebAccessExplorersState.QueuedNode = null;
+                ExplorerRequest(0, WebAccessState.QueuedNode);
+                WebAccessState.QueuedNode = null;
             }
         }
     }

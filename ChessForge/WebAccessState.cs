@@ -13,7 +13,7 @@ namespace ChessForge
     /// or Tablebase. The program chooses which one to send based 
     /// on the number of pieces in the position.
     /// </summary>
-    public class WebAccessExplorersState
+    public class WebAccessState
     {
         /// <summary>
         /// Whether Explorer queries are enabled.

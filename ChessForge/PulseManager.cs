@@ -58,13 +58,13 @@ namespace ChessForge
             if (!_isWebAccessInProgress || _webAccessCounter > WEB_ACCESS_PULSES_COUNT)
             {
                 _webAccessCounter = 0;
-                WebAccessExplorersState.IsExplorerRequestInProgress = true;
-                WebAccessExplorersState.QueuedNode = null;
+                WebAccessState.IsExplorerRequestInProgress = true;
+                WebAccessState.QueuedNode = null;
                 return true;
             }
             else
             {
-                WebAccessExplorersState.QueuedNode = node;
+                WebAccessState.QueuedNode = node;
                 return false;
             }
         }
