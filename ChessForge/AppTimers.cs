@@ -329,7 +329,7 @@ namespace ChessForge
         /// </summary>
         private void InitPulseTimer()
         {
-            _pulseTimer.Elapsed += new ElapsedEventHandler(_mainWin.PulseEventHandler);
+            _pulseTimer.Elapsed += new ElapsedEventHandler(PulseManager.PulseEventHandler);
             _pulseTimer.Interval = 100;
             _pulseTimer.Enabled = false;
         }

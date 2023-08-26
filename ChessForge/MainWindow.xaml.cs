@@ -2048,52 +2048,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// In response to the PULSE timer event
-        /// checks if the evaluation bar should be shown, and if so, updates its value.
-        /// </summary>
-        /// <param name="source"></param>
-        /// <param name="e"></param>
-        public void PulseEventHandler(object source, ElapsedEventArgs e)
-        {
-            UpdateEvaluationBar();
-        }
-
-        /// <summary>
-        /// Updates the position of the evaluation bar.
-        /// </summary>
-        private void UpdateEvaluationBar()
-        {
-            Dispatcher.Invoke(() =>
-            {
-                if (AppState.IsVariationTreeTabType
-                || TrainingSession.IsTrainingInProgress
-                   && (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE || EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
-               )
-                {
-                    TreeNode nd = null;
-                    if (TrainingSession.IsTrainingInProgress)
-                    {
-                        nd = EvaluationManager.GetEvaluatedNode(out _);
-                    }
-                    else if (ActiveTreeView != null)
-                    {
-                        nd = ActiveTreeView.GetSelectedNode();
-                        if (nd == null && ActiveVariationTree != null && ActiveVariationTree.Nodes.Count > 0)
-                        {
-                            nd = ActiveVariationTree.Nodes[0];
-                        }
-                    }
-
-                    EvaluationBar.ShowEvaluation(nd);
-                }
-                else
-                {
-                    EvaluationBar.Show(false);
-                }
-            });
-        }
-
-        /// <summary>
         /// The app is in the Solving GUESS_MOVE mode
         /// and the user made their move.
         /// </summary>
