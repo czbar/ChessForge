@@ -34,6 +34,11 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Whether the mandatory wait period from the previous request is on.
+        /// </summary>
+        public static bool IsMandatoryDelayOn = false;
+
+        /// <summary>
         /// A node for the waiting request.
         /// </summary>
         public static TreeNode WaitingNode = null;
@@ -44,12 +49,7 @@ namespace ChessForge
         public static int WaitingNodeTreeId = 0;
 
         /// <summary>
-        /// Whether the mandatory wait period from the previous request is on.
-        /// </summary>
-        public static bool IsMandatoryDelayOn = false;
-
-        /// <summary>
-        /// Whether there is an Explorer query in progress,
+        /// Whether there is an Explorer query in progress.
         /// </summary>
         public static bool IsWaitingForResults = false;
 
@@ -57,6 +57,21 @@ namespace ChessForge
         /// Whether there is a request waiting to be processed.
         /// </summary>
         public static bool HasWaitingRequest = false;
+
+        /// <summary>
+        /// A node for the queued request.
+        /// </summary>
+        public static TreeNode QueuedNode = null;
+
+        /// <summary>
+        /// Id of the Tree for the queued request.
+        /// </summary>
+        public static int QueuedNodeTreeId = 0;
+
+        /// <summary>
+        /// Whether there is a queued request.
+        /// </summary>
+        public static bool HasQueuedRequest = false;
 
         /// <summary>
         /// Whether the Explorer Queries handlers have been initialized
