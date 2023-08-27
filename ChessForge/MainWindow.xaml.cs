@@ -37,6 +37,16 @@ namespace ChessForge
         public ChaptersView ChaptersView { get => _chaptersView; }
 
         /// <summary>
+        /// Public reference to OpeningStatsView
+        /// </summary>
+        public OpeningStatsView OpeningStatsView { get => _openingStatsView; }
+
+        /// <summary>
+        /// Public reference to TopGamesView
+        /// </summary>
+        public TopGamesView TopGamesView { get => _topGamesView; }
+
+        /// <summary>
         /// The RichTextBox based Chapters view
         /// </summary>
         private ChaptersView _chaptersView;
