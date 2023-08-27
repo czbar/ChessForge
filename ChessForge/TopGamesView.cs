@@ -83,8 +83,8 @@ namespace ChessForge
         public TopGamesView(FlowDocument doc, bool mainWin) : base(doc)
         {
             _isMainWin = mainWin;
-            // listen to Data Received events
-            OpeningExplorer.OpeningStatsReceived += TopGamesReceived;
+            // listen to Data Received Errors events
+            OpeningExplorer.OpeningStatsErrorReceived += TopGamesErrorReceived;
             TablebaseExplorer.TablebaseReceived += TablebaseDataReceived;
 
             CreateTopGamesTable();
@@ -123,18 +123,22 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void TopGamesReceived(object sender, WebAccessEventArgs e)
+        public void TopGamesReceived(LichessOpeningsStats stats)
         {
-            if (e.Success)
-            {
-                LichessGamesPreviewDialog.SetOpeningsData(e.OpeningStats);
+            LichessGamesPreviewDialog.SetOpeningsData(stats);
+            BuildFlowDocument(stats);
+        }
 
-                BuildFlowDocument(e.OpeningStats);
-            }
-            else
-            {
-                ClearDocument();
-            }
+
+        /// <summary>
+        /// Event handlers requesting the build the view 
+        /// when data is received from Lichess.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void TopGamesErrorReceived(object sender, WebAccessEventArgs e)
+        {
+            ClearDocument();
         }
 
         /// <summary>

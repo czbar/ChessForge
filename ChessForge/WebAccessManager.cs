@@ -11,93 +11,180 @@ using System.Web;
 namespace ChessForge
 {
     /// <summary>
-    /// Manages communication with WebAccess library
+    /// Manages communication with WebAccess library.
     /// </summary>
     public class WebAccessManager
     {
-        /// <summary>
-        /// Whether querying Opening Stats is enabled.
-        /// </summary>
-        public static bool IsEnabledExplorerQueries
-        {
-            get => WebAccessExplorersState.IsEnabledExplorerQueries;
-            set => WebAccessExplorersState.IsEnabledExplorerQueries = value;
-        }
+        // number of pulses since last Web Access request before a new one can be issued.
+        private static readonly int MANDATORY_DELAY_PULSES_COUNT = 2;
+
+        // counts pulse events since last web access 
+        private static int _webAccessCounter;
+
+        // lock to prevent clashing of UpdateWebProcessing and RequestWebAccess
+        private static object _lockWebUpdate = new object();
 
         /// <summary>
-        /// Calls WebAccess with an Explorer Query.
+        /// This method is called by the client requesting Explorer data from a web site.
+        /// It will be checked against the current state and executed, queued or discarded.
         /// </summary>
         /// <param name="treeId"></param>
         /// <param name="nd"></param>
+        /// <param name="force"></param>
         public static void ExplorerRequest(int treeId, TreeNode nd, bool force = false)
         {
-            if (nd != null)
-            {
-                if (IsEnabledExplorerQueries)
-                {
-                    if (!WebAccessExplorersState.IsExplorerQueriesInitialized)
-                    {
-                        InitializeExplorerQueries();
-                    }
+            RequestWebAccess(treeId, nd, force);
+        }
 
-                    if (WebAccessExplorersState.IsExplorerRequestInProgress)
+        /// <summary>
+        /// Invoked from the PulseManager after a PULSE timer event.
+        /// If there is a ready request it will be executed if sufficient time
+        /// since the last request has passed.
+        /// </summary>
+        public static void UpdateWebAccess()
+        {
+            _webAccessCounter++;
+
+            lock (_lockWebUpdate)
+            {
+                // if there a new queued request, and we are not in "mandatory delay", slot it in for immediate execution,
+                // we are no longer interested in the current one
+                if (WebAccessState.HasQueuedRequest && !WebAccessState.IsMandatoryDelayOn)
+                {
+                    WebAccessState.ReadyNode = WebAccessState.QueuedNode;
+                    WebAccessState.ReadyNodeTreeId = WebAccessState.QueuedNodeTreeId;
+                    WebAccessState.HasQueuedRequest = false;
+                    WebAccessState.HasReadyRequest = true;
+                    WebAccessState.IsWaitingForResults = true;
+                }
+            }
+
+            // if we have a request in progress check for results
+            if (WebAccessState.IsWaitingForResults)
+            {
+                LichessOpeningsStats stats = CheckResults();
+                if (stats != null)
+                {
+                    AppLog.Message(2, "Received Web Data for: " + WebAccessState.ReadyNode.LastMoveAlgebraicNotation);
+                    WebAccessState.IsWaitingForResults = false;
+                    AppState.MainWin.Dispatcher.Invoke(() =>
                     {
-                        WebAccessExplorersState.QueuedNode = nd;
-                        WebAccessExplorersState.QueuedNodeTreeId = treeId;
-                    }
-                    else
-                    {
-                        WebAccessExplorersState.IsExplorerRequestInProgress = true;
-                        WebAccessExplorersState.QueuedNode = null;
-                        int pieceCount = PositionUtils.GetPieceCount(nd.Position);
-                        if (pieceCount > 7)
-                        {
-                            OpeningExplorer.RequestOpeningStats(treeId, nd, force);
-                        }
-                        else
-                        {
-                            OpeningExplorer.ResetLastRequestedFen();
-                            TablebaseExplorer.RequestTablebaseData(treeId, nd, force);
-                        }
-                    }
+                        AppState.MainWin.OpeningStatsView.OpeningStatsReceived(stats, WebAccessState.ReadyNode, WebAccessState.ReadyNodeTreeId);
+                        AppState.MainWin.TopGamesView.TopGamesReceived(stats);
+                    });
+                }
+            }
+
+            // reset the "mandatory delay" period, if it is time to do so
+            if (_webAccessCounter > MANDATORY_DELAY_PULSES_COUNT)
+            {
+                WebAccessState.IsMandatoryDelayOn = false;
+            }
+
+            // if we are not in the "mandatory delay", check if we have a request to execute
+            if (!WebAccessState.IsMandatoryDelayOn)
+            {
+                _webAccessCounter = 0;
+                if (WebAccessState.HasReadyRequest)
+                {
+                    WebAccessState.IsMandatoryDelayOn = true;
+                    AppLog.Message(2, "Execute Web Request for: " + WebAccessState.ReadyNode.LastMoveAlgebraicNotation);
+                    ExecuteRequest(WebAccessState.ReadyNodeTreeId, WebAccessState.ReadyNode);
+                    WebAccessState.HasReadyRequest = false;
                 }
             }
         }
 
         /// <summary>
-        /// Helper function to pause execution 
+        /// Sets a queued request that will be picked up later on by UpdateWebAccess()
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        public static bool RequestWebAccess(int treeId, TreeNode nd, bool force = false)
+        {
+            lock (_lockWebUpdate)
+            {
+                if (force || nd != WebAccessState.ReadyNode)
+                {
+                    AppLog.Message(2, "Requesting Web Access for:" + nd.LastMoveAlgebraicNotation);
+
+                    if (WebAccessState.ReadyNode != null)
+                    {
+                        AppLog.Message(2, "Cancelling Web Access for:" + WebAccessState.ReadyNode.LastMoveAlgebraicNotation);
+                    }
+
+                    WebAccessState.QueuedNode = nd;
+                    WebAccessState.QueuedNodeTreeId = treeId;
+                    WebAccessState.HasQueuedRequest = true;
+
+                    if (WebAccessState.IsMandatoryDelayOn)
+                    {
+                        // reset the "mandatory delay" counter.
+                        // this is to prevent processing of requests when too many come in a short
+                        // period of time e.g. when the user keep the right arrow depressed.
+                        _webAccessCounter = 0;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Whether querying Opening Stats is enabled.
+        /// </summary>
+        public static bool IsEnabledExplorerQueries
+        {
+            get => WebAccessState.IsEnabledExplorerQueries;
+            set => WebAccessState.IsEnabledExplorerQueries = value;
+        }
+
+        /// <summary>
+        /// Checks if the results are already in the cache.
         /// </summary>
         /// <returns></returns>
-        static async Task UseDelay(int millisec)
+        private static LichessOpeningsStats CheckResults()
         {
-            await Task.Delay(millisec);
+            return WebAccess.OpeningExplorer.GetOpeningStats(WebAccessState.ReadyNode);
         }
 
         /// <summary>
-        /// Sets the event handling delegate.
+        /// Executes a Web request.
+        /// This will be invoked from PulseManager once the web query
+        /// is greenlit for execution.
         /// </summary>
-        private static void InitializeExplorerQueries()
+        /// <param name="treeId"></param>
+        /// <param name="nd"></param>
+        /// <param name="force"></param>
+        private static void ExecuteRequest(int treeId, TreeNode nd)
         {
-            OpeningExplorer.OpeningStatsReceived += ExplorerRequestCompleted;
-            OpeningExplorer.OpeningStatsRequestIgnored += ExplorerRequestCompleted;
-            TablebaseExplorer.TablebaseReceived += ExplorerRequestCompleted;
-            WebAccessExplorersState.IsExplorerQueriesInitialized = true;
-        }
-
-        /// <summary>
-        /// Delegate listening to the Explorer request completed events.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private static void ExplorerRequestCompleted(object sender, WebAccessEventArgs e)
-        {
-            WebAccessExplorersState.IsExplorerRequestInProgress = false;
-
-            // check if we have anything queued and if so run it
-            if (WebAccessExplorersState.QueuedNode != null)
+            if (nd != null)
             {
-                ExplorerRequest(0, WebAccessExplorersState.QueuedNode);
-                WebAccessExplorersState.QueuedNode = null;
+                try
+                {
+                    AppState.MainWin.Dispatcher.Invoke(() =>
+                    {
+                        WebAccessState.IsWaitingForResults = true;
+
+                        if (IsEnabledExplorerQueries)
+                        {
+                            int pieceCount = PositionUtils.GetPieceCount(nd.Position);
+                            if (pieceCount > 7)
+                            {
+                                if (OpeningExplorer.GetOpeningStats(nd) == null)
+                                {
+                                    OpeningExplorer.RequestOpeningStats(treeId, nd);
+                                }
+                            }
+                            else
+                            {
+                                OpeningExplorer.ResetLastRequestedFen();
+                                TablebaseExplorer.RequestTablebaseData(treeId, nd);
+                            }
+                        }
+                    });
+                }
+                catch { }
             }
         }
     }

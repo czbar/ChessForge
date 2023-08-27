@@ -207,8 +207,6 @@ namespace ChessForge
 
                 int totalGames = whiteWins + draws + blackWins;
 
-                //Canvas.SetLeft(_pctBarBorder, 10 * scaleFactor - 1);
-
                 int whiteWinsPercent = (int)Math.Round((double)(whiteWins * 100) / (double)totalGames);
                 int blackWinsPercent = (int)Math.Round((double)(blackWins * 100) / (double)totalGames);
                 int drawsPercent = 100 - (whiteWinsPercent + blackWinsPercent);
@@ -218,11 +216,9 @@ namespace ChessForge
                 Canvas.SetLeft(_lblPctBlack, Canvas.GetLeft(_lblPctDraws) + _lblPctDraws.Width);
 
                 _cellTotal.FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff;
-                //_row.Cells.Add(cellTotal);
 
                 SetTotalGames(totalGames);
                 SetPercentBarElements(whiteWinsPercent, drawsPercent, blackWinsPercent);
-                //_row.Cells.Add(_cellScoring);
             }
             catch (Exception ex)
             {

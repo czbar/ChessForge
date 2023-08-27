@@ -22,10 +22,10 @@ namespace ChessForge
         public enum TimerId
         {
             DUMMY,
+            PULSE,
             AUTO_SAVE,
             EVALUATION_LINE_DISPLAY,
             GAMES_EVALUATION,
-            EVALUATION_BAR,
             CHECK_FOR_USER_MOVE,
             CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE,
             REQUEST_WORKBOOK_MOVE,
@@ -63,7 +63,7 @@ namespace ChessForge
         /// <summary>
         /// Triggers refresh of the evaluation bar
         /// </summary>
-        private Timer _evaluationBarTimer;
+        private Timer _pulseTimer;
 
         /// <summary>
         /// This timer invokes the method checking if a user made their move and if so
@@ -141,9 +141,9 @@ namespace ChessForge
             InitGamesEvaluationTimer();
             _dictTimers.Add(TimerId.GAMES_EVALUATION, _gamesEvaluationTimer);
 
-            _evaluationBarTimer = new Timer();
-            InitEvaluationBarTimer();
-            _dictTimers.Add(TimerId.EVALUATION_BAR, _evaluationBarTimer);
+            _pulseTimer = new Timer();
+            InitPulseTimer();
+            _dictTimers.Add(TimerId.PULSE, _pulseTimer);
 
             _autoSaveTimer = new Timer();
             InitAutoSaveTimer();
@@ -309,7 +309,7 @@ namespace ChessForge
         private void InitEvaluationLinesDisplayTimer()
         {
             _evaluationLinesDisplayTimer.Elapsed += new ElapsedEventHandler(EngineLinesBox.ShowEngineLinesEx);
-            _evaluationLinesDisplayTimer.Interval = 100;
+            _evaluationLinesDisplayTimer.Interval = 150;
             _evaluationLinesDisplayTimer.Enabled = false;
         }
 
@@ -324,13 +324,14 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Configures the timer triggering refresh of the evaluation bar's position
+        /// Configures the "pulse" timer that will run throughout the lifetime of the app.
+        /// In particular it will trigger refresh of the evaluation bar's position.
         /// </summary>
-        private void InitEvaluationBarTimer()
+        private void InitPulseTimer()
         {
-            _evaluationBarTimer.Elapsed += new ElapsedEventHandler(_mainWin.UpdateEvaluationBar);
-            _evaluationBarTimer.Interval = 100;
-            _evaluationBarTimer.Enabled = false;
+            _pulseTimer.Elapsed += new ElapsedEventHandler(PulseManager.PulseEventHandler);
+            _pulseTimer.Interval = 100;
+            _pulseTimer.Enabled = false;
         }
 
         private void InitAutoSaveTimer()

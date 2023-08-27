@@ -19,109 +19,104 @@ namespace WebAccess
     public class OpeningExplorer
     {
         /// <summary>
-        /// Handler for the DataReceived event
+        /// Handler for the error in the Web response
         /// </summary>
-        public static event EventHandler<WebAccessEventArgs> OpeningStatsReceived;
-
-        /// <summary>
-        /// Handler for the case where we did not send a request
-        /// </summary>
-        public static event EventHandler<WebAccessEventArgs> OpeningStatsRequestIgnored;
+        public static event EventHandler<WebAccessEventArgs> OpeningStatsErrorReceived;
 
         // max number of results to store in cache
-        private static int STATS_CACHE_SIZE = 100;
+        private static int STATS_CACHE_SIZE = 1000;
 
-        // number of entires to remove when cache is full
+        // number of entries to remove when cache is full
         private static int COUNT_TO_FREE_ON_FULL = STATS_CACHE_SIZE / 5;
 
         /// Cached stats. The key is FEN.
         private static Dictionary<string, LichessOpeningsStats> _dictCachedStats = new Dictionary<string, LichessOpeningsStats>();
 
-        /// Last tocuh times for the cached items. The key is FEN.
+        /// Last touch times for the cached items. The key is FEN.
         private static Dictionary<string, long> _dictLastTouch = new Dictionary<string, long>();
 
         // the last requested fen
         private static string _lastRequestedFen;
 
         /// <summary>
-        /// Blocks/allows  the usage of the cache which, somewhat paradoxically, negatively impacts performance.
-        /// TODO: review the sync vs async behavior. Needs investigation.
+        /// Lock for cache access
         /// </summary>
-        private static readonly bool _useCache = true;
+        private static object _lockCacheAccess = new object();
+
+        /// <summary>
+        /// Returns opening stats for the passed position
+        /// or null if stats not found.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        public static LichessOpeningsStats GetOpeningStats(TreeNode nd)
+        {
+            lock (_lockCacheAccess)
+            {
+                if (nd != null)
+                {
+                    string fen = FenParser.GenerateFenFromPosition(nd.Position);
+                    if (_dictCachedStats.ContainsKey(fen))
+                    {
+                        _dictLastTouch[fen] = DateTime.Now.Ticks;
+                        return _dictCachedStats[fen];
+                    }
+                }
+            }
+
+            return null;
+        }
 
         /// <summary>
         /// Requests Opening Stats from lichess
         /// </summary>
         /// <returns></returns>
-        public static async void RequestOpeningStats(int treeId, TreeNode nd, bool force = false)
+        public static async void RequestOpeningStats(int treeId, TreeNode nd)
         {
             string fen = FenParser.GenerateFenFromPosition(nd.Position);
-            if (!force && fen == _lastRequestedFen)
-            {
-                OpeningStatsRequestIgnored?.Invoke(null, null);
-                return;
-            }
-            else
-            {
-                _lastRequestedFen = fen;
-            }
+            _lastRequestedFen = fen;
 
+            // event args will only be used on error/exception
             WebAccessEventArgs eventArgs = new WebAccessEventArgs();
             eventArgs.TreeId = treeId;
             eventArgs.NodeId = nd.NodeId;
 
-            if (_useCache && _dictCachedStats.ContainsKey(fen))
+            string json;
+            try
             {
-                eventArgs.OpeningStats = await Task.Run(() =>
-                {
-                    return _dictCachedStats[fen];
-                });
-                _dictLastTouch[fen] = DateTime.Now.Ticks;
-                eventArgs.Success = true;
-                OpeningStatsReceived?.Invoke(null, eventArgs);
-            }
-            else
-            {
-                string json;
-                try
-                {
-                    AppLog.Message(2, "HttpClient sending OpeningStats request for FEN: " + fen);
+                AppLog.Message(2, "HttpClient sending OpeningStats request for FEN: " + fen);
 
-                    HttpResponseMessage response = await RestApiRequest.OpeningStatsClient.GetAsync("https://explorer.lichess.ovh/masters?" + "fen=" + fen);
-                    json = await response.Content.ReadAsStringAsync();
+                HttpResponseMessage response = await RestApiRequest.OpeningStatsClient.GetAsync("https://explorer.lichess.ovh/masters?" + "fen=" + fen);
+                json = await response.Content.ReadAsStringAsync();
 
-                    if (response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
+                {
+                    LichessOpeningsStats stats = JsonConvert.DeserializeObject<LichessOpeningsStats>(json);
+
+                    lock (_lockCacheAccess)
                     {
-                        eventArgs.OpeningStats = JsonConvert.DeserializeObject<LichessOpeningsStats>(json);
-
-                        if (_useCache)
+                        if (_dictCachedStats.Count >= STATS_CACHE_SIZE)
                         {
-                            if (_dictCachedStats.Count >= STATS_CACHE_SIZE)
-                            {
-                                MakeRoomInCache();
-                            }
-                            _dictCachedStats[fen] = eventArgs.OpeningStats;
-                            _dictLastTouch[fen] = DateTime.Now.Ticks;
+                            MakeRoomInCache();
                         }
-
-                        eventArgs.Success = true;
-                        OpeningStatsReceived?.Invoke(null, eventArgs);
+                        _dictCachedStats[fen] = stats;
+                        _dictLastTouch[fen] = DateTime.Now.Ticks;
                     }
-                    else
-                    {
-                        eventArgs.Success = false;
-                        eventArgs.Message = json;
-                        OpeningStatsReceived?.Invoke(null, eventArgs);
-                    }
-                    AppLog.Message(2, "HttpClient received OpeningStats response for FEN: " + fen);
                 }
-                catch (Exception ex)
+                else
                 {
                     eventArgs.Success = false;
-                    eventArgs.Message = ex.Message;
-                    OpeningStatsReceived?.Invoke(null, eventArgs);
-                    AppLog.Message("RequestOpeningStats()", ex);
+                    eventArgs.Message = json;
+                    OpeningStatsErrorReceived?.Invoke(null, eventArgs);
                 }
+                AppLog.Message(2, "HttpClient received OpeningStats response for FEN: " + fen);
+            }
+            catch (Exception ex)
+            {
+                eventArgs.Success = false;
+                eventArgs.Message = ex.Message;
+                OpeningStatsErrorReceived?.Invoke(null, eventArgs);
+                AppLog.Message("RequestOpeningStats()", ex);
             }
         }
 
@@ -134,22 +129,19 @@ namespace WebAccess
         }
 
         /// <summary>
-        /// Remove some elements from the cache to make room for new ones
+        /// Remove some elements from the cache to make room for new ones.
+        /// Caller must lock access with _lockCacheAccess object
         /// </summary>
         private static void MakeRoomInCache()
         {
-            if (_useCache)
+            var keysToRemove = _dictLastTouch.OrderBy(x => x.Value).Select(x => x.Key).Take(COUNT_TO_FREE_ON_FULL);
+            foreach (string key in keysToRemove)
             {
-                var keysToRemove = _dictLastTouch.OrderBy(x => x.Value).Select(x => x.Key).Take(COUNT_TO_FREE_ON_FULL);
-                foreach (string key in keysToRemove)
-                {
-                    _dictLastTouch.Remove(key);
-                    _dictCachedStats.Remove(key);
-                }
+                _dictLastTouch.Remove(key);
+                _dictCachedStats.Remove(key);
             }
         }
     }
-
 
     /// <summary>
     /// The class to deserialize the Lichess Opening Stats into.

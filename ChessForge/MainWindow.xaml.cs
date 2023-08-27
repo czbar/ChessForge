@@ -37,6 +37,16 @@ namespace ChessForge
         public ChaptersView ChaptersView { get => _chaptersView; }
 
         /// <summary>
+        /// Public reference to OpeningStatsView
+        /// </summary>
+        public OpeningStatsView OpeningStatsView { get => _openingStatsView; }
+
+        /// <summary>
+        /// Public reference to TopGamesView
+        /// </summary>
+        public TopGamesView TopGamesView { get => _topGamesView; }
+
+        /// <summary>
         /// The RichTextBox based Chapters view
         /// </summary>
         private ChaptersView _chaptersView;
@@ -405,7 +415,7 @@ namespace ChessForge
 
             ArticleSelected += EventSelectArticle;
 
-            Timers.Start(AppTimers.TimerId.EVALUATION_BAR);
+            Timers.Start(AppTimers.TimerId.PULSE);
             AppLog.LogAvailableThreadsCounts();
         }
 
@@ -2045,44 +2055,6 @@ namespace ChessForge
                     EngineMessageProcessor.RequestEngineMove(EngineGame.GetLastGameNode(), ActiveVariationTreeId);
                 }
             }
-        }
-
-        /// <summary>
-        /// In response to the EVALUATION_BAR timer event
-        /// checks if the evaluation bar should be shown, and if so, updates its value.
-        /// </summary>
-        /// <param name="source"></param>
-        /// <param name="e"></param>
-        public void UpdateEvaluationBar(object source, ElapsedEventArgs e)
-        {
-            Dispatcher.Invoke(() =>
-            {
-                if (AppState.IsVariationTreeTabType
-                || TrainingSession.IsTrainingInProgress
-                   && (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE || EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS)
-               )
-                {
-                    TreeNode nd = null;
-                    if (TrainingSession.IsTrainingInProgress)
-                    {
-                        nd = EvaluationManager.GetEvaluatedNode(out _);
-                    }
-                    else if (ActiveTreeView != null)
-                    {
-                        nd = ActiveTreeView.GetSelectedNode();
-                        if (nd == null && ActiveVariationTree != null && ActiveVariationTree.Nodes.Count > 0)
-                        {
-                            nd = ActiveVariationTree.Nodes[0];
-                        }
-                    }
-
-                    EvaluationBar.ShowEvaluation(nd);
-                }
-                else
-                {
-                    EvaluationBar.Show(false);
-                }
-            });
         }
 
         /// <summary>

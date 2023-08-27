@@ -32,6 +32,12 @@ namespace ChessForge
         // The top table showing the name of the opening 
         private Table _openingNameTable;
 
+        // Label containing the opening name
+        private Label _lblOpeningName;
+
+        // Lable containing the ECO code 
+        private Label _lblEcoCode;
+
         // The main table holding the stats
         private Table _openingStatsTable;
 
@@ -66,8 +72,8 @@ namespace ChessForge
         /// <param name="doc"></param>
         public OpeningStatsView(FlowDocument doc) : base(doc)
         {
-            // listen to Data Received events
-            OpeningExplorer.OpeningStatsReceived += OpeningStatsReceived;
+            // listen to Data Received Errors events
+            OpeningExplorer.OpeningStatsErrorReceived += OpeningStatsErrorReceived;
             TablebaseExplorer.TablebaseReceived += TablebaseDataReceived;
 
             CreateOpeningStatsTable();
@@ -119,6 +125,44 @@ namespace ChessForge
 
         // Used to ensure that _node object is not accessed simultaneously by OpeningStatsReceived and SetOpeningName
         private object _lockNodeAccess = new object();
+
+        /// <summary>
+        /// Updates the view with received data.
+        /// </summary>
+        /// <param name="stats"></param>
+        /// <param name="node"></param>
+        /// <param name="treeId"></param>
+        public void OpeningStatsReceived(LichessOpeningsStats stats, TreeNode node, int treeId)
+        {
+            lock (_lockNodeAccess)
+            {
+                _treeId = treeId;
+                _node = node;
+                if (_node != null)
+                {
+                    _moveNumberString = BuildMoveNumberString(_node);
+                    BuildFlowDocument(DataMode.OPENINGS, stats);
+                    if (stats.Opening != null)
+                    {
+                        if (_node.Eco != stats.Opening.Eco || _node.OpeningName != stats.Opening.Name)
+                        {
+                            _node.Eco = stats.Opening.Eco;
+                            _node.OpeningName = stats.Opening.Name;
+                            UpdateOpeningNameTable();
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Rebuilds the view to show the error.
+        /// </summary>
+        /// <param name="message"></param>
+        public void OpeningStatsErrorReceived(object sender, WebAccessEventArgs e)
+        {
+            BuildFlowDocument(DataMode.NO_DATA, null, e.Message);
+        }
 
         /// <summary>
         /// Rebuilds the view when Openings data is received.
@@ -200,11 +244,50 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// The updated OpeningName table will replace the current one
+        /// Updates the opening name table
         /// </summary>
         private void UpdateOpeningNameTable()
         {
-            BuildOpeningNameTable();
+            UpdateEcoCodeLabel();
+            UpdateOpeningNameLabel();
+        }
+
+        /// <summary>
+        /// Updates the name of the opening in the table
+        /// </summary>
+        private void UpdateOpeningNameLabel()
+        {
+            string openingName;
+
+            if (_node != null && _lblOpeningName != null)
+            {
+                openingName = _node.OpeningName;
+                if (string.IsNullOrEmpty(openingName) || openingName == POSITION_NOT_NAMED)
+                {
+                    openingName = string.Empty;
+                }
+
+                _lblOpeningName.Content = openingName;
+            }
+        }
+
+        /// <summary>
+        /// Updates the ECO in the table
+        /// </summary>
+        private void UpdateEcoCodeLabel()
+        {
+            string eco;
+
+            if (_node != null && _lblEcoCode != null)
+            {
+                eco = _node.Eco;
+                if (string.IsNullOrEmpty(eco))
+                {
+                    eco = string.Empty;
+                }
+
+                _lblEcoCode.Content = eco;
+            }
         }
 
         /// <summary>
@@ -296,7 +379,7 @@ namespace ChessForge
                         {
                             Document.Blocks.Add(_openingNameTable);
                         }
-                        BuildOpeningStatsTableEx(openingStats);
+                        BuildOpeningStatsTable(openingStats);
                         Document.Blocks.Add(_openingStatsTable);
                         break;
                     case DataMode.TABLEBASE:
@@ -398,38 +481,39 @@ namespace ChessForge
         /// </summary>
         private void BuildOpeningNameTable()
         {
-            _openingNameTable = CreateTable(0);
-            _openingNameTable.FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff;
-            _openingNameTable.CellSpacing = 0;
-            _openingNameTable.Foreground = Brushes.Black;
-            _openingNameTable.Background = ChessForgeColors.TABLE_HEADER_GREEN;
-            _openingNameTable.RowGroups.Add(new TableRowGroup());
-
-            _openingNameTable.Columns.Add(new TableColumn());
-            _openingNameTable.Columns[0].Width = new GridLength(_ecoColumnWidth * scaleFactor);
-
-            _openingNameTable.Columns.Add(new TableColumn());
-            _openingNameTable.Columns[1].Width = new GridLength((_openingNameColumnWidth * scaleFactor) + 1);
-
-            TableRow row = new TableRow();
-            _openingNameTable.RowGroups[0].Rows.Add(row);
-
-            TableCell cellEco = new TableCell(BuildEcoPara(_node.Eco));
-            cellEco.FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff;
-            cellEco.FontWeight = FontWeights.Bold;
-            cellEco.Foreground = Brushes.Black;
-            cellEco.Background = ChessForgeColors.TABLE_HEADER_GREEN;
-            row.Cells.Add(cellEco);
-
-            string openingName = _node.OpeningName;
-            if (string.IsNullOrEmpty(openingName) || openingName == POSITION_NOT_NAMED)
+            if (_openingNameTable == null)
             {
-                openingName = string.Empty;
+                _openingNameTable = CreateTable(0);
+                _openingNameTable.FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff;
+                _openingNameTable.CellSpacing = 0;
+                _openingNameTable.Foreground = Brushes.Black;
+                _openingNameTable.Background = ChessForgeColors.TABLE_HEADER_GREEN;
+                _openingNameTable.RowGroups.Add(new TableRowGroup());
+
+                _openingNameTable.Columns.Add(new TableColumn());
+                _openingNameTable.Columns[0].Width = new GridLength(_ecoColumnWidth * scaleFactor);
+
+                _openingNameTable.Columns.Add(new TableColumn());
+                _openingNameTable.Columns[1].Width = new GridLength((_openingNameColumnWidth * scaleFactor) + 1);
+
+                TableRow row = new TableRow();
+                _openingNameTable.RowGroups[0].Rows.Add(row);
+
+                TableCell cellEco = new TableCell(BuildEcoPara(""));
+                cellEco.FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff;
+                cellEco.FontWeight = FontWeights.Bold;
+                cellEco.Foreground = Brushes.Black;
+                cellEco.Background = ChessForgeColors.TABLE_HEADER_GREEN;
+                row.Cells.Add(cellEco);
+
+                TableCell cellOpeningName = new TableCell(BuildOpeningNamePara(""));
+                cellOpeningName.FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff;
+                cellOpeningName.Foreground = Brushes.Black;
+                row.Cells.Add(cellOpeningName);
             }
-            TableCell cellOpeningName = new TableCell(BuildOpeningNamePara(openingName));
-            cellOpeningName.FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff;
-            cellOpeningName.Foreground = Brushes.Black;
-            row.Cells.Add(cellOpeningName);
+
+            UpdateEcoCodeLabel();
+            UpdateOpeningNameLabel();
         }
 
         /// <summary>
@@ -484,7 +568,7 @@ namespace ChessForge
         /// <summary>
         /// Builds the main table with opening stats
         /// </summary>
-        private void BuildOpeningStatsTableEx(LichessOpeningsStats stats)
+        private void BuildOpeningStatsTable(LichessOpeningsStats stats)
         {
             int rowNo = 0;
 
@@ -499,70 +583,6 @@ namespace ChessForge
                 TableRow row = _lstRows[rowNo].Row;
                 _lstRows[rowNo].SetLabels(move, _moveNumberString, _node.ColorToMove);
                 rowNo++;
-            }
-        }
-
-        /// <summary>
-        /// Builds the main table with opening stats
-        /// </summary>
-        private void BuildOpeningStatsTable(LichessOpeningsStats openingStats)
-        {
-            _openingStatsTable = CreateTable(0);
-            _openingStatsTable.FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff;
-            _openingStatsTable.CellSpacing = 0;
-            _openingStatsTable.RowGroups.Add(new TableRowGroup());
-
-            // get the data
-            LichessOpeningsStats stats = openingStats;
-
-            CreateStatsTableColumns(scaleFactor);
-
-            foreach (WebAccess.LichessMoveStats move in stats.Moves)
-            {
-                TableRow row = new TableRow();
-                _openingStatsTable.RowGroups[0].Rows.Add(row);
-                PopulateCellsInRow(row, move, scaleFactor);
-            }
-        }
-
-        /// <summary>
-        /// Populates cells in the passed row, using LichessMoveStats data
-        /// </summary>
-        /// <param name="row"></param>
-        /// <param name="move"></param>
-        /// <param name="scaleFactor"></param>
-        private void PopulateCellsInRow(TableRow row, LichessMoveStats move, double scaleFactor)
-        {
-            try
-            {
-                Run rMove = new Run(_moveNumberString + move.San);
-                rMove.MouseLeftButtonDown += EventMoveClicked;
-                rMove.Name = MOVE_PREFIX + move.Uci;
-                rMove.Cursor = Cursors.Arrow;
-
-                TableCell cellMove = new TableCell(new Paragraph(rMove));
-                row.Cells.Add(cellMove);
-
-                int whiteWins = int.Parse(move.White);
-                int draws = int.Parse(move.Draws);
-                int blackWins = int.Parse(move.Black);
-
-                int totalGames = whiteWins + draws + blackWins;
-
-                int whiteWinsPercent = (int)Math.Round((double)(whiteWins * 100) / (double)totalGames);
-                int blackWinsPercent = (int)Math.Round((double)(blackWins * 100) / (double)totalGames);
-                int drawsPercent = 100 - (whiteWinsPercent + blackWinsPercent);
-
-                TableCell cellTotal = new TableCell(BuildTotalGamesPara(totalGames));
-                cellTotal.FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff;
-                row.Cells.Add(cellTotal);
-
-                TableCell cellScoring = new TableCell(CreatePercentBarToParagraph(whiteWinsPercent, drawsPercent, blackWinsPercent, scaleFactor));
-                row.Cells.Add(cellScoring);
-            }
-            catch (Exception ex)
-            {
-                AppLog.Message("PopulateCellsInRow", ex);
             }
         }
 
@@ -654,141 +674,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Combines percentage labels into one "bar".
-        /// </summary>
-        /// <param name="pctWhite"></param>
-        /// <param name="pctDraws"></param>
-        /// <param name="pctBlack"></param>
-        /// <param name="scaleFactor"></param>
-        /// <returns></returns>
-        private Paragraph CreatePercentBarToParagraph(int pctWhite, int pctDraws, int pctBlack, double scaleFactor)
-        {
-            Paragraph para = new Paragraph();
-
-            Canvas canvas = new Canvas
-            {
-                Width = scaleFactor * 110 + 2,
-                Height = 20 + Configuration.FontSizeDiff,
-                Background = Brushes.White
-            };
-
-            Label lblWhite = BuildPercentLabel(pctWhite, scaleFactor);
-            Label lblDraws = BuildPercentLabel(pctDraws, scaleFactor);
-            Label lblBlack = BuildPercentLabel(pctBlack, scaleFactor);
-
-            lblWhite.Background = ChessForgeColors.WhiteWinLinearBrush;
-
-            lblDraws.Background = ChessForgeColors.DrawLinearBrush;
-            lblDraws.Foreground = Brushes.White;
-
-            lblBlack.Background = ChessForgeColors.BlackWinLinearBrush;
-            lblBlack.Foreground = Brushes.White;
-
-
-            Border border = new Border
-            {
-                BorderBrush = ChessForgeColors.TABLE_ROW_LIGHT_GRAY,
-                Width = (100 * scaleFactor + 2),
-                Height = 16 + Configuration.FontSizeDiff,
-                BorderThickness = new Thickness(1),
-                CornerRadius = new CornerRadius(3),
-            };
-
-            canvas.Children.Add(lblWhite);
-            canvas.Children.Add(lblDraws);
-            canvas.Children.Add(lblBlack);
-            canvas.Children.Add(border);
-
-            Canvas.SetLeft(border, 10 * scaleFactor - 1);
-            Canvas.SetLeft(lblWhite, 10 * scaleFactor);
-            Canvas.SetLeft(lblDraws, Canvas.GetLeft(lblWhite) + lblWhite.Width);
-            Canvas.SetLeft(lblBlack, Canvas.GetLeft(lblDraws) + lblDraws.Width);
-
-            Canvas.SetTop(border, 2);
-            Canvas.SetTop(lblWhite, 3);
-            Canvas.SetTop(lblDraws, 3);
-            Canvas.SetTop(lblBlack, 3);
-
-            InlineUIContainer uIContainer = new InlineUIContainer
-            {
-                Child = canvas
-            };
-            para.Inlines.Add(uIContainer);
-
-
-            return para;
-        }
-
-        /// <summary>
-        /// Creates a label showing the percentage value
-        /// </summary>
-        /// <param name="pct"></param>
-        /// <param name="scaleFactor"></param>
-        /// <returns></returns>
-        private Label BuildPercentLabel(int pct, double scaleFactor)
-        {
-            Label lbl = new Label
-            {
-                Width = pct * scaleFactor,
-                Height = 14 + Configuration.FontSizeDiff,
-                FontSize = _baseFontSize + Configuration.FontSizeDiff,
-                VerticalContentAlignment = VerticalAlignment.Center,
-                HorizontalContentAlignment = HorizontalAlignment.Center,
-                Content = pct.ToString() + "%",
-
-                BorderThickness = new Thickness(0, 0, 0, 0),
-                Padding = new Thickness(0, 0, 0, 0)
-            };
-
-            return lbl;
-        }
-
-        /// <summary>
-        /// Builds Paragraph showing the total number of games.
-        /// </summary>
-        /// <param name="totalGames"></param>
-        /// <returns></returns>
-        private Paragraph BuildTotalGamesPara(int totalGames)
-        {
-            Paragraph para = new Paragraph();
-
-            Canvas canvas = new Canvas
-            {
-                Width = scaleFactor * (_totalGamesColumnWidth),
-                Height = 20 + Configuration.FontSizeDiff,
-                Background = Brushes.White
-            };
-
-            Label lbl = new Label
-            {
-                Width = scaleFactor * _totalGamesColumnWidth,
-                Height = 18 + Configuration.FontSizeDiff,
-                FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff,
-                VerticalContentAlignment = VerticalAlignment.Center,
-                HorizontalContentAlignment = HorizontalAlignment.Right,
-                Content = totalGames.ToString("N0"),
-
-                BorderThickness = new Thickness(0, 0, 0, 0),
-                Padding = new Thickness(0, 0, 0, 0)
-            };
-
-            lbl.Background = Brushes.White;
-
-            canvas.Children.Add(lbl);
-
-            Canvas.SetLeft(lbl, 0 * scaleFactor);
-
-            InlineUIContainer uIContainer = new InlineUIContainer
-            {
-                Child = canvas
-            };
-            para.Inlines.Add(uIContainer);
-
-
-            return para;
-        }
-
-        /// <summary>
         /// Builds Paragraph with the name of the Opening.
         /// </summary>
         /// <param name="name"></param>
@@ -804,7 +689,7 @@ namespace ChessForge
                 Background = Brushes.White
             };
 
-            Label lbl = new Label
+            _lblOpeningName = new Label
             {
                 Width = scaleFactor * (TotalStatsTableWidth - _ecoColumnWidth) + 1,
                 Height = 22 + Configuration.FontSizeDiff,
@@ -817,12 +702,12 @@ namespace ChessForge
                 Padding = new Thickness(0, 0, 0, 0)
             };
 
-            lbl.Foreground = Brushes.Black;
-            lbl.Background = ChessForgeColors.TABLE_HEADER_GREEN;
+            _lblOpeningName.Foreground = Brushes.Black;
+            _lblOpeningName.Background = ChessForgeColors.TABLE_HEADER_GREEN;
 
-            canvas.Children.Add(lbl);
+            canvas.Children.Add(_lblOpeningName);
 
-            Canvas.SetLeft(lbl, 0 * scaleFactor);
+            Canvas.SetLeft(_lblOpeningName, 0 * scaleFactor);
 
             InlineUIContainer uIContainer = new InlineUIContainer
             {
@@ -849,7 +734,7 @@ namespace ChessForge
                 Background = Brushes.White
             };
 
-            Label lbl = new Label
+            _lblEcoCode = new Label
             {
                 Width = scaleFactor * (_ecoColumnWidth),
                 Height = 22 + Configuration.FontSizeDiff,
@@ -862,12 +747,12 @@ namespace ChessForge
                 Padding = new Thickness(0, 0, 0, 0)
             };
 
-            lbl.Foreground = Brushes.Black;
-            lbl.Background = ChessForgeColors.TABLE_HEADER_GREEN;
+            _lblEcoCode.Foreground = Brushes.Black;
+            _lblEcoCode.Background = ChessForgeColors.TABLE_HEADER_GREEN;
 
-            canvas.Children.Add(lbl);
+            canvas.Children.Add(_lblEcoCode);
 
-            Canvas.SetLeft(lbl, 0 * scaleFactor);
+            Canvas.SetLeft(_lblEcoCode, 0 * scaleFactor);
 
             InlineUIContainer uIContainer = new InlineUIContainer
             {
