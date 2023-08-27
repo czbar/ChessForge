@@ -82,7 +82,6 @@ namespace ChessPositionTest
                 var equal = data1.Cast<byte>().SequenceEqual(data2.Cast<byte>());
             }
 
-            WebAccess.OpeningExplorer.OpeningStatsReceived += OpeningStatsReceived;
             Console.WriteLine("Sending Request");
             watch.Start();
 
