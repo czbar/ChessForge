@@ -626,13 +626,14 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Disables handling of the mouse down event in the Game data grid.
+        /// Do nothing.
+        /// Selection is disabled in DataGrid RowStyle
+        /// but we need the scrolling event.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void EngineGame_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            e.Handled = true;
         }
 
 
