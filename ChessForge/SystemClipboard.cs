@@ -63,7 +63,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Determines whether the sytem clipboard contains the same text as last
+        /// Determines whether the system clipboard contains the same text as the last
         /// set from Chess Forge. If so, returns false;
         /// </summary>
         /// <returns></returns>
