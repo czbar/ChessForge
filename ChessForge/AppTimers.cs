@@ -309,7 +309,7 @@ namespace ChessForge
         private void InitEvaluationLinesDisplayTimer()
         {
             _evaluationLinesDisplayTimer.Elapsed += new ElapsedEventHandler(EngineLinesBox.ShowEngineLinesEx);
-            _evaluationLinesDisplayTimer.Interval = 100;
+            _evaluationLinesDisplayTimer.Interval = 150;
             _evaluationLinesDisplayTimer.Enabled = false;
         }
 
