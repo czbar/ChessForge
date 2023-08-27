@@ -72,8 +72,8 @@ namespace ChessForge
         /// <param name="doc"></param>
         public OpeningStatsView(FlowDocument doc) : base(doc)
         {
-            // listen to Data Received events
-            OpeningExplorer.OpeningStatsReceived += OpeningStatsReceived;
+            // listen to Data Received Errors events
+            OpeningExplorer.OpeningStatsErrorReceived += OpeningStatsErrorReceived;
             TablebaseExplorer.TablebaseReceived += TablebaseDataReceived;
 
             CreateOpeningStatsTable();
@@ -125,6 +125,44 @@ namespace ChessForge
 
         // Used to ensure that _node object is not accessed simultaneously by OpeningStatsReceived and SetOpeningName
         private object _lockNodeAccess = new object();
+
+        /// <summary>
+        /// Updates the view with received data.
+        /// </summary>
+        /// <param name="stats"></param>
+        /// <param name="node"></param>
+        /// <param name="treeId"></param>
+        public void OpeningStatsReceived(LichessOpeningsStats stats, TreeNode node, int treeId)
+        {
+            lock (_lockNodeAccess)
+            {
+                _treeId = treeId;
+                _node = node;
+                if (_node != null)
+                {
+                    _moveNumberString = BuildMoveNumberString(_node);
+                    BuildFlowDocument(DataMode.OPENINGS, stats);
+                    if (stats.Opening != null)
+                    {
+                        if (_node.Eco != stats.Opening.Eco || _node.OpeningName != stats.Opening.Name)
+                        {
+                            _node.Eco = stats.Opening.Eco;
+                            _node.OpeningName = stats.Opening.Name;
+                            UpdateOpeningNameTable();
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Rebuilds the view to show the error.
+        /// </summary>
+        /// <param name="message"></param>
+        public void OpeningStatsErrorReceived(object sender, WebAccessEventArgs e)
+        {
+            BuildFlowDocument(DataMode.NO_DATA, null, e.Message);
+        }
 
         /// <summary>
         /// Rebuilds the view when Openings data is received.
