@@ -19,14 +19,9 @@ namespace WebAccess
     public class OpeningExplorer
     {
         /// <summary>
-        /// Handler for the DataReceived event
+        /// Handler for the error in the Web response
         /// </summary>
-        public static event EventHandler<WebAccessEventArgs> OpeningStatsReceived;
-
-        /// <summary>
-        /// Handler for the case where we did not send a request
-        /// </summary>
-        public static event EventHandler<WebAccessEventArgs> OpeningStatsRequestIgnored;
+        public static event EventHandler<WebAccessEventArgs> OpeningStatsErrorReceived;
 
         // max number of results to store in cache
         private static int STATS_CACHE_SIZE = 1000;
@@ -44,8 +39,7 @@ namespace WebAccess
         private static string _lastRequestedFen;
 
         /// <summary>
-        /// Blocks/allows  the usage of the cache which, somewhat paradoxically, negatively impacts performance.
-        /// TODO: review the sync vs async behavior. Needs investigation.
+        /// Lock for cache access
         /// </summary>
         private static object _lockCacheAccess = new object();
 
@@ -77,19 +71,12 @@ namespace WebAccess
         /// Requests Opening Stats from lichess
         /// </summary>
         /// <returns></returns>
-        public static async void RequestOpeningStats(int treeId, TreeNode nd, bool force = false)
+        public static async void RequestOpeningStats(int treeId, TreeNode nd)
         {
             string fen = FenParser.GenerateFenFromPosition(nd.Position);
-            if (!force && fen == _lastRequestedFen)
-            {
-                OpeningStatsRequestIgnored?.Invoke(null, null);
-                return;
-            }
-            else
-            {
-                _lastRequestedFen = fen;
-            }
+            _lastRequestedFen = fen;
 
+            // event args will only be used on error/exception
             WebAccessEventArgs eventArgs = new WebAccessEventArgs();
             eventArgs.TreeId = treeId;
             eventArgs.NodeId = nd.NodeId;
@@ -104,7 +91,7 @@ namespace WebAccess
 
                 if (response.IsSuccessStatusCode)
                 {
-                    eventArgs.OpeningStats = JsonConvert.DeserializeObject<LichessOpeningsStats>(json);
+                    LichessOpeningsStats stats = JsonConvert.DeserializeObject<LichessOpeningsStats>(json);
 
                     lock (_lockCacheAccess)
                     {
@@ -112,18 +99,15 @@ namespace WebAccess
                         {
                             MakeRoomInCache();
                         }
-                        _dictCachedStats[fen] = eventArgs.OpeningStats;
+                        _dictCachedStats[fen] = stats;
                         _dictLastTouch[fen] = DateTime.Now.Ticks;
                     }
-
-                    eventArgs.Success = true;
-                    OpeningStatsReceived?.Invoke(null, eventArgs);
                 }
                 else
                 {
                     eventArgs.Success = false;
                     eventArgs.Message = json;
-                    OpeningStatsReceived?.Invoke(null, eventArgs);
+                    OpeningStatsErrorReceived?.Invoke(null, eventArgs);
                 }
                 AppLog.Message(2, "HttpClient received OpeningStats response for FEN: " + fen);
             }
@@ -131,7 +115,7 @@ namespace WebAccess
             {
                 eventArgs.Success = false;
                 eventArgs.Message = ex.Message;
-                OpeningStatsReceived?.Invoke(null, eventArgs);
+                OpeningStatsErrorReceived?.Invoke(null, eventArgs);
                 AppLog.Message("RequestOpeningStats()", ex);
             }
         }
@@ -158,7 +142,6 @@ namespace WebAccess
             }
         }
     }
-
 
     /// <summary>
     /// The class to deserialize the Lichess Opening Stats into.
