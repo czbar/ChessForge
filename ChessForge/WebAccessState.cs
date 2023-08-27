@@ -27,27 +27,36 @@ namespace ChessForge
             set
             {
                 _isEnabledExplorerQueries = value;
-                QueuedNode = null;
-                QueuedNodeTreeId = 0;
-                IsExplorerRequestInProgress = false;
+                WaitingNode = null;
+                WaitingNodeTreeId = 0;
+                IsWaitingForResults = false;
             }
         }
 
         /// <summary>
-        /// A node that had to be queued while another request
-        /// was in porogress
+        /// A node for the waiting request.
         /// </summary>
-        public static TreeNode QueuedNode = null;
+        public static TreeNode WaitingNode = null;
 
         /// <summary>
-        /// Id of the Tree to which the queued node belongs.
+        /// Id of the Tree for the waiting request.
         /// </summary>
-        public static int QueuedNodeTreeId = 0;
+        public static int WaitingNodeTreeId = 0;
+
+        /// <summary>
+        /// Whether the mandatory wait period from the previous request is on.
+        /// </summary>
+        public static bool IsMandatoryDelayOn = false;
 
         /// <summary>
         /// Whether there is an Explorer query in progress,
         /// </summary>
-        public static bool IsExplorerRequestInProgress = false;
+        public static bool IsWaitingForResults = false;
+
+        /// <summary>
+        /// Whether there is a request waiting to be processed.
+        /// </summary>
+        public static bool HasWaitingRequest = false;
 
         /// <summary>
         /// Whether the Explorer Queries handlers have been initialized
