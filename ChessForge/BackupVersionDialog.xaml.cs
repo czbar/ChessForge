@@ -91,6 +91,7 @@ namespace ChessForge
 
             _backupPath = _workbookPathNoExt + " v" + _workbook.Version.ToString().Replace('.', '_') + ext;
             UiTbBackupFileName.Text = System.IO.Path.GetFileName(_backupPath);
+            UiTbBackupFileName.ToolTip = _backupPath;
 
             SetNewVersionLabel();
         }
