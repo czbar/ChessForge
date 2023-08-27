@@ -1641,7 +1641,7 @@ ShowMovesAtFork=
 SoundOn=
 
 #description: Current version
-#english: CurrentVersion=The current version $0 will be backed up in $1
+#english: CurrentVersion=The current version $0 will be backed up as
 CurrentVersion=
 
 #description: Updated version number

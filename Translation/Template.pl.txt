@@ -1641,8 +1641,8 @@ ShowMovesAtFork=Tabelka przy Rozgałęzieniu
 SoundOn=Włącz Dźwięk
 
 #description: Current version
-#english: CurrentVersion=The current version $0 will be backed up in $1
-CurrentVersion=Aktualna wersja
+#english: CurrentVersion=The current version $0 will be backed up as
+CurrentVersion=Kopia aktualnej wersji $0 będzie zapisana w
 
 #description: Updated version number
 #english: UpdatedVersion=The updated version number will be

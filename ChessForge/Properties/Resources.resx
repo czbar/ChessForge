@@ -1238,7 +1238,7 @@
     <value>Sound On</value>
   </data>
   <data name="CurrentVersion" xml:space="preserve">
-    <value>The current version $0 will be backed up in $1</value>
+    <value>The current version $0 will be backed up as</value>
   </data>
   <data name="UpdatedVersion" xml:space="preserve">
     <value>The updated version number will be</value>

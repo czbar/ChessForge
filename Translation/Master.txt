@@ -1268,7 +1268,7 @@ ShowMovesAtFork=Show Moves at Fork
 SoundOn=Sound On
 
 #Current version
-CurrentVersion=The current version $0 will be backed up in $1
+CurrentVersion=The current version $0 will be backed up as
 
 #Updated version number
 UpdatedVersion=The updated version number will be
