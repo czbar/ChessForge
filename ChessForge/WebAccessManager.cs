@@ -38,10 +38,8 @@ namespace ChessForge
 
         /// <summary>
         /// Invoked from the PulseManager after a PULSE timer event.
-        /// If there is a waiting request it will be executed if sufficient time
+        /// If there is a ready request it will be executed if sufficient time
         /// since the last request has passed.
-        /// If there is no waiting request and the sufficient time since the last
-        /// request has passed the request will be executed.
         /// </summary>
         public static void UpdateWebAccess()
         {
@@ -53,10 +51,10 @@ namespace ChessForge
                 // we are no longer interested in the current one
                 if (WebAccessState.HasQueuedRequest && !WebAccessState.IsMandatoryDelayOn)
                 {
-                    WebAccessState.WaitingNode = WebAccessState.QueuedNode;
-                    WebAccessState.WaitingNodeTreeId = WebAccessState.QueuedNodeTreeId;
+                    WebAccessState.ReadyNode = WebAccessState.QueuedNode;
+                    WebAccessState.ReadyNodeTreeId = WebAccessState.QueuedNodeTreeId;
                     WebAccessState.HasQueuedRequest = false;
-                    WebAccessState.HasWaitingRequest = true;
+                    WebAccessState.HasReadyRequest = true;
                     WebAccessState.IsWaitingForResults = true;
                 }
             }
@@ -67,11 +65,11 @@ namespace ChessForge
                 LichessOpeningsStats stats = CheckResults();
                 if (stats != null)
                 {
-                    AppLog.Message(2, "Received Web Data for: " + WebAccessState.WaitingNode.LastMoveAlgebraicNotation);
+                    AppLog.Message(2, "Received Web Data for: " + WebAccessState.ReadyNode.LastMoveAlgebraicNotation);
                     WebAccessState.IsWaitingForResults = false;
                     AppState.MainWin.Dispatcher.Invoke(() =>
                     {
-                        AppState.MainWin.OpeningStatsView.OpeningStatsReceived(stats, WebAccessState.WaitingNode, WebAccessState.WaitingNodeTreeId);
+                        AppState.MainWin.OpeningStatsView.OpeningStatsReceived(stats, WebAccessState.ReadyNode, WebAccessState.ReadyNodeTreeId);
                         AppState.MainWin.TopGamesView.TopGamesReceived(stats);
                     });
                 }
@@ -87,12 +85,12 @@ namespace ChessForge
             if (!WebAccessState.IsMandatoryDelayOn)
             {
                 _webAccessCounter = 0;
-                if (WebAccessState.HasWaitingRequest)
+                if (WebAccessState.HasReadyRequest)
                 {
                     WebAccessState.IsMandatoryDelayOn = true;
-                    AppLog.Message(2, "Execute Web Request for: " + WebAccessState.WaitingNode.LastMoveAlgebraicNotation);
-                    ExecuteRequest(WebAccessState.WaitingNodeTreeId, WebAccessState.WaitingNode);
-                    WebAccessState.HasWaitingRequest = false;
+                    AppLog.Message(2, "Execute Web Request for: " + WebAccessState.ReadyNode.LastMoveAlgebraicNotation);
+                    ExecuteRequest(WebAccessState.ReadyNodeTreeId, WebAccessState.ReadyNode);
+                    WebAccessState.HasReadyRequest = false;
                 }
             }
         }
@@ -106,13 +104,13 @@ namespace ChessForge
         {
             lock (_lockWebUpdate)
             {
-                if (force || nd != WebAccessState.WaitingNode)
+                if (force || nd != WebAccessState.ReadyNode)
                 {
                     AppLog.Message(2, "Requesting Web Access for:" + nd.LastMoveAlgebraicNotation);
 
-                    if (WebAccessState.WaitingNode != null)
+                    if (WebAccessState.ReadyNode != null)
                     {
-                        AppLog.Message(2, "Cancelling Web Access for:" + WebAccessState.WaitingNode.LastMoveAlgebraicNotation);
+                        AppLog.Message(2, "Cancelling Web Access for:" + WebAccessState.ReadyNode.LastMoveAlgebraicNotation);
                     }
 
                     WebAccessState.QueuedNode = nd;
@@ -147,7 +145,7 @@ namespace ChessForge
         /// <returns></returns>
         private static LichessOpeningsStats CheckResults()
         {
-            return WebAccess.OpeningExplorer.GetOpeningStats(WebAccessState.WaitingNode);
+            return WebAccess.OpeningExplorer.GetOpeningStats(WebAccessState.ReadyNode);
         }
 
         /// <summary>
