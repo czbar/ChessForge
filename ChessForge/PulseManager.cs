@@ -15,18 +15,6 @@ namespace ChessForge
     /// </summary>
     public class PulseManager
     {
-        // number of pulses since last Web Access request before a new one can be issued.
-        private static readonly int WEB_ACCESS_PULSES_COUNT = 2;
-
-        // flags whether we are permitted to send a Web request
-        private static bool _isWebAccessPermitted;
-
-        // counts pulse events since last web access 
-        private static int _webAccessCounter;
-
-        // whether we have a Web access permitted recently
-        private static bool _isWebAccessInProgress;
-
         /// <summary>
         /// Handles the PULSE timer event.
         /// </summary>
@@ -34,39 +22,8 @@ namespace ChessForge
         /// <param name="e"></param>
         public static void PulseEventHandler(object source, ElapsedEventArgs e)
         {
-            if (_isWebAccessInProgress)
-            {
-                _webAccessCounter++;
-            }
-            else
-            {
-                _webAccessCounter = 0;
-            }
-
+            WebAccessManager.UpdateWebAccess();
             UpdateEvaluationBar();
-        }
-
-        /// <summary>
-        /// Invoked by the WebAccessManager.
-        /// The request will be processed or queued depending on when the last
-        /// request was issued.
-        /// </summary>
-        /// <param name="node"></param>
-        /// <returns></returns>
-        public static bool RequestWebAccess(TreeNode node)
-        {
-            if (!_isWebAccessInProgress || _webAccessCounter > WEB_ACCESS_PULSES_COUNT)
-            {
-                _webAccessCounter = 0;
-                WebAccessState.IsExplorerRequestInProgress = true;
-                WebAccessState.QueuedNode = null;
-                return true;
-            }
-            else
-            {
-                WebAccessState.QueuedNode = node;
-                return false;
-            }
         }
 
         /// <summary>
