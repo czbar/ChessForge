@@ -136,6 +136,8 @@ namespace ChessForge
             {
                 AppState.MainWin.UiTabChapters.Focus();
                 chapter.AddModelGame(_tree);
+                chapter.ActiveModelGameIndex = chapter.GetModelGameCount() - 1;
+                AppState.MainWin.SelectModelGame(chapter.ActiveModelGameIndex, false);
                 string guid = _tree.Header.GetGuid(out _);
                 // if the current active tree is Study Tree, add reference
                 if (chapter.ActiveVariationTree != null && chapter.ActiveVariationTree.ContentType == GameData.ContentType.STUDY_TREE)
