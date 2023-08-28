@@ -113,6 +113,13 @@ namespace ChessForge
                     _maxRunId = node.NodeId;
                 }
             }
+
+            _selectedNode = Nodes[0];
+            if (AppState.ActiveVariationTree != null)
+            {
+                AppState.ActiveVariationTree.SelectedNodeId = _selectedNode.NodeId;
+            }
+
             WebAccessManager.ExplorerRequest(Intro.Tree.TreeId, Nodes[0]);
         }
 
