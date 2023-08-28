@@ -1845,6 +1845,7 @@ namespace ChessForge
                             (inl as Hyperlink).NavigateUri = new Uri(part.Text);
                             inl.FontWeight = FontWeights.Normal;
                             inl.PreviewMouseDown += Hyperlink_MouseLeftButtonDown;
+                            inl.Cursor = Cursors.Hand;
                             break;
                         default:
                             inl = new Run(part.Text);
