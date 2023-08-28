@@ -326,6 +326,8 @@ namespace ChessForge
                 return null;
             }
 
+            PositionUtils.GuessCastlingRights(ref node.Position);
+
             _selectedNode = node;
             int nodeId = AddNode(node);
 
@@ -333,6 +335,8 @@ namespace ChessForge
             rMove.Name = _run_move_ + nodeId.ToString();
             rMove.Foreground = Brushes.Blue;
             rMove.FontWeight = FontWeights.Bold;
+
+            WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, _selectedNode);
 
             return InsertMoveTextBlock(rMove, node, fromClipboard);
         }
