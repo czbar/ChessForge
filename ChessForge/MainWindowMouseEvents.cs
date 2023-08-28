@@ -724,14 +724,14 @@ namespace ChessForge
             UiImgExplorersOn.Visibility = Visibility.Visible;
             WebAccessManager.IsEnabledExplorerQueries = true;
 
-            if (ActiveVariationTree != null && ActiveVariationTree.SelectedNode != null)
+            if (ActiveVariationTree != null && ActiveVariationTree.SelectedNode != null || AppState.ActiveTab == WorkbookManager.TabViewType.INTRO)
             {
                 _openingStatsView.SetOpeningName();
                 WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, ActiveVariationTree.SelectedNode);
             }
 
             AppState.AreExplorersOn = true;
-            AppState.ShowExplorers(ActiveTreeView != null, ActiveTreeView != null && ActiveTreeView.HasEntities);
+            AppState.SetupGuiForCurrentStates();
         }
 
         /// <summary>
