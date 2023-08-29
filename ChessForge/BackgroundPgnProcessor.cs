@@ -1,32 +1,23 @@
 ﻿using GameTree;
+using ChessPosition;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Media;
 
 namespace ChessForge
 {
-    /// <summary>
-    /// Enumeration of possible Background Worker states.
-    /// </summary>
-    public enum BackgroundWorkerState
-    {
-        UNKNOWN,
-        NOT_STARTED,
-        RUNNING,
-        FINISHED
-    };
-
     /// <summary>
     /// Encapsulates a background process that processes a GameData object
     /// to build an Article object
     /// </summary>
     public class BackgroundPgnProcessor
     {
+        // parent object owning this one
+        private BackgroundPgnProcessingManager _parent;
+
         // the background worker object controlled from this object
         private BackgroundWorker _worker;
 
@@ -34,23 +25,26 @@ namespace ChessForge
         private BackgroundPgnParserData _dataObject;
 
         // current state of the background worker
-        private BackgroundWorkerState _workerState;
+        private ProcessState _workerState;
 
+        /// <summary>
+        /// Public accessor the DataObject
+        /// </summary>
         public BackgroundPgnParserData DataObject
             { get { return _dataObject; } }
 
         /// <summary>
         /// Returns id that this processor received from the Manager.
         /// </summary>
-        public int ProcessorId
+        public int GameIndex
         {
-            get => _dataObject == null ? -1 : _dataObject.ProcessorId;
+            get => _dataObject == null ? -1 : _dataObject.GameIndex;
         }
 
         /// <summary>
         /// The current state of the background worker
         /// </summary>
-        public BackgroundWorkerState WorkerState
+        public ProcessState WorkerState
         {
             get { return _workerState; }
         }
@@ -58,14 +52,16 @@ namespace ChessForge
         /// <summary>
         /// Create a new background worker object
         /// </summary>
-        public BackgroundPgnProcessor()
+        public BackgroundPgnProcessor(BackgroundPgnProcessingManager parent)
         {
-            _worker = new BackgroundWorker();
-            _workerState = BackgroundWorkerState.NOT_STARTED;
+            _parent = parent;
+            _workerState = ProcessState.NOT_STARTED;
 
+            _worker = new BackgroundWorker();
             _worker.WorkerReportsProgress = false;
             _worker.DoWork += DoWork;
             _worker.RunWorkerCompleted += RunWorkerCompleted;
+            _parent = parent;
         }
 
         /// <summary>
@@ -77,11 +73,11 @@ namespace ChessForge
         /// <param name="fen"></param>
         public void Run(int processorId, string gameText, VariationTree tree, string fen = null)
         {
-            _workerState = BackgroundWorkerState.RUNNING;
+            _workerState = ProcessState.RUNNING;
             try
             {
                 _dataObject = new BackgroundPgnParserData();
-                _dataObject.ProcessorId = processorId;
+                _dataObject.GameIndex = processorId;
                 _dataObject.GameText = gameText;
                 _dataObject.Fen = fen;
                 _dataObject.Tree = tree;
@@ -90,7 +86,7 @@ namespace ChessForge
             }
             catch (Exception ex)
             {
-                _workerState = BackgroundWorkerState.UNKNOWN;
+                _workerState = ProcessState.UNKNOWN;
                 AppLog.Message("BackgroundWorker Run()", ex);
             }
         }
@@ -117,8 +113,8 @@ namespace ChessForge
         /// <param name="e"></param>
         private void RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            _workerState = BackgroundWorkerState.FINISHED;
-            BackgroundPgnProcessingManager.JobFinished(_dataObject.ProcessorId);
+            _workerState = ProcessState.FINISHED;
+            _parent.JobFinished(_dataObject.GameIndex);
         }
     }
 }
