@@ -79,6 +79,32 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Sets fill castling rights on the position.
+        /// </summary>
+        /// <param name="position"></param>
+        public static void ResetCastlingRights(ref BoardPosition position)
+        {
+            position.DynamicProperties |= (
+                Constants.WhiteKingsideCastle
+                | Constants.WhiteQueensideCastle
+                | Constants.BlackKingsideCastle
+                | Constants.BlackQueensideCastle);
+        }
+
+        /// <summary>
+        /// "Guesses" castling rights in the position based purely
+        /// on the positions of kings and rooks.
+        /// This is done when we don't know the history of the position
+        /// and this is our best guess.
+        /// </summary>
+        /// <param name="pos"></param>
+        public static void GuessCastlingRights(ref BoardPosition pos)
+        {
+            ResetCastlingRights(ref pos);
+            CorrectCastlingRights(ref pos);
+        }
+
+        /// <summary>
         /// Gets the number of Kings in a given position.
         /// </summary>
         /// <param name="whiteKings"></param>

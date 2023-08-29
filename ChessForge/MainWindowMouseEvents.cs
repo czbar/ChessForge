@@ -626,13 +626,14 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Disables handling of the mouse down event in the Game data grid.
+        /// Do nothing.
+        /// Selection is disabled in DataGrid RowStyle
+        /// but we need the scrolling event.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void EngineGame_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            e.Handled = true;
         }
 
 
@@ -723,14 +724,14 @@ namespace ChessForge
             UiImgExplorersOn.Visibility = Visibility.Visible;
             WebAccessManager.IsEnabledExplorerQueries = true;
 
-            if (ActiveVariationTree != null && ActiveVariationTree.SelectedNode != null)
+            if (ActiveVariationTree != null && ActiveVariationTree.SelectedNode != null || AppState.ActiveTab == WorkbookManager.TabViewType.INTRO)
             {
                 _openingStatsView.SetOpeningName();
                 WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, ActiveVariationTree.SelectedNode);
             }
 
             AppState.AreExplorersOn = true;
-            AppState.ShowExplorers(ActiveTreeView != null, ActiveTreeView != null && ActiveTreeView.HasEntities);
+            AppState.SetupGuiForCurrentStates();
         }
 
         /// <summary>

@@ -239,7 +239,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Identifies differences betwee 2 BoardPositions.
+        /// Identifies differences between 2 BoardPositions.
         /// </summary>
         /// <param name="fen"></param>
         /// <param name="position"></param>
@@ -385,6 +385,21 @@ namespace ChessForge
         }
 
 
+        /// <summary>
+        /// Since this is used for the Opening Explorer we can fairly accurately
+        /// evaluate castling rights based on positions of kings and rooks
+        /// </summary>
+        private void SetApproximateCastlingRights()
+        {
+            // set all castling rights to ON and then run the correction function
+            PositionSetup.DynamicProperties |= (Constants.WhiteKingsideCastle 
+                | Constants.WhiteQueensideCastle 
+                |Constants.BlackKingsideCastle 
+                | Constants.BlackQueensideCastle);
+
+            PositionUtils.CorrectCastlingRights(ref PositionSetup);
+        }
+
         //************************************************************
         //
         //  MAIN BUTTONS
@@ -398,6 +413,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnOk_Click(object sender, RoutedEventArgs e)
         {
+            PositionUtils.GuessCastlingRights(ref PositionSetup);
             DialogResult = true;
         }
 

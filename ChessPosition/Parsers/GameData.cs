@@ -38,6 +38,11 @@ namespace GameTree
         private bool _isSelected;
 
         /// <summary>
+        /// Flags whether the GameText has already been processed.
+        /// </summary>
+        public bool IsProcessed = false;
+
+        /// <summary>
         /// Creates the object and sets IsSelected to true.
         /// The games in ListView are selected by default.
         /// </summary>

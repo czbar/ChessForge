@@ -199,7 +199,7 @@ namespace ChessForge
                     sb.Append("Move alg = " + nd.LastMoveAlgebraicNotationWithNag + Environment.NewLine);
                     sb.Append("EnPassant = " + nd.Position.EnPassantSquare.ToString() + Environment.NewLine);
                     sb.Append("InheritedEnPassant = " + nd.Position.InheritedEnPassantSquare.ToString() + Environment.NewLine);
-                    if (nd.NodeId != 0)
+                    if (nd.NodeId != 0 && nd.Position.LastMove.Origin != null && nd.Position.LastMove.Destination != null)
                     {
                         sb.Append("Origin = " + nd.Position.LastMove.Origin.Xcoord.ToString() + " " + nd.Position.LastMove.Origin.Ycoord.ToString() + Environment.NewLine);
                         sb.Append("Destination = " + nd.Position.LastMove.Destination.Xcoord.ToString() + " " + nd.Position.LastMove.Destination.Ycoord.ToString() + Environment.NewLine);

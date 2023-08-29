@@ -133,8 +133,8 @@ namespace ChessForge
                 chapter.IsViewExpanded = cvs.IsExpanded;
                 chapter.IsModelGamesListExpanded = cvs.IsGameListExpanded;
                 chapter.IsExercisesListExpanded = cvs.IsExerciseListExpanded;
-                chapter.ActiveModelGameIndex = cvs.ActiveGameIndex;
-                chapter.ActiveExerciseIndex = cvs.ActiveExerciseIndex;
+                chapter.ActiveModelGameIndex = chapter.VerifyGameIndex(cvs.ActiveGameIndex);
+                chapter.ActiveExerciseIndex = chapter.VerifyExerciseIndex(cvs.ActiveExerciseIndex);
             }
 
             switch (_activeViewType)

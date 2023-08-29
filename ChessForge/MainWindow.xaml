@@ -234,7 +234,9 @@
                         </Style>
                     </DataGrid.Resources>
                     <DataGrid.RowStyle>
-                        <Style TargetType="{x:Type DataGridRow}"/>
+                        <Style TargetType="{x:Type DataGridRow}">
+                            <Setter Property="IsHitTestVisible" Value="False"/>
+                        </Style>
                     </DataGrid.RowStyle>
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="#" Width="30" Binding="{Binding Number}" CellStyle="{StaticResource DisableSelection}" CanUserReorder="False" />

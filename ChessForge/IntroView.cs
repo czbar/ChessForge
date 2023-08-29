@@ -111,8 +111,18 @@ namespace ChessForge
                 if (node.NodeId > _maxRunId)
                 {
                     _maxRunId = node.NodeId;
+                    // in older Workbooks castling rights may be set wrong
+                    // thus affecting OpeningExplorer queries, so correct them
+                    PositionUtils.CorrectCastlingRights(ref node.Position);
                 }
             }
+
+            _selectedNode = Nodes[0];
+            if (AppState.ActiveVariationTree != null)
+            {
+                AppState.ActiveVariationTree.SelectedNodeId = _selectedNode.NodeId;
+            }
+
             WebAccessManager.ExplorerRequest(Intro.Tree.TreeId, Nodes[0]);
         }
 
@@ -319,6 +329,8 @@ namespace ChessForge
                 return null;
             }
 
+            PositionUtils.GuessCastlingRights(ref node.Position);
+
             _selectedNode = node;
             int nodeId = AddNode(node);
 
@@ -327,9 +339,12 @@ namespace ChessForge
             rMove.Foreground = Brushes.Blue;
             rMove.FontWeight = FontWeights.Bold;
 
+            WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, _selectedNode);
+
             return InsertMoveTextBlock(rMove, node, fromClipboard);
         }
 
+        /// <summary>
         /// Edits a Move element.
         /// </summary>
         public void EditMove()
@@ -360,7 +375,7 @@ namespace ChessForge
                     SelectedNode.LastMoveAlgebraicNotation = dlg.MoveText;
 
                     TextBlock tb = (inlClicked as InlineUIContainer).Child as TextBlock;
-                    
+
                     Run run = null;
                     foreach (Inline inl in tb.Inlines)
                     {
@@ -382,6 +397,10 @@ namespace ChessForge
                         _rtb.CaretPosition = inlClicked.ElementEnd;
                         InsertDiagram(SelectedNode, false);
                     }
+
+                    // select the edited node on exit
+                    _rtb.Selection.Select(inlClicked.ElementStart, inlClicked.ElementEnd);
+                    WebAccessManager.ExplorerRequest(Intro.Tree.TreeId, SelectedNode, true);
                 }
             }
             catch (Exception ex)
@@ -461,27 +480,43 @@ namespace ChessForge
                 {
                     Run r = e.Source as Run;
 
-                    int nodeId = TextUtils.GetIdFromPrefixedString(r.Name);
-                    TreeNode nd = GetNodeById(nodeId);
-                    WebAccessManager.ExplorerRequest(Intro.Tree.TreeId, nd);
-                    if (nd != null)
+                    TreeNode nd = HandleMoveSelection(r.Name, true);
+                    if (nd != null && e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
                     {
-                        _selectedNode = nd;
-                        string uicName = _uic_move_ + nodeId.ToString();
-                        Inline inlClicked = FindInlineByName(uicName);
-                        _rtb.CaretPosition = inlClicked.ElementEnd;
-                        AppState.MainWin.DisplayPosition(_selectedNode);
-
-                        EnableMenuItems(false, true, nd);
-
-                        if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
-                        {
-                            EditMove();
-                        }
+                        EditMove();
                     }
                 }
                 catch { }
             }
+        }
+
+        /// <summary>
+        /// Calls the OpeningExplorer, adjusts context menu items 
+        /// and optionally sets the caret on the selected move.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="adjustCaret"></param>
+        /// <returns></returns>
+        private TreeNode HandleMoveSelection(string name, bool adjustCaret)
+        {
+            int nodeId = TextUtils.GetIdFromPrefixedString(name);
+            TreeNode nd = GetNodeById(nodeId);
+            WebAccessManager.ExplorerRequest(Intro.Tree.TreeId, nd);
+            if (nd != null)
+            {
+                _selectedNode = nd;
+                string uicName = _uic_move_ + nodeId.ToString();
+                Inline inlClicked = FindInlineByName(uicName);
+                if (adjustCaret)
+                {
+                    _rtb.CaretPosition = inlClicked.ElementEnd;
+                }
+                AppState.MainWin.DisplayPosition(_selectedNode);
+
+                EnableMenuItems(false, true, nd);
+            }
+
+            return nd;
         }
 
         /// <summary>
@@ -522,7 +557,7 @@ namespace ChessForge
                 }
             }
             catch { }
-            
+
             e.Handled = true;
         }
 
@@ -1296,7 +1331,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// If mouse is outside a diagram, make sure the main board is blue
+        /// If the mouse is outside a diagram, make sure the main board is blue.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1310,6 +1345,135 @@ namespace ChessForge
                     AppState.MainWin.UiImgMainChessboard.Source = Configuration.StudyBoardSet.MainBoard;
                 }
             }
+
+            if (e.Key == Key.Left || e.Key == Key.Right)
+            {
+                e.Handled = ProcessArrowKey(e.Key);
+            }
+        }
+
+        /// <summary>
+        /// if the Left/Right key was pressed, check if we have a single move element selected.
+        /// If so go to the previous/next move, otherwise allow the default behavior.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        private bool ProcessArrowKey(Key key)
+        {
+            bool handled = false;
+
+            if (key == Key.Left || key == Key.Right)
+            {
+                InlineUIContainer moveUiElement = GetSelectedMoveElement();
+                if (moveUiElement != null)
+                {
+                    InlineUIContainer nearestMove = FindNearestMoveElement(key == Key.Right ? _rtb.Selection.End : _rtb.Selection.Start, key == Key.Right);
+                    if (nearestMove != null)
+                    {
+                        // set new selection
+                        _rtb.Selection.Select(nearestMove.ContentStart, nearestMove.ContentEnd);
+
+                        // must mark the event as handled
+                        handled = true;
+                        HandleMoveSelection(nearestMove.Name, false);
+                    }
+                }
+            }
+
+            return handled;
+        }
+
+        /// <summary>
+        /// Finds the Move InlineUIElement nearest to the passed text pointer
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="forward">if true search in the forward direction, otherwise backward</param>
+        /// <returns></returns>
+        private InlineUIContainer FindNearestMoveElement(TextPointer position, bool forward)
+        {
+            InlineUIContainer nearest = null;
+
+            while ((position = position.GetNextContextPosition(forward ? LogicalDirection.Forward : LogicalDirection.Backward)) != null)
+            {
+                TextPointerContext tpc = position.GetPointerContext(forward ? LogicalDirection.Forward : LogicalDirection.Backward);
+                if (tpc == TextPointerContext.EmbeddedElement)
+                {
+                    TextElement elem = position.Parent as TextElement;
+                    if (elem != null)
+                    {
+                        // make sure this is not a diagram i.e. this element is not inside a diagram paragraph
+                        if (!(elem.Parent is Paragraph)
+                            || !(elem.Parent as Paragraph).Name.Contains(RichTextBoxUtilities.DiagramParaPrefix))
+                        {
+                            nearest = position.Parent as InlineUIContainer;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return nearest;
+        }
+
+        /// <summary>
+        /// Given a TextPointer and the search direction, finds the InlineUIContainer
+        /// immediately adjacent to the pointer.
+        /// </summary>
+        /// <param name="tp"></param>
+        /// <param name="forward"></param>
+        /// <returns></returns>
+        private InlineUIContainer GetMoveContainerFromTextPointer(TextPointer tp, bool forward)
+        {
+            InlineUIContainer iuc = null;
+
+            var elem = tp.GetAdjacentElement(forward ? LogicalDirection.Forward : LogicalDirection.Backward);
+
+            if (elem is InlineUIContainer)
+            {
+                iuc = elem as InlineUIContainer;
+            }
+            else
+            {
+                Run run = tp.Parent as Run;
+                if (run != null)
+                {
+                    iuc = forward ? run.NextInline as InlineUIContainer : run.PreviousInline as InlineUIContainer;
+                }
+            }
+
+            return iuc;
+        }
+
+        /// <summary>
+        /// If the current selection consists of exactly one InlineUIContainer (move),
+        /// the name of the container will be returned.
+        /// Otherwise returns null.
+        /// </summary>
+        /// <returns></returns>
+        private InlineUIContainer GetSelectedMoveElement()
+        {
+            InlineUIContainer move = null;
+
+            try
+            {
+                if (!_rtb.Selection.IsEmpty)
+                {
+                    InlineUIContainer uicStart = GetMoveContainerFromTextPointer(_rtb.Selection.Start, true);
+                    InlineUIContainer uicEnd = GetMoveContainerFromTextPointer(_rtb.Selection.End, false);
+
+                    // do start and end point to the same Element?
+                    if (uicStart != null && uicEnd != null && !string.IsNullOrEmpty(uicStart.Name))
+                    {
+                        if (uicStart.Name.Contains(_uic_move_) && uicStart.Name == uicEnd.Name)
+                        {
+                            move = uicStart;
+                        }
+                    }
+                }
+            }
+            catch { }
+
+            return move;
         }
 
         /// <summary>
@@ -1343,7 +1507,7 @@ namespace ChessForge
                 AppState.MainWin.UiImgMainChessboard.Source = Configuration.StudyBoardSet.MainBoard;
             }
 
-            e.Handled   = true;
+            e.Handled = true;
             AppState.IsDirty = true;
 
             // reset TextChanged event handler

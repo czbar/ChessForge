@@ -1060,7 +1060,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The current version $0 will be backed up in $1.
+        ///   Looks up a localized string similar to The current version $0 will be backed up as.
         /// </summary>
         public static string CurrentVersion {
             get {

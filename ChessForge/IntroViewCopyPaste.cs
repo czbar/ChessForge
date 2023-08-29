@@ -36,7 +36,12 @@ namespace ChessForge
         {
             IntroViewClipboard.Clear();
             CopySelectionToClipboard();
+            
+            // the call to _rtb.Cut() is convenient but we need to preserve
+            // the content of the system clipboard
+            string txt = SystemClipboard.GetText();
             _rtb.Cut();
+            SystemClipboard.SetText(txt);
         }
 
         /// <summary>

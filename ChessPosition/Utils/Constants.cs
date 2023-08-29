@@ -33,6 +33,18 @@ namespace ChessPosition
     }
 
     /// <summary>
+    /// Enumeration of possible process states.
+    /// </summary>
+    public enum ProcessState
+    {
+        UNKNOWN,
+        NOT_STARTED,
+        RUNNING,
+        FINISHED,
+        CANCELED
+    };
+
+    /// <summary>
     /// Sizes in which the TabControls may be displayed.
     /// </summary>
     public enum TabControlSizeMode

@@ -1237,7 +1237,7 @@
     <value>Włącz Dźwięk</value>
   </data>
   <data name="CurrentVersion" xml:space="preserve">
-    <value>Aktualna wersja</value>
+    <value>Kopia aktualnej wersji $0 będzie zapisana w</value>
   </data>
   <data name="UpdatedVersion" xml:space="preserve">
     <value>Uaktualniony numer wersji będzie</value>

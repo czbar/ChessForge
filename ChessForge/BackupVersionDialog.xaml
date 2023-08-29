@@ -11,7 +11,7 @@
     <Grid>
         <CheckBox x:Name="UiCbMajorVersion" Content="{x:Static p:Resources.IncrementMajorVersion}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,99,0,0" Unchecked="UiCbMajorVersion_Unchecked" Checked="UiCbMajorVersion_Checked"/>
         <Label x:Name="UiLblBackupNotification" Content="{x:Static p:Resources.CurrentVersion}" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="UiTbBackupFileName" FontWeight="Bold" BorderThickness="0" IsEnabled="False" Text="FileName_1_0.pgn" HorizontalAlignment="Center" Margin="0,35,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="UiTbBackupFileName" FontWeight="Bold" BorderThickness="0" IsEnabled="True" IsReadOnly="True" Text="FileName_1_0.pgn" HorizontalAlignment="Center" Margin="0,35,0,0" VerticalAlignment="Top"/>
         <Label x:Name="UiLblWorkbookNewVersion" Content="{x:Static p:Resources.UpdatedVersion}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,56,0,0"/>
         <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="-95,138,0,0" VerticalAlignment="Top" Width="80" Click="UiBtnOk_Click"/>
         <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="95,138,0,0" VerticalAlignment="Top" Width="80" Click="UiBtnCancel_Click"/>

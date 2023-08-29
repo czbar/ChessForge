@@ -92,6 +92,9 @@
     <Compile Include="ArticleReferencesDialog.xaml.cs">
       <DependentUpon>ArticleReferencesDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BackgroundPgnParserData.cs" />
+    <Compile Include="BackgroundPgnProcessingManager.cs" />
+    <Compile Include="BackgroundPgnProcessor.cs" />
     <Compile Include="BackupVersionDialog.xaml.cs">
       <DependentUpon>BackupVersionDialog.xaml</DependentUpon>
     </Compile>
