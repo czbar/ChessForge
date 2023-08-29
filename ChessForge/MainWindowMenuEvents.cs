@@ -3103,6 +3103,8 @@ namespace ChessForge
                     WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex
                         = WorkbookManager.SessionWorkbook.ActiveChapter.GetModelGameCount() - 1;
                     _chaptersView.BuildFlowDocumentForChaptersView();
+
+                    // TODO: is this spurious? RefreshGamesView() calls SelectModelGame too
                     SelectModelGame(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex, true);
                     RefreshGamesView(out Chapter chapter, out int articleIndex);
                     WorkbookLocationNavigator.SaveNewLocation(chapter, GameData.ContentType.MODEL_GAME, articleIndex);
