@@ -15,7 +15,7 @@ namespace ChessForge
         /// <summary>
         /// Identifies the processor using this objects
         /// </summary>
-        public int ProcessorId;
+        public int GameIndex;
 
         /// <summary>
         /// Text to parse.
