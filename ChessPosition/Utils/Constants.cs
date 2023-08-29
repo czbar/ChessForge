@@ -40,7 +40,8 @@ namespace ChessPosition
         UNKNOWN,
         NOT_STARTED,
         RUNNING,
-        FINISHED
+        FINISHED,
+        CANCELED
     };
 
     /// <summary>
