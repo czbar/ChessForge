@@ -300,10 +300,22 @@ namespace ChessForge
                     sb.Append("        ");
                     for (int i = 0; i <= 7; i++)
                     {
-                        char piece = DebugUtils.FenPieceToChar[Constants.FlagToPiece[(byte)((board.Board[i, row] & ~Constants.Color))]];
-                        if ((board.Board[i, row] & Constants.Color) > 0)
+                        char ch = DebugUtils.FenPieceToChar[Constants.FlagToPiece[(byte)((board.Board[i, row] & ~Constants.Color))]];
+                        char piece;
+                        if (ch == DebugUtils.FenPieceToChar[PieceType.None])
                         {
-                            piece = char.ToUpper(piece);
+                            piece = '⨯';
+                        }
+                        else
+                        {
+                            if ((board.Board[i, row] & Constants.Color) > 0)
+                            {
+                                Languages.WhiteFigurinesMapping.TryGetValue(char.ToUpper(ch), out piece);
+                            }
+                            else
+                            {
+                                Languages.BlackFigurinesMapping.TryGetValue(char.ToUpper(ch), out piece);
+                            }
                         }
 
                         sb.Append(piece);
