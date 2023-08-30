@@ -78,6 +78,7 @@ namespace ChessForge
             sb.AppendLine(PgnHeaders.GetWorkbookBlackText());
             sb.AppendLine(PgnHeaders.GetLineResultHeader());
 
+            _workbook.Description = Properties.Resources.AboutWorkbook;
             if (!string.IsNullOrWhiteSpace(_workbook.Description))
             {
                 sb.AppendLine(BuildCommentText(_workbook.Description));
@@ -177,13 +178,21 @@ namespace ChessForge
             {
                 string headerText = BuildIntroHeaderText(chapter);
 
+                StringBuilder sbOutput = new StringBuilder();
+
+                // textual version of the content first
+                string introPlainText = "";
+                if (chapter.Intro.Tree.RootNode != null)
+                {
+                    introPlainText = BuildCommentText(chapter.Intro.Tree.RootNode.Comment) + "\n\n";
+                }
+
                 string xamlCmdText = BuildXamlCommandText(chapter.Intro.CodedContent);
                 string positionsText = BuildPositionsCommandText(chapter.Intro);
 
                 string introContent = BuildCommentText("[" + xamlCmdText + " " + positionsText + "]");
 
-                StringBuilder sbOutput = new StringBuilder();
-                sbOutput.Append(headerText + DivideLineForced(introContent, 80));
+                sbOutput.Append(headerText + introPlainText + DivideLineForced(introContent, 80));
                 sbOutput.AppendLine();
 
                 // add terminating character
