@@ -258,12 +258,18 @@ namespace ChessForge
                                     TreeNode node = GetNodeById(nodeId);
                                     flipped = GetDiagramFlipState(positionParent);
                                     IntroViewClipboard.AddDiagram(node, flipped);
+                                    plainText.AppendLine("");
                                     plainText.Append(RichTextBoxUtilities.GetDiagramPlainText(node));
                                 }
                                 else
                                 {
                                     IntroViewClipboard.AddParagraph(position.Parent as Paragraph);
-                                    plainText.Append(RichTextBoxUtilities.GetParagraphPlainText(position.Parent as Paragraph));
+                                    if (plainText.Length > 0)
+                                    {
+                                        plainText.AppendLine("");
+                                        plainText.AppendLine("");
+                                    }
+                                    //plainText.Append(RichTextBoxUtilities.GetParagraphPlainText(position.Parent as Paragraph));
                                 }
                                 currParagraph = position.Parent as Paragraph;
                             }
