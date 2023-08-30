@@ -187,6 +187,7 @@ namespace ChessForge
                 RemoveDuplicateNames();
                 string xamlText = XamlWriter.Save(Document);
                 Nodes[0].Data = EncodingUtils.Base64Encode(xamlText);
+                Nodes[0].Comment = CopySelectionToClipboard(true);
                 RemoveUnusedNodes();
             }
 
