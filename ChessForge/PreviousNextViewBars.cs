@@ -62,13 +62,13 @@ namespace ChessForge
                 chapterIndex = WorkbookManager.SessionWorkbook.ActiveChapterIndex;
             }
 
-            if (GetChapterCounterControls(contentType, out Image imgLeftArrow, out Image imgRightArrow, out Label lblCounter))
+            if (GetChapterCounterControls(contentType, out Label lblTitle, out Image imgLeftArrow, out Image imgRightArrow, out Label lblCounter))
             {
-
-                SetupElements(imgLeftArrow,
+                SetupElements(lblTitle,
+                              imgLeftArrow,
                               imgRightArrow,
                               lblCounter,
-                              "Chapter",
+                              "Chapter",  //TODO: using a string here is weird, switch to using ContentType
                               chapterIndex,
                               chapterCount);
             }
@@ -90,7 +90,8 @@ namespace ChessForge
                 gameIndex = WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex;
             }
 
-            SetupElements(mainWin.UiImgModelGameLeftArrow,
+            SetupElements(mainWin.UiGamesLblChapterTitle,
+                          mainWin.UiImgModelGameLeftArrow,
                           mainWin.UiImgModelGameRightArrow,
                           mainWin.UiLblGameCounter,
                           "Game",
@@ -114,7 +115,8 @@ namespace ChessForge
                 exerciseIndex = WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex;
             }
 
-            SetupElements(mainWin.UiImgExerciseLeftArrow,
+            SetupElements(mainWin.UiExerciseLblChapterTitle,
+                          mainWin.UiImgExerciseLeftArrow,
                           mainWin.UiImgExerciseRightArrow,
                           mainWin.UiLblExerciseCounter,
                           "Exercise",
@@ -131,7 +133,8 @@ namespace ChessForge
         /// <param name="itemType"></param>
         /// <param name="itemIndex"></param>
         /// <param name="itemCount"></param>
-        private static void SetupElements(Image imgLeftArrow,
+        private static void SetupElements(Label lblTitle,
+                                          Image imgLeftArrow,
                                           Image imgRightArrow,
                                           Label lblCounter,
                                           string itemType,
@@ -142,6 +145,11 @@ namespace ChessForge
             {
                 string counter = ResourceUtils.GetCounterBarText(itemType, itemIndex, itemCount);
                 lblCounter.Content = counter;
+
+                string chapterTitle = AppState.ActiveChapter == null ? "" : AppState.ActiveChapter.Title;
+                lblTitle.Content = chapterTitle;
+                lblTitle.ToolTip = chapterTitle;
+                lblCounter.ToolTip = AppState.ActiveChapter == null ? "" : AppState.ActiveChapter.Title;
 
                 imgRightArrow.Visibility = Visibility.Visible;
                 imgLeftArrow.Visibility = Visibility.Visible;
@@ -174,12 +182,13 @@ namespace ChessForge
         /// <param name="imgRightArrow"></param>
         /// <param name="lblCounter"></param>
         /// <returns></returns>
-        private static bool GetChapterCounterControls(GameData.ContentType contentType, out Image imgLeftArrow, out Image imgRightArrow, out Label lblCounter)
+        private static bool GetChapterCounterControls(GameData.ContentType contentType, out Label lblTitle, out Image imgLeftArrow, out Image imgRightArrow, out Label lblCounter)
         {
             bool res = true;
             imgLeftArrow = null;
             imgRightArrow = null;
             lblCounter = null;
+            lblTitle = null;
 
             MainWindow mainWin = AppState.MainWin;
 
@@ -189,21 +198,25 @@ namespace ChessForge
                     imgLeftArrow = mainWin.UiIntroImgLeftArrowChapter;
                     imgRightArrow = mainWin.UiIntroImgRightArrowChapter;
                     lblCounter = mainWin.UiIntroLblCounterChapter;
+                    lblTitle = mainWin.UiIntroLblChapterTitle;
                     break;
                 case GameData.ContentType.STUDY_TREE:
                     imgLeftArrow = mainWin.UiImgChapterLeftArrow;
                     imgRightArrow = mainWin.UiImgChapterRightArrow;
                     lblCounter = mainWin.UiLblChapterCounter;
+                    lblTitle = mainWin.UiStudyLblChapterTitle;
                     break;
                 case GameData.ContentType.MODEL_GAME:
                     imgLeftArrow = mainWin.UiGamesImgLeftArrowChapter;
                     imgRightArrow = mainWin.UiGamesImgRightArrowChapter;
                     lblCounter = mainWin.UiGamesLblCounterChapter;
+                    lblTitle = mainWin.UiGamesLblChapterTitle;
                     break;
                 case GameData.ContentType.EXERCISE:
                     imgLeftArrow = mainWin.UiExerciseImgLeftArrowChapter;
                     imgRightArrow = mainWin.UiExerciseImgRightArrowChapter;
                     lblCounter = mainWin.UiExerciseLblCounterChapter;
+                    lblTitle = mainWin.UiExerciseLblChapterTitle;
                     break;
                 default:
                     res = false;
