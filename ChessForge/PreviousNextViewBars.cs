@@ -146,12 +146,12 @@ namespace ChessForge
                 string counter = ResourceUtils.GetCounterBarText(itemType, itemIndex, itemCount);
                 lblCounter.Content = counter;
 
-                string title = AppState.ActiveChapter == null ? "" : AppState.ActiveChapter.Title;
+                string fullTitle = AppState.ActiveChapter == null ? "" : AppState.ActiveChapter.Title;
 
-                string chapterTitle = GuiUtilities.AdjustTextToFit(lblTitle, title);
-                lblTitle.Content = chapterTitle;
-                lblTitle.ToolTip = title;
-                lblCounter.ToolTip = title;
+                string titleForLabel = GuiUtilities.AdjustTextToFit(lblTitle, fullTitle);
+                lblTitle.Content = titleForLabel;
+                lblTitle.ToolTip = fullTitle;
+                lblCounter.ToolTip = fullTitle;
 
                 imgRightArrow.Visibility = Visibility.Visible;
                 imgLeftArrow.Visibility = Visibility.Visible;
