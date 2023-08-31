@@ -418,12 +418,16 @@ namespace GameTree
         /// If not, stores in the list of unprocessed commands.
         /// </summary>
         /// <param name="command"></param>
-        public void AddChfCommand(TreeNode nd, string command)
+        public ChfCommands.Command AddChfCommand(TreeNode nd, string command)
         {
+            ChfCommands.Command chfCommand = ChfCommands.Command.NONE;
+            
             if (!string.IsNullOrEmpty(command))
             {
                 string[] tokens = command.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                 string cmdPrefix = tokens[0];
+
+                chfCommand = ChfCommands.GetCommand(cmdPrefix);
 
                 switch (ChfCommands.GetCommand(cmdPrefix))
                 {
@@ -479,6 +483,8 @@ namespace GameTree
                         break;
                 }
             }
+
+            return chfCommand;
         }
 
         /// <summary>
