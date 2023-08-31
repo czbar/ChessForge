@@ -32,6 +32,23 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// True if the article has been fully created from it PGN
+        /// </summary>
+        public bool IsReady;
+
+        /// <summary>
+        /// Index on the list of the PGN background processor.
+        /// </summary>
+        public int PgnProcessorListIndex
+        {
+            get => _pgnProcessorListIndex;
+        }
+
+        // position on the PGN's background processor list
+        private int _pgnProcessorListIndex = -1;
+
+
+        /// <summary>
         /// Guid of the article
         /// </summary>
         public string Guid
@@ -62,6 +79,16 @@ namespace ChessForge
         {
             Tree = tree;
             Solver = new SolvingManager();
+        }
+
+        /// <summary>
+        /// Constructs a new object setting the value for its processor list's object.
+        /// </summary>
+        /// <param name="contentType"></param>
+        /// <param name="processorListIndex"></param>
+        public Article(GameData.ContentType contentType, int processorListIndex) : this(contentType)
+        {
+            _pgnProcessorListIndex = processorListIndex;
         }
     }
 }
