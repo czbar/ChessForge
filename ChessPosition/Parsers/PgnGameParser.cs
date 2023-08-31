@@ -524,6 +524,8 @@ namespace GameTree
                 return;
             }
 
+            bool preserveCRLF = false;
+
             // process any Chess Forge commands
             while (true)
             {
@@ -541,7 +543,11 @@ namespace GameTree
                         command = command.Replace("\r", "");
                         command = command.Replace("\n", "");
                     }
-                    _tree.AddChfCommand(node, command);
+                    if (_tree.AddChfCommand(node, command) == ChfCommands.Command.BINARY)
+                    {
+                        preserveCRLF = true;
+                    }
+
                     _remainingGameText = _remainingGameText.Substring(commandEnd + 1);
                     endPos = endPos - (commandEnd + 1);
                 }
@@ -564,9 +570,12 @@ namespace GameTree
                 // trim to check if there is any comment but do not trim the comment if it is there.
                 if (comment.Trim().Length > 0)
                 {
-                    // remove CRLF
-                    comment = comment.Replace("\r", "");
-                    comment = comment.Replace("\n", "");
+                    if (!preserveCRLF)
+                    {
+                        // remove CRLF
+                        comment = comment.Replace("\r", "");
+                        comment = comment.Replace("\n", "");
+                    }
 
                     node.Comment = comment;
                 }
