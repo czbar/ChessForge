@@ -5,8 +5,6 @@ using System.Text;
 using System.Windows;
 using GameTree;
 using ChessPosition;
-using System.Windows.Controls;
-using ChessPosition.GameTree;
 
 namespace ChessForge
 {
@@ -509,8 +507,30 @@ namespace ChessForge
                     break;
                 }
 
+                // If we don't want to to introduce spurious \r\n characters in the comment
+                // we need to extend the line if the using maxchar would break the comment up.
+                // Check if we need to adjust maxchar.
+                int adjustedMaxChars = -1;
+                int commentStart = inp.LastIndexOf('{', Math.Min(startIdx + maxChars, inp.Length - 1), maxChars);
+                if (commentStart > 0)
+                {
+                    // there is a comment starting in the candidate substring, check if there is a matching end
+                    int commentEnd = inp.LastIndexOf('}', Math.Min(startIdx + maxChars, inp.Length - 1), maxChars);
+                    if (commentEnd < commentStart)
+                    {
+                        // there was no comment end following the start, so extend the candidate substring,
+                        // find where the comment ends
+                        int nextCommentEnd = inp.IndexOf('}', commentStart);
+                        // +2 in order to capture the space that always follows '}'
+                        adjustedMaxChars = (nextCommentEnd - startIdx) + 2;
+                    }
+                }
+
+                adjustedMaxChars = Math.Max(maxChars, adjustedMaxChars);
+
                 // find the last space before the maxChars limit
-                lastSpaceIdx = inp.LastIndexOf(' ', Math.Min(startIdx + maxChars, inp.Length - 1), maxChars);
+                //lastSpaceIdx = inp.LastIndexOf(' ', Math.Min(startIdx + maxChars, inp.Length - 1), maxChars);
+                lastSpaceIdx = inp.LastIndexOf(' ', Math.Min(startIdx + adjustedMaxChars, inp.Length - 1), adjustedMaxChars);
 
                 if (lastSpaceIdx == -1)
                 {
