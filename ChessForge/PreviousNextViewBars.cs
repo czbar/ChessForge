@@ -146,7 +146,7 @@ namespace ChessForge
                 string counter = ResourceUtils.GetCounterBarText(itemType, itemIndex, itemCount);
                 lblCounter.Content = counter;
 
-                string fullTitle = AppState.ActiveChapter == null ? "" : AppState.ActiveChapter.Title;
+                string fullTitle = AppState.ActiveChapter == null ? "" : AppState.ActiveChapter.GetTitle();
 
                 string titleForLabel = GuiUtilities.AdjustTextToFit(lblTitle, fullTitle);
                 lblTitle.Content = titleForLabel;
