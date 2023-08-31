@@ -1891,3 +1891,10 @@ AmbiguousMove=Ambiguous move notation
 #Illegal Castling
 IllegalCastling=Illegal castling attempted
 
+##################################
+#
+# External texts
+#
+
+#Workbook info
+AboutWorkbook=This PGN Workbook is optimized for viewing in Chess Forge https://sourceforge.net/projects/chessforge/ \nChess Forge is a Free and Open Source Windows application.

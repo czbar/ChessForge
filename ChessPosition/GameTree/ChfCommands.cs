@@ -35,6 +35,7 @@ namespace GameTree
             THUMBNAIL,
             ARTICLE_REFS,
             XAML,
+            BINARY,
 
             ARROWS,
             CIRCLES
@@ -53,6 +54,7 @@ namespace GameTree
             ["%thmb"] = Command.THUMBNAIL,
             ["%ref"] = Command.ARTICLE_REFS,
             ["%xaml"] = Command.XAML,
+            ["%bin"] = Command.BINARY,
 
             ["%csl"] = Command.CIRCLES,
             ["%cal"] = Command.ARROWS

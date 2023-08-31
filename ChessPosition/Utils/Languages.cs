@@ -45,6 +45,7 @@ namespace ChessPosition
             ['R'] = '♖',
             ['B'] = '♗',
             ['N'] = '♘',
+            ['P'] = '♙'
         };
 
         /// <summary>
@@ -62,6 +63,7 @@ namespace ChessPosition
             ['R'] = '♜',
             ['B'] = '♝',
             ['N'] = '♞',
+            ['P'] = '♟'
         };
 
         /// <summary>

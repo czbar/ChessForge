@@ -1804,4 +1804,8 @@
   <data name="IllegalCastling" xml:space="preserve">
     <value>Illegal castling attempted</value>
   </data>
+  <data name="AboutWorkbook" xml:space="preserve">
+    <value>This PGN Workbook is optimized for viewing in Chess Forge https://sourceforge.net/projects/chessforge/ 
+Chess Forge is a Free and Open Source Windows application.</value>
+  </data>
 </root>

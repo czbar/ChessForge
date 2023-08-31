@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,6 +17,68 @@ namespace ChessForge
     /// </summary>
     public class GuiUtilities
     {
+        /// <summary>
+        /// Get the length in pixel that the passed text would take in the passed label.
+        /// </summary>
+        /// <param name="label"></param>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static Size GetTextLength(Label label, string text)
+        {
+            var formattedText = new FormattedText(
+                text,
+                CultureInfo.CurrentCulture,
+                FlowDirection.LeftToRight,
+                new Typeface(label.FontFamily, label.FontStyle, label.FontWeight, label.FontStretch),
+                label.FontSize,
+                Brushes.Black,
+                new NumberSubstitution(),
+                VisualTreeHelper.GetDpi(label).PixelsPerDip);
+
+            return new Size(formattedText.Width, formattedText.Height);
+        }
+
+        /// <summary>
+        /// Shortens the text if necessary to fit into a label.
+        /// Appends 3 dots at the end if the shortening occurred.
+        /// </summary>
+        /// <param name="label"></param>
+        /// <param name="text"></param>
+        /// <param name="maxChars"></param>
+        /// <returns></returns>
+        public static string AdjustTextToFit(Label label, string text, int maxChars = 35)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                return text;
+            }
+
+            string adjusted = text;
+            double maxWidth = label.MaxWidth - (label.BorderThickness.Left + label.BorderThickness.Right);
+            double width = GetTextLength(label, text).Width;
+            if (width > maxWidth)
+            {
+                for (int i = text.Length - 1; i > 0; i--)
+                {
+                    if (i <= maxChars)
+                    {
+                        string sub = text.Substring(0, i);
+                        if (GetTextLength(label, sub).Width <= maxWidth)
+                        {
+                            if (sub.Length > 2)
+                            {
+                                sub = sub.Substring(0, sub.Length - 2);
+                                adjusted = sub + "...";
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return adjusted;
+        }
+
         /// <summary>
         /// Displays info advising the user to exit Training Mode.
         /// </summary>

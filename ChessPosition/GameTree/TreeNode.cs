@@ -297,9 +297,6 @@ namespace GameTree
             if (nag.Length < 2 || nag[0] != '$')
                 return;
 
-            // insert space between NAGs so they are ready for writing out without further parsing
-            Nags += " " + nag;
-
             int res;
             if (int.TryParse(nag.Substring(1), out res))
             {
@@ -315,6 +312,9 @@ namespace GameTree
                         LastMoveAlgebraicNotationWithNag += nagStr;
                     }
                 }
+
+                // insert space between NAGs so they are ready for writing out without further parsing
+                Nags += " " + nag;
             }
         }
 

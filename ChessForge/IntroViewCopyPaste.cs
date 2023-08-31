@@ -215,9 +215,11 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Builds a list of elements in the current selection. 
-        /// This will be called when the user requests a copy of the current selection
-        /// in the Intro tab.
+        /// Builds a list of elements in the current selection and puts them in the clipboard
+        /// If plainTextOnly is set to true, builds only the plain text representation of the
+        /// entire document. 
+        /// This will be called when the user requests a copy of the current selection in the Intro tab
+        /// or upon exit to store the textual representation of the view in the comment of the root node.
         /// We expect the following types of Inlines:
         /// - Paragraphs
         /// - Runs
@@ -230,13 +232,19 @@ namespace ChessForge
         /// A paragraph with an InlineUiContainers will not be split, but if it has Runs, it will be recreated with 
         /// only the elements that are in the curent selection.
         /// </summary>
-        private void CopySelectionToClipboard()
+        /// <param name="plainTextOnly"></param>
+        private string CopySelectionToClipboard(bool plainTextOnly = false)
         {
             TextPointer position = _rtb.Selection.Start;
             TextPointer end = _rtb.Selection.End;
 
-            Paragraph currParagraph = null;
-            currParagraph = position.Paragraph;
+            if (plainTextOnly)
+            {
+                position = _rtb.Document.ContentStart;
+                end = _rtb.Document.ContentEnd;
+            }
+
+            Paragraph currParagraph = position.Paragraph;
 
             StringBuilder plainText = new StringBuilder("");
 
@@ -257,13 +265,24 @@ namespace ChessForge
                                     int nodeId = TextUtils.GetIdFromPrefixedString(positionParent.Name);
                                     TreeNode node = GetNodeById(nodeId);
                                     flipped = GetDiagramFlipState(positionParent);
-                                    IntroViewClipboard.AddDiagram(node, flipped);
+                                    if (!plainTextOnly)
+                                    {
+                                        IntroViewClipboard.AddDiagram(node, flipped);
+                                    }
+                                    plainText.AppendLine("");
                                     plainText.Append(RichTextBoxUtilities.GetDiagramPlainText(node));
                                 }
                                 else
                                 {
-                                    IntroViewClipboard.AddParagraph(position.Parent as Paragraph);
-                                    plainText.Append(RichTextBoxUtilities.GetParagraphPlainText(position.Parent as Paragraph));
+                                    if (!plainTextOnly)
+                                    {
+                                        IntroViewClipboard.AddParagraph(position.Parent as Paragraph);
+                                    }
+                                    if (plainText.Length > 0)
+                                    {
+                                        plainText.AppendLine("");
+                                        plainText.AppendLine("");
+                                    }
                                 }
                                 currParagraph = position.Parent as Paragraph;
                             }
@@ -277,7 +296,10 @@ namespace ChessForge
                             TreeNode node = GetNodeById(nodeId);
                             if (name.StartsWith(_uic_move_))
                             {
-                                IntroViewClipboard.AddMove(node);
+                                if (!plainTextOnly)
+                                {
+                                    IntroViewClipboard.AddMove(node);
+                                }
                                 plainText.Append(RichTextBoxUtilities.GetEmbeddedElementPlainText(node));
                             }
                         }
@@ -295,12 +317,18 @@ namespace ChessForge
                             TextRange tr = new TextRange(position, end);
                             Run runCopy = RichTextBoxUtilities.CopyRun(r);
                             runCopy.Text = tr.Text;
-                            IntroViewClipboard.AddRun(runCopy, margins);
+                            if (!plainTextOnly)
+                            {
+                                IntroViewClipboard.AddRun(runCopy, margins);
+                            }
                             plainText.Append(RichTextBoxUtilities.GetRunPlainText(runCopy));
                         }
                         else
                         {
-                            IntroViewClipboard.AddRun(r, margins);
+                            if (!plainTextOnly)
+                            {
+                                IntroViewClipboard.AddRun(r, margins);
+                            }
                             plainText.Append(RichTextBoxUtilities.GetRunPlainText(r));
                         }
                         break;
@@ -314,7 +342,10 @@ namespace ChessForge
                 SystemClipboard.Clear();
                 SystemClipboard.SetText(plainText.ToString());
             }
+
+            return plainText.ToString();
         }
+
     }
 
 }
