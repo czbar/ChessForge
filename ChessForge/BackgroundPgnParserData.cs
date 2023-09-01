@@ -15,12 +15,12 @@ namespace ChessForge
         /// <summary>
         /// Identifies the processor using this objects
         /// </summary>
-        public int GameIndex;
+        public int ArticleIndex;
 
         /// <summary>
         /// Text to parse.
         /// </summary>
-        public string GameText;
+        public string ArticleText;
 
         /// <summary>
         /// Variation Tree to be populated.
