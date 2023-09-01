@@ -1403,16 +1403,18 @@ namespace ChessForge
 
                 if (acceptFile)
                 {
+                    WorkbookViewState wvs = new WorkbookViewState(WorkbookManager.SessionWorkbook);
                     try
                     {
-                        WorkbookViewState wvs = new WorkbookViewState(WorkbookManager.SessionWorkbook);
                         wvs.ReadState();
                     }
                     catch (Exception ex)
                     {
                         AppLog.Message("wvs.ReadState()", ex);
                     }
-                    SetupGuiForNewSession(AppState.WorkbookFilePath, isChessForgeFile);
+
+                    // Possibly we do not need to call this at all if ApplyStates ran.
+                    SetupGuiForNewSession(AppState.WorkbookFilePath, isChessForgeFile, wvs);
                 }
                 else
                 {
@@ -1432,74 +1434,61 @@ namespace ChessForge
         /// a new session in the MANUAL_REVIEW learning mode.
         /// </summary>
         /// <param name="fileName"></param>
-        private void SetupGuiForNewSession(string fileName, bool isChessForgeFile = true)
+        private void SetupGuiForNewSession(string fileName, bool isChessForgeFile, WorkbookViewState wvs)
         {
-            // if we are here, the WorkbookFileName must have been updated
-            // and the WorkbookFileType was set to CHESS_FORGE_PGN 
-
-            // if this is a new session we will set ActiveChapter to the first chapter
+            // if this is a new file (wvs == null) or we do not have ActiveChapter from the
+            // saved configuration we will set ActiveChapter to the first chapter
             // and Active Tree to the Study Tree in that chapter.
 
-            switch (AppState.ActiveTab)
+            Workbook workbook = WorkbookManager.SessionWorkbook;
+            WorkbookManager.TabViewType tabToFocus = WorkbookManager.TabViewType.NONE;
+
+            if (wvs == null)
             {
-                case WorkbookManager.TabViewType.MODEL_GAME:
-                    WorkbookManager.SessionWorkbook.SetActiveChapterTreeByIndex(
-                        Math.Max(0, WorkbookManager.SessionWorkbook.ActiveChapterIndex),
-                        GameData.ContentType.MODEL_GAME,
-                        WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex);
-                    break;
-                case WorkbookManager.TabViewType.EXERCISE:
-                    WorkbookManager.SessionWorkbook.SetActiveChapterTreeByIndex(
-                        Math.Max(0, WorkbookManager.SessionWorkbook.ActiveChapterIndex),
-                        GameData.ContentType.EXERCISE,
-                        WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex);
-                    break;
-                default:
-                    WorkbookManager.SessionWorkbook.SetActiveChapterTreeByIndex(
-                        Math.Max(0, WorkbookManager.SessionWorkbook.ActiveChapterIndex),
-                        GameData.ContentType.STUDY_TREE);
-                    // here SetActiveChapterTreeByIndex will set the wrong Location in location history so fix this
-                    WorkbookLocationNavigator.Reset();
-                    WorkbookLocationNavigator.SaveNewLocation(WorkbookManager.TabViewType.CHAPTERS);
-                    break;
+                // this is a newly created Workbook
+                tabToFocus = WorkbookManager.TabViewType.STUDY;
+                workbook.SelectDefaultActiveChapter();
+            }
+            else
+            {
+                tabToFocus = wvs.ActiveViewType == WorkbookManager.TabViewType.NONE ? WorkbookManager.TabViewType.CHAPTERS : wvs.ActiveViewType;
+                workbook.SelectActiveChapter(wvs.ActiveChapterIndex);
             }
 
             AppState.UpdateAppTitleBar();
-            BoardCommentBox.ShowTabHints();
-
             if (SessionWorkbook.TrainingSideConfig == PieceColor.None)
             {
                 ShowWorkbookOptionsDialog(false);
             }
-
             MainChessBoard.FlipBoard(SessionWorkbook.StudyBoardOrientationConfig);
-
             if (isChessForgeFile)
             {
                 WorkbookManager.UpdateRecentFilesList(fileName);
             }
+            LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
 
-            BoardCommentBox.ShowTabHints();
+            //TODO: is this necessary here?
             InitializeChaptersView();
 
+            // reset so that GotFocus() does not bail 
+            WorkbookManager.ActiveTab = WorkbookManager.TabViewType.NONE;
+            
+            // this just in case and for extra future proofing...
+            // : move the focus somewhere away from any tab that may have it so that the next call to Focus() is effective 
+            //
+            // However, due the use of ForceFocus() below, it is not necessary
+            UiRtbBoardComment.Focus();
+
+            if (tabToFocus == WorkbookManager.TabViewType.INTRO && WorkbookManager.SessionWorkbook.ActiveChapter.IsIntroEmpty())
+            {
+                tabToFocus = WorkbookManager.TabViewType.STUDY;
+            }
+
+            GuiUtilities.ForceFocus(tabToFocus, WorkbookManager.TabViewType.STUDY);
+
             // build study tree but do not focus
+            // TODO: do not build it here unless focus will be on the Study
             SetupGuiForActiveStudyTree(!isChessForgeFile);
-
-            LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
-            if (isChessForgeFile)
-            {
-                if (AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS)
-                {
-                    UiTabChapters.Focus();
-                    SetupGuiForChapters();
-                }
-            }
-
-            // if INTRO is active then make sure it has focus (so editing can start right away)
-            if (AppState.ActiveTab == WorkbookManager.TabViewType.INTRO)
-            {
-                UiRtbIntroView.Focus();
-            }
         }
 
         /// <summary>
