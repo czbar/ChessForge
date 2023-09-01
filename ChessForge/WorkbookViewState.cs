@@ -26,11 +26,13 @@ namespace ChessForge
         // list of ChapterViewState objects
         private List<ChapterViewState> _chapterViewStates = new List<ChapterViewState>();
 
-        // index of the active chapter
-        private int _activeChapterIndex = -1;
+        /// <summary>
+        /// Index of the active chapter
+        /// </summary>
+        public int ActiveChapterIndex = -1;
 
         // type of UI Tab that is open
-        WorkbookManager.TabViewType _activeViewType;
+        public WorkbookManager.TabViewType ActiveViewType;
 
         /// Constructor.
         /// </summary>
@@ -91,7 +93,7 @@ namespace ChessForge
                             if (key == CHAPTER_INDEX)
                             {
                                 chapterIndex++;
-                                _chapterViewStates.Add(new ChapterViewState(_workbook.Chapters[chapterIndex], chapterIndex == _activeChapterIndex));
+                                _chapterViewStates.Add(new ChapterViewState(_workbook.Chapters[chapterIndex], chapterIndex == ActiveChapterIndex));
                             }
                             else
                             {
@@ -116,7 +118,8 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Apply view states to the Workbook and Chapter objects.
+        /// Sets selections and states on the Workbook and Chapter objects
+        /// as per the processed data.
         /// </summary>
         private void ApplyStates()
         {
@@ -125,7 +128,7 @@ namespace ChessForge
                 ChapterViewState cvs = _chapterViewStates[i];
                 Chapter chapter = WorkbookManager.SessionWorkbook.Chapters[i];
 
-                if (i == _activeChapterIndex)
+                if (i == ActiveChapterIndex)
                 {
                     WorkbookManager.SessionWorkbook.ActiveChapter = chapter;
                 }
@@ -135,25 +138,6 @@ namespace ChessForge
                 chapter.IsExercisesListExpanded = cvs.IsExerciseListExpanded;
                 chapter.ActiveModelGameIndex = chapter.VerifyGameIndex(cvs.ActiveGameIndex);
                 chapter.ActiveExerciseIndex = chapter.VerifyExerciseIndex(cvs.ActiveExerciseIndex);
-            }
-
-            switch (_activeViewType)
-            {
-                case WorkbookManager.TabViewType.MODEL_GAME:
-                    AppState.MainWin.SelectModelGame(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex, true);
-                    break;
-                case WorkbookManager.TabViewType.EXERCISE:
-                    AppState.MainWin.SelectExercise(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex, true);
-                    break;
-                case WorkbookManager.TabViewType.STUDY:
-                    AppState.MainWin.UiTabStudyTree.Focus();
-                    break;
-                case WorkbookManager.TabViewType.INTRO:
-                    if (!WorkbookManager.SessionWorkbook.ActiveChapter.IsIntroEmpty())
-                    {
-                        AppState.MainWin.UiTabIntro.Focus();
-                    }
-                    break;
             }
         }
 
@@ -168,10 +152,10 @@ namespace ChessForge
             switch (key)
             {
                 case ACTIVE_TAB:
-                    Enum.TryParse(value, out _activeViewType);
+                    Enum.TryParse(value, out ActiveViewType);
                     break;
                 case ACTIVE_CHAPTER_INDEX:
-                    int.TryParse(value, out _activeChapterIndex);
+                    int.TryParse(value, out ActiveChapterIndex);
                     break;
             }
         }
