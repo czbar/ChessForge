@@ -18,6 +18,80 @@ namespace ChessForge
     public class GuiUtilities
     {
         /// <summary>
+        /// Call this method when we need to ensure that both, the tab has focus and
+        /// the focus-received handler is run.
+        /// If the tab does not have a focus, it is enough to call the Focus() method,
+        /// otherwise the handler will not be invoked so we have to call it explicitly.
+        /// </summary>
+        /// <param name="vt"></param>
+        public static void ForceFocus(WorkbookManager.TabViewType vt, WorkbookManager.TabViewType vtDefault = WorkbookManager.TabViewType.NONE)
+        {
+            switch (vt)
+            {
+                case WorkbookManager.TabViewType.CHAPTERS:
+                    if (AppState.MainWin.UiTabChapters.IsFocused)
+                    {
+                        AppState.MainWin.UiTabChapters_GotFocus(null, null);
+                    }
+                    else
+                    {
+                        AppState.MainWin.UiTabChapters.Focus();
+                    }
+                    break;
+                case WorkbookManager.TabViewType.STUDY:
+                    if (AppState.MainWin.UiTabStudyTree.IsFocused)
+                    {
+                        AppState.MainWin.UiTabStudyTree_GotFocus(null, null);
+                    }
+                    else
+                    {
+                        AppState.MainWin.UiTabStudyTree.Focus();
+                    }
+                    break;
+                case WorkbookManager.TabViewType.INTRO:
+                    if (AppState.MainWin.UiTabIntro.IsFocused)
+                    {
+                        AppState.MainWin.UiTabIntro_GotFocus(null, null);
+                    }
+                    else
+                    {
+                        AppState.MainWin.UiTabIntro.Focus();
+                    }
+                    break;
+                case WorkbookManager.TabViewType.MODEL_GAME:
+                    if (AppState.MainWin.UiTabModelGames.IsFocused)
+                    {
+                        AppState.MainWin.UiTabModelGames_GotFocus(null, null);
+                    }
+                    else
+                    {
+                        AppState.MainWin.UiTabModelGames.Focus();
+                    }
+                    break;
+                case WorkbookManager.TabViewType.EXERCISE:
+                    if (AppState.MainWin.UiTabExercises.IsFocused)
+                    {
+                        AppState.MainWin.UiTabExercises_GotFocus(null, null);
+                    }
+                    else
+                    {
+                        AppState.MainWin.UiTabExercises.Focus();
+                    }
+                    break;
+                default:
+                    if (AppState.MainWin.UiTabChapters.IsFocused)
+                    {
+                        AppState.MainWin.UiTabChapters_GotFocus(null, null);
+                    }
+                    else
+                    {
+                        AppState.MainWin.UiTabChapters.Focus();
+                    }
+                    break;
+            }
+        }
+
+        /// <summary>
         /// Get the length in pixel that the passed text would take in the passed label.
         /// </summary>
         /// <param name="label"></param>

@@ -969,8 +969,13 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiTabChapters_GotFocus(object sender, RoutedEventArgs e)
+        public void UiTabChapters_GotFocus(object sender, RoutedEventArgs e)
         {
+            if (AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS)
+            {
+                return;
+            }
+
             StopReplayIfActive();
             EngineMessageProcessor.StopEngineEvaluation();
             ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
@@ -980,7 +985,7 @@ namespace ChessForge
 
             WorkbookLocationNavigator.SaveNewLocation(WorkbookManager.TabViewType.CHAPTERS);
 
-            // we may need to show/hode Intro headers if something has changed
+            // we may need to show/hide Intro headers if something has changed
             if (_chaptersView != null)
             {
                 _chaptersView.UpdateIntroHeaders();
@@ -1013,7 +1018,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiTabIntro_GotFocus(object sender, RoutedEventArgs e)
+        public void UiTabIntro_GotFocus(object sender, RoutedEventArgs e)
         {
             StopReplayIfActive();
             try
@@ -1086,7 +1091,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiTabStudyTree_GotFocus(object sender, RoutedEventArgs e)
+        public void UiTabStudyTree_GotFocus(object sender, RoutedEventArgs e)
         {
             if (AppState.ActiveTab == WorkbookManager.TabViewType.STUDY)
             {
@@ -1122,7 +1127,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiTabBookmarks_GotFocus(object sender, RoutedEventArgs e)
+        public void UiTabBookmarks_GotFocus(object sender, RoutedEventArgs e)
         {
             StopReplayIfActive();
 
@@ -1345,7 +1350,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiTabExercises_GotFocus(object sender, RoutedEventArgs e)
+        public void UiTabExercises_GotFocus(object sender, RoutedEventArgs e)
         {
             if (AppState.ActiveTab == WorkbookManager.TabViewType.EXERCISE)
             {

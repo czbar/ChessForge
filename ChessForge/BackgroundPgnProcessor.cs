@@ -36,9 +36,9 @@ namespace ChessForge
         /// <summary>
         /// Returns id that this processor received from the Manager.
         /// </summary>
-        public int GameIndex
+        public int ArticleIndex
         {
-            get => _dataObject == null ? -1 : _dataObject.GameIndex;
+            get => _dataObject == null ? -1 : _dataObject.ArticleIndex;
         }
 
         /// <summary>
@@ -68,17 +68,17 @@ namespace ChessForge
         /// Called by the client to start the backgound process.
         /// Sets the event handlers.
         /// </summary>
-        /// <param name="gameText"></param>
+        /// <param name="articleText"></param>
         /// <param name="tree"></param>
         /// <param name="fen"></param>
-        public void Run(int processorId, string gameText, VariationTree tree, string fen = null)
+        public void Run(int processorId, string articleText, VariationTree tree, string fen = null)
         {
             _workerState = ProcessState.RUNNING;
             try
             {
                 _dataObject = new BackgroundPgnParserData();
-                _dataObject.GameIndex = processorId;
-                _dataObject.GameText = gameText;
+                _dataObject.ArticleIndex = processorId;
+                _dataObject.ArticleText = articleText;
                 _dataObject.Fen = fen;
                 _dataObject.Tree = tree;
 
@@ -101,7 +101,7 @@ namespace ChessForge
             BackgroundPgnParserData dataObject = e.Argument as BackgroundPgnParserData;
             try
             {
-                PgnGameParser pp = new PgnGameParser(dataObject.GameText, dataObject.Tree, dataObject.Fen);
+                PgnGameParser pp = new PgnGameParser(dataObject.ArticleText, dataObject.Tree, dataObject.Fen);
             }
             catch { }
         }
@@ -114,7 +114,7 @@ namespace ChessForge
         private void RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             _workerState = ProcessState.FINISHED;
-            _parent.JobFinished(_dataObject.GameIndex);
+            _parent.JobFinished(_dataObject.ArticleIndex);
         }
     }
 }

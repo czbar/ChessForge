@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace ChessForge
 {
@@ -15,62 +16,67 @@ namespace ChessForge
     public class BackgroundPgnProcessingManager
     {
         // number of parallel workers in the pool
-        private int WORKERS_COUNT = 10;
+        private int WORKERS_COUNT = 8;
 
         // state of the parsing multi-task
         private ProcessState _state;
 
         // list of background processors
-        private List<BackgroundPgnProcessor> _workerPool;
+        private List<BackgroundPgnProcessor> _workerPool = new List<BackgroundPgnProcessor>();
 
-        // number of games to process
-        private int _gamesToProcess;
+        // number of articles to process
+        private int _articlesToProcess;
 
-        // number of games currently being processed
-        private int _gamesInProgress;
+        // number of articles currently being processed
+        private int _articlesInProgress;
 
-        // number of games processed
-        private int _gamesCompleted;
+        // number of articles processed
+        private int _articlesCompleted;
 
-        // index of the last scheduled game
-        private int _lastScheduledGame = -1;
+        // index of the last scheduled article
+        private int _lastScheduledArticle = -1;
 
-        // reference to the list of games being processed
-        private ObservableCollection<GameData> _games;
+        // reference to the list of articles being processed
+        private ObservableCollection<GameData> _rawArticles;
 
         // used as a lock to access state variables
         private object _lockState = new object();
 
+        //Workbook owning this object
+        private Workbook _parent;
+
         /// <summary>
-        /// Number of games not scheduled for parsing yet
+        /// Number of articles not scheduled for parsing yet
         /// </summary>
-        private int GamesNotStarted
+        private int ArticlesNotStarted
         {
-            get => _gamesToProcess - (_gamesInProgress + _gamesCompleted);
+            get => _articlesToProcess - (_articlesInProgress + _articlesCompleted);
         }
 
-        // list of VariationTrees sent to, and received from the workers 
-        public List<VariationTree> _processedVariationTrees;
+        // list of Articles to be processed by the background workers
+        private List<Article> _articleList;
 
         /// <summary>
-        /// Constructors. Sets the initial state
+        /// Constructors. Sets the initial state.
         /// </summary>
-        public BackgroundPgnProcessingManager()
+        public BackgroundPgnProcessingManager(Workbook parent)
         {
             _state = ProcessState.NOT_STARTED;
+            _parent = parent;
         }
 
         /// <summary>
-        /// Prepares the process of parsing games from the passed list.
+        /// Prepares the process of parsing articles from the passed list.
         /// </summary>
-        /// <param name="games"></param>
-        public void Execute(ObservableCollection<GameData> games)
+        /// <param name="articleDataList"></param>
+        public void Execute(ref ObservableCollection<GameData> articleDataList, ref List<Article> articleList)
         {
             _state = ProcessState.RUNNING;
-            _games = games;
+            _rawArticles = articleDataList;
+            _articleList = articleList;
             Initialize();
 
-            if (_gamesToProcess == 0)
+            if (_articlesToProcess == 0)
             {
                 _state = ProcessState.FINISHED;
             }
@@ -81,96 +87,18 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Starts the processing.
-        /// Kicks off the initial bunch of background workers.
-        /// </summary>
-        private void StartProcessing()
-        {
-            for (int i = 0; i < WORKERS_COUNT; i++)
-            {
-                if (i >= _games.Count)
-                {
-                    break;
-                }
-
-                KickoffWorker(i, i);
-                lock (_lockState)
-                {
-                    _gamesInProgress++;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Starts a worker at the passed index for processing
-        /// of the game at the passed index.
-        /// </summary>
-        /// <param name="workerIndex"></param>
-        /// <param name="gameIndex"></param>
-        private void KickoffWorker(int workerIndex, int gameIndex)
-        {
-            _workerPool[workerIndex].Run(gameIndex, _games[gameIndex].GameText, _processedVariationTrees[gameIndex]);
-            _lastScheduledGame = gameIndex;
-        }
-
-        /// <summary>
-        /// Starts the passed worker for processing
-        /// of the game at the passed index.
-        /// </summary>
-        /// <param name="worker"></param>
-        /// <param name="gameIndex"></param>
-        private void KickoffWorker(BackgroundPgnProcessor worker, int gameIndex)
-        {
-            worker.Run(gameIndex, _games[gameIndex].GameText, _processedVariationTrees[gameIndex]);
-            _lastScheduledGame = gameIndex;
-        }
-
-        /// <summary>
-        /// Prepares data structures and performs parsing of the supplied list of
-        /// PGN games.
-        /// </summary>
-        private void Initialize()
-        {
-            for (int i = 0; i < WORKERS_COUNT; i++)
-            {
-                _workerPool.Add(new BackgroundPgnProcessor(this));
-            }
-
-            lock (_lockState)
-            {
-                _gamesToProcess = _games.Count;
-            }
-
-            _processedVariationTrees = new List<VariationTree>(_gamesToProcess);
-            for (int i = 0; i < _games.Count; i++)
-            {
-                _processedVariationTrees.Add(new VariationTree(GameData.ContentType.GENERIC));
-            }
-        }
-
-        /// <summary>
         /// Called by the background workers to report completion of the work
         /// </summary>
-        /// <param name="id"></param>
-        public void JobFinished(int id)
+        /// <param name="articleIndex"></param>
+        public void JobFinished(int articleIndex)
         {
-            BackgroundPgnProcessor processor = _workerPool.Find(x => x.GameIndex == id);
+            BackgroundPgnProcessor processor = _workerPool.Find(x => x.ArticleIndex == articleIndex);
             if (processor != null)
             {
-                _processedVariationTrees[id] = processor.DataObject.Tree;
-                lock (_lockState)
-                {
-                    _gamesInProgress--;
-                    _gamesCompleted++;
-                    _games[id].IsProcessed = true;
+                _articleList[articleIndex].Tree = processor.DataObject.Tree;
+                UpdateVariablesOnJobFinish(articleIndex);
 
-                    if (_gamesCompleted >= _games.Count)
-                    {
-                        _state = ProcessState.FINISHED;
-                    }
-                }
-
-                if (GamesNotStarted > 0)
+                if (ArticlesNotStarted > 0)
                 {
                     ReuseWorker(processor);
                 }
@@ -191,23 +119,134 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Starts the processing.
+        /// Kicks off the initial bunch of background workers.
+        /// </summary>
+        private void StartProcessing()
+        {
+            for (int i = 0; i < WORKERS_COUNT; i++)
+            {
+                if (i >= _rawArticles.Count)
+                {
+                    break;
+                }
+
+                bool res = KickoffWorker(i, i);
+                lock (_lockState)
+                {
+                    _articlesInProgress++;
+                    if (!res)
+                    {
+                        UpdateVariablesOnJobFinish(i);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Starts a worker at the passed index for processing
+        /// of the article at the passed index.
+        /// </summary>
+        /// <param name="workerIndex"></param>
+        /// <param name="articleIndex"></param>
+        /// <returns>true if the run was started, false if the argument was null</returns>
+        private bool KickoffWorker(int workerIndex, int articleIndex)
+        {
+            bool res = false;
+            
+            if (_articleList[articleIndex] != null)
+            {
+                _workerPool[workerIndex].Run(articleIndex, _rawArticles[articleIndex].GameText, _articleList[articleIndex].Tree);
+                res = true;
+            }
+            _lastScheduledArticle = articleIndex;
+
+            return res;
+        }
+
+        /// <summary>
+        /// Starts the passed worker for processing
+        /// of the article at the passed index.
+        /// </summary>
+        /// <param name="worker"></param>
+        /// <param name="articleIndex">this is the index in the output list of articles.</param>
+        /// <returns>true if the run was started, false if the argument was null</returns>
+        private bool KickoffWorker(BackgroundPgnProcessor worker, int articleIndex)
+        {
+            bool res = false;
+
+            if (_articleList[articleIndex] != null)
+            {
+                worker.Run(articleIndex, _rawArticles[articleIndex].GameText, _articleList[articleIndex].Tree);
+                res = true;
+            }
+            _lastScheduledArticle = articleIndex;
+
+            return res;
+        }
+
+        /// <summary>
         /// Check if there are any jobs still pending and if so
         /// take the next one and start the passed worker on it.
         /// </summary>
         /// <param name="processor"></param>
         private void ReuseWorker(BackgroundPgnProcessor processor)
         {
-            if (GamesNotStarted > 0 && _state != ProcessState.CANCELED)
+            if (ArticlesNotStarted > 0 && _state != ProcessState.CANCELED)
             {
                 // find the first unproccesed index
-                for (int i = _lastScheduledGame + 1; i < _games.Count; ++i)
+                for (int i = _lastScheduledArticle + 1; i < _rawArticles.Count; ++i)
                 {
-                    if (!_games[i].IsProcessed)
+                    if (!_rawArticles[i].IsProcessed)
                     {
-                        KickoffWorker(processor, i);
+                        _lastScheduledArticle = i;
+                        bool res = KickoffWorker(processor, i);
+                        _articlesInProgress++;
+                        if (!res)
+                        {
+                            UpdateVariablesOnJobFinish(i);
+                        }
+                        break;
                     }
                 }
             }
         }
+
+        /// <summary>
+        /// Prepares data structures and performs parsing of the supplied list of
+        /// PGN articles.
+        /// </summary>
+        private void Initialize()
+        {
+            for (int i = 0; i < WORKERS_COUNT; i++)
+            {
+                _workerPool.Add(new BackgroundPgnProcessor(this));
+            }
+
+            lock (_lockState)
+            {
+                _articlesToProcess = _rawArticles.Count;
+            }
+        }
+
+        /// <summary>
+        /// Updates variables upon return from a worker.
+        /// </summary>
+        /// <param name="articleIndex"></param>
+        private void UpdateVariablesOnJobFinish(int articleIndex)
+        {
+            lock (_lockState)
+            {
+                _articlesInProgress--;
+                _articlesCompleted++;
+                _rawArticles[articleIndex].IsProcessed = true;
+
+                if (_articlesCompleted >= _rawArticles.Count)
+                {
+                    _state = ProcessState.FINISHED;
+                }
+            }
+        }
+
     }
 }

@@ -115,7 +115,14 @@ namespace ChessForge
         /// </summary>
         private TreeManager _treeManager = new TreeManager();
 
-        // associated OperationsManager
+        /// <summary>
+        /// An object managing reading games in the background
+        /// </summary>
+        public BackgroundPgnProcessingManager GamesManager;
+
+        /// <summary>
+        // Associated OperationsManager
+        /// </summary>
         public WorkbookOperationsManager OpsManager;
 
         /// <summary>
@@ -127,7 +134,69 @@ namespace ChessForge
         {
             TreeManager.Reset();
             OpsManager = new WorkbookOperationsManager(this);
+            GamesManager = new BackgroundPgnProcessingManager(this);
             _version = new WorkbookVersion();
+        }
+
+        /// <summary>
+        /// Called when creating a Workbook to populate article lists across the workbook.
+        /// The created list must have the exact same number of elements as the passed collection
+        /// and they must match their source by index.
+        /// </summary>
+        /// <param name="articleDataList"></param>
+        public List<Article> CreateArticlePlaceholders(ref ObservableCollection<GameData> articleDataList)
+        {
+            List<Article> lstArticles = new List<Article>(articleDataList.Count);
+
+            // put a null value in the first element
+            lstArticles.Add(null);
+
+            Chapter chapter = null;
+            for (int i = 1; i < articleDataList.Count; i++)
+            {
+                GameData gm = articleDataList[i];
+                GameData.ContentType contentType = gm.GetContentType();
+                if (contentType == GameData.ContentType.STUDY_TREE)
+                {
+                    chapter = CreateNewChapter();
+                    chapter.SetTitle(gm.Header.GetChapterTitle());
+                    chapter.Guid = gm.Header.GetOrGenerateGuid(out bool generated);
+                    if (generated)
+                    {
+                        AppState.IsDirty = true;
+                    }
+                }
+
+                if (chapter != null)
+                {
+                    Article article = new Article(contentType, i);
+                    switch (contentType)
+                    {
+                        case GameData.ContentType.STUDY_TREE:
+                            chapter.StudyTree = article;
+                            break;
+                        case GameData.ContentType.INTRO:
+                            chapter.Intro = article;
+                            break;
+                        case GameData.ContentType.MODEL_GAME:
+                            chapter.ModelGames.Add(article);
+                            break;
+                        case GameData.ContentType.EXERCISE:
+                            chapter.Exercises.Add(article);
+                            break;
+                    }
+
+                    // force creation of GUID if absent
+                    gm.Header.GetGuid(out _);
+                    lstArticles.Add(article);
+                }
+                else
+                {
+                    lstArticles.Add(null);
+                }
+            }
+
+            return lstArticles;
         }
 
         /// <summary>
@@ -311,6 +380,22 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Selects ActiveChapter based on the passed index.
+        /// </summary>
+        /// <param name="index"></param>
+        public void SelectActiveChapter(int index)
+        {
+            if (index < 0 || index >= Chapters.Count)
+            {
+                SelectDefaultActiveChapter();
+            }
+            else
+            {
+                _activeChapter = Chapters[index];
+            }
+        }
+
+        /// <summary>
         /// Creates a new "default" chapter
         /// </summary>
         /// <returns></returns>
@@ -327,6 +412,7 @@ namespace ChessForge
         /// <param name="gameIndex">index in the list of elements of the requested type i.e. Model Games or Exercises </param>
         public Chapter SetActiveChapterTreeByIndex(int chapterIndex, GameData.ContentType gameType, int gameIndex = 0, bool saveLocation = true)
         {
+            // TODO: replace with SelectGame/Exercise somehow
             if (chapterIndex < 0 || chapterIndex >= Chapters.Count)
             {
                 return null;
@@ -476,7 +562,7 @@ namespace ChessForge
                 {
                     _guid = TextUtils.GenerateRandomElementName();
                 }
-               return _guid;
+                return _guid;
             }
             set
             {
@@ -638,7 +724,7 @@ namespace ChessForge
         public Chapter GetChapterByGuid(string guid, out int index)
         {
             index = -1;
-         
+
             if (string.IsNullOrEmpty(guid))
             {
                 return null;

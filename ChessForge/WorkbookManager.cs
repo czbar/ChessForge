@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using System.Windows;
-using Microsoft.Win32;
+﻿using ChessPosition;
 using ChessPosition.GameTree;
-using System.Collections.ObjectModel;
 using GameTree;
-using ChessPosition;
+using Microsoft.Win32;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Text;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Runtime.Remoting.Messaging;
 
 namespace ChessForge
 {
@@ -665,6 +663,8 @@ namespace ChessForge
                 workbook.ExerciseBoardOrientationConfig = TextUtils.ConvertStringToPieceColor(GameList[0].Header.GetExerciseBoardOrientation(out _));
 
                 ProcessGames(ref GameList, ref workbook);
+                //TODO: replace the above with this:
+                //ProcessGamesInBackground(ref GameList, ref workbook);
 
             }
             catch
@@ -804,6 +804,19 @@ namespace ChessForge
             {
                 ShowPgnProcessingErrors(Properties.Resources.DlgParseErrors, ref sbErrors);
             }
+        }
+
+        /// <summary>
+        /// Processes the list games in the background.
+        /// First, creates a list of unprocessed articles,
+        /// and then invokes the Background Manager to process them.
+        /// </summary>
+        /// <param name="rawPgnArticles"></param>
+        /// <param name="workbook"></param>
+        private static void ProcessGamesInBackground(ref ObservableCollection<GameData> rawPgnArticles, ref Workbook workbook)
+        {
+            List<Article> outArticles = workbook.CreateArticlePlaceholders(ref rawPgnArticles);
+            workbook.GamesManager.Execute(ref rawPgnArticles, ref outArticles);
         }
 
         /// <summary>

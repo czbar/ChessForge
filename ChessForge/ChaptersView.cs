@@ -1147,7 +1147,7 @@ namespace ChessForge
             if (focusOnStudyTree || prevActiveChapter.Index != chapterIndex)
             {
                 _mainWin.SelectChapterByIndex(chapterIndex, focusOnStudyTree);
-                BuildChapterParagraph(prevActiveChapter, _dictChapterParas[prevActiveChapter.Index]);
+                ClearChapterSelections(prevActiveChapter, _dictChapterParas[prevActiveChapter.Index]);
             }
         }
 
@@ -1199,6 +1199,127 @@ namespace ChessForge
                 }
                 SelectChapter(chapter.Index, false);
             }
+        }
+
+        /// <summary>
+        /// Restore normal font in any bolded item
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="para"></param>
+        private void ClearChapterSelections(Chapter chapter, Paragraph para)
+        {
+            if (para == null)
+            {
+                return;
+            }
+
+            foreach (Inline inl in para.Inlines)
+            {
+                Run run = inl as Run;
+                if (run != null && run.FontWeight == FontWeights.Bold)
+                {
+                    run.FontWeight = FontWeights.Normal;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Highlights chapter/games/exercise selections.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="para"></param>
+        private void HighlightChapterSelections(Chapter chapter)
+        {
+            Paragraph para = GetParagraphForChapter(chapter);
+            if (para == null)
+            {
+                return;
+            }
+
+            foreach (Inline inl in para.Inlines)
+            {
+                Run run = inl as Run;
+                if (run != null)
+                {
+                    run.FontWeight = FontWeights.Normal;
+
+                    WorkbookManager.TabViewType runType = GetRunTypeFromName(run.Name);
+                    int index = TextUtils.GetIdFromPrefixedString(run.Name);
+                    switch (runType)
+                    {
+                        case WorkbookManager.TabViewType.CHAPTERS:
+                            run.FontWeight = FontWeights.Bold;
+                            break;
+                        case WorkbookManager.TabViewType.MODEL_GAME:
+                            if (index == chapter.ActiveModelGameIndex)
+                            {
+                                run.FontWeight = FontWeights.Bold;
+                            }
+                            break;
+                        case WorkbookManager.TabViewType.EXERCISE:
+                            if (index == chapter.ActiveExerciseIndex)
+                            {
+                                run.FontWeight = FontWeights.Bold;
+                            }
+                            break;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns the type of object/article represented by the Run
+        /// as encode in the Run's name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        private WorkbookManager.TabViewType GetRunTypeFromName(string name)
+        {
+            WorkbookManager.TabViewType typ = WorkbookManager.TabViewType.NONE;
+
+            if (string.IsNullOrEmpty(name))
+            {
+                return WorkbookManager.TabViewType.NONE;
+            }
+            else if (name.StartsWith(_run_chapter_title_))
+            {
+                typ = WorkbookManager.TabViewType.CHAPTERS;
+            }
+            else if (name.StartsWith(_run_model_game_))
+            {
+                typ = WorkbookManager.TabViewType.MODEL_GAME;
+            }
+            else if (name.StartsWith(_run_exercise_))
+            {
+                typ = WorkbookManager.TabViewType.EXERCISE;
+            }
+
+            return typ;
+        }
+
+        /// <summary>
+        /// Returns the Paragraph hosting the passed chapter.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <returns></returns>
+        private Paragraph GetParagraphForChapter(Chapter chapter)
+        {
+            Paragraph para = null; ;
+
+            foreach (Block b in Document.Blocks)
+            {
+                if (b is Paragraph)
+                {
+                    int id = TextUtils.GetIdFromPrefixedString((b as Paragraph).Name);
+                    if (id == chapter.Index)
+                    {
+                        para = b as Paragraph;
+                        break;
+                    }
+                }
+            }
+
+            return para;
         }
 
         /// <summary>
@@ -1299,6 +1420,8 @@ namespace ChessForge
                         // TODO: this rebuilds the Study Tree. Performance!
                         SelectChapter(chapterIndex, false);
                     }
+
+                    HighlightChapterSelections(chapter);
                 }
             }
             catch (Exception ex)
@@ -1677,7 +1800,7 @@ namespace ChessForge
                     }
                 }
 
-                RebuildChapterParagraph(chapter);
+                HighlightChapterSelections(chapter);
             }
             catch (Exception ex)
             {
@@ -1769,7 +1892,7 @@ namespace ChessForge
                     }
                 }
 
-                RebuildChapterParagraph(chapter);
+                HighlightChapterSelections(chapter);
             }
             catch (Exception ex)
             {
