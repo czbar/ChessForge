@@ -56,7 +56,7 @@ namespace ChessForge
 
             LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
 
-            SetupGuiForNewSession(AppState.WorkbookFilePath, true);
+            SetupGuiForNewSession(AppState.WorkbookFilePath, true, null);
 
             AppState.SetupGuiForCurrentStates();
             //StudyTree.CreateNew();
