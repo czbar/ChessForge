@@ -54,7 +54,7 @@ namespace ChessForge
         }
 
         // list of Articles to be processed by the background workers
-        private List<Article> _articleList;
+        public List<Article> _articleList;
 
         /// <summary>
         /// Constructors. Sets the initial state.
@@ -96,6 +96,8 @@ namespace ChessForge
             if (processor != null)
             {
                 _articleList[articleIndex].Tree = processor.DataObject.Tree;
+                _articleList[articleIndex].IsReady = true;
+
                 UpdateVariablesOnJobFinish(articleIndex);
 
                 if (ArticlesNotStarted > 0)
@@ -156,7 +158,7 @@ namespace ChessForge
             
             if (_articleList[articleIndex] != null)
             {
-                _workerPool[workerIndex].Run(articleIndex, _rawArticles[articleIndex].GameText, _articleList[articleIndex].Tree);
+                _workerPool[workerIndex].Run(articleIndex, _rawArticles[articleIndex].GameText, ref _articleList[articleIndex].Tree);
                 res = true;
             }
             _lastScheduledArticle = articleIndex;
@@ -177,7 +179,7 @@ namespace ChessForge
 
             if (_articleList[articleIndex] != null)
             {
-                worker.Run(articleIndex, _rawArticles[articleIndex].GameText, _articleList[articleIndex].Tree);
+                worker.Run(articleIndex, _rawArticles[articleIndex].GameText, ref _articleList[articleIndex].Tree);
                 res = true;
             }
             _lastScheduledArticle = articleIndex;
