@@ -794,7 +794,7 @@ namespace ChessForge
                     if (newSelGame != null)
                     {
                         chapter.ActiveModelGameIndex = index;
-                        RebuildChapterParagraph(chapter);
+                        HighlightChapterSelections(chapter);
                         _mainWin.DisplayPosition(newSelGame.Tree.GetFinalPosition());
                         BringArticleIntoView(chapter.Index, GameData.ContentType.MODEL_GAME, index);
                     }
@@ -804,7 +804,7 @@ namespace ChessForge
                     if (newSelExercise != null)
                     {
                         chapter.ActiveExerciseIndex = index;
-                        RebuildChapterParagraph(chapter);
+                        HighlightChapterSelections(chapter);
                         _mainWin.DisplayPosition(newSelExercise.Tree.RootNode);
                         BringArticleIntoView(chapter.Index, GameData.ContentType.EXERCISE, index);
                     }
@@ -1241,7 +1241,10 @@ namespace ChessForge
                 Run run = inl as Run;
                 if (run != null)
                 {
-                    run.FontWeight = FontWeights.Normal;
+                    if (run.FontWeight != FontWeights.Normal)
+                    {
+                        run.FontWeight = FontWeights.Normal;
+                    }
 
                     WorkbookManager.TabViewType runType = GetRunTypeFromName(run.Name);
                     int index = TextUtils.GetIdFromPrefixedString(run.Name);
