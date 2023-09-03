@@ -170,6 +170,7 @@ namespace ChessForge
                 if (chapter != null)
                 {
                     Article article = new Article(contentType, i);
+                    article.Tree.Header = gm.Header.CloneMe(true);
                     switch (contentType)
                     {
                         case GameData.ContentType.STUDY_TREE:
