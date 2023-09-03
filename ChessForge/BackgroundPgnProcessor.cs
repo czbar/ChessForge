@@ -71,13 +71,13 @@ namespace ChessForge
         /// <param name="articleText"></param>
         /// <param name="tree"></param>
         /// <param name="fen"></param>
-        public void Run(int processorId, string articleText, VariationTree tree, string fen = null)
+        public void Run(int articleIndex, string articleText, ref VariationTree tree, string fen = null)
         {
             _workerState = ProcessState.RUNNING;
             try
             {
                 _dataObject = new BackgroundPgnParserData();
-                _dataObject.ArticleIndex = processorId;
+                _dataObject.ArticleIndex = articleIndex;
                 _dataObject.ArticleText = articleText;
                 _dataObject.Fen = fen;
                 _dataObject.Tree = tree;
@@ -101,9 +101,11 @@ namespace ChessForge
             BackgroundPgnParserData dataObject = e.Argument as BackgroundPgnParserData;
             try
             {
-                PgnGameParser pp = new PgnGameParser(dataObject.ArticleText, dataObject.Tree, dataObject.Fen);
+                PgnGameParser pp = new PgnGameParser(_dataObject.ArticleText, _dataObject.Tree, _dataObject.Fen, false);
             }
-            catch { }
+            catch 
+            { 
+            }
         }
 
         /// <summary>
