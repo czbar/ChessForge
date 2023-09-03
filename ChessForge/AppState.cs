@@ -569,7 +569,7 @@ namespace ChessForge
                 if (chapter != null)
                 {
                     VariationTree tree = new VariationTree(GameData.ContentType.MODEL_GAME);
-                    PgnGameParser pgnGame = new PgnGameParser(GameDownload.GameText, tree);
+                    PgnGameParser pgnGame = new PgnGameParser(GameDownload.GameText, tree, null);
                     if (string.IsNullOrEmpty(GameDownload.GameText))
                     {
                         throw new Exception(Properties.Resources.ErrNoTextReceived);
