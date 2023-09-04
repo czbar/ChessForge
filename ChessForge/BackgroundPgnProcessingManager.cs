@@ -239,13 +239,20 @@ namespace ChessForge
         {
             lock (_lockState)
             {
-                _articlesInProgress--;
-                _articlesCompleted++;
-                _rawArticles[articleIndex].IsProcessed = true;
-
-                if (_articlesCompleted >= _rawArticles.Count)
+                try
                 {
-                    _state = ProcessState.FINISHED;
+                    _articlesInProgress--;
+                    _articlesCompleted++;
+                    _rawArticles[articleIndex].IsProcessed = true;
+
+                    if (_articlesCompleted >= _rawArticles.Count)
+                    {
+                        _state = ProcessState.FINISHED;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    AppLog.Message("UpdateVariablesOnJobFinish()", ex);
                 }
             }
         }
