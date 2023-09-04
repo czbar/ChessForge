@@ -649,7 +649,7 @@ namespace ChessForge
                 // while the rest are Study Trees, Model Games and Exercises.
 
                 VariationTree preface = new VariationTree(GameData.ContentType.STUDY_TREE);
-                PgnGameParser pp = new PgnGameParser(GameList[0].GameText, preface);
+                PgnGameParser pp = new PgnGameParser(GameList[0].GameText, preface, null);
                 workbook.Description = preface.Nodes[0].Comment;
 
                 workbook.Title = GameList[0].GetWorkbookTitle();
@@ -662,9 +662,9 @@ namespace ChessForge
                 workbook.GameBoardOrientationConfig = TextUtils.ConvertStringToPieceColor(GameList[0].Header.GetGameBoardOrientation(out _));
                 workbook.ExerciseBoardOrientationConfig = TextUtils.ConvertStringToPieceColor(GameList[0].Header.GetExerciseBoardOrientation(out _));
 
-                ProcessGames(ref GameList, ref workbook);
+                //ProcessGames(ref GameList, ref workbook);
                 //TODO: replace the above with this:
-                //ProcessGamesInBackground(ref GameList, ref workbook);
+                ProcessGamesInBackground(ref GameList, ref workbook);
 
             }
             catch
@@ -1195,6 +1195,10 @@ namespace ChessForge
             {
                 // the user chose cancel so we are not closing after all
                 return false;
+            }
+            else
+            {
+                SessionWorkbook.GamesManager.CancelAll();
             }
 
             WorkbookViewState wvs = new WorkbookViewState(SessionWorkbook);
