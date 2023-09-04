@@ -117,7 +117,10 @@ namespace ChessForge
         /// </summary>
         public void CancelAll()
         {
-            _state = ProcessState.CANCELED;
+            if (_state != ProcessState.FINISHED)
+            {
+                _state = ProcessState.CANCELED;
+            }
         }
 
         /// <summary>
