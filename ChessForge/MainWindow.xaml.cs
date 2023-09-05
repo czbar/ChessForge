@@ -622,6 +622,7 @@ namespace ChessForge
                     Timers.Stop(AppTimers.TimerId.APP_START);
                     EngineMessageProcessor.CreateEngineService(this, _isDebugMode);
                     Timers.Start(AppTimers.TimerId.APP_START);
+                    BoardCommentBox.ReadingFile();
                 }
                 else if (_appStartStage == 1)
                 {
@@ -863,11 +864,18 @@ namespace ChessForge
         {
             try
             {
-                gameIndex = AdjustArticleIndex(gameIndex, WorkbookManager.SessionWorkbook.ActiveChapter.GetModelGameCount());
-                if (gameIndex >= 0 && gameIndex < WorkbookManager.SessionWorkbook.ActiveChapter.GetModelGameCount())
+                Chapter activeChapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                gameIndex = AdjustArticleIndex(gameIndex, activeChapter.GetModelGameCount());
+                if (gameIndex >= 0 && gameIndex < activeChapter.GetModelGameCount())
                 {
-                    WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex = gameIndex;
-                    WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.MODEL_GAME, gameIndex);
+                    Article article = activeChapter.ModelGames[gameIndex];
+                    if (!article.IsReady)
+                    {
+                        activeChapter.ModelGames[gameIndex] = WorkbookManager.SessionWorkbook.GamesManager.ProcessArticleSync(article);
+                    }
+
+                    activeChapter.ActiveModelGameIndex = gameIndex;
+                    activeChapter.SetActiveVariationTree(GameData.ContentType.MODEL_GAME, gameIndex);
 
                     PieceColor orient = EffectiveBoardOrientation(WorkbookManager.ItemType.MODEL_GAME);
                     MainChessBoard.FlipBoard(orient);
@@ -875,7 +883,7 @@ namespace ChessForge
                     SetupGuiForActiveModelGame(gameIndex, setFocus);
                     if (setFocus && WorkbookManager.SessionWorkbook != null)
                     {
-                        WorkbookLocationNavigator.SaveNewLocation(WorkbookManager.SessionWorkbook.ActiveChapter, GameData.ContentType.MODEL_GAME, gameIndex);
+                        WorkbookLocationNavigator.SaveNewLocation(activeChapter, GameData.ContentType.MODEL_GAME, gameIndex);
                     }
                 }
                 else
@@ -883,7 +891,7 @@ namespace ChessForge
                     if (_modelGameTreeView != null)
                     {
                         _modelGameTreeView.Clear(GameData.ContentType.MODEL_GAME);
-                        WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.NONE);
+                        activeChapter.SetActiveVariationTree(GameData.ContentType.NONE);
                     }
                 }
             }
@@ -946,11 +954,18 @@ namespace ChessForge
         {
             try
             {
-                exerciseIndex = AdjustArticleIndex(exerciseIndex, WorkbookManager.SessionWorkbook.ActiveChapter.GetExerciseCount());
-                if (exerciseIndex >= 0 && exerciseIndex < WorkbookManager.SessionWorkbook.ActiveChapter.GetExerciseCount())
+                Chapter activeChapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                exerciseIndex = AdjustArticleIndex(exerciseIndex, activeChapter.GetExerciseCount());
+                if (exerciseIndex >= 0 && exerciseIndex < activeChapter.GetExerciseCount())
                 {
-                    WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex = exerciseIndex;
-                    WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.EXERCISE, exerciseIndex);
+                    Article article = activeChapter.Exercises[exerciseIndex];
+                    if (!article.IsReady)
+                    {
+                        activeChapter.Exercises[exerciseIndex] = WorkbookManager.SessionWorkbook.GamesManager.ProcessArticleSync(article);
+                    }
+
+                    activeChapter.ActiveExerciseIndex = exerciseIndex;
+                    activeChapter.SetActiveVariationTree(GameData.ContentType.EXERCISE, exerciseIndex);
 
                     PieceColor orient = EffectiveBoardOrientation(WorkbookManager.ItemType.EXERCISE);
                     if (orient == PieceColor.None)
@@ -962,7 +977,7 @@ namespace ChessForge
                     SetupGuiForActiveExercise(exerciseIndex, setFocus);
                     if (setFocus && WorkbookManager.SessionWorkbook != null)
                     {
-                        WorkbookLocationNavigator.SaveNewLocation(WorkbookManager.SessionWorkbook.ActiveChapter, GameData.ContentType.EXERCISE, exerciseIndex);
+                        WorkbookLocationNavigator.SaveNewLocation(activeChapter, GameData.ContentType.EXERCISE, exerciseIndex);
                     }
                 }
                 else
@@ -970,6 +985,7 @@ namespace ChessForge
                     if (_exerciseTreeView != null)
                     {
                         _exerciseTreeView.Clear(GameData.ContentType.EXERCISE);
+                        activeChapter.SetActiveVariationTree(GameData.ContentType.NONE);
                     }
                 }
             }
@@ -1372,16 +1388,19 @@ namespace ChessForge
         /// <param name="isLastOpen">were we asked to open the file that was open last in the previous session</param>
         private void ReadWorkbookFile(string fileName, bool isLastOpen, ref ObservableCollection<GameData> GameList)
         {
+            Cursor prevCursor = Cursor;
+
             try
             {
                 if (!WorkbookManager.CheckFileExists(fileName, isLastOpen))
                 {
+                    BoardCommentBox.ShowTabHints();
                     return;
                 }
+                BoardCommentBox.ReadingFile();
 
                 AppState.RestartInIdleMode(false);
                 AppState.WorkbookFilePath = fileName;
-                BoardCommentBox.ReadingFile();
 
                 string fileExtension = Path.GetExtension(fileName).ToLower();
 
@@ -1391,6 +1410,7 @@ namespace ChessForge
                 switch (fileExtension)
                 {
                     case ".pgn":
+                        Cursor = Cursors.Wait;
                         WorkbookManager.ReadPgnFile(fileName, ref GameList, GameData.ContentType.GENERIC, GameData.ContentType.NONE);
                         bool res = WorkbookManager.PrepareWorkbook(ref GameList, out isChessForgeFile);
                         acceptFile = res;
@@ -1427,6 +1447,8 @@ namespace ChessForge
                 MessageBox.Show(e.Message, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
                 AppState.RestartInIdleMode();
             }
+
+            Cursor = prevCursor;
         }
 
         /// <summary>
