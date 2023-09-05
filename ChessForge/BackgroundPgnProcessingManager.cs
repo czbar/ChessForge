@@ -53,6 +53,11 @@ namespace ChessForge
             get => _articlesToProcess - (_articlesInProgress + _articlesCompleted);
         }
 
+        /// <summary>
+        /// Accessor to the Game processing status.
+        /// </summary>
+        public ProcessState State { get => _state; }
+
         // list of Articles to be processed by the background workers
         public List<Article> _articleList;
 
@@ -104,6 +109,11 @@ namespace ChessForge
                 {
                     ReuseWorker(processor);
                 }
+
+                if (_articlesCompleted % 500 == 0)
+                {
+                    AppState.MainWin.BoardCommentBox.ReadingItems(_articlesCompleted, _articleList.Count);
+                }
             }
             else
             {
@@ -120,7 +130,45 @@ namespace ChessForge
             if (_state != ProcessState.FINISHED)
             {
                 _state = ProcessState.CANCELED;
+                AppState.MainWin.BoardCommentBox.ShowTabHints();
             }
+        }
+
+        /// <summary>
+        /// Serves the request to synchronously process the article's text.
+        /// In order not to risk upsetting the integrity of the ongoing background
+        /// processing, a copy of the article will made, processed and returned.
+        /// </summary>
+        /// <param name="article"></param>
+        /// <returns></returns>
+        public Article ProcessArticleSync(Article article)
+        {
+            Article retArticle = article;
+
+            int index = GetArticleIndex(article);
+            if (index >= 0)
+            {
+                try
+                {
+                    if (!_articleList[index].IsReady)
+                    {
+                        retArticle = new Article(article.Tree);
+                        retArticle.Tree.Header = article.Tree.Header.CloneMe(true);
+                        VariationTree tree = retArticle.Tree;
+
+                        // check if fen needs to be set
+                        string fen = tree.Header.IsExercise() ? tree.Header.GetFenString() : null;
+                        PgnGameParser pp = new PgnGameParser(_rawArticles[index].GameText, tree, fen, true);
+                    }
+                }
+                catch
+                {
+                }
+
+                retArticle.IsReady = true;
+            }
+
+            return retArticle;
         }
 
         /// <summary>
@@ -158,7 +206,7 @@ namespace ChessForge
         private bool KickoffWorker(int workerIndex, int articleIndex)
         {
             bool res = false;
-            
+
             if (_articleList[articleIndex] != null)
             {
                 _workerPool[workerIndex].Run(articleIndex, _rawArticles[articleIndex].GameText, ref _articleList[articleIndex].Tree);
@@ -217,6 +265,28 @@ namespace ChessForge
             }
         }
 
+
+        /// <summary>
+        /// Finds the passed article in the list of articles.
+        /// </summary>
+        /// <param name="article"></param>
+        /// <returns></returns>
+        private int GetArticleIndex(Article article)
+        {
+            int index = -1;
+
+            for (int i = 0; i < _articleList.Count; i++)
+            {
+                if (article == _articleList[i])
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            return index;
+        }
+
         /// <summary>
         /// Prepares data structures and performs parsing of the supplied list of
         /// PGN articles.
@@ -251,6 +321,7 @@ namespace ChessForge
                     if (_articlesCompleted >= _rawArticles.Count)
                     {
                         _state = ProcessState.FINISHED;
+                        AppState.MainWin.BoardCommentBox.ShowTabHints();
                     }
                 }
                 catch (Exception ex)
