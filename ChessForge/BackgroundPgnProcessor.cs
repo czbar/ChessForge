@@ -79,8 +79,18 @@ namespace ChessForge
                 _dataObject = new BackgroundPgnParserData();
                 _dataObject.ArticleIndex = articleIndex;
                 _dataObject.ArticleText = articleText;
-                _dataObject.Fen = fen;
                 _dataObject.Tree = tree;
+
+                // check if fen needs to be set
+                if (!tree.Header.IsExercise())
+                {
+                    fen = null;
+                }
+                else
+                {
+                    fen = tree.Header.GetFenString();
+                }
+                _dataObject.Fen = fen;
 
                 _worker.RunWorkerAsync(_dataObject);
             }
