@@ -158,7 +158,7 @@ namespace ChessForge
 
                         // check if fen needs to be set
                         string fen = tree.Header.IsExercise() ? tree.Header.GetFenString() : null;
-                        PgnGameParser pp = new PgnGameParser(_rawArticles[index].GameText, tree, fen, true);
+                        PgnGameParser pp = new PgnGameParser(_rawArticles[index].GameText, tree, fen, false);
                     }
                 }
                 catch
