@@ -1539,6 +1539,8 @@ namespace ChessForge
         public void SetupGuiForActiveStudyTree(bool focusOnStudyTree)
         {
             _studyTreeView = new VariationTreeView(UiRtbStudyTreeView.Document, this, GameData.ContentType.STUDY_TREE, -1);
+
+            //TODO: make sure we don't set it up multiple times
             _studyTreeView.ArticleSelected += ArticleSelected;
 
             VariationTree studyTree = AppState.ActiveChapter.StudyTree.Tree;
