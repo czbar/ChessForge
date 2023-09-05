@@ -904,7 +904,9 @@ namespace ChessForge
                             try
                             {
                                 // special treatment for the first one
+                                GameHeader gh = WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree.Header.CloneMe(true);
                                 PgnGameParser pgp = new PgnGameParser(games[i].GameText, WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree, out bool multi);
+                                WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree.Header = gh;
                             }
                             catch (Exception ex)
                             {
