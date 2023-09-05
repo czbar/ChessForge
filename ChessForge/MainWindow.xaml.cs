@@ -1543,7 +1543,19 @@ namespace ChessForge
             //TODO: make sure we don't set it up multiple times
             _studyTreeView.ArticleSelected += ArticleSelected;
 
-            VariationTree studyTree = AppState.ActiveChapter.StudyTree.Tree;
+            VariationTree studyTree;
+
+            Article article = AppState.ActiveChapter.StudyTree;
+            if (!article.IsReady)
+            {
+                AppState.ActiveChapter.StudyTree = WorkbookManager.SessionWorkbook.GamesManager.ProcessArticleSync(article);
+                studyTree = article.Tree;
+            }
+            else
+            {
+                studyTree = AppState.ActiveChapter.StudyTree.Tree;
+            }
+
             if (studyTree.Nodes.Count == 0)
             {
                 studyTree.CreateNew();
