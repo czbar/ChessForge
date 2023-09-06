@@ -113,8 +113,16 @@ namespace ChessForge
             {
                 PgnGameParser pp = new PgnGameParser(_dataObject.ArticleText, _dataObject.Tree, _dataObject.Fen, false);
             }
-            catch 
-            { 
+            catch (Exception ex)
+            {
+                if (ex is ParserException)
+                {
+                    _dataObject.ErrorText = GuiUtilities.TranslateParseException(ex as ParserException);
+                }
+                else
+                {
+                    _dataObject.ErrorText = ex.Message;
+                }
             }
         }
 
@@ -126,7 +134,7 @@ namespace ChessForge
         private void RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             _workerState = ProcessState.FINISHED;
-            _parent.JobFinished(_dataObject.ArticleIndex);
+            _parent.JobFinished(_dataObject.ArticleIndex, _dataObject.ErrorText);
         }
     }
 }
