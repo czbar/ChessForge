@@ -24,6 +24,9 @@ namespace ChessForge
         // list of background processors
         private List<BackgroundPgnProcessor> _workerPool = new List<BackgroundPgnProcessor>();
 
+        // Text of errors returned by the workers
+        private List<string> _errors = new List<string>();
+
         // number of articles to process
         private int _articlesToProcess;
 
@@ -95,13 +98,14 @@ namespace ChessForge
         /// Called by the background workers to report completion of the work
         /// </summary>
         /// <param name="articleIndex"></param>
-        public void JobFinished(int articleIndex)
+        public void JobFinished(int articleIndex, string errorText)
         {
             BackgroundPgnProcessor processor = _workerPool.Find(x => x.ArticleIndex == articleIndex);
             if (processor != null)
             {
                 _articleList[articleIndex].Tree = processor.DataObject.Tree;
                 _articleList[articleIndex].IsReady = true;
+                _errors[articleIndex] = errorText;
 
                 UpdateVariablesOnJobFinish(articleIndex);
 
@@ -302,6 +306,11 @@ namespace ChessForge
             {
                 _articlesToProcess = _rawArticles.Count;
             }
+
+            for (int i = 0; i < _rawArticles.Count; i++)
+            {
+                _errors.Add(null);
+            }
         }
 
         /// <summary>
@@ -321,6 +330,7 @@ namespace ChessForge
                     if (_articlesCompleted >= _rawArticles.Count)
                     {
                         _state = ProcessState.FINISHED;
+                        ReportErrors();
                         AppState.MainWin.BoardCommentBox.ShowTabHints();
                     }
                 }
@@ -328,6 +338,38 @@ namespace ChessForge
                 {
                     AppLog.Message("UpdateVariablesOnJobFinish()", ex);
                 }
+            }
+        }
+
+        /// <summary>
+        /// If any errors were detected, shows them in a dialog.
+        /// </summary>
+        private void ReportErrors()
+        {
+            StringBuilder sbErrors = new StringBuilder();
+            int errorCount = 0;
+            int chapterIndex = -1;
+
+            for (int i = 0; i < _errors.Count; i++)
+            {
+                if (_errors[i] != null)
+                {
+                    if (_articleList[i].ContentType == GameData.ContentType.STUDY_TREE)
+                    {
+                        chapterIndex++;
+                    }
+
+                    if (!string.IsNullOrEmpty(_errors[i]))
+                    {
+                        sbErrors.AppendLine(WorkbookManager.BuildGameParseErrorText(chapterIndex, i + 1, _rawArticles[i], _errors[i]));
+                        errorCount++;
+                    }
+                }
+            }
+
+            if (errorCount > 0)
+            {
+                WorkbookManager.ShowPgnProcessingErrors(Properties.Resources.DlgParseErrors, ref sbErrors);
             }
         }
 
