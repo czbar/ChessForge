@@ -91,7 +91,7 @@ namespace GenerateOpeningsDictionary
         static private string GetLastPositionFen(string moves)
         {
             VariationTree tree = new VariationTree(GameData.ContentType.NONE);
-            new PgnGameParser(moves, tree);
+            new PgnGameParser(moves, tree, null);
             TreeNode lastNode = tree.Nodes[tree.Nodes.Count - 1];
             return FenParser.GenerateShortFen(lastNode.Position);
         }

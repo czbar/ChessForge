@@ -75,6 +75,20 @@ namespace GameTree
             set => _customBoardOrientation = value;
         }
 
+        /// <summary>
+        /// Move numbering adjustment for the GUI.
+        /// Internally the root node always has number 1
+        /// but in the GUI we may want to start at a diiferent number.
+        /// </summary>
+        public uint MoveNumberOffset
+        {
+            get => _moveNumberOffset; 
+            set => _moveNumberOffset = value;
+        }
+
+        // move numbering offset
+        private uint _moveNumberOffset = 0;
+
         // whether the Associated Tree is active
         private bool _isAssociatedTreeActive = false;
 

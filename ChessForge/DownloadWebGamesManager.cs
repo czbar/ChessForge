@@ -213,9 +213,9 @@ namespace ChessForge
                 }
                 if (blackGames.Count > 0)
                 {
-                    if (whiteGames.Count > 0)
+                    if (createWhiteChapter)
                     {
-                        // create a new chapter for Black games if the White chapter was created
+                        // create a new chapter for Black games if createWhiteChapter is true
                         WorkbookManager.SessionWorkbook.CreateNewChapter();
                     }
                     WorkbookManager.SessionWorkbook.ActiveChapter.SetTitle(player + ": " + Properties.Resources.GamesWithBlack);

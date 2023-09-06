@@ -32,5 +32,10 @@ namespace ChessForge
         /// if different from the starting position.
         /// </summary>
         public string Fen;
+
+        /// <summary>
+        /// Text of a processing error if one occurred.
+        /// </summary>
+        public string ErrorText;
     }
 }

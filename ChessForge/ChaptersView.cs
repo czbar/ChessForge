@@ -30,8 +30,18 @@ namespace ChessForge
         private static readonly string STYLE_MODEL_GAME = "model_game";
         private static readonly string STYLE_EXERCISE = "exercise";
 
-        private const string SUBHEADER_INDENT = "        ";
-        private const string SUBHEADER_DOUBLE_INDENT = "            ";
+        private const string SUBHEADER_INDENT          = "        ";
+        private const string SELECTED_SUBHEADER_INDENT = "       ";
+        private const string SUBHEADER_DOUBLE_INDENT   = "            ";
+        private const string SELECTED_ARTICLE_INDENT   = "           ";
+
+        private string SELECTED_STUDY_PREFIX = SELECTED_SUBHEADER_INDENT + Constants.CHAR_SELECTED.ToString() + " ";
+        private string SELECTED_ARTICLE_PREFIX = SELECTED_ARTICLE_INDENT + Constants.CHAR_SELECTED.ToString() + " ";
+        private string SELECTED_CHAPTER_PREFIX = Constants.CHAR_SELECTED.ToString() + " ";
+
+        private string NON_SELECTED_STUDY_PREFIX = SUBHEADER_INDENT;
+        private string NON_SELECTED_ARTICLE_PREFIX = SUBHEADER_DOUBLE_INDENT;
+        private string NON_SELECTED_CHAPTER_PREFIX = "";
 
         /// <summary>
         /// The type of item most recently clicked. It is required when handling an
@@ -273,30 +283,45 @@ namespace ChessForge
         /// </summary>
         public void HighlightActiveChapter()
         {
+            Run runToSelect = null;
+            Run runToClear = null;
+
             try
             {
                 int activeChapterIndex = WorkbookManager.SessionWorkbook.ActiveChapter.Index;
-                // iterate over the runs with chapter name and set the font for the active one to bold
-                foreach (Block b in Document.Blocks)
+                // iterate over the runs with chapter name and marks selection on the active one
+                foreach (Block block in Document.Blocks)
                 {
-                    if (b is Paragraph)
+                    if (block is Paragraph)
                     {
-                        foreach (Inline r in ((Paragraph)b).Inlines)
+                        foreach (Inline inl in ((Paragraph)block).Inlines)
                         {
-                            int chapterIndex = GetNodeIdFromRunName((r as Run).Name, _run_chapter_title_);
-                            if (chapterIndex >= 0)
+                            Run run = inl as Run;
+                            if (run != null)
                             {
-                                if (chapterIndex == activeChapterIndex)
+                                int chapterIndex = GetNodeIdFromRunName(run.Name, _run_chapter_title_);
+                                if (chapterIndex >= 0)
                                 {
-                                    (r as Run).FontWeight = FontWeights.Bold;
-                                }
-                                else
-                                {
-                                    (r as Run).FontWeight = FontWeights.Normal;
+                                    if (chapterIndex == activeChapterIndex)
+                                    {
+                                        runToSelect = run;
+                                    }
+                                    else
+                                    {
+                                        runToClear = run;
+                                    }
                                 }
                             }
                         }
                     }
+                }
+                if (runToSelect != null)
+                {
+                    ShowSelectionMark(ref runToSelect, true, SELECTED_CHAPTER_PREFIX, NON_SELECTED_CHAPTER_PREFIX);
+                }
+                if (runToClear != null)
+                {
+                    ShowSelectionMark(ref runToClear, false, SELECTED_CHAPTER_PREFIX, NON_SELECTED_CHAPTER_PREFIX);
                 }
             }
             catch
@@ -367,7 +392,7 @@ namespace ChessForge
                 Run rTitle = CreateRun(STYLE_CHAPTER_TITLE, chapterNo + ". " + chapter.GetTitle(), true);
                 if (chapter.Index == WorkbookManager.SessionWorkbook.ActiveChapter.Index)
                 {
-                    rTitle.FontWeight = FontWeights.Bold;
+                    ShowSelectionMark(ref rTitle, true, SELECTED_CHAPTER_PREFIX, NON_SELECTED_CHAPTER_PREFIX);
                 }
                 rTitle.Name = _run_chapter_title_ + chapter.Index.ToString();
                 rTitle.MouseDown += EventChapterHeaderClicked;
@@ -492,7 +517,7 @@ namespace ChessForge
             r.Name = _run_study_tree_ + chapter.Index.ToString();
             if (LastClickedItemType == WorkbookManager.ItemType.STUDY)
             {
-                r.FontWeight = FontWeights.Bold;
+                ShowSelectionMark(ref r, true, SELECTED_STUDY_PREFIX, NON_SELECTED_STUDY_PREFIX);
             }
             r.MouseDown += EventStudyTreeHeaderClicked;
             r.MouseMove += EventStudyTreeHeaderHovered;
@@ -516,7 +541,7 @@ namespace ChessForge
                 r.Name = _run_intro_ + chapter.Index.ToString();
                 if (LastClickedItemType == WorkbookManager.ItemType.INTRO)
                 {
-                    r.FontWeight = FontWeights.Bold;
+                    ShowSelectionMark(ref r, true, SELECTED_STUDY_PREFIX, NON_SELECTED_STUDY_PREFIX);
                 }
                 r.MouseDown += EventIntroHeaderClicked;
                 r.MouseMove += EventIntroHeaderHovered;
@@ -595,7 +620,7 @@ namespace ChessForge
                     rGame.MouseLeave += EventModelGameRunLeft;
                     if (LastClickedItemType == WorkbookManager.ItemType.MODEL_GAME && i == chapter.ActiveModelGameIndex && chapter == WorkbookManager.SessionWorkbook.ActiveChapter)
                     {
-                        rGame.FontWeight = FontWeights.Bold;
+                        ShowSelectionMark(ref rGame, true, SELECTED_ARTICLE_PREFIX, NON_SELECTED_ARTICLE_PREFIX);
                     }
                     para.Inlines.Add(rGame);
                 }
@@ -633,7 +658,7 @@ namespace ChessForge
                     rGame.MouseLeave += EventExerciseRunLeft;
                     if (LastClickedItemType == WorkbookManager.ItemType.EXERCISE && i == chapter.ActiveExerciseIndex && chapter == WorkbookManager.SessionWorkbook.ActiveChapter)
                     {
-                        rGame.FontWeight = FontWeights.Bold;
+                        ShowSelectionMark(ref rGame, true, SELECTED_ARTICLE_PREFIX, NON_SELECTED_ARTICLE_PREFIX);
                     }
                     para.Inlines.Add(rGame);
                 }
@@ -794,7 +819,7 @@ namespace ChessForge
                     if (newSelGame != null)
                     {
                         chapter.ActiveModelGameIndex = index;
-                        RebuildChapterParagraph(chapter);
+                        HighlightChapterSelections(chapter);
                         _mainWin.DisplayPosition(newSelGame.Tree.GetFinalPosition());
                         BringArticleIntoView(chapter.Index, GameData.ContentType.MODEL_GAME, index);
                     }
@@ -804,7 +829,7 @@ namespace ChessForge
                     if (newSelExercise != null)
                     {
                         chapter.ActiveExerciseIndex = index;
-                        RebuildChapterParagraph(chapter);
+                        HighlightChapterSelections(chapter);
                         _mainWin.DisplayPosition(newSelExercise.Tree.RootNode);
                         BringArticleIntoView(chapter.Index, GameData.ContentType.EXERCISE, index);
                     }
@@ -1136,7 +1161,7 @@ namespace ChessForge
         /// <summary>
         /// Selects a Chapter.
         /// If this is a new chapter, refreshes the view of the previously
-        /// selected one (e.g. to remove bolding on selected games/exercises)
+        /// selected one (e.g. to remove marks on selected games/exercises)
         /// </summary>
         /// <param name="chapterIndex"></param>
         /// <param name="focusOnStudyTree"></param>
@@ -1202,7 +1227,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Restore normal font in any bolded item
+        /// Remove selection marks from any previously selected item
         /// </summary>
         /// <param name="chapter"></param>
         /// <param name="para"></param>
@@ -1213,12 +1238,28 @@ namespace ChessForge
                 return;
             }
 
+            List<Run> runsToClear = new List<Run>();
+
             foreach (Inline inl in para.Inlines)
             {
                 Run run = inl as Run;
-                if (run != null && run.FontWeight == FontWeights.Bold)
+                if (run != null)
                 {
-                    run.FontWeight = FontWeights.Normal;
+                    runsToClear.Add(run);
+                }
+            }
+
+            for (int i = 0; i < runsToClear.Count; i++)
+            {
+                Run r = runsToClear[i];
+                WorkbookManager.TabViewType runType = GetRunTypeFromName(runsToClear[i].Name);
+                if (runType == WorkbookManager.TabViewType.CHAPTERS)
+                {
+                    ShowSelectionMark(ref r, false, SELECTED_CHAPTER_PREFIX, NON_SELECTED_CHAPTER_PREFIX);
+                }
+                else if (runType == WorkbookManager.TabViewType.MODEL_GAME || runType == WorkbookManager.TabViewType.EXERCISE)
+                {
+                    ShowSelectionMark(ref r, false, SELECTED_ARTICLE_PREFIX, NON_SELECTED_ARTICLE_PREFIX);
                 }
             }
         }
@@ -1236,34 +1277,74 @@ namespace ChessForge
                 return;
             }
 
+            Run gameRunToSelect = null;
+            Run gameRunToClear = null;
+
+            Run exerciseRunToSelect = null;
+            Run exerciseRunToClear = null;
+
+            Run chapterRunToSelect = null;
+
             foreach (Inline inl in para.Inlines)
             {
                 Run run = inl as Run;
                 if (run != null)
                 {
-                    run.FontWeight = FontWeights.Normal;
+                    if (run.FontWeight != FontWeights.Normal)
+                    {
+                        run.FontWeight = FontWeights.Normal;
+                    }
 
                     WorkbookManager.TabViewType runType = GetRunTypeFromName(run.Name);
                     int index = TextUtils.GetIdFromPrefixedString(run.Name);
                     switch (runType)
                     {
                         case WorkbookManager.TabViewType.CHAPTERS:
-                            run.FontWeight = FontWeights.Bold;
+                            chapterRunToSelect = run;
                             break;
                         case WorkbookManager.TabViewType.MODEL_GAME:
                             if (index == chapter.ActiveModelGameIndex)
                             {
-                                run.FontWeight = FontWeights.Bold;
+                                gameRunToSelect = run;
+                            }
+                            else if (run.Text.Contains(SELECTED_ARTICLE_PREFIX))
+                            {
+                                gameRunToClear = run;
                             }
                             break;
                         case WorkbookManager.TabViewType.EXERCISE:
                             if (index == chapter.ActiveExerciseIndex)
                             {
-                                run.FontWeight = FontWeights.Bold;
+                                exerciseRunToSelect = run;
+                            }
+                            else if (run.Text.Contains(SELECTED_ARTICLE_PREFIX))
+                            {
+                                exerciseRunToClear = run;
                             }
                             break;
                     }
                 }
+            }
+
+            if (gameRunToSelect != null)
+            {
+                ShowSelectionMark(ref gameRunToSelect, true, SELECTED_ARTICLE_PREFIX, NON_SELECTED_ARTICLE_PREFIX);
+            }
+            if (gameRunToClear != null)
+            {
+                ShowSelectionMark(ref gameRunToClear, false, SELECTED_ARTICLE_PREFIX, NON_SELECTED_ARTICLE_PREFIX);
+            }
+            if (exerciseRunToSelect != null)
+            {
+                ShowSelectionMark(ref exerciseRunToSelect, true, SELECTED_ARTICLE_PREFIX, NON_SELECTED_ARTICLE_PREFIX);
+            }
+            if (exerciseRunToClear != null)
+            {
+                ShowSelectionMark(ref exerciseRunToClear, false, SELECTED_ARTICLE_PREFIX, NON_SELECTED_ARTICLE_PREFIX);
+            }
+            if (chapterRunToSelect != null)
+            {
+                ShowSelectionMark(ref chapterRunToSelect, true, SELECTED_CHAPTER_PREFIX, NON_SELECTED_CHAPTER_PREFIX);
             }
         }
 
@@ -1353,6 +1434,42 @@ namespace ChessForge
         {
             _mainWin.ShowChaptersFloatingBoard(false, viewType);
         }
+
+        /// <summary>
+        /// Modifies the text of the run to include or remove the SELECTION MARK.
+        /// </summary>
+        /// <param name="run"></param>
+        /// <param name="highlighted"></param>
+        private void ShowSelectionMark(ref Run run, bool highlighted, string selectionPrefix, string nonSelectionPrefix)
+        {
+            if (string.IsNullOrEmpty(run.Text))
+            {
+                return;
+            }
+
+            if (highlighted)
+            {
+                if (!run.Text.StartsWith(selectionPrefix))
+                {
+                    if (string.IsNullOrEmpty(nonSelectionPrefix))
+                    {
+                        run.Text = selectionPrefix + run.Text;
+                    }
+                    else
+                    {
+                        run.Text = run.Text.Replace(nonSelectionPrefix, selectionPrefix);
+                    }
+                }
+            }
+            else
+            {
+                if (run.Text.StartsWith(selectionPrefix))
+                {
+                    run.Text = run.Text.Replace(selectionPrefix, nonSelectionPrefix);
+                }
+            }
+        }
+
 
         //*******************************************************************************************
         //

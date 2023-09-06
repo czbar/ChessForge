@@ -85,7 +85,7 @@ namespace ChessForge
                         throw new Exception(Properties.Resources.ErrGamesNotFound);
                     }
                     _tree = new VariationTree(GameData.ContentType.MODEL_GAME);
-                    PgnGameParser pgnGame = new PgnGameParser(GameDownload.GameText, _tree);
+                    PgnGameParser pgnGame = new PgnGameParser(GameDownload.GameText, _tree, null);
                     _tree.ContentType = GameData.ContentType.MODEL_GAME;
 
                     PopulateHeaderLine(_tree);

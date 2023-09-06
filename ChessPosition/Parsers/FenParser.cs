@@ -365,6 +365,12 @@ namespace GameTree
         private static void SetMoveNumber(string moveNo, ref BoardPosition board)
         {
             board.MoveNumber = Convert.ToUInt32(moveNo);
+            // if White is on move, subtract one because the move number
+            // in BoardPosition is obe ply behind FEN
+            if (board.ColorToMove == PieceColor.White)
+            {
+                board.MoveNumber--;
+            }
         }
 
         /// <summary>

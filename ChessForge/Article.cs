@@ -28,7 +28,7 @@ namespace ChessForge
         /// </summary>
         public string CodedContent
         {
-            get => Tree.RootNode.Data;
+            get => (Tree.RootNode == null ? null : Tree.RootNode.Data);
         }
 
         /// <summary>

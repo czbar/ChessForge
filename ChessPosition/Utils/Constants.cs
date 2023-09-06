@@ -212,6 +212,11 @@ namespace ChessPosition
         public const char CHAR_REFERENCE_MARK = '\u203B';
 
         /// <summary>
+        /// The reference mark character
+        /// </summary>
+        public const char CHAR_SELECTED = '\u27A4';
+
+        /// <summary>
         /// Min and Max dimensions of the chess board
         /// when starting from 0.
         /// </summary>

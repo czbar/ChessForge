@@ -12,8 +12,6 @@ using System.Windows.Input;
 using static ChessForge.WorkbookOperation;
 using ChessPosition.GameTree;
 using ChessForge;
-using System.Reflection;
-using System.Runtime.Remoting.Messaging;
 using System.Windows.Documents;
 using System.Linq;
 
@@ -92,6 +90,10 @@ namespace ChessForge
             if (WorkbookManager.SessionWorkbook != null && AppState.IsDirty)
             {
                 proceed = WorkbookManager.PromptAndSaveWorkbook(false, out _);
+                if (proceed)
+                {
+                    WorkbookManager.SessionWorkbook.GamesManager.CancelAll();
+                }
             }
 
             if (proceed && ChangeAppModeWarning(LearningMode.Mode.MANUAL_REVIEW))
@@ -1824,6 +1826,7 @@ namespace ChessForge
         /// <param name="header"></param>
         private void CopyHeaderFromGame(VariationTree tree, GameHeader header, bool overrideGuid = false)
         {
+            // TODO: replace with Header.CloneMe()
             tree.Header.SetHeaderValue(PgnHeaders.KEY_WHITE, header.GetWhitePlayer(out _));
             tree.Header.SetHeaderValue(PgnHeaders.KEY_BLACK, header.GetBlackPlayer(out _));
             tree.Header.SetHeaderValue(PgnHeaders.KEY_VARIANT, header.GetVariant(out _));

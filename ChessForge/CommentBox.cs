@@ -207,6 +207,11 @@ namespace ChessForge
         /// <param name="title"></param>
         public void ShowTabHints()
         {
+            if (WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.GamesManager.State == ProcessState.RUNNING)
+            {
+                return;
+            }
+
             _mainWin.Dispatcher.Invoke(() =>
             {
                 Document.Blocks.Clear();
@@ -422,8 +427,6 @@ namespace ChessForge
                 Document.Blocks.Add(para);
                 para.Foreground = brush;
             });
-
-            AppState.DoEvents();
         }
     }
 }

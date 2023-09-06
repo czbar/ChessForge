@@ -60,7 +60,7 @@ namespace GameTree
                     DEBUG_MODE = true;
                 }
 
-                ProcessPgnGameText(tree, pgnGametext);
+                ProcessPgnGameText(tree, pgnGametext, null);
 
                 if (_remainingGameText.IndexOf("[White") >= 0)
                 {
@@ -78,11 +78,11 @@ namespace GameTree
         /// </summary>
         /// <param name="pgnGametext"></param>
         /// <param name="gameTree"></param>
-        public PgnGameParser(string pgnGametext, VariationTree gameTree, string fen = null)
+        public PgnGameParser(string pgnGametext, VariationTree gameTree, string fen, bool updateHeaders = true)
         {
             try
             {
-                ProcessPgnGameText(gameTree, pgnGametext, fen);
+                ProcessPgnGameText(gameTree, pgnGametext, fen, updateHeaders);
             }
             catch (Exception ex)
             {
@@ -96,16 +96,19 @@ namespace GameTree
         /// file in which we have already processed the first game. 
         /// </summary>
         /// <param name="tree"></param>
-        private void ProcessPgnGameText(VariationTree tree, string pgnGametext, string fen = null)
+        private void ProcessPgnGameText(VariationTree tree, string pgnGametext, string fen, bool updateHeaders = true)
         {
             _tree = tree;
 
             // clear Nodes, just in case
             _tree.Nodes.Clear();
-            _tree.Header.Clear();
+            if (updateHeaders)
+            {
+                _tree.Header.Clear();
+            }
 
             _runningNodeId = 0;
-            _remainingGameText = ReadHeaders(pgnGametext);
+            _remainingGameText = ReadHeaders(pgnGametext, updateHeaders);
             ParsePgnTreeText(tree, fen);
 
             try
@@ -122,7 +125,7 @@ namespace GameTree
         /// </summary>
         /// <param name="pgnGametext"></param>
         /// <returns></returns>
-        public string ReadHeaders(string pgnGametext)
+        public string ReadHeaders(string pgnGametext, bool updateHeaders)
         {
             bool readingHeaders = true;
 
@@ -134,7 +137,7 @@ namespace GameTree
                 {
                     if (readingHeaders)
                     {
-                        readingHeaders = ProcessHeaderLine(line);
+                        readingHeaders = ProcessHeaderLine(line, updateHeaders);
                     }
 
                     if (!readingHeaders)
@@ -153,7 +156,7 @@ namespace GameTree
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>
-        private bool ProcessHeaderLine(string line)
+        private bool ProcessHeaderLine(string line, bool processHeaders)
         {
             line = line.Trim();
             if (line.Length == 0)
@@ -166,7 +169,10 @@ namespace GameTree
 
             if (line[0] == '[')
             {
-                ParseHeaderItem(line);
+                if (processHeaders)
+                {
+                    ParseHeaderItem(line);
+                }
                 return true;
             }
             else
@@ -219,7 +225,10 @@ namespace GameTree
             else
             {
                 FenParser.ParseFenIntoBoard(fen, ref rootNode.Position);
-                //rootNode.Position.EnPassantSquare = rootNode.Position.InheritedEnPassantSquare;
+                // Chess Forge requires that the rootNode's move number is 1.
+                // We force it to 1 but first save the actual number from FEN to apply in the GUI when appropriate.
+                tree.MoveNumberOffset = rootNode.Position.MoveNumber;
+                rootNode.Position.MoveNumber = 1;
                 BackShiftOnePly(ref rootNode);
             }
             tree.AddNode(rootNode);

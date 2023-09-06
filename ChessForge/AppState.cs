@@ -490,25 +490,25 @@ namespace ChessForge
             }
 
             AppLog.Message("Saving Workbook to File - START");
-            lock (_lockFileSave)
+            try
             {
-                try
+                string savePath = string.IsNullOrWhiteSpace(filePath) ? WorkbookFilePath : filePath;
+                if (WorkbookFileType == FileType.CHESS_FORGE_PGN)
                 {
-                    string savePath = string.IsNullOrWhiteSpace(filePath) ? WorkbookFilePath : filePath;
-                    if (WorkbookFileType == FileType.CHESS_FORGE_PGN)
+                    lock (_lockFileSave)
                     {
                         MainWin.SaveIntro();
                         string chfText = WorkbookFileTextBuilder.BuildWorkbookText();
                         File.WriteAllText(savePath, chfText);
-                        IsDirty = false;
                     }
+                    IsDirty = false;
                 }
-                catch (Exception ex)
-                {
-                    result = false;
-                    AppLog.Message("SaveWorkbookFile()", ex);
-                    MessageBox.Show(Strings.GetResource("FailedToSaveFile") + ": " + ex.Message, Strings.GetResource("Error"), MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+            }
+            catch (Exception ex)
+            {
+                result = false;
+                AppLog.Message("SaveWorkbookFile()", ex);
+                MessageBox.Show(Strings.GetResource("FailedToSaveFile") + ": " + ex.Message, Strings.GetResource("Error"), MessageBoxButton.OK, MessageBoxImage.Error);
             }
             AppLog.Message("Saving Workbook to File - END");
 
@@ -569,7 +569,7 @@ namespace ChessForge
                 if (chapter != null)
                 {
                     VariationTree tree = new VariationTree(GameData.ContentType.MODEL_GAME);
-                    PgnGameParser pgnGame = new PgnGameParser(GameDownload.GameText, tree);
+                    PgnGameParser pgnGame = new PgnGameParser(GameDownload.GameText, tree, null);
                     if (string.IsNullOrEmpty(GameDownload.GameText))
                     {
                         throw new Exception(Properties.Resources.ErrNoTextReceived);
@@ -1518,7 +1518,7 @@ namespace ChessForge
              {
                  if (eval)
                  {
-                     if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS 
+                     if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS
                          && (LearningMode.CurrentMode != LearningMode.Mode.ENGINE_GAME || EngineGame.CurrentState != EngineGame.GameState.ENGINE_THINKING))
                      {
                          _mainWin.UiImgEngineOn.Visibility = Visibility.Visible;

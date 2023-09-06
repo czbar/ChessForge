@@ -649,7 +649,7 @@ namespace ChessForge
                 // while the rest are Study Trees, Model Games and Exercises.
 
                 VariationTree preface = new VariationTree(GameData.ContentType.STUDY_TREE);
-                PgnGameParser pp = new PgnGameParser(GameList[0].GameText, preface);
+                PgnGameParser pp = new PgnGameParser(GameList[0].GameText, preface, null);
                 workbook.Description = preface.Nodes[0].Comment;
 
                 workbook.Title = GameList[0].GetWorkbookTitle();
@@ -662,9 +662,9 @@ namespace ChessForge
                 workbook.GameBoardOrientationConfig = TextUtils.ConvertStringToPieceColor(GameList[0].Header.GetGameBoardOrientation(out _));
                 workbook.ExerciseBoardOrientationConfig = TextUtils.ConvertStringToPieceColor(GameList[0].Header.GetExerciseBoardOrientation(out _));
 
-                ProcessGames(ref GameList, ref workbook);
+                //ProcessGames(ref GameList, ref workbook);
                 //TODO: replace the above with this:
-                //ProcessGamesInBackground(ref GameList, ref workbook);
+                ProcessGamesInBackground(ref GameList, ref workbook);
 
             }
             catch
@@ -904,7 +904,9 @@ namespace ChessForge
                             try
                             {
                                 // special treatment for the first one
+                                GameHeader gh = WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree.Header.CloneMe(true);
                                 PgnGameParser pgp = new PgnGameParser(games[i].GameText, WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree, out bool multi);
+                                WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree.Header = gh;
                             }
                             catch (Exception ex)
                             {
@@ -955,21 +957,21 @@ namespace ChessForge
 
         /// <summary>
         /// Builds text for the individual parsing error.
-        /// If chapter != null this is occurring while reading a Workbook
+        /// If chapterIndex >= 0 this is occurring while reading a Workbook
         /// otherwise while reading generic PGN (e.g. importing)
         /// </summary>
-        /// <param name="chapter"></param>
+        /// <param name="chapterIndex"></param>
         /// <param name="gameNo"></param>
         /// <param name="game"></param>
-        /// <param name="ex"></param>
+        /// <param name="msg"></param>
         /// <returns></returns>
-        private static string BuildGameParseErrorText(Chapter chapter, int gameNo, GameData game, string msg)
+        public static string BuildGameParseErrorText(int chapterIndex, int gameNo, GameData game, string msg)
         {
             StringBuilder sb = new StringBuilder();
 
-            if (chapter != null)
+            if (chapterIndex >= 0)
             {
-                sb.Append(Properties.Resources.Chapter + " " + (chapter.Index + 1).ToString() + ": " + game.GetContentType().ToString() + ": " + game.Header.BuildGameHeaderLine(false));
+                sb.Append(Properties.Resources.Chapter + " " + (chapterIndex + 1).ToString() + ": " + game.GetContentType().ToString() + ": " + game.Header.BuildGameHeaderLine(false));
             }
             else
             {
@@ -986,7 +988,7 @@ namespace ChessForge
         /// <summary>
         /// Reports errors encountered while merging
         /// </summary>
-        private static void ShowPgnProcessingErrors(string dlgTitle, ref StringBuilder sb)
+        public static void ShowPgnProcessingErrors(string dlgTitle, ref StringBuilder sb)
         {
             TextBoxDialog dlg = new TextBoxDialog(dlgTitle, sb.ToString())
             {
@@ -1196,6 +1198,10 @@ namespace ChessForge
                 // the user chose cancel so we are not closing after all
                 return false;
             }
+            else
+            {
+                SessionWorkbook.GamesManager.CancelAll();
+            }
 
             WorkbookViewState wvs = new WorkbookViewState(SessionWorkbook);
             wvs.SaveState();
@@ -1303,6 +1309,22 @@ namespace ChessForge
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Builds text for the individual parsing error.
+        /// If chapter != null this is occurring while reading a Workbook
+        /// otherwise while reading generic PGN (e.g. importing)
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="gameNo"></param>
+        /// <param name="game"></param>
+        /// <param name="ex"></param>
+        /// <returns></returns>
+        private static string BuildGameParseErrorText(Chapter chapter, int gameNo, GameData game, string msg)
+        {
+            int chapterIndex = chapter == null ? -1 : chapter.Index;
+            return BuildGameParseErrorText(chapterIndex, gameNo, game, msg);
         }
 
     }
