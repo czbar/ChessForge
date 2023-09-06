@@ -225,7 +225,10 @@ namespace GameTree
             else
             {
                 FenParser.ParseFenIntoBoard(fen, ref rootNode.Position);
-                //rootNode.Position.EnPassantSquare = rootNode.Position.InheritedEnPassantSquare;
+                // Chess Forge requires that the rootNode's move number is 1.
+                // We force it to 1 but first save the actual number from FEN to apply in the GUI when appropriate.
+                tree.MoveNumberOffset = rootNode.Position.MoveNumber;
+                rootNode.Position.MoveNumber = 1;
                 BackShiftOnePly(ref rootNode);
             }
             tree.AddNode(rootNode);
