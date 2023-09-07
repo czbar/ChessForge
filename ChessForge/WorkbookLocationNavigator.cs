@@ -62,7 +62,7 @@ namespace ChessForge
                 }
 
                 WorkbookManager.SessionWorkbook.ActiveChapter = chapter;
-                AppState.MainWin.HighlightActiveChapterHeader();
+                //AppState.MainWin.HighlightActiveChapterHeader();
                 GameData.ContentType contentType = GameData.ContentType.NONE;
                 int articleIndex = -1;
                 switch (tabType)
