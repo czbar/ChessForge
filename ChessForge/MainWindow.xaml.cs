@@ -1507,10 +1507,6 @@ namespace ChessForge
             }
 
             GuiUtilities.ForceFocus(tabToFocus, WorkbookManager.TabViewType.STUDY);
-
-            // build study tree but do not focus
-            // TODO: do not build it here unless focus will be on the Study
-            SetupGuiForActiveStudyTree(!isChessForgeFile);
         }
 
         /// <summary>
