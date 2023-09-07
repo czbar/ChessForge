@@ -286,6 +286,8 @@ namespace ChessForge
             Run runToSelect = null;
             Run runToClear = null;
 
+            Paragraph paraToClear = null;
+
             try
             {
                 int activeChapterIndex = WorkbookManager.SessionWorkbook.ActiveChapter.Index;
@@ -308,20 +310,33 @@ namespace ChessForge
                                     }
                                     else
                                     {
-                                        runToClear = run;
+                                        if (run.Text.StartsWith(SELECTED_CHAPTER_PREFIX))
+                                        {
+                                            // we need to identify one that is actually selected
+                                            runToClear = run;
+                                            paraToClear = block as Paragraph;
+                                        }
                                     }
                                 }
                             }
                         }
                     }
                 }
+
                 if (runToSelect != null)
                 {
                     ShowSelectionMark(ref runToSelect, true, SELECTED_CHAPTER_PREFIX, NON_SELECTED_CHAPTER_PREFIX);
+                    int chapterIndex = GetChapterIndexFromChildRun(runToSelect);
+                    Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(chapterIndex);
+                    HighlightChapterSelections(chapter);
                 }
+
                 if (runToClear != null)
                 {
                     ShowSelectionMark(ref runToClear, false, SELECTED_CHAPTER_PREFIX, NON_SELECTED_CHAPTER_PREFIX);
+                    int chapterIndex = GetChapterIndexFromChildRun(runToClear);
+                    Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(chapterIndex);
+                    ClearChapterSelections(chapter, paraToClear);
                 }
             }
             catch
@@ -1387,15 +1402,18 @@ namespace ChessForge
         {
             Paragraph para = null; ;
 
-            foreach (Block b in Document.Blocks)
+            if (chapter != null)
             {
-                if (b is Paragraph)
+                foreach (Block b in Document.Blocks)
                 {
-                    int id = TextUtils.GetIdFromPrefixedString((b as Paragraph).Name);
-                    if (id == chapter.Index)
+                    if (b is Paragraph)
                     {
-                        para = b as Paragraph;
-                        break;
+                        int id = TextUtils.GetIdFromPrefixedString((b as Paragraph).Name);
+                        if (id == chapter.Index)
+                        {
+                            para = b as Paragraph;
+                            break;
+                        }
                     }
                 }
             }
