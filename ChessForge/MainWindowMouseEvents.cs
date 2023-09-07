@@ -1098,6 +1098,12 @@ namespace ChessForge
                 return;
             }
 
+
+            if (_studyTreeView == null || _studyTreeView.Document == null || _studyTreeView.Document.Blocks.Count == 0)
+            {
+                SetupGuiForActiveStudyTree(true);
+            }
+
             StopReplayIfActive();
 
             AppState.ConfigureMenusForManualReview();
