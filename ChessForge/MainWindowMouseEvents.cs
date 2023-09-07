@@ -986,9 +986,11 @@ namespace ChessForge
             WorkbookLocationNavigator.SaveNewLocation(WorkbookManager.TabViewType.CHAPTERS);
 
             // we may need to show/hide Intro headers if something has changed
+            // TODO: consider creating it here if null, then we don't need to build it in Initialize() thus improving perf in some scenarios.
             if (_chaptersView != null)
             {
                 _chaptersView.UpdateIntroHeaders();
+                _chaptersView.HighlightActiveChapter();
             }
             AppState.ConfigureMenusForManualReview();
             BoardCommentBox.ShowTabHints();
