@@ -150,6 +150,8 @@ namespace ChessForge
             Article retArticle = article;
 
             int index = GetArticleIndex(article);
+
+            // we will get -1 if this is a newly created study tree that should not be processed
             if (index >= 0)
             {
                 try
@@ -279,12 +281,16 @@ namespace ChessForge
         {
             int index = -1;
 
-            for (int i = 0; i < _articleList.Count; i++)
+            //_articleList will be null if we are creating a new Workbook
+            if (_articleList == null)
             {
-                if (article == _articleList[i])
+                for (int i = 0; i < _articleList.Count; i++)
                 {
-                    index = i;
-                    break;
+                    if (article == _articleList[i])
+                    {
+                        index = i;
+                        break;
+                    }
                 }
             }
 
