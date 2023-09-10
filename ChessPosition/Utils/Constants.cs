@@ -137,6 +137,11 @@ namespace ChessPosition
         public static int OPENING_MAX_MOVE = 15;
 
         /// <summary>
+        /// In some places we need a string indication that an exception occurred.
+        /// </summary>
+        public static string EXCEPTION = "Exception";
+
+        /// <summary>
         /// Name to use for lichess in configuration for selecting a web site
         /// </summary>
         public static string LichessNameId = "lichess.org";
