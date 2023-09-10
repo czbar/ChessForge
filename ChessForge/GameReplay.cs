@@ -237,7 +237,8 @@ namespace ChessForge
             LastAnimatedMoveIndex = index + 1;
             if (LastAnimatedMoveIndex < _treeLineToAnimate.Count)
             {
-                RequestNodeAnimation(_treeLineToAnimate[index + 1]);
+                _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, _mainWin.ActiveLine.GetLineId(), LastAnimatedMoveIndex, true);
+                RequestNodeAnimation(_treeLineToAnimate[LastAnimatedMoveIndex]);
             }
             else
             {

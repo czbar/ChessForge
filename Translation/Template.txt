@@ -1708,6 +1708,11 @@ ImportIntoChapter=
 #english: DownloadingGameFromLichess=Downloading Game from lichess.org. Please wait...
 DownloadingGameFromLichess=
 
+#description: Duplicate Lichess import
+#english: MsgDuplicateLichessImport=This game is already present in the current chapter. Import a second copy?
+MsgDuplicateLichessImport=
+
+
 #description: Downloading games from lichess
 #english: DownloadingFromLichess=Downloading from lichess.org. Please wait...
 DownloadingFromLichess=

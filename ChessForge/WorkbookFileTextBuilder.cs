@@ -346,6 +346,7 @@ namespace ChessForge
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_CONTENT_TYPE, PgnHeaders.VALUE_MODEL_GAME));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_EVENT, tree.Header.GetEventName(out _)));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_ECO, tree.Header.GetECO(out _)));
+            AppendHeaderLine(ref sb, PgnHeaders.KEY_LICHESS_ID, tree.Header.GetLichessId(out _));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_GUID, tree.Header.GetGuid(out _)));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_DATE, tree.Header.GetDate(out _)));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_WHITE, tree.Header.GetWhitePlayer(out _)));
@@ -360,6 +361,23 @@ namespace ChessForge
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Appends a header line to the passed StringBuilder object, unless the value is empty.
+        /// </summary>
+        /// <param name="sb"></param>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        private static void AppendHeaderLine(ref StringBuilder sb, string key, string value)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                return;
+            }
+            else
+            {
+                sb.AppendLine(PgnHeaders.BuildHeaderLine(key, value));
+            }
+        }
 
         /// <summary>
         /// Builds the header for an Exercise.

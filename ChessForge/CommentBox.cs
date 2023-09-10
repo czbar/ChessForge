@@ -207,7 +207,8 @@ namespace ChessForge
         /// <param name="title"></param>
         public void ShowTabHints()
         {
-            if (WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.GamesManager.State == ProcessState.RUNNING)
+            if (WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.GamesManager.State == ProcessState.RUNNING
+                || _mainWin.ActiveLineReplay.IsReplayActive)
             {
                 return;
             }

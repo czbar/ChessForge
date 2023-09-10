@@ -438,12 +438,30 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Returns the Event Name
+        /// Returns the game's ECO code
         /// </summary>
         /// <returns></returns>
         public string GetECO(out string key)
         {
             string headerKey = PgnHeaders.KEY_ECO;
+            key = headerKey;
+
+            string value = _headers.Where(kvp => kvp.Key == headerKey).FirstOrDefault().Value;
+            if (string.IsNullOrEmpty(value))
+            {
+                value = "";
+            }
+
+            return value;
+        }
+
+        /// <summary>
+        /// Returns the Lichess Id
+        /// </summary>
+        /// <returns></returns>
+        public string GetLichessId(out string key)
+        {
+            string headerKey = PgnHeaders.KEY_LICHESS_ID;
             key = headerKey;
 
             string value = _headers.Where(kvp => kvp.Key == headerKey).FirstOrDefault().Value;

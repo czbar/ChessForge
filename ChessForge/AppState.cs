@@ -1516,6 +1516,7 @@ namespace ChessForge
 
             _mainWin.Dispatcher.Invoke(() =>
              {
+                 _mainWin.UiImgEngineOff.IsEnabled = true;
                  if (eval)
                  {
                      if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS
@@ -1545,8 +1546,17 @@ namespace ChessForge
                      _mainWin.UiImgEngineOn.Visibility = Visibility.Collapsed;
                      _mainWin.UiImgEngineOff.Visibility = Visibility.Visible;
 
-                     _mainWin.UiMnciEvalLine.IsEnabled = true;
-                     _mainWin.UiMnciEvalPos.IsEnabled = true;
+                     if (MainWin.ActiveLineReplay.IsReplayActive)
+                     {
+                         _mainWin.UiMnciEvalLine.IsEnabled = false;
+                         _mainWin.UiMnciEvalPos.IsEnabled = false;
+                         _mainWin.UiImgEngineOff.IsEnabled = false;
+                     }
+                     else
+                     {
+                         _mainWin.UiMnciEvalLine.IsEnabled = true;
+                         _mainWin.UiMnciEvalPos.IsEnabled = true;
+                     }
 
                      _mainWin.UiPbEngineThinking.Visibility = Visibility.Hidden;
                  }

@@ -3077,6 +3077,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You have already imported this game. Import a second copy?.
+        /// </summary>
+        public static string MsgDuplicateLichessImport {
+            get {
+                return ResourceManager.GetString("MsgDuplicateLichessImport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No identical positions found..
         /// </summary>
         public static string MsgNoIdenticalPositions {

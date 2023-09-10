@@ -1835,6 +1835,7 @@ namespace ChessForge
             tree.Header.SetHeaderValue(PgnHeaders.KEY_RESULT, header.GetResult(out _));
             tree.Header.SetHeaderValue(PgnHeaders.KEY_EVENT, header.GetEventName(out _));
             tree.Header.SetHeaderValue(PgnHeaders.KEY_ECO, header.GetECO(out _));
+            tree.Header.SetHeaderValue(PgnHeaders.KEY_LICHESS_ID, header.GetLichessId(out _));
             if (overrideGuid)
             {
                 tree.Header.SetHeaderValue(PgnHeaders.KEY_GUID, header.GetGuid(out _));

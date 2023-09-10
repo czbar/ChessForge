@@ -789,7 +789,10 @@ namespace ChessForge
             if (chapterIndex >= 0 && chapterIndex < WorkbookManager.SessionWorkbook.Chapters.Count)
             {
                 WorkbookManager.SessionWorkbook.SetActiveChapterTreeByIndex(chapterIndex, GameData.ContentType.STUDY_TREE, 0, focusOnStudyTree);
-                _chaptersView.HighlightActiveChapter();
+                if (AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS)
+                {
+                    _chaptersView.HighlightActiveChapter();
+                }
 
                 if (rebuild)
                 {
@@ -797,14 +800,6 @@ namespace ChessForge
                     SetupGuiForActiveStudyTree(focusOnStudyTree);
                 }
             }
-        }
-
-        /// <summary>
-        /// Highlights the chapter's header line in ChaptersView.
-        /// </summary>
-        public void HighlightActiveChapterHeader()
-        {
-            _chaptersView.HighlightActiveChapter();
         }
 
         /// <summary>
@@ -1507,10 +1502,6 @@ namespace ChessForge
             }
 
             GuiUtilities.ForceFocus(tabToFocus, WorkbookManager.TabViewType.STUDY);
-
-            // build study tree but do not focus
-            // TODO: do not build it here unless focus will be on the Study
-            SetupGuiForActiveStudyTree(!isChessForgeFile);
         }
 
         /// <summary>

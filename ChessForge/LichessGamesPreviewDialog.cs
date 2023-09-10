@@ -21,6 +21,9 @@ namespace ChessForge
         // lock object for accessing _openingsData as it theoretically (highly unlikely, though) may be written into while we processing 
         private static object _lockOpeningData = new object();
 
+        // list of games already downloaded in this dialog session
+        private List<string> _importedGameIds = new List<string>();
+
         /// <summary>
         /// Sets the value of the _openingsData property. 
         /// </summary>
@@ -134,26 +137,45 @@ namespace ChessForge
             Chapter chapter = AppState.ActiveChapter;
             if (chapter != null)
             {
-                AppState.MainWin.UiTabChapters.Focus();
-                chapter.AddModelGame(_tree);
-                chapter.ActiveModelGameIndex = chapter.GetModelGameCount() - 1;
-                AppState.MainWin.SelectModelGame(chapter.ActiveModelGameIndex, false);
-                string guid = _tree.Header.GetGuid(out _);
-                // if the current active tree is Study Tree, add reference
-                if (chapter.ActiveVariationTree != null && chapter.ActiveVariationTree.ContentType == GameData.ContentType.STUDY_TREE)
+                bool import = true;
+                if (_importedGameIds.Find(x => x == _currentGameId) != null
+                    || 
+                    !string.IsNullOrEmpty(_currentGameId) && chapter.ModelGames.Find(x => x.Tree.Header.GetHeaderValue(PgnHeaders.KEY_LICHESS_ID) == _currentGameId) != null)
                 {
-                    TreeNode nd = chapter.ActiveVariationTree.SelectedNode;
-                    if (nd != null)
+                    if (MessageBox.Show(Properties.Resources.MsgDuplicateLichessImport
+                        , Properties.Resources.ImportIntoChapter
+                        , MessageBoxButton.YesNo, MessageBoxImage.Question
+                        , MessageBoxResult.No) != MessageBoxResult.Yes)
                     {
-                        nd.AddArticleReference(guid);
-                        if (AppState.MainWin.ActiveTreeView != null)
-                        {
-                            AppState.MainWin.ActiveTreeView.InsertOrDeleteReferenceRun(nd);
-                        }
+                        import = false;
                     }
                 }
-                AppState.MainWin.RefreshChaptersViewAfterImport(GameData.ContentType.MODEL_GAME, chapter, chapter.GetModelGameCount() - 1);
-                AppState.IsDirty = true;
+
+                if (import)
+                {
+                    AppState.MainWin.UiTabChapters.Focus();
+                    chapter.AddModelGame(_tree);
+                    _importedGameIds.Add(_currentGameId);
+                    chapter.ActiveModelGameIndex = chapter.GetModelGameCount() - 1;
+                    AppState.MainWin.SelectModelGame(chapter.ActiveModelGameIndex, false);
+                    string guid = _tree.Header.GetGuid(out _);
+                    _tree.Header.SetHeaderValue(PgnHeaders.KEY_LICHESS_ID, _currentGameId);
+                    // if the current active tree is Study Tree, add reference
+                    if (chapter.ActiveVariationTree != null && chapter.ActiveVariationTree.ContentType == GameData.ContentType.STUDY_TREE)
+                    {
+                        TreeNode nd = chapter.ActiveVariationTree.SelectedNode;
+                        if (nd != null)
+                        {
+                            nd.AddArticleReference(guid);
+                            if (AppState.MainWin.ActiveTreeView != null)
+                            {
+                                AppState.MainWin.ActiveTreeView.InsertOrDeleteReferenceRun(nd);
+                            }
+                        }
+                    }
+                    AppState.MainWin.RefreshChaptersViewAfterImport(GameData.ContentType.MODEL_GAME, chapter, chapter.GetModelGameCount() - 1);
+                    AppState.IsDirty = true;
+                }
             }
         }
 
