@@ -404,6 +404,17 @@ namespace ChessForge
                         AppState.DoEvents();
                         _chaptersView.BringChapterIntoViewByIndex(selectedChapterIndex);
                         break;
+                    case WorkbookOperation.WorkbookOperationType.CREATE_ARTICLE:
+                        if (AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS)
+                        {
+                            _chaptersView.BuildFlowDocumentForChaptersView();
+                        }
+                        else
+                        {
+                            _chaptersView.IsDirty = true;
+                            SelectModelGame(selectedArticleIndex, true);
+                        }
+                        break;
                     case WorkbookOperation.WorkbookOperationType.DELETE_MODEL_GAME:
                     case WorkbookOperation.WorkbookOperationType.DELETE_MODEL_GAMES:
                         _chaptersView.BuildFlowDocumentForChaptersView();
