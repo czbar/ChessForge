@@ -1288,6 +1288,9 @@
   <data name="DownloadingGameFromLichess" xml:space="preserve">
     <value>Downloading Game from lichess.org. Please wait...</value>
   </data>
+  <data name="MsgDuplicateLichessImport" xml:space="preserve">
+    <value>You have already imported this game. Import a second copy?</value>
+  </data>
   <data name="DownloadingFromLichess" xml:space="preserve">
     <value>Downloading from lichess.org. Please wait...</value>
   </data>

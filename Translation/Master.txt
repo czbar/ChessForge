@@ -1318,6 +1318,10 @@ ImportIntoChapter=Import into Chapter
 #Downloading game from lichess
 DownloadingGameFromLichess=Downloading Game from lichess.org. Please wait...
 
+#Duplicate Lichess import
+MsgDuplicateLichessImport=You have already imported this game. Import a second copy?
+
+
 #Downloading games from lichess
 DownloadingFromLichess=Downloading from lichess.org. Please wait...
 

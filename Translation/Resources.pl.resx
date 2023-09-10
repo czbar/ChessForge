@@ -1287,6 +1287,9 @@
   <data name="DownloadingGameFromLichess" xml:space="preserve">
     <value>Trwa pobieranie partii z lichess. Proszę czekać...</value>
   </data>
+  <data name="MsgDuplicateLichessImport" xml:space="preserve">
+    <value>Ta partia już jest zaimportowana. Importować drugą kopię?</value>
+  </data>
   <data name="DownloadingFromLichess" xml:space="preserve">
     <value>Trwa pobieranie partii z lichess. Proszę czekać...</value>
   </data>
