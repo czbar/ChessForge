@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using WebAccess;
+using static ChessForge.WorkbookOperation;
 
 namespace ChessForge
 {
@@ -154,7 +155,14 @@ namespace ChessForge
                 if (import)
                 {
                     AppState.MainWin.UiTabChapters.Focus();
-                    chapter.AddModelGame(_tree);
+                    Article article = chapter.AddModelGame(_tree);
+                    
+                    if (article != null)
+                    {
+                        WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.CREATE_ARTICLE, chapter, article);
+                        WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
+                    }
+
                     _importedGameIds.Add(_currentGameId);
                     chapter.ActiveModelGameIndex = chapter.GetModelGameCount() - 1;
                     AppState.MainWin.SelectModelGame(chapter.ActiveModelGameIndex, false);
