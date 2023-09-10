@@ -138,7 +138,9 @@ namespace ChessForge
             if (chapter != null)
             {
                 bool import = true;
-                if (_importedGameIds.Find(x => x == _currentGameId) != null)
+                if (_importedGameIds.Find(x => x == _currentGameId) != null
+                    || 
+                    !string.IsNullOrEmpty(_currentGameId) && chapter.ModelGames.Find(x => x.Tree.Header.GetHeaderValue(PgnHeaders.KEY_LICHESS_ID) == _currentGameId) != null)
                 {
                     if (MessageBox.Show(Properties.Resources.MsgDuplicateLichessImport
                         , Properties.Resources.ImportIntoChapter
@@ -157,6 +159,7 @@ namespace ChessForge
                     chapter.ActiveModelGameIndex = chapter.GetModelGameCount() - 1;
                     AppState.MainWin.SelectModelGame(chapter.ActiveModelGameIndex, false);
                     string guid = _tree.Header.GetGuid(out _);
+                    _tree.Header.SetHeaderValue(PgnHeaders.KEY_LICHESS_ID, _currentGameId);
                     // if the current active tree is Study Tree, add reference
                     if (chapter.ActiveVariationTree != null && chapter.ActiveVariationTree.ContentType == GameData.ContentType.STUDY_TREE)
                     {
