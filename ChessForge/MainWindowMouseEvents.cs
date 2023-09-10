@@ -997,6 +997,10 @@ namespace ChessForge
             // TODO: consider creating it here if null, then we don't need to build it in Initialize() thus improving perf in some scenarios.
             if (_chaptersView != null)
             {
+                if (_chaptersView.IsDirty)
+                {
+                    _chaptersView.BuildFlowDocumentForChaptersView();
+                }
                 _chaptersView.UpdateIntroHeaders();
                 _chaptersView.HighlightActiveChapter();
             }
