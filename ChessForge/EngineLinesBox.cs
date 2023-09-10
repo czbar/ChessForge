@@ -81,6 +81,13 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// A counter that will be set if we encounter an excpetion while processing lines.
+        /// Each invokation of ShowEngineLinesEx() will then decrease the counter.
+        /// This is so that we don't get stuck in a tight loop handling exceptions.
+        /// </summary>
+        private static int _pauseCount = 0;
+
+        /// <summary>
         /// Shows the latest engine lines in response to a timer event
         /// or when called from ShowEngineLines().
         /// </summary>
@@ -88,6 +95,13 @@ namespace ChessForge
         /// <param name="e"></param>
         public static void ShowEngineLinesEx(object source, ElapsedEventArgs e)
         {
+            // check if we are paused.
+            if (_pauseCount > 0)
+            {
+                _pauseCount--;
+                return;
+            }
+
             try
             {
                 _pbEngineEval.Dispatcher.Invoke(() =>
@@ -151,6 +165,14 @@ namespace ChessForge
                             for (int i = 0; i < moveCandidates.Lines.Count; i++)
                             {
                                 sb.Append(BuildLineText(moveCandidates.EvalNode, i, moveCandidates.Lines[i], out string eval));
+                                // if we got eval string indicating exception, stop and "declare" pause
+                                // otherwise we may end up blocking the app!
+                                if (eval == Constants.EXCEPTION)
+                                {
+                                    _pauseCount = 4;
+                                    break;
+                                }
+
                                 sb.Append(Environment.NewLine);
 
                                 if (i == 0)
@@ -290,7 +312,13 @@ namespace ChessForge
                     }
 
                     string moveSeq = BuildMoveSequence(evalNode, line.Line);
-                    if (moveSeq.Length == 0)
+                    // check if BuildMoveSequence encounter an excpetion.
+                    if (moveSeq == Constants.EXCEPTION)
+                    {
+                        eval = Constants.EXCEPTION;
+                        return "";
+                    }
+                    else if (moveSeq.Length == 0)
                     {
                         return "";
                     }
@@ -298,7 +326,7 @@ namespace ChessForge
                     {
                         return (lineNo + 1).ToString() + ". (" + eval + "): "
                             + sMoveNo
-                            + BuildMoveSequence(evalNode, line.Line);
+                            + moveSeq;
                     }
                 }
             }
@@ -388,6 +416,10 @@ namespace ChessForge
                         AppLog.Message("Move: " + debugMove);
                         AppLog.Message("Returned string: " + sb.ToString());
                     }
+
+                    // indicate exception to the caller
+                    sb.Clear();
+                    sb.Append(Constants.EXCEPTION);
                 }
 
                 return sb.ToString();
