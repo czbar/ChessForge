@@ -67,6 +67,11 @@ namespace GameTree
         public const string KEY_ECO = "ECO";
 
         /// <summary>
+        /// Lichess id of the game downloaded from lichess.org.
+        /// </summary>
+        public const string KEY_LICHESS_ID = "LichessId";
+
+        /// <summary>
         /// Event round number.
         /// </summary>
         public const string KEY_ROUND = "Round";
@@ -303,6 +308,11 @@ namespace GameTree
             return BuildHeaderLine(KEY_DATE, dt.Value.ToString("yyyy.MM.dd"));
         }
 
+        /// <summary>
+        /// Returns the fixed string for the White field in the Workbook's 
+        /// pgn "game".  
+        /// </summary>
+        /// <returns></returns>
         public static string GetWorkbookWhiteText()
         {
             return BuildHeaderLine(KEY_WHITE, "CHESS FORGE");
@@ -318,7 +328,12 @@ namespace GameTree
             return BuildHeaderLine(KEY_RESULT, Constants.PGN_NO_RESULT);
         }
 
-
+        /// <summary>
+        /// Builds a header line string in the pgn format.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static string BuildHeaderLine(string key, string value)
         {
             if (string.IsNullOrEmpty(key))
