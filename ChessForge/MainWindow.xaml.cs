@@ -1011,7 +1011,7 @@ namespace ChessForge
         /// <returns></returns>
         private int AdjustArticleIndex(int index, int articleCount)
         {
-            if (index >= 0 && index < WorkbookManager.SessionWorkbook.ActiveChapter.GetExerciseCount())
+            if (index >= 0 && index < articleCount)
             {
                 return index;
             }
