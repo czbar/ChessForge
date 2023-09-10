@@ -93,6 +93,12 @@ namespace ChessForge
                             WorkbookManager.SessionWorkbook.ActiveChapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(selectedChapterIndex);
                         }
                         break;
+                    case WorkbookOperation.WorkbookOperationType.CREATE_ARTICLE:
+                        WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
+                        selectedChapterIndex = WorkbookManager.SessionWorkbook.GetChapterIndex(op.Chapter);
+                        WorkbookManager.SessionWorkbook.UndoCreateArticle(op.Chapter, op.OpData_1 as Article);
+                        selectedArticleIndex = op.Chapter.AdjustActiveArticleIndex((op.OpData_1 as Article).ContentType);
+                        break;
                     case WorkbookOperation.WorkbookOperationType.DELETE_MODEL_GAME:
                         WorkbookManager.SessionWorkbook.UndoDeleteModelGame(op.Chapter, op.Article, op.ArticleIndex);
                         selectedArticleIndex = op.ArticleIndex;
