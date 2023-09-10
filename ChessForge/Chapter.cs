@@ -608,13 +608,38 @@ namespace ChessForge
         /// Adds a VariationTree to the list of Model Games
         /// </summary>
         /// <param name="game"></param>
-        public void AddModelGame(VariationTree game)
+        public Article AddModelGame(VariationTree game)
         {
             lock (_lockModelGames)
             {
                 Article article = new Article(game);
                 ModelGames.Add(article);
+                return article;
             }
+        }
+
+        /// <summary>
+        /// Checks if the current active article index is in the valid range.
+        /// If not, returns the corrected value;
+        /// </summary>
+        /// <param name="contentType"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public int AdjustActiveArticleIndex(GameData.ContentType contentType)
+        {
+            int index = -1;
+
+            switch (contentType)
+            {
+                case GameData.ContentType.MODEL_GAME:
+                    index = VerifyGameIndex(ActiveModelGameIndex);
+                    break;
+                case GameData.ContentType.EXERCISE:
+                    index = VerifyExerciseIndex(ActiveExerciseIndex);
+                    break;
+            }
+
+            return index;
         }
 
         /// <summary>
