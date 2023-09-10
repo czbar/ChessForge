@@ -282,7 +282,7 @@ namespace ChessForge
             int index = -1;
 
             //_articleList will be null if we are creating a new Workbook
-            if (_articleList == null)
+            if (_articleList != null)
             {
                 for (int i = 0; i < _articleList.Count; i++)
                 {
