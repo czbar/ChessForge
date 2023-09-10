@@ -798,6 +798,14 @@ namespace ChessForge
             if (!EngineMessageProcessor.IsEngineAvailable)
             {
                 BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.EngineNotAvailable);
+                e.Handled = true;
+                return;
+            }
+
+            // no eval in auto-replay
+            if (ActiveLineReplay.IsReplayActive)
+            {
+                e.Handled = true;
                 return;
             }
 
