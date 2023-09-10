@@ -1709,7 +1709,7 @@ ImportIntoChapter=
 DownloadingGameFromLichess=
 
 #description: Duplicate Lichess import
-#english: MsgDuplicateLichessImport=You have already imported this game. Import a second copy?
+#english: MsgDuplicateLichessImport=This game is already present in the current chapter. Import a second copy?
 MsgDuplicateLichessImport=
 
 

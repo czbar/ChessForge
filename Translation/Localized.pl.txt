@@ -1708,6 +1708,11 @@ ImportIntoChapter=Importuj Partię
 #english: DownloadingGameFromLichess=Downloading Game from lichess.org. Please wait...
 DownloadingGameFromLichess=Trwa pobieranie partii z lichess. Proszę czekać...
 
+#description: Duplicate Lichess import
+#english: MsgDuplicateLichessImport=This game is already present in the current chapter. Import a second copy?
+MsgDuplicateLichessImport=Ta partia już jest w tym rozdziale. Importować drugą kopię?
+
+
 #description: Downloading games from lichess
 #english: DownloadingFromLichess=Downloading from lichess.org. Please wait...
 DownloadingFromLichess=Trwa pobieranie partii z lichess. Proszę czekać...
@@ -2461,7 +2466,3 @@ IllegalCastling=Niedozwolona roszada.
 #description: Workbook info
 #english: AboutWorkbook=This PGN Workbook is optimized for viewing in Chess Forge https://sourceforge.net/projects/chessforge/ \nChess Forge is a Free and Open Source Windows application.
 AboutWorkbook=Ten podręcznik PGN najlepiej oglądać w programie Chess Forge https://sourceforge.net/projects/chessforge/ \nChess Forge to Wolne i Otwarte Oprogramowanie do systemu Windows.
-
-#Duplicate Lichess import
-MsgDuplicateLichessImport=Ta partia już jest zaimportowana. Importować drugą kopię?
-

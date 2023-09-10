@@ -1709,8 +1709,8 @@ ImportIntoChapter=Importuj Partię
 DownloadingGameFromLichess=Trwa pobieranie partii z lichess. Proszę czekać...
 
 #description: Duplicate Lichess import
-#english: MsgDuplicateLichessImport=You have already imported this game. Import a second copy?
-MsgDuplicateLichessImport=Ta partia już jest zaimportowana. Importować drugą kopię?
+#english: MsgDuplicateLichessImport=This game is already present in the current chapter. Import a second copy?
+MsgDuplicateLichessImport=Ta partia już jest w tym rozdziale. Importować drugą kopię?
 
 
 #description: Downloading games from lichess
