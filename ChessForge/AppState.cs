@@ -13,6 +13,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using WebAccess;
 using ChessForge.Properties;
+using static ChessForge.WorkbookOperation;
 
 namespace ChessForge
 {
@@ -575,10 +576,17 @@ namespace ChessForge
                         throw new Exception(Properties.Resources.ErrNoTextReceived);
                     }
                     tree.ContentType = GameData.ContentType.MODEL_GAME;
-                    chapter.AddModelGame(tree);
-                    MainWin.RefreshChaptersViewAfterImport(GameData.ContentType.MODEL_GAME, chapter, chapter.GetModelGameCount() - 1);
-                    IsDirty = true;
-                    MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgGameImportSuccess, System.Windows.Media.Brushes.Green);
+                    Article article = chapter.AddModelGame(tree);
+                    if (article != null)
+                    {
+                        WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.CREATE_ARTICLE, chapter, article);
+                        WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
+                        chapter.ActiveModelGameIndex = chapter.GetModelGameCount() - 1;
+                        AppState.MainWin.SelectModelGame(chapter.ActiveModelGameIndex, false);
+                        MainWin.RefreshChaptersViewAfterImport(GameData.ContentType.MODEL_GAME, chapter, chapter.GetModelGameCount() - 1);
+                        IsDirty = true;
+                        MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgGameImportSuccess, System.Windows.Media.Brushes.Green);
+                    }
                 }
             }
             catch (Exception ex)
