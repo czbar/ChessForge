@@ -19,6 +19,9 @@ namespace ChessForge
         // Application's Main Window
         private MainWindow _mainWin;
 
+        // whether the view needs refreshing
+        private bool _isDirty;
+
         /// <summary>
         /// RichTextPara dictionary accessor
         /// </summary>
@@ -110,6 +113,15 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Flags whether the view needs refreshing
+        /// </summary>
+        public bool IsDirty
+        {
+            get { return _isDirty; }
+            set { _isDirty = value; }
+        }
+
+        /// <summary>
         /// Builds a list of paragraphs to show the chapters in this Workbook and their content.
         /// </summary>
         public void BuildFlowDocumentForChaptersView()
@@ -128,6 +140,8 @@ namespace ChessForge
             }
 
             HighlightActiveChapter();
+
+            IsDirty = false;
         }
 
         /// <summary>
