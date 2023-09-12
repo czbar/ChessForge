@@ -15,6 +15,20 @@ namespace ChessForge
     /// </summary>
     public class PulseManager
     {
+        // index of the chapter to bring into view
+        private static int _chaperIndexToBringIntoView = -1;
+
+        /// <summary>
+        /// Index of the chapter to bring into view.
+        /// </summary>
+        public static int ChaperIndexToBringIntoView
+        {
+            set => _chaperIndexToBringIntoView = value;
+        }
+
+        // identifies the article that needs to be brought into view
+        private static ArticleIdentifier _articleToBringIntoView = new ArticleIdentifier();
+
         /// <summary>
         /// Handles the PULSE timer event.
         /// </summary>
@@ -24,6 +38,32 @@ namespace ChessForge
         {
             WebAccessManager.UpdateWebAccess();
             UpdateEvaluationBar();
+            if (_chaperIndexToBringIntoView >= 0)
+            {
+                AppState.MainWin.BringChapterIntoView(_chaperIndexToBringIntoView);
+                _chaperIndexToBringIntoView = -1;
+            }
+            else if (_articleToBringIntoView.ArticleIndex >= 0)
+            {
+                AppState.MainWin.BringArticleIntoView(_articleToBringIntoView.ChapterIndex,
+                    _articleToBringIntoView.ContentType,
+                    _articleToBringIntoView.ArticleIndex);
+
+                _articleToBringIntoView.ArticleIndex = -1;
+            }
+        }
+
+        /// <summary>
+        /// Sets the article that will be brought into view on the next pulse.
+        /// </summary>
+        /// <param name="chapterIndex"></param>
+        /// <param name="contentType"></param>
+        /// <param name="articleIndex"></param>
+        public static void SetArticleToBringIntoView(int chapterIndex, GameData.ContentType contentType, int articleIndex)
+        {
+            _articleToBringIntoView.ChapterIndex = chapterIndex;
+            _articleToBringIntoView.ContentType = contentType;
+            _articleToBringIntoView.ArticleIndex = articleIndex;
         }
 
         /// <summary>
@@ -61,5 +101,15 @@ namespace ChessForge
             });
         }
 
+    }
+
+    /// <summary>
+    /// Encapsulates attributes identifying a chapter in the Workbook.
+    /// </summary>
+    class ArticleIdentifier
+    {
+        public int ChapterIndex;
+        public GameData.ContentType ContentType;
+        public int ArticleIndex = -1;
     }
 }
