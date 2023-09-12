@@ -1189,6 +1189,26 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Brings the requested chapter into view in ChaptersView.
+        /// </summary>
+        /// <param name="index"></param>
+        public void BringChapterIntoView(int index)
+        {
+            _chaptersView.BringChapterIntoViewByIndex(index);
+        }
+
+        /// <summary>
+        /// Brings the requested article into view in ChaptersView.
+        /// </summary>
+        /// <param name="chapterIndex"></param>
+        /// <param name="contentType"></param>
+        /// <param name="index"></param>
+        public void BringArticleIntoView(int chapterIndex, GameData.ContentType contentType, int index)
+        {
+            _chaptersView.BringArticleIntoView(chapterIndex, contentType, index);
+        }
+
+        /// <summary>
         /// Moves chapter up one position in the list
         /// </summary>
         /// <param name="sender"></param>
@@ -1203,6 +1223,7 @@ namespace ChessForge
                 WorkbookManager.SessionWorkbook.Chapters[index - 1] = hold;
                 _chaptersView.BuildFlowDocumentForChaptersView();
                 SelectChapterByIndex(index - 1, false, false);
+                PulseManager.ChaperIndexToBringIntoView = index - 1;
                 AppState.IsDirty = true;
             }
         }
@@ -1222,6 +1243,7 @@ namespace ChessForge
                 WorkbookManager.SessionWorkbook.Chapters[index + 1] = hold;
                 _chaptersView.BuildFlowDocumentForChaptersView();
                 SelectChapterByIndex(index + 1, false, false);
+                PulseManager.ChaperIndexToBringIntoView = index + 1;
                 AppState.IsDirty = true;
             }
         }
