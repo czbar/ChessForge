@@ -1675,7 +1675,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnTopGameImport_Click(object sender, RoutedEventArgs e)
         {
-            AppState.DownloadModelGameToActiveChapter(_topGamesView.CurrentGameId);
+            AppState.DownloadLichessGameToActiveChapter(_topGamesView.CurrentGameId);
         }
 
         /// <summary>
