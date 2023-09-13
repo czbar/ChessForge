@@ -1273,6 +1273,7 @@ namespace ChessForge
 
             StopReplayIfActive();
 
+            WorkbookManager.ActiveTab = WorkbookManager.TabViewType.MODEL_GAME;
             AppState.ConfigureMenusForManualReview();
             RefreshGamesView(out Chapter chapter, out int articleIndex);
             WorkbookLocationNavigator.SaveNewLocation(chapter, GameData.ContentType.MODEL_GAME, articleIndex);
@@ -1379,6 +1380,7 @@ namespace ChessForge
 
             StopReplayIfActive();
 
+            WorkbookManager.ActiveTab = WorkbookManager.TabViewType.EXERCISE;
             AppState.ConfigureMenusForManualReview();
             RefreshExercisesView(out Chapter chapter, out int articleIndex);
             WorkbookLocationNavigator.SaveNewLocation(chapter, GameData.ContentType.MODEL_GAME, articleIndex);
