@@ -37,18 +37,34 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// The tab that should be made active by the caller.
+        /// </summary>
+        public WorkbookManager.TabViewType ActiveTabOnExit
+        {
+            get { return _activeTabOnExit; }
+        }
+
         // hosted TopGamesView
         private TopGamesView _topGamesView;
+
+        // active tab when entering the dialog
+        private WorkbookManager.TabViewType _activeTabOnEntry;
+
+        // active tab when exiting the dialog
+        private WorkbookManager.TabViewType _activeTabOnExit;
 
         /// <summary>
         /// Initializes the dialog.
         /// </summary>
         /// <param name="lichessGameId"></param>
         /// <param name="gameIdList"></param>
-        public LichessGamesPreviewDialog(string lichessGameId, List<string> gameIdList)
+        public LichessGamesPreviewDialog(string lichessGameId, List<string> gameIdList, WorkbookManager.TabViewType activeTab)
             : base(lichessGameId, gameIdList)
         {
             GameDownload.GameReceived += GameReceived;
+            _activeTabOnEntry = activeTab;
+            _activeTabOnExit = activeTab;
             ConfigureTopGamesView();
             DownloadGame(_currentGameId);
         }
@@ -140,7 +156,7 @@ namespace ChessForge
             {
                 bool import = true;
                 if (_importedGameIds.Find(x => x == _currentGameId) != null
-                    || 
+                    ||
                     !string.IsNullOrEmpty(_currentGameId) && chapter.ModelGames.Find(x => x.Tree.Header.GetHeaderValue(PgnHeaders.KEY_LICHESS_ID) == _currentGameId) != null)
                 {
                     if (MessageBox.Show(Properties.Resources.MsgDuplicateLichessImport
@@ -155,34 +171,10 @@ namespace ChessForge
                 if (import)
                 {
                     AppState.MainWin.UiTabChapters.Focus();
-                    Article article = chapter.AddModelGame(_tree);
-                    
-                    if (article != null)
-                    {
-                        WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.CREATE_ARTICLE, chapter, article);
-                        WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
-                    }
-
                     _importedGameIds.Add(_currentGameId);
-                    chapter.ActiveModelGameIndex = chapter.GetModelGameCount() - 1;
-                    AppState.MainWin.SelectModelGame(chapter.ActiveModelGameIndex, false);
-                    string guid = _tree.Header.GetGuid(out _);
-                    _tree.Header.SetHeaderValue(PgnHeaders.KEY_LICHESS_ID, _currentGameId);
-                    // if the current active tree is Study Tree, add reference
-                    if (chapter.ActiveVariationTree != null && chapter.ActiveVariationTree.ContentType == GameData.ContentType.STUDY_TREE)
-                    {
-                        TreeNode nd = chapter.ActiveVariationTree.SelectedNode;
-                        if (nd != null)
-                        {
-                            nd.AddArticleReference(guid);
-                            if (AppState.MainWin.ActiveTreeView != null)
-                            {
-                                AppState.MainWin.ActiveTreeView.InsertOrDeleteReferenceRun(nd);
-                            }
-                        }
-                    }
-                    AppState.MainWin.RefreshChaptersViewAfterImport(GameData.ContentType.MODEL_GAME, chapter, chapter.GetModelGameCount() - 1);
-                    AppState.IsDirty = true;
+
+                    AppState.FinalizeLichessDownload(chapter, _tree, _currentGameId, _activeTabOnEntry);
+                    _activeTabOnExit = WorkbookManager.TabViewType.MODEL_GAME;
                 }
             }
         }
