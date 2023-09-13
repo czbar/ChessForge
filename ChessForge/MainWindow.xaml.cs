@@ -37,6 +37,11 @@ namespace ChessForge
         public ChaptersView ChaptersView { get => _chaptersView; }
 
         /// <summary>
+        /// Public reference to StudyTreeView 
+        /// </summary>
+        public VariationTreeView StudyTreeView { get => _studyTreeView; }
+
+        /// <summary>
         /// Public reference to OpeningStatsView
         /// </summary>
         public OpeningStatsView OpeningStatsView { get => _openingStatsView; }
