@@ -1,10 +1,8 @@
 ﻿using ChessPosition;
 using GameTree;
 using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -274,10 +272,8 @@ namespace ChessForge
         /// </summary>
         public void OpenReplayDialog()
         {
-            // we may change focus while in the dialog so note it here and restore
-            WorkbookManager.TabViewType activeTab = AppState.ActiveTab;
-
-            LichessGamesPreviewDialog dlg = new LichessGamesPreviewDialog(_clickedGameId, _gameIdList)
+            // pass ActiveTab so that we can add a reference if this is a Study Tree
+            LichessGamesPreviewDialog dlg = new LichessGamesPreviewDialog(_clickedGameId, _gameIdList, AppState.ActiveTab)
             {
                 Left = AppState.MainWin.ChessForgeMain.Left + 100,
                 Top = AppState.MainWin.Top + 100,
@@ -286,13 +282,16 @@ namespace ChessForge
             };
             dlg.ShowDialog();
 
-            switch (activeTab)
+            switch (dlg.ActiveTabOnExit)
             {
                 case WorkbookManager.TabViewType.STUDY:
                     AppState.MainWin.UiTabStudyTree.Focus();
                     break;
                 case WorkbookManager.TabViewType.MODEL_GAME:
                     AppState.MainWin.UiTabModelGames.Focus();
+                    break;
+                case WorkbookManager.TabViewType.EXERCISE:
+                    AppState.MainWin.UiTabExercises.Focus();
                     break;
             }
         }
