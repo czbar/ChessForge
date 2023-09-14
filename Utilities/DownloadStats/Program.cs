@@ -43,7 +43,7 @@ namespace DownloadStats
             else
             {
                 // if the file does not exist, make sure we will write out the headers
-                sb.AppendLine("Date,Country.Count");
+                sb.AppendLine("Date,Country,Count");
             }
 
             // limit the number of days to query, as Source Forge will return an error if too many
