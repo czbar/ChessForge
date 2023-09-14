@@ -248,6 +248,20 @@ namespace GameTree
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Returns a value for the passed key.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public string GetValueForKey(string key)
+        {
+            if (string.IsNullOrEmpty(key))
+            {
+                return null;
+            }
+            
+            return _headers.Where(kvp => kvp.Key == key).FirstOrDefault().Value;
+        }
 
         /// <summary>
         /// Returns the title of the Workbook
@@ -462,6 +476,24 @@ namespace GameTree
         public string GetLichessId(out string key)
         {
             string headerKey = PgnHeaders.KEY_LICHESS_ID;
+            key = headerKey;
+
+            string value = _headers.Where(kvp => kvp.Key == headerKey).FirstOrDefault().Value;
+            if (string.IsNullOrEmpty(value))
+            {
+                value = "";
+            }
+
+            return value;
+        }
+
+        /// <summary>
+        /// Returns the Chess.com Id
+        /// </summary>
+        /// <returns></returns>
+        public string GetChessComId(out string key)
+        {
+            string headerKey = PgnHeaders.KEY_CHESSCOM_ID;
             key = headerKey;
 
             string value = _headers.Where(kvp => kvp.Key == headerKey).FirstOrDefault().Value;
