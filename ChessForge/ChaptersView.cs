@@ -19,6 +19,9 @@ namespace ChessForge
         // Application's Main Window
         private MainWindow _mainWin;
 
+        // whether the view needs refreshing
+        private bool _isDirty;
+
         /// <summary>
         /// RichTextPara dictionary accessor
         /// </summary>
@@ -30,10 +33,10 @@ namespace ChessForge
         private static readonly string STYLE_MODEL_GAME = "model_game";
         private static readonly string STYLE_EXERCISE = "exercise";
 
-        private const string SUBHEADER_INDENT          = "        ";
+        private const string SUBHEADER_INDENT = "        ";
         private const string SELECTED_SUBHEADER_INDENT = "       ";
-        private const string SUBHEADER_DOUBLE_INDENT   = "            ";
-        private const string SELECTED_ARTICLE_INDENT   = "           ";
+        private const string SUBHEADER_DOUBLE_INDENT = "            ";
+        private const string SELECTED_ARTICLE_INDENT = "           ";
 
         private string SELECTED_STUDY_PREFIX = SELECTED_SUBHEADER_INDENT + Constants.CHAR_SELECTED.ToString() + " ";
         private string SELECTED_ARTICLE_PREFIX = SELECTED_ARTICLE_INDENT + Constants.CHAR_SELECTED.ToString() + " ";
@@ -110,6 +113,15 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Flags whether the view needs refreshing
+        /// </summary>
+        public bool IsDirty
+        {
+            get { return _isDirty; }
+            set { _isDirty = value; }
+        }
+
+        /// <summary>
         /// Builds a list of paragraphs to show the chapters in this Workbook and their content.
         /// </summary>
         public void BuildFlowDocumentForChaptersView()
@@ -128,6 +140,8 @@ namespace ChessForge
             }
 
             HighlightActiveChapter();
+
+            IsDirty = false;
         }
 
         /// <summary>
@@ -257,8 +271,11 @@ namespace ChessForge
         /// <param name="chapterIndex"></param>
         public void BringChapterIntoViewByIndex(int chapterIndex)
         {
-            Run rChapter = FindChapterTitleRun(chapterIndex);
-            rChapter?.BringIntoView();
+            _mainWin.Dispatcher.Invoke(() =>
+              {
+                  Run rChapter = FindChapterTitleRun(chapterIndex);
+                  rChapter?.BringIntoView();
+              });
         }
 
         /// <summary>
@@ -269,13 +286,15 @@ namespace ChessForge
         /// <param name="index"></param>
         public void BringArticleIntoView(int chapterIndex, GameData.ContentType contentType, int index)
         {
-            Paragraph paraChapter = FindChapterParagraph(chapterIndex);
-            if (paraChapter != null)
+            _mainWin.Dispatcher.Invoke(() =>
             {
-                AppState.DoEvents();
-                Run r = FindArticleRunInParagraph(paraChapter, contentType, index);
-                r?.BringIntoView();
-            }
+                Paragraph paraChapter = FindChapterParagraph(chapterIndex);
+                if (paraChapter != null)
+                {
+                    Run r = FindArticleRunInParagraph(paraChapter, contentType, index);
+                    r?.BringIntoView();
+                }
+            });
         }
 
         /// <summary>
@@ -827,6 +846,7 @@ namespace ChessForge
                     if (newSelChapter != null)
                     {
                         ActivateAndHighlightChapter(newSelChapter, chapter, true);
+                        PulseManager.ChaperIndexToBringIntoView = newSelChapter.Index;
                     }
                     break;
                 case WorkbookManager.ItemType.MODEL_GAME:
@@ -836,7 +856,7 @@ namespace ChessForge
                         chapter.ActiveModelGameIndex = index;
                         HighlightChapterSelections(chapter);
                         _mainWin.DisplayPosition(newSelGame.Tree.GetFinalPosition());
-                        BringArticleIntoView(chapter.Index, GameData.ContentType.MODEL_GAME, index);
+                        PulseManager.SetArticleToBringIntoView(chapter.Index, GameData.ContentType.MODEL_GAME, index);
                     }
                     break;
                 case WorkbookManager.ItemType.EXERCISE:
@@ -846,7 +866,7 @@ namespace ChessForge
                         chapter.ActiveExerciseIndex = index;
                         HighlightChapterSelections(chapter);
                         _mainWin.DisplayPosition(newSelExercise.Tree.RootNode);
-                        BringArticleIntoView(chapter.Index, GameData.ContentType.EXERCISE, index);
+                        PulseManager.SetArticleToBringIntoView(chapter.Index, GameData.ContentType.EXERCISE, index);
                     }
                     break;
             }

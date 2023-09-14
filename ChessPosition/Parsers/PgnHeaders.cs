@@ -72,6 +72,21 @@ namespace GameTree
         public const string KEY_LICHESS_ID = "LichessId";
 
         /// <summary>
+        /// Chess.com id of the game downloaded from chess.com.
+        /// </summary>
+        public const string KEY_CHESSCOM_ID = "ChessComId";
+
+        /// <summary>
+        /// Link to the game on the chess.com site
+        /// </summary>
+        public const string KEY_LINK = "Link";
+
+        /// <summary>
+        /// Kink to the game on the lichess.org site
+        /// </summary>
+        public const string KEY_SITE = "Site";
+
+        /// <summary>
         /// Event round number.
         /// </summary>
         public const string KEY_ROUND = "Round";

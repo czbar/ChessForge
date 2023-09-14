@@ -347,6 +347,7 @@ namespace ChessForge
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_EVENT, tree.Header.GetEventName(out _)));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_ECO, tree.Header.GetECO(out _)));
             AppendHeaderLine(ref sb, PgnHeaders.KEY_LICHESS_ID, tree.Header.GetLichessId(out _));
+            AppendHeaderLine(ref sb, PgnHeaders.KEY_CHESSCOM_ID, tree.Header.GetChessComId(out _));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_GUID, tree.Header.GetGuid(out _)));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_DATE, tree.Header.GetDate(out _)));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_WHITE, tree.Header.GetWhitePlayer(out _)));

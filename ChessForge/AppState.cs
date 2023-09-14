@@ -13,6 +13,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using WebAccess;
 using ChessForge.Properties;
+using static ChessForge.WorkbookOperation;
 
 namespace ChessForge
 {
@@ -559,7 +560,7 @@ namespace ChessForge
         /// Download a game from lichess and add to ActiveChapter
         /// </summary>
         /// <param name="gameId"></param>
-        public static async void DownloadModelGameToActiveChapter(string gameId)
+        public static async void DownloadLichessGameToActiveChapter(string gameId)
         {
             try
             {
@@ -574,17 +575,64 @@ namespace ChessForge
                     {
                         throw new Exception(Properties.Resources.ErrNoTextReceived);
                     }
-                    tree.ContentType = GameData.ContentType.MODEL_GAME;
-                    chapter.AddModelGame(tree);
-                    MainWin.RefreshChaptersViewAfterImport(GameData.ContentType.MODEL_GAME, chapter, chapter.GetModelGameCount() - 1);
-                    IsDirty = true;
-                    MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgGameImportSuccess, System.Windows.Media.Brushes.Green);
+
+                    FinalizeLichessDownload(chapter, tree, gameId, ActiveTab);
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(Strings.GetResource("CouldNotImportGame") + ": " + ex.Message, Strings.GetResource("Error"), MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        /// <summary>
+        /// Finalizes the operations after a successful import from Lichess.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="tree"></param>
+        /// <param name="lichessGameId"></param>
+        /// <param name="activeTabOnEntry"></param>
+        /// <returns></returns>
+        public static bool FinalizeLichessDownload(Chapter chapter, VariationTree tree, string lichessGameId, WorkbookManager.TabViewType activeTabOnEntry)
+        {
+            bool added = false;
+
+            tree.ContentType = GameData.ContentType.MODEL_GAME;
+            tree.Header.SetHeaderValue(PgnHeaders.KEY_LICHESS_ID, lichessGameId);
+            Article article = chapter.AddModelGame(tree);
+
+            if (article != null)
+            {
+                added = true;
+
+                WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.CREATE_ARTICLE, chapter, article);
+                WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
+
+                chapter.ActiveModelGameIndex = chapter.GetModelGameCount() - 1;
+                string guid = tree.Header.GetGuid(out _);
+
+                // if the current active tree is Study Tree, add reference
+                if (activeTabOnEntry == WorkbookManager.TabViewType.STUDY)
+                {
+                    TreeNode nd = chapter.StudyTree.Tree.SelectedNode;
+                    if (nd != null)
+                    {
+                        nd.AddArticleReference(guid);
+                        if (MainWin.StudyTreeView != null)
+                        {
+                            MainWin.StudyTreeView.InsertOrDeleteReferenceRun(nd);
+                        }
+                    }
+                }
+
+                MainWin.ChaptersView.IsDirty = true;
+                IsDirty = true;
+                MainWin.SelectModelGame(chapter.ActiveModelGameIndex, true);
+
+                MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgGameImportSuccess, System.Windows.Media.Brushes.Green);
+            }
+
+            return added;
         }
 
         /// <summary>

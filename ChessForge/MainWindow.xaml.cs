@@ -37,6 +37,11 @@ namespace ChessForge
         public ChaptersView ChaptersView { get => _chaptersView; }
 
         /// <summary>
+        /// Public reference to StudyTreeView 
+        /// </summary>
+        public VariationTreeView StudyTreeView { get => _studyTreeView; }
+
+        /// <summary>
         /// Public reference to OpeningStatsView
         /// </summary>
         public OpeningStatsView OpeningStatsView { get => _openingStatsView; }
@@ -1011,7 +1016,7 @@ namespace ChessForge
         /// <returns></returns>
         private int AdjustArticleIndex(int index, int articleCount)
         {
-            if (index >= 0 && index < WorkbookManager.SessionWorkbook.ActiveChapter.GetExerciseCount())
+            if (index >= 0 && index < articleCount)
             {
                 return index;
             }

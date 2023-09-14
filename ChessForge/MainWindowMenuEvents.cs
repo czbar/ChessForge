@@ -404,6 +404,17 @@ namespace ChessForge
                         AppState.DoEvents();
                         _chaptersView.BringChapterIntoViewByIndex(selectedChapterIndex);
                         break;
+                    case WorkbookOperation.WorkbookOperationType.CREATE_ARTICLE:
+                        if (AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS)
+                        {
+                            _chaptersView.BuildFlowDocumentForChaptersView();
+                        }
+                        else
+                        {
+                            _chaptersView.IsDirty = true;
+                            SelectModelGame(selectedArticleIndex, true);
+                        }
+                        break;
                     case WorkbookOperation.WorkbookOperationType.DELETE_MODEL_GAME:
                     case WorkbookOperation.WorkbookOperationType.DELETE_MODEL_GAMES:
                         _chaptersView.BuildFlowDocumentForChaptersView();
@@ -1178,6 +1189,26 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Brings the requested chapter into view in ChaptersView.
+        /// </summary>
+        /// <param name="index"></param>
+        public void BringChapterIntoView(int index)
+        {
+            _chaptersView.BringChapterIntoViewByIndex(index);
+        }
+
+        /// <summary>
+        /// Brings the requested article into view in ChaptersView.
+        /// </summary>
+        /// <param name="chapterIndex"></param>
+        /// <param name="contentType"></param>
+        /// <param name="index"></param>
+        public void BringArticleIntoView(int chapterIndex, GameData.ContentType contentType, int index)
+        {
+            _chaptersView.BringArticleIntoView(chapterIndex, contentType, index);
+        }
+
+        /// <summary>
         /// Moves chapter up one position in the list
         /// </summary>
         /// <param name="sender"></param>
@@ -1192,6 +1223,7 @@ namespace ChessForge
                 WorkbookManager.SessionWorkbook.Chapters[index - 1] = hold;
                 _chaptersView.BuildFlowDocumentForChaptersView();
                 SelectChapterByIndex(index - 1, false, false);
+                PulseManager.ChaperIndexToBringIntoView = index - 1;
                 AppState.IsDirty = true;
             }
         }
@@ -1211,6 +1243,7 @@ namespace ChessForge
                 WorkbookManager.SessionWorkbook.Chapters[index + 1] = hold;
                 _chaptersView.BuildFlowDocumentForChaptersView();
                 SelectChapterByIndex(index + 1, false, false);
+                PulseManager.ChaperIndexToBringIntoView = index + 1;
                 AppState.IsDirty = true;
             }
         }
@@ -1642,7 +1675,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnTopGameImport_Click(object sender, RoutedEventArgs e)
         {
-            AppState.DownloadModelGameToActiveChapter(_topGamesView.CurrentGameId);
+            AppState.DownloadLichessGameToActiveChapter(_topGamesView.CurrentGameId);
         }
 
         /// <summary>
@@ -1836,6 +1869,7 @@ namespace ChessForge
             tree.Header.SetHeaderValue(PgnHeaders.KEY_EVENT, header.GetEventName(out _));
             tree.Header.SetHeaderValue(PgnHeaders.KEY_ECO, header.GetECO(out _));
             tree.Header.SetHeaderValue(PgnHeaders.KEY_LICHESS_ID, header.GetLichessId(out _));
+            tree.Header.SetHeaderValue(PgnHeaders.KEY_CHESSCOM_ID, header.GetChessComId(out _));
             if (overrideGuid)
             {
                 tree.Header.SetHeaderValue(PgnHeaders.KEY_GUID, header.GetGuid(out _));

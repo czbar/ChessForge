@@ -997,6 +997,10 @@ namespace ChessForge
             // TODO: consider creating it here if null, then we don't need to build it in Initialize() thus improving perf in some scenarios.
             if (_chaptersView != null)
             {
+                if (_chaptersView.IsDirty)
+                {
+                    _chaptersView.BuildFlowDocumentForChaptersView();
+                }
                 _chaptersView.UpdateIntroHeaders();
                 _chaptersView.HighlightActiveChapter();
             }
@@ -1269,6 +1273,7 @@ namespace ChessForge
 
             StopReplayIfActive();
 
+            WorkbookManager.ActiveTab = WorkbookManager.TabViewType.MODEL_GAME;
             AppState.ConfigureMenusForManualReview();
             RefreshGamesView(out Chapter chapter, out int articleIndex);
             WorkbookLocationNavigator.SaveNewLocation(chapter, GameData.ContentType.MODEL_GAME, articleIndex);
@@ -1375,6 +1380,7 @@ namespace ChessForge
 
             StopReplayIfActive();
 
+            WorkbookManager.ActiveTab = WorkbookManager.TabViewType.EXERCISE;
             AppState.ConfigureMenusForManualReview();
             RefreshExercisesView(out Chapter chapter, out int articleIndex);
             WorkbookLocationNavigator.SaveNewLocation(chapter, GameData.ContentType.MODEL_GAME, articleIndex);

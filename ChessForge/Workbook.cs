@@ -616,6 +616,25 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Undo creation/addition of an Article.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="article"></param>
+        public void UndoCreateArticle(Chapter chapter, Article article)
+        {
+            try
+            {
+                if (chapter != null && article != null)
+                {
+                    chapter.DeleteArticle(article);
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
         /// Undo deletion of a Model Game
         /// </summary>
         /// <param name="chapter"></param>

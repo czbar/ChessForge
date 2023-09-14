@@ -20,6 +20,7 @@ namespace ChessForge
             DELETE_CHAPTER,
             CREATE_CHAPTER,
             RENAME_CHAPTER,
+            CREATE_ARTICLE,
             DELETE_MODEL_GAME,
             DELETE_MODEL_GAMES,
             DELETE_EXERCISE,
