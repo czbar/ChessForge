@@ -100,6 +100,12 @@ namespace ChessForge
                         }
 
                         UiLblLoading.Visibility = Visibility.Collapsed;
+                        // Set game's web site id
+                        for (int i = 0; i < lstGames.Count; i++)
+                        {
+                            SetGameWebId(lstGames[i]);
+                        }
+
                         Games = new ObservableCollection<GameData>(lstGames);
                         if (Games.Count > 0)
                         {
@@ -129,6 +135,39 @@ namespace ChessForge
             if (!exit)
             {
                 EnableControls(false);
+            }
+        }
+
+        /// <summary>
+        /// Checks for the GameId from Lichess or chess.com.
+        /// If from lichess, then the id will be found in the [Site] header.
+        /// If from chess.com, the id will be found in the [Link] header. 
+        /// However, chess.com also has a [Site] header so we need to check it first.
+        /// </summary>
+        private void SetGameWebId(GameData game)
+        {
+            string val = game.Header.GetValueForKey(PgnHeaders.KEY_LINK);
+            if (!string.IsNullOrEmpty(val))
+            {
+                // double check that this from chess.com
+                if (val.Contains("chess.com"))
+                {
+                    string[] tokens = val.Split('/');
+                    game.Header.SetHeaderValue(PgnHeaders.KEY_CHESSCOM_ID, tokens[tokens.Length - 1]);
+                }
+            }
+            else
+            {
+                val = game.Header.GetValueForKey(PgnHeaders.KEY_SITE);
+                if (!string.IsNullOrEmpty(val))
+                {
+                    // double check that this from lichess
+                    if (val.Contains("lichess"))
+                    {
+                        string[] tokens = val.Split('/');
+                        game.Header.SetHeaderValue(PgnHeaders.KEY_LICHESS_ID, tokens[tokens.Length - 1]);
+                    }
+                }
             }
         }
 
