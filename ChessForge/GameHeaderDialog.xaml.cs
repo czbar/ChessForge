@@ -2,15 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using ChessPosition;
 using GameTree;
 
@@ -58,8 +52,18 @@ namespace ChessForge
 
             UiTbPreamble.Text = _tree.Header.BuildPreambleText();
 
+            UiTbFirstMoveNumber.Text = (_tree.MoveNumberOffset + 1).ToString();
+
             SetDateControls();
             SetResultRadioButton();
+
+            if (_tree.ContentType == GameData.ContentType.EXERCISE)
+            {
+                // make room for the move number offset
+                UiTbPreamble.Height = UiTbPreamble.Height - 30;
+                UiTbFirstMoveNumber.Visibility = Visibility.Visible;
+                UiLblFirstMoveNumber.Visibility = Visibility.Visible;
+            }
         }
 
         /// <summary>
@@ -146,6 +150,14 @@ namespace ChessForge
             _tree.Header.SetHeaderValue(PgnHeaders.KEY_RESULT, CollectResultString());
 
             _tree.Header.SetPreamble(UiTbPreamble.Text);
+
+            if (uint.TryParse(UiTbFirstMoveNumber.Text, out uint firstMoveNumber))
+            {
+                if (firstMoveNumber > 0 && firstMoveNumber <= 1000)
+                {
+                    _tree.MoveNumberOffset = firstMoveNumber - 1;
+                }
+            }
         }
 
         /// <summary>
