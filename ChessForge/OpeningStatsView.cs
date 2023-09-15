@@ -641,13 +641,19 @@ namespace ChessForge
             }
 
             StringBuilder sb = new StringBuilder();
+            
+            uint moveNumberOffset = 0;
+            if (AppState.ActiveVariationTree != null)
+            {
+                moveNumberOffset = AppState.ActiveVariationTree.MoveNumberOffset;
+            }
             if (nd.ColorToMove == ChessPosition.PieceColor.Black)
             {
-                sb.Append(nd.MoveNumber.ToString() + "...");
+                sb.Append((nd.MoveNumber + moveNumberOffset).ToString() + "...");
             }
             else
             {
-                sb.Append((nd.MoveNumber + 1).ToString() + ".");
+                sb.Append((nd.MoveNumber + moveNumberOffset + 1).ToString() + ".");
             }
 
             return sb.ToString();
