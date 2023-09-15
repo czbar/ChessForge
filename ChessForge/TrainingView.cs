@@ -160,6 +160,11 @@ namespace ChessForge
         private MoveContext _moveContext;
 
         /// <summary>
+        /// Offset to apply to move numbers shown in the GUI
+        /// </summary>
+        private uint _moveNumberOffset;
+
+        /// <summary>
         /// Id of the node over which to temporarily suspend floating board.
         /// </summary>
         private int _nodeIdSuppressFloatingBoard = -1;
@@ -292,7 +297,7 @@ namespace ChessForge
             TrainingSession.ResetTrainingLine(node);
             Document.Blocks.Clear();
             InitParaDictionary();
-
+            _moveNumberOffset =_mainWin.ActiveVariationTree.MoveNumberOffset;
             BuildIntroText(node);
         }
 
@@ -604,11 +609,11 @@ namespace ChessForge
                     _paraCurrentEngineGame.Inlines.Add(rWbEnded);
                 }
                 _paraCurrentEngineGame.Inlines.Add(new Run("\n" + Properties.Resources.TrnGameInProgress + "\n"));
-                text = "          " + MoveUtils.BuildSingleMoveText(nd, true, false) + " ";
+                text = "          " + MoveUtils.BuildSingleMoveText(nd, true, false, _moveNumberOffset) + " ";
             }
             else
             {
-                text = MoveUtils.BuildSingleMoveText(nd, false, false) + " ";
+                text = MoveUtils.BuildSingleMoveText(nd, false, false, _moveNumberOffset) + " ";
             }
 
             Run gm = CreateButtonRun(text, _run_engine_game_move_ + nd.NodeId.ToString(), Brushes.Brown);
@@ -686,7 +691,7 @@ namespace ChessForge
                 _paraCurrentEngineGame.Inlines.Add(rWbEnded);
             }
             _paraCurrentEngineGame.Inlines.Add(new Run("\n" + Properties.Resources.TrnGameInProgress + "\n"));
-            string text = "          " + MoveUtils.BuildSingleMoveText(nd, true, false) + " ";
+            string text = "          " + MoveUtils.BuildSingleMoveText(nd, true, false, _moveNumberOffset) + " ";
             Run r_root = CreateButtonRun(text, _run_engine_game_move_ + nd.NodeId.ToString(), Brushes.Brown);
             _paraCurrentEngineGame.Inlines.Add(r_root);
             if (dictEvalRunsToKeep.ContainsKey(nd.NodeId))
@@ -700,7 +705,7 @@ namespace ChessForge
             {
                 nd = nd.Children[0];
                 _currentEngineGameMoveCount++;
-                text = MoveUtils.BuildSingleMoveText(nd, false, false) + " ";
+                text = MoveUtils.BuildSingleMoveText(nd, false, false, _moveNumberOffset) + " ";
                 Run gm = CreateButtonRun(text, _run_engine_game_move_ + nd.NodeId.ToString(), Brushes.Brown);
                 _paraCurrentEngineGame.Inlines.Add(gm);
                 if (dictEvalRunsToKeep.ContainsKey(nd.NodeId))
@@ -851,7 +856,7 @@ namespace ChessForge
                     para.Inlines.Add(r_prefix);
                 }
 
-                Run r = CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, true, true) + " ", runName, Brushes.Black);
+                Run r = CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, true, true, _moveNumberOffset) + " ", runName, Brushes.Black);
                 para.Inlines.Add(r);
 
                 if (!userMove)
@@ -987,7 +992,7 @@ namespace ChessForge
             // NOTE without nd.Parent != null we'd be getting "starting position" text in front
             while (nd != null && nd.Parent != null)
             {
-                Run r = CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, nd.Parent.NodeId == 0, false) + " ", _run_stem_move_ + nd.NodeId.ToString(), Brushes.Black, true);
+                Run r = CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, nd.Parent.NodeId == 0, false, _moveNumberOffset) + " ", _run_stem_move_ + nd.NodeId.ToString(), Brushes.Black, true);
                 nd = nd.Parent;
 
                 if (prevRun == null)
@@ -1337,7 +1342,7 @@ namespace ChessForge
             foreach (TreeNode nd in moves)
             {
                 Brush brush = isUserMove ? _userBrush : _workbookBrush;
-                para.Inlines.Add(CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, true, true), _run_wb_move_ + nd.NodeId.ToString(), brush));
+                para.Inlines.Add(CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, true, true, _moveNumberOffset), _run_wb_move_ + nd.NodeId.ToString(), brush));
                 Run r_semi = new Run("; ");
                 para.Inlines.Add(r_semi);
             }
@@ -1377,7 +1382,7 @@ namespace ChessForge
         /// <returns></returns>
         private string BuildMoveTextForMenu(TreeNode nd)
         {
-            return MoveUtils.BuildSingleMoveText(nd, true, true);
+            return MoveUtils.BuildSingleMoveText(nd, true, true, _moveNumberOffset);
         }
 
         /// <summary>

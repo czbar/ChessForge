@@ -191,7 +191,13 @@ namespace ChessForge
             {
                 Run rStem = new Run();
                 rStem.Name = PREFIX_STEM_MOVE + nd.NodeId.ToString();
-                rStem.Text = MoveUtils.BuildSingleMoveText(nd, nd.Parent.NodeId == 0, true) + " ";
+
+                uint moveNumberOffset = 0;
+                if (item.Article != null && item.Article.Tree != null)
+                {
+                    moveNumberOffset = item.Article.Tree.MoveNumberOffset;
+                }
+                rStem.Text = MoveUtils.BuildSingleMoveText(nd, nd.Parent.NodeId == 0, true, moveNumberOffset) + " ";
                 rStem.FontWeight = FontWeights.Bold;
                 rStem.FontSize = 13 + Configuration.FontSizeDiff;
                 rStem.MouseMove += EventRunMoveOver;
@@ -217,7 +223,12 @@ namespace ChessForge
             {
                 Run rTail = new Run();
                 rTail.Name = PREFIX_TAIL_MOVE + nd.NodeId.ToString();
-                rTail.Text = MoveUtils.BuildSingleMoveText(nd, nd.Parent.NodeId == 0 || plyCount == 0, true) + " ";
+                uint moveNumberOffset = 0;
+                if (item.Article != null && item.Article.Tree != null)
+                {
+                    moveNumberOffset = item.Article.Tree.MoveNumberOffset;
+                }
+                rTail.Text = MoveUtils.BuildSingleMoveText(nd, nd.Parent.NodeId == 0 || plyCount == 0, true, moveNumberOffset) + " ";
                 rTail.FontStyle = FontStyles.Italic;
                 rTail.FontWeight = FontWeights.Normal;
                 rTail.FontSize = 12 + Configuration.FontSizeDiff;
@@ -246,7 +257,12 @@ namespace ChessForge
             if (nd != null && item.TailLine.Count > 0)
             {
                 InsertIndent(para);
-                string moveText = MoveUtils.BuildSingleMoveText(nd, true, false);
+                uint moveNumberOffset = 0;
+                if (item.Article != null && item.Article.Tree != null)
+                {
+                    moveNumberOffset = item.Article.Tree.MoveNumberOffset;
+                }
+                string moveText = MoveUtils.BuildSingleMoveText(nd, true, false, moveNumberOffset);
                 Run rCopyLine = new Run();
                 rCopyLine.Name = PREFIX_BUTTON_COPY_LINE + itemIndex.ToString();
                 rCopyLine.Text = Properties.Resources.CopyMainLineAfterMove + " " + moveText;
@@ -275,7 +291,12 @@ namespace ChessForge
             if (nd != null && item.TailLine.Count > 0)
             {
                 InsertIndent(para);
-                string moveText = MoveUtils.BuildSingleMoveText(nd, true, false);
+                uint moveNumberOffset = 0;
+                if (item.Article != null && item.Article.Tree != null)
+                {
+                    moveNumberOffset = item.Article.Tree.MoveNumberOffset;
+                }
+                string moveText = MoveUtils.BuildSingleMoveText(nd, true, false, moveNumberOffset);
                 Run rCopyTree = new Run();
                 rCopyTree.Name = PREFIX_BUTTON_COPY_TREE + itemIndex.ToString();
                 rCopyTree.Text = Properties.Resources.CopySubtreeAfterMove + " " + moveText;

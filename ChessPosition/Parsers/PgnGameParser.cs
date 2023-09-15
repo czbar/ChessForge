@@ -514,7 +514,7 @@ namespace GameTree
         {
             LocalizedStrings.Values.TryGetValue(LocalizedStrings.StringId.PgnMissingMoveAfter, out string msg);
             StringBuilder sb = new StringBuilder();
-            sb.Append(msg + " " + MoveUtils.BuildSingleMoveText(ndParent, true, false));
+            sb.Append(msg + " " + MoveUtils.BuildSingleMoveText(ndParent, true, false, _tree.MoveNumberOffset));
             return sb.ToString();
         }
 

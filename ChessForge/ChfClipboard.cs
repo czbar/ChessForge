@@ -37,7 +37,7 @@ namespace ChessForge
         /// Saves a node list in the clipboard.
         /// </summary>
         /// <param name="lst"></param>
-        public static void HoldNodeList(List<TreeNode> lst)
+        public static void HoldNodeList(List<TreeNode> lst, uint moveNumberOffset)
         {
             if (lst == null)
             {
@@ -47,7 +47,7 @@ namespace ChessForge
             Type = ItemType.NODE_LIST;
             Value = lst;
 
-            SystemClipboard.SetText(TextUtils.BuildLineText(lst));
+            SystemClipboard.SetText(TextUtils.BuildLineText(lst, moveNumberOffset));
         }
 
         /// <summary>

@@ -328,8 +328,9 @@ namespace ChessForge
         /// <param name="secondaryTree"></param>
         private void HandleIncorrectGuess(TreeNode guess, VariationTree secondaryTree)
         {
+            //TODO: make sure that secondary tree gets move number offset from primary
             // report incorrect move and (defensively) remove from the view it is there
-            guess.Parent.Comment = Constants.CharCrossMark.ToString() + " " + MoveUtils.BuildSingleMoveText(guess, true, false) + " is not correct.";
+            guess.Parent.Comment = Constants.CharCrossMark.ToString() + " " + MoveUtils.BuildSingleMoveText(guess, true, false, secondaryTree.MoveNumberOffset) + " is not correct.";
             AppState.MainWin.ActiveVariationTree.SelectedNodeId = guess.Parent.NodeId;
             AppState.MainWin.ActiveLine.Line.RemoveLastPly();
 

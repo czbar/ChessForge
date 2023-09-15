@@ -969,7 +969,8 @@ namespace ChessForge
                 {
                     sb.Append(", ");
                 }
-                sb.Append(MoveUtils.BuildSingleMoveText(nodesToRemove[i], true, true));
+                //TODO: fix the movenumberoffset argument
+                sb.Append(MoveUtils.BuildSingleMoveText(nodesToRemove[i], true, true, 0));
             }
             sb.Append(')');
 
@@ -1009,6 +1010,7 @@ namespace ChessForge
                 PositionSetup.MoveNumber = 0;
             }
 
+            //TODO: pass moveNumberOffset
             if (GuiUtilities.ValidatePosition(ref PositionSetup, out string errorText))
             {
                 if (ValidateTree())

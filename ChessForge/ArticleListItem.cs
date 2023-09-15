@@ -224,7 +224,12 @@ namespace ChessForge
         {
             get
             {
-                return MoveUtils.BuildSingleMoveText(_node, true, false);
+                uint moveNumberOffset = 0;
+                if (_article != null && _article.Tree != null)
+                {
+                    moveNumberOffset = _article.Tree.MoveNumberOffset;
+                }
+                return MoveUtils.BuildSingleMoveText(_node, true, false, moveNumberOffset);
             }
         }
 

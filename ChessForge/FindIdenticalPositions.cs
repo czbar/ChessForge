@@ -57,12 +57,17 @@ namespace ChessForge
                     if (dlgEx.ShowDialog() == true && dlgEx.ArticleIndexId >= 0 && dlgEx.ArticleIndexId < lstIdenticalPositions.Count)
                     {
                         ArticleListItem item = lstIdenticalPositions[dlgEx.ArticleIndexId];
+                        uint moveNumberOffset = 0;
+                        if (item.Article != null && item.Article.Tree != null)
+                        {
+                            moveNumberOffset = item.Article.Tree.MoveNumberOffset;
+                        }
                         List<TreeNode> nodelList = null;
                         switch (dlgEx.Request)
                         {
                             case IdenticalPositionsExDialog.Action.CopyLine:
                                 nodelList = TreeUtils.CopyNodeList(item.TailLine);
-                                ChfClipboard.HoldNodeList(nodelList);
+                                ChfClipboard.HoldNodeList(nodelList, moveNumberOffset);
                                 AppState.MainWin.PasteChfClipboard();
                                 AppState.IsDirty = true;
                                 break;
@@ -70,7 +75,7 @@ namespace ChessForge
                                 foreach (TreeNode node in item.TailLine[0].Parent.Children)
                                 {
                                     nodelList = TreeUtils.CopySubtree(node);
-                                    ChfClipboard.HoldNodeList(nodelList);
+                                    ChfClipboard.HoldNodeList(nodelList, moveNumberOffset);
                                     AppState.MainWin.PasteChfClipboard();
                                 }
                                 AppState.IsDirty = true;

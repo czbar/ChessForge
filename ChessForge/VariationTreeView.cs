@@ -589,7 +589,7 @@ namespace ChessForge
                     {
                         VariationTree newTree = TreeUtils.CreateNewTreeFromNode(lstNodes[0], GameData.ContentType.STUDY_TREE);
                         Chapter chapter = WorkbookManager.SessionWorkbook.CreateNewChapter(newTree, false);
-                        chapter.SetTitle(Properties.Resources.Chapter + " " + (chapter.Index + 1).ToString() + ": " + MoveUtils.BuildSingleMoveText(nd, true, true));
+                        chapter.SetTitle(Properties.Resources.Chapter + " " + (chapter.Index + 1).ToString() + ": " + MoveUtils.BuildSingleMoveText(nd, true, true, newTree.MoveNumberOffset));
 
                         ChapterFromLineDialog dlg = new ChapterFromLineDialog(chapter)
                         {
@@ -1196,7 +1196,7 @@ namespace ChessForge
                         TableCell cell;
                         if (i < moveCount)
                         {
-                            Run rCell = new Run(MoveUtils.BuildSingleMoveText(node.Children[i], true, true));
+                            Run rCell = new Run(MoveUtils.BuildSingleMoveText(node.Children[i], true, true, ShownVariationTree.MoveNumberOffset));
                             rCell.Name = _run_fork_move_ + node.Children[i].NodeId.ToString();
                             rCell.MouseDown += EventForkChildClicked;
 
@@ -1499,7 +1499,7 @@ namespace ChessForge
             }
 
 
-            Run r = new Run(" " + MoveUtils.BuildSingleMoveText(nd, false, false));
+            Run r = new Run(" " + MoveUtils.BuildSingleMoveText(nd, false, false, ShownVariationTree.MoveNumberOffset));
             r.Name = _run_ + nd.NodeId.ToString();
             r.PreviewMouseDown += EventRunClicked;
 
@@ -1956,7 +1956,7 @@ namespace ChessForge
             if (_selectedForCopy.Count > 0)
             {
                 List<TreeNode> lstNodes = TreeUtils.CopyNodeList(_selectedForCopy);
-                ChfClipboard.HoldNodeList(lstNodes);
+                ChfClipboard.HoldNodeList(lstNodes, ShownVariationTree.MoveNumberOffset);
             }
         }
 

@@ -81,29 +81,39 @@ namespace ChessForge
 
             if (userMove)
             {
-                AddNewParagraphToDoc("normal", Strings.GetResource("YourMoveWas") + ":");
-                AddNewParagraphToDoc("bold_prompt", MoveUtils.BuildSingleMoveText(nd, true, false));
+                AddNewParagraphToDoc("normal", Properties.Resources.YourMoveWas + ":");
+                uint moveNumberOffset = 0;
+                if (AppState.ActiveVariationTree != null)
+                {
+                    moveNumberOffset= AppState.ActiveVariationTree.MoveNumberOffset;
+                }
+                AddNewParagraphToDoc("bold_prompt", MoveUtils.BuildSingleMoveText(nd, true, false, moveNumberOffset));
                 if (AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
                 {
-                    AddNewParagraphToDoc("normal", Strings.GetResource("WaitForEngineResponse"));
+                    AddNewParagraphToDoc("normal", Properties.Resources.WaitForEngineResponse);
                 }
                 else if (TrainingSession.IsTrainingInProgress)
                 {
-                    AddNewParagraphToDoc("normal", Strings.GetResource("WaitForResponse"));
+                    AddNewParagraphToDoc("normal", Properties.Resources.WaitForResponse);
                 }
             }
             else // engine or "coach" moved
             {
                 if (AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
                 {
-                    AddNewParagraphToDoc("normal", Strings.GetResource("EnginePlayed") + ":");
+                    AddNewParagraphToDoc("normal", Properties.Resources.EnginePlayed + ":");
                 }
                 else
                 {
-                    AddNewParagraphToDoc("normal", Strings.GetResource("CoachPlayed") + ":");
+                    AddNewParagraphToDoc("normal", Properties.Resources.CoachPlayed + ":");
                 }
-                AddNewParagraphToDoc("bold_16", MoveUtils.BuildSingleMoveText(nd, true, false));
-                AddNewParagraphToDoc("normal", Strings.GetResource("YourTurn"));
+                uint moveNumberOffset = 0;
+                if (AppState.ActiveVariationTree != null)
+                {
+                    moveNumberOffset = AppState.ActiveVariationTree.MoveNumberOffset;
+                }
+                AddNewParagraphToDoc("bold_16", MoveUtils.BuildSingleMoveText(nd, true, false, moveNumberOffset));
+                AddNewParagraphToDoc("normal", Properties.Resources.YourTurn);
             }
         }
 

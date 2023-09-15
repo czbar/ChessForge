@@ -1839,7 +1839,7 @@ namespace ChessForge
                     if (ActiveVariationTree.Header.GetContentType(out _) == GameData.ContentType.STUDY_TREE)
                     {
                         tree.Header.SetHeaderValue(PgnHeaders.KEY_WHITE, chapter.Title);
-                        tree.Header.SetHeaderValue(PgnHeaders.KEY_BLACK, Properties.Resources.StudyTreeAfter + " " + MoveUtils.BuildSingleMoveText(nd, true, true));
+                        tree.Header.SetHeaderValue(PgnHeaders.KEY_BLACK, Properties.Resources.StudyTreeAfter + " " + MoveUtils.BuildSingleMoveText(nd, true, true, ActiveVariationTree.MoveNumberOffset));
                     }
                     CreateNewExerciseFromTree(tree);
                 }
@@ -2675,7 +2675,7 @@ namespace ChessForge
                             }
 
                             string msg = Properties.Resources.ErrClipboardLinePaste + " ("
-                                + MoveUtils.BuildSingleMoveText(failedInsertions[0], true, false) + ")";
+                                + MoveUtils.BuildSingleMoveText(failedInsertions[0], true, false, ActiveVariationTree.MoveNumberOffset) + ")";
                             MessageBox.Show(msg, Properties.Resources.ClipboardOperation, MessageBoxButton.OK, MessageBoxImage.Exclamation);
                         }
                     }
