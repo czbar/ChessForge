@@ -129,6 +129,14 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Move number to use in FEN and in reporting bad moves.
+        /// </summary>
+        private uint MoveNumberOffset
+        {
+            get => _tree == null ? 1 : _tree.MoveNumberOffset;
+        }
+
+        /// <summary>
         /// Sets the state of castling check boxes according to the position's properties.
         /// </summary>
         private void SetCastlingCheckboxes()
@@ -144,7 +152,7 @@ namespace ChessForge
         /// </summary>
         private void SetFen(bool checkEnpassant = true)
         {
-            UiTbFen.Text = FenParser.GenerateFenFromPosition(PositionSetup);
+            UiTbFen.Text = FenParser.GenerateFenFromPosition(PositionSetup, MoveNumberOffset);
         }
 
 
@@ -969,8 +977,7 @@ namespace ChessForge
                 {
                     sb.Append(", ");
                 }
-                //TODO: fix the movenumberoffset argument
-                sb.Append(MoveUtils.BuildSingleMoveText(nodesToRemove[i], true, true, 0));
+                sb.Append(MoveUtils.BuildSingleMoveText(nodesToRemove[i], true, true, MoveNumberOffset));
             }
             sb.Append(')');
 
@@ -1010,7 +1017,6 @@ namespace ChessForge
                 PositionSetup.MoveNumber = 0;
             }
 
-            //TODO: pass moveNumberOffset
             if (GuiUtilities.ValidatePosition(ref PositionSetup, out string errorText))
             {
                 if (ValidateTree())
