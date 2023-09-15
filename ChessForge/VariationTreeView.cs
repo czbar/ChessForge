@@ -531,7 +531,7 @@ namespace ChessForge
 
                 if (nd != null)
                 {
-                    SystemClipboard.SetText(FenParser.GenerateFenFromPosition(nd.Position));
+                    SystemClipboard.SetText(FenParser.GenerateFenFromPosition(nd.Position, ShownVariationTree.MoveNumberOffset));
                 }
             }
             catch
@@ -1693,12 +1693,12 @@ namespace ChessForge
                 {
                     //sb.Append(" ");
                 }
-                sb.Append(nd.Position.MoveNumber.ToString() + ".");
+                sb.Append((nd.Position.MoveNumber + MainVariationTree.MoveNumberOffset).ToString() + ".");
             }
 
             if (nd.Position.ColorToMove == PieceColor.White && includeNumber)
             {
-                sb.Append(nd.Position.MoveNumber.ToString() + "...");
+                sb.Append((nd.Position.MoveNumber + MainVariationTree.MoveNumberOffset).ToString() + "...");
             }
 
             if (nd.Position.ColorToMove == PieceColor.White)
