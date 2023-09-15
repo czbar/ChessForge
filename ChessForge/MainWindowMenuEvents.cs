@@ -3155,6 +3155,11 @@ namespace ChessForge
                     SelectModelGame(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex, true);
                     RefreshGamesView(out Chapter chapter, out int articleIndex);
                     WorkbookLocationNavigator.SaveNewLocation(chapter, GameData.ContentType.MODEL_GAME, articleIndex);
+
+                    if (AppState.AreExplorersOn)
+                    {
+                        WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, ActiveVariationTree.SelectedNode, true);
+                    }
                     AppState.IsDirty = true;
                 }
             }
@@ -3201,6 +3206,10 @@ namespace ChessForge
                         CreateNewExerciseFromTree(tree);
                         RefreshExercisesView(out Chapter chapter, out int articleIndex);
                         WorkbookLocationNavigator.SaveNewLocation(chapter, GameData.ContentType.EXERCISE, articleIndex);
+                        if (AppState.AreExplorersOn)
+                        {
+                            WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, ActiveVariationTree.SelectedNode);
+                        }
                         AppState.IsDirty = true;
                     }
                 }
@@ -3402,6 +3411,10 @@ namespace ChessForge
                     {
                         _modelGameTreeView.BuildFlowDocumentForVariationTree();
                     }
+                    if (AppState.AreExplorersOn)
+                    {
+                        WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, ActiveVariationTree.SelectedNode);
+                    }
                 }
             }
             catch (Exception ex)
@@ -3436,6 +3449,10 @@ namespace ChessForge
                     {
                         _exerciseTreeView.BuildFlowDocumentForVariationTree();
                     }
+                }
+                if (AppState.AreExplorersOn)
+                {
+                    WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, ActiveVariationTree.SelectedNode, true);
                 }
             }
             catch (Exception ex)
