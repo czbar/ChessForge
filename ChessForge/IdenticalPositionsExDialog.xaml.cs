@@ -246,7 +246,7 @@ namespace ChessForge
             if (nd != null && item.TailLine.Count > 0)
             {
                 InsertIndent(para);
-                string moveText = MoveUtils.BuildSingleMoveText(nd, true);
+                string moveText = MoveUtils.BuildSingleMoveText(nd, true, false);
                 Run rCopyLine = new Run();
                 rCopyLine.Name = PREFIX_BUTTON_COPY_LINE + itemIndex.ToString();
                 rCopyLine.Text = Properties.Resources.CopyMainLineAfterMove + " " + moveText;
@@ -275,7 +275,7 @@ namespace ChessForge
             if (nd != null && item.TailLine.Count > 0)
             {
                 InsertIndent(para);
-                string moveText = MoveUtils.BuildSingleMoveText(nd, true);
+                string moveText = MoveUtils.BuildSingleMoveText(nd, true, false);
                 Run rCopyTree = new Run();
                 rCopyTree.Name = PREFIX_BUTTON_COPY_TREE + itemIndex.ToString();
                 rCopyTree.Text = Properties.Resources.CopySubtreeAfterMove + " " + moveText;
