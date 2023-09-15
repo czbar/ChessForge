@@ -1012,7 +1012,7 @@ namespace ChessForge
 
                     if (deletedArticles.Count > 0)
                     {
-                        WorkbookOperation.WorkbookOperationType wot = 
+                        WorkbookOperation.WorkbookOperationType wot =
                             articleType == GameData.ContentType.MODEL_GAME ? WorkbookOperationType.DELETE_MODEL_GAMES : WorkbookOperationType.DELETE_EXERCISES;
                         int activeArticleIndex = articleType == GameData.ContentType.MODEL_GAME ? chapter.ActiveModelGameIndex : chapter.ActiveExerciseIndex;
                         WorkbookOperation op = new WorkbookOperation(wot, chapter, activeArticleIndex, deletedArticles, deletedIndices);
@@ -1813,7 +1813,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Creates a new Exercise starting from the position currently selected in the Study Tree.
+        /// Creates a new Exercise starting from the position currently selected in the Active Tree.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1824,7 +1824,16 @@ namespace ChessForge
                 TreeNode nd = ActiveLine.GetSelectedTreeNode();
                 if (nd != null)
                 {
+                    // get the move number offset
+                    uint moveNumberOffset = nd.MoveNumber;
+                    if (nd.Position.ColorToMove == PieceColor.Black && moveNumberOffset > 0)
+                    {
+                        moveNumberOffset--;
+                    }
+
                     VariationTree tree = TreeUtils.CreateNewTreeFromNode(nd, GameData.ContentType.EXERCISE);
+                    tree.MoveNumberOffset = moveNumberOffset;
+
                     Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                     CopyHeaderFromGame(tree, ActiveVariationTree.Header, false);
                     if (ActiveVariationTree.Header.GetContentType(out _) == GameData.ContentType.STUDY_TREE)
@@ -2307,7 +2316,7 @@ namespace ChessForge
                         AppState.IsDirty = true;
                         SoundPlayer.PlayConfirmationSound();
                         BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.BookmarkAdded, System.Windows.Media.Brushes.Green);
-                       //  UiTabBookmarks.Focus();
+                        //  UiTabBookmarks.Focus();
                     }
                 }
                 else
@@ -2456,7 +2465,7 @@ namespace ChessForge
                 {
                     AppLog.Message("Stopping Training Session");
                     EngineMessageProcessor.ResetEngineEvaluation();
-                    
+
                     UiTrainingView.CleanupVariationTree();
                     if (WorkbookManager.PromptAndSaveWorkbook(false, out bool saved))
                     {
