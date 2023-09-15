@@ -43,7 +43,7 @@ namespace DownloadStats
             else
             {
                 // if the file does not exist, make sure we will write out the headers
-                sb.AppendLine("Date,Country,Count");
+                sb.AppendLine("Date,Country,Count,YearMonth");
             }
 
             // limit the number of days to query, as Source Forge will return an error if too many
@@ -107,8 +107,11 @@ namespace DownloadStats
                                     Console.Write((item as List<object>)[0] as string + ",");
                                     sb.Append((item as List<object>)[0] as string + ",");
 
-                                    Console.WriteLine((item as List<object>)[1].ToString());
-                                    sb.AppendLine((item as List<object>)[1].ToString());
+                                    Console.Write((item as List<object>)[1].ToString() + ",");
+                                    sb.Append((item as List<object>)[1].ToString() + ",");
+
+                                    Console.WriteLine(dt.ToString("yy MM"));
+                                    sb.AppendLine(dt.ToString("yy MM"));
                                 }
                             }
                         }
