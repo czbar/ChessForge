@@ -3136,7 +3136,7 @@ namespace ChessForge
             try
             {
                 VariationTree tree = new VariationTree(GameData.ContentType.MODEL_GAME);
-                GameHeaderDialog dlg = new GameHeaderDialog(tree, Properties.Resources.ResourceManager.GetString("GameHeader"))
+                GameHeaderDialog dlg = new GameHeaderDialog(tree, Properties.Resources.GameHeader)
                 {
                     Left = ChessForgeMain.Left + 100,
                     Top = ChessForgeMain.Top + 100,
@@ -3386,7 +3386,7 @@ namespace ChessForge
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
 
                 VariationTree game = WorkbookManager.SessionWorkbook.ActiveChapter.ModelGames[chapter.ActiveModelGameIndex].Tree;
-                var dlg = new GameHeaderDialog(game, Properties.Resources.ResourceManager.GetString("GameHeader"))
+                var dlg = new GameHeaderDialog(game, Properties.Resources.GameHeader)
                 {
                     Left = ChessForgeMain.Left + 100,
                     Top = ChessForgeMain.Top + 100,
@@ -3420,7 +3420,7 @@ namespace ChessForge
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
 
                 VariationTree game = WorkbookManager.SessionWorkbook.ActiveChapter.Exercises[chapter.ActiveExerciseIndex].Tree;
-                var dlg = new GameHeaderDialog(game, Properties.Resources.ResourceManager.GetString("ExerciseHeader"))
+                var dlg = new GameHeaderDialog(game, Properties.Resources.ExerciseHeader)
                 {
                     Left = ChessForgeMain.Left + 100,
                     Top = ChessForgeMain.Top + 100,
