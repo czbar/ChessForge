@@ -515,11 +515,18 @@ namespace ChessForge
         protected string GetStemLineText(TreeNode nd)
         {
             StringBuilder sbPrefix = new StringBuilder();
+
+            uint moveNumberOffset = 0;
+            if (AppState.ActiveVariationTree != null)
+            {
+                moveNumberOffset = AppState.ActiveVariationTree.MoveNumberOffset;
+            }
+
             while (nd != null)
             {
                 if (nd.ColorToMove == PieceColor.Black)
                 {
-                    sbPrefix.Insert(0, nd.MoveNumber.ToString() + "." + nd.LastMoveAlgebraicNotation);
+                    sbPrefix.Insert(0, (nd.MoveNumber + moveNumberOffset).ToString() + "." + nd.LastMoveAlgebraicNotation);
                 }
                 else
                 {
