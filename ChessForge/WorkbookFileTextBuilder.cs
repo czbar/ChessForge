@@ -395,7 +395,7 @@ namespace ChessForge
             BoardPosition pos = new BoardPosition(tree.Nodes[0].Position);
             UpShiftOnePly(ref pos);
 
-            string fen = FenParser.GenerateFenFromPosition(pos);
+            string fen = FenParser.GenerateFenFromPosition(pos, tree.MoveNumberOffset);
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_FEN_STRING, fen));
 
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_EVENT, tree.Header.GetEventName(out _)));

@@ -133,7 +133,12 @@ namespace ChessForge
                 sb.Append(" " + (ArticleIndex + 1).ToString());
             }
 
-            sb.Append(" (" + MoveUtils.BuildSingleMoveText(BookmarkWrapper.Node, true, false) + ")");
+            uint moveNumberOffset = 0;
+            if (BookmarkWrapper.Tree != null)
+            {
+                moveNumberOffset = BookmarkWrapper.Tree.MoveNumberOffset;   
+            }
+            sb.Append(" (" + MoveUtils.BuildSingleMoveText(BookmarkWrapper.Node, true, false, moveNumberOffset) + ")");
 
             return sb.ToString();
         }

@@ -1120,6 +1120,9 @@
   <data name="MsgTakebackInfo" xml:space="preserve">
     <value>Click here or press the space key to take back your move.</value>
   </data>
+  <data name="FirstMoveNumber" xml:space="preserve">
+    <value>Number of the first move</value>
+  </data>
   <data name="GamesWithWhite" xml:space="preserve">
     <value>Games with White</value>
   </data>

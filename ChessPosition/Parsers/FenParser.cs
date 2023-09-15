@@ -163,7 +163,7 @@ namespace GameTree
         /// position.
         /// </summary>
         /// <returns>FEN string</returns>
-        public static string GenerateFenFromPosition(BoardPosition pos)
+        public static string GenerateFenFromPosition(BoardPosition pos, uint moveNumberOffset = 0)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -192,11 +192,11 @@ namespace GameTree
             // Field 6: the number of the full move
             if (pos.ColorToMove == PieceColor.White)
             {
-                sb.Append((pos.MoveNumber+1).ToString());
+                sb.Append(((pos.MoveNumber + moveNumberOffset) + 1).ToString());
             }
             else
             {
-                sb.Append(pos.MoveNumber.ToString());
+                sb.Append((pos.MoveNumber + moveNumberOffset).ToString());
             }
 
             return sb.ToString();
@@ -366,7 +366,7 @@ namespace GameTree
         {
             board.MoveNumber = Convert.ToUInt32(moveNo);
             // if White is on move, subtract one because the move number
-            // in BoardPosition is obe ply behind FEN
+            // in BoardPosition is one ply behind FEN
             if (board.ColorToMove == PieceColor.White)
             {
                 board.MoveNumber--;

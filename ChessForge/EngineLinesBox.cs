@@ -293,6 +293,12 @@ namespace ChessForge
                     return " ";
                 }
 
+                uint moveNumberOffset = 0;
+                if (AppState.ActiveVariationTree != null)
+                {
+                    moveNumberOffset = AppState.ActiveVariationTree.MoveNumberOffset;
+                }
+
                 eval = EvaluationManager.BuildEvaluationText(line, position.ColorToMove);
 
                 if (eval == "#")
@@ -301,18 +307,17 @@ namespace ChessForge
                 }
                 else
                 {
-
                     uint moveNoToShow = position.ColorToMove == PieceColor.Black ?
                         position.MoveNumber : (position.MoveNumber + 1);
 
-                    string sMoveNo = moveNoToShow.ToString() + (position.ColorToMove == PieceColor.White ? "." : "...");
+                    string sMoveNo = (moveNoToShow + moveNumberOffset).ToString() + (position.ColorToMove == PieceColor.White ? "." : "...");
                     if (string.IsNullOrEmpty(line.Line))
                     {
                         sMoveNo = "";
                     }
 
                     string moveSeq = BuildMoveSequence(evalNode, line.Line);
-                    // check if BuildMoveSequence encounter an excpetion.
+                    // check if BuildMoveSequence encounter an exception.
                     if (moveSeq == Constants.EXCEPTION)
                     {
                         eval = Constants.EXCEPTION;
@@ -350,6 +355,12 @@ namespace ChessForge
         {
             string[] moves = line.Split(' ');
 
+            uint moveNumberOffset = 0;
+            if (AppState.ActiveVariationTree != null)
+            {
+                moveNumberOffset = AppState.ActiveVariationTree.MoveNumberOffset;
+            }
+
             StringBuilder sb = new StringBuilder();
             // make a copy of the position under evaluation
             if (evalNode != null)
@@ -370,13 +381,14 @@ namespace ChessForge
                         }
                         if (workingPosition.ColorToMove == PieceColor.White && !firstMove)
                         {
+
                             if (evalNode.Position.ColorToMove == PieceColor.White)
                             {
-                                sb.Append((workingPosition.MoveNumber + 1).ToString() + ".");
+                                sb.Append((workingPosition.MoveNumber + moveNumberOffset + 1).ToString() + ".");
                             }
                             else
                             {
-                                sb.Append(workingPosition.MoveNumber.ToString() + ".");
+                                sb.Append((workingPosition.MoveNumber + moveNumberOffset).ToString() + ".");
                             }
                         }
                         firstMove = false;

@@ -30,7 +30,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="treeId"></param>
         /// <param name="nd"></param>
-        /// <param name="force"></param>
+        /// <param name="force">force execution even if this is the same node as last time. </param>
         public static void ExplorerRequest(int treeId, TreeNode nd, bool force = false)
         {
             RequestWebAccess(treeId, nd, force);

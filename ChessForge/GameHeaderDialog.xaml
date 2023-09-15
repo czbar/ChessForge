@@ -48,7 +48,11 @@
             </Canvas>
         </GroupBox>
         <GroupBox x:Name="UiGbPreamble" HorizontalAlignment="Left" Height="215" Header="{x:Static p:Resources.Preamble}" Margin="12,143,0,0" VerticalAlignment="Top" Width="342">
-            <TextBox x:Name="UiTbPreamble" AcceptsReturn="True" HorizontalAlignment="Left" Margin="7,4,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="318" Height="182" PreviewKeyDown="UiTbPreamble_PreviewKeyDown"/>
+            <Canvas>
+                <TextBox x:Name="UiTbPreamble" AcceptsReturn="True" HorizontalAlignment="Left" Margin="7,4,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="318" Height="182" PreviewKeyDown="UiTbPreamble_PreviewKeyDown"/>
+                <Label x:Name="UiLblFirstMoveNumber" Visibility="Collapsed" Content="{x:Static p:Resources.FirstMoveNumber}" HorizontalAlignment="Right" VerticalAlignment="Center" Canvas.Right="40" Canvas.Top="161" />
+                <TextBox x:Name="UiTbFirstMoveNumber" Visibility="Collapsed" HorizontalAlignment="Right" Canvas.Right="6" Canvas.Top="166" Text="1" HorizontalContentAlignment="Center" VerticalAlignment="Top" Width="30"/>
+            </Canvas>
         </GroupBox>
         <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Left" Margin="180,374,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
         <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Left" Margin="280,374,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>

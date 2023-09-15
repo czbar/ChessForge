@@ -44,8 +44,13 @@ namespace ChessForge
                         if (!excludePassedNode || node != nd)
                         {
                             ArticleListItem ali = new ArticleListItem(null, chIndex, chapter.StudyTree, 0, node);
-                            ali.StemLineText = MoveUtils.BuildStemText(node);
-                            ali.TailLineText = MoveUtils.BuildTailText(node, out ali.TailLinePlyCount);
+                            uint moveNumberOffset = 0;
+                            if (ali.Article != null && ali.Article.Tree != null)
+                            {
+                                moveNumberOffset = ali.Article.Tree.MoveNumberOffset;
+                            }
+                            ali.StemLineText = MoveUtils.BuildStemText(node, moveNumberOffset);
+                            ali.TailLineText = MoveUtils.BuildTailText(node, moveNumberOffset, out ali.TailLinePlyCount);
                             ali.StemLine = TreeUtils.GetStemLine(node);
                             ali.TailLine = TreeUtils.GetTailLine(node);
                             lstIdenticalPositions.Add(ali);
@@ -71,8 +76,13 @@ namespace ChessForge
                                 if (!excludePassedNode || node != nd)
                                 {
                                     ArticleListItem ali = new ArticleListItem(null, chIndex, article, art, node);
-                                    ali.StemLineText = MoveUtils.BuildStemText(node);
-                                    ali.TailLineText = MoveUtils.BuildTailText(node, out ali.TailLinePlyCount);
+                                    uint moveNumberOffset = 0;
+                                    if (ali.Article != null && ali.Article.Tree != null)
+                                    {
+                                        moveNumberOffset = ali.Article.Tree.MoveNumberOffset;
+                                    }
+                                    ali.StemLineText = MoveUtils.BuildStemText(node, moveNumberOffset);
+                                    ali.TailLineText = MoveUtils.BuildTailText(node, moveNumberOffset, out ali.TailLinePlyCount);
                                     ali.StemLine = TreeUtils.GetStemLine(node);
                                     ali.TailLine = TreeUtils.GetTailLine(node);
                                     lstIdenticalPositions.Add(ali);
@@ -100,8 +110,13 @@ namespace ChessForge
                                 if (!excludePassedNode || node != nd)
                                 {
                                     ArticleListItem ali = new ArticleListItem(null, chIndex, article, art, node);
-                                    ali.StemLineText = MoveUtils.BuildStemText(node);
-                                    ali.TailLineText = MoveUtils.BuildTailText(node, out ali.TailLinePlyCount);
+                                    uint moveNumberOffset = 0;
+                                    if (ali.Article != null && ali.Article.Tree != null)
+                                    {
+                                        moveNumberOffset = ali.Article.Tree.MoveNumberOffset;
+                                    }
+                                    ali.StemLineText = MoveUtils.BuildStemText(node, moveNumberOffset);
+                                    ali.TailLineText = MoveUtils.BuildTailText(node, moveNumberOffset, out ali.TailLinePlyCount);
                                     ali.StemLine = TreeUtils.GetStemLine(node);
                                     ali.TailLine = TreeUtils.GetTailLine(node);
                                     lstIdenticalPositions.Add(ali);

@@ -239,7 +239,7 @@ namespace ChessPosition
         /// </summary>
         /// <param name="nd"></param>
         /// <returns></returns>
-        public static string BuildSingleMoveText(TreeNode nd, bool isStandalone, bool withNAGs = false)
+        public static string BuildSingleMoveText(TreeNode nd, bool isStandalone, bool withNAGs, uint moveNumberOffset)
         {
             if (nd == null)
             {
@@ -256,11 +256,11 @@ namespace ChessPosition
             StringBuilder sb = new StringBuilder();
             if (nd.ColorToMove == PieceColor.Black)
             {
-                sb.Append(nd.MoveNumber.ToString() + ".");
+                sb.Append((nd.MoveNumber + moveNumberOffset).ToString() + ".");
             }
             else if (isStandalone)
             {
-                sb.Append(nd.MoveNumber.ToString() + "...");
+                sb.Append((nd.MoveNumber + moveNumberOffset).ToString() + "...");
             }
 
             sb.Append(nd.GetGuiPlyText(withNAGs));
@@ -310,12 +310,12 @@ namespace ChessPosition
         /// </summary>
         /// <param name="nd"></param>
         /// <returns></returns>
-        public static string BuildStemText(TreeNode nd)
+        public static string BuildStemText(TreeNode nd, uint moveNumberOffset)
         {
             StringBuilder sb = new StringBuilder();
             while (nd != null && nd.Parent != null)
             {
-                sb.Insert(0, BuildSingleMoveText(nd, nd.Parent.NodeId == 0) + " ");
+                sb.Insert(0, BuildSingleMoveText(nd, nd.Parent.NodeId == 0, false, moveNumberOffset) + " ");
                 nd = nd.Parent;
             }
 
@@ -329,7 +329,7 @@ namespace ChessPosition
         /// <param name="nd"></param>
         /// <param name="plyCount"></param>
         /// <returns></returns>
-        public static string BuildTailText(TreeNode nd, out int plyCount)
+        public static string BuildTailText(TreeNode nd, uint moveNumberOffset, out int plyCount)
         {
             plyCount = 0;
 
@@ -343,7 +343,7 @@ namespace ChessPosition
             StringBuilder sb = new StringBuilder();
             while (nd != null)
             {
-                sb.Insert(0, BuildSingleMoveText(nd, nd.Parent.NodeId == 0 || plyCount == 0) + " ");
+                sb.Insert(0, BuildSingleMoveText(nd, nd.Parent.NodeId == 0 || plyCount == 0, false, moveNumberOffset) + " ");
                 plyCount++;
 
                 if (nd.Children.Count > 0)

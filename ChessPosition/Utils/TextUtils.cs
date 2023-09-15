@@ -153,7 +153,7 @@ namespace ChessPosition
         /// <param name="toIndex">The index of the last included ply.  
         /// If -1, the whole line starting as fromIndex will be included.</param>
         /// <returns></returns>
-        public static string BuildLineText(List<TreeNode> line, bool withNAG = false, int fromIndex = 0, int toIndex = -1)
+        public static string BuildLineText(List<TreeNode> line, uint moveNumberOffset, bool withNAG = false, int fromIndex = 0, int toIndex = -1)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -169,7 +169,7 @@ namespace ChessPosition
                 // if NodeId is 0 this the starting position Node and we must not process it
                 if (nd.NodeId != 0)
                 {
-                    sb.Append(" " + MoveUtils.BuildSingleMoveText(nd, i == fromIndex, withNAG));
+                    sb.Append(" " + MoveUtils.BuildSingleMoveText(nd, i == fromIndex, withNAG, moveNumberOffset));
                 }
             }
 

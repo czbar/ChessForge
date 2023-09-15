@@ -106,7 +106,7 @@ namespace ChessForge
                 return this.ArticleIndex - bm.ArticleIndex;
             }
 
-            int moveNoDiff = (int)this.Node.MoveNumber - (int)bm.Node.MoveNumber;
+            int moveNoDiff = (int)(this.Node.MoveNumber + this.Tree.MoveNumberOffset)  - (int)(bm.Node.MoveNumber + bm.Tree.MoveNumberOffset);
             if (moveNoDiff != 0)
             {
                 return moveNoDiff;
