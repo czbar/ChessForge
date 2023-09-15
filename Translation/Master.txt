@@ -1147,6 +1147,10 @@ MsgTakebackInfo=Click here or press the space key to take back your move.
 # Dialogs
 #
 
+
+#First move number
+FirstMoveNumber=Number of the first move
+
 #Games with White
 GamesWithWhite=Games with White
 

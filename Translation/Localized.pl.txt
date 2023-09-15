@@ -1481,6 +1481,11 @@ MsgTakebackInfo=Kliknij tutaj lub naciśnij klawisz spacji, by cofnąć ostatni 
 # Dialogs
 #
 
+
+#description: First move number
+#english: FirstMoveNumber=Number of the first move
+FirstMoveNumber=Numer pierwszego posunięcia
+
 #description: Games with White
 #english: GamesWithWhite=Games with White
 GamesWithWhite=Partie białymi

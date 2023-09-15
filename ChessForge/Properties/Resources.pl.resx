@@ -1119,6 +1119,9 @@
   <data name="MsgTakebackInfo" xml:space="preserve">
     <value>Kliknij tutaj lub naciśnij klawisz spacji, by cofnąć ostatni ruch.</value>
   </data>
+  <data name="FirstMoveNumber" xml:space="preserve">
+    <value>Numer pierwszego posunięcia</value>
+  </data>
   <data name="GamesWithWhite" xml:space="preserve">
     <value>Partie białymi</value>
   </data>

@@ -1481,6 +1481,11 @@ MsgTakebackInfo=
 # Dialogs
 #
 
+
+#description: First move number
+#english: FirstMoveNumber=Number of the first move
+FirstMoveNumber=
+
 #description: Games with White
 #english: GamesWithWhite=Games with White
 GamesWithWhite=

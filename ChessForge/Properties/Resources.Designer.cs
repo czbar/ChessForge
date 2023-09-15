@@ -2231,6 +2231,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Number of the first move.
+        /// </summary>
+        public static string FirstMoveNumber {
+            get {
+                return ResourceManager.GetString("FirstMoveNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Flip Board.
         /// </summary>
         public static string FlipBoard {
@@ -3077,7 +3086,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You have already imported this game. Import a second copy?.
+        ///   Looks up a localized string similar to This game is already present in the current chapter. Import a second copy?.
         /// </summary>
         public static string MsgDuplicateLichessImport {
             get {
