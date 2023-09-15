@@ -82,7 +82,7 @@ namespace ChessForge
             if (userMove)
             {
                 AddNewParagraphToDoc("normal", Strings.GetResource("YourMoveWas") + ":");
-                AddNewParagraphToDoc("bold_prompt", MoveUtils.BuildSingleMoveText(nd, true));
+                AddNewParagraphToDoc("bold_prompt", MoveUtils.BuildSingleMoveText(nd, true, false));
                 if (AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
                 {
                     AddNewParagraphToDoc("normal", Strings.GetResource("WaitForEngineResponse"));
@@ -102,7 +102,7 @@ namespace ChessForge
                 {
                     AddNewParagraphToDoc("normal", Strings.GetResource("CoachPlayed") + ":");
                 }
-                AddNewParagraphToDoc("bold_16", MoveUtils.BuildSingleMoveText(nd, true));
+                AddNewParagraphToDoc("bold_16", MoveUtils.BuildSingleMoveText(nd, true, false));
                 AddNewParagraphToDoc("normal", Strings.GetResource("YourTurn"));
             }
         }

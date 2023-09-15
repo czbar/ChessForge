@@ -604,11 +604,11 @@ namespace ChessForge
                     _paraCurrentEngineGame.Inlines.Add(rWbEnded);
                 }
                 _paraCurrentEngineGame.Inlines.Add(new Run("\n" + Properties.Resources.TrnGameInProgress + "\n"));
-                text = "          " + MoveUtils.BuildSingleMoveText(nd, true) + " ";
+                text = "          " + MoveUtils.BuildSingleMoveText(nd, true, false) + " ";
             }
             else
             {
-                text = MoveUtils.BuildSingleMoveText(nd, false) + " ";
+                text = MoveUtils.BuildSingleMoveText(nd, false, false) + " ";
             }
 
             Run gm = CreateButtonRun(text, _run_engine_game_move_ + nd.NodeId.ToString(), Brushes.Brown);
@@ -686,7 +686,7 @@ namespace ChessForge
                 _paraCurrentEngineGame.Inlines.Add(rWbEnded);
             }
             _paraCurrentEngineGame.Inlines.Add(new Run("\n" + Properties.Resources.TrnGameInProgress + "\n"));
-            string text = "          " + MoveUtils.BuildSingleMoveText(nd, true) + " ";
+            string text = "          " + MoveUtils.BuildSingleMoveText(nd, true, false) + " ";
             Run r_root = CreateButtonRun(text, _run_engine_game_move_ + nd.NodeId.ToString(), Brushes.Brown);
             _paraCurrentEngineGame.Inlines.Add(r_root);
             if (dictEvalRunsToKeep.ContainsKey(nd.NodeId))
@@ -700,7 +700,7 @@ namespace ChessForge
             {
                 nd = nd.Children[0];
                 _currentEngineGameMoveCount++;
-                text = MoveUtils.BuildSingleMoveText(nd, false) + " ";
+                text = MoveUtils.BuildSingleMoveText(nd, false, false) + " ";
                 Run gm = CreateButtonRun(text, _run_engine_game_move_ + nd.NodeId.ToString(), Brushes.Brown);
                 _paraCurrentEngineGame.Inlines.Add(gm);
                 if (dictEvalRunsToKeep.ContainsKey(nd.NodeId))
@@ -987,7 +987,7 @@ namespace ChessForge
             // NOTE without nd.Parent != null we'd be getting "starting position" text in front
             while (nd != null && nd.Parent != null)
             {
-                Run r = CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, nd.Parent.NodeId == 0) + " ", _run_stem_move_ + nd.NodeId.ToString(), Brushes.Black, true);
+                Run r = CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, nd.Parent.NodeId == 0, false) + " ", _run_stem_move_ + nd.NodeId.ToString(), Brushes.Black, true);
                 nd = nd.Parent;
 
                 if (prevRun == null)

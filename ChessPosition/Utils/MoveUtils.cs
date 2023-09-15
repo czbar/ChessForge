@@ -239,7 +239,7 @@ namespace ChessPosition
         /// </summary>
         /// <param name="nd"></param>
         /// <returns></returns>
-        public static string BuildSingleMoveText(TreeNode nd, bool isStandalone, bool withNAGs = false)
+        public static string BuildSingleMoveText(TreeNode nd, bool isStandalone, bool withNAGs)
         {
             if (nd == null)
             {
@@ -315,7 +315,7 @@ namespace ChessPosition
             StringBuilder sb = new StringBuilder();
             while (nd != null && nd.Parent != null)
             {
-                sb.Insert(0, BuildSingleMoveText(nd, nd.Parent.NodeId == 0) + " ");
+                sb.Insert(0, BuildSingleMoveText(nd, nd.Parent.NodeId == 0, false) + " ");
                 nd = nd.Parent;
             }
 
@@ -343,7 +343,7 @@ namespace ChessPosition
             StringBuilder sb = new StringBuilder();
             while (nd != null)
             {
-                sb.Insert(0, BuildSingleMoveText(nd, nd.Parent.NodeId == 0 || plyCount == 0) + " ");
+                sb.Insert(0, BuildSingleMoveText(nd, nd.Parent.NodeId == 0 || plyCount == 0, false) + " ");
                 plyCount++;
 
                 if (nd.Children.Count > 0)

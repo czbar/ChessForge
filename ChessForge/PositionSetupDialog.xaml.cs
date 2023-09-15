@@ -969,7 +969,7 @@ namespace ChessForge
                 {
                     sb.Append(", ");
                 }
-                sb.Append(MoveUtils.BuildSingleMoveText(nodesToRemove[i], true));
+                sb.Append(MoveUtils.BuildSingleMoveText(nodesToRemove[i], true, true));
             }
             sb.Append(')');
 

@@ -329,7 +329,7 @@ namespace ChessForge
         private void HandleIncorrectGuess(TreeNode guess, VariationTree secondaryTree)
         {
             // report incorrect move and (defensively) remove from the view it is there
-            guess.Parent.Comment = Constants.CharCrossMark.ToString() + " " + MoveUtils.BuildSingleMoveText(guess, true) + " is not correct.";
+            guess.Parent.Comment = Constants.CharCrossMark.ToString() + " " + MoveUtils.BuildSingleMoveText(guess, true, false) + " is not correct.";
             AppState.MainWin.ActiveVariationTree.SelectedNodeId = guess.Parent.NodeId;
             AppState.MainWin.ActiveLine.Line.RemoveLastPly();
 

@@ -2675,7 +2675,7 @@ namespace ChessForge
                             }
 
                             string msg = Properties.Resources.ErrClipboardLinePaste + " ("
-                                + MoveUtils.BuildSingleMoveText(failedInsertions[0], true) + ")";
+                                + MoveUtils.BuildSingleMoveText(failedInsertions[0], true, false) + ")";
                             MessageBox.Show(msg, Properties.Resources.ClipboardOperation, MessageBoxButton.OK, MessageBoxImage.Exclamation);
                         }
                     }

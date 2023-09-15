@@ -1499,7 +1499,7 @@ namespace ChessForge
             }
 
 
-            Run r = new Run(" " + MoveUtils.BuildSingleMoveText(nd, false));
+            Run r = new Run(" " + MoveUtils.BuildSingleMoveText(nd, false, false));
             r.Name = _run_ + nd.NodeId.ToString();
             r.PreviewMouseDown += EventRunClicked;
 
