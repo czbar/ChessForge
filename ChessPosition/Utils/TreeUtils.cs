@@ -463,6 +463,27 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Builds a list of EvalsAndAssessments.
+        /// Only includes those that have non empty EngineEval or Assessments.
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <returns></returns>
+        public static List<EvalAndAssessment> BuildEngineEvalList(VariationTree tree)
+        {
+            List<EvalAndAssessment> lst = new List<EvalAndAssessment>();
+
+            foreach (TreeNode nd in tree.Nodes)
+            {
+                if (!string.IsNullOrEmpty(nd.EngineEvaluation) || nd.Assessment > 0)
+                {
+                    lst.Add(new EvalAndAssessment(nd.NodeId, nd.EngineEvaluation, nd.Assessment));
+                }
+            }
+
+            return lst;
+        }
+
+        /// <summary>
         /// Copies the passed tree and cerifies validity of the .
         /// If not cuts the subtree off and reports the number of removed
         /// Nodes.
