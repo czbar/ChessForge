@@ -63,6 +63,15 @@ namespace GameTree
         };
 
         /// <summary>
+        /// Coded assessment values.
+        /// </summary>
+        public enum Assessment
+        {
+            NONE = 0,
+            BLUNDER = 1,
+        }
+
+        /// <summary>
         /// Returns the command id given a string.
         /// </summary>
         /// <param name="sCmd"></param>

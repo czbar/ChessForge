@@ -915,7 +915,7 @@ namespace ChessForge
                             if (PositionUtils.IsStalemate(nd.Position))
                             {
                                 nd.Position.IsStalemate = true;
-                                nd.EngineEvaluation = 0.ToString("F2");
+                                nd.SetEngineEvaluation(0.ToString("F2"));
                             }
                             EngineLinesBox.ShowEngineLines(nd, null);
                         }
@@ -940,7 +940,7 @@ namespace ChessForge
 
                     if (moveCandidates != null && moveCandidates.Lines.Count > 0)
                     {
-                        nd.EngineEvaluation = EvaluationManager.BuildEvaluationText(moveCandidates.Lines[0], nd.Position.ColorToMove);
+                        nd.SetEngineEvaluation(EvaluationManager.BuildEvaluationText(moveCandidates.Lines[0], nd.Position.ColorToMove));
                         EngineLinesBox.EvalLinesToProcess.Remove(nd);
                     }
                     else

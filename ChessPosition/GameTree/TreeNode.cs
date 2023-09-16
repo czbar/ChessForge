@@ -81,11 +81,13 @@ namespace GameTree
 
         /// <summary>
         /// Holds engine evaluation if available.
+        /// This is read only.
+        /// Setting must be done via SetEngineEvaluation()
+        /// method as we need to do some extra work there.
         /// </summary>
         public string EngineEvaluation
         {
             get => _engEval;
-            set => _engEval = value;
         }
 
         /// <summary>
@@ -152,6 +154,17 @@ namespace GameTree
                 }
             }
             return count;
+        }
+
+        /// <summary>
+        /// Sets engine evaluation of the node.
+        /// </summary>
+        /// <param name="eval"></param>
+        /// <returns></returns>
+        public ChfCommands.Assessment SetEngineEvaluation(string eval)
+        {
+            _engEval = eval;
+            return ChfCommands.Assessment.NONE;
         }
 
         /// <summary>

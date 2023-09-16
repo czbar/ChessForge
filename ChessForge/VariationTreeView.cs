@@ -1666,6 +1666,10 @@ namespace ChessForge
                     fontColor = GetParaAttrs(_currParagraphLevel.ToString(), true).FirstCharColor;
                 }
             }
+            else if (nd.Assessment == (uint)ChfCommands.Assessment.BLUNDER)
+            {
+                fontColor = Brushes.DarkRed;
+            }
 
             AddRunToParagraph(nd, para, nodeText, fontColor);
             AddReferenceRunToParagraph(nd, para);

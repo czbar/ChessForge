@@ -462,7 +462,7 @@ namespace GameTree
                     case ChfCommands.Command.ENGINE_EVALUATION_V2:
                         if (tokens.Length > 1)
                         {
-                            nd.EngineEvaluation = tokens[1];
+                            nd.SetEngineEvaluation(tokens[1]);
                         }
                         break;
                     case ChfCommands.Command.QUIZ_POINTS:
@@ -1129,7 +1129,7 @@ namespace GameTree
         {
             foreach (TreeNode nd in Nodes)
             {
-                nd.EngineEvaluation = null;
+                nd.SetEngineEvaluation(null);
             }
         }
 
