@@ -1518,7 +1518,7 @@ NumberOfOccurrences =
 #english: InfoGameExerciseReferences=Double click to preview, right click for options
 InfoGameExerciseReferences=
 
-#description: Tooltip for the References symbole
+#description: Tooltip for the References symbol
 #english: OpenReferencesDialog=Click to edit Game and Exercise references
 OpenReferencesDialog=
 
@@ -1909,6 +1909,10 @@ TooltipSideToMove=
 #description: Tooltip for workbook version
 #english: TooltipWorkbookVersion=To increment version select File->Backup Version
 TooltipWorkbookVersion=
+
+#description: Tooltip for engine blunder detection
+#english: TooltipEngineBlunderDetect=Assessed as a blunder by the engine
+TooltipEngineBlunderDetect=
 
 #description: Errors encountered while parsing a PGN file
 #english: PgnErrors=PGN parsing errors

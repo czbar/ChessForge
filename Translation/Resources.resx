@@ -1438,6 +1438,9 @@
   <data name="TooltipWorkbookVersion" xml:space="preserve">
     <value>To increment version select File-&gt;Backup Version</value>
   </data>
+  <data name="TooltipEngineBlunderDetect" xml:space="preserve">
+    <value>Assessed as a blunder by the engine</value>
+  </data>
   <data name="PgnErrors" xml:space="preserve">
     <value>PGN parsing errors</value>
   </data>

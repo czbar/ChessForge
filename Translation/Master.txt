@@ -1175,7 +1175,7 @@ NumberOfOccurrences = Number of occurrences
 #Info in the View References Dialog
 InfoGameExerciseReferences=Double click to preview, right click for options
 
-#Tooltip for the References symbole
+#Tooltip for the References symbol
 OpenReferencesDialog=Click to edit Game and Exercise references
 
 #Save the currently open Workbook into a different file
@@ -1469,6 +1469,9 @@ TooltipSideToMove=Determines some default settings
 
 #Tooltip for workbook version
 TooltipWorkbookVersion=To increment version select File->Backup Version
+
+#Tooltip for engine blunder detection
+TooltipEngineBlunderDetect=Assessed as a blunder by the engine
 
 #Errors encountered while parsing a PGN file
 PgnErrors=PGN parsing errors

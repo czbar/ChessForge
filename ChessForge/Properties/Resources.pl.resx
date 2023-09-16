@@ -1437,6 +1437,9 @@
   <data name="TooltipWorkbookVersion" xml:space="preserve">
     <value>Wybierz Plik-&gt;Zrób Kopię tej Wersji, by zwiększyć numer wersji</value>
   </data>
+  <data name="TooltipEngineBlunderDetect" xml:space="preserve">
+    <value>Ocenione przez silnik jako duży błąd</value>
+  </data>
   <data name="PgnErrors" xml:space="preserve">
     <value>Błąd w pliku PGN</value>
   </data>

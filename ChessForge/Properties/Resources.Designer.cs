@@ -4428,6 +4428,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Assessed as a blunder by the engine.
+        /// </summary>
+        public static string TooltipEngineBlunderDetect {
+            get {
+                return ResourceManager.GetString("TooltipEngineBlunderDetect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Determines some default settings.
         /// </summary>
         public static string TooltipSideToMove {
