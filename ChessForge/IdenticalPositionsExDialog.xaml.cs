@@ -12,8 +12,6 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace ChessForge
 {
@@ -47,6 +45,9 @@ namespace ChessForge
 
         // Node for which this dialog was invoked.
         private TreeNode _node;
+
+        // Name of the summary para.
+        private const string PARA_SUMMARY = "summary";
 
         // Prefix for the name of the paragraph with moves.
         private const string PREFIX_ITEM_INDEX = "itemindex_";
@@ -89,7 +90,31 @@ namespace ChessForge
             InitializeComponent();
             IdenticalPositionFloatingBoard = new ChessBoardSmall(_cnvFloatingBoard, UiImgFloatingBoard, null, null, true, false);
 
+            BuildSummaryParagraph();
             BuildAllItemParagraphs();
+        }
+
+        /// <summary>
+        /// Builds the top paragraph with the summary number.
+        /// </summary>
+        private void BuildSummaryParagraph()
+        {
+            int count = _articleList.Count;
+
+            Paragraph para = new Paragraph
+            {
+                Margin = new Thickness(10, 0, 0, 20),
+            };
+
+            para.Name = PARA_SUMMARY;
+
+            Run run = new Run();
+            run.Text = Properties.Resources.NumberOfOccurrences + ": " + count.ToString();
+            run.FontWeight = FontWeights.Bold;
+            run.FontSize = 16 + Configuration.FontSizeDiff;
+            para.Inlines.Add(run);
+
+            UiRtbIdenticalPositions.Document.Blocks.Add(para);
         }
 
         /// <summary>
@@ -435,7 +460,7 @@ namespace ChessForge
         private void PositionFloatingBoard(Point pt)
         {
             double xCoord = pt.X + 10;
-            double yCoord = pt.Y + 10;
+            double yCoord = pt.Y + 20;
 
             // are we too far to the right?
             if (UiRtbIdenticalPositions.ActualWidth < xCoord + 170)
