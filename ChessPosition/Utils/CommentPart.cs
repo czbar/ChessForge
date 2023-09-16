@@ -11,6 +11,7 @@ namespace ChessPosition.Utils
     /// </summary>
     public enum CommentPartType
     {
+        ASSESSMENT,
         TEXT,
         URL,
         THUMBNAIL_SYMBOL,
