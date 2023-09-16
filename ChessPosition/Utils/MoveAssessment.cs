@@ -45,7 +45,7 @@ namespace ChessPosition.Utils
             // if we now have mate by our opponent but parent's eval was not so bad.
             else if (IsMateByColor(nd.EngineEvaluation, nd.ColorToMove))
             {
-                if (double.TryParse(nd.EngineEvaluation, out double eval))
+                if (double.TryParse(nd.Parent.EngineEvaluation, out double eval))
                 {
                     if (nd.Parent.ColorToMove == PieceColor.White && eval > -5.0
                         || nd.Parent.ColorToMove == PieceColor.Black && eval < 5.0)
