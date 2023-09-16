@@ -1671,9 +1671,13 @@ namespace ChessForge
                 fontColor = Brushes.DarkRed;
             }
 
-            AddRunToParagraph(nd, para, nodeText, fontColor);
+            Run r = AddRunToParagraph(nd, para, nodeText, fontColor);
             AddReferenceRunToParagraph(nd, para);
-            AddCommentRunsToParagraph(nd, para);
+            AddCommentRunsToParagraph(nd, para, out bool isBlunder);
+            if (isBlunder)
+            {
+                TextUtils.RemoveBlunderNagFromText(r);
+            }
         }
 
         /// <summary>
@@ -1727,9 +1731,13 @@ namespace ChessForge
             if (_mainWin.ActiveVariationTree != null)
             {
                 TreeNode nd = _mainWin.ActiveVariationTree.Nodes[0];
-                AddRunToParagraph(nd, para, "", Brushes.White);
+                Run r = AddRunToParagraph(nd, para, "", Brushes.White);
                 AddReferenceRunToParagraph(nd, para);
-                AddCommentRunsToParagraph(nd, para);
+                AddCommentRunsToParagraph(nd, para, out bool isBlunder);
+                if (isBlunder)
+                {
+                    TextUtils.RemoveBlunderNagFromText(r);
+                }
             }
         }
 
@@ -1740,11 +1748,13 @@ namespace ChessForge
         /// <param name="para"></param>
         /// <param name="text"></param>
         /// <param name="fontColor"></param>
-        private void AddRunToParagraph(TreeNode nd, Paragraph para, string text, SolidColorBrush fontColor)
+        private Run AddRunToParagraph(TreeNode nd, Paragraph para, string text, SolidColorBrush fontColor)
         {
+            Run r = null;
+
             try
             {
-                Run r = new Run(text.ToString());
+                r = new Run(text.ToString());
                 r.Name = _run_ + nd.NodeId.ToString();
                 r.PreviewMouseDown += EventRunClicked;
 
@@ -1777,6 +1787,8 @@ namespace ChessForge
             {
                 AppLog.Message("AddRunToParagraph()", ex);
             }
+
+            return r;
         }
 
         /// <summary>
@@ -1785,8 +1797,10 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd"></param>
         /// <param name="para"></param>
-        private void AddCommentRunsToParagraph(TreeNode nd, Paragraph para)
+        private void AddCommentRunsToParagraph(TreeNode nd, Paragraph para, out bool isAssessmentBlunderShown)
         {
+            isAssessmentBlunderShown = false;
+
             if (!IsCommentRunToShow(nd))
             {
                 return;
@@ -1815,8 +1829,25 @@ namespace ChessForge
                 CommentPart startPart = new CommentPart(CommentPartType.TEXT, nd.NodeId == 0 ? "[ " : "[ ");
                 parts.Insert(0, startPart);
 
-                CommentPart lastPart = new CommentPart(CommentPartType.TEXT, nd.NodeId == 0 ? " ] " : " ] ");
-                parts.Add(lastPart);
+                CommentPart endPart = new CommentPart(CommentPartType.TEXT, nd.NodeId == 0 ? " ] " : " ] ");
+                parts.Add(endPart);
+
+                // in front of that start bracket!
+                if (nd.Assessment == (uint)ChfCommands.Assessment.BLUNDER && nd.IsMainLine())
+                {
+                    // if we only have start and end parts so far, delete them.
+                    // We don't need brackets if all we have ASSESSMENT
+                    if (parts.Count == 2)
+                    {
+                        parts.Clear();
+                        // but we need a space after assessment
+                        parts.Add(new CommentPart(CommentPartType.TEXT, " "));
+                    }
+
+                    CommentPart ass = new CommentPart(CommentPartType.ASSESSMENT, "");
+                    parts.Insert(0, ass);
+                }
+
 
                 Inline inlPrevious = null;
                 for (int i = 0; i < parts.Count; i++)
@@ -1826,6 +1857,16 @@ namespace ChessForge
 
                     switch (part.Type)
                     {
+                        case CommentPartType.ASSESSMENT:
+                            string assSymbol = " ?? ";
+                            inl = new Run(assSymbol);
+                            inl.ToolTip = Properties.Resources.TooltipEngineBlunderDetect;
+                            inl.FontStyle = FontStyles.Normal;
+                            inl.Foreground = Brushes.White;
+                            inl.Background = Brushes.Red;
+                            inl.FontWeight = FontWeights.Bold;
+                            isAssessmentBlunderShown = true;
+                            break;
                         case CommentPartType.THUMBNAIL_SYMBOL:
                             // if this is not the second last part, insert extra space
                             string thmb;
@@ -2479,7 +2520,6 @@ namespace ChessForge
                     {
                         _dictNodeToCommentRun.Remove(nd.NodeId);
                         RemoveCommentRunsFromHostingParagraph(inlComment);
-                        //                        RemoveRunFromHostingParagraph(inlComment);
                     }
                 }
                 else
@@ -2488,7 +2528,11 @@ namespace ChessForge
                     RemoveCommentRunsFromHostingParagraph(inlComment);
 
                     Paragraph para = r.Parent as Paragraph;
-                    AddCommentRunsToParagraph(nd, para);
+                    AddCommentRunsToParagraph(nd, para, out bool isBlunder);
+                    if (isBlunder)
+                    {
+                        TextUtils.RemoveBlunderNagFromText(r);
+                    }
                 }
             }
             catch
@@ -2616,6 +2660,7 @@ namespace ChessForge
         {
             return !string.IsNullOrEmpty(nd.Comment)
                    || nd.IsThumbnail
+                   || nd.Assessment == (uint)ChfCommands.Assessment.BLUNDER && nd.IsMainLine()
                    || (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.EDITING && nd.QuizPoints != 0);
         }
 
