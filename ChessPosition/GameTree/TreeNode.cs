@@ -98,6 +98,15 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Coded assessment of the move.
+        /// </summary>
+        public uint Assessment
+        {
+            get => _assessment;
+            set => _assessment = value;
+        }
+
+        /// <summary>
         /// Whether this node has siblings.
         /// We check that the parent has more than one child.
         /// </summary>
@@ -235,6 +244,9 @@ namespace GameTree
 
         // points awarded in the solving analysis mode
         private int _quizPoints;
+
+        // coded assessment of the move
+        private uint _assessment;
 
         /// <summary>
         /// Numeric Annotation Glyphs associated with this

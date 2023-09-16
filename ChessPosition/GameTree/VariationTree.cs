@@ -474,6 +474,15 @@ namespace GameTree
                             }
                         }
                         break;
+                    case ChfCommands.Command.ASSESSMENT:
+                        if (tokens.Length > 1)
+                        {
+                            if (uint.TryParse(tokens[1], out uint ass))
+                            {
+                                nd.Assessment = ass;
+                            }
+                        }
+                        break;
                     case ChfCommands.Command.XAML:
                         if (tokens.Length > 1)
                         {
