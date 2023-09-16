@@ -6,6 +6,7 @@ using System.Net.NetworkInformation;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 using System.Windows.Media;
 using ChessPosition.GameTree;
 using ChessPosition.Utils;
@@ -140,6 +141,19 @@ namespace ChessPosition
             }
 
             return fileName;
+        }
+
+        /// <summary>
+        /// Removes the "??" nag from the Run's text.
+        /// </summary>
+        /// <param name="txt"></param>
+        /// <returns></returns>
+        public static void RemoveBlunderNagFromText(Run run)
+        {
+            if (run != null && !string.IsNullOrEmpty(run.Text))
+            {
+                run.Text = run.Text.Replace("??", "");
+            }
         }
 
         /// <summary>
