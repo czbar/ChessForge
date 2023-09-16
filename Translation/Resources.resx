@@ -1141,6 +1141,9 @@
   <data name="EditPosition" xml:space="preserve">
     <value>Edit Position</value>
   </data>
+  <data name="NumberOfOccurrences" xml:space="preserve">
+    <value>Number of occurrences</value>
+  </data>
   <data name="InfoGameExerciseReferences" xml:space="preserve">
     <value>Double click to preview, right click for options</value>
   </data>

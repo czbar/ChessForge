@@ -3321,6 +3321,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Number of occurrences.
+        /// </summary>
+        public static string NumberOfOccurrences {
+            get {
+                return ResourceManager.GetString("NumberOfOccurrences", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to checkmate.
         /// </summary>
         public static string OebCheckmate {

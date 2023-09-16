@@ -1510,6 +1510,9 @@ TextForDisplay=Tekst na Ekran
 #english: EditPosition=Edit Position
 EditPosition=Ustaw Pozycję
 
+#description: Number of occurrences
+#english: NumberOfOccurrences = Number of occurrences
+NumberOfOccurrences = Liczba znalezionych pozycji
 
 #description: Info in the View References Dialog
 #english: InfoGameExerciseReferences=Double click to preview, right click for options

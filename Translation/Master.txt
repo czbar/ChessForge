@@ -1169,6 +1169,8 @@ TextForDisplay=Text for Display
 #Button for Edit Position 
 EditPosition=Edit Position
 
+#Number of occurrences
+NumberOfOccurrences = Number of occurrences
 
 #Info in the View References Dialog
 InfoGameExerciseReferences=Double click to preview, right click for options
