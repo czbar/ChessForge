@@ -76,6 +76,18 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Removes evaluations from all moves.
+        /// </summary>
+        public void DeleteEngineEvaluations()
+        {
+            for (int i = 0; i < MoveList.Count; i++)
+            {
+                MoveList[i].WhiteEval = "";
+                MoveList[i].BlackEval = "";
+            }
+        }
+
+        /// <summary>
         /// Used to refresh move notation when we change to/from "figurines".
         /// </summary>
         public void RefreshMovesText()
