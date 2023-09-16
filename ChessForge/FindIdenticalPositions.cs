@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ChessPosition;
+using System.Windows.Input;
 
 namespace ChessForge
 {
@@ -34,7 +35,16 @@ namespace ChessForge
         /// <returns></returns>
         public static bool Search(TreeNode nd, Mode mode)
         {
-            ObservableCollection<ArticleListItem> lstIdenticalPositions = ArticleListBuilder.BuildIdenticalPositionsList(nd, mode == Mode.CHECK_IF_ANY);
+            AppState.MainWin.Cursor = Cursors.Wait;
+            ObservableCollection<ArticleListItem> lstIdenticalPositions;
+            try
+            {
+                lstIdenticalPositions = ArticleListBuilder.BuildIdenticalPositionsList(nd, mode == Mode.CHECK_IF_ANY);
+            }
+            finally
+            {
+                AppState.MainWin.Cursor = Cursors.Arrow;
+            }
 
             bool anyFound = lstIdenticalPositions.Count > 0;
 
