@@ -270,6 +270,21 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Removes engine evals and assessments from all nodes.
+        /// </summary>
+        public void DeleteEvalsAndAssessments()
+        {
+            foreach (TreeNode nd in Nodes)
+            {
+                if (!string.IsNullOrEmpty(nd.EngineEvaluation))
+                {
+                    nd.SetEngineEvaluation(string.Empty);
+                }
+                nd.Assessment = 0;
+            }
+        }
+
+        /// <summary>
         /// The complete list of Nodes for the current Workbook.
         /// </summary>
         public List<TreeNode> Nodes = new List<TreeNode>();
@@ -1615,6 +1630,27 @@ namespace GameTree
                     nd.Comment = nac.Comment;
                     nd.Nags = nac.Nags;
                     nd.SetNags(nac.Nags);
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// Restores deleted engine evaluations and assessments.
+        /// </summary>
+        /// <param name="opData"></param>
+        public void UndoDeleteEngineEvals(object opData)
+        {
+            try
+            {
+                List<EvalAndAssessment> lst = opData as List<EvalAndAssessment>;
+                foreach (EvalAndAssessment nac in lst)
+                {
+                    TreeNode nd = GetNodeFromNodeId(nac.NodeId);
+                    nd.SetEngineEvaluation(nac.EngineEvaluation);
+                    nd.Assessment = nac.Assessment;
                 }
             }
             catch
