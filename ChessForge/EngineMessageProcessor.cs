@@ -8,6 +8,7 @@ using System.IO;
 using EngineService;
 using System.Windows;
 using ChessForge.Properties;
+using ChessPosition.Utils;
 
 namespace ChessForge
 {
@@ -350,6 +351,19 @@ namespace ChessForge
                     int moveIndex = (index - 1) / 2;
 
                     AppState.ActiveLine.SetEvaluation(nd, eval);
+                    if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
+                    {
+                        // assess the move
+                        uint assess = (uint)MoveAssessment.GetMoveAssessment(nd);
+                        if (assess != nd.Assessment)
+                        {
+                            nd.Assessment = assess;
+                            _mainWin.Dispatcher.Invoke(() =>
+                            {
+                                _mainWin.ActiveTreeView?.InsertOrUpdateCommentRun(nd);
+                            });
+                        }
+                    }
 
                     if (EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS)
                     {
