@@ -499,6 +499,9 @@ Tools=Tools
 #Strip all comments
 StripComments=Delete All Comments
 
+#Delete all engine evals
+DeleteEngineEvals=Delete Engine Evaluations
+
 
 #TOP LEVEL MENU: Help
 Help=Help
@@ -968,6 +971,9 @@ MsgConfirmDeleteSubtree=Delete the selected move and all moves that follow?
 
 #Confirm stripping comments
 MsgConfirmStripComments=Delete all comments in this view? 
+
+#Confirm removing evals
+MsgConfirmDeleteEngineEvals=Delete all evaluations in this view?
 
 #Copy Paste error
 MbtTitleCopyPasteError=Copy/Paste Error

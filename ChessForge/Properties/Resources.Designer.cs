@@ -1151,6 +1151,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete Engine Evaluations.
+        /// </summary>
+        public static string DeleteEngineEvals {
+            get {
+                return ResourceManager.GetString("DeleteEngineEvals", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete Exercise.
         /// </summary>
         public static string DeleteExercise {
@@ -3064,6 +3073,15 @@ namespace ChessForge.Properties {
         public static string MoveSelectionAccuracy {
             get {
                 return ResourceManager.GetString("MoveSelectionAccuracy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete all evaluations in this view?.
+        /// </summary>
+        public static string MsgConfirmDeleteEngineEvals {
+            get {
+                return ResourceManager.GetString("MsgConfirmDeleteEngineEvals", resourceCulture);
             }
         }
         

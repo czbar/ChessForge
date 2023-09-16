@@ -570,6 +570,9 @@
   <data name="StripComments" xml:space="preserve">
     <value>Usuń wszystkie komentarze</value>
   </data>
+  <data name="DeleteEngineEvals" xml:space="preserve">
+    <value>Usuń wszystkie oceny silnika</value>
+  </data>
   <data name="Help" xml:space="preserve">
     <value>Pomoc</value>
   </data>
@@ -953,6 +956,9 @@
   </data>
   <data name="MsgConfirmStripComments" xml:space="preserve">
     <value>Usunąć wszystkie komentarze w tym widoku? </value>
+  </data>
+  <data name="MsgConfirmDeleteEngineEvals" xml:space="preserve">
+    <value>Usunąć wszystkie oceny w tym widoku?</value>
   </data>
   <data name="MbtTitleCopyPasteError" xml:space="preserve">
     <value>Błąd w Kopiuj/Wklej</value>

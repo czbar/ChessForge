@@ -650,6 +650,10 @@ Tools=Narzędzia
 #english: StripComments=Delete All Comments
 StripComments=Usuń wszystkie komentarze
 
+#description: Delete all engine evals
+#english: DeleteEngineEvals=Delete Engine Evaluations
+DeleteEngineEvals=Usuń wszystkie oceny silnika
+
 
 #description: TOP LEVEL MENU: Help
 #english: Help=Help
@@ -1247,6 +1251,10 @@ MsgConfirmDeleteSubtree=Usunąć zaznaczony ruch i wszystkie dalsze posunięcia?
 #description: Confirm stripping comments
 #english: MsgConfirmStripComments=Delete all comments in this view? 
 MsgConfirmStripComments=Usunąć wszystkie komentarze w tym widoku? 
+
+#description: Confirm removing evals
+#english: MsgConfirmDeleteEngineEvals=Delete all evaluations in this view?
+MsgConfirmDeleteEngineEvals=Usunąć wszystkie oceny w tym widoku?
 
 #description: Copy Paste error
 #english: MbtTitleCopyPasteError=Copy/Paste Error

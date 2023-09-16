@@ -570,6 +570,9 @@
   <data name="StripComments" xml:space="preserve">
     <value>Delete All Comments</value>
   </data>
+  <data name="DeleteEngineEvals" xml:space="preserve">
+    <value>Delete Engine Evaluations</value>
+  </data>
   <data name="Help" xml:space="preserve">
     <value>Help</value>
   </data>
@@ -953,6 +956,9 @@
   </data>
   <data name="MsgConfirmStripComments" xml:space="preserve">
     <value>Delete all comments in this view? </value>
+  </data>
+  <data name="MsgConfirmDeleteEngineEvals" xml:space="preserve">
+    <value>Delete all evaluations in this view?</value>
   </data>
   <data name="MbtTitleCopyPasteError" xml:space="preserve">
     <value>Copy/Paste Error</value>
