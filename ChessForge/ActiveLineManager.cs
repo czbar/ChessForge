@@ -60,6 +60,14 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Removes all engine evaluations from the scoresheet.
+        /// </summary>
+        public void DeleteEngineEvaluations()
+        {
+            Line.DeleteEngineEvaluations();
+        }
+
+        /// <summary>
         /// Figures out the node corresponding to 
         /// the selected cell and displays the position.
         /// </summary>

@@ -650,6 +650,10 @@ Tools=Narzędzia
 #english: StripComments=Delete All Comments
 StripComments=Usuń wszystkie komentarze
 
+#description: Delete all engine evals
+#english: DeleteEngineEvals=Delete Engine Evaluations
+DeleteEngineEvals=Usuń wszystkie oceny silnika
+
 
 #description: TOP LEVEL MENU: Help
 #english: Help=Help
@@ -1248,6 +1252,10 @@ MsgConfirmDeleteSubtree=Usunąć zaznaczony ruch i wszystkie dalsze posunięcia?
 #english: MsgConfirmStripComments=Delete all comments in this view? 
 MsgConfirmStripComments=Usunąć wszystkie komentarze w tym widoku? 
 
+#Confirm removing evals
+MsgConfirmDeleteEngineEvals=Usunąć wszystkie oceny w tym widoku?
+
+
 #description: Copy Paste error
 #english: MbtTitleCopyPasteError=Copy/Paste Error
 MbtTitleCopyPasteError=Błąd w Kopiuj/Wklej
@@ -1510,12 +1518,15 @@ TextForDisplay=Tekst na Ekran
 #english: EditPosition=Edit Position
 EditPosition=Ustaw Pozycję
 
+#description: Number of occurrences
+#english: NumberOfOccurrences = Number of occurrences
+NumberOfOccurrences = Liczba znalezionych pozycji
 
 #description: Info in the View References Dialog
 #english: InfoGameExerciseReferences=Double click to preview, right click for options
 InfoGameExerciseReferences=Kliknij podwójnie po przegląd partii/ćwiczenia, prawy przycisk po opcje
 
-#description: Tooltip for the References symbole
+#description: Tooltip for the References symbol
 #english: OpenReferencesDialog=Click to edit Game and Exercise references
 OpenReferencesDialog=Kliknij aby edytować odsyłacz do Partii i Ćwiczeń
 
@@ -1906,6 +1917,10 @@ TooltipSideToMove=Decyduje o pewnych domyślnych ustawieniach
 #description: Tooltip for workbook version
 #english: TooltipWorkbookVersion=To increment version select File->Backup Version
 TooltipWorkbookVersion=Wybierz Plik->Zrób Kopię tej Wersji, by zwiększyć numer wersji
+
+#description: Tooltip for engine blunder detection
+#english: TooltipEngineBlunderDetect=Assessed as a blunder by the engine
+TooltipEngineBlunderDetect=Ocenione przez silnik jako duży błąd
 
 #description: Errors encountered while parsing a PGN file
 #english: PgnErrors=PGN parsing errors

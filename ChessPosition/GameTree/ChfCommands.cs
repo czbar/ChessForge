@@ -32,6 +32,7 @@ namespace GameTree
             ENGINE_EVALUATION,
             ENGINE_EVALUATION_V2,
             QUIZ_POINTS,
+            ASSESSMENT,
             THUMBNAIL,
             ARTICLE_REFS,
             XAML,
@@ -51,6 +52,7 @@ namespace GameTree
             ["%chf-eev"] = Command.ENGINE_EVALUATION,  // DEPRECATED
             ["%eval"] = Command.ENGINE_EVALUATION_V2,
             ["%quiz"] = Command.QUIZ_POINTS,
+            ["%assm"] = Command.ASSESSMENT,
             ["%thmb"] = Command.THUMBNAIL,
             ["%ref"] = Command.ARTICLE_REFS,
             ["%xaml"] = Command.XAML,
@@ -59,6 +61,15 @@ namespace GameTree
             ["%csl"] = Command.CIRCLES,
             ["%cal"] = Command.ARROWS
         };
+
+        /// <summary>
+        /// Coded assessment values.
+        /// </summary>
+        public enum Assessment
+        {
+            NONE = 0,
+            BLUNDER = 1,
+        }
 
         /// <summary>
         /// Returns the command id given a string.

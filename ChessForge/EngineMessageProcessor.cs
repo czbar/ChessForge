@@ -8,6 +8,7 @@ using System.IO;
 using EngineService;
 using System.Windows;
 using ChessForge.Properties;
+using ChessPosition.Utils;
 
 namespace ChessForge
 {
@@ -350,6 +351,19 @@ namespace ChessForge
                     int moveIndex = (index - 1) / 2;
 
                     AppState.ActiveLine.SetEvaluation(nd, eval);
+                    if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
+                    {
+                        // assess the move
+                        uint assess = (uint)MoveAssessment.GetMoveAssessment(nd);
+                        if (assess != nd.Assessment)
+                        {
+                            nd.Assessment = assess;
+                            _mainWin.Dispatcher.Invoke(() =>
+                            {
+                                _mainWin.ActiveTreeView?.InsertOrUpdateCommentRun(nd);
+                            });
+                        }
+                    }
 
                     if (EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS)
                     {
@@ -915,7 +929,7 @@ namespace ChessForge
                             if (PositionUtils.IsStalemate(nd.Position))
                             {
                                 nd.Position.IsStalemate = true;
-                                nd.EngineEvaluation = 0.ToString("F2");
+                                nd.SetEngineEvaluation(0.ToString("F2"));
                             }
                             EngineLinesBox.ShowEngineLines(nd, null);
                         }
@@ -940,7 +954,7 @@ namespace ChessForge
 
                     if (moveCandidates != null && moveCandidates.Lines.Count > 0)
                     {
-                        nd.EngineEvaluation = EvaluationManager.BuildEvaluationText(moveCandidates.Lines[0], nd.Position.ColorToMove);
+                        nd.SetEngineEvaluation(EvaluationManager.BuildEvaluationText(moveCandidates.Lines[0], nd.Position.ColorToMove));
                         EngineLinesBox.EvalLinesToProcess.Remove(nd);
                     }
                     else

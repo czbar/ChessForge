@@ -499,6 +499,9 @@ Tools=Tools
 #Strip all comments
 StripComments=Delete All Comments
 
+#Delete all engine evals
+DeleteEngineEvals=Delete Engine Evaluations
+
 
 #TOP LEVEL MENU: Help
 Help=Help
@@ -969,6 +972,9 @@ MsgConfirmDeleteSubtree=Delete the selected move and all moves that follow?
 #Confirm stripping comments
 MsgConfirmStripComments=Delete all comments in this view? 
 
+#Confirm removing evals
+MsgConfirmDeleteEngineEvals=Delete all evaluations in this view?
+
 #Copy Paste error
 MbtTitleCopyPasteError=Copy/Paste Error
 
@@ -1169,11 +1175,13 @@ TextForDisplay=Text for Display
 #Button for Edit Position 
 EditPosition=Edit Position
 
+#Number of occurrences
+NumberOfOccurrences = Number of occurrences
 
 #Info in the View References Dialog
 InfoGameExerciseReferences=Double click to preview, right click for options
 
-#Tooltip for the References symbole
+#Tooltip for the References symbol
 OpenReferencesDialog=Click to edit Game and Exercise references
 
 #Save the currently open Workbook into a different file
@@ -1467,6 +1475,9 @@ TooltipSideToMove=Determines some default settings
 
 #Tooltip for workbook version
 TooltipWorkbookVersion=To increment version select File->Backup Version
+
+#Tooltip for engine blunder detection
+TooltipEngineBlunderDetect=Assessed as a blunder by the engine
 
 #Errors encountered while parsing a PGN file
 PgnErrors=PGN parsing errors

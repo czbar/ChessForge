@@ -1151,6 +1151,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete Engine Evaluations.
+        /// </summary>
+        public static string DeleteEngineEvals {
+            get {
+                return ResourceManager.GetString("DeleteEngineEvals", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete Exercise.
         /// </summary>
         public static string DeleteExercise {
@@ -3068,6 +3077,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete all evaluations in this view?.
+        /// </summary>
+        public static string MsgConfirmDeleteEngineEvals {
+            get {
+                return ResourceManager.GetString("MsgConfirmDeleteEngineEvals", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete the selected move and all moves that follow? .
         /// </summary>
         public static string MsgConfirmDeleteSubtree {
@@ -3317,6 +3335,15 @@ namespace ChessForge.Properties {
         public static string NumberOfGames {
             get {
                 return ResourceManager.GetString("NumberOfGames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of occurrences.
+        /// </summary>
+        public static string NumberOfOccurrences {
+            get {
+                return ResourceManager.GetString("NumberOfOccurrences", resourceCulture);
             }
         }
         
@@ -4415,6 +4442,15 @@ namespace ChessForge.Properties {
         public static string Tools {
             get {
                 return ResourceManager.GetString("Tools", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Assessed as a blunder by the engine.
+        /// </summary>
+        public static string TooltipEngineBlunderDetect {
+            get {
+                return ResourceManager.GetString("TooltipEngineBlunderDetect", resourceCulture);
             }
         }
         

@@ -52,6 +52,7 @@
     <Compile Include="GameTree\ChfCommands.cs" />
     <Compile Include="GameTree\EditOperation.cs" />
     <Compile Include="GameTree\EditOperationsManager.cs" />
+    <Compile Include="GameTree\EvalAndAssessment.cs" />
     <Compile Include="GameTree\FullNodeId.cs" />
     <Compile Include="GameTree\NagsAndComment.cs" />
     <Compile Include="GameTree\OperationsManager.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Utils\Language.cs" />
     <Compile Include="Utils\Languages.cs" />
     <Compile Include="Utils\LocalizedStrings.cs" />
+    <Compile Include="Utils\MoveAssessment.cs" />
     <Compile Include="Utils\MoveEvalEventArgs.cs" />
     <Compile Include="Utils\MoveOrigDest.cs" />
     <Compile Include="Utils\MoveUtils.cs" />

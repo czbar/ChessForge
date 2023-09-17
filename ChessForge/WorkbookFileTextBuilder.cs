@@ -771,6 +771,13 @@ namespace ChessForge
                     sb.Append("[" + sCmd + "]");
                 }
 
+                // Process the Assessment command
+                if (nd.Assessment != 0)
+                {
+                    string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.ASSESSMENT) + " " + nd.Assessment;
+                    sb.Append("[" + sCmd + "]");
+                }
+
                 // Process the Arrows string
                 if (!string.IsNullOrEmpty(nd.Arrows))
                 {

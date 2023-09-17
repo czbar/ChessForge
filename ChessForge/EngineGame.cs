@@ -141,7 +141,7 @@ namespace ChessForge
             }
 
             nd = new TreeNode(curr, algMove, _mainWin.ActiveVariationTree.GetNewNodeId());
-            nd.EngineEvaluation = evalStr;
+            nd.SetEngineEvaluation(evalStr);
 
             TreeNode sib = AppState.MainWin.ActiveVariationTree.GetIdenticalSibling(nd, engMove);
             if (sib == null)

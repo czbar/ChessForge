@@ -650,6 +650,10 @@ Tools=
 #english: StripComments=Delete All Comments
 StripComments=
 
+#description: Delete all engine evals
+#english: DeleteEngineEvals=Delete Engine Evaluations
+DeleteEngineEvals=
+
 
 #description: TOP LEVEL MENU: Help
 #english: Help=Help
@@ -1248,6 +1252,10 @@ MsgConfirmDeleteSubtree=
 #english: MsgConfirmStripComments=Delete all comments in this view? 
 MsgConfirmStripComments=
 
+#description: Confirm removing evals
+#english: MsgConfirmDeleteEngineEvals=Delete all evaluations in this view?
+MsgConfirmDeleteEngineEvals=
+
 #description: Copy Paste error
 #english: MbtTitleCopyPasteError=Copy/Paste Error
 MbtTitleCopyPasteError=
@@ -1510,12 +1518,15 @@ TextForDisplay=
 #english: EditPosition=Edit Position
 EditPosition=
 
+#description: Number of occurrences
+#english: NumberOfOccurrences = Number of occurrences
+NumberOfOccurrences =
 
 #description: Info in the View References Dialog
 #english: InfoGameExerciseReferences=Double click to preview, right click for options
 InfoGameExerciseReferences=
 
-#description: Tooltip for the References symbole
+#description: Tooltip for the References symbol
 #english: OpenReferencesDialog=Click to edit Game and Exercise references
 OpenReferencesDialog=
 
@@ -1906,6 +1917,10 @@ TooltipSideToMove=
 #description: Tooltip for workbook version
 #english: TooltipWorkbookVersion=To increment version select File->Backup Version
 TooltipWorkbookVersion=
+
+#description: Tooltip for engine blunder detection
+#english: TooltipEngineBlunderDetect=Assessed as a blunder by the engine
+TooltipEngineBlunderDetect=
 
 #description: Errors encountered while parsing a PGN file
 #english: PgnErrors=PGN parsing errors

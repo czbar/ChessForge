@@ -81,11 +81,13 @@ namespace GameTree
 
         /// <summary>
         /// Holds engine evaluation if available.
+        /// This is read only.
+        /// Setting must be done via SetEngineEvaluation()
+        /// method as we need to do some extra work there.
         /// </summary>
         public string EngineEvaluation
         {
             get => _engEval;
-            set => _engEval = value;
         }
 
         /// <summary>
@@ -95,6 +97,15 @@ namespace GameTree
         {
             get => _quizPoints;
             set => _quizPoints = value;
+        }
+
+        /// <summary>
+        /// Coded assessment of the move.
+        /// </summary>
+        public uint Assessment
+        {
+            get => _assessment;
+            set => _assessment = value;
         }
 
         /// <summary>
@@ -143,6 +154,17 @@ namespace GameTree
                 }
             }
             return count;
+        }
+
+        /// <summary>
+        /// Sets engine evaluation of the node.
+        /// </summary>
+        /// <param name="eval"></param>
+        /// <returns></returns>
+        public ChfCommands.Assessment SetEngineEvaluation(string eval)
+        {
+            _engEval = eval;
+            return ChfCommands.Assessment.NONE;
         }
 
         /// <summary>
@@ -235,6 +257,9 @@ namespace GameTree
 
         // points awarded in the solving analysis mode
         private int _quizPoints;
+
+        // coded assessment of the move
+        private uint _assessment;
 
         /// <summary>
         /// Numeric Annotation Glyphs associated with this

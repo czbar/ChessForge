@@ -570,6 +570,9 @@
   <data name="StripComments" xml:space="preserve">
     <value>Delete All Comments</value>
   </data>
+  <data name="DeleteEngineEvals" xml:space="preserve">
+    <value>Delete Engine Evaluations</value>
+  </data>
   <data name="Help" xml:space="preserve">
     <value>Help</value>
   </data>
@@ -954,6 +957,9 @@
   <data name="MsgConfirmStripComments" xml:space="preserve">
     <value>Delete all comments in this view? </value>
   </data>
+  <data name="MsgConfirmDeleteEngineEvals" xml:space="preserve">
+    <value>Delete all evaluations in this view?</value>
+  </data>
   <data name="MbtTitleCopyPasteError" xml:space="preserve">
     <value>Copy/Paste Error</value>
   </data>
@@ -1140,6 +1146,9 @@
   </data>
   <data name="EditPosition" xml:space="preserve">
     <value>Edit Position</value>
+  </data>
+  <data name="NumberOfOccurrences" xml:space="preserve">
+    <value>Number of occurrences</value>
   </data>
   <data name="InfoGameExerciseReferences" xml:space="preserve">
     <value>Double click to preview, right click for options</value>
@@ -1434,6 +1443,9 @@
   </data>
   <data name="TooltipWorkbookVersion" xml:space="preserve">
     <value>To increment version select File-&gt;Backup Version</value>
+  </data>
+  <data name="TooltipEngineBlunderDetect" xml:space="preserve">
+    <value>Assessed as a blunder by the engine</value>
   </data>
   <data name="PgnErrors" xml:space="preserve">
     <value>PGN parsing errors</value>

@@ -69,6 +69,9 @@ namespace GameTree
                     case EditOperation.EditType.STRIP_COMMENTS:
                         _owningTree.UndoStripComments(op.OpData_1);
                         break;
+                    case EditOperation.EditType.DELETE_ENGINE_EVALS:
+                        _owningTree.UndoDeleteEngineEvals(op.OpData_1);
+                        break;
                 }
             }
             catch

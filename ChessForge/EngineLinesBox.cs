@@ -178,7 +178,7 @@ namespace ChessForge
                                 if (i == 0)
                                 {
                                     AppState.MainWin.ActiveLine.SetEvaluation(moveCandidates.EvalNode, eval);
-                                    moveCandidates.EvalNode.EngineEvaluation = eval;
+                                    moveCandidates.EvalNode.SetEngineEvaluation(eval);
                                     if (TrainingSession.IsTrainingInProgress)
                                     {
                                         AppState.MainWin.ShowEvaluationRunInTraining(moveCandidates.EvalNode);
