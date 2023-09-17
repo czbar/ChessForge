@@ -90,10 +90,11 @@ namespace ChessForge
             if (WorkbookManager.SessionWorkbook != null && AppState.IsDirty)
             {
                 proceed = WorkbookManager.PromptAndSaveWorkbook(false, out _);
-                if (proceed)
-                {
-                    WorkbookManager.SessionWorkbook.GamesManager.CancelAll();
-                }
+            }
+
+            if (proceed)
+            {
+                WorkbookManager.SessionWorkbook.GamesManager.CancelAll();
             }
 
             if (proceed && ChangeAppModeWarning(LearningMode.Mode.MANUAL_REVIEW))
