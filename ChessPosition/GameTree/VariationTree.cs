@@ -127,6 +127,15 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Checks if the line ids have been calculated yet
+        /// </summary>
+        /// <returns></returns>
+        public bool HasLinesCalculated()
+        {
+            return RootNode != null && !string.IsNullOrEmpty(RootNode.LineId);
+        }
+
+        /// <summary>
         /// Adds a node to the Workbook tree.
         /// </summary>
         /// <param name="node"></param>

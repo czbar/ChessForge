@@ -10,6 +10,75 @@ namespace ChessPosition
     public class TreeUtils
     {
         /// <summary>
+        /// Makes a deep copy of the passed variation tree.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static VariationTree CopyVariationTree(VariationTree source)
+        {
+            try
+            {
+                VariationTree copy = new VariationTree(source.ContentType);
+                copy.Header = source.Header.CloneMe(true);
+                copy.Nodes.Clear();
+
+                Dictionary<int, int> dictNodeIdToIndex = new Dictionary<int, int>();
+                List<int> parentIds = new List<int>();
+                Dictionary<int, List<int>> dictChildrenAtIndex = new Dictionary<int, List<int>>();
+
+                // build a list of Nodes with dictionaries for NodeIds, parent and childre node ids
+                for (int i = 0; i < source.Nodes.Count; i++)
+                {
+                    TreeNode node = source.Nodes[i].CloneJustMe();
+                    node.Children = new List<TreeNode>();
+
+                    copy.Nodes.Add(node);
+
+                    dictNodeIdToIndex[node.NodeId] = i;
+                    if (source.Nodes[i].Parent == null)
+                    {
+                        parentIds.Add(-1);
+                    }
+                    else
+                    {
+                        parentIds.Add(source.Nodes[i].Parent.NodeId);
+                    }
+                    dictChildrenAtIndex[i] = new List<int>();
+                    foreach (TreeNode child in source.Nodes[i].Children)
+                    {
+                        dictChildrenAtIndex[i].Add(child.NodeId);
+                    }
+                }
+
+                // now populate Nodes' parents and children with object references
+                for (int i = 0; i < copy.Nodes.Count; i++)
+                {
+                    TreeNode nd = copy.Nodes[i];
+                    if (parentIds[i] == -1)
+                    {
+                        nd.Parent = null;
+                    }
+                    else
+                    {
+                        nd.Parent = copy.Nodes[dictNodeIdToIndex[parentIds[i]]];
+                    }
+
+                    foreach (int nodeId in dictChildrenAtIndex[i])
+                    {
+                        nd.Children.Add(copy.Nodes[dictNodeIdToIndex[nodeId]]);
+                    }
+                }
+
+                return copy;
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("CopyVariationTree()", ex);
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Determines if the first passed line id starts with the second passed line id.
         /// Note that full partial numbers must be checked 
         /// so that we do not consider that 1.6.11 starts with 1.6.1 
@@ -134,7 +203,7 @@ namespace ChessPosition
 
             foreach (TreeNode nd in leaves)
             {
-                nd.Children.Clear(); 
+                nd.Children.Clear();
             }
             foreach (TreeNode nd in markedForDeletion)
             {

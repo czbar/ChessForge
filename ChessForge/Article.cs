@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ChessPosition;
 using GameTree;
 
 namespace ChessForge
@@ -89,6 +90,19 @@ namespace ChessForge
         public Article(GameData.ContentType contentType, int processorListIndex) : this(contentType)
         {
             _pgnProcessorListIndex = processorListIndex;
+        }
+
+        /// <summary>
+        /// Creates a clone of this article.
+        /// </summary>
+        /// <returns></returns>
+        public Article CloneMe()
+        {
+            Article copy = this.MemberwiseClone() as Article;
+            copy.Tree = TreeUtils.CopyVariationTree(this.Tree);
+            copy.Tree.Header = this.Tree.Header.CloneMe(true); 
+
+            return copy;
         }
     }
 }

@@ -77,7 +77,7 @@ namespace ChessForge
         /// Prepares the process of parsing articles from the passed list.
         /// </summary>
         /// <param name="articleDataList"></param>
-        public void Execute(ref ObservableCollection<GameData> articleDataList, ref List<Article> articleList)
+        public void Execute(ObservableCollection<GameData> articleDataList, List<Article> articleList)
         {
             _state = ProcessState.RUNNING;
             _rawArticles = articleDataList;
@@ -103,12 +103,15 @@ namespace ChessForge
             BackgroundPgnProcessor processor = _workerPool.Find(x => x.ArticleIndex == articleIndex);
             if (processor != null)
             {
-                _articleList[articleIndex].Tree = processor.DataObject.Tree;
-                _articleList[articleIndex].IsReady = true;
-                _errors[articleIndex] = errorText;
+                // Check that the article has not been processed synchronously earlier.
+                if (!_articleList[articleIndex].IsReady && processor.DataObject.Tree != null)
+                {
+                    _articleList[articleIndex].Tree = processor.DataObject.Tree;
+                    _articleList[articleIndex].IsReady = true;
+                    _errors[articleIndex] = errorText;
+                }
 
                 UpdateVariablesOnJobFinish(articleIndex);
-
                 if (ArticlesNotStarted > 0)
                 {
                     ReuseWorker(processor);
@@ -158,8 +161,10 @@ namespace ChessForge
                 {
                     if (!_articleList[index].IsReady)
                     {
-                        retArticle = new Article(article.Tree);
-                        retArticle.Tree.Header = article.Tree.Header.CloneMe(true);
+                        // set this upfront to stop async processing
+                        _articleList[index].IsReady = true;
+
+                        retArticle = article.CloneMe();
                         VariationTree tree = retArticle.Tree;
 
                         // check if fen needs to be set
@@ -215,7 +220,10 @@ namespace ChessForge
 
             if (_articleList[articleIndex] != null)
             {
-                _workerPool[workerIndex].Run(articleIndex, _rawArticles[articleIndex].GameText, ref _articleList[articleIndex].Tree);
+                // perform only dummy processing if the article already processed
+                bool dummy = _articleList[articleIndex].IsReady;
+                VariationTree tree = TreeUtils.CopyVariationTree(_articleList[articleIndex].Tree);
+                _workerPool[workerIndex].Run(articleIndex, _rawArticles[articleIndex].GameText, tree, dummy);
                 res = true;
             }
             _lastScheduledArticle = articleIndex;
@@ -236,7 +244,10 @@ namespace ChessForge
 
             if (_articleList[articleIndex] != null)
             {
-                worker.Run(articleIndex, _rawArticles[articleIndex].GameText, ref _articleList[articleIndex].Tree);
+                // perform only dummy processing if the article already processed
+                bool dummy = _articleList[articleIndex].IsReady;
+                VariationTree tree = TreeUtils.CopyVariationTree(_articleList[articleIndex].Tree);
+                worker.Run(articleIndex, _rawArticles[articleIndex].GameText, tree, dummy);
                 res = true;
             }
             _lastScheduledArticle = articleIndex;

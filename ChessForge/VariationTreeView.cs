@@ -2228,6 +2228,13 @@ namespace ChessForge
                     if (r.Name != null && r.Name.StartsWith(_run_))
                     {
                         nodeId = TextUtils.GetIdFromPrefixedString(r.Name);
+
+                        // This should never be needed but protect against unexpected timoing issue with sync/async processing
+                        if (!ShownVariationTree.HasLinesCalculated())
+                        {
+                            ShownVariationTree.BuildLines();
+                        }
+
                         string lineId = ShownVariationTree.GetDefaultLineIdForNode(nodeId);
 
                         SelectAndHighlightLine(lineId, nodeId);
