@@ -107,11 +107,8 @@ namespace DownloadStats
                                     Console.Write((item as List<object>)[0] as string + ",");
                                     sb.Append((item as List<object>)[0] as string + ",");
 
-                                    Console.Write((item as List<object>)[1].ToString() + ",");
-                                    sb.Append((item as List<object>)[1].ToString() + ",");
-
-                                    Console.WriteLine(dt.ToString("yy MM"));
-                                    sb.AppendLine(dt.ToString("yy MM"));
+                                    Console.WriteLine((item as List<object>)[1].ToString() + ",");
+                                    sb.AppendLine((item as List<object>)[1].ToString() + ",");
                                 }
                             }
                         }
