@@ -70,8 +70,9 @@ namespace ChessForge
         /// </summary>
         /// <param name="articleText"></param>
         /// <param name="tree"></param>
+        /// <param name="dummyRun">Of true then the requested article has already been processed so shortcircuit this method.</param>
         /// <param name="fen"></param>
-        public void Run(int articleIndex, string articleText, ref VariationTree tree, string fen = null)
+        public void Run(int articleIndex, string articleText, VariationTree tree, bool dummyRun, string fen = null)
         {
             _workerState = ProcessState.RUNNING;
             try
@@ -79,17 +80,21 @@ namespace ChessForge
                 _dataObject = new BackgroundPgnParserData();
                 _dataObject.ArticleIndex = articleIndex;
                 _dataObject.ArticleText = articleText;
-                _dataObject.Tree = tree;
+                _dataObject.Tree = dummyRun ? null : tree;
 
-                // check if fen needs to be set
-                if (!tree.Header.IsExercise())
+                if (tree != null)
                 {
-                    fen = null;
+                    // check if fen needs to be set
+                    if (!tree.Header.IsExercise())
+                    {
+                        fen = null;
+                    }
+                    else
+                    {
+                        fen = tree.Header.GetFenString();
+                    }
                 }
-                else
-                {
-                    fen = tree.Header.GetFenString();
-                }
+
                 _dataObject.Fen = fen;
 
                 _worker.RunWorkerAsync(_dataObject);
@@ -111,7 +116,10 @@ namespace ChessForge
             BackgroundPgnParserData dataObject = e.Argument as BackgroundPgnParserData;
             try
             {
-                PgnGameParser pp = new PgnGameParser(_dataObject.ArticleText, _dataObject.Tree, _dataObject.Fen, false);
+                if (dataObject.Tree != null)
+                {
+                    PgnGameParser pp = new PgnGameParser(_dataObject.ArticleText, _dataObject.Tree, _dataObject.Fen, false);
+                }
             }
             catch (Exception ex)
             {
