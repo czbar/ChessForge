@@ -1426,7 +1426,11 @@ namespace ChessForge
                     WorkbookViewState wvs = new WorkbookViewState(WorkbookManager.SessionWorkbook);
                     try
                     {
-                        wvs.ReadState();
+                        // don't read the state it is a new workbook built from generic PGN
+                        if (isChessForgeFile)
+                        {
+                            wvs.ReadState();
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -1434,7 +1438,7 @@ namespace ChessForge
                     }
 
                     // Possibly we do not need to call this at all if ApplyStates ran.
-                    SetupGuiForNewSession(AppState.WorkbookFilePath, isChessForgeFile, wvs);
+                    SetupGuiForNewSession(AppState.WorkbookFilePath, true, wvs);
                 }
                 else
                 {
