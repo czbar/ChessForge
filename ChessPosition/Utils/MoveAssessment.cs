@@ -144,14 +144,14 @@ namespace ChessPosition.Utils
 
             if (color == PieceColor.White)
             {
-                if (childEval - parentEval > 2.0 || parentEval > 0.5 && childEval < -0.8)
+                if (childEval - parentEval > 2.0 && childEval > -4.0 || parentEval > 0.5 && childEval < -0.8)
                 {
                     res = true;
                 }
             }
             else
             {
-                if (childEval - parentEval < -2.0 || parentEval < -0.5 && childEval > 0.8)
+                if (childEval - parentEval < -2.0  && childEval < 4.0 || parentEval < -0.5 && childEval > 0.8)
                 {
                     res = true;
                 }
