@@ -7,13 +7,13 @@
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
         ShowInTaskbar="True"
-        Title="{x:Static p:Resources.ImportPgn}" Height="520" Width="800">
+        Title="{x:Static p:Resources.ImportPgn}" Height="480" Width="800">
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="300"/>
-            <RowDefinition Height="140"/>
+            <RowDefinition Height="330"/>
+            <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
         <ListView x:Name="UiLvGames" Grid.Row="1" ItemsSource="{Binding}" >
             <ListView.ItemContainerStyle>
@@ -37,15 +37,9 @@
             </ListView.View>
         </ListView>
         <CheckBox x:Name="UiCbSelectAll" IsChecked="True" Grid.Row="1" Content="" HorizontalAlignment="Left" Margin="10,3,0,0" VerticalAlignment="Top" Checked="UiCbSelectAll_Checked" Unchecked="UiCbSelectAll_Unchecked"/>
-        <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Left" Margin="580,42,0,0" Grid.Row="2" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
-        <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Left" Margin="580,77,0,0" Grid.Row="2" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
+        <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="-100,24,0,0" Grid.Row="2" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
+        <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="100,24,0,0" Grid.Row="2" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnCancel_Click" RenderTransformOrigin="-1.488,-1.598"/>
         <Label x:Name="UiLblInstruct" Content="{x:Static p:Resources.SelectItems}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Width="766"/>
         
-        <RadioButton x:Name="UiRbStudyAndGames" Content="{x:Static p:Resources.MergeGamesAndCopy}" HorizontalAlignment="Left" Margin="30,50,0,0" Grid.Row="2" VerticalAlignment="Top"/>
-        <RadioButton x:Name="UiRbStudyOnly" Content="{x:Static p:Resources.MergeGamesNoCopy}" HorizontalAlignment="Left" Margin="30,75,0,0" Grid.Row="2" VerticalAlignment="Top"/>
-        <RadioButton x:Name="UiRbGamesOnly" Content="{x:Static p:Resources.CopyGamesNoMerge}" HorizontalAlignment="Left" Margin="30,100,0,0" Grid.Row="2" VerticalAlignment="Top"/>
-
-        <CheckBox x:Name="UiCbMultiChapter" Content="{x:Static p:Resources.CreateChapterPerGame}" HorizontalAlignment="Left" Margin="30,15,0,0" Grid.Row="2" VerticalAlignment="Top"/>
-
     </Grid>
 </Window>

@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -17,25 +16,6 @@ namespace ChessForge
     /// </summary>
     public partial class SelectGamesDialog : Window
     {
-        /// <summary>
-        /// Indicates whether a Study should be created
-        /// from selected games.
-        /// </summary>
-        public bool CreateStudy = true;
-
-        /// <summary>
-        /// Indicates whether Games should be copied
-        /// into the Games section of the chapter.
-        /// </summary>
-        public bool CopyGames = true;
-
-
-        /// <summary>
-        /// Indicates whether each Game should have
-        /// its own chapter when creating a Workbook.
-        /// </summary>
-        public bool MultiChapter = false;
-
         /// <summary>
         /// Modes in which this dialog can be invoked.
         /// </summary>
@@ -86,9 +66,6 @@ namespace ChessForge
             UiLvGames.ItemsSource = gameList;
 
             SetInstructionText();
-            InitializeCopyOptionsRadioButtons();
-
-            ShowMultiChapterCheckBox();
         }
 
         /// <summary>
@@ -124,26 +101,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Controls the visibility of the checkbox
-        /// and radio buttons.
-        /// </summary>
-        private void ShowMultiChapterCheckBox()
-        {
-            if (_mode == Mode.CREATE_WORKBOOK)
-            {
-                UiCbMultiChapter.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                UiCbMultiChapter.Visibility = Visibility.Collapsed;
-
-                MoveRadioButtonUp(UiRbStudyAndGames);
-                MoveRadioButtonUp(UiRbStudyOnly);
-                MoveRadioButtonUp(UiRbGamesOnly);
-            }
-        }
-
-        /// <summary>
         /// Moves the Radio Button for esthetics reasons if
         /// the Multi Chapter button is not showing.
         /// </summary>
@@ -176,35 +133,6 @@ namespace ChessForge
                 case Mode.IMPORT_INTO_NEW_CHAPTER:
                     UiLblInstruct.Content = Properties.Resources.SelectItemsForChapter;
                     break;
-            }
-        }
-
-        /// <summary>
-        /// Selects the first radio button for copy/merge options
-        /// if there is at least one game.
-        /// Disables all radio buttons if there are no games.
-        /// </summary>
-        private void InitializeCopyOptionsRadioButtons()
-        {
-            if (_mode == Mode.IMPORT_GAMES || _mode == Mode.IMPORT_EXERCISES || _mode == Mode.DOWNLOAD_WEB_GAMES)
-            {
-
-                UiRbStudyAndGames.Visibility = Visibility.Collapsed;
-                UiRbStudyOnly.Visibility = Visibility.Collapsed;
-                UiRbGamesOnly.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                if (_gameCount > 0)
-                {
-                    UiRbStudyAndGames.IsChecked = true;
-                }
-                else
-                {
-                    UiRbStudyAndGames.IsEnabled = false;
-                    UiRbStudyOnly.IsEnabled = false;
-                    UiRbGamesOnly.IsEnabled = false;
-                }
             }
         }
 
@@ -271,10 +199,6 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnOk_Click(object sender, RoutedEventArgs e)
         {
-            CopyGames = UiRbGamesOnly.IsChecked == true || UiRbStudyAndGames.IsChecked == true;
-            CreateStudy = UiRbStudyOnly.IsChecked == true || UiRbStudyAndGames.IsChecked == true;
-            MultiChapter = UiCbMultiChapter.IsChecked == true;
-
             DialogResult = true;
         }
 

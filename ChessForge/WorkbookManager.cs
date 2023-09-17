@@ -689,9 +689,7 @@ namespace ChessForge
                 Chapter chapter = SessionWorkbook.CreateDefaultChapter();
                 BookmarkManager.ResetSelections();
 
-                if (AppState.MainWin.SelectArticlesFromPgnFile(ref games,
-                                                               SelectGamesDialog.Mode.CREATE_WORKBOOK,
-                                                               out bool createStudy, out bool copyGames, out bool multiChapter))
+                if (AppState.MainWin.SelectArticlesFromPgnFile(ref games, SelectGamesDialog.Mode.CREATE_WORKBOOK))
                 {
                     // insert a dummy article at position 0
                     games.Insert(0, null);

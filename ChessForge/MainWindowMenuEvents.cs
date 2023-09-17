@@ -1048,16 +1048,17 @@ namespace ChessForge
 
                 if (gamesCount > 0)
                 {
-                    if (SelectArticlesFromPgnFile(ref games, SelectGamesDialog.Mode.IMPORT_INTO_NEW_CHAPTER, out bool createStudy, out bool copyGames, out _))
+                    if (SelectArticlesFromPgnFile(ref games, SelectGamesDialog.Mode.IMPORT_INTO_NEW_CHAPTER))
                     {
-                        if (createStudy)
-                        {
-                            WorkbookManager.MergeGames(ref chapter.StudyTree.Tree, ref games);
-                        }
+                        //if (createStudy)
+                        //{
+                        //    WorkbookManager.MergeGames(ref chapter.StudyTree.Tree, ref games);
+                        //}
+
                         // content type may have been reset to GENERIC in MergeGames above
                         chapter.StudyTree.Tree.ContentType = GameData.ContentType.STUDY_TREE;
 
-                        CopySelectedItemsToChapter(chapter, copyGames, out string error, games, out _);
+                        CopySelectedItemsToChapter(chapter, true, out string error, games, out _);
 
                         _chaptersView.BuildFlowDocumentForChaptersView();
                         SelectChapterByIndex(chapter.Index, false);
@@ -1137,7 +1138,7 @@ namespace ChessForge
         /// <param name="games"></param>
         /// <param name="mode"></param>
         /// <returns></returns>
-        public bool SelectArticlesFromPgnFile(ref ObservableCollection<GameData> games, SelectGamesDialog.Mode mode, out bool createStudy, out bool copyGames, out bool multiChapter)
+        public bool SelectArticlesFromPgnFile(ref ObservableCollection<GameData> games, SelectGamesDialog.Mode mode)
         {
             SelectGamesDialog dlg = new SelectGamesDialog(ref games, mode)
             {
@@ -1148,11 +1149,6 @@ namespace ChessForge
             };
 
             bool res = dlg.ShowDialog() == true;
-
-            createStudy = dlg.CreateStudy;
-            copyGames = dlg.CopyGames;
-            multiChapter = dlg.MultiChapter;
-
             return res;
         }
 
