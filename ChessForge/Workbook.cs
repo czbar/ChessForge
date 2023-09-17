@@ -144,7 +144,7 @@ namespace ChessForge
         /// and they must match their source by index.
         /// </summary>
         /// <param name="articleDataList"></param>
-        public List<Article> CreateArticlePlaceholders(ref ObservableCollection<GameData> articleDataList)
+        public List<Article> CreateArticlePlaceholders(ObservableCollection<GameData> articleDataList)
         {
             List<Article> lstArticles = new List<Article>(articleDataList.Count);
 

@@ -816,8 +816,8 @@ namespace ChessForge
         /// <param name="workbook"></param>
         private static void ProcessGamesInBackground(ref ObservableCollection<GameData> rawPgnArticles, ref Workbook workbook)
         {
-            List<Article> outArticles = workbook.CreateArticlePlaceholders(ref rawPgnArticles);
-            workbook.GamesManager.Execute(ref rawPgnArticles, ref outArticles);
+            List<Article> outArticles = workbook.CreateArticlePlaceholders(rawPgnArticles);
+            workbook.GamesManager.Execute(rawPgnArticles, outArticles);
         }
 
         /// <summary>
