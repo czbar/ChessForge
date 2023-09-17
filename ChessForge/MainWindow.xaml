@@ -126,6 +126,7 @@
                         <MenuItem x:Name="UiMnEvaluateGames" Header="{x:Static p:Resources.EvaluateGames}" Click="UiMnEvaluateGames_Click" />
                         <Separator />
                         <MenuItem x:Name="UiMnStripComments" Header="{x:Static p:Resources.StripComments}" Click="UiStripComments_Click" />
+                        <MenuItem x:Name="UiMnDeleteEngineEvals" Header="{x:Static p:Resources.DeleteEngineEvals}" Click="UiDeleteEngineEvals_Click" />
                     </MenuItem>
                     <MenuItem Header="{x:Static p:Resources.Help}" Margin="0,0,0,0">
                         <MenuItem Header="{x:Static p:Resources.Wiki}" Click="UiMnHelpWiki_Click" />
