@@ -502,7 +502,12 @@ namespace ChessForge
                         string chfText = WorkbookFileTextBuilder.BuildWorkbookText();
                         File.WriteAllText(savePath, chfText);
                     }
-                    IsDirty = false;
+
+                    // if background processing is in progress, do not mark as clean
+                    if (!WorkbookManager.SessionWorkbook.IsBackgroundLoadingInProgress)
+                    {
+                        IsDirty = false;
+                    }
                 }
             }
             catch (Exception ex)
