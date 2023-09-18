@@ -4095,6 +4095,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Click to Select items to Copy or Move to a Chapter.
+        /// </summary>
+        public static string SelectGamesStudiesToCopyMove {
+            get {
+                return ResourceManager.GetString("SelectGamesStudiesToCopyMove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select Games to Import:.
         /// </summary>
         public static string SelectGamesToImport {
@@ -4334,6 +4343,15 @@ namespace ChessForge.Properties {
         public static string StripComments {
             get {
                 return ResourceManager.GetString("StripComments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Studies.
+        /// </summary>
+        public static string Studies {
+            get {
+                return ResourceManager.GetString("Studies", resourceCulture);
             }
         }
         

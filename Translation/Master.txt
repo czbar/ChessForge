@@ -83,6 +83,9 @@ Intro=Intro
 #Study Tree
 Study=Study
 
+#Study Trees plural
+Studies=Studies
+
 #Game
 Game=Game
 
@@ -1052,6 +1055,9 @@ SelectEngineStartMove=Select the move from which to start.
 
 #Select a position
 SelectPosition=A position must be selected.
+
+#Select Games and Studies to Move or Copy
+SelectGamesStudiesToCopyMove=Click to select items to Copy or Move to a Chapter
 
 #Delete chapter
 DeleteChapter=Delete Chapter

@@ -183,6 +183,9 @@
   <data name="Study" xml:space="preserve">
     <value>Study</value>
   </data>
+  <data name="Studies" xml:space="preserve">
+    <value>Studies</value>
+  </data>
   <data name="Game" xml:space="preserve">
     <value>Game</value>
   </data>
@@ -1031,6 +1034,9 @@
   </data>
   <data name="SelectPosition" xml:space="preserve">
     <value>A position must be selected.</value>
+  </data>
+  <data name="SelectGamesStudiesToCopyMove" xml:space="preserve">
+    <value>Click to select items to Copy or Move to a Chapter</value>
   </data>
   <data name="DeleteChapter" xml:space="preserve">
     <value>Delete Chapter</value>

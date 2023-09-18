@@ -183,6 +183,9 @@
   <data name="Study" xml:space="preserve">
     <value>Teoria</value>
   </data>
+  <data name="Studies" xml:space="preserve">
+    <value>Teoria</value>
+  </data>
   <data name="Game" xml:space="preserve">
     <value>Partia</value>
   </data>
@@ -1031,6 +1034,9 @@
   </data>
   <data name="SelectPosition" xml:space="preserve">
     <value>Pozycja musi być wybrana.</value>
+  </data>
+  <data name="SelectGamesStudiesToCopyMove" xml:space="preserve">
+    <value>Kliknij by wybrać pozycje do skopiowania lub przeniesienia do jednego rozdziału</value>
   </data>
   <data name="DeleteChapter" xml:space="preserve">
     <value>Usuń Rozdział</value>

@@ -105,6 +105,10 @@ Intro=Wstęp
 #english: Study=Study
 Study=Teoria
 
+#description: Study Trees plural
+#english: Studies=Studies
+Studies=Teoria
+
 #description: Game
 #english: Game=Game
 Game=Partia
@@ -1252,9 +1256,9 @@ MsgConfirmDeleteSubtree=Usunąć zaznaczony ruch i wszystkie dalsze posunięcia?
 #english: MsgConfirmStripComments=Delete all comments in this view? 
 MsgConfirmStripComments=Usunąć wszystkie komentarze w tym widoku? 
 
-#Confirm removing evals
+#description: Confirm removing evals
+#english: MsgConfirmDeleteEngineEvals=Delete all evaluations in this view?
 MsgConfirmDeleteEngineEvals=Usunąć wszystkie oceny w tym widoku?
-
 
 #description: Copy Paste error
 #english: MbtTitleCopyPasteError=Copy/Paste Error
@@ -1357,6 +1361,10 @@ SelectEngineStartMove=Wybierz początkowe posunięcie do gry z silnikiem
 #description: Select a position
 #english: SelectPosition=A position must be selected.
 SelectPosition=Pozycja musi być wybrana.
+
+#description: Select Games and Studies to Move or Copy
+#english: SelectGamesStudiesToCopyMove=Click to Select items to Copy or Move to a Chapter
+SelectGamesStudiesToCopyMove=Kliknij by wybrać pozycje do skopiowania lub przeniesienia do jednego rozdziału
 
 #description: Delete chapter
 #english: DeleteChapter=Delete Chapter
