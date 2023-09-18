@@ -977,7 +977,7 @@ namespace ChessForge
             try
             {
                 ObservableCollection<ArticleListItem> articleList = WorkbookManager.SessionWorkbook.GenerateArticleList(AppState.ActiveChapter, articleType);
-                SelectArticlesDialog dlg = new SelectArticlesDialog(null, ref articleList, articleType)
+                SelectArticlesDialog dlg = new SelectArticlesDialog(null, ref articleList, false, articleType)
                 {
                     Left = ChessForgeMain.Left + 100,
                     Top = ChessForgeMain.Top + 100,
@@ -1710,7 +1710,7 @@ namespace ChessForge
             {
                 TreeNode nd = ActiveTreeView.GetSelectedNode();
                 ObservableCollection<ArticleListItem> articleList = WorkbookManager.SessionWorkbook.GenerateArticleList();
-                SelectArticlesDialog dlg = new SelectArticlesDialog(nd, ref articleList)
+                SelectArticlesDialog dlg = new SelectArticlesDialog(nd, ref articleList, false)
                 {
                     Left = ChessForgeMain.Left + 100,
                     Top = ChessForgeMain.Top + 100,
