@@ -140,7 +140,8 @@ namespace ChessForge
 
             if (gameCount + exerciseCount > 0)
             {
-                CreateCopyMoveItemsLink(para);
+                CreateMoveItemsLink(para);
+                CreateCopyItemsLink(para);
             }
 
             UiRtbIdenticalPositions.Document.Blocks.Add(para);
@@ -165,21 +166,41 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Creates a Run that will invoke selection of the items when clicked on.
+        /// Creates a Run that will invoke the item selection dialog
+        /// followed by moving items to a new or existing chapter.
         /// </summary>
         /// <param name="para"></param>
-        private void CreateCopyMoveItemsLink(Paragraph para)
+        private void CreateMoveItemsLink(Paragraph para)
         {
-            Run rCopyLine = new Run();
-            rCopyLine.Text = "\n\n" + Properties.Resources.SelectGamesStudiesToCopyMove;
-            rCopyLine.Cursor = Cursors.Hand;
+            Run rMoveLink = new Run();
+            rMoveLink.Text = "\n\n" + Properties.Resources.SelectGamesStudiesToMove;
+            rMoveLink.Cursor = Cursors.Hand;
             //rCopyLine.MouseDown += EventCopyLineButtonClicked;
 
-            rCopyLine.TextDecorations = TextDecorations.Underline;
-            rCopyLine.FontWeight = FontWeights.Normal;
-            rCopyLine.FontSize = 14 + Configuration.FontSizeDiff;
-            rCopyLine.Foreground = Brushes.Blue;
-            para.Inlines.Add(rCopyLine);
+            rMoveLink.TextDecorations = TextDecorations.Underline;
+            rMoveLink.FontWeight = FontWeights.Normal;
+            rMoveLink.FontSize = 14 + Configuration.FontSizeDiff;
+            rMoveLink.Foreground = Brushes.Blue;
+            para.Inlines.Add(rMoveLink);
+        }
+
+        /// <summary>
+        /// Creates a Run that will invoke the item selection dialog
+        /// followed by copying items to a new or existing chapter.
+        /// </summary>
+        /// <param name="para"></param>
+        private void CreateCopyItemsLink(Paragraph para)
+        {
+            Run rCopyLink = new Run();
+            rCopyLink.Text = "\n" + Properties.Resources.SelectGamesStudiesToCopy;
+            rCopyLink.Cursor = Cursors.Hand;
+            //rCopyLine.MouseDown += EventCopyLineButtonClicked;
+
+            rCopyLink.TextDecorations = TextDecorations.Underline;
+            rCopyLink.FontWeight = FontWeights.Normal;
+            rCopyLink.FontSize = 14 + Configuration.FontSizeDiff;
+            rCopyLink.Foreground = Brushes.Blue;
+            para.Inlines.Add(rCopyLink);
         }
 
         /// <summary>
@@ -222,9 +243,17 @@ namespace ChessForge
 
             InsertStemRuns(para, item);
             InsertTailRuns(para, item);
-            InsertCopyMainLineButton(para, item, itemIndex);
-            InsertCopySubtreeButton(para, item, itemIndex);
-            InsertOpenViewButton(para, item, itemIndex);
+
+            if (item.Node == _node)
+            {
+                InsertSameArticleRun(para, item);
+            }
+            else
+            {
+                InsertCopyMainLineButton(para, item, itemIndex);
+                InsertCopySubtreeButton(para, item, itemIndex);
+                InsertOpenViewButton(para, item, itemIndex);
+            }
 
             return para;
         }
@@ -251,6 +280,21 @@ namespace ChessForge
             }
 
             return para;
+        }
+
+        /// <summary>
+        /// Inserts a run indicating that the item is the one currently viewed.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <param name="item"></param>
+        private void InsertSameArticleRun(Paragraph para, ArticleListItem item)
+        {
+            Run rThisPosition = new Run();
+            rThisPosition.Text = "    (" + Properties.Resources.CurrentlyViewed + ")\n";
+            rThisPosition.FontWeight = FontWeights.Bold;
+            rThisPosition.Foreground = Brushes.Green;
+            rThisPosition.FontSize = 12 + Configuration.FontSizeDiff;
+            para.Inlines.Add(rThisPosition);
         }
 
         /// <summary>
