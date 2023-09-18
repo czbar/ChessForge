@@ -6,8 +6,6 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using ChessPosition;
 using System.Windows.Input;
 
@@ -18,6 +16,9 @@ namespace ChessForge
     /// </summary>
     public class FindIdenticalPositions
     {
+        /// <summary>
+        /// Search mode.
+        /// </summary>
         public enum Mode
         {
             FIND_AND_REPORT,
@@ -39,7 +40,7 @@ namespace ChessForge
             ObservableCollection<ArticleListItem> lstIdenticalPositions;
             try
             {
-                lstIdenticalPositions = ArticleListBuilder.BuildIdenticalPositionsList(nd, mode == Mode.CHECK_IF_ANY);
+                lstIdenticalPositions = ArticleListBuilder.BuildIdenticalPositionsList(nd, mode == Mode.CHECK_IF_ANY, false);
             }
             finally
             {
@@ -50,8 +51,9 @@ namespace ChessForge
 
             if (mode == Mode.FIND_AND_REPORT)
             {
-                if (lstIdenticalPositions.Count == 0)
+                if (!HasAtLeastTwoArticles(lstIdenticalPositions))
                 {
+                    // we only have 1 result which is the current position
                     MessageBox.Show(Properties.Resources.MsgNoIdenticalPositions, Properties.Resources.ChessForge, MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
@@ -106,5 +108,32 @@ namespace ChessForge
 
             return anyFound;
         }
+
+        /// <summary>
+        /// Checks if we have at least 2 articles i.e. 1 in addition to the currently viewed.
+        /// We have to check the type of the item so that we don't count chapter items.
+        /// </summary>
+        /// <param name="lstPos"></param>
+        /// <returns></returns>
+        private static bool HasAtLeastTwoArticles(ObservableCollection<ArticleListItem> lstPos)
+        {
+            int count = 0;
+            foreach (ArticleListItem item in lstPos)
+            {
+                if (item.ContentType == GameData.ContentType.STUDY_TREE
+                    || item.ContentType == GameData.ContentType.MODEL_GAME
+                    || item.ContentType == GameData.ContentType.EXERCISE)
+                {
+                    count++;
+                    if (count >= 2)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            return count >= 2;
+        }
+
     }
 }
