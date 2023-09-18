@@ -25,7 +25,9 @@ namespace ChessForge
             None,
             CopyLine,
             CopyTree,
-            OpenView
+            OpenView,
+            CopyArticles,
+            MoveArticles
         }
 
         /// <summary>
@@ -175,7 +177,7 @@ namespace ChessForge
             Run rMoveLink = new Run();
             rMoveLink.Text = "\n\n" + Properties.Resources.SelectGamesStudiesToMove;
             rMoveLink.Cursor = Cursors.Hand;
-            //rCopyLine.MouseDown += EventCopyLineButtonClicked;
+            rMoveLink.MouseDown += EventMoveArticlesClicked;
 
             rMoveLink.TextDecorations = TextDecorations.Underline;
             rMoveLink.FontWeight = FontWeights.Normal;
@@ -194,7 +196,7 @@ namespace ChessForge
             Run rCopyLink = new Run();
             rCopyLink.Text = "\n" + Properties.Resources.SelectGamesStudiesToCopy;
             rCopyLink.Cursor = Cursors.Hand;
-            //rCopyLine.MouseDown += EventCopyLineButtonClicked;
+            rCopyLink.MouseDown += EventCopyArticlesClicked;
 
             rCopyLink.TextDecorations = TextDecorations.Underline;
             rCopyLink.FontWeight = FontWeights.Normal;
@@ -559,6 +561,32 @@ namespace ChessForge
 
             Request = Action.OpenView;
             DialogResult = true;
+        }
+
+        /// <summary>
+        /// Handles user's click on Move Articles link
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventMoveArticlesClicked(object sender, MouseEventArgs e)
+        {
+            Request = Action.MoveArticles;
+            DialogResult = true;
+
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// Handles user's click on Copy Articles link
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventCopyArticlesClicked(object sender, MouseEventArgs e)
+        {
+            Request = Action.CopyArticles;
+            DialogResult = true;
+
+            e.Handled = true;
         }
 
         /// <summary>
