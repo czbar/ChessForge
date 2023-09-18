@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ChessForge
 {
@@ -31,7 +30,9 @@ namespace ChessForge
                 }
                 Chapter chapter = WorkbookManager.SessionWorkbook.Chapters[chIndex];
                 // create a "chapter line" item that will be removed if nothing found in the chapter
-                ArticleListItem chapterLine = new ArticleListItem(chapter, chIndex, null, 0);
+                ArticleListItem chapterLine = new ArticleListItem(chapter, chIndex);
+                chapterLine.IsSelected = true;
+
                 lstIdenticalPositions.Add(chapterLine);
                 int currentItemCount = lstIdenticalPositions.Count;
 
@@ -53,6 +54,7 @@ namespace ChessForge
                             ali.TailLineText = MoveUtils.BuildTailText(node, moveNumberOffset, out ali.TailLinePlyCount);
                             ali.StemLine = TreeUtils.GetStemLine(node);
                             ali.TailLine = TreeUtils.GetTailLine(node);
+                            ali.IsSelected = true;
                             lstIdenticalPositions.Add(ali);
                             found = true;
                             if (firstOnly)
@@ -85,6 +87,7 @@ namespace ChessForge
                                     ali.TailLineText = MoveUtils.BuildTailText(node, moveNumberOffset, out ali.TailLinePlyCount);
                                     ali.StemLine = TreeUtils.GetStemLine(node);
                                     ali.TailLine = TreeUtils.GetTailLine(node);
+                                    ali.IsSelected = true;
                                     lstIdenticalPositions.Add(ali);
                                     found = true;
                                     if (firstOnly)
@@ -119,6 +122,7 @@ namespace ChessForge
                                     ali.TailLineText = MoveUtils.BuildTailText(node, moveNumberOffset, out ali.TailLinePlyCount);
                                     ali.StemLine = TreeUtils.GetStemLine(node);
                                     ali.TailLine = TreeUtils.GetTailLine(node);
+                                    ali.IsSelected = true;
                                     lstIdenticalPositions.Add(ali);
                                     found = true;
                                     if (firstOnly)
