@@ -99,7 +99,27 @@ namespace ChessForge
         /// </summary>
         private void BuildSummaryParagraph()
         {
-            int count = _articleList.Count;
+            int studyCount = 0;
+            int gameCount = 0;
+            int exerciseCount = 0;
+
+            foreach (ArticleListItem item in _articleList)
+            {
+                switch (item.ContentType)
+                {
+                    case GameData.ContentType.STUDY_TREE:
+                        studyCount++;
+                        break;
+                    case GameData.ContentType.MODEL_GAME:
+                        gameCount++;
+                        break;
+                    case GameData.ContentType.EXERCISE:
+                        exerciseCount++;
+                        break;
+                }
+            }
+
+            int count = studyCount + gameCount + exerciseCount;
 
             Paragraph para = new Paragraph
             {
@@ -108,13 +128,58 @@ namespace ChessForge
 
             para.Name = PARA_SUMMARY;
 
-            Run run = new Run();
-            run.Text = Properties.Resources.NumberOfOccurrences + ": " + count.ToString();
-            run.FontWeight = FontWeights.Bold;
-            run.FontSize = 16 + Configuration.FontSizeDiff;
-            para.Inlines.Add(run);
+            Run runTotal = new Run();
+            runTotal.Text = Properties.Resources.NumberOfOccurrences + ": " + count.ToString();
+            runTotal.FontWeight = FontWeights.Bold;
+            runTotal.FontSize = 16 + Configuration.FontSizeDiff;
+            para.Inlines.Add(runTotal);
+
+            CreateItemCountRun(para, Properties.Resources.Studies, studyCount);
+            CreateItemCountRun(para, Properties.Resources.Games, gameCount);
+            CreateItemCountRun(para, Properties.Resources.Exercises, exerciseCount);
+
+            if (gameCount + exerciseCount > 0)
+            {
+                CreateCopyMoveItemsLink(para);
+            }
 
             UiRtbIdenticalPositions.Document.Blocks.Add(para);
+        }
+
+        /// <summary>
+        /// Creates a Run reporting the count of items.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <param name="label"></param>
+        /// <param name="count"></param>
+        private void CreateItemCountRun(Paragraph para, string label, int count)
+        {
+            if (count > 0)
+            {
+                Run run = new Run();
+                run.Text = "\n     " + label + ": " + count.ToString();
+                run.FontWeight = FontWeights.Bold;
+                run.FontSize = 14 + Configuration.FontSizeDiff;
+                para.Inlines.Add(run);
+            }
+        }
+
+        /// <summary>
+        /// Creates a Run that will invoke selection of the items when clicked on.
+        /// </summary>
+        /// <param name="para"></param>
+        private void CreateCopyMoveItemsLink(Paragraph para)
+        {
+            Run rCopyLine = new Run();
+            rCopyLine.Text = "\n\n" + Properties.Resources.SelectGamesStudiesToCopyMove;
+            rCopyLine.Cursor = Cursors.Hand;
+            //rCopyLine.MouseDown += EventCopyLineButtonClicked;
+
+            rCopyLine.TextDecorations = TextDecorations.Underline;
+            rCopyLine.FontWeight = FontWeights.Normal;
+            rCopyLine.FontSize = 14 + Configuration.FontSizeDiff;
+            rCopyLine.Foreground = Brushes.Blue;
+            para.Inlines.Add(rCopyLine);
         }
 
         /// <summary>
