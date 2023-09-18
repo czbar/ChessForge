@@ -1070,6 +1070,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Currently viewed.
+        /// </summary>
+        public static string CurrentlyViewed {
+            get {
+                return ResourceManager.GetString("CurrentlyViewed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The current version $0 will be backed up as.
         /// </summary>
         public static string CurrentVersion {
@@ -4095,11 +4104,20 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Click to Select items to Copy or Move to a Chapter.
+        ///   Looks up a localized string similar to COPY - click to select items to copy to a new or existing chapter.
         /// </summary>
-        public static string SelectGamesStudiesToCopyMove {
+        public static string SelectGamesStudiesToCopy {
             get {
-                return ResourceManager.GetString("SelectGamesStudiesToCopyMove", resourceCulture);
+                return ResourceManager.GetString("SelectGamesStudiesToCopy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MOVE - click to select items to move to a new or existing chapter.
+        /// </summary>
+        public static string SelectGamesStudiesToMove {
+            get {
+                return ResourceManager.GetString("SelectGamesStudiesToMove", resourceCulture);
             }
         }
         

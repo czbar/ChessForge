@@ -1035,8 +1035,11 @@
   <data name="SelectPosition" xml:space="preserve">
     <value>A position must be selected.</value>
   </data>
-  <data name="SelectGamesStudiesToCopyMove" xml:space="preserve">
-    <value>Click to select items to Copy or Move to a Chapter</value>
+  <data name="SelectGamesStudiesToMove" xml:space="preserve">
+    <value>MOVE - click to select items to move to a new or existing chapter</value>
+  </data>
+  <data name="SelectGamesStudiesToCopy" xml:space="preserve">
+    <value>COPY - click to select items to copy to a new or existing chapter</value>
   </data>
   <data name="DeleteChapter" xml:space="preserve">
     <value>Delete Chapter</value>
@@ -1515,6 +1518,9 @@
   </data>
   <data name="ExplorersAbout" xml:space="preserve">
     <value>Openings/Tablebases</value>
+  </data>
+  <data name="CurrentlyViewed" xml:space="preserve">
+    <value>Currently viewed</value>
   </data>
   <data name="YourMoveWas" xml:space="preserve">
     <value>Your move was</value>
