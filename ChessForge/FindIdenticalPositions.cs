@@ -66,47 +66,104 @@ namespace ChessForge
                         Owner = AppState.MainWin
                     };
 
-                    if (dlgEx.ShowDialog() == true && dlgEx.ArticleIndexId >= 0 && dlgEx.ArticleIndexId < lstIdenticalPositions.Count)
+                    if (dlgEx.ShowDialog() == true)
                     {
-                        ArticleListItem item = lstIdenticalPositions[dlgEx.ArticleIndexId];
-                        uint moveNumberOffset = 0;
-                        if (item.Article != null && item.Article.Tree != null)
+                        if (dlgEx.Request == IdenticalPositionsExDialog.Action.CopyArticles
+                            || dlgEx.Request == IdenticalPositionsExDialog.Action.MoveArticles)
                         {
-                            moveNumberOffset = item.Article.Tree.MoveNumberOffset;
+                            // make a list with only games and exercises
+                            RemoveStudies(lstIdenticalPositions);
+                            SelectArticlesDialog dlg = new SelectArticlesDialog(null, ref lstIdenticalPositions, true)
+                            {
+                                Left = AppState.MainWin.ChessForgeMain.Left + 100,
+                                Top = AppState.MainWin.ChessForgeMain.Top + 100,
+                                Topmost = false,
+                                Owner = AppState.MainWin
+                            };
+                            dlg.ShowDialog();
                         }
-                        List<TreeNode> nodelList = null;
-                        switch (dlgEx.Request)
+                        else if (dlgEx.ArticleIndexId >= 0 && dlgEx.ArticleIndexId < lstIdenticalPositions.Count)
                         {
-                            case IdenticalPositionsExDialog.Action.CopyLine:
-                                nodelList = TreeUtils.CopyNodeList(item.TailLine);
-                                ChfClipboard.HoldNodeList(nodelList, moveNumberOffset);
-                                AppState.MainWin.PasteChfClipboard();
-                                AppState.IsDirty = true;
-                                break;
-                            case IdenticalPositionsExDialog.Action.CopyTree:
-                                foreach (TreeNode node in item.TailLine[0].Parent.Children)
-                                {
-                                    nodelList = TreeUtils.CopySubtree(node);
+                            ArticleListItem item = lstIdenticalPositions[dlgEx.ArticleIndexId];
+                            uint moveNumberOffset = 0;
+                            if (item.Article != null && item.Article.Tree != null)
+                            {
+                                moveNumberOffset = item.Article.Tree.MoveNumberOffset;
+                            }
+                            List<TreeNode> nodelList = null;
+                            switch (dlgEx.Request)
+                            {
+                                case IdenticalPositionsExDialog.Action.CopyLine:
+                                    nodelList = TreeUtils.CopyNodeList(item.TailLine);
                                     ChfClipboard.HoldNodeList(nodelList, moveNumberOffset);
                                     AppState.MainWin.PasteChfClipboard();
-                                }
-                                AppState.IsDirty = true;
-                                break;
-                            case IdenticalPositionsExDialog.Action.OpenView:
-                                WorkbookLocationNavigator.GotoArticle(item.ChapterIndex, item.Article.Tree.ContentType, item.ArticleIndex);
-                                if (item.Article.Tree.ContentType == GameData.ContentType.STUDY_TREE)
-                                {
-                                    AppState.MainWin.SetupGuiForActiveStudyTree(true);
-                                }
-                                AppState.MainWin.SetActiveLine(item.Node.LineId, item.Node.NodeId);
-                                AppState.MainWin.ActiveTreeView.SelectLineAndMove(item.Node.LineId, item.Node.NodeId);
-                                break;
+                                    AppState.IsDirty = true;
+                                    break;
+                                case IdenticalPositionsExDialog.Action.CopyTree:
+                                    foreach (TreeNode node in item.TailLine[0].Parent.Children)
+                                    {
+                                        nodelList = TreeUtils.CopySubtree(node);
+                                        ChfClipboard.HoldNodeList(nodelList, moveNumberOffset);
+                                        AppState.MainWin.PasteChfClipboard();
+                                    }
+                                    AppState.IsDirty = true;
+                                    break;
+                                case IdenticalPositionsExDialog.Action.OpenView:
+                                    WorkbookLocationNavigator.GotoArticle(item.ChapterIndex, item.Article.Tree.ContentType, item.ArticleIndex);
+                                    if (item.Article.Tree.ContentType == GameData.ContentType.STUDY_TREE)
+                                    {
+                                        AppState.MainWin.SetupGuiForActiveStudyTree(true);
+                                    }
+                                    AppState.MainWin.SetActiveLine(item.Node.LineId, item.Node.NodeId);
+                                    AppState.MainWin.ActiveTreeView.SelectLineAndMove(item.Node.LineId, item.Node.NodeId);
+                                    break;
+                            }
                         }
                     }
                 }
             }
 
             return anyFound;
+        }
+
+        /// <summary>
+        /// Removes lines for studies and chapters that only contain studies.
+        /// </summary>
+        /// <param name="lstIdenticalPositions"></param>
+        private static void RemoveStudies(ObservableCollection<ArticleListItem> lstIdenticalPositions)
+        {
+            List<ArticleListItem> itemsToRemove = new List<ArticleListItem>();
+
+            ArticleListItem lastChapterItem = null;
+            foreach (ArticleListItem item in lstIdenticalPositions)
+            {
+                if (item.Article == null)
+                {
+                    if (lastChapterItem != null)
+                    {
+                        itemsToRemove.Add(lastChapterItem);
+                    }
+                    lastChapterItem = item;
+                }
+                else if (item.ContentType == GameData.ContentType.STUDY_TREE)
+                {
+                    itemsToRemove.Add(item);
+                }
+                else
+                {
+                    lastChapterItem = null;
+                }
+            }
+
+            if (lastChapterItem != null)
+            {
+                itemsToRemove.Add(lastChapterItem);
+            }
+
+            foreach (ArticleListItem item in itemsToRemove)
+            {
+                lstIdenticalPositions.Remove(item);
+            }
         }
 
         /// <summary>
