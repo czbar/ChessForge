@@ -126,22 +126,29 @@ namespace ChessForge
         /// </summary>
         public void BuildFlowDocumentForChaptersView()
         {
-            Document.Blocks.Clear();
-            _dictChapterParas.Clear();
-
-            Paragraph paraWorkbookTitle = AddNewParagraphToDoc(STYLE_WORKBOOK_TITLE, WorkbookManager.SessionWorkbook.Title);
-            paraWorkbookTitle.MouseDown += EventWorkbookTitleClicked;
-
-            foreach (Chapter chapter in WorkbookManager.SessionWorkbook.Chapters)
+            try
             {
-                Paragraph para = BuildChapterParagraph(chapter);
-                Document.Blocks.Add(para);
-                _dictChapterParas[chapter.Index] = para;
+                Document.Blocks.Clear();
+                _dictChapterParas.Clear();
+
+                Paragraph paraWorkbookTitle = AddNewParagraphToDoc(STYLE_WORKBOOK_TITLE, WorkbookManager.SessionWorkbook.Title);
+                paraWorkbookTitle.MouseDown += EventWorkbookTitleClicked;
+
+                foreach (Chapter chapter in WorkbookManager.SessionWorkbook.Chapters)
+                {
+                    Paragraph para = BuildChapterParagraph(chapter);
+                    Document.Blocks.Add(para);
+                    _dictChapterParas[chapter.Index] = para;
+                }
+
+                HighlightActiveChapter();
+
+                IsDirty = false;
             }
-
-            HighlightActiveChapter();
-
-            IsDirty = false;
+            catch(Exception ex)    
+            {
+                AppLog.Message("BuildFlowDocumentForChaptersView()", ex);
+            }
         }
 
         /// <summary>
