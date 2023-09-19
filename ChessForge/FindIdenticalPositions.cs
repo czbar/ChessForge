@@ -37,49 +37,50 @@ namespace ChessForge
         /// <returns></returns>
         public static bool Search(TreeNode nd, Mode mode)
         {
-            AppState.MainWin.Cursor = Cursors.Wait;
+            bool anyFound = false;
             ObservableCollection<ArticleListItem> lstIdenticalPositions;
             try
             {
+                Mouse.SetCursor(Cursors.Wait);
                 lstIdenticalPositions = ArticleListBuilder.BuildIdenticalPositionsList(nd, mode == Mode.CHECK_IF_ANY, false);
-            }
-            finally
-            {
-                AppState.MainWin.Cursor = Cursors.Arrow;
-            }
 
-            bool anyFound = lstIdenticalPositions.Count > 0;
+                anyFound = lstIdenticalPositions.Count > 0;
 
-            if (mode == Mode.FIND_AND_REPORT)
-            {
-                if (!HasAtLeastTwoArticles(lstIdenticalPositions))
+                if (mode == Mode.FIND_AND_REPORT)
                 {
-                    // we only have 1 result which is the current position
-                    MessageBox.Show(Properties.Resources.MsgNoIdenticalPositions, Properties.Resources.ChessForge, MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-                else
-                {
-                    IdenticalPositionsExDialog dlgEx = new IdenticalPositionsExDialog(nd, ref lstIdenticalPositions)
+                    if (!HasAtLeastTwoArticles(lstIdenticalPositions))
                     {
-                        Left = AppState.MainWin.ChessForgeMain.Left + 100,
-                        Top = AppState.MainWin.ChessForgeMain.Top + 100,
-                        Topmost = false,
-                        Owner = AppState.MainWin
-                    };
+                        // we only have 1 result which is the current position
+                        MessageBox.Show(Properties.Resources.MsgNoIdenticalPositions, Properties.Resources.ChessForge, MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else
+                    {
+                        IdenticalPositionsExDialog dlgEx = new IdenticalPositionsExDialog(nd, ref lstIdenticalPositions)
+                        {
+                            Left = AppState.MainWin.ChessForgeMain.Left + 100,
+                            Top = AppState.MainWin.ChessForgeMain.Top + 100,
+                            Topmost = false,
+                            Owner = AppState.MainWin
+                        };
 
-                    if (dlgEx.ShowDialog() == true)
-                    {
-                        if (dlgEx.Request == IdenticalPositionsExDialog.Action.CopyArticles
-                            || dlgEx.Request == IdenticalPositionsExDialog.Action.MoveArticles)
+                        if (dlgEx.ShowDialog() == true)
                         {
-                            ProcessCopyMoveArticlesRequest(lstIdenticalPositions, dlgEx.Request);
-                        }
-                        else if (dlgEx.ArticleIndexId >= 0 && dlgEx.ArticleIndexId < lstIdenticalPositions.Count)
-                        {
-                            ProcessSelectedPosition(lstIdenticalPositions, dlgEx.Request, dlgEx.ArticleIndexId);
+                            if (dlgEx.Request == IdenticalPositionsExDialog.Action.CopyArticles
+                                || dlgEx.Request == IdenticalPositionsExDialog.Action.MoveArticles)
+                            {
+                                ProcessCopyMoveArticlesRequest(lstIdenticalPositions, dlgEx.Request);
+                            }
+                            else if (dlgEx.ArticleIndexId >= 0 && dlgEx.ArticleIndexId < lstIdenticalPositions.Count)
+                            {
+                                ProcessSelectedPosition(lstIdenticalPositions, dlgEx.Request, dlgEx.ArticleIndexId);
+                            }
                         }
                     }
                 }
+            }
+            finally
+            {
+                Mouse.SetCursor(Cursors.Arrow);
             }
 
             return anyFound;
@@ -109,33 +110,116 @@ namespace ChessForge
                 int index = AppState.MainWin.InvokeSelectSingleChapterDialog();
                 if (index >= 0)
                 {
-                    // perform the requested operation
-                    List<ArticleListItem> articlesToInsert = new List<ArticleListItem>();
-                    if (request == IdenticalPositionsExDialog.Action.CopyArticles)
+                    RemoveChapters(lstIdenticalPositions);
+                    bool emptyEntryList = lstIdenticalPositions.Count == 0;
+
+                    Chapter targetChapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(index);
+                    if (targetChapter != null)
                     {
-                        // make copies and give them new GUIDs
-                        foreach (ArticleListItem ali in lstIdenticalPositions)
+                        List<ArticleListItem> articlesToInsert = CreateListToMoveOrCopy(lstIdenticalPositions, request, targetChapter);
+                        if (articlesToInsert.Count > 0)
                         {
-                            Article newArticle = ali.Article.CloneMe();
-                            newArticle.Tree.Header.SetNewTreeGuid();
-                            ArticleListItem article = new ArticleListItem(ali.Chapter, ali.ChapterIndex, newArticle, ali.ArticleIndex);
-                            articlesToInsert.Add(article);
+                            // place the articles in the target chapter
+                            foreach (ArticleListItem ali in articlesToInsert)
+                            {
+                                if (ali.Article != null)
+                                {
+                                    if (ali.ContentType == GameData.ContentType.MODEL_GAME)
+                                    {
+                                        targetChapter.AddModelGame(ali.Article);
+                                    }
+                                    else if (ali.ContentType == GameData.ContentType.EXERCISE)
+                                    {
+                                        targetChapter.AddExercise(ali.Article);
+                                    }
+                                }
+                            }
+
+                            // remove from the articles from their source chapters,
+                            // note that we could be removing the Active article so the GUI must be handled
+                            // accordingly
+                            if (request == IdenticalPositionsExDialog.Action.MoveArticles)
+                            {
+                                foreach (ArticleListItem ali in articlesToInsert)
+                                {
+                                    Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(ali.ChapterIndex);
+                                    chapter?.DeleteArticle(ali.Article);
+                                }
+                            }
+
+                            targetChapter.IsViewExpanded = true;
+                            targetChapter.IsModelGamesListExpanded = true;
+                            targetChapter.IsExercisesListExpanded = true;
+
+                            AppState.MainWin.ChaptersView.IsDirty = true;
+
+                            AppState.MainWin.UiTabChapters.Focus();
+                            PulseManager.ChaperIndexToBringIntoView = targetChapter.Index;
+                        }
+                        else
+                        {
+                            if (!emptyEntryList)
+                            {
+                                AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.ItemsAlreadyInChapter);
+                            }
                         }
                     }
                     else
                     {
-                        // we are moving so store just references, not copies
-                        foreach (ArticleListItem ali in lstIdenticalPositions)
+                        AppLog.Message("Unexpected error in ProcessCopyMoveArticlesRequest() - target chapter is null");
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Prepares a list of articles that will be inserted in the target chapter.
+        /// In case of Copy, we need copies of the articles and the originals will not be touched.
+        /// In case of Move, the articles will be removed from the source chapter.
+        /// </summary>
+        /// <param name="sourceArticles"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        private static List<ArticleListItem> CreateListToMoveOrCopy(ObservableCollection<ArticleListItem> sourceArticles
+            , IdenticalPositionsExDialog.Action request
+            , Chapter targetChapter)
+        {
+            List<ArticleListItem> articlesToInsert = new List<ArticleListItem>();
+            int targetChapterIndex = targetChapter.Index;
+
+            if (request == IdenticalPositionsExDialog.Action.CopyArticles)
+            {
+                // make copies and give them new GUIDs
+                foreach (ArticleListItem ali in sourceArticles)
+                {
+                    // defensive check, it should never be null here
+                    if (ali.Article != null)
+                    {
+                        Article newArticle = ali.Article.CloneMe();
+                        newArticle.Tree.Header.SetNewTreeGuid();
+                        ArticleListItem article = new ArticleListItem(ali.Chapter, ali.ChapterIndex, newArticle, ali.ArticleIndex);
+                        // if target chapter is the same as source, do not add it. 
+                        if (ali.ChapterIndex != targetChapterIndex)
                         {
-                            ArticleListItem article = new ArticleListItem(ali.Chapter, ali.ChapterIndex, ali.Article, ali.ArticleIndex);
                             articlesToInsert.Add(article);
                         }
                     }
-
-                    // TODO: move to the selected chapter
-                    // make sure that if we are moving to an existing chapter, we skip the artcles already in that chapter
                 }
             }
+            else
+            {
+                // we are moving so store just the references, not copies
+                foreach (ArticleListItem ali in sourceArticles)
+                {
+                    ArticleListItem article = new ArticleListItem(ali.Chapter, ali.ChapterIndex, ali.Article, ali.ArticleIndex);
+                    // if target chapter is the same as source, do not add it. 
+                    if (ali.ChapterIndex != targetChapterIndex)
+                    {
+                        articlesToInsert.Add(article);
+                    }
+                }
+            }
+            return articlesToInsert;
         }
 
         /// <summary>
@@ -185,6 +269,7 @@ namespace ChessForge
 
         /// <summary>
         /// Removes lines for studies and chapters that only contain studies.
+        /// This is for display in the list of articles to select.
         /// </summary>
         /// <param name="lstIdenticalPositions"></param>
         private static void RemoveStudies(ObservableCollection<ArticleListItem> lstIdenticalPositions)
@@ -215,6 +300,29 @@ namespace ChessForge
             if (lastChapterItem != null)
             {
                 itemsToRemove.Add(lastChapterItem);
+            }
+
+            foreach (ArticleListItem item in itemsToRemove)
+            {
+                lstIdenticalPositions.Remove(item);
+            }
+        }
+
+        /// <summary>
+        /// Removes lines for chapters.
+        /// This is for copying/moving articles.
+        /// </summary>
+        /// <param name="lstIdenticalPositions"></param>
+        private static void RemoveChapters(ObservableCollection<ArticleListItem> lstIdenticalPositions)
+        {
+            List<ArticleListItem> itemsToRemove = new List<ArticleListItem>();
+
+            foreach (ArticleListItem item in lstIdenticalPositions)
+            {
+                if (item.Article == null)
+                {
+                    itemsToRemove.Add(item);
+                }
             }
 
             foreach (ArticleListItem item in itemsToRemove)
