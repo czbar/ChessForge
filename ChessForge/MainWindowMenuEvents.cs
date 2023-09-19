@@ -977,7 +977,18 @@ namespace ChessForge
             try
             {
                 ObservableCollection<ArticleListItem> articleList = WorkbookManager.SessionWorkbook.GenerateArticleList(AppState.ActiveChapter, articleType);
-                SelectArticlesDialog dlg = new SelectArticlesDialog(null, ref articleList, false, articleType)
+                
+                string title = null;
+                if (articleType == GameData.ContentType.MODEL_GAME)
+                {
+                    title = Properties.Resources.SelectGamesForDeletion;
+                }
+                else if (articleType == GameData.ContentType.EXERCISE)
+                {
+                    title = Properties.Resources.SelectExercisesForDeletion;
+                }
+
+                SelectArticlesDialog dlg = new SelectArticlesDialog(null, title, ref articleList, false, articleType)
                 {
                     Left = ChessForgeMain.Left + 100,
                     Top = ChessForgeMain.Top + 100,
@@ -1710,7 +1721,7 @@ namespace ChessForge
             {
                 TreeNode nd = ActiveTreeView.GetSelectedNode();
                 ObservableCollection<ArticleListItem> articleList = WorkbookManager.SessionWorkbook.GenerateArticleList();
-                SelectArticlesDialog dlg = new SelectArticlesDialog(nd, ref articleList, false)
+                SelectArticlesDialog dlg = new SelectArticlesDialog(nd, null, ref articleList, false)
                 {
                     Left = ChessForgeMain.Left + 100,
                     Top = ChessForgeMain.Top + 100,
