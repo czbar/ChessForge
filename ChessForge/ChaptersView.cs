@@ -1256,7 +1256,7 @@ namespace ChessForge
 
             if (WorkbookManager.SessionWorkbook.ActiveChapter != null && WorkbookManager.SessionWorkbook.ActiveChapter == chapter)
             {
-                ExpandChapterList(chapter, forceExpand);
+                //ExpandChapterList(chapter, forceExpand);
             }
             else
             {
