@@ -484,6 +484,14 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Get the title prefixed by the chapter's number (i.e. index + 1)
+        /// </summary>
+        public string TitleWithNumber
+        {
+            get => "[" + (Index + 1).ToString() + "] " + (_title ?? "");
+        }
+
+        /// <summary>
         /// The Title of this chapter.
         /// If raw is set to false and the title is empty
         /// it returns the default title.
