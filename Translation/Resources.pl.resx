@@ -1134,6 +1134,9 @@
   <data name="MsgTakebackInfo" xml:space="preserve">
     <value>Kliknij tutaj lub naciśnij klawisz spacji, by cofnąć ostatni ruch.</value>
   </data>
+  <data name="ItemsAlreadyInChapter" xml:space="preserve">
+    <value>Wszystkie pozycje już były w docelowym rozdziale.</value>
+  </data>
   <data name="FirstMoveNumber" xml:space="preserve">
     <value>Numer pierwszego posunięcia</value>
   </data>
@@ -1667,6 +1670,9 @@
   </data>
   <data name="cbDoubleClickToAnnotate" xml:space="preserve">
     <value>Kliknij na dowolne posunięcie. Dwukrotnie kliknij, by wprowadzić komentarz.</value>
+  </data>
+  <data name="cbFindIdenticalPositions" xml:space="preserve">
+    <value>Naciśnij F3 by znaleźć identyczne pozycje.</value>
   </data>
   <data name="cbAdvancedEditig" xml:space="preserve">
     <value>Naciśnij prawy przycisk, by wywołać menu do edycji, kopiowania FEN i inne.</value>

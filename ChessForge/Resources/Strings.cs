@@ -34,8 +34,8 @@ namespace ChessForge
             get
             {
                 return
-                      GetResource("cbClickStudyHeader") + "\n"
-                    + GetResource("cbClickForContextMenu");
+                      Properties.Resources.cbClickStudyHeader + "\n"
+                    + Properties.Resources.cbClickForContextMenu;
             }
         }
 
@@ -60,10 +60,11 @@ namespace ChessForge
             get
             {
                 return
-                      GetResource("cbClickThruMoves") + "\n"
-                    + GetResource("cbDoubleClickToAnnotate") + "\n"
-                    + GetResource("cbAdvancedEditig") + "\n "
-                    + GetResource("cbDoubleClickAutoReplay");
+                      Properties.Resources.cbClickThruMoves + "\n"
+                    + Properties.Resources.cbFindIdenticalPositions + "\n"
+                    + Properties.Resources.cbDoubleClickToAnnotate + "\n"
+                    + Properties.Resources.cbAdvancedEditig + "\n "
+                    + Properties.Resources.cbDoubleClickAutoReplay;
             }
         }
 
@@ -75,8 +76,8 @@ namespace ChessForge
             get
             {
                 return
-                      GetResource("cbClickBookmarkToTrain") + "\n"
-                    + GetResource("cbRightClickBookmarkManager");
+                      Properties.Resources.cbClickBookmarkToTrain + "\n"
+                    + Properties.Resources.cbRightClickBookmarkManager;
             }
         }
 
@@ -88,7 +89,7 @@ namespace ChessForge
         {
             get
             {
-                return GetResource("cbRightClickCreateGame");
+                return Properties.Resources.cbRightClickCreateGame;
             }
         }
 
@@ -100,9 +101,10 @@ namespace ChessForge
             get
             {
                 return
-                      GetResource("cbClickThruMoves") + "\n"
-                    + GetResource("cbDoubleClickToAnnotate") + "\n"
-                    + GetResource("cbRightClickCreateGame");
+                      Properties.Resources.cbClickThruMoves + "\n"
+                    + Properties.Resources.cbFindIdenticalPositions + "\n"
+                    + Properties.Resources.cbDoubleClickToAnnotate + "\n"
+                    + Properties.Resources.cbRightClickCreateGame;
             }
         }
 
@@ -114,7 +116,7 @@ namespace ChessForge
         {
             get
             {
-                return GetResource("cbRightClickCreateExercise");
+                return Properties.Resources.cbRightClickCreateExercise;
             }
         }
 
@@ -126,10 +128,11 @@ namespace ChessForge
             get
             {
                 return
-                    GetResource("cbMoveToEnterSolution") + "\n"
-                  + GetResource("cbDoubleClickToAssignPoints") + "\n"
-                  + GetResource("cbSelectSolvingMove") + "\n"
-                  + GetResource("cbRightClickEditExercise");
+                    Properties.Resources.cbMoveToEnterSolution + "\n"
+                  + Properties.Resources.cbFindIdenticalPositions + "\n"
+                  + Properties.Resources.cbDoubleClickToAssignPoints + "\n"
+                  + Properties.Resources.cbSelectSolvingMove + "\n"
+                  + Properties.Resources.cbRightClickEditExercise;
             }
         }
 
@@ -142,9 +145,9 @@ namespace ChessForge
             get
             {
                 return
-                    GetResource("cbShowSolution") + "\n"
-                  + GetResource("cbSelectSolvingMove") + "\n"
-                  + GetResource("cbRightClickEditExercise");
+                    Properties.Resources.cbShowSolution + "\n"
+                  + Properties.Resources.cbSelectSolvingMove + "\n"
+                  + Properties.Resources.cbRightClickEditExercise;
             }
         }
 
@@ -156,7 +159,7 @@ namespace ChessForge
         {
             get
             {
-                return GetResource("cbMakeMovesOnMainBoard");
+                return Properties.Resources.cbMakeMovesOnMainBoard;
             }
         }
     }

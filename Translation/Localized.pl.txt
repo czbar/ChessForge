@@ -1496,6 +1496,10 @@ MsgTakebackWanted=Cofnąć?
 #english: MsgTakebackInfo=Click here or press the space key to take back your move.
 MsgTakebackInfo=Kliknij tutaj lub naciśnij klawisz spacji, by cofnąć ostatni ruch.
 
+#description: All items already in the target chapter (when copying/moving from FindIdenticalPosition)
+#english: ItemsAlreadyInChapter=All items already are in the target chapter.
+ItemsAlreadyInChapter=Wszystkie pozycje już były w docelowym rozdziale.
+
 ##################################
 #
 # Header: Dialogs
@@ -1691,7 +1695,6 @@ IncrementMajorVersion=Podwyższ główny number wersji
 #description: Create a new chapter from a variation line
 #english: NewChapterFromLine=Create New Chapter From Line
 NewChapterFromLine=Utwórz Rozdział z Wariantu
-
 
 #description: A new chapter will be created from the selected sub-tree.
 #english: NewChapterToBeCreated=A new chapter will be created from the selected sub-tree.
@@ -2512,3 +2515,5 @@ IllegalCastling=Niedozwolona roszada.
 #english: AboutWorkbook=This PGN Workbook is optimized for viewing in Chess Forge https://sourceforge.net/projects/chessforge/ \nChess Forge is a Free and Open Source Windows application.
 AboutWorkbook=Ten podręcznik PGN najlepiej oglądać w programie Chess Forge https://sourceforge.net/projects/chessforge/ \nChess Forge to Wolne i Otwarte Oprogramowanie do systemu Windows.
 
+#F3 to find identical positions
+cbFindIdenticalPositions=Naciśnij F3 by znaleźć identyczne pozycje.

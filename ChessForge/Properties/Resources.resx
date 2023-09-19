@@ -1135,6 +1135,9 @@
   <data name="MsgTakebackInfo" xml:space="preserve">
     <value>Click here or press the space key to take back your move.</value>
   </data>
+  <data name="ItemsAlreadyInChapter" xml:space="preserve">
+    <value>All items already are in the target chapter.</value>
+  </data>
   <data name="FirstMoveNumber" xml:space="preserve">
     <value>Number of the first move</value>
   </data>
@@ -1668,6 +1671,9 @@
   </data>
   <data name="cbDoubleClickToAnnotate" xml:space="preserve">
     <value>Click through the moves. Double click to annotate.</value>
+  </data>
+  <data name="cbFindIdenticalPositions" xml:space="preserve">
+    <value>Press F3 to find identical positions.</value>
   </data>
   <data name="cbAdvancedEditig" xml:space="preserve">
     <value>Right click to open menu for advanced editing, FEN, creating exercise and more.</value>

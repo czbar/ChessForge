@@ -476,6 +476,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Press F3 to find identical positions..
+        /// </summary>
+        public static string cbFindIdenticalPositions {
+            get {
+                return ResourceManager.GetString("cbFindIdenticalPositions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An identical position was found elsewhere..
         /// </summary>
         public static string cbIdenticalPositionFound {
@@ -2758,6 +2767,15 @@ namespace ChessForge.Properties {
         public static string Item {
             get {
                 return ResourceManager.GetString("Item", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All items already are in the target chapter..
+        /// </summary>
+        public static string ItemsAlreadyInChapter {
+            get {
+                return ResourceManager.GetString("ItemsAlreadyInChapter", resourceCulture);
             }
         }
         
