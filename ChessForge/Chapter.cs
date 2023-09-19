@@ -627,6 +627,19 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Adds an Article to the list of Model Games
+        /// </summary>
+        /// <param name="game"></param>
+        public Article AddModelGame(Article article)
+        {
+            lock (_lockModelGames)
+            {
+                ModelGames.Add(article);
+                return article;
+            }
+        }
+
+        /// <summary>
         /// Checks if the current active article index is in the valid range.
         /// If not, returns the corrected value;
         /// </summary>
@@ -708,106 +721,116 @@ namespace ChessForge
         /// <param name="article"></param>
         /// <param name="index"></param>
         public void InsertModelGame(Article article, int index)
+        {
+            ModelGames.Insert(index, article);
+        }
+
+        /// <summary>
+        /// Adds a VariationTree to the list of Exercises
+        /// </summary>
+        /// <param name="game"></param>
+        public void AddExercise(VariationTree game)
+        {
+            Article article = new Article(game);
+            Exercises.Add(article);
+        }
+
+        /// <summary>
+        /// Adds an Artticle to the list of Exercises
+        /// </summary>
+        /// <param name="game"></param>
+        public Article AddExercise(Article article)
+        {
+            Exercises.Add(article);
+            return article;
+        }
+
+        /// <summary>
+        /// Inserts Exercise at a requested index.
+        /// </summary>
+        /// <param name="article"></param>
+        /// <param name="index"></param>
+        public void InsertExercise(Article article, int index)
+        {
+            Exercises.Insert(index, article);
+        }
+
+        /// <summary>
+        /// Adds a new game to this chapter.
+        /// The caller must handle errors if returned index is -1.
+        /// </summary>
+        /// <param name="gm"></param>
+        public int AddArticle(GameData gm, GameData.ContentType typ, out string errorText, GameData.ContentType targetcontentType = GameData.ContentType.GENERIC)
+        {
+            if (!gm.Header.IsStandardChess())
             {
-                ModelGames.Insert(index, article);
+                errorText = Properties.Resources.ErrNotStandardChessVariant;
+                return -1;
             }
 
-            /// <summary>
-            /// Adds a VariationTree to the list of Exercises
-            /// </summary>
-            /// <param name="game"></param>
-            public void AddExercise(VariationTree game)
-            {
-                Article article = new Article(game);
-                Exercises.Add(article);
-            }
+            int index = -1;
+            errorText = string.Empty;
 
-            /// <summary>
-            /// Inserts Exercise at a requested index.
-            /// </summary>
-            /// <param name="article"></param>
-            /// <param name="index"></param>
-            public void InsertExercise(Article article, int index)
+            Article article = new Article(typ);
+            try
             {
-                Exercises.Insert(index, article);
-            }
-
-            /// <summary>
-            /// Adds a new game to this chapter.
-            /// The caller must handle errors if returned index is -1.
-            /// </summary>
-            /// <param name="gm"></param>
-            public int AddArticle(GameData gm, GameData.ContentType typ, out string errorText, GameData.ContentType targetcontentType = GameData.ContentType.GENERIC)
-            {
-                if (!gm.Header.IsStandardChess())
+                string fen = gm.Header.GetFenString();
+                if (!gm.Header.IsExercise())
                 {
-                    errorText = Properties.Resources.ErrNotStandardChessVariant;
-                    return -1;
+                    fen = null;
                 }
 
-                int index = -1;
-                errorText = string.Empty;
+                PgnGameParser pp = new PgnGameParser(gm.GameText, article.Tree, fen);
 
-                Article article = new Article(typ);
-                try
+                article.Tree.Header = gm.Header.CloneMe(true);
+
+                if (typ == GameData.ContentType.GENERIC)
                 {
-                    string fen = gm.Header.GetFenString();
-                    if (!gm.Header.IsExercise())
-                    {
-                        fen = null;
-                    }
-
-                    PgnGameParser pp = new PgnGameParser(gm.GameText, article.Tree, fen);
-
-                    article.Tree.Header = gm.Header.CloneMe(true);
-
-                    if (typ == GameData.ContentType.GENERIC)
-                    {
-                        typ = gm.GetContentType();
-                    }
-                    article.Tree.ContentType = typ;
-
-                    switch (typ)
-                    {
-                        case GameData.ContentType.STUDY_TREE:
-                            StudyTree = article;
-                            break;
-                        case GameData.ContentType.INTRO:
-                            Intro = article;
-                            break;
-                        case GameData.ContentType.MODEL_GAME:
-                            if (targetcontentType == GameData.ContentType.GENERIC || targetcontentType == GameData.ContentType.MODEL_GAME)
-                            {
-                                ModelGames.Add(article);
-                                index = ModelGames.Count - 1;
-                            }
-                            else
-                            {
-                                index = -1;
-                            }
-                            break;
-                        case GameData.ContentType.EXERCISE:
-                            if (targetcontentType == GameData.ContentType.GENERIC || targetcontentType == GameData.ContentType.EXERCISE)
-                            {
-                                TreeUtils.RestartMoveNumbering(article.Tree);
-                                Exercises.Add(article);
-                                index = Exercises.Count - 1;
-                            }
-                            else
-                            {
-                                index = -1;
-                            }
-                            break;
-                    }
+                    typ = gm.GetContentType();
                 }
-                catch (Exception ex)
+                article.Tree.ContentType = typ;
+
+                switch (typ)
                 {
-                    errorText = ex.Message;
-                    AppLog.Message("AddArticle()", ex);
-                    index = -1;
+                    case GameData.ContentType.STUDY_TREE:
+                        StudyTree = article;
+                        break;
+                    case GameData.ContentType.INTRO:
+                        Intro = article;
+                        break;
+                    case GameData.ContentType.MODEL_GAME:
+                        if (targetcontentType == GameData.ContentType.GENERIC || targetcontentType == GameData.ContentType.MODEL_GAME)
+                        {
+                            ModelGames.Add(article);
+                            index = ModelGames.Count - 1;
+                        }
+                        else
+                        {
+                            index = -1;
+                        }
+                        break;
+                    case GameData.ContentType.EXERCISE:
+                        if (targetcontentType == GameData.ContentType.GENERIC || targetcontentType == GameData.ContentType.EXERCISE)
+                        {
+                            TreeUtils.RestartMoveNumbering(article.Tree);
+                            Exercises.Add(article);
+                            index = Exercises.Count - 1;
+                        }
+                        else
+                        {
+                            index = -1;
+                        }
+                        break;
                 }
-
-                return index;
             }
+            catch (Exception ex)
+            {
+                errorText = ex.Message;
+                AppLog.Message("AddArticle()", ex);
+                index = -1;
+            }
+
+            return index;
         }
     }
+}
