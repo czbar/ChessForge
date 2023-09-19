@@ -430,7 +430,7 @@ namespace ChessForge
                 para.Inlines.Add(rExpandChar);
 
                 string chapterNo = (WorkbookManager.SessionWorkbook.GetChapterIndex(chapter) + 1).ToString();
-                Run rTitle = CreateRun(STYLE_CHAPTER_TITLE, chapterNo + ". " + chapter.GetTitle(), true);
+                Run rTitle = CreateRun(STYLE_CHAPTER_TITLE, "[" + chapterNo + ".] " + chapter.GetTitle(), true);
                 if (chapter.Index == WorkbookManager.SessionWorkbook.ActiveChapter.Index)
                 {
                     ShowSelectionMark(ref rTitle, true, SELECTED_CHAPTER_PREFIX, NON_SELECTED_CHAPTER_PREFIX);
