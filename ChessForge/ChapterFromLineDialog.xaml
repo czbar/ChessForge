@@ -11,7 +11,7 @@
     <Grid>
         <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="-100,146,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
         <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="100,146,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
-        <Label x:Name="UiLblNewChapterCreated" Content="{x:Static p:Resources.NewChapterToBeCreate}" HorizontalAlignment="Center" Margin="0,11,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="UiLblNewChapterCreated" Content="{x:Static p:Resources.NewChapterToBeCreated}" HorizontalAlignment="Center" Margin="0,11,0,0" VerticalAlignment="Top"/>
 
         <Label x:Name="UiLblTitle" Content="{x:Static p:Resources.Title}" HorizontalAlignment="Left" Margin="30,43,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="UiTbChapterTitle" Text="" HorizontalAlignment="Center" Margin="40,47,0,0" VerticalAlignment="Top" Width="270" BorderBrush="Black" BorderThickness="1" />
