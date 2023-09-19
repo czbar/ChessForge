@@ -1385,10 +1385,12 @@ namespace ChessForge
         /// and returns the selected index.
         /// </summary>
         /// <returns></returns>
-        private int InvokeSelectSingleChapterDialog()
+        public int InvokeSelectSingleChapterDialog()
         {
             try
             {
+                int chapterIndex = -1;
+
                 SelectSingleChapterDialog dlg = new SelectSingleChapterDialog()
                 {
                     Left = ChessForgeMain.Left + 100,
@@ -1396,9 +1398,20 @@ namespace ChessForge
                     Topmost = false,
                     Owner = this
                 };
-                dlg.ShowDialog();
 
-                return dlg.ExitOk ? dlg.SelectedIndex : -1;
+                if (dlg.ShowDialog() == true)
+                {
+                    if (dlg.CreateNew)
+                    {
+                        chapterIndex = WorkbookManager.SessionWorkbook.CreateNewChapter().Index;
+                    }
+                    else
+                    {
+                        chapterIndex = dlg.SelectedIndex;
+                    }
+                }
+
+                return chapterIndex;
             }
             catch
             {
@@ -1407,7 +1420,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Lets the user select a chapter to move the curently selected game to.
+        /// Lets the user select a chapter to move the currently selected game to.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1489,7 +1502,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Lets the user select a chapter to move the curently selected exercise to.
+        /// Lets the user select a chapter to move the currently selected exercise to.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
