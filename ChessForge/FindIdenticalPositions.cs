@@ -73,7 +73,9 @@ namespace ChessForge
                         {
                             // make a list with only games and exercises
                             RemoveStudies(lstIdenticalPositions);
-                            SelectArticlesDialog dlg = new SelectArticlesDialog(null, ref lstIdenticalPositions, true)
+                            string title = dlgEx.Request == IdenticalPositionsExDialog.Action.MoveArticles ?
+                                           Properties.Resources.SelectItemsToMove : Properties.Resources.SelectItemsToCopy;
+                            SelectArticlesDialog dlg = new SelectArticlesDialog(null, title, ref lstIdenticalPositions, true)
                             {
                                 Left = AppState.MainWin.ChessForgeMain.Left + 100,
                                 Top = AppState.MainWin.ChessForgeMain.Top + 100,
