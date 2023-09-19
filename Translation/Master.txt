@@ -1307,7 +1307,7 @@ IncrementMajorVersion=Increment major version
 NewChapterFromLine=Create New Chapter From Line
 
 #A new chapter will be created from the selected sub-tree.
-NewChapterToBeCreate=A new chapter will be created from the selected sub-tree.
+NewChapterToBeCreated=A new chapter will be created from the selected sub-tree.
 
 #Check box to delete sub-tree from the source chapter
 DeleteSubTreeFromSource=Delete the sub-tree from the original chapter.

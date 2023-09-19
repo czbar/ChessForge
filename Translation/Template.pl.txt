@@ -1693,8 +1693,8 @@ IncrementMajorVersion=Podwyższ główny number wersji
 NewChapterFromLine=Utwórz Rozdział z Wariantu
 
 #description: A new chapter will be created from the selected sub-tree.
-#english: NewChapterToBeCreate=A new chapter will be created from the selected sub-tree.
-NewChapterToBeCreate=Utwórz Rozdział z Wariantu
+#english: NewChapterToBeCreated=A new chapter will be created from the selected sub-tree.
+NewChapterToBeCreated=Utwórz Rozdział z Wariantu
 
 #description: Check box to delete sub-tree from the source chapter
 #english: DeleteSubTreeFromSource=Delete the sub-tree from the original chapter.

@@ -1692,9 +1692,10 @@ IncrementMajorVersion=Podwyższ główny number wersji
 #english: NewChapterFromLine=Create New Chapter From Line
 NewChapterFromLine=Utwórz Rozdział z Wariantu
 
+
 #description: A new chapter will be created from the selected sub-tree.
-#english: NewChapterToBeCreate=A new chapter will be created from the selected sub-tree.
-NewChapterToBeCreate=Utwórz Rozdział z Wariantu
+#english: NewChapterToBeCreated=A new chapter will be created from the selected sub-tree.
+NewChapterToBeCreated=Utwórz Rozdział z Wariantu
 
 #description: Check box to delete sub-tree from the source chapter
 #english: DeleteSubTreeFromSource=Delete the sub-tree from the original chapter.
@@ -2510,3 +2511,4 @@ IllegalCastling=Niedozwolona roszada.
 #description: Workbook info
 #english: AboutWorkbook=This PGN Workbook is optimized for viewing in Chess Forge https://sourceforge.net/projects/chessforge/ \nChess Forge is a Free and Open Source Windows application.
 AboutWorkbook=Ten podręcznik PGN najlepiej oglądać w programie Chess Forge https://sourceforge.net/projects/chessforge/ \nChess Forge to Wolne i Otwarte Oprogramowanie do systemu Windows.
+

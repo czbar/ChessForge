@@ -3187,9 +3187,9 @@ namespace ChessForge.Properties {
         /// <summary>
         ///   Looks up a localized string similar to A new chapter will be created from the selected sub-tree..
         /// </summary>
-        public static string NewChapterToBeCreate {
+        public static string NewChapterToBeCreated {
             get {
-                return ResourceManager.GetString("NewChapterToBeCreate", resourceCulture);
+                return ResourceManager.GetString("NewChapterToBeCreated", resourceCulture);
             }
         }
         

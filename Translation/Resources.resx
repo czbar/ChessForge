@@ -1276,7 +1276,7 @@
   <data name="NewChapterFromLine" xml:space="preserve">
     <value>Create New Chapter From Line</value>
   </data>
-  <data name="NewChapterToBeCreate" xml:space="preserve">
+  <data name="NewChapterToBeCreated" xml:space="preserve">
     <value>A new chapter will be created from the selected sub-tree.</value>
   </data>
   <data name="DeleteSubTreeFromSource" xml:space="preserve">

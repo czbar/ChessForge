@@ -1275,7 +1275,7 @@
   <data name="NewChapterFromLine" xml:space="preserve">
     <value>Utwórz Rozdział z Wariantu</value>
   </data>
-  <data name="NewChapterToBeCreate" xml:space="preserve">
+  <data name="NewChapterToBeCreated" xml:space="preserve">
     <value>Utwórz Rozdział z Wariantu</value>
   </data>
   <data name="DeleteSubTreeFromSource" xml:space="preserve">
