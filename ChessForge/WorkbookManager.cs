@@ -621,7 +621,7 @@ namespace ChessForge
             }
             else
             {
-                isChessForgeFile = true;
+                isChessForgeFile = false;
                 res = CreateWorkbookFromGenericGames(ref games);
                 if (res)
                 {
@@ -663,8 +663,6 @@ namespace ChessForge
                 workbook.GameBoardOrientationConfig = TextUtils.ConvertStringToPieceColor(GameList[0].Header.GetGameBoardOrientation(out _));
                 workbook.ExerciseBoardOrientationConfig = TextUtils.ConvertStringToPieceColor(GameList[0].Header.GetExerciseBoardOrientation(out _));
 
-                //ProcessGames(ref GameList, ref workbook);
-                //TODO: replace the above with this:
                 ProcessGamesInBackground(ref GameList, ref workbook);
 
             }
@@ -691,23 +689,11 @@ namespace ChessForge
                 Chapter chapter = SessionWorkbook.CreateDefaultChapter();
                 BookmarkManager.ResetSelections();
 
-                if (AppState.MainWin.SelectArticlesFromPgnFile(ref games,
-                                                               SelectGamesDialog.Mode.CREATE_WORKBOOK,
-                                                               out bool createStudy, out bool copyGames, out bool multiChapter))
+                if (AppState.MainWin.SelectArticlesFromPgnFile(ref games, SelectGamesDialog.Mode.CREATE_WORKBOOK))
                 {
-                    if (createStudy && !multiChapter)
-                    {
-                        MergeGames(ref chapter.StudyTree.Tree, ref games);
-                        // the content type may have been reset to generic
-                        chapter.StudyTree.Tree.ContentType = GameData.ContentType.STUDY_TREE;
-                        AppState.MainWin.CopySelectedItemsToChapter(chapter, copyGames, out string error, games, out _);
-                    }
-                    else
-                    {
-                        CreateChaptersFromSelectedItems(chapter, multiChapter, createStudy, copyGames, games);
-                        SessionWorkbook.ActiveChapter = chapter;
-                        chapter.SetActiveVariationTree(GameData.ContentType.STUDY_TREE);
-                    }
+                    // insert a dummy article at position 0
+                    games.Insert(0, null);
+                    ProcessGamesInBackground(ref games, ref SessionWorkbook, chapter);
 
                     if (AppState.MainWin.ShowWorkbookOptionsDialog(false))
                     {
@@ -814,9 +800,9 @@ namespace ChessForge
         /// </summary>
         /// <param name="rawPgnArticles"></param>
         /// <param name="workbook"></param>
-        private static void ProcessGamesInBackground(ref ObservableCollection<GameData> rawPgnArticles, ref Workbook workbook)
+        private static void ProcessGamesInBackground(ref ObservableCollection<GameData> rawPgnArticles, ref Workbook workbook, Chapter chapter = null)
         {
-            List<Article> outArticles = workbook.CreateArticlePlaceholders(rawPgnArticles);
+            List<Article> outArticles = workbook.CreateArticlePlaceholders(rawPgnArticles, chapter);
             workbook.GamesManager.Execute(rawPgnArticles, outArticles);
         }
 

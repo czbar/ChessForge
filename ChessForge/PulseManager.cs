@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.PerformanceData;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,19 +16,31 @@ namespace ChessForge
     /// </summary>
     public class PulseManager
     {
+        // how many pulses before clearing the BringChapterIntoView request
+        private static readonly int BRING_CHAPTER_INTO_VIEW_COUNT_DELAY = 8;
+
+        // how many pulses before clearing the BringArticleIntoView request
+        private static readonly int BRING_ARTICLE_INTO_VIEW_COUNT_DELAY = 4;
+
         // index of the chapter to bring into view
-        private static int _chaperIndexToBringIntoView = -1;
+        private static int _chapterIndexToBringIntoView = -1;
+
+        // identifies the article that needs to be brought into view
+        private static ArticleIdentifier _articleToBringIntoView = new ArticleIdentifier();
+
+        // counter monitoring delay on bring chapter into view
+        private static int _bringChapterIntoViewCounter;
+
+        // counter monitoring delay on bring chapter into view
+        private static int _bringArticleIntoViewCounter;
 
         /// <summary>
         /// Index of the chapter to bring into view.
         /// </summary>
         public static int ChaperIndexToBringIntoView
         {
-            set => _chaperIndexToBringIntoView = value;
+            set => _chapterIndexToBringIntoView = value;
         }
-
-        // identifies the article that needs to be brought into view
-        private static ArticleIdentifier _articleToBringIntoView = new ArticleIdentifier();
 
         /// <summary>
         /// Handles the PULSE timer event.
@@ -38,18 +51,29 @@ namespace ChessForge
         {
             WebAccessManager.UpdateWebAccess();
             UpdateEvaluationBar();
-            if (_chaperIndexToBringIntoView >= 0)
+            if (_chapterIndexToBringIntoView >= 0)
             {
-                AppState.MainWin.BringChapterIntoView(_chaperIndexToBringIntoView);
-                _chaperIndexToBringIntoView = -1;
+                AppState.MainWin.BringChapterIntoView(_chapterIndexToBringIntoView);
+
+                if (_bringChapterIntoViewCounter++ > BRING_CHAPTER_INTO_VIEW_COUNT_DELAY)
+                {
+                    _bringChapterIntoViewCounter = 0;
+                    _chapterIndexToBringIntoView = -1;
+                }
             }
-            else if (_articleToBringIntoView.ArticleIndex >= 0)
+            
+            if (_articleToBringIntoView.ArticleIndex >= 0)
             {
                 AppState.MainWin.BringArticleIntoView(_articleToBringIntoView.ChapterIndex,
                     _articleToBringIntoView.ContentType,
                     _articleToBringIntoView.ArticleIndex);
 
-                _articleToBringIntoView.ArticleIndex = -1;
+                if (_bringArticleIntoViewCounter++ > BRING_ARTICLE_INTO_VIEW_COUNT_DELAY)
+                {
+
+                    _bringArticleIntoViewCounter = 0;
+                    _articleToBringIntoView.ArticleIndex = -1;
+                }
             }
         }
 

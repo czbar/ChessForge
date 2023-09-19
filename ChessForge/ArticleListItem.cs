@@ -88,6 +88,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Simplified constructor for the Chapter item.
+        /// </summary>
+        /// <param name="chapter"></param>
+        public ArticleListItem(Chapter chapter, int chapterIndex) : this(chapter, chapterIndex, null, -1)
+        {
+            _isSelected = false;
+            _isSelectCheckBoxVisible = false;
+        }
+
+        /// <summary>
         /// Returns the chapter this item belongs to.
         /// </summary>
         public Chapter Chapter
@@ -156,6 +166,10 @@ namespace ChessForge
                 else if (_contentType == GameData.ContentType.EXERCISE)
                 {
                     prefix = "    " + Properties.Resources.Exercise + ": ";
+                }
+                else if (_contentType == GameData.ContentType.STUDY_TREE)
+                {
+                    prefix = "    " + Properties.Resources.Study + ": ";
                 }
 
                 return prefix + header;

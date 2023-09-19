@@ -183,6 +183,9 @@
   <data name="Study" xml:space="preserve">
     <value>Teoria</value>
   </data>
+  <data name="Studies" xml:space="preserve">
+    <value>Teoria</value>
+  </data>
   <data name="Game" xml:space="preserve">
     <value>Partia</value>
   </data>
@@ -364,7 +367,7 @@
     <value>Kontynuować?</value>
   </data>
   <data name="GoForward" xml:space="preserve">
-    <value>Idź do przodu (ALT + →) </value>
+    <value>Idź do przodu (ALT + →)</value>
   </data>
   <data name="GoBack" xml:space="preserve">
     <value>Idź wstecz (ALT + ←)</value>
@@ -394,7 +397,7 @@
     <value>po ruchu</value>
   </data>
   <data name="ErrClipboardLinePaste" xml:space="preserve">
-    <value>Błąd przy wklejaniu wariantu ze schowka </value>
+    <value>Błąd przy wklejaniu wariantu ze schowka</value>
   </data>
   <data name="ClipboardOperation" xml:space="preserve">
     <value>Operacja Schowka</value>
@@ -412,7 +415,7 @@
     <value>Nie wszystkie partie zostały skopiowane</value>
   </data>
   <data name="ErrGameNotFound" xml:space="preserve">
-    <value>Partii nie znaleziono </value>
+    <value>Partii nie znaleziono</value>
   </data>
   <data name="ErrGamesNotFound" xml:space="preserve">
     <value>Partii nie znaleziono</value>
@@ -649,13 +652,13 @@
     <value>brak nazwy</value>
   </data>
   <data name="RestartGameAfter" xml:space="preserve">
-    <value>Cofnij Partię do </value>
+    <value>Cofnij Partię do</value>
   </data>
   <data name="RestartFrom" xml:space="preserve">
-    <value>Cofnij do </value>
+    <value>Cofnij do</value>
   </data>
   <data name="RestartGameFrom" xml:space="preserve">
-    <value>Cofnij Partię do </value>
+    <value>Cofnij Partię do</value>
   </data>
   <data name="CreateNewChapter" xml:space="preserve">
     <value>Utwórz Nowy Rozdział</value>
@@ -730,7 +733,7 @@
     <value>Usuń Wybraną Partię</value>
   </data>
   <data name="DeleteThisGame" xml:space="preserve">
-    <value>Usuń Partię </value>
+    <value>Usuń Partię</value>
   </data>
   <data name="DeleteGames" xml:space="preserve">
     <value>Usuń Partie...</value>
@@ -952,10 +955,10 @@
     <value>Zaznacz pozycję gdzie wkleić ruchy.</value>
   </data>
   <data name="MsgConfirmDeleteSubtree" xml:space="preserve">
-    <value>Usunąć zaznaczony ruch i wszystkie dalsze posunięcia? </value>
+    <value>Usunąć zaznaczony ruch i wszystkie dalsze posunięcia?</value>
   </data>
   <data name="MsgConfirmStripComments" xml:space="preserve">
-    <value>Usunąć wszystkie komentarze w tym widoku? </value>
+    <value>Usunąć wszystkie komentarze w tym widoku?</value>
   </data>
   <data name="MsgConfirmDeleteEngineEvals" xml:space="preserve">
     <value>Usunąć wszystkie oceny w tym widoku?</value>
@@ -1032,6 +1035,12 @@
   <data name="SelectPosition" xml:space="preserve">
     <value>Pozycja musi być wybrana.</value>
   </data>
+  <data name="SelectGamesStudiesToMove" xml:space="preserve">
+    <value>PRZENIEŚ - kliknij by wybrać pozycje do przeniesienia do nowego lub istniejącego rozdziału</value>
+  </data>
+  <data name="SelectGamesStudiesToCopy" xml:space="preserve">
+    <value>KOPIUJ - kliknij by wybrać pozycje do skopiowania do nowego lub istniejącego rozdziału</value>
+  </data>
   <data name="DeleteChapter" xml:space="preserve">
     <value>Usuń Rozdział</value>
   </data>
@@ -1039,13 +1048,13 @@
     <value>Potwierdź usunięcie rozdziału: $0</value>
   </data>
   <data name="NoExerciseInFile" xml:space="preserve">
-    <value>Ćwiczenia nie znalezione w </value>
+    <value>Ćwiczenia nie znalezione w</value>
   </data>
   <data name="NoGamesInFile" xml:space="preserve">
-    <value>Partie nie znalezione w </value>
+    <value>Partie nie znalezione w</value>
   </data>
   <data name="NoGamesFound" xml:space="preserve">
-    <value>Nie znaleziono żadnej partii. </value>
+    <value>Nie znaleziono żadnej partii.</value>
   </data>
   <data name="BookmarkAlreadyExists" xml:space="preserve">
     <value>Zakładka już istnieje</value>
@@ -1081,7 +1090,7 @@
     <value>Brak silnika do treningu</value>
   </data>
   <data name="UnexpectedErrorInUserMove" xml:space="preserve">
-    <value>Nieoczekiwany błąd w przetwarzaniu posunięcia  </value>
+    <value>Nieoczekiwany błąd w przetwarzaniu posunięcia</value>
   </data>
   <data name="CloseThisWorkbook" xml:space="preserve">
     <value>Zamknij Podręcznik</value>
@@ -1124,6 +1133,9 @@
   </data>
   <data name="MsgTakebackInfo" xml:space="preserve">
     <value>Kliknij tutaj lub naciśnij klawisz spacji, by cofnąć ostatni ruch.</value>
+  </data>
+  <data name="ItemsAlreadyInChapter" xml:space="preserve">
+    <value>Wszystkie pozycje już były w docelowym rozdziale.</value>
   </data>
   <data name="FirstMoveNumber" xml:space="preserve">
     <value>Numer pierwszego posunięcia</value>
@@ -1169,6 +1181,12 @@
   </data>
   <data name="SelectItemsforWorkbook" xml:space="preserve">
     <value>Wybierz elementy do utworzenia nowego Podręcznika:</value>
+  </data>
+  <data name="SelectItemsToMove" xml:space="preserve">
+    <value>Wybierz Pozycje do Przeniesienia</value>
+  </data>
+  <data name="SelectItemsToCopy" xml:space="preserve">
+    <value>Wybierz Pozycje do Skopiowania</value>
   </data>
   <data name="SelectGames" xml:space="preserve">
     <value>Wybierz Partie</value>
@@ -1243,7 +1261,7 @@
     <value>Uaktywnij Kółko Myszy</value>
   </data>
   <data name="ShowMovesAtFork" xml:space="preserve">
-    <value>Tabelka przy Rozgałęzieniu  </value>
+    <value>Tabelka przy Rozgałęzieniu</value>
   </data>
   <data name="SoundOn" xml:space="preserve">
     <value>Włącz Dźwięk</value>
@@ -1260,7 +1278,7 @@
   <data name="NewChapterFromLine" xml:space="preserve">
     <value>Utwórz Rozdział z Wariantu</value>
   </data>
-  <data name="NewChapterToBeCreate" xml:space="preserve">
+  <data name="NewChapterToBeCreated" xml:space="preserve">
     <value>Utwórz Rozdział z Wariantu</value>
   </data>
   <data name="DeleteSubTreeFromSource" xml:space="preserve">
@@ -1453,10 +1471,10 @@
     <value>1 element w złym formacie</value>
   </data>
   <data name="MultiEntitiesValid" xml:space="preserve">
-    <value>Liczba elementów złym formacie $0 </value>
+    <value>Liczba elementów złym formacie $0</value>
   </data>
   <data name="BadTypeForImport" xml:space="preserve">
-    <value>Niewłaściwy typ pliku </value>
+    <value>Niewłaściwy typ pliku</value>
   </data>
   <data name="SelectSolvingMode" xml:space="preserve">
     <value>Wybierz Tryb Rozwiązywania</value>
@@ -1508,6 +1526,9 @@
   </data>
   <data name="ExplorersAbout" xml:space="preserve">
     <value>Otwarcia/Tablice</value>
+  </data>
+  <data name="CurrentlyViewed" xml:space="preserve">
+    <value>Obecnie wyświetlane</value>
   </data>
   <data name="YourMoveWas" xml:space="preserve">
     <value>Zagrałeś</value>
@@ -1618,10 +1639,10 @@
     <value>Grasz czarnymi, a wirtualny trener gra białymi.</value>
   </data>
   <data name="TrnClickMoveBelow" xml:space="preserve">
-    <value>Kliknij na dowolny ruch poniżej aby cofnąć trening do niego.  </value>
+    <value>Kliknij na dowolny ruch poniżej aby cofnąć trening do niego.</value>
   </data>
   <data name="TrnRightClickMove" xml:space="preserve">
-    <value>Prawy przycisk myszki wywoła menu.  </value>
+    <value>Prawy przycisk myszki wywoła menu.</value>
   </data>
   <data name="cbUseMenuToOpenWorkbook" xml:space="preserve">
     <value>Użyj opcji Plik w menu, by otworzyć podręcznik.</value>
@@ -1633,7 +1654,7 @@
     <value>Niektóre dostępne czynności:</value>
   </data>
   <data name="cbClickStudyHeader" xml:space="preserve">
-    <value>Kliknij nagłówek Teoria, albo dwukrotnie kliknij tytuł rozdziału, by otworzyć Teorię </value>
+    <value>Kliknij nagłówek Teoria, albo dwukrotnie kliknij tytuł rozdziału, by otworzyć Teorię</value>
   </data>
   <data name="cbEditText" xml:space="preserve">
     <value>Edytuj tekst, wybierz/kopiuj/wklejaj itp.</value>
@@ -1650,6 +1671,9 @@
   <data name="cbDoubleClickToAnnotate" xml:space="preserve">
     <value>Kliknij na dowolne posunięcie. Dwukrotnie kliknij, by wprowadzić komentarz.</value>
   </data>
+  <data name="cbFindIdenticalPositions" xml:space="preserve">
+    <value>Naciśnij F3 by znaleźć identyczne pozycje.</value>
+  </data>
   <data name="cbAdvancedEditig" xml:space="preserve">
     <value>Naciśnij prawy przycisk, by wywołać menu do edycji, kopiowania FEN i inne.</value>
   </data>
@@ -1657,7 +1681,7 @@
     <value>Dwukrotnie kliknij posunięcie w Zapisie, by rozpocząć auto-odtwarzanie</value>
   </data>
   <data name="cbClickBookmarkToTrain" xml:space="preserve">
-    <value>Kliknij zakładkę, aby przejść do zapamiętanej pozycji. </value>
+    <value>Kliknij zakładkę, aby przejść do zapamiętanej pozycji.</value>
   </data>
   <data name="cbRightClickBookmarkManager" xml:space="preserve">
     <value>Naciśnij prawy przycisk, by otworzyć menu zakładek</value>
@@ -1723,7 +1747,7 @@
     <value>Taka sama pozycja jest już gdzie indziej.</value>
   </data>
   <data name="cbInvestigateIdenticalPositions" xml:space="preserve">
-    <value>Naciśnij klawisz F3 albo użyj menu kontekstowego, aby ją pokazać. </value>
+    <value>Naciśnij klawisz F3 albo użyj menu kontekstowego, aby ją pokazać.</value>
   </data>
   <data name="ChessEngineLoading" xml:space="preserve">
     <value>Trwa ładowanie silnika...</value>
@@ -1753,7 +1777,7 @@
     <value>Przegrywa</value>
   </data>
   <data name="OebUnknown" xml:space="preserve">
-    <value>Rezultat niewiadomy </value>
+    <value>Rezultat niewiadomy</value>
   </data>
   <data name="OebDrawing" xml:space="preserve">
     <value>Remisuje</value>
@@ -1798,7 +1822,7 @@
     <value>Błąd: FEN nie może mieć mniej niż 6 pól</value>
   </data>
   <data name="FenInvalidEnpassant" xml:space="preserve">
-    <value>Błąd: nieważne pole en passant </value>
+    <value>Błąd: nieważne pole en passant</value>
   </data>
   <data name="FenColorNotSpecified" xml:space="preserve">
     <value>Błąd: nie podano czyj ruch</value>

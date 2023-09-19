@@ -126,22 +126,29 @@ namespace ChessForge
         /// </summary>
         public void BuildFlowDocumentForChaptersView()
         {
-            Document.Blocks.Clear();
-            _dictChapterParas.Clear();
-
-            Paragraph paraWorkbookTitle = AddNewParagraphToDoc(STYLE_WORKBOOK_TITLE, WorkbookManager.SessionWorkbook.Title);
-            paraWorkbookTitle.MouseDown += EventWorkbookTitleClicked;
-
-            foreach (Chapter chapter in WorkbookManager.SessionWorkbook.Chapters)
+            try
             {
-                Paragraph para = BuildChapterParagraph(chapter);
-                Document.Blocks.Add(para);
-                _dictChapterParas[chapter.Index] = para;
+                Document.Blocks.Clear();
+                _dictChapterParas.Clear();
+
+                Paragraph paraWorkbookTitle = AddNewParagraphToDoc(STYLE_WORKBOOK_TITLE, WorkbookManager.SessionWorkbook.Title);
+                paraWorkbookTitle.MouseDown += EventWorkbookTitleClicked;
+
+                foreach (Chapter chapter in WorkbookManager.SessionWorkbook.Chapters)
+                {
+                    Paragraph para = BuildChapterParagraph(chapter);
+                    Document.Blocks.Add(para);
+                    _dictChapterParas[chapter.Index] = para;
+                }
+
+                HighlightActiveChapter();
+
+                IsDirty = false;
             }
-
-            HighlightActiveChapter();
-
-            IsDirty = false;
+            catch(Exception ex)    
+            {
+                AppLog.Message("BuildFlowDocumentForChaptersView()", ex);
+            }
         }
 
         /// <summary>
@@ -423,7 +430,7 @@ namespace ChessForge
                 para.Inlines.Add(rExpandChar);
 
                 string chapterNo = (WorkbookManager.SessionWorkbook.GetChapterIndex(chapter) + 1).ToString();
-                Run rTitle = CreateRun(STYLE_CHAPTER_TITLE, chapterNo + ". " + chapter.GetTitle(), true);
+                Run rTitle = CreateRun(STYLE_CHAPTER_TITLE, "[" + chapterNo + ".] " + chapter.GetTitle(), true);
                 if (chapter.Index == WorkbookManager.SessionWorkbook.ActiveChapter.Index)
                 {
                     ShowSelectionMark(ref rTitle, true, SELECTED_CHAPTER_PREFIX, NON_SELECTED_CHAPTER_PREFIX);
@@ -1249,7 +1256,7 @@ namespace ChessForge
 
             if (WorkbookManager.SessionWorkbook.ActiveChapter != null && WorkbookManager.SessionWorkbook.ActiveChapter == chapter)
             {
-                ExpandChapterList(chapter, forceExpand);
+                //ExpandChapterList(chapter, forceExpand);
             }
             else
             {

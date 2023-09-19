@@ -1,6 +1,6 @@
 ##################################
 #
-# MASTER FILE for Translations
+# Header: MASTER FILE for Translations
 #
 ##################################
 
@@ -46,7 +46,7 @@ ChangeLanguageNote=
 
 ##################################
 #
-# COMMON TERMS
+# Header: COMMON TERMS
 #
 
 #description: Workbook
@@ -104,6 +104,10 @@ Intro=
 #description: Study Tree
 #english: Study=Study
 Study=
+
+#description: Study Trees plural
+#english: Studies=Studies
+Studies=
 
 #description: Game
 #english: Game=Game
@@ -358,7 +362,7 @@ GoBack=
 
 ##################################
 #
-# EDITING
+# Header: EDITING
 #
 
 #description: Font bold
@@ -386,7 +390,7 @@ DecreaseIndent=
 
 ##################################
 #
-# ERRORS
+# Header: ERRORS
 #
 
 #description: Found
@@ -459,7 +463,7 @@ ErrHttpStatus=
 ErrNoTextReceived=
 
 #
-# MAIN MENU
+# Header: MAIN MENU
 #
 
 
@@ -721,7 +725,7 @@ TurnEngineOn=
 TopGames=
 
 #
-# CONTEXT MENU for the Main Chessboard
+# Header: CONTEXT MENU for the Main Chessboard
 #
 
 #description: Start training from the current position
@@ -769,7 +773,7 @@ StudyTreeAfter=
 NotNamed=
 
 #
-# CONTEXT MENU in Training View
+# Header: CONTEXT MENU in Training View
 #
 
 #description: User wants to restart the game against the engine after a certain move in the Training Session
@@ -786,7 +790,7 @@ RestartGameFrom=
 
 
 #
-# CONTEXT MENU for Chapters Tab
+# Header: CONTEXT MENU for Chapters Tab
 #
 
 #description: Create a new chapter
@@ -915,7 +919,7 @@ DeleteSelectedExercise=
 ConfirmDeleteExercise=
 
 #
-# CONTEXT MENU for Intro Tab
+# Header: CONTEXT MENU for Intro Tab
 #
 
 #description: Insert a diagram
@@ -1011,7 +1015,7 @@ Chapter0of0=
 
 
 #
-# CONTEXT MENU for Bookmarks
+# Header: CONTEXT MENU for Bookmarks
 #
 
 #description: Start training from the selected bookmark
@@ -1039,7 +1043,7 @@ DeleteAllBookmarks=
 Page0of0=
 
 #
-# CONTEXT MENU for Games
+# Header: CONTEXT MENU for Games
 #
 
 
@@ -1059,7 +1063,7 @@ Game0of0=
 
 
 #
-# CONTEXT MENU for Exercises
+# Header: CONTEXT MENU for Exercises
 #
 
 
@@ -1082,7 +1086,7 @@ Exercise0of0=
 
 
 #
-# Scoresheet
+# Header: SCORESHEET
 #
 
 #description: Scoresheet			
@@ -1108,7 +1112,7 @@ EvaluationShort=
 
 
 #
-# CONTEXT MENU for Top Games
+# Header: CONTEXT MENU for Top Games
 #
 
 
@@ -1130,7 +1134,7 @@ FullView=
 
 
 #
-# Context menu for SelectArticles dialog
+# Header: Context menu for SelectArticles dialog
 #
 # PreviewGame already defined elsewhere
 #
@@ -1151,7 +1155,7 @@ GoToExercises=
 
 ##################################
 #
-# Button Labels
+# Header: Button Labels
 #
 
 #description: OK
@@ -1185,7 +1189,7 @@ UseFigurines=
 
 ##################################
 #
-# Message Box Titles
+# Header: Message Box Titles
 #
 
 #description: File error
@@ -1262,7 +1266,7 @@ MbtTitleCopyPasteError=
 
 ##################################
 #
-# Message Text
+# Header: Message Text
 #
 
 #description: Flash message: Game Imported Successfully.
@@ -1357,6 +1361,14 @@ SelectEngineStartMove=
 #description: Select a position
 #english: SelectPosition=A position must be selected.
 SelectPosition=
+
+#description: Select Games and Studies to move to a chapter
+#english: SelectGamesStudiesToMove=MOVE - click to select items to move to a new or existing chapter
+SelectGamesStudiesToMove=
+
+#description: Select Games and Studies to copy to a chapter
+#english: SelectGamesStudiesToCopy=COPY - click to select items to copy to a new or existing chapter
+SelectGamesStudiesToCopy=
 
 #description: Delete chapter
 #english: DeleteChapter=Delete Chapter
@@ -1484,9 +1496,13 @@ MsgTakebackWanted=
 #english: MsgTakebackInfo=Click here or press the space key to take back your move.
 MsgTakebackInfo=
 
+#description: All items already in the target chapter (when copying/moving from FindIdenticalPosition)
+#english: ItemsAlreadyInChapter=All items already are in the target chapter.
+ItemsAlreadyInChapter=
+
 ##################################
 #
-# Dialogs
+# Header: Dialogs
 #
 
 
@@ -1550,6 +1566,14 @@ SelectOption=
 #description: Select Items to create a new Workbook
 #english: SelectItemsforWorkbook=Select Items to create a new Workbook from:
 SelectItemsforWorkbook=
+
+#description: Select items to move
+#english: SelectItemsToMove=Select Items to Move
+SelectItemsToMove=
+
+#description: Select items to copy
+#english: SelectItemsToCopy=Select Items to Copy
+SelectItemsToCopy=
 
 #description: Select Games
 #english: SelectGames=Select Games
@@ -1673,8 +1697,8 @@ IncrementMajorVersion=
 NewChapterFromLine=
 
 #description: A new chapter will be created from the selected sub-tree.
-#english: NewChapterToBeCreate=A new chapter will be created from the selected sub-tree.
-NewChapterToBeCreate=
+#english: NewChapterToBeCreated=A new chapter will be created from the selected sub-tree.
+NewChapterToBeCreated=
 
 #description: Check box to delete sub-tree from the source chapter
 #english: DeleteSubTreeFromSource=Delete the sub-tree from the original chapter.
@@ -2007,9 +2031,13 @@ Library=
 ExplorersAbout=
 
 
+#description: Currently viewed
+#english: CurrentlyViewed=Currently viewed
+CurrentlyViewed=
+
 ##################################
 #
-# Training
+# Header: Training
 #
 
 #description:  User's move was
@@ -2176,7 +2204,7 @@ TrnRightClickMove=
 
 ##################################
 #
-# Comment Box
+# Header: Comment Box
 #
 
 #description: Info for the user on how to open a Workbook
@@ -2215,6 +2243,10 @@ cbClickThruMoves=
 #description: Double click to annotate
 #english: cbDoubleClickToAnnotate=Click through the moves. Double click to annotate.
 cbDoubleClickToAnnotate=
+
+#description: F3 to find identical positions
+#english: cbFindIdenticalPositions=Press F3 to find identical positions.
+cbFindIdenticalPositions=
 
 #description: Right click for context menu
 #english: cbAdvancedEditig=Right click to open menu for advanced editing, FEN, creating exercise and more.
@@ -2322,7 +2354,7 @@ cbInvestigateIdenticalPositions=
 
 ##################################
 #
-# Announcements
+# Header: Announcements
 #
 
 #description: Loading Engine
@@ -2343,7 +2375,7 @@ ReadingItems=
 
 ##################################
 #
-# Openings Explore / Tablebase
+# Header: Openings Explorer / Tablebase
 #
 
 #description: checkmate
@@ -2381,7 +2413,7 @@ OebWinning=
 
 ##################################
 #
-# Position Validation
+# Header: Position Validation
 #
 
 #description: Too many White Kings
@@ -2410,7 +2442,7 @@ PosValBlackKingInCheck=
 
 ##################################
 #
-# MESSAGES / WARNINGS / NOTIFICATIONS
+# Header: MESSAGES / WARNINGS / NOTIFICATIONS
 #
 
 #description: Info: line evaluation is in progress
@@ -2431,7 +2463,7 @@ EngineReplaced=
 
 ##################################
 #
-# Libary exceptions
+# Header: Libary exceptions
 #
 
 #description: Missing move while parsing PGN
@@ -2480,7 +2512,7 @@ IllegalCastling=
 
 ##################################
 #
-# External texts
+# Header: External texts
 #
 
 #description: Workbook info

@@ -143,13 +143,16 @@ namespace ChessForge
 
             if (tree != null && tree.Nodes.Count >= 1)
             {
-                TreeNode root = tree.Nodes[0];
-
-                // There may be a comment or command before the first move. Add if so.
-                _fileText.Append(BuildCommandAndCommentText(root));
-
                 StringBuilder sb = new StringBuilder();
-                sb.Append(BuildTreeLineText(root));
+                TreeNode root = tree.RootNode;
+                if (root != null)
+                {
+
+                    // There may be a comment or command before the first move. Add if so.
+                    _fileText.Append(BuildCommandAndCommentText(root));
+
+                    sb.Append(BuildTreeLineText(root));
+                }
 
                 sbOutput.Append(DivideLine(sb.ToString(), 80));
             }
@@ -219,26 +222,36 @@ namespace ChessForge
             StringBuilder sb = new StringBuilder();
             StringBuilder sbOutput = new StringBuilder();
 
-            foreach (Article article in chapter.ModelGames)
+            for (int i = 0; i < chapter.ModelGames.Count; i++)
             {
-                string headerText = BuildModelGameHeaderText(chapter, article.Tree);
+                try
+                {
+                    Article article = chapter.ModelGames[i];
+                    string headerText = BuildModelGameHeaderText(chapter, article.Tree);
 
-                TreeNode root = article.Tree.Nodes[0];
+                    TreeNode root = article.Tree.RootNode;
+                    if (root != null)
+                    {
+                        // There may be a comment or command before the first move. Add if so.
+                        _fileText.Append(BuildCommandAndCommentText(root));
 
-                // There may be a comment or command before the first move. Add if so.
-                _fileText.Append(BuildCommandAndCommentText(root));
+                        sb.Append(BuildTreeLineText(root));
+                    }
 
-                sb.Append(BuildTreeLineText(root));
+                    sbOutput.Append(headerText + DivideLine(sb.ToString(), 80));
 
-                sbOutput.Append(headerText + DivideLine(sb.ToString(), 80));
+                    // add result
+                    sbOutput.Append(" " + article.Tree.Header.GetResult(out _));
+                    sbOutput.AppendLine();
+                    sbOutput.AppendLine();
 
-                // add result
-                sbOutput.Append(" " + article.Tree.Header.GetResult(out _));
-                sbOutput.AppendLine();
-                sbOutput.AppendLine();
-
-                sb.Clear();
-                _fileText.Clear();
+                    sb.Clear();
+                    _fileText.Clear();
+                }
+                catch (Exception ex)
+                {
+                    AppLog.Message("BuildModelGamesText() index=" + i.ToString(), ex);
+                }
             }
 
             return sbOutput.ToString();
@@ -257,26 +270,37 @@ namespace ChessForge
             StringBuilder sb = new StringBuilder();
             StringBuilder sbOutput = new StringBuilder();
 
-            foreach (Article article in chapter.Exercises)
+            for (int i = 0; i < chapter.Exercises.Count; i++)
             {
-                string headerText = BuildExercisesHeaderText(chapter, article.Tree);
+                Article article = chapter.Exercises[i];
 
-                TreeNode root = article.Tree.Nodes[0];
+                try
+                {
+                    string headerText = BuildExercisesHeaderText(chapter, article.Tree);
 
-                // There may be a comment or command before the first move. Add if so.
-                _fileText.Append(BuildCommandAndCommentText(root));
+                    TreeNode root = article.Tree.RootNode;
+                    if (root != null)
+                    {
+                        // There may be a comment or command before the first move. Add if so.
+                        _fileText.Append(BuildCommandAndCommentText(root));
 
-                sb.Append(BuildTreeLineText(root));
+                        sb.Append(BuildTreeLineText(root));
+                    }
 
-                sbOutput.Append(headerText + DivideLine(sb.ToString(), 80));
+                    sbOutput.Append(headerText + DivideLine(sb.ToString(), 80));
 
-                // add result
-                sbOutput.Append(" " + article.Tree.Header.GetResult(out _));
-                sbOutput.AppendLine();
-                sbOutput.AppendLine();
+                    // add result
+                    sbOutput.Append(" " + article.Tree.Header.GetResult(out _));
+                    sbOutput.AppendLine();
+                    sbOutput.AppendLine();
 
-                sb.Clear();
-                _fileText.Clear();
+                    sb.Clear();
+                    _fileText.Clear();
+                }
+                catch (Exception ex)
+                {
+                    AppLog.Message("BuildExercisesText() index=" + i.ToString(), ex);
+                }
             }
 
             return sbOutput.ToString();
@@ -392,11 +416,14 @@ namespace ChessForge
 
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_CONTENT_TYPE, PgnHeaders.VALUE_EXERCISE));
 
-            BoardPosition pos = new BoardPosition(tree.Nodes[0].Position);
-            UpShiftOnePly(ref pos);
+            if (tree.RootNode != null)
+            {
+                BoardPosition pos = new BoardPosition(tree.Nodes[0].Position);
+                UpShiftOnePly(ref pos);
 
-            string fen = FenParser.GenerateFenFromPosition(pos, tree.MoveNumberOffset);
-            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_FEN_STRING, fen));
+                string fen = FenParser.GenerateFenFromPosition(pos, tree.MoveNumberOffset);
+                sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_FEN_STRING, fen));
+            }
 
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_EVENT, tree.Header.GetEventName(out _)));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_GUID, tree.Header.GetGuid(out _)));

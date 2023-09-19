@@ -183,6 +183,9 @@
   <data name="Study" xml:space="preserve">
     <value>Study</value>
   </data>
+  <data name="Studies" xml:space="preserve">
+    <value>Studies</value>
+  </data>
   <data name="Game" xml:space="preserve">
     <value>Game</value>
   </data>
@@ -1032,6 +1035,12 @@
   <data name="SelectPosition" xml:space="preserve">
     <value>A position must be selected.</value>
   </data>
+  <data name="SelectGamesStudiesToMove" xml:space="preserve">
+    <value>MOVE - click to select items to move to a new or existing chapter</value>
+  </data>
+  <data name="SelectGamesStudiesToCopy" xml:space="preserve">
+    <value>COPY - click to select items to copy to a new or existing chapter</value>
+  </data>
   <data name="DeleteChapter" xml:space="preserve">
     <value>Delete Chapter</value>
   </data>
@@ -1126,6 +1135,9 @@
   <data name="MsgTakebackInfo" xml:space="preserve">
     <value>Click here or press the space key to take back your move.</value>
   </data>
+  <data name="ItemsAlreadyInChapter" xml:space="preserve">
+    <value>All items already are in the target chapter.</value>
+  </data>
   <data name="FirstMoveNumber" xml:space="preserve">
     <value>Number of the first move</value>
   </data>
@@ -1170,6 +1182,12 @@
   </data>
   <data name="SelectItemsforWorkbook" xml:space="preserve">
     <value>Select Items to create a new Workbook from:</value>
+  </data>
+  <data name="SelectItemsToMove" xml:space="preserve">
+    <value>Select Items to Move</value>
+  </data>
+  <data name="SelectItemsToCopy" xml:space="preserve">
+    <value>Select Items to Copy</value>
   </data>
   <data name="SelectGames" xml:space="preserve">
     <value>Select Games</value>
@@ -1261,7 +1279,7 @@
   <data name="NewChapterFromLine" xml:space="preserve">
     <value>Create New Chapter From Line</value>
   </data>
-  <data name="NewChapterToBeCreate" xml:space="preserve">
+  <data name="NewChapterToBeCreated" xml:space="preserve">
     <value>A new chapter will be created from the selected sub-tree.</value>
   </data>
   <data name="DeleteSubTreeFromSource" xml:space="preserve">
@@ -1510,6 +1528,9 @@
   <data name="ExplorersAbout" xml:space="preserve">
     <value>Openings/Tablebases</value>
   </data>
+  <data name="CurrentlyViewed" xml:space="preserve">
+    <value>Currently viewed</value>
+  </data>
   <data name="YourMoveWas" xml:space="preserve">
     <value>Your move was</value>
   </data>
@@ -1650,6 +1671,9 @@
   </data>
   <data name="cbDoubleClickToAnnotate" xml:space="preserve">
     <value>Click through the moves. Double click to annotate.</value>
+  </data>
+  <data name="cbFindIdenticalPositions" xml:space="preserve">
+    <value>Press F3 to find identical positions.</value>
   </data>
   <data name="cbAdvancedEditig" xml:space="preserve">
     <value>Right click to open menu for advanced editing, FEN, creating exercise and more.</value>

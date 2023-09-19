@@ -1,6 +1,6 @@
 ##################################
 #
-# MASTER FILE for Translations
+# Header: MASTER FILE for Translations
 #
 ##################################
 
@@ -46,7 +46,7 @@ ChangeLanguageNote=Uwaga: Zmiana języka wymaga zamknięcia i ponownego otwarcia
 
 ##################################
 #
-# COMMON TERMS
+# Header: COMMON TERMS
 #
 
 #description: Workbook
@@ -104,6 +104,10 @@ Intro=Wstęp
 #description: Study Tree
 #english: Study=Study
 Study=Teoria
+
+#description: Study Trees plural
+#english: Studies=Studies
+Studies=Teoria
 
 #description: Game
 #english: Game=Game
@@ -349,7 +353,7 @@ Proceed=Kontynuować?
 
 #description: Go forward
 #english: GoForward=Go forward (ALT + →)  
-GoForward=Idź do przodu (ALT + →) 
+GoForward=Idź do przodu (ALT + →)
 
 #description: Go back 
 #english: GoBack=Go back (ALT + ←)
@@ -358,7 +362,7 @@ GoBack=Idź wstecz (ALT + ←)
 
 ##################################
 #
-# EDITING
+# Header: EDITING
 #
 
 #description: Font bold
@@ -386,7 +390,7 @@ DecreaseIndent=Zmniejsz wcięcie
 
 ##################################
 #
-# ERRORS
+# Header: ERRORS
 #
 
 #description: Found
@@ -403,7 +407,7 @@ ErrAfterMove=po ruchu
 
 #description: Cannot insert line from the Clipboard
 #english: ErrClipboardLinePaste=Error pasting variation from the Clipboard 
-ErrClipboardLinePaste=Błąd przy wklejaniu wariantu ze schowka 
+ErrClipboardLinePaste=Błąd przy wklejaniu wariantu ze schowka
 
 #description: Clipboard operation
 #english: ClipboardOperation=Clipboard Operation
@@ -428,7 +432,7 @@ ErrNotAllGamesCopied=Nie wszystkie partie zostały skopiowane
 
 #description: Game not found
 #english: ErrGameNotFound=Game not found
-ErrGameNotFound=Partii nie znaleziono 
+ErrGameNotFound=Partii nie znaleziono
 
 #description: Games not found
 #english: ErrGamesNotFound=Games not found
@@ -459,7 +463,7 @@ ErrHttpStatus=Błąd w odpowiedzi serwera. Kod: $0
 ErrNoTextReceived=brak tekstu partii.
 
 #
-# MAIN MENU
+# Header: MAIN MENU
 #
 
 
@@ -721,7 +725,7 @@ TurnEngineOn=Włącz silnik
 TopGames=Partie Mistrzowskie
 
 #
-# CONTEXT MENU for the Main Chessboard
+# Header: CONTEXT MENU for the Main Chessboard
 #
 
 #description: Start training from the current position
@@ -769,24 +773,24 @@ StudyTreeAfter=Pozycja z Teorii po
 NotNamed=brak nazwy
 
 #
-# CONTEXT MENU in Training View
+# Header: CONTEXT MENU in Training View
 #
 
 #description: User wants to restart the game against the engine after a certain move in the Training Session
 #english: RestartGameAfter=Restart Game After 
-RestartGameAfter=Cofnij Partię do 
+RestartGameAfter=Cofnij Partię do
 
 #description: User wants to restart the training from a certain move in the Training Session
 #english: RestartFrom=Restart from 
-RestartFrom=Cofnij do 
+RestartFrom=Cofnij do
 
 #description: Restart game from a selected move (context menu item)
 #english: RestartGameFrom=Restart Game from 
-RestartGameFrom=Cofnij Partię do 
+RestartGameFrom=Cofnij Partię do
 
 
 #
-# CONTEXT MENU for Chapters Tab
+# Header: CONTEXT MENU for Chapters Tab
 #
 
 #description: Create a new chapter
@@ -887,7 +891,7 @@ DeleteSelectedGame=Usuń Wybraną Partię
 
 #description: Delete this game
 #english: DeleteThisGame=Delete This Game
-DeleteThisGame=Usuń Partię 
+DeleteThisGame=Usuń Partię
 
 #description: Delete multiple games
 #english: DeleteGames=Delete Games...
@@ -915,7 +919,7 @@ DeleteSelectedExercise=Usuń Wybrane ćwiczenie
 ConfirmDeleteExercise=Usunąć ćwiczenie
 
 #
-# CONTEXT MENU for Intro Tab
+# Header: CONTEXT MENU for Intro Tab
 #
 
 #description: Insert a diagram
@@ -1011,7 +1015,7 @@ Chapter0of0=Rozdział $0 z $1
 
 
 #
-# CONTEXT MENU for Bookmarks
+# Header: CONTEXT MENU for Bookmarks
 #
 
 #description: Start training from the selected bookmark
@@ -1039,7 +1043,7 @@ DeleteAllBookmarks=Usuń wszystkie zakładki
 Page0of0=Strona $0 z $1
 
 #
-# CONTEXT MENU for Games
+# Header: CONTEXT MENU for Games
 #
 
 
@@ -1059,7 +1063,7 @@ Game0of0=Partia $0 z $1
 
 
 #
-# CONTEXT MENU for Exercises
+# Header: CONTEXT MENU for Exercises
 #
 
 
@@ -1082,7 +1086,7 @@ Exercise0of0=Ćwiczenie $0 z $1
 
 
 #
-# Scoresheet
+# Header: SCORESHEET
 #
 
 #description: Scoresheet			
@@ -1108,7 +1112,7 @@ EvaluationShort=Ocena
 
 
 #
-# CONTEXT MENU for Top Games
+# Header: CONTEXT MENU for Top Games
 #
 
 
@@ -1130,7 +1134,7 @@ FullView=Pełny Widok
 
 
 #
-# Context menu for SelectArticles dialog
+# Header: Context menu for SelectArticles dialog
 #
 # PreviewGame already defined elsewhere
 #
@@ -1151,7 +1155,7 @@ GoToExercises=Otwórz Widok Ćwiczeń
 
 ##################################
 #
-# Button Labels
+# Header: Button Labels
 #
 
 #description: OK
@@ -1185,7 +1189,7 @@ UseFigurines=Używaj figurek
 
 ##################################
 #
-# Message Box Titles
+# Header: Message Box Titles
 #
 
 #description: File error
@@ -1246,11 +1250,11 @@ MsgSelectNodeToInserAt=Zaznacz pozycję gdzie wkleić ruchy.
 
 #description: Confirm deleting remaining moves
 #english: MsgConfirmDeleteSubtree=Delete the selected move and all moves that follow? 
-MsgConfirmDeleteSubtree=Usunąć zaznaczony ruch i wszystkie dalsze posunięcia? 
+MsgConfirmDeleteSubtree=Usunąć zaznaczony ruch i wszystkie dalsze posunięcia?
 
 #description: Confirm stripping comments
 #english: MsgConfirmStripComments=Delete all comments in this view? 
-MsgConfirmStripComments=Usunąć wszystkie komentarze w tym widoku? 
+MsgConfirmStripComments=Usunąć wszystkie komentarze w tym widoku?
 
 #description: Confirm removing evals
 #english: MsgConfirmDeleteEngineEvals=Delete all evaluations in this view?
@@ -1262,7 +1266,7 @@ MbtTitleCopyPasteError=Błąd w Kopiuj/Wklej
 
 ##################################
 #
-# Message Text
+# Header: Message Text
 #
 
 #description: Flash message: Game Imported Successfully.
@@ -1358,6 +1362,14 @@ SelectEngineStartMove=Wybierz początkowe posunięcie do gry z silnikiem
 #english: SelectPosition=A position must be selected.
 SelectPosition=Pozycja musi być wybrana.
 
+#description: Select Games and Studies to move to a chapter
+#english: SelectGamesStudiesToMove=MOVE - click to select items to move to a new or existing chapter
+SelectGamesStudiesToMove=PRZENIEŚ - kliknij by wybrać pozycje do przeniesienia do nowego lub istniejącego rozdziału
+
+#description: Select Games and Studies to copy to a chapter
+#english: SelectGamesStudiesToCopy=COPY - click to select items to copy to a new or existing chapter
+SelectGamesStudiesToCopy=KOPIUJ - kliknij by wybrać pozycje do skopiowania do nowego lub istniejącego rozdziału
+
 #description: Delete chapter
 #english: DeleteChapter=Delete Chapter
 DeleteChapter=Usuń Rozdział
@@ -1368,15 +1380,15 @@ DeleteChapterConfirm=Potwierdź usunięcie rozdziału: $0
 
 #description: No exercise in file
 #english: NoExerciseInFile=No Exercises found in
-NoExerciseInFile=Ćwiczenia nie znalezione w 
+NoExerciseInFile=Ćwiczenia nie znalezione w
 
 #description: No games in file
 #english: NoGamesInFile=No Games found in 
-NoGamesInFile=Partie nie znalezione w 
+NoGamesInFile=Partie nie znalezione w
 
 #description: No games found (e.g. whet attempting download from the Web
 #english: NoGamesFound=No games have been found. 
-NoGamesFound=Nie znaleziono żadnej partii. 
+NoGamesFound=Nie znaleziono żadnej partii.
 
 #description: Bookmark already exists
 #english: BookmarkAlreadyExists=This bookmark already exists
@@ -1425,7 +1437,7 @@ NoEngineForTraining=Brak silnika do treningu
 
 #description: Unexpected error processing user's move
 #english: UnexpectedErrorInUserMove=Unexpected error while processing user's move
-UnexpectedErrorInUserMove=Nieoczekiwany błąd w przetwarzaniu posunięcia  
+UnexpectedErrorInUserMove=Nieoczekiwany błąd w przetwarzaniu posunięcia
 
 #description: Close the Workbook
 #english: CloseThisWorkbook=Close the current Workbook?
@@ -1484,9 +1496,13 @@ MsgTakebackWanted=Cofnąć?
 #english: MsgTakebackInfo=Click here or press the space key to take back your move.
 MsgTakebackInfo=Kliknij tutaj lub naciśnij klawisz spacji, by cofnąć ostatni ruch.
 
+#description: All items already in the target chapter (when copying/moving from FindIdenticalPosition)
+#english: ItemsAlreadyInChapter=All items already are in the target chapter.
+ItemsAlreadyInChapter=Wszystkie pozycje już były w docelowym rozdziale.
+
 ##################################
 #
-# Dialogs
+# Header: Dialogs
 #
 
 
@@ -1550,6 +1566,14 @@ SelectOption=Wybierz Opcję
 #description: Select Items to create a new Workbook
 #english: SelectItemsforWorkbook=Select Items to create a new Workbook from:
 SelectItemsforWorkbook=Wybierz elementy do utworzenia nowego Podręcznika:
+
+#description: Select items to move
+#english: SelectItemsToMove=Select Items to Move
+SelectItemsToMove=Wybierz Pozycje do Przeniesienia
+
+#description: Select items to copy
+#english: SelectItemsToCopy=Select Items to Copy
+SelectItemsToCopy=Wybierz Pozycje do Skopiowania
 
 #description: Select Games
 #english: SelectGames=Select Games
@@ -1650,7 +1674,7 @@ AllowMouseWheel=Uaktywnij Kółko Myszy
 
 #description: Whether to show inline table with move options at a fork
 #english: ShowMovesAtFork=Show Moves at Fork
-ShowMovesAtFork=Tabelka przy Rozgałęzieniu  
+ShowMovesAtFork=Tabelka przy Rozgałęzieniu
 
 #description: Whether sound for the moves is turned on
 #english: SoundOn=Sound On
@@ -1673,8 +1697,8 @@ IncrementMajorVersion=Podwyższ główny number wersji
 NewChapterFromLine=Utwórz Rozdział z Wariantu
 
 #description: A new chapter will be created from the selected sub-tree.
-#english: NewChapterToBeCreate=A new chapter will be created from the selected sub-tree.
-NewChapterToBeCreate=Utwórz Rozdział z Wariantu
+#english: NewChapterToBeCreated=A new chapter will be created from the selected sub-tree.
+NewChapterToBeCreated=Utwórz Rozdział z Wariantu
 
 #description: Check box to delete sub-tree from the source chapter
 #english: DeleteSubTreeFromSource=Delete the sub-tree from the original chapter.
@@ -1932,11 +1956,11 @@ OneEntityValid=1 element w złym formacie
 
 #description: Multiple entities were valid
 #english: MultiEntitiesValid=$0  entities were valid
-MultiEntitiesValid=Liczba elementów złym formacie $0 
+MultiEntitiesValid=Liczba elementów złym formacie $0
 
 #description: not imported due to wrong type
 #english: BadTypeForImport=but not imported due to not being of the $0 type
-BadTypeForImport=Niewłaściwy typ pliku 
+BadTypeForImport=Niewłaściwy typ pliku
 
 #description: Select Solving Mode
 #english: SelectSolvingMode=Select Solving Mode
@@ -2007,9 +2031,13 @@ Library=Biblioteka
 ExplorersAbout=Otwarcia/Tablice
 
 
+#description: Currently viewed
+#english: CurrentlyViewed=Currently viewed
+CurrentlyViewed=Obecnie wyświetlane
+
 ##################################
 #
-# Training
+# Header: Training
 #
 
 #description:  User's move was
@@ -2167,16 +2195,16 @@ TrnUserPlaysBlack=Grasz czarnymi, a wirtualny trener gra białymi.
 
 #description: Click move instruction
 #english: TrnClickMoveBelow=Click any move below to restart training from it.  
-TrnClickMoveBelow=Kliknij na dowolny ruch poniżej aby cofnąć trening do niego.  
+TrnClickMoveBelow=Kliknij na dowolny ruch poniżej aby cofnąć trening do niego.
 
 #description: Right click move instruction
 #english: TrnRightClickMove=Right click to open the context menu.  
-TrnRightClickMove=Prawy przycisk myszki wywoła menu.  
+TrnRightClickMove=Prawy przycisk myszki wywoła menu.
 
 
 ##################################
 #
-# Comment Box
+# Header: Comment Box
 #
 
 #description: Info for the user on how to open a Workbook
@@ -2193,7 +2221,7 @@ cbActions=Niektóre dostępne czynności:
 
 #description: Click to open Study
 #english: cbClickStudyHeader=Click Study header or double click chapter's title to open the Study Tree
-cbClickStudyHeader=Kliknij nagłówek Teoria, albo dwukrotnie kliknij tytuł rozdziału, by otworzyć Teorię 
+cbClickStudyHeader=Kliknij nagłówek Teoria, albo dwukrotnie kliknij tytuł rozdziału, by otworzyć Teorię
 
 #description: Edit Rich Text  
 #english: cbEditText=Edit text, select/copy/paste etc.
@@ -2216,6 +2244,10 @@ cbClickThruMoves=Klawiatura: ←/→ (naprzód/wstecz); SHIFT←/→ or Home/End
 #english: cbDoubleClickToAnnotate=Click through the moves. Double click to annotate.
 cbDoubleClickToAnnotate=Kliknij na dowolne posunięcie. Dwukrotnie kliknij, by wprowadzić komentarz.
 
+#description: F3 to find identical positions
+#english: cbFindIdenticalPositions=Press F3 to find identical positions.
+cbFindIdenticalPositions=Naciśnij F3 by znaleźć identyczne pozycje.
+
 #description: Right click for context menu
 #english: cbAdvancedEditig=Right click to open menu for advanced editing, FEN, creating exercise and more.
 cbAdvancedEditig=Naciśnij prawy przycisk, by wywołać menu do edycji, kopiowania FEN i inne.
@@ -2226,7 +2258,7 @@ cbDoubleClickAutoReplay=Dwukrotnie kliknij posunięcie w Zapisie, by rozpocząć
 
 #description: Click bookmark to start training
 #english: cbClickBookmarkToTrain=Click a bookmark to navigate to the bookmarked position
-cbClickBookmarkToTrain=Kliknij zakładkę, aby przejść do zapamiętanej pozycji. 
+cbClickBookmarkToTrain=Kliknij zakładkę, aby przejść do zapamiętanej pozycji.
 
 #description: Right click to open bookmarks menu
 #english: cbRightClickBookmarkManager=Right click to open menu for Bookmark management options
@@ -2318,11 +2350,11 @@ cbIdenticalPositionFound=Taka sama pozycja jest już gdzie indziej.
 
 #description: how to open the dialog with identical positions
 #english: cbInvestigateIdenticalPositions=Press F3 or use the context menu to show it. 
-cbInvestigateIdenticalPositions=Naciśnij klawisz F3 albo użyj menu kontekstowego, aby ją pokazać. 
+cbInvestigateIdenticalPositions=Naciśnij klawisz F3 albo użyj menu kontekstowego, aby ją pokazać.
 
 ##################################
 #
-# Announcements
+# Header: Announcements
 #
 
 #description: Loading Engine
@@ -2343,7 +2375,7 @@ ReadingItems=Wczytywanie elementu $0 z $1
 
 ##################################
 #
-# Openings Explore / Tablebase
+# Header: Openings Explorer / Tablebase
 #
 
 #description: checkmate
@@ -2368,7 +2400,7 @@ OebLosing=Przegrywa
 
 #description: Unknown
 #english: OebUnknown=Unknown
-OebUnknown=Rezultat niewiadomy 
+OebUnknown=Rezultat niewiadomy
 
 #description: Drawing
 #english: OebDrawing=Drawing
@@ -2381,7 +2413,7 @@ OebWinning=Wygrywa
 
 ##################################
 #
-# Position Validation
+# Header: Position Validation
 #
 
 #description: Too many White Kings
@@ -2410,7 +2442,7 @@ PosValBlackKingInCheck=Czarny król nie może być w szachu przy ruchu białych
 
 ##################################
 #
-# MESSAGES / WARNINGS / NOTIFICATIONS
+# Header: MESSAGES / WARNINGS / NOTIFICATIONS
 #
 
 #description: Info: line evaluation is in progress
@@ -2431,7 +2463,7 @@ EngineReplaced=Załadowano wybrany silnik
 
 ##################################
 #
-# Libary exceptions
+# Header: Libary exceptions
 #
 
 #description: Missing move while parsing PGN
@@ -2446,7 +2478,7 @@ FenTooFewFields=Błąd: FEN nie może mieć mniej niż 6 pól
 
 #description: Invalid Enpassant
 #english: FenInvalidEnpassant=Error: invalid enpassant field
-FenInvalidEnpassant=Błąd: nieważne pole en passant 
+FenInvalidEnpassant=Błąd: nieważne pole en passant
 
 #description: Color not specified
 #english: FenColorNotSpecified=Error: color to move not specified
@@ -2480,7 +2512,7 @@ IllegalCastling=Niedozwolona roszada.
 
 ##################################
 #
-# External texts
+# Header: External texts
 #
 
 #description: Workbook info

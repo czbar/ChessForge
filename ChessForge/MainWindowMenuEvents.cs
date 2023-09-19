@@ -90,10 +90,11 @@ namespace ChessForge
             if (WorkbookManager.SessionWorkbook != null && AppState.IsDirty)
             {
                 proceed = WorkbookManager.PromptAndSaveWorkbook(false, out _);
-                if (proceed)
-                {
-                    WorkbookManager.SessionWorkbook.GamesManager.CancelAll();
-                }
+            }
+
+            if (proceed)
+            {
+                WorkbookManager.SessionWorkbook.GamesManager.CancelAll();
             }
 
             if (proceed && ChangeAppModeWarning(LearningMode.Mode.MANUAL_REVIEW))
@@ -640,8 +641,9 @@ namespace ChessForge
                 TreeNode nd = ActiveLine.GetSelectedTreeNode();
                 FindIdenticalPositions.Search(nd, FindIdenticalPositions.Mode.FIND_AND_REPORT);
             }
-            catch
+            catch (Exception ex)
             {
+                AppLog.Message("UiMnFindIdenticalPosition_Click()", ex);
             }
         }
 
@@ -976,7 +978,18 @@ namespace ChessForge
             try
             {
                 ObservableCollection<ArticleListItem> articleList = WorkbookManager.SessionWorkbook.GenerateArticleList(AppState.ActiveChapter, articleType);
-                SelectArticlesDialog dlg = new SelectArticlesDialog(null, ref articleList, articleType)
+                
+                string title = null;
+                if (articleType == GameData.ContentType.MODEL_GAME)
+                {
+                    title = Properties.Resources.SelectGamesForDeletion;
+                }
+                else if (articleType == GameData.ContentType.EXERCISE)
+                {
+                    title = Properties.Resources.SelectExercisesForDeletion;
+                }
+
+                SelectArticlesDialog dlg = new SelectArticlesDialog(null, title, ref articleList, false, articleType)
                 {
                     Left = ChessForgeMain.Left + 100,
                     Top = ChessForgeMain.Top + 100,
@@ -1047,16 +1060,17 @@ namespace ChessForge
 
                 if (gamesCount > 0)
                 {
-                    if (SelectArticlesFromPgnFile(ref games, SelectGamesDialog.Mode.IMPORT_INTO_NEW_CHAPTER, out bool createStudy, out bool copyGames, out _))
+                    if (SelectArticlesFromPgnFile(ref games, SelectGamesDialog.Mode.IMPORT_INTO_NEW_CHAPTER))
                     {
-                        if (createStudy)
-                        {
-                            WorkbookManager.MergeGames(ref chapter.StudyTree.Tree, ref games);
-                        }
+                        //if (createStudy)
+                        //{
+                        //    WorkbookManager.MergeGames(ref chapter.StudyTree.Tree, ref games);
+                        //}
+
                         // content type may have been reset to GENERIC in MergeGames above
                         chapter.StudyTree.Tree.ContentType = GameData.ContentType.STUDY_TREE;
 
-                        CopySelectedItemsToChapter(chapter, copyGames, out string error, games, out _);
+                        CopySelectedItemsToChapter(chapter, true, out string error, games, out _);
 
                         _chaptersView.BuildFlowDocumentForChaptersView();
                         SelectChapterByIndex(chapter.Index, false);
@@ -1136,7 +1150,7 @@ namespace ChessForge
         /// <param name="games"></param>
         /// <param name="mode"></param>
         /// <returns></returns>
-        public bool SelectArticlesFromPgnFile(ref ObservableCollection<GameData> games, SelectGamesDialog.Mode mode, out bool createStudy, out bool copyGames, out bool multiChapter)
+        public bool SelectArticlesFromPgnFile(ref ObservableCollection<GameData> games, SelectGamesDialog.Mode mode)
         {
             SelectGamesDialog dlg = new SelectGamesDialog(ref games, mode)
             {
@@ -1147,11 +1161,6 @@ namespace ChessForge
             };
 
             bool res = dlg.ShowDialog() == true;
-
-            createStudy = dlg.CreateStudy;
-            copyGames = dlg.CopyGames;
-            multiChapter = dlg.MultiChapter;
-
             return res;
         }
 
@@ -1377,10 +1386,12 @@ namespace ChessForge
         /// and returns the selected index.
         /// </summary>
         /// <returns></returns>
-        private int InvokeSelectSingleChapterDialog()
+        public int InvokeSelectSingleChapterDialog()
         {
             try
             {
+                int chapterIndex = -1;
+
                 SelectSingleChapterDialog dlg = new SelectSingleChapterDialog()
                 {
                     Left = ChessForgeMain.Left + 100,
@@ -1388,9 +1399,20 @@ namespace ChessForge
                     Topmost = false,
                     Owner = this
                 };
-                dlg.ShowDialog();
 
-                return dlg.ExitOk ? dlg.SelectedIndex : -1;
+                if (dlg.ShowDialog() == true)
+                {
+                    if (dlg.CreateNew)
+                    {
+                        chapterIndex = WorkbookManager.SessionWorkbook.CreateNewChapter().Index;
+                    }
+                    else
+                    {
+                        chapterIndex = dlg.SelectedIndex;
+                    }
+                }
+
+                return chapterIndex;
             }
             catch
             {
@@ -1399,7 +1421,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Lets the user select a chapter to move the curently selected game to.
+        /// Lets the user select a chapter to move the currently selected game to.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1481,7 +1503,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Lets the user select a chapter to move the curently selected exercise to.
+        /// Lets the user select a chapter to move the currently selected exercise to.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1713,7 +1735,7 @@ namespace ChessForge
             {
                 TreeNode nd = ActiveTreeView.GetSelectedNode();
                 ObservableCollection<ArticleListItem> articleList = WorkbookManager.SessionWorkbook.GenerateArticleList();
-                SelectArticlesDialog dlg = new SelectArticlesDialog(nd, ref articleList)
+                SelectArticlesDialog dlg = new SelectArticlesDialog(nd, null, ref articleList, false)
                 {
                     Left = ChessForgeMain.Left + 100,
                     Top = ChessForgeMain.Top + 100,

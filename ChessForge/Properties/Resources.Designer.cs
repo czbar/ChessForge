@@ -476,6 +476,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Press F3 to find identical positions..
+        /// </summary>
+        public static string cbFindIdenticalPositions {
+            get {
+                return ResourceManager.GetString("cbFindIdenticalPositions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An identical position was found elsewhere..
         /// </summary>
         public static string cbIdenticalPositionFound {
@@ -1066,6 +1075,15 @@ namespace ChessForge.Properties {
         public static string CreateNewGame {
             get {
                 return ResourceManager.GetString("CreateNewGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Currently viewed.
+        /// </summary>
+        public static string CurrentlyViewed {
+            get {
+                return ResourceManager.GetString("CurrentlyViewed", resourceCulture);
             }
         }
         
@@ -2753,6 +2771,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All items already are in the target chapter..
+        /// </summary>
+        public static string ItemsAlreadyInChapter {
+            get {
+                return ResourceManager.GetString("ItemsAlreadyInChapter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to English.
         /// </summary>
         public static string LangEnglish {
@@ -3178,9 +3205,9 @@ namespace ChessForge.Properties {
         /// <summary>
         ///   Looks up a localized string similar to A new chapter will be created from the selected sub-tree..
         /// </summary>
-        public static string NewChapterToBeCreate {
+        public static string NewChapterToBeCreated {
             get {
-                return ResourceManager.GetString("NewChapterToBeCreate", resourceCulture);
+                return ResourceManager.GetString("NewChapterToBeCreated", resourceCulture);
             }
         }
         
@@ -4095,6 +4122,24 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to COPY - click to select items to copy to a new or existing chapter.
+        /// </summary>
+        public static string SelectGamesStudiesToCopy {
+            get {
+                return ResourceManager.GetString("SelectGamesStudiesToCopy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MOVE - click to select items to move to a new or existing chapter.
+        /// </summary>
+        public static string SelectGamesStudiesToMove {
+            get {
+                return ResourceManager.GetString("SelectGamesStudiesToMove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select Games to Import:.
         /// </summary>
         public static string SelectGamesToImport {
@@ -4127,6 +4172,24 @@ namespace ChessForge.Properties {
         public static string SelectItemsforWorkbook {
             get {
                 return ResourceManager.GetString("SelectItemsforWorkbook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Items to Copy.
+        /// </summary>
+        public static string SelectItemsToCopy {
+            get {
+                return ResourceManager.GetString("SelectItemsToCopy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Items to Move.
+        /// </summary>
+        public static string SelectItemsToMove {
+            get {
+                return ResourceManager.GetString("SelectItemsToMove", resourceCulture);
             }
         }
         
@@ -4334,6 +4397,15 @@ namespace ChessForge.Properties {
         public static string StripComments {
             get {
                 return ResourceManager.GetString("StripComments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Studies.
+        /// </summary>
+        public static string Studies {
+            get {
+                return ResourceManager.GetString("Studies", resourceCulture);
             }
         }
         

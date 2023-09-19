@@ -139,19 +139,26 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns true of background processing is in progress.
+        /// </summary>
+        public bool IsBackgroundLoadingInProgress
+        {
+            get => GamesManager.State == ProcessState.RUNNING;
+        }
+
+        /// <summary>
         /// Called when creating a Workbook to populate article lists across the workbook.
         /// The created list must have the exact same number of elements as the passed collection
         /// and they must match their source by index.
         /// </summary>
         /// <param name="articleDataList"></param>
-        public List<Article> CreateArticlePlaceholders(ObservableCollection<GameData> articleDataList)
+        public List<Article> CreateArticlePlaceholders(ObservableCollection<GameData> articleDataList, Chapter chapter = null)
         {
             List<Article> lstArticles = new List<Article>(articleDataList.Count);
 
             // put a null value in the first element
             lstArticles.Add(null);
 
-            Chapter chapter = null;
             for (int i = 1; i < articleDataList.Count; i++)
             {
                 GameData gm = articleDataList[i];

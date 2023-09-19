@@ -206,7 +206,7 @@
                                 <Separator x:Name="UiMncMainBoardSepar_1a" />
                                 <MenuItem x:Name="UiMnciEvalPos" Header="{x:Static p:Resources.EvaluatePosition}" Click="UiMnEvaluatePosition_Click" />
                                 <MenuItem x:Name="UiMnciEvalLine" Header="{x:Static p:Resources.EvaluateLine}" Click="UiMnEvaluateLine_Click" />
-                                <MenuItem x:Name="UiMnciFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}" Click="UiMnFindIdenticalPosition_Click" />
+                                <MenuItem x:Name="UiMnciFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}" Click="UiMnFindIdenticalPosition_Click" InputGestureText="F3"/>
                                 <Separator x:Name="UiMncMainBoardSepar_2" />
                                 <MenuItem x:Name="UiMnciBookmarkPosition" Header="{x:Static p:Resources.BookmarkThisPosition}" Click="UiMnMarkBookmark_Click" />
                                 <Separator x:Name="UiMncMainBoardSepar_4" />
@@ -567,7 +567,7 @@
                                     <Separator />
                                     <MenuItem x:Name="_mnGame_EvalMove" Header="{x:Static p:Resources.EvaluatePosition}"  Click="UiMnEvaluatePosition_Click" />
                                     <MenuItem x:Name="_mnGame_EvalLine" Header="{x:Static p:Resources.EvaluateLine}"  Click="UiMnEvaluateLine_Click" />
-                                    <MenuItem x:Name="UiMnGameFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}" Click="UiMnFindIdenticalPosition_Click" />
+                                    <MenuItem x:Name="UiMnGameFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}" Click="UiMnFindIdenticalPosition_Click" InputGestureText="F3" />
                                     <Separator />
                                     <MenuItem x:Name="UiMnGameMarkBookmark" Header="{x:Static p:Resources.BookmarkThisPosition}" Click="UiMnMarkBookmark_Click" />
                                     <MenuItem x:Name="_mnGame_MarkThumbnail" Header="{x:Static p:Resources.MarkAsThumbnail}" Click="UiMn_MarkThumbnail_Click" InputGestureText="Ctrl+T" />
@@ -649,7 +649,7 @@
                                     <Separator x:Name="UiMnExerc_Separator_6"/>
                                     <MenuItem x:Name="UiMnExerc_EvalMove" Header="{x:Static p:Resources.EvaluatePosition}"  Click="UiMnEvaluatePosition_Click" />
                                     <MenuItem x:Name="_mnExerc_EvalLine" Header="{x:Static p:Resources.EvaluateLine}"  Click="UiMnEvaluateLine_Click" />
-                                    <MenuItem x:Name="UiMnExercFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}" Click="UiMnFindIdenticalPosition_Click" />
+                                    <MenuItem x:Name="UiMnExercFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}" Click="UiMnFindIdenticalPosition_Click" InputGestureText="F3" />
                                     <Separator x:Name="UiMnExerc_Separator_7"/>
                                     <MenuItem x:Name="UiMnExercMarkBookmark" Header="{x:Static p:Resources.BookmarkThisPosition}" Click="UiMnMarkBookmark_Click" />
                                     <MenuItem x:Name="_mnExerc_MarkThumbnail" Header="{x:Static p:Resources.MarkAsThumbnail}" Click="UiMn_ExerciseMarkThumbnail_Click" InputGestureText="Ctrl+T" />

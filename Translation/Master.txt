@@ -1,6 +1,6 @@
 ##################################
 #
-# MASTER FILE for Translations
+# Header: MASTER FILE for Translations
 #
 ##################################
 
@@ -38,7 +38,7 @@ ChangeLanguageNote=The requested change of language requires restarting the appl
 
 ##################################
 #
-# COMMON TERMS
+# Header: COMMON TERMS
 #
 
 #Workbook
@@ -82,6 +82,9 @@ Intro=Intro
 
 #Study Tree
 Study=Study
+
+#Study Trees plural
+Studies=Studies
 
 #Game
 Game=Game
@@ -274,7 +277,7 @@ GoBack=Go back (ALT + ←)
 
 ##################################
 #
-# EDITING
+# Header: EDITING
 #
 
 #Font bold
@@ -297,7 +300,7 @@ DecreaseIndent=Decrease Indent
 
 ##################################
 #
-# ERRORS
+# Header: ERRORS
 #
 
 #Found
@@ -353,7 +356,7 @@ ErrHttpStatus=Bad response from the server. Error: $0
 ErrNoTextReceived=no text received.
 
 #
-# MAIN MENU
+# Header: MAIN MENU
 #
 
 
@@ -555,7 +558,7 @@ TurnEngineOn=Turn the Engine On
 TopGames=Top Games
 
 #
-# CONTEXT MENU for the Main Chessboard
+# Header: CONTEXT MENU for the Main Chessboard
 #
 
 #Start training from the current position
@@ -592,7 +595,7 @@ StudyTreeAfter=Study position after
 NotNamed=[not named]
 
 #
-# CONTEXT MENU in Training View
+# Header: CONTEXT MENU in Training View
 #
 
 #User wants to restart the game against the engine after a certain move in the Training Session
@@ -606,7 +609,7 @@ RestartGameFrom=Restart Game from
 
 
 #
-# CONTEXT MENU for Chapters Tab
+# Header: CONTEXT MENU for Chapters Tab
 #
 
 #Create a new chapter
@@ -704,7 +707,7 @@ DeleteSelectedExercise=Delete Selected Exercise
 ConfirmDeleteExercise=Delete Exercise
 
 #
-# CONTEXT MENU for Intro Tab
+# Header: CONTEXT MENU for Intro Tab
 #
 
 #Insert a diagram
@@ -779,7 +782,7 @@ Chapter0of0=Chapter $0 of $1
 
 
 #
-# CONTEXT MENU for Bookmarks
+# Header: CONTEXT MENU for Bookmarks
 #
 
 #Start training from the selected bookmark
@@ -801,7 +804,7 @@ DeleteAllBookmarks=Delete All Bookmarks
 Page0of0=Page $0 of $1
 
 #
-# CONTEXT MENU for Games
+# Header: CONTEXT MENU for Games
 #
 
 
@@ -818,7 +821,7 @@ Game0of0=Game $0 of $1
 
 
 #
-# CONTEXT MENU for Exercises
+# Header: CONTEXT MENU for Exercises
 #
 
 
@@ -837,7 +840,7 @@ Exercise0of0=Exercise $0 of $1
 
 
 #
-# Scoresheet
+# Header: SCORESHEET
 #
 			
 #Scoresheet			
@@ -858,7 +861,7 @@ EvaluationShort=Ev
 
 
 #
-# CONTEXT MENU for Top Games
+# Header: CONTEXT MENU for Top Games
 #
 
 
@@ -876,7 +879,7 @@ FullView=Full View
 
 
 #
-# Context menu for SelectArticles dialog
+# Header: Context menu for SelectArticles dialog
 #
 # PreviewGame already defined elsewhere
 #
@@ -894,7 +897,7 @@ GoToExercises=Open Exercise View
 
 ##################################
 #
-# Button Labels
+# Header: Button Labels
 #
 
 #OK
@@ -921,7 +924,7 @@ UseFigurines=Use Figurines
 
 ##################################
 #
-# Message Box Titles
+# Header: Message Box Titles
 #
 
 #File error
@@ -980,7 +983,7 @@ MbtTitleCopyPasteError=Copy/Paste Error
 
 ##################################
 #
-# Message Text
+# Header: Message Text
 #
 
 #Flash message: Game Imported Successfully.
@@ -1052,6 +1055,12 @@ SelectEngineStartMove=Select the move from which to start.
 
 #Select a position
 SelectPosition=A position must be selected.
+
+#Select Games and Studies to move to a chapter
+SelectGamesStudiesToMove=MOVE - click to select items to move to a new or existing chapter
+
+#Select Games and Studies to copy to a chapter
+SelectGamesStudiesToCopy=COPY - click to select items to copy to a new or existing chapter
 
 #Delete chapter
 DeleteChapter=Delete Chapter
@@ -1148,9 +1157,12 @@ MsgTakebackWanted=Takeback?
 #Takeback instructions
 MsgTakebackInfo=Click here or press the space key to take back your move.
 
+#All items already in the target chapter (when copying/moving from FindIdenticalPosition)
+ItemsAlreadyInChapter=All items already are in the target chapter.
+
 ##################################
 #
-# Dialogs
+# Header: Dialogs
 #
 
 
@@ -1199,6 +1211,12 @@ SelectOption=Select Option
 
 #Select Items to create a new Workbook
 SelectItemsforWorkbook=Select Items to create a new Workbook from:
+
+#Select items to move
+SelectItemsToMove=Select Items to Move
+
+#Select items to copy
+SelectItemsToCopy=Select Items to Copy
 
 #Select Games
 SelectGames=Select Games
@@ -1292,7 +1310,7 @@ IncrementMajorVersion=Increment major version
 NewChapterFromLine=Create New Chapter From Line
 
 #A new chapter will be created from the selected sub-tree.
-NewChapterToBeCreate=A new chapter will be created from the selected sub-tree.
+NewChapterToBeCreated=A new chapter will be created from the selected sub-tree.
 
 #Check box to delete sub-tree from the source chapter
 DeleteSubTreeFromSource=Delete the sub-tree from the original chapter.
@@ -1543,9 +1561,12 @@ Library=Library
 ExplorersAbout=Openings/Tablebases
 
 
+#Currently viewed
+CurrentlyViewed=Currently viewed
+
 ##################################
 #
-# Training
+# Header: Training
 #
 
 # User's move was
@@ -1674,7 +1695,7 @@ TrnRightClickMove=Right click to open the context menu.
 
 ##################################
 #
-# Comment Box
+# Header: Comment Box
 #
 
 #Info for the user on how to open a Workbook
@@ -1704,6 +1725,9 @@ cbClickThruMoves=Keyboard: ←/→ (back/forth); SHIFT ↑↓ or Home/End (go to
 
 #Double click to annotate
 cbDoubleClickToAnnotate=Click through the moves. Double click to annotate.
+
+#F3 to find identical positions
+cbFindIdenticalPositions=Press F3 to find identical positions.
 
 #Right click for context menu
 cbAdvancedEditig=Right click to open menu for advanced editing, FEN, creating exercise and more.
@@ -1786,7 +1810,7 @@ cbInvestigateIdenticalPositions=Press F3 or use the context menu to show it.
 
 ##################################
 #
-# Announcements
+# Header: Announcements
 #
 
 #Loading Engine
@@ -1803,7 +1827,7 @@ ReadingItems=Reading item $0 of $1
 
 ##################################
 #
-# Openings Explore / Tablebase
+# Header: Openings Explorer / Tablebase
 #
 
 #checkmate
@@ -1833,7 +1857,7 @@ OebWinning=Winning
 
 ##################################
 #
-# Position Validation
+# Header: Position Validation
 #
 
 #Too many White Kings
@@ -1856,7 +1880,7 @@ PosValBlackKingInCheck=Black King cannot be in check on Black's move
 
 ##################################
 #
-# MESSAGES / WARNINGS / NOTIFICATIONS
+# Header: MESSAGES / WARNINGS / NOTIFICATIONS
 #
 
 #Info: line evaluation is in progress
@@ -1873,7 +1897,7 @@ EngineReplaced=Selected engine loaded
 
 ##################################
 #
-# Libary exceptions
+# Header: Libary exceptions
 #
 
 #Missing move while parsing PGN
@@ -1912,7 +1936,7 @@ IllegalCastling=Illegal castling attempted
 
 ##################################
 #
-# External texts
+# Header: External texts
 #
 
 #Workbook info
