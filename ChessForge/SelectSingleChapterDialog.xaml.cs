@@ -19,11 +19,11 @@ namespace ChessForge
     /// </summary>
     public partial class SelectSingleChapterDialog : Window
     {
-        // true if user exits by clicking ok or double click on the list
-        public bool ExitOk = false;
-
         // selected chapter index
         public int SelectedIndex = -1;
+
+        // flags whether the user request a new chapter
+        public bool CreateNew = false;
 
         /// <summary>
         /// Constructs the dialog and binds the list of chapters.
@@ -31,7 +31,20 @@ namespace ChessForge
         public SelectSingleChapterDialog()
         {
             InitializeComponent();
+            UiBtnCreateNew.Content = "   " + Properties.Resources.CreateNewChapter + "    ";
+            UiBtnCreateNew.Background = Brushes.LightGreen;
             UiLbChapters.ItemsSource = WorkbookManager.SessionWorkbook.Chapters;
+        }
+
+        /// <summary>
+        /// Exit the dialog with a flag to create a new chapter
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnCreateNew_Click(object sender, RoutedEventArgs e)
+        {
+            CreateNew = true;
+            DialogResult = true;
         }
 
         /// <summary>
@@ -42,7 +55,6 @@ namespace ChessForge
         private void UiBtnOk_Click(object sender, RoutedEventArgs e)
         {
             SelectedIndex = UiLbChapters.SelectedIndex;
-            ExitOk = true;
             DialogResult = true;
         }
 
