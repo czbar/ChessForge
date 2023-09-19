@@ -1563,6 +1563,14 @@ SelectOption=
 #english: SelectItemsforWorkbook=Select Items to create a new Workbook from:
 SelectItemsforWorkbook=
 
+#description: Select items to move
+#english: SelectItemsToMove=Select Items to Move
+SelectItemsToMove=
+
+#description: Select items to copy
+#english: SelectItemsToCopy=Select Items to Copy
+SelectItemsToCopy=
+
 #description: Select Games
 #english: SelectGames=Select Games
 SelectGames=

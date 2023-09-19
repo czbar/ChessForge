@@ -4158,6 +4158,24 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select Items to Copy.
+        /// </summary>
+        public static string SelectItemsToCopy {
+            get {
+                return ResourceManager.GetString("SelectItemsToCopy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Items to Move.
+        /// </summary>
+        public static string SelectItemsToMove {
+            get {
+                return ResourceManager.GetString("SelectItemsToMove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select Option.
         /// </summary>
         public static string SelectOption {

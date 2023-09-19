@@ -1179,6 +1179,12 @@
   <data name="SelectItemsforWorkbook" xml:space="preserve">
     <value>Wybierz elementy do utworzenia nowego Podręcznika:</value>
   </data>
+  <data name="SelectItemsToMove" xml:space="preserve">
+    <value>Wybierz Pozycje do Przeniesienia</value>
+  </data>
+  <data name="SelectItemsToCopy" xml:space="preserve">
+    <value>Wybierz Pozycje do Skopiowania</value>
+  </data>
   <data name="SelectGames" xml:space="preserve">
     <value>Wybierz Partie</value>
   </data>

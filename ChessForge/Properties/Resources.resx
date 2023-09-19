@@ -1180,6 +1180,12 @@
   <data name="SelectItemsforWorkbook" xml:space="preserve">
     <value>Select Items to create a new Workbook from:</value>
   </data>
+  <data name="SelectItemsToMove" xml:space="preserve">
+    <value>Select Items to Move</value>
+  </data>
+  <data name="SelectItemsToCopy" xml:space="preserve">
+    <value>Select Items to Copy</value>
+  </data>
   <data name="SelectGames" xml:space="preserve">
     <value>Select Games</value>
   </data>

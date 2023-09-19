@@ -1209,6 +1209,12 @@ SelectOption=Select Option
 #Select Items to create a new Workbook
 SelectItemsforWorkbook=Select Items to create a new Workbook from:
 
+#Select items to move
+SelectItemsToMove=Select Items to Move
+
+#Select items to copy
+SelectItemsToCopy=Select Items to Copy
+
 #Select Games
 SelectGames=Select Games
 
