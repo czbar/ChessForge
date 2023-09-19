@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using ChessPosition;
 using System.Windows.Input;
+using System.Text.RegularExpressions;
 
 namespace ChessForge
 {
@@ -71,61 +72,83 @@ namespace ChessForge
                         if (dlgEx.Request == IdenticalPositionsExDialog.Action.CopyArticles
                             || dlgEx.Request == IdenticalPositionsExDialog.Action.MoveArticles)
                         {
-                            // make a list with only games and exercises
-                            RemoveStudies(lstIdenticalPositions);
-                            string title = dlgEx.Request == IdenticalPositionsExDialog.Action.MoveArticles ?
-                                           Properties.Resources.SelectItemsToMove : Properties.Resources.SelectItemsToCopy;
-                            SelectArticlesDialog dlg = new SelectArticlesDialog(null, title, ref lstIdenticalPositions, true)
-                            {
-                                Left = AppState.MainWin.ChessForgeMain.Left + 100,
-                                Top = AppState.MainWin.ChessForgeMain.Top + 100,
-                                Topmost = false,
-                                Owner = AppState.MainWin
-                            };
-                            dlg.ShowDialog();
+                            ProcessCopyMoveArticlesRequest(lstIdenticalPositions, dlgEx.Request);
                         }
                         else if (dlgEx.ArticleIndexId >= 0 && dlgEx.ArticleIndexId < lstIdenticalPositions.Count)
                         {
-                            ArticleListItem item = lstIdenticalPositions[dlgEx.ArticleIndexId];
-                            uint moveNumberOffset = 0;
-                            if (item.Article != null && item.Article.Tree != null)
-                            {
-                                moveNumberOffset = item.Article.Tree.MoveNumberOffset;
-                            }
-                            List<TreeNode> nodelList = null;
-                            switch (dlgEx.Request)
-                            {
-                                case IdenticalPositionsExDialog.Action.CopyLine:
-                                    nodelList = TreeUtils.CopyNodeList(item.TailLine);
-                                    ChfClipboard.HoldNodeList(nodelList, moveNumberOffset);
-                                    AppState.MainWin.PasteChfClipboard();
-                                    AppState.IsDirty = true;
-                                    break;
-                                case IdenticalPositionsExDialog.Action.CopyTree:
-                                    foreach (TreeNode node in item.TailLine[0].Parent.Children)
-                                    {
-                                        nodelList = TreeUtils.CopySubtree(node);
-                                        ChfClipboard.HoldNodeList(nodelList, moveNumberOffset);
-                                        AppState.MainWin.PasteChfClipboard();
-                                    }
-                                    AppState.IsDirty = true;
-                                    break;
-                                case IdenticalPositionsExDialog.Action.OpenView:
-                                    WorkbookLocationNavigator.GotoArticle(item.ChapterIndex, item.Article.Tree.ContentType, item.ArticleIndex);
-                                    if (item.Article.Tree.ContentType == GameData.ContentType.STUDY_TREE)
-                                    {
-                                        AppState.MainWin.SetupGuiForActiveStudyTree(true);
-                                    }
-                                    AppState.MainWin.SetActiveLine(item.Node.LineId, item.Node.NodeId);
-                                    AppState.MainWin.ActiveTreeView.SelectLineAndMove(item.Node.LineId, item.Node.NodeId);
-                                    break;
-                            }
+                            ProcessSelectedPosition(lstIdenticalPositions, dlgEx.Request, dlgEx.ArticleIndexId);
                         }
                     }
                 }
             }
 
             return anyFound;
+        }
+
+        /// <summary>
+        /// Processes a response from the dialog, where the user requested to copy/move articles
+        /// </summary>
+        /// <param name="lstIdenticalPositions"></param>
+        /// <param name="request"></param>
+        private static void ProcessCopyMoveArticlesRequest(ObservableCollection<ArticleListItem> lstIdenticalPositions, IdenticalPositionsExDialog.Action request)
+        {
+            // make a list with only games and exercises
+            RemoveStudies(lstIdenticalPositions);
+            string title = request == IdenticalPositionsExDialog.Action.MoveArticles ?
+                           Properties.Resources.SelectItemsToMove : Properties.Resources.SelectItemsToCopy;
+            SelectArticlesDialog dlg = new SelectArticlesDialog(null, title, ref lstIdenticalPositions, true)
+            {
+                Left = AppState.MainWin.ChessForgeMain.Left + 100,
+                Top = AppState.MainWin.ChessForgeMain.Top + 100,
+                Topmost = false,
+                Owner = AppState.MainWin
+            };
+            dlg.ShowDialog();
+        }
+
+        /// <summary>
+        /// Processes a response from the dialog, where the user requested
+        /// action on a specific item
+        /// </summary>
+        /// <param name="lstIdenticalPositions"></param>
+        /// <param name="request"></param>
+        /// <param name="articleIndexId"></param>
+        private static void ProcessSelectedPosition(ObservableCollection<ArticleListItem> lstIdenticalPositions, IdenticalPositionsExDialog.Action request, int articleIndexId)
+        {
+            ArticleListItem item = lstIdenticalPositions[articleIndexId];
+            uint moveNumberOffset = 0;
+            if (item.Article != null && item.Article.Tree != null)
+            {
+                moveNumberOffset = item.Article.Tree.MoveNumberOffset;
+            }
+            List<TreeNode> nodelList = null;
+            switch (request)
+            {
+                case IdenticalPositionsExDialog.Action.CopyLine:
+                    nodelList = TreeUtils.CopyNodeList(item.TailLine);
+                    ChfClipboard.HoldNodeList(nodelList, moveNumberOffset);
+                    AppState.MainWin.PasteChfClipboard();
+                    AppState.IsDirty = true;
+                    break;
+                case IdenticalPositionsExDialog.Action.CopyTree:
+                    foreach (TreeNode node in item.TailLine[0].Parent.Children)
+                    {
+                        nodelList = TreeUtils.CopySubtree(node);
+                        ChfClipboard.HoldNodeList(nodelList, moveNumberOffset);
+                        AppState.MainWin.PasteChfClipboard();
+                    }
+                    AppState.IsDirty = true;
+                    break;
+                case IdenticalPositionsExDialog.Action.OpenView:
+                    WorkbookLocationNavigator.GotoArticle(item.ChapterIndex, item.Article.Tree.ContentType, item.ArticleIndex);
+                    if (item.Article.Tree.ContentType == GameData.ContentType.STUDY_TREE)
+                    {
+                        AppState.MainWin.SetupGuiForActiveStudyTree(true);
+                    }
+                    AppState.MainWin.SetActiveLine(item.Node.LineId, item.Node.NodeId);
+                    AppState.MainWin.ActiveTreeView.SelectLineAndMove(item.Node.LineId, item.Node.NodeId);
+                    break;
+            }
         }
 
         /// <summary>
