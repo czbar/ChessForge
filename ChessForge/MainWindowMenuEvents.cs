@@ -641,8 +641,9 @@ namespace ChessForge
                 TreeNode nd = ActiveLine.GetSelectedTreeNode();
                 FindIdenticalPositions.Search(nd, FindIdenticalPositions.Mode.FIND_AND_REPORT);
             }
-            catch
+            catch (Exception ex)
             {
+                AppLog.Message("UiMnFindIdenticalPosition_Click()", ex);
             }
         }
 
