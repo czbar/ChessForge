@@ -103,7 +103,39 @@ namespace ChessForge
                 Topmost = false,
                 Owner = AppState.MainWin
             };
-            dlg.ShowDialog();
+
+            if (dlg.ShowDialog() == true)
+            {
+                int index = AppState.MainWin.InvokeSelectSingleChapterDialog();
+                if (index >= 0)
+                {
+                    // perform the requested operation
+                    List<ArticleListItem> articlesToInsert = new List<ArticleListItem>();
+                    if (request == IdenticalPositionsExDialog.Action.CopyArticles)
+                    {
+                        // make copies and give them new GUIDs
+                        foreach (ArticleListItem ali in lstIdenticalPositions)
+                        {
+                            Article newArticle = ali.Article.CloneMe();
+                            newArticle.Tree.Header.SetNewTreeGuid();
+                            ArticleListItem article = new ArticleListItem(ali.Chapter, ali.ChapterIndex, newArticle, ali.ArticleIndex);
+                            articlesToInsert.Add(article);
+                        }
+                    }
+                    else
+                    {
+                        // we are moving so store just references, not copies
+                        foreach (ArticleListItem ali in lstIdenticalPositions)
+                        {
+                            ArticleListItem article = new ArticleListItem(ali.Chapter, ali.ChapterIndex, ali.Article, ali.ArticleIndex);
+                            articlesToInsert.Add(article);
+                        }
+                    }
+
+                    // TODO: move to the selected chapter
+                    // make sure that if we are moving to an existing chapter, we skip the artcles already in that chapter
+                }
+            }
         }
 
         /// <summary>
