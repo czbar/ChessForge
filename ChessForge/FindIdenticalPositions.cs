@@ -111,7 +111,7 @@ namespace ChessForge
 
                 if (HasAtLeastNArticles(lstIdenticalPositions, 1))
                 {
-                    int index = AppState.MainWin.InvokeSelectSingleChapterDialog(out bool newChapter);
+                    int index = ChapterUtils.InvokeSelectSingleChapterDialog(out bool newChapter);
                     if (index >= 0)
                     {
                         RemoveChapters(lstIdenticalPositions);
