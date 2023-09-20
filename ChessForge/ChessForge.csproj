@@ -111,6 +111,7 @@
     <Compile Include="ChapterTitleDialog.xaml.cs">
       <DependentUpon>ChapterTitleDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ChapterUtils.cs" />
     <Compile Include="ChapterViewState.cs" />
     <Compile Include="ChessBoardSmall.cs" />
     <Compile Include="ChessForgeEventArgs.cs" />
