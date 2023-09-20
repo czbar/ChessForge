@@ -32,17 +32,17 @@ namespace ChessForge
         /// If mode is set to CHECK_IF_ANY, this is all it does,
         /// otherwise it pops up an appropriate message or dialog for the user.
         /// </summary>
-        /// <param name="nd"></param>
+        /// <param name="searchNode"></param>
         /// <param name="mode"></param>
         /// <returns></returns>
-        public static bool Search(TreeNode nd, Mode mode)
+        public static bool Search(TreeNode searchNode, Mode mode)
         {
             bool anyFound = false;
             ObservableCollection<ArticleListItem> lstIdenticalPositions;
             try
             {
                 Mouse.SetCursor(Cursors.Wait);
-                lstIdenticalPositions = ArticleListBuilder.BuildIdenticalPositionsList(nd, mode == Mode.CHECK_IF_ANY, false);
+                lstIdenticalPositions = ArticleListBuilder.BuildIdenticalPositionsList(searchNode, mode == Mode.CHECK_IF_ANY, false);
 
                 anyFound = lstIdenticalPositions.Count > 0;
 
@@ -55,7 +55,7 @@ namespace ChessForge
                     }
                     else
                     {
-                        IdenticalPositionsExDialog dlgEx = new IdenticalPositionsExDialog(nd, ref lstIdenticalPositions)
+                        IdenticalPositionsExDialog dlgEx = new IdenticalPositionsExDialog(searchNode, ref lstIdenticalPositions)
                         {
                             Left = AppState.MainWin.ChessForgeMain.Left + 100,
                             Top = AppState.MainWin.ChessForgeMain.Top + 100,
@@ -68,7 +68,7 @@ namespace ChessForge
                             if (dlgEx.Request == IdenticalPositionsExDialog.Action.CopyArticles
                                 || dlgEx.Request == IdenticalPositionsExDialog.Action.MoveArticles)
                             {
-                                ProcessCopyMoveArticlesRequest(lstIdenticalPositions, dlgEx.Request);
+                                ProcessCopyMoveArticlesRequest(searchNode, lstIdenticalPositions, dlgEx.Request);
                             }
                             else if (dlgEx.ArticleIndexId >= 0 && dlgEx.ArticleIndexId < lstIdenticalPositions.Count)
                             {
@@ -91,7 +91,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="lstIdenticalPositions"></param>
         /// <param name="request"></param>
-        private static void ProcessCopyMoveArticlesRequest(ObservableCollection<ArticleListItem> lstIdenticalPositions, IdenticalPositionsExDialog.Action request)
+        private static void ProcessCopyMoveArticlesRequest(TreeNode searchNode, ObservableCollection<ArticleListItem> lstIdenticalPositions, IdenticalPositionsExDialog.Action request)
         {
             // make a list with only games and exercises
             RemoveStudies(lstIdenticalPositions);
@@ -107,13 +107,17 @@ namespace ChessForge
 
             if (dlg.ShowDialog() == true)
             {
-                int index = AppState.MainWin.InvokeSelectSingleChapterDialog();
+                int index = AppState.MainWin.InvokeSelectSingleChapterDialog(out bool newChapter);
                 if (index >= 0)
                 {
                     RemoveChapters(lstIdenticalPositions);
                     bool emptyEntryList = lstIdenticalPositions.Count == 0;
 
                     Chapter targetChapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(index);
+                    if (newChapter)
+                    {
+                        SetChapterTitle(searchNode, targetChapter);
+                    }
                     if (targetChapter != null)
                     {
                         List<ArticleListItem> articlesToInsert = CreateListToMoveOrCopy(lstIdenticalPositions, request, targetChapter);
@@ -169,6 +173,26 @@ namespace ChessForge
                         AppLog.Message("Unexpected error in ProcessCopyMoveArticlesRequest() - target chapter is null");
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Sets the chapter's title based on the passed move ECO code
+        /// and the move notation.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="chapter"></param>
+        private static void SetChapterTitle(TreeNode nd, Chapter chapter)
+        {
+            if (nd != null && chapter != null)
+            {
+                string title = "";
+                if (nd.Eco != null)
+                {
+                    title = nd.Eco + ": ";
+                }
+                title += MoveUtils.BuildSingleMoveText(nd, true, true, 0);
+                chapter.SetTitle(title);
             }
         }
 
