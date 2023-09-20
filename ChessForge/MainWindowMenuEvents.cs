@@ -1386,8 +1386,10 @@ namespace ChessForge
         /// and returns the selected index.
         /// </summary>
         /// <returns></returns>
-        public int InvokeSelectSingleChapterDialog()
+        public int InvokeSelectSingleChapterDialog(out bool newChapter)
         {
+            newChapter = false;
+
             try
             {
                 int chapterIndex = -1;
@@ -1405,6 +1407,7 @@ namespace ChessForge
                     if (dlg.CreateNew)
                     {
                         chapterIndex = WorkbookManager.SessionWorkbook.CreateNewChapter().Index;
+                        newChapter = true;
                     }
                     else
                     {
@@ -1474,7 +1477,7 @@ namespace ChessForge
 
             try
             {
-                selectedChapterIndex = InvokeSelectSingleChapterDialog();
+                selectedChapterIndex = InvokeSelectSingleChapterDialog(out _);
 
                 if (selectedChapterIndex >= 0)
                 {
@@ -1511,7 +1514,7 @@ namespace ChessForge
         {
             try
             {
-                int selectedChapterIndex = InvokeSelectSingleChapterDialog();
+                int selectedChapterIndex = InvokeSelectSingleChapterDialog(out _);
 
                 if (selectedChapterIndex >= 0)
                 {
