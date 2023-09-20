@@ -507,7 +507,9 @@ namespace GameTree
             {
                 foreach (TreeNode child in Children)
                 {
-                    clone.Children.Add(child.CloneMe(false));
+                    TreeNode childClone = child.CloneMe(false);
+                    childClone.Parent = clone;
+                    clone.Children.Add(childClone);
                 }
             }
 
