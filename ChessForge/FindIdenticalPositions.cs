@@ -409,7 +409,7 @@ namespace ChessForge
                 }
             }
 
-            return count >= 2;
+            return count >= n;
         }
 
     }
