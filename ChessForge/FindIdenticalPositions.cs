@@ -48,7 +48,7 @@ namespace ChessForge
 
                 if (mode == Mode.FIND_AND_REPORT)
                 {
-                    if (!HasAtLeastTwoArticles(lstIdenticalPositions))
+                    if (!HasAtLeastNArticles(lstIdenticalPositions, 2))
                     {
                         // we only have 1 result which is the current position
                         MessageBox.Show(Properties.Resources.MsgNoIdenticalPositions, Properties.Resources.ChessForge, MessageBoxButton.OK, MessageBoxImage.Information);
@@ -107,70 +107,79 @@ namespace ChessForge
 
             if (dlg.ShowDialog() == true)
             {
-                int index = AppState.MainWin.InvokeSelectSingleChapterDialog(out bool newChapter);
-                if (index >= 0)
+                RemoveUnselectedArticles(lstIdenticalPositions);
+
+                if (HasAtLeastNArticles(lstIdenticalPositions, 1))
                 {
-                    RemoveChapters(lstIdenticalPositions);
-                    bool emptyEntryList = lstIdenticalPositions.Count == 0;
+                    int index = AppState.MainWin.InvokeSelectSingleChapterDialog(out bool newChapter);
+                    if (index >= 0)
+                    {
+                        RemoveChapters(lstIdenticalPositions);
+                        bool emptyEntryList = lstIdenticalPositions.Count == 0;
 
-                    Chapter targetChapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(index);
-                    if (newChapter)
-                    {
-                        SetChapterTitle(searchNode, targetChapter);
-                    }
-                    if (targetChapter != null)
-                    {
-                        List<ArticleListItem> articlesToInsert = CreateListToMoveOrCopy(lstIdenticalPositions, request, targetChapter);
-                        if (articlesToInsert.Count > 0)
+                        Chapter targetChapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(index);
+                        if (newChapter)
                         {
-                            // place the articles in the target chapter
-                            foreach (ArticleListItem ali in articlesToInsert)
-                            {
-                                if (ali.Article != null)
-                                {
-                                    if (ali.ContentType == GameData.ContentType.MODEL_GAME)
-                                    {
-                                        targetChapter.AddModelGame(ali.Article);
-                                    }
-                                    else if (ali.ContentType == GameData.ContentType.EXERCISE)
-                                    {
-                                        targetChapter.AddExercise(ali.Article);
-                                    }
-                                }
-                            }
+                            SetChapterTitle(searchNode, targetChapter);
+                            List<TreeNode> stem = TreeUtils.GetStemLine(searchNode, true);
+                            stem[stem.Count - 1].IsThumbnail = true;
+                            targetChapter.StudyTree.Tree.Nodes = TreeUtils.CopyNodeList(stem);
 
-                            // remove from the articles from their source chapters,
-                            // note that we could be removing the Active article so the GUI must be handled
-                            // accordingly
-                            if (request == IdenticalPositionsExDialog.Action.MoveArticles)
+                        }
+                        if (targetChapter != null)
+                        {
+                            List<ArticleListItem> articlesToInsert = CreateListToMoveOrCopy(lstIdenticalPositions, request, targetChapter);
+                            if (articlesToInsert.Count > 0)
                             {
+                                // place the articles in the target chapter
                                 foreach (ArticleListItem ali in articlesToInsert)
                                 {
-                                    Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(ali.ChapterIndex);
-                                    chapter?.DeleteArticle(ali.Article);
+                                    if (ali.Article != null)
+                                    {
+                                        if (ali.ContentType == GameData.ContentType.MODEL_GAME)
+                                        {
+                                            targetChapter.AddModelGame(ali.Article);
+                                        }
+                                        else if (ali.ContentType == GameData.ContentType.EXERCISE)
+                                        {
+                                            targetChapter.AddExercise(ali.Article);
+                                        }
+                                    }
+                                }
+
+                                // remove from the articles from their source chapters,
+                                // note that we could be removing the Active article so the GUI must be handled
+                                // accordingly
+                                if (request == IdenticalPositionsExDialog.Action.MoveArticles)
+                                {
+                                    foreach (ArticleListItem ali in articlesToInsert)
+                                    {
+                                        Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(ali.ChapterIndex);
+                                        chapter?.DeleteArticle(ali.Article);
+                                    }
+                                }
+
+                                targetChapter.IsViewExpanded = true;
+                                targetChapter.IsModelGamesListExpanded = true;
+                                targetChapter.IsExercisesListExpanded = true;
+
+                                AppState.MainWin.ChaptersView.IsDirty = true;
+
+                                AppState.MainWin.UiTabChapters.Focus();
+                                PulseManager.ChaperIndexToBringIntoView = targetChapter.Index;
+                            }
+                            else
+                            {
+                                if (!emptyEntryList)
+                                {
+                                    AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.ItemsAlreadyInChapter);
                                 }
                             }
-
-                            targetChapter.IsViewExpanded = true;
-                            targetChapter.IsModelGamesListExpanded = true;
-                            targetChapter.IsExercisesListExpanded = true;
-
-                            AppState.MainWin.ChaptersView.IsDirty = true;
-
-                            AppState.MainWin.UiTabChapters.Focus();
-                            PulseManager.ChaperIndexToBringIntoView = targetChapter.Index;
                         }
                         else
                         {
-                            if (!emptyEntryList)
-                            {
-                                AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.ItemsAlreadyInChapter);
-                            }
+                            AppLog.Message("Unexpected error in ProcessCopyMoveArticlesRequest() - target chapter is null");
                         }
-                    }
-                    else
-                    {
-                        AppLog.Message("Unexpected error in ProcessCopyMoveArticlesRequest() - target chapter is null");
                     }
                 }
             }
@@ -292,6 +301,28 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Removes all Articles that are not selected.
+        /// </summary>
+        /// <param name="lstIdenticalPositions"></param>
+        private static void RemoveUnselectedArticles(ObservableCollection<ArticleListItem> lstIdenticalPositions)
+        {
+            List<ArticleListItem> itemsToRemove = new List<ArticleListItem>();
+
+            foreach (ArticleListItem item in lstIdenticalPositions)
+            {
+                if (item.Article != null && !item.IsSelected)
+                {
+                    itemsToRemove.Add(item);
+                }
+            }
+
+            foreach (ArticleListItem item in itemsToRemove)
+            {
+                lstIdenticalPositions.Remove(item);
+            }
+        }
+
+        /// <summary>
         /// Removes lines for studies and chapters that only contain studies.
         /// This is for display in the list of articles to select.
         /// </summary>
@@ -361,7 +392,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="lstPos"></param>
         /// <returns></returns>
-        private static bool HasAtLeastTwoArticles(ObservableCollection<ArticleListItem> lstPos)
+        private static bool HasAtLeastNArticles(ObservableCollection<ArticleListItem> lstPos, int n)
         {
             int count = 0;
             foreach (ArticleListItem item in lstPos)
@@ -371,7 +402,7 @@ namespace ChessForge
                     || item.ContentType == GameData.ContentType.EXERCISE)
                 {
                     count++;
-                    if (count >= 2)
+                    if (count >= n)
                     {
                         break;
                     }
