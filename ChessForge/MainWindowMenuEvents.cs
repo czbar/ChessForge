@@ -388,15 +388,15 @@ namespace ChessForge
         {
             try
             {
-                WorkbookManager.SessionWorkbook.OpsManager.Undo(out WorkbookOperation.WorkbookOperationType opType, out int selectedChapterIndex, out int selectedArticleIndex);
+                WorkbookManager.SessionWorkbook.OpsManager.Undo(out WorkbookOperationType opType, out int selectedChapterIndex, out int selectedArticleIndex);
                 switch (opType)
                 {
-                    case WorkbookOperation.WorkbookOperationType.RENAME_CHAPTER:
+                    case WorkbookOperationType.RENAME_CHAPTER:
                         AppState.MainWin.ActiveTreeView?.BuildFlowDocumentForVariationTree();
                         _chaptersView.BuildFlowDocumentForChaptersView();
                         break;
-                    case WorkbookOperation.WorkbookOperationType.DELETE_CHAPTER:
-                    case WorkbookOperation.WorkbookOperationType.CREATE_CHAPTER:
+                    case WorkbookOperationType.DELETE_CHAPTER:
+                    case WorkbookOperationType.CREATE_CHAPTER:
                         _chaptersView.BuildFlowDocumentForChaptersView();
                         if (AppState.ActiveTab != WorkbookManager.TabViewType.CHAPTERS)
                         {
@@ -405,7 +405,7 @@ namespace ChessForge
                         AppState.DoEvents();
                         _chaptersView.BringChapterIntoViewByIndex(selectedChapterIndex);
                         break;
-                    case WorkbookOperation.WorkbookOperationType.CREATE_ARTICLE:
+                    case WorkbookOperationType.CREATE_ARTICLE:
                         if (AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS)
                         {
                             _chaptersView.BuildFlowDocumentForChaptersView();
@@ -416,13 +416,13 @@ namespace ChessForge
                             SelectModelGame(selectedArticleIndex, true);
                         }
                         break;
-                    case WorkbookOperation.WorkbookOperationType.DELETE_MODEL_GAME:
-                    case WorkbookOperation.WorkbookOperationType.DELETE_MODEL_GAMES:
+                    case WorkbookOperationType.DELETE_MODEL_GAME:
+                    case WorkbookOperationType.DELETE_MODEL_GAMES:
                         _chaptersView.BuildFlowDocumentForChaptersView();
                         SelectModelGame(selectedArticleIndex, AppState.ActiveTab != WorkbookManager.TabViewType.CHAPTERS);
                         break;
-                    case WorkbookOperation.WorkbookOperationType.DELETE_EXERCISE:
-                    case WorkbookOperation.WorkbookOperationType.DELETE_EXERCISES:
+                    case WorkbookOperationType.DELETE_EXERCISE:
+                    case WorkbookOperationType.DELETE_EXERCISES:
                         _chaptersView.BuildFlowDocumentForChaptersView();
                         SelectExercise(selectedArticleIndex, AppState.ActiveTab != WorkbookManager.TabViewType.CHAPTERS);
                         break;
@@ -856,7 +856,7 @@ namespace ChessForge
             string prevTitle = chapter.GetTitle();
             if (ShowChapterTitleDialog(chapter) && chapter.GetTitle() != prevTitle)
             {
-                WorkbookOperation op = new WorkbookOperation(WorkbookOperation.WorkbookOperationType.RENAME_CHAPTER, chapter, prevTitle);
+                WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.RENAME_CHAPTER, chapter, prevTitle);
                 WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
                 AppState.IsDirty = true;
             }
@@ -1025,7 +1025,7 @@ namespace ChessForge
 
                     if (deletedArticles.Count > 0)
                     {
-                        WorkbookOperation.WorkbookOperationType wot =
+                        WorkbookOperationType wot =
                             articleType == GameData.ContentType.MODEL_GAME ? WorkbookOperationType.DELETE_MODEL_GAMES : WorkbookOperationType.DELETE_EXERCISES;
                         int activeArticleIndex = articleType == GameData.ContentType.MODEL_GAME ? chapter.ActiveModelGameIndex : chapter.ActiveExerciseIndex;
                         WorkbookOperation op = new WorkbookOperation(wot, chapter, activeArticleIndex, deletedArticles, deletedIndices);

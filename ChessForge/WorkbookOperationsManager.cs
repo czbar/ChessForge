@@ -56,9 +56,9 @@ namespace ChessForge
         /// <summary>
         /// Performs the undo of the Operation in the queue.
         /// </summary>
-        public void Undo(out WorkbookOperation.WorkbookOperationType tp, out int selectedChapterIndex, out int selectedArticleIndex)
+        public void Undo(out WorkbookOperationType tp, out int selectedChapterIndex, out int selectedArticleIndex)
         {
-            tp = WorkbookOperation.WorkbookOperationType.NONE;
+            tp = WorkbookOperationType.NONE;
             selectedChapterIndex = -1;
             selectedArticleIndex = -1;
             if (_operations.Count == 0)
@@ -73,15 +73,15 @@ namespace ChessForge
 
                 switch (tp)
                 {
-                    case WorkbookOperation.WorkbookOperationType.RENAME_CHAPTER:
+                    case WorkbookOperationType.RENAME_CHAPTER:
                         WorkbookManager.SessionWorkbook.UndoRenameChapter(op.Chapter, op.OpData_1);
                         break;
-                    case WorkbookOperation.WorkbookOperationType.DELETE_CHAPTER:
+                    case WorkbookOperationType.DELETE_CHAPTER:
                         selectedChapterIndex = op.ChapterIndex;
                         WorkbookManager.SessionWorkbook.UndoDeleteChapter(op.Chapter, op.ChapterIndex);
                         WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
                         break;
-                    case WorkbookOperation.WorkbookOperationType.CREATE_CHAPTER:
+                    case WorkbookOperationType.CREATE_CHAPTER:
                         if (WorkbookManager.SessionWorkbook.GetChapterCount() > 1)
                         {
                             selectedChapterIndex = WorkbookManager.SessionWorkbook.GetChapterIndex(op.Chapter);
@@ -93,28 +93,28 @@ namespace ChessForge
                             WorkbookManager.SessionWorkbook.ActiveChapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(selectedChapterIndex);
                         }
                         break;
-                    case WorkbookOperation.WorkbookOperationType.CREATE_ARTICLE:
+                    case WorkbookOperationType.CREATE_ARTICLE:
                         WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
                         selectedChapterIndex = WorkbookManager.SessionWorkbook.GetChapterIndex(op.Chapter);
                         WorkbookManager.SessionWorkbook.UndoCreateArticle(op.Chapter, op.OpData_1 as Article);
                         selectedArticleIndex = op.Chapter.AdjustActiveArticleIndex((op.OpData_1 as Article).ContentType);
                         break;
-                    case WorkbookOperation.WorkbookOperationType.DELETE_MODEL_GAME:
+                    case WorkbookOperationType.DELETE_MODEL_GAME:
                         WorkbookManager.SessionWorkbook.UndoDeleteModelGame(op.Chapter, op.Article, op.ArticleIndex);
                         selectedArticleIndex = op.ArticleIndex;
                         WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
                         break;
-                    case WorkbookOperation.WorkbookOperationType.DELETE_MODEL_GAMES:
+                    case WorkbookOperationType.DELETE_MODEL_GAMES:
                         WorkbookManager.SessionWorkbook.UndoDeleteModelGames(op.Chapter, op.ArticleIndex, op.OpData_1, op.OpData_2);
                         selectedArticleIndex = op.ArticleIndex;
                         WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
                         break;
-                    case WorkbookOperation.WorkbookOperationType.DELETE_EXERCISE:
+                    case WorkbookOperationType.DELETE_EXERCISE:
                         WorkbookManager.SessionWorkbook.UndoDeleteExercise(op.Chapter, op.Article, op.ArticleIndex);
                         selectedArticleIndex = op.ArticleIndex;
                         WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
                         break;
-                    case WorkbookOperation.WorkbookOperationType.DELETE_EXERCISES:
+                    case WorkbookOperationType.DELETE_EXERCISES:
                         WorkbookManager.SessionWorkbook.UndoDeleteExercises(op.Chapter, op.ArticleIndex, op.OpData_1, op.OpData_2);
                         selectedArticleIndex = op.ArticleIndex;
                         WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;

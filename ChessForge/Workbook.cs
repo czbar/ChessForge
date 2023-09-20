@@ -785,7 +785,7 @@ namespace ChessForge
             Chapters.Add(chapter);
             SetActiveChapter(chapter);
 
-            WorkbookOperation op = new WorkbookOperation(WorkbookOperation.WorkbookOperationType.CREATE_CHAPTER, chapter, 0);
+            WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.CREATE_CHAPTER, chapter, 0);
             WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
 
             _activeChapter.SetActiveVariationTree(GameData.ContentType.STUDY_TREE);
@@ -804,7 +804,7 @@ namespace ChessForge
 
             Chapters.Add(chapter);
 
-            WorkbookOperation op = new WorkbookOperation(WorkbookOperation.WorkbookOperationType.CREATE_CHAPTER, chapter, 0);
+            WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.CREATE_CHAPTER, chapter, 0);
             WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
 
             if (makeActive)
@@ -825,7 +825,7 @@ namespace ChessForge
             if (index >= 0)
             {
                 Chapters.Remove(ch);
-                WorkbookOperation op = new WorkbookOperation(WorkbookOperation.WorkbookOperationType.DELETE_CHAPTER, ch, index);
+                WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.DELETE_CHAPTER, ch, index);
                 WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
             }
         }
