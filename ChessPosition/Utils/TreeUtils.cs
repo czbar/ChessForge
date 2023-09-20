@@ -137,7 +137,8 @@ namespace ChessPosition
             if (nd != null)
             {
                 TreeNode clonedRoot = nd.CloneMe(false);
-                return TreeUtils.NodeToNodeList(clonedRoot);
+                clonedRoot.Parent = null;
+                return NodeToNodeList(clonedRoot);
             }
             else
             {
@@ -159,6 +160,12 @@ namespace ChessPosition
                 copiedList.Add(nd.CloneMe(true));
             }
 
+            // make sure parent of the first node points to nowhere
+            if (copiedList.Count > 0)
+            {
+                copiedList[0].Parent = null;
+            }
+
             // set children
             for (int i = 0; i < copiedList.Count; i++)
             {
@@ -170,6 +177,7 @@ namespace ChessPosition
                     if (found != null)
                     {
                         target.Children.Add(found);
+                        found.Parent = target;
                     }
                 }
             }
@@ -245,7 +253,7 @@ namespace ChessPosition
         }
 
         /// <summary>
-        /// Returns the list of positions from the start (no including position 0)
+        /// Returns the list of positions from the start (not including position 0)
         /// until the passed node.
         /// </summary>
         /// <param name="nd"></param>
