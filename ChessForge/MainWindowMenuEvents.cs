@@ -2732,6 +2732,8 @@ namespace ChessForge
                             MessageBox.Show(msg, Properties.Resources.ClipboardOperation, MessageBoxButton.OK, MessageBoxImage.Exclamation);
                         }
                     }
+
+                    AppState.IsDirty = true;
                 }
             }
             catch (Exception ex)
