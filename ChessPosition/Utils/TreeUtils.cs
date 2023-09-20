@@ -253,16 +253,16 @@ namespace ChessPosition
         }
 
         /// <summary>
-        /// Returns the list of positions from the start (not including position 0)
-        /// until the passed node.
+        /// Returns the list of positions from the start until the passed node.
         /// </summary>
         /// <param name="nd"></param>
+        /// <param name="includeRoot">whether to include the root node</param>
         /// <returns></returns>
-        public static List<TreeNode> GetStemLine(TreeNode nd)
+        public static List<TreeNode> GetStemLine(TreeNode nd, bool includeRoot = false)
         {
             List<TreeNode> line = new List<TreeNode>();
 
-            while (nd != null && nd.Parent != null)
+            while (nd != null && (nd.Parent != null || includeRoot))
             {
                 line.Insert(0, nd);
                 nd = nd.Parent;
