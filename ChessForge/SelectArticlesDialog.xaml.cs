@@ -51,7 +51,7 @@ namespace ChessForge
         /// The dialog for selecting Articles (games or exercises) from multiple chapters.
         /// </summary>
         /// <param name="articleList"></param>
-        public SelectArticlesDialog(TreeNode nd, string title, ref ObservableCollection<ArticleListItem> articleList, bool allChapters, GameData.ContentType articleType = GameData.ContentType.GENERIC)
+        public SelectArticlesDialog(TreeNode nd, bool allChaptersCheckbox, string title, ref ObservableCollection<ArticleListItem> articleList, bool allChapters, GameData.ContentType articleType = GameData.ContentType.GENERIC)
         {
             _node = nd;
             _articleList = articleList;
@@ -63,7 +63,11 @@ namespace ChessForge
             {
                 Title = title;
             }
-            if (_node == null)
+            if (allChaptersCheckbox)
+            {
+                UiCbAllChapters.Visibility = Visibility.Visible;
+            }
+            else
             {
                 UiCbAllChapters.Visibility = Visibility.Collapsed;
             }
