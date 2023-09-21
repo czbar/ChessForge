@@ -8,7 +8,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using ChessPosition;
 using GameTree;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace ChessForge
 {
@@ -17,6 +16,41 @@ namespace ChessForge
     /// </summary>
     public class GuiUtilities
     {
+        /// <summary>
+        /// Rebuilds the ChaptersView if it has focus or marks for refresh.
+        /// Brings the passed chapter into view of not null.
+        /// </summary>
+        public static void RefreshChaptersView(Chapter chapterToView)
+        {
+            if (AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS || AppState.MainWin.UiTabChapters.IsFocused)
+            {
+                AppState.MainWin.ChaptersView.BuildFlowDocumentForChaptersView();
+                if (chapterToView != null)
+                {
+                    PulseManager.ChaperIndexToBringIntoView = chapterToView.Index;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Rebuilds the ChaptersView if it has focus or marks for refresh.
+        /// Brings the passed article into view if set.
+        /// </summary>
+        /// <param name="chapterToView"></param>
+        /// <param name="articleToView"></param>
+        /// <param name="articleToViewIndex"></param>
+        public static void RefreshChaptersView(Chapter chapterToView, Article articleToView, int articleToViewIndex)
+        {
+            if (AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS || AppState.MainWin.UiTabChapters.IsFocused)
+            {
+                AppState.MainWin.ChaptersView.BuildFlowDocumentForChaptersView();
+                if (chapterToView != null && articleToView != null)
+                {
+                    PulseManager.SetArticleToBringIntoView(chapterToView.Index, articleToView.ContentType, articleToViewIndex);
+                }
+            }
+        }
+
         /// <summary>
         /// Call this method when we need to ensure that both, the tab has focus and
         /// the focus-received handler is run.
