@@ -81,6 +81,7 @@ namespace ChessForge
                         targetChapter.IsExercisesListExpanded = true;
 
                         AppState.MainWin.ChaptersView.IsDirty = true;
+                        AppState.IsDirty = true;
 
                         GuiUtilities.RefreshChaptersView(null);
                         AppState.MainWin.UiTabChapters.Focus();
