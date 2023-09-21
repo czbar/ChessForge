@@ -994,7 +994,7 @@ namespace ChessForge
                     title = Properties.Resources.SelectExercisesForDeletion;
                 }
 
-                SelectArticlesDialog dlg = new SelectArticlesDialog(null, title, ref articleList, false, articleType)
+                SelectArticlesDialog dlg = new SelectArticlesDialog(null, false, title, ref articleList, false, articleType)
                 {
                     Left = ChessForgeMain.Left + 100,
                     Top = ChessForgeMain.Top + 100,
@@ -1599,7 +1599,7 @@ namespace ChessForge
             {
                 TreeNode nd = ActiveTreeView.GetSelectedNode();
                 ObservableCollection<ArticleListItem> articleList = WorkbookManager.SessionWorkbook.GenerateArticleList();
-                SelectArticlesDialog dlg = new SelectArticlesDialog(nd, null, ref articleList, false)
+                SelectArticlesDialog dlg = new SelectArticlesDialog(nd, false, null, ref articleList, false)
                 {
                     Left = ChessForgeMain.Left + 100,
                     Top = ChessForgeMain.Top + 100,
@@ -2275,6 +2275,28 @@ namespace ChessForge
                     ActiveTreeView.BuildFlowDocumentForVariationTree();
                 }
             }
+        }
+
+        /// <summary>
+        /// Performs the process of selecting and copying games between chapters.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnCopyArticles_Click(object sender, RoutedEventArgs e)
+        {
+            ObservableCollection<ArticleListItem> articleList = WorkbookManager.SessionWorkbook.GenerateArticleList();
+            ChapterUtils.RequestCopyMoveArticles(null, true, articleList, true, false);
+        }
+
+        /// <summary>
+        /// Performs the process of selecting and moving games between chapters.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnMoveArticles_Click(object sender, RoutedEventArgs e)
+        {
+            ObservableCollection<ArticleListItem> articleList = WorkbookManager.SessionWorkbook.GenerateArticleList();
+            ChapterUtils.RequestCopyMoveArticles(null, true, articleList, true, false);
         }
 
         /// <summary>
