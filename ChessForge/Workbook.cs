@@ -790,6 +790,7 @@ namespace ChessForge
 
             _activeChapter.SetActiveVariationTree(GameData.ContentType.STUDY_TREE);
 
+            AppState.ConfigureMenusForManualReview();
             return chapter;
         }
 
@@ -812,6 +813,7 @@ namespace ChessForge
                 SetActiveChapter(chapter);
             }
 
+            AppState.ConfigureMenusForManualReview();
             return chapter;
         }
 
@@ -827,6 +829,7 @@ namespace ChessForge
                 Chapters.Remove(ch);
                 WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.DELETE_CHAPTER, ch, index);
                 WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
+                AppState.ConfigureMenusForManualReview();       
             }
         }
 
