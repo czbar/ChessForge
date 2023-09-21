@@ -877,6 +877,14 @@ MoveExerciseDown=Przesuń Ćwiczenie na Dół
 #english: MoveExerciseToChapter=Move Exercise To Chapter...
 MoveExerciseToChapter=Przenieś Ćwiczenie do Rozdziału
 
+#description: Copy articles to another chapter
+#english: CopyArticlesToChapter=Copy Games and Exercises Between Chapters...
+CopyArticlesToChapter=Skopiuj Partie i Ćwiczenia do Rozdziału...
+
+#description: Move articles to another chapter
+#english: MoveArticlesToChapter=Move Games and Exercises Between Chapters...
+MoveArticlesToChapter=Przenieś Partie i Ćwiczenia do Rozdziału...
+
 #description: Deleted selected chapter
 #english: DeleteSelectedChapter=Delete Selected Chapter
 DeleteSelectedChapter=Usuń Wybrany Rozdział
@@ -2244,6 +2252,10 @@ cbClickThruMoves=Klawiatura: ←/→ (naprzód/wstecz); SHIFT←/→ or Home/End
 #english: cbDoubleClickToAnnotate=Click through the moves. Double click to annotate.
 cbDoubleClickToAnnotate=Kliknij na dowolne posunięcie. Dwukrotnie kliknij, by wprowadzić komentarz.
 
+#description: F3 to find identical positions
+#english: cbFindIdenticalPositions=Press F3 to find identical positions.
+cbFindIdenticalPositions=Naciśnij F3 by znaleźć identyczne pozycje.
+
 #description: Right click for context menu
 #english: cbAdvancedEditig=Right click to open menu for advanced editing, FEN, creating exercise and more.
 cbAdvancedEditig=Naciśnij prawy przycisk, by wywołać menu do edycji, kopiowania FEN i inne.
@@ -2514,6 +2526,3 @@ IllegalCastling=Niedozwolona roszada.
 #description: Workbook info
 #english: AboutWorkbook=This PGN Workbook is optimized for viewing in Chess Forge https://sourceforge.net/projects/chessforge/ \nChess Forge is a Free and Open Source Windows application.
 AboutWorkbook=Ten podręcznik PGN najlepiej oglądać w programie Chess Forge https://sourceforge.net/projects/chessforge/ \nChess Forge to Wolne i Otwarte Oprogramowanie do systemu Windows.
-
-#F3 to find identical positions
-cbFindIdenticalPositions=Naciśnij F3 by znaleźć identyczne pozycje.

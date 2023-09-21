@@ -1030,7 +1030,7 @@ namespace ChessForge
                 VariationTree tree = ActiveVariationTree;
                 VariationTreeView view = AppState.MainWin.ActiveTreeView;
 
-                foreach (var item in MainWin.UiCmnWorkbookRightClick.Items)
+                foreach (var item in MainWin.UiCmnStudyTree.Items)
                 {
                     if (item is MenuItem)
                     {
@@ -1176,6 +1176,10 @@ namespace ChessForge
                                 break;
                             case "_mnExerc_EditPosition":
                                 menuItem.IsEnabled = exerciseIndex >= 0;
+                                menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
+                                break;
+                            case "UiMnMoveExerciseToChapter":
+                                menuItem.IsEnabled = exerciseIndex >= 0 && WorkbookManager.SessionWorkbook.GetChapterCount() > 1;
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "_mnExerc_StartTrainingFromHere":
@@ -1421,6 +1425,9 @@ namespace ChessForge
                 _mainWin.UiMnEvaluateGames.IsEnabled = ActiveChapter != null && ActiveChapter.GetModelGameCount() > 0;
                 _mainWin.UiMnStripComments.IsEnabled = IsTreeViewTabActive();
                 _mainWin.UiMnDeleteEngineEvals.IsEnabled = IsTreeViewTabActive();
+                _mainWin.UiMnCopyArticles.IsEnabled = WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.GetChapterCount() > 1;
+                _mainWin.UiMnMoveArticles.IsEnabled = WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.GetChapterCount() > 1;
+
                 _mainWin.UiMnAnnotations.IsEnabled = IsTreeViewTabActive();
                 _mainWin.UiMnMergeChapters.IsEnabled = WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.GetChapterCount() > 1;
             });

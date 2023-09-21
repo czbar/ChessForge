@@ -329,7 +329,7 @@ namespace ChessForge
 
                 AppState.IsDirty = true;
             }
-            catch {}
+            catch { }
         }
 
         /// <summary>
@@ -388,15 +388,15 @@ namespace ChessForge
         {
             try
             {
-                WorkbookManager.SessionWorkbook.OpsManager.Undo(out WorkbookOperation.WorkbookOperationType opType, out int selectedChapterIndex, out int selectedArticleIndex);
+                WorkbookManager.SessionWorkbook.OpsManager.Undo(out WorkbookOperationType opType, out int selectedChapterIndex, out int selectedArticleIndex);
                 switch (opType)
                 {
-                    case WorkbookOperation.WorkbookOperationType.RENAME_CHAPTER:
+                    case WorkbookOperationType.RENAME_CHAPTER:
                         AppState.MainWin.ActiveTreeView?.BuildFlowDocumentForVariationTree();
                         _chaptersView.BuildFlowDocumentForChaptersView();
                         break;
-                    case WorkbookOperation.WorkbookOperationType.DELETE_CHAPTER:
-                    case WorkbookOperation.WorkbookOperationType.CREATE_CHAPTER:
+                    case WorkbookOperationType.DELETE_CHAPTER:
+                    case WorkbookOperationType.CREATE_CHAPTER:
                         _chaptersView.BuildFlowDocumentForChaptersView();
                         if (AppState.ActiveTab != WorkbookManager.TabViewType.CHAPTERS)
                         {
@@ -405,7 +405,7 @@ namespace ChessForge
                         AppState.DoEvents();
                         _chaptersView.BringChapterIntoViewByIndex(selectedChapterIndex);
                         break;
-                    case WorkbookOperation.WorkbookOperationType.CREATE_ARTICLE:
+                    case WorkbookOperationType.CREATE_ARTICLE:
                         if (AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS)
                         {
                             _chaptersView.BuildFlowDocumentForChaptersView();
@@ -416,15 +416,20 @@ namespace ChessForge
                             SelectModelGame(selectedArticleIndex, true);
                         }
                         break;
-                    case WorkbookOperation.WorkbookOperationType.DELETE_MODEL_GAME:
-                    case WorkbookOperation.WorkbookOperationType.DELETE_MODEL_GAMES:
+                    case WorkbookOperationType.DELETE_MODEL_GAME:
+                    case WorkbookOperationType.DELETE_MODEL_GAMES:
                         _chaptersView.BuildFlowDocumentForChaptersView();
                         SelectModelGame(selectedArticleIndex, AppState.ActiveTab != WorkbookManager.TabViewType.CHAPTERS);
                         break;
-                    case WorkbookOperation.WorkbookOperationType.DELETE_EXERCISE:
-                    case WorkbookOperation.WorkbookOperationType.DELETE_EXERCISES:
+                    case WorkbookOperationType.DELETE_EXERCISE:
+                    case WorkbookOperationType.DELETE_EXERCISES:
                         _chaptersView.BuildFlowDocumentForChaptersView();
                         SelectExercise(selectedArticleIndex, AppState.ActiveTab != WorkbookManager.TabViewType.CHAPTERS);
+                        break;
+                    case WorkbookOperationType.COPY_ARTICLES:
+                    case WorkbookOperationType.MOVE_ARTICLES:
+                        _chaptersView.IsDirty = true;
+                        UiTabChapters.Focus();
                         break;
                 }
             }
@@ -856,7 +861,7 @@ namespace ChessForge
             string prevTitle = chapter.GetTitle();
             if (ShowChapterTitleDialog(chapter) && chapter.GetTitle() != prevTitle)
             {
-                WorkbookOperation op = new WorkbookOperation(WorkbookOperation.WorkbookOperationType.RENAME_CHAPTER, chapter, prevTitle);
+                WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.RENAME_CHAPTER, chapter, prevTitle);
                 WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
                 AppState.IsDirty = true;
             }
@@ -978,7 +983,7 @@ namespace ChessForge
             try
             {
                 ObservableCollection<ArticleListItem> articleList = WorkbookManager.SessionWorkbook.GenerateArticleList(AppState.ActiveChapter, articleType);
-                
+
                 string title = null;
                 if (articleType == GameData.ContentType.MODEL_GAME)
                 {
@@ -989,7 +994,7 @@ namespace ChessForge
                     title = Properties.Resources.SelectExercisesForDeletion;
                 }
 
-                SelectArticlesDialog dlg = new SelectArticlesDialog(null, title, ref articleList, false, articleType)
+                SelectArticlesDialog dlg = new SelectArticlesDialog(null, false, title, ref articleList, false, articleType)
                 {
                     Left = ChessForgeMain.Left + 100,
                     Top = ChessForgeMain.Top + 100,
@@ -1025,7 +1030,7 @@ namespace ChessForge
 
                     if (deletedArticles.Count > 0)
                     {
-                        WorkbookOperation.WorkbookOperationType wot =
+                        WorkbookOperationType wot =
                             articleType == GameData.ContentType.MODEL_GAME ? WorkbookOperationType.DELETE_MODEL_GAMES : WorkbookOperationType.DELETE_EXERCISES;
                         int activeArticleIndex = articleType == GameData.ContentType.MODEL_GAME ? chapter.ActiveModelGameIndex : chapter.ActiveExerciseIndex;
                         WorkbookOperation op = new WorkbookOperation(wot, chapter, activeArticleIndex, deletedArticles, deletedIndices);
@@ -1382,124 +1387,21 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Invokes the InvokeSelectSingleChapter dialog
-        /// and returns the selected index.
-        /// </summary>
-        /// <returns></returns>
-        public int InvokeSelectSingleChapterDialog()
-        {
-            try
-            {
-                int chapterIndex = -1;
-
-                SelectSingleChapterDialog dlg = new SelectSingleChapterDialog()
-                {
-                    Left = ChessForgeMain.Left + 100,
-                    Top = ChessForgeMain.Top + 100,
-                    Topmost = false,
-                    Owner = this
-                };
-
-                if (dlg.ShowDialog() == true)
-                {
-                    if (dlg.CreateNew)
-                    {
-                        chapterIndex = WorkbookManager.SessionWorkbook.CreateNewChapter().Index;
-                    }
-                    else
-                    {
-                        chapterIndex = dlg.SelectedIndex;
-                    }
-                }
-
-                return chapterIndex;
-            }
-            catch
-            {
-                return -1;
-            }
-        }
-
-        /// <summary>
         /// Lets the user select a chapter to move the currently selected game to.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void UiMnMoveGameToChapter_Click(object sender, RoutedEventArgs e)
         {
-            try
+            ObservableCollection<ArticleListItem> articleList = new ObservableCollection<ArticleListItem>();
+            Chapter chapter = AppState.ActiveChapter;
+            if (chapter != null)
             {
-                Chapter activeChapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                int selectedChapterIndex = MoveGameBetweenChapters();
-
-                if (selectedChapterIndex >= 0)
-                {
-                    Chapter targetChapter = WorkbookManager.SessionWorkbook.Chapters[selectedChapterIndex];
-                    activeChapter.CorrectActiveModelGameIndex();
-
-                    switch (AppState.ActiveTab)
-                    {
-                        case WorkbookManager.TabViewType.CHAPTERS:
-                            WorkbookManager.SessionWorkbook.ActiveChapter = targetChapter;
-                            targetChapter.ActiveModelGameIndex = targetChapter.GetModelGameCount() - 1;
-                            _chaptersView.BuildFlowDocumentForChaptersView();
-
-                            AppState.DoEvents();
-                            _chaptersView.BringChapterIntoViewByIndex(selectedChapterIndex);
-                            break;
-                        case WorkbookManager.TabViewType.MODEL_GAME:
-                            if (activeChapter.ActiveModelGameIndex < 0)
-                            {
-                                DisplayPosition(PositionUtils.SetupStartingPosition());
-                            }
-                            SelectModelGame(activeChapter.ActiveModelGameIndex, false);
-                            _chaptersView.BuildFlowDocumentForChaptersView();
-                            break;
-                    }
-                }
+                int articleIndex = chapter.ActiveModelGameIndex;
+                ArticleListItem item = new ArticleListItem(null, chapter.Index, chapter.GetModelGameAtIndex(articleIndex), articleIndex);
+                articleList.Add(item);
+                ChapterUtils.ProcessCopyOrMoveArticles(null, articleList, false);
             }
-            catch
-            {
-            }
-        }
-
-        /// <summary>
-        /// Moves a game between chapters after invoking a dialog
-        /// to select the target chapter
-        /// </summary>
-        /// <returns></returns>
-        private int MoveGameBetweenChapters()
-        {
-            int selectedChapterIndex = -1;
-
-            try
-            {
-                selectedChapterIndex = InvokeSelectSingleChapterDialog();
-
-                if (selectedChapterIndex >= 0)
-                {
-                    Chapter activeChapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                    int activeChapterIndex = WorkbookManager.SessionWorkbook.ActiveChapterIndex;
-                    int gameIndex = activeChapter.ActiveModelGameIndex;
-                    if (selectedChapterIndex >= 0 && selectedChapterIndex != activeChapterIndex)
-                    {
-                        Chapter targetChapter = WorkbookManager.SessionWorkbook.Chapters[selectedChapterIndex];
-
-                        Article game = activeChapter.GetModelGameAtIndex(gameIndex);
-                        targetChapter.ModelGames.Add(game);
-                        activeChapter.ModelGames.Remove(game);
-
-                        targetChapter.IsModelGamesListExpanded = true;
-
-                        AppState.IsDirty = true;
-                    }
-                }
-            }
-            catch
-            {
-            }
-
-            return selectedChapterIndex;
         }
 
         /// <summary>
@@ -1509,36 +1411,14 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnMoveExerciseToChapter_Click(object sender, RoutedEventArgs e)
         {
-            try
+            ObservableCollection<ArticleListItem> articleList = new ObservableCollection<ArticleListItem>();
+            Chapter chapter = AppState.ActiveChapter;
+            if (chapter != null)
             {
-                int selectedChapterIndex = InvokeSelectSingleChapterDialog();
-
-                if (selectedChapterIndex >= 0)
-                {
-                    Chapter activeChapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                    int activeChapterIndex = WorkbookManager.SessionWorkbook.ActiveChapterIndex;
-                    int exerciseIndex = activeChapter.ActiveExerciseIndex;
-                    if (selectedChapterIndex >= 0 && selectedChapterIndex != activeChapterIndex)
-                    {
-                        Chapter targetChapter = WorkbookManager.SessionWorkbook.Chapters[selectedChapterIndex];
-
-                        Article exercise = activeChapter.GetExerciseAtIndex(exerciseIndex);
-                        targetChapter.Exercises.Add(exercise);
-                        activeChapter.Exercises.Remove(exercise);
-
-                        targetChapter.IsExercisesListExpanded = true;
-                        WorkbookManager.SessionWorkbook.ActiveChapter = targetChapter;
-                        targetChapter.ActiveExerciseIndex = targetChapter.GetExerciseCount() - 1;
-
-                        AppState.IsDirty = true;
-                        _chaptersView.BuildFlowDocumentForChaptersView();
-                        AppState.DoEvents();
-                        _chaptersView.BringChapterIntoViewByIndex(selectedChapterIndex);
-                    }
-                }
-            }
-            catch
-            {
+                int articleIndex = chapter.ActiveExerciseIndex;
+                ArticleListItem item = new ArticleListItem(null, chapter.Index, chapter.GetExerciseAtIndex(articleIndex), articleIndex);
+                articleList.Add(item);
+                ChapterUtils.ProcessCopyOrMoveArticles(null, articleList, false);
             }
         }
 
@@ -1735,7 +1615,7 @@ namespace ChessForge
             {
                 TreeNode nd = ActiveTreeView.GetSelectedNode();
                 ObservableCollection<ArticleListItem> articleList = WorkbookManager.SessionWorkbook.GenerateArticleList();
-                SelectArticlesDialog dlg = new SelectArticlesDialog(nd, null, ref articleList, false)
+                SelectArticlesDialog dlg = new SelectArticlesDialog(nd, false, null, ref articleList, false)
                 {
                     Left = ChessForgeMain.Left + 100,
                     Top = ChessForgeMain.Top + 100,
@@ -2414,6 +2294,28 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Performs the process of selecting and copying games between chapters.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnCopyArticles_Click(object sender, RoutedEventArgs e)
+        {
+            ObservableCollection<ArticleListItem> articleList = WorkbookManager.SessionWorkbook.GenerateArticleList();
+            ChapterUtils.RequestCopyMoveArticles(null, true, articleList, true, false);
+        }
+
+        /// <summary>
+        /// Performs the process of selecting and moving games between chapters.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnMoveArticles_Click(object sender, RoutedEventArgs e)
+        {
+            ObservableCollection<ArticleListItem> articleList = WorkbookManager.SessionWorkbook.GenerateArticleList();
+            ChapterUtils.RequestCopyMoveArticles(null, true, articleList, true, false);
+        }
+
+        /// <summary>
         /// Opens the dialog for importing games from the Web
         /// </summary>
         /// <param name="sender"></param>
@@ -2729,6 +2631,8 @@ namespace ChessForge
                             MessageBox.Show(msg, Properties.Resources.ClipboardOperation, MessageBoxButton.OK, MessageBoxImage.Exclamation);
                         }
                     }
+
+                    AppState.IsDirty = true;
                 }
             }
             catch (Exception ex)

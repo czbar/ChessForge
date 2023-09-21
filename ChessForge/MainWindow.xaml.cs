@@ -2217,6 +2217,29 @@ namespace ChessForge
                         break;
                 }
             }
+            else if ((Keyboard.Modifiers & ModifierKeys.Control) > 0)
+            {
+                var key = (e.Key == Key.System ? e.SystemKey : e.Key);
+                switch (key)
+                {
+                    case Key.OemPlus:
+                        if (AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS)
+                        {
+                            ExpandCollapseChaptersView(true, true);
+                            handled = true;
+                        }
+                        break;
+                    case Key.OemMinus:
+                        if (AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS)
+                        {
+                            ExpandCollapseChaptersView(false, true);
+                            handled = true;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
 
             if (handled)
             {
