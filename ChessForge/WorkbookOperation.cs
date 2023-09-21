@@ -9,26 +9,31 @@ using static GameTree.EditOperation;
 
 namespace ChessForge
 {
+    /// <summary>
+    /// Types of supported operations.
+    /// </summary>
+    public enum WorkbookOperationType
+    {
+        NONE,
+        DELETE_CHAPTER,
+        CREATE_CHAPTER,
+        RENAME_CHAPTER,
+        CREATE_ARTICLE,
+        DELETE_MODEL_GAME,
+        DELETE_MODEL_GAMES,
+        DELETE_EXERCISE,
+        DELETE_EXERCISES,
+        EDIT_MODEL_GAME_HEADER,
+        EDIT_EXERCISE_HEADER,
+        MOVE_ARTICLES,
+        COPY_ARTICLES,
+    }
+
+    /// <summary>
+    /// A workbook operation than can be registered and then undone if requeired.
+    /// </summary>
     public class WorkbookOperation : Operation
     {
-        /// <summary>
-        /// Types of supported operations.
-        /// </summary>
-        public enum WorkbookOperationType
-        {
-            NONE,
-            DELETE_CHAPTER,
-            CREATE_CHAPTER,
-            RENAME_CHAPTER,
-            CREATE_ARTICLE,
-            DELETE_MODEL_GAME,
-            DELETE_MODEL_GAMES,
-            DELETE_EXERCISE,
-            DELETE_EXERCISES,
-            EDIT_MODEL_GAME_HEADER,
-            EDIT_EXERCISE_HEADER
-        }
-
         /// <summary>
         /// Operation type.
         /// </summary>
