@@ -426,6 +426,11 @@ namespace ChessForge
                         _chaptersView.BuildFlowDocumentForChaptersView();
                         SelectExercise(selectedArticleIndex, AppState.ActiveTab != WorkbookManager.TabViewType.CHAPTERS);
                         break;
+                    case WorkbookOperationType.COPY_ARTICLES:
+                    case WorkbookOperationType.MOVE_ARTICLES:
+                        _chaptersView.IsDirty = true;
+                        UiTabChapters.Focus();
+                        break;
                 }
             }
             catch (Exception ex)
