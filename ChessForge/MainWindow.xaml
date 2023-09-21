@@ -475,7 +475,7 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <Grid.ContextMenu>
-                                <ContextMenu x:Name="UiCmnWorkbookRightClick">
+                                <ContextMenu x:Name="UiCmnStudyTree">
                                     <MenuItem x:Name="UiMnStudyStartTrainingHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere_Click" />
                                     <MenuItem x:Name="UiMnStudy_CreateExercise" Header="{x:Static p:Resources.CreateExerciseFromHere}" Click="UiMn_CreateExercise_Click"  />
                                     <MenuItem x:Name="UiMnReferenceArticles" Header="{x:Static p:Resources.MnGameExerciseReferences}" Click="UiMnReferenceArticles_Click"/>
@@ -629,10 +629,11 @@
                                     <MenuItem x:Name="_mnExerc_EditHeader" Header="{x:Static p:Resources.EditExerciseHeader}" Click="UiMnExerc_EditHeader_Click" />
                                     <MenuItem x:Name="_mnExerc_EditPosition" Header="{x:Static p:Resources.EditStartingPosition}" Click="UiMnExerc_EditPosition_Click" />
                                     <MenuItem x:Name="UiMnExercExitSolving" Header="{x:Static p:Resources.ExitSolvingMode}" Click="UiMnExercExitSolving_Click" />
-                                    <Separator x:Name="UiMnExerc_Separator_1"/>
-                                    <MenuItem x:Name="_mnExerc_StartTrainingFromHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere_Click" />
+                                    <MenuItem x:Name="UiMnMoveExerciseToChapter" Header="{x:Static p:Resources.MoveExerciseToChapter}"  Click="UiMnMoveExerciseToChapter_Click" />
                                     <MenuItem x:Name="_mnExerc_CreateExercise" Header="{x:Static p:Resources.CreateNewExercise}" Click="UiMnExerc_CreateExercise_Click" />
                                     <MenuItem x:Name="UiMnExerc_ImportExercises" Header="{x:Static p:Resources.ImportExercises}" Click="UiMnExerc_ImportExercises_Click"  />
+                                    <Separator x:Name="UiMnExerc_Separator_1"/>
+                                    <MenuItem x:Name="_mnExerc_StartTrainingFromHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere_Click" />
                                     <MenuItem x:Name="_mnExerc_CopyFen" Header="{x:Static p:Resources.CopyFENtoClipboard}" Click="UiMnExerc_CopyFen_Click" />
                                     <Separator x:Name="UiMnExerc_Separator_2"/>
                                     <MenuItem x:Name="UiMnExercCopyMoves" Header="{x:Static p:Resources.CopyMoves}"  InputGestureText="Ctrl+C" Click="UiMnCopyMoves_Click" />
