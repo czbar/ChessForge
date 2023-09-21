@@ -119,6 +119,12 @@ namespace ChessForge
                         selectedArticleIndex = op.ArticleIndex;
                         WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
                         break;
+                    case WorkbookOperationType.COPY_ARTICLES:
+                        ChapterUtils.UndoCopyArticles(op.Chapter, op.OpData_1);
+                        break;
+                    case WorkbookOperationType.MOVE_ARTICLES:
+                        ChapterUtils.UndoMoveArticles(op.Chapter, op.OpData_1);
+                        break;
                 }
             }
             catch
