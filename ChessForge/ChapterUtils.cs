@@ -82,6 +82,7 @@ namespace ChessForge
 
                         AppState.MainWin.ChaptersView.IsDirty = true;
 
+                        GuiUtilities.RefreshChaptersView(null);
                         AppState.MainWin.UiTabChapters.Focus();
                         PulseManager.ChaperIndexToBringIntoView = targetChapter.Index;
                     }
@@ -135,8 +136,9 @@ namespace ChessForge
                     AppState.IsDirty = true;
                     AppState.MainWin.ChaptersView.IsDirty = true;
 
+                    GuiUtilities.RefreshChaptersView(null);
                     AppState.MainWin.UiTabChapters.Focus();
-                    AppState.MainWin.ChaptersView.BringChapterIntoViewByIndex(targetChapterIndex);
+                    PulseManager.ChaperIndexToBringIntoView = targetChapter.Index;
                 }
             }
             catch (Exception ex)
@@ -182,8 +184,9 @@ namespace ChessForge
                     AppState.IsDirty = true;
                     AppState.MainWin.ChaptersView.IsDirty = true;
 
+                    GuiUtilities.RefreshChaptersView(null);
                     AppState.MainWin.UiTabChapters.Focus();
-                    AppState.MainWin.ChaptersView.BringChapterIntoViewByIndex(targetChapterIndex);
+                    PulseManager.ChaperIndexToBringIntoView = targetChapter.Index;
                 }
             }
             catch (Exception ex)
@@ -299,6 +302,11 @@ namespace ChessForge
                     chapter?.DeleteArticle(ali.Article);
                 }
             }
+
+            // collect info for the Undo operation
+            WorkbookOperationType typ = copy ? WorkbookOperationType.COPY_ARTICLES : WorkbookOperationType.MOVE_ARTICLES;
+            WorkbookOperation op = new WorkbookOperation(typ, targetChapter, (object)articlesToInsert);
+            WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
         }
 
         /// <summary>
@@ -341,6 +349,77 @@ namespace ChessForge
             catch
             {
                 return -1;
+            }
+        }
+
+        /// <summary>
+        /// Undoes the copy articles operation.
+        /// </summary>
+        /// <param name="targetChapter"></param>
+        /// <param name="lst"></param>
+        public static void UndoCopyArticles(Chapter targetChapter, object lst)
+        {
+            try
+            {
+                Chapter firstChapter = null;
+
+                List<ArticleListItem> articles = lst as List<ArticleListItem>;
+
+                // delete from the copy target chapter
+                foreach (var item in articles)
+                {
+                    targetChapter.DeleteArticle(item.Article);
+                    if (firstChapter == null)
+                    {
+                        firstChapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(item.ChapterIndex);
+                    }
+                }
+
+                GuiUtilities.RefreshChaptersView(firstChapter);
+                AppState.MainWin.UiTabChapters.Focus();
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// Undoes the move articles operation.
+        /// </summary>
+        /// <param name="targetChapter"></param>
+        /// <param name="lst"></param>
+        public static void UndoMoveArticles(Chapter targetChapter, object lst)
+        {
+            Chapter firstChapter = null;
+
+            try
+            {
+                List<ArticleListItem> articles = lst as List<ArticleListItem>;
+
+                // first return the articles to where they were copied from
+                foreach (ArticleListItem item in articles)
+                {
+                    Chapter sourceChapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(item.ChapterIndex);
+                    // since this the same order we were removing the articles in.
+                    // the indexes should be valid as we ,ove down the list
+                    sourceChapter.InsertArticle(item.Article, item.ArticleIndex);
+                    if (firstChapter == null)
+                    {
+                        firstChapter = sourceChapter;
+                    }
+                }
+
+                // delete from the move target chapter
+                foreach (var item in articles)
+                {
+                    targetChapter.DeleteArticle(item.Article);
+                }
+
+                GuiUtilities.RefreshChaptersView(firstChapter);
+                AppState.MainWin.UiTabChapters.Focus();
+            }
+            catch
+            {
             }
         }
 
