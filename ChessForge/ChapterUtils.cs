@@ -20,12 +20,12 @@ namespace ChessForge
         /// </summary>
         /// <param name="lstIdenticalPositions"></param>
         /// <param name="request"></param>
-        public static void RequestCopyMoveArticles(TreeNode searchNode, ObservableCollection<ArticleListItem> lstIdenticalPositions, bool copy)
+        public static void RequestCopyMoveArticles(TreeNode searchNode, bool allChaptersCheckbox, ObservableCollection<ArticleListItem> lstIdenticalPositions, bool copy, bool showAllChapters)
         {
             // make a list with only games and exercises
             RemoveStudies(lstIdenticalPositions);
             string title = copy ? Properties.Resources.SelectItemsToCopy : Properties.Resources.SelectItemsToMove;
-            SelectArticlesDialog dlg = new SelectArticlesDialog(null, title, ref lstIdenticalPositions, true)
+            SelectArticlesDialog dlg = new SelectArticlesDialog(null, allChaptersCheckbox, title, ref lstIdenticalPositions, showAllChapters)
             {
                 Left = AppState.MainWin.ChessForgeMain.Left + 100,
                 Top = AppState.MainWin.ChessForgeMain.Top + 100,
