@@ -68,7 +68,7 @@ namespace ChessForge
                             if (dlgEx.Request == IdenticalPositionsExDialog.Action.CopyArticles
                                 || dlgEx.Request == IdenticalPositionsExDialog.Action.MoveArticles)
                             {
-                                ChapterUtils.RequestCopyMoveArticles(searchNode, lstIdenticalPositions, dlgEx.Request == IdenticalPositionsExDialog.Action.CopyArticles);
+                                ChapterUtils.RequestCopyMoveArticles(searchNode, false, lstIdenticalPositions, dlgEx.Request == IdenticalPositionsExDialog.Action.CopyArticles, true);
                             }
                             else if (dlgEx.ArticleIndexId >= 0 && dlgEx.ArticleIndexId < lstIdenticalPositions.Count)
                             {
