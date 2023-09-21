@@ -1393,7 +1393,15 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnMoveGameToChapter_Click(object sender, RoutedEventArgs e)
         {
-            ChapterUtils.MoveGameBetweenChapters(WorkbookManager.SessionWorkbook.ActiveChapter);
+            ObservableCollection<ArticleListItem> articleList = new ObservableCollection<ArticleListItem>();
+            Chapter chapter = AppState.ActiveChapter;
+            if (chapter != null)
+            {
+                int articleIndex = chapter.ActiveModelGameIndex;
+                ArticleListItem item = new ArticleListItem(null, chapter.Index, chapter.GetModelGameAtIndex(articleIndex), articleIndex);
+                articleList.Add(item);
+                ChapterUtils.ProcessCopyOrMoveArticles(null, articleList, false);
+            }
         }
 
         /// <summary>
@@ -1403,7 +1411,15 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnMoveExerciseToChapter_Click(object sender, RoutedEventArgs e)
         {
-            ChapterUtils.MoveExerciseBetweenChapters(WorkbookManager.SessionWorkbook.ActiveChapter);
+            ObservableCollection<ArticleListItem> articleList = new ObservableCollection<ArticleListItem>();
+            Chapter chapter = AppState.ActiveChapter;
+            if (chapter != null)
+            {
+                int articleIndex = chapter.ActiveExerciseIndex;
+                ArticleListItem item = new ArticleListItem(null, chapter.Index, chapter.GetExerciseAtIndex(articleIndex), articleIndex);
+                articleList.Add(item);
+                ChapterUtils.ProcessCopyOrMoveArticles(null, articleList, false);
+            }
         }
 
         /// <summary>
