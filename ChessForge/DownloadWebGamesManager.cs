@@ -210,6 +210,7 @@ namespace ChessForge
                     {
                         TreeUtils.TrimTree(ref WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree, lastRepertoireMoveNo, PieceColor.Black);
                     }
+                    WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree.BuildLines();
                 }
                 if (blackGames.Count > 0)
                 {
@@ -227,6 +228,7 @@ namespace ChessForge
                     {
                         TreeUtils.TrimTree(ref WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree, lastRepertoireMoveNo, PieceColor.Black);
                     }
+                    WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree.BuildLines();
                 }
             }
             else
