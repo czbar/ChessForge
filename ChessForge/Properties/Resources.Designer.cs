@@ -935,6 +935,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copy Games and Exercises Between Chapters....
+        /// </summary>
+        public static string CopyArticlesToChapter {
+            get {
+                return ResourceManager.GetString("CopyArticlesToChapter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Copy FEN to Clipboard.
         /// </summary>
         public static string CopyFENtoClipboard {
@@ -3001,6 +3010,15 @@ namespace ChessForge.Properties {
         public static string Move {
             get {
                 return ResourceManager.GetString("Move", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move Games and Exercises Between Chapters....
+        /// </summary>
+        public static string MoveArticlesToChapter {
+            get {
+                return ResourceManager.GetString("MoveArticlesToChapter", resourceCulture);
             }
         }
         

@@ -877,6 +877,14 @@ MoveExerciseDown=
 #english: MoveExerciseToChapter=Move Exercise To Chapter...
 MoveExerciseToChapter=
 
+#description: Copy articles to another chapter
+#english: CopyArticlesToChapter=Copy Games and Exercises Between Chapters...
+CopyArticlesToChapter=
+
+#description: Move articles to another chapter
+#english: MoveArticlesToChapter=Move Games and Exercises Between Chapters...
+MoveArticlesToChapter=
+
 #description: Deleted selected chapter
 #english: DeleteSelectedChapter=Delete Selected Chapter
 DeleteSelectedChapter=

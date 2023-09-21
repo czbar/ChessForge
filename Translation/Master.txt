@@ -675,6 +675,12 @@ MoveExerciseDown=Move Exercise Down
 #Move exercise to another chapter
 MoveExerciseToChapter=Move Exercise To Chapter...
 
+#Copy articles to another chapter
+CopyArticlesToChapter=Copy Games and Exercises Between Chapters...
+
+#Move articles to another chapter
+MoveArticlesToChapter=Move Games and Exercises Between Chapters...
+
 #Deleted selected chapter
 DeleteSelectedChapter=Delete Selected Chapter
 
