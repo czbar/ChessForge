@@ -97,26 +97,29 @@ namespace ChessForge
             Point mousePoint = e.GetPosition(_chessboard.CanvasCtrl);
             SquareCoords sc = GetSquareCoordsFromBoardCanvasPoint(mousePoint);
 
-            if (e.ChangedButton == MouseButton.Left)
+            if (sc != null && sc.IsValid())
             {
-                byte square = _positionSetup.Board[sc.Xcoord, sc.Ycoord];
-                PieceColor pc = PositionUtils.GetPieceColor(square);
+                if (e.ChangedButton == MouseButton.Left)
+                {
+                    byte square = _positionSetup.Board[sc.Xcoord, sc.Ycoord];
+                    PieceColor pc = PositionUtils.GetPieceColor(square);
 
-                if (sc != null && sc.IsValid() && pc != PieceColor.None)
-                {
-                    StartDrag(sc, e);
-                }
-                else
-                {
-                    if (pc == PieceColor.None)
+                    if (sc != null && sc.IsValid() && pc != PieceColor.None)
                     {
-                        _chessboard.Shapes.Reset(true);
+                        StartDrag(sc, e);
+                    }
+                    else
+                    {
+                        if (pc == PieceColor.None)
+                        {
+                            _chessboard.Shapes.Reset(true);
+                        }
                     }
                 }
-            }
-            else if (e.ChangedButton == MouseButton.Right)
-            {
-                _chessboard.Shapes.StartShapeDraw(sc, "", false);
+                else if (e.ChangedButton == MouseButton.Right)
+                {
+                    _chessboard.Shapes.StartShapeDraw(sc, "", false);
+                }
             }
         }
 
