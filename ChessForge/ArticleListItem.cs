@@ -155,7 +155,7 @@ namespace ChessForge
                 }
                 else if (_chapter != null)
                 {
-                    header = "[" + Chapter.Index.ToString() + ".] " + _chapter.Title;
+                    header = "[" + (Chapter.Index + 1).ToString() + ".] " + _chapter.Title;
                 }
 
                 string prefix = string.Empty;
