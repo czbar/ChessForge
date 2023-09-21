@@ -32,7 +32,8 @@ namespace ChessForge
         public ChapterTitleDialog(Chapter chapter)
         {
             InitializeComponent();
-            UiTbChapterTitle.Text = chapter.GetTitle(); 
+            UiTbChapterTitle.Text = chapter.GetTitle();
+            UiTbChapterTitle.Focus();
         }
 
         /// <summary>
