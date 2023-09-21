@@ -756,6 +756,35 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Inserts at an article at the specified preferred position.
+        /// </summary>
+        /// <param name="article"></param>
+        /// <param name="index">Index at which the Artcle was actually inserted</param>
+        /// <returns></returns>
+        public int InsertArticle(Article article, int index)
+        {
+            GameData.ContentType contentType = article.ContentType;
+            if (contentType == GameData.ContentType.MODEL_GAME)
+            {
+                if (index < 0 || index >= ModelGames.Count)
+                {
+                    index = ModelGames.Count;
+                }
+                ModelGames.Insert(index, article);
+            }
+            else if (contentType == GameData.ContentType.EXERCISE)
+            {
+                if (index < 0 || index >= Exercises.Count)
+                {
+                    index = Exercises.Count;
+                }
+                Exercises.Insert(index, article);
+            }
+
+            return index;
+        }
+
+        /// <summary>
         /// Adds a new game to this chapter.
         /// The caller must handle errors if returned index is -1.
         /// </summary>
