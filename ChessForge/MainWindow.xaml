@@ -327,8 +327,8 @@
                                     <MenuItem x:Name="UiMnChptExpandChapters" Header="{x:Static p:Resources.ExpandChapters}" Click="UiMnChptExpandChapters_Click" />
                                     <MenuItem x:Name="UiMnChptCollapseChapters" Header="{x:Static p:Resources.CollapseChapters}" Click="UiMnChptCollapseChapters_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="UiMnChptExpandAll" Header="{x:Static p:Resources.ExpandAll}" Click="UiMnChptExpandAll_Click" />
-                                    <MenuItem x:Name="UiMnChptCollapseAll" Header="{x:Static p:Resources.CollapseAll}" Click="UiMnChptCollapseAll_Click" />
+                                    <MenuItem x:Name="UiMnChptExpandAll" Header="{x:Static p:Resources.ExpandAll}" Click="UiMnChptExpandAll_Click" InputGestureText="Ctrl +" />
+                                    <MenuItem x:Name="UiMnChptCollapseAll" Header="{x:Static p:Resources.CollapseAll}" Click="UiMnChptCollapseAll_Click" InputGestureText="Ctrl -" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
                             <RichTextBox x:Name="UiRtbChaptersView" Grid.Row="1"  ContextMenu="{x:Null}" IsUndoEnabled="False" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
