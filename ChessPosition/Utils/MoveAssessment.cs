@@ -150,14 +150,14 @@ namespace ChessPosition.Utils
 
             if (color == PieceColor.White)
             {
-                if (childEval - parentEval > +2.0 && childEval > -HIGH_EVAL_THRESH || parentEval < -0.7 && childEval > +0.7)
+                if (childEval - parentEval > +2.0 && childEval < +HIGH_EVAL_THRESH || parentEval < -0.7 && childEval > +0.7)
                 {
                     res = true;
                 }
             }
             else
             {
-                if (childEval - parentEval < -2.0  && childEval < HIGH_EVAL_THRESH || parentEval > +0.7 && childEval < -0.7)
+                if (childEval - parentEval < -2.0  && childEval > -HIGH_EVAL_THRESH || parentEval > +0.7 && childEval < -0.7)
                 {
                     res = true;
                 }
