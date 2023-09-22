@@ -402,7 +402,7 @@ namespace ChessForge
                 Paragraph para = CreateParagraph("0", true);
                 Document.Blocks.Add(para);
 
-                CreateStartingNode(para);
+                CreateRunForStartingNode(para, root);
 
                 // if we have a stem (e.g. this is Browse view in training, we need to request a number printed too
                 BuildTreeLineText(root, para, includeStem);
@@ -1721,16 +1721,15 @@ namespace ChessForge
 
         /// <summary>
         /// Creates a run with no move for the starting position.
-        /// This is necessary so that we have parent for the first move
+        /// This is necessary so that we have a parent for the first move
         /// when starting a new Workbook.
         /// Also, there may be a comment that we want to show before the first move.
         /// </summary>
         /// <param name="para"></param>
-        private void CreateStartingNode(Paragraph para)
+        private void CreateRunForStartingNode(Paragraph para, TreeNode nd)
         {
-            if (_mainWin.ActiveVariationTree != null)
+            if (nd != null)
             {
-                TreeNode nd = _mainWin.ActiveVariationTree.Nodes[0];
                 Run r = AddRunToParagraph(nd, para, "", Brushes.White);
                 AddReferenceRunToParagraph(nd, para);
                 AddCommentRunsToParagraph(nd, para, out bool isBlunder);
