@@ -185,6 +185,7 @@ namespace ChessForge
                             break;
                         case GameData.ContentType.INTRO:
                             chapter.Intro = article;
+                            chapter.AlwaysShowIntroTab = true;
                             break;
                         case GameData.ContentType.MODEL_GAME:
                             chapter.ModelGames.Add(article);
