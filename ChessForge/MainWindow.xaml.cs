@@ -18,6 +18,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using WebAccess;
 using System.Management;
+using System.Windows.Documents;
 
 namespace ChessForge
 {
@@ -3106,6 +3107,86 @@ namespace ChessForge
         private void ShowFloatEval(bool show)
         {
             UiLblEvalFloat.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        /// <summary>
+        /// Intro's RichTextBox editing command.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnIntroUndo_Click(object sender, RoutedEventArgs e)
+        {
+            _introView.Command_Undo(sender, e);
+        }
+
+        /// <summary>
+        /// Intro's RichTextBox editing command.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnIntroToggleBold_Click(object sender, RoutedEventArgs e)
+        {
+            _introView.Command_ToggleBold(sender, e);
+        }
+
+        /// <summary>
+        /// Intro's RichTextBox editing command.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnIntroToggleItalic_Click(object sender, RoutedEventArgs e)
+        {
+            _introView.Command_ToggleItalic(sender, e);
+        }
+
+        /// <summary>
+        /// Intro's RichTextBox editing command.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnIntroToggleUnderline_Click(object sender, RoutedEventArgs e)
+        {
+            _introView.Command_ToggleUnderline(sender, e);
+        }
+
+        /// <summary>
+        /// Intro's RichTextBox editing command.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnIntroFontSizeUp_Click(object sender, RoutedEventArgs e)
+        {
+            _introView.Command_FontSizeUp(sender, e);
+        }
+
+        /// <summary>
+        /// Intro's RichTextBox editing command.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnIntroFontSizeDown_Click(object sender, RoutedEventArgs e)
+        {
+            _introView.Command_FontSizeDown(sender, e);
+        }
+
+        /// <summary>
+        /// Intro's RichTextBox editing command.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnIntroIncreaseIndent_Click(object sender, RoutedEventArgs e)
+        {
+            _introView.Command_IncreaseIndent(sender, e);
+        }
+
+        /// <summary>
+        /// Intro's RichTextBox editing command.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnIntroDecreaseIndent_Click(object sender, RoutedEventArgs e)
+        {
+            _introView.Command_DecreaseIndent(sender, e);
         }
     }
 }

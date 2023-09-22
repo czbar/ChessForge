@@ -396,28 +396,28 @@
                                         <Setter Property="Background" Value="Transparent"></Setter>
                                     </Style>
                                 </Grid.Resources>
-                                <Button Style="{StaticResource formatImageStyle}" Grid.Column="0"  Margin="10,0,0,0" HorizontalAlignment="Left"   Command="ApplicationCommands.Undo" ToolTip="{x:Static p:Resources.Undo}">
+                                <Button x:Name="UiBtnIntroUndo" Style="{StaticResource formatImageStyle}" Grid.Column="0"  Margin="10,0,0,0" HorizontalAlignment="Left"   ToolTip="{x:Static p:Resources.Undo}" Command="ApplicationCommands.Undo" >
                                     <Image Source="Resources/Images/undo_16.png"></Image>
                                 </Button>
-                                <Button Style="{StaticResource formatImageStyle}" Grid.Column="1" Margin="10,0,0,0" HorizontalAlignment="Left"   Command="EditingCommands.ToggleBold" ToolTip="{x:Static p:Resources.FontBold}">
+                                <Button x:Name="UiBtnIntroToggleBold" Style="{StaticResource formatImageStyle}" Grid.Column="1" Margin="10,0,0,0" HorizontalAlignment="Left"  ToolTip="{x:Static p:Resources.FontBold}" Click="UiBtnIntroToggleBold_Click">
                                     <Image Source="Resources/Images/format_bold.png"></Image>
                                 </Button>
-                                <Button Style="{StaticResource formatImageStyle}" Grid.Column="1" Margin="30,0,0,0" HorizontalAlignment="Left"   Command="EditingCommands.ToggleItalic" ToolTip="{x:Static p:Resources.FontItalic}">
+                                <Button x:Name="UiBtnIntroToggleItalic" Style="{StaticResource formatImageStyle}" Grid.Column="1" Margin="30,0,0,0" HorizontalAlignment="Left" ToolTip="{x:Static p:Resources.FontItalic}" Click="UiBtnIntroToggleItalic_Click">
                                     <Image Source="Resources/Images/format_italic.png"></Image>
                                 </Button>
-                                <Button Style="{StaticResource formatImageStyle}" Grid.Column="1" Margin="50,0,0,0" HorizontalAlignment="Left"   Command="EditingCommands.ToggleUnderline" ToolTip="{x:Static p:Resources.FontUnderline}">
+                                <Button x:Name="UiBtnIntroToggleUnderline" Style="{StaticResource formatImageStyle}" Grid.Column="1" Margin="50,0,0,0" HorizontalAlignment="Left" ToolTip="{x:Static p:Resources.FontUnderline}" Click="UiBtnIntroToggleUnderline_Click">
                                     <Image Source="Resources/Images/format_underline.png"></Image>
                                 </Button>
-                                <Button Style="{StaticResource formatImageStyle}" Grid.Column="2" Margin="10,0,0,0" HorizontalAlignment="Left"   Command="EditingCommands.IncreaseFontSize" ToolTip="{x:Static p:Resources.IncreaseFontSize}">
+                                <Button x:Name="UiBtnIntroFontSizeUp" Style="{StaticResource formatImageStyle}" Grid.Column="2" Margin="10,0,0,0" HorizontalAlignment="Left"   ToolTip="{x:Static p:Resources.IncreaseFontSize}" Click="UiBtnIntroFontSizeUp_Click" >
                                     <Image Source="Resources/Images/FontSizeUp.png"></Image>
                                 </Button>
-                                <Button Style="{StaticResource formatImageStyle}" Grid.Column="2" Margin="30,0,0,0" HorizontalAlignment="Left"   Command="EditingCommands.DecreaseFontSize" ToolTip="{x:Static p:Resources.DecreaseFontSize}">
+                                <Button x:Name="UiBtnIntroFontSizeDown"  Style="{StaticResource formatImageStyle}" Grid.Column="2" Margin="30,0,0,0" HorizontalAlignment="Left"  ToolTip="{x:Static p:Resources.DecreaseFontSize}" Click="UiBtnIntroFontSizeDown_Click">
                                     <Image Source="Resources/Images/FontSizeDown.png"></Image>
                                 </Button>
-                                <Button Style="{StaticResource formatImageStyle}" Grid.Column="3" Margin="10,0,0,0" HorizontalAlignment="Left"   Command="EditingCommands.IncreaseIndentation" ToolTip="{x:Static p:Resources.IncreaseIndent}">
+                                <Button x:Name="UiBtnIntroIncreaseIndent" Style="{StaticResource formatImageStyle}" Grid.Column="3" Margin="10,0,0,0" HorizontalAlignment="Left" ToolTip="{x:Static p:Resources.IncreaseIndent}" Click="UiBtnIntroIncreaseIndent_Click">
                                     <Image Source="Resources/Images/right_indent.png"></Image>
                                 </Button>
-                                <Button Style="{StaticResource formatImageStyle}" Grid.Column="3" Margin="30,0,0,0" HorizontalAlignment="Left"   Command="EditingCommands.DecreaseIndentation" ToolTip="{x:Static p:Resources.DecreaseIndent}">
+                                <Button x:Name="UiBtnIntroDecreaseIndent" Style="{StaticResource formatImageStyle}" Grid.Column="3" Margin="30,0,0,0" HorizontalAlignment="Left" ToolTip="{x:Static p:Resources.DecreaseIndent}" Click="UiBtnIntroDecreaseIndent_Click">
                                     <Image Source="Resources/Images/left_indent.png"></Image>
                                 </Button>
                             </Grid>
