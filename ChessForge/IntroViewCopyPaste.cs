@@ -257,20 +257,24 @@ namespace ChessForge
                         if (position.Parent is Paragraph)
                         {
                             Paragraph positionParent = position.Parent as Paragraph;
-                            if (positionParent != currParagraph) // || RichTextBoxUtilities.IsDiagramPara(positionParent))
+                            if (positionParent != currParagraph)
                             {
                                 bool? flipped = null;
                                 if (RichTextBoxUtilities.IsDiagramPara(positionParent))
                                 {
-                                    int nodeId = TextUtils.GetIdFromPrefixedString(positionParent.Name);
-                                    TreeNode node = GetNodeById(nodeId);
-                                    flipped = GetDiagramFlipState(positionParent);
-                                    if (!plainTextOnly)
+                                    // check if proper diagram
+                                    if (HasInlineUIContainer(positionParent))
                                     {
-                                        IntroViewClipboard.AddDiagram(node, flipped);
+                                        int nodeId = TextUtils.GetIdFromPrefixedString(positionParent.Name);
+                                        TreeNode node = GetNodeById(nodeId);
+                                        flipped = GetDiagramFlipState(positionParent);
+                                        if (!plainTextOnly)
+                                        {
+                                            IntroViewClipboard.AddDiagram(node, flipped);
+                                        }
+                                        plainText.AppendLine("");
+                                        plainText.Append(RichTextBoxUtilities.GetDiagramPlainText(node));
                                     }
-                                    plainText.AppendLine("");
-                                    plainText.Append(RichTextBoxUtilities.GetDiagramPlainText(node));
                                 }
                                 else
                                 {
