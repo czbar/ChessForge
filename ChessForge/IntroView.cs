@@ -1389,7 +1389,23 @@ namespace ChessForge
                 }
             }
 
-            if (e.Key == Key.Left || e.Key == Key.Right)
+            if ((Keyboard.Modifiers & ModifierKeys.Control) > 0)
+            {
+                try
+                {
+                    switch (e.Key)
+                    {
+                        case Key.Z:
+                            Command_Undo(null, null);
+                            e.Handled = true;
+                            break;
+                    }
+                }
+                catch 
+                { 
+                }
+            } 
+            else if (e.Key == Key.Left || e.Key == Key.Right)
             {
                 e.Handled = ProcessArrowKey(e.Key);
             }
@@ -1524,12 +1540,12 @@ namespace ChessForge
         /// </summary>
         private static void RemoveEmptyDiagrams()
         {
-            List<Paragraph> parasToRemove  = new List<Paragraph>();
+            List<Paragraph> parasToRemove = new List<Paragraph>();
 
             foreach (Block block in _rtb.Document.Blocks)
             {
                 Paragraph para = block as Paragraph;
-                if ( para != null)
+                if (para != null)
                 {
                     if (para.Name.StartsWith(RichTextBoxUtilities.DiagramParaPrefix))
                     {
