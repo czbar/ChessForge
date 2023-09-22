@@ -1518,6 +1518,12 @@ namespace ChessForge
         /// </summary>
         public void SetupGuiForIntro(bool focusOnIntro)
         {
+            Article article = AppState.ActiveChapter.Intro;
+            if (!article.IsReady)
+            {
+                AppState.ActiveChapter.Intro = WorkbookManager.SessionWorkbook.GamesManager.ProcessArticleSync(article);
+            }
+
             // if we are in the INTRO tab, we need to force a rebuild
             if (AppState.ActiveTab == WorkbookManager.TabViewType.INTRO)
             {
@@ -2615,6 +2621,11 @@ namespace ChessForge
                 _chaptersView.BuildFlowDocumentForChaptersView();
                 // study tree also shows title so update it there
                 // TODO: update only the Header
+                if (_studyTreeView == null)
+                {
+                    _studyTreeView = new VariationTreeView(UiRtbStudyTreeView.Document, this, GameData.ContentType.STUDY_TREE, -1);
+                }
+
                 _studyTreeView.BuildFlowDocumentForVariationTree();
                 AppState.IsDirty = true;
                 return true;
