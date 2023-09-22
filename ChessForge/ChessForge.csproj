@@ -154,6 +154,7 @@
     <Compile Include="IntroViewClipboardElement.cs" />
     <Compile Include="IntroViewCopyPaste.cs" />
     <Compile Include="IntroViewDiagram.cs" />
+    <Compile Include="IntroViewEditCommands.cs" />
     <Compile Include="LearningMode.cs" />
     <Compile Include="AppState.cs" />
     <Compile Include="AppTimers.cs" />
