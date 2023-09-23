@@ -381,22 +381,32 @@ namespace ChessForge
 
             try
             {
-                BookmarkWrapper bmv = BookmarkGuiList[ClickedIndex % BOOKMARKS_PER_PAGE].BookmarkWrapper;
-                TreeNode nd = bmv.Bookmark.Node;
-                VariationTree tree = bmv.Tree;
-                if (nd != null)
-                {
-                    tree.DeleteBookmark(nd);
-                    BookmarkList.Remove(bmv);
-                    if (_currentPage > _maxPage)
-                    {
-                        _currentPage = _maxPage;
-                    }
-                    ResyncBookmarks(_currentPage);
-                }
-                AppState.IsDirty = true;
+                BookmarkWrapper bmw = BookmarkGuiList[ClickedIndex % BOOKMARKS_PER_PAGE].BookmarkWrapper;
+                DeleteBookmark(bmw);
             }
             catch { }
+        }
+
+        /// <summary>
+        /// Deletes the bookmark identified by the passed parameters.
+        /// </summary>
+        /// <param name="chapterIndex"></param>
+        /// <param name="articleType"></param>
+        /// <param name="articleIndex"></param>
+        /// <param name="nodeId"></param>
+        public static BookmarkWrapper DeleteBookmark(int chapterIndex, GameData.ContentType articleType, int articleIndex, int nodeId)
+        {
+            BookmarkWrapper bmw = null;
+            foreach (BookmarkWrapper wrapper in BookmarkList)
+            {
+                if (wrapper.ChapterIndex == chapterIndex && wrapper.ContentType == articleType && wrapper.ArticleIndex == articleIndex && wrapper.Node.NodeId == nodeId)
+                {
+                    bmw = wrapper;
+                }
+            }
+
+            DeleteBookmark(bmw);
+            return bmw;
         }
 
         /// <summary>
@@ -640,6 +650,39 @@ namespace ChessForge
 
             ShowPageControls();
             HighlightBookmark(_lastAddedBookmark);
+        }
+
+        /// <summary>
+        /// Deletes a bookmark from the parent tree
+        /// and the list of bookmarks.
+        /// </summary>
+        /// <param name="bmw"></param>
+        private static void DeleteBookmark(BookmarkWrapper bmw)
+        {
+            if (bmw == null)
+            {
+                return;
+            }
+
+            try
+            {
+                TreeNode nd = bmw.Bookmark.Node;
+                VariationTree tree = bmw.Tree;
+                if (nd != null)
+                {
+                    tree.DeleteBookmark(nd);
+                    BookmarkList.Remove(bmw);
+                    if (_currentPage > _maxPage)
+                    {
+                        _currentPage = _maxPage;
+                    }
+                    ResyncBookmarks(_currentPage);
+                }
+                AppState.IsDirty = true;
+            }
+            catch
+            {
+            }
         }
 
         /// <summary>
