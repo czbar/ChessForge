@@ -116,7 +116,7 @@ namespace ChessForge
         /// </summary>
         public string ChapterIndexColumnText
         {
-            get { return _chapter == null ? string.Empty : Properties.Resources.Chapter + " " + (_chapterIndex + 1).ToString(); }
+            get { return !IsChapterHeader ? string.Empty : Properties.Resources.Chapter + " " + (_chapterIndex + 1).ToString(); }
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace ChessForge
                 {
                     header = _article.Tree.Header.BuildGameHeaderLine(true, _contentType == GameData.ContentType.MODEL_GAME);
                 }
-                else if (_chapter != null)
+                else if (IsChapterHeader)
                 {
                     header = "[" + (Chapter.Index + 1).ToString() + ".] " + _chapter.Title;
                 }
@@ -192,7 +192,7 @@ namespace ChessForge
         {
             get
             {
-                return _chapter != null ? Properties.Resources.Chapter : string.Empty;
+                return IsChapterHeader ? Properties.Resources.Chapter : string.Empty;
             }
         }
 
@@ -206,7 +206,7 @@ namespace ChessForge
         {
             get
             {
-                if (_chapter != null)
+                if (IsChapterHeader)
                 {
                     return _chapter.Title;
                 }
@@ -357,7 +357,7 @@ namespace ChessForge
                 }
                 else
                 {
-                    if (_chapter != null)
+                    if (IsChapterHeader)
                     {
                         return Properties.Resources.Chapter + " " + (_chapterIndex + 1).ToString();
                     }
@@ -374,7 +374,7 @@ namespace ChessForge
         /// </summary>
         public int ChapterIndex
         {
-            get => _chapter == null ? _chapterIndex : _chapter.Index;
+            get => !IsChapterHeader ? _chapterIndex : _chapter.Index;
             set => _chapterIndex = value;
         }
 
@@ -425,7 +425,7 @@ namespace ChessForge
         /// </summary>
         public string ChapterCheckBoxVisible
         {
-            get => _chapter != null ? _isChapterCheckboxVisible : "Collapsed";
+            get => IsChapterHeader ? _isChapterCheckboxVisible : "Collapsed";
             set
             {
                 _isChapterCheckboxVisible = value;
@@ -439,12 +439,20 @@ namespace ChessForge
         /// </summary>
         public string ChapterGrayedCheckBoxVisible
         {
-            get => _chapter != null ? _isChapterGrayedCheckboxVisible : "Collapsed";
+            get => IsChapterHeader ? _isChapterGrayedCheckboxVisible : "Collapsed";
             set
             {
                 _isChapterGrayedCheckboxVisible = value;
                 NotifyPropertyChanged();
             }
+        }
+
+        /// <summary>
+        /// Always visible, if this is not a chapter item.
+        /// </summary>
+        public string NonChapterCheckBoxVisible
+        {
+            get { return !IsChapterHeader ? "Visible" : "Collapsed"; }
         }
 
         /// <summary>
@@ -475,14 +483,6 @@ namespace ChessForge
         {
             get => _isChapterAllUnselected;
             set => _isChapterAllUnselected = value;
-        }
-
-        /// <summary>
-        /// Always visible, if this is not a chapter item.
-        /// </summary>
-        public string NonChapterCheckBoxVisible
-        {
-            get { return _chapter == null ? "Visible" : "Collapsed"; }
         }
 
 
