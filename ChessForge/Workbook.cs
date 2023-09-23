@@ -219,6 +219,8 @@ namespace ChessForge
 
             foreach (Chapter chapter in Chapters)
             {
+                int chapterIndex = chapter.Index;
+
                 if (selectedChapter == null)
                 {
                     // an item for the Chapter itself
@@ -237,7 +239,7 @@ namespace ChessForge
                 {
                     for (int i = 0; i < chapter.ModelGames.Count; i++)
                     {
-                        ArticleListItem artItem = new ArticleListItem(chapter, -1, chapter.ModelGames[i], i);
+                        ArticleListItem artItem = new ArticleListItem(chapter, chapterIndex, chapter.ModelGames[i], i);
                         articleList.Add(artItem);
                     }
                 }
@@ -246,7 +248,7 @@ namespace ChessForge
                 {
                     for (int i = 0; i < chapter.Exercises.Count; i++)
                     {
-                        ArticleListItem artItem = new ArticleListItem(chapter, -1, chapter.Exercises[i], i);
+                        ArticleListItem artItem = new ArticleListItem(chapter, chapterIndex, chapter.Exercises[i], i);
                         articleList.Add(artItem);
                     }
                 }
