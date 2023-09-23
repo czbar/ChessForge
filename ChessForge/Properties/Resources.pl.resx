@@ -987,6 +987,9 @@
   <data name="BookmarkAdded" xml:space="preserve">
     <value>Zakładka została zapisana</value>
   </data>
+  <data name="BookmarkDeleted" xml:space="preserve">
+    <value>Zakładka została usunięta</value>
+  </data>
   <data name="FailedToSaveFile" xml:space="preserve">
     <value>Błąd przy zapisie pliku</value>
   </data>

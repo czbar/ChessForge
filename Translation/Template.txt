@@ -1298,6 +1298,10 @@ BookmarksAlreadyExist=
 #english: BookmarkAdded=The bookmark has been added
 BookmarkAdded=
 
+#description: A bookmark has been deleted
+#english: BookmarkDeleted=The bookmark has been deleted
+BookmarkDeleted=
+
 #description: Error saving file
 #english: FailedToSaveFile=Failed to save file
 FailedToSaveFile=

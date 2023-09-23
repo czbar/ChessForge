@@ -278,6 +278,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The bookmark has been deleted.
+        /// </summary>
+        public static string BookmarkDeleted {
+            get {
+                return ResourceManager.GetString("BookmarkDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bookmarks.
         /// </summary>
         public static string Bookmarks {

@@ -1298,6 +1298,10 @@ BookmarksAlreadyExist=Zakładki już istnieją
 #english: BookmarkAdded=The bookmark has been added
 BookmarkAdded=Zakładka została zapisana
 
+#description: A bookmark has been deleted
+#english: BookmarkDeleted=The bookmark has been deleted
+BookmarkDeleted=Zakładka została usunięta
+
 #description: Error saving file
 #english: FailedToSaveFile=Failed to save file
 FailedToSaveFile=Błąd przy zapisie pliku

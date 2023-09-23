@@ -1008,6 +1008,9 @@ BookmarksAlreadyExist=Bookmarks already exist
 #A bookmark has been added
 BookmarkAdded=The bookmark has been added
 
+#A bookmark has been deleted
+BookmarkDeleted=The bookmark has been deleted
+
 #Error saving file
 FailedToSaveFile=Failed to save file
 
