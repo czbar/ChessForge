@@ -212,6 +212,7 @@
                                 <MenuItem x:Name="UiMnciFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}" Click="UiMnFindIdenticalPosition_Click" InputGestureText="F3"/>
                                 <Separator x:Name="UiMncMainBoardSepar_2" />
                                 <MenuItem x:Name="UiMnciBookmarkPosition" Header="{x:Static p:Resources.BookmarkThisPosition}" Click="UiMnMarkBookmark_Click" />
+                                <MenuItem x:Name="UiMnciDeleteBookmark" Visibility="Collapsed" Header="{x:Static p:Resources.DeleteThisBookmark}" Click="UiMnciDeleteBookmark_Click" />
                                 <Separator x:Name="UiMncMainBoardSepar_4" />
                                 <MenuItem x:Name="UiMnciReplay" Header="{x:Static p:Resources.Replay}"  Click="UiMnReplayLine_Clicked"/>
                                 <Separator x:Name="UiMncMainBoardSepar_3" />
@@ -500,6 +501,7 @@
                                     <MenuItem x:Name="UiMnStudyFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}"  Click="UiMnFindIdenticalPosition_Click" InputGestureText="F3" />
                                     <Separator />
                                     <MenuItem x:Name="UiMnMarkBookmark" Header="{x:Static p:Resources.BookmarkThisPosition}" Click="UiMnMarkBookmark_Click" />
+                                    <MenuItem x:Name="UiMnStDeleteBookmark" Visibility="Collapsed" Header="{x:Static p:Resources.DeleteThisBookmark}" Click="UiMnciDeleteBookmark_Click" />
                                     <Separator />
                                     <MenuItem x:Name="_mnStudyTree_MarkThumbnail" Header="{x:Static p:Resources.MarkAsThumbnail}" Click="UiMn_MarkThumbnail_Click" InputGestureText="Ctrl+T" />
                                 </ContextMenu>
@@ -573,6 +575,7 @@
                                     <MenuItem x:Name="UiMnGameFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}" Click="UiMnFindIdenticalPosition_Click" InputGestureText="F3" />
                                     <Separator />
                                     <MenuItem x:Name="UiMnGameMarkBookmark" Header="{x:Static p:Resources.BookmarkThisPosition}" Click="UiMnMarkBookmark_Click" />
+                                    <MenuItem x:Name="UiMnGameDeleteBookmark" Visibility="Collapsed" Header="{x:Static p:Resources.DeleteThisBookmark}" Click="UiMnciDeleteBookmark_Click" />
                                     <MenuItem x:Name="_mnGame_MarkThumbnail" Header="{x:Static p:Resources.MarkAsThumbnail}" Click="UiMn_MarkThumbnail_Click" InputGestureText="Ctrl+T" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
@@ -656,6 +659,7 @@
                                     <MenuItem x:Name="UiMnExercFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}" Click="UiMnFindIdenticalPosition_Click" InputGestureText="F3" />
                                     <Separator x:Name="UiMnExerc_Separator_7"/>
                                     <MenuItem x:Name="UiMnExercMarkBookmark" Header="{x:Static p:Resources.BookmarkThisPosition}" Click="UiMnMarkBookmark_Click" />
+                                    <MenuItem x:Name="UiMnExercDeleteBookmark" Visibility="Collapsed" Header="{x:Static p:Resources.DeleteThisBookmark}" Click="UiMnciDeleteBookmark_Click" />
                                     <MenuItem x:Name="_mnExerc_MarkThumbnail" Header="{x:Static p:Resources.MarkAsThumbnail}" Click="UiMn_ExerciseMarkThumbnail_Click" InputGestureText="Ctrl+T" />
                                 </ContextMenu>
                             </Grid.ContextMenu>

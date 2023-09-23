@@ -2231,6 +2231,32 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Deletes a bookmark from the currently selected node.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnciDeleteBookmark_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int chapterIndex = AppState.ActiveChapter.Index;
+                GameData.ContentType articleType = ActiveVariationTree.ContentType;
+                int articleIndex = AppState.ActiveArticleIndex;
+                int nodeId = AppState.ActiveVariationTree.SelectedNodeId;
+
+                if (BookmarkManager.DeleteBookmark(chapterIndex, articleType, articleIndex, nodeId) != null)
+                {
+                    SoundPlayer.PlayConfirmationSound();
+                    BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.BookmarkDeleted, System.Windows.Media.Brushes.Green);
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("UiMnciDeleteBookmark_Click()", ex);
+            }
+        }
+
 
         //**********************
         //
