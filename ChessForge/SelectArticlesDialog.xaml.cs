@@ -2,19 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data.SqlTypes;
 using System.Linq;
-using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace ChessForge
 {
@@ -293,8 +287,9 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Handles a double-click event on an Article.
-        /// Opens the Game Preview dialog for the clicked game.
+        /// Handles a double-click event on an item.
+        /// If this is an article, opens the Game Preview dialog for the clicked game.
+        /// If this is a Chaper header expands or collapses the clicked chapter
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -303,26 +298,147 @@ namespace ChessForge
             ListViewItem item = GetListViewItemFromPoint(UiLvGames, e.GetPosition(UiLvGames));
             if (item != null && item.Content is ArticleListItem)
             {
-                Article art = (item.Content as ArticleListItem).Article;
-                _lastClickedArticle = art;
-                InvokeGamePreviewDialog(art);
+                ArticleListItem artItem = (ArticleListItem)item.Content;
+                Article art = artItem.Article;
+                if (art != null)
+                {
+                    _lastClickedArticle = art;
+                    InvokeGamePreviewDialog(art);
+                }
+                else
+                {
+                    // a chapter line was clicked
+                    ChapterHeaderDoubleClicked(artItem);
+                }
             }
         }
 
+        /// <summary>
+        /// Handles double click on a Chapter Header line.
+        /// </summary>
+        /// <param name="artItem"></param>
+        private void ChapterHeaderDoubleClicked(ArticleListItem artItem)
+        {
+            if (artItem != null && artItem.IsChapterHeader)
+            {
+                GetChapterItemsSelectionStatus(artItem.ChapterIndex, out bool anySelected, out bool anyUnselected);
+
+                artItem.IsChapterAllSelected = anySelected && !anyUnselected;
+                artItem.IsChapterAllUnselected = !anySelected && anyUnselected;
+                artItem.IsChapterExpanded = ExpandCollapseChapter(artItem);
+
+                artItem.ChapterCheckBoxVisible =  (artItem.IsChapterExpanded || artItem.IsChapterAllSelected || artItem.IsChapterAllUnselected) ? "Visible" : "Collapsed";
+                artItem.ChapterGrayedCheckBoxVisible = (!artItem.IsChapterExpanded && !artItem.IsChapterAllSelected && !artItem.IsChapterAllUnselected) ? "Visible" : "Collapsed";
+            }
+        }
+
+        /// <summary>
+        /// Checks the seletcion status of a chapter.
+        /// Returns values indicating whether all items in the chapter are selected or unselected.
+        /// </summary>
+        /// <param name="chapterIndex"></param>
+        /// <param name="anySelected"></param>
+        /// <param name="anyUnSelected"></param>
+        private void GetChapterItemsSelectionStatus(int chapterIndex, out bool anySelected, out bool anyUnSelected)
+        {
+            anySelected = false;
+            anyUnSelected = false;
+
+            // TODO: this can be optimized but is it worthwhile?
+            foreach (ArticleListItem item in _articleList)
+            {
+                if (!item.IsChapterHeader && item.ChapterIndex == chapterIndex)
+                {
+                    if (item.IsSelected)
+                    {
+                        anySelected = true;
+                    }
+                    else
+                    {
+                        anyUnSelected = true;
+                    }
+
+                    if (anySelected && anyUnSelected)
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns true if any Articles in a chapter are shown.
+        /// This determines whether the chapter is expanded or collapsed.
+        /// </summary>
+        /// <param name="chapterIndex"></param>
+        /// <returns></returns>
+        private bool AnyItemsShownFromChapter(int chapterIndex)
+        {
+            bool shown = false;
+            foreach (ArticleListItem item in _articleList)
+            {
+                if (item.ChapterIndex == chapterIndex && !item.IsChapterHeader && item.IsShown)
+                {
+                    shown = true;
+                    break;
+                }
+            }
+
+            return shown;
+        }
+
+        /// <summary>
+        /// Expands or collapses a chapter.
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        private bool ExpandCollapseChapter(ArticleListItem item)
+        {
+            bool expanded = true;
+
+            try
+            {
+                expanded = AnyItemsShownFromChapter(item.ChapterIndex);
+                if (item.IsChapterHeader)
+                {
+                    for (int i = 0; i < _articleList.Count; i++)
+                    {
+                        ArticleListItem art = _articleList[i];
+                        if (art.ChapterIndex == item.ChapterIndex && !art.IsChapterHeader)
+                        {
+                            art.IsShown = !expanded;
+                        }
+                    }
+                }
+            }
+            catch
+            {
+            }
+
+            return !expanded;
+        }
+
+        /// <summary>
+        /// Opens a game preview dialog.
+        /// </summary>
+        /// <param name="art"></param>
         private void InvokeGamePreviewDialog(Article art)
         {
-            List<string> gameIdList = new List<string>();
-            List<Article> games = new List<Article> { art };
-            gameIdList.Add(art.Tree.Header.GetGuid(out _));
-
-            SingleGamePreviewDialog dlg = new SingleGamePreviewDialog(gameIdList, games)
+            if (art != null)
             {
-                Left = this.Left + 20,
-                Top = this.Top + 20,
-                Topmost = false,
-                Owner = this
-            };
-            dlg.ShowDialog();
+                List<string> gameIdList = new List<string>();
+                List<Article> games = new List<Article> { art };
+                gameIdList.Add(art.Tree.Header.GetGuid(out _));
+
+                SingleGamePreviewDialog dlg = new SingleGamePreviewDialog(gameIdList, games)
+                {
+                    Left = this.Left + 20,
+                    Top = this.Top + 20,
+                    Topmost = false,
+                    Owner = this
+                };
+                dlg.ShowDialog();
+            }
         }
 
         /// <summary>
@@ -354,11 +470,22 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Prevents context menu from opening.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UiLvGames_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
             e.Handled = true;
         }
 
+        /// <summary>
+        /// Invokes the game preview dialog when the user
+        /// chooses the preview from the context menu. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UiMnPreviewGame_Click(object sender, RoutedEventArgs e)
         {
             if (_lastClickedArticle != null)
@@ -367,10 +494,79 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// The Open Game context menu item was selected.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UiMnOpenGame_Click(object sender, RoutedEventArgs e)
         {
             SelectedArticle = _lastClickedArticle;
             UiBtnOk_Click(null, null);
+        }
+
+        /// <summary>
+        /// The selection CheckBox was clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CheckBox cb = sender as CheckBox;
+                ArticleListItem item = cb.DataContext as ArticleListItem;
+                if (item.IsChapterHeader)
+                {
+                    for (int i = 0; i < _articleList.Count; i++)
+                    {
+                        ArticleListItem art = _articleList[i];
+                        if (art.ChapterIndex == item.ChapterIndex && !art.IsChapterHeader)
+                        {
+                            art.IsSelected = true;
+                        }
+                    }
+                    if (!item.IsChapterExpanded)
+                    {
+                        ChapterHeaderDoubleClicked(item);
+                    }
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// The selection CheckBox was unclicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CheckBox cb = sender as CheckBox;
+                ArticleListItem item = cb.DataContext as ArticleListItem;
+                if (item.IsChapterHeader)
+                {
+                    for (int i = 0; i < _articleList.Count; i++)
+                    {
+                        ArticleListItem art = _articleList[i];
+                        if (art.ChapterIndex == item.ChapterIndex && !art.IsChapterHeader)
+                        {
+                            art.IsSelected = false;
+                        }
+                    }
+                    if (!item.IsChapterExpanded)
+                    {
+                        ChapterHeaderDoubleClicked(item);
+                    }
+                }
+            }
+            catch
+            {
+            }
         }
     }
 }
