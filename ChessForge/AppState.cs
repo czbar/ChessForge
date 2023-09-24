@@ -1494,6 +1494,17 @@ namespace ChessForge
                 MainWin.UiMnciBookmarkPosition.IsEnabled = false;
                 MainWin.UiMnciDeleteBookmark.Visibility = Visibility.Collapsed;
 
+                _mainWin.UiMnMain_CreateExercise.Visibility = Visibility.Visible;
+                _mainWin.UiMnciBookmarkPosition.Visibility = Visibility.Visible;
+                _mainWin.UiMnciDeleteBookmark.Visibility = Visibility.Visible;
+                _mainWin.UiMnciFindIdentical.Visibility = Visibility.Visible;
+
+                _mainWin.UiMncMainBoardSepar_1.Visibility = Visibility.Visible;
+                _mainWin.UiMncMainBoardSepar_1a.Visibility = Visibility.Visible;
+                _mainWin.UiMncMainBoardSepar_2.Visibility = Visibility.Visible;
+                _mainWin.UiMncMainBoardSepar_3.Visibility = Visibility.Visible;
+                _mainWin.UiMncMainBoardSepar_4.Visibility = Visibility.Visible;
+
                 switch (CurrentLearningMode)
                 {
                     case LearningMode.Mode.MANUAL_REVIEW:
@@ -1537,11 +1548,12 @@ namespace ChessForge
 
                         _mainWin.UiMnciPlayEngine.Visibility = Visibility.Collapsed;
                         _mainWin.UiMnciExitEngineGame.Visibility = Visibility.Collapsed;
+
+                        _mainWin.UiMnMain_CreateExercise.Visibility = Visibility.Collapsed;
                         break;
                     case LearningMode.Mode.ENGINE_GAME:
                         if (TrainingSession.IsTrainingInProgress)
                         {
-                            _mainWin.UiMnciStartTrainingHere.Visibility = Visibility.Collapsed;
                             _mainWin.UiMnciRestartTraining.Visibility = Visibility.Visible;
                             _mainWin.UiMnciExitTraining.Visibility = Visibility.Visible;
 
@@ -1551,7 +1563,6 @@ namespace ChessForge
                         }
                         else
                         {
-                            _mainWin.UiMnciStartTrainingHere.Visibility = Visibility.Collapsed;
                             _mainWin.UiMnciRestartTraining.Visibility = Visibility.Collapsed;
                             _mainWin.UiMnciExitTraining.Visibility = Visibility.Collapsed;
 
@@ -1559,6 +1570,18 @@ namespace ChessForge
 
                             _mainWin.UiMnciExitEngineGame.Visibility = Visibility.Visible;
                         }
+
+                        _mainWin.UiMncMainBoardSepar_1.Visibility = Visibility.Collapsed;
+                        _mainWin.UiMncMainBoardSepar_1a.Visibility = Visibility.Collapsed;
+                        _mainWin.UiMncMainBoardSepar_2.Visibility = Visibility.Collapsed;
+                        _mainWin.UiMncMainBoardSepar_3.Visibility = Visibility.Collapsed;
+                        _mainWin.UiMncMainBoardSepar_4.Visibility = Visibility.Collapsed;
+
+                        _mainWin.UiMnciStartTrainingHere.Visibility = Visibility.Collapsed;
+                        _mainWin.UiMnMain_CreateExercise.Visibility = Visibility.Collapsed;
+                        _mainWin.UiMnciBookmarkPosition.Visibility = Visibility.Collapsed;
+                        _mainWin.UiMnciDeleteBookmark.Visibility = Visibility.Collapsed;
+                        _mainWin.UiMnciFindIdentical.Visibility = Visibility.Collapsed;
 
                         _mainWin.UiMnciEvalPos.Visibility = Visibility.Collapsed;
                         _mainWin.UiMnciEvalLine.Visibility = Visibility.Collapsed;
