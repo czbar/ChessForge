@@ -756,6 +756,10 @@ Replay=
 #english: PlayAgainstComputer=Play Against Engine
 PlayAgainstComputer=
 
+#description: Game against the engine tab name
+#english: GameAgainstEngine=Game Against Engine
+GameAgainstEngine=
+
 #description: Exit game
 #english: ExitGame=Exit Game
 ExitGame=

@@ -582,6 +582,9 @@ Replay=Replay
 #Start game against the engine
 PlayAgainstComputer=Play Against Engine
 
+#Game against the engine tab name
+GameAgainstEngine=Game Against Engine
+
 #Exit game
 ExitGame=Exit Game
 

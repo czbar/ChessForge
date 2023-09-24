@@ -639,6 +639,9 @@
   <data name="PlayAgainstComputer" xml:space="preserve">
     <value>Gra z Programem</value>
   </data>
+  <data name="GameAgainstEngine" xml:space="preserve">
+    <value>Partia z Silnikiem</value>
+  </data>
   <data name="ExitGame" xml:space="preserve">
     <value>Zakończ Partię</value>
   </data>

@@ -2357,6 +2357,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Game Against Engine.
+        /// </summary>
+        public static string GameAgainstEngine {
+            get {
+                return ResourceManager.GetString("GameAgainstEngine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Game download error.
         /// </summary>
         public static string GameDownloadError {

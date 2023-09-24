@@ -639,6 +639,9 @@
   <data name="PlayAgainstComputer" xml:space="preserve">
     <value>Play Against Engine</value>
   </data>
+  <data name="GameAgainstEngine" xml:space="preserve">
+    <value>Game Against Engine</value>
+  </data>
   <data name="ExitGame" xml:space="preserve">
     <value>Exit Game</value>
   </data>

@@ -756,6 +756,10 @@ Replay=Powtórz Wariant
 #english: PlayAgainstComputer=Play Against Engine
 PlayAgainstComputer=Gra z Programem
 
+#description: Game against the engine tab name
+#english: GameAgainstEngine=Game Against Engine
+GameAgainstEngine=Partia z Silnikiem
+
 #description: Exit game
 #english: ExitGame=Exit Game
 ExitGame=Zakończ Partię
