@@ -188,82 +188,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// SelectAll box was checked
-        /// Check all currently shown items.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiCbSelectAll_Checked(object sender, RoutedEventArgs e)
-        {
-            foreach (var item in _articleList)
-            {
-                if (item.IsShown && item.Article != null)
-                {
-                    item.IsSelected = true;
-                }
-            }
-        }
-
-        /// <summary>
-        /// SelectAll box was unchecked.
-        /// Uncheck all currently shown items.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiCbSelectAll_Unchecked(object sender, RoutedEventArgs e)
-        {
-            foreach (var item in _articleList)
-            {
-                if (item.IsShown)
-                {
-                    item.IsSelected = false;
-                }
-            }
-        }
-
-        /// <summary>
-        /// OK button was clicked. Exits with the result = true
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiBtnOk_Click(object sender, RoutedEventArgs e)
-        {
-            DialogResult = true;
-        }
-
-        /// <summary>
-        /// Cancel button was clicked. Exits with the result = false
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiBtnCancel_Click(object sender, RoutedEventArgs e)
-        {
-            DialogResult = false;
-        }
-
-        /// <summary>
-        /// The user wants to show articles from all chapters
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiCbAllChapters_Checked(object sender, RoutedEventArgs e)
-        {
-            _showActiveChapterOnly = false;
-            SetItemVisibility();
-        }
-
-        /// <summary>
-        /// The user wants to show articles from the active chapter only
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiCbAllChapters_Unchecked(object sender, RoutedEventArgs e)
-        {
-            _showActiveChapterOnly = true;
-            SetItemVisibility();
-        }
-
-        /// <summary>
         /// Identifies a List View item from the click coordinates. 
         /// </summary>
         /// <param name="listView"></param>
@@ -442,7 +366,83 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Handles a right-click even on an Article.
+        /// SelectAll box was checked
+        /// Check all currently shown items.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiCbSelectAll_Checked(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in _articleList)
+            {
+                if (item.IsShown && item.Article != null)
+                {
+                    item.IsSelected = true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// SelectAll box was unchecked.
+        /// Uncheck all currently shown items.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiCbSelectAll_Unchecked(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in _articleList)
+            {
+                if (item.IsShown)
+                {
+                    item.IsSelected = false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// OK button was clicked. Exits with the result = true
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnOk_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
+        }
+
+        /// <summary>
+        /// Cancel button was clicked. Exits with the result = false
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
+        }
+
+        /// <summary>
+        /// The user wants to show articles from all chapters
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiCbAllChapters_Checked(object sender, RoutedEventArgs e)
+        {
+            _showActiveChapterOnly = false;
+            SetItemVisibility();
+        }
+
+        /// <summary>
+        /// The user wants to show articles from the active chapter only
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiCbAllChapters_Unchecked(object sender, RoutedEventArgs e)
+        {
+            _showActiveChapterOnly = true;
+            SetItemVisibility();
+        }
+
+        /// <summary>
+        /// Handles a right-click event on an Article.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -472,6 +472,9 @@ namespace ChessForge
 
         /// <summary>
         /// Prevents context menu from opening.
+        /// If we want a context menu, because we clicked on an article
+        /// UiLvGames_MouseRightButtonUp() will bring it up and this method won't
+        /// be invoked.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -566,6 +569,26 @@ namespace ChessForge
             }
             catch
             {
+            }
+        }
+
+        /// <summary>
+        /// When the "grayed" chapter box is clicked, expand the chapter and ensure 
+        /// that the box remains checked for when it is made visible the next time.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiCbGrayedChapter_Click(object sender, RoutedEventArgs e)
+        {
+            CheckBox cb = sender as CheckBox;
+            if (cb != null)
+            {
+                cb.IsChecked = true;
+                ArticleListItem item = cb.DataContext as ArticleListItem;
+                if (!item.IsChapterExpanded)
+                {
+                    ChapterHeaderDoubleClicked(item);
+                }
             }
         }
     }
