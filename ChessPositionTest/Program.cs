@@ -18,6 +18,27 @@ namespace ChessPositionTest
     class Program
     {
         /// <summary>
+        /// Blunder detection tests.
+        /// </summary>
+        private static List<PositionEvaluation> positionEvaluations = new List<PositionEvaluation>()
+        {
+             new PositionEvaluation(1, 5,  false, true),
+             new PositionEvaluation(5, 1,  true, false),
+             new PositionEvaluation(1, -5, true, false),
+             new PositionEvaluation(0, 5,  false, true),
+             new PositionEvaluation(0, -5, true, false),
+             new PositionEvaluation(-1, -5, true, false),
+             new PositionEvaluation(-5, -1, false, true),
+             new PositionEvaluation(-1, 5, false, true),
+             new PositionEvaluation(+7, +10, false, false),
+             new PositionEvaluation(+10, +7, false, false),
+             new PositionEvaluation(-7, -10, false, false),
+             new PositionEvaluation(-10, -7, false, false),
+             new PositionEvaluation(-7, -4, false, true),
+             new PositionEvaluation(7, 4, true, false),
+        };
+
+        /// <summary>
         /// Positions to test
         /// </summary>
         private static List<TestPosition> TestPositions = new List<TestPosition>()
@@ -26,6 +47,75 @@ namespace ChessPositionTest
             ,new TestPosition("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1","")
             ,new TestPosition("r1r3k1/p2bppbp/3p1np1/q2Nn2P/1p1NP1P1/1B2BP2/PPPQ4/2KR3R b - - 1 15", "c6")
         };
+
+        // high threshold for blunder detection
+        private static double HIGH_EVAL_THRESH = 5;
+
+        /// <summary>
+        /// Blunder detection logic
+        /// </summary>
+        /// <param name="prevEval"></param>
+        /// <param name="currEval"></param>
+        /// <param name="colorToMove"></param>
+        /// <returns></returns>
+        private static bool IsBlunder(double prevEval, double currEval, PieceColor colorToMove)
+        {
+            bool res = false;
+
+            if (colorToMove == PieceColor.White)
+            {
+                if ((currEval - prevEval < -2) && ((Math.Abs(prevEval) <= HIGH_EVAL_THRESH) || Math.Abs(currEval) <= HIGH_EVAL_THRESH))
+                {
+                    res = true;
+                }
+            }
+            else
+            {
+                if ((currEval - prevEval > 2) && ((Math.Abs(prevEval) <= HIGH_EVAL_THRESH) || Math.Abs(currEval) <= HIGH_EVAL_THRESH))
+                {
+                    res = true;
+                }
+            }
+
+            return res;
+        }
+
+        /// <summary>
+        /// Executes blunder detection tests.
+        /// </summary>
+        private static void RunEvaluationTest()
+        {
+            Console.WriteLine("#### EVALUATION TEST ####");
+
+            for(int i = 0; i < positionEvaluations.Count; i++)
+            {
+                Console.WriteLine("@TEST " + (i+1).ToString() + ": ");
+                var posEval = positionEvaluations[i];
+                Console.WriteLine("Previous Position Eval = " + posEval.PreviousPositionEvaluation);
+                Console.WriteLine("Current  Position Eval = " + posEval.CurrentPositionEvaluation);
+                bool isWhiteBlunder = IsBlunder(posEval.PreviousPositionEvaluation, posEval.CurrentPositionEvaluation, PieceColor.White);
+                bool isBlackBlunder = IsBlunder(posEval.PreviousPositionEvaluation, posEval.CurrentPositionEvaluation, PieceColor.Black);
+
+                if (isWhiteBlunder == posEval.BlunderIfWhiteMove)
+                {
+                    Console.WriteLine("PASS for WHITE on move: " + (isWhiteBlunder ? "[??]" : "[--]"));
+                }
+                else
+                {
+                    Console.WriteLine("FAIL for WHITE on move: " + (isWhiteBlunder ? "[??]" : "[--]") + "  EXPECTED " + (posEval.BlunderIfWhiteMove ? "[??]" : "[--]"));
+                }
+
+                if (isBlackBlunder == posEval.BlunderIfBlackMove)
+                {
+                    Console.WriteLine("PASS for BLACK on move: " + (isBlackBlunder ? "[??]" : "[--]"));
+                }
+                else
+                {
+                    Console.WriteLine("FAIL for BLACK on move: " + (isBlackBlunder ? "[??]" : "[--]") + "  EXPECTED " + (posEval.BlunderIfBlackMove ? "[??]" : "[--]"));
+                }
+                Console.WriteLine("");
+            }
+        }
 
         private static bool IsChessMove(string move)
         {
@@ -43,11 +133,13 @@ namespace ChessPositionTest
         static Stopwatch watch = new System.Diagnostics.Stopwatch();
 
         /// <summary>
-        /// Tessts aspects of variation trees and text parsing.
+        /// Tests aspects of variation trees and text parsing.
         /// </summary>
         /// <param name="args"></param>
         static void Main(string[] args)
         {
+            RunEvaluationTest();
+
             bool moveFound = IsChessMove("Nf3");
             moveFound = IsChessMove("1. Nf3");
             moveFound = IsChessMove("2... e5");
@@ -388,5 +480,22 @@ namespace ChessPositionTest
         }
         public string Fen;
         public string Square;
+    }
+
+    class PositionEvaluation
+    {
+        public PositionEvaluation(double previousPositionEvaluation, double currentPositionEvaluation, bool blunderIfWhiteMove, bool blunderIfBlackMove)
+        {
+            CurrentPositionEvaluation = currentPositionEvaluation;
+            PreviousPositionEvaluation = previousPositionEvaluation;
+
+            BlunderIfWhiteMove = blunderIfWhiteMove;
+            BlunderIfBlackMove = blunderIfBlackMove;
+        }
+
+        public double PreviousPositionEvaluation;
+        public double CurrentPositionEvaluation;
+        public bool BlunderIfWhiteMove;
+        public bool BlunderIfBlackMove;
     }
 }
