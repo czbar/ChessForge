@@ -1301,6 +1301,7 @@ namespace ChessForge
                 }
 
                 _mainWin.UiTabCtrlTraining.Visibility = Visibility.Hidden;
+                _mainWin.UiTabEngineGame.Visibility = Visibility.Hidden;
                 _mainWin.UiTabCtrlManualReview.Visibility = Visibility.Visible;
 
                 _mainWin.UiTabStudyTree.Visibility = Visibility.Visible;

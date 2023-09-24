@@ -942,6 +942,27 @@
                             </Grid>
                         </Grid>
                     </TabItem>
+                    <TabItem x:Name="UiTabEngineGame"  Header="{x:Static p:Resources.GameAgainstEngine}"  ContextMenu="{x:Null}"  >
+                        <Grid x:Name="UiGridEngineGame" Background="#FFE5E5E5" ContextMenuOpening="SupressContextMenu" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <RichTextBox x:Name="UiRtbEngineGame"  Visibility="Hidden" IsUndoEnabled="False" Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                                 SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                                   Height="640" MinHeight="500" IsReadOnly="True"  BorderThickness="0">
+                                <RichTextBox.Resources>
+                                    <Style TargetType="{x:Type Paragraph}">
+                                        <Setter Property="Margin" Value="0" />
+                                    </Style>
+                                </RichTextBox.Resources>
+                                <FlowDocument>
+                                </FlowDocument>
+                            </RichTextBox>
+                        </Grid>
+                    </TabItem>
                 </TabControl>
                 <Label x:Name="UiLblScoresheet" FontWeight="Bold" Content="{x:Static p:Resources.Scoresheet}"  Grid.Column="1" Grid.ColumnSpan="2"  HorizontalAlignment="Right" VerticalContentAlignment="Center" Height="24" Margin="0,0,68,0" Width="80" VerticalAlignment="Top" Visibility="Visible" Grid.Row="1" />
                 <DataGrid x:Name="UiDgActiveLine" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Height="648" Margin="0,27,10,0" VerticalAlignment="Top" Width="260"  
