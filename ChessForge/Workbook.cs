@@ -665,21 +665,21 @@ namespace ChessForge
         /// <summary>
         /// Undo deletion of multiple model games
         /// </summary>
-        /// <param name="chapter"></param>
-        /// <param name="index"></param>
         /// <param name="objArticleList"></param>
         /// <param name="objIndices"></param>
-        public void UndoDeleteModelGames(Chapter chapter, int index, object objArticleList, object objIndexList)
+        public void UndoDeleteModelGames(object objArticleList, object objIndexList)
         {
             try
             {
-                List<Article> articleList = objArticleList as List<Article>;
+                List<ArticleListItem> articleList = objArticleList as List<ArticleListItem>;
                 List<int> indexList = objIndexList as List<int>;
-                for (int i = 0; i < articleList.Count; i++)
+                // undo in the reverse order to how they were deleted
+                for (int i = articleList.Count - 1; i >= 0; i--)
                 {
-                    chapter.InsertModelGame(articleList[i], indexList[i]);
+                    Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(articleList[i].ChapterIndex);
+                    chapter.InsertModelGame(articleList[i].Article, indexList[i]);
+                    chapter.ActiveModelGameIndex = indexList[i];
                 }
-                chapter.ActiveModelGameIndex = index;
             }
             catch
             {
