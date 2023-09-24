@@ -666,26 +666,33 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnPlayEngine_Click(object sender, RoutedEventArgs e)
         {
-            if (!EngineMessageProcessor.IsEngineAvailable)
-            {
-                MessageBox.Show(Properties.Resources.EngineNotAvailable, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
 
-            // check that there is a move selected in the _dgMainLineView so
-            // that we have somewhere to start
-            TreeNode nd = ActiveLine.GetSelectedTreeNode();
-            if (nd != null)
+            // double check that we are in the Study tab,
+            // we don't allow starting a game from anywhere else
+            if (AppState.ActiveTab == WorkbookManager.TabViewType.STUDY)
             {
-                StartEngineGame(nd, false);
-                if (nd.ColorToMove == PieceColor.White && !MainChessBoard.IsFlipped || nd.ColorToMove == PieceColor.Black && MainChessBoard.IsFlipped)
+                if (!EngineMessageProcessor.IsEngineAvailable)
                 {
-                    MainChessBoard.FlipBoard();
+                    MessageBox.Show(Properties.Resources.EngineNotAvailable, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
                 }
-            }
-            else
-            {
-                MessageBox.Show(Properties.Resources.SelectEngineStartMove, Properties.Resources.EngineGame, MessageBoxButton.OK);
+
+                // check that there is a move selected in the _dgMainLineView so
+                // that we have somewhere to start
+                TreeNode nd = ActiveLine.GetSelectedTreeNode();
+                if (nd != null)
+                {
+                    StartEngineGame(nd, false);
+                    if (nd.ColorToMove == PieceColor.White && !MainChessBoard.IsFlipped || nd.ColorToMove == PieceColor.Black && MainChessBoard.IsFlipped)
+                    {
+                        MainChessBoard.FlipBoard();
+                    }
+                    EnableGui(false);
+                }
+                else
+                {
+                    MessageBox.Show(Properties.Resources.SelectEngineStartMove, Properties.Resources.EngineGame, MessageBoxButton.OK);
+                }
             }
         }
 
@@ -696,7 +703,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnExitEngineGame_Click(object sender, RoutedEventArgs e)
         {
-            StopEngineGame();
+            UiBtnExitGame_Click(sender, e);
         }
 
         /// <summary>
@@ -706,7 +713,14 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnExitGame_Click(object sender, RoutedEventArgs e)
         {
-            StopEngineGame();
+            try
+            {
+                StopEngineGame();
+            }
+            finally
+            {
+                EnableGui(true);
+            }
         }
 
 
