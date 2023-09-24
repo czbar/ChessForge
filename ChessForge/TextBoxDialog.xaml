@@ -9,9 +9,9 @@
         ShowInTaskbar="True"
         Title="" Height="400" Width="600">
     <Grid>
-        <TextBox x:Name="UiTextBox" IsReadOnly="True" BorderThickness="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" HorizontalAlignment="Center" Margin="0,23,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="484" Height="246"/>
-        <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="0,298,0,0" VerticalAlignment="Top" Width="80" Height="30" Click="UiBtnOk_Click"/>
-        <Button x:Name="UiBtnCancel" IsCancel="True" Content="" Width="0" Height="0" />
+        <TextBox x:Name="UiTextBox" TabIndex="0" IsReadOnly="True" BorderThickness="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" HorizontalAlignment="Center" Margin="0,23,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="484" Height="246"/>
+        <Button x:Name="UiBtnOk" TabIndex="1" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="0,298,0,0" VerticalAlignment="Top" Width="80" Height="30" Click="UiBtnOk_Click"/>
+        <Button x:Name="UiBtnCancel" TabIndex="2" IsCancel="True" Content="" Width="0" Height="0" />
 
     </Grid>
 </Window>

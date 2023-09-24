@@ -24,6 +24,7 @@ namespace ChessForge
             InitializeComponent();
             this.Title = title;
             UiTextBox.Text = content;
+            UiTextBox.Focus();
         }
 
         private void UiBtnOk_Click(object sender, RoutedEventArgs e)

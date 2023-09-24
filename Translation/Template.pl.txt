@@ -438,9 +438,9 @@ ErrGameNotFound=Partii nie znaleziono
 #english: ErrGamesNotFound=Games not found
 ErrGamesNotFound=Partii nie znaleziono
 
-#description: Empty game tekst
-#english: ErrEmptyGame=Game text is empty
-ErrEmptyGame=Pusty zapis partii
+#description: Empty game text
+#english: EmptyGameTextFromLichess=No game text received from Lichess.
+EmptyGameTextFromLichess=Pusty zapis partii otrzymany z Lichess.
 
 #description: User name cannot be empty 
 #english: ErrEmptyUserName=Provide User Name
@@ -1298,6 +1298,10 @@ BookmarksAlreadyExist=Zakładki już istnieją
 #english: BookmarkAdded=The bookmark has been added
 BookmarkAdded=Zakładka została zapisana
 
+#description: A bookmark has been deleted
+#english: BookmarkDeleted=The bookmark has been deleted
+BookmarkDeleted=Zakładka została usunięta
+
 #description: Error saving file
 #english: FailedToSaveFile=Failed to save file
 FailedToSaveFile=Błąd przy zapisie pliku
@@ -1800,10 +1804,6 @@ Medium=Umiarkowanie
 #description: Slow speed
 #english: Slow=Slow
 Slow=Powoli
-
-#description: Empty game text
-#english: EmptyGameText=Game text is empty.
-EmptyGameText=Zapis partii jest pusty
 
 #description: Game not found
 #english: GameNotFound=Game not found.

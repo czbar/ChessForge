@@ -420,8 +420,8 @@
   <data name="ErrGamesNotFound" xml:space="preserve">
     <value>Partii nie znaleziono</value>
   </data>
-  <data name="ErrEmptyGame" xml:space="preserve">
-    <value>Pusty zapis partii</value>
+  <data name="EmptyGameTextFromLichess" xml:space="preserve">
+    <value>Pusty zapis partii otrzymany z Lichess.</value>
   </data>
   <data name="ErrEmptyUserName" xml:space="preserve">
     <value>Brak nazwy użytkownika</value>
@@ -987,6 +987,9 @@
   <data name="BookmarkAdded" xml:space="preserve">
     <value>Zakładka została zapisana</value>
   </data>
+  <data name="BookmarkDeleted" xml:space="preserve">
+    <value>Zakładka została usunięta</value>
+  </data>
   <data name="FailedToSaveFile" xml:space="preserve">
     <value>Błąd przy zapisie pliku</value>
   </data>
@@ -1355,9 +1358,6 @@
   </data>
   <data name="Slow" xml:space="preserve">
     <value>Powoli</value>
-  </data>
-  <data name="EmptyGameText" xml:space="preserve">
-    <value>Zapis partii jest pusty</value>
   </data>
   <data name="GameNotFound" xml:space="preserve">
     <value>Partia nie znaleziona</value>

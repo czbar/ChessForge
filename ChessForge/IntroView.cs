@@ -195,6 +195,42 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Invokes the Diagram Setup dialog,
+        /// creates GUI objects for the position
+        /// and inserts in the document.
+        /// </summary>
+        public void CreateDiagram()
+        {
+            try
+            {
+                TreeNode node = new TreeNode(null, "", 0);
+                node.Position = new BoardPosition(SelectedNode.Position);
+
+                DiagramSetupDialog dlg = new DiagramSetupDialog(node)
+                {
+                    Left = AppState.MainWin.ChessForgeMain.Left + 100,
+                    Top = AppState.MainWin.Top + 100,
+                    Topmost = false,
+                    Owner = AppState.MainWin
+                };
+
+                if (dlg.ShowDialog() == true)
+                {
+                    BoardPosition pos = dlg.PositionSetup;
+                    node.Position = new BoardPosition(pos);
+
+                    InsertDiagram(node, false);
+                    _isTextDirty = true;
+                    AppState.IsDirty = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("CreateDiagram()", ex);
+            }
+        }
+
+        /// <summary>
         /// Due to RTB idiosyncrasies, there may be multiple
         /// Paragraphs with the same name which will cause failures
         /// when loading saved document.
@@ -536,23 +572,28 @@ namespace ChessForge
                 {
                     Paragraph para = sender as Paragraph;
 
-                    _rtb.Focus();
-                    _rtb.CaretPosition = para.ContentEnd;
-
-                    int nodeId = TextUtils.GetIdFromPrefixedString(para.Name);
-                    TreeNode nd = GetNodeById(nodeId);
-                    _selectedNode = nd;
-                    WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, nd);
-                    if (nd != null)
+                    // is a proper diagram para?
+                    if (HasInlineUIContainer(para))
                     {
+
+                        _rtb.Focus();
+                        _rtb.CaretPosition = para.ContentEnd;
+
+                        int nodeId = TextUtils.GetIdFromPrefixedString(para.Name);
+                        TreeNode nd = GetNodeById(nodeId);
                         _selectedNode = nd;
-                        AppState.MainWin.DisplayPosition(nd);
-
-                        EnableMenuItems(true, false, nd);
-
-                        if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
+                        WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, nd);
+                        if (nd != null)
                         {
-                            EditDiagram(para);
+                            _selectedNode = nd;
+                            AppState.MainWin.DisplayPosition(nd);
+
+                            EnableMenuItems(true, false, nd);
+
+                            if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
+                            {
+                                EditDiagram(para);
+                            }
                         }
                     }
                 }
@@ -619,7 +660,15 @@ namespace ChessForge
                 }
             }
 
-            return para;
+            // is a proper diagram para?
+            if (HasInlineUIContainer(para))
+            {
+                return para;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -749,41 +798,34 @@ namespace ChessForge
             return number;
         }
 
+
         /// <summary>
-        /// Invokes the Diagram Setup dialog,
-        /// creates GUI objects for the position
-        /// and inserts in the document.
+        /// Checks if the paragraph has at least one InlineUIContainer.
+        /// This is useful when we have a Diagram para that is an empty
+        /// post-deletion remnant and we don't want to rebuild it.
         /// </summary>
-        public void CreateDiagram()
+        /// <param name="para"></param>
+        /// <returns></returns>
+        private static bool HasInlineUIContainer(Paragraph para)
         {
-            try
+            if (para == null)
             {
-                TreeNode node = new TreeNode(null, "", 0);
-                node.Position = new BoardPosition(SelectedNode.Position);
+                return false;
+            }
 
-                DiagramSetupDialog dlg = new DiagramSetupDialog(node)
+            bool res = false;
+
+            foreach (Inline inl in para.Inlines)
+            {
+                if (inl is InlineUIContainer)
                 {
-                    Left = AppState.MainWin.ChessForgeMain.Left + 100,
-                    Top = AppState.MainWin.Top + 100,
-                    Topmost = false,
-                    Owner = AppState.MainWin
-                };
-
-                if (dlg.ShowDialog() == true)
-                {
-                    BoardPosition pos = dlg.PositionSetup;
-                    node.Position = new BoardPosition(pos);
-
-                    InsertDiagram(node, false);
-                    _isTextDirty = true;
-                    AppState.IsDirty = true;
+                    res = true;
+                    break;
                 }
             }
-            catch (Exception ex)
-            {
-                AppLog.Message("CreateDiagram()", ex);
-            }
+            return res;
         }
+
 
         /// <summary>
         /// Inserts a diagram at the current position for the selected Node
@@ -1347,7 +1389,23 @@ namespace ChessForge
                 }
             }
 
-            if (e.Key == Key.Left || e.Key == Key.Right)
+            if ((Keyboard.Modifiers & ModifierKeys.Control) > 0)
+            {
+                try
+                {
+                    switch (e.Key)
+                    {
+                        case Key.Z:
+                            Command_Undo(null, null);
+                            e.Handled = true;
+                            break;
+                    }
+                }
+                catch 
+                { 
+                }
+            } 
+            else if (e.Key == Key.Left || e.Key == Key.Right)
             {
                 e.Handled = ProcessArrowKey(e.Key);
             }
@@ -1478,6 +1536,34 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Removes diagram paragraphs that no longer hold diagrams.
+        /// </summary>
+        private static void RemoveEmptyDiagrams()
+        {
+            List<Paragraph> parasToRemove = new List<Paragraph>();
+
+            foreach (Block block in _rtb.Document.Blocks)
+            {
+                Paragraph para = block as Paragraph;
+                if (para != null)
+                {
+                    if (para.Name.StartsWith(RichTextBoxUtilities.DiagramParaPrefix))
+                    {
+                        if (!HasInlineUIContainer(para))
+                        {
+                            parasToRemove.Add(para);
+                        }
+                    }
+                }
+            }
+
+            foreach (Paragraph para in parasToRemove)
+            {
+                _rtb.Document.Blocks.Remove(para);
+            }
+        }
+
+        /// <summary>
         /// Handles the Text Change event. Sets the Workbook's dirty flag.
         /// </summary>
         /// <param name="sender"></param>
@@ -1494,6 +1580,10 @@ namespace ChessForge
             // stop TextChanged event handler! 
             _rtb.TextChanged -= UiRtbIntroView_TextChanged;
 
+            if (e.Changes.Count > 0 && e.Changes.First<TextChange>().RemovedLength > 0)
+            {
+                RemoveEmptyDiagrams();
+            }
             // we want to avoid adding anything to the diagram paragraph outside of the diagram InlineUIElement so check for this
             TextPointer tpCaret = _rtb.CaretPosition;
             Paragraph para = tpCaret.Paragraph;

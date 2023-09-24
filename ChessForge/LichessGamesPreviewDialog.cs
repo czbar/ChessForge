@@ -98,26 +98,29 @@ namespace ChessForge
                 {
                     if (string.IsNullOrEmpty(GameDownload.GameText))
                     {
-                        throw new Exception(Properties.Resources.ErrEmptyGame);
+                        MessageBox.Show(Properties.Resources.EmptyGameTextFromLichess, Properties.Resources.Information, MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     }
-                    if (GameDownload.GameText.IndexOf("DOCTYPE") > 0 && GameDownload.GameText.IndexOf("DOCTYPE") < 10)
+                    else
                     {
-                        throw new Exception(Properties.Resources.ErrGamesNotFound);
+                        if (GameDownload.GameText.IndexOf("DOCTYPE") > 0 && GameDownload.GameText.IndexOf("DOCTYPE") < 10)
+                        {
+                            throw new Exception(Properties.Resources.ErrGamesNotFound);
+                        }
+                        _tree = new VariationTree(GameData.ContentType.MODEL_GAME);
+                        PgnGameParser pgnGame = new PgnGameParser(GameDownload.GameText, _tree, null);
+                        _tree.ContentType = GameData.ContentType.MODEL_GAME;
+
+                        PopulateHeaderLine(_tree);
+
+                        _tree.BuildLines();
+                        _chessBoard.DisplayStartingPosition();
+                        _mainLine = _tree.SelectLine("1");
+
+                        _currentNodeMoveIndex = 1;
+                        RequestMoveAnimation(_currentNodeMoveIndex);
+
+                        ShowControls(true, false);
                     }
-                    _tree = new VariationTree(GameData.ContentType.MODEL_GAME);
-                    PgnGameParser pgnGame = new PgnGameParser(GameDownload.GameText, _tree, null);
-                    _tree.ContentType = GameData.ContentType.MODEL_GAME;
-
-                    PopulateHeaderLine(_tree);
-
-                    _tree.BuildLines();
-                    _chessBoard.DisplayStartingPosition();
-                    _mainLine = _tree.SelectLine("1");
-
-                    _currentNodeMoveIndex = 1;
-                    RequestMoveAnimation(_currentNodeMoveIndex);
-
-                    ShowControls(true, false);
                 }
                 else
                 {

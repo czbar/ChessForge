@@ -105,7 +105,7 @@ namespace ChessForge
                         WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
                         break;
                     case WorkbookOperationType.DELETE_MODEL_GAMES:
-                        WorkbookManager.SessionWorkbook.UndoDeleteModelGames(op.Chapter, op.ArticleIndex, op.OpData_1, op.OpData_2);
+                        WorkbookManager.SessionWorkbook.UndoDeleteModelGames(op.OpData_1, op.OpData_2);
                         selectedArticleIndex = op.ArticleIndex;
                         WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
                         break;

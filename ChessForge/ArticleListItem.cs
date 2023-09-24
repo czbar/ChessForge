@@ -26,13 +26,13 @@ namespace ChessForge
         // is selection checkbox visible
         private bool _isSelectCheckBoxVisible;
 
-        // the Chapter object (may be null if not needed for the current purpose).
+        // the Chapter object (null if the item represents an Article).
         private Chapter _chapter;
 
         // index of the Chapter
         private int _chapterIndex = -1;
 
-        // the Article object (may be null if we are only representing a Chapter here)
+        // the Article object (null if we are only representing a Chapter here)
         private Article _article;
 
         // index of the Article in its chapter
@@ -84,7 +84,6 @@ namespace ChessForge
         public ArticleListItem(Chapter chapter) : this(chapter, -1, null, -1)
         {
             _isSelected = false;
-            _isSelectCheckBoxVisible = false;
         }
 
         /// <summary>
@@ -94,7 +93,6 @@ namespace ChessForge
         public ArticleListItem(Chapter chapter, int chapterIndex) : this(chapter, chapterIndex, null, -1)
         {
             _isSelected = false;
-            _isSelectCheckBoxVisible = false;
         }
 
         /// <summary>
@@ -106,11 +104,19 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns true if this item represents a chapter header kine.
+        /// </summary>
+        public bool IsChapterHeader
+        {
+            get => _chapter != null && _contentType == GameData.ContentType.NONE;
+        }
+
+        /// <summary>
         /// Returns the chapter this item belongs to.
         /// </summary>
         public string ChapterIndexColumnText
         {
-            get { return _chapter == null ? string.Empty : Properties.Resources.Chapter + " " + (_chapterIndex + 1).ToString(); }
+            get { return !IsChapterHeader ? string.Empty : Properties.Resources.Chapter + " " + (_chapterIndex + 1).ToString(); }
         }
 
         /// <summary>
@@ -153,7 +159,7 @@ namespace ChessForge
                 {
                     header = _article.Tree.Header.BuildGameHeaderLine(true, _contentType == GameData.ContentType.MODEL_GAME);
                 }
-                else if (_chapter != null)
+                else if (IsChapterHeader)
                 {
                     header = "[" + (Chapter.Index + 1).ToString() + ".] " + _chapter.Title;
                 }
@@ -186,7 +192,7 @@ namespace ChessForge
         {
             get
             {
-                return _chapter != null ? Properties.Resources.Chapter : string.Empty;
+                return IsChapterHeader ? Properties.Resources.Chapter : string.Empty;
             }
         }
 
@@ -200,7 +206,7 @@ namespace ChessForge
         {
             get
             {
-                if (_chapter != null)
+                if (IsChapterHeader)
                 {
                     return _chapter.Title;
                 }
@@ -336,7 +342,7 @@ namespace ChessForge
         /// Number of plies in the tail line
         /// </summary>
         public int TailLinePlyCount;
-        
+
         /// <summary>
         /// Tool tip that shows the stem line if the item is an Article,
         /// or the chapter index if the item is a Chapter.
@@ -351,7 +357,7 @@ namespace ChessForge
                 }
                 else
                 {
-                    if (_chapter != null)
+                    if (IsChapterHeader)
                     {
                         return Properties.Resources.Chapter + " " + (_chapterIndex + 1).ToString();
                     }
@@ -368,7 +374,7 @@ namespace ChessForge
         /// </summary>
         public int ChapterIndex
         {
-            get => _chapterIndex;
+            get => !IsChapterHeader ? _chapterIndex : _chapter.Index;
             set => _chapterIndex = value;
         }
 
@@ -380,6 +386,108 @@ namespace ChessForge
             get => _articleIndex;
             set => _articleIndex = value;
         }
+
+        //////////////////////////////////////////////////////////////////        
+        ///
+        /// The following attributes determine visibility of the selection
+        /// CheckBox in the row of the SelectArticle dialog.
+        /// 
+        /// There are 3 instances of the CheckBox initiated in the dialog
+        /// and precisely one will be visible (note that for a non-chapter 
+        /// item, the entire row may be hidden).
+        /// 
+        /// If the Chapter is expanded, the regular Chapter-style CheckBox will be shown.
+        /// If the Chapter is collapsed, the parent dialog will check if all the items
+        /// are checked or unchecked and show the regular CheckBox appropriately set.
+        /// If some items are checked and some are not, the special CheckBox
+        /// with a gray background will be shown.
+        ///
+        //////////////////////////////////////////////////////////////////        
+
+        // whether the regular chapter CheckBox is visible
+        private string _isChapterCheckboxVisible = "Visible";
+
+        // whether the "grayed" chapter CheckBox is visible
+        private string _isChapterGrayedCheckboxVisible = "Collapsed";
+
+        // whether the parent chapter is expanded
+        private bool _isChapterExpanded = true;
+
+        // whether all items in the the parent chapter are selected
+        private bool _isChapterAllSelected = true;
+
+        // whether all items in the the parent chapter are unselected
+        private bool _isChapterAllUnselected = false;
+
+        /// <summary>
+        /// Set from outside to indicate if the regular chapter
+        /// CheckBox is visible.
+        /// </summary>
+        public string ChapterCheckBoxVisible
+        {
+            get => IsChapterHeader ? _isChapterCheckboxVisible : "Collapsed";
+            set
+            {
+                _isChapterCheckboxVisible = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Set from outside to indicate if the regular chapter
+        /// CheckBox is visible.
+        /// </summary>
+        public string ChapterGrayedCheckBoxVisible
+        {
+            get => IsChapterHeader ? _isChapterGrayedCheckboxVisible : "Collapsed";
+            set
+            {
+                _isChapterGrayedCheckboxVisible = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Always visible, if this is not a chapter item.
+        /// </summary>
+        public string NonChapterCheckBoxVisible
+        {
+            get { return !IsChapterHeader ? "Visible" : "Collapsed"; }
+        }
+
+        /// <summary>
+        /// If true, the chapter state is "expanded".
+        /// If false, the chapter state is "collapsed".
+        /// </summary>
+        public bool IsChapterExpanded
+        {
+            get => _isChapterExpanded;
+            set => _isChapterExpanded = value;
+        }
+
+        /// <summary>
+        /// If true, all articles within the chapter are selected.
+        /// If false, not all articles within the chapter are selected.
+        /// </summary>
+        public bool IsChapterAllSelected
+        {
+            get => _isChapterAllSelected;
+            set => _isChapterAllSelected = value;
+        }
+
+        /// <summary>
+        /// If true, all articles within the chapter are unselected.
+        /// If false, not all articles within the chapter are unselected.
+        /// </summary>
+        public bool IsChapterAllUnselected
+        {
+            get => _isChapterAllUnselected;
+            set => _isChapterAllUnselected = value;
+        }
+
+
+        //////////////////////////////////////////////////////////////////        
+
 
         /// <summary>
         /// PropertChange event handler

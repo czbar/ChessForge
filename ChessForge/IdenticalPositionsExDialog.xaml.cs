@@ -104,6 +104,7 @@ namespace ChessForge
             int studyCount = 0;
             int gameCount = 0;
             int exerciseCount = 0;
+            int chapterCount = 0;
 
             foreach (ArticleListItem item in _articleList)
             {
@@ -117,6 +118,12 @@ namespace ChessForge
                         break;
                     case GameData.ContentType.EXERCISE:
                         exerciseCount++;
+                        break;
+                    default:
+                        if (item.Chapter != null)
+                        {
+                            chapterCount++;
+                        }
                         break;
                 }
             }
@@ -136,6 +143,7 @@ namespace ChessForge
             runTotal.FontSize = 16 + Configuration.FontSizeDiff;
             para.Inlines.Add(runTotal);
 
+            CreateItemCountRun(para, Properties.Resources.Chapters, chapterCount);
             CreateItemCountRun(para, Properties.Resources.Studies, studyCount);
             CreateItemCountRun(para, Properties.Resources.Games, gameCount);
             CreateItemCountRun(para, Properties.Resources.Exercises, exerciseCount);

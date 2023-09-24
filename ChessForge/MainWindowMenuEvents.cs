@@ -418,8 +418,9 @@ namespace ChessForge
                         break;
                     case WorkbookOperationType.DELETE_MODEL_GAME:
                     case WorkbookOperationType.DELETE_MODEL_GAMES:
-                        _chaptersView.BuildFlowDocumentForChaptersView();
-                        SelectModelGame(selectedArticleIndex, AppState.ActiveTab != WorkbookManager.TabViewType.CHAPTERS);
+                        AppState.MainWin.ChaptersView.IsDirty = true;
+                        GuiUtilities.RefreshChaptersView(null);
+                        AppState.MainWin.UiTabChapters.Focus();
                         break;
                     case WorkbookOperationType.DELETE_EXERCISE:
                     case WorkbookOperationType.DELETE_EXERCISES:
@@ -955,7 +956,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnDeleteGames_Click(object sender, RoutedEventArgs e)
         {
-            DeleteArticles(AppState.ActiveChapter, GameData.ContentType.MODEL_GAME);
+            DeleteArticles(GameData.ContentType.MODEL_GAME);
         }
 
         /// <summary>
@@ -965,7 +966,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnDeleteExercises_Click(object sender, RoutedEventArgs e)
         {
-            DeleteArticles(AppState.ActiveChapter, GameData.ContentType.EXERCISE);
+            DeleteArticles(GameData.ContentType.EXERCISE);
         }
 
         /// <summary>
@@ -973,16 +974,11 @@ namespace ChessForge
         /// </summary>
         /// <param name="chapter"></param>
         /// <param name="articleType"></param>
-        private void DeleteArticles(Chapter chapter, GameData.ContentType articleType)
+        private void DeleteArticles(GameData.ContentType articleType)
         {
-            if (chapter == null)
-            {
-                return;
-            }
-
             try
             {
-                ObservableCollection<ArticleListItem> articleList = WorkbookManager.SessionWorkbook.GenerateArticleList(AppState.ActiveChapter, articleType);
+                ObservableCollection<ArticleListItem> articleList = WorkbookManager.SessionWorkbook.GenerateArticleList(null, articleType);
 
                 string title = null;
                 if (articleType == GameData.ContentType.MODEL_GAME)
@@ -994,7 +990,7 @@ namespace ChessForge
                     title = Properties.Resources.SelectExercisesForDeletion;
                 }
 
-                SelectArticlesDialog dlg = new SelectArticlesDialog(null, false, title, ref articleList, false, articleType)
+                SelectArticlesDialog dlg = new SelectArticlesDialog(null, true, title, ref articleList, false, articleType)
                 {
                     Left = ChessForgeMain.Left + 100,
                     Top = ChessForgeMain.Top + 100,
@@ -1003,28 +999,32 @@ namespace ChessForge
                 };
                 if (dlg.ShowDialog() == true)
                 {
-                    List<Article> articlesToDelete = new List<Article>();
+                    List<ArticleListItem> articlesToDelete = new List<ArticleListItem>();
                     List<int> indicesToDelete = new List<int>();
-                    int index = 0;
                     foreach (ArticleListItem item in articleList)
                     {
                         if (item.IsSelected)
                         {
-                            articlesToDelete.Add(item.Article);
-                            indicesToDelete.Add(index);
+                            articlesToDelete.Add(item);
+                            indicesToDelete.Add(item.ArticleIndex);
                         }
-                        index++;
                     }
 
-                    List<Article> deletedArticles = new List<Article>();
+                    List<ArticleListItem> deletedArticles = new List<ArticleListItem>();
                     List<int> deletedIndices = new List<int>();
                     for (int i = 0; i < articlesToDelete.Count; i++)
                     {
-                        bool res = chapter.DeleteArticle(articlesToDelete[i]);
-                        if (res)
+                        ArticleListItem item = articlesToDelete[i];
+                        Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(item.ChapterIndex);
+                        if (chapter != null)
                         {
-                            deletedArticles.Add(articlesToDelete[i]);
-                            deletedIndices.Add(indicesToDelete[i]);
+                            int index = chapter.GetArticleIndex(item.Article);
+                            bool res = chapter.DeleteArticle(item.Article);
+                            if (res)
+                            {
+                                deletedArticles.Add(item);
+                                deletedIndices.Add(indicesToDelete[index]);
+                            }
                         }
                     }
 
@@ -1032,11 +1032,13 @@ namespace ChessForge
                     {
                         WorkbookOperationType wot =
                             articleType == GameData.ContentType.MODEL_GAME ? WorkbookOperationType.DELETE_MODEL_GAMES : WorkbookOperationType.DELETE_EXERCISES;
-                        int activeArticleIndex = articleType == GameData.ContentType.MODEL_GAME ? chapter.ActiveModelGameIndex : chapter.ActiveExerciseIndex;
-                        WorkbookOperation op = new WorkbookOperation(wot, chapter, activeArticleIndex, deletedArticles, deletedIndices);
+                        WorkbookOperation op = new WorkbookOperation(wot, null, -1, deletedArticles, deletedIndices);
                         WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
+
+                        AppState.MainWin.ChaptersView.IsDirty = true;
                         AppState.IsDirty = true;
-                        _chaptersView.RebuildChapterParagraph(chapter);
+                        GuiUtilities.RefreshChaptersView(null);
+                        AppState.MainWin.UiTabChapters.Focus();
                     }
                 }
             }
@@ -1615,7 +1617,7 @@ namespace ChessForge
             {
                 TreeNode nd = ActiveTreeView.GetSelectedNode();
                 ObservableCollection<ArticleListItem> articleList = WorkbookManager.SessionWorkbook.GenerateArticleList();
-                SelectArticlesDialog dlg = new SelectArticlesDialog(nd, false, null, ref articleList, false)
+                SelectArticlesDialog dlg = new SelectArticlesDialog(nd, true, null, ref articleList, false)
                 {
                     Left = ChessForgeMain.Left + 100,
                     Top = ChessForgeMain.Top + 100,
@@ -2228,6 +2230,32 @@ namespace ChessForge
             }
             catch
             {
+            }
+        }
+
+        /// <summary>
+        /// Deletes a bookmark from the currently selected node.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnciDeleteBookmark_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int chapterIndex = AppState.ActiveChapter.Index;
+                GameData.ContentType articleType = ActiveVariationTree.ContentType;
+                int articleIndex = AppState.ActiveArticleIndex;
+                int nodeId = AppState.ActiveVariationTree.SelectedNodeId;
+
+                if (BookmarkManager.DeleteBookmark(chapterIndex, articleType, articleIndex, nodeId) != null)
+                {
+                    SoundPlayer.PlayConfirmationSound();
+                    BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.BookmarkDeleted, System.Windows.Media.Brushes.Green);
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("UiMnciDeleteBookmark_Click()", ex);
             }
         }
 

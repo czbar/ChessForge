@@ -1030,6 +1030,8 @@ namespace ChessForge
                 VariationTree tree = ActiveVariationTree;
                 VariationTreeView view = AppState.MainWin.ActiveTreeView;
 
+                ConfigureBookmarkMenuOptions(MainWin.UiMnMarkBookmark, MainWin.UiMnStDeleteBookmark);
+
                 foreach (var item in MainWin.UiCmnStudyTree.Items)
                 {
                     if (item is MenuItem)
@@ -1086,7 +1088,9 @@ namespace ChessForge
                 int gameCount = chapter.GetModelGameCount();
                 int gameIndex = chapter.ActiveModelGameIndex;
 
-                VariationTreeView view = AppState.MainWin.ActiveTreeView;
+                VariationTreeView view = MainWin.ActiveTreeView;
+
+                ConfigureBookmarkMenuOptions(MainWin.UiMnGameMarkBookmark, MainWin.UiMnGameDeleteBookmark);
 
                 foreach (var item in MainWin.UiCmModelGames.Items)
                 {
@@ -1160,6 +1164,16 @@ namespace ChessForge
                 bool isTrainingOrSolving = TrainingSession.IsTrainingInProgress || IsUserSolving();
                 VariationTreeView view = AppState.MainWin.ActiveTreeView;
 
+                if (isTrainingOrSolving)
+                {
+                    MainWin.UiMnExercMarkBookmark.Visibility = Visibility.Collapsed;
+                    MainWin.UiMnExercDeleteBookmark.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    ConfigureBookmarkMenuOptions(MainWin.UiMnExercMarkBookmark, MainWin.UiMnExercDeleteBookmark);
+                }
+
                 foreach (var item in MainWin.UiCmExercises.Items)
                 {
                     if (item is MenuItem)
@@ -1222,7 +1236,6 @@ namespace ChessForge
                                 menuItem.IsEnabled = ChfClipboard.Type == ChfClipboard.ItemType.NODE_LIST && ChfClipboard.Value != null;
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
-                            case "UiMnExercMarkBookmark":
                             case "UiMnExerc_ImportExercises":
                             case "UiMnExercSelectHighlighted":
                             case "UiMnExercSelectSubtree":
@@ -1478,6 +1491,9 @@ namespace ChessForge
                 MainWin.UiMnAnnotations.IsEnabled = false;
                 MainWin.UiMnMergeChapters.IsEnabled = false;
 
+                MainWin.UiMnciBookmarkPosition.IsEnabled = false;
+                MainWin.UiMnciDeleteBookmark.Visibility = Visibility.Collapsed;
+
                 switch (CurrentLearningMode)
                 {
                     case LearningMode.Mode.MANUAL_REVIEW:
@@ -1499,6 +1515,9 @@ namespace ChessForge
 
                         _mainWin.UiMnciPlayEngine.Visibility = Visibility.Visible;
                         _mainWin.UiMnciExitEngineGame.Visibility = Visibility.Collapsed;
+
+                        ConfigureBookmarkMenuOptions(_mainWin.UiMnciBookmarkPosition, _mainWin.UiMnciDeleteBookmark);
+
                         break;
                     case LearningMode.Mode.TRAINING:
                         _mainWin.UiMnciStartTrainingHere.Visibility = Visibility.Collapsed;
@@ -1566,6 +1585,34 @@ namespace ChessForge
                 }
 
             });
+        }
+
+
+        /// <summary>
+        /// Configures the Add/Delete bookmark menu options
+        /// </summary>
+        /// <param name="addBookmark"></param>
+        /// <param name="deleteBookmark"></param>
+        private static void ConfigureBookmarkMenuOptions(MenuItem addBookmark, MenuItem deleteBookmark)
+        {
+            TreeNode nd = AppState.GetCurrentNode();
+
+            if (nd == null)
+            {
+                addBookmark.Visibility = Visibility.Visible;
+                addBookmark.IsEnabled = false;
+
+                deleteBookmark.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                bool hasBookmark = nd.IsBookmark;
+                addBookmark.Visibility = hasBookmark ? Visibility.Collapsed : Visibility.Visible;
+                addBookmark.IsEnabled = !hasBookmark;
+
+                deleteBookmark.Visibility = hasBookmark ? Visibility.Visible : Visibility.Collapsed;
+                deleteBookmark.IsEnabled = hasBookmark;
+            }
         }
 
         /// <summary>

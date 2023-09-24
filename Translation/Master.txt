@@ -337,8 +337,8 @@ ErrGameNotFound=Game not found
 #Games not found
 ErrGamesNotFound=Games not found
 
-#Empty game tekst
-ErrEmptyGame=Game text is empty
+#Empty game text
+EmptyGameTextFromLichess=No game text received from Lichess.
 
 #User name cannot be empty 
 ErrEmptyUserName=Provide User Name
@@ -1008,6 +1008,9 @@ BookmarksAlreadyExist=Bookmarks already exist
 #A bookmark has been added
 BookmarkAdded=The bookmark has been added
 
+#A bookmark has been deleted
+BookmarkDeleted=The bookmark has been deleted
+
 #Error saving file
 FailedToSaveFile=Failed to save file
 
@@ -1387,9 +1390,6 @@ Medium=Medium
 
 #Slow speed
 Slow=Slow
-
-#Empty game text
-EmptyGameText=Game text is empty.
 
 #Game not found
 GameNotFound=Game not found.

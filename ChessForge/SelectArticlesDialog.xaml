@@ -29,19 +29,24 @@
                         <DataTrigger Binding="{Binding IsShown}" Value="False">
                             <Setter Property="Visibility" Value="Collapsed"/>
                         </DataTrigger>
+                        <DataTrigger Binding="{Binding ArticleIndex}" Value="-1">
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.Resources>
                 <DataTemplate x:Key="SelectionCell">
                     <StackPanel Orientation="Horizontal">
-                        <CheckBox IsChecked="{Binding Path=IsSelected}" Visibility="{Binding Path=Visibility}"  />
+                        <CheckBox BorderThickness="2" BorderBrush="Green" IsChecked="{Binding Path=IsSelected}" Visibility="{Binding Path=ChapterCheckBoxVisible}" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"   />
+                        <CheckBox x:Name="UiCbGrayedChapter" BorderThickness="2" Background="LightGray" BorderBrush="Green" IsChecked="True" IsEnabled="False"  Visibility="{Binding Path=ChapterGrayedCheckBoxVisible}"   />
+                        <CheckBox Margin="10,0,0,0" BorderBrush="Black" BorderThickness="1" IsChecked="{Binding Path=IsSelected}" Visibility="{Binding Path=NonChapterCheckBoxVisible}" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"   />
                     </StackPanel>
                 </DataTemplate>
             </ListView.Resources>
             <ListView.View>
                 <GridView>
-                    <GridViewColumn CellTemplate="{StaticResource SelectionCell}"  Width="30"/>
+                    <GridViewColumn CellTemplate="{StaticResource SelectionCell}"  Width="40"/>
                     <GridViewColumn Header="{x:Static p:Resources.Item}" DisplayMemberBinding="{Binding Path=GameTitleForList}" Width="640"/>
                     <GridViewColumn Header="{x:Static p:Resources.Date}"  DisplayMemberBinding="{Binding Path=Date}" Width="90"/>
                 </GridView>

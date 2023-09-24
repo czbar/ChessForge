@@ -420,8 +420,8 @@
   <data name="ErrGamesNotFound" xml:space="preserve">
     <value>Games not found</value>
   </data>
-  <data name="ErrEmptyGame" xml:space="preserve">
-    <value>Game text is empty</value>
+  <data name="EmptyGameTextFromLichess" xml:space="preserve">
+    <value>No game text received from Lichess.</value>
   </data>
   <data name="ErrEmptyUserName" xml:space="preserve">
     <value>Provide User Name</value>
@@ -987,6 +987,9 @@
   <data name="BookmarkAdded" xml:space="preserve">
     <value>The bookmark has been added</value>
   </data>
+  <data name="BookmarkDeleted" xml:space="preserve">
+    <value>The bookmark has been deleted</value>
+  </data>
   <data name="FailedToSaveFile" xml:space="preserve">
     <value>Failed to save file</value>
   </data>
@@ -1356,9 +1359,6 @@
   </data>
   <data name="Slow" xml:space="preserve">
     <value>Slow</value>
-  </data>
-  <data name="EmptyGameText" xml:space="preserve">
-    <value>Game text is empty.</value>
   </data>
   <data name="GameNotFound" xml:space="preserve">
     <value>Game not found.</value>

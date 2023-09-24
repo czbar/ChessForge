@@ -13,6 +13,12 @@ namespace ChessPosition.Utils
     /// </summary>
     public class MoveAssessment
     {
+        // eval above which we don't care if we allow mate
+        private static readonly int MATE_TO_LOW_ADV = 5;
+
+        // eval above which we don't care if we spoil 
+        private static readonly int HIGH_EVAL_THRESH = 5;
+
         /// <summary>
         /// Determines the assessment of the passed move by comparing its evaluation
         /// against the evaluation of the parent.
@@ -34,21 +40,21 @@ namespace ChessPosition.Utils
                 // so the eval  must parse unless something got corrupted.
                 if (double.TryParse(nd.EngineEvaluation, out double eval))
                 {
-                    if (nd.Parent.ColorToMove == PieceColor.Black && eval > -5.0
-                        || nd.Parent.ColorToMove == PieceColor.White && eval < 5.0)
+                    if (nd.Parent.ColorToMove == PieceColor.Black && eval > -MATE_TO_LOW_ADV
+                        || nd.Parent.ColorToMove == PieceColor.White && eval < +MATE_TO_LOW_ADV)
                     {
-                        // eval dropped from mate to less than 5, so we consider this a blunder
+                        // eval dropped from mate to less than MATE_TO_LOW_ADV, so we consider this a blunder
                         ass = ChfCommands.Assessment.BLUNDER;
                     }
                 }
             }
-            // if we now have mate by our opponent but parent's eval was not so bad.
+            // if we now have a mate by our opponent but parent's eval was not so bad.
             else if (IsMateByColor(nd.EngineEvaluation, nd.ColorToMove))
             {
-                if (double.TryParse(nd.Parent.EngineEvaluation, out double eval))
+                if (double.TryParse(nd.Parent.EngineEvaluation, out double evalParent))
                 {
-                    if (nd.Parent.ColorToMove == PieceColor.White && eval > -5.0
-                        || nd.Parent.ColorToMove == PieceColor.Black && eval < 5.0)
+                    if (nd.Parent.ColorToMove == PieceColor.White && evalParent > -MATE_TO_LOW_ADV
+                        || nd.Parent.ColorToMove == PieceColor.Black && evalParent < +MATE_TO_LOW_ADV)
                     {
                         ass = ChfCommands.Assessment.BLUNDER;
                     }
@@ -144,14 +150,14 @@ namespace ChessPosition.Utils
 
             if (color == PieceColor.White)
             {
-                if (childEval - parentEval > 2.0 && childEval > -4.0 || parentEval > 0.5 && childEval < -0.8)
+                if (childEval - parentEval > +2.0 && childEval < +HIGH_EVAL_THRESH || parentEval < -0.7 && childEval > +0.7)
                 {
                     res = true;
                 }
             }
             else
             {
-                if (childEval - parentEval < -2.0  && childEval < 4.0 || parentEval < -0.5 && childEval > 0.8)
+                if (childEval - parentEval < -2.0  && childEval > -HIGH_EVAL_THRESH || parentEval > +0.7 && childEval < -0.7)
                 {
                     res = true;
                 }

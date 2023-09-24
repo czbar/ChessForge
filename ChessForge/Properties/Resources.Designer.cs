@@ -278,6 +278,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The bookmark has been deleted.
+        /// </summary>
+        public static string BookmarkDeleted {
+            get {
+                return ResourceManager.GetString("BookmarkDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bookmarks.
         /// </summary>
         public static string Bookmarks {
@@ -1574,11 +1583,11 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Game text is empty..
+        ///   Looks up a localized string similar to No game text received from Lichess..
         /// </summary>
-        public static string EmptyGameText {
+        public static string EmptyGameTextFromLichess {
             get {
-                return ResourceManager.GetString("EmptyGameText", resourceCulture);
+                return ResourceManager.GetString("EmptyGameTextFromLichess", resourceCulture);
             }
         }
         
@@ -1723,15 +1732,6 @@ namespace ChessForge.Properties {
         public static string ErrClipboardLinePaste {
             get {
                 return ResourceManager.GetString("ErrClipboardLinePaste", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Game text is empty.
-        /// </summary>
-        public static string ErrEmptyGame {
-            get {
-                return ResourceManager.GetString("ErrEmptyGame", resourceCulture);
             }
         }
         

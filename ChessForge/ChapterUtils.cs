@@ -64,9 +64,8 @@ namespace ChessForge
                 {
                     SetChapterTitle(startNode, targetChapter);
                     List<TreeNode> stem = TreeUtils.GetStemLine(startNode, true);
-                    stem[stem.Count - 1].IsThumbnail = true;
                     targetChapter.StudyTree.Tree.Nodes = TreeUtils.CopyNodeList(stem);
-
+                    targetChapter.StudyTree.Tree.Nodes[stem.Count - 1].IsThumbnail = true;
                 }
 
                 if (targetChapter != null)

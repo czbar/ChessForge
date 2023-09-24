@@ -194,6 +194,42 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns the index of the article in the list of articles
+        /// of its type.
+        /// </summary>
+        /// <param name="article"></param>
+        /// <returns></returns>
+        public int GetArticleIndex(Article article)
+        {
+            int index = -1;
+            if (article != null)
+            {
+                if (article.ContentType == GameData.ContentType.MODEL_GAME)
+                {
+                    for (int i = 0; i < ModelGames.Count; i++)
+                    {
+                        if (ModelGames[i] == article)
+                        {
+                            index = i;
+                        }
+                    }
+                }
+                else if (article.ContentType == GameData.ContentType.EXERCISE)
+                {
+                    for (int i = 0; i < Exercises.Count; i++)
+                    {
+                        if (Exercises[i] == article)
+                        {
+                            index = i;
+                        }
+                    }
+                }
+            }
+
+            return index;
+        }
+
+        /// <summary>
         /// Returns a Model Game stored at a given index.
         /// Null if invalid index.
         /// </summary>
@@ -722,7 +758,21 @@ namespace ChessForge
         /// <param name="index"></param>
         public void InsertModelGame(Article article, int index)
         {
-            ModelGames.Insert(index, article);
+            try
+            {
+                if (index >= 0 && index < ModelGames.Count)
+                {
+                    ModelGames.Insert(index, article);
+                }
+                else
+                {
+                    ModelGames.Add(article);
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("InsertModelGame()", ex);
+            }
         }
 
         /// <summary>
@@ -752,7 +802,21 @@ namespace ChessForge
         /// <param name="index"></param>
         public void InsertExercise(Article article, int index)
         {
-            Exercises.Insert(index, article);
+            try
+            {
+                if (index >= 0 && index < Exercises.Count)
+                {
+                    Exercises.Insert(index, article);
+                }
+                else
+                {
+                    Exercises.Add(article);
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("InsertExercise()", ex);
+            }
         }
 
         /// <summary>

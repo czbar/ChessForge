@@ -9,7 +9,6 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Timers;
 using System.Windows;
@@ -18,6 +17,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using WebAccess;
 using System.Management;
+using System.Windows.Documents;
 
 namespace ChessForge
 {
@@ -1462,55 +1462,62 @@ namespace ChessForge
         /// <param name="fileName"></param>
         private void SetupGuiForNewSession(string fileName, bool isChessForgeFile, WorkbookViewState wvs)
         {
-            // if this is a new file (wvs == null) or we do not have ActiveChapter from the
-            // saved configuration we will set ActiveChapter to the first chapter
-            // and Active Tree to the Study Tree in that chapter.
-
-            Workbook workbook = WorkbookManager.SessionWorkbook;
-            WorkbookManager.TabViewType tabToFocus = WorkbookManager.TabViewType.NONE;
-
-            if (wvs == null)
+            try
             {
-                // this is a newly created Workbook
-                tabToFocus = WorkbookManager.TabViewType.STUDY;
-                workbook.SelectDefaultActiveChapter();
+                // if this is a new file (wvs == null) or we do not have ActiveChapter from the
+                // saved configuration we will set ActiveChapter to the first chapter
+                // and Active Tree to the Study Tree in that chapter.
+
+                Workbook workbook = WorkbookManager.SessionWorkbook;
+                WorkbookManager.TabViewType tabToFocus = WorkbookManager.TabViewType.NONE;
+
+                if (wvs == null)
+                {
+                    // this is a newly created Workbook
+                    tabToFocus = WorkbookManager.TabViewType.STUDY;
+                    workbook.SelectDefaultActiveChapter();
+                }
+                else
+                {
+                    tabToFocus = wvs.ActiveViewType == WorkbookManager.TabViewType.NONE ? WorkbookManager.TabViewType.CHAPTERS : wvs.ActiveViewType;
+                    workbook.SelectActiveChapter(wvs.ActiveChapterIndex);
+                }
+
+                AppState.UpdateAppTitleBar();
+                if (SessionWorkbook.TrainingSideConfig == PieceColor.None)
+                {
+                    ShowWorkbookOptionsDialog(false);
+                }
+                MainChessBoard.FlipBoard(SessionWorkbook.StudyBoardOrientationConfig);
+                if (isChessForgeFile)
+                {
+                    WorkbookManager.UpdateRecentFilesList(fileName);
+                }
+                LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
+
+                //TODO: is this necessary here?
+                InitializeChaptersView();
+
+                // reset so that GotFocus() does not bail 
+                WorkbookManager.ActiveTab = WorkbookManager.TabViewType.NONE;
+
+                // this just in case and for extra future proofing...
+                // : move the focus somewhere away from any tab that may have it so that the next call to Focus() is effective 
+                //
+                // However, due the use of ForceFocus() below, it is not necessary
+                UiRtbBoardComment.Focus();
+
+                if (tabToFocus == WorkbookManager.TabViewType.INTRO && WorkbookManager.SessionWorkbook.ActiveChapter.IsIntroEmpty())
+                {
+                    tabToFocus = WorkbookManager.TabViewType.STUDY;
+                }
+
+                GuiUtilities.ForceFocus(tabToFocus, WorkbookManager.TabViewType.STUDY);
             }
-            else
+            catch (Exception ex)
             {
-                tabToFocus = wvs.ActiveViewType == WorkbookManager.TabViewType.NONE ? WorkbookManager.TabViewType.CHAPTERS : wvs.ActiveViewType;
-                workbook.SelectActiveChapter(wvs.ActiveChapterIndex);
+                AppLog.Message("SetupGuiForNewSession()", ex);
             }
-
-            AppState.UpdateAppTitleBar();
-            if (SessionWorkbook.TrainingSideConfig == PieceColor.None)
-            {
-                ShowWorkbookOptionsDialog(false);
-            }
-            MainChessBoard.FlipBoard(SessionWorkbook.StudyBoardOrientationConfig);
-            if (isChessForgeFile)
-            {
-                WorkbookManager.UpdateRecentFilesList(fileName);
-            }
-            LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
-
-            //TODO: is this necessary here?
-            InitializeChaptersView();
-
-            // reset so that GotFocus() does not bail 
-            WorkbookManager.ActiveTab = WorkbookManager.TabViewType.NONE;
-            
-            // this just in case and for extra future proofing...
-            // : move the focus somewhere away from any tab that may have it so that the next call to Focus() is effective 
-            //
-            // However, due the use of ForceFocus() below, it is not necessary
-            UiRtbBoardComment.Focus();
-
-            if (tabToFocus == WorkbookManager.TabViewType.INTRO && WorkbookManager.SessionWorkbook.ActiveChapter.IsIntroEmpty())
-            {
-                tabToFocus = WorkbookManager.TabViewType.STUDY;
-            }
-
-            GuiUtilities.ForceFocus(tabToFocus, WorkbookManager.TabViewType.STUDY);
         }
 
         /// <summary>
@@ -1518,16 +1525,34 @@ namespace ChessForge
         /// </summary>
         public void SetupGuiForIntro(bool focusOnIntro)
         {
-            // if we are in the INTRO tab, we need to force a rebuild
-            if (AppState.ActiveTab == WorkbookManager.TabViewType.INTRO)
+            if (AppState.ActiveChapter == null)
             {
-                RebuildIntroView();
+                return;
             }
-            else
+
+            try
             {
-                // if not in the INTRO tab, calling Focus will do the job.
-                UiTabIntro.Focus();
-                UiRtbIntroView.Focus();
+                Article article = AppState.ActiveChapter.Intro;
+                if (!article.IsReady)
+                {
+                    AppState.ActiveChapter.Intro = WorkbookManager.SessionWorkbook.GamesManager.ProcessArticleSync(article);
+                }
+
+                // if we are in the INTRO tab, we need to force a rebuild
+                if (AppState.ActiveTab == WorkbookManager.TabViewType.INTRO)
+                {
+                    RebuildIntroView();
+                }
+                else
+                {
+                    // if not in the INTRO tab, calling Focus will do the job.
+                    UiTabIntro.Focus();
+                    UiRtbIntroView.Focus();
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("SetupGuiForIntro()", ex);
             }
         }
 
@@ -1538,63 +1563,75 @@ namespace ChessForge
         /// </summary>
         public void SetupGuiForActiveStudyTree(bool focusOnStudyTree)
         {
-            _studyTreeView = new VariationTreeView(UiRtbStudyTreeView.Document, this, GameData.ContentType.STUDY_TREE, -1);
-
-            //TODO: make sure we don't set it up multiple times
-            _studyTreeView.ArticleSelected += ArticleSelected;
-
-            VariationTree studyTree;
-
-            Article article = AppState.ActiveChapter.StudyTree;
-            if (!article.IsReady)
+            if (AppState.ActiveChapter == null)
             {
-                AppState.ActiveChapter.StudyTree = WorkbookManager.SessionWorkbook.GamesManager.ProcessArticleSync(article);
-                studyTree = article.Tree;
-            }
-            else
-            {
-                studyTree = AppState.ActiveChapter.StudyTree.Tree;
+                return;
             }
 
-            if (studyTree.Nodes.Count == 0)
+            try
             {
-                studyTree.CreateNew();
+                _studyTreeView = new VariationTreeView(UiRtbStudyTreeView.Document, this, GameData.ContentType.STUDY_TREE, -1);
+
+                //TODO: make sure we don't set it up multiple times
+                _studyTreeView.ArticleSelected += ArticleSelected;
+
+                VariationTree studyTree;
+
+                Article article = AppState.ActiveChapter.StudyTree;
+                if (!article.IsReady)
+                {
+                    AppState.ActiveChapter.StudyTree = WorkbookManager.SessionWorkbook.GamesManager.ProcessArticleSync(article);
+                    studyTree = article.Tree;
+                }
+                else
+                {
+                    studyTree = AppState.ActiveChapter.StudyTree.Tree;
+                }
+
+                if (studyTree.Nodes.Count == 0)
+                {
+                    studyTree.CreateNew();
+                }
+                else
+                {
+                    studyTree.BuildLines();
+                }
+
+                _studyTreeView.BuildFlowDocumentForVariationTree();
+
+                string startLineId;
+                int startNodeId = 0;
+
+                if (!string.IsNullOrEmpty(studyTree.SelectedLineId) && studyTree.SelectedNodeId >= 0)
+                {
+                    startLineId = studyTree.SelectedLineId;
+                    startNodeId = studyTree.SelectedNodeId;
+                }
+                else
+                {
+                    startLineId = studyTree.GetDefaultLineIdForNode(0);
+                }
+
+                studyTree.SelectedLineId = startLineId;
+                studyTree.SelectedNodeId = startNodeId;
+
+                if (focusOnStudyTree)
+                {
+                    UiTabStudyTree.Focus();
+                    UiRtbStudyTreeView.Focus();
+                }
+
+                SetActiveLine(studyTree, startLineId, startNodeId);
+
+                BookmarkManager.IsDirty = true;
+
+                int nodeIndex = ActiveLine.GetIndexForNode(startNodeId);
+                SelectLineAndMoveInWorkbookViews(_studyTreeView, startLineId, nodeIndex, false);
             }
-            else
+            catch (Exception ex)
             {
-                studyTree.BuildLines();
+                AppLog.Message("SetupGuiForActiveStudyTree()", ex);
             }
-
-            _studyTreeView.BuildFlowDocumentForVariationTree();
-
-            string startLineId;
-            int startNodeId = 0;
-
-            if (!string.IsNullOrEmpty(studyTree.SelectedLineId) && studyTree.SelectedNodeId >= 0)
-            {
-                startLineId = studyTree.SelectedLineId;
-                startNodeId = studyTree.SelectedNodeId;
-            }
-            else
-            {
-                startLineId = studyTree.GetDefaultLineIdForNode(0);
-            }
-
-            studyTree.SelectedLineId = startLineId;
-            studyTree.SelectedNodeId = startNodeId;
-
-            if (focusOnStudyTree)
-            {
-                UiTabStudyTree.Focus();
-                UiRtbStudyTreeView.Focus();
-            }
-
-            SetActiveLine(studyTree, startLineId, startNodeId);
-
-            BookmarkManager.IsDirty = true;
-
-            int nodeIndex = ActiveLine.GetIndexForNode(startNodeId);
-            SelectLineAndMoveInWorkbookViews(_studyTreeView, startLineId, nodeIndex, false);
         }
 
         /// <summary>
@@ -1604,49 +1641,61 @@ namespace ChessForge
         /// </summary>
         public void SetupGuiForActiveModelGame(int gameIndex, bool focusOnModelGame)
         {
-            _modelGameTreeView = new VariationTreeView(UiRtbModelGamesView.Document, this, GameData.ContentType.MODEL_GAME, gameIndex);
-            if (ActiveVariationTree.Nodes.Count == 0)
+            if (ActiveVariationTree == null)
             {
-                ActiveVariationTree.CreateNew();
-            }
-            else
-            {
-                ActiveVariationTree.BuildLines();
+                return;
             }
 
-            _modelGameTreeView.BuildFlowDocumentForVariationTree();
-
-            string startLineId;
-            int startNodeId = 0;
-
-            if (!string.IsNullOrEmpty(ActiveVariationTree.SelectedLineId) && ActiveVariationTree.SelectedNodeId >= 0)
+            try
             {
-                startLineId = ActiveVariationTree.SelectedLineId;
-                startNodeId = ActiveVariationTree.SelectedNodeId;
+                _modelGameTreeView = new VariationTreeView(UiRtbModelGamesView.Document, this, GameData.ContentType.MODEL_GAME, gameIndex);
+                if (ActiveVariationTree.Nodes.Count == 0)
+                {
+                    ActiveVariationTree.CreateNew();
+                }
+                else
+                {
+                    ActiveVariationTree.BuildLines();
+                }
+
+                _modelGameTreeView.BuildFlowDocumentForVariationTree();
+
+                string startLineId;
+                int startNodeId = 0;
+
+                if (!string.IsNullOrEmpty(ActiveVariationTree.SelectedLineId) && ActiveVariationTree.SelectedNodeId >= 0)
+                {
+                    startLineId = ActiveVariationTree.SelectedLineId;
+                    startNodeId = ActiveVariationTree.SelectedNodeId;
+                }
+                else
+                {
+                    startLineId = ActiveVariationTree.GetDefaultLineIdForNode(0);
+                }
+
+                ActiveVariationTree.SelectedLineId = startLineId;
+                ActiveVariationTree.SelectedNodeId = startNodeId;
+
+                bool isModelGameTabAlready = AppState.ActiveTab == WorkbookManager.TabViewType.MODEL_GAME;
+                if (focusOnModelGame)
+                {
+                    UiTabModelGames.Focus();
+                    UiRtbModelGamesView.Focus();
+                }
+
+                // if !focusOnModelGame and or we are already in the Model Game tab, the Focus methods above won't be called or won't refresh the view
+                if (!focusOnModelGame || isModelGameTabAlready)
+                {
+                    SetActiveLine(startLineId, startNodeId);
+                }
+
+                int nodeIndex = ActiveLine.GetIndexForNode(startNodeId);
+                SelectLineAndMoveInWorkbookViews(_modelGameTreeView, startLineId, nodeIndex, false);
             }
-            else
+            catch (Exception ex)
             {
-                startLineId = ActiveVariationTree.GetDefaultLineIdForNode(0);
+                AppLog.Message("SetupGuiForActiveModelGame()", ex);
             }
-
-            ActiveVariationTree.SelectedLineId = startLineId;
-            ActiveVariationTree.SelectedNodeId = startNodeId;
-
-            bool isModelGameTabAlready = AppState.ActiveTab == WorkbookManager.TabViewType.MODEL_GAME;
-            if (focusOnModelGame)
-            {
-                UiTabModelGames.Focus();
-                UiRtbModelGamesView.Focus();
-            }
-
-            // if !focusOnModelGame and or we are already in the Model Game tab, the Focus methods above won't be called or won't refresh the view
-            if (!focusOnModelGame || isModelGameTabAlready)
-            {
-                SetActiveLine(startLineId, startNodeId);
-            }
-
-            int nodeIndex = ActiveLine.GetIndexForNode(startNodeId);
-            SelectLineAndMoveInWorkbookViews(_modelGameTreeView, startLineId, nodeIndex, false);
         }
 
         /// <summary>
@@ -1663,6 +1712,11 @@ namespace ChessForge
         /// </summary>
         public void SetupGuiForActiveExercise(int exerciseIndex, bool focusOnExercise)
         {
+            if (AppState.ActiveChapter == null)
+            {
+                return;
+            }
+
             try
             {
                 _exerciseTreeView = new ExerciseTreeView(UiRtbExercisesView.Document, this, GameData.ContentType.EXERCISE, exerciseIndex);
@@ -1720,8 +1774,10 @@ namespace ChessForge
                     AppState.ShowExplorers(false, false);
                 }
             }
-            catch 
-            { }
+            catch (Exception ex)
+            {
+                AppLog.Message("SetupGuiForActiveExercise()", ex);
+            }
         }
 
         /// <summary>
@@ -1740,7 +1796,10 @@ namespace ChessForge
         /// </summary>
         public void RebuildActiveTreeView()
         {
-            ActiveTreeView.BuildFlowDocumentForVariationTree();
+            if (ActiveTreeView != null)
+            {
+                ActiveTreeView.BuildFlowDocumentForVariationTree();
+            }
         }
 
         /// <summary>
@@ -1763,7 +1822,7 @@ namespace ChessForge
         /// <param name="nd"></param>
         public void AddNewNodeToVariationTreeView(TreeNode nd)
         {
-            if (ActiveVariationTree.ShowTreeLines)
+            if (ActiveVariationTree != null && ActiveVariationTree.ShowTreeLines)
             {
                 ActiveTreeView.AddNewNodeToDocument(nd);
             }
@@ -2615,6 +2674,11 @@ namespace ChessForge
                 _chaptersView.BuildFlowDocumentForChaptersView();
                 // study tree also shows title so update it there
                 // TODO: update only the Header
+                if (_studyTreeView == null)
+                {
+                    _studyTreeView = new VariationTreeView(UiRtbStudyTreeView.Document, this, GameData.ContentType.STUDY_TREE, -1);
+                }
+
                 _studyTreeView.BuildFlowDocumentForVariationTree();
                 AppState.IsDirty = true;
                 return true;
@@ -3095,6 +3159,86 @@ namespace ChessForge
         private void ShowFloatEval(bool show)
         {
             UiLblEvalFloat.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        /// <summary>
+        /// Intro's RichTextBox editing command.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnIntroUndo_Click(object sender, RoutedEventArgs e)
+        {
+            _introView.Command_Undo(sender, e);
+        }
+
+        /// <summary>
+        /// Intro's RichTextBox editing command.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnIntroToggleBold_Click(object sender, RoutedEventArgs e)
+        {
+            _introView.Command_ToggleBold(sender, e);
+        }
+
+        /// <summary>
+        /// Intro's RichTextBox editing command.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnIntroToggleItalic_Click(object sender, RoutedEventArgs e)
+        {
+            _introView.Command_ToggleItalic(sender, e);
+        }
+
+        /// <summary>
+        /// Intro's RichTextBox editing command.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnIntroToggleUnderline_Click(object sender, RoutedEventArgs e)
+        {
+            _introView.Command_ToggleUnderline(sender, e);
+        }
+
+        /// <summary>
+        /// Intro's RichTextBox editing command.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnIntroFontSizeUp_Click(object sender, RoutedEventArgs e)
+        {
+            _introView.Command_FontSizeUp(sender, e);
+        }
+
+        /// <summary>
+        /// Intro's RichTextBox editing command.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnIntroFontSizeDown_Click(object sender, RoutedEventArgs e)
+        {
+            _introView.Command_FontSizeDown(sender, e);
+        }
+
+        /// <summary>
+        /// Intro's RichTextBox editing command.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnIntroIncreaseIndent_Click(object sender, RoutedEventArgs e)
+        {
+            _introView.Command_IncreaseIndent(sender, e);
+        }
+
+        /// <summary>
+        /// Intro's RichTextBox editing command.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnIntroDecreaseIndent_Click(object sender, RoutedEventArgs e)
+        {
+            _introView.Command_DecreaseIndent(sender, e);
         }
     }
 }
