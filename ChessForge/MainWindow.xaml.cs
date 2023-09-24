@@ -234,6 +234,31 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Enables or disables the entire GUI.
+        /// </summary>
+        public void EnableGui(bool enable)
+        {
+            UiMainMenu.IsEnabled = enable;
+
+            UiTabChapters.IsEnabled = enable;
+            UiTabStudyTree.IsEnabled = enable;
+            UiTabIntro.IsEnabled = enable;
+            UiTabModelGames.IsEnabled = enable;
+            UiTabExercises.IsEnabled = enable;
+            UiTabBookmarks.IsEnabled = enable;
+
+            UiImgAutoSaveOff.IsEnabled = enable;
+            UiImgAutoSaveOn.IsEnabled = enable;
+
+            UiImgEngineOn.IsEnabled = enable;
+            UiImgEngineOff.IsEnabled = enable;
+
+            UiImgExplorersOn.IsEnabled = enable;
+            UiImgExplorersOff.IsEnabled = enable;
+        }
+
+
+        /// <summary>
         /// The variation tree currently being processed.
         /// Note that this can only be Study, Game or Exercise.
         /// The Training tree does not become Active when opened.
