@@ -287,6 +287,24 @@
                         </Grid>
                     </TabItem>
                 </TabControl>
+                <TabControl x:Name="UiTabCtrlEngineGame" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="20,5,20,0" Grid.Row="1" 
+                    VerticalAlignment="Top" Grid.RowSpan="1" Visibility="Hidden">
+                    <TabItem x:Name="UiTabEngineGame"  Header="{x:Static p:Resources.GameAgainstEngine}" IsVisibleChanged="UiTabEngineGame_IsVisibleChanged" >
+                        <Grid Background="#FFE5E5E5">
+                            <RichTextBox x:Name="UiRtbEngineGame" IsUndoEnabled="False"  ContextMenu="{x:Null}" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                                 SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                                 IsReadOnly="True"  MinHeight="640" >
+                                <RichTextBox.Resources>
+                                    <Style TargetType="{x:Type Paragraph}">
+                                        <Setter Property="Margin" Value="0" />
+                                    </Style>
+                                </RichTextBox.Resources>
+                                <FlowDocument>
+                                </FlowDocument>
+                            </RichTextBox>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
                 <TabControl x:Name="UiTabCtrlManualReview" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="20,5,20,0" Grid.Row="1" VerticalAlignment="Top" Grid.RowSpan="1" IsVisibleChanged="UiTabCtrlManualReview_IsVisibleChanged"  PreviewMouseWheel="OnPreviewMouseWheel">
                     <TabItem x:Name="UiTabChapters"  Header="{x:Static p:Resources.Chapters}" GotFocus="UiTabChapters_GotFocus" 
                              PreviewKeyDown="ChessForgeMain_PreviewKeyDown" PreviewKeyUp="ChessForgeMain_PreviewKeyUp">
@@ -940,27 +958,6 @@
                                 </Viewbox>
 
                             </Grid>
-                        </Grid>
-                    </TabItem>
-                    <TabItem x:Name="UiTabEngineGame"  Header="{x:Static p:Resources.GameAgainstEngine}"  ContextMenu="{x:Null}"  >
-                        <Grid x:Name="UiGridEngineGame" Background="#FFE5E5E5" ContextMenuOpening="SupressContextMenu" >
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <RichTextBox x:Name="UiRtbEngineGame"  Visibility="Hidden" IsUndoEnabled="False" Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
-                                 SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                                   Height="640" MinHeight="500" IsReadOnly="True"  BorderThickness="0">
-                                <RichTextBox.Resources>
-                                    <Style TargetType="{x:Type Paragraph}">
-                                        <Setter Property="Margin" Value="0" />
-                                    </Style>
-                                </RichTextBox.Resources>
-                                <FlowDocument>
-                                </FlowDocument>
-                            </RichTextBox>
                         </Grid>
                     </TabItem>
                 </TabControl>
