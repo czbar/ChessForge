@@ -2952,6 +2952,7 @@ namespace ChessForge
                 {
                     MainChessBoard.Shapes.CancelShapeDraw(true);
                 }
+                AppState.ConfigureMainBoardContextMenu();
                 UiMnMainBoard.Visibility = Visibility.Visible;
             }
             else
