@@ -9,7 +9,6 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using ChessPosition;
 using GameTree;
-using System.Windows.Markup.Localizer;
 
 namespace ChessForge
 {
