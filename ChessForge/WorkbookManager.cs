@@ -30,7 +30,8 @@ namespace ChessForge
             BOOKMARKS,
             MODEL_GAME,
             EXERCISE,
-            TRAINING
+            TRAINING,
+            ENGINE_GAME
         }
 
         /// <summary>
