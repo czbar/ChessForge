@@ -679,7 +679,13 @@ namespace ChessForge
 
                 // check that there is a move selected in the _dgMainLineView so
                 // that we have somewhere to start
-                TreeNode nd = ActiveLine.GetSelectedTreeNode();
+                TreeNode origNode = ActiveLine.GetSelectedTreeNode();
+
+                // make a deep  copy of the stem so that we detach our tree from the previously Active Tree.
+                List<TreeNode> gameStem = TreeUtils.CopyNodeList(TreeUtils.GetStemLine(origNode, true));
+
+                TreeNode nd = gameStem.Find(x => x.NodeId == origNode.NodeId);
+
                 if (nd != null)
                 {
                     AppState.SetupGuiForEngineGame();
@@ -718,14 +724,8 @@ namespace ChessForge
                 StopEngineGame();
                 EnableGui(true);
             }
-            finally
+            catch
             {
-                LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
-                //              AppState.SetupGuiForCurrentStates();
-
-                ActiveLine.DisplayPositionForSelectedCell();
-                AppState.SwapCommentBoxForEngineLines(false);
-                BoardCommentBox.RestoreTitleMessage();
             }
         }
 
