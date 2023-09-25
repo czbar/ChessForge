@@ -36,6 +36,12 @@ namespace ChessForge
         public ObservableCollection<MoveWithEval> MoveList = new ObservableCollection<MoveWithEval>();
 
         /// <summary>
+        /// VariationTree representation of the NodeList that will be used during
+        /// a user game against the engine.
+        /// </summary>
+        public VariationTree Tree = new VariationTree(GameData.ContentType.GENERIC);
+
+        /// <summary>
         /// Creates a line for the starting position to the passed Node.
         /// This is needed e.g. when a game is about to start from a position
         /// selected by the user.
@@ -51,6 +57,8 @@ namespace ChessForge
                 NodeList.Insert(0, nd);
                 nd = nd.Parent;
             }
+
+            CopyNodeListToTree();
         }
 
         /// <summary>
@@ -63,6 +71,7 @@ namespace ChessForge
             AppState.MainWin.Dispatcher.Invoke(() =>
             {
                 NodeList.Add(nd);
+                Tree.AddNode(nd);
                 AddPly(nd);
             });
         }
@@ -122,6 +131,7 @@ namespace ChessForge
                     RemoveLastPly();
                 }
             }
+            CopyNodeListToTree();
         }
 
         /// <summary>
@@ -144,6 +154,7 @@ namespace ChessForge
                     RemoveLastPly();
                 }
             }
+            CopyNodeListToTree();
         }
 
         /// <summary>
@@ -310,6 +321,20 @@ namespace ChessForge
         {
             NodeList = line;
             BuildMoveListFromPlyList();
+            CopyNodeListToTree();
+        }
+
+        /// <summary>
+        /// Makes a shallow copy of the NodeList to the Tree.
+        /// This is needed because LineNodeList is an ObservableCollection not a List
+        /// </summary>
+        public void CopyNodeListToTree()
+        {
+            Tree.Nodes.Clear();
+            foreach (TreeNode node in NodeList)
+            {
+                Tree.Nodes.Add(node);
+            }
         }
 
         /// <summary>
@@ -389,6 +414,8 @@ namespace ChessForge
                 {
                     MoveList.RemoveAt(MoveList.Count - 1);
                 }
+
+                CopyNodeListToTree();
             });
         }
 
@@ -411,6 +438,8 @@ namespace ChessForge
             {
                 move.WhitePly = nd.GetGuiPlyText(true);
             }
+
+            CopyNodeListToTree();
         }
     }
 }
