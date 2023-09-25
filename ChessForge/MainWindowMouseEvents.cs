@@ -1117,6 +1117,7 @@ namespace ChessForge
             {
                 SetupGuiForActiveStudyTree(true);
             }
+            UiRtbStudyTreeView.Focus();
 
             StopReplayIfActive();
 
