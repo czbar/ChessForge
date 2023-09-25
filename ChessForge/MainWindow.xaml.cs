@@ -240,13 +240,6 @@ namespace ChessForge
         {
             UiMainMenu.IsEnabled = enable;
 
-            UiTabChapters.IsEnabled = enable;
-            UiTabStudyTree.IsEnabled = enable;
-            UiTabIntro.IsEnabled = enable;
-            UiTabModelGames.IsEnabled = enable;
-            UiTabExercises.IsEnabled = enable;
-            UiTabBookmarks.IsEnabled = enable;
-
             UiImgAutoSaveOff.IsEnabled = enable;
             UiImgAutoSaveOn.IsEnabled = enable;
 
@@ -2993,7 +2986,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Upon start up or when returning from Training the tab control will receive an IsVisibleChanged 
+        /// Upon start up or when returning from Training or Engine Game the tab control will receive an IsVisibleChanged 
         /// notification.  We store the active tab when losing visibility and send focus to it when regaining it.
         /// </summary>
         /// <param name="sender"></param>
