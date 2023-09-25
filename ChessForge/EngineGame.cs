@@ -111,6 +111,8 @@ namespace ChessForge
             {
                 Line.SetLineToNode(startNode);
                 Line.BuildMoveListFromPlyList();
+
+                Line.CopyNodeListToTree();
             }
         }
 
