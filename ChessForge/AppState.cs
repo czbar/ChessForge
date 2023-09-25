@@ -1301,7 +1301,7 @@ namespace ChessForge
                 }
 
                 _mainWin.UiTabCtrlTraining.Visibility = Visibility.Hidden;
-                _mainWin.UiTabEngineGame.Visibility = Visibility.Hidden;
+                _mainWin.UiTabCtrlEngineGame.Visibility = Visibility.Hidden;
                 _mainWin.UiTabCtrlManualReview.Visibility = Visibility.Visible;
 
                 _mainWin.UiTabStudyTree.Visibility = Visibility.Visible;
@@ -1370,9 +1370,12 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Sets up GUI elements for the Training mode.
+        /// Sets up GUI elements for Engine game.
+        /// The setup is different depending on whether the game
+        /// is played during the training session or not (i.e. the user
+        /// requested a game against the engine from the Study tab.)
         /// </summary>
-        private static void SetupGuiForEngineGame()
+        public static void SetupGuiForEngineGame()
         {
             _mainWin.Dispatcher.Invoke(() =>
             {
@@ -1386,6 +1389,8 @@ namespace ChessForge
                     _mainWin.UiLblScoresheet.Visibility = Visibility.Hidden;
                     _mainWin.UiDgEngineGame.Visibility = Visibility.Visible;
 
+                    // set visibility of UiTabCtrlManualReview first as it triggers an event
+                    // that must be run before the event triggerd by UiTabCtrlTraining.Visibility
                     _mainWin.UiTabCtrlManualReview.Visibility = Visibility.Hidden;
                     _mainWin.UiTabStudyTree.Visibility = Visibility.Hidden;
                     _mainWin.UiTabBookmarks.Visibility = Visibility.Hidden;
@@ -1393,33 +1398,48 @@ namespace ChessForge
                     _mainWin.UiTabCtrlTraining.Visibility = Visibility.Visible;
                     _mainWin.UiTabTrainingProgress.Visibility = Visibility.Visible;
 
+                    _mainWin.UiTabCtrlEngineGame.Visibility = Visibility.Hidden;
+
                     _mainWin.UiBtnExitTraining.Visibility = Visibility.Visible;
                     _mainWin.UiBtnExitGame.Visibility = Visibility.Collapsed;
+
+
+                    ShowEvaluationControlsForCurrentStates();
+                    ConfigureMenusForEngineGame();
+
+                    //ShowGuiEngineGameLine(true, MainWin.UiTabCtrlTraining);
                 }
                 else
                 {
                     _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
-                    MainWin.UiRtbStudyTreeView.IsEnabled = false;
+
+                    MainWin.ResizeTabControl(MainWin.UiTabCtrlEngineGame, TabControlSizeMode.SHOW_ENGINE_GAME_LINE);
 
                     _mainWin.UiDgActiveLine.Visibility = Visibility.Hidden;
                     _mainWin.UiLblScoresheet.Visibility = Visibility.Hidden;
                     _mainWin.UiDgEngineGame.Visibility = Visibility.Visible;
 
-                    _mainWin.UiTabCtrlManualReview.Visibility = Visibility.Visible;
-                    _mainWin.UiTabStudyTree.Visibility = Visibility.Visible;
-                    _mainWin.UiTabBookmarks.Visibility = Visibility.Visible;
-
+                    // set visibility of UiTabCtrlManualReview first as it triggers an event
+                    // that must be run before the event triggerd by UiTabCtrlEngineGame.Visibility
+                    _mainWin.UiTabCtrlManualReview.Visibility = Visibility.Hidden;
+                    _mainWin.UiTabCtrlEngineGame.Visibility = Visibility.Visible;
                     _mainWin.UiTabCtrlTraining.Visibility = Visibility.Hidden;
+
                     _mainWin.UiTabTrainingProgress.Visibility = Visibility.Hidden;
 
                     _mainWin.UiBtnExitTraining.Visibility = Visibility.Collapsed;
                     _mainWin.UiBtnExitGame.Visibility = Visibility.Visible;
+
+                    _mainWin.UiMnCloseWorkbook.Visibility = Visibility.Visible;
+
+
+                    _mainWin.UiTabStudyTree.Visibility = Visibility.Hidden;
+                    _mainWin.UiTabBookmarks.Visibility = Visibility.Hidden;
+
+                    MainWin.EnableGui(false);
+
+                    //ShowGuiEngineGameLine(true, MainWin.UiTabCtrlEngineGame);
                 }
-
-                ShowEvaluationControlsForCurrentStates();
-                ShowGuiEngineGameLine(true);
-
-                ConfigureMenusForEngineGame();
             });
         }
 
@@ -1732,8 +1752,10 @@ namespace ChessForge
         /// Shows or hides EngineGame's DataGrid control.
         /// </summary>
         /// <param name="show"></param>
-        private static void ShowGuiEngineGameLine(bool show)
+        private static void ShowGuiEngineGameLine(bool show, TabControl tabCtrl)
         {
+            return;
+
             _mainWin.Dispatcher.Invoke(() =>
             {
                 // only applicable when playing in ManualReview
@@ -1748,13 +1770,12 @@ namespace ChessForge
                     {
                         if (show)
                         {
-                            MainWin.ResizeTabControl(_mainWin.UiTabCtrlTraining, TabControlSizeMode.SHOW_ENGINE_GAME_LINE);
+                            MainWin.ResizeTabControl(tabCtrl, TabControlSizeMode.SHOW_ENGINE_GAME_LINE);
                         }
                         else
                         {
-                            MainWin.ResizeTabControl(_mainWin.UiTabCtrlTraining, TabControlSizeMode.HIDE_ENGINE_GAME_LINE);
+                            MainWin.ResizeTabControl(tabCtrl, TabControlSizeMode.HIDE_ENGINE_GAME_LINE);
                         }
-                        //_mainWin.UiTabCtrlTraining.Margin = show ? new Thickness(180, 5, 5, 5) : new Thickness(5, 5, 5, 5);
                     }
                     else
                     {
