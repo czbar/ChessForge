@@ -252,11 +252,15 @@ namespace ChessForge
 
 
         /// <summary>
-        /// The variation tree currently being processed.
-        /// Note that this can only be Study, Game or Exercise.
-        /// The Training tree does not become Active when opened.
+        /// The variation tree currently being in view or processed.
+        /// This will be Study, Game or Exercise tree from the 
+        /// active chapter of the current workbook,
+        /// except during an Engine Game where the EngineGame.Tree is
+        /// set as the Active Tree.
+        /// 
+        /// Note that the Training tree does not become Active when opened.
         /// The previously opened tree remains active.
-        /// Also note that the retun can be null;
+        /// Also note that the return can be null;
         /// </summary>
         public VariationTree ActiveVariationTree
         {
@@ -268,7 +272,14 @@ namespace ChessForge
                 }
                 else
                 {
-                    return SessionWorkbook.ActiveVariationTree;
+                    if (AppState.ActiveTab == WorkbookManager.TabViewType.ENGINE_GAME)
+                    {
+                        return EngineGame.Line.Tree;
+                    }
+                    else
+                    {
+                        return SessionWorkbook.ActiveVariationTree;
+                    }
                 }
             }
         }
@@ -286,7 +297,7 @@ namespace ChessForge
                 }
                 else
                 {
-                    return SessionWorkbook.ActiveVariationTree.TreeId;
+                    return ActiveVariationTree.TreeId;
                 }
             }
         }
@@ -2100,7 +2111,8 @@ namespace ChessForge
 
             LearningMode.ChangeCurrentMode(LearningMode.Mode.ENGINE_GAME);
 
-            // TODO: should make a call to SetupGUI for game, instead
+            AppState.SetupGuiForEngineGame();
+
             if (TrainingSession.IsTrainingInProgress && TrainingSession.IsContinuousEvaluation)
             {
                 AppState.ShowMoveEvaluationControls(true, true);
@@ -2198,8 +2210,8 @@ namespace ChessForge
 
             Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
 
-            AppState.MainWin.ActiveVariationTree.BuildLines();
-            RebuildActiveTreeView();
+            //AppState.MainWin.ActiveVariationTree.BuildLines();
+            //RebuildActiveTreeView();
 
             AppState.SetupGuiForCurrentStates();
 
