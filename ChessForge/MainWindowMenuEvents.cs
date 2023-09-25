@@ -682,12 +682,12 @@ namespace ChessForge
                 TreeNode nd = ActiveLine.GetSelectedTreeNode();
                 if (nd != null)
                 {
+                    AppState.SetupGuiForEngineGame();
                     StartEngineGame(nd, false);
                     if (nd.ColorToMove == PieceColor.White && !MainChessBoard.IsFlipped || nd.ColorToMove == PieceColor.Black && MainChessBoard.IsFlipped)
                     {
                         MainChessBoard.FlipBoard();
                     }
-                    EnableGui(false);
                 }
                 else
                 {
@@ -716,10 +716,16 @@ namespace ChessForge
             try
             {
                 StopEngineGame();
+                EnableGui(true);
             }
             finally
             {
-                EnableGui(true);
+                LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
+                //              AppState.SetupGuiForCurrentStates();
+
+                ActiveLine.DisplayPositionForSelectedCell();
+                AppState.SwapCommentBoxForEngineLines(false);
+                BoardCommentBox.RestoreTitleMessage();
             }
         }
 
@@ -2474,7 +2480,7 @@ namespace ChessForge
                         {
                             _exerciseTreeView.DeactivateSolvingMode(VariationTree.SolvingMode.NONE);
                         }
-                        AppState.SetupGuiForCurrentStates();
+                        //AppState.SetupGuiForCurrentStates();
 
                         if (saved)
                         {
@@ -2598,7 +2604,6 @@ namespace ChessForge
 
 
         /// <summary>
-        /// TODO: gradually replace all Got/LostFocus with IsVisibleChanged.
         /// Sets ActiveTab to Training when Training Tab becomes visible.
         /// </summary>
         /// <param name="sender"></param>
@@ -2609,6 +2614,20 @@ namespace ChessForge
             if (visible == true)
             {
                 WorkbookManager.ActiveTab = WorkbookManager.TabViewType.TRAINING;
+            }
+        }
+
+        /// <summary>
+        /// Sets ActiveTab to EngineGame when EngineGame Tab becomes visible.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTabEngineGame_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            bool visible = (bool)e.NewValue;
+            if (visible == true)
+            {
+                WorkbookManager.ActiveTab = WorkbookManager.TabViewType.ENGINE_GAME;
             }
         }
 
