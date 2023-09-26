@@ -2214,6 +2214,52 @@ TrnClickMoveBelow=Kliknij na dowolny ruch poniżej aby cofnąć trening do niego
 TrnRightClickMove=Prawy przycisk myszki wywoła menu.
 
 
+
+##################################
+#
+# Header: Engine Game
+#
+
+#description: You are playing against the engine.
+#english: EngGamePlayingVsEngine=You are playing against the engine. 
+EngGamePlayingVsEngine=Grasz partię z silnikiem. 
+
+#description: User is White
+#english: EngGameUserPlaysWhite=You are White and the engine is Black.
+EngGameUserPlaysWhite=Ty masz białe a silnik czarne.
+
+#description: User is Black
+#english: EngGameUserPlaysBlack=You are Black and the engine is White.
+EngGameUserPlaysBlack=Ty masz czarne a silnik białe.
+
+#description: Menu: SwapSides
+#english: EngGameSwapSides=Swap Sides 
+EngGameSwapSides=Zamień strony. 
+
+#description: Menu: Restart Game
+#english: EngGameRestartFrom=Restart Game From Here 
+EngGameRestartFrom=Cofnij partię tutaj 
+
+#description: Menu: Start from initial position
+#english: EngGameStartFromInitial=Start Game From Initial Position 
+EngGameStartFromInitial=Wróć do pozycji początkowej 
+
+#description: Prompt: Your move.
+#english: EngGameYourMove=It is your turn now
+EngGameYourMove=Kolej na Twoje posunięcie
+
+#description: Prompt: Wait engine's move.
+#english: EngGameEngineMove=Wait for engine's response...
+EngGameEngineMove=Czekaj na odpowiedź silnika...
+
+#description: HintBox: Game vs Engine started.
+#english: EngGameStarted=A game against the engine has started.
+EngGameStarted=Partia z silnikiem rozpoczęta.
+
+#description: MessageBox do you want to save game
+#english: EngGameSave=Do you want to save this game in the current chapter?
+EngGameSave=Zapisać partię do obecnego rozdziału?
+
 ##################################
 #
 # Header: Comment Box

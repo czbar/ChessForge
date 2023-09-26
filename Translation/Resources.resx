@@ -1654,6 +1654,36 @@
   <data name="TrnRightClickMove" xml:space="preserve">
     <value>Right click to open the context menu.  </value>
   </data>
+  <data name="EngGamePlayingVsEngine" xml:space="preserve">
+    <value>You are playing against the engine. </value>
+  </data>
+  <data name="EngGameUserPlaysWhite" xml:space="preserve">
+    <value>You are White and the engine is Black.</value>
+  </data>
+  <data name="EngGameUserPlaysBlack" xml:space="preserve">
+    <value>You are Black and the engine is White.</value>
+  </data>
+  <data name="EngGameSwapSides" xml:space="preserve">
+    <value>Swap Sides </value>
+  </data>
+  <data name="EngGameRestartFrom" xml:space="preserve">
+    <value>Restart Game From Here </value>
+  </data>
+  <data name="EngGameStartFromInitial" xml:space="preserve">
+    <value>Start Game From Initial Position </value>
+  </data>
+  <data name="EngGameYourMove" xml:space="preserve">
+    <value>It is your turn now</value>
+  </data>
+  <data name="EngGameEngineMove" xml:space="preserve">
+    <value>Wait for engine's response...</value>
+  </data>
+  <data name="EngGameStarted" xml:space="preserve">
+    <value>A game against the engine has started.</value>
+  </data>
+  <data name="EngGameSave" xml:space="preserve">
+    <value>Do you want to save this game in the current chapter?</value>
+  </data>
   <data name="cbUseMenuToOpenWorkbook" xml:space="preserve">
     <value>Use File menu to open or create a new Workbook</value>
   </data>

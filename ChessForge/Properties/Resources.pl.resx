@@ -1653,6 +1653,36 @@
   <data name="TrnRightClickMove" xml:space="preserve">
     <value>Prawy przycisk myszki wywoła menu.</value>
   </data>
+  <data name="EngGamePlayingVsEngine" xml:space="preserve">
+    <value>Grasz partię z silnikiem. </value>
+  </data>
+  <data name="EngGameUserPlaysWhite" xml:space="preserve">
+    <value>Ty masz białe a silnik czarne.</value>
+  </data>
+  <data name="EngGameUserPlaysBlack" xml:space="preserve">
+    <value>Ty masz czarne a silnik białe.</value>
+  </data>
+  <data name="EngGameSwapSides" xml:space="preserve">
+    <value>Zamień strony. </value>
+  </data>
+  <data name="EngGameRestartFrom" xml:space="preserve">
+    <value>Cofnij partię tutaj </value>
+  </data>
+  <data name="EngGameStartFromInitial" xml:space="preserve">
+    <value>Wróć do pozycji początkowej </value>
+  </data>
+  <data name="EngGameYourMove" xml:space="preserve">
+    <value>Kolej na Twoje posunięcie</value>
+  </data>
+  <data name="EngGameEngineMove" xml:space="preserve">
+    <value>Czekaj na odpowiedź silnika...</value>
+  </data>
+  <data name="EngGameStarted" xml:space="preserve">
+    <value>Partia z silnikiem rozpoczęta.</value>
+  </data>
+  <data name="EngGameSave" xml:space="preserve">
+    <value>Zapisać partię do obecnego rozdziału?</value>
+  </data>
   <data name="cbUseMenuToOpenWorkbook" xml:space="preserve">
     <value>Użyj opcji Plik w menu, by otworzyć podręcznik.</value>
   </data>
