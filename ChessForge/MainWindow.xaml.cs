@@ -2152,6 +2152,7 @@ namespace ChessForge
                 _engineGameView = new EngineGameView(UiRtbEngineGame.Document);
                 _engineGameView.BuildFlowDocumentForGameLine(startNode.ColorToMove);
                 EngineGame.SwitchToAwaitUserMove(startNode);
+                EngineGame.EngineColor = MoveUtils.ReverseColor(startNode.ColorToMove);
             }
             else
             {
