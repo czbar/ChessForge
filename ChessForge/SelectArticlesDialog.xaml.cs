@@ -375,7 +375,7 @@ namespace ChessForge
         {
             foreach (var item in _articleList)
             {
-                if (item.IsShown && item.Article != null)
+                if (item.IsShown)
                 {
                     item.IsSelected = true;
                 }
