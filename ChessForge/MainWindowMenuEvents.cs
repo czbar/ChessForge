@@ -717,14 +717,62 @@ namespace ChessForge
         {
             try
             {
-                StopEngineGame();
-                EnableGui(true);
+                bool? saveGame = SaveEngineGame();
+
+                if (saveGame != null)
+                {
+                    StopEngineGame();
+                    EnableGui(true);
+
+                    if (saveGame == true)
+                    {
+                        string key = EngineGame.EngineColor == PieceColor.White ? PgnHeaders.KEY_WHITE : PgnHeaders.KEY_BLACK;
+                        if (EngineGame.EngineColor != PieceColor.None)
+                        {
+                            EngineGame.Line.Tree.Header.SetHeaderValue(key, Properties.Resources.Engine + " " + AppState.EngineName);
+                        }
+                        EngineGame.Line.Tree.Header.SetHeaderValue(PgnHeaders.KEY_DATE, PgnHeaders.FormatPgnDateString(DateTime.Now));
+                        CreateNewModelGame(EngineGame.Line.Tree);
+                    }
+                }
             }
             catch
             {
             }
         }
 
+        /// <summary>
+        /// Determines whether the game should be saved.
+        /// If we are not in the pure Engine Game mode
+        /// but rather in Trainging, then simply return false,
+        /// otherwise ask the user.
+        /// If the user chooses Cancel then retun null.
+        /// </summary>
+        /// <returns></returns>
+        private bool? SaveEngineGame()
+        {
+            bool? save = false;
+
+            if (!TrainingSession.IsTrainingInProgress)
+            {
+                MessageBoxResult res = MessageBox.Show(Properties.Resources.EngGameSave,
+                    Properties.Resources.EngineGame
+                    , MessageBoxButton.YesNoCancel
+                    , MessageBoxImage.Question
+                    );
+
+                if (res == MessageBoxResult.Cancel)
+                {
+                    save = null;
+                }
+                else if (res == MessageBoxResult.Yes)
+                {
+                    save = true;
+                }
+            }
+
+            return save;
+        }
 
         //**************************************************************
         //
@@ -3166,11 +3214,22 @@ namespace ChessForge
         /// <summary>
         /// Creates a new Model Game and makes it "Active".
         /// </summary>
-        private void CreateNewModelGame()
+        public void CreateNewModelGame(VariationTree gameTree = null)
         {
             try
             {
-                VariationTree tree = new VariationTree(GameData.ContentType.MODEL_GAME);
+                VariationTree tree;
+
+                if (gameTree != null)
+                {
+                    tree = TreeUtils.CopyVariationTree(gameTree);
+                    tree.Header.SetContentType(GameData.ContentType.MODEL_GAME);
+                }
+                else
+                {
+                    tree = new VariationTree(GameData.ContentType.MODEL_GAME);
+                }
+
                 GameHeaderDialog dlg = new GameHeaderDialog(tree, Properties.Resources.GameHeader)
                 {
                     Left = ChessForgeMain.Left + 100,
@@ -3181,15 +3240,26 @@ namespace ChessForge
                 dlg.ShowDialog();
                 if (dlg.ExitOK)
                 {
-                    WorkbookManager.SessionWorkbook.ActiveChapter.AddModelGame(tree);
+                    Article article = WorkbookManager.SessionWorkbook.ActiveChapter.AddModelGame(tree);
+                    article.IsReady = true;
+
                     WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex
                         = WorkbookManager.SessionWorkbook.ActiveChapter.GetModelGameCount() - 1;
                     _chaptersView.BuildFlowDocumentForChaptersView();
 
-                    // TODO: is this spurious? RefreshGamesView() calls SelectModelGame too
-                    SelectModelGame(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex, true);
-                    RefreshGamesView(out Chapter chapter, out int articleIndex);
-                    WorkbookLocationNavigator.SaveNewLocation(chapter, GameData.ContentType.MODEL_GAME, articleIndex);
+                    if (AppState.ActiveTab == WorkbookManager.TabViewType.MODEL_GAME)
+                    {
+                        SelectModelGame(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex, true);
+                        //RefreshGamesView(out Chapter chapter, out int articleIndex);
+                        //WorkbookLocationNavigator.SaveNewLocation(chapter, GameData.ContentType.MODEL_GAME, articleIndex);
+
+                    }
+                    else
+                    {
+                        // if ActiveTab is not MODEL_GAME, Focus() will call SelectModelGame()
+                        // Do not call it explicitly here!
+                        UiTabModelGames.Focus();
+                    }
 
                     if (AppState.AreExplorersOn)
                     {
