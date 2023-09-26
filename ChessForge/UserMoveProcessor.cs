@@ -155,6 +155,10 @@ namespace ChessForge
             if (AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
             {
                 AppState.ShowMoveEvaluationControls(TrainingSession.IsContinuousEvaluation, false);
+                if (!TrainingSession.IsTrainingInProgress && AppState.MainWin.EngineGameView != null)
+                {
+                    AppState.MainWin.EngineGameView.AddMove(nd);
+                }
             }
 
             if (nd.Position.IsCheckmate)
@@ -177,6 +181,18 @@ namespace ChessForge
             if (nd != null)
             {
                 AppState.MainWin.MainChessBoard.DisplayPosition(nd, true);
+            }
+
+            if (!TrainingSession.IsTrainingInProgress && AppState.MainWin.EngineGameView != null)
+            {
+                if (nd.Position.IsStalemate || nd.Position.IsCheckmate)
+                {
+                    AppState.MainWin.EngineGameView.ClearMovePromptParagraph();
+                }
+                else
+                {
+                    AppState.MainWin.EngineGameView.UpdateMovePromptParagraph(false);
+                }
             }
 
         }
