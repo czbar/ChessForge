@@ -320,7 +320,7 @@ namespace GameTree
                 return "";
             }
 
-            return BuildHeaderLine(KEY_DATE, dt.Value.ToString("yyyy.MM.dd"));
+            return BuildHeaderLine(KEY_DATE, FormatPgnDateString(dt));
         }
 
         /// <summary>
@@ -341,6 +341,21 @@ namespace GameTree
         public static string GetLineResultHeader()
         {
             return BuildHeaderLine(KEY_RESULT, Constants.PGN_NO_RESULT);
+        }
+
+        /// <summary>
+        /// Formats date in PGN format.
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <returns></returns>
+        public static string FormatPgnDateString(DateTime? dt)
+        {
+            if (dt == null)
+            {
+                return "";
+            }
+
+            return dt.Value.ToString("yyyy.MM.dd");
         }
 
         /// <summary>
