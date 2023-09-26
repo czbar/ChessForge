@@ -345,7 +345,7 @@ namespace ChessForge
         /// Switches mode to awaiting for the user move
         /// </summary>
         /// <param name="nd"></param>
-        private static void SwitchToAwaitUserMove(TreeNode nd)
+        public static void SwitchToAwaitUserMove(TreeNode nd)
         {
             AppLog.Message(2, "SwitchToAwaitUserMove()");
             ChangeCurrentState(GameState.USER_THINKING);
