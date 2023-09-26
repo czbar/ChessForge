@@ -452,7 +452,10 @@ namespace ChessForge
                     }
                     else
                     {
-                        nd.IsNewTrainingMove = true;
+                        if (TrainingSession.IsTrainingInProgress)
+                        {
+                            nd.IsNewTrainingMove = true;
+                        }
                     }
                     AppState.MainWin.ActiveVariationTree.AddNodeToParent(nd);
 
