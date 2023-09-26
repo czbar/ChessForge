@@ -971,22 +971,46 @@ namespace ChessForge
 
         /// <summary>
         /// Invokes the dialog to select Games to delete and deletes them. 
+        /// The initial state of the dialog will be to show Games from the active chapter only.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void UiMnDeleteGames_Click(object sender, RoutedEventArgs e)
         {
-            DeleteArticles(GameData.ContentType.MODEL_GAME);
+            DeleteArticles(GameData.ContentType.MODEL_GAME, false);
+        }
+
+        /// <summary>
+        /// Invokes the dialog to select Games to delete and deletes them. 
+        /// The initial state of the dialog will be to show Games from all chapters.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnToolsDeleteGames_Click(object sender, RoutedEventArgs e)
+        {
+            DeleteArticles(GameData.ContentType.MODEL_GAME, true);
         }
 
         /// <summary>
         /// Invokes the dialog to select Exercises to delete and deletes them. 
+        /// The initial state of the dialog will be to show Exercises from the active chapter only.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void UiMnDeleteExercises_Click(object sender, RoutedEventArgs e)
         {
-            DeleteArticles(GameData.ContentType.EXERCISE);
+            DeleteArticles(GameData.ContentType.EXERCISE, false);
+        }
+
+        /// <summary>
+        /// Invokes the dialog to select Exercises to delete and deletes them. 
+        /// The initial state of the dialog will be to show Exercises from all chapters.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnToolsDeleteExercises_Click(object sender, RoutedEventArgs e)
+        {
+            DeleteArticles(GameData.ContentType.EXERCISE, true);
         }
 
         /// <summary>
@@ -994,7 +1018,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="chapter"></param>
         /// <param name="articleType"></param>
-        private void DeleteArticles(GameData.ContentType articleType)
+        private void DeleteArticles(GameData.ContentType articleType, bool allChapters)
         {
             try
             {
@@ -1010,7 +1034,7 @@ namespace ChessForge
                     title = Properties.Resources.SelectExercisesForDeletion;
                 }
 
-                SelectArticlesDialog dlg = new SelectArticlesDialog(null, true, title, ref articleList, false, articleType)
+                SelectArticlesDialog dlg = new SelectArticlesDialog(null, true, title, ref articleList, allChapters, articleType)
                 {
                     Left = ChessForgeMain.Left + 100,
                     Top = ChessForgeMain.Top + 100,
