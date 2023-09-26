@@ -3295,5 +3295,25 @@ namespace ChessForge
         {
             _introView.Command_DecreaseIndent(sender, e);
         }
+
+        /// <summary>
+        /// Block all keys in Engine Game mode
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTabEngineGame_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// Block all keys in Engine Game mode
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTabEngineGame_PreviewKeyUp(object sender, KeyEventArgs e)
+        {
+            e.Handled = true;
+        }
     }
 }

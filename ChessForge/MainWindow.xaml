@@ -292,7 +292,7 @@
                 </TabControl>
                 <TabControl x:Name="UiTabCtrlEngineGame" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="20,5,20,0" Grid.Row="1" 
                     VerticalAlignment="Top" Grid.RowSpan="1" Visibility="Hidden">
-                    <TabItem x:Name="UiTabEngineGame"  Header="{x:Static p:Resources.GameAgainstEngine}" IsVisibleChanged="UiTabEngineGame_IsVisibleChanged" >
+                    <TabItem x:Name="UiTabEngineGame"  Header="{x:Static p:Resources.GameAgainstEngine}" IsVisibleChanged="UiTabEngineGame_IsVisibleChanged" PreviewKeyDown="UiTabEngineGame_PreviewKeyDown" PreviewKeyUp="UiTabEngineGame_PreviewKeyUp"  >
                         <Grid Background="#FFE5E5E5">
                             <RichTextBox x:Name="UiRtbEngineGame" IsUndoEnabled="False"  ContextMenu="{x:Null}" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
