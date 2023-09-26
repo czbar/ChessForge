@@ -42,6 +42,11 @@ namespace ChessForge
         public VariationTreeView StudyTreeView { get => _studyTreeView; }
 
         /// <summary>
+        /// Public reference to EngineGameView 
+        /// </summary>
+        public EngineGameView EngineGameView { get => _engineGameView; }
+
+        /// <summary>
         /// Public reference to OpeningStatsView
         /// </summary>
         public OpeningStatsView OpeningStatsView { get => _openingStatsView; }
@@ -75,6 +80,11 @@ namespace ChessForge
         /// The RichTextBox based Exercise view
         /// </summary>
         private ExerciseTreeView _exerciseTreeView;
+
+        /// <summary>
+        /// The RichTextBox based EngineGame view
+        /// </summary>
+        private EngineGameView _engineGameView;
 
         /// <summary>
         /// The RichTextBox based Opening Stats view
@@ -2113,6 +2123,9 @@ namespace ChessForge
 
             AppState.SetupGuiForEngineGame();
 
+            EngineGame.InitializeGameObject(startNode, true, IsTraining);
+            UiDgEngineGame.ItemsSource = EngineGame.Line.MoveList;
+
             if (TrainingSession.IsTrainingInProgress && TrainingSession.IsContinuousEvaluation)
             {
                 AppState.ShowMoveEvaluationControls(true, true);
@@ -2122,10 +2135,10 @@ namespace ChessForge
                 AppState.ShowMoveEvaluationControls(false, false);
             }
 
-            EngineGame.InitializeGameObject(startNode, true, IsTraining);
-            UiDgEngineGame.ItemsSource = EngineGame.Line.MoveList;
-
-            if (startNode.ColorToMove == PieceColor.White)
+            // adjust board orientation
+            // Note: if this is in training we let the engine make the first move, otherwise the user will
+            if (startNode.ColorToMove == PieceColor.White && TrainingSession.IsTrainingInProgress
+                || startNode.ColorToMove == PieceColor.Black && !TrainingSession.IsTrainingInProgress)
             {
                 if (!MainChessBoard.IsFlipped)
                 {
@@ -2133,7 +2146,17 @@ namespace ChessForge
                 }
             }
 
-            EngineMessageProcessor.RequestEngineMove(startNode, ActiveVariationTreeId);
+            if (!TrainingSession.IsTrainingInProgress)
+            {
+                BoardCommentBox.EngineGameStart();
+                _engineGameView = new EngineGameView(UiRtbEngineGame.Document);
+                _engineGameView.BuildFlowDocumentForGameLine(startNode.ColorToMove);
+                EngineGame.SwitchToAwaitUserMove(startNode);
+            }
+            else
+            {
+                EngineMessageProcessor.RequestEngineMove(startNode, ActiveVariationTreeId);
+            }
         }
 
         /// <summary>
