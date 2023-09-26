@@ -690,10 +690,6 @@ namespace ChessForge
                 {
                     AppState.SetupGuiForEngineGame();
                     StartEngineGame(nd, false);
-                    if (nd.ColorToMove == PieceColor.White && !MainChessBoard.IsFlipped || nd.ColorToMove == PieceColor.Black && MainChessBoard.IsFlipped)
-                    {
-                        MainChessBoard.FlipBoard();
-                    }
                 }
                 else
                 {
