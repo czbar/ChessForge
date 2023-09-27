@@ -85,6 +85,8 @@
                         <MenuItem x:Name="UiMnStartTraining"  Header="{x:Static p:Resources.StartNewSession}"  Click="UiMnStartTrainingHere_Click"/>
                         <MenuItem x:Name="UiMnRestartTraining"  Header="{x:Static p:Resources.RestartTraining}" Click="UiMnTrainRestartTraining_Click"/>
                         <MenuItem x:Name="UiMnExitTraining" Header="{x:Static p:Resources.ExitTraining}" Click="UiMnStopTraining_Click"/>
+                        <Separator />
+                        <MenuItem x:Name="UiMnMainPlayEngine" Header="{x:Static p:Resources.PlayAgainstComputer}"  Click="UiMnPlayEngine_Click" />
                     </MenuItem>
                     <MenuItem Header="{x:Static p:Resources.Edit}" Margin="0,0,0,0">
                         <MenuItem x:Name="UiMnAnnotations" Header="{x:Static p:Resources.Annotations}" Click="UiMnAnnotationsDialog_Click" />

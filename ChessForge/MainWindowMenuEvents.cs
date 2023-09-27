@@ -667,9 +667,9 @@ namespace ChessForge
         private void UiMnPlayEngine_Click(object sender, RoutedEventArgs e)
         {
 
-            // double check that we are in the Study tab,
+            // double check that we are in the Study or Games tab,
             // we don't allow starting a game from anywhere else
-            if (AppState.ActiveTab == WorkbookManager.TabViewType.STUDY)
+            if (AppState.ActiveTab == WorkbookManager.TabViewType.STUDY || AppState.ActiveTab == WorkbookManager.TabViewType.MODEL_GAME)
             {
                 if (!EngineMessageProcessor.IsEngineAvailable)
                 {
@@ -677,8 +677,7 @@ namespace ChessForge
                     return;
                 }
 
-                // check that there is a move selected in the _dgMainLineView so
-                // that we have somewhere to start
+                // check that there is a move selected so that we have somewhere to start
                 TreeNode origNode = ActiveLine.GetSelectedTreeNode();
 
                 // make a deep  copy of the stem so that we detach our tree from the previously Active Tree.

@@ -1537,6 +1537,11 @@ namespace ChessForge
                         _mainWin.UiMnciRestartTraining.Visibility = Visibility.Collapsed;
                         _mainWin.UiMnciExitTraining.Visibility = Visibility.Collapsed;
 
+                        bool engGameEnabled = ActiveVariationTree != null
+                            && (ActiveTab == WorkbookManager.TabViewType.STUDY || ActiveTab == WorkbookManager.TabViewType.MODEL_GAME);
+                        _mainWin.UiMnMainPlayEngine.Visibility = Visibility.Visible;
+                        _mainWin.UiMnMainPlayEngine.IsEnabled = engGameEnabled;
+
                         _mainWin.UiMncMainBoardSepar_1.Visibility = Visibility.Visible;
 
                         _mainWin.UiMnciEvalPos.Visibility = Visibility.Visible;
@@ -1558,6 +1563,7 @@ namespace ChessForge
                         _mainWin.UiMnciStartTrainingHere.Visibility = Visibility.Collapsed;
                         _mainWin.UiMnciRestartTraining.Visibility = Visibility.Visible;
                         _mainWin.UiMnciExitTraining.Visibility = Visibility.Visible;
+                        _mainWin.UiMnMainPlayEngine.Visibility= Visibility.Collapsed;
 
                         _mainWin.UiMncMainBoardSepar_1.Visibility = Visibility.Collapsed;
 
@@ -1580,6 +1586,7 @@ namespace ChessForge
                         {
                             _mainWin.UiMnciRestartTraining.Visibility = Visibility.Visible;
                             _mainWin.UiMnciExitTraining.Visibility = Visibility.Visible;
+                            _mainWin.UiMnMainPlayEngine.Visibility = Visibility.Collapsed;
 
                             _mainWin.UiMncMainBoardSepar_1.Visibility = Visibility.Collapsed;
 
@@ -1589,6 +1596,7 @@ namespace ChessForge
                         {
                             _mainWin.UiMnciRestartTraining.Visibility = Visibility.Collapsed;
                             _mainWin.UiMnciExitTraining.Visibility = Visibility.Collapsed;
+                            _mainWin.UiMnMainPlayEngine.Visibility = Visibility.Collapsed;
 
                             _mainWin.UiMncMainBoardSepar_1.Visibility = Visibility.Visible;
 
