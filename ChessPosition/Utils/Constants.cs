@@ -269,6 +269,7 @@ namespace ChessPosition
         public const int ZIndex_SquareMoveOverlay = 1;
         public const int ZIndex_PieceOnBoard = 5;
         public const int ZIndex_BoardArrow = 6;
+        public const int ZIndex_PromoTray = 8;
         public const int ZIndex_PieceInAnimation = 10;
 
         /// <summary>
