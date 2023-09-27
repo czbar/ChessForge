@@ -1454,6 +1454,11 @@ namespace ChessForge
                 _mainWin.UiMnRestartTraining.IsEnabled = false;
                 _mainWin.UiMnExitTraining.IsEnabled = false;
 
+                bool engGameEnabled = ActiveVariationTree != null
+                    && (ActiveTab == WorkbookManager.TabViewType.STUDY || ActiveTab == WorkbookManager.TabViewType.MODEL_GAME);
+                _mainWin.UiMnMainPlayEngine.Visibility = Visibility.Visible;
+                _mainWin.UiMnMainPlayEngine.IsEnabled = engGameEnabled;
+
                 _mainWin.UiMnciPlayEngine.IsEnabled = true;
 
                 _mainWin.UiMnEvaluateGames.IsEnabled = ActiveChapter != null && ActiveChapter.GetModelGameCount() > 0;
