@@ -183,6 +183,7 @@ namespace ChessForge
                 EngineGame.SwitchToAwaitEngineMove(nd, false);
                 EngineGame.EngineColor = nd.ColorToMove;
                 AppState.MainWin.EngineGameView.UpdateMovePromptParagraph(false);
+                AppState.MainWin.EngineGameView.UpdateIntroParagraph(MoveUtils.ReverseColor(EngineGame.EngineColor));
             }
         }
 
