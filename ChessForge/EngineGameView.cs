@@ -181,6 +181,7 @@ namespace ChessForge
                 TreeNode nd = EngineGame.GetLastGameNode();
                 AppState.MainWin.MainChessBoard.FlipBoard(MoveUtils.ReverseColor(nd.ColorToMove));
                 EngineGame.SwitchToAwaitEngineMove(EngineGame.GetLastGameNode(), false);
+                AppState.MainWin.EngineGameView.UpdateMovePromptParagraph(false);
             }
         }
 
