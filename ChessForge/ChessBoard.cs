@@ -116,6 +116,11 @@ namespace ChessForge
         private Image _moveToOverlay = new Image();
 
         /// <summary>
+        /// Promotion "tray" image. 
+        /// </summary>
+        private Image _promoTray = new Image();
+
+        /// <summary>
         /// Label control to be optionally shown above the board.
         /// </summary>
         private Label _mainLabel;
@@ -468,6 +473,51 @@ namespace ChessForge
             {
                 return sq;
             }
+        }
+
+        /// <summary>
+        /// Places the promotion tray of appropriate type at the appropriate square.
+        /// </summary>
+        /// <param name="sidePromoting">Color of the pawn getting promoted.</param>
+        /// <param name="promoSquareNorm">Normalized promotion square.</param>
+        public void PlacePromoImage(PieceColor sidePromoting, SquareCoords promoSquareNorm)
+        {
+            SquareCoords promoSquare = new SquareCoords(promoSquareNorm);
+            if (_isFlipped)
+            {
+                promoSquare.Flip();
+            }
+
+            Point pt = GetSquareTopLeftPointOffCanvas(promoSquare);
+            double left = pt.X;
+            double top = pt.Y;
+            if (promoSquare.Ycoord == 0)
+            {
+                top = top - 4 * SquareSize;
+            }
+
+            _promoTray.Opacity = 0.8;
+            if (sidePromoting == PieceColor.White)
+            {
+                _promoTray.Source = _isFlipped ? ChessForge.Pieces.WhitePromoInverted : ChessForge.Pieces.WhitePromo;
+            }
+            else
+            {
+                _promoTray.Source = _isFlipped ? ChessForge.Pieces.BlackPromo : ChessForge.Pieces.BlackPromoInverted;
+            }
+
+            CanvasCtrl.Children.Add(_promoTray);
+            Canvas.SetLeft(_promoTray, left);
+            Canvas.SetTop(_promoTray, top);
+            Canvas.SetZIndex(_promoTray, Constants.ZIndex_PromoTray);
+        }
+
+        /// <summary>
+        /// Removes the promotion tray from the Canvas.
+        /// </summary>
+        public void RemovePromoImage()
+        {
+            CanvasCtrl.Children.Remove(_promoTray);
         }
 
         /// <summary>
