@@ -7,7 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace ChessForge
@@ -39,6 +41,9 @@ namespace ChessForge
 
         private readonly string _run_ = "run_";
 
+        // id of the last node clicked
+        private int _lastClickedNodeId = -1;
+
         /// <summary>
         /// Creates an instance of this class and sets reference 
         /// to the FlowDocument managed by the object.
@@ -47,7 +52,6 @@ namespace ChessForge
         public EngineGameView(FlowDocument doc) : base(doc)
         {
         }
-
 
         /// <summary>
         /// Property referencing definitions of Paragraphs 
@@ -167,6 +171,95 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// The user requested that the sides be swapped.
+        /// Engine will move now.
+        /// </summary>
+        public void SwapSides()
+        {
+            if (EngineGame.CurrentState == EngineGame.GameState.USER_THINKING)
+            {
+                TreeNode nd = EngineGame.GetLastGameNode();
+                AppState.MainWin.MainChessBoard.FlipBoard(MoveUtils.ReverseColor(nd.ColorToMove));
+                EngineGame.SwitchToAwaitEngineMove(EngineGame.GetLastGameNode(), false);
+            }
+        }
+
+        /// <summary>
+        /// Restart the game from the passed node.
+        /// </summary>
+        /// <param name="currentNode"></param>
+        public void RestartFromNode(bool currentNode)
+        {
+            if (EngineGame.CurrentState == EngineGame.GameState.USER_THINKING)
+            {
+                TreeNode startNode = null;
+                if (currentNode)
+                {
+                    startNode = EngineGame.Line.Tree.GetNodeFromNodeId(_lastClickedNodeId);
+                }
+                else
+                {
+                    startNode = EngineGame.Line.NodeList.First();
+                }
+
+                if (startNode != null)
+                {
+                    EngineGame.Line.RollbackToNode(startNode, false);
+                    UpdateGameMovesParagraph();
+                    AppState.MainWin.DisplayPosition(startNode);
+                    AppState.MainWin.MainChessBoard.FlipBoard(startNode.ColorToMove);
+                    EngineGame.SwitchToAwaitUserMove(startNode);
+                }
+            }
+        }
+
+        /// <summary>
+        /// The view was clicked somewhere.
+        /// Reset the _lastClikedNodeId value and configure
+        /// the context menu.
+        /// </summary>
+        /// <param name="e"></param>
+        public void GeneralMouseClick(MouseButtonEventArgs e)
+        {
+            _lastClickedNodeId = -1;
+            EnableActiveTreeViewMenus();
+        }
+
+        /// <summary>
+        /// Configures the context menu.
+        /// </summary>
+        public void EnableActiveTreeViewMenus()
+        {
+            bool specificNodeClicked = _lastClickedNodeId >= 0;
+
+            bool isEnabled = EngineGame.CurrentState != EngineGame.GameState.ENGINE_THINKING;
+
+            foreach (var item in AppState.MainWin.UiCmEngineGame.Items)
+            {
+                if (item is MenuItem)
+                {
+                    MenuItem menuItem = item as MenuItem;
+                    switch (menuItem.Name)
+                    {
+                        case "UiMnEngGame_SwapSides":
+                            menuItem.IsEnabled = isEnabled;
+                            break;
+                        case "UiMnEngGame_RestartFromMove":
+                            menuItem.IsEnabled = isEnabled;
+                            menuItem.Visibility = specificNodeClicked ? Visibility.Visible : Visibility.Collapsed;
+                            break;
+                        case "UiMnEngGame_StartFromInit":
+                            menuItem.IsEnabled = isEnabled;
+                            break;
+                        case "UiMnEngGame_ExitGame":
+                            menuItem.IsEnabled = true;
+                            break;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Creates or updates the moves paragraph.
         /// </summary>
         /// <returns></returns>
@@ -179,6 +272,8 @@ namespace ChessForge
                 para.Name = _para_gamemoves_;
                 Document.Blocks.Add(para);
             }
+
+            para.Inlines.Clear();
 
             ObservableCollection<TreeNode> gameMoves = EngineGame.Line.NodeList;
             for (int i = 1; i < EngineGame.Line.NodeList.Count; i++)
@@ -216,7 +311,7 @@ namespace ChessForge
             {
                 run = new Run(text.ToString());
                 run.Name = _run_ + nd.NodeId.ToString();
-                //r.PreviewMouseDown += EventRunClicked;
+                run.PreviewMouseDown += EventMoveRunClicked;
                 para.Inlines.Add(run);
 
             }
@@ -226,6 +321,26 @@ namespace ChessForge
             }
 
             return run;
+        }
+
+        /// <summary>
+        /// Event handler for the clicked node.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventMoveRunClicked(object sender, MouseButtonEventArgs e)
+        {
+            Run run = sender as Run;
+
+            if (run != null)
+            {
+                _lastClickedNodeId = TextUtils.GetIdFromPrefixedString(run.Name);
+
+                if (e.ChangedButton == MouseButton.Right)
+                {
+                    EnableActiveTreeViewMenus();
+                }
+            }
         }
 
         /// <summary>
