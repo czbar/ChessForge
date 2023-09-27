@@ -40,6 +40,12 @@ namespace ChessForge
 
         public static BitmapImage YellowOverlay = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/YellowOverlay.png", UriKind.RelativeOrAbsolute));
 
+        public static BitmapImage WhitePromo = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/WhitePromo.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage WhitePromoInverted = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/WhitePromoInverted.png", UriKind.RelativeOrAbsolute));
+
+        public static BitmapImage BlackPromo = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/BlackPromo.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage BlackPromoInverted = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/BlackPromoInverted.png", UriKind.RelativeOrAbsolute));
+
         /// <summary>
         /// Returns image for a piece of a given type and color
         /// </summary>
