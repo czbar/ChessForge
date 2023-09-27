@@ -2712,6 +2712,66 @@ namespace ChessForge
 
         //**********************
         //
+        //  ENGINE GAME
+        // 
+        //**********************
+
+        /// <summary>
+        /// Swap sides, user with the engine.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnEngGame_SwapSides_Click(object sender, RoutedEventArgs e)
+        {
+            EngineGameView?.SwapSides();
+        }
+
+        /// <summary>
+        /// Restart game from the clicked move.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnEngGame_RestartFromMove_Click(object sender, RoutedEventArgs e)
+        {
+            EngineGameView?.RestartFromNode(true);
+        }
+
+        /// <summary>
+        /// Start game from the initial position.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnEngGame_StartFromInit_Click(object sender, RoutedEventArgs e)
+        {
+            EngineGameView?.RestartFromNode(false);
+        }
+
+        /// <summary>
+        /// Exit the game.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnEngGame_ExitGame_Click(object sender, RoutedEventArgs e)
+        {
+            UiBtnExitGame_Click(sender, e);
+        }
+
+        /// <summary>
+        /// Registers a mouse click anywhere in the EngineGame RTB.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTabEngineGame_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (EngineGameView != null)
+            {
+                EngineGameView.GeneralMouseClick(e);
+            }
+        }
+
+
+        //**********************
+        //
         //  TREE OPERATIONS
         // 
         //**********************
