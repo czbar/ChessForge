@@ -117,11 +117,11 @@ namespace ChessForge
         /// the specified Node.
         /// </summary>
         /// <param name="nd"></param>
-        public void RollbackToNode(TreeNode nd)
+        public void RollbackToNode(TreeNode nd, bool trainingMovesOnly = true)
         {
             for (int i = NodeList.Count - 1; i >= 0; i--)
             {
-                if (NodeList[i].NodeId == nd.NodeId && NodeList[i].IsNewTrainingMove)
+                if (NodeList[i].NodeId == nd.NodeId && (NodeList[i].IsNewTrainingMove || !trainingMovesOnly))
                 {
                     NodeList[i].Children.Clear();
                     break;
