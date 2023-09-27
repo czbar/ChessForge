@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using ChessPosition;
 using ChessPosition.GameTree;
@@ -370,6 +371,48 @@ namespace ChessForge
         public int GetChapterCount()
         {
             return _chapters.Count;
+        }
+
+        /// <summary>
+        /// Returns true if the Workbook has at least one Model Game
+        /// </summary>
+        public bool HasAnyModelGames
+        {
+            get
+            {
+                bool has = false;
+                foreach (Chapter chapter in _chapters)
+                {
+                    if (chapter.GetModelGameCount() > 0)
+                    {
+                        has = true;
+                        break;
+                    }
+                }
+
+                return has;
+            }
+        }
+
+        /// <summary>
+        /// Returns true if the Workbook has at least one Exercise
+        /// </summary>
+        public bool HasAnyExercises
+        {
+            get
+            {
+                bool has = false;
+                foreach (Chapter chapter in _chapters)
+                {
+                    if (chapter.GetExerciseCount() > 0)
+                    {
+                        has = true;
+                        break;
+                    }
+                }
+
+                return has;
+            }
         }
 
         /// <summary>

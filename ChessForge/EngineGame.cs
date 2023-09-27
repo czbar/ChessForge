@@ -37,6 +37,22 @@ namespace ChessForge
         /// </summary>
         public static GameState CurrentState { get => _gameState; }
 
+        // color that the engine plays with
+        private static PieceColor _engineColor = PieceColor.None;
+
+        /// <summary>
+        /// The color with which the engine plays.
+        /// This is not controlled here but is just a convenient
+        /// place holder for use by clients.
+        /// In particular it may not be set at all.
+        /// </summary>
+        public static PieceColor EngineColor
+        {
+            get => _engineColor;
+            set => _engineColor = value;
+        }
+
+
         /// <summary>
         /// Position from which the game started.
         /// This will be a reference to a Node in the Workbook Tree.
@@ -111,6 +127,8 @@ namespace ChessForge
             {
                 Line.SetLineToNode(startNode);
                 Line.BuildMoveListFromPlyList();
+
+                Line.CopyNodeListToTree();
             }
         }
 
@@ -343,7 +361,7 @@ namespace ChessForge
         /// Switches mode to awaiting for the user move
         /// </summary>
         /// <param name="nd"></param>
-        private static void SwitchToAwaitUserMove(TreeNode nd)
+        public static void SwitchToAwaitUserMove(TreeNode nd)
         {
             AppLog.Message(2, "SwitchToAwaitUserMove()");
             ChangeCurrentState(GameState.USER_THINKING);

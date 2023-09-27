@@ -515,6 +515,22 @@ namespace ChessForge
                 EngineGame.ChangeCurrentState(EngineGame.GameState.USER_THINKING);
                 _mainWin.Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
             }
+
+            _mainWin.Dispatcher.Invoke(() =>
+            {
+                if (!TrainingSession.IsTrainingInProgress && _mainWin.EngineGameView != null)
+                {
+                    _mainWin.EngineGameView.AddMove(nd);
+                    if (isStalemate || isMateCf)
+                    {
+                        _mainWin.EngineGameView.ClearMovePromptParagraph();
+                    }
+                    else
+                    {
+                        _mainWin.EngineGameView.UpdateMovePromptParagraph(true);
+                    }
+                }
+            });
         }
 
 

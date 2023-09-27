@@ -42,6 +42,11 @@ namespace ChessForge
         public VariationTreeView StudyTreeView { get => _studyTreeView; }
 
         /// <summary>
+        /// Public reference to EngineGameView 
+        /// </summary>
+        public EngineGameView EngineGameView { get => _engineGameView; }
+
+        /// <summary>
         /// Public reference to OpeningStatsView
         /// </summary>
         public OpeningStatsView OpeningStatsView { get => _openingStatsView; }
@@ -75,6 +80,11 @@ namespace ChessForge
         /// The RichTextBox based Exercise view
         /// </summary>
         private ExerciseTreeView _exerciseTreeView;
+
+        /// <summary>
+        /// The RichTextBox based EngineGame view
+        /// </summary>
+        private EngineGameView _engineGameView;
 
         /// <summary>
         /// The RichTextBox based Opening Stats view
@@ -234,11 +244,33 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// The variation tree currently being processed.
-        /// Note that this can only be Study, Game or Exercise.
-        /// The Training tree does not become Active when opened.
+        /// Enables or disables the entire GUI.
+        /// </summary>
+        public void EnableGui(bool enable)
+        {
+            UiMainMenu.IsEnabled = enable;
+
+            UiImgAutoSaveOff.IsEnabled = enable;
+            UiImgAutoSaveOn.IsEnabled = enable;
+
+            UiImgEngineOn.IsEnabled = enable;
+            UiImgEngineOff.IsEnabled = enable;
+
+            UiImgExplorersOn.IsEnabled = enable;
+            UiImgExplorersOff.IsEnabled = enable;
+        }
+
+
+        /// <summary>
+        /// The variation tree currently being in view or processed.
+        /// This will be Study, Game or Exercise tree from the 
+        /// active chapter of the current workbook,
+        /// except during an Engine Game where the EngineGame.Tree is
+        /// set as the Active Tree.
+        /// 
+        /// Note that the Training tree does not become Active when opened.
         /// The previously opened tree remains active.
-        /// Also note that the retun can be null;
+        /// Also note that the return can be null;
         /// </summary>
         public VariationTree ActiveVariationTree
         {
@@ -250,7 +282,14 @@ namespace ChessForge
                 }
                 else
                 {
-                    return SessionWorkbook.ActiveVariationTree;
+                    if (AppState.ActiveTab == WorkbookManager.TabViewType.ENGINE_GAME)
+                    {
+                        return EngineGame.Line.Tree;
+                    }
+                    else
+                    {
+                        return SessionWorkbook.ActiveVariationTree;
+                    }
                 }
             }
         }
@@ -268,7 +307,7 @@ namespace ChessForge
                 }
                 else
                 {
-                    return SessionWorkbook.ActiveVariationTree.TreeId;
+                    return ActiveVariationTree.TreeId;
                 }
             }
         }
@@ -2082,7 +2121,11 @@ namespace ChessForge
 
             LearningMode.ChangeCurrentMode(LearningMode.Mode.ENGINE_GAME);
 
-            // TODO: should make a call to SetupGUI for game, instead
+            AppState.SetupGuiForEngineGame();
+
+            EngineGame.InitializeGameObject(startNode, true, IsTraining);
+            UiDgEngineGame.ItemsSource = EngineGame.Line.MoveList;
+
             if (TrainingSession.IsTrainingInProgress && TrainingSession.IsContinuousEvaluation)
             {
                 AppState.ShowMoveEvaluationControls(true, true);
@@ -2092,10 +2135,10 @@ namespace ChessForge
                 AppState.ShowMoveEvaluationControls(false, false);
             }
 
-            EngineGame.InitializeGameObject(startNode, true, IsTraining);
-            UiDgEngineGame.ItemsSource = EngineGame.Line.MoveList;
-
-            if (startNode.ColorToMove == PieceColor.White)
+            // adjust board orientation
+            // Note: if this is in training we let the engine make the first move, otherwise the user will
+            if (startNode.ColorToMove == PieceColor.White && TrainingSession.IsTrainingInProgress
+                || startNode.ColorToMove == PieceColor.Black && !TrainingSession.IsTrainingInProgress)
             {
                 if (!MainChessBoard.IsFlipped)
                 {
@@ -2103,7 +2146,18 @@ namespace ChessForge
                 }
             }
 
-            EngineMessageProcessor.RequestEngineMove(startNode, ActiveVariationTreeId);
+            if (!TrainingSession.IsTrainingInProgress)
+            {
+                BoardCommentBox.EngineGameStart();
+                _engineGameView = new EngineGameView(UiRtbEngineGame.Document);
+                _engineGameView.BuildFlowDocumentForGameLine(startNode.ColorToMove);
+                EngineGame.SwitchToAwaitUserMove(startNode);
+                EngineGame.EngineColor = MoveUtils.ReverseColor(startNode.ColorToMove);
+            }
+            else
+            {
+                EngineMessageProcessor.RequestEngineMove(startNode, ActiveVariationTreeId);
+            }
         }
 
         /// <summary>
@@ -2180,8 +2234,8 @@ namespace ChessForge
 
             Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
 
-            AppState.MainWin.ActiveVariationTree.BuildLines();
-            RebuildActiveTreeView();
+            //AppState.MainWin.ActiveVariationTree.BuildLines();
+            //RebuildActiveTreeView();
 
             AppState.SetupGuiForCurrentStates();
 
@@ -2934,6 +2988,7 @@ namespace ChessForge
                 {
                     MainChessBoard.Shapes.CancelShapeDraw(true);
                 }
+                AppState.ConfigureMainBoardContextMenu();
                 UiMnMainBoard.Visibility = Visibility.Visible;
             }
             else
@@ -2968,7 +3023,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Upon start up or when returning from Training the tab control will receive an IsVisibleChanged 
+        /// Upon start up or when returning from Training or Engine Game the tab control will receive an IsVisibleChanged 
         /// notification.  We store the active tab when losing visibility and send focus to it when regaining it.
         /// </summary>
         /// <param name="sender"></param>
@@ -3239,6 +3294,26 @@ namespace ChessForge
         private void UiBtnIntroDecreaseIndent_Click(object sender, RoutedEventArgs e)
         {
             _introView.Command_DecreaseIndent(sender, e);
+        }
+
+        /// <summary>
+        /// Block all keys in Engine Game mode
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTabEngineGame_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// Block all keys in Engine Game mode
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTabEngineGame_PreviewKeyUp(object sender, KeyEventArgs e)
+        {
+            e.Handled = true;
         }
     }
 }

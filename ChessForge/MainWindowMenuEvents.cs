@@ -666,26 +666,34 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnPlayEngine_Click(object sender, RoutedEventArgs e)
         {
-            if (!EngineMessageProcessor.IsEngineAvailable)
-            {
-                MessageBox.Show(Properties.Resources.EngineNotAvailable, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
 
-            // check that there is a move selected in the _dgMainLineView so
-            // that we have somewhere to start
-            TreeNode nd = ActiveLine.GetSelectedTreeNode();
-            if (nd != null)
+            // double check that we are in the Study or Games tab,
+            // we don't allow starting a game from anywhere else
+            if (AppState.ActiveTab == WorkbookManager.TabViewType.STUDY || AppState.ActiveTab == WorkbookManager.TabViewType.MODEL_GAME)
             {
-                StartEngineGame(nd, false);
-                if (nd.ColorToMove == PieceColor.White && !MainChessBoard.IsFlipped || nd.ColorToMove == PieceColor.Black && MainChessBoard.IsFlipped)
+                if (!EngineMessageProcessor.IsEngineAvailable)
                 {
-                    MainChessBoard.FlipBoard();
+                    MessageBox.Show(Properties.Resources.EngineNotAvailable, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
                 }
-            }
-            else
-            {
-                MessageBox.Show(Properties.Resources.SelectEngineStartMove, Properties.Resources.EngineGame, MessageBoxButton.OK);
+
+                // check that there is a move selected so that we have somewhere to start
+                TreeNode origNode = ActiveLine.GetSelectedTreeNode();
+
+                // make a deep  copy of the stem so that we detach our tree from the previously Active Tree.
+                List<TreeNode> gameStem = TreeUtils.CopyNodeList(TreeUtils.GetStemLine(origNode, true));
+
+                TreeNode nd = gameStem.Find(x => x.NodeId == origNode.NodeId);
+
+                if (nd != null)
+                {
+                    AppState.SetupGuiForEngineGame();
+                    StartEngineGame(nd, false);
+                }
+                else
+                {
+                    MessageBox.Show(Properties.Resources.SelectEngineStartMove, Properties.Resources.EngineGame, MessageBoxButton.OK);
+                }
             }
         }
 
@@ -696,7 +704,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnExitEngineGame_Click(object sender, RoutedEventArgs e)
         {
-            StopEngineGame();
+            UiBtnExitGame_Click(sender, e);
         }
 
         /// <summary>
@@ -706,9 +714,64 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnExitGame_Click(object sender, RoutedEventArgs e)
         {
-            StopEngineGame();
+            try
+            {
+                bool? saveGame = SaveEngineGame();
+
+                if (saveGame != null)
+                {
+                    StopEngineGame();
+                    EnableGui(true);
+
+                    if (saveGame == true)
+                    {
+                        string key = EngineGame.EngineColor == PieceColor.White ? PgnHeaders.KEY_WHITE : PgnHeaders.KEY_BLACK;
+                        if (EngineGame.EngineColor != PieceColor.None)
+                        {
+                            EngineGame.Line.Tree.Header.SetHeaderValue(key, Properties.Resources.Engine + " " + AppState.EngineName);
+                        }
+                        EngineGame.Line.Tree.Header.SetHeaderValue(PgnHeaders.KEY_DATE, PgnHeaders.FormatPgnDateString(DateTime.Now));
+                        CreateNewModelGame(EngineGame.Line.Tree);
+                    }
+                }
+            }
+            catch
+            {
+            }
         }
 
+        /// <summary>
+        /// Determines whether the game should be saved.
+        /// If we are not in the pure Engine Game mode
+        /// but rather in Trainging, then simply return false,
+        /// otherwise ask the user.
+        /// If the user chooses Cancel then retun null.
+        /// </summary>
+        /// <returns></returns>
+        private bool? SaveEngineGame()
+        {
+            bool? save = false;
+
+            if (!TrainingSession.IsTrainingInProgress)
+            {
+                MessageBoxResult res = MessageBox.Show(Properties.Resources.EngGameSave,
+                    Properties.Resources.EngineGame
+                    , MessageBoxButton.YesNoCancel
+                    , MessageBoxImage.Question
+                    );
+
+                if (res == MessageBoxResult.Cancel)
+                {
+                    save = null;
+                }
+                else if (res == MessageBoxResult.Yes)
+                {
+                    save = true;
+                }
+            }
+
+            return save;
+        }
 
         //**************************************************************
         //
@@ -951,22 +1014,46 @@ namespace ChessForge
 
         /// <summary>
         /// Invokes the dialog to select Games to delete and deletes them. 
+        /// The initial state of the dialog will be to show Games from the active chapter only.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void UiMnDeleteGames_Click(object sender, RoutedEventArgs e)
         {
-            DeleteArticles(GameData.ContentType.MODEL_GAME);
+            DeleteArticles(GameData.ContentType.MODEL_GAME, false);
+        }
+
+        /// <summary>
+        /// Invokes the dialog to select Games to delete and deletes them. 
+        /// The initial state of the dialog will be to show Games from all chapters.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnToolsDeleteGames_Click(object sender, RoutedEventArgs e)
+        {
+            DeleteArticles(GameData.ContentType.MODEL_GAME, true);
         }
 
         /// <summary>
         /// Invokes the dialog to select Exercises to delete and deletes them. 
+        /// The initial state of the dialog will be to show Exercises from the active chapter only.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void UiMnDeleteExercises_Click(object sender, RoutedEventArgs e)
         {
-            DeleteArticles(GameData.ContentType.EXERCISE);
+            DeleteArticles(GameData.ContentType.EXERCISE, false);
+        }
+
+        /// <summary>
+        /// Invokes the dialog to select Exercises to delete and deletes them. 
+        /// The initial state of the dialog will be to show Exercises from all chapters.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnToolsDeleteExercises_Click(object sender, RoutedEventArgs e)
+        {
+            DeleteArticles(GameData.ContentType.EXERCISE, true);
         }
 
         /// <summary>
@@ -974,7 +1061,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="chapter"></param>
         /// <param name="articleType"></param>
-        private void DeleteArticles(GameData.ContentType articleType)
+        private void DeleteArticles(GameData.ContentType articleType, bool allChapters)
         {
             try
             {
@@ -990,7 +1077,7 @@ namespace ChessForge
                     title = Properties.Resources.SelectExercisesForDeletion;
                 }
 
-                SelectArticlesDialog dlg = new SelectArticlesDialog(null, true, title, ref articleList, false, articleType)
+                SelectArticlesDialog dlg = new SelectArticlesDialog(null, true, title, ref articleList, allChapters, articleType)
                 {
                     Left = ChessForgeMain.Left + 100,
                     Top = ChessForgeMain.Top + 100,
@@ -2460,7 +2547,7 @@ namespace ChessForge
                         {
                             _exerciseTreeView.DeactivateSolvingMode(VariationTree.SolvingMode.NONE);
                         }
-                        AppState.SetupGuiForCurrentStates();
+                        //AppState.SetupGuiForCurrentStates();
 
                         if (saved)
                         {
@@ -2584,7 +2671,6 @@ namespace ChessForge
 
 
         /// <summary>
-        /// TODO: gradually replace all Got/LostFocus with IsVisibleChanged.
         /// Sets ActiveTab to Training when Training Tab becomes visible.
         /// </summary>
         /// <param name="sender"></param>
@@ -2599,6 +2685,20 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Sets ActiveTab to EngineGame when EngineGame Tab becomes visible.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTabEngineGame_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            bool visible = (bool)e.NewValue;
+            if (visible == true)
+            {
+                WorkbookManager.ActiveTab = WorkbookManager.TabViewType.ENGINE_GAME;
+            }
+        }
+
+        /// <summary>
         /// The "Exit Training" button was clicked.
         /// </summary>
         /// <param name="sender"></param>
@@ -2606,6 +2706,66 @@ namespace ChessForge
         private void UiBtnExitTraining_Click(object sender, RoutedEventArgs e)
         {
             UiMnStopTraining_Click(sender, e);
+        }
+
+
+        //**********************
+        //
+        //  ENGINE GAME
+        // 
+        //**********************
+
+        /// <summary>
+        /// Swap sides, user with the engine.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnEngGame_SwapSides_Click(object sender, RoutedEventArgs e)
+        {
+            EngineGameView?.SwapSides();
+        }
+
+        /// <summary>
+        /// Restart game from the clicked move.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnEngGame_RestartFromMove_Click(object sender, RoutedEventArgs e)
+        {
+            EngineGameView?.RestartFromNode(true);
+        }
+
+        /// <summary>
+        /// Start game from the initial position.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnEngGame_StartFromInit_Click(object sender, RoutedEventArgs e)
+        {
+            EngineGameView?.RestartFromNode(false);
+        }
+
+        /// <summary>
+        /// Exit the game.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnEngGame_ExitGame_Click(object sender, RoutedEventArgs e)
+        {
+            UiBtnExitGame_Click(sender, e);
+        }
+
+        /// <summary>
+        /// Registers a mouse click anywhere in the EngineGame RTB.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTabEngineGame_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (EngineGameView != null)
+            {
+                EngineGameView.GeneralMouseClick(e);
+            }
         }
 
 
@@ -3113,11 +3273,22 @@ namespace ChessForge
         /// <summary>
         /// Creates a new Model Game and makes it "Active".
         /// </summary>
-        private void CreateNewModelGame()
+        public void CreateNewModelGame(VariationTree gameTree = null)
         {
             try
             {
-                VariationTree tree = new VariationTree(GameData.ContentType.MODEL_GAME);
+                VariationTree tree;
+
+                if (gameTree != null)
+                {
+                    tree = TreeUtils.CopyVariationTree(gameTree);
+                    tree.Header.SetContentType(GameData.ContentType.MODEL_GAME);
+                }
+                else
+                {
+                    tree = new VariationTree(GameData.ContentType.MODEL_GAME);
+                }
+
                 GameHeaderDialog dlg = new GameHeaderDialog(tree, Properties.Resources.GameHeader)
                 {
                     Left = ChessForgeMain.Left + 100,
@@ -3128,15 +3299,26 @@ namespace ChessForge
                 dlg.ShowDialog();
                 if (dlg.ExitOK)
                 {
-                    WorkbookManager.SessionWorkbook.ActiveChapter.AddModelGame(tree);
+                    Article article = WorkbookManager.SessionWorkbook.ActiveChapter.AddModelGame(tree);
+                    article.IsReady = true;
+
                     WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex
                         = WorkbookManager.SessionWorkbook.ActiveChapter.GetModelGameCount() - 1;
                     _chaptersView.BuildFlowDocumentForChaptersView();
 
-                    // TODO: is this spurious? RefreshGamesView() calls SelectModelGame too
-                    SelectModelGame(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex, true);
-                    RefreshGamesView(out Chapter chapter, out int articleIndex);
-                    WorkbookLocationNavigator.SaveNewLocation(chapter, GameData.ContentType.MODEL_GAME, articleIndex);
+                    if (AppState.ActiveTab == WorkbookManager.TabViewType.MODEL_GAME)
+                    {
+                        SelectModelGame(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex, true);
+                        //RefreshGamesView(out Chapter chapter, out int articleIndex);
+                        //WorkbookLocationNavigator.SaveNewLocation(chapter, GameData.ContentType.MODEL_GAME, articleIndex);
+
+                    }
+                    else
+                    {
+                        // if ActiveTab is not MODEL_GAME, Focus() will call SelectModelGame()
+                        // Do not call it explicitly here!
+                        UiTabModelGames.Focus();
+                    }
 
                     if (AppState.AreExplorersOn)
                     {

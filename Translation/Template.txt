@@ -756,6 +756,10 @@ Replay=
 #english: PlayAgainstComputer=Play Against Engine
 PlayAgainstComputer=
 
+#description: Game against the engine tab name
+#english: GameAgainstEngine=Game Against Engine
+GameAgainstEngine=
+
 #description: Exit game
 #english: ExitGame=Exit Game
 ExitGame=
@@ -2209,6 +2213,52 @@ TrnClickMoveBelow=
 #english: TrnRightClickMove=Right click to open the context menu.  
 TrnRightClickMove=
 
+
+
+##################################
+#
+# Header: Engine Game
+#
+
+#description: You are playing against the engine.
+#english: EngGamePlayingVsEngine=You are playing against the engine. 
+EngGamePlayingVsEngine=
+
+#description: User is White
+#english: EngGameUserPlaysWhite=You are White and the engine is Black.
+EngGameUserPlaysWhite=
+
+#description: User is Black
+#english: EngGameUserPlaysBlack=You are Black and the engine is White.
+EngGameUserPlaysBlack=
+
+#description: Menu: SwapSides
+#english: EngGameSwapSides=Swap Sides 
+EngGameSwapSides=
+
+#description: Menu: Restart Game
+#english: EngGameRestartFrom=Restart Game From Here 
+EngGameRestartFrom=
+
+#description: Menu: Start from initial position
+#english: EngGameStartFromInitial=Start Game From Initial Position 
+EngGameStartFromInitial=
+
+#description: Prompt: Your move.
+#english: EngGameYourMove=It is your turn now
+EngGameYourMove=
+
+#description: Prompt: Wait engine's move.
+#english: EngGameEngineMove=Wait for engine's response...
+EngGameEngineMove=
+
+#description: HintBox: Game vs Engine started.
+#english: EngGameStarted=A game against the engine has started.
+EngGameStarted=
+
+#description: MessageBox do you want to save game
+#english: EngGameSave=Do you want to save this game in the current chapter?
+EngGameSave=
 
 ##################################
 #

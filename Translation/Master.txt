@@ -582,6 +582,9 @@ Replay=Replay
 #Start game against the engine
 PlayAgainstComputer=Play Against Engine
 
+#Game against the engine tab name
+GameAgainstEngine=Game Against Engine
+
 #Exit game
 ExitGame=Exit Game
 
@@ -1698,6 +1701,42 @@ TrnClickMoveBelow=Click any move below to restart training from it.
 #Right click move instruction
 TrnRightClickMove=Right click to open the context menu.  
 
+
+
+##################################
+#
+# Header: Engine Game
+#
+
+#You are playing against the engine.
+EngGamePlayingVsEngine=You are playing against the engine. 
+
+#User is White
+EngGameUserPlaysWhite=You are White and the engine is Black.
+
+#User is Black
+EngGameUserPlaysBlack=You are Black and the engine is White.
+
+#Menu: SwapSides
+EngGameSwapSides=Swap Sides 
+
+#Menu: Restart Game
+EngGameRestartFrom=Restart Game From Here 
+
+#Menu: Start from initial position
+EngGameStartFromInitial=Start Game From Initial Position 
+
+#Prompt: Your move.
+EngGameYourMove=It is your turn now
+
+#Prompt: Wait engine's move.
+EngGameEngineMove=Wait for engine's response...
+
+#HintBox: Game vs Engine started.
+EngGameStarted=A game against the engine has started.
+
+#MessageBox do you want to save game
+EngGameSave=Do you want to save this game in the current chapter?
 
 ##################################
 #

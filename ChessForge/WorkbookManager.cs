@@ -30,7 +30,8 @@ namespace ChessForge
             BOOKMARKS,
             MODEL_GAME,
             EXERCISE,
-            TRAINING
+            TRAINING,
+            ENGINE_GAME
         }
 
         /// <summary>
@@ -462,10 +463,13 @@ namespace ChessForge
         /// Sets up visibility of Model Game related menu items in the Chapters context menu.
         /// </summary>
         /// <param name="cmn"></param>
-        /// <param name="isEnabled"></param>
+        /// <param name="showEnabled"></param>
         /// <param name="contentType"></param>
-        private static void SetupModelGameMenuItems(ContextMenu cmn, bool isEnabled, GameData.ContentType contentType, bool isMini)
+        private static void SetupModelGameMenuItems(ContextMenu cmn, bool showEnabled, GameData.ContentType contentType, bool isMini)
         {
+            // TODO: showEnabled is NEVER false, Is this historical then?
+            bool isEnabled = showEnabled;
+
             bool isGamesMenu = contentType == GameData.ContentType.MODEL_GAME;
             int index = LastClickedModelGameIndex;
             if (index < 0 || SessionWorkbook == null)
@@ -513,9 +517,12 @@ namespace ChessForge
                             menuItem.Visibility = (isGamesMenu && !isMini) ? Visibility.Visible : Visibility.Collapsed;
                             break;
                         case "_mnDeleteGame":
-                        case "UiMnDeleteGames":
                             menuItem.IsEnabled = isEnabled && SessionWorkbook != null && SessionWorkbook.ActiveChapter.GetModelGameCount() > 0;
                             menuItem.Visibility = (isGamesMenu && !isMini) ? Visibility.Visible : Visibility.Collapsed;
+                            break;
+                        case "UiMnDeleteGames":
+                            menuItem.IsEnabled = showEnabled && SessionWorkbook != null && SessionWorkbook.HasAnyModelGames;
+                            menuItem.Visibility = !isMini ? Visibility.Visible : Visibility.Collapsed;
                             break;
                     }
                 }
@@ -535,8 +542,11 @@ namespace ChessForge
         /// <param name="cmn"></param>
         /// <param name="isEnabled"></param>
         /// <param name="contentType"></param>
-        private static void SetupExerciseMenuItems(ContextMenu cmn, bool isEnabled, GameData.ContentType contentType, bool isMini)
+        private static void SetupExerciseMenuItems(ContextMenu cmn, bool showEnabled, GameData.ContentType contentType, bool isMini)
         {
+            // TODO: showEnabled is NEVER false, Is this historical then?
+            bool isEnabled = showEnabled;
+
             bool isExercisesMenu = contentType == GameData.ContentType.EXERCISE;
             int index = LastClickedExerciseIndex;
             if (index < 0 || SessionWorkbook == null)
@@ -584,9 +594,12 @@ namespace ChessForge
                             menuItem.Visibility = (isExercisesMenu && !isMini) ? Visibility.Visible : Visibility.Collapsed;
                             break;
                         case "_mnDeleteExercise":
-                        case "UiMnDeleteExercises":
                             menuItem.IsEnabled = isEnabled && SessionWorkbook != null && SessionWorkbook.ActiveChapter.GetExerciseCount() > 0;
                             menuItem.Visibility = (isExercisesMenu && !isMini) ? Visibility.Visible : Visibility.Collapsed;
+                            break;
+                        case "UiMnDeleteExercises":
+                            menuItem.IsEnabled = showEnabled && SessionWorkbook != null && SessionWorkbook.HasAnyExercises;
+                            menuItem.Visibility = !isMini ? Visibility.Visible : Visibility.Collapsed;
                             break;
                     }
                 }

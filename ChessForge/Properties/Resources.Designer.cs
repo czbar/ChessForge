@@ -1601,6 +1601,96 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Wait for engine&apos;s response....
+        /// </summary>
+        public static string EngGameEngineMove {
+            get {
+                return ResourceManager.GetString("EngGameEngineMove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You are playing against the engine. .
+        /// </summary>
+        public static string EngGamePlayingVsEngine {
+            get {
+                return ResourceManager.GetString("EngGamePlayingVsEngine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restart Game From Here .
+        /// </summary>
+        public static string EngGameRestartFrom {
+            get {
+                return ResourceManager.GetString("EngGameRestartFrom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to save this game in the current chapter?.
+        /// </summary>
+        public static string EngGameSave {
+            get {
+                return ResourceManager.GetString("EngGameSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A game against the engine has started..
+        /// </summary>
+        public static string EngGameStarted {
+            get {
+                return ResourceManager.GetString("EngGameStarted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start Game From Initial Position .
+        /// </summary>
+        public static string EngGameStartFromInitial {
+            get {
+                return ResourceManager.GetString("EngGameStartFromInitial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Swap Sides .
+        /// </summary>
+        public static string EngGameSwapSides {
+            get {
+                return ResourceManager.GetString("EngGameSwapSides", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You are Black and the engine is White..
+        /// </summary>
+        public static string EngGameUserPlaysBlack {
+            get {
+                return ResourceManager.GetString("EngGameUserPlaysBlack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You are White and the engine is Black..
+        /// </summary>
+        public static string EngGameUserPlaysWhite {
+            get {
+                return ResourceManager.GetString("EngGameUserPlaysWhite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to It is your turn now.
+        /// </summary>
+        public static string EngGameYourMove {
+            get {
+                return ResourceManager.GetString("EngGameYourMove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Engine.
         /// </summary>
         public static string Engine {
@@ -2353,6 +2443,15 @@ namespace ChessForge.Properties {
         public static string Game0of0 {
             get {
                 return ResourceManager.GetString("Game0of0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game Against Engine.
+        /// </summary>
+        public static string GameAgainstEngine {
+            get {
+                return ResourceManager.GetString("GameAgainstEngine", resourceCulture);
             }
         }
         

@@ -344,6 +344,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Informs the user that the Engine Game has started.
+        /// </summary>
+        public void EngineGameStart()
+        {
+            Document.Blocks.Clear();
+            AddNewParagraphToDoc("dummy", "");
+            AddNewParagraphToDoc("bold_16", Resources.EngGameStarted);
+        }
+
+        /// <summary>
         /// Displays  a checkmate message.
         /// </summary>
         /// <param name="userMade"></param>

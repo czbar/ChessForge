@@ -85,6 +85,8 @@
                         <MenuItem x:Name="UiMnStartTraining"  Header="{x:Static p:Resources.StartNewSession}"  Click="UiMnStartTrainingHere_Click"/>
                         <MenuItem x:Name="UiMnRestartTraining"  Header="{x:Static p:Resources.RestartTraining}" Click="UiMnTrainRestartTraining_Click"/>
                         <MenuItem x:Name="UiMnExitTraining" Header="{x:Static p:Resources.ExitTraining}" Click="UiMnStopTraining_Click"/>
+                        <Separator />
+                        <MenuItem x:Name="UiMnMainPlayEngine" Header="{x:Static p:Resources.PlayAgainstComputer}"  Click="UiMnPlayEngine_Click" />
                     </MenuItem>
                     <MenuItem Header="{x:Static p:Resources.Edit}" Margin="0,0,0,0">
                         <MenuItem x:Name="UiMnAnnotations" Header="{x:Static p:Resources.Annotations}" Click="UiMnAnnotationsDialog_Click" />
@@ -125,11 +127,14 @@
                         <MenuItem x:Name="UiMnDownloadWebGames" Header="{x:Static p:Resources.DownloadGamesFromWeb}" Click="UiMnDownloadWebGames_Click" />
                         <MenuItem x:Name="UiMnEvaluateGames" Header="{x:Static p:Resources.EvaluateGames}" Click="UiMnEvaluateGames_Click" />
                         <Separator />
+                        <MenuItem x:Name="UiMnCopyArticles" Header="{x:Static p:Resources.CopyArticlesToChapter}" Click="UiMnCopyArticles_Click" />
+                        <MenuItem x:Name="UiMnMoveArticles" Header="{x:Static p:Resources.MoveArticlesToChapter}" Click="UiMnMoveArticles_Click" />
+                        <Separator />
                         <MenuItem x:Name="UiMnStripComments" Header="{x:Static p:Resources.StripComments}" Click="UiStripComments_Click" />
                         <MenuItem x:Name="UiMnDeleteEngineEvals" Header="{x:Static p:Resources.DeleteEngineEvals}" Click="UiDeleteEngineEvals_Click" />
                         <Separator />
-                        <MenuItem x:Name="UiMnCopyArticles" Header="{x:Static p:Resources.CopyArticlesToChapter}" Click="UiMnCopyArticles_Click" />
-                        <MenuItem x:Name="UiMnMoveArticles" Header="{x:Static p:Resources.MoveArticlesToChapter}" Click="UiMnMoveArticles_Click" />
+                        <MenuItem x:Name="UiMnMainDeleteGames" Header="{x:Static p:Resources.DeleteGames}" Click="UiMnToolsDeleteGames_Click" />
+                        <MenuItem x:Name="UiMnMainDeleteExercises" Header="{x:Static p:Resources.DeleteExercises}" Click="UiMnToolsDeleteExercises_Click"  />
                     </MenuItem>
                     <MenuItem Header="{x:Static p:Resources.Help}" Margin="0,0,0,0">
                         <MenuItem Header="{x:Static p:Resources.Wiki}" Click="UiMnHelpWiki_Click" />
@@ -284,6 +289,34 @@
                                     <Image x:Name="_imgTrainingFloatingBoard" Margin="2,2,0,0" Source="Resources/Images/ChessBoardGreySmall.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="240" Height="240" />
                                 </Canvas>
                             </Viewbox>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+                <TabControl x:Name="UiTabCtrlEngineGame" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="20,5,20,0" Grid.Row="1" 
+                    VerticalAlignment="Top" Grid.RowSpan="1" Visibility="Hidden">
+                    <TabItem x:Name="UiTabEngineGame"  Header="{x:Static p:Resources.GameAgainstEngine}" IsVisibleChanged="UiTabEngineGame_IsVisibleChanged" 
+                             PreviewKeyDown="UiTabEngineGame_PreviewKeyDown" PreviewKeyUp="UiTabEngineGame_PreviewKeyUp" PreviewMouseDown="UiTabEngineGame_PreviewMouseDown"  >
+                        <Grid Background="#FFE5E5E5">
+                            <Grid.ContextMenu>
+                                <ContextMenu x:Name="UiCmEngineGame">
+                                    <MenuItem x:Name="UiMnEngGame_SwapSides" Header="{x:Static p:Resources.EngGameSwapSides}" Click="UiMnEngGame_SwapSides_Click"  />
+                                    <MenuItem x:Name="UiMnEngGame_RestartFromMove" Header="{x:Static p:Resources.EngGameRestartFrom}" Click="UiMnEngGame_RestartFromMove_Click"  />
+                                    <MenuItem x:Name="UiMnEngGame_StartFromInit" Header="{x:Static p:Resources.EngGameStartFromInitial}" Click="UiMnEngGame_StartFromInit_Click"  />
+                                    <Separator />
+                                    <MenuItem x:Name="UiMnEngGame_ExitGame" Header="{x:Static p:Resources.ExitGame}" Click="UiMnEngGame_ExitGame_Click"  />
+                                </ContextMenu>
+                            </Grid.ContextMenu>
+                            <RichTextBox x:Name="UiRtbEngineGame" IsUndoEnabled="False"  ContextMenu="{x:Null}" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                                 SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                                 IsReadOnly="True"  MinHeight="640" >
+                                <RichTextBox.Resources>
+                                    <Style TargetType="{x:Type Paragraph}">
+                                        <Setter Property="Margin" Value="0" />
+                                    </Style>
+                                </RichTextBox.Resources>
+                                <FlowDocument>
+                                </FlowDocument>
+                            </RichTextBox>
                         </Grid>
                     </TabItem>
                 </TabControl>

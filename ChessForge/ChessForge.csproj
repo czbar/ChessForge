@@ -126,6 +126,7 @@
       <DependentUpon>DownloadedGamesActionDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="DownloadWebGamesManager.cs" />
+    <Compile Include="EngineGameView.cs" />
     <Compile Include="EvaluationActiveLine.cs" />
     <Compile Include="EvaluationBar.cs" />
     <Compile Include="EvaluationLine.cs" />

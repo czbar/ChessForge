@@ -67,7 +67,7 @@ namespace ChessPosition.Utils
                 {
                     if (double.TryParse(nd.EngineEvaluation, out double evalChild))
                     {
-                        if (IsBlunder(evalParent, evalChild, nd.ColorToMove))
+                        if (IsBlunder(evalParent, evalChild, nd.Parent.ColorToMove))
                         {
                             ass = ChfCommands.Assessment.BLUNDER;
                         }
@@ -140,29 +140,30 @@ namespace ChessPosition.Utils
         /// and the current (child) node justify calling the child's move
         /// a blunder.
         /// </summary>
-        /// <param name="parentEval"></param>
-        /// <param name="childEval"></param>
-        /// <param name="color">Color to move in the child node</param>
+        /// <param name="prevEval"></param>
+        /// <param name="currEval"></param>
         /// <returns></returns>
-        private static bool IsBlunder(double parentEval, double childEval, PieceColor color)
+        private static bool IsBlunder(double prevEval, double currEval, PieceColor colorToMove)
         {
             bool res = false;
 
-            if (color == PieceColor.White)
+            if (colorToMove == PieceColor.White)
             {
-                if (childEval - parentEval > +2.0 && childEval < +HIGH_EVAL_THRESH || parentEval < -0.7 && childEval > +0.7)
+                if ((currEval - prevEval < -2) && ((Math.Abs(prevEval) <= HIGH_EVAL_THRESH) || Math.Abs(currEval) <= HIGH_EVAL_THRESH))
                 {
                     res = true;
                 }
             }
             else
             {
-                if (childEval - parentEval < -2.0  && childEval > -HIGH_EVAL_THRESH || parentEval > +0.7 && childEval < -0.7)
+                if ((currEval - prevEval > 2) && ((Math.Abs(prevEval) <= HIGH_EVAL_THRESH) || Math.Abs(currEval) <= HIGH_EVAL_THRESH))
                 {
                     res = true;
                 }
             }
+
             return res;
         }
+
     }
 }
