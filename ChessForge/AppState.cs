@@ -1760,52 +1760,8 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Shows or hides EngineGame's DataGrid control.
+        /// Resets evaluation controls.
         /// </summary>
-        /// <param name="show"></param>
-        private static void ShowGuiEngineGameLine(bool show, TabControl tabCtrl)
-        {
-            return;
-
-            _mainWin.Dispatcher.Invoke(() =>
-            {
-                // only applicable when playing in ManualReview
-                if (ActiveContentType == GameData.ContentType.STUDY_TREE
-                    && CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
-                {
-                    _mainWin.UiDgEngineGame.Visibility = show ? Visibility.Visible : Visibility.Hidden;
-                    //_mainWin.UiDgEngineGame.Width = 160;
-
-                    // adjust tab controls position
-                    if (TrainingSession.IsTrainingInProgress)
-                    {
-                        if (show)
-                        {
-                            MainWin.ResizeTabControl(tabCtrl, TabControlSizeMode.SHOW_ENGINE_GAME_LINE);
-                        }
-                        else
-                        {
-                            MainWin.ResizeTabControl(tabCtrl, TabControlSizeMode.HIDE_ENGINE_GAME_LINE);
-                        }
-                    }
-                    else
-                    {
-                        if (show)
-                        {
-                            MainWin.ResizeTabControl(_mainWin.UiTabCtrlManualReview, TabControlSizeMode.SHOW_ENGINE_GAME_LINE);
-                        }
-                        else
-                        {
-                            MainWin.ResizeTabControl(_mainWin.UiTabCtrlManualReview, TabControlSizeMode.HIDE_ENGINE_GAME_LINE);
-                        }
-
-                        _mainWin.UiTabStudyTree.Focus();
-                    }
-                }
-            });
-        }
-
-
         private static void PrepareEvaluationControls()
         {
             _mainWin.Dispatcher.Invoke(() =>
@@ -1814,7 +1770,7 @@ namespace ChessForge
                 _mainWin.UiMnciEvalPos.IsEnabled = false;
 
                 _mainWin.UiPbEngineThinking.Minimum = 0;
-                int moveTime = AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME ?
+                int moveTime = CurrentLearningMode == LearningMode.Mode.ENGINE_GAME ?
                     Configuration.EngineMoveTime : Configuration.EngineEvaluationTime;
                 _mainWin.UiPbEngineThinking.Maximum = moveTime;
                 _mainWin.UiPbEngineThinking.Value = 0;
