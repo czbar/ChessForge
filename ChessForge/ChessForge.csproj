@@ -141,6 +141,9 @@
       <DependentUpon>GamesEvalDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="GamesEvaluationManager.cs" />
+    <Compile Include="HiddenClickDialog.xaml.cs">
+      <DependentUpon>HiddenClickDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="IdenticalPositionsExDialog.xaml.cs">
       <DependentUpon>IdenticalPositionsExDialog.xaml</DependentUpon>
     </Compile>
@@ -306,6 +309,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GamesEvalDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HiddenClickDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

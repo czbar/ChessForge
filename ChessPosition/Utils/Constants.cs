@@ -270,6 +270,7 @@ namespace ChessPosition
         public const int ZIndex_PieceOnBoard = 5;
         public const int ZIndex_BoardArrow = 6;
         public const int ZIndex_PieceInAnimation = 10;
+        public const int ZIndex_PromoTray = 12;
 
         /// <summary>
         /// String for naming colors in contexts where using Brushes

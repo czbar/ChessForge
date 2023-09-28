@@ -153,6 +153,12 @@ namespace ChessForge
         /// <param name="e"></param>
         private void OnMouseUp(object sender, MouseButtonEventArgs e)
         {
+            if (_processingMouseUp)
+            {
+                AppLog.Message("OnMouseUp rejected: processing MouseUp");
+                return;
+            }
+
             _processingMouseUp = true;
 
             try
