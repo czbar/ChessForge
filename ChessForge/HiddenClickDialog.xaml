@@ -1,0 +1,14 @@
+﻿<Window x:Class="ChessForge.HiddenClickDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ChessForge"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        ShowInTaskbar="False"
+        Title="" Height="0" Width="0" Activated="Window_Activated" MouseDown="Window_MouseDown" MouseUp="Window_MouseUp">
+    <Grid>
+        
+    </Grid>
+</Window>
