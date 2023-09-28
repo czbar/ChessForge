@@ -16,7 +16,7 @@ namespace ChessForge
     public class BackgroundPgnProcessingManager
     {
         // number of parallel workers in the pool
-        private int WORKERS_COUNT = 8;
+        private int _parallelWorkers = 4;
 
         // state of the parsing multi-task
         private ProcessState _state;
@@ -188,7 +188,7 @@ namespace ChessForge
         /// </summary>
         private void StartProcessing()
         {
-            for (int i = 0; i < WORKERS_COUNT; i++)
+            for (int i = 0; i < _parallelWorkers; i++)
             {
                 if (i >= _rawArticles.Count)
                 {
@@ -314,7 +314,9 @@ namespace ChessForge
         /// </summary>
         private void Initialize()
         {
-            for (int i = 0; i < WORKERS_COUNT; i++)
+            _parallelWorkers = Math.Max(Configuration.CoreCount, 4);
+
+            for (int i = 0; i < _parallelWorkers; i++)
             {
                 _workerPool.Add(new BackgroundPgnProcessor(this));
             }
