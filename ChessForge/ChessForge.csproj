@@ -127,6 +127,9 @@
     </Compile>
     <Compile Include="DownloadWebGamesManager.cs" />
     <Compile Include="EngineGameView.cs" />
+    <Compile Include="EngineOptionsDialog.xaml.cs">
+      <DependentUpon>EngineOptionsDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EvaluationActiveLine.cs" />
     <Compile Include="EvaluationBar.cs" />
     <Compile Include="EvaluationLine.cs" />
@@ -301,6 +304,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DownloadedGamesActionDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EngineOptionsDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
