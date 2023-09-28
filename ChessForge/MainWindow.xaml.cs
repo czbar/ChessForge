@@ -1276,7 +1276,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Shows a GUI element allowing the user 
+        /// Requests that the promo tray be displayed to allow the user 
         /// to select the piece to promote to.
         /// </summary>
         /// <param name="normTarget">Normalized propmotion square coordinates
@@ -1284,15 +1284,26 @@ namespace ChessForge
         /// <returns></returns>
         public PieceType GetUserPromoSelection(SquareCoords normTarget)
         {
-            bool whitePromotion = normTarget.Ycoord == 7;
-            PromotionDialog dlg = new PromotionDialog(whitePromotion, MainChessBoard.IsFlipped);
+            try
+            {
+                bool whitePromotion = normTarget.Ycoord == 7;
 
-            Point pos = CalculatePromoDialogLocation(normTarget, whitePromotion);
-            dlg.Left = pos.X;
-            dlg.Top = pos.Y;
-            dlg.ShowDialog();
+                AppState.MainWin.MainChessBoard.PlacePromoImage(whitePromotion ? PieceColor.White : PieceColor.Black, normTarget);
 
-            return dlg.SelectedPiece;
+                HiddenClickDialog dlgBlock = new HiddenClickDialog();
+                dlgBlock.ShowDialog();
+
+                AppState.MainWin.MainChessBoard.RemovePromoImage();
+
+                PieceType piece = AppState.MainWin.MainChessBoard.CalculatePromotionPieceFromPoint(dlgBlock.ClickPoint);
+                return piece;
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("GetUserPromoSelection()", ex);
+                AppState.MainWin.MainChessBoard.RemovePromoImage();
+                return PieceType.None;
+            }
         }
 
         /// <summary>
