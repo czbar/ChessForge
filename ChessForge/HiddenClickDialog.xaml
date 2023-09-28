@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         WindowStyle="None"
         ShowInTaskbar="False"
-        Title="" Height="0" Width="0" Activated="Window_Activated" MouseDown="Window_MouseDown" MouseUp="Window_MouseUp">
+        Title="" Height="0" Width="0" Activated="Window_Activated" MouseDown="Window_MouseDown">
     <Grid>
         
     </Grid>
