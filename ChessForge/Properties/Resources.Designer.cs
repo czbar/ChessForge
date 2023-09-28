@@ -1367,6 +1367,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Engine Configuration.
+        /// </summary>
+        public static string DlgTitleEngineOptions {
+            get {
+                return ResourceManager.GetString("DlgTitleEngineOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to List of Identical Positions.
         /// </summary>
         public static string DlgTitleIdenticalPositions {
@@ -1732,15 +1741,6 @@ namespace ChessForge.Properties {
         public static string EngineNotAvailable {
             get {
                 return ResourceManager.GetString("EngineNotAvailable", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Engine Parameters.
-        /// </summary>
-        public static string EngineParameters {
-            get {
-                return ResourceManager.GetString("EngineParameters", resourceCulture);
             }
         }
         
@@ -2780,6 +2780,24 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to During a Game.
+        /// </summary>
+        public static string InEngineGame {
+            get {
+                return ResourceManager.GetString("InEngineGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to During Evaluations.
+        /// </summary>
+        public static string InEvaluation {
+            get {
+                return ResourceManager.GetString("InEvaluation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The engine is thinking!.
         /// </summary>
         public static string InfoEngineThinking {
@@ -3212,7 +3230,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Move Selection (cp).
+        ///   Looks up a localized string similar to Centipawn Range.
         /// </summary>
         public static string MoveSelectionAccuracy {
             get {
@@ -3302,7 +3320,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Multiple Lines.
+        ///   Looks up a localized string similar to Top Lines to Show.
         /// </summary>
         public static string MultipleLines {
             get {
@@ -3875,6 +3893,15 @@ namespace ChessForge.Properties {
         public static string Proceed {
             get {
                 return ResourceManager.GetString("Proceed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Process Parameters.
+        /// </summary>
+        public static string ProcessParameters {
+            get {
+                return ResourceManager.GetString("ProcessParameters", resourceCulture);
             }
         }
         
@@ -4581,7 +4608,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Evaluation Time (s).
+        ///   Looks up a localized string similar to Time per Move (s).
         /// </summary>
         public static string ThinkTimeEvaluation {
             get {
@@ -4599,7 +4626,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Game Move Time (s).
+        ///   Looks up a localized string similar to Time per Move (s).
         /// </summary>
         public static string ThinkTimeInGame {
             get {
@@ -4667,6 +4694,15 @@ namespace ChessForge.Properties {
         public static string TopGames {
             get {
                 return ResourceManager.GetString("TopGames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selection Accuracy.
+        /// </summary>
+        public static string TopMoveSelectionAccuracy {
+            get {
+                return ResourceManager.GetString("TopMoveSelectionAccuracy", resourceCulture);
             }
         }
         

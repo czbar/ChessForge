@@ -588,6 +588,10 @@ ApplicationOptions=
 #english: DlgTitleApplicationOptions=Application Options
 DlgTitleApplicationOptions=
 
+#description: Engine Options dialog title
+#english: DlgTitleEngineOptions=Engine Configuration
+DlgTitleEngineOptions=
+
 #description: Identical Positions dialog title
 #english: DlgTitleIdenticalPositions=List of Identical Positions
 DlgTitleIdenticalPositions=
@@ -775,6 +779,73 @@ StudyTreeAfter=
 #description: Not Named (opening position from lichess)
 #english: NotNamed=[not named]
 NotNamed=
+
+
+#
+# Header: DIALOG Engine Options
+#
+
+#description: Group Box: In Analysis
+#english: InEvaluation=During Evaluations
+InEvaluation=
+
+#description: Group Box: In Game
+#english: InEngineGame=During a Game
+InEngineGame=
+
+#description: Group Box: Process Parameters
+#english: ProcessParameters=Process Parameters
+ProcessParameters=
+
+#description: Engine Executable
+#english: EngineExecutable=Engine Executable
+EngineExecutable=
+
+#description: Move SelectionAccuracy
+#english: TopMoveSelectionAccuracy=Selection Accuracy
+TopMoveSelectionAccuracy=
+
+#description: Engine Time per Move in seconds (group frame title)
+#english: EngineTimePerMove=Engine Think Time (s)
+EngineTimePerMove=
+
+#description: Time to think in the Game
+#english: ThinkTimeInGame=Time per Move (s)
+ThinkTimeInGame=
+
+#description: Time to think in Evaluation 
+#english: ThinkTimeEvaluation=Time per Move (s)
+ThinkTimeEvaluation=
+
+#description: Time to think in Evaluation (longer wording where there is space)
+#english: ThinkTimeEvaluationPerMove=Evaluation Time per Move(s)
+ThinkTimeEvaluationPerMove=
+
+#description: Multiple lines (MultiPV)
+#english: MultipleLines=Top Lines to Show
+MultipleLines=
+
+#description: Allows diff from best move when selecting game moves
+#english: MoveSelectionAccuracy=Centipawn Range
+MoveSelectionAccuracy=
+
+#description: Number of threads for the engine to use
+#english: EngineThreads=Thread Count
+EngineThreads=
+
+#description: Engine hash table size
+#english: EngineHashSize=Hash Table (MB)
+EngineHashSize=
+
+#
+# Header: DIALOG Multi-Game Evaluation
+#
+
+#description: EstimatedEvalTime
+#english: EstimatedEvalTime=Estimated evaluation time
+EstimatedEvalTime=
+
+
 
 #
 # Header: CONTEXT MENU in Training View
@@ -1631,54 +1702,11 @@ QuizPoints=
 #english: LostQuizPoints=Lost quiz points
 LostQuizPoints=
 
-#description: Engine Executable
-#english: EngineExecutable=Engine Executable
-EngineExecutable=
-
-#description: Engine Time per Move in seconds (group frame title)
-#english: EngineTimePerMove=Engine Think Time (s)
-EngineTimePerMove=
-
-#description: Engine Parameters (group frame title)
-#english: EngineParameters=Engine Parameters
-EngineParameters=
-
-#description: Time to think in the Game (inside a frame titled "Engine Time per Move")
-#english: ThinkTimeInGame=Game Move Time (s)
-ThinkTimeInGame=
-
-#description: Time to think in Evaluation (inside a frame titled "Engine Time per Move")
-#english: ThinkTimeEvaluation=Evaluation Time (s)
-ThinkTimeEvaluation=
-
-#description: Time to think in Evaluation (longer wording where there is space)
-#english: ThinkTimeEvaluationPerMove=Evaluation Time per Move(s)
-ThinkTimeEvaluationPerMove=
-
-#description: Multiple lines (MultiPV)
-#english: MultipleLines=Multiple Lines
-MultipleLines=
-
-
-#description: EstimatedEvalTime
-#english: EstimatedEvalTime=Estimated evaluation time
-EstimatedEvalTime=
-
-#description: Allows diff from best move when selecting game moves
-#english: MoveSelectionAccuracy=Move Selection (cp)
-MoveSelectionAccuracy=
-
-#description: Number of threads for the engine to use
-#english: EngineThreads=Thread Count
-EngineThreads=
-
-#description: Engine hash table size
-#english: EngineHashSize=Hash Table (MB)
-EngineHashSize=
 
 #description: Move Replay(group frame title)
 #english: MoveReplay=Move Replay
 MoveReplay=
+
 
 #description: Time per move in auto replay in seconds (inside a frame titled "Move Replay")
 #english: AutoReplaySpeed=Auto Speed (s)
