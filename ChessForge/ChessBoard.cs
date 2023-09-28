@@ -121,6 +121,16 @@ namespace ChessForge
         private Image _promoTray = new Image();
 
         /// <summary>
+        /// Position of the left top corner of the promo tray, if displayed
+        /// </summary>
+        private Point _promoTrayLeftTop = new Point();
+
+        /// <summary>
+        /// Whether the promo tray is inverted.
+        /// </summary>
+        private bool _promoTrayInverted;
+
+        /// <summary>
         /// Label control to be optionally shown above the board.
         /// </summary>
         private Label _mainLabel;
@@ -476,6 +486,49 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Based on the passed point coordinates, saved promo tray position
+        /// and the inverted status of the tray, determines which piece was clicked.
+        /// </summary>
+        /// <param name="pt"></param>
+        /// <returns></returns>
+        public PieceType CalculatePromotionPieceFromPoint(Point pt)
+        {
+            PieceType piece = PieceType.None;
+
+            if (pt.X >= _promoTrayLeftTop.X && pt.X <= _promoTrayLeftTop.X + SquareSize)
+            {
+                int index = (int)((pt.Y - _promoTrayLeftTop.Y) / (double)SquareSize);
+                if (index >= 0 && index <= 5)
+                {
+                    if (_promoTrayInverted)
+                    {
+                        index = 4 - index;
+                    }
+                    switch (index)
+                    {
+                        case 0:
+                            piece = PieceType.Queen;
+                            break;
+                        case 1:
+                            piece = PieceType.Knight;
+                            break;
+                        case 2:
+                            piece = PieceType.Rook;
+                            break;
+                        case 3:
+                            piece = PieceType.Bishop;
+                            break;
+                        default:
+                            piece = PieceType.None;
+                            break;
+                    }
+                }
+            }
+
+            return piece;
+        }
+
+        /// <summary>
         /// Places the promotion tray of appropriate type at the appropriate square.
         /// </summary>
         /// <param name="sidePromoting">Color of the pawn getting promoted.</param>
@@ -496,7 +549,15 @@ namespace ChessForge
                 top = top - 4 * SquareSize;
             }
 
-            _promoTray.Opacity = 0.8;
+            if (sidePromoting == PieceColor.White && _isFlipped || sidePromoting == PieceColor.Black && !_isFlipped)
+            {
+                _promoTrayInverted = true;
+            }
+            else
+            {
+                _promoTrayInverted = false;
+            }
+
             if (sidePromoting == PieceColor.White)
             {
                 _promoTray.Source = _isFlipped ? ChessForge.Pieces.WhitePromoInverted : ChessForge.Pieces.WhitePromo;
@@ -510,6 +571,9 @@ namespace ChessForge
             Canvas.SetLeft(_promoTray, left);
             Canvas.SetTop(_promoTray, top);
             Canvas.SetZIndex(_promoTray, Constants.ZIndex_PromoTray);
+
+            _promoTrayLeftTop.X = left;
+            _promoTrayLeftTop.Y = top;
         }
 
         /// <summary>
