@@ -566,8 +566,6 @@ namespace ChessForge
         {
             try
             {
-                RemoveSelectionOpacity();
-                AppState.MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGrey;
                 if (sender is Paragraph)
                 {
                     Paragraph para = sender as Paragraph;
@@ -575,6 +573,8 @@ namespace ChessForge
                     // is a proper diagram para?
                     if (HasInlineUIContainer(para))
                     {
+                        RemoveSelectionOpacity();
+                        AppState.MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGrey;
 
                         _rtb.Focus();
                         _rtb.CaretPosition = para.ContentEnd;
@@ -1045,28 +1045,37 @@ namespace ChessForge
         /// <returns></returns>
         private Paragraph CreateDiagramElements(Paragraph para, IntroViewDiagram diag, TreeNode nd, bool flipState)
         {
-            para.Inlines.Clear();
-            Canvas baseCanvas = SetupDiagramCanvas();
-            Image imgChessBoard = CreateChessBoard(baseCanvas, diag);
-            if (flipState)
+            _allowTextChanged = false;
+
+            try
             {
-                diag.Chessboard.FlipBoard();
+                para.Inlines.Clear();
+                Canvas baseCanvas = SetupDiagramCanvas();
+                Image imgChessBoard = CreateChessBoard(baseCanvas, diag);
+                if (flipState)
+                {
+                    diag.Chessboard.FlipBoard();
+                }
+                diag.Chessboard.EnableShapes(true, nd);
+                baseCanvas.Children.Add(imgChessBoard);
+
+                Canvas sideCanvas = CreateDiagramSideCanvas(baseCanvas);
+                CreateDiagramFlipImage(sideCanvas, nd);
+
+                // add invisible checkbox holding the flipped state
+                CreateFlippedCheckBox(baseCanvas, flipState);
+
+                Viewbox viewBox = SetupDiagramViewbox(baseCanvas);
+
+                InlineUIContainer uic = new InlineUIContainer();
+                uic.Child = viewBox;
+                uic.Name = _uic_move_ + nd.NodeId.ToString();
+                para.Inlines.Add(uic);
             }
-            diag.Chessboard.EnableShapes(true, nd);
-            baseCanvas.Children.Add(imgChessBoard);
-
-            Canvas sideCanvas = CreateDiagramSideCanvas(baseCanvas);
-            CreateDiagramFlipImage(sideCanvas, nd);
-
-            // add invisible checkbox holding the flipped state
-            CreateFlippedCheckBox(baseCanvas, flipState);
-
-            Viewbox viewBox = SetupDiagramViewbox(baseCanvas);
-
-            InlineUIContainer uic = new InlineUIContainer();
-            uic.Child = viewBox;
-            uic.Name = _uic_move_ + nd.NodeId.ToString();
-            para.Inlines.Add(uic);
+            finally
+            {
+                _allowTextChanged = true;
+            }
             return para;
         }
 
@@ -1401,10 +1410,10 @@ namespace ChessForge
                             break;
                     }
                 }
-                catch 
-                { 
+                catch
+                {
                 }
-            } 
+            }
             else if (e.Key == Key.Left || e.Key == Key.Right)
             {
                 e.Handled = ProcessArrowKey(e.Key);
@@ -1580,10 +1589,6 @@ namespace ChessForge
             // stop TextChanged event handler! 
             _rtb.TextChanged -= UiRtbIntroView_TextChanged;
 
-            if (e.Changes.Count > 0 && e.Changes.First<TextChange>().RemovedLength > 0)
-            {
-                RemoveEmptyDiagrams();
-            }
             // we want to avoid adding anything to the diagram paragraph outside of the diagram InlineUIElement so check for this
             TextPointer tpCaret = _rtb.CaretPosition;
             Paragraph para = tpCaret.Paragraph;
@@ -1662,7 +1667,9 @@ namespace ChessForge
                 }
                 catch { }
             }
+
             _allowTextChanged = true;
+            _isTextDirty = true;
         }
     }
 }
