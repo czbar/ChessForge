@@ -190,12 +190,6 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_1A25FFA80898053D472B1E2FEA13F6FD"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_3A481BA820F80DDB75A02811800AC4B3"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -203,6 +197,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_070F20AEE4156FF8A1EDCB6F32B33AB5"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_1A25FFA80898053D472B1E2FEA13F6FD"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -310,7 +310,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:ChessPosition, Version=1.3.3.0, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:ChessPosition, Version=1.3.4.0, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_070F20AEE4156FF8A1EDCB6F32B33AB5"
@@ -443,7 +443,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:EngineService, Version=1.3.3.0, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:EngineService, Version=1.3.4.0, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_3A481BA820F80DDB75A02811800AC4B3"
@@ -694,7 +694,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:WebAccess, Version=1.3.3.0, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:WebAccess, Version=1.3.4.0, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_B31923E79F360E25A9908EEE60355755"
@@ -921,15 +921,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Chess Forge"
-        "ProductCode" = "8:{36B81DB6-0564-4EE4-A514-8FDDBDAB6CEE}"
-        "PackageCode" = "8:{F613209B-093F-4098-9E19-FEDB4BBEAE86}"
+        "ProductCode" = "8:{5E237254-2723-4875-8B9C-0EB2268C681E}"
+        "PackageCode" = "8:{82BA48B0-733A-47F0-BC31-0203ABB2122F}"
         "UpgradeCode" = "8:{8FBE368E-7FA2-4112-9D18-7A5CD1CE504C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:FALSE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.3.4"
+        "ProductVersion" = "8:1.3.5"
         "Manufacturer" = "8:Mindrose Pty Ltd"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1471,7 +1471,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_0B816B9828BC4414A662D7186EC23E8C"
             {
-            "SourcePath" = "8:..\\ChessForge\\obj\\Debug\\ChessForge.exe"
+            "SourcePath" = "8:..\\ChessForge\\obj\\Release\\ChessForge.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_76196FC40D204F0E9D2F09E6D29AAF54"

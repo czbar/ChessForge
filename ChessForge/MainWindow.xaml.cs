@@ -2718,6 +2718,36 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Shows the Engine Configuration dialog.
+        /// </summary>
+        public void ShowEngineOptionsDialog()
+        {
+            EngineOptionsDialog dlg = new EngineOptionsDialog
+            {
+                Left = ChessForgeMain.Left + 100,
+                Top = ChessForgeMain.Top + 100,
+                Topmost = false,
+                Owner = this
+            };
+            dlg.ShowDialog();
+
+            if (dlg.DialogResult == true)
+            {
+                Configuration.WriteOutConfiguration();
+
+                if (dlg.EngineParamsChanged)
+                {
+                    EngineMessageProcessor.SendOptionsCommand();
+                }
+
+                if (dlg.ChangedEnginePath)
+                {
+                    ReloadEngine();
+                }
+            }
+        }
+
+        /// <summary>
         /// Shows the Chapter Title options dialog.
         /// </summary>
         /// <returns></returns>

@@ -525,6 +525,12 @@
   <data name="DlgTitleApplicationOptions" xml:space="preserve">
     <value>Opcje Aplikacji</value>
   </data>
+  <data name="EngineOptions" xml:space="preserve">
+    <value>Opcje Silnika...</value>
+  </data>
+  <data name="DlgTitleEngineOptions" xml:space="preserve">
+    <value>Konfiguracja Silnika</value>
+  </data>
   <data name="DlgTitleIdenticalPositions" xml:space="preserve">
     <value>Lista Identycznych Pozycji</value>
   </data>
@@ -653,6 +659,60 @@
   </data>
   <data name="NotNamed" xml:space="preserve">
     <value>brak nazwy</value>
+  </data>
+  <data name="EgEngineConfiguration" xml:space="preserve">
+    <value>Konfiguracja Silnika</value>
+  </data>
+  <data name="EgChange" xml:space="preserve">
+    <value>zmień</value>
+  </data>
+  <data name="EgSelectionAccuracyLabel" xml:space="preserve">
+    <value>Dokładność wyboru ruchów wynosi</value>
+  </data>
+  <data name="EgCentipawnAccuracy" xml:space="preserve">
+    <value>maksymalne odchylenie od najlepszego ruchu wynosi</value>
+  </data>
+  <data name="InEvaluation" xml:space="preserve">
+    <value>Podczas Oceniania</value>
+  </data>
+  <data name="InEngineGame" xml:space="preserve">
+    <value>Podczas Partii</value>
+  </data>
+  <data name="ProcessParameters" xml:space="preserve">
+    <value>Parametery Obliczeń</value>
+  </data>
+  <data name="EngineExecutable" xml:space="preserve">
+    <value>Silnik</value>
+  </data>
+  <data name="TopMoveSelectionAccuracy" xml:space="preserve">
+    <value>Dokładność wyboru ruchu</value>
+  </data>
+  <data name="EngineTimePerMove" xml:space="preserve">
+    <value>Czas Namysłu Silnika (s)</value>
+  </data>
+  <data name="ThinkTimeInGame" xml:space="preserve">
+    <value>Czas na posunięcie</value>
+  </data>
+  <data name="ThinkTimeEvaluation" xml:space="preserve">
+    <value>Czas na posunięcie (s)</value>
+  </data>
+  <data name="ThinkTimeEvaluationPerMove" xml:space="preserve">
+    <value>Czas na ewaluację ruchu (s)</value>
+  </data>
+  <data name="MultipleLines" xml:space="preserve">
+    <value>Liczba pokazywanych linii</value>
+  </data>
+  <data name="MoveSelectionAccuracy" xml:space="preserve">
+    <value>Zakres w centypionach</value>
+  </data>
+  <data name="EngineThreads" xml:space="preserve">
+    <value>Liczba wątków</value>
+  </data>
+  <data name="EngineHashSize" xml:space="preserve">
+    <value>Tablica mieszająca (MB)</value>
+  </data>
+  <data name="EstimatedEvalTime" xml:space="preserve">
+    <value>Szacowany czas oceny</value>
   </data>
   <data name="RestartGameAfter" xml:space="preserve">
     <value>Cofnij Partię do</value>
@@ -1229,39 +1289,6 @@
   </data>
   <data name="LostQuizPoints" xml:space="preserve">
     <value>Punkty stracone</value>
-  </data>
-  <data name="EngineExecutable" xml:space="preserve">
-    <value>Silnik</value>
-  </data>
-  <data name="EngineTimePerMove" xml:space="preserve">
-    <value>Czas Namysłu Silnika (s)</value>
-  </data>
-  <data name="EngineParameters" xml:space="preserve">
-    <value>Parametry Silnika</value>
-  </data>
-  <data name="ThinkTimeInGame" xml:space="preserve">
-    <value>Czas na posunięcie</value>
-  </data>
-  <data name="ThinkTimeEvaluation" xml:space="preserve">
-    <value>Czas na ewaluację (s)</value>
-  </data>
-  <data name="ThinkTimeEvaluationPerMove" xml:space="preserve">
-    <value>Czas na ewaluację ruchu (s)</value>
-  </data>
-  <data name="MultipleLines" xml:space="preserve">
-    <value>Liczba wariantów</value>
-  </data>
-  <data name="EstimatedEvalTime" xml:space="preserve">
-    <value>Szacowany czas oceny</value>
-  </data>
-  <data name="MoveSelectionAccuracy" xml:space="preserve">
-    <value>Wybór ruchu (cp)</value>
-  </data>
-  <data name="EngineThreads" xml:space="preserve">
-    <value>Liczba wątków</value>
-  </data>
-  <data name="EngineHashSize" xml:space="preserve">
-    <value>Tablica mieszająca (MB)</value>
   </data>
   <data name="MoveReplay" xml:space="preserve">
     <value>Odtwarzanie Ruchów</value>

@@ -36,6 +36,7 @@ namespace ChessForge
         };
 
         private readonly string _para_intro_ = "para_intro_";
+        private readonly string _para_engineoptions_ = "para_engineoptions_";
         private readonly string _para_gamemoves_ = "para_gamemoves_";
         private readonly string _para_moveprompt_ = "para_moveprompt_";
 
@@ -59,6 +60,7 @@ namespace ChessForge
         override internal Dictionary<string, RichTextPara> RichTextParas { get { return _richTextParas; } }
 
         private static readonly string STYLE_INTRO = "intro";
+        private static readonly string STYLE_ENGINE_OPTIONS = "engine_options";
         private static readonly string STYLE_GAME_MOVES = "moves_main";
         private static readonly string STYLE_MOVE_PROMPT = "move_prompt";
         private static readonly string STYLE_DEFAULT = "default";
@@ -69,6 +71,7 @@ namespace ChessForge
         internal Dictionary<string, RichTextPara> _richTextParas = new Dictionary<string, RichTextPara>()
         {
             [STYLE_INTRO] = new RichTextPara(0, 0, 14, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(0, 0, 0)), TextAlignment.Left),
+            [STYLE_ENGINE_OPTIONS] = new RichTextPara(20, 0, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(0, 0, 0)), TextAlignment.Left),
             [STYLE_GAME_MOVES] = new RichTextPara(10, 20, 16, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
             [STYLE_MOVE_PROMPT] = new RichTextPara(0, 0, 14, FontWeights.Bold, Brushes.Green, TextAlignment.Left, Brushes.Green),
             [STYLE_DEFAULT] = new RichTextPara(10, 5, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(128, 98, 63)), TextAlignment.Left),
@@ -84,6 +87,7 @@ namespace ChessForge
             Document.Blocks.Add(BuildDummyPararaph());
 
             UpdateIntroParagraph(colorForUser);
+            UpdateEngineOptionsParagraph();
             UpdateGameMovesParagraph();
             UpdateMovePromptParagraph(true);
         }
@@ -130,6 +134,30 @@ namespace ChessForge
             string text2 = colorForUser == PieceColor.White ? Properties.Resources.EngGameUserPlaysWhite : Properties.Resources.EngGameUserPlaysBlack;
             Run run2 = new Run(text2 + "\n");
             para.Inlines.Add(run2);
+
+            return para;
+        }
+
+        /// <summary>
+        /// Creates or updates the engine options paragraph.
+        /// </summary>
+        /// <returns></returns>
+        public Paragraph UpdateEngineOptionsParagraph()
+        {
+            Paragraph para = FindParagraphByName(_para_engineoptions_, false);
+            if (para == null)
+            {
+                para = CreateParagraph(STYLE_ENGINE_OPTIONS, true);
+                para.Name = _para_engineoptions_;
+                Document.Blocks.Add(para);
+            }
+
+            para.Inlines.Clear();
+
+            para.Inlines.Add(CreateEngineOptionsTitle());
+            para.Inlines.Add(CreateEngineOptionsEditLink());
+            AddSelectionAccuracyRuns(para);
+            AddCentipawnAccuracyRuns(para);
 
             return para;
         }
@@ -193,7 +221,7 @@ namespace ChessForge
         /// <param name="currentNode"></param>
         public void RestartFromNode(bool currentNode)
         {
-            if (EngineGame.CurrentState == EngineGame.GameState.USER_THINKING)
+            if (EngineGame.CurrentState == EngineGame.GameState.USER_THINKING || EngineGame.CurrentState == EngineGame.GameState.IDLE)
             {
                 TreeNode startNode = null;
                 if (currentNode)
@@ -205,13 +233,15 @@ namespace ChessForge
                     startNode = EngineGame.Line.NodeList.First();
                 }
 
-                if (startNode != null)
+                if (startNode != null && !startNode.Position.IsCheckmate && !startNode.Position.IsStalemate)
                 {
                     EngineGame.Line.RollbackToNode(startNode, false);
                     UpdateGameMovesParagraph();
                     AppState.MainWin.DisplayPosition(startNode);
                     AppState.MainWin.MainChessBoard.FlipBoard(startNode.ColorToMove);
                     EngineGame.SwitchToAwaitUserMove(startNode);
+                    AppState.MainWin.BoardCommentBox.EngineGameStart();
+                    UpdateMovePromptParagraph(true);
                 }
             }
         }
@@ -261,6 +291,75 @@ namespace ChessForge
                 }
             }
         }
+
+        /// <summary>
+        /// Creates a run with the title for Engine Configuration paragraph.
+        /// </summary>
+        /// <returns></returns>
+        private Run CreateEngineOptionsTitle()
+        {
+            Run run = new Run(Properties.Resources.EgEngineConfiguration + " ");
+            run.FontWeight = FontWeights.Bold;
+            return run;
+        }
+
+        /// <summary>
+        /// Creates a link for invoking the engine configuration dialog.
+        /// </summary>
+        /// <returns></returns>
+        private Run CreateEngineOptionsEditLink()
+        {
+            string text = "(" + Properties.Resources.EgChange + ")";
+            Run run = new Run(text + "\n");
+            run.Foreground = Brushes.Blue;
+            run.TextDecorations = TextDecorations.Underline;
+            run.MouseDown += EventInvokeEngineOptionsDialog;
+            run.Cursor = Cursors.Hand;
+
+            return run;
+        }
+
+        /// <summary>
+        /// Inserts a run with engine accuracy.
+        /// </summary>
+        /// <param name="para"></param>
+        private void AddSelectionAccuracyRuns(Paragraph para)
+        {
+            Run runLabel = new Run("      " + Properties.Resources.EgSelectionAccuracyLabel + " ");
+            para.Inlines.Add(runLabel);
+
+            string acc = GuiUtilities.ConvertCentipawnsToAccuracy((uint)Configuration.ViableMoveCpDiff).ToString();
+            Run runValue = new Run(acc + "%\n");
+            runValue.FontWeight = FontWeights.Bold;
+            para.Inlines.Add(runValue);
+        }
+
+        /// <summary>
+        /// Inserts a run with the allowed centipawn difference.
+        /// </summary>
+        /// <param name="para"></param>
+        private void AddCentipawnAccuracyRuns(Paragraph para)
+        {
+            Run runLabel = new Run("      (" + Properties.Resources.EgCentipawnAccuracy + " ");
+            para.Inlines.Add(runLabel);
+
+            string acc = GuiUtilities.ConvertCentipawnsToAccuracy((uint)Configuration.ViableMoveCpDiff).ToString();
+            Run runValue = new Run(Configuration.ViableMoveCpDiff.ToString() + ")\n");
+            runValue.FontWeight = FontWeights.Bold;
+            para.Inlines.Add(runValue);
+        }
+
+        /// <summary>
+        /// Handles click on the "change" run by invoking the Engien Options dialog. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventInvokeEngineOptionsDialog(object sender, MouseButtonEventArgs e)
+        {
+            AppState.MainWin.ShowEngineOptionsDialog();
+            UpdateEngineOptionsParagraph();
+        }
+
 
         /// <summary>
         /// Creates or updates the moves paragraph.

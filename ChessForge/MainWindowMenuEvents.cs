@@ -3117,6 +3117,18 @@ namespace ChessForge
             ShowApplicationOptionsDialog();
         }
 
+        /// <summary>
+        /// The user requested to edit Engine configuration.
+        /// The dialog will be shown.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnEngineOptions_Click(object sender, RoutedEventArgs e)
+        {
+            ShowEngineOptionsDialog();
+        }
+
+        
 
         //*********************
         //

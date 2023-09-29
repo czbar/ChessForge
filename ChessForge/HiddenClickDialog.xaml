@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         WindowStyle="None"
         ShowInTaskbar="False"
+        AllowsTransparency="True"
+        Opacity="0"
         Title="" Height="0" Width="0" Activated="Window_Activated" MouseDown="Window_MouseDown">
     <Grid>
         

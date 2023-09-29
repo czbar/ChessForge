@@ -588,6 +588,14 @@ ApplicationOptions=Opcje Aplikacji
 #english: DlgTitleApplicationOptions=Application Options
 DlgTitleApplicationOptions=Opcje Aplikacji
 
+#description: Opens the Engine Configuration dialog
+#english: EngineOptions=Engine Options...
+EngineOptions=Opcje Silnika...
+
+#description: Engine Options dialog title
+#english: DlgTitleEngineOptions=Engine Configuration
+DlgTitleEngineOptions=Konfiguracja Silnika
+
 #description: Identical Positions dialog title
 #english: DlgTitleIdenticalPositions=List of Identical Positions
 DlgTitleIdenticalPositions=Lista Identycznych Pozycji
@@ -775,6 +783,94 @@ StudyTreeAfter=Pozycja z Teorii po
 #description: Not Named (opening position from lichess)
 #english: NotNamed=[not named]
 NotNamed=brak nazwy
+
+
+#
+# Header: VIEW Engine Game
+#
+
+#description: Engine Configuration header
+#english: EgEngineConfiguration=Engine Configuration
+EgEngineConfiguration=Konfiguracja Silnika
+
+#description: Change link
+#english: EgChange=change
+EgChange=zmień
+
+#description: Move selection accuracy label
+#english: EgSelectionAccuracyLabel=Move selection accuracy is
+EgSelectionAccuracyLabel=Dokładność wyboru ruchów wynosi
+
+#description: Cenitpawn accuracy
+#english: EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
+EgCentipawnAccuracy=maksymalne odchylenie od najlepszego ruchu wynosi
+
+
+#
+# Header: DIALOG Engine Options
+#
+
+#description: Group Box: In Analysis
+#english: InEvaluation=During Evaluations
+InEvaluation=Podczas Oceniania
+
+#description: Group Box: In Game
+#english: InEngineGame=During a Game
+InEngineGame=Podczas Partii
+
+#description: Group Box: Process Parameters
+#english: ProcessParameters=Process Parameters
+ProcessParameters=Parametery Obliczeń
+
+#description: Engine Executable
+#english: EngineExecutable=Engine Executable
+EngineExecutable=Silnik
+
+#description: Move SelectionAccuracy
+#english: TopMoveSelectionAccuracy=Selection Accuracy
+TopMoveSelectionAccuracy=Dokładność wyboru ruchu
+
+#description: Engine Time per Move in seconds (group frame title)
+#english: EngineTimePerMove=Engine Think Time (s)
+EngineTimePerMove=Czas Namysłu Silnika (s)
+
+#description: Time to think in the Game
+#english: ThinkTimeInGame=Time per Move (s)
+ThinkTimeInGame=Czas na posunięcie
+
+#description: Time to think in Evaluation 
+#english: ThinkTimeEvaluation=Time per Move (s)
+ThinkTimeEvaluation=Czas na posunięcie (s)
+
+#description: Time to think in Evaluation (longer wording where there is space)
+#english: ThinkTimeEvaluationPerMove=Evaluation Time per Move(s)
+ThinkTimeEvaluationPerMove=Czas na ewaluację ruchu (s)
+
+#description: Multiple lines (MultiPV)
+#english: MultipleLines=Top Lines to Show
+MultipleLines=Liczba pokazywanych linii
+
+#description: Allows diff from best move when selecting game moves
+#english: MoveSelectionAccuracy=Centipawn Range
+MoveSelectionAccuracy=Zakres w centypionach
+
+#description: Number of threads for the engine to use
+#english: EngineThreads=Thread Count
+EngineThreads=Liczba wątków
+
+#description: Engine hash table size
+#english: EngineHashSize=Hash Table (MB)
+EngineHashSize=Tablica mieszająca (MB)
+
+#
+# Header: DIALOG Multi-Game Evaluation
+#
+
+#description: EstimatedEvalTime
+#english: EstimatedEvalTime=Estimated evaluation time
+EstimatedEvalTime=Szacowany czas oceny
+
+
 
 #
 # Header: CONTEXT MENU in Training View
@@ -1631,54 +1727,11 @@ QuizPoints=Punktacja do Quizu
 #english: LostQuizPoints=Lost quiz points
 LostQuizPoints=Punkty stracone
 
-#description: Engine Executable
-#english: EngineExecutable=Engine Executable
-EngineExecutable=Silnik
-
-#description: Engine Time per Move in seconds (group frame title)
-#english: EngineTimePerMove=Engine Think Time (s)
-EngineTimePerMove=Czas Namysłu Silnika (s)
-
-#description: Engine Parameters (group frame title)
-#english: EngineParameters=Engine Parameters
-EngineParameters=Parametry Silnika
-
-#description: Time to think in the Game (inside a frame titled "Engine Time per Move")
-#english: ThinkTimeInGame=Game Move Time (s)
-ThinkTimeInGame=Czas na posunięcie
-
-#description: Time to think in Evaluation (inside a frame titled "Engine Time per Move")
-#english: ThinkTimeEvaluation=Evaluation Time (s)
-ThinkTimeEvaluation=Czas na ewaluację (s)
-
-#description: Time to think in Evaluation (longer wording where there is space)
-#english: ThinkTimeEvaluationPerMove=Evaluation Time per Move(s)
-ThinkTimeEvaluationPerMove=Czas na ewaluację ruchu (s)
-
-#description: Multiple lines (MultiPV)
-#english: MultipleLines=Multiple Lines
-MultipleLines=Liczba wariantów
-
-
-#description: EstimatedEvalTime
-#english: EstimatedEvalTime=Estimated evaluation time
-EstimatedEvalTime=Szacowany czas oceny
-
-#description: Allows diff from best move when selecting game moves
-#english: MoveSelectionAccuracy=Move Selection (cp)
-MoveSelectionAccuracy=Wybór ruchu (cp)
-
-#description: Number of threads for the engine to use
-#english: EngineThreads=Thread Count
-EngineThreads=Liczba wątków
-
-#description: Engine hash table size
-#english: EngineHashSize=Hash Table (MB)
-EngineHashSize=Tablica mieszająca (MB)
 
 #description: Move Replay(group frame title)
 #english: MoveReplay=Move Replay
 MoveReplay=Odtwarzanie Ruchów
+
 
 #description: Time per move in auto replay in seconds (inside a frame titled "Move Replay")
 #english: AutoReplaySpeed=Auto Speed (s)

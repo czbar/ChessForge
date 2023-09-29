@@ -525,6 +525,12 @@
   <data name="DlgTitleApplicationOptions" xml:space="preserve">
     <value>Application Options</value>
   </data>
+  <data name="EngineOptions" xml:space="preserve">
+    <value>Engine Options...</value>
+  </data>
+  <data name="DlgTitleEngineOptions" xml:space="preserve">
+    <value>Engine Configuration</value>
+  </data>
   <data name="DlgTitleIdenticalPositions" xml:space="preserve">
     <value>List of Identical Positions</value>
   </data>
@@ -653,6 +659,60 @@
   </data>
   <data name="NotNamed" xml:space="preserve">
     <value>[not named]</value>
+  </data>
+  <data name="EgEngineConfiguration" xml:space="preserve">
+    <value>Engine Configuration</value>
+  </data>
+  <data name="EgChange" xml:space="preserve">
+    <value>change</value>
+  </data>
+  <data name="EgSelectionAccuracyLabel" xml:space="preserve">
+    <value>Move selection accuracy is</value>
+  </data>
+  <data name="EgCentipawnAccuracy" xml:space="preserve">
+    <value>max allowed centipawn deviation from the best move is</value>
+  </data>
+  <data name="InEvaluation" xml:space="preserve">
+    <value>During Evaluations</value>
+  </data>
+  <data name="InEngineGame" xml:space="preserve">
+    <value>During a Game</value>
+  </data>
+  <data name="ProcessParameters" xml:space="preserve">
+    <value>Process Parameters</value>
+  </data>
+  <data name="EngineExecutable" xml:space="preserve">
+    <value>Engine Executable</value>
+  </data>
+  <data name="TopMoveSelectionAccuracy" xml:space="preserve">
+    <value>Selection Accuracy</value>
+  </data>
+  <data name="EngineTimePerMove" xml:space="preserve">
+    <value>Engine Think Time (s)</value>
+  </data>
+  <data name="ThinkTimeInGame" xml:space="preserve">
+    <value>Time per Move (s)</value>
+  </data>
+  <data name="ThinkTimeEvaluation" xml:space="preserve">
+    <value>Time per Move (s)</value>
+  </data>
+  <data name="ThinkTimeEvaluationPerMove" xml:space="preserve">
+    <value>Evaluation Time per Move(s)</value>
+  </data>
+  <data name="MultipleLines" xml:space="preserve">
+    <value>Top Lines to Show</value>
+  </data>
+  <data name="MoveSelectionAccuracy" xml:space="preserve">
+    <value>Centipawn Range</value>
+  </data>
+  <data name="EngineThreads" xml:space="preserve">
+    <value>Thread Count</value>
+  </data>
+  <data name="EngineHashSize" xml:space="preserve">
+    <value>Hash Table (MB)</value>
+  </data>
+  <data name="EstimatedEvalTime" xml:space="preserve">
+    <value>Estimated evaluation time</value>
   </data>
   <data name="RestartGameAfter" xml:space="preserve">
     <value>Restart Game After </value>
@@ -1230,39 +1290,6 @@
   </data>
   <data name="LostQuizPoints" xml:space="preserve">
     <value>Lost quiz points</value>
-  </data>
-  <data name="EngineExecutable" xml:space="preserve">
-    <value>Engine Executable</value>
-  </data>
-  <data name="EngineTimePerMove" xml:space="preserve">
-    <value>Engine Think Time (s)</value>
-  </data>
-  <data name="EngineParameters" xml:space="preserve">
-    <value>Engine Parameters</value>
-  </data>
-  <data name="ThinkTimeInGame" xml:space="preserve">
-    <value>Game Move Time (s)</value>
-  </data>
-  <data name="ThinkTimeEvaluation" xml:space="preserve">
-    <value>Evaluation Time (s)</value>
-  </data>
-  <data name="ThinkTimeEvaluationPerMove" xml:space="preserve">
-    <value>Evaluation Time per Move(s)</value>
-  </data>
-  <data name="MultipleLines" xml:space="preserve">
-    <value>Multiple Lines</value>
-  </data>
-  <data name="EstimatedEvalTime" xml:space="preserve">
-    <value>Estimated evaluation time</value>
-  </data>
-  <data name="MoveSelectionAccuracy" xml:space="preserve">
-    <value>Move Selection (cp)</value>
-  </data>
-  <data name="EngineThreads" xml:space="preserve">
-    <value>Thread Count</value>
-  </data>
-  <data name="EngineHashSize" xml:space="preserve">
-    <value>Hash Table (MB)</value>
   </data>
   <data name="MoveReplay" xml:space="preserve">
     <value>Move Replay</value>
