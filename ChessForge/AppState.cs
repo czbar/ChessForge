@@ -91,10 +91,12 @@ namespace ChessForge
         /// <summary>
         /// Whether a tab with an active Tree View is currently open.
         /// </summary>
+        /// <param name="ignoreActiveTree">If true, the function will ignore the stated of the Active Tree.
+        /// Otherwise, it will return false if the ActiveTree is null. </param>
         /// <returns></returns>
-        public static bool IsTreeViewTabActive()
+        public static bool IsTreeViewTabActive(bool ignoreActiveTree = false)
         {
-            return ActiveVariationTree != null &&
+            return (ActiveVariationTree != null || ignoreActiveTree) &&
                 (ActiveTab == WorkbookManager.TabViewType.STUDY
                 || ActiveTab == WorkbookManager.TabViewType.MODEL_GAME
                 || ActiveTab == WorkbookManager.TabViewType.EXERCISE);
@@ -677,6 +679,7 @@ namespace ChessForge
             IsDirty = false;
             WorkbookManager.ClearAll();
             _mainWin.ClearTreeViews();
+            MainWin.UiTabIntro.Visibility = Visibility.Collapsed;
             _mainWin.UiTabChapters.Focus();
             _mainWin.SetupGuiForChapters();
             _mainWin.Dispatcher.Invoke(() =>
@@ -1341,6 +1344,8 @@ namespace ChessForge
         {
             _mainWin.Dispatcher.Invoke(() =>
             {
+                GuiConfiguration.ConfigureAppBarFontButtons();
+
                 _mainWin.UiMnCloseWorkbook.Visibility = Visibility.Visible;
 
                 _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
@@ -1380,6 +1385,8 @@ namespace ChessForge
             _mainWin.Dispatcher.Invoke(() =>
             {
                 _mainWin.UiMnCloseWorkbook.Visibility = Visibility.Visible;
+
+                GuiConfiguration.ConfigureAppBarFontButtons();
 
                 if (TrainingSession.IsTrainingInProgress)
                 {
@@ -1450,6 +1457,8 @@ namespace ChessForge
         {
             _mainWin.Dispatcher.Invoke(() =>
             {
+                GuiConfiguration.ConfigureAppBarFontButtons();
+
                 _mainWin.UiMnStartTraining.IsEnabled = true;
                 _mainWin.UiMnRestartTraining.IsEnabled = false;
                 _mainWin.UiMnExitTraining.IsEnabled = false;
