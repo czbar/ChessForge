@@ -92,7 +92,7 @@ namespace ChessForge
                 proceed = WorkbookManager.PromptAndSaveWorkbook(false, out _);
             }
 
-            if (proceed)
+            if (proceed && WorkbookManager.SessionWorkbook != null)
             {
                 WorkbookManager.SessionWorkbook.GamesManager.CancelAll();
             }
