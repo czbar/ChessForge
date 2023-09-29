@@ -2720,7 +2720,7 @@ namespace ChessForge
         /// <summary>
         /// Shows the Engine Configuration dialog.
         /// </summary>
-        private void ShowEngineOptionsDialog()
+        public void ShowEngineOptionsDialog()
         {
             EngineOptionsDialog dlg = new EngineOptionsDialog
             {
