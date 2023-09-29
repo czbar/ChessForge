@@ -452,6 +452,9 @@ ApplicationOptions=Application Options...
 #Application Options dialog title
 DlgTitleApplicationOptions=Application Options
 
+#Opens the Engine Configuration dialog
+EngineOptions=Engine Options...
+
 #Engine Options dialog title
 DlgTitleEngineOptions=Engine Configuration
 
@@ -599,6 +602,23 @@ StudyTreeAfter=Study position after
 
 #Not Named (opening position from lichess)
 NotNamed=[not named]
+
+
+#
+# Header: VIEW Engine Game
+#
+
+#Engine Configuration header
+EgEngineConfiguration=Engine Configuration
+
+#Change link
+EgChange=change
+
+#Move selection accuracy label
+EgSelectionAccuracyLabel=Move selection accuracy is
+
+#Cenitpawn accuracy
+EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
 
 
 #

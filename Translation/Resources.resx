@@ -525,6 +525,9 @@
   <data name="DlgTitleApplicationOptions" xml:space="preserve">
     <value>Application Options</value>
   </data>
+  <data name="EngineOptions" xml:space="preserve">
+    <value>Engine Options...</value>
+  </data>
   <data name="DlgTitleEngineOptions" xml:space="preserve">
     <value>Engine Configuration</value>
   </data>
@@ -656,6 +659,18 @@
   </data>
   <data name="NotNamed" xml:space="preserve">
     <value>[not named]</value>
+  </data>
+  <data name="EgEngineConfiguration" xml:space="preserve">
+    <value>Engine Configuration</value>
+  </data>
+  <data name="EgChange" xml:space="preserve">
+    <value>change</value>
+  </data>
+  <data name="EgSelectionAccuracyLabel" xml:space="preserve">
+    <value>Move selection accuracy is</value>
+  </data>
+  <data name="EgCentipawnAccuracy" xml:space="preserve">
+    <value>max allowed centipawn deviation from the best move is</value>
   </data>
   <data name="InEvaluation" xml:space="preserve">
     <value>During Evaluations</value>

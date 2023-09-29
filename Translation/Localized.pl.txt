@@ -588,6 +588,10 @@ ApplicationOptions=Opcje Aplikacji
 #english: DlgTitleApplicationOptions=Application Options
 DlgTitleApplicationOptions=Opcje Aplikacji
 
+#description: Opens the Engine Configuration dialog
+#english: EngineOptions=Engine Options...
+EngineOptions=Opcje Silnika...
+
 #description: Engine Options dialog title
 #english: DlgTitleEngineOptions=Engine Configuration
 DlgTitleEngineOptions=Konfiguracja Silnika
@@ -779,6 +783,27 @@ StudyTreeAfter=Pozycja z Teorii po
 #description: Not Named (opening position from lichess)
 #english: NotNamed=[not named]
 NotNamed=brak nazwy
+
+
+#
+# Header: VIEW Engine Game
+#
+
+#description: Engine Configuration header
+#english: EgEngineConfiguration=Engine Configuration
+EgEngineConfiguration=Konfiguracja Silnika
+
+#description: Change link
+#english: EgChange=change
+EgChange=zmień
+
+#description: Move selection accuracy label
+#english: EgSelectionAccuracyLabel=Move selection accuracy is
+EgSelectionAccuracyLabel=Dokładność wyboru ruchów wynosi
+
+#description: Cenitpawn accuracy
+#english: EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
+EgCentipawnAccuracy=maksymalne odchylenie od najlepszego ruchu wynosi
 
 
 #

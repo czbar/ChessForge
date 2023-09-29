@@ -1583,6 +1583,42 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to max allowed centipawn deviation from the best move is.
+        /// </summary>
+        public static string EgCentipawnAccuracy {
+            get {
+                return ResourceManager.GetString("EgCentipawnAccuracy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to change.
+        /// </summary>
+        public static string EgChange {
+            get {
+                return ResourceManager.GetString("EgChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Engine Configuration.
+        /// </summary>
+        public static string EgEngineConfiguration {
+            get {
+                return ResourceManager.GetString("EgEngineConfiguration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move selection accuracy is.
+        /// </summary>
+        public static string EgSelectionAccuracyLabel {
+            get {
+                return ResourceManager.GetString("EgSelectionAccuracyLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Elo.
         /// </summary>
         public static string Elo {
@@ -1741,6 +1777,15 @@ namespace ChessForge.Properties {
         public static string EngineNotAvailable {
             get {
                 return ResourceManager.GetString("EngineNotAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Engine Options....
+        /// </summary>
+        public static string EngineOptions {
+            get {
+                return ResourceManager.GetString("EngineOptions", resourceCulture);
             }
         }
         

@@ -525,6 +525,9 @@
   <data name="DlgTitleApplicationOptions" xml:space="preserve">
     <value>Opcje Aplikacji</value>
   </data>
+  <data name="EngineOptions" xml:space="preserve">
+    <value>Opcje Silnika...</value>
+  </data>
   <data name="DlgTitleEngineOptions" xml:space="preserve">
     <value>Konfiguracja Silnika</value>
   </data>
@@ -656,6 +659,18 @@
   </data>
   <data name="NotNamed" xml:space="preserve">
     <value>brak nazwy</value>
+  </data>
+  <data name="EgEngineConfiguration" xml:space="preserve">
+    <value>Konfiguracja Silnika</value>
+  </data>
+  <data name="EgChange" xml:space="preserve">
+    <value>zmień</value>
+  </data>
+  <data name="EgSelectionAccuracyLabel" xml:space="preserve">
+    <value>Dokładność wyboru ruchów wynosi</value>
+  </data>
+  <data name="EgCentipawnAccuracy" xml:space="preserve">
+    <value>maksymalne odchylenie od najlepszego ruchu wynosi</value>
   </data>
   <data name="InEvaluation" xml:space="preserve">
     <value>Podczas Oceniania</value>
