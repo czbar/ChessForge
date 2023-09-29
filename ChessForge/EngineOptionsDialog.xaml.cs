@@ -110,7 +110,7 @@ namespace ChessForge
             UiSldAccuracy.Maximum = 100;
 
             _blockAccuracySync = true;
-            SetSliderPosition(ConvertCentipawnsToAccuracy((uint)EngineMoveAccuracy));
+            SetSliderPosition(GuiUtilities.ConvertCentipawnsToAccuracy((uint)EngineMoveAccuracy));
             _blockAccuracySync = false;
         }
 
@@ -122,28 +122,6 @@ namespace ChessForge
         private void SetSliderPosition(uint accuracy)
         {
             UiSldAccuracy.Value = accuracy;
-        }
-
-        /// <summary>
-        /// Converts centipawns to accuracy percentage.
-        /// </summary>
-        /// <param name="centipawns"></param>
-        /// <returns></returns>
-        private uint ConvertCentipawnsToAccuracy(uint centipawns)
-        {
-            centipawns = Math.Min(centipawns, 400);
-            return (400 - centipawns) / 4;
-        }
-
-        /// <summary>
-        /// Converts accuracy percentage to centipawns.
-        /// </summary>
-        /// <param name="accuracy"></param>
-        /// <returns></returns>
-        private uint ConvertAccuracyToCentipawns(uint accuracy)
-        {
-            accuracy = Math.Min(100, accuracy);
-            return (100 - accuracy) * 4;
         }
 
         /// <summary>
@@ -256,7 +234,7 @@ namespace ChessForge
             }
 
             _blockAccuracySync = true;
-            UiTbMoveAcc.Text = ConvertAccuracyToCentipawns((uint)(UiSldAccuracy.Value)).ToString();
+            UiTbMoveAcc.Text = GuiUtilities.ConvertAccuracyToCentipawns((uint)(UiSldAccuracy.Value)).ToString();
             _blockAccuracySync = false;
         }
 
@@ -276,7 +254,7 @@ namespace ChessForge
             _blockAccuracySync = true;
             if (uint.TryParse(UiTbMoveAcc.Text, out uint uiVal))
             {
-                UiSldAccuracy.Value = ConvertCentipawnsToAccuracy(uiVal);
+                UiSldAccuracy.Value = GuiUtilities.ConvertCentipawnsToAccuracy(uiVal);
             }
             _blockAccuracySync = false;
         }

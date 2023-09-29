@@ -17,6 +17,29 @@ namespace ChessForge
     public class GuiUtilities
     {
         /// <summary>
+        /// Converts centipawns to accuracy percentage.
+        /// </summary>
+        /// <param name="centipawns"></param>
+        /// <returns></returns>
+        public static uint ConvertCentipawnsToAccuracy(uint centipawns)
+        {
+            centipawns = Math.Min(centipawns, 400);
+            return (400 - centipawns) / 4;
+        }
+
+        /// <summary>
+        /// Converts accuracy percentage to centipawns.
+        /// </summary>
+        /// <param name="accuracy"></param>
+        /// <returns></returns>
+        public static uint ConvertAccuracyToCentipawns(uint accuracy)
+        {
+            accuracy = Math.Min(100, accuracy);
+            return (100 - accuracy) * 4;
+        }
+
+
+        /// <summary>
         /// Rebuilds the ChaptersView if it has focus or marks for refresh.
         /// Brings the passed chapter into view of not null.
         /// </summary>
