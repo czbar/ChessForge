@@ -144,6 +144,7 @@
       <DependentUpon>GamesEvalDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="GamesEvaluationManager.cs" />
+    <Compile Include="GuiConfiguration.cs" />
     <Compile Include="HiddenClickDialog.xaml.cs">
       <DependentUpon>HiddenClickDialog.xaml</DependentUpon>
     </Compile>
