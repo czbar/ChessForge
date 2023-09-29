@@ -3806,8 +3806,11 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnFontSizeUp_Click(object sender, RoutedEventArgs e)
         {
-            // lets limit the increase to 4 pixels
-            if (!Configuration.IsFontSizeAtMax)
+            if (AppState.ActiveTab == WorkbookManager.TabViewType.INTRO)
+            {
+                UiBtnIntroFontSizeUp_Click(sender, e);
+            }
+            else if (!Configuration.IsFontSizeAtMax)
             {
                 Configuration.FontSizeDiff++;
                 SetupMenuBarControls();
@@ -3823,8 +3826,11 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnFontSizeDown_Click(object sender, RoutedEventArgs e)
         {
-            // do not allow decrease by more than 2 pixels
-            if (!Configuration.IsFontSizeAtMin)
+            if (AppState.ActiveTab == WorkbookManager.TabViewType.INTRO)
+            {
+                UiBtnIntroFontSizeDown_Click(sender, e);
+            } 
+            else if (!Configuration.IsFontSizeAtMin)
             {
                 Configuration.FontSizeDiff--;
                 SetupMenuBarControls();
