@@ -221,7 +221,7 @@ namespace ChessForge
         /// <param name="currentNode"></param>
         public void RestartFromNode(bool currentNode)
         {
-            if (EngineGame.CurrentState == EngineGame.GameState.USER_THINKING)
+            if (EngineGame.CurrentState == EngineGame.GameState.USER_THINKING || EngineGame.CurrentState == EngineGame.GameState.IDLE)
             {
                 TreeNode startNode = null;
                 if (currentNode)
@@ -233,13 +233,15 @@ namespace ChessForge
                     startNode = EngineGame.Line.NodeList.First();
                 }
 
-                if (startNode != null)
+                if (startNode != null && !startNode.Position.IsCheckmate && !startNode.Position.IsStalemate)
                 {
                     EngineGame.Line.RollbackToNode(startNode, false);
                     UpdateGameMovesParagraph();
                     AppState.MainWin.DisplayPosition(startNode);
                     AppState.MainWin.MainChessBoard.FlipBoard(startNode.ColorToMove);
                     EngineGame.SwitchToAwaitUserMove(startNode);
+                    AppState.MainWin.BoardCommentBox.EngineGameStart();
+                    UpdateMovePromptParagraph(true);
                 }
             }
         }
