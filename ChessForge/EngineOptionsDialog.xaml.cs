@@ -8,9 +8,7 @@ using System.Windows;
 using System.IO;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using static ChessForge.SoundPlayer;
 
 namespace ChessForge
 {
@@ -77,6 +75,13 @@ namespace ChessForge
         // path to the engine as this dialog is invoked,
         private string _originalEnginePath;
 
+
+        // flag to block sync'ing loop between the slider and the text box
+        private bool _blockAccuracySync = false;
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public EngineOptionsDialog()
         {
             InitializeComponent();
@@ -100,6 +105,45 @@ namespace ChessForge
             UiTbMoveAcc.Text = EngineMoveAccuracy.ToString();
             UiTbThreads.Text = EngineThreads.ToString();
             UiTbHashSize.Text = EngineHashSize.ToString();
+
+            UiSldAccuracy.Minimum = 0;
+            UiSldAccuracy.Maximum = 100;
+
+            _blockAccuracySync = true;
+            SetSliderPosition(ConvertCentipawnsToAccuracy((uint)EngineMoveAccuracy));
+            _blockAccuracySync = false;
+        }
+
+        /// <summary>
+        /// Sets the slider's position according to the passed
+        /// accuracy value.
+        /// </summary>
+        /// <param name="accuracy"></param>
+        private void SetSliderPosition(uint accuracy)
+        {
+            UiSldAccuracy.Value = accuracy;
+        }
+
+        /// <summary>
+        /// Converts centipawns to accuracy percentage.
+        /// </summary>
+        /// <param name="centipawns"></param>
+        /// <returns></returns>
+        private uint ConvertCentipawnsToAccuracy(uint centipawns)
+        {
+            centipawns = Math.Min(centipawns, 400);
+            return (400 - centipawns) / 4;
+        }
+
+        /// <summary>
+        /// Converts accuracy percentage to centipawns.
+        /// </summary>
+        /// <param name="accuracy"></param>
+        /// <returns></returns>
+        private uint ConvertAccuracyToCentipawns(uint accuracy)
+        {
+            accuracy = Math.Min(100, accuracy);
+            return (100 - accuracy) * 4;
         }
 
         /// <summary>
@@ -195,7 +239,46 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
         {
-           System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Engine-Options-Dialog");
+            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Engine-Options-Dialog");
+        }
+
+        /// <summary>
+        /// Handles the change in the slider's value.
+        /// Updates the accuracy text box while blocking sync loop.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiSldAccuracy_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (_blockAccuracySync)
+            {
+                return;
+            }
+
+            _blockAccuracySync = true;
+            UiTbMoveAcc.Text = ConvertAccuracyToCentipawns((uint)(UiSldAccuracy.Value)).ToString();
+            _blockAccuracySync = false;
+        }
+
+        /// <summary>
+        /// Handles the change in the accuracy text box.
+        /// Updates the accuracy slider while blocking sync loop.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTbMoveAcc_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (_blockAccuracySync)
+            {
+                return;
+            }
+
+            _blockAccuracySync = true;
+            if (uint.TryParse(UiTbMoveAcc.Text, out uint uiVal))
+            {
+                UiSldAccuracy.Value = ConvertCentipawnsToAccuracy(uiVal);
+            }
+            _blockAccuracySync = false;
         }
     }
 }
