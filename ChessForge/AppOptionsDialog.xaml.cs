@@ -139,14 +139,7 @@ namespace ChessForge
             _currentEngineThreads = Configuration.EngineThreads;
             _currentEngineHashSize = Configuration.EngineHashSize;
 
-            UiTbEngineExe.Text = EnginePath;
             UiTbReplaySpeed.Text = ReplaySpeed.ToString("F1");
-            UiTbEngTimeInGame.Text = EngineTimePerMoveInGame.ToString("F1");
-            UiTbEngEvalTime.Text = EngineTimePerMoveInEvaluation.ToString("F1");
-            UiTbMultiPv.Text = EngineMpv.ToString();
-            UiTbMoveAcc.Text = EngineMoveAccuracy.ToString();
-            UiTbThreads.Text = EngineThreads.ToString();
-            UiTbHashSize.Text = EngineHashSize.ToString();
             UiCbAllowWheel.IsChecked = (AllowMouseWheel == true);
             UiCbShowForkMoves.IsChecked = (ShowMovesAtFork == true);
             UiCbSoundOn.IsChecked = (SoundOn == true);
@@ -161,22 +154,6 @@ namespace ChessForge
                     _currentConfiguredLanguage = lang.Code;
                     UiLbLanguages.SelectedItem = lang;
                 }
-            }
-        }
-
-        /// <summary>
-        /// Invokes the Configuration object's Select Engine dialog.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiBtnLocateEngine_Click(object sender, RoutedEventArgs e)
-        {
-            string searchPath = Path.GetDirectoryName(Configuration.EngineExePath);
-            string res = Configuration.SelectEngineExecutable(searchPath);
-            if (!string.IsNullOrEmpty(res))
-            {
-                EnginePath = res;
-                UiTbEngineExe.Text = EnginePath;
             }
         }
 
@@ -198,42 +175,10 @@ namespace ChessForge
             }
 
             double dval;
-            int iVal;
-            long lVal;
 
             if (double.TryParse(UiTbReplaySpeed.Text, out dval))
             {
                 Configuration.MoveSpeed = (int)(dval * 1000);
-            }
-
-            if (double.TryParse(UiTbEngTimeInGame.Text, out dval))
-            {
-                Configuration.EngineMoveTime = (int)(dval * 1000);
-            }
-
-            if (double.TryParse(UiTbEngEvalTime.Text, out dval))
-            {
-                Configuration.EngineEvaluationTime = (int)(dval * 1000);
-            }
-
-            if (int.TryParse(UiTbMultiPv.Text, out iVal))
-            {
-                Configuration.EngineMpv = iVal;
-            }
-
-            if (int.TryParse(UiTbMoveAcc.Text, out iVal))
-            {
-                Configuration.ViableMoveCpDiff = iVal;
-            }
-
-            if (int.TryParse(UiTbThreads.Text, out iVal))
-            {
-                Configuration.EngineThreads = iVal;
-            }
-
-            if (long.TryParse(UiTbHashSize.Text, out lVal))
-            {
-                Configuration.EngineHashSize = lVal;
             }
 
             Configuration.AllowMouseWheelForMoves = (UiCbAllowWheel.IsChecked == true);
@@ -283,6 +228,16 @@ namespace ChessForge
         private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Application-Options-Dialog");
+        }
+
+        /// <summary>
+        /// Invokes the Engine Options dialog.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnEngine_Click(object sender, RoutedEventArgs e)
+        {
+            AppState.MainWin.ShowEngineOptionsDialog();
         }
     }
 }
