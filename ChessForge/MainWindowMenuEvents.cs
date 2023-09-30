@@ -85,19 +85,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnOpenWorkbook_Click(object sender, RoutedEventArgs e)
         {
-            bool proceed = true;
-
-            if (WorkbookManager.SessionWorkbook != null && AppState.IsDirty)
-            {
-                proceed = WorkbookManager.PromptAndSaveWorkbook(false, out _);
-            }
-
-            if (proceed && WorkbookManager.SessionWorkbook != null)
-            {
-                WorkbookManager.SessionWorkbook.GamesManager.CancelAll();
-            }
-
-            if (proceed && ChangeAppModeWarning(LearningMode.Mode.MANUAL_REVIEW))
+            if (PrepareToReadWorkbook())
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog
                 {
@@ -145,8 +133,24 @@ namespace ChessForge
         /// <param name="e"></param>
         private void OpenRecentWorkbookFile(object sender, RoutedEventArgs e)
         {
+            if (PrepareToReadWorkbook())
+            {
+                string menuItemName = ((MenuItem)e.Source).Name;
+                string path = Configuration.GetRecentFile(menuItemName);
+                Configuration.LastOpenDirectory = Path.GetDirectoryName(path);
+                ReadWorkbookFile(path, false, ref WorkbookManager.VariationTreeList);
+            }
+        }
+
+        /// <summary>
+        /// Checks if we can proceed with opening a Workbook.
+        /// </summary>
+        /// <returns></returns>
+        private bool PrepareToReadWorkbook()
+        {
             bool proceed = true;
 
+            // check with the user if required
             if (WorkbookManager.SessionWorkbook != null && AppState.IsDirty)
             {
                 proceed = WorkbookManager.PromptAndSaveWorkbook(false, out _);
@@ -154,10 +158,14 @@ namespace ChessForge
 
             if (proceed && ChangeAppModeWarning(LearningMode.Mode.MANUAL_REVIEW))
             {
-                string menuItemName = ((MenuItem)e.Source).Name;
-                string path = Configuration.GetRecentFile(menuItemName);
-                ReadWorkbookFile(path, false, ref WorkbookManager.VariationTreeList);
+                AppState.RestartInIdleMode();
             }
+            else
+            {
+                proceed = false;
+            }
+
+            return proceed;
         }
 
         /// <summary>
@@ -3128,7 +3136,7 @@ namespace ChessForge
             ShowEngineOptionsDialog();
         }
 
-        
+
 
         //*********************
         //
@@ -3829,7 +3837,7 @@ namespace ChessForge
             if (AppState.ActiveTab == WorkbookManager.TabViewType.INTRO)
             {
                 UiBtnIntroFontSizeDown_Click(sender, e);
-            } 
+            }
             else if (!Configuration.IsFontSizeAtMin)
             {
                 Configuration.FontSizeDiff--;
