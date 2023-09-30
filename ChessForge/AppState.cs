@@ -76,6 +76,14 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns the current Workbook object
+        /// </summary>
+        public static Workbook Workbook
+        {
+            get => WorkbookManager.SessionWorkbook ?? null;
+        }
+
+        /// <summary>
         /// Determine whether the Intro tab should be shown
         /// and set its visibility accordingly.
         /// </summary>
@@ -678,6 +686,7 @@ namespace ChessForge
             OpeningExplorer.ResetLastRequestedFen();
             IsDirty = false;
             WorkbookManager.ClearAll();
+            Workbook?.GamesManager.CancelAll();
             _mainWin.ClearTreeViews();
             MainWin.UiTabIntro.Visibility = Visibility.Collapsed;
             _mainWin.UiTabChapters.Focus();
