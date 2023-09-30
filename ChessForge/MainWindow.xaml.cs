@@ -1545,7 +1545,6 @@ namespace ChessForge
                 }
                 LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
 
-                //TODO: is this necessary here?
                 InitializeChaptersView();
 
                 // reset so that GotFocus() does not bail 
@@ -1836,6 +1835,13 @@ namespace ChessForge
         private void InitializeChaptersView()
         {
             _chaptersView = new ChaptersView(UiRtbChaptersView.Document, this);
+            // if this is very big, make sure the view is collapsed
+            // to speed up initial reading
+            int articleCount = AppState.Workbook.GetArticleCount();
+            if (articleCount > 500)
+            {
+                ExpandCollapseChaptersView(false, true);
+            }
             _chaptersView.BuildFlowDocumentForChaptersView();
             AppState.DoEvents();
             _chaptersView.BringChapterIntoView(WorkbookManager.SessionWorkbook.ActiveChapterIndex);
