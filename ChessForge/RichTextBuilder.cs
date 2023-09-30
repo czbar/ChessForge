@@ -554,7 +554,7 @@ namespace ChessForge
                 foreach (Inline inl in para.Inlines)
                 {
                     Run run = inl as Run;
-                    if (run != null && !string.IsNullOrEmpty(run.Text))
+                    if (run == null || !string.IsNullOrEmpty(run.Text))
                     {
                         res = true;
                         break;
