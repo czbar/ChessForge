@@ -374,6 +374,25 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns the total number of study trees, games and exercises
+        /// in this Workbook
+        /// </summary>
+        /// <returns></returns>
+        public int GetArticleCount()
+        {
+            int count = 0;
+
+            foreach (Chapter chapter in _chapters)
+            {
+                count++; // for the study tree
+                count += chapter.GetModelGameCount();
+                count += chapter.GetExerciseCount();
+            }
+
+            return count;
+        }
+
+        /// <summary>
         /// Returns true if the Workbook has at least one Model Game
         /// </summary>
         public bool HasAnyModelGames
