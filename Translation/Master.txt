@@ -1782,6 +1782,17 @@ EngGameStarted=A game against the engine has started.
 #MessageBox do you want to save game
 EngGameSave=Do you want to save this game in the current chapter?
 
+
+
+##################################
+#
+# Header: Exercises View
+#
+
+#Completed guessing exercise
+ExVwCompletedGuessing=Congratulations! You have completed the guessing exercise.
+
+
 ##################################
 #
 # Header: Comment Box

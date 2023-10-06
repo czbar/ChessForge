@@ -2267,6 +2267,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Congratulations! You have completed the guessing exercise..
+        /// </summary>
+        public static string ExVwCompletedGuessing {
+            get {
+                return ResourceManager.GetString("ExVwCompletedGuessing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to parse engine&apos;s move..
         /// </summary>
         public static string FailedProcessEngineMove {

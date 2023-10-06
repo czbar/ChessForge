@@ -1710,6 +1710,9 @@
   <data name="EngGameSave" xml:space="preserve">
     <value>Zapisać partię do obecnego rozdziału?</value>
   </data>
+  <data name="ExVwCompletedGuessing" xml:space="preserve">
+    <value>Gratulacje! Zakończyłeś ćwiczenie.</value>
+  </data>
   <data name="cbUseMenuToOpenWorkbook" xml:space="preserve">
     <value>Użyj opcji Plik w menu, by otworzyć podręcznik.</value>
   </data>

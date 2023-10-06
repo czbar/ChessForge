@@ -1711,6 +1711,9 @@
   <data name="EngGameSave" xml:space="preserve">
     <value>Do you want to save this game in the current chapter?</value>
   </data>
+  <data name="ExVwCompletedGuessing" xml:space="preserve">
+    <value>Congratulations! You have completed the guessing exercise.</value>
+  </data>
   <data name="cbUseMenuToOpenWorkbook" xml:space="preserve">
     <value>Use File menu to open or create a new Workbook</value>
   </data>

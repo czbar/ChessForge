@@ -2313,6 +2313,18 @@ EngGameStarted=Partia z silnikiem rozpoczęta.
 #english: EngGameSave=Do you want to save this game in the current chapter?
 EngGameSave=Zapisać partię do obecnego rozdziału?
 
+
+
+##################################
+#
+# Header: Exercises View
+#
+
+#description: Completed guessing exercise
+#english: ExVwCompletedGuessing=Congratulations! You have completed the guessing exercise.
+ExVwCompletedGuessing=Gratulacje! Zakończyłeś ćwiczenie.
+
+
 ##################################
 #
 # Header: Comment Box
