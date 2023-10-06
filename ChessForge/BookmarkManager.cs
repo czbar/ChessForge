@@ -416,8 +416,8 @@ namespace ChessForge
         {
             if (askUser && BookmarkList.Count > 0)
             {
-                if (MessageBox.Show(Strings.GetResource("ConfirmDeleteAllBookmarks")
-                    , Strings.GetResource("Bookmarks"), MessageBoxButton.YesNo) != MessageBoxResult.Yes)
+                if (MessageBox.Show(Properties.Resources.ConfirmDeleteAllBookmarks
+                    , Properties.Resources.Bookmarks, MessageBoxButton.YesNo) != MessageBoxResult.Yes)
                 {
                     return;
                 }

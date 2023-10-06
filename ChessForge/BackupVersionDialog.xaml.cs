@@ -80,7 +80,7 @@ namespace ChessForge
         /// </summary>
         private void SetLabelsText()
         {
-            string txt = Strings.GetResource("CurrentVersion");
+            string txt = Properties.Resources.CurrentVersion;
             txt = txt.Replace("$0", _workbook.Version.ToString());
             UiLblBackupNotification.Content = txt;
 
@@ -101,7 +101,7 @@ namespace ChessForge
         /// </summary>
         private void SetNewVersionLabel()
         {
-            UiLblWorkbookNewVersion.Content = Strings.GetResource("UpdatedVersion") + " " + IncrementVersionNumber();
+            UiLblWorkbookNewVersion.Content = Properties.Resources.UpdatedVersion + " " + IncrementVersionNumber();
         }
 
         /// <summary>
