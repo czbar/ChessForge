@@ -184,6 +184,7 @@
     <Compile Include="MainWindowMoveAnimation.cs" />
     <Compile Include="GuiUtilities.cs" />
     <Compile Include="ActiveLineManager.cs" />
+    <Compile Include="MainWindowToolsMenu.cs" />
     <Compile Include="ManualReviewState.cs" />
     <Compile Include="MoveAnimator.cs" />
     <Compile Include="MoveCandidates.cs" />
