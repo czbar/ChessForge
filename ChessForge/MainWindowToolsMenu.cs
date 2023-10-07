@@ -18,7 +18,6 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnEvaluateGames_Click(object sender, RoutedEventArgs e)
         {
-
             if (TrainingSession.IsTrainingInProgress)
             {
                 GuiUtilities.ShowExitTrainingInfoMessage();
@@ -27,27 +26,44 @@ namespace ChessForge
             {
                 try
                 {
-                    if (AppState.ActiveChapter != null)
+                    ObservableCollection<ArticleListItem> gameList = WorkbookManager.SessionWorkbook.GenerateArticleList(null, GameData.ContentType.MODEL_GAME);
+
+                    string title = Properties.Resources.EvaluateGames;
+                    SelectArticlesDialog dlg = new SelectArticlesDialog(null, false, title, ref gameList, true, GameData.ContentType.MODEL_GAME)
                     {
-                        int chapterIndex = WorkbookManager.SessionWorkbook.GetChapterIndex(AppState.ActiveChapter);
-                        SelectGamesForEvalDialog dlg = new SelectGamesForEvalDialog(AppState.ActiveChapter, chapterIndex, AppState.ActiveChapter.ModelGames)
+                        Left = ChessForgeMain.Left + 100,
+                        Top = ChessForgeMain.Top + 100,
+                        Topmost = false,
+                        Owner = this
+                    };
+                    dlg.SetupGuiForGamesEval();
+
+                    if (dlg.ShowDialog() == true)
+                    {
+                        if (double.TryParse(dlg.UiTbEngEvalTime.Text, out double dval))
                         {
-                            Left = ChessForgeMain.Left + 100,
-                            Top = ChessForgeMain.Top + 100,
-                            Topmost = false,
-                            Owner = AppState.MainWin
-                        };
-                        dlg.ShowDialog();
+                            Configuration.EngineEvaluationTime = (int)(dval * 1000);
+                        }
+
+                        ObservableCollection<ArticleListItem> gamesToEvaluate = new ObservableCollection<ArticleListItem>();
+                        foreach (ArticleListItem item in gameList)
+                        {
+                            if (item.IsSelected)
+                            {
+                                gamesToEvaluate.Add(item);
+                            }
+                        }
+                        if (gamesToEvaluate.Count > 0)
+                        {
+                            GamesEvaluationManager.InitializeProcess(gamesToEvaluate);
+                        }
                     }
                 }
-                catch
-                {
-                }
+                catch { }
             }
 
             e.Handled = true;
         }
-
 
         /// <summary>
         /// Invokes the dialog to select Games to delete and deletes them. 

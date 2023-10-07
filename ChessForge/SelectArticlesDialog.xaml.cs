@@ -93,6 +93,19 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Hides the "all chapters" check box and makes
+        /// the evaluation time label and text box visible.
+        /// </summary>
+        public void SetupGuiForGamesEval()
+        {
+            UiCbAllChapters.Visibility = Visibility.Collapsed;
+            UiLblEvalTime.Visibility = Visibility.Visible;
+            UiTbEngEvalTime.Visibility = Visibility.Visible;
+            double dval = (double)Configuration.EngineEvaluationTime / 1000.0;
+            UiTbEngEvalTime.Text = dval.ToString("F1");
+        }
+
+        /// <summary>
         /// Returns a list of selected references.
         /// </summary>
         /// <returns></returns>
