@@ -6,11 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace ChessForge
 {
@@ -41,11 +37,6 @@ namespace ChessForge
         public bool BuildRepertoireChapters;
 
         /// <summary>
-        /// Number of the last move to include in the merged repertoire tree.
-        /// </summary>
-        public int LastTreeMoveNumber;
-
-        /// <summary>
         /// Constructor.
         /// </summary>
         public DownloadedGamesActionDialog(int gamesCount)
@@ -67,7 +58,14 @@ namespace ChessForge
                 UiCbCreateNewWorkbook.IsChecked = false;
             }
 
-
+            if (Configuration.AutogenTreeDepth == 0)
+            {
+                UiTbLastTreeMoveNo.Text = "";
+            }
+            else
+            {
+                UiTbLastTreeMoveNo.Text = Configuration.AutogenTreeDepth.ToString();
+            }
         }
 
         /// <summary>
@@ -93,10 +91,12 @@ namespace ChessForge
             BuildRepertoireChapters = UiRbRepertoireChapters.IsChecked == true;
             if (BuildRepertoireChapters)
             {
-                if (!int.TryParse(UiTbLastTreeMoveNo.Text, out LastTreeMoveNumber))
+                uint treeDepth;
+                if (!uint.TryParse(UiTbLastTreeMoveNo.Text, out treeDepth))
                 {
-                    LastTreeMoveNumber = 0;
+                    treeDepth = 0;
                 }
+                Configuration.AutogenTreeDepth = treeDepth;
             }
 
             DialogResult = true;

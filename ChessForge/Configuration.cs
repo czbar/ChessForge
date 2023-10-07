@@ -73,6 +73,16 @@ namespace ChessForge
         public static int MoveSpeed = 200;
 
         /// <summary>
+        /// Depth of the study tree automatically built
+        /// from the games of the chapter or the downloaded list.
+        /// </summary>
+        public static uint AutogenTreeDepth
+        {
+            get => _autogenTreeDepth;
+            set => _autogenTreeDepth = value;
+        }
+
+        /// <summary>
         /// By how many pixels to adjust font size
         /// in the views.
         /// (in milliseconds)
@@ -320,6 +330,9 @@ namespace ChessForge
         /// </summary>
         public static int DebugLevel = 1;
 
+        // depth of the auto-generated tree
+        private static uint _autogenTreeDepth = 12;
+
         // allowed diff between the chosen engine move and the best move
         private static int _viableMoveCpDiff = 50;
 
@@ -358,6 +371,7 @@ namespace ChessForge
         //*********************************
 
         private const string CFG_MOVE_SPEED = "MoveSpeed";
+        private const string CFG_AUTOGEN_TREE_DEPTH = "AutogenTreeDepth";
         private const string CFG_LAST_DIRECTORY = "LastDirectory";
         private const string CFG_LAST_IMPORT_DIRECTORY = "LastImportDirectory";
         private const string CFG_LAST_FILE = "LastFile";
@@ -531,6 +545,7 @@ namespace ChessForge
 
                 sb.Append(CFG_DEBUG_MODE + "=" + DebugLevel.ToString() + Environment.NewLine);
 
+                sb.Append(CFG_AUTOGEN_TREE_DEPTH + "=" + AutogenTreeDepth.ToString() + Environment.NewLine);
                 sb.Append(CFG_MOVE_SPEED + "=" + MoveSpeed.ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_DIRECTORY + "=" + LastOpenDirectory.ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_IMPORT_DIRECTORY + "=" + LastImportDirectory.ToString() + Environment.NewLine);
@@ -812,6 +827,9 @@ namespace ChessForge
                 {
                     switch (name)
                     {
+                        case CFG_AUTOGEN_TREE_DEPTH:
+                            uint.TryParse(value, out _autogenTreeDepth);
+                            break;
                         case CFG_MOVE_SPEED:
                             int.TryParse(value, out MoveSpeed);
                             break;
