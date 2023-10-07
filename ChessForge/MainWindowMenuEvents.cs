@@ -2247,61 +2247,6 @@ namespace ChessForge
         //**********************
 
         /// <summary>
-        /// Deletes all comments from the currently shown tree. 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiStripComments_Click(object sender, RoutedEventArgs e)
-        {
-            if (ActiveTreeView != null && AppState.IsTreeViewTabActive())
-            {
-                if (MessageBox.Show(Properties.Resources.MsgConfirmStripComments, Properties.Resources.Confirm,
-                    MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-                {
-                    VariationTree tree = ActiveTreeView.ShownVariationTree;
-
-                    // get data for the Undo operation first
-                    List<NagsAndComment> comments = TreeUtils.BuildNagsAndCommentsList(tree);
-                    EditOperation op = new EditOperation(EditOperation.EditType.STRIP_COMMENTS, comments, null);
-                    tree.OpsManager.PushOperation(op);
-
-                    tree.StripCommentsAndNags();
-                    AppState.IsDirty = true;
-
-                    ActiveTreeView.BuildFlowDocumentForVariationTree();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Deletes all engine evaluations from the currently shown tree. 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiDeleteEngineEvals_Click(object sender, RoutedEventArgs e)
-        {
-            if (ActiveTreeView != null && AppState.IsTreeViewTabActive())
-            {
-                if (MessageBox.Show(Properties.Resources.MsgConfirmDeleteEngineEvals, Properties.Resources.Confirm,
-                    MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-                {
-                    VariationTree tree = ActiveTreeView.ShownVariationTree;
-
-                    // get data for the Undo operation first
-                    List<EvalAndAssessment> evals = TreeUtils.BuildEngineEvalList(tree);
-                    EditOperation op = new EditOperation(EditOperation.EditType.DELETE_ENGINE_EVALS, evals, null);
-                    tree.OpsManager.PushOperation(op);
-
-                    tree.DeleteEvalsAndAssessments();
-                    ActiveLine.DeleteEngineEvaluations();
-                    AppState.IsDirty = true;
-
-                    ActiveTreeView.BuildFlowDocumentForVariationTree();
-                }
-            }
-        }
-
-        /// <summary>
         /// Performs the process of selecting and copying games between chapters.
         /// </summary>
         /// <param name="sender"></param>
