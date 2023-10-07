@@ -448,6 +448,8 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiLvGames_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
+            return;
+#if false
             ListViewItem item = GetListViewItemFromPoint(UiLvGames, e.GetPosition(UiLvGames));
             if (item != null && item.Content is ArticleListItem)
             {
@@ -468,6 +470,7 @@ namespace ChessForge
                     UiCmGame.IsOpen = true;
                 }
             }
+#endif
         }
 
         /// <summary>
