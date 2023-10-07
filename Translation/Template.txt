@@ -654,16 +654,25 @@ UseVariableFontSize=
 RestoreFontDefaults=
 
 
-#description: TOP LEVEL MENU: Tools
+###########################
+#
+# Header: TOP LEVEL MENU: Tools
+#
+
+#description: Tools
 #english: Tools=Tools
 Tools=
 
+#description: Evaluate Games
+#english: MnEvaluateGames=Evaluate Games in Workbook...
+MnEvaluateGames=
+
 #description: Strip all comments
-#english: StripComments=Delete All Comments
+#english: StripComments=Delete Comments...
 StripComments=
 
 #description: Delete all engine evals
-#english: DeleteEngineEvals=Delete Engine Evaluations
+#english: DeleteEngineEvals=Delete Engine Evaluations...
 DeleteEngineEvals=
 
 
@@ -806,6 +815,45 @@ EgSelectionAccuracyLabel=
 EgCentipawnAccuracy=
 
 
+#######################################
+#
+# Header: DIALOG Operation Scope
+#
+
+#description: Scope for deleting comments - dialog title
+#english: ScopeForDeleteComments=Delete Comments
+ScopeForDeleteComments=
+
+#description: Scope for deleting engine evals - dialog title
+#english: ScopeForDeleteEvals=Delete Engine Evaluations
+ScopeForDeleteEvals=
+
+#description: Operation Scope label
+#english: OperationScope=Apply to the following:
+OperationScope=
+
+#description: Scope
+#english: Scope=Scope
+Scope=
+
+#description: Items Type
+#english: ItemsType=Items Type
+ItemsType=
+
+#description: Current view
+#english: CurrentItem=Current View
+CurrentItem=
+
+#description: Current chapter
+#english: CurrentChapter=Current Chapter
+CurrentChapter=
+
+#description: Entire Workbook
+#english: EntireWorkbook=Entire Workbook
+EntireWorkbook=
+
+
+#######################################
 #
 # Header: DIALOG Engine Options
 #
@@ -2584,9 +2632,10 @@ InfoExitGameBeforeTabSwitch=
 #english: EngineReplaced=Selected engine loaded
 EngineReplaced=
 
+
 ##################################
 #
-# Header: Libary exceptions
+# Header: Library exceptions
 #
 
 #description: Missing move while parsing PGN

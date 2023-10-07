@@ -1097,6 +1097,24 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current Chapter.
+        /// </summary>
+        public static string CurrentChapter {
+            get {
+                return ResourceManager.GetString("CurrentChapter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current View.
+        /// </summary>
+        public static string CurrentItem {
+            get {
+                return ResourceManager.GetString("CurrentItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Currently viewed.
         /// </summary>
         public static string CurrentlyViewed {
@@ -1187,7 +1205,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete Engine Evaluations.
+        ///   Looks up a localized string similar to Delete Engine Evaluations....
         /// </summary>
         public static string DeleteEngineEvals {
             get {
@@ -1849,6 +1867,15 @@ namespace ChessForge.Properties {
         public static string EnterAnalysis {
             get {
                 return ResourceManager.GetString("EnterAnalysis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Entire Workbook.
+        /// </summary>
+        public static string EntireWorkbook {
+            get {
+                return ResourceManager.GetString("EntireWorkbook", resourceCulture);
             }
         }
         
@@ -2960,6 +2987,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Items Type.
+        /// </summary>
+        public static string ItemsType {
+            get {
+                return ResourceManager.GetString("ItemsType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to English.
         /// </summary>
         public static string LangEnglish {
@@ -3154,6 +3190,15 @@ namespace ChessForge.Properties {
         public static string Minutes {
             get {
                 return ResourceManager.GetString("Minutes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Evaluate Games in Workbook....
+        /// </summary>
+        public static string MnEvaluateGames {
+            get {
+                return ResourceManager.GetString("MnEvaluateGames", resourceCulture);
             }
         }
         
@@ -3717,6 +3762,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Apply to the following:.
+        /// </summary>
+        public static string OperationScope {
+            get {
+                return ResourceManager.GetString("OperationScope", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No.
         /// </summary>
         public static string OrderNo {
@@ -4212,6 +4266,33 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Scope.
+        /// </summary>
+        public static string Scope {
+            get {
+                return ResourceManager.GetString("Scope", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Comments.
+        /// </summary>
+        public static string ScopeForDeleteComments {
+            get {
+                return ResourceManager.GetString("ScopeForDeleteComments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Engine Evaluations.
+        /// </summary>
+        public static string ScopeForDeleteEvals {
+            get {
+                return ResourceManager.GetString("ScopeForDeleteEvals", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Scoresheet.
         /// </summary>
         public static string Scoresheet {
@@ -4590,7 +4671,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete All Comments.
+        ///   Looks up a localized string similar to Delete Comments....
         /// </summary>
         public static string StripComments {
             get {
