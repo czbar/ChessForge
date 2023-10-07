@@ -159,7 +159,7 @@ namespace ChessForge
         /// </summary>
         public void RestoreSelectedLineAndMoveInActiveView()
         {
-            if (WorkbookManager.SessionWorkbook == null)
+            if (WorkbookManager.SessionWorkbook == null || ActiveTreeView == null)
             {
                 return;
             }
@@ -1115,7 +1115,7 @@ namespace ChessForge
             {
                 if (_introView != null)
                 {
-                    _introView.SaveXAMLContent();
+                    _introView.SaveXAMLContent(true);
                 }
             }
             catch
@@ -1545,7 +1545,6 @@ namespace ChessForge
                 }
                 LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
 
-                //TODO: is this necessary here?
                 InitializeChaptersView();
 
                 // reset so that GotFocus() does not bail 
@@ -1836,6 +1835,13 @@ namespace ChessForge
         private void InitializeChaptersView()
         {
             _chaptersView = new ChaptersView(UiRtbChaptersView.Document, this);
+            // if this is very big, make sure the view is collapsed
+            // to speed up initial reading
+            int articleCount = AppState.Workbook.GetArticleCount();
+            if (articleCount > 500)
+            {
+                ExpandCollapseChaptersView(false, true);
+            }
             _chaptersView.BuildFlowDocumentForChaptersView();
             AppState.DoEvents();
             _chaptersView.BringChapterIntoView(WorkbookManager.SessionWorkbook.ActiveChapterIndex);
@@ -3264,7 +3270,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnIntroUndo_Click(object sender, RoutedEventArgs e)
         {
-            _introView.Command_Undo(sender, e);
+            _introView?.Command_Undo(sender, e);
         }
 
         /// <summary>
@@ -3274,7 +3280,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnIntroToggleBold_Click(object sender, RoutedEventArgs e)
         {
-            _introView.Command_ToggleBold(sender, e);
+            _introView?.Command_ToggleBold(sender, e);
         }
 
         /// <summary>
@@ -3284,7 +3290,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnIntroToggleItalic_Click(object sender, RoutedEventArgs e)
         {
-            _introView.Command_ToggleItalic(sender, e);
+            _introView?.Command_ToggleItalic(sender, e);
         }
 
         /// <summary>
@@ -3294,7 +3300,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnIntroToggleUnderline_Click(object sender, RoutedEventArgs e)
         {
-            _introView.Command_ToggleUnderline(sender, e);
+            _introView?.Command_ToggleUnderline(sender, e);
         }
 
         /// <summary>
@@ -3304,7 +3310,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnIntroFontSizeUp_Click(object sender, RoutedEventArgs e)
         {
-            _introView.Command_FontSizeUp(sender, e);
+            _introView?.Command_FontSizeUp(sender, e);
         }
 
         /// <summary>
@@ -3314,7 +3320,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnIntroFontSizeDown_Click(object sender, RoutedEventArgs e)
         {
-            _introView.Command_FontSizeDown(sender, e);
+            _introView?.Command_FontSizeDown(sender, e);
         }
 
         /// <summary>
@@ -3324,7 +3330,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnIntroIncreaseIndent_Click(object sender, RoutedEventArgs e)
         {
-            _introView.Command_IncreaseIndent(sender, e);
+            _introView?.Command_IncreaseIndent(sender, e);
         }
 
         /// <summary>
@@ -3334,7 +3340,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnIntroDecreaseIndent_Click(object sender, RoutedEventArgs e)
         {
-            _introView.Command_DecreaseIndent(sender, e);
+            _introView?.Command_DecreaseIndent(sender, e);
         }
 
         /// <summary>

@@ -76,6 +76,14 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns the current Workbook object
+        /// </summary>
+        public static Workbook Workbook
+        {
+            get => WorkbookManager.SessionWorkbook ?? null;
+        }
+
+        /// <summary>
         /// Determine whether the Intro tab should be shown
         /// and set its visibility accordingly.
         /// </summary>
@@ -91,10 +99,12 @@ namespace ChessForge
         /// <summary>
         /// Whether a tab with an active Tree View is currently open.
         /// </summary>
+        /// <param name="ignoreActiveTree">If true, the function will ignore the stated of the Active Tree.
+        /// Otherwise, it will return false if the ActiveTree is null. </param>
         /// <returns></returns>
-        public static bool IsTreeViewTabActive()
+        public static bool IsTreeViewTabActive(bool ignoreActiveTree = false)
         {
-            return ActiveVariationTree != null &&
+            return (ActiveVariationTree != null || ignoreActiveTree) &&
                 (ActiveTab == WorkbookManager.TabViewType.STUDY
                 || ActiveTab == WorkbookManager.TabViewType.MODEL_GAME
                 || ActiveTab == WorkbookManager.TabViewType.EXERCISE);
@@ -514,7 +524,7 @@ namespace ChessForge
             {
                 result = false;
                 AppLog.Message("SaveWorkbookFile()", ex);
-                MessageBox.Show(Strings.GetResource("FailedToSaveFile") + ": " + ex.Message, Strings.GetResource("Error"), MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(Properties.Resources.FailedToSaveFile + ": " + ex.Message, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
             }
             AppLog.Message("Saving Workbook to File - END");
 
@@ -586,7 +596,7 @@ namespace ChessForge
             }
             catch (Exception ex)
             {
-                MessageBox.Show(Strings.GetResource("CouldNotImportGame") + ": " + ex.Message, Strings.GetResource("Error"), MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(Properties.Resources.CouldNotImportGame + ": " + ex.Message, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -676,7 +686,9 @@ namespace ChessForge
             OpeningExplorer.ResetLastRequestedFen();
             IsDirty = false;
             WorkbookManager.ClearAll();
+            Workbook?.GamesManager.CancelAll();
             _mainWin.ClearTreeViews();
+            MainWin.UiTabIntro.Visibility = Visibility.Collapsed;
             _mainWin.UiTabChapters.Focus();
             _mainWin.SetupGuiForChapters();
             _mainWin.Dispatcher.Invoke(() =>
@@ -914,9 +926,9 @@ namespace ChessForge
                 string filePath = WorkbookFilePath ?? "";
                 string fileName = Path.GetFileName(filePath);
 
-                _mainWin.UiMnWorkbookSave.Header = Strings.GetResource("Save") + " " + fileName;
+                _mainWin.UiMnWorkbookSave.Header = Properties.Resources.Save + " " + fileName;
 
-                string resSaveAs = Strings.GetResource("SaveAs") ?? "";
+                string resSaveAs = Properties.Resources.SaveAs ?? "";
                 resSaveAs = resSaveAs.Replace("$0", fileName);
                 _mainWin.UiMnWorkbookSaveAs.Header = resSaveAs;
 
@@ -1341,6 +1353,8 @@ namespace ChessForge
         {
             _mainWin.Dispatcher.Invoke(() =>
             {
+                GuiConfiguration.ConfigureAppBarFontButtons();
+
                 _mainWin.UiMnCloseWorkbook.Visibility = Visibility.Visible;
 
                 _mainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
@@ -1380,6 +1394,8 @@ namespace ChessForge
             _mainWin.Dispatcher.Invoke(() =>
             {
                 _mainWin.UiMnCloseWorkbook.Visibility = Visibility.Visible;
+
+                GuiConfiguration.ConfigureAppBarFontButtons();
 
                 if (TrainingSession.IsTrainingInProgress)
                 {
@@ -1450,6 +1466,8 @@ namespace ChessForge
         {
             _mainWin.Dispatcher.Invoke(() =>
             {
+                GuiConfiguration.ConfigureAppBarFontButtons();
+
                 _mainWin.UiMnStartTraining.IsEnabled = true;
                 _mainWin.UiMnRestartTraining.IsEnabled = false;
                 _mainWin.UiMnExitTraining.IsEnabled = false;

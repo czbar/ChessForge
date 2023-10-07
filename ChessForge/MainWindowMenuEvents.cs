@@ -85,19 +85,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnOpenWorkbook_Click(object sender, RoutedEventArgs e)
         {
-            bool proceed = true;
-
-            if (WorkbookManager.SessionWorkbook != null && AppState.IsDirty)
-            {
-                proceed = WorkbookManager.PromptAndSaveWorkbook(false, out _);
-            }
-
-            if (proceed)
-            {
-                WorkbookManager.SessionWorkbook.GamesManager.CancelAll();
-            }
-
-            if (proceed && ChangeAppModeWarning(LearningMode.Mode.MANUAL_REVIEW))
+            if (PrepareToReadWorkbook())
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog
                 {
@@ -145,8 +133,24 @@ namespace ChessForge
         /// <param name="e"></param>
         private void OpenRecentWorkbookFile(object sender, RoutedEventArgs e)
         {
+            if (PrepareToReadWorkbook())
+            {
+                string menuItemName = ((MenuItem)e.Source).Name;
+                string path = Configuration.GetRecentFile(menuItemName);
+                Configuration.LastOpenDirectory = Path.GetDirectoryName(path);
+                ReadWorkbookFile(path, false, ref WorkbookManager.VariationTreeList);
+            }
+        }
+
+        /// <summary>
+        /// Checks if we can proceed with opening a Workbook.
+        /// </summary>
+        /// <returns></returns>
+        private bool PrepareToReadWorkbook()
+        {
             bool proceed = true;
 
+            // check with the user if required
             if (WorkbookManager.SessionWorkbook != null && AppState.IsDirty)
             {
                 proceed = WorkbookManager.PromptAndSaveWorkbook(false, out _);
@@ -154,10 +158,14 @@ namespace ChessForge
 
             if (proceed && ChangeAppModeWarning(LearningMode.Mode.MANUAL_REVIEW))
             {
-                string menuItemName = ((MenuItem)e.Source).Name;
-                string path = Configuration.GetRecentFile(menuItemName);
-                ReadWorkbookFile(path, false, ref WorkbookManager.VariationTreeList);
+                AppState.RestartInIdleMode();
             }
+            else
+            {
+                proceed = false;
+            }
+
+            return proceed;
         }
 
         /// <summary>
@@ -1013,128 +1021,13 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Invokes the dialog to select Games to delete and deletes them. 
-        /// The initial state of the dialog will be to show Games from the active chapter only.
+        /// Forces focus on the Chapters view.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnDeleteGames_Click(object sender, RoutedEventArgs e)
-        {
-            DeleteArticles(GameData.ContentType.MODEL_GAME, false);
-        }
-
-        /// <summary>
-        /// Invokes the dialog to select Games to delete and deletes them. 
-        /// The initial state of the dialog will be to show Games from all chapters.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnToolsDeleteGames_Click(object sender, RoutedEventArgs e)
-        {
-            DeleteArticles(GameData.ContentType.MODEL_GAME, true);
-        }
-
-        /// <summary>
-        /// Invokes the dialog to select Exercises to delete and deletes them. 
-        /// The initial state of the dialog will be to show Exercises from the active chapter only.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnDeleteExercises_Click(object sender, RoutedEventArgs e)
-        {
-            DeleteArticles(GameData.ContentType.EXERCISE, false);
-        }
-
-        /// <summary>
-        /// Invokes the dialog to select Exercises to delete and deletes them. 
-        /// The initial state of the dialog will be to show Exercises from all chapters.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnToolsDeleteExercises_Click(object sender, RoutedEventArgs e)
-        {
-            DeleteArticles(GameData.ContentType.EXERCISE, true);
-        }
-
-        /// <summary>
-        /// Deletes articles passed in the artcole list
-        /// </summary>
-        /// <param name="chapter"></param>
-        /// <param name="articleType"></param>
-        private void DeleteArticles(GameData.ContentType articleType, bool allChapters)
-        {
-            try
-            {
-                ObservableCollection<ArticleListItem> articleList = WorkbookManager.SessionWorkbook.GenerateArticleList(null, articleType);
-
-                string title = null;
-                if (articleType == GameData.ContentType.MODEL_GAME)
-                {
-                    title = Properties.Resources.SelectGamesForDeletion;
-                }
-                else if (articleType == GameData.ContentType.EXERCISE)
-                {
-                    title = Properties.Resources.SelectExercisesForDeletion;
-                }
-
-                SelectArticlesDialog dlg = new SelectArticlesDialog(null, true, title, ref articleList, allChapters, articleType)
-                {
-                    Left = ChessForgeMain.Left + 100,
-                    Top = ChessForgeMain.Top + 100,
-                    Topmost = false,
-                    Owner = this
-                };
-                if (dlg.ShowDialog() == true)
-                {
-                    List<ArticleListItem> articlesToDelete = new List<ArticleListItem>();
-                    List<int> indicesToDelete = new List<int>();
-                    foreach (ArticleListItem item in articleList)
-                    {
-                        if (item.IsSelected)
-                        {
-                            articlesToDelete.Add(item);
-                            indicesToDelete.Add(item.ArticleIndex);
-                        }
-                    }
-
-                    List<ArticleListItem> deletedArticles = new List<ArticleListItem>();
-                    List<int> deletedIndices = new List<int>();
-                    for (int i = 0; i < articlesToDelete.Count; i++)
-                    {
-                        ArticleListItem item = articlesToDelete[i];
-                        Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(item.ChapterIndex);
-                        if (chapter != null)
-                        {
-                            int index = chapter.GetArticleIndex(item.Article);
-                            bool res = chapter.DeleteArticle(item.Article);
-                            if (res)
-                            {
-                                deletedArticles.Add(item);
-                                deletedIndices.Add(indicesToDelete[index]);
-                            }
-                        }
-                    }
-
-                    if (deletedArticles.Count > 0)
-                    {
-                        WorkbookOperationType wot =
-                            articleType == GameData.ContentType.MODEL_GAME ? WorkbookOperationType.DELETE_MODEL_GAMES : WorkbookOperationType.DELETE_EXERCISES;
-                        WorkbookOperation op = new WorkbookOperation(wot, null, -1, deletedArticles, deletedIndices);
-                        WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
-
-                        AppState.MainWin.ChaptersView.IsDirty = true;
-                        AppState.IsDirty = true;
-                        GuiUtilities.RefreshChaptersView(null);
-                        AppState.MainWin.UiTabChapters.Focus();
-                    }
-                }
-            }
-            catch { }
-        }
-
         public void FocusOnChapterView()
         {
             UiTabChapters.Focus();
+
+            //TODO: probably can be removed.
             AppState.DoEvents();
             _chaptersView.BringChapterIntoView(WorkbookManager.SessionWorkbook.ActiveChapterIndex);
         }
@@ -2450,43 +2343,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Opens the dialog for selecting and evaluating games
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnEvaluateGames_Click(object sender, RoutedEventArgs e)
-        {
-
-            if (TrainingSession.IsTrainingInProgress)
-            {
-                GuiUtilities.ShowExitTrainingInfoMessage();
-            }
-            else
-            {
-                try
-                {
-                    if (AppState.ActiveChapter != null)
-                    {
-                        int chapterIndex = WorkbookManager.SessionWorkbook.GetChapterIndex(AppState.ActiveChapter);
-                        SelectGamesForEvalDialog dlg = new SelectGamesForEvalDialog(AppState.ActiveChapter, chapterIndex, AppState.ActiveChapter.ModelGames)
-                        {
-                            Left = ChessForgeMain.Left + 100,
-                            Top = ChessForgeMain.Top + 100,
-                            Topmost = false,
-                            Owner = AppState.MainWin
-                        };
-                        dlg.ShowDialog();
-                    }
-                }
-                catch
-                {
-                }
-            }
-
-            e.Handled = true;
-        }
-
-        /// <summary>
         /// A request from the menu to start training at the currently selected position.
         /// </summary>
         /// <param name="sender"></param>
@@ -3128,7 +2984,7 @@ namespace ChessForge
             ShowEngineOptionsDialog();
         }
 
-        
+
 
         //*********************
         //
@@ -3806,8 +3662,11 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnFontSizeUp_Click(object sender, RoutedEventArgs e)
         {
-            // lets limit the increase to 4 pixels
-            if (!Configuration.IsFontSizeAtMax)
+            if (AppState.ActiveTab == WorkbookManager.TabViewType.INTRO)
+            {
+                UiBtnIntroFontSizeUp_Click(sender, e);
+            }
+            else if (!Configuration.IsFontSizeAtMax)
             {
                 Configuration.FontSizeDiff++;
                 SetupMenuBarControls();
@@ -3823,8 +3682,11 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnFontSizeDown_Click(object sender, RoutedEventArgs e)
         {
-            // do not allow decrease by more than 2 pixels
-            if (!Configuration.IsFontSizeAtMin)
+            if (AppState.ActiveTab == WorkbookManager.TabViewType.INTRO)
+            {
+                UiBtnIntroFontSizeDown_Click(sender, e);
+            }
+            else if (!Configuration.IsFontSizeAtMin)
             {
                 Configuration.FontSizeDiff--;
                 SetupMenuBarControls();

@@ -144,6 +144,7 @@
       <DependentUpon>GamesEvalDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="GamesEvaluationManager.cs" />
+    <Compile Include="GuiConfiguration.cs" />
     <Compile Include="HiddenClickDialog.xaml.cs">
       <DependentUpon>HiddenClickDialog.xaml</DependentUpon>
     </Compile>
@@ -183,6 +184,7 @@
     <Compile Include="MainWindowMoveAnimation.cs" />
     <Compile Include="GuiUtilities.cs" />
     <Compile Include="ActiveLineManager.cs" />
+    <Compile Include="MainWindowToolsMenu.cs" />
     <Compile Include="ManualReviewState.cs" />
     <Compile Include="MoveAnimator.cs" />
     <Compile Include="MoveCandidates.cs" />
@@ -208,9 +210,6 @@
     <Compile Include="RichTextBoxUtilities.cs" />
     <Compile Include="SelectArticlesDialog.xaml.cs">
       <DependentUpon>SelectArticlesDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SelectGamesForEvalDialog.xaml.cs">
-      <DependentUpon>SelectGamesForEvalDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="SelectSingleChapterDialog.xaml.cs">
       <DependentUpon>SelectSingleChapterDialog.xaml</DependentUpon>
@@ -368,10 +367,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SelectGamesDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SelectGamesForEvalDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

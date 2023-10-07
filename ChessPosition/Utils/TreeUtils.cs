@@ -189,10 +189,15 @@ namespace ChessPosition
         /// Removes all moves after the specified move/ply.
         /// </summary>
         /// <param name="tree"></param>
-        /// <param name="lastMoveNo"></param>
+        /// <param name="lastMoveNo">If lastMoveNo is passed as 0, no trimming is to be performed.</param>
         /// <param name="lastMoveColor"></param>
-        public static void TrimTree(ref VariationTree tree, int lastMoveNo, PieceColor lastMoveColor)
+        public static void TrimTree(ref VariationTree tree, uint lastMoveNo, PieceColor lastMoveColor)
         {
+            if (lastMoveNo == 0)
+            {
+                return;
+            }
+
             // find all moves that meet the "last ply" criterion and trim the subtree
             List<TreeNode> markedForDeletion = new List<TreeNode>();
             List<TreeNode> leaves = new List<TreeNode>();

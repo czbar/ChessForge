@@ -1372,7 +1372,7 @@
     <value>Liczba partii $0, liczba ćwiczeń $1</value>
   </data>
   <data name="EvaluateGames" xml:space="preserve">
-    <value>Oceń partie z rozdziału</value>
+    <value>Oceń partie z podręcznika</value>
   </data>
   <data name="PleaseWait" xml:space="preserve">
     <value>Proszę czekać!</value>
@@ -1709,6 +1709,9 @@
   </data>
   <data name="EngGameSave" xml:space="preserve">
     <value>Zapisać partię do obecnego rozdziału?</value>
+  </data>
+  <data name="ExVwCompletedGuessing" xml:space="preserve">
+    <value>Gratulacje! Zakończyłeś ćwiczenie.</value>
   </data>
   <data name="cbUseMenuToOpenWorkbook" xml:space="preserve">
     <value>Użyj opcji Plik w menu, by otworzyć podręcznik.</value>

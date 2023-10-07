@@ -1069,8 +1069,8 @@ namespace ChessForge
         /// </summary>
         private void RebuildIntroView()
         {
-            AppState.ConfigureMenusForManualReview();
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.INTRO;
+            AppState.ConfigureMenusForManualReview();
             WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.INTRO);
             AppState.ShowExplorers(AppState.AreExplorersOn, true);
             UiImgMainChessboard.Source = Configuration.StudyBoardSet.MainBoard;
@@ -1101,7 +1101,7 @@ namespace ChessForge
             //TODO: this will be called too often (e.g. when loading), find some performance optimization
             if (_introView != null)
             {
-                _introView.SaveXAMLContent();
+                _introView.SaveXAMLContent(false);
             }
         }
 
@@ -1127,7 +1127,6 @@ namespace ChessForge
 
             StopReplayIfActive();
 
-            AppState.ConfigureMenusForManualReview();
             UiImgEngineOn.IsEnabled = true;
             UiImgEngineOff.IsEnabled = true;
 
@@ -1138,6 +1137,7 @@ namespace ChessForge
             try
             {
                 SetStudyStateOnFocus();
+                AppState.ConfigureMainBoardContextMenu();
                 if (WorkbookManager.SessionWorkbook != null)
                 {
                     WorkbookLocationNavigator.SaveNewLocation(WorkbookManager.SessionWorkbook.ActiveChapter, GameData.ContentType.STUDY_TREE, -1);
@@ -1164,8 +1164,8 @@ namespace ChessForge
             }
 
             DisplayPosition(PositionUtils.SetupStartingPosition());
-            AppState.ConfigureMenusForManualReview();
             WorkbookManager.ActiveTab = WorkbookManager.TabViewType.BOOKMARKS;
+            AppState.ConfigureMenusForManualReview();
             AppState.ShowExplorers(false, false);
 
             BoardCommentBox.ShowTabHints();
@@ -1223,7 +1223,6 @@ namespace ChessForge
         {
             try
             {
-                AppState.ConfigureMainBoardContextMenu();
                 if (AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
                 {
                     UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;

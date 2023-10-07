@@ -180,15 +180,27 @@ namespace ChessForge
         /// Saves the content of the view into the root node of the view.
         /// </summary>
         /// <returns></returns>
-        public void SaveXAMLContent()
+        public void SaveXAMLContent(bool cleanup)
         {
             if (_isTextDirty)
             {
+                if (cleanup)
+                {
+                    RemoveEmptyParagraphs();
+                }
                 RemoveDuplicateNames();
                 string xamlText = XamlWriter.Save(Document);
-                Nodes[0].Data = EncodingUtils.Base64Encode(xamlText);
-                Nodes[0].Comment = CopySelectionToClipboard(true);
-                RemoveUnusedNodes();
+                if (Document.Blocks.Count == 0)
+                {
+                    Nodes[0].Data = "";
+                    Nodes[0].Comment = "";
+                }
+                else
+                {
+                    Nodes[0].Data = EncodingUtils.Base64Encode(xamlText);
+                    Nodes[0].Comment = CopySelectionToClipboard(true);
+                    RemoveUnusedNodes();
+                }
             }
 
             _isTextDirty = false;

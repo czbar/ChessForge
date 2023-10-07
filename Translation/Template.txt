@@ -1839,7 +1839,7 @@ DownloadGamesFromWeb=
 DownloadedGamesAndExercises=
 
 #description: Evaluate Games
-#english: EvaluateGames=Evaluate Games in Chapter
+#english: EvaluateGames=Evaluate Games in Workbook
 EvaluateGames=
 
 #description: Please wait
@@ -2312,6 +2312,18 @@ EngGameStarted=
 #description: MessageBox do you want to save game
 #english: EngGameSave=Do you want to save this game in the current chapter?
 EngGameSave=
+
+
+
+##################################
+#
+# Header: Exercises View
+#
+
+#description: Completed guessing exercise
+#english: ExVwCompletedGuessing=Congratulations! You have completed the guessing exercise.
+ExVwCompletedGuessing=
+
 
 ##################################
 #

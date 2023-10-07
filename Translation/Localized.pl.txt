@@ -1839,8 +1839,8 @@ DownloadGamesFromWeb=Pobierz partie z Internetu
 DownloadedGamesAndExercises=Liczba partii $0, liczba ćwiczeń $1
 
 #description: Evaluate Games
-#english: EvaluateGames=Evaluate Games in Chapter
-EvaluateGames=Oceń partie z rozdziału
+#english: EvaluateGames=Evaluate Games in Workbook
+EvaluateGames=Oceń partie z podręcznika
 
 #description: Please wait
 #english: PleaseWait=Please Wait
@@ -2312,6 +2312,18 @@ EngGameStarted=Partia z silnikiem rozpoczęta.
 #description: MessageBox do you want to save game
 #english: EngGameSave=Do you want to save this game in the current chapter?
 EngGameSave=Zapisać partię do obecnego rozdziału?
+
+
+
+##################################
+#
+# Header: Exercises View
+#
+
+#description: Completed guessing exercise
+#english: ExVwCompletedGuessing=Congratulations! You have completed the guessing exercise.
+ExVwCompletedGuessing=Gratulacje! Zakończyłeś ćwiczenie.
+
 
 ##################################
 #

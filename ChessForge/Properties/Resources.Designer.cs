@@ -2042,7 +2042,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Evaluate Games in Chapter.
+        ///   Looks up a localized string similar to Evaluate Games in Workbook.
         /// </summary>
         public static string EvaluateGames {
             get {
@@ -2263,6 +2263,15 @@ namespace ChessForge.Properties {
         public static string ExplorersAbout {
             get {
                 return ResourceManager.GetString("ExplorersAbout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Congratulations! You have completed the guessing exercise..
+        /// </summary>
+        public static string ExVwCompletedGuessing {
+            get {
+                return ResourceManager.GetString("ExVwCompletedGuessing", resourceCulture);
             }
         }
         

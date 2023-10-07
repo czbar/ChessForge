@@ -254,7 +254,8 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Removes empty paragraphs that get created when building the document.
+        /// Removes empty paragraphs that get created when building the document
+        /// or left behind after deletions.
         /// </summary>
         public void RemoveEmptyParagraphs()
         {
@@ -264,7 +265,7 @@ namespace ChessForge
             {
                 if (para is Paragraph paragraph)
                 {
-                    if (paragraph.Inlines.Count == 0)
+                    if (paragraph.Inlines.Count == 0 || !HasNonEmptyInline(para as Paragraph))
                     {
                         parasToRemove.Add(paragraph);
                     }
@@ -536,6 +537,32 @@ namespace ChessForge
             }
 
             return sbPrefix.ToString();
+        }
+
+        /// <summary>
+        /// Returns true if the passed paragraph contains no inlines
+        /// or only empty Runs.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        private bool HasNonEmptyInline(Paragraph para)
+        {
+            bool res = false;
+
+            if (para != null)
+            {
+                foreach (Inline inl in para.Inlines)
+                {
+                    Run run = inl as Run;
+                    if (run == null || !string.IsNullOrEmpty(run.Text))
+                    {
+                        res = true;
+                        break;
+                    }
+                }
+            }
+
+            return res;
         }
 
     }

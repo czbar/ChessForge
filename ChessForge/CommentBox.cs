@@ -153,7 +153,7 @@ namespace ChessForge
         /// </summary>
         public void OpenFile()
         {
-            UserWaitAnnouncement(Strings.GetResource("cbUseMenuToOpenWorkbook"), Brushes.Blue);
+            UserWaitAnnouncement(Properties.Resources.cbUseMenuToOpenWorkbook, Brushes.Blue);
         }
 
         /// <summary>

@@ -1421,7 +1421,7 @@ DownloadGamesFromWeb=Download Games from a Web Site
 DownloadedGamesAndExercises=Game count $0, Exercise count $1
 
 #Evaluate Games
-EvaluateGames=Evaluate Games in Chapter
+EvaluateGames=Evaluate Games in Workbook
 
 #Please wait
 PleaseWait=Please Wait
@@ -1781,6 +1781,17 @@ EngGameStarted=A game against the engine has started.
 
 #MessageBox do you want to save game
 EngGameSave=Do you want to save this game in the current chapter?
+
+
+
+##################################
+#
+# Header: Exercises View
+#
+
+#Completed guessing exercise
+ExVwCompletedGuessing=Congratulations! You have completed the guessing exercise.
+
 
 ##################################
 #
