@@ -1839,8 +1839,8 @@ DownloadGamesFromWeb=Pobierz partie z Internetu
 DownloadedGamesAndExercises=Liczba partii $0, liczba ćwiczeń $1
 
 #description: Evaluate Games
-#english: EvaluateGames=Evaluate Games in Chapter
-EvaluateGames=Oceń partie z rozdziału
+#english: EvaluateGames=Evaluate Games in Workbook
+EvaluateGames=Oceń partie z podręcznika
 
 #description: Please wait
 #english: PleaseWait=Please Wait

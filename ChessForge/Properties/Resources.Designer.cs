@@ -2042,7 +2042,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Evaluate Games in Chapter.
+        ///   Looks up a localized string similar to Evaluate Games in Workbook.
         /// </summary>
         public static string EvaluateGames {
             get {

@@ -1373,7 +1373,7 @@
     <value>Game count $0, Exercise count $1</value>
   </data>
   <data name="EvaluateGames" xml:space="preserve">
-    <value>Evaluate Games in Chapter</value>
+    <value>Evaluate Games in Workbook</value>
   </data>
   <data name="PleaseWait" xml:space="preserve">
     <value>Please Wait</value>

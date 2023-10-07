@@ -1372,7 +1372,7 @@
     <value>Liczba partii $0, liczba ćwiczeń $1</value>
   </data>
   <data name="EvaluateGames" xml:space="preserve">
-    <value>Oceń partie z rozdziału</value>
+    <value>Oceń partie z podręcznika</value>
   </data>
   <data name="PleaseWait" xml:space="preserve">
     <value>Proszę czekać!</value>

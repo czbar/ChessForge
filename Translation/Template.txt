@@ -1839,7 +1839,7 @@ DownloadGamesFromWeb=
 DownloadedGamesAndExercises=
 
 #description: Evaluate Games
-#english: EvaluateGames=Evaluate Games in Chapter
+#english: EvaluateGames=Evaluate Games in Workbook
 EvaluateGames=
 
 #description: Please wait

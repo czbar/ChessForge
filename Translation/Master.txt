@@ -1421,7 +1421,7 @@ DownloadGamesFromWeb=Download Games from a Web Site
 DownloadedGamesAndExercises=Game count $0, Exercise count $1
 
 #Evaluate Games
-EvaluateGames=Evaluate Games in Chapter
+EvaluateGames=Evaluate Games in Workbook
 
 #Please wait
 PleaseWait=Please Wait
