@@ -18,7 +18,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiStripComments_Click(object sender, RoutedEventArgs e)
+        private void UiDeleteComments_Click(object sender, RoutedEventArgs e)
         {
             OperationScopeDialog dlg = new OperationScopeDialog(Properties.Resources.ScopeForDeleteComments);
             if (dlg.ShowDialog() == true)
