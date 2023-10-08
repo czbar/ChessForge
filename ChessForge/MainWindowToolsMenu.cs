@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Xml.Linq;
 
 namespace ChessForge
 {
@@ -19,25 +20,102 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiStripComments_Click(object sender, RoutedEventArgs e)
         {
-            OperationScopeDialog dialog = new OperationScopeDialog(Properties.Resources.ScopeForDeleteComments);
-            dialog.ShowDialog();
-
-            if (ActiveTreeView != null && AppState.IsTreeViewTabActive())
+            OperationScopeDialog dlg = new OperationScopeDialog(Properties.Resources.ScopeForDeleteComments);
+            if (dlg.ShowDialog() == true)
             {
-                if (MessageBox.Show(Properties.Resources.MsgConfirmStripComments, Properties.Resources.Confirm,
-                    MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                Dictionary<Article, List<NagsAndComment>> dictUndoData = new Dictionary<Article, List<NagsAndComment>>();
+
+                if (dlg.ApplyScope == OperationScope.ACTIVE_ITEM)
                 {
-                    VariationTree tree = ActiveTreeView.ShownVariationTree;
+                    if (ActiveTreeView != null && AppState.IsTreeViewTabActive() && AppState.Workbook.ActiveArticle != null)
+                    {
+                        var list = DeleteCommentsInArticle(AppState.Workbook.ActiveArticle);
+                        if (list.Count > 0)
+                        {
+                            dictUndoData[AppState.Workbook.ActiveArticle] = list;
+                        }
+                    }
+                }
+                else if (dlg.ApplyScope == OperationScope.CHAPTER)
+                {
+                    DeleteCommentsInChapter(AppState.ActiveChapter, dlg.ApplyToStudies, dlg.ApplyToGames, dlg.ApplyToExercises, dictUndoData);
+                }
+                else if (dlg.ApplyScope == OperationScope.WORKBOOK)
+                {
+                    foreach (Chapter chapter in AppState.Workbook.Chapters)
+                    {
+                        DeleteCommentsInChapter(chapter, dlg.ApplyToStudies, dlg.ApplyToGames, dlg.ApplyToExercises, dictUndoData);
+                    }
+                }
 
-                    // get data for the Undo operation first
-                    List<NagsAndComment> comments = TreeUtils.BuildNagsAndCommentsList(tree);
-                    EditOperation op = new EditOperation(EditOperation.EditType.STRIP_COMMENTS, comments, null);
-                    tree.OpsManager.PushOperation(op);
-
-                    tree.StripCommentsAndNags();
-                    AppState.IsDirty = true;
-
+                if (ActiveTreeView != null && AppState.IsTreeViewTabActive())
+                {
                     ActiveTreeView.BuildFlowDocumentForVariationTree();
+                }
+
+                if (dictUndoData.Keys.Count > 0)
+                {
+                    WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.DELETE_COMMENTS, dictUndoData);
+                    AppState.Workbook.OpsManager.PushOperation(op);
+
+                    AppState.IsDirty = true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deletes comments from an article.
+        /// Returns the list of removed comments for the Undo operation.
+        /// </summary>
+        /// <param name="article"></param>
+        /// <returns></returns>
+        private List<NagsAndComment> DeleteCommentsInArticle(Article article)
+        {
+            List<NagsAndComment> comments = TreeUtils.BuildNagsAndCommentsList(article.Tree);
+            article.Tree.StripCommentsAndNags();
+            return comments;
+        }
+
+        /// <summary>
+        /// Deletes comments from all articles in a chapter.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="study"></param>
+        /// <param name="games"></param>
+        /// <param name="exercises"></param>
+        private void DeleteCommentsInChapter(Chapter chapter, bool study, bool games, bool exercises, Dictionary<Article, List<NagsAndComment>> dict)
+        {
+            if (chapter != null)
+            {
+                if (study)
+                {
+                    var list = DeleteCommentsInArticle(chapter.StudyTree);
+                    if (list.Count > 0)
+                    {
+                        dict[chapter.StudyTree] = list;
+                    }
+                }
+                if (games)
+                {
+                    foreach (Article game in chapter.ModelGames)
+                    {
+                        var list = DeleteCommentsInArticle(game);
+                        if (list.Count > 0)
+                        {
+                            dict[game] = list;
+                        }
+                    }
+                }
+                if (exercises)
+                {
+                    foreach (Article exercise in chapter.Exercises)
+                    {
+                        var list = DeleteCommentsInArticle(exercise);
+                        if (list.Count > 0)
+                        {
+                            dict[exercise] = list;
+                        }
+                    }
                 }
             }
         }
@@ -172,7 +250,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Deletes articles passed in the artcole list
+        /// Deletes articles passed in the article list
         /// </summary>
         /// <param name="chapter"></param>
         /// <param name="articleType"></param>
