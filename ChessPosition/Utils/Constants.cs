@@ -45,6 +45,17 @@ namespace ChessPosition
     };
 
     /// <summary>
+    /// Scope to which to apply an operation.
+    /// </summary>
+    public enum OperationScope
+    {
+        NONE,
+        ACTIVE_ITEM,
+        CHAPTER,
+        WORKBOOK
+    };
+
+    /// <summary>
     /// Sizes in which the TabControls may be displayed.
     /// </summary>
     public enum TabControlSizeMode
