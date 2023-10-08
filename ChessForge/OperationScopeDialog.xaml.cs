@@ -1,4 +1,5 @@
-﻿using GameTree;
+﻿using ChessPosition;
+using GameTree;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,32 @@ namespace ChessForge
     /// </summary>
     public partial class OperationScopeDialog : Window
     {
+        /// <summary>
+        /// The scope selected by the user.
+        /// </summary>
+        public OperationScope ApplyScope { get; set; }
+        
+        /// <summary>
+        /// Whether to apply the operation to Study/Studies.
+        /// </summary>
+        public bool ApplyToStudies { get; set; }
+
+        /// <summary>
+        /// Whether to apply the operation to Model Games.
+        /// </summary>
+        public bool ApplyToGames { get; set; }
+
+        /// <summary>
+        /// Whether to apply the operation to Exercises.
+        /// </summary>
+        public bool ApplyToExercises { get; set; }
+
+        /// <summary>
+        /// Constructor. Sets the title of the dialog
+        /// and checks the controls as per the current state
+        /// of the application.
+        /// </summary>
+        /// <param name="title"></param>
         public OperationScopeDialog(string title)
         {
             InitializeComponent();
@@ -34,6 +61,8 @@ namespace ChessForge
             {
                 UiRbCurrentItem.IsChecked = true;
             }
+
+            ApplyScope = OperationScope.NONE;
         }
 
         /// <summary>
@@ -97,6 +126,42 @@ namespace ChessForge
         private void UiRbWorkbook_Checked(object sender, RoutedEventArgs e)
         {
             UiCbStudy.Content = (AppState.Workbook != null && AppState.Workbook.GetChapterCount() > 1) ? Properties.Resources.Studies : Properties.Resources.Study;
+        }
+
+        /// <summary>
+        /// Collects the controls states and converts them to scope. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnOk_Click(object sender, RoutedEventArgs e)
+        {
+            if (UiRbCurrentItem.IsChecked == true)
+            {
+                ApplyScope = OperationScope.ACTIVE_ITEM;
+            }
+            else if (UiRbCurrentChapter.IsChecked == true)
+            {
+                ApplyScope = OperationScope.CHAPTER;
+            }
+            else if (UiRbWorkbook.IsChecked == true)
+            {
+                ApplyScope = OperationScope.WORKBOOK;
+            }
+
+            if (UiCbStudy.IsChecked == true)
+            {
+                ApplyToStudies = true;
+            }
+            if (UiCbGames.IsChecked == true)
+            {
+                ApplyToGames = true;
+            }
+            if (UiCbExercises.IsChecked == true)
+            {
+                ApplyToExercises = true;
+            }
+
+            DialogResult = true;
         }
     }
 }
