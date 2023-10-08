@@ -262,7 +262,7 @@ namespace GameTree
         /// <summary>
         /// Removes comments and nags from all nodes.
         /// </summary>
-        public void StripCommentsAndNags()
+        public void DeleteCommentsAndNags()
         {
             foreach (TreeNode nd in Nodes)
             {

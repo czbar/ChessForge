@@ -72,7 +72,7 @@ namespace ChessForge
         private List<NagsAndComment> DeleteCommentsInArticle(Article article)
         {
             List<NagsAndComment> comments = TreeUtils.BuildNagsAndCommentsList(article.Tree);
-            article.Tree.StripCommentsAndNags();
+            article.Tree.DeleteCommentsAndNags();
             return comments;
         }
 
