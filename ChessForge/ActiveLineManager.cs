@@ -68,6 +68,15 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Force updating of engine evaluations
+        /// e.g. as part of Undo for Delete Engine Evals.
+        /// </summary>
+        public void RefreshNodeList()
+        {
+            SetNodeList(Line.NodeList);
+        }
+
+        /// <summary>
         /// Figures out the node corresponding to 
         /// the selected cell and displays the position.
         /// </summary>
