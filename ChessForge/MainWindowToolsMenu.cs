@@ -87,7 +87,7 @@ namespace ChessForge
                             ActiveTreeView.BuildFlowDocumentForVariationTree();
                             break;
                         case MoveAttribute.ENGINE_EVALUATION:
-                            ActiveLine.DeleteEngineEvaluations();
+                            ActiveLine.RefreshNodeList();
                             break;
                     }
                 }
