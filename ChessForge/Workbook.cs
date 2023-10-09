@@ -791,6 +791,34 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Undo deletion of comments and NAGs from articles
+        /// </summary>
+        /// <param name="dictMoveAttributes"></param>
+        public void UndoDeleteComments(object dictMoveAttributes)
+        {
+            Dictionary<Article, List<MoveAttributes>> dictUndoData = dictMoveAttributes as Dictionary<Article, List<MoveAttributes>>;
+
+            foreach (Article article in dictUndoData.Keys)
+            {
+                TreeUtils.InsertCommentsAndNags(article.Tree, dictUndoData[article]);
+            }
+        }
+
+        /// <summary>
+        /// Undo deletion of engine evaluations from articles
+        /// </summary>
+        /// <param name="dictMoveAttributes"></param>
+        public void UndoDeleteEngineEvals(object dictMoveAttributes)
+        {
+            Dictionary<Article, List<MoveAttributes>> dictUndoData = dictMoveAttributes as Dictionary<Article, List<MoveAttributes>>;
+
+            foreach (Article article in dictUndoData.Keys)
+            {
+                TreeUtils.InsertEngineEvals(article.Tree, dictUndoData[article]);
+            }
+        }
+
+        /// <summary>
         /// Return chapter from a given position in the Chapters list
         /// </summary>
         /// <param name="id"></param>
