@@ -54,7 +54,7 @@
     <Compile Include="GameTree\EditOperationsManager.cs" />
     <Compile Include="GameTree\EvalAndAssessment.cs" />
     <Compile Include="GameTree\FullNodeId.cs" />
-    <Compile Include="GameTree\NagsAndComment.cs" />
+    <Compile Include="GameTree\MoveAttributes.cs" />
     <Compile Include="GameTree\OperationsManager.cs" />
     <Compile Include="GameTree\TreeManager.cs" />
     <Compile Include="GameTree\Operation.cs" />

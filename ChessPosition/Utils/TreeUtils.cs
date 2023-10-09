@@ -529,15 +529,15 @@ namespace ChessPosition
         /// </summary>
         /// <param name="tree"></param>
         /// <returns></returns>
-        public static List<NagsAndComment> BuildNagsAndCommentsList(VariationTree tree)
+        public static List<MoveAttributes> BuildNagsAndCommentsList(VariationTree tree)
         {
-            List<NagsAndComment> lst = new List<NagsAndComment>();
+            List<MoveAttributes> lst = new List<MoveAttributes>();
 
             foreach (TreeNode nd in tree.Nodes)
             {
                 if (!string.IsNullOrEmpty(nd.Comment) || !string.IsNullOrEmpty(nd.Nags))
                 {
-                    lst.Add(new NagsAndComment(nd.NodeId, nd.Comment, nd.Nags));
+                    lst.Add(new MoveAttributes(nd.NodeId, nd.Comment, nd.Nags));
                 }
             }
 

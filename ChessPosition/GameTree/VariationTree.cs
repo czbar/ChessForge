@@ -1632,8 +1632,8 @@ namespace GameTree
         {
             try
             {
-                List<NagsAndComment> lst = opData as List<NagsAndComment>;
-                foreach (NagsAndComment nac in lst)
+                List<MoveAttributes> lst = opData as List<MoveAttributes>;
+                foreach (MoveAttributes nac in lst)
                 {
                     TreeNode nd = GetNodeFromNodeId(nac.NodeId);
                     nd.Comment = nac.Comment;

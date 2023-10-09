@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 namespace GameTree
 {
     /// <summary>
-    /// Holds node Id along with the Comment and Nags.
-    /// This was created to supported Undo for StripComments
+    /// Holds node Id along with some move attribures..
+    /// This has been created to support Undo for DeleteComments / EngineEvals
     /// </summary>
-    public class NagsAndComment
+    public class MoveAttributes
     {
         /// <summary>
         /// Constructor.
         /// </summary>
-        public NagsAndComment() 
+        public MoveAttributes() 
         { 
         }
 
@@ -25,7 +25,7 @@ namespace GameTree
         /// <param name="nodeId"></param>
         /// <param name="comment"></param>
         /// <param name="nags"></param>
-        public NagsAndComment(int nodeId, string comment, string nags) 
+        public MoveAttributes(int nodeId, string comment, string nags) 
         { 
             NodeId = nodeId;
             Comment = comment;

@@ -23,7 +23,7 @@ namespace ChessForge
             OperationScopeDialog dlg = new OperationScopeDialog(Properties.Resources.ScopeForDeleteComments);
             if (dlg.ShowDialog() == true)
             {
-                Dictionary<Article, List<NagsAndComment>> dictUndoData = new Dictionary<Article, List<NagsAndComment>>();
+                Dictionary<Article, List<MoveAttributes>> dictUndoData = new Dictionary<Article, List<MoveAttributes>>();
 
                 if (dlg.ApplyScope == OperationScope.ACTIVE_ITEM)
                 {
@@ -69,9 +69,9 @@ namespace ChessForge
         /// </summary>
         /// <param name="article"></param>
         /// <returns></returns>
-        private List<NagsAndComment> DeleteCommentsInArticle(Article article)
+        private List<MoveAttributes> DeleteCommentsInArticle(Article article)
         {
-            List<NagsAndComment> comments = TreeUtils.BuildNagsAndCommentsList(article.Tree);
+            List<MoveAttributes> comments = TreeUtils.BuildNagsAndCommentsList(article.Tree);
             article.Tree.DeleteCommentsAndNags();
             return comments;
         }
@@ -83,7 +83,7 @@ namespace ChessForge
         /// <param name="study"></param>
         /// <param name="games"></param>
         /// <param name="exercises"></param>
-        private void DeleteCommentsInChapter(Chapter chapter, bool study, bool games, bool exercises, Dictionary<Article, List<NagsAndComment>> dict)
+        private void DeleteCommentsInChapter(Chapter chapter, bool study, bool games, bool exercises, Dictionary<Article, List<MoveAttributes>> dict)
         {
             if (chapter != null)
             {
