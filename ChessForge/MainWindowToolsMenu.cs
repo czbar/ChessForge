@@ -14,13 +14,44 @@ namespace ChessForge
     public partial class MainWindow : Window
     {
         /// <summary>
-        /// Deletes all comments from the currently shown tree. 
+        /// Deletes all comments and NAGs in the scope that the user will select. 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void UiDeleteComments_Click(object sender, RoutedEventArgs e)
         {
-            OperationScopeDialog dlg = new OperationScopeDialog(Properties.Resources.ScopeForDeleteComments);
+            UiDeleteMoveAttributes(sender, e, MoveAttribute.COMMENT_AND_NAGS);
+        }
+
+        /// <summary>
+        /// Deletes all engine evaluations in the scope that the user will select. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiDeleteEngineEvals_Click(object sender, RoutedEventArgs e)
+        {
+            UiDeleteMoveAttributes(sender, e, MoveAttribute.ENGINE_EVALUATION);
+        }
+
+        /// <summary>
+        /// Deletes all comments from the currently shown tree. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiDeleteMoveAttributes(object sender, RoutedEventArgs e, MoveAttribute attrType)
+        {
+            string dlgTitle = "";
+            switch (attrType)
+            {
+                case MoveAttribute.COMMENT_AND_NAGS:
+                    dlgTitle = Properties.Resources.ScopeForDeleteComments;
+                    break;
+                case MoveAttribute.ENGINE_EVALUATION:
+                    dlgTitle = Properties.Resources.ScopeForDeleteEvals;
+                    break;
+            }
+
+            OperationScopeDialog dlg = new OperationScopeDialog(dlgTitle);
             if (dlg.ShowDialog() == true)
             {
                 Dictionary<Article, List<MoveAttributes>> dictUndoData = new Dictionary<Article, List<MoveAttributes>>();
@@ -29,7 +60,7 @@ namespace ChessForge
                 {
                     if (ActiveTreeView != null && AppState.IsTreeViewTabActive() && AppState.Workbook.ActiveArticle != null)
                     {
-                        var list = DeleteCommentsInArticle(AppState.Workbook.ActiveArticle);
+                        var list = DeleteMoveAttributesInArticle(AppState.Workbook.ActiveArticle, attrType);
                         if (list.Count > 0)
                         {
                             dictUndoData[AppState.Workbook.ActiveArticle] = list;
@@ -38,24 +69,42 @@ namespace ChessForge
                 }
                 else if (dlg.ApplyScope == OperationScope.CHAPTER)
                 {
-                    DeleteCommentsInChapter(AppState.ActiveChapter, dlg.ApplyToStudies, dlg.ApplyToGames, dlg.ApplyToExercises, dictUndoData);
+                    DeleteMoveAttributesInChapter(attrType, AppState.ActiveChapter, dlg.ApplyToStudies, dlg.ApplyToGames, dlg.ApplyToExercises, dictUndoData);
                 }
                 else if (dlg.ApplyScope == OperationScope.WORKBOOK)
                 {
                     foreach (Chapter chapter in AppState.Workbook.Chapters)
                     {
-                        DeleteCommentsInChapter(chapter, dlg.ApplyToStudies, dlg.ApplyToGames, dlg.ApplyToExercises, dictUndoData);
+                        DeleteMoveAttributesInChapter(attrType, chapter, dlg.ApplyToStudies, dlg.ApplyToGames, dlg.ApplyToExercises, dictUndoData);
                     }
                 }
 
                 if (ActiveTreeView != null && AppState.IsTreeViewTabActive())
                 {
-                    ActiveTreeView.BuildFlowDocumentForVariationTree();
+                    switch (attrType)
+                    {
+                        case MoveAttribute.COMMENT_AND_NAGS:
+                            ActiveTreeView.BuildFlowDocumentForVariationTree();
+                            break;
+                        case MoveAttribute.ENGINE_EVALUATION:
+                            ActiveLine.DeleteEngineEvaluations();
+                            break;
+                    }
                 }
 
                 if (dictUndoData.Keys.Count > 0)
                 {
-                    WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.DELETE_COMMENTS, dictUndoData);
+                    WorkbookOperationType wot = WorkbookOperationType.NONE;
+                    switch (attrType)
+                    {
+                        case MoveAttribute.COMMENT_AND_NAGS:
+                            wot = WorkbookOperationType.DELETE_COMMENTS;    
+                            break;
+                        case MoveAttribute.ENGINE_EVALUATION:
+                            wot = WorkbookOperationType.DELETE_ENGINE_EVALS;
+                            break;
+                    }
+                    WorkbookOperation op = new WorkbookOperation(wot, dictUndoData);
                     AppState.Workbook.OpsManager.PushOperation(op);
 
                     AppState.IsDirty = true;
@@ -64,32 +113,49 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Deletes comments from an article.
+        /// Deletes move attributes of the specified type from the Article.
         /// Returns the list of removed comments for the Undo operation.
         /// </summary>
         /// <param name="article"></param>
         /// <returns></returns>
-        private List<MoveAttributes> DeleteCommentsInArticle(Article article)
+        private List<MoveAttributes> DeleteMoveAttributesInArticle(Article article, MoveAttribute attrType)
         {
-            List<MoveAttributes> comments = TreeUtils.BuildNagsAndCommentsList(article.Tree);
-            article.Tree.DeleteCommentsAndNags();
-            return comments;
+            List<MoveAttributes> attrsList = new List<MoveAttributes>();
+
+            switch (attrType)
+            {
+                case MoveAttribute.COMMENT_AND_NAGS:
+                    attrsList = TreeUtils.BuildNagsAndCommentsList(article.Tree);
+                    article.Tree.DeleteCommentsAndNags();
+                    break;
+                case MoveAttribute.ENGINE_EVALUATION:
+                    attrsList = TreeUtils.BuildEngineEvalList(article.Tree);
+                    article.Tree.DeleteEvalsAndAssessments();
+                    break;
+            }
+
+            return attrsList;
         }
 
         /// <summary>
-        /// Deletes comments from all articles in a chapter.
+        /// Deletes move attributes of the specified type from all articles in a chapter.
         /// </summary>
         /// <param name="chapter"></param>
         /// <param name="study"></param>
         /// <param name="games"></param>
         /// <param name="exercises"></param>
-        private void DeleteCommentsInChapter(Chapter chapter, bool study, bool games, bool exercises, Dictionary<Article, List<MoveAttributes>> dict)
+        private void DeleteMoveAttributesInChapter(MoveAttribute attrType, 
+            Chapter chapter, 
+            bool study, 
+            bool games, 
+            bool exercises, 
+            Dictionary<Article, List<MoveAttributes>> dict)
         {
             if (chapter != null)
             {
                 if (study)
                 {
-                    var list = DeleteCommentsInArticle(chapter.StudyTree);
+                    var list = DeleteMoveAttributesInArticle(chapter.StudyTree, attrType);
                     if (list.Count > 0)
                     {
                         dict[chapter.StudyTree] = list;
@@ -99,7 +165,7 @@ namespace ChessForge
                 {
                     foreach (Article game in chapter.ModelGames)
                     {
-                        var list = DeleteCommentsInArticle(game);
+                        var list = DeleteMoveAttributesInArticle(game, attrType);
                         if (list.Count > 0)
                         {
                             dict[game] = list;
@@ -110,7 +176,7 @@ namespace ChessForge
                 {
                     foreach (Article exercise in chapter.Exercises)
                     {
-                        var list = DeleteCommentsInArticle(exercise);
+                        var list = DeleteMoveAttributesInArticle(exercise, attrType);
                         if (list.Count > 0)
                         {
                             dict[exercise] = list;
@@ -120,36 +186,9 @@ namespace ChessForge
             }
         }
 
-        /// <summary>
-        /// Deletes all engine evaluations from the currently shown tree. 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiDeleteEngineEvals_Click(object sender, RoutedEventArgs e)
-        {
-            OperationScopeDialog dialog = new OperationScopeDialog(Properties.Resources.ScopeForDeleteEvals);
-            dialog.ShowDialog();
 
-            if (ActiveTreeView != null && AppState.IsTreeViewTabActive())
-            {
-                if (MessageBox.Show(Properties.Resources.MsgConfirmDeleteEngineEvals, Properties.Resources.Confirm,
-                    MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-                {
-                    VariationTree tree = ActiveTreeView.ShownVariationTree;
+        //########################################################################################
 
-                    // get data for the Undo operation first
-                    List<MoveAttributes> evals = TreeUtils.BuildEngineEvalList(tree);
-                    EditOperation op = new EditOperation(EditOperation.EditType.DELETE_ENGINE_EVALS, evals, null);
-                    tree.OpsManager.PushOperation(op);
-
-                    tree.DeleteEvalsAndAssessments();
-                    ActiveLine.DeleteEngineEvaluations();
-                    AppState.IsDirty = true;
-
-                    ActiveTreeView.BuildFlowDocumentForVariationTree();
-                }
-            }
-        }
 
         /// <summary>
         /// Opens the dialog for selecting and evaluating games
