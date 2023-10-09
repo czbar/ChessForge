@@ -27,6 +27,8 @@ namespace ChessForge
         EDIT_EXERCISE_HEADER,
         MOVE_ARTICLES,
         COPY_ARTICLES,
+        DELETE_COMMENTS,
+        DELETE_ENGINE_EVALS,
     }
 
     /// <summary>
@@ -93,7 +95,7 @@ namespace ChessForge
         {
             _opType = tp;
             _chapter = ch;
-            _opData_1= data;
+            _opData_1 = data;
         }
 
         /// <summary>
@@ -132,6 +134,21 @@ namespace ChessForge
             _articleIndex = articleIndex;
             _opData_1 = data1;
             _opData_2 = data2;
+        }
+
+        /// <summary>
+        /// Constructor for actions:
+        ///    DELETE_COMMENTS
+        ///    DELETE_ENGINE_EVALS
+        /// The data parameter is a dictionary with Articles as keys
+        /// and deleted data as values.
+        /// </summary>
+        /// <param name="tp"></param>
+        /// <param name="data"></param>
+        public WorkbookOperation(WorkbookOperationType tp, object data) : base()
+        {
+            _opType = tp;
+            _opData_1 = data;
         }
     }
 }

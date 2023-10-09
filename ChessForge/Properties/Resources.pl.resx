@@ -576,11 +576,14 @@
   <data name="Tools" xml:space="preserve">
     <value>Narzędzia</value>
   </data>
+  <data name="MnEvaluateGames" xml:space="preserve">
+    <value>Oceń partie z podręcznika...</value>
+  </data>
   <data name="StripComments" xml:space="preserve">
-    <value>Usuń wszystkie komentarze</value>
+    <value>Usuń komentarze...</value>
   </data>
   <data name="DeleteEngineEvals" xml:space="preserve">
-    <value>Usuń wszystkie oceny silnika</value>
+    <value>Usuń oceny silnika...</value>
   </data>
   <data name="Help" xml:space="preserve">
     <value>Pomoc</value>
@@ -671,6 +674,30 @@
   </data>
   <data name="EgCentipawnAccuracy" xml:space="preserve">
     <value>maksymalne odchylenie od najlepszego ruchu wynosi</value>
+  </data>
+  <data name="ScopeForDeleteComments" xml:space="preserve">
+    <value>Usuń Komentarze</value>
+  </data>
+  <data name="ScopeForDeleteEvals" xml:space="preserve">
+    <value>Usuń Oceny Silnika</value>
+  </data>
+  <data name="OperationScope" xml:space="preserve">
+    <value>Zastosuj do:</value>
+  </data>
+  <data name="Scope" xml:space="preserve">
+    <value>Zakres</value>
+  </data>
+  <data name="ItemsType" xml:space="preserve">
+    <value>Typ elementów</value>
+  </data>
+  <data name="CurrentItem" xml:space="preserve">
+    <value>Obecny widok</value>
+  </data>
+  <data name="CurrentChapter" xml:space="preserve">
+    <value>Obecny rozdział</value>
+  </data>
+  <data name="EntireWorkbook" xml:space="preserve">
+    <value>Cały podręcznik</value>
   </data>
   <data name="InEvaluation" xml:space="preserve">
     <value>Podczas Oceniania</value>

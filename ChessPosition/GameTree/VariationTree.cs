@@ -262,7 +262,7 @@ namespace GameTree
         /// <summary>
         /// Removes comments and nags from all nodes.
         /// </summary>
-        public void StripCommentsAndNags()
+        public void DeleteCommentsAndNags()
         {
             foreach (TreeNode nd in Nodes)
             {
@@ -1632,8 +1632,8 @@ namespace GameTree
         {
             try
             {
-                List<NagsAndComment> lst = opData as List<NagsAndComment>;
-                foreach (NagsAndComment nac in lst)
+                List<MoveAttributes> lst = opData as List<MoveAttributes>;
+                foreach (MoveAttributes nac in lst)
                 {
                     TreeNode nd = GetNodeFromNodeId(nac.NodeId);
                     nd.Comment = nac.Comment;
@@ -1654,11 +1654,11 @@ namespace GameTree
         {
             try
             {
-                List<EvalAndAssessment> lst = opData as List<EvalAndAssessment>;
-                foreach (EvalAndAssessment nac in lst)
+                List<MoveAttributes> lst = opData as List<MoveAttributes>;
+                foreach (MoveAttributes nac in lst)
                 {
                     TreeNode nd = GetNodeFromNodeId(nac.NodeId);
-                    nd.SetEngineEvaluation(nac.EngineEvaluation);
+                    nd.SetEngineEvaluation(nac.EngineEval);
                     nd.Assessment = nac.Assessment;
                 }
             }

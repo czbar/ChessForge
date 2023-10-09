@@ -45,6 +45,26 @@ namespace ChessPosition
     };
 
     /// <summary>
+    /// Scope to which to apply an operation.
+    /// </summary>
+    public enum OperationScope
+    {
+        NONE,
+        ACTIVE_ITEM,
+        CHAPTER,
+        WORKBOOK
+    };
+
+    /// <summary>
+    /// Move attribute types.
+    /// </summary>
+    public enum MoveAttribute
+    {
+        COMMENT_AND_NAGS,
+        ENGINE_EVALUATION
+    };
+
+    /// <summary>
     /// Sizes in which the TabControls may be displayed.
     /// </summary>
     public enum TabControlSizeMode

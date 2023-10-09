@@ -502,14 +502,22 @@ UseVariableFontSize=Variable Font Size
 RestoreFontDefaults=Restore Font Defaults
 
 
-#TOP LEVEL MENU: Tools
+###########################
+#
+# Header: TOP LEVEL MENU: Tools
+#
+
+#Tools
 Tools=Tools
 
+#Evaluate Games
+MnEvaluateGames=Evaluate Games in Workbook...
+
 #Strip all comments
-StripComments=Delete All Comments
+StripComments=Delete Comments...
 
 #Delete all engine evals
-DeleteEngineEvals=Delete Engine Evaluations
+DeleteEngineEvals=Delete Engine Evaluations...
 
 
 #TOP LEVEL MENU: Help
@@ -621,6 +629,37 @@ EgSelectionAccuracyLabel=Move selection accuracy is
 EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
 
 
+#######################################
+#
+# Header: DIALOG Operation Scope
+#
+
+#Scope for deleting comments - dialog title
+ScopeForDeleteComments=Delete Comments
+
+#Scope for deleting engine evals - dialog title
+ScopeForDeleteEvals=Delete Engine Evaluations
+
+#Operation Scope label
+OperationScope=Apply to the following:
+
+#Scope
+Scope=Scope
+
+#Items Type
+ItemsType=Items Type
+
+#Current view
+CurrentItem=Current View
+
+#Current chapter
+CurrentChapter=Current Chapter
+
+#Entire Workbook
+EntireWorkbook=Entire Workbook
+
+
+#######################################
 #
 # Header: DIALOG Engine Options
 #
@@ -1995,9 +2034,10 @@ InfoExitGameBeforeTabSwitch=Exit the game against the engine before switching ta
 #Info: the selected engine was loaded
 EngineReplaced=Selected engine loaded
 
+
 ##################################
 #
-# Header: Libary exceptions
+# Header: Library exceptions
 #
 
 #Missing move while parsing PGN

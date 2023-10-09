@@ -22,8 +22,6 @@ namespace GameTree
             MERGE_TREE,
             PASTE_MOVES,
             SAVE_TRAINING_MOVES,
-            STRIP_COMMENTS,
-            DELETE_ENGINE_EVALS,
         }
 
         /// <summary>

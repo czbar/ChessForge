@@ -375,6 +375,41 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Inserts comments and nags from the list of move attributes into a tree.
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <param name="lstAttrs"></param>
+        public static void InsertCommentsAndNags(VariationTree tree, List<MoveAttributes> lstAttrs)
+        {
+            foreach (MoveAttributes attrs in lstAttrs)
+            {
+                TreeNode nd = tree.GetNodeFromNodeId(attrs.NodeId);
+                if (nd != null)
+                {
+                    nd.Comment = attrs.Comment;
+                    nd.Nags= attrs.Nags;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Inserts engine evaluations from the list of move attributes into a tree.
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <param name="lstAttrs"></param>
+        public static void InsertEngineEvals(VariationTree tree, List<MoveAttributes> lstAttrs)
+        {
+            foreach (MoveAttributes attrs in lstAttrs)
+            {
+                TreeNode nd = tree.GetNodeFromNodeId(attrs.NodeId);
+                if (nd != null)
+                {
+                    nd.SetEngineEvaluation(attrs.EngineEval);
+                }
+            }
+        }
+
+        /// <summary>
         /// Checks if possible enpassant moves are same in both positions. 
         /// </summary>
         /// <param name="pos1"></param>
@@ -529,15 +564,15 @@ namespace ChessPosition
         /// </summary>
         /// <param name="tree"></param>
         /// <returns></returns>
-        public static List<NagsAndComment> BuildNagsAndCommentsList(VariationTree tree)
+        public static List<MoveAttributes> BuildNagsAndCommentsList(VariationTree tree)
         {
-            List<NagsAndComment> lst = new List<NagsAndComment>();
+            List<MoveAttributes> lst = new List<MoveAttributes>();
 
             foreach (TreeNode nd in tree.Nodes)
             {
                 if (!string.IsNullOrEmpty(nd.Comment) || !string.IsNullOrEmpty(nd.Nags))
                 {
-                    lst.Add(new NagsAndComment(nd.NodeId, nd.Comment, nd.Nags));
+                    lst.Add(new MoveAttributes(nd.NodeId, nd.Comment, nd.Nags));
                 }
             }
 
@@ -550,15 +585,15 @@ namespace ChessPosition
         /// </summary>
         /// <param name="tree"></param>
         /// <returns></returns>
-        public static List<EvalAndAssessment> BuildEngineEvalList(VariationTree tree)
+        public static List<MoveAttributes> BuildEngineEvalList(VariationTree tree)
         {
-            List<EvalAndAssessment> lst = new List<EvalAndAssessment>();
+            List<MoveAttributes> lst = new List<MoveAttributes>();
 
             foreach (TreeNode nd in tree.Nodes)
             {
                 if (!string.IsNullOrEmpty(nd.EngineEvaluation) || nd.Assessment > 0)
                 {
-                    lst.Add(new EvalAndAssessment(nd.NodeId, nd.EngineEvaluation, nd.Assessment));
+                    lst.Add(new MoveAttributes(nd.NodeId, nd.EngineEvaluation, nd.Assessment));
                 }
             }
 

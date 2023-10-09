@@ -576,11 +576,14 @@
   <data name="Tools" xml:space="preserve">
     <value>Tools</value>
   </data>
+  <data name="MnEvaluateGames" xml:space="preserve">
+    <value>Evaluate Games in Workbook...</value>
+  </data>
   <data name="StripComments" xml:space="preserve">
-    <value>Delete All Comments</value>
+    <value>Delete Comments...</value>
   </data>
   <data name="DeleteEngineEvals" xml:space="preserve">
-    <value>Delete Engine Evaluations</value>
+    <value>Delete Engine Evaluations...</value>
   </data>
   <data name="Help" xml:space="preserve">
     <value>Help</value>
@@ -671,6 +674,30 @@
   </data>
   <data name="EgCentipawnAccuracy" xml:space="preserve">
     <value>max allowed centipawn deviation from the best move is</value>
+  </data>
+  <data name="ScopeForDeleteComments" xml:space="preserve">
+    <value>Delete Comments</value>
+  </data>
+  <data name="ScopeForDeleteEvals" xml:space="preserve">
+    <value>Delete Engine Evaluations</value>
+  </data>
+  <data name="OperationScope" xml:space="preserve">
+    <value>Apply to the following:</value>
+  </data>
+  <data name="Scope" xml:space="preserve">
+    <value>Scope</value>
+  </data>
+  <data name="ItemsType" xml:space="preserve">
+    <value>Items Type</value>
+  </data>
+  <data name="CurrentItem" xml:space="preserve">
+    <value>Current View</value>
+  </data>
+  <data name="CurrentChapter" xml:space="preserve">
+    <value>Current Chapter</value>
+  </data>
+  <data name="EntireWorkbook" xml:space="preserve">
+    <value>Entire Workbook</value>
   </data>
   <data name="InEvaluation" xml:space="preserve">
     <value>During Evaluations</value>

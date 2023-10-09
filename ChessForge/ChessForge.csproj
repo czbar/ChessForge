@@ -191,6 +191,9 @@
     <Compile Include="MoveEvaluation.cs" />
     <Compile Include="OpeningStatsView.cs" />
     <Compile Include="OpeningStatsViewRow.cs" />
+    <Compile Include="OperationScopeDialog.xaml.cs">
+      <DependentUpon>OperationScopeDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PositionBoardDragEvents.cs" />
     <Compile Include="PreviousNextViewBars.cs" />
     <Compile Include="Properties\OpeningNames.Designer.cs">
@@ -346,6 +349,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="OperationScopeDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PositionSetupDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

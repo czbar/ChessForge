@@ -1480,8 +1480,8 @@ namespace ChessForge
                 _mainWin.UiMnciPlayEngine.IsEnabled = true;
 
                 _mainWin.UiMnEvaluateGames.IsEnabled = ActiveChapter != null && ActiveChapter.GetModelGameCount() > 0;
-                _mainWin.UiMnStripComments.IsEnabled = IsTreeViewTabActive();
-                _mainWin.UiMnDeleteEngineEvals.IsEnabled = IsTreeViewTabActive();
+                _mainWin.UiMnDeleteComments.IsEnabled = WorkbookManager.SessionWorkbook != null;
+                _mainWin.UiMnDeleteEngineEvals.IsEnabled = WorkbookManager.SessionWorkbook != null;
                 _mainWin.UiMnCopyArticles.IsEnabled = WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.GetChapterCount() > 1;
                 _mainWin.UiMnMoveArticles.IsEnabled = WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.GetChapterCount() > 1;
 
@@ -1506,7 +1506,7 @@ namespace ChessForge
 
                 _mainWin.UiMnciPlayEngine.IsEnabled = false;
 
-                _mainWin.UiMnStripComments.IsEnabled = false;
+                _mainWin.UiMnDeleteComments.IsEnabled = false;
                 _mainWin.UiMnDeleteEngineEvals.IsEnabled = false;
             });
         }
