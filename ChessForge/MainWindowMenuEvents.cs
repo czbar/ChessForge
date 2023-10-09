@@ -440,6 +440,12 @@ namespace ChessForge
                         _chaptersView.IsDirty = true;
                         UiTabChapters.Focus();
                         break;
+                    case WorkbookOperationType.DELETE_COMMENTS:
+                        AppState.MainWin.ActiveTreeView?.BuildFlowDocumentForVariationTree();
+                        break;
+                    case WorkbookOperationType.DELETE_ENGINE_EVALS:
+                        ActiveLine.RefreshNodeList();
+                        break;
                 }
             }
             catch (Exception ex)
