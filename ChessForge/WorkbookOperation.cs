@@ -27,7 +27,8 @@ namespace ChessForge
         EDIT_EXERCISE_HEADER,
         MOVE_ARTICLES,
         COPY_ARTICLES,
-        DELETE_COMMENTS
+        DELETE_COMMENTS,
+        DELETE_ENGINE_EVALS,
     }
 
     /// <summary>
@@ -94,7 +95,7 @@ namespace ChessForge
         {
             _opType = tp;
             _chapter = ch;
-            _opData_1= data;
+            _opData_1 = data;
         }
 
         /// <summary>
