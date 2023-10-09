@@ -138,7 +138,7 @@ namespace ChessForge
                     VariationTree tree = ActiveTreeView.ShownVariationTree;
 
                     // get data for the Undo operation first
-                    List<EvalAndAssessment> evals = TreeUtils.BuildEngineEvalList(tree);
+                    List<MoveAttributes> evals = TreeUtils.BuildEngineEvalList(tree);
                     EditOperation op = new EditOperation(EditOperation.EditType.DELETE_ENGINE_EVALS, evals, null);
                     tree.OpsManager.PushOperation(op);
 

@@ -1654,11 +1654,11 @@ namespace GameTree
         {
             try
             {
-                List<EvalAndAssessment> lst = opData as List<EvalAndAssessment>;
-                foreach (EvalAndAssessment nac in lst)
+                List<MoveAttributes> lst = opData as List<MoveAttributes>;
+                foreach (MoveAttributes nac in lst)
                 {
                     TreeNode nd = GetNodeFromNodeId(nac.NodeId);
-                    nd.SetEngineEvaluation(nac.EngineEvaluation);
+                    nd.SetEngineEvaluation(nac.EngineEval);
                     nd.Assessment = nac.Assessment;
                 }
             }

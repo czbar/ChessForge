@@ -550,15 +550,15 @@ namespace ChessPosition
         /// </summary>
         /// <param name="tree"></param>
         /// <returns></returns>
-        public static List<EvalAndAssessment> BuildEngineEvalList(VariationTree tree)
+        public static List<MoveAttributes> BuildEngineEvalList(VariationTree tree)
         {
-            List<EvalAndAssessment> lst = new List<EvalAndAssessment>();
+            List<MoveAttributes> lst = new List<MoveAttributes>();
 
             foreach (TreeNode nd in tree.Nodes)
             {
                 if (!string.IsNullOrEmpty(nd.EngineEvaluation) || nd.Assessment > 0)
                 {
-                    lst.Add(new EvalAndAssessment(nd.NodeId, nd.EngineEvaluation, nd.Assessment));
+                    lst.Add(new MoveAttributes(nd.NodeId, nd.EngineEvaluation, nd.Assessment));
                 }
             }
 

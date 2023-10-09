@@ -20,7 +20,7 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Constructor setting the properties.
+        /// Constructor setting the comment and Nags properties.
         /// </summary>
         /// <param name="nodeId"></param>
         /// <param name="comment"></param>
@@ -30,6 +30,19 @@ namespace GameTree
             NodeId = nodeId;
             Comment = comment;
             Nags = nags;
+        }
+
+        /// <summary>
+        /// Constructor setting the engine eval and assessment properties.
+        /// </summary>
+        /// <param name="nodeId"></param>
+        /// <param name="engineEval"></param>
+        /// <param name="assessment"></param>
+        public MoveAttributes(int nodeId, string engineEval, uint assessment)
+        {
+            NodeId = nodeId;
+            EngineEval = engineEval;
+            Assessment = assessment;
         }
 
         /// <summary>
@@ -46,5 +59,15 @@ namespace GameTree
         /// Nags string.
         /// </summary>
         public string Nags;
+
+        /// <summary>
+        /// Engine Evaluation.
+        /// </summary>
+        public string EngineEval;
+
+        /// <summary>
+        /// Coded move assessment (e.g. BLUNDER).
+        /// </summary>
+        public uint Assessment;
     }
 }
