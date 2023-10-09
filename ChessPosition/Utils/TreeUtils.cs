@@ -375,6 +375,41 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Inserts comments and nags from the list of move attributes into a tree.
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <param name="lstAttrs"></param>
+        public static void InsertCommentsAndNags(VariationTree tree, List<MoveAttributes> lstAttrs)
+        {
+            foreach (MoveAttributes attrs in lstAttrs)
+            {
+                TreeNode nd = tree.GetNodeFromNodeId(attrs.NodeId);
+                if (nd != null)
+                {
+                    nd.Comment = attrs.Comment;
+                    nd.Nags= attrs.Nags;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Inserts engine evaluations from the list of move attributes into a tree.
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <param name="lstAttrs"></param>
+        public static void InsertEngineEvals(VariationTree tree, List<MoveAttributes> lstAttrs)
+        {
+            foreach (MoveAttributes attrs in lstAttrs)
+            {
+                TreeNode nd = tree.GetNodeFromNodeId(attrs.NodeId);
+                if (nd != null)
+                {
+                    nd.SetEngineEvaluation(attrs.EngineEval);
+                }
+            }
+        }
+
+        /// <summary>
         /// Checks if possible enpassant moves are same in both positions. 
         /// </summary>
         /// <param name="pos1"></param>
