@@ -3346,7 +3346,6 @@ namespace ChessForge
                     List<FullNodeId> affectedNodes = WorkbookManager.RemoveArticleReferences(guid);
                     if (affectedNodes.Count > 0)
                     {
-                        // TODO: we should save this list for the Undo operation
                         _studyTreeView?.UpdateReferenceRuns(affectedNodes);
                     }
                     WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
@@ -3377,7 +3376,6 @@ namespace ChessForge
                     List<FullNodeId> affectedNodes = WorkbookManager.RemoveArticleReferences(guid);
                     if (affectedNodes.Count > 0)
                     {
-                        // TODO: we should save this list for the Undo operation
                         _studyTreeView?.UpdateReferenceRuns(affectedNodes);
                     }
                     WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
