@@ -1,4 +1,5 @@
-﻿using GameTree;
+﻿using ChessForge;
+using GameTree;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +14,11 @@ namespace ChessPosition.Utils
     /// </summary>
     public class MoveAssessment
     {
-        // eval above which we don't care if we allow mate
-        private static readonly int MATE_TO_LOW_ADV = 5;
+        // bad eval above beyond which we no longer care about blunders 
+        private static double IGNORE_BLUNDER_THRESHOLD = 5;
 
-        // eval above which we don't care if we spoil 
-        private static readonly int HIGH_EVAL_THRESH = 5;
+        // the drop in evaluation that triggers blunder determination.
+        private static double BLUNDER_EVAL_DETECTION_DIFF = 2;
 
         /// <summary>
         /// Determines the assessment of the passed move by comparing its evaluation
@@ -27,6 +28,9 @@ namespace ChessPosition.Utils
         /// <returns></returns>
         public static ChfCommands.Assessment GetMoveAssessment(TreeNode nd)
         {
+            BLUNDER_EVAL_DETECTION_DIFF = ((double)Configuration.BlunderDetectEvalDrop)/100;
+            IGNORE_BLUNDER_THRESHOLD = ((double)Configuration.BlunderNoDetectThresh) / 100;
+
             ChfCommands.Assessment ass = ChfCommands.Assessment.NONE;
             if (!IsPotentialBlunder(nd))
             {
@@ -40,8 +44,8 @@ namespace ChessPosition.Utils
                 // so the eval  must parse unless something got corrupted.
                 if (double.TryParse(nd.EngineEvaluation, out double eval))
                 {
-                    if (nd.Parent.ColorToMove == PieceColor.Black && eval > -MATE_TO_LOW_ADV
-                        || nd.Parent.ColorToMove == PieceColor.White && eval < +MATE_TO_LOW_ADV)
+                    if (nd.Parent.ColorToMove == PieceColor.Black && eval > -IGNORE_BLUNDER_THRESHOLD
+                        || nd.Parent.ColorToMove == PieceColor.White && eval < +IGNORE_BLUNDER_THRESHOLD)
                     {
                         // eval dropped from mate to less than MATE_TO_LOW_ADV, so we consider this a blunder
                         ass = ChfCommands.Assessment.BLUNDER;
@@ -53,8 +57,8 @@ namespace ChessPosition.Utils
             {
                 if (double.TryParse(nd.Parent.EngineEvaluation, out double evalParent))
                 {
-                    if (nd.Parent.ColorToMove == PieceColor.White && evalParent > -MATE_TO_LOW_ADV
-                        || nd.Parent.ColorToMove == PieceColor.Black && evalParent < +MATE_TO_LOW_ADV)
+                    if (nd.Parent.ColorToMove == PieceColor.White && evalParent > -IGNORE_BLUNDER_THRESHOLD
+                        || nd.Parent.ColorToMove == PieceColor.Black && evalParent < +IGNORE_BLUNDER_THRESHOLD)
                     {
                         ass = ChfCommands.Assessment.BLUNDER;
                     }
@@ -62,7 +66,7 @@ namespace ChessPosition.Utils
             }
             else
             {
-                // now we have 2 numerical evals, assess the difference
+                // now we have two numerical evals, assess the difference
                 if (double.TryParse(nd.Parent.EngineEvaluation, out double evalParent))
                 {
                     if (double.TryParse(nd.EngineEvaluation, out double evalChild))
@@ -149,14 +153,14 @@ namespace ChessPosition.Utils
 
             if (colorToMove == PieceColor.White)
             {
-                if ((currEval - prevEval < -2) && ((Math.Abs(prevEval) <= HIGH_EVAL_THRESH) || Math.Abs(currEval) <= HIGH_EVAL_THRESH))
+                if ((currEval - prevEval < -BLUNDER_EVAL_DETECTION_DIFF) && ((Math.Abs(prevEval) <= IGNORE_BLUNDER_THRESHOLD) || Math.Abs(currEval) <= IGNORE_BLUNDER_THRESHOLD))
                 {
                     res = true;
                 }
             }
             else
             {
-                if ((currEval - prevEval > 2) && ((Math.Abs(prevEval) <= HIGH_EVAL_THRESH) || Math.Abs(currEval) <= HIGH_EVAL_THRESH))
+                if ((currEval - prevEval > BLUNDER_EVAL_DETECTION_DIFF) && ((Math.Abs(prevEval) <= IGNORE_BLUNDER_THRESHOLD) || Math.Abs(currEval) <= IGNORE_BLUNDER_THRESHOLD))
                 {
                     res = true;
                 }

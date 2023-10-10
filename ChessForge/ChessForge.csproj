@@ -190,6 +190,7 @@
     <Compile Include="MainWindowToolsMenu.cs" />
     <Compile Include="ManualReviewState.cs" />
     <Compile Include="MoveAnimator.cs" />
+    <Compile Include="MoveAssessment.cs" />
     <Compile Include="MoveCandidates.cs" />
     <Compile Include="MoveEvaluation.cs" />
     <Compile Include="OpeningStatsView.cs" />
