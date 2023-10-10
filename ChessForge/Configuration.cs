@@ -83,6 +83,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Evaluation drop triggering detection 
+        /// </summary>
+        public static uint BlunderDetectEvalDrop = 200;
+
+        /// <summary>
+        /// Threshold beyond which blunders are ignored.
+        /// </summary>
+        public static uint BlunderNoDetectThresh = 500;
+
+        /// <summary>
         /// By how many pixels to adjust font size
         /// in the views.
         /// (in milliseconds)
@@ -394,6 +404,8 @@ namespace ChessForge
         private const string CFG_ENGINE_HASH_SIZE = "EngineHashSize";
         private const string CFG_ENGINE_MPV = "EngineMpv";
         private const string CFG_VIABLE_MOVE_CP_DIFF = "ViableMoveCpDiff";
+        private const string CFG_BLUNDER_DET_EVAL_DROP = "BlunderDetEvalDrop";
+        private const string CFG_BLUNDER_NO_DET_THRESH = "BlunderNoDetThresh";
 
         private const string CFG_FONT_SIZE_DIFF = "FontSizeDiff";
         private const string CFG_AUTO_SAVE_FREQ = "AutoSaveFrequency";
@@ -567,6 +579,8 @@ namespace ChessForge
                 sb.Append(CFG_AUTO_SAVE_FREQ + "=" + AutoSaveFrequency.ToString() + Environment.NewLine);
 
                 sb.Append(CFG_VIABLE_MOVE_CP_DIFF + "=" + ViableMoveCpDiff.ToString() + Environment.NewLine);
+                sb.Append(CFG_BLUNDER_DET_EVAL_DROP + "=" + BlunderDetectEvalDrop.ToString() + Environment.NewLine);
+                sb.Append(CFG_BLUNDER_NO_DET_THRESH + "=" + BlunderNoDetectThresh.ToString() + Environment.NewLine);
 
                 sb.Append(CFG_PGN_EXP_BOOKMARKS + "=" + (PgnExportBookmarks ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_PGN_EXP_EVALS + "=" + (PgnExportEvaluations ? "1" : "0") + Environment.NewLine);
@@ -859,6 +873,12 @@ namespace ChessForge
                             break;
                         case CFG_AUTO_SAVE_FREQ:
                             int.TryParse(value, out AutoSaveFrequency);
+                            break;
+                        case CFG_BLUNDER_DET_EVAL_DROP:
+                            uint.TryParse(value, out BlunderDetectEvalDrop);
+                            break;
+                        case CFG_BLUNDER_NO_DET_THRESH:
+                            uint.TryParse(value, out BlunderNoDetectThresh);
                             break;
                         case CFG_ENGINE_EVALUATION_TIME:
                             int.TryParse(value, out _engineEvaluationTime);
