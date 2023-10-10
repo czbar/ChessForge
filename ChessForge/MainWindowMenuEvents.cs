@@ -2914,6 +2914,27 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// The user requested to edit Blunder Detection options.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnBlunderDetectionOptions_Click(object sender, RoutedEventArgs e)
+        {
+            BlunderDetectionDialog dlg = new BlunderDetectionDialog()
+            {
+                Left = ChessForgeMain.Left + 100,
+                Top = ChessForgeMain.Top + 100,
+                Topmost = false,
+                Owner = this
+            };
+
+            if (dlg.ShowDialog() == true)
+            {
+                Configuration.WriteOutConfiguration();
+            }
+        }
+
+        /// <summary>
         /// The user requested to edit Application options.
         /// The dialog will be shown.
         /// </summary>

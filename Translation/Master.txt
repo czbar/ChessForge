@@ -436,8 +436,11 @@ Undo=Undo
 ExitTrainingAdvice=Exit the training session to use this function.
 
 
+#################################
+#
+# Header: TOP LEVEL MENU: View
+#
 
-#TOP LEVEL MENU: View
 View=View
 
 #Views plural
@@ -454,6 +457,9 @@ DlgTitleApplicationOptions=Application Options
 
 #Opens the Engine Configuration dialog
 EngineOptions=Engine Options...
+
+#Blunder detection options
+BlunderDetectionOptions=Blunder Detection...
 
 #Engine Options dialog title
 DlgTitleEngineOptions=Engine Configuration
@@ -710,6 +716,20 @@ EngineHashSize=Hash Table (MB)
 #EstimatedEvalTime
 EstimatedEvalTime=Estimated evaluation time
 
+
+#######################################
+#
+# Header: DIALOG Blunder Detection
+#
+
+#Blunder Detection dialog title
+DlgBlunderDetection=Blunder Detection
+
+#Drop in eval triggering detection
+EvalDropTrigger=Evaluation Drop (cp)
+
+#Threshold beyond which we don't detect
+StopDetectLevel=No Detection Beyond (cp)
 
 
 #

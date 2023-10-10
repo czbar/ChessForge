@@ -98,6 +98,9 @@
     <Compile Include="BackupVersionDialog.xaml.cs">
       <DependentUpon>BackupVersionDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BlunderDetectionDialog.xaml.cs">
+      <DependentUpon>BlunderDetectionDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BoardArrow.cs" />
     <Compile Include="BoardShapesManager.cs" />
     <Compile Include="BoardCircle.cs" />
@@ -187,6 +190,7 @@
     <Compile Include="MainWindowToolsMenu.cs" />
     <Compile Include="ManualReviewState.cs" />
     <Compile Include="MoveAnimator.cs" />
+    <Compile Include="MoveAssessment.cs" />
     <Compile Include="MoveCandidates.cs" />
     <Compile Include="MoveEvaluation.cs" />
     <Compile Include="OpeningStatsView.cs" />
@@ -290,6 +294,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="BackupVersionDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BlunderDetectionDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

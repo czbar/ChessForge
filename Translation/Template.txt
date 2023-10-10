@@ -567,9 +567,12 @@ Undo=
 ExitTrainingAdvice=
 
 
+#################################
+#
+# Header: TOP LEVEL MENU: View
+#
 
-#description: TOP LEVEL MENU: View
-#english: View=View
+Vdescription: iew=View
 View=
 
 #description: Views plural
@@ -591,6 +594,10 @@ DlgTitleApplicationOptions=
 #description: Opens the Engine Configuration dialog
 #english: EngineOptions=Engine Options...
 EngineOptions=
+
+#description: Blunder detection options
+#english: BlunderDetectionOptions=Blunder Detection...
+BlunderDetectionOptions=
 
 #description: Engine Options dialog title
 #english: DlgTitleEngineOptions=Engine Configuration
@@ -918,6 +925,23 @@ EngineHashSize=
 #english: EstimatedEvalTime=Estimated evaluation time
 EstimatedEvalTime=
 
+
+#######################################
+#
+# Header: DIALOG Blunder Detection
+#
+
+#description: Blunder Detection dialog title
+#english: DlgBlunderDetection=Blunder Detection
+DlgBlunderDetection=
+
+#description: Drop in eval triggering detection
+#english: EvalDropTrigger=Evaluation Drop (cp)
+EvalDropTrigger=
+
+#description: Threshold beyond which we don't detect
+#english: StopDetectLevel=No Detection Beyond (cp)
+StopDetectLevel=
 
 
 #

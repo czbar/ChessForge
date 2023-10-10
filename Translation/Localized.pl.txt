@@ -567,9 +567,12 @@ Undo=Cofnij Operację
 ExitTrainingAdvice=Wyjdź z sesji treningowej, aby użyc tej funkcji.
 
 
+#################################
+#
+# Header: TOP LEVEL MENU: View
+#
 
-#description: TOP LEVEL MENU: View
-#english: View=View
+Vdescription: iew=View
 View=Widok
 
 #description: Views plural
@@ -591,6 +594,10 @@ DlgTitleApplicationOptions=Opcje Aplikacji
 #description: Opens the Engine Configuration dialog
 #english: EngineOptions=Engine Options...
 EngineOptions=Opcje Silnika...
+
+#description: Blunder detection options
+#english: BlunderDetectionOptions=Blunder Detection...
+BlunderDetectionOptions=Detekcja Błędów...
 
 #description: Engine Options dialog title
 #english: DlgTitleEngineOptions=Engine Configuration
@@ -918,6 +925,23 @@ EngineHashSize=Tablica mieszająca (MB)
 #english: EstimatedEvalTime=Estimated evaluation time
 EstimatedEvalTime=Szacowany czas oceny
 
+
+#######################################
+#
+# Header: DIALOG Blunder Detection
+#
+
+#description: Blunder Detection dialog title
+#english: DlgBlunderDetection=Blunder Detection
+DlgBlunderDetection=Detekcja Błędów
+
+#description: Drop in eval triggering detection
+#english: EvalDropTrigger=Evaluation Drop (cp)
+EvalDropTrigger=Pogorszenie Oceny (cp)
+
+#description: Threshold beyond which we don't detect
+#english: StopDetectLevel=No Detection Beyond (cp)
+StopDetectLevel=Poziom poza detekcją (cp)
 
 
 #

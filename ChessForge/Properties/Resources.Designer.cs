@@ -242,6 +242,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Blunder Detection....
+        /// </summary>
+        public static string BlunderDetectionOptions {
+            get {
+                return ResourceManager.GetString("BlunderDetectionOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bookmark.
         /// </summary>
         public static string Bookmark {
@@ -1340,6 +1349,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Blunder Detection.
+        /// </summary>
+        public static string DlgBlunderDetection {
+            get {
+                return ResourceManager.GetString("DlgBlunderDetection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit Move.
         /// </summary>
         public static string DlgEditMoveInIntro {
@@ -2065,6 +2083,15 @@ namespace ChessForge.Properties {
         public static string EstimatedEvalTime {
             get {
                 return ResourceManager.GetString("EstimatedEvalTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Evaluation Drop (cp).
+        /// </summary>
+        public static string EvalDropTrigger {
+            get {
+                return ResourceManager.GetString("EvalDropTrigger", resourceCulture);
             }
         }
         
@@ -4667,6 +4694,15 @@ namespace ChessForge.Properties {
         public static string Stop {
             get {
                 return ResourceManager.GetString("Stop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Detection Beyond (cp).
+        /// </summary>
+        public static string StopDetectLevel {
+            get {
+                return ResourceManager.GetString("StopDetectLevel", resourceCulture);
             }
         }
         
