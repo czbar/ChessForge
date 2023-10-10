@@ -528,6 +528,9 @@
   <data name="EngineOptions" xml:space="preserve">
     <value>Engine Options...</value>
   </data>
+  <data name="BlunderDetectionOptions" xml:space="preserve">
+    <value>Blunder Detection...</value>
+  </data>
   <data name="DlgTitleEngineOptions" xml:space="preserve">
     <value>Engine Configuration</value>
   </data>
@@ -740,6 +743,15 @@
   </data>
   <data name="EstimatedEvalTime" xml:space="preserve">
     <value>Estimated evaluation time</value>
+  </data>
+  <data name="DlgBlunderDetection" xml:space="preserve">
+    <value>Blunder Detection</value>
+  </data>
+  <data name="EvalDropTrigger" xml:space="preserve">
+    <value>Evaluation Drop (cp)</value>
+  </data>
+  <data name="StopDetectLevel" xml:space="preserve">
+    <value>No Detection Beyond (cp)</value>
   </data>
   <data name="RestartGameAfter" xml:space="preserve">
     <value>Restart Game After </value>
