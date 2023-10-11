@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChessForge
+namespace WebAccess
 {
     /// <summary>
     /// Structure for the Online ChessForge Library's json file.
     /// </summary>
-    public class OnlineLibrary
+    public class LibraryContent
     {
         /// <summary>
         /// Target URL if not at the default location

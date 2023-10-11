@@ -48,7 +48,9 @@
     <Compile Include="ChesscomUserGames.cs" />
     <Compile Include="GameDownload.cs" />
     <Compile Include="GamesFilter.cs" />
+    <Compile Include="LibraryContent.cs" />
     <Compile Include="LichessUserGames.cs" />
+    <Compile Include="OnlineLibrary.cs" />
     <Compile Include="OpeningExplorer.cs" />
     <Compile Include="RestApiRequest.cs" />
     <Compile Include="SourceForgeCheck.cs" />
