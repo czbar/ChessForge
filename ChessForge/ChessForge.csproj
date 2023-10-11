@@ -193,7 +193,6 @@
     <Compile Include="MoveAssessment.cs" />
     <Compile Include="MoveCandidates.cs" />
     <Compile Include="MoveEvaluation.cs" />
-    <Compile Include="OnlineLibrary.cs" />
     <Compile Include="OpeningStatsView.cs" />
     <Compile Include="OpeningStatsViewRow.cs" />
     <Compile Include="OperationScopeDialog.xaml.cs">
