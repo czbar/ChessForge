@@ -149,11 +149,26 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnOnlineLibrary_Click(object sender, RoutedEventArgs e)
         {
-            WebAccess.LibraryContent libraryContent =  WebAccess.OnlineLibrary.GetLibraryContent();
+            WebAccess.LibraryContent libraryContent = WebAccess.OnlineLibrary.GetLibraryContent(out string error);
+            if (libraryContent == null)
+            {
+                MessageBox.Show(Properties.Resources.ErrAccessOnlineLibrary + ": " + error, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else
+            {
+                OnlineLibraryContentDialog dlg = new OnlineLibraryContentDialog(libraryContent)
+                {
+                    Left = ChessForgeMain.Left + 100,
+                    Top = ChessForgeMain.Top + 100,
+                    Topmost = false,
+                    Owner = this
+                };
+                dlg.ShowDialog();
+            }
         }
 
         /// <summary>
-        /// Checks if we can proceed with opening a Workbook.
+        /// Checks if we can proceed with the opening of the Workbook.
         /// </summary>
         /// <returns></returns>
         private bool PrepareToReadWorkbook()
