@@ -1,13 +1,12 @@
 {  
     "redirect": null,
     "messages": [
-      "Chess Forge Online Library",
-      ""
+      "Click on any Workbook below to download, view and edit it."
     ],
     "sections": [
       {
         "title": "Openings",
-        "description": "Workbooks examining theory and practice of various Openings",
+        "description": "Workbooks examining theory and practice of various Openings.",
         "subSections": [
           {
             "title": "General",
