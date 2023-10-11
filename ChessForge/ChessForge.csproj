@@ -193,6 +193,9 @@
     <Compile Include="MoveAssessment.cs" />
     <Compile Include="MoveCandidates.cs" />
     <Compile Include="MoveEvaluation.cs" />
+    <Compile Include="OnlineLibraryContentDialog.xaml.cs">
+      <DependentUpon>OnlineLibraryContentDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="OpeningStatsView.cs" />
     <Compile Include="OpeningStatsViewRow.cs" />
     <Compile Include="OperationScopeDialog.xaml.cs">
@@ -357,6 +360,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="OnlineLibraryContentDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="OperationScopeDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
