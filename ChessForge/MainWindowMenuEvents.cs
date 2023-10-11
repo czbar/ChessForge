@@ -143,6 +143,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Obtains the content of the online library.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnOnlineLibrary_Click(object sender, RoutedEventArgs e)
+        {
+            WebAccess.LibraryContent libraryContent =  WebAccess.OnlineLibrary.GetLibraryContent();
+        }
+
+        /// <summary>
         /// Checks if we can proceed with opening a Workbook.
         /// </summary>
         /// <returns></returns>
