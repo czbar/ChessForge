@@ -1,5 +1,4 @@
-{
-  "library": {
+{  
     "redirect": null,
     "messages": [
       "Chess Forge Online Library",
@@ -81,7 +80,7 @@
             ]
           }
         ]
-      }
+      },
       {
         "title": "Book Samples",
         "description": "Book fragments adapted for Chess Forge",
@@ -105,5 +104,4 @@
         ]
       }
     ]
-  }
 }
