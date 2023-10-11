@@ -360,7 +360,12 @@ ErrNoTextReceived=no text received.
 #
 
 
-#TOP LEVEL MENU: File
+#################################
+#
+# Header: TOP LEVEL MENU: File
+#
+
+#File
 File=File
 
 #Create a new Workbook
@@ -371,6 +376,9 @@ OpenWorkbook=Open Workbook
 
 #Close an existing Workbook
 CloseWorkbook=Close Workbook
+
+#Online library
+OnlineLibrary=Online Library
 
 #Save the currently open Workbook
 Save=Save
@@ -441,6 +449,7 @@ ExitTrainingAdvice=Exit the training session to use this function.
 # Header: TOP LEVEL MENU: View
 #
 
+#description: View=View
 View=View
 
 #Views plural
@@ -633,6 +642,23 @@ EgSelectionAccuracyLabel=Move selection accuracy is
 
 #Cenitpawn accuracy
 EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
+
+#######################################
+#
+# Header: DIALOG Chess Forge library
+#
+
+#Dialog title
+DlgTitleLibraryContent=Library Content
+
+#Chess Forge Online Library Title
+ChessForgeOnlineLibrary=Chess Forge Online Library
+
+#Bookcase
+Bookcase=Bookcase
+
+#Shelf
+Shelf = Shelf
 
 
 #######################################
@@ -1136,8 +1162,12 @@ FlMsgGameImportSuccess=Game Imported Successfully.
 #Referenced Games not Found
 RefGamesNotFound=Referenced games not found.
 
-#Error communcating with liches
+#Error communicating with lichess
 ErrorLichess=Error accessing lichess.org
+
+#Error accessing online library
+ErrAccessOnlineLibrary=Error accessing library
+
 
 #Bookmarks already exist
 BookmarksAlreadyExist=Bookmarks already exist

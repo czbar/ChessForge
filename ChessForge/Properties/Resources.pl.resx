@@ -450,6 +450,9 @@
   <data name="CloseWorkbook" xml:space="preserve">
     <value>Zamknij Podręcznik</value>
   </data>
+  <data name="OnlineLibrary" xml:space="preserve">
+    <value>Biblioteka w Sieci</value>
+  </data>
   <data name="Save" xml:space="preserve">
     <value>Zapisz</value>
   </data>
@@ -509,9 +512,6 @@
   </data>
   <data name="ExitTrainingAdvice" xml:space="preserve">
     <value>Wyjdź z sesji treningowej, aby użyc tej funkcji.</value>
-  </data>
-  <data name="Vdescription: iew" xml:space="preserve">
-    <value>View</value>
   </data>
   <data name="View" xml:space="preserve">
     <value>Widok</value>
@@ -680,6 +680,18 @@
   </data>
   <data name="EgCentipawnAccuracy" xml:space="preserve">
     <value>maksymalne odchylenie od najlepszego ruchu wynosi</value>
+  </data>
+  <data name="DlgTitleLibraryContent" xml:space="preserve">
+    <value>Zawartość Biblioteki</value>
+  </data>
+  <data name="ChessForgeOnlineLibrary" xml:space="preserve">
+    <value>Biblioteka Chess Forge w Sieci</value>
+  </data>
+  <data name="Bookcase" xml:space="preserve">
+    <value>Regał</value>
+  </data>
+  <data name="Shelf" xml:space="preserve">
+    <value>Półka</value>
   </data>
   <data name="ScopeForDeleteComments" xml:space="preserve">
     <value>Usuń Komentarze</value>
@@ -1085,6 +1097,9 @@
   </data>
   <data name="ErrorLichess" xml:space="preserve">
     <value>Błąd w dostępie do lichess.org</value>
+  </data>
+  <data name="ErrAccessOnlineLibrary" xml:space="preserve">
+    <value>Błąd w dostępie do biblioteki</value>
   </data>
   <data name="BookmarksAlreadyExist" xml:space="preserve">
     <value>Zakładki już istnieją</value>
