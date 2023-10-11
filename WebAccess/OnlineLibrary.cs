@@ -1,11 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using ChessForge;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Windows;
 using System.Threading.Tasks;
 
 namespace WebAccess
@@ -19,25 +20,33 @@ namespace WebAccess
         /// Gets and deserializes the library content from ChessForge's web site.
         /// </summary>
         /// <returns></returns>
-        public static LibraryContent GetLibraryContent()
+        public static LibraryContent GetLibraryContent(out string error)
         {
+            error = string.Empty;
+
             LibraryContent library = null;
-
-            string urlQuery = "https://chessforge.sourceforge.io/LibraryContent.json";
-            var request = WebRequest.CreateHttp(urlQuery);
-
-            request.Method = "GET";
-
-            using (var response = (HttpWebResponse)request.GetResponse())
+            try
             {
-                using (var responseStream = response.GetResponseStream())
+                string urlQuery = "https://chessforge.sourceforge.io/LibraryContent.json";
+                var request = WebRequest.CreateHttp(urlQuery);
+                request.Method = "GET";
+
+                using (var response = (HttpWebResponse)request.GetResponse())
                 {
-                    using (var myStreamReader = new StreamReader(responseStream, Encoding.UTF8))
+                    using (var responseStream = response.GetResponseStream())
                     {
-                        var json = myStreamReader.ReadToEnd();
-                        library = JsonConvert.DeserializeObject<LibraryContent>(json);
+                        using (var myStreamReader = new StreamReader(responseStream, Encoding.UTF8))
+                        {
+                            var json = myStreamReader.ReadToEnd();
+                            library = JsonConvert.DeserializeObject<LibraryContent>(json);
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                error = ex.Message;
+                AppLog.Message("GetLibraryContent()", ex);
             }
 
             return library;
