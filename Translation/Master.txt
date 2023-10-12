@@ -1168,6 +1168,11 @@ ErrorLichess=Error accessing lichess.org
 #Error accessing online library
 ErrAccessOnlineLibrary=Error accessing library
 
+#Error when file appears in wrong format.
+ErrFileFormatOrCorrupt=File corrupted or in the wrong format.
+
+#Error when downloading from the library
+ErrLibraryDownload=Library Download Error
 
 #Bookmarks already exist
 BookmarksAlreadyExist=Bookmarks already exist

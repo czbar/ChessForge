@@ -1496,6 +1496,13 @@ ErrorLichess=
 #english: ErrAccessOnlineLibrary=Error accessing library
 ErrAccessOnlineLibrary=
 
+#description: Error when file appears in wrong format.
+#english: ErrFileFormatOrCorrupt=File corrupted or in the wrong format.
+ErrFileFormatOrCorrupt=
+
+#description: Error when downloading from the library
+#english: ErrLibraryDownload=Library Download Error
+ErrLibraryDownload=
 
 #description: Bookmarks already exist
 #english: BookmarksAlreadyExist=Bookmarks already exist

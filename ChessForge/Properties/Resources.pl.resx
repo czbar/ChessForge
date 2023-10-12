@@ -1101,6 +1101,12 @@
   <data name="ErrAccessOnlineLibrary" xml:space="preserve">
     <value>Błąd w dostępie do biblioteki</value>
   </data>
+  <data name="ErrFileFormatOrCorrupt" xml:space="preserve">
+    <value>Plik uszkodzony lub w złym formacie.</value>
+  </data>
+  <data name="ErrLibraryDownload" xml:space="preserve">
+    <value>Błąd Pobrania z Biblioteki</value>
+  </data>
   <data name="BookmarksAlreadyExist" xml:space="preserve">
     <value>Zakładki już istnieją</value>
   </data>

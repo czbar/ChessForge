@@ -1961,6 +1961,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File corrupted or in the wrong format..
+        /// </summary>
+        public static string ErrFileFormatOrCorrupt {
+            get {
+                return ResourceManager.GetString("ErrFileFormatOrCorrupt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Found.
         /// </summary>
         public static string ErrFound {
@@ -2002,6 +2011,15 @@ namespace ChessForge.Properties {
         public static string ErrInsteadOfMoveNumber {
             get {
                 return ResourceManager.GetString("ErrInsteadOfMoveNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Library Download Error.
+        /// </summary>
+        public static string ErrLibraryDownload {
+            get {
+                return ResourceManager.GetString("ErrLibraryDownload", resourceCulture);
             }
         }
         

@@ -1101,6 +1101,12 @@
   <data name="ErrAccessOnlineLibrary" xml:space="preserve">
     <value>Error accessing library</value>
   </data>
+  <data name="ErrFileFormatOrCorrupt" xml:space="preserve">
+    <value>File corrupted or in the wrong format.</value>
+  </data>
+  <data name="ErrLibraryDownload" xml:space="preserve">
+    <value>Library Download Error</value>
+  </data>
   <data name="BookmarksAlreadyExist" xml:space="preserve">
     <value>Bookmarks already exist</value>
   </data>

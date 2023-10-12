@@ -1496,6 +1496,13 @@ ErrorLichess=Błąd w dostępie do lichess.org
 #english: ErrAccessOnlineLibrary=Error accessing library
 ErrAccessOnlineLibrary=Błąd w dostępie do biblioteki
 
+#description: Error when file appears in wrong format.
+#english: ErrFileFormatOrCorrupt=File corrupted or in the wrong format.
+ErrFileFormatOrCorrupt=Plik uszkodzony lub w złym formacie.
+
+#description: Error when downloading from the library
+#english: ErrLibraryDownload=Library Download Error
+ErrLibraryDownload=Błąd Pobrania z Biblioteki
 
 #description: Bookmarks already exist
 #english: BookmarksAlreadyExist=Bookmarks already exist
