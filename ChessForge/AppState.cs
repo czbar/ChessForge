@@ -508,7 +508,7 @@ namespace ChessForge
                 return true;
             }
 
-            AppLog.Message("Saving Workbook to File - START");
+            AppLog.Message("Saving Workbook to File");
             try
             {
                 string savePath = string.IsNullOrWhiteSpace(filePath) ? WorkbookFilePath : filePath;
@@ -542,7 +542,7 @@ namespace ChessForge
                 AppLog.Message("SaveWorkbookFile()", ex);
                 MessageBox.Show(Properties.Resources.FailedToSaveFile + ": " + ex.Message, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            AppLog.Message("Saving Workbook to File - END");
+            AppLog.Message("Workbook Saved to File");
 
             return result;
         }
