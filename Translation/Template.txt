@@ -1452,8 +1452,12 @@ PgnFile=
 AllFiles=
 
 #description: Workbook not saved
-#english: WorkbookNotSaved=Workbook not Saved
+#english: WorkbookNotSaved=Workbook Not Saved
 WorkbookNotSaved=
+
+#description: Prompt th euser to save the workbook locally
+#english: PromptSaveWorkbookLocally=Save the Workbook on your local drive?
+PromptSaveWorkbookLocally=
 
 #description: No node selected to paste at
 #english: MsgSelectNodeToInserAt=Select position to paste the moves at.

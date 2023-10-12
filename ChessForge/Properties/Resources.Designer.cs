@@ -4122,6 +4122,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save the Workbook on your local drive?.
+        /// </summary>
+        public static string PromptSaveWorkbookLocally {
+            get {
+                return ResourceManager.GetString("PromptSaveWorkbookLocally", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quiz points.
         /// </summary>
         public static string QuizPoints {
@@ -5589,7 +5598,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Workbook not Saved.
+        ///   Looks up a localized string similar to Workbook Not Saved.
         /// </summary>
         public static string WorkbookNotSaved {
             get {

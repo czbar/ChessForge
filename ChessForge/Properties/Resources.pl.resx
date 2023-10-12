@@ -1072,7 +1072,10 @@
     <value>Wszystkie pliki</value>
   </data>
   <data name="WorkbookNotSaved" xml:space="preserve">
-    <value>Podręcznik nie Zapisany</value>
+    <value>Podręcznik Niezapisany</value>
+  </data>
+  <data name="PromptSaveWorkbookLocally" xml:space="preserve">
+    <value>Zapisać podręcznik na lokalnym dysku?</value>
   </data>
   <data name="MsgSelectNodeToInserAt" xml:space="preserve">
     <value>Zaznacz pozycję gdzie wkleić ruchy.</value>

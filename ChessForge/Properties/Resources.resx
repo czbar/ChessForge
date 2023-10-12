@@ -1072,7 +1072,10 @@
     <value>All files</value>
   </data>
   <data name="WorkbookNotSaved" xml:space="preserve">
-    <value>Workbook not Saved</value>
+    <value>Workbook Not Saved</value>
+  </data>
+  <data name="PromptSaveWorkbookLocally" xml:space="preserve">
+    <value>Save the Workbook on your local drive?</value>
   </data>
   <data name="MsgSelectNodeToInserAt" xml:space="preserve">
     <value>Select position to paste the moves at.</value>
