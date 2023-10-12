@@ -444,13 +444,16 @@ namespace ChessForge
         /// Handles events from the AutoSave timer.
         /// Writes out the current file if it is "dirty" and if
         /// AutoSave is enabled (which it should be if this event
-        /// is enabled but we do a defensive check)
+        /// is enabled but we do a defensive check).
+        /// However, if WorkbookFilePath is empty, this indicates that the user
+        /// downloaded the workbook and declined to save it locally.
+        /// Therefore, we will not save it.
         /// </summary>
         /// <param name="source"></param>
         /// <param name="e"></param>
         public static void AutoSaveEvent(object source, ElapsedEventArgs e)
         {
-            if (IsDirty && Configuration.AutoSave)
+            if (IsDirty && Configuration.AutoSave && !string.IsNullOrEmpty(WorkbookFilePath))
             {
                 SaveWorkbookFile(null);
             }
