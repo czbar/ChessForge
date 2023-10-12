@@ -6,7 +6,7 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        Title="{x:Static p:Resources.DlgTitleLibraryContent}" Height="550" Width="800">
+        Title="{x:Static p:Resources.DlgTitleLibraryContent}" Height="600" Width="800">
     <Grid>
         <RichTextBox x:Name="UiRtbOnlineLibrary" IsReadOnly="True" Cursor="Arrow"  
                      Margin="10,10,10,50" VerticalScrollBarVisibility="Auto">

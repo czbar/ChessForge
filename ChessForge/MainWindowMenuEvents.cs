@@ -159,8 +159,8 @@ namespace ChessForge
             {
                 OnlineLibraryContentDialog dlg = new OnlineLibraryContentDialog(libraryContent)
                 {
-                    Left = ChessForgeMain.Left + 100,
-                    Top = ChessForgeMain.Top + 100,
+                    Left = ChessForgeMain.Left + 50,
+                    Top = ChessForgeMain.Top + 50,
                     Topmost = false,
                     Owner = this
                 };
