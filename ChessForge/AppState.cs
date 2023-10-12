@@ -492,6 +492,11 @@ namespace ChessForge
 
         /// <summary>
         /// Saves the workbook to its PGN file.
+        /// Note that if the user is working with w workbook file
+        /// that was downloaded and not saved locally, both filePath
+        /// and WorkbookFilePath will be null or empty.
+        /// In this case, we will prompt the user to choose the file
+        /// name and save it, or not save it.
         /// </summary>
         /// <returns>true if successful, false on exception</returns>
         public static bool SaveWorkbookFile(string filePath, bool checkDirty = false)
@@ -507,19 +512,27 @@ namespace ChessForge
             try
             {
                 string savePath = string.IsNullOrWhiteSpace(filePath) ? WorkbookFilePath : filePath;
-                if (WorkbookFileType == FileType.CHESS_FORGE_PGN)
+                if (string.IsNullOrEmpty(savePath))
                 {
-                    lock (_lockFileSave)
+                    // downloaded file, not saved previously
+                    WorkbookManager.SaveWorkbookToNewFile(null);
+                }
+                else
+                {
+                    if (WorkbookFileType == FileType.CHESS_FORGE_PGN)
                     {
-                        MainWin.SaveIntro();
-                        string chfText = WorkbookFileTextBuilder.BuildWorkbookText();
-                        File.WriteAllText(savePath, chfText);
-                    }
+                        lock (_lockFileSave)
+                        {
+                            MainWin.SaveIntro();
+                            string chfText = WorkbookFileTextBuilder.BuildWorkbookText();
+                            File.WriteAllText(savePath, chfText);
+                        }
 
-                    // if background processing is in progress, do not mark as clean
-                    if (!WorkbookManager.SessionWorkbook.IsBackgroundLoadingInProgress)
-                    {
-                        IsDirty = false;
+                        // if background processing is in progress, do not mark as clean
+                        if (!WorkbookManager.SessionWorkbook.IsBackgroundLoadingInProgress)
+                        {
+                            IsDirty = false;
+                        }
                     }
                 }
             }
