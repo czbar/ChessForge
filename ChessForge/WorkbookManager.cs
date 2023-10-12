@@ -219,7 +219,10 @@ namespace ChessForge
             GameData gm = new GameData();
             gm.FirstLineInFile = 1;
 
-            using (StreamReader sr = new StreamReader(path))
+            // TODO: need something more elegant here, perhpas another parameter
+            bool isFile = !path.Contains("\n");
+
+            using (TextReader sr = isFile ? (new StreamReader(path) as TextReader) : (new StringReader(path) as TextReader))
             {
                 StringBuilder gameText = new StringBuilder();
                 int lineNo = 0;
@@ -1216,9 +1219,12 @@ namespace ChessForge
         /// <param name="fileName"></param>
         public static void UpdateRecentFilesList(string fileName)
         {
-            Configuration.AddRecentFile(fileName);
-            AppState.MainWin.RecreateRecentFilesMenuItems();
-            Configuration.LastWorkbookFile = fileName;
+            if (!string.IsNullOrEmpty(fileName))
+            {
+                Configuration.AddRecentFile(fileName);
+                AppState.MainWin.RecreateRecentFilesMenuItems();
+                Configuration.LastWorkbookFile = fileName;
+            }
         }
 
         public static bool SaveWorkbookToNewFileV2(string chfFileName)
