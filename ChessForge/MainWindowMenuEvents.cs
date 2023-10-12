@@ -149,7 +149,8 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnOnlineLibrary_Click(object sender, RoutedEventArgs e)
         {
-            WebAccess.LibraryContent libraryContent = WebAccess.OnlineLibrary.GetLibraryContent(out string error);
+            string error;
+            WebAccess.LibraryContent libraryContent = WebAccess.OnlineLibrary.GetLibraryContent(out error);
             if (libraryContent == null)
             {
                 MessageBox.Show(Properties.Resources.ErrAccessOnlineLibrary + ": " + error, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
@@ -163,7 +164,32 @@ namespace ChessForge
                     Topmost = false,
                     Owner = this
                 };
-                dlg.ShowDialog();
+                if (dlg.ShowDialog() == true)
+                {
+                    // download the workbook
+                    string bookText = WebAccess.OnlineLibrary.GetWorkbookText(dlg.SelectedBook.File, out error);
+                    if (!string.IsNullOrEmpty(error))
+                    {
+                        MessageBox.Show(Properties.Resources.ErrAccessOnlineLibrary + ": " + error, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    else
+                    {
+                        if (PrepareToReadWorkbook())
+                        {
+                            WorkbookManager.ReadPgnFile(bookText, ref WorkbookManager.VariationTreeList, GameData.ContentType.GENERIC, GameData.ContentType.NONE);
+                            bool res = WorkbookManager.PrepareWorkbook(ref WorkbookManager.VariationTreeList, out bool isChessForgeFile);
+                            if (!isChessForgeFile)
+                            {
+                                MessageBox.Show(Properties.Resources.ErrFileFormatOrCorrupt, Properties.Resources.ErrLibraryDownload, MessageBoxButton.OK, MessageBoxImage.Error);
+                                AppState.RestartInIdleMode();
+                            }
+                            else
+                            {
+                                SetupGuiForNewSession("", true, null);
+                            }
+                        }
+                    }
+                }
             }
         }
 
