@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChessPosition;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,10 +19,24 @@ namespace ChessForge
     /// </summary>
     public partial class OnlineLibraryContentDialog : Window
     {
+        // starting letter for bookcase numbering
         private char _bookcaseId = 'A';
 
+        // the listing of the content of the library
         private LibraryContent _content;
 
+        // dictionary mapping Runs to Workbook that they represent
+        private Dictionary<Run, WebAccess.Book> _dictRunBooks = new Dictionary<Run, WebAccess.Book>();
+
+        /// <summary>
+        /// A library workbook object selected by the user.
+        /// </summary>
+        public WebAccess.Book SelectedBook = null;
+        
+        /// <summary>
+        /// Constructor. Builds the content of the Rich Text Box.
+        /// </summary>
+        /// <param name="content"></param>
         public OnlineLibraryContentDialog(LibraryContent content)
         {
             InitializeComponent();
@@ -218,6 +233,9 @@ namespace ChessForge
                 title.TextDecorations = TextDecorations.Underline;
                 title.Foreground = Brushes.Blue;
                 title.Cursor = Cursors.Hand;
+                title.MouseDown += EventBookTitle;
+
+                _dictRunBooks[title] = book;
                 para.Inlines.Add(title);
 
                 if (!string.IsNullOrEmpty(book.Description))
@@ -234,5 +252,26 @@ namespace ChessForge
 
             UiRtbOnlineLibrary.Document.Blocks.Add(para);
         }
+
+        /// <summary>
+        /// Handles user's click on a book title.
+        /// Identifies the clicked book and closes the dialog.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventBookTitle(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                Run run = e.Source as Run;
+                if (run != null)
+                {
+                    SelectedBook = _dictRunBooks[run];
+                    DialogResult = true;
+                }
+            }
+            catch { }
+        }
+
     }
 }
