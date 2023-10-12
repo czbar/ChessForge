@@ -74,6 +74,8 @@
                         <MenuItem x:Name="UiMnOpenWorkbook" Header="{x:Static p:Resources.OpenWorkbook}" Click="UiMnOpenWorkbook_Click"/>
                         <MenuItem x:Name="UiMnCloseWorkbook" Header="{x:Static p:Resources.CloseWorkbook}" Click="UiMnCloseWorkbook_Click" />
                         <Separator />
+                        <MenuItem x:Name="UiMnOnlineLibrary" Header="{x:Static p:Resources.OnlineLibrary}"  Click="UiMnOnlineLibrary_Click" />
+                        <Separator />
                         <MenuItem x:Name="UiMnWorkbookSave" Header="{x:Static p:Resources.Save}" Click="UiMnWorkbookSave_Click" InputGestureText="Ctrl+S" />
                         <MenuItem x:Name="UiMnWorkbookSaveAs" Header="{x:Static p:Resources.SaveAs}" Click="UiMnWorkbookSaveAs_Click" />
                         <MenuItem x:Name="UiMnBackupVersion" Header="{x:Static p:Resources.BackUpThisVersion}" Click="UiMnBackupVersion_Click" />

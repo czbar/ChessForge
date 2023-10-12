@@ -143,7 +143,66 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Checks if we can proceed with opening a Workbook.
+        /// Obtains the content of the online library.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnOnlineLibrary_Click(object sender, RoutedEventArgs e)
+        {
+            string error;
+            WebAccess.LibraryContent libraryContent = WebAccess.OnlineLibrary.GetLibraryContent(out error);
+            if (libraryContent == null)
+            {
+                MessageBox.Show(Properties.Resources.ErrAccessOnlineLibrary + ": " + error, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else
+            {
+                OnlineLibraryContentDialog dlg = new OnlineLibraryContentDialog(libraryContent)
+                {
+                    Left = ChessForgeMain.Left + 50,
+                    Top = ChessForgeMain.Top + 50,
+                    Topmost = false,
+                    Owner = this
+                };
+                if (dlg.ShowDialog() == true)
+                {
+                    // download the workbook
+                    string bookText = WebAccess.OnlineLibrary.GetWorkbookText(dlg.SelectedBook.File, out error);
+                    if (!string.IsNullOrEmpty(error))
+                    {
+                        MessageBox.Show(Properties.Resources.ErrAccessOnlineLibrary + ": " + error, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    else
+                    {
+                        if (PrepareToReadWorkbook())
+                        {
+                            WorkbookManager.ReadPgnFile(bookText, ref WorkbookManager.VariationTreeList, GameData.ContentType.GENERIC, GameData.ContentType.NONE);
+                            bool res = WorkbookManager.PrepareWorkbook(ref WorkbookManager.VariationTreeList, out bool isChessForgeFile);
+                            if (!isChessForgeFile)
+                            {
+                                MessageBox.Show(Properties.Resources.ErrFileFormatOrCorrupt, Properties.Resources.ErrLibraryDownload, MessageBoxButton.OK, MessageBoxImage.Error);
+                                AppState.RestartInIdleMode();
+                            }
+                            else
+                            {
+                                SetupGuiForNewSession("", true, null);
+                                // at this point the Workbook is not saved
+                                if (MessageBox.Show(Properties.Resources.PromptSaveWorkbookLocally,
+                                    dlg.SelectedBook.Title, 
+                                    MessageBoxButton.YesNo, 
+                                    MessageBoxImage.Question) == MessageBoxResult.Yes)
+                                {
+                                    WorkbookManager.SaveWorkbookToNewFile(null);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Checks if we can proceed with the opening of the Workbook.
         /// </summary>
         /// <returns></returns>
         private bool PrepareToReadWorkbook()
@@ -3346,7 +3405,6 @@ namespace ChessForge
                     List<FullNodeId> affectedNodes = WorkbookManager.RemoveArticleReferences(guid);
                     if (affectedNodes.Count > 0)
                     {
-                        // TODO: we should save this list for the Undo operation
                         _studyTreeView?.UpdateReferenceRuns(affectedNodes);
                     }
                     WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
@@ -3377,7 +3435,6 @@ namespace ChessForge
                     List<FullNodeId> affectedNodes = WorkbookManager.RemoveArticleReferences(guid);
                     if (affectedNodes.Count > 0)
                     {
-                        // TODO: we should save this list for the Undo operation
                         _studyTreeView?.UpdateReferenceRuns(affectedNodes);
                     }
                     WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);

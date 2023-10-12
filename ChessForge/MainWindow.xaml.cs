@@ -1524,7 +1524,7 @@ namespace ChessForge
                 if (wvs == null)
                 {
                     // this is a newly created Workbook
-                    tabToFocus = WorkbookManager.TabViewType.STUDY;
+                    tabToFocus = WorkbookManager.TabViewType.CHAPTERS;
                     workbook.SelectDefaultActiveChapter();
                 }
                 else

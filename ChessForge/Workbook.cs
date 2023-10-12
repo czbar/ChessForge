@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Windows.Input;
 using ChessPosition;
 using ChessPosition.GameTree;
 using GameTree;
@@ -296,6 +297,44 @@ namespace ChessForge
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Looks for a tree with the requested id in the workbook.
+        /// (Ignores Intro trees.)
+        /// </summary>
+        /// <param name="treeId"></param>
+        /// <returns></returns>
+        public VariationTree GetTreeByTreeId(int treeId)
+        {
+            VariationTree tree = null;
+
+            foreach (Chapter chapter in _chapters)
+            {
+                if (chapter.StudyTree.Tree.TreeId == treeId)
+                {
+                    tree = chapter.StudyTree.Tree;
+                    break;
+                }
+                foreach (Article game in chapter.ModelGames)
+                {
+                    if (game.Tree.TreeId == treeId)
+                    {
+                        tree = game.Tree;
+                        break;
+                    }
+                }
+                foreach (Article exercise in chapter.Exercises)
+                {
+                    if (exercise.Tree.TreeId == treeId)
+                    {
+                        tree = exercise.Tree;
+                        break;
+                    }
+                }
+            }
+
+            return tree;
         }
 
         /// <summary>

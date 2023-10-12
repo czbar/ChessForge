@@ -450,6 +450,9 @@
   <data name="CloseWorkbook" xml:space="preserve">
     <value>Close Workbook</value>
   </data>
+  <data name="OnlineLibrary" xml:space="preserve">
+    <value>Online Library</value>
+  </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>
@@ -677,6 +680,18 @@
   </data>
   <data name="EgCentipawnAccuracy" xml:space="preserve">
     <value>max allowed centipawn deviation from the best move is</value>
+  </data>
+  <data name="DlgTitleLibraryContent" xml:space="preserve">
+    <value>Library Content</value>
+  </data>
+  <data name="ChessForgeOnlineLibrary" xml:space="preserve">
+    <value>Chess Forge Online Library</value>
+  </data>
+  <data name="Bookcase" xml:space="preserve">
+    <value>Bookcase</value>
+  </data>
+  <data name="Shelf" xml:space="preserve">
+    <value>Shelf</value>
   </data>
   <data name="ScopeForDeleteComments" xml:space="preserve">
     <value>Delete Comments</value>
@@ -1057,7 +1072,10 @@
     <value>All files</value>
   </data>
   <data name="WorkbookNotSaved" xml:space="preserve">
-    <value>Workbook not Saved</value>
+    <value>Workbook Not Saved</value>
+  </data>
+  <data name="PromptSaveWorkbookLocally" xml:space="preserve">
+    <value>Save the Workbook on your local drive?</value>
   </data>
   <data name="MsgSelectNodeToInserAt" xml:space="preserve">
     <value>Select position to paste the moves at.</value>
@@ -1082,6 +1100,15 @@
   </data>
   <data name="ErrorLichess" xml:space="preserve">
     <value>Error accessing lichess.org</value>
+  </data>
+  <data name="ErrAccessOnlineLibrary" xml:space="preserve">
+    <value>Error accessing library</value>
+  </data>
+  <data name="ErrFileFormatOrCorrupt" xml:space="preserve">
+    <value>File corrupted or in the wrong format.</value>
+  </data>
+  <data name="ErrLibraryDownload" xml:space="preserve">
+    <value>Library Download Error</value>
   </data>
   <data name="BookmarksAlreadyExist" xml:space="preserve">
     <value>Bookmarks already exist</value>

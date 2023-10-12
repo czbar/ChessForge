@@ -360,7 +360,12 @@ ErrNoTextReceived=no text received.
 #
 
 
-#TOP LEVEL MENU: File
+#################################
+#
+# Header: TOP LEVEL MENU: File
+#
+
+#File
 File=File
 
 #Create a new Workbook
@@ -371,6 +376,9 @@ OpenWorkbook=Open Workbook
 
 #Close an existing Workbook
 CloseWorkbook=Close Workbook
+
+#Online library
+OnlineLibrary=Online Library
 
 #Save the currently open Workbook
 Save=Save
@@ -441,6 +449,7 @@ ExitTrainingAdvice=Exit the training session to use this function.
 # Header: TOP LEVEL MENU: View
 #
 
+#description: View=View
 View=View
 
 #Views plural
@@ -633,6 +642,23 @@ EgSelectionAccuracyLabel=Move selection accuracy is
 
 #Cenitpawn accuracy
 EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
+
+#######################################
+#
+# Header: DIALOG Chess Forge library
+#
+
+#Dialog title
+DlgTitleLibraryContent=Library Content
+
+#Chess Forge Online Library Title
+ChessForgeOnlineLibrary=Chess Forge Online Library
+
+#Bookcase
+Bookcase=Bookcase
+
+#Shelf
+Shelf = Shelf
 
 
 #######################################
@@ -1108,7 +1134,10 @@ PgnFile=PGN files
 AllFiles=All files
 
 #Workbook not saved
-WorkbookNotSaved=Workbook not Saved
+WorkbookNotSaved=Workbook Not Saved
+
+#Prompt th euser to save the workbook locally
+PromptSaveWorkbookLocally=Save the Workbook on your local drive?
 
 #No node selected to paste at
 MsgSelectNodeToInserAt=Select position to paste the moves at.
@@ -1136,8 +1165,17 @@ FlMsgGameImportSuccess=Game Imported Successfully.
 #Referenced Games not Found
 RefGamesNotFound=Referenced games not found.
 
-#Error communcating with liches
+#Error communicating with lichess
 ErrorLichess=Error accessing lichess.org
+
+#Error accessing online library
+ErrAccessOnlineLibrary=Error accessing library
+
+#Error when file appears in wrong format.
+ErrFileFormatOrCorrupt=File corrupted or in the wrong format.
+
+#Error when downloading from the library
+ErrLibraryDownload=Library Download Error
 
 #Bookmarks already exist
 BookmarksAlreadyExist=Bookmarks already exist

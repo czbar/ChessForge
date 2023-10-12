@@ -467,7 +467,12 @@ ErrNoTextReceived=
 #
 
 
-#description: TOP LEVEL MENU: File
+#################################
+#
+# Header: TOP LEVEL MENU: File
+#
+
+#description: File
 #english: File=File
 File=
 
@@ -482,6 +487,10 @@ OpenWorkbook=
 #description: Close an existing Workbook
 #english: CloseWorkbook=Close Workbook
 CloseWorkbook=
+
+#description: Online library
+#english: OnlineLibrary=Online Library
+OnlineLibrary=
 
 #description: Save the currently open Workbook
 #english: Save=Save
@@ -572,7 +581,8 @@ ExitTrainingAdvice=
 # Header: TOP LEVEL MENU: View
 #
 
-Vdescription: iew=View
+#description: description: View=View
+#english: View=View
 View=
 
 #description: Views plural
@@ -820,6 +830,27 @@ EgSelectionAccuracyLabel=
 #description: Cenitpawn accuracy
 #english: EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
 EgCentipawnAccuracy=
+
+#######################################
+#
+# Header: DIALOG Chess Forge library
+#
+
+#description: Dialog title
+#english: DlgTitleLibraryContent=Library Content
+DlgTitleLibraryContent=
+
+#description: Chess Forge Online Library Title
+#english: ChessForgeOnlineLibrary=Chess Forge Online Library
+ChessForgeOnlineLibrary=
+
+#description: Bookcase
+#english: Bookcase=Bookcase
+Bookcase=
+
+#description: Shelf
+#english: Shelf = Shelf
+Shelf =
 
 
 #######################################
@@ -1421,8 +1452,12 @@ PgnFile=
 AllFiles=
 
 #description: Workbook not saved
-#english: WorkbookNotSaved=Workbook not Saved
+#english: WorkbookNotSaved=Workbook Not Saved
 WorkbookNotSaved=
+
+#description: Prompt th euser to save the workbook locally
+#english: PromptSaveWorkbookLocally=Save the Workbook on your local drive?
+PromptSaveWorkbookLocally=
 
 #description: No node selected to paste at
 #english: MsgSelectNodeToInserAt=Select position to paste the moves at.
@@ -1457,9 +1492,21 @@ FlMsgGameImportSuccess=
 #english: RefGamesNotFound=Referenced games not found.
 RefGamesNotFound=
 
-#description: Error communcating with liches
+#description: Error communicating with lichess
 #english: ErrorLichess=Error accessing lichess.org
 ErrorLichess=
+
+#description: Error accessing online library
+#english: ErrAccessOnlineLibrary=Error accessing library
+ErrAccessOnlineLibrary=
+
+#description: Error when file appears in wrong format.
+#english: ErrFileFormatOrCorrupt=File corrupted or in the wrong format.
+ErrFileFormatOrCorrupt=
+
+#description: Error when downloading from the library
+#english: ErrLibraryDownload=Library Download Error
+ErrLibraryDownload=
 
 #description: Bookmarks already exist
 #english: BookmarksAlreadyExist=Bookmarks already exist

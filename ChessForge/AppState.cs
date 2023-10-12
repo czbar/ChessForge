@@ -444,13 +444,16 @@ namespace ChessForge
         /// Handles events from the AutoSave timer.
         /// Writes out the current file if it is "dirty" and if
         /// AutoSave is enabled (which it should be if this event
-        /// is enabled but we do a defensive check)
+        /// is enabled but we do a defensive check).
+        /// However, if WorkbookFilePath is empty, this indicates that the user
+        /// downloaded the workbook and declined to save it locally.
+        /// Therefore, we will not save it.
         /// </summary>
         /// <param name="source"></param>
         /// <param name="e"></param>
         public static void AutoSaveEvent(object source, ElapsedEventArgs e)
         {
-            if (IsDirty && Configuration.AutoSave)
+            if (IsDirty && Configuration.AutoSave && !string.IsNullOrEmpty(WorkbookFilePath))
             {
                 SaveWorkbookFile(null);
             }
@@ -489,6 +492,11 @@ namespace ChessForge
 
         /// <summary>
         /// Saves the workbook to its PGN file.
+        /// Note that if the user is working with w workbook file
+        /// that was downloaded and not saved locally, both filePath
+        /// and WorkbookFilePath will be null or empty.
+        /// In this case, we will prompt the user to choose the file
+        /// name and save it, or not save it.
         /// </summary>
         /// <returns>true if successful, false on exception</returns>
         public static bool SaveWorkbookFile(string filePath, bool checkDirty = false)
@@ -500,23 +508,31 @@ namespace ChessForge
                 return true;
             }
 
-            AppLog.Message("Saving Workbook to File - START");
+            AppLog.Message("Saving Workbook to File");
             try
             {
                 string savePath = string.IsNullOrWhiteSpace(filePath) ? WorkbookFilePath : filePath;
-                if (WorkbookFileType == FileType.CHESS_FORGE_PGN)
+                if (string.IsNullOrEmpty(savePath))
                 {
-                    lock (_lockFileSave)
+                    // downloaded file, not saved previously
+                    WorkbookManager.SaveWorkbookToNewFile(null);
+                }
+                else
+                {
+                    if (WorkbookFileType == FileType.CHESS_FORGE_PGN)
                     {
-                        MainWin.SaveIntro();
-                        string chfText = WorkbookFileTextBuilder.BuildWorkbookText();
-                        File.WriteAllText(savePath, chfText);
-                    }
+                        lock (_lockFileSave)
+                        {
+                            MainWin.SaveIntro();
+                            string chfText = WorkbookFileTextBuilder.BuildWorkbookText();
+                            File.WriteAllText(savePath, chfText);
+                        }
 
-                    // if background processing is in progress, do not mark as clean
-                    if (!WorkbookManager.SessionWorkbook.IsBackgroundLoadingInProgress)
-                    {
-                        IsDirty = false;
+                        // if background processing is in progress, do not mark as clean
+                        if (!WorkbookManager.SessionWorkbook.IsBackgroundLoadingInProgress)
+                        {
+                            IsDirty = false;
+                        }
                     }
                 }
             }
@@ -526,7 +542,7 @@ namespace ChessForge
                 AppLog.Message("SaveWorkbookFile()", ex);
                 MessageBox.Show(Properties.Resources.FailedToSaveFile + ": " + ex.Message, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            AppLog.Message("Saving Workbook to File - END");
+            AppLog.Message("Workbook Saved to File");
 
             return result;
         }

@@ -467,7 +467,12 @@ ErrNoTextReceived=brak tekstu partii.
 #
 
 
-#description: TOP LEVEL MENU: File
+#################################
+#
+# Header: TOP LEVEL MENU: File
+#
+
+#description: File
 #english: File=File
 File=Plik
 
@@ -482,6 +487,10 @@ OpenWorkbook=Otwórz Podręcznik
 #description: Close an existing Workbook
 #english: CloseWorkbook=Close Workbook
 CloseWorkbook=Zamknij Podręcznik
+
+#description: Online library
+#english: OnlineLibrary=Online Library
+OnlineLibrary=Biblioteka w Sieci
 
 #description: Save the currently open Workbook
 #english: Save=Save
@@ -572,7 +581,8 @@ ExitTrainingAdvice=Wyjdź z sesji treningowej, aby użyc tej funkcji.
 # Header: TOP LEVEL MENU: View
 #
 
-Vdescription: iew=View
+#description: description: View=View
+#english: View=View
 View=Widok
 
 #description: Views plural
@@ -820,6 +830,27 @@ EgSelectionAccuracyLabel=Dokładność wyboru ruchów wynosi
 #description: Cenitpawn accuracy
 #english: EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
 EgCentipawnAccuracy=maksymalne odchylenie od najlepszego ruchu wynosi
+
+#######################################
+#
+# Header: DIALOG Chess Forge library
+#
+
+#description: Dialog title
+#english: DlgTitleLibraryContent=Library Content
+DlgTitleLibraryContent=Zawartość Biblioteki
+
+#description: Chess Forge Online Library Title
+#english: ChessForgeOnlineLibrary=Chess Forge Online Library
+ChessForgeOnlineLibrary=Biblioteka Chess Forge w Sieci
+
+#description: Bookcase
+#english: Bookcase=Bookcase
+Bookcase=Regał
+
+#description: Shelf
+#english: Shelf = Shelf
+Shelf = Półka
 
 
 #######################################
@@ -1421,8 +1452,12 @@ PgnFile=Pliki PGN
 AllFiles=Wszystkie pliki
 
 #description: Workbook not saved
-#english: WorkbookNotSaved=Workbook not Saved
-WorkbookNotSaved=Podręcznik nie Zapisany
+#english: WorkbookNotSaved=Workbook Not Saved
+WorkbookNotSaved=Podręcznik Niezapisany
+
+#description: Prompt th euser to save the workbook locally
+#english: PromptSaveWorkbookLocally=Save the Workbook on your local drive?
+PromptSaveWorkbookLocally=Zapisać podręcznik na lokalnym dysku?
 
 #description: No node selected to paste at
 #english: MsgSelectNodeToInserAt=Select position to paste the moves at.
@@ -1457,9 +1492,21 @@ FlMsgGameImportSuccess=Partia Została Zaimportowana.
 #english: RefGamesNotFound=Referenced games not found.
 RefGamesNotFound=Partii nie znaleziono.
 
-#description: Error communcating with liches
+#description: Error communicating with lichess
 #english: ErrorLichess=Error accessing lichess.org
 ErrorLichess=Błąd w dostępie do lichess.org
+
+#description: Error accessing online library
+#english: ErrAccessOnlineLibrary=Error accessing library
+ErrAccessOnlineLibrary=Błąd w dostępie do biblioteki
+
+#description: Error when file appears in wrong format.
+#english: ErrFileFormatOrCorrupt=File corrupted or in the wrong format.
+ErrFileFormatOrCorrupt=Plik uszkodzony lub w złym formacie.
+
+#description: Error when downloading from the library
+#english: ErrLibraryDownload=Library Download Error
+ErrLibraryDownload=Błąd Pobrania z Biblioteki
 
 #description: Bookmarks already exist
 #english: BookmarksAlreadyExist=Bookmarks already exist

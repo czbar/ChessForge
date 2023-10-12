@@ -2557,10 +2557,17 @@ namespace ChessForge
         /// <param name="nodes"></param>
         public void UpdateReferenceRuns(List<FullNodeId> nodes)
         {
-            foreach (FullNodeId fullNode in nodes)
+            if (AppState.Workbook != null)
             {
-                TreeNode nd = _mainWin.ActiveVariationTree.GetNodeFromNodeId(fullNode.NodeId);
-                InsertOrDeleteReferenceRun(nd);
+                foreach (FullNodeId fullNode in nodes)
+                {
+                    VariationTree tree = AppState.Workbook.GetTreeByTreeId(fullNode.TreeId);
+                    if (tree != null)
+                    {
+                        TreeNode nd = tree.GetNodeFromNodeId(fullNode.NodeId);
+                        InsertOrDeleteReferenceRun(nd);
+                    }
+                }
             }
         }
 

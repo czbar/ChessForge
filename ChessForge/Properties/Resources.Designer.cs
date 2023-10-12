@@ -251,6 +251,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bookcase.
+        /// </summary>
+        public static string Bookcase {
+            get {
+                return ResourceManager.GetString("Bookcase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bookmark.
         /// </summary>
         public static string Bookmark {
@@ -787,6 +796,15 @@ namespace ChessForge.Properties {
         public static string ChessForge {
             get {
                 return ResourceManager.GetString("ChessForge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chess Forge Online Library.
+        /// </summary>
+        public static string ChessForgeOnlineLibrary {
+            get {
+                return ResourceManager.GetString("ChessForgeOnlineLibrary", resourceCulture);
             }
         }
         
@@ -1421,6 +1439,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Library Content.
+        /// </summary>
+        public static string DlgTitleLibraryContent {
+            get {
+                return ResourceManager.GetString("DlgTitleLibraryContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Workbook Options.
         /// </summary>
         public static string DlgTitleWorkbookOptions {
@@ -1898,6 +1925,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error accessing library.
+        /// </summary>
+        public static string ErrAccessOnlineLibrary {
+            get {
+                return ResourceManager.GetString("ErrAccessOnlineLibrary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to after move.
         /// </summary>
         public static string ErrAfterMove {
@@ -1921,6 +1957,15 @@ namespace ChessForge.Properties {
         public static string ErrEmptyUserName {
             get {
                 return ResourceManager.GetString("ErrEmptyUserName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File corrupted or in the wrong format..
+        /// </summary>
+        public static string ErrFileFormatOrCorrupt {
+            get {
+                return ResourceManager.GetString("ErrFileFormatOrCorrupt", resourceCulture);
             }
         }
         
@@ -1966,6 +2011,15 @@ namespace ChessForge.Properties {
         public static string ErrInsteadOfMoveNumber {
             get {
                 return ResourceManager.GetString("ErrInsteadOfMoveNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Library Download Error.
+        /// </summary>
+        public static string ErrLibraryDownload {
+            get {
+                return ResourceManager.GetString("ErrLibraryDownload", resourceCulture);
             }
         }
         
@@ -3726,6 +3780,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Online Library.
+        /// </summary>
+        public static string OnlineLibrary {
+            get {
+                return ResourceManager.GetString("OnlineLibrary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Openings.
         /// </summary>
         public static string Openings {
@@ -4055,6 +4118,15 @@ namespace ChessForge.Properties {
         public static string PromptCorrectData {
             get {
                 return ResourceManager.GetString("PromptCorrectData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save the Workbook on your local drive?.
+        /// </summary>
+        public static string PromptSaveWorkbookLocally {
+            get {
+                return ResourceManager.GetString("PromptSaveWorkbookLocally", resourceCulture);
             }
         }
         
@@ -4532,6 +4604,15 @@ namespace ChessForge.Properties {
         public static string SelectSolvingMode {
             get {
                 return ResourceManager.GetString("SelectSolvingMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shelf.
+        /// </summary>
+        public static string Shelf {
+            get {
+                return ResourceManager.GetString("Shelf", resourceCulture);
             }
         }
         
@@ -5517,7 +5598,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Workbook not Saved.
+        ///   Looks up a localized string similar to Workbook Not Saved.
         /// </summary>
         public static string WorkbookNotSaved {
             get {
