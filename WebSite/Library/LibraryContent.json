@@ -15,7 +15,7 @@
               {
                 "title": "The London System",
                 "description": "A comprehensive overview of the omnipresent London System.",
-                "file": "French for Black.pgn"
+                "file": "Openings/General/London System.pgn"
               }
             ]
           },
@@ -24,14 +24,14 @@
             "description": "Openings analyzed from the White player's point of view",
             "books": [
               {
-                "title": "Budapest Gambit with 4.e5-e6!?",
-                "description": "A surprise weapon against Black's aggressive plans.",
-                "file": "White/BudapestWhiteE6.pgn"
+                "title": "Budapest Gambit",
+                "description": "A couple of options to safely counter the Budapest Gambit.",
+                "file": "Openings/White/Budapest for White.pgn"
               },
               {
                 "title": "King's Indian - Karpov Variation",
                 "description": "A very popular and effective variation against King's Indian at all levels.",
-                "files": "White/KingsIndianKarpov.pgn"
+                "file": "Openings/White/King's Indian - Karpov variation for White.pgn"
               }
             ]
           },
@@ -42,17 +42,17 @@
               {
                 "title": "Exchange French",
                 "description": "Breaking symmetry when facing the Exchange Variation in the French.",
-                "files": "Black/FrenchExchange.pgn"
+                "file": "Openings/Black/French Exchange for Black.pgn"
               },
               {
                 "title": "Stafford Gambit Traps",
                 "description": "Eric Rosen's entertaining treatise on the Stafford Gambit.  Adapted from Eric's lichess study.",
-                "file": "Black/StaffordGambitTraps.pgn"
+                "file": "Openings/Black/Stafford Gambit for Black.pgn"
               },
               {
-                "title": "Ragozin",
+                "title": "Ragozin Defense",
                 "description": "A solid addition to one's repertoire against 1.d4",
-                "files": "Black/Ragozin.pgn"
+                "file": "Openings/Black/Ragozin for Black.pgn"
               }
             ]
           }
@@ -74,7 +74,7 @@
               {
                 "title": "Checkmate Patterns",
                 "description": "Basic checkmate patterns named and illustrated.",
-                "file": "Endgames/CheckmatePatterns.pgn"
+                "file": "Endgames/Checkmate Patterns.pgn"
               }
             ]
           }
@@ -91,12 +91,12 @@
               {
                 "title": "Chess Strategy Explained",
                 "description": "A small sample of a book by GM Bartek Macieja and IM Witalis Sapis.",
-                "file": "BookSamples/ChessStrategyExplained.pgn"
+                "file": "BookSamples/Chess Strategy Explained.pgn"
               },
               {
                 "title": "The Complete Chess Swindler",
                 "description": "A small example from an extraordinary book by GM. David Smerdon.",
-                "file": "BookSamples/CompleteChessSwindler.pgn"
+                "file": "BookSamples/The Complete Chess Swindler.pgn"
               }
             ]
           }
