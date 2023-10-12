@@ -187,8 +187,8 @@ namespace ChessForge
                             {
                                 SetupGuiForNewSession("", true, null);
                                 // at this point the Workbook is not saved
-                                if (MessageBox.Show(Properties.Resources.PromptSaveWorkbookLocally, 
-                                    Properties.Resources.WorkbookNotSaved, 
+                                if (MessageBox.Show(Properties.Resources.PromptSaveWorkbookLocally,
+                                    dlg.SelectedBook.Title, 
                                     MessageBoxButton.YesNo, 
                                     MessageBoxImage.Question) == MessageBoxResult.Yes)
                                 {
