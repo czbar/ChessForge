@@ -1,7 +1,6 @@
 {  
     "redirect": null,
     "messages": [
-      "Click on any Workbook below to download, view and edit it."
     ],
     "sections": [
       {
@@ -68,7 +67,7 @@
             "books": [
               {
                 "title": "Endgames by NoseKnowsAll",
-                "description": "Great selection of endgames adapted from a lichess study by @NodeKnowsAll",
+                "description": "Great selection of endgames imported from a lichess study by NoseKnowsAll@lichess",
                 "file": "Endgames/Endgames by NoseKnowsAll.pgn"
               },
               {
