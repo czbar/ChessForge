@@ -2330,7 +2330,7 @@ namespace ChessForge
         private void UiMnMoveArticles_Click(object sender, RoutedEventArgs e)
         {
             ObservableCollection<ArticleListItem> articleList = WorkbookManager.SessionWorkbook.GenerateArticleList();
-            ChapterUtils.RequestCopyMoveArticles(null, true, articleList, true, false);
+            ChapterUtils.RequestCopyMoveArticles(null, true, articleList, false, false);
         }
 
         /// <summary>
