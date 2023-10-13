@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
         ShowInTaskbar="True"
-        Title="{x:Static p:Resources.SelectChapter}" Height="400" Width="400">
+        Title="{x:Static p:Resources.SelectChapter}" Height="450" Width="500">
     <Grid>
         <ListBox x:Name="UiLbChapters" ItemsSource="{Binding}" SelectionMode="Single" 
                  DisplayMemberPath="TitleWithNumber"
