@@ -82,14 +82,21 @@ namespace ChessForge
 
             foreach (ArticleListItem game in _games)
             {
-                if (string.IsNullOrEmpty(game.Article.Tree.RootNode.LineId))
+                if (game.ContentType == GameData.ContentType.MODEL_GAME && game.Article != null)
                 {
-                    game.Article.Tree.BuildLines();
-                }
-                if (game.IsSelected)
-                {
-                    _plyCountToEvaluate += (game.Article.Tree.SelectLine("1").Count - 1);
-                    _gamesToEvaluate++;
+                    try
+                    {
+                        if (string.IsNullOrEmpty(game.Article.Tree.RootNode.LineId))
+                        {
+                            game.Article.Tree.BuildLines();
+                        }
+                        if (game.IsSelected)
+                        {
+                            _plyCountToEvaluate += (game.Article.Tree.SelectLine("1").Count - 1);
+                            _gamesToEvaluate++;
+                        }
+                    }
+                    catch { }
                 }
             }
 
