@@ -87,6 +87,8 @@ namespace ChessForge
                             ActiveTreeView.BuildFlowDocumentForVariationTree();
                             break;
                         case MoveAttribute.ENGINE_EVALUATION:
+                            // there may have been "assessments" so need to refresh this
+                            ActiveTreeView.BuildFlowDocumentForVariationTree();
                             ActiveLine.RefreshNodeList();
                             break;
                     }
@@ -227,7 +229,7 @@ namespace ChessForge
                         ObservableCollection<ArticleListItem> gamesToEvaluate = new ObservableCollection<ArticleListItem>();
                         foreach (ArticleListItem item in gameList)
                         {
-                            if (item.IsSelected)
+                            if (item.ContentType == GameData.ContentType.MODEL_GAME && item.IsSelected)
                             {
                                 gamesToEvaluate.Add(item);
                             }
