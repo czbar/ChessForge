@@ -833,7 +833,7 @@ EgCentipawnAccuracy=
 
 #######################################
 #
-# Header: DIALOG Chess Forge library
+# Header: DIALOG Chess Forge Online Library
 #
 
 #description: Dialog title
@@ -851,6 +851,10 @@ Bookcase=
 #description: Shelf
 #english: Shelf = Shelf
 Shelf =
+
+#description: Intro line
+#english: OnlineLibraryInfo=Click on any blue link below to download the corresponding workbook. You will be able to view the workbook as well as edit it and save a copy on your PC.
+OnlineLibraryInfo=
 
 
 #######################################

@@ -3789,6 +3789,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Click on any blue link below to download the corresponding workbook. You will be able to view the workbook as well as edit it and save a copy on your PC..
+        /// </summary>
+        public static string OnlineLibraryInfo {
+            get {
+                return ResourceManager.GetString("OnlineLibraryInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Openings.
         /// </summary>
         public static string Openings {

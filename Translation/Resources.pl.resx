@@ -693,6 +693,9 @@
   <data name="Shelf" xml:space="preserve">
     <value>Półka</value>
   </data>
+  <data name="OnlineLibraryInfo" xml:space="preserve">
+    <value>Kliknij dowolny niebieski link poniżej aby pobrać wybrany podręcznik. Będziesz mógł przegladać ściagnięty podręcznik, a także edytować go i zapisać kopię na swoim komputerze. </value>
+  </data>
   <data name="ScopeForDeleteComments" xml:space="preserve">
     <value>Usuń Komentarze</value>
   </data>

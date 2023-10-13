@@ -645,7 +645,7 @@ EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
 
 #######################################
 #
-# Header: DIALOG Chess Forge library
+# Header: DIALOG Chess Forge Online Library
 #
 
 #Dialog title
@@ -659,6 +659,9 @@ Bookcase=Bookcase
 
 #Shelf
 Shelf = Shelf
+
+#Intro line
+OnlineLibraryInfo=Click on any blue link below to download the corresponding workbook. You will be able to view the workbook as well as edit it and save a copy on your PC.
 
 
 #######################################
