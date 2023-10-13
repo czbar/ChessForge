@@ -32,7 +32,7 @@ namespace ChessForge
         /// A library workbook object selected by the user.
         /// </summary>
         public WebAccess.Book SelectedBook = null;
-        
+
         /// <summary>
         /// Constructor. Builds the content of the Rich Text Box.
         /// </summary>
@@ -72,31 +72,18 @@ namespace ChessForge
         /// </summary>
         private void BuildMessagesParagraph()
         {
-            if (_content.Messages.Count == 0)
-            {
-                return;
-            }
-
             Paragraph para = new Paragraph
             {
                 Margin = new Thickness(10, 0, 0, 0),
             };
 
-            Run run = new Run();
+            Run run = new Run(Properties.Resources.OnlineLibraryInfo);
             run.FontWeight = FontWeights.Normal;
             run.FontSize = 14 + Configuration.FontSizeDiff;
 
-            bool first = true;
             foreach (string msg in _content.Messages)
             {
-                if (first)
-                {
-                    first = false;
-                }
-                else
-                {
-                    run.Text = "\n";
-                }
+                run.Text += "\n";
                 run.Text += (msg);
             }
             para.Inlines.Add(run);
