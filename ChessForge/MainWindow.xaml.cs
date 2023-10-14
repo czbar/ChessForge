@@ -1835,13 +1835,15 @@ namespace ChessForge
         private void InitializeChaptersView()
         {
             _chaptersView = new ChaptersView(UiRtbChaptersView.Document, this);
+            
             // if this is very big, make sure the view is collapsed
             // to speed up initial reading
-            int articleCount = AppState.Workbook.GetArticleCount();
-            if (articleCount > 500)
-            {
-                ExpandCollapseChaptersView(false, true);
-            }
+            // int articleCount = AppState.Workbook.GetArticleCount();
+            // if (articleCount > 500)  // TODO: this could be annoying to the user, on the other hand coule be a big perf hit, maybe do it per chapter?
+            //{
+            //    ExpandCollapseChaptersView(false, true);
+            //}
+            
             _chaptersView.BuildFlowDocumentForChaptersView();
             AppState.DoEvents();
             _chaptersView.BringChapterIntoView(WorkbookManager.SessionWorkbook.ActiveChapterIndex);
