@@ -2334,6 +2334,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Invokes dialog for managing some aspects of the active chapter.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnManageChapter_Click(object sender, RoutedEventArgs e)
+        {
+            ChapterUtils.ManageChapter(AppState.ActiveChapter);
+        }
+
+        /// <summary>
         /// Opens the dialog for importing games from the Web
         /// </summary>
         /// <param name="sender"></param>

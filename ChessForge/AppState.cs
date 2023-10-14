@@ -1500,6 +1500,7 @@ namespace ChessForge
                 _mainWin.UiMnDeleteEngineEvals.IsEnabled = WorkbookManager.SessionWorkbook != null;
                 _mainWin.UiMnCopyArticles.IsEnabled = WorkbookManager.SessionWorkbook != null;
                 _mainWin.UiMnMoveArticles.IsEnabled = WorkbookManager.SessionWorkbook != null;
+                MainWin.UiMnManageChapter.IsEnabled = AppState.ActiveChapter != null;
 
                 _mainWin.UiMnAnnotations.IsEnabled = IsTreeViewTabActive();
                 _mainWin.UiMnMergeChapters.IsEnabled = WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.GetChapterCount() > 1;

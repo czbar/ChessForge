@@ -188,6 +188,9 @@
     <Compile Include="GuiUtilities.cs" />
     <Compile Include="ActiveLineManager.cs" />
     <Compile Include="MainWindowToolsMenu.cs" />
+    <Compile Include="ManageChapterDialog.xaml.cs">
+      <DependentUpon>ManageChapterDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ManualReviewState.cs" />
     <Compile Include="MoveAnimator.cs" />
     <Compile Include="MoveAssessment.cs" />
@@ -360,6 +363,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ManageChapterDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="OnlineLibraryContentDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

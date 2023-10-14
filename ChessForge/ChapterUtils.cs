@@ -16,6 +16,28 @@ namespace ChessForge
     public class ChapterUtils
     {
         /// <summary>
+        /// Invokes dialog for managing some aspects of the active chapter.
+        /// </summary>
+        /// <param name="chapter"></param>
+        public static void ManageChapter(Chapter chapter)
+        {
+            if (chapter != null)
+            {
+                ManageChapterDialog dlg = new ManageChapterDialog()
+                {
+                    Left = AppState.MainWin.ChessForgeMain.Left + 100,
+                    Top = AppState.MainWin.ChessForgeMain.Top + 100,
+                    Topmost = false,
+                    Owner = AppState.MainWin
+                };
+
+                if (dlg.ShowDialog() == true)
+                {
+                }
+            }
+        }
+
+        /// <summary>
         /// Processes a response from the dialog, where the user requested to copy/move articles
         /// </summary>
         /// <param name="lstIdenticalPositions"></param>
