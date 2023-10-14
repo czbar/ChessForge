@@ -12,12 +12,12 @@
             <Canvas>
                 <Label x:Name="UiLblMinDiff" Content="{x:Static p:Resources.EvalDropTrigger}" Canvas.Left="20" Canvas.Top="10"/>
                 <Label x:Name="UiLblMaxThresh" Content="{x:Static p:Resources.StopDetectLevel}" Canvas.Left="20" Canvas.Top="40"/>
-                <TextBox x:Name="UiTbMinDiff" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="40" Canvas.Left="250" Canvas.Top="15"/>
-                <TextBox x:Name="UiTbMaxThresh" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="40" Canvas.Left="250" Canvas.Top="45"/>
+                <TextBox x:Name="UiTbMinDiff" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" HorizontalContentAlignment="Center" Width="40" Canvas.Left="250" Canvas.Top="15"/>
+                <TextBox x:Name="UiTbMaxThresh" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" HorizontalContentAlignment="Center" Width="40" Canvas.Left="250" Canvas.Top="45"/>
             </Canvas>
         </GroupBox>
-        <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Ok}" IsDefault="True" HorizontalAlignment="Center" Margin="-240,116,0,0" VerticalAlignment="Top" Width="100" Click="UiBtnOk_Click" />
+        <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Ok}" IsDefault="True" HorizontalAlignment="Center" Margin="-230,116,0,0" VerticalAlignment="Top" Width="100" Click="UiBtnOk_Click" />
         <Button x:Name="UiBtnCancel" Content="{x:Static p:Resources.Cancel}" IsCancel="True" HorizontalAlignment="Center" Margin="0,116,0,0" VerticalAlignment="Top" Width="100" Click="UiBtnCancel_Click"/>
-        <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Center" Margin="240,116,0,0" VerticalAlignment="Top" Width="100" Click="UiBtnHelp_Click"/>
+        <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Center" Margin="230,116,0,0" VerticalAlignment="Top" Width="100" Click="UiBtnHelp_Click"/>
     </Grid>
 </Window>
