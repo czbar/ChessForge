@@ -1394,6 +1394,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manage Chapter.
+        /// </summary>
+        public static string DlgManageChapter {
+            get {
+                return ResourceManager.GetString("DlgManageChapter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Merge Errors.
         /// </summary>
         public static string DlgMergeErrors {
@@ -3185,6 +3194,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manage Chapter.
+        /// </summary>
+        public static string ManageChapter {
+            get {
+                return ResourceManager.GetString("ManageChapter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mark as Thumbnail.
         /// </summary>
         public static string MarkAsThumbnail {
@@ -3487,6 +3505,15 @@ namespace ChessForge.Properties {
         public static string MsgTakebackWanted {
             get {
                 return ResourceManager.GetString("MsgTakebackWanted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This will replace the current Study. Proceed?.
+        /// </summary>
+        public static string MsgThisOverwritesStudy {
+            get {
+                return ResourceManager.GetString("MsgThisOverwritesStudy", resourceCulture);
             }
         }
         
@@ -4131,7 +4158,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Save the Workbook on your local drive?.
+        ///   Looks up a localized string similar to Save the Workbook to your local drive?.
         /// </summary>
         public static string PromptSaveWorkbookLocally {
             get {
@@ -4208,6 +4235,15 @@ namespace ChessForge.Properties {
         public static string RefGamesNotFound {
             get {
                 return ResourceManager.GetString("RefGamesNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Regenerate Study Tree.
+        /// </summary>
+        public static string RegenerateStudyTree {
+            get {
+                return ResourceManager.GetString("RegenerateStudyTree", resourceCulture);
             }
         }
         
@@ -4694,6 +4730,15 @@ namespace ChessForge.Properties {
         public static string SolvingInProgress {
             get {
                 return ResourceManager.GetString("SolvingInProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sort By.
+        /// </summary>
+        public static string SortBy {
+            get {
+                return ResourceManager.GetString("SortBy", resourceCulture);
             }
         }
         

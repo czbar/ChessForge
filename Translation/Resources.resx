@@ -591,6 +591,9 @@
   <data name="DeleteEngineEvals" xml:space="preserve">
     <value>Delete Engine Evaluations...</value>
   </data>
+  <data name="ManageChapter" xml:space="preserve">
+    <value>Manage Chapter</value>
+  </data>
   <data name="Help" xml:space="preserve">
     <value>Help</value>
   </data>
@@ -695,6 +698,18 @@
   </data>
   <data name="OnlineLibraryInfo" xml:space="preserve">
     <value>Click on any blue link below to download the corresponding workbook. You will be able to view the workbook as well as edit it and save a copy on your PC.</value>
+  </data>
+  <data name="DlgManageChapter" xml:space="preserve">
+    <value>Manage Chapter</value>
+  </data>
+  <data name="SortBy" xml:space="preserve">
+    <value>Sort By</value>
+  </data>
+  <data name="RegenerateStudyTree" xml:space="preserve">
+    <value>Regenerate Study Tree</value>
+  </data>
+  <data name="MsgThisOverwritesStudy" xml:space="preserve">
+    <value>This will replace the current Study. Proceed?</value>
   </data>
   <data name="ScopeForDeleteComments" xml:space="preserve">
     <value>Delete Comments</value>
@@ -1078,7 +1093,7 @@
     <value>Workbook Not Saved</value>
   </data>
   <data name="PromptSaveWorkbookLocally" xml:space="preserve">
-    <value>Save the Workbook on your local drive?</value>
+    <value>Save the Workbook to your local drive?</value>
   </data>
   <data name="MsgSelectNodeToInserAt" xml:space="preserve">
     <value>Select position to paste the moves at.</value>
