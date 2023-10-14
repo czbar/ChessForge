@@ -503,7 +503,7 @@ namespace ChessForge
                             break;
                         case "_mnGameToChapter":
                             menuItem.IsEnabled = isEnabled;
-                            menuItem.Visibility = (isGamesMenu && !isMini && chapterCount > 1) ? Visibility.Visible : Visibility.Collapsed;
+                            menuItem.Visibility = (isGamesMenu && !isMini) ? Visibility.Visible : Visibility.Collapsed;
                             break;
                         case "_mnRenameGame":
                             menuItem.IsEnabled = isEnabled;
