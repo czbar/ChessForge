@@ -249,7 +249,8 @@ namespace ChessForge
             if (lastLocation == null
                 || lastLocation.ChapterGuid != location.ChapterGuid
                 || lastLocation.ViewType != location.ViewType
-                || lastLocation.ArticleGuid != location.ArticleGuid)
+                || lastLocation.ArticleGuid != location.ArticleGuid
+                || lastLocation.ArticleIndex != location.ArticleIndex)
             {
                 AppendLocation(location);
             }
