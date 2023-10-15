@@ -939,7 +939,7 @@ namespace ChessForge
                                 }
                                 sbErrors.AppendLine(BuildGameParseErrorText(null, i + 1, games[i], message));
                             }
-                            tree = WorkbookTreeMerge.MergeVariationTrees(tree, workbook2);
+                            tree = TreeMerge.MergeVariationTrees(tree, workbook2);
                             mergedCount++;
                         }
                     }
