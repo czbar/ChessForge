@@ -15,6 +15,31 @@ namespace ChessPosition.GameTree
         private static VariationTree _mergedTree;
 
         /// <summary>
+        /// Merges a list of trees into one and returns a deep copy
+        /// of the merged product.
+        /// </summary>
+        /// <param name="treeList"></param>
+        /// <returns></returns>
+        public static VariationTree MergeVariationTrees(List<VariationTree> treeList)
+        {
+            VariationTree returnTree = null;
+
+            if (treeList != null && treeList.Count != 0)   
+            {
+                returnTree = TreeUtils.CopyVariationTree(treeList[0]);
+                if (treeList.Count > 1)
+                {
+                    for (int i = 1; i < treeList.Count; i++)
+                    {
+                        returnTree = MergeVariationTrees(returnTree, treeList[i]);
+                    }
+                }
+            }
+
+            return returnTree;
+        }
+
+        /// <summary>
         /// Performs merging of 2 Variation Trees returns a new, merged tree as the result.
         /// </summary>
         /// <param name="tree1"></param>
