@@ -3,10 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using GameTree;
 using ChessPosition;
 using System.Collections.ObjectModel;
+using System.Windows;
+using ChessPosition.GameTree;
 
 namespace ChessForge
 {
@@ -33,6 +34,32 @@ namespace ChessForge
 
                 if (dlg.ShowDialog() == true)
                 {
+                    try
+                    {
+                        bool regenerateStudy = dlg.RegenerateStudy;
+                        bool sortGames = dlg.SortGamesBy != GameSortCriterion.SortItem.NONE && chapter.ModelGames.Count > 1;
+                        if (dlg.RegenerateStudy)
+                        {
+                            RegenerateStudy(chapter);
+                            if (!sortGames)
+                            {
+                                AppState.MainWin.SetupGuiForActiveStudyTree(true);
+                            }
+                        }
+
+                        if (sortGames)
+                        {
+                            SortGames(chapter, dlg.SortGamesBy, dlg.SortGamesDirection);
+
+                            GuiUtilities.RefreshChaptersView(null);
+                            AppState.MainWin.UiTabChapters.Focus();
+                            PulseManager.ChaperIndexToBringIntoView = chapter.Index;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        AppLog.Message("ManageChapter()", ex);
+                    }
                 }
             }
         }
@@ -469,6 +496,55 @@ namespace ChessForge
             }
 
             return count >= n;
+        }
+
+        /// <summary>
+        /// Sorts games in the chapter per specified criteria.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="sortBy"></param>
+        /// <param name="direction"></param>
+        private static void SortGames(Chapter chapter, GameSortCriterion.SortItem sortBy, GameSortCriterion.SortItem direction)
+        {
+            IComparer<Article> comparer = new ArticleComparer(sortBy, direction);
+            chapter.ModelGames = chapter.ModelGames
+                .Select((item, index) => new { item, index })
+                .OrderBy(z => z.item, comparer)
+                .ThenBy(z => z.index)
+                .Select(z => z.item)
+                .ToList();
+
+            AppState.MainWin.ChaptersView.IsDirty = true;
+            AppState.IsDirty = true;
+        }
+
+        /// <summary>
+        /// Regenerates the Study Tree from the Games.
+        /// </summary>
+        /// <param name="chapter"></param>
+        private static void RegenerateStudy(Chapter chapter)
+        {
+            if (chapter.StudyTree.Tree.Nodes.Count <= 1 ||
+                MessageBox.Show(Properties.Resources.MsgThisOverwritesStudy,
+                    Properties.Resources.Information,
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                List<VariationTree> trees = new List<VariationTree>();
+                foreach (Article game in chapter.ModelGames)
+                {
+                    trees.Add(game.Tree);
+                }
+
+                // TODO: trimming while merging would be more effective; implement MergeWithTrim()
+                VariationTree tree = TreeMerge.MergeVariationTrees(trees);
+                if (tree != null)
+                {
+                    TreeUtils.TrimTree(ref tree, Configuration.AutogenTreeDepth, PieceColor.Black);
+                    chapter.StudyTree.Tree = tree;
+                    AppState.IsDirty = true;
+                }
+            }
         }
 
         /// <summary>
