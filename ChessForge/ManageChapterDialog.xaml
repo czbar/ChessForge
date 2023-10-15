@@ -10,20 +10,22 @@
     <Grid>
         <GroupBox x:Name="UiGbStudyTree" Header="{x:Static p:Resources.StudyTree}" Height="110" Width="280" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 10">
             <Canvas Margin="0,0,0,0">
-                <CheckBox x:Name="UiCbGenerateStudyTree" Content="{x:Static p:Resources.RegenerateStudyTree}" Margin="8,15,0,0" />
+                <CheckBox x:Name="UiCbGenerateStudyTree" Content="{x:Static p:Resources.RegenerateStudyTree}" Margin="8,15,0,0" Checked="UiCbGenerateStudyTree_Checked" Unchecked="UiCbGenerateStudyTree_Unchecked" />
                 <Label x:Name="UiLblLastTreeMoveNo" Margin="5,45,0,0" HorizontalAlignment="Left" Content="{x:Static p:Resources.TrimStudyTree}" />
                 <TextBox x:Name="UiTbLastTreeMoveNo" Width="40" Margin="200,50, 0, 3" HorizontalAlignment="Left" />
             </Canvas>
         </GroupBox>
         <GroupBox x:Name="UiGbGames" Header="{x:Static p:Resources.Games}" Height="110" Width="280" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="310, 10, 10, 0">
             <Canvas Margin="0,0,0,0">
-                <Label x:Name="UiLblSortBy" Margin="10,30,0,0" HorizontalAlignment="Left" Content="{x:Static p:Resources.SortBy}" />
-                <ListBox x:Name="UiLbSortBy" Margin="135,8,0,0"  Height="70" Width="100" />
+                <Label x:Name="UiLblSortBy" Margin="10,10,0,0" HorizontalAlignment="Left" Content="{x:Static p:Resources.SortBy}" />
+                <ComboBox x:Name="UiComboBoxSortBy" Margin="120,12,0,0"  Width="125" SelectionChanged="UiComboBoxSortBy_SelectionChanged" />
+                <Label x:Name="UiLblSortDirection" Margin="10,45,0,0" HorizontalAlignment="Left" Content="{x:Static p:Resources.SortDirection}" />
+                <ComboBox x:Name="UiComboBoxSortDirection" Margin="120,47,0,0"  Width="125" />
             </Canvas>
         </GroupBox>
-        <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="-220,0,0,25" Width="100" VerticalAlignment="Bottom" />
-        <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="0,0,0,25" Width="100" VerticalAlignment="Bottom"/>
-        <Button x:Name="UiBtnHelp" Content="Help" HorizontalAlignment="Center" Margin="220,0,0,25" Width="100" VerticalAlignment="Bottom" />
+        <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="-220,0,0,20" Width="100" VerticalAlignment="Bottom" Click="UiBtnOk_Click" />
+        <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="0,0,0,20" Width="100" VerticalAlignment="Bottom"/>
+        <Button x:Name="UiBtnHelp" Content="Help" HorizontalAlignment="Center" Margin="220,0,0,20" Width="100" VerticalAlignment="Bottom" Click="UiBtnHelp_Click" />
 
     </Grid>
 </Window>
