@@ -9,7 +9,7 @@ namespace ChessPosition.GameTree
     /// <summary>
     /// Manages merging of Workbooks
     /// </summary>
-    public class WorkbookTreeMerge
+    public class TreeMerge
     {
         // the VariationTree that will be built and returned
         private static VariationTree _mergedTree;
