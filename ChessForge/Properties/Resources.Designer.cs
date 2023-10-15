@@ -4734,11 +4734,74 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ascending.
+        /// </summary>
+        public static string SortAsc {
+            get {
+                return ResourceManager.GetString("SortAsc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sort By.
         /// </summary>
         public static string SortBy {
             get {
                 return ResourceManager.GetString("SortBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Black Name.
+        /// </summary>
+        public static string SortByBlackName {
+            get {
+                return ResourceManager.GetString("SortByBlackName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        public static string SortByDate {
+            get {
+                return ResourceManager.GetString("SortByDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ECO.
+        /// </summary>
+        public static string SortByEco {
+            get {
+                return ResourceManager.GetString("SortByEco", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to White Name.
+        /// </summary>
+        public static string SortByWhiteName {
+            get {
+                return ResourceManager.GetString("SortByWhiteName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Descending.
+        /// </summary>
+        public static string SortDesc {
+            get {
+                return ResourceManager.GetString("SortDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Direction.
+        /// </summary>
+        public static string SortDirection {
+            get {
+                return ResourceManager.GetString("SortDirection", resourceCulture);
             }
         }
         

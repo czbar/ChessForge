@@ -682,6 +682,28 @@ RegenerateStudyTree=Regenerate Study Tree
 #Warning for regenerate study tree
 MsgThisOverwritesStudy=This will replace the current Study. Proceed?
 
+#Sort by ECO
+SortByEco=ECO
+
+#Sort by White Player
+SortByWhiteName=White Name
+
+#Sort by Black Player
+SortByBlackName=Black Name
+
+#Sort by date 
+SortByDate=Date
+
+#Sort direction
+SortDirection=Direction
+
+#Sort Ascending
+SortAsc=Ascending
+
+#Sort Descending
+SortDesc=Descending
+
+
 #######################################
 #
 # Header: DIALOG Operation Scope

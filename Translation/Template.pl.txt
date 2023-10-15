@@ -880,6 +880,35 @@ RegenerateStudyTree=Wygeneruj drzewo teorii
 #english: MsgThisOverwritesStudy=This will replace the current Study. Proceed?
 MsgThisOverwritesStudy=Nowe drzewo zastąpi istniejącą teorię. Kontynuować?
 
+#description: Sort by ECO
+#english: SortByEco=ECO
+SortByEco=Kod Otwarcia
+
+#description: Sort by White Player
+#english: SortByWhiteName=White Name
+SortByWhiteName=Grający Białymi
+
+#description: Sort by Black Player
+#english: SortByBlackName=Black Name
+SortByBlackName=Grający Czarnymi
+
+#description: Sort by date 
+#english: SortByDate=Date
+SortByDate=Data
+
+#description: Sort direction
+#english: SortDirection=Direction
+SortDirection=Kierunek
+
+#description: Sort Ascending
+#english: SortAsc=Ascending
+SortAsc=Rosnący
+
+#description: Sort Descending
+#english: SortDesc=Descending
+SortDesc=Malejący
+
+
 #######################################
 #
 # Header: DIALOG Operation Scope

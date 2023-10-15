@@ -880,6 +880,35 @@ RegenerateStudyTree=
 #english: MsgThisOverwritesStudy=This will replace the current Study. Proceed?
 MsgThisOverwritesStudy=
 
+#description: Sort by ECO
+#english: SortByEco=ECO
+SortByEco=
+
+#description: Sort by White Player
+#english: SortByWhiteName=White Name
+SortByWhiteName=
+
+#description: Sort by Black Player
+#english: SortByBlackName=Black Name
+SortByBlackName=
+
+#description: Sort by date 
+#english: SortByDate=Date
+SortByDate=
+
+#description: Sort direction
+#english: SortDirection=Direction
+SortDirection=
+
+#description: Sort Ascending
+#english: SortAsc=Ascending
+SortAsc=
+
+#description: Sort Descending
+#english: SortDesc=Descending
+SortDesc=
+
+
 #######################################
 #
 # Header: DIALOG Operation Scope

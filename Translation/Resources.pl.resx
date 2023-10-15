@@ -711,6 +711,27 @@
   <data name="MsgThisOverwritesStudy" xml:space="preserve">
     <value>Nowe drzewo zastąpi istniejącą teorię. Kontynuować?</value>
   </data>
+  <data name="SortByEco" xml:space="preserve">
+    <value>Kod Otwarcia</value>
+  </data>
+  <data name="SortByWhiteName" xml:space="preserve">
+    <value>Grający Białymi</value>
+  </data>
+  <data name="SortByBlackName" xml:space="preserve">
+    <value>Grający Czarnymi</value>
+  </data>
+  <data name="SortByDate" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="SortDirection" xml:space="preserve">
+    <value>Kierunek</value>
+  </data>
+  <data name="SortAsc" xml:space="preserve">
+    <value>Rosnący</value>
+  </data>
+  <data name="SortDesc" xml:space="preserve">
+    <value>Malejący</value>
+  </data>
   <data name="ScopeForDeleteComments" xml:space="preserve">
     <value>Usuń Komentarze</value>
   </data>

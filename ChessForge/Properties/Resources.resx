@@ -711,6 +711,27 @@
   <data name="MsgThisOverwritesStudy" xml:space="preserve">
     <value>This will replace the current Study. Proceed?</value>
   </data>
+  <data name="SortByEco" xml:space="preserve">
+    <value>ECO</value>
+  </data>
+  <data name="SortByWhiteName" xml:space="preserve">
+    <value>White Name</value>
+  </data>
+  <data name="SortByBlackName" xml:space="preserve">
+    <value>Black Name</value>
+  </data>
+  <data name="SortByDate" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="SortDirection" xml:space="preserve">
+    <value>Direction</value>
+  </data>
+  <data name="SortAsc" xml:space="preserve">
+    <value>Ascending</value>
+  </data>
+  <data name="SortDesc" xml:space="preserve">
+    <value>Descending</value>
+  </data>
   <data name="ScopeForDeleteComments" xml:space="preserve">
     <value>Delete Comments</value>
   </data>
