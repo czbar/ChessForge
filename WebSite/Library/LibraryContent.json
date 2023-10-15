@@ -1,7 +1,6 @@
 {  
     "redirect": null,
     "messages": [
-      "Click on any Workbook below to download, view and edit it."
     ],
     "sections": [
       {
@@ -68,7 +67,7 @@
             "books": [
               {
                 "title": "Endgames by NoseKnowsAll",
-                "description": "Great selection of endgames adapted from a lichess study by @NodeKnowsAll",
+                "description": "Great selection of endgames imported from a lichess study by NoseKnowsAll@lichess",
                 "file": "Endgames/Endgames by NoseKnowsAll.pgn"
               },
               {
@@ -90,12 +89,12 @@
             "books": [
               {
                 "title": "Chess Strategy Explained",
-                "description": "A small sample of a book by GM Bartek Macieja and IM Witalis Sapis.",
+                "description": "A small sample from the book by GM Bartek Macieja and IM Witalis Sapis.",
                 "file": "BookSamples/Chess Strategy Explained.pgn"
               },
               {
                 "title": "The Complete Chess Swindler",
-                "description": "A small example from an extraordinary book by GM. David Smerdon.",
+                "description": "A small example from the award winning book by GM. David Smerdon.",
                 "file": "BookSamples/The Complete Chess Swindler.pgn"
               }
             ]

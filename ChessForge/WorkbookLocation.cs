@@ -21,12 +21,26 @@ namespace ChessForge
         // Guid of the article where applicable
         private string _articleGuid;
 
+        // Index of the article where applicable
+        private int _articleIndex;
+
         /// <summary>
         /// Guid of the chapter
         /// </summary>
         public string ChapterGuid
         {
             get { return _chapterGuid; }
+        }
+
+        /// <summary>
+        /// Index of the article where applicable
+        /// </summary>
+        public int ArticleIndex
+        {
+            get
+            {
+                return _articleIndex;
+            }
         }
 
         /// <summary>
@@ -57,11 +71,12 @@ namespace ChessForge
         /// <param name="chapterGuid"></param>
         /// <param name="viewType"></param>
         /// <param name="articleGuid"></param>
-        public WorkbookLocation(string chapterGuid, WorkbookManager.TabViewType viewType, string articleGuid)
+        public WorkbookLocation(string chapterGuid, WorkbookManager.TabViewType viewType, string articleGuid, int articleIndex)
         {
             _chapterGuid = chapterGuid;
             _viewType = viewType;
             _articleGuid = articleGuid;
+            _articleIndex = articleIndex;
         }
 
     }

@@ -58,6 +58,14 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Whether to show blunder assessments.
+        /// </summary>
+        public bool HandleBlunders
+        {
+            get => ContentType == GameData.ContentType.MODEL_GAME;
+        }
+
+        /// <summary>
         /// Checks whether there are any moves selected for copying
         /// </summary>
         public bool HasMovesSelectedForCopy
@@ -1666,10 +1674,6 @@ namespace ChessForge
                     fontColor = GetParaAttrs(_currParagraphLevel.ToString(), true).FirstCharColor;
                 }
             }
-            else if (nd.Assessment == (uint)ChfCommands.Assessment.BLUNDER)
-            {
-                fontColor = Brushes.DarkRed;
-            }
 
             Run r = AddRunToParagraph(nd, para, nodeText, fontColor);
             AddReferenceRunToParagraph(nd, para);
@@ -1763,19 +1767,24 @@ namespace ChessForge
                     r.FontSize = GetParaAttrs((_currParagraphLevel + 1).ToString(), true).FontSize;
                 }
 
+                // only used the passed fontColor on the first move in the paragraph
                 if (fontColor != null && para.Inlines.Count == 0)
                 {
                     r.Foreground = fontColor;
                     r.FontWeight = FontWeights.Bold;
                 }
 
+                // use bold on the mainline and ... if the paragraph is left aligned
+                // TODO: what does the second condition do?
                 if (para.Margin.Left == 0 && nd.IsMainLine())
                 {
                     r.FontWeight = FontWeights.Bold;
                     para.Inlines.Add(r);
                 }
                 else
+                {
                     para.Inlines.Add(r);
+                }
 
                 _dictNodeToRun.Add(nd.NodeId, r);
                 _dictRunToParagraph.Add(r, para);
@@ -1832,7 +1841,7 @@ namespace ChessForge
                 parts.Add(endPart);
 
                 // in front of that start bracket!
-                if (nd.Assessment == (uint)ChfCommands.Assessment.BLUNDER && nd.IsMainLine())
+                if (HandleBlunders && nd.Assessment == (uint)ChfCommands.Assessment.BLUNDER && nd.IsMainLine())
                 {
                     // if we only have start and end parts so far, delete them.
                     // We don't need brackets if all we have ASSESSMENT
@@ -2673,7 +2682,7 @@ namespace ChessForge
         {
             return !string.IsNullOrEmpty(nd.Comment)
                    || nd.IsThumbnail
-                   || nd.Assessment == (uint)ChfCommands.Assessment.BLUNDER && nd.IsMainLine()
+                   || HandleBlunders && nd.Assessment == (uint)ChfCommands.Assessment.BLUNDER && nd.IsMainLine()
                    || (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.EDITING && nd.QuizPoints != 0);
         }
 

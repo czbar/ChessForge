@@ -6,13 +6,14 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        Title="{x:Static p:Resources.DlgTitleLibraryContent}" Height="600" Width="800">
+        Title="{x:Static p:Resources.DlgTitleLibraryContent}" Height="550" Width="800">
     <Grid>
         <RichTextBox x:Name="UiRtbOnlineLibrary" IsReadOnly="True" Cursor="Arrow"  
                      Margin="10,10,10,50" VerticalScrollBarVisibility="Auto">
             <FlowDocument>
             </FlowDocument>
         </RichTextBox>
-
+        <Button x:Name="UiBtnClose" IsCancel="True" Content="Close" HorizontalAlignment="Center" Margin="-150,0,0,15" VerticalAlignment="Bottom" Width="100" Click="UiBtnClose_Click" />
+        <Button x:Name="UiBtnHelp" Content="Help" HorizontalAlignment="Center" Margin="150,0,0,15" VerticalAlignment="Bottom" Width="100" Click="UiBtnHelp_Click" />
     </Grid>
 </Window>

@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace ChessForge
 {
@@ -34,6 +31,11 @@ namespace ChessForge
             UiBtnCreateNew.Content = "   " + Properties.Resources.CreateNewChapter + "    ";
             UiBtnCreateNew.Background = Brushes.LightGreen;
             UiLbChapters.ItemsSource = WorkbookManager.SessionWorkbook.Chapters;
+            if (WorkbookManager.SessionWorkbook.Chapters.Count == 1)
+            {
+                UiLbChapters.IsEnabled = false;
+                UiBtnOk.IsEnabled = false;
+            }
         }
 
         /// <summary>

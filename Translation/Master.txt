@@ -355,14 +355,10 @@ ErrHttpStatus=Bad response from the server. Error: $0
 #No text in the downloaded game
 ErrNoTextReceived=no text received.
 
-#
-# Header: MAIN MENU
-#
-
 
 #################################
 #
-# Header: TOP LEVEL MENU: File
+# Header: MAIN MENU: File
 #
 
 #File
@@ -410,10 +406,13 @@ ExpandChapters=Expand Chapters
 #Collapse chapters
 CollapseChapters=Collapse Chapters
 
+#################################
+#
+# Header: MAIN MENU: Training
+#
 
 
-
-#TOP LEVEL MENU: Training
+#Training
 Training=Training
 
 #Start a new training session
@@ -440,13 +439,13 @@ MergeChapters=Merge Chapters...
 #Undoes the previous operation
 Undo=Undo
 
-#Avice to exit
+#Advice to exit
 ExitTrainingAdvice=Exit the training session to use this function.
 
 
 #################################
 #
-# Header: TOP LEVEL MENU: View
+# Header: MAIN MENU: View
 #
 
 #description: View=View
@@ -519,7 +518,7 @@ RestoreFontDefaults=Restore Font Defaults
 
 ###########################
 #
-# Header: TOP LEVEL MENU: Tools
+# Header: MAIN MENU: Tools
 #
 
 #Tools
@@ -534,8 +533,15 @@ StripComments=Delete Comments...
 #Delete all engine evals
 DeleteEngineEvals=Delete Engine Evaluations...
 
+#Manage Chapter
+ManageChapter=Manage Chapter...
 
-#TOP LEVEL MENU: Help
+###########################
+#
+# Header: MAIN MENU: Help
+#
+
+#Help
 Help=Help
 
 #Opens user's browser and navigates to Chess Forge's Wiki
@@ -645,7 +651,7 @@ EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
 
 #######################################
 #
-# Header: DIALOG Chess Forge library
+# Header: DIALOG Chess Forge Online Library
 #
 
 #Dialog title
@@ -659,6 +665,48 @@ Bookcase=Bookcase
 
 #Shelf
 Shelf = Shelf
+
+#Intro line
+OnlineLibraryInfo=Click on any blue link below to download the corresponding workbook. You will be able to view the workbook as well as edit it and save a copy on your PC.
+
+
+#######################################
+#
+# Header: DIALOG Chess Forge Online Library
+#
+
+#Dialog title
+DlgManageChapter=Manage Chapter
+
+#Sort by
+SortBy=Sort By
+
+#Regenerate Study Tree
+RegenerateStudyTree=Regenerate Study Tree
+
+#Warning for regenerate study tree
+MsgThisOverwritesStudy=This will replace the current Study. Proceed?
+
+#Sort by ECO
+SortByEco=ECO
+
+#Sort by White Player
+SortByWhiteName=White Name
+
+#Sort by Black Player
+SortByBlackName=Black Name
+
+#Sort by date 
+SortByDate=Date
+
+#Sort direction
+SortDirection=Direction
+
+#Sort Ascending
+SortAsc=Ascending
+
+#Sort Descending
+SortDesc=Descending
 
 
 #######################################
@@ -1137,7 +1185,7 @@ AllFiles=All files
 WorkbookNotSaved=Workbook Not Saved
 
 #Prompt th euser to save the workbook locally
-PromptSaveWorkbookLocally=Save the Workbook on your local drive?
+PromptSaveWorkbookLocally=Save the Workbook to your local drive?
 
 #No node selected to paste at
 MsgSelectNodeToInserAt=Select position to paste the moves at.

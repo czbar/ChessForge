@@ -32,7 +32,7 @@ namespace ChessForge
         /// A library workbook object selected by the user.
         /// </summary>
         public WebAccess.Book SelectedBook = null;
-        
+
         /// <summary>
         /// Constructor. Builds the content of the Rich Text Box.
         /// </summary>
@@ -72,31 +72,18 @@ namespace ChessForge
         /// </summary>
         private void BuildMessagesParagraph()
         {
-            if (_content.Messages.Count == 0)
-            {
-                return;
-            }
-
             Paragraph para = new Paragraph
             {
                 Margin = new Thickness(10, 0, 0, 0),
             };
 
-            Run run = new Run();
+            Run run = new Run(Properties.Resources.OnlineLibraryInfo);
             run.FontWeight = FontWeights.Normal;
             run.FontSize = 14 + Configuration.FontSizeDiff;
 
-            bool first = true;
             foreach (string msg in _content.Messages)
             {
-                if (first)
-                {
-                    first = false;
-                }
-                else
-                {
-                    run.Text = "\n";
-                }
+                run.Text += "\n";
                 run.Text += (msg);
             }
             para.Inlines.Add(run);
@@ -273,5 +260,24 @@ namespace ChessForge
             catch { }
         }
 
+        /// <summary>
+        /// User clicked close without selecting any action.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnClose_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
+        }
+
+        /// <summary>
+        /// Open browser to the Help web page.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Online-Library");
+        }
     }
 }

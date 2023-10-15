@@ -7,6 +7,7 @@ using System.IO;
 using System.Net;
 using Newtonsoft.Json;
 using System.Dynamic;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace DownloadStats
 {
@@ -24,6 +25,8 @@ namespace DownloadStats
         // name of the output text file with the stats in the csv format.
         private static string outFileName = "ChessForgeDownloadStats.csv";
 
+        private static string[] _lines;
+
         static void Main(string[] args)
         {
             DateTime startDate = ChessForgeRegDate;
@@ -35,10 +38,12 @@ namespace DownloadStats
             bool outFileExists = File.Exists(outFileName);
             if (outFileExists)
             {
-                string[] lines = File.ReadAllLines(outFileName);
-                string lastLine = lines[lines.Length - 1];
-                string[] tokens = lastLine.Split(',');
-                startDate = DateTime.Parse(tokens[0]).AddDays(1);
+                _lines = File.ReadAllLines(outFileName);
+                startDate = GetStartDate(_lines, out int lastValidLine).Value;
+                for (int i = 0; i <= lastValidLine; i++)
+                {
+                    sb.AppendLine(_lines[i]);
+                }
             }
             else
             {
@@ -63,12 +68,65 @@ namespace DownloadStats
             // either write the lot out or append if output file already exists.
             if (outFileExists)
             {
-                File.AppendAllText(outFileName, sb.ToString());
+                File.WriteAllText(outFileName, sb.ToString());
             }
             else
             {
                 File.WriteAllText(outFileName, sb.ToString());
             }
+        }
+
+        /// <summary>
+        /// Determines the last date found in the file.
+        /// Returns the Start Date from which to start gathering data
+        /// (3 days before the last date found, so we can update those last dates)
+        /// and the last line index in the file to keep.
+        /// </summary>
+        /// <param name="lines"></param>
+        /// <param name="lastValidLineIndex"></param>
+        /// <returns></returns>
+        static DateTime? GetStartDate(string[] lines, out int lastValidLineIndex)
+        {
+            lastValidLineIndex = lines.Length - 1;
+            DateTime? dt = null;
+            DateTime? lastDate = null;
+
+            for (int i = lines.Length - 1; i >= 0; i--)
+            {
+                string line = lines[i];
+                string[] tokens = line.Split(',');
+                if (tokens.Length >= 2)
+                {
+                    if (lastDate == null)
+                    {
+                        try
+                        {
+                            lastDate = DateTime.Parse(tokens[0]);
+                        }
+                        catch
+                        {
+                            dt = null;
+                        }
+                    }
+                    else
+                    {
+                        try
+                        {
+                            DateTime currDt = DateTime.Parse(tokens[0]);
+                            if (currDt < lastDate.Value.AddDays(-2))
+                            {
+                                lastValidLineIndex = i;
+                                dt = currDt;
+                                break;
+                            }
+                        }
+                        catch
+                        {
+                        }
+                    }
+                }
+            }
+            return dt;
         }
 
         /// <summary>

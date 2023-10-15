@@ -462,14 +462,10 @@ ErrHttpStatus=Błąd w odpowiedzi serwera. Kod: $0
 #english: ErrNoTextReceived=no text received.
 ErrNoTextReceived=brak tekstu partii.
 
-#
-# Header: MAIN MENU
-#
-
 
 #################################
 #
-# Header: TOP LEVEL MENU: File
+# Header: MAIN MENU: File
 #
 
 #description: File
@@ -532,10 +528,13 @@ ExpandChapters=Rozwiń rozdziały
 #english: CollapseChapters=Collapse Chapters
 CollapseChapters=Zwiń rozdziały
 
+#################################
+#
+# Header: MAIN MENU: Training
+#
 
 
-
-#description: TOP LEVEL MENU: Training
+#description: Training
 #english: Training=Training
 Training=Trening
 
@@ -571,14 +570,14 @@ MergeChapters=Połącz rozdziały
 #english: Undo=Undo
 Undo=Cofnij Operację
 
-#description: Avice to exit
+#description: Advice to exit
 #english: ExitTrainingAdvice=Exit the training session to use this function.
 ExitTrainingAdvice=Wyjdź z sesji treningowej, aby użyc tej funkcji.
 
 
 #################################
 #
-# Header: TOP LEVEL MENU: View
+# Header: MAIN MENU: View
 #
 
 #description: description: View=View
@@ -673,7 +672,7 @@ RestoreFontDefaults=Przywróć Domyślne Wartości
 
 ###########################
 #
-# Header: TOP LEVEL MENU: Tools
+# Header: MAIN MENU: Tools
 #
 
 #description: Tools
@@ -692,8 +691,16 @@ StripComments=Usuń komentarze...
 #english: DeleteEngineEvals=Delete Engine Evaluations...
 DeleteEngineEvals=Usuń oceny silnika...
 
+#description: Manage Chapter
+#english: ManageChapter=Manage Chapter...
+ManageChapter=Organizuj Rozdział...
 
-#description: TOP LEVEL MENU: Help
+###########################
+#
+# Header: MAIN MENU: Help
+#
+
+#description: Help
 #english: Help=Help
 Help=Pomoc
 
@@ -833,7 +840,7 @@ EgCentipawnAccuracy=maksymalne odchylenie od najlepszego ruchu wynosi
 
 #######################################
 #
-# Header: DIALOG Chess Forge library
+# Header: DIALOG Chess Forge Online Library
 #
 
 #description: Dialog title
@@ -851,6 +858,60 @@ Bookcase=Regał
 #description: Shelf
 #english: Shelf = Shelf
 Shelf = Półka
+
+#description: Intro line
+#english: OnlineLibraryInfo=Click on any blue link below to download the corresponding workbook. You will be able to view the workbook as well as edit it and save a copy on your PC.
+OnlineLibraryInfo=Kliknij dowolny niebieski link poniżej aby pobrać wybrany podręcznik. Będziesz mógł przegladać ściagnięty podręcznik, a także edytować go i zapisać kopię na swoim komputerze. 
+
+
+#######################################
+#
+# Header: DIALOG Chess Forge Online Library
+#
+
+#description: Dialog title
+#english: DlgManageChapter=Manage Chapter
+DlgManageChapter=Organizacja Rozdziału
+
+#description: Sort by
+#english: SortBy=Sort By
+SortBy=Sortuj wg.
+
+#description: Regenerate Study Tree
+#english: RegenerateStudyTree=Regenerate Study Tree
+RegenerateStudyTree=Wygeneruj drzewo teorii
+
+#description: Warning for regenerate study tree
+#english: MsgThisOverwritesStudy=This will replace the current Study. Proceed?
+MsgThisOverwritesStudy=Nowe drzewo zastąpi istniejącą teorię. Kontynuować?
+
+#description: Sort by ECO
+#english: SortByEco=ECO
+SortByEco=Kod Otwarcia
+
+#description: Sort by White Player
+#english: SortByWhiteName=White Name
+SortByWhiteName=Grający Białymi
+
+#description: Sort by Black Player
+#english: SortByBlackName=Black Name
+SortByBlackName=Grający Czarnymi
+
+#description: Sort by date 
+#english: SortByDate=Date
+SortByDate=Data
+
+#description: Sort direction
+#english: SortDirection=Direction
+SortDirection=Kierunek
+
+#description: Sort Ascending
+#english: SortAsc=Ascending
+SortAsc=Rosnący
+
+#description: Sort Descending
+#english: SortDesc=Descending
+SortDesc=Malejący
 
 
 #######################################
@@ -1456,7 +1517,7 @@ AllFiles=Wszystkie pliki
 WorkbookNotSaved=Podręcznik Niezapisany
 
 #description: Prompt th euser to save the workbook locally
-#english: PromptSaveWorkbookLocally=Save the Workbook on your local drive?
+#english: PromptSaveWorkbookLocally=Save the Workbook to your local drive?
 PromptSaveWorkbookLocally=Zapisać podręcznik na lokalnym dysku?
 
 #description: No node selected to paste at

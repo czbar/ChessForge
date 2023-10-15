@@ -1394,6 +1394,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manage Chapter.
+        /// </summary>
+        public static string DlgManageChapter {
+            get {
+                return ResourceManager.GetString("DlgManageChapter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Merge Errors.
         /// </summary>
         public static string DlgMergeErrors {
@@ -3185,6 +3194,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manage Chapter.
+        /// </summary>
+        public static string ManageChapter {
+            get {
+                return ResourceManager.GetString("ManageChapter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mark as Thumbnail.
         /// </summary>
         public static string MarkAsThumbnail {
@@ -3491,6 +3509,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This will replace the current Study. Proceed?.
+        /// </summary>
+        public static string MsgThisOverwritesStudy {
+            get {
+                return ResourceManager.GetString("MsgThisOverwritesStudy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to $0  entities were valid.
         /// </summary>
         public static string MultiEntitiesValid {
@@ -3785,6 +3812,15 @@ namespace ChessForge.Properties {
         public static string OnlineLibrary {
             get {
                 return ResourceManager.GetString("OnlineLibrary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click on any blue link below to download the corresponding workbook. You will be able to view the workbook as well as edit it and save a copy on your PC..
+        /// </summary>
+        public static string OnlineLibraryInfo {
+            get {
+                return ResourceManager.GetString("OnlineLibraryInfo", resourceCulture);
             }
         }
         
@@ -4122,7 +4158,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Save the Workbook on your local drive?.
+        ///   Looks up a localized string similar to Save the Workbook to your local drive?.
         /// </summary>
         public static string PromptSaveWorkbookLocally {
             get {
@@ -4199,6 +4235,15 @@ namespace ChessForge.Properties {
         public static string RefGamesNotFound {
             get {
                 return ResourceManager.GetString("RefGamesNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Regenerate Study Tree.
+        /// </summary>
+        public static string RegenerateStudyTree {
+            get {
+                return ResourceManager.GetString("RegenerateStudyTree", resourceCulture);
             }
         }
         
@@ -4685,6 +4730,78 @@ namespace ChessForge.Properties {
         public static string SolvingInProgress {
             get {
                 return ResourceManager.GetString("SolvingInProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ascending.
+        /// </summary>
+        public static string SortAsc {
+            get {
+                return ResourceManager.GetString("SortAsc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sort By.
+        /// </summary>
+        public static string SortBy {
+            get {
+                return ResourceManager.GetString("SortBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Black Name.
+        /// </summary>
+        public static string SortByBlackName {
+            get {
+                return ResourceManager.GetString("SortByBlackName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        public static string SortByDate {
+            get {
+                return ResourceManager.GetString("SortByDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ECO.
+        /// </summary>
+        public static string SortByEco {
+            get {
+                return ResourceManager.GetString("SortByEco", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to White Name.
+        /// </summary>
+        public static string SortByWhiteName {
+            get {
+                return ResourceManager.GetString("SortByWhiteName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Descending.
+        /// </summary>
+        public static string SortDesc {
+            get {
+                return ResourceManager.GetString("SortDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Direction.
+        /// </summary>
+        public static string SortDirection {
+            get {
+                return ResourceManager.GetString("SortDirection", resourceCulture);
             }
         }
         

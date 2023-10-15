@@ -212,7 +212,7 @@ namespace ChessForge
                             break;
                     }
 
-                    WorkbookLocation location = new WorkbookLocation(chapter.Guid, tab, articleGuid);
+                    WorkbookLocation location = new WorkbookLocation(chapter.Guid, tab, articleGuid, articleIndex);
                     VerifyNewLocation(location);
                 }
             }
@@ -227,7 +227,7 @@ namespace ChessForge
         /// <param name="tabType"></param>
         public static void SaveNewLocation(WorkbookManager.TabViewType tabType)
         {
-            WorkbookLocation location = new WorkbookLocation(null, tabType, null);
+            WorkbookLocation location = new WorkbookLocation(null, tabType, null, -1);
             VerifyNewLocation(location);
         }
 
@@ -249,7 +249,8 @@ namespace ChessForge
             if (lastLocation == null
                 || lastLocation.ChapterGuid != location.ChapterGuid
                 || lastLocation.ViewType != location.ViewType
-                || lastLocation.ArticleGuid != location.ArticleGuid)
+                || lastLocation.ArticleGuid != location.ArticleGuid
+                || lastLocation.ArticleIndex != location.ArticleIndex)
             {
                 AppendLocation(location);
             }
@@ -283,8 +284,6 @@ namespace ChessForge
                 }
                 else
                 {
-                    int articleIndex = -1;
-
                     // if the tab type is a Tree holding tab identify the chapter by guid
                     Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterByGuid(location.ChapterGuid, out int chapterIndex);
                     if (chapter != null)
@@ -302,13 +301,11 @@ namespace ChessForge
                                 break;
                             case WorkbookManager.TabViewType.MODEL_GAME:
                                 contentType = GameData.ContentType.MODEL_GAME;
-                                WorkbookManager.SessionWorkbook.GetArticleByGuid(location.ArticleGuid, out _, out articleIndex);
-                                GotoArticle(chapterIndex, contentType, articleIndex, false);
+                                GotoArticle(chapterIndex, contentType, location.ArticleIndex, false);
                                 break;
                             case WorkbookManager.TabViewType.EXERCISE:
                                 contentType = GameData.ContentType.EXERCISE;
-                                WorkbookManager.SessionWorkbook.GetArticleByGuid(location.ArticleGuid, out _, out articleIndex);
-                                GotoArticle(chapterIndex, contentType, articleIndex, false);
+                                GotoArticle(chapterIndex, contentType, location.ArticleIndex, false);
                                 break;
                         }
                     }

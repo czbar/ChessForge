@@ -274,7 +274,7 @@ namespace ChessForge
                         }
                         else
                         {
-                            merged = WorkbookTreeMerge.MergeVariationTrees(merged, ch.Chapter.StudyTree.Tree);
+                            merged = TreeMerge.MergeVariationTrees(merged, ch.Chapter.StudyTree.Tree);
                         }
                         mergedCount++;
                     }
@@ -2330,7 +2330,17 @@ namespace ChessForge
         private void UiMnMoveArticles_Click(object sender, RoutedEventArgs e)
         {
             ObservableCollection<ArticleListItem> articleList = WorkbookManager.SessionWorkbook.GenerateArticleList();
-            ChapterUtils.RequestCopyMoveArticles(null, true, articleList, true, false);
+            ChapterUtils.RequestCopyMoveArticles(null, true, articleList, false, false);
+        }
+
+        /// <summary>
+        /// Invokes dialog for managing some aspects of the active chapter.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnManageChapter_Click(object sender, RoutedEventArgs e)
+        {
+            ChapterUtils.ManageChapter(AppState.ActiveChapter);
         }
 
         /// <summary>
