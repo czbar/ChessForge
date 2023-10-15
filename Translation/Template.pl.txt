@@ -692,10 +692,15 @@ StripComments=Usuń komentarze...
 DeleteEngineEvals=Usuń oceny silnika...
 
 #description: Manage Chapter
-#english: ManageChapter=Manage Chapter
-ManageChapter=Organizuj Rozdział
+#english: ManageChapter=Manage Chapter...
+ManageChapter=Organizuj Rozdział...
 
-#description: TOP LEVEL MENU: Help
+###########################
+#
+# Header: MAIN MENU: Help
+#
+
+#description: Help
 #english: Help=Help
 Help=Pomoc
 

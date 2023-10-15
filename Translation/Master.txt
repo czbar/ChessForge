@@ -534,9 +534,14 @@ StripComments=Delete Comments...
 DeleteEngineEvals=Delete Engine Evaluations...
 
 #Manage Chapter
-ManageChapter=Manage Chapter
+ManageChapter=Manage Chapter...
 
-#TOP LEVEL MENU: Help
+###########################
+#
+# Header: MAIN MENU: Help
+#
+
+#Help
 Help=Help
 
 #Opens user's browser and navigates to Chess Forge's Wiki

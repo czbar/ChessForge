@@ -693,7 +693,7 @@ DeleteEngineEvals=Usuń oceny silnika...
 
 #description: Manage Chapter
 #english: ManageChapter=Manage Chapter
-ManageChapter=Organizuj Rozdział
+ManageChapter=Organizuj Rozdział...
 
 #description: TOP LEVEL MENU: Help
 #english: Help=Help

@@ -692,10 +692,15 @@ StripComments=
 DeleteEngineEvals=
 
 #description: Manage Chapter
-#english: ManageChapter=Manage Chapter
+#english: ManageChapter=Manage Chapter...
 ManageChapter=
 
-#description: TOP LEVEL MENU: Help
+###########################
+#
+# Header: MAIN MENU: Help
+#
+
+#description: Help
 #english: Help=Help
 Help=
 
