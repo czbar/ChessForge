@@ -105,7 +105,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnOk_Click(object sender, RoutedEventArgs e)
         {
-            RegenerateStudy = UiCbGenerateStudyTree.IsEnabled == true;
+            RegenerateStudy = UiCbGenerateStudyTree.IsChecked == true;
             if (RegenerateStudy)
             {
                 uint treeDepth;
@@ -117,7 +117,7 @@ namespace ChessForge
             }
 
             GameSortCriterion crit = UiComboBoxSortBy.SelectedItem as GameSortCriterion;
-            if (crit != null && crit.ItemId == GameSortCriterion.SortItem.NONE)
+            if (crit != null && crit.ItemId != GameSortCriterion.SortItem.NONE)
             {
                 SortGamesBy = crit.ItemId;
                 GameSortCriterion direction = UiComboBoxSortDirection.SelectedItem as GameSortCriterion;
