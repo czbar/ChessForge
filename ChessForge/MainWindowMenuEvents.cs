@@ -150,55 +150,91 @@ namespace ChessForge
         private void UiMnOnlineLibrary_Click(object sender, RoutedEventArgs e)
         {
             string error;
-            WebAccess.LibraryContent libraryContent = WebAccess.OnlineLibrary.GetLibraryContent(out error);
-            if (libraryContent == null)
+            WebAccess.LibraryContent library = ReadLibraryContentFile(out error);
+            if (library == null)
             {
                 MessageBox.Show(Properties.Resources.ErrAccessOnlineLibrary + ": " + error, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else
             {
-                OnlineLibraryContentDialog dlg = new OnlineLibraryContentDialog(libraryContent)
+                OnlineLibraryContentDialog dlg = new OnlineLibraryContentDialog(library)
                 {
                     Left = ChessForgeMain.Left + 50,
                     Top = ChessForgeMain.Top + 50,
                     Topmost = false,
                     Owner = this
                 };
+
+
                 if (dlg.ShowDialog() == true)
                 {
-                    // download the workbook
-                    string bookText = WebAccess.OnlineLibrary.GetWorkbookText(dlg.SelectedBook.File, out error);
-                    if (!string.IsNullOrEmpty(error))
+                    try
                     {
-                        MessageBox.Show(Properties.Resources.ErrAccessOnlineLibrary + ": " + error, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                    else
-                    {
-                        if (PrepareToReadWorkbook())
+                        Mouse.SetCursor(Cursors.Wait);
+
+                        // download the workbook
+                        string bookText = WebAccess.OnlineLibrary.GetWorkbookText(dlg.SelectedBook.File, out error);
+                        if (!string.IsNullOrEmpty(error))
                         {
-                            WorkbookManager.ReadPgnFile(bookText, ref WorkbookManager.VariationTreeList, GameData.ContentType.GENERIC, GameData.ContentType.NONE);
-                            bool res = WorkbookManager.PrepareWorkbook(ref WorkbookManager.VariationTreeList, out bool isChessForgeFile);
-                            if (!isChessForgeFile)
+                            MessageBox.Show(Properties.Resources.ErrAccessOnlineLibrary + ": " + error, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                        else
+                        {
+                            if (PrepareToReadWorkbook())
                             {
-                                MessageBox.Show(Properties.Resources.ErrFileFormatOrCorrupt, Properties.Resources.ErrLibraryDownload, MessageBoxButton.OK, MessageBoxImage.Error);
-                                AppState.RestartInIdleMode();
-                            }
-                            else
-                            {
-                                SetupGuiForNewSession("", true, null);
-                                // at this point the Workbook is not saved
-                                if (MessageBox.Show(Properties.Resources.PromptSaveWorkbookLocally,
-                                    dlg.SelectedBook.Title, 
-                                    MessageBoxButton.YesNo, 
-                                    MessageBoxImage.Question) == MessageBoxResult.Yes)
+                                WorkbookManager.ReadPgnFile(bookText, ref WorkbookManager.VariationTreeList, GameData.ContentType.GENERIC, GameData.ContentType.NONE);
+                                bool res = WorkbookManager.PrepareWorkbook(ref WorkbookManager.VariationTreeList, out bool isChessForgeFile);
+                                if (!isChessForgeFile)
                                 {
-                                    WorkbookManager.SaveWorkbookToNewFile(null);
+                                    MessageBox.Show(Properties.Resources.ErrFileFormatOrCorrupt, Properties.Resources.ErrLibraryDownload, MessageBoxButton.OK, MessageBoxImage.Error);
+                                    AppState.RestartInIdleMode();
+                                }
+                                else
+                                {
+                                    SetupGuiForNewSession("", true, null);
                                 }
                             }
                         }
                     }
+                    catch (Exception ex)
+                    {
+                        AppLog.Message("UiMnOnlineLibrary_Click()", ex);
+                    }
+                    finally
+                    {
+                        Mouse.SetCursor(Cursors.Arrow);
+                    }
                 }
             }
+        }
+
+        /// <summary>
+        /// Reads the library content file respecting redirects.
+        /// </summary>
+        /// <param name="error"></param>
+        /// <returns></returns>
+        private WebAccess.LibraryContent ReadLibraryContentFile(out string error)
+        {
+            error = "";
+            int allowedRedirections = 5;
+
+            WebAccess.LibraryContent library = null;
+
+            for (int i = 0; i < allowedRedirections; i++)
+            {
+                library = WebAccess.OnlineLibrary.GetLibraryContent(out error);
+                if (library == null || string.IsNullOrWhiteSpace(library.Redirect))
+                {
+                    break;
+                }
+            }
+
+            if (library != null && !string.IsNullOrWhiteSpace(library.Redirect))
+            {
+                library = null;
+            }
+
+            return library;
         }
 
         /// <summary>
@@ -550,7 +586,7 @@ namespace ChessForge
             wvs.SaveState();
 
             if (AppState.CurrentLearningMode != LearningMode.Mode.IDLE
-                && AppState.IsDirty || (ActiveVariationTree != null && ActiveVariationTree.HasTrainingMoves()))
+                && (AppState.IsDirty || string.IsNullOrEmpty(AppState.WorkbookFilePath)) || (ActiveVariationTree != null && ActiveVariationTree.HasTrainingMoves()))
             {
                 try
                 {

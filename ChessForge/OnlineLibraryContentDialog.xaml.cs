@@ -96,7 +96,7 @@ namespace ChessForge
         /// </summary>
         private void BuildSections()
         {
-            foreach (WebAccess.Section section in _content.Sections)
+            foreach (WebAccess.Bookcase section in _content.Bookcases)
             {
                 BuildSectionParagraph(section);
             }
@@ -106,7 +106,7 @@ namespace ChessForge
         /// Build paragraphs for a single section.
         /// </summary>
         /// <param name="section"></param>
-        private void BuildSectionParagraph(WebAccess.Section section)
+        private void BuildSectionParagraph(WebAccess.Bookcase section)
         {
             Paragraph para = new Paragraph
             {
@@ -139,11 +139,11 @@ namespace ChessForge
         /// </summary>
         /// <param name="section"></param>
         /// <param name="bookcaseId"></param>
-        private void BuildSubSections(WebAccess.Section section, char bookcaseId)
+        private void BuildSubSections(WebAccess.Bookcase section, char bookcaseId)
         {
             uint shelfId = 1;
 
-            foreach (WebAccess.SubSection subSection in section.SubSections)
+            foreach (WebAccess.Shelf subSection in section.Shelves)
             {
                 BuildSubSectionParagraph(subSection, bookcaseId, shelfId);
                 shelfId++;
@@ -156,7 +156,7 @@ namespace ChessForge
         /// <param name="subSection"></param>
         /// <param name="bookcaseId"></param>
         /// <param name="shelfId"></param>
-        private void BuildSubSectionParagraph(WebAccess.SubSection subSection, char bookcaseId, uint shelfId)
+        private void BuildSubSectionParagraph(WebAccess.Shelf subSection, char bookcaseId, uint shelfId)
         {
             Paragraph para = new Paragraph
             {

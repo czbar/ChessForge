@@ -481,7 +481,12 @@ namespace ChessForge
         /// </summary>
         public static void UpdateAppTitleBar()
         {
-            _mainWin.Title = _mainWin.APP_NAME + " - " + Path.GetFileName(WorkbookFilePath);
+            string titleToShow = "";
+            if (Workbook != null)
+            {
+                titleToShow = string.IsNullOrEmpty(WorkbookFilePath) ? Workbook.Title : Path.GetFileName(WorkbookFilePath);
+            }
+            _mainWin.Title = _mainWin.APP_NAME + " - " + titleToShow;
         }
 
 

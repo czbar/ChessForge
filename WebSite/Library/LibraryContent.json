@@ -81,7 +81,7 @@
       },
       {
         "title": "Book Samples",
-        "description": "Book fragments adapted for Chess Forge",
+        "description": "Book fragments adapted for Chess Forge.",
         "subSections": [
           {
             "title": "",
@@ -97,6 +97,23 @@
                 "description": "A small example from the award winning book by GM. David Smerdon.",
                 "file": "BookSamples/The Complete Chess Swindler.pgn"
               }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Tournaments",
+        "description": "Games from tournaments and matches.",
+        "subSections": [
+          {
+            "title": "",
+            "description": "",
+            "books": [
+              {
+                "title": "Men's World Championships",
+                "description": "All games from Men's World Championship Matches and Tournaments.",
+                "file": "Tournaments/Mens World Individual Championships.pgn"
+              },
             ]
           }
         ]

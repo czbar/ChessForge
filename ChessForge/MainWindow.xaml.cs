@@ -1523,9 +1523,24 @@ namespace ChessForge
 
                 if (wvs == null)
                 {
-                    // this is a newly created Workbook
+                    // this is a Workbook that is opened for the first time
                     tabToFocus = WorkbookManager.TabViewType.CHAPTERS;
                     workbook.SelectDefaultActiveChapter();
+
+                    int articleCount = workbook.GetArticleCount();
+                    if (articleCount < 500)
+                    {
+                        // open everything
+                        ExpandCollapseChaptersView(true, true);
+                    }
+                    else
+                    {
+                        // expand just the first chapter
+                        Chapter chapter = workbook.Chapters[0];
+                        chapter.IsViewExpanded = true;
+                        chapter.IsModelGamesListExpanded = true;
+                        chapter.IsExercisesListExpanded = true;
+                    }
                 }
                 else
                 {

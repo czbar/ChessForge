@@ -6,7 +6,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
-using System.Windows;
 using System.Threading.Tasks;
 
 namespace WebAccess
@@ -19,8 +18,11 @@ namespace WebAccess
         // root URL for the library
         private static string LIBRARY_URL = "https://chessforge.sourceforge.io/Library/";
 
-        // name of the json content file at the root of the library
-        private static string LIBRARY_CONTENT_FILE = "LibraryContent.json";
+        //// name of the json content file at the root of the library
+        //private static string LIBRARY_CONTENT_FILE = "LibraryContent.json";
+
+        // name of the text content file at the root of the library
+        private static string LIBRARY_CONTENT_FILE = "LibraryContent.txt";
 
         /// <summary>
         /// Gets and deserializes the library content from ChessForge's web site.
@@ -43,8 +45,8 @@ namespace WebAccess
                     {
                         using (var myStreamReader = new StreamReader(responseStream, Encoding.UTF8))
                         {
-                            var json = myStreamReader.ReadToEnd();
-                            library = JsonConvert.DeserializeObject<LibraryContent>(json);
+                            var txt = myStreamReader.ReadToEnd();
+                            library = ParseLibraryContent(txt);
                         }
                     }
                 }
@@ -94,6 +96,94 @@ namespace WebAccess
             }
 
             return bookText;
+        }
+
+        /// <summary>
+        /// Parses the text file with library content.
+        /// </summary>
+        /// <param name="txt"></param>
+        /// <returns></returns>
+        private static LibraryContent ParseLibraryContent(string txt)
+        {
+            LibraryContent library = new LibraryContent();
+
+            using (StringReader sr = new StringReader(txt))
+            {
+                Bookcase currBookcase = null;
+                Shelf currShelf = null;
+                Book currBook = null;
+
+                while (sr.Peek() >= 0)
+                {
+                    string line = sr.ReadLine();
+                    string typ = ParseLine(line, out string value);
+                    switch (typ)
+                    {
+                        case "redirect":
+                            library.Redirect = value;
+                            break;
+                        case "bookcase":
+                            currBookcase = new Bookcase(value);
+                            library.Bookcases.Add(currBookcase);
+                            currShelf = null;
+                            currBook = null;
+                            break;
+                        case "shelf":
+                            currShelf = new Shelf(value);
+                            currBookcase?.Shelves.Add(currShelf);
+                            currBook = null;
+                            break;
+                        case "book":
+                            currBook = new Book(value);
+                            currShelf?.Books.Add(currBook);
+                            break;
+                        case "file":
+                            currBook.File = value.Trim();
+                            break;
+                        case "description":
+                            if (currBook != null)
+                            {
+                                currBook.Description = value;
+                            }
+                            else if (currShelf != null)
+                            {
+                                currShelf.Description = value;
+                            }
+                            else if (currBookcase != null)
+                            {
+                                currBookcase.Description = value;
+                            }
+                            break;
+                    }
+                }
+            }
+
+            return library;
+        }
+
+        /// <summary>
+        /// Parses a single line in the content file.
+        /// Returns the key (type) and the value.
+        /// </summary>
+        /// <param name="line"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        private static string ParseLine(string line, out string value)
+        {
+            string typ = "";
+            value = "";
+
+            if (!string.IsNullOrEmpty(line))
+            {
+                int index = line.IndexOf(':');
+                if (index > 0)
+                {
+                    typ = line.Substring(0, index).Trim().ToLower();
+                    value = line.Substring(index + 1);    
+                }
+            }
+
+            return typ;
         }
     }
 }
