@@ -26,7 +26,7 @@ Description:Workbooks examining theory and practice of various Openings.
     Description: Openings analyzed from the White player's point of view
       
 	  Book:Budapest Gambit
-      Description: A couple of options to safely counter the Budapest Gambit.
+      Description: A few of options to safely counter the Budapest Gambit.
       File: Openings/White/Budapest for White.pgn
       
 	  Book:King's Indian - Karpov Variation
