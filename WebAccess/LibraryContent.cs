@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace WebAccess
 {
     /// <summary>
-    /// Structure for the Online ChessForge Library's json file.
+    /// Structure for the Online ChessForge Library file.
     /// </summary>
     public class LibraryContent
     {
@@ -19,19 +18,33 @@ namespace WebAccess
         /// <summary>
         /// Any text messages relevant to the library overall.  
         /// </summary>
-        public List<string> Messages;
+        public List<string> Messages = new List<string>();
 
         /// <summary>
-        /// Library Sections.
+        /// Bookcases (sections of the library).
         /// </summary>
-        public List<Section> Sections;
+        public List<Bookcase> Bookcases = new List<Bookcase>();
     }
 
     /// <summary>
-    /// Represents a Section of the Library.
+    /// Represents a Bookcase (section) of the Library.
     /// </summary>
-    public class Section
+    public class Bookcase
     {
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        public Bookcase() { }
+
+        /// <summary>
+        /// Constructor setting the title.
+        /// </summary>
+        /// <param name="title"></param>
+        public Bookcase(string title) 
+        {
+            Title = title;
+        }
+        
         /// <summary>
         /// Title of the section.
         /// </summary>
@@ -45,14 +58,28 @@ namespace WebAccess
         /// <summary>
         /// The list of subsections.
         /// </summary>
-        public List<SubSection> SubSections;
+        public List<Shelf> Shelves = new List<Shelf>();
     }
 
     /// <summary>
-    /// Represents a SubSection in a Section of the Library.  
+    /// Represents a Shelf (sub-section) in a Bookcase of the Library.  
     /// </summary>
-    public class SubSection
+    public class Shelf
     {
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        public Shelf() { }
+
+        /// <summary>
+        /// Constructor setting the title.
+        /// </summary>
+        /// <param name="title"></param>
+        public Shelf(string title)
+        {
+            Title = title;
+        }
+
         /// <summary>
         /// Title of the SubSection
         /// </summary>
@@ -66,14 +93,28 @@ namespace WebAccess
         /// <summary>
         /// The list of Books in the SubsSection.
         /// </summary>
-        public List<Book> Books;
+        public List<Book> Books = new List<Book>();
     }
 
     /// <summary>
-    /// Represents a single Workbook in the Library.
+    /// Represents a single Book (Workbook) in the Library.
     /// </summary>
     public class Book
     {
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        public Book() { }
+
+        /// <summary>
+        /// Constructor setting the title.
+        /// </summary>
+        /// <param name="title"></param>
+        public Book(string title)
+        {
+            Title = title;
+        }
+
         /// <summary>
         /// Title of the workbook.
         /// </summary>
