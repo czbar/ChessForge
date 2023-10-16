@@ -104,7 +104,7 @@ namespace ChessForge
         private string _description;
 
         // workbook title
-        private string _title;
+        private string _title = "";
 
         // Version object for this Workbook
         private WorkbookVersion _version;
@@ -652,7 +652,7 @@ namespace ChessForge
                     return _title;
                 }
             }
-            set => _title = value;
+            set => _title = (value ?? "");
         }
 
         /// <summary>
