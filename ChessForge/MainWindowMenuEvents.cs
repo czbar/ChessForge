@@ -150,14 +150,14 @@ namespace ChessForge
         private void UiMnOnlineLibrary_Click(object sender, RoutedEventArgs e)
         {
             string error;
-            WebAccess.LibraryContent libraryContent = WebAccess.OnlineLibrary.GetLibraryContent(out error);
-            if (libraryContent == null)
+            WebAccess.LibraryContent library = ReadLibraryContentFile(out error);
+            if (library == null)
             {
                 MessageBox.Show(Properties.Resources.ErrAccessOnlineLibrary + ": " + error, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else
             {
-                OnlineLibraryContentDialog dlg = new OnlineLibraryContentDialog(libraryContent)
+                OnlineLibraryContentDialog dlg = new OnlineLibraryContentDialog(library)
                 {
                     Left = ChessForgeMain.Left + 50,
                     Top = ChessForgeMain.Top + 50,
@@ -188,8 +188,8 @@ namespace ChessForge
                                 SetupGuiForNewSession("", true, null);
                                 // at this point the Workbook is not saved
                                 if (MessageBox.Show(Properties.Resources.PromptSaveWorkbookLocally,
-                                    dlg.SelectedBook.Title, 
-                                    MessageBoxButton.YesNo, 
+                                    dlg.SelectedBook.Title,
+                                    MessageBoxButton.YesNo,
                                     MessageBoxImage.Question) == MessageBoxResult.Yes)
                                 {
                                     WorkbookManager.SaveWorkbookToNewFile(null);
@@ -199,6 +199,35 @@ namespace ChessForge
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Reads the library content file respecting redirects.
+        /// </summary>
+        /// <param name="error"></param>
+        /// <returns></returns>
+        private WebAccess.LibraryContent ReadLibraryContentFile(out string error)
+        {
+            error = "";
+            int allowedRedirections = 5;
+
+            WebAccess.LibraryContent library = null;
+
+            for (int i = 0; i < allowedRedirections; i++)
+            {
+                library = WebAccess.OnlineLibrary.GetLibraryContent(out error);
+                if (library == null || string.IsNullOrWhiteSpace(library.Redirect))
+                {
+                    break;
+                }
+            }
+
+            if (library != null && !string.IsNullOrWhiteSpace(library.Redirect))
+            {
+                library = null;
+            }
+
+            return library;
         }
 
         /// <summary>
