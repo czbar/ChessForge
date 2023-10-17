@@ -535,7 +535,7 @@
     <value>Blunder Detection...</value>
   </data>
   <data name="DlgTitleEngineOptions" xml:space="preserve">
-    <value>Engine Configuration</value>
+    <value>Engine Options</value>
   </data>
   <data name="DlgTitleIdenticalPositions" xml:space="preserve">
     <value>List of Identical Positions</value>
@@ -673,7 +673,7 @@
     <value>[not named]</value>
   </data>
   <data name="EgEngineConfiguration" xml:space="preserve">
-    <value>Engine Configuration</value>
+    <value>Engine Options</value>
   </data>
   <data name="EgChange" xml:space="preserve">
     <value>change</value>

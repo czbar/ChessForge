@@ -1430,7 +1430,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Engine Configuration.
+        ///   Looks up a localized string similar to Engine Options.
         /// </summary>
         public static string DlgTitleEngineOptions {
             get {
@@ -1673,7 +1673,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Engine Configuration.
+        ///   Looks up a localized string similar to Engine Options.
         /// </summary>
         public static string EgEngineConfiguration {
             get {
@@ -3194,7 +3194,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage Chapter.
+        ///   Looks up a localized string similar to Manage Chapter....
         /// </summary>
         public static string ManageChapter {
             get {

@@ -463,14 +463,14 @@ ApplicationOptions=Application Options...
 #Application Options dialog title
 DlgTitleApplicationOptions=Application Options
 
-#Opens the Engine Configuration dialog
+#Opens the Engine Options dialog
 EngineOptions=Engine Options...
 
 #Blunder detection options
 BlunderDetectionOptions=Blunder Detection...
 
 #Engine Options dialog title
-DlgTitleEngineOptions=Engine Configuration
+DlgTitleEngineOptions=Engine Options
 
 #Identical Positions dialog title
 DlgTitleIdenticalPositions=List of Identical Positions
@@ -637,8 +637,8 @@ NotNamed=[not named]
 # Header: VIEW Engine Game
 #
 
-#Engine Configuration header
-EgEngineConfiguration=Engine Configuration
+#Engine Options header
+EgEngineConfiguration=Engine Options
 
 #Change link
 EgChange=change

@@ -610,7 +610,7 @@ BlunderDetectionOptions=Detekcja Błędów...
 
 #description: Engine Options dialog title
 #english: DlgTitleEngineOptions=Engine Configuration
-DlgTitleEngineOptions=Konfiguracja Silnika
+DlgTitleEngineOptions=Opcje Silnika
 
 #description: Identical Positions dialog title
 #english: DlgTitleIdenticalPositions=List of Identical Positions
@@ -819,7 +819,7 @@ NotNamed=brak nazwy
 
 #description: Engine Configuration header
 #english: EgEngineConfiguration=Engine Configuration
-EgEngineConfiguration=Konfiguracja Silnika
+EgEngineConfiguration=Opcje Silnika
 
 #description: Change link
 #english: EgChange=change
