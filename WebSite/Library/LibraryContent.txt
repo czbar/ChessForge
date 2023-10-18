@@ -33,6 +33,10 @@ Description:Workbooks examining theory and practice of various Openings.
       Description:A very popular and effective variation against King's Indian at all levels.
       File: Openings/White/King's Indian - Karpov variation for White.pgn
     
+	  Book:Smith-Morra Gambit
+      Description: A popular anti-Sicilian weapon.
+      File: Openings/White/Smith Morra Gambit.pgn
+      
 	Shelf:Black repertoire
     Description: Openings analyzed from the Black player's point of view
     
