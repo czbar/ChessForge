@@ -184,23 +184,27 @@ namespace ChessForge
         {
             if (_isTextDirty)
             {
-                if (cleanup)
+                // needs the dispatcher context so it doesn't throw when called from the autosave timer event. 
+                AppState.MainWin.Dispatcher.Invoke(() =>
                 {
-                    RemoveEmptyParagraphs();
-                }
-                RemoveDuplicateNames();
-                string xamlText = XamlWriter.Save(Document);
-                if (Document.Blocks.Count == 0)
-                {
-                    Nodes[0].Data = "";
-                    Nodes[0].Comment = "";
-                }
-                else
-                {
-                    Nodes[0].Data = EncodingUtils.Base64Encode(xamlText);
-                    Nodes[0].Comment = CopySelectionToClipboard(true);
-                    RemoveUnusedNodes();
-                }
+                    if (cleanup)
+                    {
+                        RemoveEmptyParagraphs();
+                    }
+                    RemoveDuplicateNames();
+                    string xamlText = XamlWriter.Save(Document);
+                    if (Document.Blocks.Count == 0)
+                    {
+                        Nodes[0].Data = "";
+                        Nodes[0].Comment = "";
+                    }
+                    else
+                    {
+                        Nodes[0].Data = EncodingUtils.Base64Encode(xamlText);
+                        Nodes[0].Comment = CopySelectionToClipboard(true);
+                        RemoveUnusedNodes();
+                    }
+                });
             }
 
             _isTextDirty = false;
