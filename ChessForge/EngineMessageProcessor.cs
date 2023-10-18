@@ -1010,85 +1010,92 @@ namespace ChessForge
                     IsInfoMessageProcessing = true;
             }
 
-            string[] tokens = message.Split(' ');
-
-            int idx = 0;
-
-            int? multipv = null;
-            int? score = null;
-            int? movesToMate = null;
-            string moves = "";
-
-            string STRING_PV = " pv ";
-
-            while (idx < tokens.Length)
+            try
             {
-                switch (tokens[idx])
-                {
-                    case "multipv":
-                        idx++;
-                        multipv = int.Parse(tokens[idx]);
-                        break;
-                    case "score":
-                        // next token can be "cp" or "mate" followed by an int value
-                        ProcessScoreTokens(tokens[idx + 1], tokens[idx + 2], out score, out movesToMate);
-                        idx += 2;
-                        break;
-                    case "pv":
-                        int pvIndex = message.IndexOf(STRING_PV);
-                        moves = message.Substring(pvIndex + STRING_PV.Length);
+                string[] tokens = message.Split(' ');
 
-                        // force loop exit
-                        idx = tokens.Length;
-                        break;
+                int idx = 0;
+
+                int? multipv = null;
+                int? score = null;
+                int? movesToMate = null;
+                string moves = "";
+
+                string STRING_PV = " pv ";
+
+                while (idx < tokens.Length)
+                {
+                    switch (tokens[idx])
+                    {
+                        case "multipv":
+                            idx++;
+                            multipv = int.Parse(tokens[idx]);
+                            break;
+                        case "score":
+                            // next token can be "cp" or "mate" followed by an int value
+                            ProcessScoreTokens(tokens[idx + 1], tokens[idx + 2], out score, out movesToMate);
+                            idx += 2;
+                            break;
+                        case "pv":
+                            int pvIndex = message.IndexOf(STRING_PV);
+                            moves = message.Substring(pvIndex + STRING_PV.Length);
+
+                            // force loop exit
+                            idx = tokens.Length;
+                            break;
+                    }
+                    idx++;
                 }
-                idx++;
+
+                lock (MoveCandidatesLock)
+                {
+                    if (multipv != null && (score != null || movesToMate != null))
+                    {
+                        EngineMoveCandidates.EvalNode = evalNode;
+
+                        // we have updated evaluation
+                        // make sure we have the object to set
+                        while (EngineMoveCandidates.Lines.Count < multipv)
+                        {
+                            EngineMoveCandidates.AddEvaluation(new MoveEvaluation());
+                        }
+
+                        EngineMoveCandidates.Lines[multipv.Value - 1].Line = moves;
+                        if (score != null)
+                        {
+                            EngineMoveCandidates.Lines[multipv.Value - 1].ScoreCp = score.Value;
+                            EngineMoveCandidates.Lines[multipv.Value - 1].IsMateDetected = false;
+                        }
+                        else
+                        {
+                            EngineMoveCandidates.Lines[multipv.Value - 1].IsMateDetected = true;
+                            EngineMoveCandidates.Lines[multipv.Value - 1].MovesToMate = movesToMate.Value;
+                        }
+                    }
+                    else if (multipv == null && movesToMate == 0) // special case where we have a check mate position
+                    {
+                        if (EngineMoveCandidates.Lines.Count == 0)
+                        {
+                            EngineMoveCandidates.AddEvaluation(new MoveEvaluation());
+                        }
+                        EngineMoveCandidates.Lines[0].IsMateDetected = true;
+                        EngineMoveCandidates.Lines[0].MovesToMate = 0;
+                    }
+                    else if (multipv == null && score == 0) // special case where we have a stalemate
+                    {
+                        if (EngineMoveCandidates.Lines.Count == 0)
+                        {
+                            EngineMoveCandidates.AddEvaluation(new MoveEvaluation());
+                        }
+                        EngineMoveCandidates.Lines[0].ScoreCp = score.Value;
+                        EngineMoveCandidates.Lines[0].IsMateDetected = false;
+                        EngineMoveCandidates.Lines[0].MovesToMate = 0;
+                    }
+                }
             }
-
-            lock (MoveCandidatesLock)
+            catch(Exception ex)
             {
-                if (multipv != null && (score != null || movesToMate != null))
-                {
-                    EngineMoveCandidates.EvalNode = evalNode;
-
-                    // we have updated evaluation
-                    // make sure we have the object to set
-                    while (EngineMoveCandidates.Lines.Count < multipv)
-                    {
-                        EngineMoveCandidates.AddEvaluation(new MoveEvaluation());
-                    }
-
-                    EngineMoveCandidates.Lines[multipv.Value - 1].Line = moves;
-                    if (score != null)
-                    {
-                        EngineMoveCandidates.Lines[multipv.Value - 1].ScoreCp = score.Value;
-                        EngineMoveCandidates.Lines[multipv.Value - 1].IsMateDetected = false;
-                    }
-                    else
-                    {
-                        EngineMoveCandidates.Lines[multipv.Value - 1].IsMateDetected = true;
-                        EngineMoveCandidates.Lines[multipv.Value - 1].MovesToMate = movesToMate.Value;
-                    }
-                }
-                else if (multipv == null && movesToMate == 0) // special case where we have a check mate position
-                {
-                    if (EngineMoveCandidates.Lines.Count == 0)
-                    {
-                        EngineMoveCandidates.AddEvaluation(new MoveEvaluation());
-                    }
-                    EngineMoveCandidates.Lines[0].IsMateDetected = true;
-                    EngineMoveCandidates.Lines[0].MovesToMate = 0;
-                }
-                else if (multipv == null && score == 0) // special case where we have a stalemate
-                {
-                    if (EngineMoveCandidates.Lines.Count == 0)
-                    {
-                        EngineMoveCandidates.AddEvaluation(new MoveEvaluation());
-                    }
-                    EngineMoveCandidates.Lines[0].ScoreCp = score.Value;
-                    EngineMoveCandidates.Lines[0].IsMateDetected = false;
-                    EngineMoveCandidates.Lines[0].MovesToMate = 0;
-                }
+                AppLog.Message("ProcessInfoMessage()", ex);
             }
 
             lock (InfoMessageProcessLock)
