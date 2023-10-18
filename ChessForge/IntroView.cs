@@ -187,19 +187,15 @@ namespace ChessForge
                 // needs the dispatcher context so it doesn't throw when called from the autosave timer event. 
                 AppState.MainWin.Dispatcher.Invoke(() =>
                 {
-                    if (cleanup)
-                    {
-                        RemoveEmptyParagraphs();
-                    }
                     RemoveDuplicateNames();
-                    string xamlText = XamlWriter.Save(Document);
-                    if (Document.Blocks.Count == 0)
+                    if (cleanup && IsDocumentEmpty())
                     {
                         Nodes[0].Data = "";
                         Nodes[0].Comment = "";
                     }
                     else
                     {
+                        string xamlText = XamlWriter.Save(Document);
                         Nodes[0].Data = EncodingUtils.Base64Encode(xamlText);
                         Nodes[0].Comment = CopySelectionToClipboard(true);
                         RemoveUnusedNodes();
