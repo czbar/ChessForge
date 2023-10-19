@@ -1661,6 +1661,9 @@ namespace ChessForge
                     studyTree.BuildLines();
                 }
 
+                // may have to be set explicitly in some cases
+                studyTree.ContentType = GameData.ContentType.STUDY_TREE;
+
                 _studyTreeView.BuildFlowDocumentForVariationTree();
 
                 string startLineId;
