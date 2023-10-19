@@ -1119,6 +1119,7 @@ namespace ChessForge
             }
 
 
+            WorkbookManager.ActiveTab = WorkbookManager.TabViewType.STUDY;
             if (_studyTreeView == null || _studyTreeView.Document == null || _studyTreeView.Document.Blocks.Count == 0)
             {
                 SetupGuiForActiveStudyTree(true);
@@ -1130,7 +1131,6 @@ namespace ChessForge
             UiImgEngineOn.IsEnabled = true;
             UiImgEngineOff.IsEnabled = true;
 
-            WorkbookManager.ActiveTab = WorkbookManager.TabViewType.STUDY;
             AppState.ShowExplorers(AppState.AreExplorersOn, true);
 
             BoardCommentBox.ShowTabHints();
