@@ -2141,6 +2141,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The Intro data has been corrupted..
+        /// </summary>
+        public static string ErrorParsingIntro {
+            get {
+                return ResourceManager.GetString("ErrorParsingIntro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Estimated evaluation time.
         /// </summary>
         public static string EstimatedEvalTime {

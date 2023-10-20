@@ -1131,6 +1131,9 @@
   <data name="MbtTitleCopyPasteError" xml:space="preserve">
     <value>Błąd w Kopiuj/Wklej</value>
   </data>
+  <data name="ErrorParsingIntro" xml:space="preserve">
+    <value>Dane Wstępu zostały Uszkodzone.</value>
+  </data>
   <data name="FlMsgGameImportSuccess" xml:space="preserve">
     <value>Partia Została Zaimportowana.</value>
   </data>

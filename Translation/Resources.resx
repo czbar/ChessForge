@@ -1131,6 +1131,9 @@
   <data name="MbtTitleCopyPasteError" xml:space="preserve">
     <value>Copy/Paste Error</value>
   </data>
+  <data name="ErrorParsingIntro" xml:space="preserve">
+    <value>The Intro data has been corrupted.</value>
+  </data>
   <data name="FlMsgGameImportSuccess" xml:space="preserve">
     <value>Game Imported Successfully.</value>
   </data>

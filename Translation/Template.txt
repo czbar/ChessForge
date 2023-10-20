@@ -1545,6 +1545,10 @@ MbtTitleCopyPasteError=
 # Header: Message Text
 #
 
+#description: Error while parsing Intro data
+#english: ErrorParsingIntro=The Intro data has been corrupted.
+ErrorParsingIntro=
+
 #description: Flash message: Game Imported Successfully.
 #english: FlMsgGameImportSuccess=Game Imported Successfully.
 FlMsgGameImportSuccess=
