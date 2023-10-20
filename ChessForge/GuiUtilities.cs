@@ -163,7 +163,6 @@ namespace ChessForge
                 new Typeface(label.FontFamily, label.FontStyle, label.FontWeight, label.FontStretch),
                 label.FontSize,
                 Brushes.Black,
-                new NumberSubstitution(),
                 VisualTreeHelper.GetDpi(label).PixelsPerDip);
 
             return new Size(formattedText.Width, formattedText.Height);
@@ -177,7 +176,7 @@ namespace ChessForge
         /// <param name="text"></param>
         /// <param name="maxChars"></param>
         /// <returns></returns>
-        public static string AdjustTextToFit(Label label, string text, int maxChars = 35)
+        public static string AdjustTextToFit(Label label, string text)
         {
             if (string.IsNullOrEmpty(text))
             {
@@ -186,23 +185,18 @@ namespace ChessForge
 
             string adjusted = text;
             double maxWidth = label.MaxWidth - (label.BorderThickness.Left + label.BorderThickness.Right);
+
             double width = GetTextLength(label, text).Width;
             if (width > maxWidth)
             {
+                double elipsisWidth = GetTextLength(label, "...").Width;
                 for (int i = text.Length - 1; i > 0; i--)
                 {
-                    if (i <= maxChars)
+                    string sub = text.Substring(0, i);
+                    if (GetTextLength(label, sub).Width < (maxWidth - (elipsisWidth + 10)))
                     {
-                        string sub = text.Substring(0, i);
-                        if (GetTextLength(label, sub).Width <= maxWidth)
-                        {
-                            if (sub.Length > 2)
-                            {
-                                sub = sub.Substring(0, sub.Length - 2);
-                                adjusted = sub + "...";
-                                break;
-                            }
-                        }
+                        adjusted = sub + "...";
+                        break;
                     }
                 }
             }
@@ -302,7 +296,7 @@ namespace ChessForge
                     }
                 }
             }
-            catch 
+            catch
             {
                 res = true;
             }
@@ -388,9 +382,9 @@ namespace ChessForge
             switch (ex.ParseError)
             {
                 case ParserException.ParseErrorType.PGN_GAME_EXPECTED_MOVE_NUMBER:
-                    sb.Append(Properties.Resources.ErrFound 
-                        + " "+ ex.CurrentToken 
-                        + " " + Properties.Resources.ErrInsteadOfMoveNumber 
+                    sb.Append(Properties.Resources.ErrFound
+                        + " " + ex.CurrentToken
+                        + " " + Properties.Resources.ErrInsteadOfMoveNumber
                         + ", " + Properties.Resources.ErrAfterMove + " " + ex.PreviousMove);
                     break;
                 default:
