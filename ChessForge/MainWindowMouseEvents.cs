@@ -1053,6 +1053,7 @@ namespace ChessForge
                     return;
                 }
 
+                WorkbookManager.ActiveTab = WorkbookManager.TabViewType.INTRO;
                 RebuildIntroView();
                 if (WorkbookManager.SessionWorkbook != null)
                 {
@@ -1069,7 +1070,6 @@ namespace ChessForge
         /// </summary>
         private void RebuildIntroView()
         {
-            WorkbookManager.ActiveTab = WorkbookManager.TabViewType.INTRO;
             AppState.ConfigureMenusForManualReview();
             WorkbookManager.SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.INTRO);
             AppState.ShowExplorers(AppState.AreExplorersOn, true);
@@ -1083,12 +1083,13 @@ namespace ChessForge
                 UiRtbIntroView.IsDocumentEnabled = true;
                 UiRtbIntroView.AllowDrop = false;
                 _introView = new IntroView(UiRtbIntroView.Document, WorkbookManager.SessionWorkbook.ActiveChapter);
-                PreviousNextViewBars.BuildPreviousNextBar(GameData.ContentType.INTRO);
             }
             DisplayPosition(_introView.SelectedNode);
 
             AppState.ConfigureMainBoardContextMenu();
             ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
+
+            PreviousNextViewBars.BuildPreviousNextBar(GameData.ContentType.INTRO);
         }
 
         /// <summary>
