@@ -4,8 +4,10 @@ using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace ChessForge
 {
@@ -632,14 +634,31 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Do nothing.
-        /// Selection is disabled in DataGrid RowStyle
-        /// but we need the scrolling event.
+        /// Selection is disabled in DataGrid RowStyle but we need the scrolling event.
+        /// So, we need to let this event through.  However, the whole program hangs
+        /// if the header is clicked (??) so detect that and mark as handled.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void EngineGame_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
+            DependencyObject dep = (DependencyObject)e.OriginalSource;
+
+            // iteratively traverse the visual tree
+            while ((dep != null) && !(dep is DataGridCell) && !(dep is DataGridColumnHeader))
+            {
+                dep = VisualTreeHelper.GetParent(dep);
+            }
+
+            if (dep == null)
+            {
+                return;
+            }
+
+            if (dep is DataGridColumnHeader)
+            {
+                e.Handled = true;
+            }
         }
 
 
