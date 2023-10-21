@@ -1709,7 +1709,7 @@ namespace ChessForge
                     WorkbookManager.LastClickedChapterIndex = chapterIndex;
                     if (e.ChangedButton == MouseButton.Left)
                     {
-                        SelectChapter(chapterIndex, true);
+                        SelectChapter(chapterIndex, false);
                     }
                     else if (e.ChangedButton == MouseButton.Right)
                     {
