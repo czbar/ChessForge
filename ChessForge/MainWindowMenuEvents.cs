@@ -63,6 +63,7 @@ namespace ChessForge
 
             int startingNode = 0;
             string startLineId = ActiveVariationTree.GetDefaultLineIdForNode(startingNode);
+            ActiveVariationTree.SetSelectedLineAndMove(startLineId, startingNode);
             SetActiveLine(startLineId, startingNode);
 
             return true;
