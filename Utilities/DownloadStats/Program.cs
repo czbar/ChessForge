@@ -116,7 +116,7 @@ namespace DownloadStats
                             if (currDt < lastDate.Value.AddDays(-2))
                             {
                                 lastValidLineIndex = i;
-                                dt = currDt;
+                                dt = currDt.AddDays(1);
                                 break;
                             }
                         }

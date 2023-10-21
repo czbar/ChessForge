@@ -419,7 +419,7 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            <Grid>
+                            <Grid x:Name="UiGridIntroIcons" Grid.Row="0" HorizontalAlignment="Left"  >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="30"/>
                                     <ColumnDefinition Width="70 "/>
@@ -460,9 +460,9 @@
                                     <Image Source="Resources/Images/left_indent.png"></Image>
                                 </Button>
                             </Grid>
+                            <Label x:Name="UiIntroLblChapterTitle" Height="30" MaxWidth="400" Content="" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,-3,0,0" FontWeight="Normal" FontStyle="Normal" />
                             <Grid x:Name="UiGridIntroPrevNext" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Visible" >
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto "/>
                                     <ColumnDefinition Width="Auto "/>
                                     <ColumnDefinition Width="Auto "/>
                                     <ColumnDefinition Width="Auto "/>
@@ -470,10 +470,9 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto "/>
                                 </Grid.RowDefinitions>
-                                <Label x:Name="UiIntroLblChapterTitle" Grid.Column="0" Content="" MaxWidth="220" HorizontalAlignment="Right" HorizontalContentAlignment="Left" Margin="0,-3,10,0" FontWeight="Normal" FontStyle="Normal" />
-                                <Image x:Name="UiIntroImgLeftArrowChapter" Grid.Column="1" Cursor="Hand"  HorizontalAlignment="Left"  Margin="0,0,10,0" Source="Resources/Images/LeftArrowChapters.png" PreviewMouseLeftButtonDown="UiImgChapterLeftArrow_PreviewMouseLeftButtonDown"  />
-                                <Label x:Name="UiIntroLblCounterChapter" Grid.Column="2" Content="" HorizontalAlignment="Right" HorizontalContentAlignment="Left" Margin="0,-3,10,0" FontWeight="Bold"/>
-                                <Image x:Name="UiIntroImgRightArrowChapter" Grid.Column="3" Cursor="Hand"  HorizontalAlignment="Right" Margin="0,0,10,0" Source="Resources/Images/RightArrowChapters.png" PreviewMouseLeftButtonDown="UiImgChapterRightArrow_PreviewMouseLeftButtonDown"  />
+                                <Image x:Name="UiIntroImgLeftArrowChapter" Grid.Column="0" Cursor="Hand"  HorizontalAlignment="Left"  Margin="0,0,10,0" Source="Resources/Images/LeftArrowChapters.png" PreviewMouseLeftButtonDown="UiImgChapterLeftArrow_PreviewMouseLeftButtonDown"  />
+                                <Label x:Name="UiIntroLblCounterChapter" Grid.Column="1" Content="" HorizontalAlignment="Right" HorizontalContentAlignment="Left" Margin="0,-3,10,0" FontWeight="Bold"/>
+                                <Image x:Name="UiIntroImgRightArrowChapter" Grid.Column="2" Cursor="Hand"  HorizontalAlignment="Right" Margin="0,0,10,0" Source="Resources/Images/RightArrowChapters.png" PreviewMouseLeftButtonDown="UiImgChapterRightArrow_PreviewMouseLeftButtonDown"  />
                             </Grid>
                             <RichTextBox x:Name="UiRtbIntroView"  Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
@@ -544,9 +543,9 @@
                                     <MenuItem x:Name="_mnStudyTree_MarkThumbnail" Header="{x:Static p:Resources.MarkAsThumbnail}" Click="UiMn_MarkThumbnail_Click" InputGestureText="Ctrl+T" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
+                            <Label x:Name="UiStudyLblChapterTitle" Height="30" Content="" MaxWidth="320" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="-150,-3,10,0" FontWeight="Normal" FontStyle="Normal" />
                             <Grid x:Name="UiGridStudyTreePrevNext" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Visible" >
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto "/>
                                     <ColumnDefinition Width="Auto "/>
                                     <ColumnDefinition Width="Auto "/>
                                     <ColumnDefinition Width="Auto "/>
@@ -554,10 +553,9 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto "/>
                                 </Grid.RowDefinitions>
-                                <Label x:Name="UiStudyLblChapterTitle" Grid.Column="0" Content="" MaxWidth="220" HorizontalAlignment="Right" HorizontalContentAlignment="Left" Margin="0,-3,10,0" FontWeight="Normal" FontStyle="Normal" />
-                                <Image x:Name="UiImgChapterLeftArrow" Grid.Column="1" Cursor="Hand"  HorizontalAlignment="Left"  Margin="0,0,10,0" Source="Resources/Images/LeftArrowChapters.png" PreviewMouseLeftButtonDown="UiImgChapterLeftArrow_PreviewMouseLeftButtonDown"  />
-                                <Label x:Name="UiLblChapterCounter" Grid.Column="2" Content="" HorizontalAlignment="Right" HorizontalContentAlignment="Left" Margin="0,-3,10,0" FontWeight="Bold"/>
-                                <Image x:Name="UiImgChapterRightArrow" Grid.Column="3" Cursor="Hand"  HorizontalAlignment="Right" Margin="0,0,10,0" Source="Resources/Images/RightArrowChapters.png" PreviewMouseLeftButtonDown="UiImgChapterRightArrow_PreviewMouseLeftButtonDown"  />
+                                <Image x:Name="UiImgChapterLeftArrow" Grid.Column="0" Cursor="Hand"  HorizontalAlignment="Left"  Margin="0,0,10,0" Source="Resources/Images/LeftArrowChapters.png" PreviewMouseLeftButtonDown="UiImgChapterLeftArrow_PreviewMouseLeftButtonDown"  />
+                                <Label x:Name="UiLblChapterCounter" Grid.Column="1" Content="" HorizontalAlignment="Right" HorizontalContentAlignment="Left" Margin="0,-3,10,0" FontWeight="Bold"/>
+                                <Image x:Name="UiImgChapterRightArrow" Grid.Column="2" Cursor="Hand"  HorizontalAlignment="Right" Margin="0,0,10,0" Source="Resources/Images/RightArrowChapters.png" PreviewMouseLeftButtonDown="UiImgChapterRightArrow_PreviewMouseLeftButtonDown"  />
                             </Grid>
                             <RichTextBox x:Name="UiRtbStudyTreeView"  ContextMenu="{x:Null}" IsUndoEnabled="False"  Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
@@ -630,6 +628,7 @@
                                 <Label x:Name="UiLblGameCounter" Grid.Column="1" Content="" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="10,-3,0,0" FontWeight="Bold"/>
                                 <Image x:Name="UiImgModelGameRightArrow" Grid.Column="2" Cursor="Hand"  HorizontalAlignment="Right" Margin="10,0,0,0" Source="Resources/Images/RightArrow.png" PreviewMouseLeftButtonDown="UiImgModelGameRightArrow_PreviewMouseLeftButtonDown"  />
                             </Grid>
+                            <Label x:Name="UiGamesLblChapterTitle" Grid.Column="0" Height="30" Content="" MaxWidth="220" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,-3,0,0" FontWeight="Normal" FontStyle="Normal" />
                             <Grid x:Name="UiGridModelGamePrevNextChapter" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Visible" >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto "/>
@@ -640,10 +639,9 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto "/>
                                 </Grid.RowDefinitions>
-                                <Label x:Name="UiGamesLblChapterTitle" Grid.Column="0" Content="" MaxWidth="220" HorizontalAlignment="Right" HorizontalContentAlignment="Left" Margin="0,-3,10,0" FontWeight="Normal" FontStyle="Normal" />
-                                <Image x:Name="UiGamesImgLeftArrowChapter" Grid.Column="1" Cursor="Hand"  HorizontalAlignment="Left"  Margin="0,0,10,0" Source="Resources/Images/LeftArrowChapters.png" PreviewMouseLeftButtonDown="UiImgChapterLeftArrow_PreviewMouseLeftButtonDown"  />
-                                <Label x:Name="UiGamesLblCounterChapter" Grid.Column="2" Content="" HorizontalAlignment="Right" HorizontalContentAlignment="Left" Margin="0,-3,10,0" FontWeight="Bold"/>
-                                <Image x:Name="UiGamesImgRightArrowChapter" Grid.Column="3" Cursor="Hand"  HorizontalAlignment="Right" Margin="0,0,10,0" Source="Resources/Images/RightArrowChapters.png" PreviewMouseLeftButtonDown="UiImgChapterRightArrow_PreviewMouseLeftButtonDown"  />
+                                <Image x:Name="UiGamesImgLeftArrowChapter" Grid.Column="0" Cursor="Hand"  HorizontalAlignment="Left"  Margin="0,0,10,0" Source="Resources/Images/LeftArrowChapters.png" PreviewMouseLeftButtonDown="UiImgChapterLeftArrow_PreviewMouseLeftButtonDown"  />
+                                <Label x:Name="UiGamesLblCounterChapter" Grid.Column="1" Content="" HorizontalAlignment="Right" HorizontalContentAlignment="Left" Margin="0,-3,10,0" FontWeight="Bold"/>
+                                <Image x:Name="UiGamesImgRightArrowChapter" Grid.Column="2" Cursor="Hand"  HorizontalAlignment="Right" Margin="0,0,10,0" Source="Resources/Images/RightArrowChapters.png" PreviewMouseLeftButtonDown="UiImgChapterRightArrow_PreviewMouseLeftButtonDown"  />
                             </Grid>
                             <RichTextBox x:Name="UiRtbModelGamesView"  ContextMenu="{x:Null}" IsUndoEnabled="False" Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
@@ -715,6 +713,7 @@
                                 <Label x:Name="UiLblExerciseCounter" Grid.Column="1" Content="" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="10,-3,0,0" FontWeight="Bold"/>
                                 <Image x:Name="UiImgExerciseRightArrow" Grid.Column="2" Cursor="Hand"  HorizontalAlignment="Right" Margin="10,0,0,0" Source="Resources/Images/RightArrow.png" PreviewMouseLeftButtonDown="UiImgExerciseRightArrow_PreviewMouseLeftButtonDown"  />
                             </Grid>
+                            <Label x:Name="UiExerciseLblChapterTitle" Grid.Column="0" Height="30" Content="" MaxWidth="400" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,-3,10,0" FontWeight="Normal" FontStyle="Normal" />
                             <Grid x:Name="UiGridExercisePrevNextChapter" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Visible" >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto "/>
@@ -725,10 +724,9 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto "/>
                                 </Grid.RowDefinitions>
-                                <Label x:Name="UiExerciseLblChapterTitle" Grid.Column="0" Content="" MaxWidth="220" HorizontalAlignment="Right" HorizontalContentAlignment="Left" Margin="0,-3,10,0" FontWeight="Normal" FontStyle="Normal" />
-                                <Image x:Name="UiExerciseImgLeftArrowChapter" Grid.Column="1" Cursor="Hand"  HorizontalAlignment="Left"  Margin="0,0,10,0" Source="Resources/Images/LeftArrowChapters.png" PreviewMouseLeftButtonDown="UiImgChapterLeftArrow_PreviewMouseLeftButtonDown"  />
-                                <Label x:Name="UiExerciseLblCounterChapter" Grid.Column="2" Content="" HorizontalAlignment="Right" HorizontalContentAlignment="Left" Margin="0,-3,10,0" FontWeight="Bold"/>
-                                <Image x:Name="UiExerciseImgRightArrowChapter" Grid.Column="3" Cursor="Hand"  HorizontalAlignment="Right" Margin="0,0,10,0" Source="Resources/Images/RightArrowChapters.png" PreviewMouseLeftButtonDown="UiImgChapterRightArrow_PreviewMouseLeftButtonDown"  />
+                                <Image x:Name="UiExerciseImgLeftArrowChapter" Grid.Column="0" Cursor="Hand"  HorizontalAlignment="Left"  Margin="0,0,10,0" Source="Resources/Images/LeftArrowChapters.png" PreviewMouseLeftButtonDown="UiImgChapterLeftArrow_PreviewMouseLeftButtonDown"  />
+                                <Label x:Name="UiExerciseLblCounterChapter" Grid.Column="1" Content="" HorizontalAlignment="Right" HorizontalContentAlignment="Left" Margin="0,-3,10,0" FontWeight="Bold"/>
+                                <Image x:Name="UiExerciseImgRightArrowChapter" Grid.Column="2" Cursor="Hand"  HorizontalAlignment="Right" Margin="0,0,10,0" Source="Resources/Images/RightArrowChapters.png" PreviewMouseLeftButtonDown="UiImgChapterRightArrow_PreviewMouseLeftButtonDown"  />
                             </Grid>
                             <RichTextBox x:Name="UiRtbExercisesView" IsUndoEnabled="False" Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
@@ -786,10 +784,10 @@
                                                 <ColumnDefinition Width="Auto"/>
                                                 <ColumnDefinition Width="Auto"/>
                                             </Grid.ColumnDefinitions>
-                                            <Label x:Name="UiLblBmChapters" Grid.Column="0" Content="{x:Static p:Resources.Chapter}" Margin="20,2,0,0" FontSize="10"  />
-                                            <ComboBox x:Name="UiComboBoxBmChapters" Grid.Column="1" Margin="0,4,0,0"  Width="30" Height="18" FontSize="8" SelectionChanged="UiComboBoxBmChapters_SelectionChanged" />
-                                            <Label x:Name="UiLblBmCContent" Content="{x:Static p:Resources.Content}" Margin="25,2,0,0" Grid.Column="2" FontSize="10" />
-                                            <ComboBox x:Name="UiComboBoxBmContent" Grid.Column="3" Margin="0,4,0,0" Width="65" Height="18" FontSize="8" SelectionChanged="UiComboBoxBmContent_SelectionChanged" />
+                                            <Label x:Name="UiLblBmChapters" Grid.Column="0" Content="{x:Static p:Resources.Chapter}" Margin="20,0,0,0" FontSize="12"  />
+                                            <ComboBox x:Name="UiComboBoxBmChapters" Grid.Column="1" Margin="0,2,0,0"  Width="30" Height="18" FontSize="12" SelectionChanged="UiComboBoxBmChapters_SelectionChanged" />
+                                            <Label x:Name="UiLblBmCContent" Content="{x:Static p:Resources.Content}" Margin="25,0,0,0" Grid.Column="2" FontSize="12" />
+                                            <ComboBox x:Name="UiComboBoxBmContent" Grid.Column="3" Margin="0,2,0,0" Width="65" Height="18" FontSize="12" SelectionChanged="UiComboBoxBmContent_SelectionChanged" />
                                         </Grid>
                                         <Image x:Name="UiImgLeftArrow" Cursor="Hand" Grid.Column="1" HorizontalAlignment="Right"  Margin="0,9,0,0" Source="Resources/Images/LeftArrow.png" PreviewMouseDown="Bookmarks_PreviousPage_OnPreviewMouseDown"  />
                                         <Label x:Name="UiLblBookmarkPage" Content="" Padding="15,9,15,0" Grid.Column="2" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,0,0,0" FontWeight="Bold" />

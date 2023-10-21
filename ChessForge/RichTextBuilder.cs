@@ -254,6 +254,30 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// If the document contains no inlines or only inlines of type Run
+        /// with emoty text, we consider it empty.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsDocumentEmpty()
+        {
+            bool empty = true;
+            
+            foreach (var para in Document.Blocks)
+            {
+                if (para is Paragraph paragraph)
+                {
+                    if (paragraph.Inlines.Count > 0 && HasNonEmptyInline(paragraph as Paragraph))
+                    {
+                        empty = false;
+                        break;
+                    }
+                }
+            }
+
+            return empty;
+        }
+
+        /// <summary>
         /// Removes empty paragraphs that get created when building the document
         /// or left behind after deletions.
         /// </summary>
@@ -554,6 +578,7 @@ namespace ChessForge
                 foreach (Inline inl in para.Inlines)
                 {
                     Run run = inl as Run;
+                    // if this is not a Run we consider that this Paragraph has non-empty content (e.g. InlineUIContainer)
                     if (run == null || !string.IsNullOrEmpty(run.Text))
                     {
                         res = true;

@@ -600,7 +600,7 @@ ApplicationOptions=Opcje Aplikacji
 #english: DlgTitleApplicationOptions=Application Options
 DlgTitleApplicationOptions=Opcje Aplikacji
 
-#description: Opens the Engine Configuration dialog
+#description: Opens the Engine Options dialog
 #english: EngineOptions=Engine Options...
 EngineOptions=Opcje Silnika...
 
@@ -609,8 +609,8 @@ EngineOptions=Opcje Silnika...
 BlunderDetectionOptions=Detekcja Błędów...
 
 #description: Engine Options dialog title
-#english: DlgTitleEngineOptions=Engine Configuration
-DlgTitleEngineOptions=Konfiguracja Silnika
+#english: DlgTitleEngineOptions=Engine Options
+DlgTitleEngineOptions=Opcje Silnika
 
 #description: Identical Positions dialog title
 #english: DlgTitleIdenticalPositions=List of Identical Positions
@@ -822,9 +822,9 @@ NotNamed=brak nazwy
 # Header: VIEW Engine Game
 #
 
-#description: Engine Configuration header
-#english: EgEngineConfiguration=Engine Configuration
-EgEngineConfiguration=Konfiguracja Silnika
+#description: Engine Options header
+#english: EgEngineConfiguration=Engine Options
+EgEngineConfiguration=Opcje Silnika
 
 #description: Change link
 #english: EgChange=change
@@ -1544,6 +1544,10 @@ MbtTitleCopyPasteError=Błąd w Kopiuj/Wklej
 #
 # Header: Message Text
 #
+
+#description: Error while parsing Intro data
+#english: ErrorParsingIntro=The Intro data has been corrupted.
+ErrorParsingIntro=Dane Wstępu zostały Uszkodzone.
 
 #description: Flash message: Game Imported Successfully.
 #english: FlMsgGameImportSuccess=Game Imported Successfully.

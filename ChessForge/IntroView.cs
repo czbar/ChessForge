@@ -184,23 +184,23 @@ namespace ChessForge
         {
             if (_isTextDirty)
             {
-                if (cleanup)
+                // needs the dispatcher context so it doesn't throw when called from the autosave timer event. 
+                AppState.MainWin.Dispatcher.Invoke(() =>
                 {
-                    RemoveEmptyParagraphs();
-                }
-                RemoveDuplicateNames();
-                string xamlText = XamlWriter.Save(Document);
-                if (Document.Blocks.Count == 0)
-                {
-                    Nodes[0].Data = "";
-                    Nodes[0].Comment = "";
-                }
-                else
-                {
-                    Nodes[0].Data = EncodingUtils.Base64Encode(xamlText);
-                    Nodes[0].Comment = CopySelectionToClipboard(true);
-                    RemoveUnusedNodes();
-                }
+                    RemoveDuplicateNames();
+                    if (cleanup && IsDocumentEmpty())
+                    {
+                        Nodes[0].Data = "";
+                        Nodes[0].Comment = "";
+                    }
+                    else
+                    {
+                        string xamlText = XamlWriter.Save(Document);
+                        Nodes[0].Data = EncodingUtils.Base64Encode(xamlText);
+                        Nodes[0].Comment = CopySelectionToClipboard(true);
+                        RemoveUnusedNodes();
+                    }
+                });
             }
 
             _isTextDirty = false;
@@ -1376,22 +1376,105 @@ namespace ChessForge
 
         /// <summary>
         /// Creates a FlowDocument from XAML string.
+        /// If the first attempt to deserialize fails we will try
+        /// to deduplicate names (which is usually the reason) and try again.
         /// </summary>
         /// <param name="xamlString"></param>
         /// <returns></returns>
         private FlowDocument StringToFlowDocument(string xamlString)
         {
+            bool success;
+
             try
             {
-                Document = XamlReader.Parse(xamlString) as FlowDocument;
+                Document = XamlToDocument(xamlString);
+                success = true;
             }
             catch (Exception ex)
             {
+                success = false;
                 Document = new FlowDocument();
-                AppLog.Message("StringToFlowDocument()", ex);
+                AppLog.Message("StringToFlowDocument() first attempt", ex);
+            }
+
+            if (!success)
+            {
+                // run dedupe and try again
+                xamlString = DedupeXamlString(xamlString);
+                try
+                {
+                    Document = XamlToDocument(xamlString);
+                }
+                catch (Exception ex)
+                {
+                    Document = new FlowDocument();
+                    AppLog.Message("StringToFlowDocument() second attempt", ex);
+                    MessageBox.Show(Properties.Resources.ErrorParsingIntro, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
 
             return Document;
+        }
+
+        /// <summary>
+        /// Attempt to deserialize the xaml string.
+        /// Let the caller handle exceptions.
+        /// </summary>
+        /// <param name="xamlString"></param>
+        /// <returns></returns>
+        private FlowDocument XamlToDocument(string xamlString)
+        {
+            return XamlReader.Parse(xamlString) as FlowDocument;
+        }
+
+        /// <summary>
+        /// Deduplicate "Name" strings in the xaml string.
+        /// It should never be needed so don't worry about performance.
+        /// </summary>
+        /// <param name="xamlString"></param>
+        /// <returns></returns>
+        private string DedupeXamlString(string xamlString)
+        {
+            string SEARCH_STRING = " Name=\"";
+
+            int currpos = 0;
+            while (true)
+            {
+                currpos = xamlString.IndexOf(SEARCH_STRING, currpos);
+                if (currpos == -1)
+                {
+                    // we're done
+                    break;
+                }
+                else
+                {
+                    int closeQuotePos = xamlString.IndexOf('"', currpos + SEARCH_STRING.Length + 1);
+                    if (closeQuotePos == -1)
+                    {
+                        // something wrong but nothing we can fix
+                        break;
+                    }
+                    else
+                    {
+                        // duplicates to search for in the remainder of the string
+                        string nameToSearch = xamlString.Substring(currpos, (closeQuotePos - currpos) + 1);
+                        int nameToSearchPos = xamlString.IndexOf(nameToSearch, closeQuotePos);
+
+                        if (nameToSearchPos > 0)
+                        {
+                            // duplicate found so replace
+                            string nameToReplaceWith = SEARCH_STRING + TextUtils.GenerateRandomElementName() + "\"";
+                            string xamlPart1 = xamlString.Substring(0, closeQuotePos + 1);
+                            string xamlPart2 = xamlString.Substring(closeQuotePos + 1);
+                            xamlPart1 = xamlPart1.Replace(nameToSearch, nameToReplaceWith);
+                            xamlString = xamlPart1 + xamlPart2;
+                        }
+                        currpos = closeQuotePos;
+                    }
+                }
+            }
+
+            return xamlString;
         }
 
         /// <summary>

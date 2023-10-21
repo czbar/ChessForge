@@ -600,7 +600,7 @@ ApplicationOptions=
 #english: DlgTitleApplicationOptions=Application Options
 DlgTitleApplicationOptions=
 
-#description: Opens the Engine Configuration dialog
+#description: Opens the Engine Options dialog
 #english: EngineOptions=Engine Options...
 EngineOptions=
 
@@ -609,7 +609,7 @@ EngineOptions=
 BlunderDetectionOptions=
 
 #description: Engine Options dialog title
-#english: DlgTitleEngineOptions=Engine Configuration
+#english: DlgTitleEngineOptions=Engine Options
 DlgTitleEngineOptions=
 
 #description: Identical Positions dialog title
@@ -822,8 +822,8 @@ NotNamed=
 # Header: VIEW Engine Game
 #
 
-#description: Engine Configuration header
-#english: EgEngineConfiguration=Engine Configuration
+#description: Engine Options header
+#english: EgEngineConfiguration=Engine Options
 EgEngineConfiguration=
 
 #description: Change link
@@ -1544,6 +1544,10 @@ MbtTitleCopyPasteError=
 #
 # Header: Message Text
 #
+
+#description: Error while parsing Intro data
+#english: ErrorParsingIntro=The Intro data has been corrupted.
+ErrorParsingIntro=
 
 #description: Flash message: Game Imported Successfully.
 #english: FlMsgGameImportSuccess=Game Imported Successfully.

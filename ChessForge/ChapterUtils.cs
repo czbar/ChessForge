@@ -541,6 +541,7 @@ namespace ChessForge
                 if (tree != null)
                 {
                     TreeUtils.TrimTree(ref tree, Configuration.AutogenTreeDepth, PieceColor.Black);
+                    tree.ContentType = GameData.ContentType.STUDY_TREE;
                     chapter.StudyTree.Tree = tree;
                     AppState.IsDirty = true;
                 }

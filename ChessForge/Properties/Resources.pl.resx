@@ -535,7 +535,7 @@
     <value>Detekcja Błędów...</value>
   </data>
   <data name="DlgTitleEngineOptions" xml:space="preserve">
-    <value>Konfiguracja Silnika</value>
+    <value>Opcje Silnika</value>
   </data>
   <data name="DlgTitleIdenticalPositions" xml:space="preserve">
     <value>Lista Identycznych Pozycji</value>
@@ -673,7 +673,7 @@
     <value>brak nazwy</value>
   </data>
   <data name="EgEngineConfiguration" xml:space="preserve">
-    <value>Konfiguracja Silnika</value>
+    <value>Opcje Silnika</value>
   </data>
   <data name="EgChange" xml:space="preserve">
     <value>zmień</value>
@@ -1130,6 +1130,9 @@
   </data>
   <data name="MbtTitleCopyPasteError" xml:space="preserve">
     <value>Błąd w Kopiuj/Wklej</value>
+  </data>
+  <data name="ErrorParsingIntro" xml:space="preserve">
+    <value>Dane Wstępu zostały Uszkodzone.</value>
   </data>
   <data name="FlMsgGameImportSuccess" xml:space="preserve">
     <value>Partia Została Zaimportowana.</value>

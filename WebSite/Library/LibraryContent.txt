@@ -26,13 +26,17 @@ Description:Workbooks examining theory and practice of various Openings.
     Description: Openings analyzed from the White player's point of view
       
 	  Book:Budapest Gambit
-      Description: A couple of options to safely counter the Budapest Gambit.
+      Description: A few of options to safely counter the Budapest Gambit.
       File: Openings/White/Budapest for White.pgn
       
 	  Book:King's Indian - Karpov Variation
       Description:A very popular and effective variation against King's Indian at all levels.
       File: Openings/White/King's Indian - Karpov variation for White.pgn
     
+	  Book:Smith-Morra Gambit
+      Description: A popular anti-Sicilian weapon.
+      File: Openings/White/Smith Morra Gambit.pgn
+      
 	Shelf:Black repertoire
     Description: Openings analyzed from the Black player's point of view
     
