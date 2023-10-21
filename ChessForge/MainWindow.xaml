@@ -93,8 +93,6 @@
                     <MenuItem Header="{x:Static p:Resources.Edit}" Margin="0,0,0,0">
                         <MenuItem x:Name="UiMnAnnotations" Header="{x:Static p:Resources.Annotations}" Click="UiMnAnnotationsDialog_Click" />
                         <Separator />
-                        <MenuItem x:Name="UiMnMergeChapters" Header="{x:Static p:Resources.MergeChapters}" Click="UiMnMergeChapters_Click" />
-                        <Separator />
                         <MenuItem x:Name="UiMnUndo" Header="{x:Static p:Resources.Undo}" Click="UiMnUndo_Click" InputGestureText="Ctrl+Z" />
                     </MenuItem>
                     <MenuItem Header="{x:Static p:Resources.View}" Margin="0,0,0,0">
@@ -133,6 +131,7 @@
                         <Separator />
                         <MenuItem x:Name="UiMnCopyArticles" Header="{x:Static p:Resources.CopyArticlesToChapter}" Click="UiMnCopyArticles_Click" />
                         <MenuItem x:Name="UiMnMoveArticles" Header="{x:Static p:Resources.MoveArticlesToChapter}" Click="UiMnMoveArticles_Click" />
+                        <MenuItem x:Name="UiMnMergeChapters" Header="{x:Static p:Resources.MergeChapters}" Click="UiMnMergeChapters_Click" />
                         <MenuItem x:Name="UiMnManageChapter" Header="{x:Static p:Resources.ManageChapter}"  Click="UiMnManageChapter_Click" />
                         <Separator />
                         <MenuItem x:Name="UiMnDeleteComments" Header="{x:Static p:Resources.StripComments}" Click="UiDeleteComments_Click" />
