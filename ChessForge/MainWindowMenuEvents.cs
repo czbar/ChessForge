@@ -3382,6 +3382,7 @@ namespace ChessForge
                         {
                             SelectModelGame(chapter.ActiveModelGameIndex, false);
                         }
+                        AppState.SetupGuiForCurrentStates();
                     }
                 }
                 BoardCommentBox.ShowTabHints();

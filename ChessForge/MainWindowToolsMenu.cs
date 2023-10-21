@@ -359,6 +359,7 @@ namespace ChessForge
                         AppState.MainWin.ChaptersView.IsDirty = true;
                         AppState.IsDirty = true;
                         GuiUtilities.RefreshChaptersView(null);
+                        AppState.SetupGuiForCurrentStates();
                         AppState.MainWin.UiTabChapters.Focus();
                     }
                 }
