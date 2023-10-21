@@ -324,7 +324,7 @@ namespace ChessForge
                     List<int> indicesToDelete = new List<int>();
                     foreach (ArticleListItem item in articleList)
                     {
-                        if (item.IsSelected)
+                        if (item.IsSelected && item.Article != null)
                         {
                             articlesToDelete.Add(item);
                             indicesToDelete.Add(item.ArticleIndex);
@@ -337,7 +337,7 @@ namespace ChessForge
                     {
                         ArticleListItem item = articlesToDelete[i];
                         Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(item.ChapterIndex);
-                        if (chapter != null)
+                        if (chapter != null && item.Article != null)
                         {
                             int index = chapter.GetArticleIndex(item.Article);
                             bool res = chapter.DeleteArticle(item.Article);

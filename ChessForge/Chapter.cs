@@ -171,6 +171,11 @@ namespace ChessForge
         /// <returns></returns>
         public bool DeleteArticle(Article article)
         {
+            if (article == null)
+            {
+                return false;
+            }
+
             bool result = false;
 
             if (article.ContentType == GameData.ContentType.MODEL_GAME)
