@@ -115,7 +115,7 @@ namespace ChessForge
                         WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
                         break;
                     case WorkbookOperationType.DELETE_EXERCISES:
-                        WorkbookManager.SessionWorkbook.UndoDeleteExercises(op.Chapter, op.ArticleIndex, op.OpData_1, op.OpData_2);
+                        WorkbookManager.SessionWorkbook.UndoDeleteExercises(op.OpData_1, op.OpData_2);
                         selectedArticleIndex = op.ArticleIndex;
                         WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
                         break;
