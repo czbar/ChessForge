@@ -6,7 +6,7 @@ Bookcase:Tournaments
 Description: Games from tournaments and matches.
 
     Shelf:World Championship 
-    Description: Games from World Championships and Matches
+    Description: Games from World Championship Matches
     
 	  Book: Men's World Championships
       Description: All games from Men's World Championship Matches and Tournaments.
