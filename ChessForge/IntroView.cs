@@ -698,11 +698,13 @@ namespace ChessForge
                         Paragraph p = (Paragraph)block;
                         if (p.Name.StartsWith(RichTextBoxUtilities.DiagramParaPrefix))
                         {
+                            p.MouseDown -= EventDiagramClicked;
                             p.MouseDown += EventDiagramClicked;
 
                             Image flipImg = FindFlipImage(p);
                             if (flipImg != null)
                             {
+                                flipImg.MouseDown -= EventFlipRequest;
                                 flipImg.MouseDown += EventFlipRequest;
                             }
                         }
@@ -710,6 +712,7 @@ namespace ChessForge
                         {
                             if (inl is InlineUIContainer && inl.Name.StartsWith(_uic_move_))
                             {
+                                ((InlineUIContainer)inl).MouseDown -= EventMoveClicked;
                                 ((InlineUIContainer)inl).MouseDown += EventMoveClicked;
                             }
                         }
