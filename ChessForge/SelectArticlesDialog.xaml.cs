@@ -44,8 +44,17 @@ namespace ChessForge
         /// <summary>
         /// The dialog for selecting Articles (games or exercises) from multiple chapters.
         /// </summary>
-        /// <param name="articleList"></param>
-        public SelectArticlesDialog(TreeNode nd, bool allChaptersCheckbox, string title, ref ObservableCollection<ArticleListItem> articleList, bool allChapters, GameData.ContentType articleType = GameData.ContentType.GENERIC)
+        /// <param name="nd"></param>
+        /// <param name="allChaptersCheckbox">whether to show "All Chapter" check box</param>
+        /// <param name="title">the title of the dialog to display</param>
+        /// <param name="articleList">list of articles to show</param>
+        /// <param name="allChapters">whether to start with all chapters</param>
+        /// <param name="articleType"></param>
+        public SelectArticlesDialog(TreeNode nd, 
+            bool allChaptersCheckbox, string title, 
+            ref ObservableCollection<ArticleListItem> articleList, 
+            bool allChapters, 
+            GameData.ContentType articleType = GameData.ContentType.GENERIC)
         {
             _node = nd;
             _articleList = articleList;
@@ -53,6 +62,10 @@ namespace ChessForge
 
             // if there is any selection outside the active chapter show all chapters (issue #465)
             InitializeComponent();
+
+            UiLblEvalTime.Visibility = Visibility.Collapsed;
+            UiTbEngEvalTime.Visibility = Visibility.Collapsed;
+
             if (title != null)
             {
                 Title = title;
@@ -98,7 +111,6 @@ namespace ChessForge
         /// </summary>
         public void SetupGuiForGamesEval()
         {
-            UiCbAllChapters.Visibility = Visibility.Collapsed;
             UiLblEvalTime.Visibility = Visibility.Visible;
             UiTbEngEvalTime.Visibility = Visibility.Visible;
             double dval = (double)Configuration.EngineEvaluationTime / 1000.0;
