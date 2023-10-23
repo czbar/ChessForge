@@ -339,7 +339,11 @@ namespace GameTree
         public int SelectedNodeId
         {
             get => _selectedNodeId;
-            set => _selectedNodeId = value;
+            set
+            {
+                AppLog.Message(2, "Set SelectedLineId = " + value.ToString() + " for TreeId = " + TreeId.ToString());
+                _selectedNodeId = value;
+            }
         }
 
         /// <summary>
@@ -375,8 +379,8 @@ namespace GameTree
         /// <param name="nodeId"></param>
         public void SetSelectedLineAndMove(string lineId, int nodeId)
         {
-            _selectedLineId = lineId;
-            _selectedNodeId = nodeId;
+            SelectedLineId = lineId;
+            SelectedNodeId = nodeId;
         }
 
         /// <summary>
