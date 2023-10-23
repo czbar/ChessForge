@@ -3,7 +3,7 @@ Message:
 
       
 Bookcase:Tournaments
-Description: Games from tournaments and matches.
+Description: Partie z turniejów i meczów.
 
     Shelf:Mistrzostwa Świata 
     Description: Partie z meczów o mistrzostwo świata
