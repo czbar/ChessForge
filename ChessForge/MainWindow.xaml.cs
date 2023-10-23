@@ -1914,6 +1914,12 @@ namespace ChessForge
             try
             {
                 TreeNode nd = ActiveLine.GetNodeAtIndex(index);
+                if (nd == null)
+                {
+                    // try the node at index 0
+                    nd = ActiveLine.GetNodeAtIndex(0);
+                }
+
                 if (nd != null && WorkbookManager.SessionWorkbook.ActiveVariationTree != null)
                 {
                     WorkbookManager.SessionWorkbook.ActiveVariationTree.SetSelectedLineAndMove(lineId, nd.NodeId);
