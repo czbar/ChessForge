@@ -476,12 +476,6 @@ BlunderDetectionOptions=Blunder Detection...
 #Engine Options dialog title
 DlgTitleEngineOptions=Engine Options
 
-#Identical Positions dialog title
-DlgTitleIdenticalPositions=List of Identical Positions
-
-# Label explaining clicks in the Identical Positions dialog.
-DlgLabelIdenticalPositionHint=Double click an item to open its view.
-
 #Parsing Errors
 DlgParseErrors=Parsing Errors
 
@@ -787,6 +781,7 @@ EngineThreads=Thread Count
 #Engine hash table size
 EngineHashSize=Hash Table (MB)
 
+#######################################
 #
 # Header: DIALOG Multi-Game Evaluation
 #
@@ -808,6 +803,54 @@ EvalDropTrigger=Evaluation Drop (cp)
 
 #Threshold beyond which we don't detect
 StopDetectLevel=No Detection Beyond (cp)
+
+
+#######################################
+#
+# Header: DIALOG Find Identical Positions
+#
+
+#Select to Copy/Move
+SelectCopyMove=Select to Copy or Move...
+
+#Identical Positions dialog title
+DlgTitleIdenticalPositions=List of Identical Positions
+
+# Label explaining clicks in the Identical Positions dialog.
+DlgLabelIdenticalPositionHint=Double click an item to open its view.
+
+
+#######################################
+#
+# Header: DIALOG Select Articles
+#
+
+#Copy Articles
+CopyArticles=Copy
+
+#Move Articles
+MoveArticles=Move
+
+#Select items
+SelectItems=Select Items
+
+#All chapters
+AllChapters=All Chapters
+
+#Show all chapters
+ShowAllChapters=Show All Chapters
+
+#Select chapter
+SelectChapter=Select Chapter
+
+#Select target chapter
+SelectTargetChapter=Select Target Chapter
+
+#Select chapters to import
+SelectChaptersToImport=Select Chapters to Import
+
+#Select chapters to merge
+SelectChaptersToMerge=Select Chapters to Merge
 
 
 #
@@ -1458,6 +1501,9 @@ SelectItemsToMove=Select Items to Move
 #Select items to copy
 SelectItemsToCopy=Select Items to Copy
 
+#Select items to copy or move
+SelectItemsToCopyOrMove=Select Items to Copy or Move
+
 #Select Games
 SelectGames=Select Games
 
@@ -1629,24 +1675,6 @@ SelectGameAndExercises=Select Games and/or Exercises
 #Select Reference Games/Exercises (dialog title)
 SelectReferences=Select Reference Games and/or Exercises
 
-
-#Select items
-SelectItems=Select Items
-
-#All chapters
-AllChapters=All Chapters
-
-#Show all chapters
-ShowAllChapters=Show All Chapters
-
-#Select chapter
-SelectChapter=Select Chapter
-
-#Select chapters to import
-SelectChaptersToImport=Select Chapters to Import
-
-#Select chapters to merge
-SelectChaptersToMerge=Select Chapters to Merge
 
 #Merge games and copy
 MergeGamesAndCopy=Merge Games into the Study Tree and Copy them into the Games section.

@@ -617,14 +617,6 @@ BlunderDetectionOptions=Detekcja Błędów...
 #english: DlgTitleEngineOptions=Engine Options
 DlgTitleEngineOptions=Opcje Silnika
 
-#description: Identical Positions dialog title
-#english: DlgTitleIdenticalPositions=List of Identical Positions
-DlgTitleIdenticalPositions=Lista Identycznych Pozycji
-
-#description:  Label explaining clicks in the Identical Positions dialog.
-#english: DlgLabelIdenticalPositionHint=Double click an item to open its view.
-DlgLabelIdenticalPositionHint=Kliknij podwójnie element aby otworzyć jego widok.
-
 #description: Parsing Errors
 #english: DlgParseErrors=Parsing Errors
 DlgParseErrors=Błędy przetwarzania zapisu
@@ -1014,6 +1006,7 @@ EngineThreads=Liczba wątków
 #english: EngineHashSize=Hash Table (MB)
 EngineHashSize=Tablica mieszająca (MB)
 
+#######################################
 #
 # Header: DIALOG Multi-Game Evaluation
 #
@@ -1039,6 +1032,66 @@ EvalDropTrigger=Pogorszenie Oceny (cp)
 #description: Threshold beyond which we don't detect
 #english: StopDetectLevel=No Detection Beyond (cp)
 StopDetectLevel=Poziom poza detekcją (cp)
+
+
+#######################################
+#
+# Header: DIALOG Find Identical Positions
+#
+
+#description: Select to Copy/Move
+#english: SelectCopyMove=Select to Copy or Move...
+SelectCopyMove=Wybierz i Kopiuj lub Przenieś...
+
+#description: Identical Positions dialog title
+#english: DlgTitleIdenticalPositions=List of Identical Positions
+DlgTitleIdenticalPositions=Lista Identycznych Pozycji
+
+#description:  Label explaining clicks in the Identical Positions dialog.
+#english: DlgLabelIdenticalPositionHint=Double click an item to open its view.
+DlgLabelIdenticalPositionHint=Kliknij podwójnie element aby otworzyć jego widok.
+
+
+#######################################
+#
+# Header: DIALOG Select Articles
+#
+
+#description: Copy Articles
+#english: CopyArticles=Copy
+CopyArticles=Kopiuj
+
+#description: Move Articles
+#english: MoveArticles=Move
+MoveArticles=Przenieś
+
+#description: Select items
+#english: SelectItems=Select Items
+SelectItems=Zaznacz swój wybór
+
+#description: All chapters
+#english: AllChapters=All Chapters
+AllChapters=Wszystkie Rozdziały
+
+#description: Show all chapters
+#english: ShowAllChapters=Show All Chapters
+ShowAllChapters=Pokaż Wszystkie Rozdziały
+
+#description: Select chapter
+#english: SelectChapter=Select Chapter
+SelectChapter=Wybierz Rozdział
+
+#description: Select target chapter
+#english: SelectTargetChapter=Select Target Chapter
+SelectTargetChapter=Wybierz Docelowy Rozdział
+
+#description: Select chapters to import
+#english: SelectChaptersToImport=Select Chapters to Import
+SelectChaptersToImport=Wybierz Rozdziały do Importu
+
+#description: Select chapters to merge
+#english: SelectChaptersToMerge=Select Chapters to Merge
+SelectChaptersToMerge=Wybierz Rozdziały do Połączenia.
 
 
 #
@@ -1876,6 +1929,10 @@ SelectItemsToMove=Wybierz Pozycje do Przeniesienia
 #english: SelectItemsToCopy=Select Items to Copy
 SelectItemsToCopy=Wybierz Pozycje do Skopiowania
 
+#description: Select items to copy or move
+#english: SelectItemsToCopyOrMove=Select Items to Copy or Move
+SelectItemsToCopyOrMove=Wybierz Pozycje do Skopiowania lub Przeniesienia
+
 #description: Select Games
 #english: SelectGames=Select Games
 SelectGames=Wybierz Partie
@@ -2103,30 +2160,6 @@ SelectGameAndExercises=Wybierz Partie i Ćwiczenia
 #english: SelectReferences=Select Reference Games and/or Exercises
 SelectReferences=Wybierz Partie i Ćwiczenia do Odsyłacza
 
-
-#description: Select items
-#english: SelectItems=Select Items
-SelectItems=Zaznacz swój wybór
-
-#description: All chapters
-#english: AllChapters=All Chapters
-AllChapters=Wszystkie Rozdziały
-
-#description: Show all chapters
-#english: ShowAllChapters=Show All Chapters
-ShowAllChapters=Pokaż Wszystkie Rozdziały
-
-#description: Select chapter
-#english: SelectChapter=Select Chapter
-SelectChapter=Wybierz Rozdział
-
-#description: Select chapters to import
-#english: SelectChaptersToImport=Select Chapters to Import
-SelectChaptersToImport=Wybierz Rozdziały do Importu
-
-#description: Select chapters to merge
-#english: SelectChaptersToMerge=Select Chapters to Merge
-SelectChaptersToMerge=Wybierz Rozdziały do Połączenia.
 
 #description: Merge games and copy
 #english: MergeGamesAndCopy=Merge Games into the Study Tree and Copy them into the Games section.

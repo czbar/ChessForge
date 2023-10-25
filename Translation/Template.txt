@@ -617,14 +617,6 @@ BlunderDetectionOptions=
 #english: DlgTitleEngineOptions=Engine Options
 DlgTitleEngineOptions=
 
-#description: Identical Positions dialog title
-#english: DlgTitleIdenticalPositions=List of Identical Positions
-DlgTitleIdenticalPositions=
-
-#description:  Label explaining clicks in the Identical Positions dialog.
-#english: DlgLabelIdenticalPositionHint=Double click an item to open its view.
-DlgLabelIdenticalPositionHint=
-
 #description: Parsing Errors
 #english: DlgParseErrors=Parsing Errors
 DlgParseErrors=
@@ -1014,6 +1006,7 @@ EngineThreads=
 #english: EngineHashSize=Hash Table (MB)
 EngineHashSize=
 
+#######################################
 #
 # Header: DIALOG Multi-Game Evaluation
 #
@@ -1039,6 +1032,66 @@ EvalDropTrigger=
 #description: Threshold beyond which we don't detect
 #english: StopDetectLevel=No Detection Beyond (cp)
 StopDetectLevel=
+
+
+#######################################
+#
+# Header: DIALOG Find Identical Positions
+#
+
+#description: Select to Copy/Move
+#english: SelectCopyMove=Select to Copy or Move...
+SelectCopyMove=
+
+#description: Identical Positions dialog title
+#english: DlgTitleIdenticalPositions=List of Identical Positions
+DlgTitleIdenticalPositions=
+
+#description:  Label explaining clicks in the Identical Positions dialog.
+#english: DlgLabelIdenticalPositionHint=Double click an item to open its view.
+DlgLabelIdenticalPositionHint=
+
+
+#######################################
+#
+# Header: DIALOG Select Articles
+#
+
+#description: Copy Articles
+#english: CopyArticles=Copy
+CopyArticles=
+
+#description: Move Articles
+#english: MoveArticles=Move
+MoveArticles=
+
+#description: Select items
+#english: SelectItems=Select Items
+SelectItems=
+
+#description: All chapters
+#english: AllChapters=All Chapters
+AllChapters=
+
+#description: Show all chapters
+#english: ShowAllChapters=Show All Chapters
+ShowAllChapters=
+
+#description: Select chapter
+#english: SelectChapter=Select Chapter
+SelectChapter=
+
+#description: Select target chapter
+#english: SelectTargetChapter=Select Target Chapter
+SelectTargetChapter=
+
+#description: Select chapters to import
+#english: SelectChaptersToImport=Select Chapters to Import
+SelectChaptersToImport=
+
+#description: Select chapters to merge
+#english: SelectChaptersToMerge=Select Chapters to Merge
+SelectChaptersToMerge=
 
 
 #
@@ -1876,6 +1929,10 @@ SelectItemsToMove=
 #english: SelectItemsToCopy=Select Items to Copy
 SelectItemsToCopy=
 
+#description: Select items to copy or move
+#english: SelectItemsToCopyOrMove=Select Items to Copy or Move
+SelectItemsToCopyOrMove=
+
 #description: Select Games
 #english: SelectGames=Select Games
 SelectGames=
@@ -2103,30 +2160,6 @@ SelectGameAndExercises=
 #english: SelectReferences=Select Reference Games and/or Exercises
 SelectReferences=
 
-
-#description: Select items
-#english: SelectItems=Select Items
-SelectItems=
-
-#description: All chapters
-#english: AllChapters=All Chapters
-AllChapters=
-
-#description: Show all chapters
-#english: ShowAllChapters=Show All Chapters
-ShowAllChapters=
-
-#description: Select chapter
-#english: SelectChapter=Select Chapter
-SelectChapter=
-
-#description: Select chapters to import
-#english: SelectChaptersToImport=Select Chapters to Import
-SelectChaptersToImport=
-
-#description: Select chapters to merge
-#english: SelectChaptersToMerge=Select Chapters to Merge
-SelectChaptersToMerge=
 
 #description: Merge games and copy
 #english: MergeGamesAndCopy=Merge Games into the Study Tree and Copy them into the Games section.

@@ -540,12 +540,6 @@
   <data name="DlgTitleEngineOptions" xml:space="preserve">
     <value>Engine Options</value>
   </data>
-  <data name="DlgTitleIdenticalPositions" xml:space="preserve">
-    <value>List of Identical Positions</value>
-  </data>
-  <data name="DlgLabelIdenticalPositionHint" xml:space="preserve">
-    <value>Double click an item to open its view.</value>
-  </data>
   <data name="DlgParseErrors" xml:space="preserve">
     <value>Parsing Errors</value>
   </data>
@@ -809,6 +803,42 @@
   </data>
   <data name="StopDetectLevel" xml:space="preserve">
     <value>No Detection Beyond (cp)</value>
+  </data>
+  <data name="SelectCopyMove" xml:space="preserve">
+    <value>Select to Copy or Move...</value>
+  </data>
+  <data name="DlgTitleIdenticalPositions" xml:space="preserve">
+    <value>List of Identical Positions</value>
+  </data>
+  <data name="DlgLabelIdenticalPositionHint" xml:space="preserve">
+    <value>Double click an item to open its view.</value>
+  </data>
+  <data name="CopyArticles" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="MoveArticles" xml:space="preserve">
+    <value>Move</value>
+  </data>
+  <data name="SelectItems" xml:space="preserve">
+    <value>Select Items</value>
+  </data>
+  <data name="AllChapters" xml:space="preserve">
+    <value>All Chapters</value>
+  </data>
+  <data name="ShowAllChapters" xml:space="preserve">
+    <value>Show All Chapters</value>
+  </data>
+  <data name="SelectChapter" xml:space="preserve">
+    <value>Select Chapter</value>
+  </data>
+  <data name="SelectTargetChapter" xml:space="preserve">
+    <value>Select Target Chapter</value>
+  </data>
+  <data name="SelectChaptersToImport" xml:space="preserve">
+    <value>Select Chapters to Import</value>
+  </data>
+  <data name="SelectChaptersToMerge" xml:space="preserve">
+    <value>Select Chapters to Merge</value>
   </data>
   <data name="RestartGameAfter" xml:space="preserve">
     <value>Restart Game After </value>
@@ -1372,6 +1402,9 @@
   <data name="SelectItemsToCopy" xml:space="preserve">
     <value>Select Items to Copy</value>
   </data>
+  <data name="SelectItemsToCopyOrMove" xml:space="preserve">
+    <value>Select Items to Copy or Move</value>
+  </data>
   <data name="SelectGames" xml:space="preserve">
     <value>Select Games</value>
   </data>
@@ -1539,24 +1572,6 @@
   </data>
   <data name="SelectReferences" xml:space="preserve">
     <value>Select Reference Games and/or Exercises</value>
-  </data>
-  <data name="SelectItems" xml:space="preserve">
-    <value>Select Items</value>
-  </data>
-  <data name="AllChapters" xml:space="preserve">
-    <value>All Chapters</value>
-  </data>
-  <data name="ShowAllChapters" xml:space="preserve">
-    <value>Show All Chapters</value>
-  </data>
-  <data name="SelectChapter" xml:space="preserve">
-    <value>Select Chapter</value>
-  </data>
-  <data name="SelectChaptersToImport" xml:space="preserve">
-    <value>Select Chapters to Import</value>
-  </data>
-  <data name="SelectChaptersToMerge" xml:space="preserve">
-    <value>Select Chapters to Merge</value>
   </data>
   <data name="MergeGamesAndCopy" xml:space="preserve">
     <value>Merge Games into the Study Tree and Copy them into the Games section.</value>
