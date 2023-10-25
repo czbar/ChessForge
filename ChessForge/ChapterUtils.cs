@@ -69,12 +69,30 @@ namespace ChessForge
         /// </summary>
         /// <param name="lstIdenticalPositions"></param>
         /// <param name="request"></param>
-        public static void RequestCopyMoveArticles(TreeNode searchNode, bool allChaptersCheckbox, ObservableCollection<ArticleListItem> lstIdenticalPositions, bool copy, bool showAllChapters)
+        public static void RequestCopyMoveArticles(TreeNode searchNode, 
+                                bool allChaptersCheckbox, 
+                                ObservableCollection<ArticleListItem> lstIdenticalPositions, 
+                                ArticlesAction action, 
+                                bool showAllChapters)
         {
             // make a list with only games and exercises
             RemoveStudies(lstIdenticalPositions);
-            string title = copy ? Properties.Resources.SelectItemsToCopy : Properties.Resources.SelectItemsToMove;
-            SelectArticlesDialog dlg = new SelectArticlesDialog(null, allChaptersCheckbox, title, ref lstIdenticalPositions, showAllChapters)
+            
+            string title = "";
+            switch (action)
+            {
+                case ArticlesAction.COPY:
+                    title = Properties.Resources.SelectItemsToCopy;
+                    break;
+                case ArticlesAction.MOVE:
+                    title = Properties.Resources.SelectItemsToMove;
+                    break;
+                case ArticlesAction.COPY_OR_MOVE:
+                    title = Properties.Resources.SelectItemsToCopyOrMove;
+                    break;
+            }
+
+            SelectArticlesDialog dlg = new SelectArticlesDialog(null, allChaptersCheckbox, title, ref lstIdenticalPositions, showAllChapters, action)
             {
                 Left = AppState.MainWin.ChessForgeMain.Left + 100,
                 Top = AppState.MainWin.ChessForgeMain.Top + 100,
@@ -82,13 +100,19 @@ namespace ChessForge
                 Owner = AppState.MainWin
             };
 
+            if (action == ArticlesAction.COPY_OR_MOVE)
+            {
+                dlg.SetupGuiForGamesCopyOrMove();
+                action = dlg.ActionOnArticles;
+            }
+
             if (dlg.ShowDialog() == true)
             {
                 RemoveUnselectedArticles(lstIdenticalPositions);
 
                 if (HasAtLeastNArticles(lstIdenticalPositions, 1))
                 {
-                    ProcessCopyOrMoveArticles(searchNode, lstIdenticalPositions, copy);
+                    ProcessCopyOrMoveArticles(searchNode, lstIdenticalPositions, action);
                 }
             }
         }
@@ -99,8 +123,8 @@ namespace ChessForge
         /// </summary>
         /// <param name="startNode"></param>
         /// <param name="lstArticles"></param>
-        /// <param name="copy"></param>
-        public static void ProcessCopyOrMoveArticles(TreeNode startNode, ObservableCollection<ArticleListItem> lstArticles, bool copy)
+        /// <param name="action"></param>
+        public static void ProcessCopyOrMoveArticles(TreeNode startNode, ObservableCollection<ArticleListItem> lstArticles, ArticlesAction action)
         {
             int index = InvokeSelectSingleChapterDialog(out bool newChapter);
             if (index >= 0)
@@ -119,10 +143,10 @@ namespace ChessForge
 
                 if (targetChapter != null)
                 {
-                    List<ArticleListItem> articlesToInsert = CreateListToMoveOrCopy(lstArticles, copy, targetChapter);
+                    List<ArticleListItem> articlesToInsert = CreateListToMoveOrCopy(lstArticles, action, targetChapter);
                     if (articlesToInsert.Count > 0)
                     {
-                        CopyOrMoveArticles(targetChapter, articlesToInsert, copy);
+                        CopyOrMoveArticles(targetChapter, articlesToInsert, action);
 
                         targetChapter.IsViewExpanded = true;
                         targetChapter.IsModelGamesListExpanded = true;
@@ -275,13 +299,13 @@ namespace ChessForge
         /// <param name="request"></param>
         /// <returns></returns>
         private static List<ArticleListItem> CreateListToMoveOrCopy(ObservableCollection<ArticleListItem> sourceArticles
-            , bool copy
+            , ArticlesAction action
             , Chapter targetChapter)
         {
             List<ArticleListItem> articlesToInsert = new List<ArticleListItem>();
             int targetChapterIndex = targetChapter.Index;
 
-            if (copy)
+            if (action == ArticlesAction.COPY)
             {
                 // make copies and give them new GUIDs
                 foreach (ArticleListItem ali in sourceArticles)
@@ -322,7 +346,7 @@ namespace ChessForge
         /// <param name="targetChapter"></param>
         /// <param name="articlesToInsert"></param>
         /// <param name="copy"></param>
-        private static void CopyOrMoveArticles(Chapter targetChapter, List<ArticleListItem> articlesToInsert, bool copy)
+        private static void CopyOrMoveArticles(Chapter targetChapter, List<ArticleListItem> articlesToInsert, ArticlesAction action)
         {
             // place the articles in the target chapter
             foreach (ArticleListItem ali in articlesToInsert)
@@ -343,7 +367,7 @@ namespace ChessForge
             // remove from the articles from their source chapters,
             // note that we could be removing the Active article so the GUI must be handled
             // accordingly
-            if (!copy)
+            if (action != ArticlesAction.COPY)
             {
                 foreach (ArticleListItem ali in articlesToInsert)
                 {
@@ -353,7 +377,7 @@ namespace ChessForge
             }
 
             // collect info for the Undo operation
-            WorkbookOperationType typ = copy ? WorkbookOperationType.COPY_ARTICLES : WorkbookOperationType.MOVE_ARTICLES;
+            WorkbookOperationType typ = action == ArticlesAction.COPY ? WorkbookOperationType.COPY_ARTICLES : WorkbookOperationType.MOVE_ARTICLES;
             WorkbookOperation op = new WorkbookOperation(typ, targetChapter, (object)articlesToInsert);
             WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
         }
