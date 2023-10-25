@@ -28,6 +28,11 @@ namespace ChessForge
         public string MoveText;
 
         /// <summary>
+        /// Text of the Font Size text box.
+        /// </summary>
+        public string MoveFontSize;
+
+        /// <summary>
         /// Set to true when the user exits the dialog
         /// with the request to create a dialog for the position.
         /// </summary>
@@ -45,16 +50,26 @@ namespace ChessForge
         private BoardPosition _originalPos;
 
         /// <summary>
+        /// Run for this move in IntroView
+        /// </summary>
+        private Run _run;
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="nd"></param>
-        public IntroMoveDialog(TreeNode nd)
+        public IntroMoveDialog(TreeNode nd, Run run)
         {
             InitializeComponent();
             
             _node = nd;
+            _run = run;
+
             _originalPos = new BoardPosition(nd.Position);
             UiTbMoveText.Text = nd.LastMoveAlgebraicNotation;
+            UiTbMoveFontSize.Text = run.FontSize.ToString();
+
+            UiTbMoveText.Focus();
         }
 
         /// <summary>
@@ -65,6 +80,7 @@ namespace ChessForge
         private void UiBtnOk_Click(object sender, RoutedEventArgs e)
         {
             MoveText = UiTbMoveText.Text;
+            MoveFontSize = UiTbMoveFontSize.Text;
             DialogResult = true;
         }
 

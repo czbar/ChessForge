@@ -7,13 +7,15 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         mc:Ignorable="d"
         ShowInTaskbar="True"
-        Title="{x:Static p:Resources.DlgEditMoveInIntro}" Height="180" Width="400">
+        Title="{x:Static p:Resources.DlgEditMoveInIntro}" Height="220" Width="400">
     <Grid>
-        <Label x:Name="UiLblText" Content="{x:Static p:Resources.TextForDisplay}" HorizontalAlignment="Left" Margin="31,10,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="UiLblText" Content="{x:Static p:Resources.TextForDisplay}" HorizontalAlignment="Left" Margin="25,10,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="UiTbMoveText" HorizontalAlignment="Left" Margin="156,15,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="202" PreviewKeyDown="UiTbMoveText_PreviewKeyDown"/>
-        <Button x:Name="UiBtnEditPosition"  Content="{x:Static p:Resources.EditPosition}" HorizontalAlignment="Center" Margin="-180,56,0,0" VerticalAlignment="Top" Width="150" Click="UiBtnEditPosition_Click"/>
-        <Button x:Name="UiBtnInsertDiagram" Content="{x:Static p:Resources.InsertDiagram}" HorizontalAlignment="Center" Margin="180,56,0,0" VerticalAlignment="Top" Width="150" Click="UiBtnInsertDiagram_Click"/>
-        <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="-120,96,0,0" VerticalAlignment="Top" Width="90" Click="UiBtnOk_Click" />
-        <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="120,96,0,0" VerticalAlignment="Top" Width="90" Click="UiBtnCancel_Click"/>
+        <Label x:Name="UiLblFontSize" Content="{x:Static p:Resources.FontSize}" HorizontalAlignment="Left" Margin="25,45,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="UiTbMoveFontSize" HorizontalAlignment="Left" Margin="156,50,0,0" TextWrapping="Wrap" Text="" HorizontalContentAlignment="Center" VerticalAlignment="Top" Width="80" PreviewKeyDown="UiTbMoveText_PreviewKeyDown"/>
+        <Button x:Name="UiBtnEditPosition"  Content="{x:Static p:Resources.EditPosition}" HorizontalAlignment="Center" Margin="-180,96,0,0" VerticalAlignment="Top" Width="150" Click="UiBtnEditPosition_Click"/>
+        <Button x:Name="UiBtnInsertDiagram" Content="{x:Static p:Resources.InsertDiagram}" HorizontalAlignment="Center" Margin="180,96,0,0" VerticalAlignment="Top" Width="150" Click="UiBtnInsertDiagram_Click"/>
+        <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="-120,136,0,0" VerticalAlignment="Top" Width="90" Click="UiBtnOk_Click" />
+        <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="120,136,0,0" VerticalAlignment="Top" Width="90" Click="UiBtnCancel_Click"/>
     </Grid>
 </Window>
