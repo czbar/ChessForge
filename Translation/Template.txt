@@ -365,6 +365,11 @@ GoBack=
 # Header: EDITING
 #
 
+#description: Font size
+#english: FontSize=Font Size
+FontSize=
+
+
 #description: Font bold
 #english: FontBold=Bold
 FontBold=

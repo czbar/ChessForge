@@ -280,6 +280,10 @@ GoBack=Go back (ALT + ←)
 # Header: EDITING
 #
 
+#Font size
+FontSize=Font Size
+
+
 #Font bold
 FontBold=Bold
 

@@ -372,6 +372,9 @@
   <data name="GoBack" xml:space="preserve">
     <value>Idź wstecz (ALT + ←)</value>
   </data>
+  <data name="FontSize" xml:space="preserve">
+    <value>Rozmiar czcionki</value>
+  </data>
   <data name="FontBold" xml:space="preserve">
     <value>Pogrubienie</value>
   </data>

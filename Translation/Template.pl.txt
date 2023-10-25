@@ -365,6 +365,11 @@ GoBack=Idź wstecz (ALT + ←)
 # Header: EDITING
 #
 
+#description: Font size
+#english: FontSize=Font Size
+FontSize=Rozmiar czcionki
+
+
 #description: Font bold
 #english: FontBold=Bold
 FontBold=Pogrubienie
