@@ -411,48 +411,56 @@ namespace ChessForge
                 string uicName = _uic_move_ + SelectedNode.NodeId.ToString();
                 Inline inlClicked = FindInlineByName(uicName);
 
-                IntroMoveDialog dlg = new IntroMoveDialog(SelectedNode)
+                TextBlock tb = (inlClicked as InlineUIContainer).Child as TextBlock;
+
+                Run run = null;
+                foreach (Inline inl in tb.Inlines)
                 {
-                    Left = AppState.MainWin.Left + 100,
-                    Top = AppState.MainWin.Top + 100,
-                    Topmost = false,
-                    Owner = AppState.MainWin
-                };
-
-                if (dlg.ShowDialog() == true)
-                {
-                    _isTextDirty = true;
-                    AppState.IsDirty = true;
-
-                    SelectedNode.LastMoveAlgebraicNotation = dlg.MoveText;
-
-                    TextBlock tb = (inlClicked as InlineUIContainer).Child as TextBlock;
-
-                    Run run = null;
-                    foreach (Inline inl in tb.Inlines)
+                    if (inl is Run r)
                     {
-                        if (inl is Run r)
+                        run = r;
+                        break;
+                    }
+                }
+
+                if (run != null)
+                {
+                    IntroMoveDialog dlg = new IntroMoveDialog(SelectedNode, run)
+                    {
+                        Left = AppState.MainWin.Left + 100,
+                        Top = AppState.MainWin.Top + 100,
+                        Topmost = false,
+                        Owner = AppState.MainWin
+                    };
+
+                    if (dlg.ShowDialog() == true)
+                    {
+                        _isTextDirty = true;
+                        AppState.IsDirty = true;
+
+                        SelectedNode.LastMoveAlgebraicNotation = dlg.MoveText;
+                        run.Text = dlg.MoveText;
+
+                        if (double.TryParse(dlg.MoveFontSize, out double fontSize))
                         {
-                            run = r;
-                            break;
+                            // make sure it is a reasonable value
+                            fontSize = Math.Max(fontSize, 8);
+                            fontSize = Math.Min(fontSize, 42);
+
+                            run.FontSize = fontSize;
                         }
-                    }
 
-                    if (run != null)
-                    {
-                        run.Text = " " + dlg.MoveText + " ";
-                    }
+                        if (dlg.InsertDialogRequest)
+                        {
+                            TextSelection sel = _rtb.Selection;
+                            _rtb.CaretPosition = inlClicked.ElementEnd;
+                            InsertDiagram(SelectedNode, false);
+                        }
 
-                    if (dlg.InsertDialogRequest)
-                    {
-                        TextSelection sel = _rtb.Selection;
-                        _rtb.CaretPosition = inlClicked.ElementEnd;
-                        InsertDiagram(SelectedNode, false);
+                        // select the edited node on exit
+                        _rtb.Selection.Select(inlClicked.ElementStart, inlClicked.ElementEnd);
+                        WebAccessManager.ExplorerRequest(Intro.Tree.TreeId, SelectedNode, true);
                     }
-
-                    // select the edited node on exit
-                    _rtb.Selection.Select(inlClicked.ElementStart, inlClicked.ElementEnd);
-                    WebAccessManager.ExplorerRequest(Intro.Tree.TreeId, SelectedNode, true);
                 }
             }
             catch (Exception ex)
