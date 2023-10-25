@@ -210,7 +210,7 @@ namespace ChessForge
                     ObservableCollection<ArticleListItem> gameList = WorkbookManager.SessionWorkbook.GenerateArticleList(null, GameData.ContentType.MODEL_GAME);
 
                     string title = Properties.Resources.EvaluateGames;
-                    SelectArticlesDialog dlg = new SelectArticlesDialog(null, true, title, ref gameList, false, GameData.ContentType.MODEL_GAME)
+                    SelectArticlesDialog dlg = new SelectArticlesDialog(null, true, title, ref gameList, false, ArticlesAction.NONE, GameData.ContentType.MODEL_GAME)
                     {
                         Left = ChessForgeMain.Left + 100,
                         Top = ChessForgeMain.Top + 100,
@@ -311,7 +311,7 @@ namespace ChessForge
                     title = Properties.Resources.SelectExercisesForDeletion;
                 }
 
-                SelectArticlesDialog dlg = new SelectArticlesDialog(null, true, title, ref articleList, allChapters, articleType)
+                SelectArticlesDialog dlg = new SelectArticlesDialog(null, true, title, ref articleList, allChapters, ArticlesAction.NONE, articleType)
                 {
                     Left = ChessForgeMain.Left + 100,
                     Top = ChessForgeMain.Top + 100,
