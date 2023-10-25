@@ -65,14 +65,9 @@ namespace ChessForge
 
                         if (dlgEx.ShowDialog() == true)
                         {
-                            if (dlgEx.Request == IdenticalPositionsExDialog.Action.CopyArticles
-                                || dlgEx.Request == IdenticalPositionsExDialog.Action.MoveArticles)
+                            if (dlgEx.Request == IdenticalPositionsExDialog.Action.CopyOrMoveArticles)
                             {
-                                ChapterUtils.RequestCopyMoveArticles(searchNode, false, lstIdenticalPositions, dlgEx.Request == IdenticalPositionsExDialog.Action.CopyArticles, true);
-                            }
-                            else if (dlgEx.ArticleIndexId >= 0 && dlgEx.ArticleIndexId < lstIdenticalPositions.Count)
-                            {
-                                ProcessSelectedPosition(lstIdenticalPositions, dlgEx.Request, dlgEx.ArticleIndexId);
+                                ChapterUtils.RequestCopyMoveArticles(searchNode, false, lstIdenticalPositions, ArticlesAction.COPY_OR_MOVE, true);
                             }
                         }
                     }
