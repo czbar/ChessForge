@@ -82,7 +82,7 @@ namespace GameTree
         /// </summary>
         public uint MoveNumberOffset
         {
-            get => _moveNumberOffset; 
+            get => _moveNumberOffset;
             set => _moveNumberOffset = value;
         }
 
@@ -339,11 +339,16 @@ namespace GameTree
         public int SelectedNodeId
         {
             get => _selectedNodeId;
-            set
-            {
-                AppLog.Message(2, "Set SelectedLineId = " + value.ToString() + " for TreeId = " + TreeId.ToString());
-                _selectedNodeId = value;
-            }
+        }
+
+        /// <summary>
+        /// Set the Selected Node id.
+        /// </summary>
+        /// <param name="nodeId"></param>
+        public void SetSelectedNodeId(int nodeId)
+        {
+            AppLog.Message(2, "Set SelectedNodeId = " + nodeId.ToString() + " for TreeId = " + TreeId.ToString());
+            _selectedNodeId = nodeId;
         }
 
         /// <summary>
@@ -380,7 +385,7 @@ namespace GameTree
         public void SetSelectedLineAndMove(string lineId, int nodeId)
         {
             SelectedLineId = lineId;
-            SelectedNodeId = nodeId;
+            SetSelectedNodeId(nodeId);
         }
 
         /// <summary>
@@ -463,7 +468,7 @@ namespace GameTree
         public ChfCommands.Command AddChfCommand(TreeNode nd, string command)
         {
             ChfCommands.Command chfCommand = ChfCommands.Command.NONE;
-            
+
             if (!string.IsNullOrEmpty(command))
             {
                 string[] tokens = command.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);

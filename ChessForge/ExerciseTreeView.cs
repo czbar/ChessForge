@@ -827,7 +827,7 @@ namespace ChessForge
                 _mainVariationTree.SelectedLineId = "1";
                 string lineId = "1";
 
-                _mainVariationTree.SelectedNodeId = 0;
+                _mainVariationTree.SetSelectedNodeId(0);
                 int nodeId = 0;
                 SelectLineAndMove(lineId, nodeId);
 

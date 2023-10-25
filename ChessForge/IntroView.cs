@@ -120,7 +120,7 @@ namespace ChessForge
             _selectedNode = Nodes[0];
             if (AppState.ActiveVariationTree != null)
             {
-                AppState.ActiveVariationTree.SelectedNodeId = _selectedNode.NodeId;
+                AppState.ActiveVariationTree.SetSelectedNodeId(_selectedNode.NodeId);
             }
 
             WebAccessManager.ExplorerRequest(Intro.Tree.TreeId, Nodes[0]);

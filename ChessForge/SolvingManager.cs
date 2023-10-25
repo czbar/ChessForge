@@ -292,7 +292,7 @@ namespace ChessForge
                 if (inPrimaryTree.Children.Count == 0)
                 {
                     _guessingFinished = true;
-                    AppState.MainWin.ActiveVariationTree.SelectedNodeId = guess.NodeId;
+                    AppState.MainWin.ActiveVariationTree.SetSelectedNodeId(guess.NodeId);
                 }
                 else
                 {
@@ -307,7 +307,7 @@ namespace ChessForge
                         AppState.MainWin.ActiveLine.SelectPly((int)response.Parent.MoveNumber, response.Parent.ColorToMove);
                         AppState.MainWin.DisplayPosition(response);
                     });
-                    AppState.MainWin.ActiveVariationTree.SelectedNodeId = response.NodeId;
+                    AppState.MainWin.ActiveVariationTree.SetSelectedNodeId(response.NodeId);
 
                     if (inPrimaryTree.Children[0].Children.Count == 0)
                     {
@@ -331,7 +331,7 @@ namespace ChessForge
             //TODO: make sure that secondary tree gets move number offset from primary
             // report incorrect move and (defensively) remove from the view it is there
             guess.Parent.Comment = Constants.CharCrossMark.ToString() + " " + MoveUtils.BuildSingleMoveText(guess, true, false, secondaryTree.MoveNumberOffset) + " is not correct.";
-            AppState.MainWin.ActiveVariationTree.SelectedNodeId = guess.Parent.NodeId;
+            AppState.MainWin.ActiveVariationTree.SetSelectedNodeId(guess.Parent.NodeId);
             AppState.MainWin.ActiveLine.Line.RemoveLastPly();
 
             AppState.MainWin.Dispatcher.Invoke(() =>
