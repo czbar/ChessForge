@@ -55,6 +55,8 @@ namespace ChessForge
         private readonly string _uic_move_ = "uic_move_";
         private readonly string _flip_img_ = "flip_img_";
 
+        // default font size for the Move element text
+        private double MOVE_FONT_SIZE = 14;
 
         // current highest run id (it is 0 initially, because we have the root node)
         private int _maxRunId = 0;
@@ -362,7 +364,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Inserts new move at the caret.
+        /// Inserts a new move at the caret.
         /// This function is invoked when the user made a move on the main chessboard
         /// or a move from the clipboard is being inserted.
         /// If the latter, the text of the move will be taken from LastMoveAlgebraicNotation
@@ -387,6 +389,7 @@ namespace ChessForge
             rMove.Name = _run_move_ + nodeId.ToString();
             rMove.Foreground = Brushes.Blue;
             rMove.FontWeight = FontWeights.Bold;
+            rMove.FontSize = MOVE_FONT_SIZE;
 
             WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, _selectedNode);
 
@@ -939,7 +942,7 @@ namespace ChessForge
 
             try
             {
-                RichTextBoxUtilities.GetMoveInsertionPlace(_rtb, out Paragraph paraToInsertIn, out Inline inlineToInsertBefore);
+                RichTextBoxUtilities.GetMoveInsertionPlace(_rtb, out Paragraph paraToInsertIn, out Inline inlineToInsertBefore, out double fontSize);
 
                 tbMove = new TextBlock();
                 tbMove.Name = _tb_move_ + node.NodeId.ToString();

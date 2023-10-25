@@ -84,7 +84,7 @@ namespace ChessForge
                         r.FontWeight = currentRun.FontWeight;
                     }
 
-                    InsertRunFromClipboard(r, null);
+                    InsertRunFromClipboard(r, null, out _);
                     return;
                 }
 
@@ -119,7 +119,7 @@ namespace ChessForge
                             InsertDiagramFromClipboard(element.DataObject as TreeNode, element.BoolState == true);
                             break;
                         case IntroViewClipboard.ElementType.Run:
-                            InsertRunFromClipboard(element.DataObject as Run, isFirstElem ? element.Margins : null);
+                            InsertRunFromClipboard(element.DataObject as Run, isFirstElem ? element.Margins : null, out _);
                             break;
                         case IntroViewClipboard.ElementType.Move:
                             InsertMoveFromClipboard(element.DataObject as TreeNode);
@@ -179,9 +179,9 @@ namespace ChessForge
         /// If parent is a Paragraph and it is not a diagram paragraph, insert it at the caret point.
         /// </summary>
         /// <param name="run"></param>
-        private void InsertRunFromClipboard(Run runToInsert, Thickness? margins)
+        private void InsertRunFromClipboard(Run runToInsert, Thickness? margins, out double fontSize)
         {
-            RichTextBoxUtilities.GetMoveInsertionPlace(_rtb, out Paragraph para, out Inline insertBefore);
+            RichTextBoxUtilities.GetMoveInsertionPlace(_rtb, out Paragraph para, out Inline insertBefore, out fontSize);
             if (para != null)
             {
                 if (margins != null)
