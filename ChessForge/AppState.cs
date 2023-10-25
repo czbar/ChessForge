@@ -1759,7 +1759,6 @@ namespace ChessForge
                      {
                          _mainWin.UiMnciEvalLine.IsEnabled = false;
                          _mainWin.UiMnciEvalPos.IsEnabled = false;
-                         _mainWin.UiImgEngineOff.IsEnabled = false;
                      }
                      else
                      {
