@@ -591,6 +591,9 @@
   <data name="ManageChapter" xml:space="preserve">
     <value>Organizuj Rozdział...</value>
   </data>
+  <data name="FindGames" xml:space="preserve">
+    <value>Znajdź partie...</value>
+  </data>
   <data name="Help" xml:space="preserve">
     <value>Pomoc</value>
   </data>
@@ -752,6 +755,18 @@
   </data>
   <data name="EntireWorkbook" xml:space="preserve">
     <value>Cały podręcznik</value>
+  </data>
+  <data name="SearchCriteria" xml:space="preserve">
+    <value>Kryteria Wyszukiwania</value>
+  </data>
+  <data name="Players" xml:space="preserve">
+    <value>Zawodnicy</value>
+  </data>
+  <data name="IgnoreColors" xml:space="preserve">
+    <value>Ignoruj kolory</value>
+  </data>
+  <data name="MovesInGame" xml:space="preserve">
+    <value>Liczba posunięć</value>
   </data>
   <data name="InEvaluation" xml:space="preserve">
     <value>Podczas Oceniania</value>

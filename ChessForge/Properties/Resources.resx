@@ -591,6 +591,9 @@
   <data name="ManageChapter" xml:space="preserve">
     <value>Manage Chapter...</value>
   </data>
+  <data name="FindGames" xml:space="preserve">
+    <value>Find Games...</value>
+  </data>
   <data name="Help" xml:space="preserve">
     <value>Help</value>
   </data>
@@ -752,6 +755,18 @@
   </data>
   <data name="EntireWorkbook" xml:space="preserve">
     <value>Entire Workbook</value>
+  </data>
+  <data name="SearchCriteria" xml:space="preserve">
+    <value>Search Criteria</value>
+  </data>
+  <data name="Players" xml:space="preserve">
+    <value>Players</value>
+  </data>
+  <data name="IgnoreColors" xml:space="preserve">
+    <value>Ignore Colors</value>
+  </data>
+  <data name="MovesInGame" xml:space="preserve">
+    <value>Number of Moves</value>
   </data>
   <data name="InEvaluation" xml:space="preserve">
     <value>During Evaluations</value>
