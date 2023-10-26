@@ -234,7 +234,14 @@ namespace ChessForge
         /// <returns></returns>
         public static string GetDiagramPlainText(TreeNode node)
         {
-            return "\n" + BuildDiagramString(node.Position) + "\n";
+            if (node == null)
+            {
+                return "";
+            }
+            else
+            {
+                return "\n" + BuildDiagramString(node.Position) + "\n";
+            }
         }
 
         /// <summary>
