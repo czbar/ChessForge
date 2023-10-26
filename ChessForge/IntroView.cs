@@ -53,6 +53,7 @@ namespace ChessForge
         private readonly string _run_move_ = "run_move_";
         private readonly string _tb_move_ = "tb_move_";
         private readonly string _uic_move_ = "uic_move_";
+        private readonly string _vbox_diag_ = "vbox_move_";
         private readonly string _flip_img_ = "flip_img_";
 
         // default font size for the Move element text
@@ -375,6 +376,8 @@ namespace ChessForge
         /// <returns></returns>
         public TextBlock InsertMove(TreeNode node, bool fromClipboard = false)
         {
+            AppState.MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
+
             if (string.IsNullOrEmpty(node.LastMoveAlgebraicNotation))
             {
                 return null;
@@ -589,16 +592,17 @@ namespace ChessForge
         {
             try
             {
-                if (sender is Paragraph)
+                if (sender is InlineUIContainer)
                 {
-                    Paragraph para = sender as Paragraph;
+                    InlineUIContainer iuc = sender as InlineUIContainer;
 
                     // is a proper diagram para?
-                    if (HasInlineUIContainer(para))
+                    //if (HasInlineUIContainer(para))
                     {
                         RemoveSelectionOpacity();
                         AppState.MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGrey;
 
+                        Paragraph para = iuc.Parent as Paragraph;
                         _rtb.Focus();
                         _rtb.CaretPosition = para.ContentEnd;
 
@@ -695,8 +699,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Sets event handlers for the move Runs
-        /// and diagram Paragraphs.
+        /// Sets event handlers for the Move and Diagram InlineUIContainers.
         /// </summary>
         private void SetEventHandlers()
         {
@@ -704,35 +707,57 @@ namespace ChessForge
             {
                 foreach (Block block in Document.Blocks)
                 {
-                    if (block is Paragraph)
+                    if (block is Paragraph para)
                     {
-                        Paragraph p = (Paragraph)block;
-                        if (p.Name.StartsWith(RichTextBoxUtilities.DiagramParaPrefix))
-                        {
-                            p.MouseDown -= EventDiagramClicked;
-                            p.MouseDown += EventDiagramClicked;
+                        bool isDiag = false;
 
-                            Image flipImg = FindFlipImage(p);
+                        if (para.Name.StartsWith(RichTextBoxUtilities.DiagramParaPrefix))
+                        {
+                            isDiag = true;
+
+                            Image flipImg = FindFlipImage(para);
                             if (flipImg != null)
                             {
                                 flipImg.MouseDown -= EventFlipRequest;
                                 flipImg.MouseDown += EventFlipRequest;
                             }
                         }
-                        foreach (Inline inl in p.Inlines)
-                        {
-                            if (inl is InlineUIContainer && inl.Name.StartsWith(_uic_move_))
-                            {
-                                ((InlineUIContainer)inl).MouseDown -= EventMoveClicked;
-                                ((InlineUIContainer)inl).MouseDown += EventMoveClicked;
-                            }
-                        }
+
+                        SetInlineUIContainerEventHandlers(para, isDiag);
                     }
                 }
             }
             catch (Exception ex)
             {
                 AppLog.Message("SetEventHandlers()", ex);
+            }
+        }
+
+        /// <summary>
+        /// Sets event handlers for the Move and Diagram InlineUIContainers in a Paragraph.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <param name="isDiag"></param>
+        private void SetInlineUIContainerEventHandlers(Paragraph para, bool isDiag)
+        {
+            foreach (Inline inline in para.Inlines)
+            {
+                if (inline is InlineUIContainer iuc && inline.Name.StartsWith(_uic_move_))
+                {
+                    iuc.MouseDown -= EventMoveClicked;
+                    iuc.MouseDown += EventMoveClicked;
+
+                    if (isDiag && iuc.Child is Viewbox)
+                    {
+                        para.MouseDown -= EventDiagramClicked;
+                        iuc.MouseDown -= EventDiagramClicked;
+                        iuc.MouseDown += EventDiagramClicked;
+                    }
+                    else if (iuc.Child is TextBlock)
+                    {
+                        para.MouseDown -= EventDiagramClicked;
+                    }
+                }
             }
         }
 
@@ -1096,6 +1121,7 @@ namespace ChessForge
                 InlineUIContainer uic = new InlineUIContainer();
                 uic.Child = viewBox;
                 uic.Name = _uic_move_ + nd.NodeId.ToString();
+                viewBox.Name = _vbox_diag_ + nd.NodeId.ToString();
                 para.Inlines.Add(uic);
             }
             finally
