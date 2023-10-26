@@ -142,6 +142,7 @@
     <Compile Include="EvaluationLine.cs" />
     <Compile Include="EvaluationTrainingLine.cs" />
     <Compile Include="ExerciseTreeView.cs" />
+    <Compile Include="FindGames.cs" />
     <Compile Include="FindIdenticalPositions.cs" />
     <Compile Include="GameHeaderDialog.xaml.cs">
       <DependentUpon>GameHeaderDialog.xaml</DependentUpon>
