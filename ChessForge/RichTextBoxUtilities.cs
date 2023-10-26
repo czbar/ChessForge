@@ -61,8 +61,10 @@ namespace ChessForge
         /// </summary>
         /// <param name="rtb"></param>
         /// <returns></returns>
-        public static Run SplitRun(RichTextBox rtb)
+        public static Run SplitRun(RichTextBox rtb, out double fontSize)
         {
+            fontSize = 14;
+
             try
             {
                 TextPointer caretPosition = rtb.CaretPosition;
@@ -77,6 +79,8 @@ namespace ChessForge
 
                 // Split the Run at the current caret position
                 Run currentRun = caretPosition.Parent as Run;
+                fontSize = currentRun.FontSize;
+
                 Paragraph currentParagraph = caretPosition.Paragraph;
 
                 if (caretPosition.GetOffsetToPosition(currentRun.ContentEnd) > 0)
@@ -86,6 +90,7 @@ namespace ChessForge
 
                     // Create a new Run containing the second half of the original Run
                     newRun = new Run(currentRun.Text.Substring(-1 * splitPosition.GetOffsetToPosition(currentRun.ContentStart)));
+                    newRun.FontSize = currentRun.FontSize;
 
                     // Remove the second half of the original Run
                     currentRun.Text = currentRun.Text.Substring(0, -1 * splitPosition.GetOffsetToPosition(currentRun.ContentStart));
@@ -115,8 +120,10 @@ namespace ChessForge
         /// </summary>
         /// <param name="para"></param>
         /// <param name="insertBefore"></param>
-        public static void GetMoveInsertionPlace(RichTextBox rtb, out Paragraph para, out Inline insertBefore)
+        public static void GetMoveInsertionPlace(RichTextBox rtb, out Paragraph para, out Inline insertBefore, out double fontSize)
         {
+            fontSize = 14;
+
             TextSelection selection = rtb.Selection;
             if (!selection.IsEmpty)
             {
@@ -139,7 +146,7 @@ namespace ChessForge
             else
             {
                 // if caret is inside a Run, split it and return the second part
-                insertBefore = RichTextBoxUtilities.SplitRun(rtb);
+                insertBefore = SplitRun(rtb, out fontSize);
                 if (insertBefore != null && insertBefore.Parent is Paragraph)
                 {
                     para = insertBefore.Parent as Paragraph;
@@ -227,7 +234,14 @@ namespace ChessForge
         /// <returns></returns>
         public static string GetDiagramPlainText(TreeNode node)
         {
-            return "\n" + BuildDiagramString(node.Position) + "\n";
+            if (node == null)
+            {
+                return "";
+            }
+            else
+            {
+                return "\n" + BuildDiagramString(node.Position) + "\n";
+            }
         }
 
         /// <summary>

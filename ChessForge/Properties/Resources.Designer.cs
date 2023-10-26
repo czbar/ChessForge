@@ -971,6 +971,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copy.
+        /// </summary>
+        public static string CopyArticles {
+            get {
+                return ResourceManager.GetString("CopyArticles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Copy Games and Exercises Between Chapters....
         /// </summary>
         public static string CopyArticlesToChapter {
@@ -2582,6 +2591,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Font Size.
+        /// </summary>
+        public static string FontSize {
+            get {
+                return ResourceManager.GetString("FontSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Underline.
         /// </summary>
         public static string FontUnderline {
@@ -3334,6 +3352,15 @@ namespace ChessForge.Properties {
         public static string Move {
             get {
                 return ResourceManager.GetString("Move", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move.
+        /// </summary>
+        public static string MoveArticles {
+            get {
+                return ResourceManager.GetString("MoveArticles", resourceCulture);
             }
         }
         
@@ -4491,6 +4518,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select to Copy or Move....
+        /// </summary>
+        public static string SelectCopyMove {
+            get {
+                return ResourceManager.GetString("SelectCopyMove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select a date.
         /// </summary>
         public static string SelectDate {
@@ -4617,6 +4653,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select Items to Copy or Move.
+        /// </summary>
+        public static string SelectItemsToCopyOrMove {
+            get {
+                return ResourceManager.GetString("SelectItemsToCopyOrMove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select Items to Move.
         /// </summary>
         public static string SelectItemsToMove {
@@ -4658,6 +4703,15 @@ namespace ChessForge.Properties {
         public static string SelectSolvingMode {
             get {
                 return ResourceManager.GetString("SelectSolvingMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Target Chapter.
+        /// </summary>
+        public static string SelectTargetChapter {
+            get {
+                return ResourceManager.GetString("SelectTargetChapter", resourceCulture);
             }
         }
         

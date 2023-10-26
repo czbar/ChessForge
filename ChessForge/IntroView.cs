@@ -53,8 +53,11 @@ namespace ChessForge
         private readonly string _run_move_ = "run_move_";
         private readonly string _tb_move_ = "tb_move_";
         private readonly string _uic_move_ = "uic_move_";
+        private readonly string _vbox_diag_ = "vbox_move_";
         private readonly string _flip_img_ = "flip_img_";
 
+        // default font size for the Move element text
+        private double MOVE_FONT_SIZE = 14;
 
         // current highest run id (it is 0 initially, because we have the root node)
         private int _maxRunId = 0;
@@ -120,7 +123,7 @@ namespace ChessForge
             _selectedNode = Nodes[0];
             if (AppState.ActiveVariationTree != null)
             {
-                AppState.ActiveVariationTree.SelectedNodeId = _selectedNode.NodeId;
+                AppState.ActiveVariationTree.SetSelectedNodeId(_selectedNode.NodeId);
             }
 
             WebAccessManager.ExplorerRequest(Intro.Tree.TreeId, Nodes[0]);
@@ -362,7 +365,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Inserts new move at the caret.
+        /// Inserts a new move at the caret.
         /// This function is invoked when the user made a move on the main chessboard
         /// or a move from the clipboard is being inserted.
         /// If the latter, the text of the move will be taken from LastMoveAlgebraicNotation
@@ -373,6 +376,8 @@ namespace ChessForge
         /// <returns></returns>
         public TextBlock InsertMove(TreeNode node, bool fromClipboard = false)
         {
+            AppState.MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
+
             if (string.IsNullOrEmpty(node.LastMoveAlgebraicNotation))
             {
                 return null;
@@ -387,6 +392,7 @@ namespace ChessForge
             rMove.Name = _run_move_ + nodeId.ToString();
             rMove.Foreground = Brushes.Blue;
             rMove.FontWeight = FontWeights.Bold;
+            rMove.FontSize = MOVE_FONT_SIZE;
 
             WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, _selectedNode);
 
@@ -408,48 +414,56 @@ namespace ChessForge
                 string uicName = _uic_move_ + SelectedNode.NodeId.ToString();
                 Inline inlClicked = FindInlineByName(uicName);
 
-                IntroMoveDialog dlg = new IntroMoveDialog(SelectedNode)
+                TextBlock tb = (inlClicked as InlineUIContainer).Child as TextBlock;
+
+                Run run = null;
+                foreach (Inline inl in tb.Inlines)
                 {
-                    Left = AppState.MainWin.Left + 100,
-                    Top = AppState.MainWin.Top + 100,
-                    Topmost = false,
-                    Owner = AppState.MainWin
-                };
-
-                if (dlg.ShowDialog() == true)
-                {
-                    _isTextDirty = true;
-                    AppState.IsDirty = true;
-
-                    SelectedNode.LastMoveAlgebraicNotation = dlg.MoveText;
-
-                    TextBlock tb = (inlClicked as InlineUIContainer).Child as TextBlock;
-
-                    Run run = null;
-                    foreach (Inline inl in tb.Inlines)
+                    if (inl is Run r)
                     {
-                        if (inl is Run r)
+                        run = r;
+                        break;
+                    }
+                }
+
+                if (run != null)
+                {
+                    IntroMoveDialog dlg = new IntroMoveDialog(SelectedNode, run)
+                    {
+                        Left = AppState.MainWin.Left + 100,
+                        Top = AppState.MainWin.Top + 100,
+                        Topmost = false,
+                        Owner = AppState.MainWin
+                    };
+
+                    if (dlg.ShowDialog() == true)
+                    {
+                        _isTextDirty = true;
+                        AppState.IsDirty = true;
+
+                        SelectedNode.LastMoveAlgebraicNotation = dlg.MoveText;
+                        run.Text = dlg.MoveText;
+
+                        if (double.TryParse(dlg.MoveFontSize, out double fontSize))
                         {
-                            run = r;
-                            break;
+                            // make sure it is a reasonable value
+                            fontSize = Math.Max(fontSize, 8);
+                            fontSize = Math.Min(fontSize, 42);
+
+                            run.FontSize = fontSize;
                         }
-                    }
 
-                    if (run != null)
-                    {
-                        run.Text = " " + dlg.MoveText + " ";
-                    }
+                        if (dlg.InsertDialogRequest)
+                        {
+                            TextSelection sel = _rtb.Selection;
+                            _rtb.CaretPosition = inlClicked.ElementEnd;
+                            InsertDiagram(SelectedNode, false);
+                        }
 
-                    if (dlg.InsertDialogRequest)
-                    {
-                        TextSelection sel = _rtb.Selection;
-                        _rtb.CaretPosition = inlClicked.ElementEnd;
-                        InsertDiagram(SelectedNode, false);
+                        // select the edited node on exit
+                        _rtb.Selection.Select(inlClicked.ElementStart, inlClicked.ElementEnd);
+                        WebAccessManager.ExplorerRequest(Intro.Tree.TreeId, SelectedNode, true);
                     }
-
-                    // select the edited node on exit
-                    _rtb.Selection.Select(inlClicked.ElementStart, inlClicked.ElementEnd);
-                    WebAccessManager.ExplorerRequest(Intro.Tree.TreeId, SelectedNode, true);
                 }
             }
             catch (Exception ex)
@@ -578,16 +592,17 @@ namespace ChessForge
         {
             try
             {
-                if (sender is Paragraph)
+                if (sender is InlineUIContainer)
                 {
-                    Paragraph para = sender as Paragraph;
+                    InlineUIContainer iuc = sender as InlineUIContainer;
 
                     // is a proper diagram para?
-                    if (HasInlineUIContainer(para))
+                    //if (HasInlineUIContainer(para))
                     {
                         RemoveSelectionOpacity();
                         AppState.MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGrey;
 
+                        Paragraph para = iuc.Parent as Paragraph;
                         _rtb.Focus();
                         _rtb.CaretPosition = para.ContentEnd;
 
@@ -684,8 +699,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Sets event handlers for the move Runs
-        /// and diagram Paragraphs.
+        /// Sets event handlers for the Move and Diagram InlineUIContainers.
         /// </summary>
         private void SetEventHandlers()
         {
@@ -693,32 +707,57 @@ namespace ChessForge
             {
                 foreach (Block block in Document.Blocks)
                 {
-                    if (block is Paragraph)
+                    if (block is Paragraph para)
                     {
-                        Paragraph p = (Paragraph)block;
-                        if (p.Name.StartsWith(RichTextBoxUtilities.DiagramParaPrefix))
-                        {
-                            p.MouseDown += EventDiagramClicked;
+                        bool isDiag = false;
 
-                            Image flipImg = FindFlipImage(p);
+                        if (para.Name.StartsWith(RichTextBoxUtilities.DiagramParaPrefix))
+                        {
+                            isDiag = true;
+
+                            Image flipImg = FindFlipImage(para);
                             if (flipImg != null)
                             {
+                                flipImg.MouseDown -= EventFlipRequest;
                                 flipImg.MouseDown += EventFlipRequest;
                             }
                         }
-                        foreach (Inline inl in p.Inlines)
-                        {
-                            if (inl is InlineUIContainer && inl.Name.StartsWith(_uic_move_))
-                            {
-                                ((InlineUIContainer)inl).MouseDown += EventMoveClicked;
-                            }
-                        }
+
+                        SetInlineUIContainerEventHandlers(para, isDiag);
                     }
                 }
             }
             catch (Exception ex)
             {
                 AppLog.Message("SetEventHandlers()", ex);
+            }
+        }
+
+        /// <summary>
+        /// Sets event handlers for the Move and Diagram InlineUIContainers in a Paragraph.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <param name="isDiag"></param>
+        private void SetInlineUIContainerEventHandlers(Paragraph para, bool isDiag)
+        {
+            foreach (Inline inline in para.Inlines)
+            {
+                if (inline is InlineUIContainer iuc && inline.Name.StartsWith(_uic_move_))
+                {
+                    iuc.MouseDown -= EventMoveClicked;
+                    iuc.MouseDown += EventMoveClicked;
+
+                    if (isDiag && iuc.Child is Viewbox)
+                    {
+                        para.MouseDown -= EventDiagramClicked;
+                        iuc.MouseDown -= EventDiagramClicked;
+                        iuc.MouseDown += EventDiagramClicked;
+                    }
+                    else if (iuc.Child is TextBlock)
+                    {
+                        para.MouseDown -= EventDiagramClicked;
+                    }
+                }
             }
         }
 
@@ -936,7 +975,7 @@ namespace ChessForge
 
             try
             {
-                RichTextBoxUtilities.GetMoveInsertionPlace(_rtb, out Paragraph paraToInsertIn, out Inline inlineToInsertBefore);
+                RichTextBoxUtilities.GetMoveInsertionPlace(_rtb, out Paragraph paraToInsertIn, out Inline inlineToInsertBefore, out double fontSize);
 
                 tbMove = new TextBlock();
                 tbMove.Name = _tb_move_ + node.NodeId.ToString();
@@ -1082,6 +1121,7 @@ namespace ChessForge
                 InlineUIContainer uic = new InlineUIContainer();
                 uic.Child = viewBox;
                 uic.Name = _uic_move_ + nd.NodeId.ToString();
+                viewBox.Name = _vbox_diag_ + nd.NodeId.ToString();
                 para.Inlines.Add(uic);
             }
             finally

@@ -188,6 +188,9 @@ namespace ChessForge
             }
             else
             {
+                sb.AppendLine("Tree Id = " + tree.TreeId.ToString());
+                sb.AppendLine();
+
                 for (int i = 0; i < tree.Nodes.Count; i++)
                 {
                     TreeNode nd = tree.Nodes[i];

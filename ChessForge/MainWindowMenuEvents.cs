@@ -1484,7 +1484,7 @@ namespace ChessForge
                 int articleIndex = chapter.ActiveModelGameIndex;
                 ArticleListItem item = new ArticleListItem(null, chapter.Index, chapter.GetModelGameAtIndex(articleIndex), articleIndex);
                 articleList.Add(item);
-                ChapterUtils.ProcessCopyOrMoveArticles(null, articleList, false);
+                ChapterUtils.ProcessCopyOrMoveArticles(null, articleList, ArticlesAction.MOVE);
             }
         }
 
@@ -1502,7 +1502,7 @@ namespace ChessForge
                 int articleIndex = chapter.ActiveExerciseIndex;
                 ArticleListItem item = new ArticleListItem(null, chapter.Index, chapter.GetExerciseAtIndex(articleIndex), articleIndex);
                 articleList.Add(item);
-                ChapterUtils.ProcessCopyOrMoveArticles(null, articleList, false);
+                ChapterUtils.ProcessCopyOrMoveArticles(null, articleList, ArticlesAction.MOVE);
             }
         }
 
@@ -1699,7 +1699,7 @@ namespace ChessForge
             {
                 TreeNode nd = ActiveTreeView.GetSelectedNode();
                 ObservableCollection<ArticleListItem> articleList = WorkbookManager.SessionWorkbook.GenerateArticleList();
-                SelectArticlesDialog dlg = new SelectArticlesDialog(nd, true, null, ref articleList, false)
+                SelectArticlesDialog dlg = new SelectArticlesDialog(nd, true, null, ref articleList, false, ArticlesAction.NONE)
                 {
                     Left = ChessForgeMain.Left + 100,
                     Top = ChessForgeMain.Top + 100,
@@ -2356,7 +2356,7 @@ namespace ChessForge
         private void UiMnCopyArticles_Click(object sender, RoutedEventArgs e)
         {
             ObservableCollection<ArticleListItem> articleList = WorkbookManager.SessionWorkbook.GenerateArticleList();
-            ChapterUtils.RequestCopyMoveArticles(null, true, articleList, true, false);
+            ChapterUtils.RequestCopyMoveArticles(null, true, articleList, ArticlesAction.COPY, false);
         }
 
         /// <summary>
@@ -2367,7 +2367,7 @@ namespace ChessForge
         private void UiMnMoveArticles_Click(object sender, RoutedEventArgs e)
         {
             ObservableCollection<ArticleListItem> articleList = WorkbookManager.SessionWorkbook.GenerateArticleList();
-            ChapterUtils.RequestCopyMoveArticles(null, true, articleList, false, false);
+            ChapterUtils.RequestCopyMoveArticles(null, true, articleList, ArticlesAction.MOVE, false);
         }
 
         /// <summary>

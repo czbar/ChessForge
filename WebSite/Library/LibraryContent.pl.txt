@@ -1,0 +1,82 @@
+Redirect:
+Message:
+
+      
+Bookcase:Tournaments
+Description: Partie z turniejów i meczów.
+
+    Shelf:Mistrzostwa Świata 
+    Description: Partie z meczów o mistrzostwo świata
+    
+	  Book: Indywidualne mistrzostwa świata mężczyzn (jęz. ang.)
+      Description: Wszystkie partie z meczów o mistrzostwo świata mężczyzn.
+      File:Tournaments/Mens World Individual Championships.pgn
+
+Bookcase:Openings
+Description:Teoria i praktyka debiutów szachowych.
+    
+	Shelf:Ogólne
+    Description: Debiuty analizowane z obu stron.
+	
+      Book:System Londyński (jęz. ang.)
+      Description: Szczegółowy przegląd Systemu Londyńskiego.
+      File: Openings/General/London System.pgn
+    
+	Shelf:Repertuar dla Białych
+    Description: Debiuty analizowane z punktu widzenia białych.
+      
+	  Book:Gambit Budapesztański (jęz. ang.)
+      Description: Kilka metod okiełznania Gambitu Budapesztańskiego.
+      File: Openings/White/Budapest for White.pgn
+      
+	  Book:Obrona Królewsko-Indyjska, wariant Karpowa (jęz. ang.)
+      Description:Bardzo popularny i efektywny wariant przeciw obronie Królewsko-Indyjskiej.
+      File: Openings/White/King's Indian - Karpov variation for White.pgn
+    
+	  Book:Gambit Morry (jęz. ang.)
+      Description: Popularny oręż przeciwko Obronie Sycylijskiej.
+      File: Openings/White/Smith Morra Gambit.pgn
+      
+	Shelf:Repertuar dla Czarnych
+    Description: Debiuty analizowane z punktu widzenia czarnych.
+    
+	  Book:Wariant Wymienny Obronny Francuskiej (jęz. ang.)
+      Description: Jak przełamać symetrię grając czarnymi wariant wyminenny Francuskiej.
+      File: Openings/Black/French Exchange for Black.pgn
+      
+	  Book: Pułapki w Gambicie Stafforda (jęz. ang.)
+      Description: Zabawna rozprawka Erica Rosena o Gambicie Stafforda.  Zaadoptowana ze studium Erica na lichess.
+      File: Openings/Black/Stafford Gambit for Black.pgn
+	  
+      Book: Obrona Ragozina (jęz. ang.)
+      Description: Solidne element repertuaru czarnych przeciwko 1.d4.
+      File: Openings/Black/Ragozin for Black.pgn
+
+
+Bookcase: Końcówki i Ćwiczenia
+Description: Zbiory końcówek i ćwiczeń.
+
+    Shelf:Końcówki
+    Description: 
+    
+	  Book:Zbiór końcówek autorstwa NoseKnowsAll@lichess (jęz. ang.)
+      Description: Znakomity wybór końcówek importowany ze studium użytkownika NoseKnowsAll nalichess.
+      File: Endgames/Endgames by NoseKnowsAll.pgn
+
+      Book: Schematy matowe (jęz. ang.)
+      Description: Podstawowe schematy matowe, nazwane i zilustrowane.
+      File: Endgames/Checkmate Patterns.pgn
+        
+Bookcase: Fragmeny Książek 
+Description: Fragmenty książek szachowych zaadoptowane dla Chess Forge'a.
+
+    Shelf:
+    Description: 
+    
+	  Book:Elementy Startegii (jęz. ang.)
+      Description: Mała próbka z książki arcymistrza Bartka Macieji i mistrza międzynarodowego Witalisa Sapisa.
+      File: BookSamples/Chess Strategy Explained.pgn
+      
+	  Book: Kompletny Cwaniak Szachowy (jęz. ang.)
+      Description: Mała próbka nagradzanej książki arcymistrza Dawida Smerdona.
+      File: BookSamples/The Complete Chess Swindler.pgn

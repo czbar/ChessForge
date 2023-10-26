@@ -3,10 +3,9 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace WebAccess
 {
@@ -18,11 +17,11 @@ namespace WebAccess
         // root URL for the library
         private static string LIBRARY_URL = "https://chessforge.sourceforge.io/Library/";
 
-        //// name of the json content file at the root of the library
-        //private static string LIBRARY_CONTENT_FILE = "LibraryContent.json";
-
         // name of the text content file at the root of the library
         private static string LIBRARY_CONTENT_FILE = "LibraryContent.txt";
+
+        // name of the text content file at the root of the library
+        private static string LIBRARY_CONTENT_FILE_PL = "LibraryContent.pl.txt";
 
         /// <summary>
         /// Gets and deserializes the library content from ChessForge's web site.
@@ -35,7 +34,7 @@ namespace WebAccess
             LibraryContent library = null;
             try
             {
-                string urlQuery = LIBRARY_URL + LIBRARY_CONTENT_FILE;
+                string urlQuery = LIBRARY_URL + GetLibraryContentFileName();
                 var request = WebRequest.CreateHttp(urlQuery);
                 request.Method = "GET";
 
@@ -96,6 +95,22 @@ namespace WebAccess
             }
 
             return bookText;
+        }
+
+        /// <summary>
+        /// Returns the name of the file with the list of the library content.
+        /// </summary>
+        /// <returns></returns>
+        private static string GetLibraryContentFileName()
+        {
+            if (Thread.CurrentThread.CurrentUICulture.Name.Contains("pl"))
+            {
+                return LIBRARY_CONTENT_FILE_PL;
+            }
+            else
+            {
+                return LIBRARY_CONTENT_FILE;
+            }
         }
 
         /// <summary>

@@ -372,6 +372,9 @@
   <data name="GoBack" xml:space="preserve">
     <value>Idź wstecz (ALT + ←)</value>
   </data>
+  <data name="FontSize" xml:space="preserve">
+    <value>Rozmiar czcionki</value>
+  </data>
   <data name="FontBold" xml:space="preserve">
     <value>Pogrubienie</value>
   </data>
@@ -536,12 +539,6 @@
   </data>
   <data name="DlgTitleEngineOptions" xml:space="preserve">
     <value>Opcje Silnika</value>
-  </data>
-  <data name="DlgTitleIdenticalPositions" xml:space="preserve">
-    <value>Lista Identycznych Pozycji</value>
-  </data>
-  <data name="DlgLabelIdenticalPositionHint" xml:space="preserve">
-    <value>Kliknij podwójnie element aby otworzyć jego widok.</value>
   </data>
   <data name="DlgParseErrors" xml:space="preserve">
     <value>Błędy przetwarzania zapisu</value>
@@ -806,6 +803,42 @@
   </data>
   <data name="StopDetectLevel" xml:space="preserve">
     <value>Poziom poza detekcją (cp)</value>
+  </data>
+  <data name="SelectCopyMove" xml:space="preserve">
+    <value>Wybierz i Kopiuj lub Przenieś...</value>
+  </data>
+  <data name="DlgTitleIdenticalPositions" xml:space="preserve">
+    <value>Lista Identycznych Pozycji</value>
+  </data>
+  <data name="DlgLabelIdenticalPositionHint" xml:space="preserve">
+    <value>Kliknij podwójnie element aby otworzyć jego widok.</value>
+  </data>
+  <data name="CopyArticles" xml:space="preserve">
+    <value>Kopiuj</value>
+  </data>
+  <data name="MoveArticles" xml:space="preserve">
+    <value>Przenieś</value>
+  </data>
+  <data name="SelectItems" xml:space="preserve">
+    <value>Zaznacz swój wybór</value>
+  </data>
+  <data name="AllChapters" xml:space="preserve">
+    <value>Wszystkie Rozdziały</value>
+  </data>
+  <data name="ShowAllChapters" xml:space="preserve">
+    <value>Pokaż Wszystkie Rozdziały</value>
+  </data>
+  <data name="SelectChapter" xml:space="preserve">
+    <value>Wybierz Rozdział</value>
+  </data>
+  <data name="SelectTargetChapter" xml:space="preserve">
+    <value>Wybierz Docelowy Rozdział</value>
+  </data>
+  <data name="SelectChaptersToImport" xml:space="preserve">
+    <value>Wybierz Rozdziały do Importu</value>
+  </data>
+  <data name="SelectChaptersToMerge" xml:space="preserve">
+    <value>Wybierz Rozdziały do Połączenia.</value>
   </data>
   <data name="RestartGameAfter" xml:space="preserve">
     <value>Cofnij Partię do</value>
@@ -1368,6 +1401,9 @@
   <data name="SelectItemsToCopy" xml:space="preserve">
     <value>Wybierz Pozycje do Skopiowania</value>
   </data>
+  <data name="SelectItemsToCopyOrMove" xml:space="preserve">
+    <value>Wybierz Pozycje do Skopiowania lub Przeniesienia</value>
+  </data>
   <data name="SelectGames" xml:space="preserve">
     <value>Wybierz Partie</value>
   </data>
@@ -1535,24 +1571,6 @@
   </data>
   <data name="SelectReferences" xml:space="preserve">
     <value>Wybierz Partie i Ćwiczenia do Odsyłacza</value>
-  </data>
-  <data name="SelectItems" xml:space="preserve">
-    <value>Zaznacz swój wybór</value>
-  </data>
-  <data name="AllChapters" xml:space="preserve">
-    <value>Wszystkie Rozdziały</value>
-  </data>
-  <data name="ShowAllChapters" xml:space="preserve">
-    <value>Pokaż Wszystkie Rozdziały</value>
-  </data>
-  <data name="SelectChapter" xml:space="preserve">
-    <value>Wybierz Rozdział</value>
-  </data>
-  <data name="SelectChaptersToImport" xml:space="preserve">
-    <value>Wybierz Rozdziały do Importu</value>
-  </data>
-  <data name="SelectChaptersToMerge" xml:space="preserve">
-    <value>Wybierz Rozdziały do Połączenia.</value>
   </data>
   <data name="MergeGamesAndCopy" xml:space="preserve">
     <value>Połącz Partie w Drzewo Wariantów i skopiuj je do sekcji Partii</value>

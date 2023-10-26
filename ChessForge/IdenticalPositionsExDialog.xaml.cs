@@ -5,10 +5,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -27,7 +25,8 @@ namespace ChessForge
             CopyTree,
             OpenView,
             CopyArticles,
-            MoveArticles
+            MoveArticles,
+            CopyOrMoveArticles
         }
 
         /// <summary>
@@ -90,6 +89,8 @@ namespace ChessForge
             _articleList = articleList;
 
             InitializeComponent();
+
+            UiBtnCopyMove.Content = "   " + Properties.Resources.SelectCopyMove + "    ";
             IdenticalPositionFloatingBoard = new ChessBoardSmall(_cnvFloatingBoard, UiImgFloatingBoard, null, null, true, false);
 
             BuildSummaryParagraph();
@@ -148,12 +149,6 @@ namespace ChessForge
             CreateItemCountRun(para, Properties.Resources.Games, gameCount);
             CreateItemCountRun(para, Properties.Resources.Exercises, exerciseCount);
 
-            if (gameCount + exerciseCount > 0)
-            {
-                CreateMoveItemsLink(para);
-                CreateCopyItemsLink(para);
-            }
-
             UiRtbIdenticalPositions.Document.Blocks.Add(para);
         }
 
@@ -173,44 +168,6 @@ namespace ChessForge
                 run.FontSize = 14 + Configuration.FontSizeDiff;
                 para.Inlines.Add(run);
             }
-        }
-
-        /// <summary>
-        /// Creates a Run that will invoke the item selection dialog
-        /// followed by moving items to a new or existing chapter.
-        /// </summary>
-        /// <param name="para"></param>
-        private void CreateMoveItemsLink(Paragraph para)
-        {
-            Run rMoveLink = new Run();
-            rMoveLink.Text = "\n\n" + Properties.Resources.SelectGamesStudiesToMove;
-            rMoveLink.Cursor = Cursors.Hand;
-            rMoveLink.MouseDown += EventMoveArticlesClicked;
-
-            rMoveLink.TextDecorations = TextDecorations.Underline;
-            rMoveLink.FontWeight = FontWeights.Normal;
-            rMoveLink.FontSize = 14 + Configuration.FontSizeDiff;
-            rMoveLink.Foreground = Brushes.Blue;
-            para.Inlines.Add(rMoveLink);
-        }
-
-        /// <summary>
-        /// Creates a Run that will invoke the item selection dialog
-        /// followed by copying items to a new or existing chapter.
-        /// </summary>
-        /// <param name="para"></param>
-        private void CreateCopyItemsLink(Paragraph para)
-        {
-            Run rCopyLink = new Run();
-            rCopyLink.Text = "\n" + Properties.Resources.SelectGamesStudiesToCopy;
-            rCopyLink.Cursor = Cursors.Hand;
-            rCopyLink.MouseDown += EventCopyArticlesClicked;
-
-            rCopyLink.TextDecorations = TextDecorations.Underline;
-            rCopyLink.FontWeight = FontWeights.Normal;
-            rCopyLink.FontSize = 14 + Configuration.FontSizeDiff;
-            rCopyLink.Foreground = Brushes.Blue;
-            para.Inlines.Add(rCopyLink);
         }
 
         /// <summary>
@@ -572,32 +529,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Handles user's click on Move Articles link
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void EventMoveArticlesClicked(object sender, MouseEventArgs e)
-        {
-            Request = Action.MoveArticles;
-            DialogResult = true;
-
-            e.Handled = true;
-        }
-
-        /// <summary>
-        /// Handles user's click on Copy Articles link
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void EventCopyArticlesClicked(object sender, MouseEventArgs e)
-        {
-            Request = Action.CopyArticles;
-            DialogResult = true;
-
-            e.Handled = true;
-        }
-
-        /// <summary>
         /// Adjusts the positioning of the floating board
         /// if it might go outside the dialog boundaries.
         /// </summary>
@@ -668,6 +599,17 @@ namespace ChessForge
         {
             UiImgFloatingBoard.Visibility = Visibility.Collapsed;
             UiVbFloatingBoard.Visibility = Visibility.Collapsed;
+        }
+
+        /// <summary>
+        /// The user clicked the Select Articles to Copy or Move button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnCopyMove_Click(object sender, RoutedEventArgs e)
+        {
+            Request = Action.CopyOrMoveArticles;
+            DialogResult = true;
         }
 
         /// <summary>

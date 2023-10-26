@@ -2,11 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Windows.Media;
 
 namespace GameTree
 {
@@ -166,7 +164,7 @@ namespace GameTree
         /// <summary>
         /// Builds text for the column with the name of the game.
         /// </summary>
-        public string BuildGameHeaderLine(bool simplified, bool includeResult = true, bool includeECO = true)
+        public string BuildGameHeaderLine(bool simplified, bool includeResult = true, bool includeECO = true, bool includeYear = false)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -244,6 +242,15 @@ namespace GameTree
             if (!string.IsNullOrEmpty(round) && round != "?")
             {
                 sb.Append(" (" + round + ") ");
+            }
+
+            if (includeYear)
+            {
+                int year = GetYear();
+                if (year != 0)
+                {
+                    sb.Append(", " + year.ToString());
+                }
             }
             return sb.ToString();
         }
@@ -401,6 +408,28 @@ namespace GameTree
             }
 
             return TextUtils.AdjustPgnDateString(value, out _, out _);
+        }
+
+        /// <summary>
+        /// Returns the year part of the date.
+        /// If invalid, returns 0;
+        /// </summary>
+        /// <returns></returns>
+        public int GetYear()
+        {
+            int year = 0;
+
+            string date = GetDate(out _);
+            if (!string.IsNullOrEmpty(date))
+            {
+                string[] tokens = date.Split('.');
+                if (!int.TryParse(tokens[0], out year))
+                {
+                    year = 0;
+                }
+            }
+
+            return year;
         }
 
         /// <summary>

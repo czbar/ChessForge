@@ -654,7 +654,7 @@ namespace ChessForge
                 for (int i = 0; i < chapter.ModelGames.Count; i++)
                 {
                     para.Inlines.Add(new Run("\n"));
-                    Run rGame = CreateRun(STYLE_SUBHEADER, SUBHEADER_DOUBLE_INDENT + (i + 1).ToString() + ". " + chapter.ModelGames[i].Tree.Header.BuildGameHeaderLine(false), true);
+                    Run rGame = CreateRun(STYLE_SUBHEADER, SUBHEADER_DOUBLE_INDENT + (i + 1).ToString() + ". " + chapter.ModelGames[i].Tree.Header.BuildGameHeaderLine(false, true, true, true), true);
                     rGame.Name = _run_model_game_ + i.ToString();
                     rGame.MouseDown += EventModelGameRunClicked;
                     rGame.MouseMove += EventModelGameRunHovered;
@@ -692,7 +692,7 @@ namespace ChessForge
                 for (int i = 0; i < chapter.Exercises.Count; i++)
                 {
                     para.Inlines.Add(new Run("\n"));
-                    Run rGame = CreateRun(STYLE_SUBHEADER, SUBHEADER_DOUBLE_INDENT + (i + 1).ToString() + ". " + chapter.Exercises[i].Tree.Header.BuildGameHeaderLine(true, false), false);
+                    Run rGame = CreateRun(STYLE_SUBHEADER, SUBHEADER_DOUBLE_INDENT + (i + 1).ToString() + ". " + chapter.Exercises[i].Tree.Header.BuildGameHeaderLine(true, false, true, true), false);
                     rGame.Name = _run_exercise_ + i.ToString();
                     rGame.MouseDown += EventExerciseRunClicked;
                     rGame.MouseMove += EventExerciseRunHovered;

@@ -1636,7 +1636,7 @@ namespace ChessForge
             {
                 _studyTreeView = new VariationTreeView(UiRtbStudyTreeView.Document, this, GameData.ContentType.STUDY_TREE, -1);
 
-                //TODO: make sure we don't set it up multiple times
+                _studyTreeView.ArticleSelected -= ArticleSelected;
                 _studyTreeView.ArticleSelected += ArticleSelected;
 
                 VariationTree studyTree;
@@ -1680,7 +1680,7 @@ namespace ChessForge
                 }
 
                 studyTree.SelectedLineId = startLineId;
-                studyTree.SelectedNodeId = startNodeId;
+                studyTree.SetSelectedNodeId(startNodeId);
 
                 if (focusOnStudyTree)
                 {
@@ -1741,7 +1741,7 @@ namespace ChessForge
                 }
 
                 ActiveVariationTree.SelectedLineId = startLineId;
-                ActiveVariationTree.SelectedNodeId = startNodeId;
+                ActiveVariationTree.SetSelectedNodeId(startNodeId);
 
                 bool isModelGameTabAlready = AppState.ActiveTab == WorkbookManager.TabViewType.MODEL_GAME;
                 if (focusOnModelGame)
@@ -1818,7 +1818,7 @@ namespace ChessForge
                 }
 
                 ActiveVariationTree.SelectedLineId = startLineId;
-                ActiveVariationTree.SelectedNodeId = startNodeId;
+                ActiveVariationTree.SetSelectedNodeId(startNodeId);
 
                 bool isExerciseTabAlready = AppState.ActiveTab == WorkbookManager.TabViewType.EXERCISE;
                 if (focusOnExercise)
@@ -1914,6 +1914,12 @@ namespace ChessForge
             try
             {
                 TreeNode nd = ActiveLine.GetNodeAtIndex(index);
+                if (nd == null)
+                {
+                    // try the node at index 0
+                    nd = ActiveLine.GetNodeAtIndex(0);
+                }
+
                 if (nd != null && WorkbookManager.SessionWorkbook.ActiveVariationTree != null)
                 {
                     WorkbookManager.SessionWorkbook.ActiveVariationTree.SetSelectedLineAndMove(lineId, nd.NodeId);

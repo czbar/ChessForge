@@ -1,10 +1,8 @@
-﻿using GameTree;
+﻿using ChessPosition;
+using GameTree;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -21,6 +19,11 @@ namespace ChessForge
         /// Set to the article to be acted upon exit.
         /// </summary>
         public Article SelectedArticle;
+
+        /// <summary>
+        /// Action to perform on the selected articles
+        /// </summary>
+        public ArticlesAction ActionOnArticles = ArticlesAction.NONE;
 
         // last clicked article
         private Article _lastClickedArticle;
@@ -44,15 +47,33 @@ namespace ChessForge
         /// <summary>
         /// The dialog for selecting Articles (games or exercises) from multiple chapters.
         /// </summary>
-        /// <param name="articleList"></param>
-        public SelectArticlesDialog(TreeNode nd, bool allChaptersCheckbox, string title, ref ObservableCollection<ArticleListItem> articleList, bool allChapters, GameData.ContentType articleType = GameData.ContentType.GENERIC)
+        /// <param name="nd"></param>
+        /// <param name="allChaptersCheckbox">whether to show "All Chapter" check box</param>
+        /// <param name="title">the title of the dialog to display</param>
+        /// <param name="articleList">list of articles to show</param>
+        /// <param name="allChapters">whether to start with all chapters</param>
+        /// <param name="articleType"></param>
+        public SelectArticlesDialog(TreeNode nd, 
+            bool allChaptersCheckbox, string title, 
+            ref ObservableCollection<ArticleListItem> articleList, 
+            bool allChapters, 
+            ArticlesAction actionOnArticles,
+            GameData.ContentType articleType = GameData.ContentType.GENERIC)
         {
             _node = nd;
             _articleList = articleList;
             _articleType = articleType;
+            ActionOnArticles = actionOnArticles;
 
             // if there is any selection outside the active chapter show all chapters (issue #465)
             InitializeComponent();
+
+            UiLblEvalTime.Visibility = Visibility.Collapsed;
+            UiTbEngEvalTime.Visibility = Visibility.Collapsed;
+
+            UiBtnCopy.Visibility = Visibility.Collapsed;
+            UiBtnMove.Visibility = Visibility.Collapsed;
+
             if (title != null)
             {
                 Title = title;
@@ -98,11 +119,21 @@ namespace ChessForge
         /// </summary>
         public void SetupGuiForGamesEval()
         {
-            UiCbAllChapters.Visibility = Visibility.Collapsed;
             UiLblEvalTime.Visibility = Visibility.Visible;
             UiTbEngEvalTime.Visibility = Visibility.Visible;
             double dval = (double)Configuration.EngineEvaluationTime / 1000.0;
             UiTbEngEvalTime.Text = dval.ToString("F1");
+        }
+
+        /// <summary>
+        /// Shows buttons relevant to the CopyOrMove mode
+        /// </summary>
+        public void SetupGuiForGamesCopyOrMove()
+        {
+            UiBtnCopy.Visibility = Visibility.Visible;
+            UiBtnCopy.Content = Properties.Resources.CopyArticles + "...";
+            UiBtnMove.Visibility = Visibility.Visible;
+            UiBtnMove.Content = Properties.Resources.MoveArticles + "...";
         }
 
         /// <summary>
@@ -413,26 +444,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// OK button was clicked. Exits with the result = true
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiBtnOk_Click(object sender, RoutedEventArgs e)
-        {
-            DialogResult = true;
-        }
-
-        /// <summary>
-        /// Cancel button was clicked. Exits with the result = false
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiBtnCancel_Click(object sender, RoutedEventArgs e)
-        {
-            DialogResult = false;
-        }
-
-        /// <summary>
         /// The user wants to show articles from all chapters
         /// </summary>
         /// <param name="sender"></param>
@@ -606,6 +617,48 @@ namespace ChessForge
                     ChapterHeaderDoubleClicked(item);
                 }
             }
+        }
+
+        /// <summary>
+        /// The user selected the Copy option.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnCopy_Click(object sender, RoutedEventArgs e)
+        {
+            ActionOnArticles = ArticlesAction.COPY;
+            DialogResult = true;
+        }
+
+        /// <summary>
+        /// The user selected the Move option.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnMove_Click(object sender, RoutedEventArgs e)
+        {
+            ActionOnArticles = ArticlesAction.MOVE;
+            DialogResult = true;
+        }
+
+        /// <summary>
+        /// OK button was clicked. Exits with the result = true
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnOk_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
+        }
+
+        /// <summary>
+        /// Cancel button was clicked. Exits with the result = false
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
         }
     }
 }

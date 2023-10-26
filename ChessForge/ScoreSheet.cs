@@ -203,10 +203,11 @@ namespace ChessForge
                 string msg = "ScoreSheet:GetNodeAtIndex bad index = " + idx.ToString();
                 DebugUtils.ShowDebugMessage(msg);
                 AppLog.Message(msg);
-                AppLog.Message("    Context: Active Content Type = " + AppState.ActiveContentType.ToString());
-                AppLog.Message("             Active Chapter Idx  = " + AppState.ActiveChapter.Index.ToString());
-                AppLog.Message("             Active Game Idx     = " + WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex.ToString());
-                AppLog.Message("             Active Exercise Idx = " + WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex.ToString());
+                AppLog.Message("    Context: Active Content Type   = " + AppState.ActiveContentType.ToString());
+                AppLog.Message("             Active Variation Tree = " + (AppState.ActiveVariationTree == null ? "null" : AppState.ActiveVariationTree.TreeId.ToString()));
+                AppLog.Message("             Active Chapter Idx    = " + AppState.ActiveChapter.Index.ToString());
+                AppLog.Message("             Active Game Idx       = " + WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex.ToString());
+                AppLog.Message("             Active Exercise Idx   = " + WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex.ToString());
                 return null;
             }
             return idx >= 0 ? NodeList[idx] : null;

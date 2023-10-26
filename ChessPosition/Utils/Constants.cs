@@ -56,6 +56,17 @@ namespace ChessPosition
     };
 
     /// <summary>
+    /// Possible actions on a list of articles.
+    /// </summary>
+    public enum ArticlesAction
+    {
+        NONE,
+        COPY,
+        MOVE,
+        COPY_OR_MOVE
+    }
+
+    /// <summary>
     /// Move attribute types.
     /// </summary>
     public enum MoveAttribute
