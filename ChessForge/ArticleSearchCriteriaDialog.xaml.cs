@@ -19,9 +19,24 @@ namespace ChessForge
     /// </summary>
     public partial class ArticleSearchCriteriaDialog : Window
     {
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public ArticleSearchCriteriaDialog()
         {
             InitializeComponent();
+
+            UiTbWhite.Focus();
+        }
+
+        /// <summary>
+        /// The user clicked OK to exit dialog.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnOk_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
         }
     }
 }

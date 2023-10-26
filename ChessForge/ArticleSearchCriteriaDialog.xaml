@@ -6,7 +6,7 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        Title="{x:Static p:Resources.SearchCriteria}" Height="330" Width="360">
+        Title="{x:Static p:Resources.SearchCriteria}" Height="320" Width="360">
     <Grid>
         <GroupBox x:Name="UiGbPlayers" Header="{x:Static p:Resources.Players}" Margin="10,10,0,0" Width="340" Height="130" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Canvas>
@@ -31,7 +31,7 @@
                 <TextBox x:Name="UiTbMaxEco" TabIndex="6"  HorizontalAlignment="Left" Margin="92,15,0,0" HorizontalContentAlignment="Center" TextWrapping="NoWrap" Text="" Width="40"/>
             </Canvas>
         </GroupBox>
-        <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="-120,240,0,0" VerticalAlignment="Top" Width="80"/>
+        <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="-120,240,0,0" VerticalAlignment="Top" Width="80" Click="UiBtnOk_Click"/>
         <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="120,240,0,0" VerticalAlignment="Top" Width="80"/>
     </Grid>
 </Window>
