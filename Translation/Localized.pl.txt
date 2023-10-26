@@ -981,6 +981,10 @@ CritMaxMovesLessMin=Maksymalna liczba posunięć nie może być mniejsza niż mi
 #english: CritsInvalid=No valid criteria have been specified.
 CritsInvalid=Nie podano kryteriów wyszukiwania.
 
+#description: No games found
+#english: MsgNoGamesFound=No games matching search criteria found.
+MsgNoGamesFound=Nie znaleziono partii spełniających podane kryteria.
+
 #######################################
 #
 # Header: DIALOG Engine Options

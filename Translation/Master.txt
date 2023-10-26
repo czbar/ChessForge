@@ -762,6 +762,9 @@ CritMaxMovesLessMin=Invalid criterion: min number of moves cannot be greater tha
 #Msg: no valid criteria
 CritsInvalid=No valid criteria have been specified.
 
+#No games found
+MsgNoGamesFound=No games matching search criteria found.
+
 #######################################
 #
 # Header: DIALOG Engine Options

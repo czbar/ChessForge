@@ -981,6 +981,10 @@ CritMaxMovesLessMin=
 #english: CritsInvalid=No valid criteria have been specified.
 CritsInvalid=
 
+#description: No games found
+#english: MsgNoGamesFound=No games matching search criteria found.
+MsgNoGamesFound=
+
 #######################################
 #
 # Header: DIALOG Engine Options

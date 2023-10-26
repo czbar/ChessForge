@@ -3554,6 +3554,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No games matching search criteria found..
+        /// </summary>
+        public static string MsgNoGamesFound {
+            get {
+                return ResourceManager.GetString("MsgNoGamesFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No identical positions found..
         /// </summary>
         public static string MsgNoIdenticalPositions {

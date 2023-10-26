@@ -774,6 +774,9 @@
   <data name="CritsInvalid" xml:space="preserve">
     <value>No valid criteria have been specified.</value>
   </data>
+  <data name="MsgNoGamesFound" xml:space="preserve">
+    <value>No games matching search criteria found.</value>
+  </data>
   <data name="InEvaluation" xml:space="preserve">
     <value>During Evaluations</value>
   </data>
