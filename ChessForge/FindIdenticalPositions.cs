@@ -55,7 +55,9 @@ namespace ChessForge
                     }
                     else
                     {
-                        FoundArticlesDialog dlgEx = new FoundArticlesDialog(searchNode, ref lstIdenticalPositions)
+                        FoundArticlesDialog dlgEx = new FoundArticlesDialog(searchNode, 
+                                                            FoundArticlesDialog.Mode.IDENTICAL_ARTICLES, 
+                                                            ref lstIdenticalPositions)
                         {
                             Left = AppState.MainWin.ChessForgeMain.Left + 100,
                             Top = AppState.MainWin.ChessForgeMain.Top + 100,

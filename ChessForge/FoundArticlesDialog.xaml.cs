@@ -18,6 +18,15 @@ namespace ChessForge
     /// </summary>
     public partial class FoundArticlesDialog : Window
     {
+        /// <summary>
+        /// The mode in which to open the dialog.
+        /// </summary>
+        public enum Mode
+        {
+            IDENTICAL_ARTICLES,
+            FILTER_GAMES
+        }
+
         public enum Action
         {
             None,
@@ -79,13 +88,19 @@ namespace ChessForge
         private ChessBoardSmall IdenticalPositionFloatingBoard;
 
         /// <summary>
+        /// Mode in which this dialog is open.
+        /// </summary>
+        private Mode _mode;
+
+        /// <summary>
         /// Creates the dialog and builds the content of the rich text box.
         /// </summary>
         /// <param name="nd"></param>
         /// <param name="articleList"></param>
-        public FoundArticlesDialog(TreeNode nd, ref ObservableCollection<ArticleListItem> articleList)
+        public FoundArticlesDialog(TreeNode nd, Mode mode, ref ObservableCollection<ArticleListItem> articleList)
         {
             _node = nd;
+            _mode = mode;
             _articleList = articleList;
 
             InitializeComponent();
@@ -208,8 +223,15 @@ namespace ChessForge
                 InsertArticleTitleRun(para, item);
             }
 
-            InsertStemRuns(para, item);
-            InsertTailRuns(para, item);
+            if (_mode == Mode.IDENTICAL_ARTICLES)
+            {
+                InsertStemRuns(para, item);
+                InsertTailRuns(para, item);
+            }
+            else if (_mode == Mode.FILTER_GAMES)
+            {
+                //InsertMainLine(para, item);
+            }
 
             if (item.Node == _node)
             {
@@ -217,8 +239,11 @@ namespace ChessForge
             }
             else
             {
-                InsertCopyMainLineButton(para, item, itemIndex);
-                InsertCopySubtreeButton(para, item, itemIndex);
+                if (_mode == Mode.IDENTICAL_ARTICLES)
+                {
+                    InsertCopyMainLineButton(para, item, itemIndex);
+                    InsertCopySubtreeButton(para, item, itemIndex);
+                }
                 InsertOpenViewButton(para, item, itemIndex);
             }
 
