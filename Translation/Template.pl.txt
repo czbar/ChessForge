@@ -973,6 +973,14 @@ IgnoreColors=Ignoruj kolory
 #english: MovesInGame=Number of Moves
 MovesInGame=Liczba posunięć
 
+#description: Msg: max number of games less than min
+#english: CritMaxMovesLessMin=Invalid criterion: min number of moves cannot be greater than max.
+CritMaxMovesLessMin=Maksymalna liczba posunięć nie może być mniejsza niż minimalna.
+
+#description: Msg: no valid criteria
+#english: CritsInvalid=No valid criteria have been specified.
+CritsInvalid=Nie podano kryteriów wyszukiwania.
+
 #######################################
 #
 # Header: DIALOG Engine Options

@@ -1133,6 +1133,24 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid criterion: min number of moves cannot be greater than max..
+        /// </summary>
+        public static string CritMaxMovesLessMin {
+            get {
+                return ResourceManager.GetString("CritMaxMovesLessMin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No valid criteria have been specified..
+        /// </summary>
+        public static string CritsInvalid {
+            get {
+                return ResourceManager.GetString("CritsInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Current Chapter.
         /// </summary>
         public static string CurrentChapter {

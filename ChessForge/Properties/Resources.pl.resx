@@ -768,6 +768,12 @@
   <data name="MovesInGame" xml:space="preserve">
     <value>Liczba posunięć</value>
   </data>
+  <data name="CritMaxMovesLessMin" xml:space="preserve">
+    <value>Maksymalna liczba posunięć nie może być mniejsza niż minimalna.</value>
+  </data>
+  <data name="CritsInvalid" xml:space="preserve">
+    <value>Nie podano kryteriów wyszukiwania.</value>
+  </data>
   <data name="InEvaluation" xml:space="preserve">
     <value>Podczas Oceniania</value>
   </data>

@@ -768,6 +768,12 @@
   <data name="MovesInGame" xml:space="preserve">
     <value>Number of Moves</value>
   </data>
+  <data name="CritMaxMovesLessMin" xml:space="preserve">
+    <value>Invalid criterion: min number of moves cannot be greater than max.</value>
+  </data>
+  <data name="CritsInvalid" xml:space="preserve">
+    <value>No valid criteria have been specified.</value>
+  </data>
   <data name="InEvaluation" xml:space="preserve">
     <value>During Evaluations</value>
   </data>
