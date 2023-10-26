@@ -21,10 +21,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnFindGames_Click(object sender, RoutedEventArgs e)
         {
-            ArticleSearchCriteriaDialog dlg = new ArticleSearchCriteriaDialog();
-            if (dlg.ShowDialog() == true)
-            {
-            }
+            FindGames.SearchForGames();
         }
 
         /// <summary>
