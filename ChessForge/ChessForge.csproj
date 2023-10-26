@@ -93,6 +93,9 @@
     <Compile Include="ArticleReferencesDialog.xaml.cs">
       <DependentUpon>ArticleReferencesDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ArticleSearchCriteriaDialog.xaml.cs">
+      <DependentUpon>ArticleSearchCriteriaDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BackgroundPgnParserData.cs" />
     <Compile Include="BackgroundPgnProcessingManager.cs" />
     <Compile Include="BackgroundPgnProcessor.cs" />
@@ -297,6 +300,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ArticleReferencesDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ArticleSearchCriteriaDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
