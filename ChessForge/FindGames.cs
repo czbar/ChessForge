@@ -100,6 +100,20 @@ namespace ChessForge
 
                         if (dlgEx.ShowDialog() == true)
                         {
+                            if (dlgEx.Request == FoundArticlesDialog.Action.CopyOrMoveArticles)
+                            {
+                                ChapterUtils.RequestCopyMoveArticles(null, false, lstGames, ArticlesAction.COPY_OR_MOVE, true);
+                            }
+                            else if (dlgEx.ArticleIndexId >= 0 && dlgEx.ArticleIndexId < lstGames.Count)
+                            {
+                                if (dlgEx.Request == FoundArticlesDialog.Action.OpenView)
+                                {
+                                    ArticleListItem item = lstGames[dlgEx.ArticleIndexId];
+                                    WorkbookLocationNavigator.GotoArticle(item.ChapterIndex, item.Article.Tree.ContentType, item.ArticleIndex);
+                                    AppState.MainWin.SetActiveLine("1", 0);
+                                    AppState.MainWin.ActiveTreeView.SelectLineAndMove("1", 0);
+                                }
+                            }
                         }
                     }
                 }
@@ -116,35 +130,42 @@ namespace ChessForge
         {
             ObservableCollection<ArticleListItem> lstGames = new ObservableCollection<ArticleListItem>();
 
-            for (int chIndex = 0; chIndex < WorkbookManager.SessionWorkbook.Chapters.Count; chIndex++)
+            try
             {
-                Chapter chapter = WorkbookManager.SessionWorkbook.Chapters[chIndex];
-                // create a "chapter line" item that will be removed if nothing found in the chapter
-                ArticleListItem chapterLine = new ArticleListItem(chapter, chIndex);
-                chapterLine.IsSelected = true;
-
-                lstGames.Add(chapterLine);
-                int currentItemCount = lstGames.Count;
-
-
-                for (int art = 0; art < chapter.ModelGames.Count; art++)
+                for (int chIndex = 0; chIndex < WorkbookManager.SessionWorkbook.Chapters.Count; chIndex++)
                 {
-                    Article game = chapter.ModelGames[art];
-                    if (ArticleMeetsCriteria(game, crits))
+                    Chapter chapter = WorkbookManager.SessionWorkbook.Chapters[chIndex];
+                    // create a "chapter line" item that will be removed if nothing found in the chapter
+                    ArticleListItem chapterLine = new ArticleListItem(chapter, chIndex);
+                    chapterLine.IsSelected = true;
+
+                    lstGames.Add(chapterLine);
+                    int currentItemCount = lstGames.Count;
+
+
+                    for (int art = 0; art < chapter.ModelGames.Count; art++)
                     {
-                        ArticleListItem ali = new ArticleListItem(null, chIndex, game, art);
-                        //ali.StemLineText = BuildMainLine();
-                        ali.IsSelected = true;
-                        lstGames.Add(ali);
+                        Article game = chapter.ModelGames[art];
+                        if (ArticleMeetsCriteria(game, crits))
+                        {
+                            ArticleListItem ali = new ArticleListItem(null, chIndex, game, art);
+                            ali.MainLine = TreeUtils.GetTailLine(game.Tree.RootNode);
+                            ali.IsSelected = true;
+                            lstGames.Add(ali);
+                        }
                     }
-                }
 
-                if (currentItemCount == lstGames.Count)
-                {
-                    // nothing added for this chapter so remove the chapter "line"
-                    lstGames.Remove(chapterLine);
-                }
+                    if (currentItemCount == lstGames.Count)
+                    {
+                        // nothing added for this chapter so remove the chapter "line"
+                        lstGames.Remove(chapterLine);
+                    }
 
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("FindGamesByCrits", ex);
             }
 
             return lstGames;
