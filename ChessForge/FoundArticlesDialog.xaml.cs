@@ -233,7 +233,7 @@ namespace ChessForge
                 //InsertMainLine(para, item);
             }
 
-            if (item.Node == _node)
+            if (item.Node == _node && _mode == Mode.IDENTICAL_ARTICLES)
             {
                 InsertSameArticleRun(para, item);
             }
