@@ -2537,6 +2537,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Find Games....
+        /// </summary>
+        public static string FindGames {
+            get {
+                return ResourceManager.GetString("FindGames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Find Identical Positions.
         /// </summary>
         public static string FindIdenticalPosition {
@@ -2866,6 +2875,15 @@ namespace ChessForge.Properties {
         public static string Hours {
             get {
                 return ResourceManager.GetString("Hours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ignore Colors.
+        /// </summary>
+        public static string IgnoreColors {
+            get {
+                return ResourceManager.GetString("IgnoreColors", resourceCulture);
             }
         }
         
@@ -3473,6 +3491,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Number of Moves.
+        /// </summary>
+        public static string MovesInGame {
+            get {
+                return ResourceManager.GetString("MovesInGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete all evaluations in this view?.
         /// </summary>
         public static string MsgConfirmDeleteEngineEvals {
@@ -4023,6 +4050,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Players.
+        /// </summary>
+        public static string Players {
+            get {
+                return ResourceManager.GetString("Players", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please Wait.
         /// </summary>
         public static string PleaseWait {
@@ -4478,6 +4514,15 @@ namespace ChessForge.Properties {
         public static string Scoresheet {
             get {
                 return ResourceManager.GetString("Scoresheet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search Criteria.
+        /// </summary>
+        public static string SearchCriteria {
+            get {
+                return ResourceManager.GetString("SearchCriteria", resourceCulture);
             }
         }
         

@@ -534,6 +534,9 @@ DeleteEngineEvals=Delete Engine Evaluations...
 #Manage Chapter
 ManageChapter=Manage Chapter...
 
+#Find Games
+FindGames=Find Games...
+
 ###########################
 #
 # Header: MAIN MENU: Help
@@ -736,6 +739,22 @@ CurrentChapter=Current Chapter
 #Entire Workbook
 EntireWorkbook=Entire Workbook
 
+#######################################
+#
+# Header: DIALOG Search Criteria
+#
+
+#Dialog Title for Search Criteria
+SearchCriteria=Search Criteria
+
+#Players
+Players=Players
+
+#Ignore colors
+IgnoreColors=Ignore Colors
+
+#Moves in the game
+MovesInGame=Number of Moves
 
 #######################################
 #

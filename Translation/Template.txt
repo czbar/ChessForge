@@ -692,6 +692,10 @@ DeleteEngineEvals=
 #english: ManageChapter=Manage Chapter...
 ManageChapter=
 
+#description: Find Games
+#english: FindGames=Find Games...
+FindGames=
+
 ###########################
 #
 # Header: MAIN MENU: Help
@@ -948,6 +952,26 @@ CurrentChapter=
 #english: EntireWorkbook=Entire Workbook
 EntireWorkbook=
 
+#######################################
+#
+# Header: DIALOG Search Criteria
+#
+
+#description: Dialog Title for Search Criteria
+#english: SearchCriteria=Search Criteria
+SearchCriteria=
+
+#description: Players
+#english: Players=Players
+Players=
+
+#description: Ignore colors
+#english: IgnoreColors=Ignore Colors
+IgnoreColors=
+
+#description: Moves in the game
+#english: MovesInGame=Number of Moves
+MovesInGame=
 
 #######################################
 #
