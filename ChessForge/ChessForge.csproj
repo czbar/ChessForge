@@ -152,8 +152,8 @@
     <Compile Include="HiddenClickDialog.xaml.cs">
       <DependentUpon>HiddenClickDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="IdenticalPositionsExDialog.xaml.cs">
-      <DependentUpon>IdenticalPositionsExDialog.xaml</DependentUpon>
+    <Compile Include="FoundArticlesDialog.xaml.cs">
+      <DependentUpon>FoundArticlesDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="DownloadWebGamesDialog.xaml.cs">
       <DependentUpon>DownloadWebGamesDialog.xaml</DependentUpon>
@@ -340,7 +340,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="IdenticalPositionsExDialog.xaml">
+    <Page Include="FoundArticlesDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

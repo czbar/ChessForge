@@ -14,9 +14,9 @@ using System.Windows.Media;
 namespace ChessForge
 {
     /// <summary>
-    /// Interaction logic for IdenticalPositionsExDialog.xaml
+    /// Interaction logic for FoundArticlesDialog.xaml
     /// </summary>
-    public partial class IdenticalPositionsExDialog : Window
+    public partial class FoundArticlesDialog : Window
     {
         public enum Action
         {
@@ -83,7 +83,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd"></param>
         /// <param name="articleList"></param>
-        public IdenticalPositionsExDialog(TreeNode nd, ref ObservableCollection<ArticleListItem> articleList)
+        public FoundArticlesDialog(TreeNode nd, ref ObservableCollection<ArticleListItem> articleList)
         {
             _node = nd;
             _articleList = articleList;
