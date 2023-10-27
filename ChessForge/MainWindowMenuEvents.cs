@@ -718,19 +718,22 @@ namespace ChessForge
                 StopEvaluation(true);
             }
 
-            // we will start with the first move of the active line
             if (EngineMessageProcessor.IsEngineAvailable)
             {
                 EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.LINE, EvaluationManager.LineSource.ACTIVE_LINE);
 
                 int idx = ActiveLine.GetSelectedPlyNodeIndex(true);
-                TreeNode nd = ActiveLine.GetSelectedTreeNode();
-                EvaluationManager.SetStartNodeIndex(idx > 0 ? idx : 1);
+                // if idx == 0, bump it to 1
+                idx = idx > 0 ? idx : 1;
+                EvaluationManager.SetStartNodeIndex(idx);
+                TreeNode nd = ActiveLine.GetNodeAtIndex(idx);
 
                 UiDgActiveLine.SelectedCells.Clear();
 
-
-                EngineMessageProcessor.RequestMoveEvaluation(idx, nd, ActiveVariationTreeId);
+                if (!EngineMessageProcessor.RequestMoveEvaluation(idx, nd, ActiveVariationTreeId))
+                {
+                    StopEvaluation(true);
+                }
             }
             else
             {
