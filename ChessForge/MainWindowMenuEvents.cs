@@ -754,7 +754,15 @@ namespace ChessForge
 
             try
             {
-                TreeNode nd = ActiveLine.GetSelectedTreeNode();
+                TreeNode nd;
+                if (AppState.ActiveTab == WorkbookManager.TabViewType.INTRO)
+                {
+                    nd = null;
+                }
+                else
+                {
+                    nd = ActiveLine.GetSelectedTreeNode();
+                }
                 FindIdenticalPositions.Search(nd, FindIdenticalPositions.Mode.FIND_AND_REPORT);
             }
             catch (Exception ex)

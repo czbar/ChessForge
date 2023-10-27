@@ -1553,6 +1553,11 @@ namespace ChessForge
             {
                 e.Handled = ProcessArrowKey(e.Key);
             }
+            else if (e.Key == Key.F3)
+            {
+                AppState.MainWin.UiMnFindIdenticalPosition_Click(null, null);
+                e.Handled = true;
+            }
         }
 
         /// <summary>
