@@ -14,6 +14,17 @@ namespace ChessForge
     public partial class MainWindow : Window
     {
         /// <summary>
+        /// Invokes the Search Games dialog, collects user specified criteria
+        /// executes the search and opens the Found Articles dialog.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnFindGames_Click(object sender, RoutedEventArgs e)
+        {
+            FindGames.SearchForGames();
+        }
+
+        /// <summary>
         /// Deletes all comments and NAGs in the scope that the user will select. 
         /// </summary>
         /// <param name="sender"></param>

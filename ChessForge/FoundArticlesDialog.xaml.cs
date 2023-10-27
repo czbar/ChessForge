@@ -14,10 +14,19 @@ using System.Windows.Media;
 namespace ChessForge
 {
     /// <summary>
-    /// Interaction logic for IdenticalPositionsExDialog.xaml
+    /// Interaction logic for FoundArticlesDialog.xaml
     /// </summary>
-    public partial class IdenticalPositionsExDialog : Window
+    public partial class FoundArticlesDialog : Window
     {
+        /// <summary>
+        /// The mode in which to open the dialog.
+        /// </summary>
+        public enum Mode
+        {
+            IDENTICAL_ARTICLES,
+            FILTER_GAMES
+        }
+
         public enum Action
         {
             None,
@@ -59,6 +68,9 @@ namespace ChessForge
         // Prefix for the tail line moves.
         private const string PREFIX_TAIL_MOVE = "tailmove_";
 
+        // Prefix for the main line line moves.
+        private const string PREFIX_MAIN_LINE_MOVE = "mainlinemove_";
+
         // Prefix for the CopyLine button
         private const string PREFIX_BUTTON_COPY_LINE = "btncopyline_";
 
@@ -79,13 +91,19 @@ namespace ChessForge
         private ChessBoardSmall IdenticalPositionFloatingBoard;
 
         /// <summary>
+        /// Mode in which this dialog is open.
+        /// </summary>
+        private Mode _mode;
+
+        /// <summary>
         /// Creates the dialog and builds the content of the rich text box.
         /// </summary>
         /// <param name="nd"></param>
         /// <param name="articleList"></param>
-        public IdenticalPositionsExDialog(TreeNode nd, ref ObservableCollection<ArticleListItem> articleList)
+        public FoundArticlesDialog(TreeNode nd, Mode mode, ref ObservableCollection<ArticleListItem> articleList)
         {
             _node = nd;
+            _mode = mode;
             _articleList = articleList;
 
             InitializeComponent();
@@ -208,17 +226,27 @@ namespace ChessForge
                 InsertArticleTitleRun(para, item);
             }
 
-            InsertStemRuns(para, item);
-            InsertTailRuns(para, item);
+            if (_mode == Mode.IDENTICAL_ARTICLES)
+            {
+                InsertStemRuns(para, item);
+                InsertTailRuns(para, item);
+            }
+            else if (_mode == Mode.FILTER_GAMES)
+            {
+                InsertMainLineRuns(para, item);
+            }
 
-            if (item.Node == _node)
+            if (item.Node == _node && _mode == Mode.IDENTICAL_ARTICLES)
             {
                 InsertSameArticleRun(para, item);
             }
             else
             {
-                InsertCopyMainLineButton(para, item, itemIndex);
-                InsertCopySubtreeButton(para, item, itemIndex);
+                if (_mode == Mode.IDENTICAL_ARTICLES)
+                {
+                    InsertCopyMainLineButton(para, item, itemIndex);
+                    InsertCopySubtreeButton(para, item, itemIndex);
+                }
                 InsertOpenViewButton(para, item, itemIndex);
             }
 
@@ -347,6 +375,36 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Builds Runs for main line moves and inserts it in the passed paragraph.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <param name="item"></param>
+        private void InsertMainLineRuns(Paragraph para, ArticleListItem item)
+        {
+            int plyCount = 0;
+
+            foreach (TreeNode nd in item.MainLine)
+            {
+                Run rMain = new Run();
+                rMain.Name = PREFIX_MAIN_LINE_MOVE + nd.NodeId.ToString();
+                uint moveNumberOffset = 0;
+                if (item.Article != null && item.Article.Tree != null)
+                {
+                    moveNumberOffset = item.Article.Tree.MoveNumberOffset;
+                }
+                rMain.Text = MoveUtils.BuildSingleMoveText(nd, nd.Parent.NodeId == 0 || plyCount == 0, true, moveNumberOffset) + " ";
+                rMain.FontStyle = FontStyles.Normal;
+                rMain.FontWeight = FontWeights.Normal;
+                rMain.FontSize = 12 + Configuration.FontSizeDiff;
+                rMain.MouseMove += EventRunMoveOver;
+                para.Inlines.Add(rMain);
+                plyCount++;
+            }
+
+            para.Inlines.Add(new Run("\n"));
+        }
+
+        /// <summary>
         /// Inserts a Run for the Copy button.
         /// </summary>
         /// <param name="para"></param>
@@ -466,7 +524,8 @@ namespace ChessForge
                             int itemIndex = TextUtils.GetIdFromPrefixedString(para.Name);
                             int nodeId = TextUtils.GetIdFromPrefixedString(r.Name);
                             bool isStem = r.Name.StartsWith(PREFIX_STEM_MOVE);
-                            TreeNode nd = GetNodeFromItemIndexAndId(itemIndex, nodeId, isStem);
+                            bool isMain = r.Name.StartsWith(PREFIX_MAIN_LINE_MOVE);
+                            TreeNode nd = GetNodeFromItemIndexAndId(itemIndex, nodeId, isStem, isMain);
                             if (nd != null)
                             {
                                 Point pt = e.GetPosition(UiRtbIdenticalPositions);
@@ -575,13 +634,21 @@ namespace ChessForge
         /// <param name="nodeId"></param>
         /// <param name="isStem"></param>
         /// <returns></returns>
-        private TreeNode GetNodeFromItemIndexAndId(int itemIndex, int nodeId, bool isStem)
+        private TreeNode GetNodeFromItemIndexAndId(int itemIndex, int nodeId, bool isStem, bool isMain)
         {
             TreeNode nd = null;
 
             try
             {
-                List<TreeNode> lst = isStem ? _articleList[itemIndex].StemLine : _articleList[itemIndex].TailLine;
+                List<TreeNode> lst;
+                if (isMain)
+                {
+                    lst = _articleList[itemIndex].MainLine;
+                }
+                else
+                {
+                    lst = isStem ? _articleList[itemIndex].StemLine : _articleList[itemIndex].TailLine;
+                }
                 nd = lst.Find(x => x.NodeId == nodeId);
             }
             catch { }

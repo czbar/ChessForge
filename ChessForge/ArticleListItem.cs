@@ -321,6 +321,11 @@ namespace ChessForge
         public List<TreeNode> TailLine;
 
         /// <summary>
+        /// List of nodes for the main line.
+        /// </summary>
+        public List<TreeNode> MainLine;
+
+        /// <summary>
         /// Text of the line from the first node of the Tree to this item's node
         /// </summary>
         public string StemLineText

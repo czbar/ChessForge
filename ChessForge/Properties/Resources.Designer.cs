@@ -1133,6 +1133,24 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid criterion: min number of moves cannot be greater than max..
+        /// </summary>
+        public static string CritMaxMovesLessMin {
+            get {
+                return ResourceManager.GetString("CritMaxMovesLessMin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No valid criteria have been specified..
+        /// </summary>
+        public static string CritsInvalid {
+            get {
+                return ResourceManager.GetString("CritsInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Current Chapter.
         /// </summary>
         public static string CurrentChapter {
@@ -2537,6 +2555,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Find Games....
+        /// </summary>
+        public static string FindGames {
+            get {
+                return ResourceManager.GetString("FindGames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Find Identical Positions.
         /// </summary>
         public static string FindIdenticalPosition {
@@ -2866,6 +2893,15 @@ namespace ChessForge.Properties {
         public static string Hours {
             get {
                 return ResourceManager.GetString("Hours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ignore Colors.
+        /// </summary>
+        public static string IgnoreColors {
+            get {
+                return ResourceManager.GetString("IgnoreColors", resourceCulture);
             }
         }
         
@@ -3473,6 +3509,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Number of Moves.
+        /// </summary>
+        public static string MovesInGame {
+            get {
+                return ResourceManager.GetString("MovesInGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete all evaluations in this view?.
         /// </summary>
         public static string MsgConfirmDeleteEngineEvals {
@@ -3505,6 +3550,15 @@ namespace ChessForge.Properties {
         public static string MsgDuplicateLichessImport {
             get {
                 return ResourceManager.GetString("MsgDuplicateLichessImport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No games matching search criteria found..
+        /// </summary>
+        public static string MsgNoGamesFound {
+            get {
+                return ResourceManager.GetString("MsgNoGamesFound", resourceCulture);
             }
         }
         
@@ -4023,6 +4077,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Players.
+        /// </summary>
+        public static string Players {
+            get {
+                return ResourceManager.GetString("Players", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please Wait.
         /// </summary>
         public static string PleaseWait {
@@ -4478,6 +4541,15 @@ namespace ChessForge.Properties {
         public static string Scoresheet {
             get {
                 return ResourceManager.GetString("Scoresheet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search Criteria.
+        /// </summary>
+        public static string SearchCriteria {
+            get {
+                return ResourceManager.GetString("SearchCriteria", resourceCulture);
             }
         }
         

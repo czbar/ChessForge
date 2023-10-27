@@ -2170,7 +2170,7 @@ namespace ChessForge
         /// <param name="changedButton"></param>
         private void SelectRun(Run r, int clickCount, MouseButton changedButton)
         {
-            if (!IsSelectionEnabled())
+            if (!IsSelectionEnabled() || r == null)
             {
                 return;
             }
@@ -2329,7 +2329,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void EventRunClicked(object sender, MouseButtonEventArgs e)
         {
-            Run r = (Run)e.Source;
+            Run r = e.Source as Run;
             _mainWin.StopReplayIfActive();
             SelectRun(r, e.ClickCount, e.ChangedButton);
         }
@@ -2367,9 +2367,14 @@ namespace ChessForge
 
                 int nodeId = TextUtils.GetIdFromPrefixedString(r.Name);
                 TreeNode nd = _mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId);
-                if (_mainWin.InvokeAnnotationsDialog(nd))
+
+                if (_dictNodeToRun.ContainsKey(nd.NodeId))
                 {
-                    InsertOrUpdateCommentRun(nd);
+                    SelectRun(_dictNodeToRun[nd.NodeId], 1, MouseButton.Left);
+                    if (_mainWin.InvokeAnnotationsDialog(nd))
+                    {
+                        InsertOrUpdateCommentRun(nd);
+                    }
                 }
             }
         }

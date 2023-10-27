@@ -258,6 +258,29 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Returns the move number of the last move in the main line
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <returns></returns>
+        public static uint GetLastMoveNumberInMainLine(VariationTree tree)
+        {
+            uint moveNo = 0;
+            
+            if (tree != null || tree.Nodes.Count == 0)
+            {
+
+                TreeNode node = tree.RootNode;
+                while (node.Children.Count > 0)
+                {
+                    node = node.Children[0];
+                    moveNo = node.MoveNumber;
+                }
+            }
+
+            return moveNo;
+        }
+
+        /// <summary>
         /// Returns the list of positions from the start until the passed node.
         /// </summary>
         /// <param name="nd"></param>

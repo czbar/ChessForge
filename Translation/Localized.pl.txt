@@ -692,6 +692,10 @@ DeleteEngineEvals=Usuń oceny silnika...
 #english: ManageChapter=Manage Chapter...
 ManageChapter=Organizuj Rozdział...
 
+#description: Find Games
+#english: FindGames=Find Games...
+FindGames=Znajdź partie...
+
 ###########################
 #
 # Header: MAIN MENU: Help
@@ -948,6 +952,38 @@ CurrentChapter=Obecny rozdział
 #english: EntireWorkbook=Entire Workbook
 EntireWorkbook=Cały podręcznik
 
+#######################################
+#
+# Header: DIALOG Search Criteria
+#
+
+#description: Dialog Title for Search Criteria
+#english: SearchCriteria=Search Criteria
+SearchCriteria=Kryteria Wyszukiwania
+
+#description: Players
+#english: Players=Players
+Players=Zawodnicy
+
+#description: Ignore colors
+#english: IgnoreColors=Ignore Colors
+IgnoreColors=Ignoruj kolory
+
+#description: Moves in the game
+#english: MovesInGame=Number of Moves
+MovesInGame=Liczba posunięć
+
+#description: Msg: max number of games less than min
+#english: CritMaxMovesLessMin=Invalid criterion: min number of moves cannot be greater than max.
+CritMaxMovesLessMin=Maksymalna liczba posunięć nie może być mniejsza niż minimalna.
+
+#description: Msg: no valid criteria
+#english: CritsInvalid=No valid criteria have been specified.
+CritsInvalid=Nie podano kryteriów wyszukiwania.
+
+#description: No games found
+#english: MsgNoGamesFound=No games matching search criteria found.
+MsgNoGamesFound=Nie znaleziono partii spełniających podane kryteria.
 
 #######################################
 #

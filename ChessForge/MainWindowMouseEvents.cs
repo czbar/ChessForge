@@ -1515,5 +1515,70 @@ namespace ChessForge
                 return false;
             }
         }
+
+
+        //**************************************************************
+        //
+        //  Previous/Next Bar  
+        // 
+        //**************************************************************
+
+
+        /// <summary>
+        /// Double click on the Chapter title in INTRO
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiIntroLblChapterTitle_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (AppState.Workbook != null)
+            {
+                RenameChapter(WorkbookManager.SessionWorkbook.ActiveChapter);
+                PreviousNextViewBars.BuildPreviousNextBar(GameData.ContentType.INTRO);
+            }
+        }
+
+        /// <summary>
+        /// Double click on the Chapter title in STUDY
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiStudyLblChapterTitle_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (AppState.Workbook != null)
+            {
+                RenameChapter(WorkbookManager.SessionWorkbook.ActiveChapter);
+                PreviousNextViewBars.BuildPreviousNextBar(GameData.ContentType.STUDY_TREE);
+            }
+        }
+
+        /// <summary>
+        /// Double click on the Chapter title in GAMES
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiGamesLblChapterTitle_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (AppState.Workbook != null)
+            {
+                RenameChapter(WorkbookManager.SessionWorkbook.ActiveChapter);
+                PreviousNextViewBars.BuildPreviousNextBar(GameData.ContentType.MODEL_GAME);
+            }
+        }
+
+        /// <summary>
+        /// Double click on the Chapter title in EXERCISES
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiExerciseLblChapterTitle_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (AppState.Workbook != null)
+            {
+                RenameChapter(WorkbookManager.SessionWorkbook.ActiveChapter);
+                PreviousNextViewBars.BuildPreviousNextBar(GameData.ContentType.EXERCISE);
+            }
+        }
+
     }
 }

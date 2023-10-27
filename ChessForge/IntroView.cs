@@ -544,6 +544,7 @@ namespace ChessForge
                     Run r = e.Source as Run;
 
                     TreeNode nd = HandleMoveSelection(r.Name, true);
+                    AppState.ActiveVariationTree.SetSelectedNodeId(nd.NodeId);
                     if (nd != null && e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
                     {
                         EditMove();
@@ -607,6 +608,7 @@ namespace ChessForge
                         _rtb.CaretPosition = para.ContentEnd;
 
                         int nodeId = TextUtils.GetIdFromPrefixedString(para.Name);
+                        AppState.ActiveVariationTree.SetSelectedNodeId(nodeId);
                         TreeNode nd = GetNodeById(nodeId);
                         _selectedNode = nd;
                         WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, nd);
@@ -1552,6 +1554,11 @@ namespace ChessForge
             else if (e.Key == Key.Left || e.Key == Key.Right)
             {
                 e.Handled = ProcessArrowKey(e.Key);
+            }
+            else if (e.Key == Key.F3)
+            {
+                AppState.MainWin.UiMnFindIdenticalPosition_Click(null, null);
+                e.Handled = true;
             }
         }
 

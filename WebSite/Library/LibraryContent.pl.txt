@@ -41,7 +41,7 @@ Description:Teoria i praktyka debiutów szachowych.
     Description: Debiuty analizowane z punktu widzenia czarnych.
     
 	  Book:Wariant Wymienny Obronny Francuskiej (jęz. ang.)
-      Description: Jak przełamać symetrię grając czarnymi wariant wyminenny Francuskiej.
+      Description: Jak przełamać symetrię grając czarnymi wariant wymienny Francuskiej.
       File: Openings/Black/French Exchange for Black.pgn
       
 	  Book: Pułapki w Gambicie Stafforda (jęz. ang.)
@@ -74,7 +74,7 @@ Description: Fragmenty książek szachowych zaadoptowane dla Chess Forge'a.
     Description: 
     
 	  Book:Elementy Startegii (jęz. ang.)
-      Description: Mała próbka z książki arcymistrza Bartka Macieji i mistrza międzynarodowego Witalisa Sapisa.
+      Description: Mała próbka z książki arcymistrza Bartka Maciei i mistrza międzynarodowego Witalisa Sapisa.
       File: BookSamples/Chess Strategy Explained.pgn
       
 	  Book: Kompletny Cwaniak Szachowy (jęz. ang.)

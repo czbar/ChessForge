@@ -93,6 +93,9 @@
     <Compile Include="ArticleReferencesDialog.xaml.cs">
       <DependentUpon>ArticleReferencesDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ArticleSearchCriteriaDialog.xaml.cs">
+      <DependentUpon>ArticleSearchCriteriaDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BackgroundPgnParserData.cs" />
     <Compile Include="BackgroundPgnProcessingManager.cs" />
     <Compile Include="BackgroundPgnProcessor.cs" />
@@ -139,6 +142,7 @@
     <Compile Include="EvaluationLine.cs" />
     <Compile Include="EvaluationTrainingLine.cs" />
     <Compile Include="ExerciseTreeView.cs" />
+    <Compile Include="FindGames.cs" />
     <Compile Include="FindIdenticalPositions.cs" />
     <Compile Include="GameHeaderDialog.xaml.cs">
       <DependentUpon>GameHeaderDialog.xaml</DependentUpon>
@@ -152,8 +156,8 @@
     <Compile Include="HiddenClickDialog.xaml.cs">
       <DependentUpon>HiddenClickDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="IdenticalPositionsExDialog.xaml.cs">
-      <DependentUpon>IdenticalPositionsExDialog.xaml</DependentUpon>
+    <Compile Include="FoundArticlesDialog.xaml.cs">
+      <DependentUpon>FoundArticlesDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="DownloadWebGamesDialog.xaml.cs">
       <DependentUpon>DownloadWebGamesDialog.xaml</DependentUpon>
@@ -300,6 +304,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ArticleSearchCriteriaDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="BackupVersionDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -340,7 +348,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="IdenticalPositionsExDialog.xaml">
+    <Page Include="FoundArticlesDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

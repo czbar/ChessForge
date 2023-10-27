@@ -4,11 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
-using System.Linq;
 using System.Text;
 using ChessPosition;
 using System.Windows.Input;
-using System.Text.RegularExpressions;
 
 namespace ChessForge
 {
@@ -55,7 +53,9 @@ namespace ChessForge
                     }
                     else
                     {
-                        IdenticalPositionsExDialog dlgEx = new IdenticalPositionsExDialog(searchNode, ref lstIdenticalPositions)
+                        FoundArticlesDialog dlgEx = new FoundArticlesDialog(searchNode, 
+                                                            FoundArticlesDialog.Mode.IDENTICAL_ARTICLES, 
+                                                            ref lstIdenticalPositions)
                         {
                             Left = AppState.MainWin.ChessForgeMain.Left + 100,
                             Top = AppState.MainWin.ChessForgeMain.Top + 100,
@@ -65,9 +65,13 @@ namespace ChessForge
 
                         if (dlgEx.ShowDialog() == true)
                         {
-                            if (dlgEx.Request == IdenticalPositionsExDialog.Action.CopyOrMoveArticles)
+                            if (dlgEx.Request == FoundArticlesDialog.Action.CopyOrMoveArticles)
                             {
                                 ChapterUtils.RequestCopyMoveArticles(searchNode, false, lstIdenticalPositions, ArticlesAction.COPY_OR_MOVE, true);
+                            }
+                            else if (dlgEx.ArticleIndexId >= 0 && dlgEx.ArticleIndexId < lstIdenticalPositions.Count)
+                            {
+                                ProcessSelectedPosition(lstIdenticalPositions, dlgEx.Request, dlgEx.ArticleIndexId);
                             }
                         }
                     }
@@ -88,7 +92,7 @@ namespace ChessForge
         /// <param name="lstIdenticalPositions"></param>
         /// <param name="request"></param>
         /// <param name="articleIndexId"></param>
-        private static void ProcessSelectedPosition(ObservableCollection<ArticleListItem> lstIdenticalPositions, IdenticalPositionsExDialog.Action request, int articleIndexId)
+        private static void ProcessSelectedPosition(ObservableCollection<ArticleListItem> lstIdenticalPositions, FoundArticlesDialog.Action request, int articleIndexId)
         {
             ArticleListItem item = lstIdenticalPositions[articleIndexId];
             uint moveNumberOffset = 0;
@@ -99,13 +103,13 @@ namespace ChessForge
             List<TreeNode> nodelList = null;
             switch (request)
             {
-                case IdenticalPositionsExDialog.Action.CopyLine:
+                case FoundArticlesDialog.Action.CopyLine:
                     nodelList = TreeUtils.CopyNodeList(item.TailLine);
                     ChfClipboard.HoldNodeList(nodelList, moveNumberOffset);
                     AppState.MainWin.PasteChfClipboard();
                     AppState.IsDirty = true;
                     break;
-                case IdenticalPositionsExDialog.Action.CopyTree:
+                case FoundArticlesDialog.Action.CopyTree:
                     foreach (TreeNode node in item.TailLine[0].Parent.Children)
                     {
                         nodelList = TreeUtils.CopySubtree(node);
@@ -114,7 +118,7 @@ namespace ChessForge
                     }
                     AppState.IsDirty = true;
                     break;
-                case IdenticalPositionsExDialog.Action.OpenView:
+                case FoundArticlesDialog.Action.OpenView:
                     WorkbookLocationNavigator.GotoArticle(item.ChapterIndex, item.Article.Tree.ContentType, item.ArticleIndex);
                     if (item.Article.Tree.ContentType == GameData.ContentType.STUDY_TREE)
                     {
