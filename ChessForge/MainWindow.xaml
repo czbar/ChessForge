@@ -494,6 +494,8 @@
                                         <MenuItem x:Name="UiCmiEditDiagram" Header="{x:Static p:Resources.EditDiagram}" Click="UiCmiEditDiagram_Click"  />
                                         <MenuItem x:Name="UiCmiFlipDiagram" Header="{x:Static p:Resources.FlipBoard}" Click="UiCmiFlipDiagram_Click"  />
                                         <MenuItem x:Name="UiCmiEditMove" Header="{x:Static p:Resources.EditMove}" Click="UiCmiEditMove_Click"  />
+                                        <Separator/>
+                                        <MenuItem x:Name="UiCmiIntroFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}"  Click="UiMnFindIdenticalPosition_Click" InputGestureText="F3" />
                                     </ContextMenu>
                                 </RichTextBox.ContextMenu>
                                 <RichTextBox.Resources>
