@@ -545,7 +545,7 @@ namespace ChessForge
         /// NOTE: does not start evaluation when making a move during a user vs engine game.
         /// </summary>
         /// <param name="posIndex"></param>
-        public static void RequestMoveEvaluation(int nodeIndex, TreeNode nd, int treeId)
+        public static bool RequestMoveEvaluation(int nodeIndex, TreeNode nd, int treeId)
         {
             if (!IsEngineAvailable
                 || WorkbookManager.SessionWorkbook == null
@@ -553,7 +553,7 @@ namespace ChessForge
                 || nd == null
                 || nd.Parent == null)
             {
-                return;
+                return false;
             }
 
             _mainWin.Dispatcher.Invoke(() =>
@@ -577,6 +577,8 @@ namespace ChessForge
             string fen = AppState.PrepareMoveEvaluation(EvaluationManager.GetEvaluatedNode(out _).Position, true);
             GoFenCommand.EvaluationMode mode = ConvertEvaluationManagertoFenEvaluationMode(EvaluationManager.CurrentMode);
             RequestEngineEvaluation(mode, nd, treeId, fen, Configuration.EngineMpv, Configuration.EngineEvaluationTime);
+
+            return true;
         }
 
         /// <summary>
