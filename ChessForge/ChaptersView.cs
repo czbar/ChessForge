@@ -273,6 +273,22 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Brings ActiveChapter into view
+        /// </summary>
+        public void BringActiveChapterIntoView()
+        {
+            try
+            {
+                if (AppState.ActiveChapter != null)
+                {
+                    PulseManager.ChaperIndexToBringIntoView = AppState.ActiveChapter.Index;
+                }
+            }
+            catch { }
+        }
+
+
+        /// <summary>
         /// Brings the title line of the chapter into view.
         /// </summary>
         /// <param name="chapterIndex"></param>
