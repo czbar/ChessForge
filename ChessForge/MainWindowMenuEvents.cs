@@ -1867,6 +1867,7 @@ namespace ChessForge
             tree.Header.SetHeaderValue(PgnHeaders.KEY_BLACK_ELO, header.GetBlackPlayerElo(out _));
             tree.Header.SetHeaderValue(PgnHeaders.KEY_RESULT, header.GetResult(out _));
             tree.Header.SetHeaderValue(PgnHeaders.KEY_EVENT, header.GetEventName(out _));
+            tree.Header.SetHeaderValue(PgnHeaders.KEY_ROUND, header.GetRound(out _));
             tree.Header.SetHeaderValue(PgnHeaders.KEY_ECO, header.GetECO(out _));
             tree.Header.SetHeaderValue(PgnHeaders.KEY_LICHESS_ID, header.GetLichessId(out _));
             tree.Header.SetHeaderValue(PgnHeaders.KEY_CHESSCOM_ID, header.GetChessComId(out _));
@@ -1875,7 +1876,6 @@ namespace ChessForge
                 tree.Header.SetHeaderValue(PgnHeaders.KEY_GUID, header.GetGuid(out _));
             }
             tree.Header.SetHeaderValue(PgnHeaders.KEY_DATE, header.GetDate(out _));
-            tree.Header.SetHeaderValue(PgnHeaders.KEY_ROUND, header.GetRound(out _));
 
             List<string> preamble = header.GetPreamble();
             tree.Header.SetPreamble(preamble);
