@@ -233,7 +233,8 @@ namespace ChessForge
         /// </summary>
         public static void BackgroundReadFinished()
         {
-            if (Workbook != null)
+            // if workbook is already set to ready, do not do anything.  This must have been a notification from background read for import.
+            if (Workbook != null && !Workbook.IsReady)
             {
                 Workbook.IsReady = true;
                 if (LearningMode.CurrentMode == LearningMode.Mode.MANUAL_REVIEW)
