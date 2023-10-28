@@ -442,7 +442,7 @@ namespace ChessForge
                         AppState.IsDirty = true;
 
                         SelectedNode.LastMoveAlgebraicNotation = dlg.MoveText;
-                        run.Text = dlg.MoveText;
+                        run.Text = PadOutMoveRunText(dlg.MoveText);
 
                         if (double.TryParse(dlg.MoveFontSize, out double fontSize))
                         {
@@ -1005,7 +1005,7 @@ namespace ChessForge
                 }
                 else
                 {
-                    run.Text = " " + BuildMoveRunText(node, uic) + " ";
+                    run.Text = PadOutMoveRunText(BuildMoveRunText(node, uic));
                 }
 
                 // set caret to the end of the new move
@@ -1020,6 +1020,31 @@ namespace ChessForge
             }
 
             return tbMove;
+        }
+
+        /// <summary>
+        /// Prepends and/or appends a space to the move if it is not already there.
+        /// </summary>
+        /// <param name="moveText"></param>
+        /// <returns></returns>
+        private string PadOutMoveRunText(string moveText)
+        {
+            if (string.IsNullOrEmpty(moveText))
+            {
+                return "";
+            }
+
+            StringBuilder sb = new StringBuilder();
+            if (moveText[0] != ' ')
+            {
+                sb.Append(' ' + moveText);
+            }
+            if (moveText[moveText.Length - 1] != ' ')
+            {
+                sb.Append(' ');
+            }
+
+            return sb.ToString();
         }
 
         /// <summary>
