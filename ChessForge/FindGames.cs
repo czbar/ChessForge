@@ -387,8 +387,8 @@ namespace ChessForge
         {
             FindGamesCriteria crits = new FindGamesCriteria();
 
-            crits.WhiteName = dlg.UiTbWhite.Text ?? "";
-            crits.BlackName = dlg.UiTbBlack.Text ?? "";
+            crits.WhiteName = (dlg.UiTbWhite.Text ?? "").ToLower();
+            crits.BlackName = (dlg.UiTbBlack.Text ?? "").ToLower();
 
             crits.IgnoreColor = dlg.UiCbIgnoreColors.IsChecked == true;
 
