@@ -3388,9 +3388,13 @@ namespace ChessForge
                             SelectModelGame(chapter.ActiveModelGameIndex, false);
                         }
                         AppState.SetupGuiForCurrentStates();
+                        if (ActiveVariationTree == null || AppState.CurrentEvaluationMode != EvaluationManager.Mode.CONTINUOUS)
+                        {
+                            StopEvaluation(true);
+                            BoardCommentBox.ShowTabHints();
+                        }
                     }
                 }
-                BoardCommentBox.ShowTabHints();
             }
             catch (Exception ex)
             {
@@ -3425,13 +3429,18 @@ namespace ChessForge
                         }
 
                         _chaptersView.RebuildChapterParagraph(WorkbookManager.SessionWorkbook.ActiveChapter);
+                        AppState.SetupGuiForCurrentStates();
                         if (WorkbookManager.ActiveTab == WorkbookManager.TabViewType.EXERCISE)
                         {
                             SelectExercise(chapter.ActiveExerciseIndex, false);
                         }
                     }
+                    if (ActiveVariationTree == null || AppState.CurrentEvaluationMode != EvaluationManager.Mode.CONTINUOUS)
+                    {
+                        StopEvaluation(true);
+                        BoardCommentBox.ShowTabHints();
+                    }
                 }
-                BoardCommentBox.ShowTabHints();
             }
             catch (Exception ex)
             {
