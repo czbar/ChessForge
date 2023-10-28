@@ -226,7 +226,7 @@ namespace ChessForge
         /// - Text Blocks (moves)
         /// - InlineUIContainers (diagrams)
         /// 
-        /// Text Blocks and InlineUiContainers will no be split.
+        /// Text Blocks and InlineUiContainers will not be split.
         /// If the start or and of the range falls inside a Run a new Run will be created with the part of text
         /// that is within the section.
         /// A paragraph with an InlineUiContainers will not be split, but if it has Runs, it will be recreated with 
@@ -246,6 +246,12 @@ namespace ChessForge
 
             Paragraph currParagraph = position.Paragraph;
 
+            bool isFirstParaDiagram = false;
+            if (currParagraph != null && RichTextBoxUtilities.IsDiagramPara(currParagraph))
+            {
+                isFirstParaDiagram = true;
+            }
+
             StringBuilder plainText = new StringBuilder("");
 
             while (position.CompareTo(end) < 0)
@@ -257,8 +263,11 @@ namespace ChessForge
                         if (position.Parent is Paragraph)
                         {
                             Paragraph positionParent = position.Parent as Paragraph;
-                            if (positionParent != currParagraph)
+                            if (isFirstParaDiagram || positionParent != currParagraph)
                             {
+                                // NOTE: if something gets "caught" in the diagram paragraph, we may copy it even if not selected (?)
+                                isFirstParaDiagram = false;
+
                                 bool? flipped = null;
                                 if (RichTextBoxUtilities.IsDiagramPara(positionParent))
                                 {
