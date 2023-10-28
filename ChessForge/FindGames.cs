@@ -252,15 +252,26 @@ namespace ChessForge
 
             if (crits.WhiteName.Length > 0 || crits.BlackName.Length > 0)
             {
-                if (white != null && crits.WhiteName.Length > 0 && (white.ToLower().Contains(crits.WhiteName)
-                    || crits.IgnoreColor && crits.BlackName.Length > 0 && white.ToLower().Contains(crits.BlackName)))
+                if (white != null && crits.WhiteName.Length > 0 && (white.ToLower().Contains(crits.WhiteName)))
                 {
                     match = true;
                 }
-                else if (black != null && crits.BlackName.Length > 0 && (black.ToLower().Contains(crits.BlackName)
-                    || crits.IgnoreColor && crits.WhiteName.Length > 0 && black.ToLower().Contains(crits.WhiteName)))
+                else if (black != null && crits.BlackName.Length > 0 && (black.ToLower().Contains(crits.BlackName)))
                 {
                     match = true;
+                }
+
+                if (!match && crits.IgnoreColor)
+                {
+                    // try cross checking
+                    if (white != null &&  crits.BlackName.Length > 0 && white.ToLower().Contains(crits.BlackName))
+                    {
+                        match = true;
+                    }
+                    else if (black != null && crits.WhiteName.Length > 0 && black.ToLower().Contains(crits.WhiteName))
+                    {
+                        match = true;
+                    }
                 }
             }
             else
