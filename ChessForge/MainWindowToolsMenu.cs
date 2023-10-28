@@ -355,7 +355,7 @@ namespace ChessForge
                             if (res)
                             {
                                 deletedArticles.Add(item);
-                                deletedIndices.Add(indicesToDelete[index]);
+                                deletedIndices.Add(indicesToDelete[i]);
                             }
                         }
                     }
