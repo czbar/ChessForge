@@ -110,8 +110,11 @@ namespace ChessForge
                                 {
                                     ArticleListItem item = lstGames[dlgEx.ArticleIndexId];
                                     WorkbookLocationNavigator.GotoArticle(item.ChapterIndex, item.Article.Tree.ContentType, item.ArticleIndex);
-                                    AppState.MainWin.SetActiveLine("1", 0);
-                                    AppState.MainWin.ActiveTreeView.SelectLineAndMove("1", 0);
+                                    if (AppState.ActiveVariationTree != null && AppState.MainWin.ActiveTreeView != null)
+                                    {
+                                        AppState.MainWin.SetActiveLine("1", 0);
+                                        AppState.MainWin.ActiveTreeView.SelectLineAndMove("1", 0);
+                                    }
                                 }
                             }
                         }
