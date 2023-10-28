@@ -228,6 +228,22 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Notification that the background read has finished.
+        /// Set the flag, update menus' status.
+        /// </summary>
+        public static void BackgroundReadFinished()
+        {
+            if (Workbook != null)
+            {
+                Workbook.IsReady = true;
+                if (LearningMode.CurrentMode == LearningMode.Mode.MANUAL_REVIEW)
+                {
+                    ConfigureMenusForManualReview();
+                }
+            }
+        }
+
+        /// <summary>
         /// Checks if the passed move (in the engine notation) is valid
         /// in the currently selected position.
         /// </summary>
@@ -1609,7 +1625,7 @@ namespace ChessForge
                         _mainWin.UiMnciStartTrainingHere.Visibility = Visibility.Collapsed;
                         _mainWin.UiMnciRestartTraining.Visibility = Visibility.Visible;
                         _mainWin.UiMnciExitTraining.Visibility = Visibility.Visible;
-                        _mainWin.UiMnMainPlayEngine.Visibility= Visibility.Collapsed;
+                        _mainWin.UiMnMainPlayEngine.Visibility = Visibility.Collapsed;
 
                         _mainWin.UiMncMainBoardSepar_1.Visibility = Visibility.Collapsed;
 

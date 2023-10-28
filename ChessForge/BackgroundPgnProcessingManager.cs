@@ -349,15 +349,7 @@ namespace ChessForge
                     if (_articlesCompleted >= _rawArticles.Count)
                     {
                         _state = ProcessState.FINISHED;
-                        if (AppState.Workbook != null)
-                        {
-                            // TODO: move this to a method in AppState
-                            AppState.Workbook.IsReady = true;
-                            if (LearningMode.CurrentMode == LearningMode.Mode.MANUAL_REVIEW)
-                            {
-                                AppState.ConfigureMenusForManualReview();
-                            }
-                        }
+                        AppState.BackgroundReadFinished();
                         ReportErrors();
                         AppState.MainWin.BoardCommentBox.ShowTabHints();
                     }
