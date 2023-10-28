@@ -128,6 +128,11 @@ namespace ChessForge
         public WorkbookOperationsManager OpsManager;
 
         /// <summary>
+        /// Whether the content of the Workbook has been read in.
+        /// </summary>
+        public bool IsReady = false;
+
+        /// <summary>
         /// The constructor.
         /// Resets the TreeManager. 
         /// Creates Operations Manager,

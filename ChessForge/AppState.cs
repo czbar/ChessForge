@@ -1501,6 +1501,7 @@ namespace ChessForge
                 _mainWin.UiMnciPlayEngine.IsEnabled = true;
 
                 _mainWin.UiMnEvaluateGames.IsEnabled = AppState.Workbook != null && Workbook.HasAnyModelGames;
+                _mainWin.UiMnFindGames.IsEnabled = AppState.Workbook != null && Workbook.IsReady;
                 _mainWin.UiMnDeleteComments.IsEnabled = WorkbookManager.SessionWorkbook != null;
                 _mainWin.UiMnDeleteEngineEvals.IsEnabled = WorkbookManager.SessionWorkbook != null;
                 _mainWin.UiMnCopyArticles.IsEnabled = WorkbookManager.SessionWorkbook != null;

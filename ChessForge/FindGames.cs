@@ -60,6 +60,11 @@ namespace ChessForge
         /// </summary>
         public static void SearchForGames()
         {
+            if (AppState.Workbook == null || !AppState.Workbook.IsReady)
+            {
+                return;
+            }
+
             ArticleSearchCriteriaDialog dlg = new ArticleSearchCriteriaDialog()
             {
                 Left = AppState.MainWin.ChessForgeMain.Left + 100,

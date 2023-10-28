@@ -1091,6 +1091,7 @@ namespace ChessForge
                 if (WorkbookManager.IsChessForgeWorkbook(ref games))
                 {
                     Workbook workbook = new Workbook();
+                    //TODO: review with the background reading in mind
                     WorkbookManager.CreateWorkbookFromGameList(ref workbook, ref games);
                     SelectChaptersDialog dlg = new SelectChaptersDialog(workbook)
                     {
@@ -1111,7 +1112,7 @@ namespace ChessForge
                                 if (_chaptersView != null)
                                 {
                                     _chaptersView.BuildFlowDocumentForChaptersView();
-                                    AppState.DoEvents();
+                                    //AppState.DoEvents();
                                     _chaptersView.BringChapterIntoView(WorkbookManager.SessionWorkbook.GetChapterCount() - 1);
                                 }
                                 AppState.IsDirty = true;

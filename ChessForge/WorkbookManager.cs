@@ -113,6 +113,7 @@ namespace ChessForge
         {
             SessionWorkbook = new Workbook();
             Chapter chapter = SessionWorkbook.CreateNewChapter();
+            SessionWorkbook.IsReady = true;
             chapter.StudyTree.IsReady = true;
             SessionWorkbook.ActiveChapter = chapter;
             SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.STUDY_TREE);

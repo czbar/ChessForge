@@ -349,6 +349,10 @@ namespace ChessForge
                     if (_articlesCompleted >= _rawArticles.Count)
                     {
                         _state = ProcessState.FINISHED;
+                        if (AppState.Workbook != null)
+                        {
+                            AppState.Workbook.IsReady = true;
+                        }
                         ReportErrors();
                         AppState.MainWin.BoardCommentBox.ShowTabHints();
                     }
