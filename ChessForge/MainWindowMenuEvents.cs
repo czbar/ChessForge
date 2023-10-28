@@ -1206,7 +1206,7 @@ namespace ChessForge
             {
                 if (gd.IsSelected)
                 {
-                    if (gd.GetContentType() == GameData.ContentType.EXERCISE)
+                    if (gd.GetContentType(false) == GameData.ContentType.EXERCISE)
                     {
                         if (chapter.AddArticle(gd, GameData.ContentType.EXERCISE, out error, GameData.ContentType.EXERCISE) >= 0)
                         {
@@ -1215,7 +1215,7 @@ namespace ChessForge
                         }
                         chapter.StudyTree.Tree.ContentType = GameData.ContentType.STUDY_TREE;
                     }
-                    else if (copyGames && (gd.GetContentType() == GameData.ContentType.GENERIC || gd.GetContentType() == GameData.ContentType.MODEL_GAME))
+                    else if (copyGames && (gd.GetContentType(false) == GameData.ContentType.GENERIC || gd.GetContentType(false) == GameData.ContentType.MODEL_GAME))
                     {
                         if (chapter.AddArticle(gd, GameData.ContentType.MODEL_GAME, out error, GameData.ContentType.MODEL_GAME) >= 0)
                         {

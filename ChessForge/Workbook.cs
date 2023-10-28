@@ -164,7 +164,7 @@ namespace ChessForge
             for (int i = 1; i < articleDataList.Count; i++)
             {
                 GameData gm = articleDataList[i];
-                GameData.ContentType contentType = gm.GetContentType();
+                GameData.ContentType contentType = gm.GetContentType(true);
                 if (contentType == GameData.ContentType.STUDY_TREE)
                 {
                     chapter = CreateNewChapter();
