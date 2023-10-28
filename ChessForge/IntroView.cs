@@ -931,6 +931,8 @@ namespace ChessForge
             CreateDiagramElements(para, diag, nd, flipState);
             DiagramList.Add(diag);
 
+            SetInlineUIContainerEventHandlers(para);
+
             diag.Chessboard.DisplayPosition(nd, true);
             AppState.MainWin.DisplayPosition(nd);
 
