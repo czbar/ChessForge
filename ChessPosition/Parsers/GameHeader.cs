@@ -460,7 +460,13 @@ namespace GameTree
             string headerKey = PgnHeaders.KEY_ROUND;
             key = headerKey;
 
-            return _headers.Where(kvp => kvp.Key == headerKey).FirstOrDefault().Value;
+            string value = _headers.Where(kvp => kvp.Key == headerKey).FirstOrDefault().Value;
+            if (string.IsNullOrEmpty(value))
+            {
+                value = "";
+            }
+
+            return value;
         }
 
         /// <summary>
