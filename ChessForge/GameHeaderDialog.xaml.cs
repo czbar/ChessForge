@@ -309,5 +309,50 @@ namespace ChessForge
                 e.Handled = true;
             }
         }
+
+        /// <summary>
+        /// Check if the user pressed key combination to enter a figurine.
+        /// We may need it, when use White/Black/Event fields for "pseudo-names"
+        /// in lines/tests etc.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTbWhite_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (GuiUtilities.InsertFigurine(UiTbWhite, sender, e))
+            {
+                e.Handled = true;
+            }
+        }
+
+        /// <summary>
+        /// Check if the user pressed key combination to enter a figurine.
+        /// We may need it, when use White/Black/Event fields for "pseudo-names"
+        /// in lines/tests etc.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTbBlack_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (GuiUtilities.InsertFigurine(UiTbBlack, sender, e))
+            {
+                e.Handled = true;
+            }
+        }
+
+        /// <summary>
+        /// Check if the user pressed key combination to enter a figurine.
+        /// We may need it, when use White/Black/Event fields for "pseudo-names"
+        /// in lines/tests etc.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTbEvent_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (GuiUtilities.InsertFigurine(UiTbEvent, sender, e))
+            {
+                e.Handled = true;
+            }
+        }
     }
 }
