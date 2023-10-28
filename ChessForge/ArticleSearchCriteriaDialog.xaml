@@ -25,14 +25,14 @@
                 <CheckBox x:Name="UiCbNoResult" Content="*" Canvas.Left="250" Canvas.Top="10"/>
             </Canvas>
         </GroupBox>
-        <GroupBox x:Name="UiGbGameLength" Header="{x:Static p:Resources.MovesInGame}" Margin="10,210,0,0" Width="165" Height="70" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <GroupBox x:Name="UiGbGameLength" Header="{x:Static p:Resources.MovesInGameMinMax}" Margin="10,210,0,0" Width="165" Height="70" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Canvas>
                 <TextBox x:Name="UiTbMinMoves" TabIndex="3" HorizontalAlignment="Left" Margin="20,15,0,0" HorizontalContentAlignment="Center" TextWrapping="NoWrap" Text="" Width="40"/>
                 <Label x:Name="UiLblDash" Content=" - " HorizontalAlignment="Left" Margin="65,10,0,0"/>
                 <TextBox x:Name="UiTbMaxMoves" TabIndex="4"  HorizontalAlignment="Left" Margin="92,15,0,0" HorizontalContentAlignment="Center" TextWrapping="NoWrap" Text="" Width="40"/>
             </Canvas>
         </GroupBox>
-        <GroupBox x:Name="UiGbEco" Header="{x:Static p:Resources.ECO}" Margin="185,210,0,0" Width="165" Height="70" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <GroupBox x:Name="UiGbEco" Header="{x:Static p:Resources.EcoFromTo}" Margin="185,210,0,0" Width="165" Height="70" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Canvas>
                 <TextBox x:Name="UiTbMinEco" TabIndex="5" HorizontalAlignment="Left" Margin="20,15,0,0" HorizontalContentAlignment="Center" TextWrapping="NoWrap" Text="" Width="40"/>
                 <Label x:Name="UiLblDash2" Content=" - " HorizontalAlignment="Left" Margin="65,10,0,0"/>

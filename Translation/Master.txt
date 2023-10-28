@@ -173,6 +173,10 @@ OrderNo=No
 #ECO
 ECO=ECO
 
+#ECO from/to
+EcoFromTo=ECO (from/to)
+
+
 #Elo
 Elo=Elo
 
@@ -754,7 +758,7 @@ Players=Players
 IgnoreColors=Ignore Colors
 
 #Moves in the game
-MovesInGame=Number of Moves
+MovesInGameMinMax=Moves (min/max)
 
 #Msg: max number of games less than min
 CritMaxMovesLessMin=Invalid criterion: min number of moves cannot be greater than max.
@@ -1281,6 +1285,9 @@ MbtTitleCopyPasteError=Copy/Paste Error
 #
 # Header: Message Text
 #
+
+#Background read is in progress
+DataProcessingInProgress=File processing is in progress. Please wait...
 
 #Error while parsing Intro data
 ErrorParsingIntro=The Intro data has been corrupted.

@@ -225,6 +225,11 @@ OrderNo=No
 #english: ECO=ECO
 ECO=ECO
 
+#description: ECO from/to
+#english: EcoFromTo=ECO (from/to)
+EcoFromTo=ECO (od/do)
+
+
 #description: Elo
 #english: Elo=Elo
 Elo=Elo
@@ -970,8 +975,8 @@ Players=Zawodnicy
 IgnoreColors=Ignoruj kolory
 
 #description: Moves in the game
-#english: MovesInGame=Number of Moves
-MovesInGame=Liczba posunięć
+#english: MovesInGameMinMax=Moves (min/max)
+MovesInGameMinMax=Posunięcia (min/maks)
 
 #description: Msg: max number of games less than min
 #english: CritMaxMovesLessMin=Invalid criterion: min number of moves cannot be greater than max.
@@ -1638,6 +1643,10 @@ MbtTitleCopyPasteError=Błąd w Kopiuj/Wklej
 #
 # Header: Message Text
 #
+
+#description: Background read is in progress
+#english: DataProcessingInProgress=File processing is in progress. Please wait...
+DataProcessingInProgress=Trwa wczytywanie pliku. Proszę czekać...
 
 #description: Error while parsing Intro data
 #english: ErrorParsingIntro=The Intro data has been corrupted.

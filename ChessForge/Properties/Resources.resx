@@ -273,6 +273,9 @@
   <data name="ECO" xml:space="preserve">
     <value>ECO</value>
   </data>
+  <data name="EcoFromTo" xml:space="preserve">
+    <value>ECO (from/to)</value>
+  </data>
   <data name="Elo" xml:space="preserve">
     <value>Elo</value>
   </data>
@@ -765,8 +768,8 @@
   <data name="IgnoreColors" xml:space="preserve">
     <value>Ignore Colors</value>
   </data>
-  <data name="MovesInGame" xml:space="preserve">
-    <value>Number of Moves</value>
+  <data name="MovesInGameMinMax" xml:space="preserve">
+    <value>Moves (min/max)</value>
   </data>
   <data name="CritMaxMovesLessMin" xml:space="preserve">
     <value>Invalid criterion: min number of moves cannot be greater than max.</value>
@@ -1187,6 +1190,9 @@
   </data>
   <data name="MbtTitleCopyPasteError" xml:space="preserve">
     <value>Copy/Paste Error</value>
+  </data>
+  <data name="DataProcessingInProgress" xml:space="preserve">
+    <value>File processing is in progress. Please wait...</value>
   </data>
   <data name="ErrorParsingIntro" xml:space="preserve">
     <value>The Intro data has been corrupted.</value>
