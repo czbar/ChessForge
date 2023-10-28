@@ -12,6 +12,7 @@ using System.Windows.Media;
 using ChessPosition.GameTree;
 using ChessPosition.Utils;
 using System.Diagnostics;
+using System.Windows.Markup;
 
 namespace ChessForge
 {
@@ -1022,7 +1023,17 @@ namespace ChessForge
                         {
                             if (hasPlayerNames)
                             {
-                                Run rEvent = CreateRun("1", "      " + _mainVariationTree.Header.GetEventName(out _) + "\n", true);
+                                string round = _mainVariationTree.Header.GetRound(out _);
+                                if (!string.IsNullOrWhiteSpace(round))
+                                {
+                                    round = " (" + round + ")";
+                                }
+                                else
+                                {
+                                    round = "";
+                                }
+                                string eventName = _mainVariationTree.Header.GetEventName(out _) + round;
+                                Run rEvent = CreateRun("1", "      " + eventName + "\n", true);
                                 para.Inlines.Add(rEvent);
                             }
                             else
