@@ -1028,6 +1028,7 @@ namespace ChessForge
                 }
                 _chaptersView.UpdateIntroHeaders();
                 _chaptersView.HighlightActiveChapter();
+                _chaptersView.BringActiveChapterIntoView();
             }
             AppState.ConfigureMenusForManualReview();
             BoardCommentBox.ShowTabHints();
