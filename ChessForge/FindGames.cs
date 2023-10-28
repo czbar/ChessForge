@@ -3,6 +3,7 @@ using GameTree;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
 
@@ -48,6 +49,26 @@ namespace ChessForge
         /// Alphabetically, last ECO code to look for.
         /// </summary>
         public string MaxECO;
+
+        /// <summary>
+        /// Search for White wins
+        /// </summary>
+        public bool ResultWhiteWin;
+
+        /// <summary>
+        /// Search for White losses
+        /// </summary>
+        public bool ResultBlackWin;
+
+        /// <summary>
+        /// Search for draws
+        /// </summary>
+        public bool ResultDraw;
+
+        /// <summary>
+        /// Search for Games with no result
+        /// </summary>
+        public bool ResultNone;
     }
 
     /// <summary>
@@ -187,28 +208,100 @@ namespace ChessForge
         /// <returns></returns>
         private static bool ArticleMeetsCriteria(Article article, FindGamesCriteria crits)
         {
-            bool match = false;
-
             GameHeader header = article.Tree.Header;
+
+            bool matchName = false;
+            if (MeetsNamesCrit(header, crits))
+            {
+                matchName = true;
+            }
+
+            bool matchGameLen = false;
+            if (MeetsGameLengthCrit(article.Tree, crits))
+            {
+                matchGameLen = true;
+            }
+
+            bool matchEco = false;
+            if (MeetsEcoCrit(article.Tree.Header, crits))
+            {
+                matchEco = true;
+            }
+
+            bool matchResult = false;
+            if (MeetsResultCrit(article.Tree.Header, crits))
+            {
+                matchResult = true;
+            }
+
+            return matchResult && matchEco && matchName && matchGameLen;
+        }
+
+        /// <summary>
+        /// If any name is specified, checks if it meets criteria.
+        /// </summary>
+        /// <param name="header"></param>
+        /// <param name="crits"></param>
+        /// <returns></returns>
+        private static bool MeetsNamesCrit(GameHeader header, FindGamesCriteria crits)
+        {
+            bool match = false;
 
             string white = header.GetWhitePlayer(out _);
             string black = header.GetBlackPlayer(out _);
 
-            if (white != null && crits.WhiteName.Length > 0 && (white.ToLower().Contains(crits.WhiteName)
-                || crits.IgnoreColor && crits.BlackName.Length > 0 && white.ToLower().Contains(crits.BlackName)))
+            if (crits.WhiteName.Length > 0 || crits.BlackName.Length > 0)
+            {
+                if (white != null && crits.WhiteName.Length > 0 && (white.ToLower().Contains(crits.WhiteName)
+                    || crits.IgnoreColor && crits.BlackName.Length > 0 && white.ToLower().Contains(crits.BlackName)))
+                {
+                    match = true;
+                }
+                else if (black != null && crits.BlackName.Length > 0 && (black.ToLower().Contains(crits.BlackName)
+                    || crits.IgnoreColor && crits.WhiteName.Length > 0 && black.ToLower().Contains(crits.WhiteName)))
+                {
+                    match = true;
+                }
+            }
+            else
             {
                 match = true;
             }
-            else if (black != null && crits.BlackName.Length > 0 && (black.ToLower().Contains(crits.BlackName)
-                || crits.IgnoreColor && crits.WhiteName.Length > 0 && black.ToLower().Contains(crits.WhiteName)))
+
+            return match;
+        }
+
+        /// <summary>
+        /// If any result criteria specified, checks if they are met
+        /// </summary>
+        /// <param name="header"></param>
+        /// <param name="crits"></param>
+        /// <returns></returns>
+        private static bool MeetsResultCrit(GameHeader header, FindGamesCriteria crits)
+        {
+            bool match = false;
+
+            if (crits.ResultWhiteWin || crits.ResultBlackWin || crits.ResultDraw || crits.ResultNone)
             {
-                match = true;
+                string result = header.GetResult(out _).Trim();
+                if (crits.ResultWhiteWin && (result.StartsWith(Constants.PGN_WHITE_WIN_RESULT) || result.StartsWith(Constants.PGN_WHITE_WIN_RESULT_EX)))
+                {
+                    match = true;
+                }
+                else if (crits.ResultBlackWin && (result.StartsWith(Constants.PGN_BLACK_WIN_RESULT) || result.StartsWith(Constants.PGN_BLACK_WIN_RESULT_EX)))
+                {
+                    match = true;
+                }
+                else if (crits.ResultDraw && (result.StartsWith(Constants.PGN_DRAW_SHORT_RESULT) || result.StartsWith(Constants.PGN_DRAW_RESULT)))
+                {
+                    match = true;
+                }
+                else if (crits.ResultNone && result.StartsWith(Constants.PGN_NO_RESULT))
+                {
+                    match = true;
+                }
             }
-            else if (MeetsGameLengthCrit(article.Tree, crits))
-            {
-                match = true;
-            }
-            else if (MeetsEcoCrit(article.Tree.Header, crits))
+            else
             {
                 match = true;
             }
@@ -239,6 +332,10 @@ namespace ChessForge
                         match = true;
                     }
                 }
+            }
+            else
+            {
+                match = true;
             }
 
             return match;
@@ -272,6 +369,10 @@ namespace ChessForge
                         match = true;
                     }
                 }
+            }
+            else
+            {
+                match = true;
             }
 
             return match;
@@ -316,6 +417,11 @@ namespace ChessForge
                 crits.MaxECO = crits.MaxECO.Substring(0, 3).ToUpper();
             }
 
+            crits.ResultWhiteWin = dlg.UiCbWhiteWin.IsChecked == true;
+            crits.ResultBlackWin = dlg.UiCbWhiteLoss.IsChecked == true;
+            crits.ResultDraw = dlg.UiCbDraw.IsChecked == true;
+            crits.ResultNone = dlg.UiCbNoResult.IsChecked == true;
+
             return crits;
         }
 
@@ -328,7 +434,8 @@ namespace ChessForge
         {
             if (string.IsNullOrWhiteSpace(crits.WhiteName) && string.IsNullOrWhiteSpace(crits.BlackName)
                 && string.IsNullOrWhiteSpace(crits.MinECO) && string.IsNullOrWhiteSpace(crits.MaxECO)
-                && crits.MinGameLength == 0 && crits.MaxGameLength == 0)
+                && crits.MinGameLength == 0 && crits.MaxGameLength == 0
+                && !crits.ResultWhiteWin && !crits.ResultBlackWin && !crits.ResultDraw && !crits.ResultNone)
             {
                 return true;
             }

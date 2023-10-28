@@ -433,7 +433,8 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Returns the result of a tree/game/exercise
+        /// Returns the result of a tree/game/exercise.
+        /// Never returns null.
         /// </summary>
         /// <returns></returns>
         public string GetResult(out string key)
