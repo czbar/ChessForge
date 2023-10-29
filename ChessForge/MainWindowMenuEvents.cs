@@ -759,7 +759,9 @@ namespace ChessForge
             {
                 //TreeNode nd = ActiveLine.GetSelectedTreeNode();
                 TreeNode nd = ActiveVariationTree == null ? null : ActiveVariationTree.SelectedNode;
-                FindIdenticalPositions.Search(nd, FindIdenticalPositions.Mode.FIND_AND_REPORT);
+
+                bool externalSearch = !AppState.IsTreeViewTabActive();
+                FindIdenticalPositions.Search(nd, FindIdenticalPositions.Mode.FIND_AND_REPORT, externalSearch);
             }
             catch (Exception ex)
             {
