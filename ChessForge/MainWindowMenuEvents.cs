@@ -158,10 +158,16 @@ namespace ChessForge
             }
             else
             {
+                double offset = 50;
+                double dlgHeight = Math.Max(ChessForgeMain.ActualHeight - (5 * offset), 550);
+                double dlgWidth = Math.Max(ChessForgeMain.ActualWidth - (5 * offset), 800);
+
                 OnlineLibraryContentDialog dlg = new OnlineLibraryContentDialog(library)
                 {
-                    Left = ChessForgeMain.Left + 50,
-                    Top = ChessForgeMain.Top + 50,
+                    Left = ChessForgeMain.Left + offset,
+                    Top = ChessForgeMain.Top + offset,
+                    Width = dlgWidth,
+                    Height = dlgHeight,
                     Topmost = false,
                     Owner = this
                 };
