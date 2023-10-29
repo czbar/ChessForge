@@ -14,9 +14,11 @@ namespace ChessForge
         /// Builds a list of nodes representing the exact same position as the passed node.
         /// </summary>
         /// <param name="nd"></param>
+        /// <param name="firstOnly">whether to look for the first match only</param>
         /// <param name="excludePassedNode"></param>
+        /// <param name="checkDynamic">whether to check the dynamic properties (castling rights, e.p. whose move)</param>
         /// <returns></returns>
-        public static ObservableCollection<ArticleListItem> BuildIdenticalPositionsList(TreeNode nd, bool firstOnly, bool excludePassedNode = true)
+        public static ObservableCollection<ArticleListItem> BuildIdenticalPositionsList(TreeNode nd, bool firstOnly, bool excludePassedNode, bool checkDynamic)
         {
             ObservableCollection<ArticleListItem> lstIdenticalPositions = new ObservableCollection<ArticleListItem>();
 
@@ -36,7 +38,7 @@ namespace ChessForge
                 lstIdenticalPositions.Add(chapterLine);
                 int currentItemCount = lstIdenticalPositions.Count;
 
-                List<TreeNode> lstStudyNodes = TreeUtils.FindIdenticalNodes(chapter.StudyTree.Tree, nd);
+                List<TreeNode> lstStudyNodes = TreeUtils.FindIdenticalNodes(chapter.StudyTree.Tree, nd, checkDynamic);
 
                 if (lstStudyNodes != null)
                 {
@@ -70,7 +72,7 @@ namespace ChessForge
                     for (int art = 0; art < chapter.ModelGames.Count; art++)
                     {
                         Article article = chapter.ModelGames[art];
-                        List<TreeNode> lstNodes = TreeUtils.FindIdenticalNodes(article.Tree, nd);
+                        List<TreeNode> lstNodes = TreeUtils.FindIdenticalNodes(article.Tree, nd, checkDynamic);
                         if (lstNodes != null)
                         {
                             foreach (TreeNode node in lstNodes)
@@ -105,7 +107,7 @@ namespace ChessForge
                     for (int art = 0; art < chapter.Exercises.Count; art++)
                     {
                         Article article = chapter.Exercises[art];
-                        List<TreeNode> lstNodes = TreeUtils.FindIdenticalNodes(article.Tree, nd);
+                        List<TreeNode> lstNodes = TreeUtils.FindIdenticalNodes(article.Tree, nd, checkDynamic);
                         if (lstNodes != null)
                         {
                             foreach (TreeNode node in lstNodes)
