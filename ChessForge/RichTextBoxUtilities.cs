@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Xml.Linq;
 
 namespace ChessForge
 {
@@ -20,6 +21,33 @@ namespace ChessForge
         /// Prefix for naming paragraphs representing a diagram.
         /// </summary>
         public static readonly string DiagramParaPrefix = "para_diag_";
+
+        /// <summary>
+        /// Finds a paragraph with a given name in the document.
+        /// Returns null if not found.
+        /// </summary>
+        /// <param name="document"></param>
+        /// <param name="name"></param>
+        /// <param name="partialName"></param>
+        /// <returns></returns>
+        public static Paragraph FindParagraphByName(FlowDocument document, string name, bool partialName)
+        {
+            Paragraph para = null;
+
+            foreach (Block block in document.Blocks)
+            {
+                if (block is Paragraph && (block as Paragraph).Name != null)
+                {
+                    if (partialName && (block as Paragraph).Name.StartsWith(name) || (block as Paragraph).Name == name)
+                    {
+                        para = block as Paragraph;
+                        break;
+                    }
+                }
+            }
+
+            return para;
+        }
 
         /// <summary>
         /// Makes a copy of a Run with selected properties.
@@ -179,7 +207,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Checks if Pargraph's name indicates that it contains a Paragraph.
+        /// Checks if Paragraph's name indicates that it contains a diagram.
         /// </summary>
         /// <param name="para"></param>
         /// <returns></returns>
