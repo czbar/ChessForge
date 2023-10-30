@@ -113,6 +113,7 @@ namespace ChessForge
         {
             SessionWorkbook = new Workbook();
             Chapter chapter = SessionWorkbook.CreateNewChapter();
+            SessionWorkbook.IsReady = true;
             chapter.StudyTree.IsReady = true;
             SessionWorkbook.ActiveChapter = chapter;
             SessionWorkbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.STUDY_TREE);
@@ -756,7 +757,8 @@ namespace ChessForge
             {
                 if (gd.IsSelected)
                 {
-                    if ((gd.GetContentType() == GameData.ContentType.GENERIC || gd.GetContentType() == GameData.ContentType.MODEL_GAME))
+                    GameData.ContentType contentType = gd.GetContentType(true);
+                    if (contentType == GameData.ContentType.MODEL_GAME)
                     {
                         if (!firstChapter && multiChapter)
                         {
@@ -790,7 +792,7 @@ namespace ChessForge
                         }
                         firstChapter = false;
                     }
-                    else if (gd.GetContentType() == GameData.ContentType.EXERCISE)
+                    else if (contentType == GameData.ContentType.EXERCISE)
                     {
                         chapter.AddArticle(gd, GameData.ContentType.EXERCISE, out errorString, GameData.ContentType.EXERCISE);
                         if (!string.IsNullOrEmpty(errorString))
@@ -836,7 +838,7 @@ namespace ChessForge
             {
                 GameData gm = GameList[i];
 
-                if (gm.GetContentType() == GameData.ContentType.STUDY_TREE)
+                if (gm.GetContentType(true) == GameData.ContentType.STUDY_TREE)
                 {
                     chapter = workbook.CreateNewChapter();
                     chapter.SetTitle(gm.Header.GetChapterTitle());
@@ -974,7 +976,7 @@ namespace ChessForge
 
             if (chapterIndex >= 0)
             {
-                sb.Append(Properties.Resources.Chapter + " " + (chapterIndex + 1).ToString() + ": " + game.GetContentType().ToString() + ": " + game.Header.BuildGameHeaderLine(false));
+                sb.Append(Properties.Resources.Chapter + " " + (chapterIndex + 1).ToString() + ": " + game.GetContentType(false).ToString() + ": " + game.Header.BuildGameHeaderLine(false));
             }
             else
             {

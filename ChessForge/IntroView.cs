@@ -442,7 +442,7 @@ namespace ChessForge
                         AppState.IsDirty = true;
 
                         SelectedNode.LastMoveAlgebraicNotation = dlg.MoveText;
-                        run.Text = dlg.MoveText;
+                        run.Text = PadOutMoveRunText(dlg.MoveText);
 
                         if (double.TryParse(dlg.MoveFontSize, out double fontSize))
                         {
@@ -711,12 +711,8 @@ namespace ChessForge
                 {
                     if (block is Paragraph para)
                     {
-                        bool isDiag = false;
-
                         if (para.Name.StartsWith(RichTextBoxUtilities.DiagramParaPrefix))
                         {
-                            isDiag = true;
-
                             Image flipImg = FindFlipImage(para);
                             if (flipImg != null)
                             {
@@ -725,7 +721,7 @@ namespace ChessForge
                             }
                         }
 
-                        SetInlineUIContainerEventHandlers(para, isDiag);
+                        SetInlineUIContainerEventHandlers(para);
                     }
                 }
             }
@@ -740,8 +736,9 @@ namespace ChessForge
         /// </summary>
         /// <param name="para"></param>
         /// <param name="isDiag"></param>
-        private void SetInlineUIContainerEventHandlers(Paragraph para, bool isDiag)
+        private void SetInlineUIContainerEventHandlers(Paragraph para)
         {
+            bool isDiag = para.Name.StartsWith(RichTextBoxUtilities.DiagramParaPrefix);
             foreach (Inline inline in para.Inlines)
             {
                 if (inline is InlineUIContainer iuc && inline.Name.StartsWith(_uic_move_))
@@ -751,13 +748,8 @@ namespace ChessForge
 
                     if (isDiag && iuc.Child is Viewbox)
                     {
-                        para.MouseDown -= EventDiagramClicked;
                         iuc.MouseDown -= EventDiagramClicked;
                         iuc.MouseDown += EventDiagramClicked;
-                    }
-                    else if (iuc.Child is TextBlock)
-                    {
-                        para.MouseDown -= EventDiagramClicked;
                     }
                 }
             }
@@ -907,7 +899,8 @@ namespace ChessForge
             AppState.IsDirty = true;
 
             Document.Blocks.InsertBefore(nextPara, para);
-            para.MouseDown += EventDiagramClicked;
+
+            SetInlineUIContainerEventHandlers(para);
 
             AppState.MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardGrey;
 
@@ -937,6 +930,8 @@ namespace ChessForge
 
             CreateDiagramElements(para, diag, nd, flipState);
             DiagramList.Add(diag);
+
+            SetInlineUIContainerEventHandlers(para);
 
             diag.Chessboard.DisplayPosition(nd, true);
             AppState.MainWin.DisplayPosition(nd);
@@ -986,8 +981,9 @@ namespace ChessForge
                 InlineUIContainer uic = new InlineUIContainer();
                 uic.Name = _uic_move_ + node.NodeId.ToString();
                 uic.Child = tbMove;
-                uic.MouseDown += EventMoveClicked;
 
+                uic.MouseDown -= EventMoveClicked;
+                uic.MouseDown += EventMoveClicked;
 
                 if (inlineToInsertBefore == null)
                 {
@@ -1005,7 +1001,7 @@ namespace ChessForge
                 }
                 else
                 {
-                    run.Text = " " + BuildMoveRunText(node, uic) + " ";
+                    run.Text = PadOutMoveRunText(BuildMoveRunText(node, uic));
                 }
 
                 // set caret to the end of the new move
@@ -1020,6 +1016,31 @@ namespace ChessForge
             }
 
             return tbMove;
+        }
+
+        /// <summary>
+        /// Prepends and/or appends a space to the move if it is not already there.
+        /// </summary>
+        /// <param name="moveText"></param>
+        /// <returns></returns>
+        private string PadOutMoveRunText(string moveText)
+        {
+            if (string.IsNullOrEmpty(moveText))
+            {
+                return "";
+            }
+
+            StringBuilder sb = new StringBuilder();
+            if (moveText[0] != ' ')
+            {
+                sb.Append(' ' + moveText);
+            }
+            if (moveText[moveText.Length - 1] != ' ')
+            {
+                sb.Append(' ');
+            }
+
+            return sb.ToString();
         }
 
         /// <summary>

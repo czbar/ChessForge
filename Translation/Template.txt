@@ -225,6 +225,11 @@ OrderNo=
 #english: ECO=ECO
 ECO=
 
+#description: ECO from/to
+#english: EcoFromTo=ECO (from/to)
+EcoFromTo=
+
+
 #description: Elo
 #english: Elo=Elo
 Elo=
@@ -861,7 +866,7 @@ Bookcase=
 Shelf =
 
 #description: Intro line
-#english: OnlineLibraryInfo=Click on any blue link below to download the corresponding workbook. You will be able to view the workbook as well as edit it and save a copy on your PC.
+#english: OnlineLibraryInfo=Click on any blue link below to download the corresponding workbook. You will be able to view the workbook as well as edit it and save a copy to your PC.
 OnlineLibraryInfo=
 
 
@@ -970,8 +975,8 @@ Players=
 IgnoreColors=
 
 #description: Moves in the game
-#english: MovesInGame=Number of Moves
-MovesInGame=
+#english: MovesInGameMinMax=Moves (min/max)
+MovesInGameMinMax=
 
 #description: Msg: max number of games less than min
 #english: CritMaxMovesLessMin=Invalid criterion: min number of moves cannot be greater than max.
@@ -1638,6 +1643,10 @@ MbtTitleCopyPasteError=
 #
 # Header: Message Text
 #
+
+#description: Background read is in progress
+#english: DataProcessingInProgress=File processing is in progress. Please wait...
+DataProcessingInProgress=
 
 #description: Error while parsing Intro data
 #english: ErrorParsingIntro=The Intro data has been corrupted.

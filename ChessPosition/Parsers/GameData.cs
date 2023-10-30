@@ -82,7 +82,7 @@ namespace GameTree
         /// we have a FEN header Making it an "Exercise".
         /// </summary>
         /// <returns></returns>
-        public ContentType GetContentType()
+        public ContentType GetContentType(bool set)
         {
             ContentType typ = Header.GetContentType(out _);
 
@@ -95,6 +95,10 @@ namespace GameTree
                 else
                 {
                     typ = ContentType.MODEL_GAME;
+                    if (set)
+                    {
+                        Header.SetContentType(typ);
+                    }
                 }
             }
 
@@ -118,7 +122,7 @@ namespace GameTree
         {
             get
             {
-                ContentType typ = GetContentType();
+                ContentType typ = GetContentType(false);
                 string prefix = string.Empty;
                 if (typ == ContentType.GENERIC || typ == ContentType.MODEL_GAME)
                 {

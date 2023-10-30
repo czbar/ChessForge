@@ -273,6 +273,9 @@
   <data name="ECO" xml:space="preserve">
     <value>ECO</value>
   </data>
+  <data name="EcoFromTo" xml:space="preserve">
+    <value>ECO (od/do)</value>
+  </data>
   <data name="Elo" xml:space="preserve">
     <value>Elo</value>
   </data>
@@ -765,8 +768,8 @@
   <data name="IgnoreColors" xml:space="preserve">
     <value>Ignoruj kolory</value>
   </data>
-  <data name="MovesInGame" xml:space="preserve">
-    <value>Liczba posunięć</value>
+  <data name="MovesInGameMinMax" xml:space="preserve">
+    <value>Posunięcia (min/maks)</value>
   </data>
   <data name="CritMaxMovesLessMin" xml:space="preserve">
     <value>Maksymalna liczba posunięć nie może być mniejsza niż minimalna.</value>
@@ -1187,6 +1190,9 @@
   </data>
   <data name="MbtTitleCopyPasteError" xml:space="preserve">
     <value>Błąd w Kopiuj/Wklej</value>
+  </data>
+  <data name="DataProcessingInProgress" xml:space="preserve">
+    <value>Trwa wczytywanie pliku. Proszę czekać...</value>
   </data>
   <data name="ErrorParsingIntro" xml:space="preserve">
     <value>Dane Wstępu zostały Uszkodzone.</value>

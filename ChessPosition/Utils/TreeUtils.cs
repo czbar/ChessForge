@@ -502,9 +502,9 @@ namespace ChessPosition
         /// <param name="checkEnpassant"></param>
         /// <param name="checkCastleRights"></param>
         /// <returns></returns>
-        public static List<TreeNode> FindIdenticalNodes(VariationTree tree, TreeNode node, bool checkSideToMove = true, bool checkEnpassant = true, bool checkCastleRights = true)
+        public static List<TreeNode> FindIdenticalNodes(VariationTree tree, TreeNode node, bool checkDynamic)
         {
-            return FindNodesWithPosition(tree, node.Position, checkSideToMove, checkEnpassant, checkCastleRights);
+            return FindNodesWithPosition(tree, node.Position, checkDynamic, checkDynamic, checkDynamic);
         }
 
         /// <summary>

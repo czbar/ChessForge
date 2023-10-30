@@ -94,8 +94,15 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnOk_Click(object sender, RoutedEventArgs e)
         {
-            ExitOK = true;
-            Close();
+            if (_workbook.IsReady)
+            {
+                ExitOK = true;
+                Close();
+            }
+            else
+            {
+                MessageBox.Show(Properties.Resources.DataProcessingInProgress, Properties.Resources.Information, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
         }
 
         /// <summary>
@@ -105,6 +112,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnCancel_Click(object sender, RoutedEventArgs e)
         {
+            _workbook.GamesManager.CancelAll();
             ExitOK = false;
             Close();
         }

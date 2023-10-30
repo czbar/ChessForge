@@ -349,6 +349,9 @@ namespace ChessForge
                     if (_articlesCompleted >= _rawArticles.Count)
                     {
                         _state = ProcessState.FINISHED;
+                        // note that the parent may not be the session workbook if this is part of ImportChapter
+                        _parent.IsReady = true;
+                        AppState.BackgroundReadFinished();
                         ReportErrors();
                         AppState.MainWin.BoardCommentBox.ShowTabHints();
                     }

@@ -355,7 +355,7 @@ namespace ChessForge
                             if (res)
                             {
                                 deletedArticles.Add(item);
-                                deletedIndices.Add(indicesToDelete[index]);
+                                deletedIndices.Add(indicesToDelete[i]);
                             }
                         }
                     }
@@ -371,6 +371,13 @@ namespace ChessForge
                         AppState.IsDirty = true;
                         GuiUtilities.RefreshChaptersView(null);
                         AppState.SetupGuiForCurrentStates();
+
+                        if (ActiveVariationTree == null || AppState.CurrentEvaluationMode != EvaluationManager.Mode.CONTINUOUS)
+                        {
+                            StopEvaluation(true);
+                            BoardCommentBox.ShowTabHints();
+                        }
+
                         AppState.MainWin.UiTabChapters.Focus();
                     }
                 }

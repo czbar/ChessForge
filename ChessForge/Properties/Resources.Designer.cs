@@ -1196,6 +1196,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File processing is in progress. Please wait....
+        /// </summary>
+        public static string DataProcessingInProgress {
+            get {
+                return ResourceManager.GetString("DataProcessingInProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date.
         /// </summary>
         public static string Date {
@@ -1597,6 +1606,15 @@ namespace ChessForge.Properties {
         public static string ECO {
             get {
                 return ResourceManager.GetString("ECO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ECO (from/to).
+        /// </summary>
+        public static string EcoFromTo {
+            get {
+                return ResourceManager.GetString("EcoFromTo", resourceCulture);
             }
         }
         
@@ -3509,11 +3527,11 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Number of Moves.
+        ///   Looks up a localized string similar to Moves (min/max).
         /// </summary>
-        public static string MovesInGame {
+        public static string MovesInGameMinMax {
             get {
-                return ResourceManager.GetString("MovesInGame", resourceCulture);
+                return ResourceManager.GetString("MovesInGameMinMax", resourceCulture);
             }
         }
         

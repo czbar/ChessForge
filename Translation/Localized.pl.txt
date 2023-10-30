@@ -971,7 +971,7 @@ IgnoreColors=Ignoruj kolory
 
 #description: Moves in the game
 #english: MovesInGame=Number of Moves
-MovesInGame=Liczba posunięć
+MovesInGameMinMax=Posunięcia (min/maks)
 
 #description: Msg: max number of games less than min
 #english: CritMaxMovesLessMin=Invalid criterion: min number of moves cannot be greater than max.
@@ -1638,6 +1638,10 @@ MbtTitleCopyPasteError=Błąd w Kopiuj/Wklej
 #
 # Header: Message Text
 #
+
+#description: Background read is in progress
+#english: DataProcessingInProgress=File processing is in progress. Please wait...
+DataProcessingInProgress=Trwa wczytywanie pliku. Proszę czekać...
 
 #description: Error while parsing Intro data
 #english: ErrorParsingIntro=The Intro data has been corrupted.
@@ -2900,3 +2904,5 @@ IllegalCastling=Niedozwolona roszada.
 #description: Workbook info
 #english: AboutWorkbook=This PGN Workbook is optimized for viewing in Chess Forge https://sourceforge.net/projects/chessforge/ \nChess Forge is a Free and Open Source Windows application.
 AboutWorkbook=Ten podręcznik PGN najlepiej oglądać w programie Chess Forge https://sourceforge.net/projects/chessforge/ \nChess Forge to Wolne i Otwarte Oprogramowanie do systemu Windows.
+
+EcoFromTo=ECO (od/do)

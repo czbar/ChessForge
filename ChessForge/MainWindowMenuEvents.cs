@@ -158,10 +158,16 @@ namespace ChessForge
             }
             else
             {
+                double offset = 50;
+                double dlgHeight = Math.Max(ChessForgeMain.ActualHeight - (5 * offset), 550);
+                double dlgWidth = Math.Max(ChessForgeMain.ActualWidth - (5 * offset), 800);
+
                 OnlineLibraryContentDialog dlg = new OnlineLibraryContentDialog(library)
                 {
-                    Left = ChessForgeMain.Left + 50,
-                    Top = ChessForgeMain.Top + 50,
+                    Left = ChessForgeMain.Left + offset,
+                    Top = ChessForgeMain.Top + offset,
+                    Width = dlgWidth,
+                    Height = dlgHeight,
                     Topmost = false,
                     Owner = this
                 };
@@ -759,7 +765,9 @@ namespace ChessForge
             {
                 //TreeNode nd = ActiveLine.GetSelectedTreeNode();
                 TreeNode nd = ActiveVariationTree == null ? null : ActiveVariationTree.SelectedNode;
-                FindIdenticalPositions.Search(nd, FindIdenticalPositions.Mode.FIND_AND_REPORT);
+
+                bool externalSearch = !AppState.IsTreeViewTabActive();
+                FindIdenticalPositions.Search(nd, FindIdenticalPositions.Mode.FIND_AND_REPORT, externalSearch);
             }
             catch (Exception ex)
             {
@@ -1111,8 +1119,7 @@ namespace ChessForge
                                 if (_chaptersView != null)
                                 {
                                     _chaptersView.BuildFlowDocumentForChaptersView();
-                                    AppState.DoEvents();
-                                    _chaptersView.BringChapterIntoView(WorkbookManager.SessionWorkbook.GetChapterCount() - 1);
+                                    PulseManager.ChaperIndexToBringIntoView = WorkbookManager.SessionWorkbook.GetChapterCount() - 1;
                                 }
                                 AppState.IsDirty = true;
                             }
@@ -1206,7 +1213,7 @@ namespace ChessForge
             {
                 if (gd.IsSelected)
                 {
-                    if (gd.GetContentType() == GameData.ContentType.EXERCISE)
+                    if (gd.GetContentType(false) == GameData.ContentType.EXERCISE)
                     {
                         if (chapter.AddArticle(gd, GameData.ContentType.EXERCISE, out error, GameData.ContentType.EXERCISE) >= 0)
                         {
@@ -1215,7 +1222,7 @@ namespace ChessForge
                         }
                         chapter.StudyTree.Tree.ContentType = GameData.ContentType.STUDY_TREE;
                     }
-                    else if (copyGames && (gd.GetContentType() == GameData.ContentType.GENERIC || gd.GetContentType() == GameData.ContentType.MODEL_GAME))
+                    else if (copyGames && (gd.GetContentType(false) == GameData.ContentType.GENERIC || gd.GetContentType(false) == GameData.ContentType.MODEL_GAME))
                     {
                         if (chapter.AddArticle(gd, GameData.ContentType.MODEL_GAME, out error, GameData.ContentType.MODEL_GAME) >= 0)
                         {
@@ -1866,6 +1873,7 @@ namespace ChessForge
             tree.Header.SetHeaderValue(PgnHeaders.KEY_BLACK_ELO, header.GetBlackPlayerElo(out _));
             tree.Header.SetHeaderValue(PgnHeaders.KEY_RESULT, header.GetResult(out _));
             tree.Header.SetHeaderValue(PgnHeaders.KEY_EVENT, header.GetEventName(out _));
+            tree.Header.SetHeaderValue(PgnHeaders.KEY_ROUND, header.GetRound(out _));
             tree.Header.SetHeaderValue(PgnHeaders.KEY_ECO, header.GetECO(out _));
             tree.Header.SetHeaderValue(PgnHeaders.KEY_LICHESS_ID, header.GetLichessId(out _));
             tree.Header.SetHeaderValue(PgnHeaders.KEY_CHESSCOM_ID, header.GetChessComId(out _));
@@ -1874,7 +1882,6 @@ namespace ChessForge
                 tree.Header.SetHeaderValue(PgnHeaders.KEY_GUID, header.GetGuid(out _));
             }
             tree.Header.SetHeaderValue(PgnHeaders.KEY_DATE, header.GetDate(out _));
-            tree.Header.SetHeaderValue(PgnHeaders.KEY_ROUND, header.GetRound(out _));
 
             List<string> preamble = header.GetPreamble();
             tree.Header.SetPreamble(preamble);
@@ -3387,9 +3394,13 @@ namespace ChessForge
                             SelectModelGame(chapter.ActiveModelGameIndex, false);
                         }
                         AppState.SetupGuiForCurrentStates();
+                        if (ActiveVariationTree == null || AppState.CurrentEvaluationMode != EvaluationManager.Mode.CONTINUOUS)
+                        {
+                            StopEvaluation(true);
+                            BoardCommentBox.ShowTabHints();
+                        }
                     }
                 }
-                BoardCommentBox.ShowTabHints();
             }
             catch (Exception ex)
             {
@@ -3424,13 +3435,18 @@ namespace ChessForge
                         }
 
                         _chaptersView.RebuildChapterParagraph(WorkbookManager.SessionWorkbook.ActiveChapter);
+                        AppState.SetupGuiForCurrentStates();
                         if (WorkbookManager.ActiveTab == WorkbookManager.TabViewType.EXERCISE)
                         {
                             SelectExercise(chapter.ActiveExerciseIndex, false);
                         }
                     }
+                    if (ActiveVariationTree == null || AppState.CurrentEvaluationMode != EvaluationManager.Mode.CONTINUOUS)
+                    {
+                        StopEvaluation(true);
+                        BoardCommentBox.ShowTabHints();
+                    }
                 }
-                BoardCommentBox.ShowTabHints();
             }
             catch (Exception ex)
             {

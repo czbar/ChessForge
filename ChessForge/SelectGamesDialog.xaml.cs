@@ -145,7 +145,7 @@ namespace ChessForge
 
             foreach (GameData gameData in _gameList)
             {
-                GameData.ContentType typ = gameData.GetContentType();
+                GameData.ContentType typ = gameData.GetContentType(false);
                 if (typ == GameData.ContentType.GENERIC || typ == GameData.ContentType.MODEL_GAME)
                 {
                     _gameCount++;

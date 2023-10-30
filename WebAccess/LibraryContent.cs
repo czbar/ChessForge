@@ -44,7 +44,12 @@ namespace WebAccess
         {
             Title = title;
         }
-        
+
+        /// <summary>
+        /// Unique Id of the bookcase
+        /// </summary>
+        public string Id;
+
         /// <summary>
         /// Title of the section.
         /// </summary>
@@ -59,6 +64,11 @@ namespace WebAccess
         /// The list of subsections.
         /// </summary>
         public List<Shelf> Shelves = new List<Shelf>();
+
+        /// <summary>
+        /// Whether to show expanded or collapsed
+        /// </summary>
+        public bool IsExpanded = true;
     }
 
     /// <summary>
@@ -81,6 +91,22 @@ namespace WebAccess
         }
 
         /// <summary>
+        /// Id of the shelf
+        /// </summary>
+        public string Id;
+
+        /// <summary>
+        /// An Id combining the parent bookcaseId with this shelf's id
+        /// making it unique across the library.
+        /// </summary>
+        public string ShelfPathId;
+
+        /// <summary>
+        /// Id of the parent bookcase
+        /// </summary>
+        public string ParentBookcaseId;
+
+        /// <summary>
         /// Title of the SubSection
         /// </summary>
         public string Title;
@@ -94,6 +120,11 @@ namespace WebAccess
         /// The list of Books in the SubsSection.
         /// </summary>
         public List<Book> Books = new List<Book>();
+
+        /// <summary>
+        /// Whether to show expanded or collapsed
+        /// </summary>
+        public bool IsExpanded = true;
     }
 
     /// <summary>
@@ -114,6 +145,17 @@ namespace WebAccess
         {
             Title = title;
         }
+
+        /// <summary>
+        /// Id of the shelf
+        /// </summary>
+        public string Id;
+
+        /// <summary>
+        /// An Id combining the grandparent bookcaseId with the parent shelf id
+        /// and this book's id making it unique across the library.
+        /// </summary>
+        public string BookPathId;
 
         /// <summary>
         /// Title of the workbook.

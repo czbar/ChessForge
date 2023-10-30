@@ -33,12 +33,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_11C686198F4C410EAB7A84CEFE75FF2B"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_141BD59E5BD35C4DA1EEFA2B8334EEBE"
         "OwnerKey" = "8:_0B816B9828BC4414A662D7186EC23E8C"
         "MsmSig" = "8:_UNDEFINED"
@@ -100,6 +94,12 @@
         "Entry"
         {
         "MsmKey" = "8:_7269021437CF4398B5AD0BEF5D242C11"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_80222B20D77142AE8FD9531585409EF6"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -310,7 +310,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:ChessPosition, Version=1.3.6.0, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:ChessPosition, Version=1.3.7.0, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_070F20AEE4156FF8A1EDCB6F32B33AB5"
@@ -335,26 +335,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_11C686198F4C410EAB7A84CEFE75FF2B"
-            {
-            "SourcePath" = "8:..\\Workbooks\\Distribution\\Anti-London for Black.pgn"
-            "TargetName" = "8:Anti-London for Black.pgn"
-            "Tag" = "8:"
-            "Folder" = "8:_F3BD7340DD264B25BFB08A3559857E96"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_141BD59E5BD35C4DA1EEFA2B8334EEBE"
@@ -443,7 +423,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:EngineService, Version=1.3.6.0, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:EngineService, Version=1.3.7.0, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_3A481BA820F80DDB75A02811800AC4B3"
@@ -554,6 +534,26 @@
             {
             "SourcePath" = "8:..\\Workbooks\\Distribution\\Ridiculous Sacrifices.pgn"
             "TargetName" = "8:Ridiculous Sacrifices.pgn"
+            "Tag" = "8:"
+            "Folder" = "8:_F3BD7340DD264B25BFB08A3559857E96"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_80222B20D77142AE8FD9531585409EF6"
+            {
+            "SourcePath" = "8:..\\Workbooks\\Distribution\\London System.pgn"
+            "TargetName" = "8:London System.pgn"
             "Tag" = "8:"
             "Folder" = "8:_F3BD7340DD264B25BFB08A3559857E96"
             "Condition" = "8:"
@@ -694,7 +694,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:WebAccess, Version=1.3.6.0, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:WebAccess, Version=1.3.7.0, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_B31923E79F360E25A9908EEE60355755"
@@ -921,15 +921,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Chess Forge"
-        "ProductCode" = "8:{7DC7F23E-D42B-481C-8A78-D237FFEA9C73}"
-        "PackageCode" = "8:{4A8FE4C5-2A96-44D1-A000-169464F4B3F4}"
+        "ProductCode" = "8:{D58BB410-14C7-42A5-8DC7-B77E5F882C2B}"
+        "PackageCode" = "8:{99572397-2386-454C-9D63-FC9131CC79A8}"
         "UpgradeCode" = "8:{8FBE368E-7FA2-4112-9D18-7A5CD1CE504C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:FALSE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.3.7"
+        "ProductVersion" = "8:1.4.0"
         "Manufacturer" = "8:Mindrose Pty Ltd"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1471,7 +1471,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_0B816B9828BC4414A662D7186EC23E8C"
             {
-            "SourcePath" = "8:..\\ChessForge\\obj\\Release\\ChessForge.exe"
+            "SourcePath" = "8:..\\ChessForge\\obj\\Debug\\ChessForge.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_76196FC40D204F0E9D2F09E6D29AAF54"

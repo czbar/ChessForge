@@ -502,7 +502,7 @@ namespace ChessForge
         /// Given the index of the bookmark clicked in the GUI,
         /// set active chapter and article. 
         /// This is to be invoked from outside, once there was a request to 
-        /// navigate to the bookamrked position or start training from it.
+        /// navigate to the bookmarked position or start training from it.
         /// </summary>
         /// <param name="ClickedIndex"></param>
         public static void SetActiveEntities(bool openTab)

@@ -884,7 +884,7 @@ namespace ChessForge
 
                 if (typ == GameData.ContentType.GENERIC)
                 {
-                    typ = gm.GetContentType();
+                    typ = gm.GetContentType(true);
                 }
                 article.Tree.ContentType = typ;
 

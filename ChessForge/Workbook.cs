@@ -128,6 +128,11 @@ namespace ChessForge
         public WorkbookOperationsManager OpsManager;
 
         /// <summary>
+        /// Whether the content of the Workbook has been read in.
+        /// </summary>
+        public bool IsReady = false;
+
+        /// <summary>
         /// The constructor.
         /// Resets the TreeManager. 
         /// Creates Operations Manager,
@@ -164,7 +169,7 @@ namespace ChessForge
             for (int i = 1; i < articleDataList.Count; i++)
             {
                 GameData gm = articleDataList[i];
-                GameData.ContentType contentType = gm.GetContentType();
+                GameData.ContentType contentType = gm.GetContentType(true);
                 if (contentType == GameData.ContentType.STUDY_TREE)
                 {
                     chapter = CreateNewChapter();

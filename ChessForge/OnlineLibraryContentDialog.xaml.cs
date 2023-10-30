@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -19,8 +18,18 @@ namespace ChessForge
     /// </summary>
     public partial class OnlineLibraryContentDialog : Window
     {
-        // starting letter for bookcase numbering
-        private char _bookcaseId = 'A';
+        /// <summary>
+        /// Enumeration for objects in the library.
+        /// </summary>
+        private enum LibObjectType
+        {
+            NONE,
+            BOOKCASE,
+            SHELF,
+            BOOK,
+            BOOKS
+        }
+
 
         // the listing of the content of the library
         private LibraryContent _content;
@@ -33,6 +42,24 @@ namespace ChessForge
         /// </summary>
         public WebAccess.Book SelectedBook = null;
 
+        // prefix for a bookcase paragraph
+        private string _para_bookcase_ = "ParaBookcase";
+
+        // prefix for a bookcase run
+        private string _run_bookcase_ = "RunBookcase";
+
+        // prefix for a shelf paragraph
+        private string _para_shelf_ = "ParaShelf";
+
+        // prefix for a shelf run
+        private string _run_shelf_ = "RunShelf";
+
+        // prefix for a books paragraph
+        private string _para_books_ = "ParaBooks";
+
+        // separator to parse element names by
+        private char NAME_SEPAR = '_';
+
         /// <summary>
         /// Constructor. Builds the content of the Rich Text Box.
         /// </summary>
@@ -42,10 +69,43 @@ namespace ChessForge
             InitializeComponent();
             _content = content;
 
+            SetObjectIds();
             BuildTitleParagraph();
             BuildMessagesParagraph();
 
-            BuildSections();
+            BuildBookcases();
+        }
+
+        /// <summary>
+        /// Sets unique IDs for bookcase and shelf objects
+        /// </summary>
+        private void SetObjectIds()
+        {
+            char bookcaseId = 'A';
+
+            foreach (Bookcase bookcase in _content.Bookcases)
+            {
+                bookcase.Id = bookcaseId.ToString();
+
+                uint shelfId = 1;
+                foreach (Shelf shelf in bookcase.Shelves)
+                {
+                    shelf.Id = shelfId.ToString();
+                    shelf.ParentBookcaseId = bookcaseId.ToString();
+                    shelf.ShelfPathId = bookcase.Id + NAME_SEPAR + shelf.Id;
+
+                    uint bookId = 1;
+                    foreach (Book book in shelf.Books)
+                    {
+                        book.Id = bookId.ToString();
+                        book.BookPathId = shelf.ShelfPathId + NAME_SEPAR + book.Id;
+                        bookId++;
+                    }
+
+                    shelfId++;
+                }
+                bookcaseId++;
+            }
         }
 
         /// <summary>
@@ -91,154 +151,415 @@ namespace ChessForge
             UiRtbOnlineLibrary.Document.Blocks.Add(para);
         }
 
+        //**********************************************************
+        //
+        // Building the view of the content of the library.
+        // There is a Paragraph for each Bookcase followed by Paragraphs
+        // for each Shelf in that Bookcase, followed by a single Paragraph
+        // with a Run for each Book in the Shelf.
+        //
+        //**********************************************************
+
         /// <summary>
-        /// Build section paragraphs.
+        /// Build or re-builds bookcase paragraphs.
         /// </summary>
-        private void BuildSections()
+        private void BuildBookcases()
         {
-            foreach (WebAccess.Bookcase section in _content.Bookcases)
+            foreach (WebAccess.Bookcase bookcase in _content.Bookcases)
             {
-                BuildSectionParagraph(section);
+                BuildBookcaseParagraph(bookcase);
             }
         }
 
         /// <summary>
-        /// Build paragraphs for a single section.
+        /// Build paragraphs for a single bookcase.
         /// </summary>
-        /// <param name="section"></param>
-        private void BuildSectionParagraph(WebAccess.Bookcase section)
+        /// <param name="bookcase"></param>
+        private void BuildBookcaseParagraph(WebAccess.Bookcase bookcase)
         {
-            Paragraph para = new Paragraph
+            string paraName = _para_bookcase_ + NAME_SEPAR + bookcase.Id;
+
+            // do we already have this paragraph?
+            Paragraph para = RichTextBoxUtilities.FindParagraphByName(UiRtbOnlineLibrary.Document, paraName, false);
+
+            bool existed = (para != null);
+            if (para == null)
             {
-                Margin = new Thickness(20, 0, 0, 0),
+                para = new Paragraph
+                {
+                    Margin = new Thickness(20, 0, 0, 0),
+                    Name = paraName
+                };
+            }
+
+            if (!existed)
+            {
+                BuildBookcaseTitleAndDescription(para, bookcase);
+                UiRtbOnlineLibrary.Document.Blocks.Add(para);
+            }
+
+            if (!bookcase.IsExpanded && HasShelves(para))
+            {
+                ClearShelves(para, bookcase);
+            }
+            else
+            {
+                BuildShelves(para, bookcase);
+            }
+        }
+
+        /// <summary>
+        /// Build shelves paragraphs.
+        /// </summary>
+        /// <param name="bookcase"></param>
+        /// <param name="bookcaseId"></param>
+        private void BuildShelves(Paragraph bookcasePara, WebAccess.Bookcase bookcase)
+        {
+            Paragraph insertAfter = bookcasePara;
+
+            foreach (WebAccess.Shelf shelf in bookcase.Shelves)
+            {
+                insertAfter = BuildShelfParagraph(insertAfter, shelf);
+            }
+        }
+
+        /// <summary>
+        /// Build paragraphs for a single shelf.
+        /// </summary>
+        /// <param name="shelf"></param>
+        private Paragraph BuildShelfParagraph(Paragraph insertAfter, WebAccess.Shelf shelf)
+        {
+            string paraName = _para_shelf_ + NAME_SEPAR + shelf.ShelfPathId;
+
+            Paragraph para = RichTextBoxUtilities.FindParagraphByName(UiRtbOnlineLibrary.Document, paraName, false);
+
+            bool existed = (para != null);
+            if (para == null)
+            {
+                para = new Paragraph
+                {
+                    Margin = new Thickness(30, 0, 0, 0),
+                    Name = paraName
+                };
             };
 
-            Run runTitle = new Run();
-            runTitle.FontWeight = FontWeights.Bold;
-            runTitle.FontSize = 16 + Configuration.FontSizeDiff;
-            runTitle.Text = "\n" + Properties.Resources.Bookcase + " " + _bookcaseId.ToString() + ": " + section.Title;
-            para.Inlines.Add(runTitle);
+            Paragraph lastPara = para;
 
-            if (!string.IsNullOrEmpty(section.Description))
+            if (!existed)
             {
-                Run descript = new Run("\n");
-                descript.FontWeight = FontWeights.Normal;
-                descript.FontSize = 14 + Configuration.FontSizeDiff;
-                descript.Text += section.Description;
-                para.Inlines.Add(descript);
+                BuildShelfTitleAndDescription(para, shelf);
+                UiRtbOnlineLibrary.Document.Blocks.InsertAfter(insertAfter, para);
             }
 
-            UiRtbOnlineLibrary.Document.Blocks.Add(para);
-
-            BuildSubSections(section, _bookcaseId);
-            _bookcaseId++;
-        }
-
-        /// <summary>
-        /// Build subsections paragraphs.
-        /// </summary>
-        /// <param name="section"></param>
-        /// <param name="bookcaseId"></param>
-        private void BuildSubSections(WebAccess.Bookcase section, char bookcaseId)
-        {
-            uint shelfId = 1;
-
-            foreach (WebAccess.Shelf subSection in section.Shelves)
+            if (!shelf.IsExpanded && HasBooks(para))
             {
-                BuildSubSectionParagraph(subSection, bookcaseId, shelfId);
-                shelfId++;
+                RemoveBooksPara(para);
             }
-        }
-
-        /// <summary>
-        /// Build paragraphs for a single subsections.
-        /// </summary>
-        /// <param name="subSection"></param>
-        /// <param name="bookcaseId"></param>
-        /// <param name="shelfId"></param>
-        private void BuildSubSectionParagraph(WebAccess.Shelf subSection, char bookcaseId, uint shelfId)
-        {
-            Paragraph para = new Paragraph
+            else if (shelf.IsExpanded && !HasBooks(para))
             {
-                Margin = new Thickness(30, 0, 0, 0),
-            };
-
-            Run title = new Run("\n" + Properties.Resources.Shelf + " " + bookcaseId.ToString() + shelfId.ToString() + ": " + subSection.Title);
-            title.FontWeight = FontWeights.Bold;
-            title.FontSize = 14 + Configuration.FontSizeDiff;
-            para.Inlines.Add(title);
-
-            if (!string.IsNullOrEmpty(subSection.Description))
-            {
-                Run descript = new Run("\n" + subSection.Description);
-                descript.FontWeight = FontWeights.Normal;
-                descript.FontSize = 14 + Configuration.FontSizeDiff;
-                para.Inlines.Add(descript);
+                lastPara = BuildBooksParagraph(para, shelf);
             }
 
-            UiRtbOnlineLibrary.Document.Blocks.Add(para);
-
-            BuildWorkbooksParagraph(subSection.Books, bookcaseId, shelfId);
+            return lastPara;
         }
 
         /// <summary>
         /// Build a paragraph with book titles.
         /// </summary>
-        /// <param name="workbooks"></param>
+        /// <param name="books"></param>
         /// <param name="bookcaseId"></param>
         /// <param name="shelfId"></param>
-        private void BuildWorkbooksParagraph(List<WebAccess.Book> workbooks, char bookcaseId, uint shelfId)
+        private Paragraph BuildBooksParagraph(Paragraph insertAfter, Shelf shelf)
         {
+            string paraName = _para_books_ + NAME_SEPAR + shelf.ShelfPathId;
+
             Paragraph para = new Paragraph
             {
                 Margin = new Thickness(40, 0, 0, 0),
+                Name = paraName
             };
 
+            Paragraph lastPara = para;
+
             bool first = true;
-            uint bookNo = 1;
-            foreach (WebAccess.Book book in workbooks)
+            foreach (WebAccess.Book book in shelf.Books)
             {
-                string prefix = "";
                 if (first)
                 {
                     first = false;
                 }
                 else
                 {
-                    prefix = "\n";
+                    para.Inlines.Add(new Run("\n"));
                 }
 
-                prefix += bookcaseId.ToString() + shelfId.ToString() + "." + bookNo.ToString() + ": ";
-                Run rPrefix = new Run(prefix);
-                rPrefix.FontWeight = FontWeights.Bold;
-                rPrefix.FontSize = 14 + Configuration.FontSizeDiff;
-                para.Inlines.Add(rPrefix);
+                BuildBookTitleAndDescription(para, shelf, book);
+            }
+            UiRtbOnlineLibrary.Document.Blocks.InsertAfter(insertAfter, para);
 
-                Run title = new Run(book.Title);
-                title.FontWeight = FontWeights.Normal;
-                title.FontSize = 14 + Configuration.FontSizeDiff;
-                title.TextDecorations = TextDecorations.Underline;
-                title.Foreground = Brushes.Blue;
-                title.Cursor = Cursors.Hand;
-                title.MouseDown += EventBookTitle;
+            return lastPara;
+        }
 
-                _dictRunBooks[title] = book;
-                para.Inlines.Add(title);
+        //************************************************************************
+        //
+        // Title and Description Runs 
+        //
+        //************************************************************************
 
-                if (!string.IsNullOrEmpty(book.Description))
+        /// <summary>
+        /// Builds a Title and a Description Run for the Bookcase
+        /// and inserts them into the passed Paragraph.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <param name="bookcase"></param>
+        private void BuildBookcaseTitleAndDescription(Paragraph para, Bookcase bookcase)
+        {
+            Run runTitle = new Run();
+            runTitle.FontWeight = FontWeights.Bold;
+            runTitle.FontSize = 16 + Configuration.FontSizeDiff;
+            runTitle.Text = "\n" + Properties.Resources.Bookcase + " " + bookcase.Id + ": " + bookcase.Title;
+            runTitle.Name = _run_bookcase_ + NAME_SEPAR + bookcase.Id;
+            runTitle.MouseDown += EventTitleLineClicked;
+            runTitle.Cursor = Cursors.Hand;
+            para.Inlines.Add(runTitle);
+
+            if (!string.IsNullOrEmpty(bookcase.Description))
+            {
+                Run descript = new Run("\n");
+                descript.FontWeight = FontWeights.Normal;
+                descript.FontSize = 14 + Configuration.FontSizeDiff;
+                descript.Text += bookcase.Description;
+                para.Inlines.Add(descript);
+            }
+        }
+
+        /// <summary>
+        /// Builds a Title and a Description Run for the Bookcase
+        /// and inserts them into the passed Paragraph.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <param name="bookcase"></param>
+        private void BuildShelfTitleAndDescription(Paragraph para, Shelf shelf)
+        {
+            string screenId = shelf.ParentBookcaseId.ToString() + shelf.Id.ToString();
+            Run runTitle = new Run("\n" + Properties.Resources.Shelf + " " + screenId + ": " + shelf.Title);
+            runTitle.FontWeight = FontWeights.Bold;
+            runTitle.FontSize = 14 + Configuration.FontSizeDiff;
+            runTitle.Name = _run_shelf_ + NAME_SEPAR + shelf.ShelfPathId;
+            runTitle.MouseDown += EventTitleLineClicked;
+            runTitle.Cursor = Cursors.Hand;
+            para.Inlines.Add(runTitle);
+
+            if (!string.IsNullOrEmpty(shelf.Description))
+            {
+                Run descript = new Run("\n" + shelf.Description);
+                descript.FontWeight = FontWeights.Normal;
+                descript.FontSize = 14 + Configuration.FontSizeDiff;
+                para.Inlines.Add(descript);
+            }
+        }
+
+        /// <summary>
+        /// Builds a Title and a Description Run for the Book
+        /// and inserts them into the passed Paragraph.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <param name="bookcase"></param>
+        private void BuildBookTitleAndDescription(Paragraph para, Shelf shelf, Book book)
+        {
+            string prefix = shelf.ParentBookcaseId.ToString() + shelf.Id.ToString() + "." + book.Id.ToString() + ": ";
+            Run rPrefix = new Run(prefix);
+            rPrefix.FontWeight = FontWeights.Bold;
+            rPrefix.FontSize = 14 + Configuration.FontSizeDiff;
+            para.Inlines.Add(rPrefix);
+
+            Run title = new Run(book.Title);
+            title.FontWeight = FontWeights.Normal;
+            title.FontSize = 14 + Configuration.FontSizeDiff;
+            title.TextDecorations = TextDecorations.Underline;
+            title.Foreground = Brushes.Blue;
+            title.Cursor = Cursors.Hand;
+            title.MouseDown += EventBookTitle;
+
+            _dictRunBooks[title] = book;
+            para.Inlines.Add(title);
+
+            if (!string.IsNullOrEmpty(book.Description))
+            {
+                Run descript = new Run("      " + book.Description);
+                descript.FontWeight = FontWeights.Normal;
+                descript.FontSize = 14 + Configuration.FontSizeDiff;
+                descript.FontStyle = FontStyles.Italic;
+                para.Inlines.Add(descript);
+            }
+        }
+
+
+        //************************************************************************
+        //
+        // Paragraph content checks. 
+        //
+        //************************************************************************
+
+        /// <summary>
+        /// Checks if the passed bookcase paragraph is followed by a Shelf paragraph.
+        /// </summary>
+        /// <param name="bookcasePara"></param>
+        /// <returns></returns>
+        private bool HasShelves(Paragraph bookcasePara)
+        {
+            bool hasShelves = false;
+
+            bool foundPara = false;
+            foreach (Block block in UiRtbOnlineLibrary.Document.Blocks)
+            {
+                if (foundPara)
                 {
-                    Run descript = new Run("      " + book.Description);
-                    descript.FontWeight = FontWeights.Normal;
-                    descript.FontSize = 14 + Configuration.FontSizeDiff;
-                    descript.FontStyle = FontStyles.Italic;
-                    para.Inlines.Add(descript);
+                    if (block is Paragraph para)
+                    {
+                        if (para.Name != null && para.Name.StartsWith(_para_shelf_))
+                        {
+                            hasShelves = true;
+                        }
+                        break;
+                    }
                 }
-
-                bookNo++;
+                else
+                {
+                    if ((block as Paragraph) == bookcasePara)
+                    {
+                        foundPara = true;
+                    }
+                }
             }
 
-            UiRtbOnlineLibrary.Document.Blocks.Add(para);
+            return hasShelves;
         }
+
+        /// <summary>
+        /// Checks if the passed Shelf paragraph is followed by a Shelf paragraph.
+        /// </summary>
+        /// <param name="bookcasePara"></param>
+        /// <returns></returns>
+        private bool HasBooks(Paragraph shelfPara)
+        {
+            bool hasBooks = false;
+
+            bool foundPara = false;
+            foreach (Block block in UiRtbOnlineLibrary.Document.Blocks)
+            {
+                if (foundPara)
+                {
+                    if (block is Paragraph para)
+                    {
+                        if (para.Name != null && para.Name.StartsWith(_para_books_))
+                        {
+                            hasBooks = true;
+                        }
+                        break;
+                    }
+                }
+                else
+                {
+                    if ((block as Paragraph) == shelfPara)
+                    {
+                        foundPara = true;
+                    }
+                }
+            }
+
+            return hasBooks;
+        }
+
+
+        //************************************************************************
+        //
+        // Clear paragraphs methods. 
+        //
+        //************************************************************************
+
+
+        /// <summary>
+        /// Finds the requested bookcase paragraph and removes all shelf paras that follow.
+        /// </summary>
+        /// <param name="bookcasePara"></param>
+        private void ClearShelves(Paragraph bookcasePara, Bookcase bookcase)
+        {
+            bool foundPara = false;
+            List<Paragraph> parasToRemove = new List<Paragraph>();
+            foreach (Block block in UiRtbOnlineLibrary.Document.Blocks)
+            {
+                if (foundPara)
+                {
+                    if (block is Paragraph para)
+                    {
+                        if (para.Name != null && para.Name.StartsWith(_para_shelf_))
+                        {
+                            parasToRemove.Add(para);
+                        }
+                        else if (para.Name != null && para.Name.StartsWith(_para_bookcase_))
+                        {
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    if ((block as Paragraph) == bookcasePara)
+                    {
+                        foundPara = true;
+                    }
+                }
+            }
+
+            foreach (Paragraph para in parasToRemove)
+            {
+                RemoveBooksPara(para);
+                UiRtbOnlineLibrary.Document.Blocks.Remove(para);
+            }
+        }
+
+        /// <summary>
+        /// Finds the requested shelf paragraph and removes the following Books paragraphs.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <param name="shelf"></param>
+        private void RemoveBooksPara(Paragraph shelfPara)
+        {
+            bool foundPara = false;
+            Paragraph paraToRemove = null;
+            foreach (Block block in UiRtbOnlineLibrary.Document.Blocks)
+            {
+                if (foundPara)
+                {
+                    if (block is Paragraph para)
+                    {
+                        if (para.Name != null && para.Name.StartsWith(_para_books_))
+                        {
+                            paraToRemove = para;
+                        }
+                        break;
+                    }
+                }
+                else
+                {
+                    if ((block as Paragraph) == shelfPara)
+                    {
+                        foundPara = true;
+                    }
+                }
+            }
+
+            UiRtbOnlineLibrary.Document.Blocks.Remove(paraToRemove);
+        }
+
+
+        //************************************************************************
+        //
+        // Event Handlers. 
+        //
+        //************************************************************************
+
 
         /// <summary>
         /// Handles user's click on a book title.
@@ -259,6 +580,160 @@ namespace ChessForge
             }
             catch { }
         }
+
+        /// <summary>
+        /// A Run was clicked. This method will determine
+        /// the type of line clicked and perform appropriate action.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventTitleLineClicked(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                // Determine which object was clicked, change its IsExpanded state and rebuild.
+                if (sender is Run run)
+                {
+                    string id = GetObjectTypeAndId(run.Name, out LibObjectType typ);
+                    switch (typ)
+                    {
+                        case LibObjectType.BOOKCASE:
+                            Bookcase bookcase = GetBookcaseById(id);
+                            if (bookcase != null)
+                            {
+                                bookcase.IsExpanded = !bookcase.IsExpanded;
+                            }
+                            break;
+                        case LibObjectType.SHELF:
+                            Shelf shelf = GetShelfByPathId(id);
+                            if (shelf != null)
+                            {
+                                shelf.IsExpanded = !shelf.IsExpanded;
+                            }
+                            break;
+                    }
+
+                    BuildBookcases();
+                }
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// Find the Bookcase by its Id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        private Bookcase GetBookcaseById(string id)
+        {
+            Bookcase bookcase = null;
+
+            foreach (Bookcase bc in _content.Bookcases)
+            {
+                if (bc.Id == id)
+                {
+                    bookcase = bc;
+                    break;
+                }
+            }
+
+            return bookcase;
+        }
+
+        /// <summary>
+        /// Find the Shelf by its PathId.
+        /// </summary>
+        /// <param name="pathId"></param>
+        /// <returns></returns>
+        private Shelf GetShelfByPathId(string pathId)
+        {
+            Shelf shelf = null;
+
+            foreach (Bookcase bc in _content.Bookcases)
+            {
+                foreach (Shelf sh in bc.Shelves)
+                {
+                    if (sh.ShelfPathId == pathId)
+                    {
+                        shelf = sh;
+                        break;
+                    }
+                }
+            }
+
+            return shelf;
+        }
+
+
+        //************************************************************************
+        //
+        // Utilities. 
+        //
+        //************************************************************************
+
+        /// <summary>
+        /// Parses the passed name of the paragraph to determine what
+        /// type it represents and what id it has.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="typ"></param>
+        /// <returns></returns>
+        private string GetObjectTypeAndId(string name, out LibObjectType typ)
+        {
+            typ = LibObjectType.NONE;
+            string pathId = "";
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                int pos = name.IndexOf(NAME_SEPAR);
+                if (pos > 0)
+                {
+                    pathId = name.Substring(pos + 1);
+                    typ = GetObjectTypeFromString(name.Substring(0, pos));
+                }
+            }
+
+            return pathId;
+        }
+
+        /// <summary>
+        /// Based on the passed string that is a name of the Run or Paragraph,
+        /// determines the type of object.
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        private LibObjectType GetObjectTypeFromString(string s)
+        {
+            LibObjectType typ = LibObjectType.NONE;
+
+            if (!string.IsNullOrEmpty(s))
+            {
+                if (s.Contains("Bookcase"))
+                {
+                    typ = LibObjectType.BOOKCASE;
+                }
+                else if (s.Contains("Shelf"))
+                {
+                    typ = LibObjectType.SHELF;
+                }
+                else if (s.Contains("Books"))
+                {
+                    typ = LibObjectType.BOOKS;
+                }
+                else if (s.Contains("Book"))
+                {
+                    typ = LibObjectType.BOOK;
+                }
+            }
+
+            return typ;
+        }
+
+        //************************************************************************
+        //
+        // Dialog buttons click events. 
+        //
+        //************************************************************************
 
         /// <summary>
         /// User clicked close without selecting any action.

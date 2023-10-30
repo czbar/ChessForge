@@ -7,22 +7,22 @@
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
         ShowInTaskbar="True"
-        Title="PLACEHOLDER" Height="450" Width="690">
+        Title="" Height="450" Width="690">
     <Grid>
         <GroupBox x:Name="UiGbPlayers" HorizontalAlignment="Left" Height="120" Header="" Margin="12,12,0,0" VerticalAlignment="Top" Width="646">
             <Canvas>
                 <Label x:Name="UiLblWhite" Content="{x:Static p:Resources.White}" HorizontalAlignment="Left" Margin="2,1,0,0" VerticalAlignment="Top"/>
-                <TextBox x:Name="UiTbWhite" TabIndex="0" HorizontalAlignment="Left" TextWrapping="NoWrap" Text="" VerticalAlignment="Center" Width="260" Canvas.Left="63" Canvas.Top="5"/>
+                <TextBox x:Name="UiTbWhite" TabIndex="0" HorizontalAlignment="Left" TextWrapping="NoWrap" Text="" VerticalAlignment="Center" Width="260" Canvas.Left="63" Canvas.Top="5" PreviewKeyDown="UiTbWhite_PreviewKeyDown"/>
                 <Label x:Name="UiLblWhiteElo" Content="{x:Static p:Resources.Elo}" Canvas.Left="383" Canvas.Top="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 <TextBox x:Name="UiTbWhiteElo" TabIndex="1" TextWrapping="Wrap" Text="" Width="40" Canvas.Left="423" Canvas.Top="5" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 <Label x:Name="UiLblBlack" Content="{x:Static p:Resources.Black}" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="2" Canvas.Top="31"/>
-                <TextBox x:Name="UiTbBlack" TabIndex="2" HorizontalAlignment="Left" TextWrapping="NoWrap" Text="" VerticalAlignment="Center" Width="260" Canvas.Left="63" Canvas.Top="35"/>
+                <TextBox x:Name="UiTbBlack" TabIndex="2" HorizontalAlignment="Left" TextWrapping="NoWrap" Text="" VerticalAlignment="Center" Width="260" Canvas.Left="63" Canvas.Top="35" PreviewKeyDown="UiTbBlack_PreviewKeyDown"/>
                 <Label x:Name="UiLblBlackElo" Content="{x:Static p:Resources.Elo}" Canvas.Left="383" Canvas.Top="31" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 <TextBox x:Name="UiTbBlackElo" TabIndex="3" TextWrapping="Wrap" Text="" Width="40" Canvas.Left="423" Canvas.Top="35" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 <Label x:Name="UiLblEco" Content="{x:Static p:Resources.ECO}" Canvas.Left="504" Canvas.Top="18" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 <TextBox x:Name="UiTbEco" TabIndex="4" TextWrapping="Wrap" Text="" Width="40" Canvas.Left="563" Canvas.Top="22" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 <Label x:Name="UiLblEvent" Content="{x:Static p:Resources.Event}" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="2" Canvas.Top="61"/>
-                <TextBox x:Name="UiTbEvent" TabIndex="5" HorizontalAlignment="Left" TextWrapping="NoWrap" Text="" VerticalAlignment="Center" Width="400" Canvas.Left="63" Canvas.Top="66"/>
+                <TextBox x:Name="UiTbEvent" TabIndex="5" HorizontalAlignment="Left" TextWrapping="NoWrap" Text="" VerticalAlignment="Center" Width="400" Canvas.Left="63" Canvas.Top="66" PreviewKeyDown="UiTbEvent_PreviewKeyDown"/>
                 <Label x:Name="UiLblRound" Content="{x:Static p:Resources.Round}" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="503" Canvas.Top="61"/>
                 <TextBox x:Name="UiTbRound" TabIndex="6" HorizontalAlignment="Left" TextWrapping="NoWrap" Text="" VerticalAlignment="Center" Width="40" Canvas.Left="563" Canvas.Top="66"/>
             </Canvas>
