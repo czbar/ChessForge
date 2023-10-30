@@ -8,7 +8,7 @@ Description: Games from tournaments and matches.
     Shelf:World Championship 
     Description: Games from World Championship Matches
     
-	  Book: Men's World Championships
+	  Book:Men's World Championships
       Description: All games from Men's World Championship Matches and Tournaments.
       File:Tournaments/Mens World Individual Championships.pgn
 
@@ -44,11 +44,11 @@ Description:Workbooks examining theory and practice of various Openings.
       Description: Breaking symmetry when facing the Exchange Variation in the French.
       File: Openings/Black/French Exchange for Black.pgn
       
-	  Book: Stafford Gambit Traps
+	  Book:Stafford Gambit Traps
       Description: Eric Rosen's entertaining treatise on the Stafford Gambit.  Adapted from Eric's lichess study.
       File: Openings/Black/Stafford Gambit for Black.pgn
 	  
-      Book: Ragozin Defense
+      Book:Ragozin Defense
       Description: A solid addition to one's repertoire against 1.d4.
       File: Openings/Black/Ragozin for Black.pgn
 
@@ -63,7 +63,7 @@ Description: Collections of endgames and exercises.
       Description: Great selection of endgames imported from a lichess study by NoseKnowsAll@lichess.
       File: Endgames/Endgames by NoseKnowsAll.pgn
 
-      Book: Checkmate Patterns
+      Book:Checkmate Patterns
       Description: Basic checkmate patterns named and illustrated.
       File: Endgames/Checkmate Patterns.pgn
         
@@ -77,6 +77,6 @@ Description: Book fragments adapted for Chess Forge.
       Description: A small sample from the book by GM Bartek Macieja and IM Witalis Sapis.
       File: BookSamples/Chess Strategy Explained.pgn
       
-	  Book: The Complete Chess Swindler
+	  Book:The Complete Chess Swindler
       Description: A small example from the award winning book by GM. David Smerdon.
       File: BookSamples/The Complete Chess Swindler.pgn

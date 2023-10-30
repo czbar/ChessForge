@@ -18,6 +18,19 @@ namespace ChessForge
     /// </summary>
     public partial class OnlineLibraryContentDialog : Window
     {
+        /// <summary>
+        /// Enumeration for objects in the library.
+        /// </summary>
+        private enum LibObjectType
+        {
+            NONE,
+            BOOKCASE,
+            SHELF,
+            BOOK,
+            BOOKS
+        }
+
+
         // the listing of the content of the library
         private LibraryContent _content;
 
@@ -30,19 +43,22 @@ namespace ChessForge
         public WebAccess.Book SelectedBook = null;
 
         // prefix for a bookcase paragraph
-        private string _para_bookcase_ = "para_bookcase_";
+        private string _para_bookcase_ = "ParaBookcase";
 
         // prefix for a bookcase run
-        private string _run_bookcase_ = "run_bookcase_";
+        private string _run_bookcase_ = "RunBookcase";
 
         // prefix for a shelf paragraph
-        private string _para_shelf_ = "para_shelf_";
+        private string _para_shelf_ = "ParaShelf";
 
         // prefix for a shelf run
-        private string _run_shelf_ = "run_shelf_";
+        private string _run_shelf_ = "RunShelf";
 
         // prefix for a books paragraph
-        private string _para_books_ = "para_books_";
+        private string _para_books_ = "ParaBooks";
+
+        // separator to parse element names by
+        private char NAME_SEPAR = '_';
 
         /// <summary>
         /// Constructor. Builds the content of the Rich Text Box.
@@ -76,13 +92,13 @@ namespace ChessForge
                 {
                     shelf.Id = shelfId.ToString();
                     shelf.ParentBookcaseId = bookcaseId.ToString();
-                    shelf.ShelfPathId = bookcase.Id + "_" + shelf.Id;
+                    shelf.ShelfPathId = bookcase.Id + NAME_SEPAR + shelf.Id;
 
                     uint bookId = 1;
                     foreach (Book book in shelf.Books)
                     {
                         book.Id = bookId.ToString();
-                        book.BookPathId = shelf.ShelfPathId + "_" + book.Id;
+                        book.BookPathId = shelf.ShelfPathId + NAME_SEPAR + book.Id;
                         bookId++;
                     }
 
@@ -161,7 +177,7 @@ namespace ChessForge
         /// <param name="bookcase"></param>
         private void BuildBookcaseParagraph(WebAccess.Bookcase bookcase)
         {
-            string paraName = _para_bookcase_ + bookcase.Id;
+            string paraName = _para_bookcase_ + NAME_SEPAR + bookcase.Id;
 
             // do we already have this paragraph?
             Paragraph para = RichTextBoxUtilities.FindParagraphByName(UiRtbOnlineLibrary.Document, paraName, false);
@@ -182,16 +198,13 @@ namespace ChessForge
                 UiRtbOnlineLibrary.Document.Blocks.Add(para);
             }
 
-            if (bookcase.IsExpanded)
+            if (!bookcase.IsExpanded && HasShelves(para))
             {
-                if (!HasShelves(para))
-                {
-                    BuildShelves(para, bookcase);
-                }
+                ClearShelves(para, bookcase);
             }
             else
             {
-                ClearShelves(para, bookcase);
+                BuildShelves(para, bookcase);
             }
         }
 
@@ -202,9 +215,11 @@ namespace ChessForge
         /// <param name="bookcaseId"></param>
         private void BuildShelves(Paragraph bookcasePara, WebAccess.Bookcase bookcase)
         {
+            Paragraph insertAfter = bookcasePara;
+
             foreach (WebAccess.Shelf shelf in bookcase.Shelves)
             {
-                BuildShelfParagraph(shelf);
+                insertAfter = BuildShelfParagraph(insertAfter, shelf);
             }
         }
 
@@ -212,9 +227,9 @@ namespace ChessForge
         /// Build paragraphs for a single shelf.
         /// </summary>
         /// <param name="shelf"></param>
-        private Paragraph BuildShelfParagraph(WebAccess.Shelf shelf)
+        private Paragraph BuildShelfParagraph(Paragraph insertAfter, WebAccess.Shelf shelf)
         {
-            string paraName = _para_shelf_ + shelf.ShelfPathId;
+            string paraName = _para_shelf_ + NAME_SEPAR + shelf.ShelfPathId;
 
             Paragraph para = RichTextBoxUtilities.FindParagraphByName(UiRtbOnlineLibrary.Document, paraName, false);
 
@@ -228,25 +243,24 @@ namespace ChessForge
                 };
             };
 
+            Paragraph lastPara = para;
+
             if (!existed)
             {
                 BuildShelfTitleAndDescription(para, shelf);
-                UiRtbOnlineLibrary.Document.Blocks.Add(para);
+                UiRtbOnlineLibrary.Document.Blocks.InsertAfter(insertAfter, para);
             }
 
-            if (shelf.IsExpanded)
+            if (!shelf.IsExpanded && HasBooks(para))
             {
-                if (!HasBooks(para))
-                {
-                    BuildBooksParagraph(shelf);
-                }
+                RemoveBooksPara(para);
             }
-            else
+            else if (shelf.IsExpanded && !HasBooks(para))
             {
-                ClearBooks(para, shelf);
+                lastPara = BuildBooksParagraph(para, shelf);
             }
 
-            return para;
+            return lastPara;
         }
 
         /// <summary>
@@ -255,12 +269,17 @@ namespace ChessForge
         /// <param name="books"></param>
         /// <param name="bookcaseId"></param>
         /// <param name="shelfId"></param>
-        private void BuildBooksParagraph(Shelf shelf)
+        private Paragraph BuildBooksParagraph(Paragraph insertAfter, Shelf shelf)
         {
+            string paraName = _para_books_ + NAME_SEPAR + shelf.ShelfPathId;
+
             Paragraph para = new Paragraph
             {
                 Margin = new Thickness(40, 0, 0, 0),
+                Name = paraName
             };
+
+            Paragraph lastPara = para;
 
             bool first = true;
             foreach (WebAccess.Book book in shelf.Books)
@@ -276,7 +295,9 @@ namespace ChessForge
 
                 BuildBookTitleAndDescription(para, shelf, book);
             }
-            UiRtbOnlineLibrary.Document.Blocks.Add(para);
+            UiRtbOnlineLibrary.Document.Blocks.InsertAfter(insertAfter, para);
+
+            return lastPara;
         }
 
         //************************************************************************
@@ -297,8 +318,9 @@ namespace ChessForge
             runTitle.FontWeight = FontWeights.Bold;
             runTitle.FontSize = 16 + Configuration.FontSizeDiff;
             runTitle.Text = "\n" + Properties.Resources.Bookcase + " " + bookcase.Id + ": " + bookcase.Title;
-            runTitle.Name = _run_bookcase_ + bookcase.Id;
+            runTitle.Name = _run_bookcase_ + NAME_SEPAR + bookcase.Id;
             runTitle.MouseDown += EventTitleLineClicked;
+            runTitle.Cursor = Cursors.Hand;
             para.Inlines.Add(runTitle);
 
             if (!string.IsNullOrEmpty(bookcase.Description))
@@ -323,8 +345,9 @@ namespace ChessForge
             Run runTitle = new Run("\n" + Properties.Resources.Shelf + " " + screenId + ": " + shelf.Title);
             runTitle.FontWeight = FontWeights.Bold;
             runTitle.FontSize = 14 + Configuration.FontSizeDiff;
-            runTitle.Name = _run_shelf_ + shelf.ShelfPathId;
+            runTitle.Name = _run_shelf_ + NAME_SEPAR + shelf.ShelfPathId;
             runTitle.MouseDown += EventTitleLineClicked;
+            runTitle.Cursor = Cursors.Hand;
             para.Inlines.Add(runTitle);
 
             if (!string.IsNullOrEmpty(shelf.Description))
@@ -474,7 +497,7 @@ namespace ChessForge
                         {
                             parasToRemove.Add(para);
                         }
-                        else
+                        else if (para.Name != null && para.Name.StartsWith(_para_bookcase_))
                         {
                             break;
                         }
@@ -491,16 +514,17 @@ namespace ChessForge
 
             foreach (Paragraph para in parasToRemove)
             {
+                RemoveBooksPara(para);
                 UiRtbOnlineLibrary.Document.Blocks.Remove(para);
             }
         }
 
         /// <summary>
-        /// Finds the requested bookcase paragraph and removes the following Books paragraphs.
+        /// Finds the requested shelf paragraph and removes the following Books paragraphs.
         /// </summary>
         /// <param name="para"></param>
         /// <param name="shelf"></param>
-        private void ClearBooks(Paragraph shelfPara, Shelf shelf)
+        private void RemoveBooksPara(Paragraph shelfPara)
         {
             bool foundPara = false;
             Paragraph paraToRemove = null;
@@ -514,10 +538,7 @@ namespace ChessForge
                         {
                             paraToRemove = para;
                         }
-                        else
-                        {
-                            break;
-                        }
+                        break;
                     }
                 }
                 else
@@ -570,12 +591,143 @@ namespace ChessForge
         {
             try
             {
-                // TODO: determin which object was clicked, change its IsExpanded state and rebuild.
-                BuildBookcases();
+                // Determine which object was clicked, change its IsExpanded state and rebuild.
+                if (sender is Run run)
+                {
+                    string id = GetObjectTypeAndId(run.Name, out LibObjectType typ);
+                    switch (typ)
+                    {
+                        case LibObjectType.BOOKCASE:
+                            Bookcase bookcase = GetBookcaseById(id);
+                            if (bookcase != null)
+                            {
+                                bookcase.IsExpanded = !bookcase.IsExpanded;
+                            }
+                            break;
+                        case LibObjectType.SHELF:
+                            Shelf shelf = GetShelfByPathId(id);
+                            if (shelf != null)
+                            {
+                                shelf.IsExpanded = !shelf.IsExpanded;
+                            }
+                            break;
+                    }
+
+                    BuildBookcases();
+                }
             }
             catch { }
         }
 
+        /// <summary>
+        /// Find the Bookcase by its Id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        private Bookcase GetBookcaseById(string id)
+        {
+            Bookcase bookcase = null;
+
+            foreach (Bookcase bc in _content.Bookcases)
+            {
+                if (bc.Id == id)
+                {
+                    bookcase = bc;
+                    break;
+                }
+            }
+
+            return bookcase;
+        }
+
+        /// <summary>
+        /// Find the Shelf by its PathId.
+        /// </summary>
+        /// <param name="pathId"></param>
+        /// <returns></returns>
+        private Shelf GetShelfByPathId(string pathId)
+        {
+            Shelf shelf = null;
+
+            foreach (Bookcase bc in _content.Bookcases)
+            {
+                foreach (Shelf sh in bc.Shelves)
+                {
+                    if (sh.ShelfPathId == pathId)
+                    {
+                        shelf = sh;
+                        break;
+                    }
+                }
+            }
+
+            return shelf;
+        }
+
+
+        //************************************************************************
+        //
+        // Utilities. 
+        //
+        //************************************************************************
+
+        /// <summary>
+        /// Parses the passed name of the paragraph to determine what
+        /// type it represents and what id it has.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="typ"></param>
+        /// <returns></returns>
+        private string GetObjectTypeAndId(string name, out LibObjectType typ)
+        {
+            typ = LibObjectType.NONE;
+            string pathId = "";
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                int pos = name.IndexOf(NAME_SEPAR);
+                if (pos > 0)
+                {
+                    pathId = name.Substring(pos + 1);
+                    typ = GetObjectTypeFromString(name.Substring(0, pos));
+                }
+            }
+
+            return pathId;
+        }
+
+        /// <summary>
+        /// Based on the passed string that is a name of the Run or Paragraph,
+        /// determines the type of object.
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        private LibObjectType GetObjectTypeFromString(string s)
+        {
+            LibObjectType typ = LibObjectType.NONE;
+
+            if (!string.IsNullOrEmpty(s))
+            {
+                if (s.Contains("Bookcase"))
+                {
+                    typ = LibObjectType.BOOKCASE;
+                }
+                else if (s.Contains("Shelf"))
+                {
+                    typ = LibObjectType.SHELF;
+                }
+                else if (s.Contains("Books"))
+                {
+                    typ = LibObjectType.BOOKS;
+                }
+                else if (s.Contains("Book"))
+                {
+                    typ = LibObjectType.BOOK;
+                }
+            }
+
+            return typ;
+        }
 
         //************************************************************************
         //
