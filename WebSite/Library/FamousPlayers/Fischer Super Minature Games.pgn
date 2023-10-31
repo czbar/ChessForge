@@ -1,0 +1,1172 @@
+[ChessForgeWorkbook "Fischer Super Minature Games"]
+[WorkbookVersion "1.0"]
+[Guid "R50174a92e3764fe985786699069e6cb1"]
+[TrainingSide "White"]
+[StudyBoardOrientation "White"]
+[GameBoardOrientation "White"]
+[ExerciseBoardOrientation "None"]
+[White "CHESS FORGE"]
+[Black "WORKBOOK"]
+[Result "*"]
+{This PGN Workbook is optimized for viewing in Chess Forge https://sourceforge.net/projects/chessforge/ 
+Chess Forge is a Free and Open Source Windows application.}
+
+*
+
+[ChapterTitle "Chapter 1"]
+[Guid "R2ce7ec06f88f4b2a8458b23b70d41691"]
+[ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "Chapter 1"]
+
+
+ {[%eval +0.34]}  *
+
+[Guid "R2ce7ec06f88f4b2a8458b23b70d41691"]
+[ContentType "Intro"]
+[White "Chapter"]
+[Black "Introduction"]
+
+{This workbook includes all of Robert James Fischer's recorded wins in 20 moves or fewer. A set of exercises has been created based on those games (see the Exercises tab).}
+
+{[%xaml PEZsb3dEb2N1bWVudCBQYWdlUGFkZGluZz0iNSwwLDUsMCIgQWxsb3dEcm9wPSJGYWxzZSIg
+eG1sbnM9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd2luZngvMjAwNi94YW1sL3ByZXNlbnRh
+dGlvbiIgeG1sbnM6eD0iaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93aW5meC8yMDA2L3hhbWwi
+PjxQYXJhZ3JhcGggTmFtZT0iUjRmZTc0Mzg2NmE1NzQ5YTE5ODhlNWFmYzE2ZDE2OWI5IiAvPjxQYXJh
+Z3JhcGggTmFtZT0iUmNjNTA3ZjhiNDUyMTRhZDZiM2EyNTc1YWE0MTVhNTZhIj48UnVuIEZvbnRXZWln
+aHQ9Ik5vcm1hbCIgRm9udFNpemU9IjE0IiB4bWw6c3BhY2U9InByZXNlcnZlIj5UaGlzIHdvcmtib29r
+IGluY2x1ZGVzIGFsbCBvZiA8L1J1bj48UnVuIEZvbnRXZWlnaHQ9IkJvbGQiIEZvbnRTaXplPSIxNCI+
+Um9iZXJ0IEphbWVzIEZpc2NoZXI8L1J1bj48UnVuIEZvbnRXZWlnaHQ9Ik5vcm1hbCIgRm9udFNpemU9
+IjE0IiB4bWw6c3BhY2U9InByZXNlcnZlIj4ncyByZWNvcmRlZCB3aW5zIGluIDIwIG1vdmVzIG9yIGZl
+d2VyLiBBIHNldCBvZiBleGVyY2lzZXMgaGFzIGJlZW4gY3JlYXRlZCBiYXNlZCBvbiB0aG9zZSBnYW1l
+cyAoc2VlIHRoZSA8L1J1bj48UnVuIEZvbnRXZWlnaHQ9IkJvbGQiIEZvbnRTaXplPSIxNCI+RXhlcmNp
+c2VzPC9SdW4+PFJ1biBGb250V2VpZ2h0PSJOb3JtYWwiIEZvbnRTaXplPSIxNCIgeG1sOnNwYWNlPSJw
+cmVzZXJ2ZSI+IHRhYikuPC9SdW4+PC9QYXJhZ3JhcGg+PC9GbG93RG9jdW1lbnQ+ node_id=0 text=
+ fen=cm5icWtibnIvcHBwcHBwcHAvOC84LzgvOC9QUFBQUFBQUC9STkJRS0JOUiB3IEtRa3EgLSAwIDE
+= ]}
+ *
+
+[ContentType "Model Game"]
+[Event "57th US Open, Oklahoma City, Oklahoma, USA"]
+[Round "3"]
+[ECO "A07"]
+[Guid "Rec40f97a598a413cbf75321dc32f2e7a"]
+[Date "1956.07.??"]
+[White "Fischer Robert James"]
+[Black "Lapiken Peter P"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+ {[%eval +0.39]} 1. Nf3 {[%eval +0.25]}  Nf6 {[%eval +0.32]}  2. g3 {[%eval +0.16]}  
+d5 {[%eval +0.26]}  3. Bg2 {[%eval +0.26]}  Bf5 {[%eval +0.24]}  4. O-O {[%eval +0.24]}  
+e6 {[%eval +0.20]}  5. d3 {[%eval +0.21]}  c6 {[%eval +0.39]}  6. Nbd2 {[%eval +0.17]}  
+Na6 {[%eval +0.62]}  7. a3 {[%eval +0.60]}  Nc5 {[%eval +0.88]}  8. c4 {[%eval +0.40]}  
+b5 $2 {[%eval +2.30]}  (8... a5 $14 {[%eval +0.49][%cal Gc5d7,Gf5g6,Gf8e7,Ge8g8]this is the logical continuation of the Black's plan that began with 6...♞a6}  
+9. Rb1 {[%eval +0.36]}  Bg6 {[%eval +0.39]}  10. b4 {[%eval +0.39]}  axb4 {[%eval +0.45]}  
+11. axb4 {[%eval +0.38]}  Ncd7 {[%eval +0.39]}  12. Bb2 {[%eval +0.34]}  Be7 {[%eval +0.40]}  
+13. Bc3 {[%eval +0.32]}  O-O $14 {[%eval +0.37]} ) 9. Nd4 $1 {[%eval +2.04][%cal Gd4f5]}  
+Qd7 {[%eval +2.62]}  10. Nxf5 {[%eval +2.09]}  exf5 {[%eval +2.10]}  11. Nb3 $14 
+{[%eval +0.83]}  (11. b4 $16 {[%eval +2.06]would give White a bigger advantage}  
+Ne6 {[%eval +2.24]}  12. cxb5 {[%eval +2.25]}  cxb5 {[%eval +2.12]}  13. e4 {[%eval +2.26]}  
+Be7 {[%eval +2.35]}  14. exf5 {[%eval +2.21]}  Nd8 {[%eval +2.37]}  15. g4 {[%eval +2.25]}  
+h6 {[%eval +2.35]}  16. Nb3 {[%eval +2.32]}  O-O {[%eval +2.50]}  17. f4 {[%eval +2.46]}  
+Nh7 {[%eval +2.53]}  18. Qf3 $16 {[%eval +2.71][%csl Rd5]} ) 11... h6 $6 {[%eval +1.53]}  
+12. Be3 {[%eval +1.47][%csl Rc5]}  Ne6 {[%eval +1.57]}  13. Nd4 {[%eval +1.39]}  
+g6 $2 {[%eval +2.64]Black has no time for such a slow plan.}  (13... Nxd4 {[%eval +1.58]}  
+14. Bxd4 {[%eval +1.75]}  Be7 $16 {[%eval +1.67][%cal Ge8g8]} ) 14. Qb3 {[%eval +1.64]}  
+Rb8 $18 {[%eval +4.59][%assm 1]allows a devastating knight sacrifice}  (14... 
+bxc4 {[%eval +1.49]}  15. dxc4 {[%eval +1.43]}  Nc5 {[%eval +1.46]}  16. Qc2 {[%eval +1.41]}  
+Nce4 $16 {[%eval +1.50]} ) 15. Nxc6 {[%eval +4.66]}  Qxc6 {[%eval +4.50]}  16. 
+cxd5 {[%eval +4.66][%csl Rc6,Re6]}  Nc5 {[%eval +5.64]}  17. Qc3 {[%eval +5.68][%cal Gc3c6,Gc3f6]}  
+Qd6 {[%eval +6.51]}  18. Bxc5 {[%eval +6.47]}  Qxc5 {[%eval +7.02]}  19. Qxf6 {[%eval +7.16]} 
+ 1-0
+
+[ContentType "Model Game"]
+[Event "US Junior Championship, San Francisco, California, USA"]
+[Round "5"]
+[ECO "C70"]
+[Guid "R2dfee09cf922462ab4596ed040b9dbcf"]
+[Date "1957.07.??"]
+[White "Fischer Robert James"]
+[Black "Walker RG"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+ {[%eval +0.30]} 1. e4 {[%eval +0.17]}  e5 {[%eval +0.18]}  2. Nf3 {[%eval +0.17]}  
+Nc6 {[%eval +0.18]}  3. Bb5 {[%eval +0.18]}  a6 {[%eval +0.39]}  4. Ba4 {[%eval +0.39]}  
+b5 {[%eval +0.42]}  5. Bb3 {[%eval +0.39]}  Na5 $6 {[%eval +0.62]}  6. O-O $5 {[%eval +0.57]}  
+(6. Nxe5 {[%eval +0.18]}  Nxb3 {[%eval +0.19]}  7. axb3 {[%eval +0.21]}  Qg5 {[%eval +0.21][%csl Rg2,Re5]}  
+8. Nf3 {[%eval +0.15]}  Qxg2 {[%eval +0.17]}  9. Rg1 $14 {[%eval +0.12]} ) 6... 
+Nxb3 {[%eval +0.64]}  7. axb3 {[%eval +0.67]}  d6 {[%eval +0.68]}  8. d4 {[%eval +0.66]}  
+f6 {[%eval +0.70]}  9. Nh4 {[%eval +0.22]An attempt to refute Black's concept of defense by pressing on the weakened f5- and g6-squares.}  
+Ne7 {[%eval +0.28]}  10. Nc3 {[%eval +0.20]}  Be6 {[%eval +0.95]}  11. Be3 {[%eval +0.78]}  
+g5 {[%eval +1.04]}  12. Qf3 {[%eval +0.44]}  Bg7 $2 {[%eval +1.57]}  (12... gxh4 
+{[%eval +0.92]}  13. Qxf6 {[%eval +1.01]}  Qd7 {[%eval +0.87]}  (13... Rg8 {[%eval +2.67]}  
+14. Qxe6 $16 {[%eval +2.32]} ) 14. d5 {[%eval +0.84]}  Bh3 {[%eval +0.97]}  
+(14... Bf7 {[%eval +3.57]}  15. Qxh8 $18 {[%eval +3.53]} ) 15. gxh3 {[%eval +0.84]}  
+Qxh3 {[%eval +0.84]}  16. Kh1 {[%eval +0.47]}  Bg7 {[%eval +0.41]}  17. Qg5 {[%eval +0.44]}  
+Qf3+ {[%eval +0.81]}  18. Qg2 {[%eval +0.79]}  Qxg2+ {[%eval +0.71]}  19. Kxg2 {[%eval +0.69]}  
+Kd7 $14 {[%eval +0.91]} ) 13. dxe5 {[%eval +0.69]}  dxe5 $2 {[%eval +2.44]}  
+(13... gxh4 {[%eval +0.63]}  14. exf6 {[%eval +0.57]}  O-O {[%eval +0.60]}  15. 
+fxe7 {[%eval +0.65]}  Qxe7 $14 {[%eval +0.56]} ) 14. Nf5 {[%eval +2.80]}  Bxf5 {[%eval +2.92]}  
+15. exf5 {[%eval +2.84]}  O-O {[%eval +2.90]}  16. Rad1 {[%eval +2.67]}  Qc8 {[%eval +2.67]}  
+17. Bc5 {[%eval +2.74][%csl Re7]}  Nxf5 $2 $18 {[%eval +3.65]}  (17... Rf7 {[%eval +2.87]}  
+18. Bxe7 {[%eval +2.78]}  Rxe7 {[%eval +2.88]}  19. Ne4 $16 {[%eval +2.89]} ) 
+18. Bxf8 {[%eval +3.64]}  Bxf8 {[%eval +4.76]}  19. Nd5 {[%eval +5.20][%cal Gf3f6][%csl Rf6]}  
+Kg7 {[%eval +5.60]}  20. g4 {[%eval +5.59][%cal Gf3f6][%csl Rf5]}  1-0
+
+[ContentType "Model Game"]
+[Event "US Championship, New York, USA"]
+[Round "8"]
+[ECO "B01"]
+[Guid "R29936bbe88204f62a0d61069cea17619"]
+[Date "1959.12.??"]
+[White "Fischer Robert James"]
+[Black "Seidman Herbert"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+ {[%eval +0.36]} 1. e4 {[%eval +0.16]}  d5 {[%eval +0.73]}  2. exd5 {[%eval +0.66]}  
+Qxd5 {[%eval +0.64]}  3. Nc3 {[%eval +0.61]}  Qa5 {[%eval +0.64]}  4. d4 {[%eval +0.65]}  
+Nf6 {[%eval +0.78]}  5. Nf3 {[%eval +0.66]}  Nc6 {[%eval +0.86]}  6. d5 {[%eval +0.61]}  
+Nb4 {[%eval +0.60]}  7. Bb5+ {[%eval +0.35]}  c6 {[%eval +0.49]}  8. dxc6 {[%eval +0.62]}  
+bxc6 {[%eval +0.52]}  9. Ba4 {[%eval +0.60]}  Ba6 {[%eval +4.45][%assm 1]loses a piece}  
+(9... Ne4 {[%eval +0.72]}  10. a3 {[%eval +0.57]}  Nxc3 {[%eval +0.69]}  11. 
+axb4 {[%eval +0.78]}  Qxa4 {[%eval +0.79]}  12. Rxa4 {[%eval +0.74]}  Nxd1 $14 {[%eval +0.78]} 
+) 10. a3 {[%eval +4.39][%csl Rb4,Rc6]}  Rd8 {[%eval +4.67][%csl Rd1]}  11. Bd2 {[%eval +4.57][%csl Rb4,Rc6]}  
+Rd6 {[%eval +5.66]}  12. axb4 {[%eval +5.78][%cal Ga1a6]}  Qf5 {[%eval +6.07]}  
+13. Bb3 {[%eval +5.50][%csl Ra6]}  Ne4 {[%eval +6.64][%cal Gf5f2][%csl Rd2,Rf2]} 
+ 14. Rxa6 {[%eval +6.63]}  Rxd2 {[%eval +6.49]}  15. Qa1 {[%eval +6.48]}  (15. 
+Nxd2 $4 {[%eval -#1]}  Qxf2# {[%eval #]} ) 15... Nxc3 {[%eval +6.45]}  16. bxc3 {[%eval +6.52]}  
+Rd6 {[%eval +6.63]}  17. O-O {[%eval +6.78]}  1-0
+
+[ContentType "Model Game"]
+[Event "XIV Chess Olympiad, Leipzig, Germany"]
+[Round "1"]
+[ECO "E51"]
+[Guid "R7ebf0e9555b9411cb9333e3313426ee2"]
+[Date "1960.10.??"]
+[White "Ghitescu Theodor"]
+[Black "Fischer Robert James"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "0-1"]
+
+
+ {[%eval +0.34]} 1. d4 {[%eval +0.19]}  Nf6 {[%eval +0.21]}  2. c4 {[%eval +0.22]}  
+e6 {[%eval +0.22]}  3. Nc3 {[%eval +0.18]}  Bb4 {[%eval +0.14]}  4. e3 {[%eval +0.10]}  
+O-O {[%eval +0.18]}  5. Bd3 {[%eval +0.12]}  d5 {[%eval +0.10]}  6. Nf3 {[%eval +0.04]}  
+Nc6 {[%eval +0.34]}  7. O-O {[%eval +0.32]}  dxc4 {[%eval +0.32]}  8. Bxc4 {[%eval +0.36]}  
+Bd6 {[%eval +0.55]}  9. Bb5 {[%eval +0.22]}  e5 {[%eval +0.34]}  10. Bxc6 {[%eval +0.24]}  
+exd4 {[%eval +0.31]}  11. exd4 {[%eval +0.21]}  bxc6 {[%eval +0.23]}  12. Bg5 {[%eval +0.19]}  
+Re8 {[%eval +0.35]}  13. Qd3 {[%eval +0.11]}  c5 {[%eval +0.33][%cal Gd8d3]}  
+14. dxc5 {[%eval -5.31][%assm 1]}  (14. Rfe1 {[%eval +0.27]}  Rxe1+ {[%eval +0.31]}  
+15. Rxe1 {[%eval +0.26]}  Bb7 {[%eval +0.34]}  16. Ne4 {[%eval +0.25]}  Bxe4 {[%eval +0.21]}  
+17. Rxe4 {[%eval +0.23]}  Be7 {[%eval +0.31]}  18. Re5 {[%eval +0.24]}  cxd4 {[%eval +0.28]}  
+19. Qxd4 {[%eval +0.29]}  h6 {[%eval +0.18]}  20. Qxd8+ {[%eval +0.23]}  Rxd8 {[%eval +0.14]}  
+21. Rxe7 {[%eval +0.20]}  hxg5 {[%eval +0.18]}  22. Kf1 {[%eval +0.21]}  g4 {[%eval +0.17]}  
+23. Ne5 {[%eval +0.18]}  Rd5 $14 {[%eval +0.21]} ) 14... Bxh2+ {[%eval -5.33]wining the white queen} 
+ 0-1
+
+[ContentType "Model Game"]
+[Event "XV Chess Olympiad, Varna, Bulgaria"]
+[Round "10"]
+[ECO "B01"]
+[Guid "Re589be70be484899b3126fe950c2abb1"]
+[Date "1962.09.??"]
+[White "Fischer Robert James"]
+[Black "Robatsch Karl"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+ {[%eval +0.33]} 1. e4 {[%eval +0.25]}  d5 {[%eval +0.82]}  2. exd5 {[%eval +0.67]}  
+Qxd5 {[%eval +0.65]}  3. Nc3 {[%eval +0.64]}  Qd8 {[%eval +0.76]}  4. d4 {[%eval +0.78]}  
+g6 {[%eval +0.82]}  5. Bf4 {[%eval +0.83]}  Bg7 {[%eval +0.78]}  6. Qd2 {[%eval +0.64]}  
+Nf6 {[%eval +0.85]}  (6... Qxd4 {[%eval +1.38]}  7. Qxd4 {[%eval +1.43]}  Bxd4 {[%eval +1.39]}  
+8. Nb5 {[%eval +0.52][%csl Rd4,Rc7]}  Bb6 {[%eval +0.52]}  9. Nxc7+ {[%eval +0.37]}  
+Bxc7 {[%eval +0.40]}  10. Bxc7 $14 {[%eval +0.35]The bishop pair gives White a slight advantage.} 
+)  (6... Bxd4 {[%eval +2.81]}  7. O-O-O {[%eval +3.76][%csl Rd4]} ) 7. O-O-O {[%eval +0.67]}  
+c6 {[%eval +0.71]}  8. Bh6 {[%eval +0.58]}  O-O $2 {[%eval +1.86]}  (8... Bxh6 {[%eval +0.61]}  
+9. Qxh6 {[%eval +0.58]}  Be6 {[%eval +0.63]}  10. Nf3 {[%eval +0.62]}  Qd6 {[%eval +0.66]}  
+11. g3 {[%eval +0.53]}  Nbd7 {[%eval +0.50]}  12. Bg2 {[%eval +0.39]}  O-O-O $14 
+{[%eval +0.55]} ) 9. h4 {[%eval +1.65]}  Qa5 {[%eval +2.62]}  10. h5 {[%eval +2.40]}  
+gxh5 {[%eval +3.53]}  11. Bd3 {[%eval +3.53]}  Nbd7 {[%eval +3.83]}  12. Nge2 {[%eval +3.08]}  
+Rd8 {[%eval +3.13]}  13. g4 {[%eval +3.85]}  Nf8 {[%eval +4.01]}  (13... Nxg4 {[%eval +3.64]}  
+14. Rdg1 {[%eval +3.58]}  Ndf6 {[%eval +3.74]}  15. Bxg7 {[%eval +3.59]}  Kxg7 {[%eval +3.77]}  
+16. f3 {[%eval +3.63]}  Rg8 {[%eval +3.84]}  17. fxg4 {[%eval +3.61]}  Bxg4 {[%eval +3.67]}  
+18. Nf4 $18 {[%eval +3.59]} )  (13... hxg4 {[%eval +7.00]}  14. Bxg7 {[%eval +6.76]}  
+Kxg7 {[%eval +#8]}  15. Qh6+ {[%eval +#7]}  Kh8 {[%eval +#7]}  16. Bxh7 {[%eval +#6]}  
+Nf8 {[%eval +#6]}  17. Bd3+ {[%eval +#5]}  Kg8 {[%eval +#1]}  18. Qh8# {[%eval #]} 
+) 14. gxh5 {[%eval +3.31]}  Ne6 {[%eval +4.43]}  15. Rdg1 {[%eval +4.55][%cal Gg1g8,Gh6g7,Gh5h6][%csl Rg7]}  
+Kh8 {[%eval +4.61]}  16. Bxg7+ {[%eval +4.53]}  Nxg7 {[%eval +4.60]}  17. Qh6 {[%eval +4.61][%csl Rg7]}  
+Rg8 {[%eval +4.71]}  18. Rg5 {[%eval +4.65][%csl Ra5]}  Qd8 {[%eval +4.72]}  19. 
+Rhg1 {[%eval +4.73][%csl Rg7]}  Nf5 {[%eval +5.71]}  20. Bxf5 {[%eval +5.81][%csl Rg8,Rh7]} 
+ 1-0
+
+[ContentType "Model Game"]
+[Event "XV Chess Olympiad, Varna, Bulgaria"]
+[Round "6"]
+[ECO "E26"]
+[Guid "R57850e885d1c4647879013f2e1c0e0b9"]
+[Date "1962.09.??"]
+[White "Rivera Donato"]
+[Black "Fischer Robert James"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "0-1"]
+
+
+ {[%eval +0.30]} 1. d4 {[%eval +0.32]}  Nf6 {[%eval +0.28]}  2. c4 {[%eval +0.26]}  
+e6 {[%eval +0.28]}  3. Nc3 {[%eval +0.24]}  Bb4 {[%eval +0.23]}  4. e3 {[%eval +0.15]}  
+d5 {[%eval +0.24]}  5. a3 {[%eval +0.28]}  Bxc3+ {[%eval +0.25]}  6. bxc3 {[%eval +0.34]}  
+c5 {[%eval +0.35]}  7. Bd3 {[%eval +0.11]}  (7. cxd5 {[%eval +0.35]the main 
+line}  exd5 {[%eval +0.26]}  8. Bd3 {[%eval +0.33]}  b6 {[%eval +0.35]}  9. Ne2 {[%eval +0.32]}  
+O-O {[%eval +0.32]}  10. O-O {[%eval +0.31]}  Ba6 {[%eval +0.36]}  11. Bxa6 {[%eval +0.32]}  
+Nxa6 $14 {[%eval +0.29]} ) 7... dxc4 {[%eval +0.14]}  8. Bxc4 {[%eval +0.12]}  
+Qc7 {[%eval +0.15][%cal Gc7c4]}  9. Bb3 {[%eval -0.30]}  b6 {[%eval -0.21]}  10. 
+Ne2 {[%eval -0.21]}  O-O {[%eval -0.13]}  11. Bb2 {[%eval -0.27]}  Nc6 {[%eval -0.29]}  
+12. O-O {[%eval -0.28]}  Na5 {[%eval -0.17]}  13. Ng3 {[%eval -0.31]}  Bb7 {[%eval -0.11]}  
+14. Rc1 {[%eval -3.14][%assm 1]gives up a piece as 14...♛c6 creates double threat of the checkmate on g2 followed by the attack on b-file bishops.}  
+(14. Ba2 {[%eval -0.27]}  Qc6 {[%eval -0.38]}  15. f3 {[%eval -0.35]}  Ba6 {[%eval -0.32]}  
+16. Re1 {[%eval -0.34]}  Bc4 {[%eval -0.34]}  17. e4 {[%eval -0.32]}  Rfd8 $15 {[%eval -0.28]} 
+) 14... Qc6 {[%eval -2.17][%cal Gc6b5,Gb5b2,Gc6g2][%csl Rg2,Rb3,Rb2]}  15. f3 {[%eval -4.11]}  
+Qb5 {[%eval -4.29]}  16. Ba4 {[%eval -4.95]}  Qxb2 {[%eval -4.80]}  0-1
+
+[ContentType "Model Game"]
+[Event "Exhibition Game, New York, USA"]
+[Round "1"]
+[ECO "C52"]
+[Guid "Rd556763f01dc40b8b29cb2035289afc5"]
+[Date "1963.03.??"]
+[White "Fischer Robert James"]
+[Black "Fine Reuben"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+ {[%eval +0.35]} 1. e4 {[%eval +0.21]}  e5 {[%eval +0.16]}  2. Nf3 {[%eval +0.17]}  
+Nc6 {[%eval +0.24]}  3. Bc4 {[%eval +0.18]}  Bc5 {[%eval +0.17]}  4. b4 {[%eval -0.01]}  
+Bxb4 {[%eval -0.01]}  5. c3 {[%eval -0.02]}  Ba5 {[%eval -0.16]}  6. d4 {[%eval -0.27]}  
+exd4 {[%eval +0.03]}  7. O-O {[%eval -0.12]}  dxc3 $2 {[%eval +0.50]Taking the third pawn is very risky. White has a strong initiative.}  
+8. Qb3 {[%eval +0.46][%csl Rf7]}  Qe7 {[%eval +1.44]}  9. Nxc3 {[%eval +1.56][%csl Rd5]}  
+Nf6 $2 {[%eval +3.46]}  (9... Bxc3 {[%eval +1.46]}  10. Qxc3 {[%eval +1.44]}  
+Nf6 {[%eval +1.41]}  11. Ba3 {[%eval +1.55]}  d6 {[%eval +1.57]}  12. e5 {[%eval +1.54]}  
+Ne4 {[%eval +1.49][%csl Rc3]}  13. Qc2 {[%eval +1.71]}  Nc5 {[%eval +1.75]}  14. 
+Rfe1 {[%eval +1.84]}  Be6 {[%eval +1.78]}  15. h4 {[%eval +1.97]}  O-O-O $16 {[%eval +1.79]} 
+) 10. Nd5 {[%eval +3.53]}  Nxd5 {[%eval +3.67]}  11. exd5 {[%eval +3.65][%csl Rc6]}  
+Ne5 {[%eval +4.20]}  12. Nxe5 {[%eval +4.32]}  Qxe5 {[%eval +4.45]}  13. Bb2 {[%eval +4.46][%cal Gb2h8,Gc4f7]}  
+Qg5 {[%eval +4.75]}  14. h4 {[%eval +4.83]}  Qxh4 {[%eval +7.07]}  15. Bxg7 {[%eval +7.01]}  
+Rg8 {[%eval +#9]}  16. Rfe1+ {[%eval +#8]}  Kd8 {[%eval +#8]}  17. Qg3 {[%eval +#7]Black cannot defend against the checkmate.} 
+ 1-0
+
+[ContentType "Model Game"]
+[Event "Western Open, Bay City, Michigan, USA"]
+[Round "1"]
+[ECO "C67"]
+[Guid "Rcd22b743287d430ca8102cb51e132292"]
+[Date "1963.07.??"]
+[White "Fischer Robert James"]
+[Black "Fuller John A"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+ {[%eval +0.28]} 1. e4 {[%eval +0.19]}  e5 {[%eval +0.17]}  2. Nf3 {[%eval +0.17]}  
+Nc6 {[%eval +0.17]}  3. Bb5 {[%eval +0.17]}  Nf6 {[%eval +0.15]}  4. O-O {[%eval +0.16]}  
+Nxe4 {[%eval +0.19]}  5. d4 {[%eval +0.10]}  Nd6 {[%eval +0.14]}  6. Bg5 {[%eval -0.12]Not the best move, allowing Black to equalize.}  
+(6. Bxc6 {[%eval +0.19]}  bxc6 {[%eval +0.92]}  7. dxe5 {[%eval +0.88]}  Nf5 {[%eval +0.84]}  
+8. Bg5 {[%eval +0.86]}  Be7 {[%eval +0.89]}  9. Bxe7 {[%eval +0.87]}  Nxe7 {[%eval +0.89]}  
+10. Nc3 {[%eval +0.87]}  O-O {[%eval +0.84]}  11. Ne4 $14 {[%eval +0.86]} ) 6... 
+Be7 {[%eval -0.09]}  7. Bxe7 {[%eval -0.14]}  Qxe7 {[%eval -0.09]}  8. Bxc6 {[%eval -0.16]}  
+dxc6 {[%eval -0.07]}  9. dxe5 {[%eval -0.18]}  Nf5 {[%eval -0.09]}  10. Nc3 {[%eval -0.27]}  
+Be6 {[%eval 0.00]}  11. Qd2 {[%eval -0.05]}  Rd8 {[%eval 0.00]}  12. Qf4 {[%eval 0.00]}  
+O-O $11 {[%eval 0.00]Black has fully equalized.}  13. Ne4 {[%eval 0.00]}  h6 {[%eval -0.03]}  
+14. h4 {[%eval -0.39]}  Nd4 {[%eval +2.28][%assm 1]blunders an exchange}  (14... 
+c5 {[%eval -0.23]}  15. a3 {[%eval -0.25]}  b6 {[%eval -0.21]}  16. h5 {[%eval -0.24]}  
+Bc8 {[%eval -0.21]}  17. c3 {[%eval -0.30]}  Qe6 {[%eval -0.30]}  18. Rfe1 {[%eval -0.35]}  
+Ne7 $15 {[%eval -0.27]} ) 15. Nxd4 {[%eval +2.51][%cal Ge4f6,Gf4d4]}  Rxd4 {[%eval +2.52]}  
+16. Nf6+ {[%eval +2.52]}  Qxf6 {[%eval +2.54]}  17. Qxd4 {[%eval +2.53]}  Rd8 {[%eval +3.10]}  
+18. Qe4 {[%eval +2.82][%cal Ge5f6][%csl Rf6]}  Bd5 $18 {[%eval +5.49][%assm 1]gives up a full piece leaving White up a a rook}  
+(18... Qe7 {[%eval +2.78]}  19. Rad1 {[%eval +2.68]}  Re8 {[%eval +2.75]}  20. 
+Rfe1 {[%eval +2.74]}  a5 {[%eval +2.75]}  21. a3 $16 {[%eval +2.77]} ) 19. Qxd5 {[%eval +5.42]} 
+ 1-0
+
+[ContentType "Model Game"]
+[Event "Manhattan Chess Club Blitz, New York, USA"]
+[Round ""]
+[ECO "C41"]
+[Guid "Rdb5d6e7160dd4cf0b0eb8272a4207e86"]
+[Date "1963.??.??"]
+[White "Fischer, Robert James"]
+[Black "Fine Reuben"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+ {[%eval +0.31]} 1. e4 {[%eval +0.25]}  e5 {[%eval +0.18]}  2. Nf3 {[%eval +0.18]}  
+d6 {[%eval +0.56]}  3. d4 {[%eval +0.55]}  Nd7 {[%eval +0.71]}  4. Bc4 {[%eval +0.56]}  
+c6 {[%eval +0.83]}  5. O-O {[%eval +0.83]}  Be7 {[%eval +1.17]}  6. dxe5 {[%eval +1.11]}  
+dxe5 {[%eval +1.16]}  7. Qe2 {[%eval +0.39]}  Ngf6 {[%eval +0.65]}  8. Rd1 {[%eval +0.98]}  
+Qc7 $2 {[%eval +2.07]}  (8... b5 {[%eval +0.78]}  9. Bb3 {[%eval +0.82]}  Qa5 {[%eval +0.76]}  
+10. Bd2 {[%eval +0.74]}  Qb6 {[%eval +0.80]}  11. a4 {[%eval +0.76]}  bxa4 {[%eval +0.75]}  
+12. Bxa4 {[%eval +0.75]}  a5 {[%eval +0.96]}  13. Na3 {[%eval +0.96]}  Ba6 {[%eval +0.83]}  
+14. Nc4 {[%eval +0.78]}  Qc7 {[%eval +0.85]}  15. Qd3 {[%eval +0.73]}  O-O $14 {[%eval +0.75]} 
+) 9. Ng5 {[%eval +2.04][%csl Rf7]}  O-O {[%eval +2.48]}  10. Bxf7+ {[%eval +2.39][%cal Ge2c4,Gc4f7,Yg5e6,Ye6f8]Here Black resigned as White wins material.}  
+Rxf7 {[%eval +2.41]}  (10... Kh8 {[%eval +3.69]}  11. Ne6 {[%eval +3.71]}  Qb6 {[%eval +3.76]}  
+12. Nxf8 {[%eval +3.70]} ) 11. Qc4 {[%eval +2.41]}  Nf8 {[%eval +2.41]}  12. 
+Qxf7+ {[%eval +2.43]}  1-0
+
+[ContentType "Model Game"]
+[Event "US Championship, New York, USA"]
+[Round "6"]
+[ECO "B19"]
+[Guid "Re4c302d0dc7d43b896f43e9285b68717"]
+[Date "1963.12.??"]
+[White "Fischer Robert James"]
+[Black "Steinmeyer Robert"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+ {[%eval +0.34]} 1. e4 {[%eval +0.17]}  c6 {[%eval +0.22]}  2. d4 {[%eval 
++0.23]}  d5 {[%eval +0.26]}  3. Nc3 {[%eval +0.20]}  dxe4 {[%eval +0.20]}  4. 
+Nxe4 {[%eval +0.21]}  Bf5 {[%eval +0.21]}  5. Ng3 {[%eval +0.21]}  Bg6 {[%eval +0.24]}  
+6. Nf3 {[%eval +0.20]}  Nf6 {[%eval +0.45]}  7. h4 {[%eval +0.36]}  h6 {[%eval +0.39]}  
+8. Bd3 {[%eval +0.05]}  Bxd3 {[%eval +0.09]}  9. Qxd3 {[%eval +0.12]}  e6 {[%eval +0.07]}  
+10. Bd2 {[%eval +0.09]}  Nbd7 {[%eval +0.18]}  11. O-O-O {[%eval +0.19]}  Qc7 {[%eval +0.35]}  
+12. c4 {[%eval -0.16]}  O-O-O {[%eval +0.40]}  13. Bc3 {[%eval +0.23]}  Qf4+ {[%eval +0.89]}  
+14. Kb1 {[%eval +0.86]}  Nc5 $2 {[%eval +2.43]}  (14... c5 {[%eval +0.79][%csl Rd4]}  
+15. Qe2 {[%eval +0.74]}  cxd4 {[%eval +1.15]}  16. Rxd4 {[%eval +1.01][%csl 
+Rf4]}  Qc7 {[%eval +0.99]}  17. c5 {[%eval +1.02]}  Nd5 {[%eval +0.88][%csl 
+Rc3]}  18. Rc1 {[%eval +0.83]}  Nxc3+ {[%eval +0.97]}  19. Rxc3 {[%eval +0.92]}  
+Kb8 {[%eval +0.83]}  20. Ne4 {[%eval +1.00]}  Be7 {[%eval +0.92]}  21. Nd6 {[%eval +0.70]}  
+Nxc5 {[%eval +1.13]}  22. Nxf7 {[%eval +1.10]}  Rxd4 {[%eval +1.11]}  23. Nxd4 {[%eval +1.12]}  
+Rc8 {[%eval +1.10]}  24. Nxe6 {[%eval +1.13]}  Qd7 {[%eval +1.14]}  25. Qe5+ {[%eval +1.21]}  
+Ka8 {[%eval +1.24]}  26. Nxc5 {[%eval +1.24]}  Bxc5 {[%eval +1.31][%csl Rf7]}  
+27. Nd6 {[%eval +1.34]}  Bxd6 {[%eval +1.35]}  28. Qxd6 {[%eval +1.29]}  Qe8 {[%eval +1.39]}  
+29. Rxc8+ {[%eval +1.39]}  Qxc8 $14 {[%eval +1.25]} ) 15. Qc2 {[%eval +2.47][%cal Gf3e5][%csl Rc5,Rf7]}  
+Nce4 {[%eval +2.50]}  16. Ne5 {[%eval +2.60][%csl Rf7]}  Nxf2 $2 {[%eval +3.87]} 
+ (16... Nxc3+ {[%eval +2.36]offered a stronger resistance}  17. bxc3 {[%eval +2.42][%csl Rf7]}  
+Rg8 {[%eval +2.81]}  18. Nxf7 {[%eval +2.16]}  Re8 {[%eval +2.36]}  19. Ne5 {[%eval +2.30]}  
+g5 {[%eval +2.35]}  20. hxg5 {[%eval +2.39]}  Qxg5 {[%eval +2.35]}  21. Ka1 {[%eval +2.30]}  
+Rg7 {[%eval +2.27]}  22. c5 {[%eval +2.53]}  Kb8 $16 {[%eval +2.57]} ) 17. Rdf1 
+$18 {[%eval +4.22][%cal Gf1f4][%csl Rf2]}  1-0
+
+[ContentType "Model Game"]
+[Event "Exhibition Simultaneous Game, Cleveland, Ohio, USA"]
+[Round ""]
+[ECO "A00"]
+[Guid "R6f06317d57bb4efd82bf009e1b2165ad"]
+[Date "1964.03.??"]
+[White "Fischer Robert James"]
+[Black "Gloger J."]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+ {[%eval +0.36]} 1. b4 {[%eval -0.42]}  e5 {[%eval -0.25]}  2. Bb2 {[%eval -0.29]}  
+f6 {[%eval -0.08]}  3. e4 {[%eval -0.70]}  Bxb4 {[%eval -0.67]}  4. Bc4 {[%eval -0.64]}  
+Ne7 {[%eval -0.66]}  5. Qh5+ {[%eval -0.80]}  Ng6 {[%eval +0.21]}  6. f4 {[%eval -0.12]}  
+exf4 {[%eval -0.19]}  7. Nf3 {[%eval -1.11]}  Nc6 {[%eval -0.10]}  8. Nc3 {[%eval -0.83]}  
+Bxc3 {[%eval -0.68]}  9. Bxc3 {[%eval -0.81]}  d6 {[%eval -0.25]}  10. Nh4 {[%eval -0.25]}  
+Ne7 $2 $14 {[%eval +0.84]A better option was 10...Qe7 =+}  11. Nf5 $2 {[%eval -0.76][%csl Rg7]Castling 10... 0-0 was stronger.}  
+Kf8 $2 $14 {[%eval +1.45]}  (11... d5 $1 $15 {[%eval -0.69]} ) 12. O-O {[%eval +0.76]}  
+Qe8 $2 $18 {[%eval +3.23]blocks the escape route for the black king and creates checkmating opportunities for White}  
+(12... d5 {[%eval +1.02]}  13. Bb3 {[%eval +0.79]}  Be6 {[%eval +0.71]}  14. 
+Rae1 {[%eval +0.86]}  a5 {[%eval +0.67]}  15. Nxe7 {[%eval +0.52]}  Qxe7 {[%eval +0.49]}  
+16. Bd4 {[%eval +0.46]}  Bf7 {[%eval +0.53]}  17. exd5 {[%eval +0.54]}  Qd7 {[%eval +0.59]}  
+18. c4 {[%eval +0.45]}  Kg8 {[%eval +0.60]}  19. Bd1 {[%eval +0.57]}  Ne5 {[%eval +0.57]}  
+20. Qh4 {[%eval +0.56]}  Ng6 {[%eval +0.67]}  21. Qg4 {[%eval +0.54]}  Qxg4 {[%eval +0.58]}  
+22. Bxg4 $14 {[%eval +0.45]} ) 13. Bxf6 {[%eval +3.22]}  Bxf5 {[%eval +3.14]}  
+(13... gxf6 {[%eval +#1]}  14. Qh6# {[%eval #]} ) 14. exf5 {[%eval +3.27]}  d5 {[%eval +5.86][%assm 1]}  
+(14... Ne5 {[%eval +9.02]}  15. Bxg7+ {[%eval +8.49]}  Kxg7 {[%eval +7.56]}  16. 
+Qg5+ {[%eval +10.66]}  N5g6 {[%eval +#2]}  (16... Kf8 {[%eval +#1]}  17. Qh6# {[%eval #]} 
+) 17. f6+ {[%eval +#1]}  Kf8 {[%eval +#1]}  18. Qh6# {[%eval #]} ) 15. fxg6 {[%eval +5.86]}  
+gxf6 {[%eval +5.89]}  16. Qh6+ {[%eval +5.76]}  Kg8 {[%eval +5.69]}  17. g7 {[%eval +5.87]} 
+ 1-0
+
+[ContentType "Model Game"]
+[Event "Exhibition Simultaneous Game, Davis, California, USA"]
+[Round ""]
+[ECO "B57"]
+[Guid "R4f3df92eefcf4630b5f9c05146a729aa"]
+[Date "1964.04.??"]
+[White "Fischer Robert James"]
+[Black "Wilkerson Max"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+ {[%eval +0.33]} 1. e4 {[%eval +0.25]}  c5 {[%eval +0.37]}  2. Nf3 {[%eval +0.33]}  
+Nc6 {[%eval +0.42]}  3. d4 {[%eval +0.26]}  cxd4 {[%eval +0.34]}  4. Nxd4 {[%eval +0.32]}  
+Nf6 {[%eval +0.37]}  5. Nc3 {[%eval +0.28]}  d6 {[%eval +0.41]}  6. Bc4 {[%eval +0.36]}  
+g6 {[%eval +0.50]}  7. Nxc6 {[%eval +0.54]}  bxc6 {[%eval +0.54]}  8. e5 {[%eval +0.47]}  
+Nd7 {[%eval +0.84]}  9. exd6 {[%eval +0.96]}  exd6 {[%eval +1.20]}  10. O-O {[%eval +0.93]}  
+d5 $18 {[%eval +5.35][%assm 1]}  (10... Ne5 {[%eval +1.01]}  11. Re1 {[%eval +1.05]}  
+Be7 {[%eval +1.02]}  12. Bb3 {[%eval +0.93]}  O-O {[%eval +0.98]}  13. Bf4 {[%eval +0.92]}  
+Bf5 {[%eval +1.00]}  14. Qd2 {[%eval +0.94]}  Re8 {[%eval +0.96]}  15. h3 {[%eval +0.95]}  
+Bf8 {[%eval +1.04]}  16. Rad1 {[%eval +1.02]}  Qc7 $16 {[%eval +1.24]} ) 11. 
+Nxd5 $1 {[%eval +4.57]}  (11. Bxd5 $3 {[%eval +4.78]}  Bb7 {[%eval +5.35]}  
+(11... cxd5 {[%eval +4.82]ultimately loses an exchange}  12. Re1+ {[%eval 
++4.60]}  Be7 {[%eval +5.33]}  13. Nxd5 {[%eval +5.31][%csl Re7]}  Ne5 {[%eval +5.49]}  
+14. Rxe5 {[%eval +5.51]}  Be6 {[%eval +5.42]}  15. Qd4 {[%eval +5.51][%cal Gd4h8]}  
+O-O {[%eval +5.67]}  16. Bh6 {[%eval +5.67][%cal Ge5e6,Gd4g7,Gh6f8][%csl Rg7]}  
+Bf6 {[%eval +5.72]}  17. Nxf6+ {[%eval +5.58]}  Qxf6 {[%eval +5.69]}  18. Bxf8 {[%eval +5.72]}  
+Rxf8 {[%eval +5.72]}  19. Re4 $18 {[%eval +5.60]} ) 12. Bb3 {[%eval +5.07]and White's attack is unstoppable}  
+Bg7 {[%eval +6.01]}  13. Re1+ {[%eval +6.05]}  Kf8 {[%eval +6.38]}  14. Qd6+ {[%eval +6.39]}  
+Kg8 {[%eval +6.33]}  15. Re7 {[%eval +6.29][%csl Rf7]}  Ne5 {[%eval +6.24]}  16. 
+Qxd8+ {[%eval +6.26]}  Rxd8 {[%eval +6.33]}  17. Rxb7 $18 {[%eval +6.12]} ) 
+11... Nc5 {[%eval +5.53]}  12. Qd4 {[%eval +5.48][%csl Rh8]}  cxd5 {[%eval +5.66]}  
+13. Bb5+ {[%eval +4.69]}  Bd7 {[%eval +4.64]}  14. Bxd7+ {[%eval +4.60]}  Qxd7 {[%eval +4.60]}  
+15. Qxh8 {[%eval +4.56]}  f5 {[%eval +5.74]}  16. Re1+ {[%eval +5.52]}  Ne6 {[%eval +8.52]}  
+17. Qf6 {[%eval +9.84]}  1-0
+
+[ContentType "Model Game"]
+[Event "Exhibition Simultaneous Game, Cicero, Illinois, USA"]
+[Round ""]
+[ECO "C33"]
+[Guid "Rcf427a35dd6f43c4abccb24a65ba7d8e"]
+[Date "1964.05.??"]
+[White "Fischer Robert James"]
+[Black "Nyman William"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+ {[%eval +0.31]} 1. e4 {[%eval +0.24]}  e5 {[%eval +0.24]}  2. f4 {[%eval 
+-0.56]}  exf4 {[%eval -0.37]}  3. Bc4 {[%eval -0.57]}  d5 {[%eval -0.43]}  4. 
+Bxd5 {[%eval -0.41]}  Nf6 {[%eval -0.12]}  5. Nc3 {[%eval -0.13]}  Bb4 {[%eval +0.34]}  
+6. Nf3 {[%eval +0.09]}  O-O {[%eval +0.25]}  7. O-O {[%eval +0.19]}  Bxc3 {[%eval +0.79]}  
+8. dxc3 {[%eval +0.72]}  c6 {[%eval +1.00]}  9. Bc4 {[%eval +1.17]}  Qb6+ {[%eval +1.33]}  
+10. Kh1 {[%eval +1.31]}  Nxe4 $2 {[%eval +2.03]}  (10... Bg4 {[%eval +1.55]}  
+11. Bxf4 {[%eval +1.21]}  Nbd7 {[%eval +1.19]}  12. Qe1 {[%eval +1.21]}  Rfe8 {[%eval +1.42]}  
+13. Qg3 {[%eval +1.56]}  Bh5 {[%eval +1.60]}  14. e5 {[%eval +1.60]}  Nd5 {[%eval +1.50]}  
+15. Rae1 {[%eval +1.26]}  Qxb2 {[%eval +1.39]}  16. Ng5 {[%eval +1.16]}  Bg6 $14 
+{[%eval +1.43]} ) 11. Qe1 {[%eval +2.54][%cal Ge1h4,Gf3g5,Gc1f4][%csl Rf7,Rh7]}  
+Re8 {[%eval +4.23]}  12. Bxf4 {[%eval +3.25]}  Nd6 {[%eval +6.21][%assm 1]}  13. 
+Bxd6 {[%eval +5.96]}  Rxe1 {[%eval +5.96]}  14. Raxe1 {[%eval +5.96][%cal 
+Ge1e8]}  Bd7 {[%eval +#9]}  15. Ng5 {[%eval +#8][%csl Rf7]}  Na6 {[%eval +#8]}  
+16. Rxf7 {[%eval +#7][%cal Gc4g8,Gf7f8][%csl Rd7]Black resigned as he cannot defend against the checkmate. }  
+c5 {[%eval +#1]}  (16... g6 {[%eval +#2]}  17. Rxd7+ {[%eval +#1]}  Kh8 {[%eval +#1]}  
+18. Rxh7# {[%eval #]} )  (16... Kh8 {[%eval +#7]}  17. Be5 {[%eval +#6]}  Qf2 {[%eval +#6]}  
+18. Bxg7+ {[%eval +#5]}  Kg8 {[%eval +#5]}  19. Rxd7+ {[%eval +#4]}  Qf7 {[%eval +#4]}  
+20. Bd4 {[%eval +#3]}  Qxc4 {[%eval +#3]}  21. Rg7+ {[%eval +#2]}  Kh8 {[%eval +#2]}  
+22. Rxh7+ {[%eval +#1]}  Kg8 {[%eval +#1]}  23. Rh8# {[%eval #]} ) 17. Rf8# {[%eval #]} 
+ 1-0
+
+[ContentType "Model Game"]
+[Event "Exhibition Simultaneous Game, Cicero, Illinois, USA"]
+[Round ""]
+[ECO "B90"]
+[Guid "Rede6270311c04d09bfdbb7f4f5e59346"]
+[Date "1964.05.??"]
+[White "Fischer Robert James"]
+[Black "Sillars Kate and Manter Larry"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+ {[%eval +0.30]} 1. e4 {[%eval +0.19]}  c5 {[%eval +0.34]}  2. Nf3 {[%eval +0.31]}  
+d6 {[%eval +0.48]}  3. d4 {[%eval +0.32]}  cxd4 {[%eval +0.36]}  4. Nxd4 {[%eval +0.34]}  
+Nf6 {[%eval +0.31]}  5. Nc3 {[%eval +0.27]}  a6 {[%eval +0.43]}  6. h3 {[%eval +0.28]}  
+e5 {[%eval +0.34]}  7. Nde2 {[%eval +0.38]}  Be6 {[%eval +0.52]}  8. g4 {[%eval +0.47]}  
+d5 {[%eval +0.69]}  9. exd5 {[%eval +0.64]}  Nxd5 {[%eval +0.66]}  10. Bg2 {[%eval +0.74]}  
+Nxc3 {[%eval +0.73]}  11. Qxd8+ {[%eval +0.75]}  Kxd8 {[%eval +0.70]}  12. Nxc3 {[%eval +0.63]}  
+Nc6 {[%eval +0.89]}  13. Be3 {[%eval +0.99]}  Bb4 {[%eval +1.31]}  (13... Kc7 {[%eval +1.02]}  
+14. Nd5+ {[%eval +1.02]}  Bxd5 {[%eval +1.02]}  15. Bxd5 {[%eval +1.09]}  f6 {[%eval +1.05]}  
+16. O-O-O {[%eval +1.04]}  Rd8 {[%eval +1.07]}  17. c3 {[%eval +1.12]}  g6 {[%eval +1.17]}  
+18. Be4 {[%eval +1.10]}  Bd6 {[%eval +1.25]}  19. Kc2 {[%eval +1.02]}  Ne7 {[%eval +1.14]}  
+20. f3 {[%eval +1.08]}  Rhe8 {[%eval +1.17]}  21. Bh6 {[%eval +1.09]}  Rd7 {[%eval +1.18]}  
+22. Rhe1 {[%eval +1.15]}  f5 $14 {[%eval +1.43]} ) 14. O-O-O+ {[%eval +1.24]}  
+Ke7 $2 $16 {[%eval +2.11]now the b4-e7 diagonal can be controlled by White}  
+(14... Kc7 $14 {[%eval +1.31]} ) 15. Ne4 {[%eval +1.78][%cal Ga2a3][%csl Rd6,Rc5]}  
+Rhd8 $4 $18 {[%eval +3.87][%cal Ga2a3,Ge3c5,Ge4d6]loses at least an exchange}  
+(15... Ke8 $16 {[%eval +1.85][%cal Gb4e7]allowing the dark-squared bishop to stay on the b4-e7 diagonal} 
+) 16. a3 {[%eval +4.07]}  Ba5 {[%eval +4.13]}  17. Bc5+ {[%eval +4.02]}  Ke8 {[%eval +4.09]}  
+18. Nd6+ {[%eval +3.96]}  Rxd6 {[%eval +4.12]}  19. Rxd6 {[%eval +3.83][%cal Gd6c6,Gg2c6][%csl Rc6,Re8,Ra8]}  
+Bc7 {[%eval +6.14][%assm 1]}  (19... Rc8 {[%eval +3.66]woul have prolonged the fight}  
+20. Rhd1 {[%eval +3.87]}  Bd8 $18 {[%eval +4.00][%cal Gd8e7]} ) 20. Rxc6 {[%eval +6.23]} 
+ 1-0
+
+[ContentType "Model Game"]
+[Event "Exhibition Simultaneous Game, Cicero, Illinois, USA"]
+[Round ""]
+[ECO "C10"]
+[Guid "R3eedbde7f8ee4818ab0283593fbca546"]
+[Date "1964.05.??"]
+[White "Fischer, Robert James"]
+[Black "Kral G"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+ {[%eval +0.32]} 1. e4 {[%eval +0.29]}  e6 {[%eval +0.38]}  2. d4 {[%eval 
++0.32]}  d5 {[%eval +0.38]}  3. Nc3 {[%eval +0.35]}  dxe4 {[%eval +0.60]}  4. 
+Nxe4 {[%eval +0.55]}  Nd7 {[%eval +0.54]}  5. Nf3 {[%eval +0.49]}  Ngf6 {[%eval +0.55]}  
+6. Nxf6+ {[%eval +0.53]}  Nxf6 {[%eval +0.54]}  7. Bd3 {[%eval +0.50]}  Be7 {[%eval +0.67]}  
+8. Qe2 {[%eval +0.63]}  O-O {[%eval +0.64]}  9. Bg5 {[%eval +0.75]}  c5 {[%eval +0.75]}  
+10. dxc5 {[%eval +0.50]}  Qa5+ {[%eval +0.48]}  11. c3 {[%eval +0.51]}  Qxc5 {[%eval +0.46]}  
+12. O-O-O {[%eval +0.56]}  b5 {[%eval +0.88]}  13. Bxf6 {[%eval +0.72]}  Bxf6 {[%eval +3.23][%assm 1]loses a rook}  
+(13... gxf6 {[%eval +0.96]}  14. Bxb5 {[%eval +0.69]}  (14. Qe4 $2 {[%eval +0.20]}  
+f5 {[%eval +0.18]}  15. Qxa8 {[%eval -1.94]}  Ba6 {[%eval -2.03]}  16. Qxf8+ {[%eval -2.02]}  
+Kxf8 {[%eval -2.01][%csl Rf2]}  17. Rhf1 {[%eval -2.90]}  Bb7 {[%eval -2.86]}  
+18. Kb1 {[%eval -2.79]}  Bf6 $19 {[%eval -3.40]} ) 14... Rb8 {[%eval +0.75]}  
+15. Ba4 {[%eval +0.63]}  Qb6 {[%eval +0.78]}  16. Rd2 {[%eval +0.79]}  e5 {[%eval +0.73]}  
+17. Bb3 {[%eval +0.71]}  a5 {[%eval +0.83]}  18. Qe4 {[%eval +0.68]}  Be6 {[%eval +0.76]}  
+19. Bxe6 {[%eval +0.84]}  Qxe6 {[%eval +0.82][%csl Ra2]}  20. Kb1 {[%eval 
++0.75]}  Rfc8 {[%eval +0.88]}  21. Rc1 {[%eval +0.78]}  a4 $14 {[%eval +0.88]} ) 
+14. Qe4 {[%eval +3.78][%cal Ge4a8,Ge4h7][%csl Rh7,Ra8]}  g6 {[%eval +4.18]}  15. 
+Qxa8 {[%eval +4.18]}  b4 {[%eval +4.11]}  16. c4 {[%eval +4.11]}  1-0
+
+[ContentType "Model Game"]
+[Event "Exhibition Simultaneous Game, Cicero, Illinois, USA"]
+[Round ""]
+[ECO "C25"]
+[Guid "R433a777132ab4777bf35638dbb4c21cb"]
+[Date "1964.05.??"]
+[White "Fischer Robert James"]
+[Black "Fajkus J"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+ {[%eval +0.33]} 1. e4 {[%eval +0.25]}  e5 {[%eval +0.23]}  2. Nc3 {[%eval +0.09]}  
+c6 {[%eval +0.71]}  3. d4 {[%eval +0.63]}  Qc7 $2 {[%eval +1.39]The main line is 3...d6}  
+4. dxe5 {[%eval +1.30]}  Qxe5 {[%eval +1.91]}  5. Nf3 {[%eval +1.77]}  Qc7 {[%eval +1.91]}  
+6. Bd3 {[%eval +1.01]}  d6 {[%eval +1.10]}  7. O-O {[%eval +1.00]}  Be6 $2 $16 {[%eval +2.10]}  
+(7... Nf6 {[%eval +1.08]}  8. Bf4 {[%eval +0.88]}  Nh5 {[%eval +1.07]}  9. Be3 {[%eval +0.99]}  
+Be7 {[%eval +1.02]}  10. Re1 {[%eval +1.02]}  Bg4 {[%eval +1.14]}  11. h3 {[%eval +1.13]}  
+Bxf3 {[%eval +1.14]}  12. Qxf3 {[%eval +1.11]}  Nf6 {[%eval +1.04]}  13. Rad1 {[%eval +1.03]}  
+Nbd7 $15 {[%eval +1.01]and Black was able to finish his development} ) 8. Nd4 {[%eval +1.90]}  
+Qc8 $2 {[%eval +2.97]a better options for Black was to try to finish the development with 8...♞f6}  
+9. f4 {[%eval +2.93]}  d5 $2 {[%eval +4.66]Opening the center is not advisable for Black when their pieces are underdeveloped and the king is not safe}  
+10. f5 {[%eval +4.77]}  Bd7 {[%eval +4.84]}  11. e5 {[%eval +3.97]}  Bc5 {[%eval +4.00]}  
+12. Be3 {[%eval +4.16]}  Bxd4 {[%eval +5.14]}  13. Bxd4 {[%eval +5.23]}  c5 {[%eval +5.38]}  
+14. Qg4 {[%eval +5.11][%csl Rg7]}  g6 {[%eval +7.78][%assm 1]}  15. e6 {[%eval +8.61][%cal Gf1f7][%csl Rd7,Rf7]}  
+cxd4 {[%eval +10.77]}  16. exf7+ {[%eval +11.39]}  Kf8 {[%eval +11.86]}  17. 
+Qxd4 {[%eval +11.85][%csl Rh8,Rg6]}  Bxf5 {[%eval +42.35]}  18. Qxh8 {[%eval +21.87][%csl Rg8]}  
+Qc5+ {[%eval +40.92]}  19. Kh1 {[%eval +#22]}  Kxf7 {[%eval +#10]}  20. Bxf5 {[%eval +#9]Black resigned as he cannot defend against the checkmate.}  
+gxf5 {[%eval +#10]}  21. Rxf5+ {[%eval +#8]}  Ke6 {[%eval +#8]}  22. Qxg8+ {[%eval +#7]}  
+Kxf5 {[%eval +#5]}  23. Rf1+ {[%eval +#4]}  Ke5 {[%eval +#4]}  24. Qg7+ {[%eval +#3]}  
+Ke6 {[%eval +#3]}  25. Rf6+ {[%eval +#2]}  Ke5 {[%eval +#2]}  26. Qg5+ {[%eval +#1]}  
+Kd4 {[%eval +#1]}  27. Qf4# {[%eval #]}  1-0
+
+[ContentType "Model Game"]
+[Event "Exhibition Simultaneous Game, New York, USA"]
+[Round ""]
+[ECO "C30"]
+[Guid "R77b212032bf248cf8cd7d983f8076050"]
+[Date "1964.05.??"]
+[White "Fischer Robert James"]
+[Black "McDermott Mike"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+ {[%eval +0.32]} 1. e4 {[%eval +0.28]}  e5 {[%eval +0.28]}  2. Bc4 {[%eval +0.13]}  
+Nf6 {[%eval +0.14]}  3. Nc3 {[%eval 0.00]}  Bc5 {[%eval +0.08]}  4. f4 {[%eval -0.45]}  
+d6 {[%eval -0.15]}  5. Nf3 {[%eval -0.18]}  Bg4 {[%eval +0.93]}  6. h3 {[%eval -0.09]}  
+Bxf3 {[%eval -0.08]}  7. Qxf3 {[%eval -0.08]}  Nc6 {[%eval +0.09]}  8. d3 {[%eval -0.41]}  
+Nd4 {[%eval -0.33]}  9. Qg3 {[%eval -0.64]}  Nxc2+ {[%eval +0.69]}  10. Kd1 {[%eval +0.44]}  
+Nxa1 {[%eval +0.44]}  11. Qxg7 {[%eval +0.46]}  Rf8 {[%eval +0.65]}  12. fxe5 {[%eval +0.91]}  
+dxe5 {[%eval +0.85]}  13. Rf1 {[%eval +0.65][%csl Rf6]}  Be7 {[%eval +0.75]}  
+14. Bg5 {[%eval +0.43][%csl Rf6]}  Nxe4 {[%eval +6.16][%assm 1][%cal Gf1f7,Gc4f7,Gg7f7][%csl Rf7]}  
+(14... Qd4 {[%eval +0.68]}  15. Bxf6 {[%eval +0.76]}  O-O-O {[%eval +0.60]}  16. 
+Qg4+ {[%eval +0.61]}  (16. Bxe7 $4 {[%eval -3.43]}  Qxc4 {[%eval -3.81]}  17. 
+Rf3 {[%eval -3.92]}  Rxd3+ {[%eval -4.02]}  18. Kc1 {[%eval -3.32]}  Re8 {[%eval -3.86]}  
+19. Bh4 {[%eval -4.07]}  Rxf3 {[%eval -4.09]}  20. Qg4+ {[%eval -4.22]}  Re6 {[%eval -4.09]}  
+21. Qxf3 $19 {[%eval -4.74]} ) 16... Kb8 {[%eval +0.58]}  17. Bxe7 {[%eval +0.58]}  
+Qxc4 {[%eval +0.64]}  18. Kc1 {[%eval +0.56]}  Rxd3 {[%eval +0.58]}  19. Bxf8 {[%eval +0.56]}  
+h5 {[%eval +0.63]}  20. Qg5 {[%eval +0.56]}  Rxc3+ {[%eval +0.56]}  21. bxc3 {[%eval +0.52]}  
+Qxf1+ {[%eval +0.42]}  22. Kb2 {[%eval +0.46]}  Qd3 {[%eval +0.39]}  23. Be7 {[%eval +0.40]}  
+b6 {[%eval +0.40]}  24. Qc1 {[%eval +0.40]}  Qe2+ {[%eval +0.51]}  25. Kxa1 {[%eval +0.53]}  
+Qxg2 {[%eval +0.47][%csl Re4,Rh3]}  26. Qe3 {[%eval +0.44]}  Qf1+ {[%eval 
++0.57]}  27. Kb2 {[%eval +0.57]}  Qb5+ {[%eval +0.49]}  28. Kc1 {[%eval +0.46]}  
+Qf1+ $11 {[%eval +0.52]} ) 15. Nxe4 {[%eval +6.01]}  f5 {[%eval +9.94]}  16. 
+Qxh7 {[%eval +8.79]}  Bxg5 $4 {[%eval +#2]}  (16... Qd7 {[%eval +7.08]prolonged the fight}  
+17. Qg6+ {[%eval +8.89]}  Kd8 {[%eval +7.80]}  18. Nc5 {[%eval +8.71]}  Qc6 {[%eval +9.43]}  
+19. Bxe7+ {[%eval +9.38]}  Kxe7 {[%eval +9.53]}  20. Qg7+ {[%eval +9.52]}  Ke8 {[%eval +9.93]}  
+21. Qxe5+ {[%eval +9.18]}  Kd8 {[%eval +10.43]}  22. Re1 {[%eval +#9]}  Kc8 {[%eval +#9]}  
+23. Qe7 {[%eval +#7]}  Rh8 {[%eval +#7]}  24. Re6 {[%eval +#6][%cal Ge6c6,Ge7e8][%csl Rc6,Re8]}  
+Qxg2 {[%eval +#2]}  25. Qe8+ {[%eval +#1]}  Rxe8 {[%eval +#1]}  26. Rxe8# {[%eval #]} 
+) 17. Qg6+ {[%eval +#1][%cal Gf8f7,Gg6f7,Ye8e7,Yg6e6,Ye8d7]delivers the checkmate after 17...♜f7 18.♕f7# or 17...♚d7/e7 18.♕e6#} 
+ 1-0
+
+[ContentType "Model Game"]
+[Event "Exhibition Simultaneous Game, New York, USA"]
+[Round ""]
+[ECO "C87"]
+[Guid "Rf16990c7ddc345b4a1b89894a7ec1d9b"]
+[Date "1964.05.??"]
+[White "Fischer Robert James"]
+[Black "Terrone James"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+ {[%eval +0.36]} 1. e4 {[%eval +0.24]}  e5 {[%eval +0.24]}  2. Nf3 {[%eval +0.24]}  
+Nc6 {[%eval +0.24]}  3. Bb5 {[%eval +0.29]}  a6 {[%eval +0.28]}  4. Ba4 {[%eval +0.37]}  
+Nf6 {[%eval +0.36]}  5. O-O {[%eval +0.32]}  Be7 {[%eval +0.47]}  6. Re1 {[%eval +0.47]}  
+d6 {[%eval +0.53]}  7. Bxc6+ {[%eval +0.36]}  bxc6 {[%eval +0.47]}  8. d4 {[%eval +0.39]}  
+Nd7 {[%eval +0.38]}  9. Nbd2 {[%eval +0.35]}  Bf6 {[%eval +0.75]}  10. Nc4 {[%eval +0.74]}  
+Nb6 $2 {[%eval +2.42]}  (10... O-O {[%eval +0.75]}  11. dxe5 {[%eval +0.69]}  
+Nxe5 {[%eval +0.73]}  12. Nfxe5 {[%eval +0.75]}  Bxe5 {[%eval +0.83]}  13. Nxe5 {[%eval +0.95]}  
+dxe5 {[%eval +0.89]}  14. Be3 {[%eval +0.89]}  Be6 $14 {[%eval +0.77]} ) 11. Na5 
+{[%eval +1.26][%csl Rc6]}  Bd7 {[%eval +1.64]}  12. b3 {[%eval +1.37]}  O-O {[%eval +1.69]}  
+13. dxe5 {[%eval +1.73]}  dxe5 {[%eval +1.75]}  14. Ba3 {[%eval +1.24]}  Re8 {[%eval +1.61]}  
+15. c4 {[%eval +1.53]}  Be7 {[%eval +3.08]}  16. c5 {[%eval +3.81]}  Nc8 {[%eval +5.88][%assm 1]}  
+(16... Bf8 {[%eval +3.89]}  17. Qd3 {[%eval +3.62]}  Qe7 {[%eval +3.65]}  18. 
+cxb6 {[%eval +3.67]}  Qxa3 {[%eval +3.66]}  19. Nc4 {[%eval +3.72]}  Qe7 {[%eval +3.75]}  
+20. b7 {[%eval +3.48]}  Rab8 {[%eval +3.59]}  21. Ncxe5 {[%eval +3.50]}  Red8 {[%eval +3.44]}  
+22. Qxa6 $18 {[%eval +3.53]} ) 17. Nb7 {[%eval +5.80]}  1-0
+
+[ContentType "Model Game"]
+[Event "Santa Monica Blitz"]
+[Round ""]
+[ECO "B04"]
+[Guid "R06517f8bdaa54267be790b64e0aa5bf2"]
+[Date "1966.??.??"]
+[White "Fischer Robert James"]
+[Black "Larsen Bent"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+ {[%eval +0.31]} 1. e4 {[%eval +0.24]}  Nf6 {[%eval +0.73]}  2. e5 {[%eval +0.66]}  
+Nd5 {[%eval +0.72]}  3. d4 {[%eval +0.70]}  d6 {[%eval +0.70]}  4. Nf3 {[%eval +0.57]}  
+dxe5 {[%eval +0.56]}  5. Nxe5 {[%eval +0.62]}  Nd7 $2 {[%eval +1.06]allows a dangerous sacrifice}  
+(5... c6 {[%eval +0.57]}  6. Be2 {[%eval +0.53]}  Bf5 {[%eval +0.54]}  7. O-O {[%eval +0.47]}  
+Nd7 {[%eval +0.57]}  8. Nf3 {[%eval +0.61]}  h6 {[%eval +0.67]}  9. c4 {[%eval +0.58]}  
+N5f6 {[%eval +0.64]}  10. d5 {[%eval +0.57]}  e5 {[%eval +0.69]}  11. dxe6 {[%eval +0.58]}  
+Bxe6 {[%eval +0.53]}  12. Nd4 {[%eval +0.55]}  Nc5 {[%eval +0.58]}  13. b4 {[%eval +0.59]}  
+Nce4 {[%eval +0.51]}  14. Nxe6 {[%eval +0.60]}  Qxd1 {[%eval +0.62]}  15. Nc7+ {[%eval +0.74]}  
+Kd7 {[%eval +0.65]}  16. Rxd1+ {[%eval +0.64]}  Kxc7 $14 {[%eval +0.63]} ) 6. 
+Nxf7 {[%eval +1.10]}  Kxf7 {[%eval +1.20]}  7. Qh5+ {[%eval +1.22]}  Ke6 {[%eval +1.26]}  
+8. Qg4+ {[%eval +1.20]}  Kf7 {[%eval +1.14]}  9. Qh5+ {[%eval +1.20]}  Ke6 {[%eval +1.35]}  
+10. Qg4+ {[%eval +1.30]}  Kd6 {[%eval +1.96]}  11. c4 {[%eval +2.03]}  N7f6 {[%eval +2.17]}  
+12. Qg3+ {[%eval +2.15]}  Ke6 {[%eval +2.58]}  13. cxd5+ {[%eval +2.77]}  Qxd5 
+$2 {[%eval +3.76]allows White to win more tempi attacking the black queen and king}  
+14. Nc3 {[%eval +3.71]}  Qxd4 {[%eval +3.87]}  15. Be3 {[%eval +3.77]}  Qb4 {[%eval +4.36]}  
+16. a3 {[%eval +4.24]}  Qxb2 {[%eval +5.29]}  17. Bc4+ {[%eval +5.71]}  Kd7 {[%eval +5.60]}  
+18. Rd1+ {[%eval +5.83]}  Ke8 {[%eval +5.87]}  19. Nb5 {[%eval +6.25][%csl Rc7]with a crushing attack. Black resigned. The game may have continued...}  
+Bd7 {[%eval +6.84]}  20. Nxc7+ {[%eval +6.69]}  Kd8 {[%eval +6.57]}  21. O-O {[%eval +6.46]}  
+Rc8 {[%eval +6.63]}  22. Bd4 {[%eval +6.56]}  Qc2 {[%eval +6.61]}  23. Ne6+ {[%eval +6.78]}  
+Bxe6 {[%eval +7.10]}  24. Bxe6 {[%eval +7.16]}  Ke8 {[%eval +7.24]}  25. Bxf6 {[%eval +7.38]}  
+gxf6 {[%eval +7.33]}  26. Qf3 {[%eval +6.78]}  Rc6 {[%eval +6.95]}  27. Bb3 {[%eval +7.03]}  
+Qc5 {[%eval +6.96]}  28. Rd5 {[%eval +6.97]}  Qc3 {[%eval +#1]}  29. Qh5# {[%eval #]} 
+ 1-0
+
+[ContentType "Model Game"]
+[Event "Skopje International, Yugoslavia"]
+[Round "4"]
+[ECO "B88"]
+[Guid "Rd9cba392b02b422bb4a17bab3cd13f93"]
+[Date "1967.06.??"]
+[White "Fischer Robert James"]
+[Black "Dely Peter"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+ {[%eval +0.39]} 1. e4 {[%eval +0.36]}  c5 {[%eval +0.44]}  2. Nf3 {[%eval +0.43]}  
+d6 {[%eval +0.62]}  3. d4 {[%eval +0.61]}  cxd4 {[%eval +0.58]}  4. Nxd4 {[%eval +0.48]}  
+Nf6 {[%eval +0.52]}  5. Nc3 {[%eval +0.49]}  Nc6 {[%eval +0.42]}  6. Bc4 {[%eval +0.39]}  
+e6 {[%eval +0.51]}  7. Bb3 {[%eval +0.40]}  a6 {[%eval +0.37]}  8. f4 {[%eval +0.25]}  
+Qa5 {[%eval +0.79]}  9. O-O {[%eval +0.48]}  Nxd4 {[%eval +0.50]}  10. Qxd4 {[%eval +0.56]}  
+d5 $2 {[%eval +1.18]opens the position for White's attack}  (10... Qc5 {[%eval +0.75]}  
+11. Be3 {[%eval +0.71]}  Qxd4 {[%eval +0.74]}  12. Bxd4 {[%eval +0.63]}  Bd7 $14 
+{[%eval +0.69]} ) 11. Be3 {[%eval +1.22]}  Nxe4 $2 {[%eval +2.65]Black should complete development and secure their king's safety before initiating play in the center}  
+(11... Ng4 {[%eval +1.30]}  12. Qb6 {[%eval +1.40]}  Qxb6 {[%eval +1.38]}  13. 
+Bxb6 {[%eval +1.40]}  dxe4 {[%eval +1.33]}  14. Nxe4 {[%eval +1.34]}  Be7 {[%eval +1.16]}  
+15. Rad1 {[%eval +1.22]}  O-O $16 {[%eval +1.80]} ) 12. Nxe4 {[%eval +4.43]}  
+dxe4 {[%eval +4.42]}  13. f5 $1 {[%eval +4.41]}  Qb4 {[%eval +5.25]}  (13... 
+exf5 {[%eval +4.34]}  14. Ba4+ {[%eval +4.41]}  b5 {[%eval +4.32]}  15. Qe5+ {[%eval +4.37]}  
+Be7 {[%eval +4.36]}  16. Bb3 $18 {[%eval +4.40]}  (16. Qxg7 $2 {[%eval +1.72]}  
+Rf8 {[%eval +1.93]}  17. Bb3 {[%eval +1.79]}  Qc7 $16 {[%eval +1.77]} ) ) 14. 
+fxe6 {[%eval +5.27]}  Bxe6 {[%eval +5.25]}  15. Bxe6 {[%eval +5.24]}  fxe6 {[%eval +5.27]}  
+16. Rxf8+ {[%eval +5.25]}  Qxf8 {[%eval +5.28]}  17. Qa4+ $18 {[%eval +5.25][%cal Ga4e4,Ge4c6,Ga1d1,Ge3b6]Black resigned due to ...}  
+b5 {[%eval +5.21]}  18. Qxe4 {[%eval +5.13]}  Rd8 {[%eval +5.26]}  19. Qc6+ {[%eval +5.30]}  
+Rd7 {[%eval +5.30]}  20. Rd1 {[%eval +5.30]}  Qe7 {[%eval +5.39]}  21. Bb6 {[%eval +5.29]} 
+ 1-0
+
+[ContentType "Model Game"]
+[Event "Skopje International, Yugoslavia"]
+[Round "17"]
+[ECO "B88"]
+[Guid "R72bffc1c1070491392e1e336e0738ea1"]
+[Date "1967.06.??"]
+[White "Fischer Robert James"]
+[Black "Sofrevski Jovan"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+ {[%eval +0.35]} 1. e4 {[%eval +0.34]}  c5 {[%eval +0.45]}  2. Nf3 {[%eval +0.33]}  
+d6 {[%eval +0.52]}  3. d4 {[%eval +0.37]}  cxd4 {[%eval +0.44]}  4. Nxd4 {[%eval +0.45]}  
+Nf6 {[%eval +0.49]}  5. Nc3 {[%eval +0.36]}  Nc6 {[%eval +0.40]}  6. Bc4 {[%eval +0.37]}  
+e6 {[%eval +0.43]}  7. Bb3 {[%eval +0.25]}  Be7 {[%eval +0.29]}  8. Be3 {[%eval +0.41]}  
+O-O {[%eval +0.37]}  9. Qe2 {[%eval +0.36]}  Qa5 {[%eval +0.90]}  10. O-O-O {[%eval +0.84]}  
+Nxd4 {[%eval +0.74]}  11. Bxd4 {[%eval +0.78]}  Bd7 {[%eval +0.90]}  12. Kb1 {[%eval +0.87]}  
+Rad8 {[%eval +1.52]}  13. Qe3 {[%eval +0.17]}  b6 {[%eval +1.04]}  14. Bxf6 {[%eval +0.25]}  
+gxf6 {[%eval +3.98][%assm 1]}  (14... Bxf6 {[%eval +0.25]}  15. Rxd6 {[%eval +0.31]}  
+Bc8 $14 {[%eval +0.24]Black would have some compensation for their pawn due to their bishop pair} 
+) 15. Nd5 $3 {[%eval +3.92][%csl Re7]}  Rfe8 {[%eval +4.26]}  (15... exd5 {[%eval +4.44]}  
+16. Rxd5 {[%eval +4.49]}  b5 {[%eval +4.51]}  17. Rh5 {[%eval +4.50]}  Bg4 {[%eval +4.57]}  
+18. Qg3 $18 {[%eval +4.56]} ) 16. Nxe7+ {[%eval +4.19][%csl Rd6]}  Rxe7 {[%eval +4.26]}  
+17. Rxd6 {[%eval +3.80]}  Rc8 {[%eval +4.07]}  18. Qd4 {[%eval +4.92][%csl Rd7,Rf6]}  
+Be8 {[%eval +5.03]}  19. Qxf6 {[%eval +5.07]}  1-0
+
+[ContentType "Model Game"]
+[Event "Vinkovci International"]
+[Round "7"]
+[ECO "B97"]
+[Guid "R4965bac8eaa444aea071998ed0375454"]
+[Date "1968.09.??"]
+[White "Matov Mladen"]
+[Black "Fischer Robert James"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "0-1"]
+
+
+ {[%eval +0.32]} 1. e4 {[%eval +0.28]}  c5 {[%eval +0.49]}  2. Nf3 {[%eval +0.45]}  
+d6 {[%eval +0.56]}  3. d4 {[%eval +0.57]}  cxd4 {[%eval +0.50]}  4. Nxd4 {[%eval +0.45]}  
+Nf6 {[%eval +0.46]}  5. Nc3 {[%eval +0.51]}  a6 {[%eval +0.42]}  6. Bg5 {[%eval +0.45]}  
+e6 {[%eval +0.32]}  7. f4 {[%eval +0.35]}  Be7 {[%eval +0.43]}  8. Be2 {[%eval -0.25]}  
+Qb6 $1 {[%eval +0.03]}  9. Qd2 {[%eval -0.06]}  Qxb2 {[%eval -0.13]}  10. Rb1 {[%eval -0.28]}  
+Qa3 {[%eval -0.27]}  11. O-O {[%eval -0.34]}  Nbd7 {[%eval -0.13]}  12. f5 {[%eval -0.21]}  
+Ne5 {[%eval 0.00]}  13. Kh1 {[%eval -0.69]too slow}  (13. Rb3 {[%eval 0.00]}  
+Qc5 {[%eval +1.19]}  (13... Qa5 {[%eval -0.02]}  14. Bh5 $11 {[%eval 0.00]} ) 
+14. fxe6 {[%eval +1.26]}  fxe6 {[%eval +1.33]}  15. Na4 {[%eval +1.32]}  Nxe4 {[%eval +1.39]}  
+16. Qe3 {[%eval +1.27]} ) 13... O-O {[%eval -0.87]}  14. Rb3 {[%eval -0.89]}  
+Qc5 {[%eval -0.95]}  15. Bxf6 $2 $17 {[%eval -1.93]}  (15. Rfb1 {[%eval -0.87]}  
+Nc4 {[%eval -0.85]}  16. Bxc4 {[%eval -0.82]}  Qxc4 {[%eval -0.86]}  17. a4 $15 {[%eval -0.85]} 
+) 15... Bxf6 {[%eval -2.16][%cal Gf6c3]}  16. Na4 $2 $19 {[%eval -5.17]}  (16. 
+fxe6 {[%eval -2.13]}  fxe6 {[%eval -2.22]}  17. Rd1 {[%eval -2.21]}  Nc4 {[%eval -2.34]}  
+18. Bxc4 {[%eval -2.35]}  Qxc4 {[%eval -2.20]}  19. Nce2 {[%eval -2.21]}  d5 {[%eval -2.22]}  
+20. exd5 {[%eval -2.42]}  Qxd5 $16 {[%eval -2.47]} ) 16... Nc4 {[%eval -5.01][%csl Rd4]}  
+17. Qf4 {[%eval -5.29]}  (17. Bxc4 {[%eval -5.16]}  Qxc4 $19 {[%eval -5.24][%csl Rd4,Ra4]} 
+) 17... Qxd4 {[%eval -5.26]}  18. Rd3 {[%eval -5.80]}  Qe5 {[%eval -5.62]}  19. 
+Qg4 {[%eval -6.68]}  exf5 {[%eval -6.60]}  20. exf5 {[%eval -6.74]}  Ne3 {[%eval -6.90]} 
+ 0-1
+
+[ContentType "Exercise"]
+[FEN "1r2kb1r/p2q1p2/2p1nnpp/1p1p1p2/2PN4/PQ1PB1P1/1P2PPBP/R4RK1 w k - 2 16"]
+[Event "57th US Open, Oklahoma City"]
+[Round "3"]
+[Guid "R798cae40f4ee4e3b8c9626580c8643e7"]
+[Date "1956.07.??"]
+[White "Fischer Robert James"]
+[Black "Lapiken Peter P"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+[Preamble "White secures a material advantage through a temporary piece sacrifice"]
+
+
+ {[%eval +4.49][%assm 1]} 1. Nxc6 {[%eval +4.61]}  Qxc6 {[%eval +4.60]}  2. cxd5 
+{[%eval +4.72]}  Nc5 {[%eval +5.33]}  3. Qc3 {[%eval +5.76]}  Qd6 {[%eval 
++6.50]}  4. Bxc5 {[%eval +6.57]}  Qxc5 {[%eval +6.97]}  5. Qxf6 {[%eval +7.15]}  1-0
+
+[ContentType "Exercise"]
+[FEN "r3kb1r/p3pppp/b1p2n2/q7/Bn6/2N2N2/PPP2PPP/R1BQK2R w KQkq - 2 11"]
+[Event "US Championship, New York"]
+[Round "8"]
+[Guid "Rbc9503b885f841e9994cdb1188d54372"]
+[Date "1959.12.??"]
+[White "Fischer Robert James"]
+[Black "Seidman Herbert"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+[Preamble "White secures a material advantage with a quiet move"]
+
+
+ {[%eval +4.28][%assm 1]} 1. a3 {[%eval +4.67]}  Rd8 {[%eval +4.75]}  (1... Nbd5 
+{[%eval +7.04]}  2. Bxc6+ {[%eval +7.05]}  Kd8 {[%eval +7.02]}  3. Bxd5 {[%eval +7.05]} 
+) 2. Bd2 {[%eval +4.60]}  Rd6 {[%eval +5.61]}  3. axb4 {[%eval +5.58]}  1-0
+
+[ContentType "Exercise"]
+[FEN "r1bqr1k1/p1p2ppp/3b1n2/2P3B1/8/2NQ1N2/PP3PPP/R4RK1 b - - 0 14"]
+[Event "XIV Chess Olympiad, Leipzig, Germany"]
+[Round "1"]
+[Guid "R9b336e5049494b3eb24dd62509ba163f"]
+[Date "1960.10.??"]
+[White "Ghitescu Theodor"]
+[Black "Fischer Robert James"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "0-1"]
+[Preamble "Black employs the battery to gain a substantial material advantage"]
+
+
+ {[%eval -5.33][%assm 1]}  Bxh2+ {[%eval -5.92]}  0-1
+
+[ContentType "Exercise"]
+[FEN "r1br2k1/pp1nppbp/2p2n1B/q6p/3P4/2NB4/PPPQNPP1/2KR3R w - - 4 14"]
+[Event "XV Chess Olympiad, Varna, Bulgaria"]
+[Round "10"]
+[Guid "Ra678e1f4405841e8b0ff76754e03845a"]
+[Date "1962.09.??"]
+[White "Fischer Robert James"]
+[Black "Robatsch Karl"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+[Preamble "White checkmates using the h-file or secures a material advantage using the g-file with a push to liquidate the pawn defending ♞f6"]
+
+
+ {[%eval +3.49]} 1. g4 {[%eval +3.57]}  Nxg4 {[%eval +3.64]}  (1... Nf8 {[%eval +4.39]}  
+2. gxh5 {[%eval +3.77]}  Ne6 {[%eval +4.39]}  3. Rdg1 {[%eval +4.51]}  Kh8 {[%eval +4.53]}  
+4. Bxg7+ {[%eval +4.22]}  Nxg7 {[%eval +4.18]}  5. Qh6 {[%eval +4.40]}  Rg8 {[%eval +4.25]}  
+6. Rg5 {[%eval +4.19]}  Qd8 {[%eval +4.26]}  7. Rhg1 {[%eval +4.09]}  Qf8 {[%eval +4.51]}  
+8. d5 {[%eval +4.29]}  Bd7 {[%eval +4.53]}  9. d6 {[%eval +4.30]}  Re8 {[%eval +6.35]}  
+10. dxe7 {[%eval +7.09]}  Rxe7 {[%eval +6.14]}  11. Qxf6 $18 {[%eval +7.17]} )  
+(1... hxg4 {[%eval +6.84]}  2. Bxg7 {[%eval +7.25]}  Kxg7 {[%eval +#8]}  3. Qh6+ 
+{[%eval +#7]}  Kh8 {[%eval +#7]}  4. Bxh7 {[%eval +#6]}  Nf8 {[%eval +#6]}  5. 
+Bd3+ {[%eval +#5]}  Kg8 {[%eval +#1]}  6. Qh8# {[%eval #]} ) 2. Rdg1 {[%eval +3.65]}  
+Ndf6 {[%eval +3.60]}  3. Bxg7 {[%eval +3.69]}  Kxg7 {[%eval +3.69]}  4. f3 {[%eval +3.61]}  
+Rg8 {[%eval +3.79]}  5. fxg4 $18 {[%eval +3.70]}  1-0
+
+[ContentType "Exercise"]
+[FEN "r4rk1/pbq2ppp/1p2pn2/n1p5/3P4/PBP1P1N1/1B3PPP/2RQ1RK1 b - - 9 14"]
+[Event "XV Chess Olympiad, Varna, Bulgaria"]
+[Round "6"]
+[Guid "R3e52c7adc72f4ff39c9371745d6b22bc"]
+[Date "1962.??.??"]
+[White "Rivera Donato"]
+[Black "Fischer Robert James"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "0-1"]
+[Preamble "Black wins a piece or checkmates the white king"]
+
+
+ {[%eval -2.74][%assm 1]}  Qc6 {[%eval -3.47]}  2. f3 {[%eval -4.33]}  Qb5 {[%eval -4.18]}  
+3. Ba4 {[%eval -4.91]}  Qxb2 {[%eval -5.05]}  0-1
+
+[ContentType "Exercise"]
+[FEN "3r1rk1/ppp1qpp1/2p1b2p/4P3/3nNQ1P/5N2/PPP2PP1/R4RK1 w - - 1 16"]
+[Event "Western Open, Bay City, Michigan"]
+[Round "1"]
+[Guid "R33913036cbf345bbae9af8530ec987b2"]
+[Date "1963.07.??"]
+[White "Fischer Robert James"]
+[Black "Fuller John A"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+[Preamble "White wins an exchange"]
+
+
+ {[%eval +2.43][%assm 1]} 1. Nxd4 {[%eval +2.38]}  Rxd4 {[%eval +2.38]}  2. Nf6+ 
+{[%eval +2.30]}  Qxf6 {[%eval +2.24]}  3. Qxd4 {[%eval +2.27]}  1-0
+
+[ContentType "Exercise"]
+[FEN "r1b1k2r/ppppqppp/2n2n2/b7/2B1P3/1QN2N2/P4PPP/R1B2RK1 w kq - 1 11"]
+[Event "Exhibition Game, New York"]
+[Round "1"]
+[Guid "R28d8eac4e9f64f408b601ef1a9ff0cc7"]
+[Date "1963.??.??"]
+[White "Fischer Robert James"]
+[Black "Fine Reuben"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+[Preamble "White activates its bishop pair to target the black queen and checkmate the black king"]
+
+
+ {[%eval +3.02]} 1. Nd5 {[%eval +3.50]}  Nxd5 {[%eval +3.83]}  2. exd5 {[%eval +3.58]}  
+Ne5 {[%eval +4.54]}  3. Nxe5 {[%eval +4.62]}  Qxe5 {[%eval +4.63]}  4. Bb2 {[%eval +4.68]}  
+Qg5 {[%eval +4.65]}  5. h4 {[%eval +4.51]}  Qxh4 {[%eval +6.51]}  6. Bxg7 {[%eval +6.73]}  
+Rg8 {[%eval +#9]}  7. Rfe1+ {[%eval +#8]}  Kd8 {[%eval +#9]}  8. Qg3 {[%eval +#7]}  
+c6 {[%eval +#5]}  9. d6 {[%eval +#4]}  Rxg7 {[%eval +#3]}  (9... Qxg3 {[%eval +#1]}  
+10. Bf6# {[%eval #]} ) 10. Qxh4+ $18 {[%eval +#2]}  1-0
+
+[ContentType "Exercise"]
+[FEN "r1b1k2r/ppqnbppp/2p2n2/4p3/2B1P3/5N2/PPP1QPPP/RNBR2K1 w kq - 4 10"]
+[Event "Manhattan Chess Club Blitz"]
+[Round ""]
+[Guid "Reb9f39ba0cd74614956d03745d8bb57a"]
+[Date "1963.??.??"]
+[White "Fischer, Robert James"]
+[Black "Fine, Reuben"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+[Preamble "White wins an exchange"]
+
+
+ {[%eval +2.29]} 1. Ng5 {[%eval +2.24][%csl Rf7]}  O-O {[%eval +2.48]}  2. Bxf7+ 
+{[%eval +2.34][%cal Ge2c4,Gc4f7,Yg5e6,Ye6f8]}  Rxf7 {[%eval +2.39]}  (2... Kh8 {[%eval +3.71]}  
+3. Ne6 {[%eval +3.68]}  Qb6 {[%eval +3.63]}  4. Nxf8 {[%eval +3.64]} ) 3. Qc4 {[%eval +2.49]}  
+Nf8 {[%eval +2.40]}  4. Qxf7+ {[%eval +2.57]}  1-0
+
+[ContentType "Exercise"]
+[FEN "rnb1r1k1/pp3ppp/1qpn4/8/2B2B2/2P2N2/PPP3PP/R3QR1K w - - 1 14"]
+[Event "Exhibition Game, Cicero, Illinois, USA"]
+[Round ""]
+[Guid "Rf63299c1976943e3a18d906b81cc120d"]
+[Date "1964.05.??"]
+[White "Fischer Robert James"]
+[Black "Nyman William"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+[Preamble "White sacrifices the queen for a crushing attack on the black king"]
+
+
+ {[%eval +5.66][%assm 1]} 1. Bxd6 {[%eval +5.66]}  Rxe1 {[%eval +5.49]}  2. 
+Raxe1 {[%eval +5.71]}  Bd7 {[%eval +10.34]}  3. Ng5 {[%eval +12.01]}  Na6 {[%eval +#10]}  
+4. Rxf7 {[%eval +#7]}  Kh8 {[%eval +#7]}  (4... c5 {[%eval +#1]}  5. Rf8# {[%eval #]} 
+) 5. Be5 {[%eval +#6]}  Qf2 {[%eval +#6]}  6. Bxg7+ {[%eval +#5]}  Kg8 {[%eval +#5]}  
+7. Rxd7+ {[%eval +#4]}  Qf7 {[%eval +#4]}  8. Rxf7 {[%eval +#3]}  b5 {[%eval +#2]}  
+9. Bd3 {[%eval +#1]}  Nc5 {[%eval +#1]}  10. Bxh7# {[%eval #]}  1-0
+
+[ContentType "Exercise"]
+[FEN "r2r4/1p2kppp/p1n1b3/4p3/1b2N1P1/4B2P/PPP2PB1/2KR3R w - - 7 17"]
+[Event "Exhibition Simultaneous Game, Cicero, Illinois, USA"]
+[Round ""]
+[Guid "R37f47d7596084dfcb3db63d34279b762"]
+[Date "1964.05.??"]
+[White "Fischer Robert James"]
+[Black "Sillars Kate and Manter Larry"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+[Preamble "White gains an exchange"]
+
+
+ {[%eval +3.74]} 1. a3 {[%eval +4.00]}  Ba5 {[%eval +4.09]}  2. Bc5+ {[%eval +4.08]}  
+Ke8 {[%eval +4.14]}  3. Nd6+ {[%eval +4.12]}  Rxd6 {[%eval +4.02]}  1-0
+
+[ContentType "Exercise"]
+[FEN "r1b2rk1/p4ppp/4pb2/1pq5/8/2PB1N2/PP2QPPP/2KR3R w - - 0 15"]
+[Event "Exhibition Simultaneous Game, Cicero, Illinois, USA"]
+[Round ""]
+[Guid "R708ef63493054c95bad966680a65bcef"]
+[Date "1964.05.??"]
+[White "Fischer, Robert James"]
+[Black "Kral G"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+[Preamble "White wins material or delivers a checkmate"]
+
+
+ {[%eval +3.73][%assm 1]} 1. Qe4 {[%eval +4.14]}  g6 {[%eval +4.26]}  2. Qxa8 {[%eval +4.26]} 
+ 1-0
+
+[ContentType "Exercise"]
+[FEN "rnq1k1nr/pp1b1p1p/6p1/2ppPP2/3B2Q1/2NB4/PPP3PP/R4RK1 w kq - 0 16"]
+[Event "Exhibition Simultaneous Game, Cicero, Illinois, USA"]
+[Round ""]
+[Guid "R3a8bed0db6da428cb4966fc5a0babf80"]
+[Date "1964.05.??"]
+[White "Fischer Robert James"]
+[Black "Fajkus J"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+[Preamble "White launches a devastating attack on the black king"]
+
+
+ {[%eval +7.66][%assm 1]} 1. e6 {[%eval +8.20]}  cxd4 {[%eval +11.48]}  2. exf7+ 
+{[%eval +12.65]}  Kf8 {[%eval +14.13]}  (2... Kxf7 {[%eval +#20]}  3. fxg6+ {[%eval +#12]}  
+Ke8 {[%eval +#12]}  4. Rae1+ {[%eval +#10]}  Ne7 {[%eval +#10]}  5. Rxe7+ {[%eval +#9]}  
+Kd8 {[%eval +#9]}  6. Nxd5 {[%eval +#8]}  Bxg4 {[%eval +#8]}  7. g7 $18 {[%eval +#7]check mate is unaviodable}  
+Re8 {[%eval +#7]}  8. Rxe8+ {[%eval +#6]}  Kxe8 {[%eval +#5]}  9. g8=Q+ {[%eval +#4]}  
+Kd7 {[%eval +#4]}  10. Qxg4+ {[%eval +#3]}  Kc6 {[%eval +#3]}  11. Rf6+ {[%eval +#2]}  
+Kxd5 {[%eval +#2]}  12. Qg5+ {[%eval +#1]}  Qf5 {[%eval +#1]}  13. Qxf5# {[%eval #]} 
+) 3. Qxd4 {[%eval +14.12]}  Bxf5 {[%eval +#12]}  4. Qxh8 {[%eval +#11]}  Qc5+ {[%eval +#11]}  
+5. Kh1 {[%eval +#10]}  Kxf7 {[%eval +#10]}  6. Bxf5 {[%eval +#9]check mate is unaviodable}  
+gxf5 {[%eval +#9]}  7. Rxf5+ {[%eval +#8]}  Ke6 {[%eval +#8]}  8. Qxg8+ {[%eval +#7]}  
+Kxf5 {[%eval +#5]}  9. Rf1+ {[%eval +#4]}  Ke5 {[%eval +#4]}  10. Qg7+ {[%eval +#3]}  
+Ke6 {[%eval +#3]}  11. Rf6+ {[%eval +#2]}  Ke5 {[%eval +#2]}  12. Qg5+ {[%eval +#1]}  
+Kd4 {[%eval +#1]}  13. Qf4# {[%eval #]}  1-0
+
+[ContentType "Exercise"]
+[FEN "r1b1qk1r/ppp1n1pp/3p1pn1/5N1Q/2B1Pp2/2B5/P1PP2PP/R4RK1 w - - 6 14"]
+[Event "Exhibition Simultaneous Game, Cleveland, Ohio, USA"]
+[Round ""]
+[Guid "R1cd1df2c496a4d1393428e7dc1ee280f"]
+[Date "1964.03.??"]
+[White "Fischer Robert James"]
+[Black "Gloger J."]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+[Preamble "White wins material or delivers a checkmate"]
+
+
+ {[%eval +2.59]} 1. Bxf6 {[%eval +3.53]}  Bxf5 {[%eval +3.59]}  (1... gxf6 {[%eval +#1]}  
+2. Qh6# {[%eval #]} ) 2. exf5 {[%eval +3.54]}  d5 {[%eval +5.82][%assm 1]}  
+(2... Ng8 {[%eval +3.57]}  3. Rae1 {[%eval +3.48]}  Ne5 {[%eval +4.05]}  4. 
+Bxg7+ {[%eval +4.10]}  Kxg7 {[%eval +4.11]}  5. Qg5+ {[%eval +4.05]}  Kf8 {[%eval +4.06]}  
+6. f6 {[%eval +4.13]}  Qg6 {[%eval +4.13]}  7. Rxe5 {[%eval +4.10]}  dxe5 {[%eval +6.22]}  
+8. Qxe5 {[%eval +6.15]}  Nxf6 {[%eval +5.92]}  9. Rxf4 $18 {[%eval +6.36]}  Kg7 {[%eval +6.36]}  
+10. Qe7+ $18 {[%eval +6.50]} ) 3. fxg6 {[%eval +5.90]}  gxf6 {[%eval +5.86]}  4. 
+Qh6+ {[%eval +5.89]}  Kg8 {[%eval +5.92]}  5. g7 {[%eval +5.76]}  1-0
+
+[ContentType "Exercise"]
+[FEN "r1bqkb1r/p2n1p1p/2p3p1/3p4/2B5/2N5/PPP2PPP/R1BQ1RK1 w kq - 0 12"]
+[Event "Exhibition Simultaneous Game, Davis, California, USA"]
+[Round ""]
+[Guid "R0c74bb2ffc65487ea6f2b2533569ac2d"]
+[Date "1964.04.??"]
+[White "Fischer Robert James"]
+[Black "Wilkerson Max"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+[Preamble "White sacrifices a piece for a devastating attack and ultimately wins an exchange"]
+
+
+ {[%eval +4.90][%assm 1]} 1. Bxd5 {[%eval +5.50]}  cxd5 {[%eval +5.37]}  2. Re1+ 
+{[%eval +5.52]}  Be7 {[%eval +5.60]}  3. Nxd5 {[%eval +5.71]}  Ne5 {[%eval +5.72]}  
+4. Rxe5 {[%eval +5.70]}  Be6 {[%eval +5.68]}  5. Qd4 {[%eval +5.71]}  O-O {[%eval +5.73]}  
+6. Bh6 {[%eval +5.71]}  Bf6 {[%eval +5.72]}  7. Nxf6+ {[%eval +5.72]}  Qxf6 {[%eval +5.78]}  
+8. Bxf8 $18 {[%eval +5.67]}  1-0
+
+[ContentType "Exercise"]
+[FEN "r2qkr2/ppp1b1Qp/8/4ppB1/2B1N3/3P3P/PP4P1/n2K1R2 w q - 0 17"]
+[Event "Exhibition Simultaneous Game, New York, USA"]
+[Round ""]
+[Guid "R1e2d87b26385460daae211092e62e60a"]
+[Date "1964.05.??"]
+[White "Fischer Robert James"]
+[Black "McDermott Mike"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+[Preamble "White checkmates the opponent"]
+
+
+ {[%eval +6.84]} 1. Qxh7 {[%eval +11.75]}  Bxg5 {[%eval +#2]}  (1... fxe4 {[%eval +#4]}  
+2. Qg6+ {[%eval +#3]}  Kd7 {[%eval +#3]}  3. Qe6+ {[%eval +#2]}  Ke8 {[%eval +#2]}  
+4. Rxf8+ {[%eval +#1]}  Kxf8 {[%eval +#1]}  5. Qf7# {[%eval #]} ) 2. Qg6+ {[%eval +#1]}  
+Rf7 {[%eval +#1]}  (2... Ke7 {[%eval +#1]}  3. Qe6# {[%eval #]} )  (2... Kd7 {[%eval +#1]}  
+3. Qe6# {[%eval #]} ) 3. Qxf7# {[%eval #]}  1-0
+
+[ContentType "Exercise"]
+[FEN "r1nqr1k1/2pbbppp/p1p5/N1P1p3/4P3/BP3N2/P4PPP/R2QR1K1 w - - 1 18"]
+[Event "Exhibition Simultaneous Game, New York, USA"]
+[Round ""]
+[Guid "Re609f708801c449eaa7dce6910cf9e4e"]
+[Date "1964.05.??"]
+[White "Fischer Robert James"]
+[Black "Terrone James"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+[Preamble "White wins the queen"]
+
+
+ {[%eval +5.82][%assm 1]} 1. Nb7 {[%eval +5.80]}  1-0
+
+[ContentType "Exercise"]
+[FEN "r1b2b1r/ppp1p1pp/4kn2/3q4/3P4/6Q1/PP3PPP/RNB1KB1R w KQ - 0 15"]
+[Event "Santa Monica Blitz"]
+[Round ""]
+[Guid "R1faebe1c32e04d9a9221c71d681d5569"]
+[Date "1966.??.??"]
+[White "Fischer Robert James"]
+[Black "Larsen Bent"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+[Preamble "White develops its pieces, attacking the black queen and gaining a crushing attack on the black king, ultimately winning a piece"]
+
+
+ {[%eval +3.77]} 1. Nc3 {[%eval +3.72]}  Qxd4 {[%eval +4.03]}  2. Be3 {[%eval +4.05]}  
+Qb4 {[%eval +3.84]}  3. a3 {[%eval +3.91]}  Qxb2 {[%eval +5.50]}  4. Bc4+ {[%eval +5.95]}  
+Kd7 {[%eval +6.13]}  5. Rd1+ {[%eval +6.30]}  Ke8 {[%eval +6.42]}  6. Nb5 {[%eval +6.49]}  
+Bd7 {[%eval +6.71]}  7. Nxc7+ {[%eval +6.94]}  Kd8 {[%eval +7.07]}  8. O-O {[%eval +7.02]}  
+Rc8 {[%eval +7.11]}  9. Bd4 {[%eval +6.93]}  Qc2 {[%eval +6.97]}  10. Ne6+ {[%eval +6.90]}  
+Bxe6 {[%eval +7.29]}  11. Bxe6 {[%eval +7.20]}  Ke8 {[%eval +7.21]}  12. Bxf6 {[%eval +7.38]}  
+gxf6 {[%eval +7.48]}  13. Qf3 {[%eval +7.81]}  Bh6 {[%eval +8.25]}  (13... Rc6 {[%eval +7.08]}  
+14. Bb3 {[%eval +7.38]}  Qc5 {[%eval +7.91]}  15. Rd5 {[%eval +8.26]}  Qc3 {[%eval +#1]}  
+16. Qh5# {[%eval #]} ) 14. Bf5 {[%eval +8.02]}  Qc4 {[%eval +11.07]}  15. Qh5+ {[%eval +10.72]}  
+Qf7 {[%eval +9.66]}  16. Qxh6 {[%eval +11.65]}  1-0
+
+[ContentType "Exercise"]
+[FEN "r1b1kb1r/1p3ppp/p3p3/q7/3QpP2/1B2B3/PPP3PP/R4RK1 w kq - 0 14"]
+[Event "Skopje International, Yugoslavia"]
+[Round "4"]
+[Guid "R11191a178f364375a1f73dcb063daf63"]
+[Date "1967.06.??"]
+[White "Fischer Robert James"]
+[Black "Dely Peter"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+ {[%eval +2.60]} 1. f5 $1 {[%eval +4.39]}  exf5 {[%eval +4.44]}  2. Ba4+ {[%eval +4.37]}  
+b5 {[%eval +4.42]}  3. Qe5+ {[%eval +4.38]}  Be7 {[%eval +4.35]}  4. Bb3 $18 {[%eval +4.44]}  
+(4. Qxg7 $2 {[%eval +1.72]}  Rf8 {[%eval +1.75]}  5. Bb3 {[%eval +1.87]}  Qc7 
+$16 {[%eval +1.78]} ) 4... Rf8 {[%eval +4.35]}  5. Bd5 {[%eval +4.41]}  f6 {[%eval +4.38]}  
+6. Qg3 {[%eval +4.45]}  Qd8 {[%eval +4.43]}  7. Bxa8 {[%eval +4.45]}  1-0
+
+[ContentType "Exercise"]
+[FEN "3r1rk1/p2bbp1p/1p1ppp2/q7/4P3/1BN1Q3/PPP2PPP/1K1R3R w - - 0 16"]
+[Event "Skopje International, Yugoslavia"]
+[Round "17"]
+[Guid "Rf58b4e00ac8c400694916bbd98ff4f19"]
+[Date "1967.06.??"]
+[White "Fischer Robert James"]
+[Black "Sofrevski Jovan"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+[Preamble "White sacrifices a piece to gain a material advantage"]
+
+
+ {[%eval +3.85][%assm 1]} 1. Nd5 $3 {[%eval +4.61][%csl Re7]}  Rfe8 {[%eval +4.64]}  
+(1... exd5 {[%eval +4.62]}  2. Rxd5 {[%eval +4.43]}  b5 {[%eval +4.38]}  3. Rh5 {[%eval +4.69]}  
+Bg4 {[%eval +4.56]}  4. Qg3 $18 {[%eval +4.70]} ) 2. Nxe7+ {[%eval +4.65]}  Rxe7 
+{[%eval +4.65]}  3. Rxd6 {[%eval +4.64]}  Rc8 {[%eval +4.93]}  4. Qd4 {[%eval +4.87]}  
+Be8 {[%eval +5.21]}  5. Qxf6 {[%eval +5.29]}  1-0
+
+[ContentType "Exercise"]
+[FEN "r1b2rk1/1p3ppp/p2ppb2/2q1nP2/N2NP3/1R6/P1PQB1PP/5R1K b - - 1 16"]
+[Event "Vinkovci International"]
+[Round "7"]
+[Guid "R87fcb1912a084ad7ad9ba24f756bcb38"]
+[Date "1968.09.??"]
+[White "Matov Mladen"]
+[Black "Fischer Robert James"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "0-1"]
+[Preamble "White wins a piece"]
+
+
+ {[%eval -4.18]}  Nc4 {[%eval -5.05]}  2. Bxc4 {[%eval -5.21]}  Qxc4 $19 {[%eval -5.40]}  
+3. Ne2 {[%eval -5.38]}  Qxa4 {[%eval -5.26]}  0-1
+
+
+
