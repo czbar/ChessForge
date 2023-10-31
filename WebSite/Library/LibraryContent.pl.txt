@@ -39,7 +39,11 @@ Description:Teoria i praktyka debiutów szachowych.
       
 	Shelf:Repertuar dla Czarnych
     Description: Debiuty analizowane z punktu widzenia czarnych.
-    
+        
+	  Book:Klasyczna Sycylijska 2...d6, 5...Sc6
+      Description: Klasyczny, zawsze popularny na wszystkich szczeblach system w Obronie Syscylijskiej.
+      File: Openings/Black/Classical Sicilian for Black.pgn
+
 	  Book:Wariant Wymienny Obronny Francuskiej (jęz. ang.)
       Description: Jak przełamać symetrię grając czarnymi wariant wymienny Francuskiej.
       File: Openings/Black/French Exchange for Black.pgn

@@ -40,6 +40,10 @@ Description:Workbooks examining theory and practice of various Openings.
 	Shelf:Black repertoire
     Description: Openings analyzed from the Black player's point of view
     
+	  Book:Classical Sicilian 2...d6, 5...Nc6
+      Description: The classical, always popular at the highest level system in the Sicilian Defense.
+      File: Openings/Black/Classical Sicilian for Black.pgn
+    
 	  Book:Exchange French
       Description: Breaking symmetry when facing the Exchange Variation in the French.
       File: Openings/Black/French Exchange for Black.pgn

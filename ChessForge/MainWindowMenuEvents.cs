@@ -158,14 +158,16 @@ namespace ChessForge
             }
             else
             {
+                Point leftTop = Application.Current.MainWindow.PointToScreen(new Point(0, 0));
+
                 double offset = 50;
-                double dlgHeight = Math.Max(ChessForgeMain.ActualHeight - (5 * offset), 550);
-                double dlgWidth = Math.Max(ChessForgeMain.ActualWidth - (5 * offset), 800);
+                double dlgHeight = Math.Max(ChessForgeMain.ActualHeight - (2 * offset + 40), 550);
+                double dlgWidth = Math.Max(ChessForgeMain.ActualWidth - (2 * offset), 800);
 
                 OnlineLibraryContentDialog dlg = new OnlineLibraryContentDialog(library)
                 {
-                    Left = ChessForgeMain.Left + offset,
-                    Top = ChessForgeMain.Top + offset,
+                    Left = leftTop.X + offset,
+                    Top = leftTop.Y + offset,
                     Width = dlgWidth,
                     Height = dlgHeight,
                     Topmost = false,
