@@ -995,13 +995,14 @@ namespace ChessForge
         /// </summary>
         public static void ShowPgnProcessingErrors(string dlgTitle, ref StringBuilder sb)
         {
-            TextBoxDialog dlg = new TextBoxDialog(dlgTitle, sb.ToString())
-            {
-                Left = AppState.MainWin.ChessForgeMain.Left + 100,
-                Top = AppState.MainWin.ChessForgeMain.Top + 100,
-                Topmost = false,
-                Owner = AppState.MainWin
-            };
+            TextBoxDialog dlg = new TextBoxDialog(dlgTitle, sb.ToString());
+            //{
+            //    Left = AppState.MainWin.ChessForgeMain.Left + 100,
+            //    Top = AppState.MainWin.ChessForgeMain.Top + 100,
+            //    Topmost = false,
+            //    Owner = AppState.MainWin
+            //};
+            GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
             dlg.ShowDialog();
         }
 
@@ -1047,7 +1048,7 @@ namespace ChessForge
                 }
                 else
                 {
-                    if ((AppState.IsDirty || string.IsNullOrEmpty(AppState.WorkbookFilePath)) && (isAppClosing || !TrainingSession.IsTrainingInProgress))
+                    if (AppState.IsDirty && (isAppClosing || !TrainingSession.IsTrainingInProgress))
                     {
                         // this was prompted by an action other than File->Save 
                         // Ask, or proceed without asking of AutoSave is enabled
