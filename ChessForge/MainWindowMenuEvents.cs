@@ -293,13 +293,14 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnMergeChapters_Click(object sender, RoutedEventArgs e)
         {
-            SelectChaptersDialog dlg = new SelectChaptersDialog(WorkbookManager.SessionWorkbook, Properties.Resources.SelectChaptersToMerge)
-            {
-                Left = AppState.MainWin.ChessForgeMain.Left + 100,
-                Top = AppState.MainWin.ChessForgeMain.Top + 100,
-                Topmost = false,
-                Owner = AppState.MainWin
-            };
+            SelectChaptersDialog dlg = new SelectChaptersDialog(WorkbookManager.SessionWorkbook, Properties.Resources.SelectChaptersToMerge);
+            //{
+            //    Left = AppState.MainWin.ChessForgeMain.Left + 100,
+            //    Top = AppState.MainWin.ChessForgeMain.Top + 100,
+            //    Topmost = false,
+            //    Owner = AppState.MainWin
+            //};
+            GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
             dlg.ShowDialog();
             if (dlg.ExitOK)
@@ -658,13 +659,14 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnBackupVersion_Click(object sender, RoutedEventArgs e)
         {
-            BackupVersionDialog dlg = new BackupVersionDialog(WorkbookManager.SessionWorkbook)
-            {
-                Left = ChessForgeMain.Left + 100,
-                Top = ChessForgeMain.Top + 100,
-                Topmost = false,
-                Owner = this
-            };
+            BackupVersionDialog dlg = new BackupVersionDialog(WorkbookManager.SessionWorkbook);
+            //{
+            //    Left = ChessForgeMain.Left + 100,
+            //    Top = ChessForgeMain.Top + 100,
+            //    Topmost = false,
+            //    Owner = this
+            //};
+            GuiUtilities.PositionDialog(dlg, this, 100);
             if (dlg.ShowDialog() == true)
             {
                 AppState.SaveWorkbookFile(dlg.BackupPath);
@@ -1102,13 +1104,14 @@ namespace ChessForge
                 {
                     Workbook workbook = new Workbook();
                     WorkbookManager.CreateWorkbookFromGameList(ref workbook, ref games);
-                    SelectChaptersDialog dlg = new SelectChaptersDialog(workbook)
-                    {
-                        Left = AppState.MainWin.ChessForgeMain.Left + 100,
-                        Top = AppState.MainWin.ChessForgeMain.Top + 100,
-                        Topmost = false,
-                        Owner = AppState.MainWin
-                    };
+                    SelectChaptersDialog dlg = new SelectChaptersDialog(workbook);
+                    //{
+                    //    Left = AppState.MainWin.ChessForgeMain.Left + 100,
+                    //    Top = AppState.MainWin.ChessForgeMain.Top + 100,
+                    //    Topmost = false,
+                    //    Owner = AppState.MainWin
+                    //};
+                    GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
                     dlg.ShowDialog();
                     if (dlg.ExitOK)
@@ -1254,13 +1257,14 @@ namespace ChessForge
         /// <returns></returns>
         public bool SelectArticlesFromPgnFile(ref ObservableCollection<GameData> games, SelectGamesDialog.Mode mode)
         {
-            SelectGamesDialog dlg = new SelectGamesDialog(ref games, mode)
-            {
-                Left = AppState.MainWin.ChessForgeMain.Left + 100,
-                Top = AppState.MainWin.ChessForgeMain.Top + 100,
-                Topmost = false,
-                Owner = AppState.MainWin
-            };
+            SelectGamesDialog dlg = new SelectGamesDialog(ref games, mode);
+            //{
+            //    Left = AppState.MainWin.ChessForgeMain.Left + 100,
+            //    Top = AppState.MainWin.ChessForgeMain.Top + 100,
+            //    Topmost = false,
+            //    Owner = AppState.MainWin
+            //};
+            GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
             bool res = dlg.ShowDialog() == true;
             return res;
@@ -1634,13 +1638,14 @@ namespace ChessForge
                             invalidEntities += (Properties.Resources.Count + " " + skippedDueToType.ToString() + ".");
                             sbErrors.AppendLine(invalidEntities);
                         }
-                        TextBoxDialog tbDlg = new TextBoxDialog(Properties.Resources.PgnErrors, sbErrors.ToString())
-                        {
-                            Left = ChessForgeMain.Left + 100,
-                            Top = ChessForgeMain.Top + 100,
-                            Topmost = false,
-                            Owner = this
-                        };
+                        TextBoxDialog tbDlg = new TextBoxDialog(Properties.Resources.PgnErrors, sbErrors.ToString());
+                        //{
+                        //    Left = ChessForgeMain.Left + 100,
+                        //    Top = ChessForgeMain.Top + 100,
+                        //    Topmost = false,
+                        //    Owner = this
+                        //};
+                        GuiUtilities.PositionDialog(tbDlg, this, 100);
                         tbDlg.ShowDialog();
                     }
                 }
@@ -1712,13 +1717,14 @@ namespace ChessForge
             {
                 TreeNode nd = ActiveTreeView.GetSelectedNode();
                 ObservableCollection<ArticleListItem> articleList = WorkbookManager.SessionWorkbook.GenerateArticleList();
-                SelectArticlesDialog dlg = new SelectArticlesDialog(nd, true, null, ref articleList, false, ArticlesAction.NONE)
-                {
-                    Left = ChessForgeMain.Left + 100,
-                    Top = ChessForgeMain.Top + 100,
-                    Topmost = false,
-                    Owner = this
-                };
+                SelectArticlesDialog dlg = new SelectArticlesDialog(nd, true, null, ref articleList, false, ArticlesAction.NONE);
+                //{
+                //    Left = ChessForgeMain.Left + 100,
+                //    Top = ChessForgeMain.Top + 100,
+                //    Topmost = false,
+                //    Owner = this
+                //};
+                GuiUtilities.PositionDialog(dlg, this, 100);
                 if (dlg.ShowDialog() == true)
                 {
                     List<string> refGuids = dlg.GetSelectedReferenceStrings();
@@ -1957,13 +1963,14 @@ namespace ChessForge
                 if (index >= 0)
                 {
                     VariationTree tree = chapter.Exercises[index].Tree;
-                    PositionSetupDialog dlg = new PositionSetupDialog(tree)
-                    {
-                        Left = ChessForgeMain.Left + 100,
-                        Top = ChessForgeMain.Top + 100,
-                        Topmost = false,
-                        Owner = this
-                    };
+                    PositionSetupDialog dlg = new PositionSetupDialog(tree);
+                    //{
+                    //    Left = ChessForgeMain.Left + 100,
+                    //    Top = ChessForgeMain.Top + 100,
+                    //    Topmost = false,
+                    //    Owner = this
+                    //};
+                    GuiUtilities.PositionDialog(dlg, this, 100);
                     dlg.ShowDialog();
                     if (dlg.ExitOK)
                     {
@@ -2130,13 +2137,14 @@ namespace ChessForge
                 mode = SelectGamesDialog.Mode.IMPORT_EXERCISES;
             }
 
-            SelectGamesDialog dlg = new SelectGamesDialog(ref games, mode)
-            {
-                Left = ChessForgeMain.Left + 100,
-                Top = ChessForgeMain.Top + 100,
-                Topmost = false,
-                Owner = AppState.MainWin
-            };
+            SelectGamesDialog dlg = new SelectGamesDialog(ref games, mode);
+            //{
+            //    Left = ChessForgeMain.Left + 100,
+            //    Top = ChessForgeMain.Top + 100,
+            //    Topmost = false,
+            //    Owner = AppState.MainWin
+            //};
+            GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
             return dlg.ShowDialog() == true;
         }
 
@@ -3005,13 +3013,14 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnHelpAbout_Click(object sender, RoutedEventArgs e)
         {
-            AboutBoxDialog dlg = new AboutBoxDialog()
-            {
-                Left = ChessForgeMain.Left + 100,
-                Top = ChessForgeMain.Top + 100,
-                Topmost = false,
-                Owner = this
-            };
+            AboutBoxDialog dlg = new AboutBoxDialog();
+            //{
+            //    Left = ChessForgeMain.Left + 100,
+            //    Top = ChessForgeMain.Top + 100,
+            //    Topmost = false,
+            //    Owner = this
+            //};
+            GuiUtilities.PositionDialog(dlg, this, 100);
             dlg.ShowDialog();
         }
 
@@ -3039,13 +3048,14 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnBlunderDetectionOptions_Click(object sender, RoutedEventArgs e)
         {
-            BlunderDetectionDialog dlg = new BlunderDetectionDialog()
-            {
-                Left = ChessForgeMain.Left + 100,
-                Top = ChessForgeMain.Top + 100,
-                Topmost = false,
-                Owner = this
-            };
+            BlunderDetectionDialog dlg = new BlunderDetectionDialog();
+            //{
+            //    Left = ChessForgeMain.Left + 100,
+            //    Top = ChessForgeMain.Top + 100,
+            //    Topmost = false,
+            //    Owner = this
+            //};
+            GuiUtilities.PositionDialog(dlg, this, 100);
 
             if (dlg.ShowDialog() == true)
             {
@@ -3248,13 +3258,14 @@ namespace ChessForge
                     tree = new VariationTree(GameData.ContentType.MODEL_GAME);
                 }
 
-                GameHeaderDialog dlg = new GameHeaderDialog(tree, Properties.Resources.GameHeader)
-                {
-                    Left = ChessForgeMain.Left + 100,
-                    Top = ChessForgeMain.Top + 100,
-                    Topmost = false,
-                    Owner = this
-                };
+                GameHeaderDialog dlg = new GameHeaderDialog(tree, Properties.Resources.GameHeader);
+                //{
+                //    Left = ChessForgeMain.Left + 100,
+                //    Top = ChessForgeMain.Top + 100,
+                //    Topmost = false,
+                //    Owner = this
+                //};
+                GuiUtilities.PositionDialog(dlg, this, 100);
                 dlg.ShowDialog();
                 if (dlg.ExitOK)
                 {
@@ -3526,13 +3537,14 @@ namespace ChessForge
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
 
                 VariationTree game = WorkbookManager.SessionWorkbook.ActiveChapter.ModelGames[chapter.ActiveModelGameIndex].Tree;
-                var dlg = new GameHeaderDialog(game, Properties.Resources.GameHeader)
-                {
-                    Left = ChessForgeMain.Left + 100,
-                    Top = ChessForgeMain.Top + 100,
-                    Topmost = false,
-                    Owner = this
-                };
+                var dlg = new GameHeaderDialog(game, Properties.Resources.GameHeader);
+                //{
+                //    Left = ChessForgeMain.Left + 100,
+                //    Top = ChessForgeMain.Top + 100,
+                //    Topmost = false,
+                //    Owner = this
+                //};
+                GuiUtilities.PositionDialog(dlg, this, 100);
                 dlg.ShowDialog();
                 if (dlg.ExitOK)
                 {
@@ -3564,13 +3576,14 @@ namespace ChessForge
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
 
                 VariationTree game = WorkbookManager.SessionWorkbook.ActiveChapter.Exercises[chapter.ActiveExerciseIndex].Tree;
-                var dlg = new GameHeaderDialog(game, Properties.Resources.ExerciseHeader)
-                {
-                    Left = ChessForgeMain.Left + 100,
-                    Top = ChessForgeMain.Top + 100,
-                    Topmost = false,
-                    Owner = this
-                };
+                var dlg = new GameHeaderDialog(game, Properties.Resources.ExerciseHeader);
+                //{
+                //    Left = ChessForgeMain.Left + 100,
+                //    Top = ChessForgeMain.Top + 100,
+                //    Topmost = false,
+                //    Owner = this
+                //};
+                GuiUtilities.PositionDialog(dlg, this, 100);
                 dlg.ShowDialog();
                 if (dlg.ExitOK)
                 {

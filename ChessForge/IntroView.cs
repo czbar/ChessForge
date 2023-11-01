@@ -221,13 +221,14 @@ namespace ChessForge
                 TreeNode node = new TreeNode(null, "", 0);
                 node.Position = new BoardPosition(SelectedNode.Position);
 
-                DiagramSetupDialog dlg = new DiagramSetupDialog(node)
-                {
-                    Left = AppState.MainWin.ChessForgeMain.Left + 100,
-                    Top = AppState.MainWin.Top + 100,
-                    Topmost = false,
-                    Owner = AppState.MainWin
-                };
+                DiagramSetupDialog dlg = new DiagramSetupDialog(node);
+                //{
+                //    Left = AppState.MainWin.ChessForgeMain.Left + 100,
+                //    Top = AppState.MainWin.Top + 100,
+                //    Topmost = false,
+                //    Owner = AppState.MainWin
+                //};
+                GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
                 if (dlg.ShowDialog() == true)
                 {
@@ -428,13 +429,14 @@ namespace ChessForge
 
                 if (run != null)
                 {
-                    IntroMoveDialog dlg = new IntroMoveDialog(SelectedNode, run)
-                    {
-                        Left = AppState.MainWin.Left + 100,
-                        Top = AppState.MainWin.Top + 100,
-                        Topmost = false,
-                        Owner = AppState.MainWin
-                    };
+                    IntroMoveDialog dlg = new IntroMoveDialog(SelectedNode, run);
+                    //{
+                    //    Left = AppState.MainWin.Left + 100,
+                    //    Top = AppState.MainWin.Top + 100,
+                    //    Topmost = false,
+                    //    Owner = AppState.MainWin
+                    //};
+                    GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
                     if (dlg.ShowDialog() == true)
                     {
@@ -488,13 +490,14 @@ namespace ChessForge
                 return;
             }
 
-            DiagramSetupDialog dlg = new DiagramSetupDialog(SelectedNode)
-            {
-                Left = AppState.MainWin.ChessForgeMain.Left + 100,
-                Top = AppState.MainWin.Top + 100,
-                Topmost = false,
-                Owner = AppState.MainWin
-            };
+            DiagramSetupDialog dlg = new DiagramSetupDialog(SelectedNode);
+            //{
+            //    Left = AppState.MainWin.ChessForgeMain.Left + 100,
+            //    Top = AppState.MainWin.Top + 100,
+            //    Topmost = false,
+            //    Owner = AppState.MainWin
+            //};
+            GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
             if (dlg.ShowDialog() == true)
             {

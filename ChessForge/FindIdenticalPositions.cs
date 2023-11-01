@@ -55,15 +55,16 @@ namespace ChessForge
                     }
                     else
                     {
-                        FoundArticlesDialog dlgEx = new FoundArticlesDialog(searchNode, 
-                                                            FoundArticlesDialog.Mode.IDENTICAL_ARTICLES, 
-                                                            ref lstIdenticalPositions)
-                        {
-                            Left = AppState.MainWin.ChessForgeMain.Left + 100,
-                            Top = AppState.MainWin.ChessForgeMain.Top + 100,
-                            Topmost = false,
-                            Owner = AppState.MainWin
-                        };
+                        FoundArticlesDialog dlgEx = new FoundArticlesDialog(searchNode,
+                                                            FoundArticlesDialog.Mode.IDENTICAL_ARTICLES,
+                                                            ref lstIdenticalPositions);
+                        //{
+                        //    Left = AppState.MainWin.ChessForgeMain.Left + 100,
+                        //    Top = AppState.MainWin.ChessForgeMain.Top + 100,
+                        //    Topmost = false,
+                        //    Owner = AppState.MainWin
+                        //};
+                        GuiUtilities.PositionDialog(dlgEx, AppState.MainWin, 100);
 
                         if (dlgEx.ShowDialog() == true)
                         {

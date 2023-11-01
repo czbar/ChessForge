@@ -63,6 +63,7 @@ namespace ChessForge
             }
 
             OperationScopeDialog dlg = new OperationScopeDialog(dlgTitle);
+            GuiUtilities.PositionDialog(dlg, this, 100);
             if (dlg.ShowDialog() == true)
             {
                 Dictionary<Article, List<MoveAttributes>> dictUndoData = new Dictionary<Article, List<MoveAttributes>>();
@@ -221,13 +222,14 @@ namespace ChessForge
                     ObservableCollection<ArticleListItem> gameList = WorkbookManager.SessionWorkbook.GenerateArticleList(null, GameData.ContentType.MODEL_GAME);
 
                     string title = Properties.Resources.EvaluateGames;
-                    SelectArticlesDialog dlg = new SelectArticlesDialog(null, true, title, ref gameList, false, ArticlesAction.NONE, GameData.ContentType.MODEL_GAME)
-                    {
-                        Left = ChessForgeMain.Left + 100,
-                        Top = ChessForgeMain.Top + 100,
-                        Topmost = false,
-                        Owner = this
-                    };
+                    SelectArticlesDialog dlg = new SelectArticlesDialog(null, true, title, ref gameList, false, ArticlesAction.NONE, GameData.ContentType.MODEL_GAME);
+                    //{
+                    //    Left = ChessForgeMain.Left + 100,
+                    //    Top = ChessForgeMain.Top + 100,
+                    //    Topmost = false,
+                    //    Owner = this
+                    //};
+                    GuiUtilities.PositionDialog(dlg, this, 100);
                     dlg.SetupGuiForGamesEval();
 
                     if (dlg.ShowDialog() == true)
@@ -322,13 +324,14 @@ namespace ChessForge
                     title = Properties.Resources.SelectExercisesForDeletion;
                 }
 
-                SelectArticlesDialog dlg = new SelectArticlesDialog(null, true, title, ref articleList, allChapters, ArticlesAction.NONE, articleType)
-                {
-                    Left = ChessForgeMain.Left + 100,
-                    Top = ChessForgeMain.Top + 100,
-                    Topmost = false,
-                    Owner = this
-                };
+                SelectArticlesDialog dlg = new SelectArticlesDialog(null, true, title, ref articleList, allChapters, ArticlesAction.NONE, articleType);
+                //{
+                //    Left = ChessForgeMain.Left + 100,
+                //    Top = ChessForgeMain.Top + 100,
+                //    Topmost = false,
+                //    Owner = this
+                //};
+                GuiUtilities.PositionDialog(dlg, this, 100);
                 if (dlg.ShowDialog() == true)
                 {
                     List<ArticleListItem> articlesToDelete = new List<ArticleListItem>();

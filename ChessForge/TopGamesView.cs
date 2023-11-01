@@ -273,13 +273,14 @@ namespace ChessForge
         public void OpenReplayDialog()
         {
             // pass ActiveTab so that we can add a reference if this is a Study Tree
-            LichessGamesPreviewDialog dlg = new LichessGamesPreviewDialog(_clickedGameId, _gameIdList, AppState.ActiveTab)
-            {
-                Left = AppState.MainWin.ChessForgeMain.Left + 100,
-                Top = AppState.MainWin.Top + 100,
-                Topmost = false,
-                Owner = AppState.MainWin
-            };
+            LichessGamesPreviewDialog dlg = new LichessGamesPreviewDialog(_clickedGameId, _gameIdList, AppState.ActiveTab);
+            //{
+            //    Left = AppState.MainWin.ChessForgeMain.Left + 100,
+            //    Top = AppState.MainWin.Top + 100,
+            //    Topmost = false,
+            //    Owner = AppState.MainWin
+            //};
+            GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
             dlg.ShowDialog();
 
             switch (dlg.ActiveTabOnExit)
