@@ -895,7 +895,7 @@ Nf4 {[%eval -#4]}  0-1
 [Event "Pozycja z Teorii po 11.Hc2"]
 [Round ""]
 [Guid "cfad5c66-3c29-40cb-a418-041e8b871ab0"]
-[Date "????.??.??"]
+[Date ""]
 [White ""]
 [Black ""]
 [WhiteElo ""]
@@ -996,7 +996,7 @@ dxc4 {[%eval -0.94]}  23. Na5 {[%eval -0.87]}  (23. Rxc4 {[%eval -1.44]}  Bxg3 {
 [Event "Pozycja z Teorii po 23.Wxc4-+"]
 [Round ""]
 [Guid "7e2f06c4-1e33-4aa6-9730-cd793cf2db23"]
-[Date "????.??.??"]
+[Date ""]
 [White ""]
 [Black ""]
 [WhiteElo ""]
@@ -1053,20 +1053,20 @@ Rad8 {[%eval -0.11]}  12. Rc1 {[%eval -0.15]}  Rfe8 $11 {[%ref Rd33c3e3a6507478a
 [Result "1/2-1/2"]
 
 
- {[%eval +0.31]} 1. e4 {[%eval +0.28]}  e6 {[%eval +0.33]}  2. d4 {[%eval 
+ {[%eval +0.29]} 1. e4 {[%eval +0.28]}  e6 {[%eval +0.33]}  2. d4 {[%eval 
 +0.27]}  d5 {[%eval +0.29]}  3. exd5 {[%eval +0.15]}  exd5 {[%eval +0.22]}  4. 
 Nf3 {[%eval +0.22]}  Nf6 {[%eval +0.18]}  5. c4 {[%eval -0.03]}  Bb4+ {[%eval -0.03]}  
 6. Nc3 {[%eval -0.06]}  O-O {[%eval -0.07]}  7. Be2 {[%eval -0.10]}  dxc4 {[%eval -0.04]}  
 8. Bxc4 {[%eval -0.05]}  Re8+ {[%eval +0.11]}  9. Be3 {[%eval +0.10]}  Be6 {[%eval +0.16]}  
 10. Bxe6 {[%eval +0.24]}  Rxe6 {[%eval +0.14]}  11. O-O {[%eval +0.05]}  Nbd7 {[%eval +0.13]}  
-12. Qb3 {[%eval +0.04]}  a5 {[%eval +0.04]}  13. d5 {[%eval -0.01]}  Re8 {[%eval +0.31]}  
-14. Rfd1 {[%eval -0.05]}  Bd6 {[%eval +0.33]}  15. Nb5 {[%eval -0.33]}  Nc5 {[%eval +0.13]}  
-16. Qc2 {[%eval +0.17]}  b6 {[%eval +0.39]}  17. Rac1 {[%eval +0.21]}  Qd7 {[%eval +0.26]}  
-18. Nxd6 {[%eval +0.20]}  cxd6 {[%eval +0.20]}  19. a3 {[%eval +0.09]}  a4 {[%eval +0.07]}  
-20. h3 {[%eval -0.11]}  Rac8 {[%eval +0.29]}  21. Qe2 {[%eval +0.18]}  Qf5 {[%eval +0.57]}  
-22. Nd4 {[%eval +0.50]}  Qg6 {[%eval +0.96]}  23. Qf3 {[%eval +0.70]}  Nfd7 {[%eval +0.81]}  
-24. Qf5 {[%eval +0.72]}  Ne5 {[%eval +0.75]}  25. Qxg6 {[%eval +0.68]}  hxg6 {[%eval +0.66]}  
-26. Nb5 {[%eval +0.61]}  Rcd8 {[%eval +0.62]}  27. Rc2 {[%eval +0.74]}  1/2-1/2
+12. Qb3 {[%eval +0.04]}  a5 {[%eval +0.04]}  13. d5 {[%eval +0.07]}  Re8 {[%eval +0.23]}  
+14. Rfd1 {[%eval +0.10]}  Bd6 {[%eval +0.42]}  15. Nb5 {[%eval -0.40]}  Nc5 {[%eval +0.09]}  
+16. Qc2 {[%eval +0.09]}  b6 {[%eval +0.34]}  17. Rac1 {[%eval +0.13]}  Qd7 {[%eval +0.27]}  
+18. Nxd6 {[%eval +0.12]}  cxd6 {[%eval +0.17]}  19. a3 {[%eval +0.08]}  a4 {[%eval +0.14]}  
+20. h3 {[%eval -0.23]}  Rac8 {[%eval +0.28]}  21. Qe2 {[%eval +0.13]}  Qf5 {[%eval +0.77]}  
+22. Nd4 {[%eval +0.56]}  Qg6 {[%eval +0.97]}  23. Qf3 {[%eval +0.68]}  Nfd7 {[%eval +0.78]}  
+24. Qf5 {[%eval +0.80]}  Ne5 {[%eval +0.78]}  25. Qxg6 {[%eval +0.83]}  hxg6 {[%eval +0.79]}  
+26. Nb5 {[%eval +0.83]}  Rcd8 {[%eval +0.84]}  27. Rc2 {[%eval +0.78]}  1/2-1/2
 
 [ContentType "Model Game"]
 [Event "Werfen"]
@@ -1137,7 +1137,7 @@ c4 {[%eval -0.10]}  Nf6 {[%eval -0.04]}  5. Nc3 {[%eval -0.03]}  Bb4 {[%eval -0.
 [Result "0-1"]
 
 
- {[%eval +0.35]} 1. e4 {[%eval +0.27]}  e6 {[%eval +0.36]}  2. d4 {[%eval 
+ {[%eval +0.29]} 1. e4 {[%eval +0.27]}  e6 {[%eval +0.36]}  2. d4 {[%eval 
 +0.33]}  d5 {[%eval +0.37]}  3. exd5 {[%eval +0.12]}  exd5 {[%eval +0.14]}  4. 
 Nf3 {[%eval +0.17]}  Nf6 {[%eval +0.16]}  5. c4 {[%eval -0.03]}  Bb4+ {[%eval -0.03]}  
 6. Nc3 {[%eval -0.06]}  Nc6 {[%eval -0.01]}  7. Be2 {[%eval -0.07]}  O-O {[%eval -0.07]}  
