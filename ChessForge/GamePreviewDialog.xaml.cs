@@ -105,10 +105,17 @@ namespace ChessForge
             string white = tree.Header.GetWhitePlayer(out _) ?? "";
             string black = tree.Header.GetBlackPlayer(out _) ?? "";
 
+            string eventName = tree.Header.GetEventName(out _);
+            int year = tree.Header.GetYear();
+            if (year > 0)
+            {
+                eventName += "  (" + year.ToString() + ")";
+            }
+            UiLblEvent.Visibility = Visibility.Visible;
+            UiLblEvent.Content = eventName;
+
             if (!string.IsNullOrWhiteSpace(white) || !string.IsNullOrEmpty(black))
             {
-                UiLblEvent.Visibility= Visibility.Collapsed;
-
                 UiLblWhiteSquare.Visibility = Visibility.Visible;
                 UiLblWhite.Visibility = Visibility.Visible;
                 UiLblBlackSquare.Visibility = Visibility.Visible;
@@ -131,9 +138,6 @@ namespace ChessForge
             }
             else
             {
-                UiLblEvent.Visibility = Visibility.Visible;
-                UiLblEvent.Content = tree.Header.GetEventName(out _);
-
                 UiLblWhiteSquare.Visibility = Visibility.Collapsed;
                 UiLblWhite.Visibility = Visibility.Collapsed;
                 UiLblBlackSquare.Visibility = Visibility.Collapsed;
