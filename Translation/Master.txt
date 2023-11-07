@@ -180,9 +180,6 @@ OrderNo=No
 #ECO
 ECO=ECO
 
-#ECO from/to
-EcoFromTo=ECO (from/to)
-
 #Elo
 Elo=Elo
 
@@ -766,6 +763,15 @@ IgnoreColors=Ignore Colors
 #Moves in the game
 MovesInGameMinMax=Moves (min/max)
 
+#ECO from/to
+EcoFromTo=ECO (from/to)
+
+#Year from/to
+YearFromTo=Years (from/to)
+
+#Include empty year
+IncludeYearUnspecified=Include unspecified
+
 #Msg: max number of games less than min
 CritMaxMovesLessMin=Invalid criterion: min number of moves cannot be greater than max.
 
@@ -845,14 +851,18 @@ StopDetectLevel=No Detection Beyond (cp)
 
 #######################################
 #
-# Header: DIALOG Find Identical Positions
+# Header: DIALOG Find Identical Positions / Found Games
 #
-
-#Select to Copy/Move
-SelectCopyMove=Select to Copy or Move...
 
 #Identical Positions dialog title
 DlgTitleIdenticalPositions=List of Identical Positions
+
+#Found games dialog title
+DlgSearchResults=Search Results
+
+
+#Select to Copy/Move
+SelectCopyMove=Select to Copy or Move...
 
 # Label explaining clicks in the Identical Positions dialog.
 DlgLabelIdenticalPositionHint=Double click an item to open its view.
