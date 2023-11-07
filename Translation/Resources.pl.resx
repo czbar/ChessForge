@@ -267,6 +267,12 @@
   <data name="Item" xml:space="preserve">
     <value>Element</value>
   </data>
+  <data name="Text" xml:space="preserve">
+    <value>Tekst</value>
+  </data>
+  <data name="Url" xml:space="preserve">
+    <value>Url</value>
+  </data>
   <data name="OrderNo" xml:space="preserve">
     <value>No</value>
   </data>
@@ -984,6 +990,12 @@
   <data name="EditMove" xml:space="preserve">
     <value>Edytuj Posunięcie</value>
   </data>
+  <data name="InsertHyperlink" xml:space="preserve">
+    <value>Wstaw Hiperlink</value>
+  </data>
+  <data name="EditHyperlink" xml:space="preserve">
+    <value>Edytuj Hiperlinkink</value>
+  </data>
   <data name="MnGameExerciseReferences" xml:space="preserve">
     <value>Edytuj Odsyłacz do Partii i Ćwiczeń...</value>
   </data>
@@ -1190,6 +1202,9 @@
   </data>
   <data name="MbtTitleCopyPasteError" xml:space="preserve">
     <value>Błąd w Kopiuj/Wklej</value>
+  </data>
+  <data name="MsgNeedValidUrlOrEmpty" xml:space="preserve">
+    <value>Podaj prawidłowy Url or zostaw pusty aby usunąć link. </value>
   </data>
   <data name="DataProcessingInProgress" xml:space="preserve">
     <value>Trwa wczytywanie pliku. Proszę czekać...</value>

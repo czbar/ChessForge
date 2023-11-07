@@ -167,6 +167,13 @@ Confirm=Confirm
 #Item
 Item=Item
 
+
+#Text
+Text=Text
+
+#Url
+Url=Url
+
 #Order No
 OrderNo=No
 
@@ -175,7 +182,6 @@ ECO=ECO
 
 #ECO from/to
 EcoFromTo=ECO (from/to)
-
 
 #Elo
 Elo=Elo
@@ -1016,6 +1022,13 @@ EditDiagram=Edit Diagram
 #Edit a move
 EditMove=Edit Move
 
+#Insert a hyperlink
+InsertHyperlink=Insert Hyperlink
+
+#Edit a hyperlink
+EditHyperlink=Edit Hyperlink
+
+
 #
 # CONTEXT MENU for Study Tree Tab
 #
@@ -1283,8 +1296,11 @@ MbtTitleCopyPasteError=Copy/Paste Error
 
 ##################################
 #
-# Header: Message Text
+# Header: MESSAGES
 #
+
+#Invalid Url
+MsgNeedValidUrlOrEmpty=Enter valid Url or leave empty to delete link. 
 
 #Background read is in progress
 DataProcessingInProgress=File processing is in progress. Please wait...

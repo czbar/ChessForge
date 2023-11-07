@@ -217,6 +217,15 @@ Confirm=Potwierdź
 #english: Item=Item
 Item=Element
 
+
+#description: Text
+#english: Text=Text
+Text=Tekst
+
+#description: Url
+#english: Url=Url
+Url=Url
+
 #description: Order No
 #english: OrderNo=No
 OrderNo=No
@@ -228,7 +237,6 @@ ECO=ECO
 #description: ECO from/to
 #english: EcoFromTo=ECO (from/to)
 EcoFromTo=ECO (od/do)
-
 
 #description: Elo
 #english: Elo=Elo
@@ -1305,6 +1313,15 @@ EditDiagram=Edytuj Diagram
 #english: EditMove=Edit Move
 EditMove=Edytuj Posunięcie
 
+#description: Insert a hyperlink
+#english: InsertHyperlink=Insert Hyperlink
+InsertHyperlink=Wstaw Hiperlink
+
+#description: Edit a hyperlink
+#english: EditHyperlink=Edit Hyperlink
+EditHyperlink=Edytuj Hiperlinkink
+
+
 #
 # CONTEXT MENU for Study Tree Tab
 #
@@ -1641,8 +1658,12 @@ MbtTitleCopyPasteError=Błąd w Kopiuj/Wklej
 
 ##################################
 #
-# Header: Message Text
+# Header: MESSAGES
 #
+
+#description: Invalid Url
+#english: MsgNeedValidUrlOrEmpty=Enter valid Url or leave empty to delete link. 
+MsgNeedValidUrlOrEmpty=Podaj prawidłowy Url or zostaw pusty aby usunąć link. 
 
 #description: Background read is in progress
 #english: DataProcessingInProgress=File processing is in progress. Please wait...
