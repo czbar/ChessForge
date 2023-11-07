@@ -3633,6 +3633,26 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// The user wants to create a hyperlink in the Intro view.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiCmiInsertHyperlink_Click(object sender, RoutedEventArgs e)
+        {
+            _introView?.CreateHyperlink();
+        }
+
+        /// <summary>
+        /// Editing of a hyperlink in the Intro view was requested.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiCmiEditHyperlink_Click(object sender, RoutedEventArgs e)
+        {
+            _introView?.EditHyperlink(sender);
+        }
+
+        /// <summary>
         /// Paste previously copied content 
         /// </summary>
         /// <param name="sender"></param>
