@@ -680,7 +680,7 @@ namespace ChessForge
             {
                 if (e.ChangedButton == MouseButton.Right)
                 {
-                    _introView.EnableMenuItems(false, false, null);
+                    _introView.EnableMenuItems(false, false, false, null);
                 }
 
                 IntroView.RestoreSelectionOpacity();
