@@ -2355,8 +2355,12 @@ namespace ChessForge
         {
             if (e.ChangedButton == MouseButton.Left)
             {
-                var hyperlink = (Hyperlink)sender;
-                Process.Start(hyperlink.NavigateUri.ToString());
+                try
+                {
+                    var hyperlink = (Hyperlink)sender;
+                    Process.Start(hyperlink.NavigateUri.ToString());
+                }
+                catch { }
             }
         }
 
