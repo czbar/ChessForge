@@ -24,13 +24,14 @@ namespace ChessForge
         {
             if (chapter != null)
             {
-                ManageChapterDialog dlg = new ManageChapterDialog()
-                {
-                    Left = AppState.MainWin.ChessForgeMain.Left + 100,
-                    Top = AppState.MainWin.ChessForgeMain.Top + 100,
-                    Topmost = false,
-                    Owner = AppState.MainWin
-                };
+                ManageChapterDialog dlg = new ManageChapterDialog();
+                //{
+                //    Left = AppState.MainWin.ChessForgeMain.Left + 100,
+                //    Top = AppState.MainWin.ChessForgeMain.Top + 100,
+                //    Topmost = false,
+                //    Owner = AppState.MainWin
+                //};
+                GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
                 if (dlg.ShowDialog() == true)
                 {
@@ -92,13 +93,14 @@ namespace ChessForge
                     break;
             }
 
-            SelectArticlesDialog dlg = new SelectArticlesDialog(null, allChaptersCheckbox, title, ref lstIdenticalPositions, showAllChapters, action)
-            {
-                Left = AppState.MainWin.ChessForgeMain.Left + 100,
-                Top = AppState.MainWin.ChessForgeMain.Top + 100,
-                Topmost = false,
-                Owner = AppState.MainWin
-            };
+            SelectArticlesDialog dlg = new SelectArticlesDialog(null, allChaptersCheckbox, title, ref lstIdenticalPositions, showAllChapters, action);
+            //{
+            //    Left = AppState.MainWin.ChessForgeMain.Left + 100,
+            //    Top = AppState.MainWin.ChessForgeMain.Top + 100,
+            //    Topmost = false,
+            //    Owner = AppState.MainWin
+            //};
+            GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
             if (action == ArticlesAction.COPY_OR_MOVE)
             {
@@ -395,14 +397,15 @@ namespace ChessForge
             {
                 int chapterIndex = -1;
 
-                SelectSingleChapterDialog dlg = new SelectSingleChapterDialog()
+                SelectSingleChapterDialog dlg = new SelectSingleChapterDialog();
                 {
-                    //TODO: if maximized, ChessForgeMain will be wrong!
-                    Left = AppState.MainWin.ChessForgeMain.Left + 100,
-                    Top = AppState.MainWin.Top + 100,
-                    Topmost = false,
-                    Owner = AppState.MainWin
+                    ////TODO: if maximized, ChessForgeMain will be wrong!
+                    //Left = AppState.MainWin.ChessForgeMain.Left + 100,
+                    //Top = AppState.MainWin.Top + 100,
+                    //Topmost = false,
+                    //Owner = AppState.MainWin
                 };
+                GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
                 if (dlg.ShowDialog() == true)
                 {

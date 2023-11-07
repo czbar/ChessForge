@@ -756,13 +756,14 @@ namespace ChessForge
                             int verCompare = AppState.GetAssemblyVersion().CompareTo(ver);
                             if (verCompare < 0)
                             {
-                                UpdateAvailableDialog dlg = new UpdateAvailableDialog(ver, updSource)
-                                {
-                                    Left = ChessForgeMain.Left + 100,
-                                    Top = ChessForgeMain.Top + 100,
-                                    Topmost = false,
-                                    Owner = this
-                                };
+                                UpdateAvailableDialog dlg = new UpdateAvailableDialog(ver, updSource);
+                                //{
+                                //    Left = ChessForgeMain.Left + 100,
+                                //    Top = ChessForgeMain.Top + 100,
+                                //    Topmost = false,
+                                //    Owner = this
+                                //};
+                                GuiUtilities.PositionDialog(dlg, this, 100);
                                 dlg.ShowDialog();
                                 res = true;
                             }
@@ -2633,13 +2634,15 @@ namespace ChessForge
         /// <returns></returns>
         public bool ShowWorkbookOptionsDialog(bool save)
         {
-            WorkbookOptionsDialog dlg = new WorkbookOptionsDialog(SessionWorkbook)
-            {
-                Left = ChessForgeMain.Left + 100,
-                Top = ChessForgeMain.Top + 100,
-                Topmost = false,
-                Owner = this
-            };
+            WorkbookOptionsDialog dlg = new WorkbookOptionsDialog(SessionWorkbook);
+            //{
+            //    Left = ChessForgeMain.Left + 100,
+            //    Top = ChessForgeMain.Top + 100,
+            //    Topmost = false,
+            //    Owner = this
+            //};
+            GuiUtilities.PositionDialog(dlg, this, 100);
+
             dlg.ShowDialog();
 
             if (dlg.ExitOK)
@@ -2693,13 +2696,14 @@ namespace ChessForge
         /// </summary>
         private void ShowApplicationOptionsDialog()
         {
-            AppOptionsDialog dlg = new AppOptionsDialog
-            {
-                Left = ChessForgeMain.Left + 100,
-                Top = ChessForgeMain.Top + 100,
-                Topmost = false,
-                Owner = this
-            };
+            AppOptionsDialog dlg = new AppOptionsDialog();
+            //{
+            //    Left = ChessForgeMain.Left + 100,
+            //    Top = ChessForgeMain.Top + 100,
+            //    Topmost = false,
+            //    Owner = this
+            //};
+            GuiUtilities.PositionDialog(dlg, this, 100);
             dlg.ShowDialog();
 
             if (dlg.DialogResult == true)
@@ -2754,13 +2758,14 @@ namespace ChessForge
         /// </summary>
         public void ShowEngineOptionsDialog()
         {
-            EngineOptionsDialog dlg = new EngineOptionsDialog
-            {
-                Left = ChessForgeMain.Left + 100,
-                Top = ChessForgeMain.Top + 100,
-                Topmost = false,
-                Owner = this
-            };
+            EngineOptionsDialog dlg = new EngineOptionsDialog();
+            //{
+            //    Left = ChessForgeMain.Left + 100,
+            //    Top = ChessForgeMain.Top + 100,
+            //    Topmost = false,
+            //    Owner = this
+            //};
+            GuiUtilities.PositionDialog(dlg, this, 100);
             dlg.ShowDialog();
 
             if (dlg.DialogResult == true)
@@ -2785,13 +2790,14 @@ namespace ChessForge
         /// <returns></returns>
         private bool ShowChapterTitleDialog(Chapter chapter)
         {
-            ChapterTitleDialog dlg = new ChapterTitleDialog(chapter)
-            {
-                Left = ChessForgeMain.Left + 100,
-                Top = ChessForgeMain.Top + 100,
-                Topmost = false,
-                Owner = this
-            };
+            ChapterTitleDialog dlg = new ChapterTitleDialog(chapter);
+            //{
+            //    Left = ChessForgeMain.Left + 100,
+            //    Top = ChessForgeMain.Top + 100,
+            //    Topmost = false,
+            //    Owner = this
+            //};
+            GuiUtilities.PositionDialog(dlg, this, 100);
 
             bool res = dlg.ShowDialog() == true;
 
@@ -2875,13 +2881,14 @@ namespace ChessForge
                     op = new EditOperation(EditOperation.EditType.UPDATE_ANNOTATION, nd);
                 }
 
-                AnnotationsDialog dlg = new AnnotationsDialog(nd)
-                {
-                    Left = ChessForgeMain.Left + 100,
-                    Top = ChessForgeMain.Top + 100,
-                    Topmost = false,
-                    Owner = this
-                };
+                AnnotationsDialog dlg = new AnnotationsDialog(nd);
+                //{
+                //    Left = ChessForgeMain.Left + 100,
+                //    Top = ChessForgeMain.Top + 100,
+                //    Topmost = false,
+                //    Owner = this
+                //};
+                GuiUtilities.PositionDialog(dlg, this, 100);
                 dlg.ShowDialog();
                 if (dlg.ExitOk)
                 {

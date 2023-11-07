@@ -165,6 +165,8 @@ namespace ChessForge
         /// </summary>
         private void BuildBookcases()
         {
+            UiRtbOnlineLibrary.Document.Blocks.Clear();
+
             foreach (WebAccess.Bookcase bookcase in _content.Bookcases)
             {
                 BuildBookcaseParagraph(bookcase);
@@ -179,47 +181,32 @@ namespace ChessForge
         {
             string paraName = _para_bookcase_ + NAME_SEPAR + bookcase.Id;
 
-            // do we already have this paragraph?
-            Paragraph para = RichTextBoxUtilities.FindParagraphByName(UiRtbOnlineLibrary.Document, paraName, false);
+            Paragraph para = new Paragraph
+            {
+                Margin = new Thickness(20, 0, 0, 0),
+                Name = paraName
+            };
 
-            bool existed = (para != null);
-            if (para == null)
-            {
-                para = new Paragraph
-                {
-                    Margin = new Thickness(20, 0, 0, 0),
-                    Name = paraName
-                };
-            }
+            BuildBookcaseTitleAndDescription(para, bookcase);
+            UiRtbOnlineLibrary.Document.Blocks.Add(para);
 
-            if (!existed)
+            if (bookcase.IsExpanded)
             {
-                BuildBookcaseTitleAndDescription(para, bookcase);
-                UiRtbOnlineLibrary.Document.Blocks.Add(para);
-            }
-
-            if (!bookcase.IsExpanded && HasShelves(para))
-            {
-                ClearShelves(para, bookcase);
-            }
-            else
-            {
-                BuildShelves(para, bookcase);
+                BuildShelves(bookcase);
             }
         }
+
 
         /// <summary>
         /// Build shelves paragraphs.
         /// </summary>
         /// <param name="bookcase"></param>
         /// <param name="bookcaseId"></param>
-        private void BuildShelves(Paragraph bookcasePara, WebAccess.Bookcase bookcase)
+        private void BuildShelves(WebAccess.Bookcase bookcase)
         {
-            Paragraph insertAfter = bookcasePara;
-
             foreach (WebAccess.Shelf shelf in bookcase.Shelves)
             {
-                insertAfter = BuildShelfParagraph(insertAfter, shelf);
+                BuildShelfParagraph(shelf);
             }
         }
 
@@ -227,40 +214,25 @@ namespace ChessForge
         /// Build paragraphs for a single shelf.
         /// </summary>
         /// <param name="shelf"></param>
-        private Paragraph BuildShelfParagraph(Paragraph insertAfter, WebAccess.Shelf shelf)
+        private Paragraph BuildShelfParagraph(WebAccess.Shelf shelf)
         {
             string paraName = _para_shelf_ + NAME_SEPAR + shelf.ShelfPathId;
 
-            Paragraph para = RichTextBoxUtilities.FindParagraphByName(UiRtbOnlineLibrary.Document, paraName, false);
-
-            bool existed = (para != null);
-            if (para == null)
+            Paragraph para = new Paragraph
             {
-                para = new Paragraph
-                {
-                    Margin = new Thickness(30, 0, 0, 0),
-                    Name = paraName
-                };
+                Margin = new Thickness(30, 0, 0, 0),
+                Name = paraName
             };
 
-            Paragraph lastPara = para;
+            BuildShelfTitleAndDescription(para, shelf);
+            UiRtbOnlineLibrary.Document.Blocks.Add(para);
 
-            if (!existed)
+            if (shelf.IsExpanded)
             {
-                BuildShelfTitleAndDescription(para, shelf);
-                UiRtbOnlineLibrary.Document.Blocks.InsertAfter(insertAfter, para);
+                BuildBooksParagraph(shelf);
             }
 
-            if (!shelf.IsExpanded && HasBooks(para))
-            {
-                RemoveBooksPara(para);
-            }
-            else if (shelf.IsExpanded && !HasBooks(para))
-            {
-                lastPara = BuildBooksParagraph(para, shelf);
-            }
-
-            return lastPara;
+            return para;
         }
 
         /// <summary>
@@ -269,7 +241,7 @@ namespace ChessForge
         /// <param name="books"></param>
         /// <param name="bookcaseId"></param>
         /// <param name="shelfId"></param>
-        private Paragraph BuildBooksParagraph(Paragraph insertAfter, Shelf shelf)
+        private Paragraph BuildBooksParagraph(Shelf shelf)
         {
             string paraName = _para_books_ + NAME_SEPAR + shelf.ShelfPathId;
 
@@ -295,7 +267,7 @@ namespace ChessForge
 
                 BuildBookTitleAndDescription(para, shelf, book);
             }
-            UiRtbOnlineLibrary.Document.Blocks.InsertAfter(insertAfter, para);
+            UiRtbOnlineLibrary.Document.Blocks.Add(para);
 
             return lastPara;
         }
@@ -317,13 +289,15 @@ namespace ChessForge
             Run runTitle = new Run();
             runTitle.FontWeight = FontWeights.Bold;
             runTitle.FontSize = 16 + Configuration.FontSizeDiff;
-            runTitle.Text = "\n" + Properties.Resources.Bookcase + " " + bookcase.Id + ": " + bookcase.Title;
+
+            char expSymbol = bookcase.IsExpanded ? Constants.CHAR_BLACK_TRIANGLE_DOWN : Constants.CHAR_BLACK_TRIANGLE_UP;
+            runTitle.Text = "\n" + expSymbol + Properties.Resources.Bookcase + " " + bookcase.Id + ": " + bookcase.Title;
             runTitle.Name = _run_bookcase_ + NAME_SEPAR + bookcase.Id;
             runTitle.MouseDown += EventTitleLineClicked;
             runTitle.Cursor = Cursors.Hand;
             para.Inlines.Add(runTitle);
 
-            if (!string.IsNullOrEmpty(bookcase.Description))
+            if (bookcase.IsExpanded && !string.IsNullOrEmpty(bookcase.Description))
             {
                 Run descript = new Run("\n");
                 descript.FontWeight = FontWeights.Normal;
@@ -342,15 +316,19 @@ namespace ChessForge
         private void BuildShelfTitleAndDescription(Paragraph para, Shelf shelf)
         {
             string screenId = shelf.ParentBookcaseId.ToString() + shelf.Id.ToString();
-            Run runTitle = new Run("\n" + Properties.Resources.Shelf + " " + screenId + ": " + shelf.Title);
+
+            Run runTitle = new Run();
             runTitle.FontWeight = FontWeights.Bold;
             runTitle.FontSize = 14 + Configuration.FontSizeDiff;
+
+            char expSymbol = shelf.IsExpanded ? Constants.CHAR_BLACK_TRIANGLE_DOWN : Constants.CHAR_BLACK_TRIANGLE_UP;
+            runTitle.Text = "\n" + expSymbol + Properties.Resources.Shelf + " " + screenId + ": " + shelf.Title;
             runTitle.Name = _run_shelf_ + NAME_SEPAR + shelf.ShelfPathId;
             runTitle.MouseDown += EventTitleLineClicked;
             runTitle.Cursor = Cursors.Hand;
             para.Inlines.Add(runTitle);
 
-            if (!string.IsNullOrEmpty(shelf.Description))
+            if (shelf.IsExpanded && !string.IsNullOrEmpty(shelf.Description))
             {
                 Run descript = new Run("\n" + shelf.Description);
                 descript.FontWeight = FontWeights.Normal;

@@ -134,13 +134,14 @@ namespace ChessForge
             List<Article> games = new List<Article> { art };
             gameIdList.Add(art.Tree.Header.GetGuid(out _));
 
-            SingleGamePreviewDialog dlg = new SingleGamePreviewDialog(gameIdList, games)
-            {
-                Left = this.Left + 20,
-                Top = this.Top + 20,
-                Topmost = false,
-                Owner = this
-            };
+            SingleGamePreviewDialog dlg = new SingleGamePreviewDialog(gameIdList, games);
+            //{
+            //    Left = this.Left + 20,
+            //    Top = this.Top + 20,
+            //    Topmost = false,
+            //    Owner = this
+            //};
+            GuiUtilities.PositionDialog(dlg, this, 20);
             dlg.ShowDialog();
         }
 

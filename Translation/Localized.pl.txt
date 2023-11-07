@@ -217,6 +217,15 @@ Confirm=Potwierdź
 #english: Item=Item
 Item=Element
 
+
+#description: Text
+#english: Text=Text
+Text=Tekst
+
+#description: Url
+#english: Url=Url
+Url=Url
+
 #description: Order No
 #english: OrderNo=No
 OrderNo=No
@@ -224,6 +233,10 @@ OrderNo=No
 #description: ECO
 #english: ECO=ECO
 ECO=ECO
+
+#description: ECO from/to
+#english: EcoFromTo=ECO (from/to)
+EcoFromTo=ECO (od/do)
 
 #description: Elo
 #english: Elo=Elo
@@ -861,7 +874,7 @@ Bookcase=Regał
 Shelf = Półka
 
 #description: Intro line
-#english: OnlineLibraryInfo=Click on any blue link below to download the corresponding workbook. You will be able to view the workbook as well as edit it and save a copy on your PC.
+#english: OnlineLibraryInfo=Click on any blue link below to download the corresponding workbook. You will be able to view the workbook as well as edit it and save a copy to your PC.
 OnlineLibraryInfo=Kliknij dowolny niebieski link poniżej aby pobrać wybrany podręcznik. Będziesz mógł przegladać ściagnięty podręcznik, a także edytować go i zapisać kopię na swoim komputerze. 
 
 
@@ -970,7 +983,7 @@ Players=Zawodnicy
 IgnoreColors=Ignoruj kolory
 
 #description: Moves in the game
-#english: MovesInGame=Number of Moves
+#english: MovesInGameMinMax=Moves (min/max)
 MovesInGameMinMax=Posunięcia (min/maks)
 
 #description: Msg: max number of games less than min
@@ -1299,6 +1312,15 @@ EditDiagram=Edytuj Diagram
 #description: Edit a move
 #english: EditMove=Edit Move
 EditMove=Edytuj Posunięcie
+
+#description: Insert a hyperlink
+#english: InsertHyperlink=Insert Hyperlink
+InsertHyperlink=Wstaw Hiperlink
+
+#description: Edit a hyperlink
+#english: EditHyperlink=Edit Hyperlink
+EditHyperlink=Edytuj Hiperlinkink
+
 
 #
 # CONTEXT MENU for Study Tree Tab
@@ -1636,8 +1658,12 @@ MbtTitleCopyPasteError=Błąd w Kopiuj/Wklej
 
 ##################################
 #
-# Header: Message Text
+# Header: MESSAGES
 #
+
+#description: Invalid Url
+#english: MsgNeedValidUrlOrEmpty=Enter valid Url or leave empty to delete link. 
+MsgNeedValidUrlOrEmpty=Podaj prawidłowy Url or zostaw pusty aby usunąć link. 
 
 #description: Background read is in progress
 #english: DataProcessingInProgress=File processing is in progress. Please wait...
@@ -2904,5 +2930,3 @@ IllegalCastling=Niedozwolona roszada.
 #description: Workbook info
 #english: AboutWorkbook=This PGN Workbook is optimized for viewing in Chess Forge https://sourceforge.net/projects/chessforge/ \nChess Forge is a Free and Open Source Windows application.
 AboutWorkbook=Ten podręcznik PGN najlepiej oglądać w programie Chess Forge https://sourceforge.net/projects/chessforge/ \nChess Forge to Wolne i Otwarte Oprogramowanie do systemu Windows.
-
-EcoFromTo=ECO (od/do)

@@ -103,13 +103,14 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnEditPosition_Click(object sender, RoutedEventArgs e)
         {
-            DiagramSetupDialog dlg = new DiagramSetupDialog(_node)
-            {
-                Left = AppState.MainWin.ChessForgeMain.Left + 150,
-                Top = AppState.MainWin.Top + 150,
-                Topmost = false,
-                Owner = AppState.MainWin
-            };
+            DiagramSetupDialog dlg = new DiagramSetupDialog(_node);
+            //{
+            //    Left = AppState.MainWin.ChessForgeMain.Left + 150,
+            //    Top = AppState.MainWin.Top + 150,
+            //    Topmost = false,
+            //    Owner = AppState.MainWin
+            //};
+            GuiUtilities.PositionDialog(dlg, AppState.MainWin, 150);
 
             if (dlg.ShowDialog() == true)
             {

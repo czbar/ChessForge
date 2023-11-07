@@ -7,7 +7,7 @@ Newtonsoft.Json.dll
 ChessForge.exe.config
 Newtonsoft.Json.xml
 
-stockfish_15_x86_64.exe
+stockfish_16_x86-64.exe
 
 Resources/Sounds/Capture.mp3
 Resources/Sounds/InvalidMove.mp3

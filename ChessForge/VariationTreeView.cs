@@ -598,13 +598,14 @@ namespace ChessForge
                         Chapter chapter = WorkbookManager.SessionWorkbook.CreateNewChapter(newTree, false);
                         chapter.SetTitle(Properties.Resources.Chapter + " " + (chapter.Index + 1).ToString() + ": " + MoveUtils.BuildSingleMoveText(nd, true, true, newTree.MoveNumberOffset));
 
-                        ChapterFromLineDialog dlg = new ChapterFromLineDialog(chapter)
-                        {
-                            Left = _mainWin.ChessForgeMain.Left + 100,
-                            Top = _mainWin.ChessForgeMain.Top + 100,
-                            Topmost = false,
-                            Owner = _mainWin
-                        };
+                        ChapterFromLineDialog dlg = new ChapterFromLineDialog(chapter);
+                        //{
+                        //    Left = _mainWin.ChessForgeMain.Left + 100,
+                        //    Top = _mainWin.ChessForgeMain.Top + 100,
+                        //    Topmost = false,
+                        //    Owner = _mainWin
+                        //};
+                        GuiUtilities.PositionDialog(dlg, _mainWin, 100);
                         dlg.ShowDialog();
                         if (dlg.ExitOK)
                         {
@@ -2354,8 +2355,12 @@ namespace ChessForge
         {
             if (e.ChangedButton == MouseButton.Left)
             {
-                var hyperlink = (Hyperlink)sender;
-                Process.Start(hyperlink.NavigateUri.ToString());
+                try
+                {
+                    var hyperlink = (Hyperlink)sender;
+                    Process.Start(hyperlink.NavigateUri.ToString());
+                }
+                catch { }
             }
         }
 
@@ -2414,13 +2419,14 @@ namespace ChessForge
                 TreeNode nd = GetClickedNode(e);
                 SelectRun(_dictNodeToRun[nd.NodeId], e.ClickCount, e.ChangedButton);
 
-                ArticleReferencesDialog dlg = new ArticleReferencesDialog(nd)
-                {
-                    Left = AppState.MainWin.Left + 100,
-                    Top = AppState.MainWin.Top + 100,
-                    Topmost = false,
-                    Owner = AppState.MainWin
-                };
+                ArticleReferencesDialog dlg = new ArticleReferencesDialog(nd);
+                //{
+                //    Left = AppState.MainWin.Left + 100,
+                //    Top = AppState.MainWin.Top + 100,
+                //    Topmost = false,
+                //    Owner = AppState.MainWin
+                //};
+                GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
                 dlg.ShowDialog();
 

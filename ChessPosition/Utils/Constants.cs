@@ -203,6 +203,16 @@ namespace ChessPosition
         public const char CharBlackSquare = '\u2B1B';
 
         /// <summary>
+        /// Character for a Black Triangle Up to use in Online Library.
+        /// </summary>
+        public const char CHAR_BLACK_TRIANGLE_UP = '\u25BE';
+
+        /// <summary>
+        /// Character for a Black Triangle Down to use in Online Library.
+        /// </summary>
+        public const char CHAR_BLACK_TRIANGLE_DOWN = '\u25B4';
+
+        /// <summary>
         /// Check mark character
         /// </summary>
         public const char CharCheckMark = '\u2713';

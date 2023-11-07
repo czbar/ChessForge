@@ -1673,6 +1673,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit Hyperlink.
+        /// </summary>
+        public static string EditHyperlink {
+            get {
+                return ResourceManager.GetString("EditHyperlink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit Move.
         /// </summary>
         public static string EditMove {
@@ -3113,6 +3122,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Insert Hyperlink.
+        /// </summary>
+        public static string InsertHyperlink {
+            get {
+                return ResourceManager.GetString("InsertHyperlink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Intro.
         /// </summary>
         public static string Intro {
@@ -3572,6 +3590,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter valid Url or leave empty to delete link. .
+        /// </summary>
+        public static string MsgNeedValidUrlOrEmpty {
+            get {
+                return ResourceManager.GetString("MsgNeedValidUrlOrEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No games matching search criteria found..
         /// </summary>
         public static string MsgNoGamesFound {
@@ -3924,7 +3951,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Click on any blue link below to download the corresponding workbook. You will be able to view the workbook as well as edit it and save a copy on your PC..
+        ///   Looks up a localized string similar to Click on any blue link below to download the corresponding workbook. You will be able to view the workbook as well as edit it and save a copy to your PC..
         /// </summary>
         public static string OnlineLibraryInfo {
             get {
@@ -5121,6 +5148,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Text.
+        /// </summary>
+        public static string Text {
+            get {
+                return ResourceManager.GetString("Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Text for Display.
         /// </summary>
         public static string TextForDisplay {
@@ -5684,6 +5720,15 @@ namespace ChessForge.Properties {
         public static string UpdatedVersion {
             get {
                 return ResourceManager.GetString("UpdatedVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Url.
+        /// </summary>
+        public static string Url {
+            get {
+                return ResourceManager.GetString("Url", resourceCulture);
             }
         }
         

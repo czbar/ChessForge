@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Media3D;
 using ChessPosition;
 using GameTree;
 
@@ -16,6 +17,22 @@ namespace ChessForge
     /// </summary>
     public class GuiUtilities
     {
+        /// <summary>
+        /// Positions a dialog in relation to the main window. 
+        /// </summary>
+        /// <param name="dlg"></param>
+        /// <param name="owner"></param>
+        /// <param name="offset"></param>
+        public static void PositionDialog(Window dlg, Window owner, double offset = 100)
+        {
+            Point leftTop = owner.PointToScreen(new Point(0, 0));
+
+            dlg.Left = leftTop.X + offset;
+            dlg.Top = leftTop.Y + offset;
+            dlg.Topmost = false;
+            dlg.Owner = owner;
+        }
+
         /// <summary>
         /// Converts centipawns to accuracy percentage.
         /// </summary>

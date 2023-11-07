@@ -86,13 +86,14 @@ namespace ChessForge
                 return;
             }
 
-            ArticleSearchCriteriaDialog dlg = new ArticleSearchCriteriaDialog()
-            {
-                Left = AppState.MainWin.ChessForgeMain.Left + 100,
-                Top = AppState.MainWin.ChessForgeMain.Top + 100,
-                Topmost = false,
-                Owner = AppState.MainWin
-            };
+            ArticleSearchCriteriaDialog dlg = new ArticleSearchCriteriaDialog();
+            //{
+            //    Left = AppState.MainWin.ChessForgeMain.Left + 100,
+            //    Top = AppState.MainWin.ChessForgeMain.Top + 100,
+            //    Topmost = false,
+            //    Owner = AppState.MainWin
+            //};
+            GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
             if (dlg.ShowDialog() == true)
             {
@@ -116,13 +117,14 @@ namespace ChessForge
                     {
                         FoundArticlesDialog dlgEx = new FoundArticlesDialog(null,
                                                             FoundArticlesDialog.Mode.FILTER_GAMES,
-                                                            ref lstGames)
-                        {
-                            Left = AppState.MainWin.ChessForgeMain.Left + 100,
-                            Top = AppState.MainWin.ChessForgeMain.Top + 100,
-                            Topmost = false,
-                            Owner = AppState.MainWin
-                        };
+                                                            ref lstGames);
+                        //{
+                        //    Left = AppState.MainWin.ChessForgeMain.Left + 100,
+                        //    Top = AppState.MainWin.ChessForgeMain.Top + 100,
+                        //    Topmost = false,
+                        //    Owner = AppState.MainWin
+                        //};
+                        GuiUtilities.PositionDialog(dlgEx, AppState.MainWin, 100);
 
                         if (dlgEx.ShowDialog() == true)
                         {

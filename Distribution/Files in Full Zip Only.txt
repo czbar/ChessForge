@@ -1,1 +1,1 @@
-stockfish_15_x86_64.exe
+stockfish_16_x86-64.exe
