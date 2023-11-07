@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using GameTree;
 using System.Windows.Media;
 using System.Windows.Input;
+using System.Diagnostics;
 
 namespace ChessForge
 {
@@ -46,6 +47,9 @@ namespace ChessForge
 
         // whether static methods have been initialized
         private bool _initialized = false;
+
+        // last clicked hyperlink
+        private Hyperlink _selectedHyperlink;
 
         /// <summary>
         /// Names and prefixes for xaml elements.
@@ -222,12 +226,6 @@ namespace ChessForge
                 node.Position = new BoardPosition(SelectedNode.Position);
 
                 DiagramSetupDialog dlg = new DiagramSetupDialog(node);
-                //{
-                //    Left = AppState.MainWin.ChessForgeMain.Left + 100,
-                //    Top = AppState.MainWin.Top + 100,
-                //    Topmost = false,
-                //    Owner = AppState.MainWin
-                //};
                 GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
                 if (dlg.ShowDialog() == true)
@@ -243,6 +241,77 @@ namespace ChessForge
             catch (Exception ex)
             {
                 AppLog.Message("CreateDiagram()", ex);
+            }
+        }
+
+        /// <summary>
+        /// Asks the user for the link and creates one if data is valid. 
+        /// </summary>
+        public void CreateHyperlink()
+        {
+            try
+            {
+                EditHyperlinkDialog dlg = new EditHyperlinkDialog(null);
+                GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
+
+                if (dlg.ShowDialog() == true)
+                {
+                    TextPointer tp = _rtb.CaretPosition;
+                    // clear selection
+                    _rtb.Selection.Select(_rtb.Selection.Start, _rtb.Selection.Start);
+                    // get insertion place
+                    RichTextBoxUtilities.GetMoveInsertionPlace(_rtb, out Paragraph para, out Inline insertBefore, out double fontSize);
+                    
+                    Run run = new Run(dlg.UiTbText.Text);
+                    run.Cursor = Cursors.Hand;
+                    run.FontSize = fontSize;
+
+                    Hyperlink hyperlink = new Hyperlink(run);
+                    hyperlink.NavigateUri = new Uri(dlg.UiTbUrl.Text);
+                    hyperlink.ToolTip = dlg.UiTbUrl.Text;
+                    hyperlink.MouseDown += EventHyperlinkClicked;
+
+                    if (insertBefore == null)
+                    {
+                        para.Inlines.Add(hyperlink);
+                    }
+                    else
+                    {
+                        para.Inlines.InsertBefore(insertBefore, hyperlink);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("CreateHyperlink()", ex);
+            }
+        }
+
+        /// <summary>
+        /// A hyperlink part of the comment was clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventHyperlinkClicked(object sender, MouseButtonEventArgs e)
+        {
+            _selectedHyperlink = null;
+
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                var hyperlink = sender as Hyperlink;
+                if (hyperlink != null)
+                {
+                    Process.Start(hyperlink.NavigateUri.ToString());
+                }
+            }
+            else if (e.ChangedButton == MouseButton.Right)
+            {
+                var hyperlink = sender as Hyperlink;
+                if (hyperlink != null)
+                {
+                    _selectedHyperlink = hyperlink;
+                    EnableMenuItems(false, false, true, null);
+                }
             }
         }
 
@@ -291,8 +360,9 @@ namespace ChessForge
         /// </summary>
         /// <param name="isDiagram"></param>
         /// <param name="isMove"></param>
+        /// <param name="isHyperlink"></param>
         /// <param name="nd"></param>
-        public void EnableMenuItems(bool isDiagram, bool isMove, TreeNode nd)
+        public void EnableMenuItems(bool isDiagram, bool isMove, bool isHyperlink, TreeNode nd)
         {
             try
             {
@@ -311,6 +381,12 @@ namespace ChessForge
                                 break;
                             case "UiCmiFlipDiagram":
                                 menuItem.Visibility = isDiagram && nd != null ? Visibility.Visible : Visibility.Collapsed;
+                                break;
+                            case "UiCmiInsertHyperlink":
+                                menuItem.Visibility = (!isHyperlink && !isDiagram && !isMove) ? Visibility.Visible : Visibility.Collapsed;
+                                break;
+                            case "UiCmiEditHyperlink":
+                                menuItem.Visibility = isHyperlink ? Visibility.Visible : Visibility.Collapsed;
                                 break;
                             case "UiCmiEditMove":
                                 menuItem.Visibility = isMove && nd != null ? Visibility.Visible : Visibility.Collapsed;
@@ -491,12 +567,6 @@ namespace ChessForge
             }
 
             DiagramSetupDialog dlg = new DiagramSetupDialog(SelectedNode);
-            //{
-            //    Left = AppState.MainWin.ChessForgeMain.Left + 100,
-            //    Top = AppState.MainWin.Top + 100,
-            //    Topmost = false,
-            //    Owner = AppState.MainWin
-            //};
             GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
             if (dlg.ShowDialog() == true)
@@ -507,6 +577,45 @@ namespace ChessForge
                 _isTextDirty = true;
                 AppState.IsDirty = true;
                 WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, SelectedNode);
+            }
+        }
+
+        /// <summary>
+        /// Allows the user to edit the clicked hyperlink.
+        /// </summary>
+        public void EditHyperlink(object sender)
+        {
+            if (_selectedHyperlink != null)
+            {
+                EditHyperlinkDialog dlg = new EditHyperlinkDialog(_selectedHyperlink);
+                if (dlg.ShowDialog() == true)
+                {
+                    Run run = dlg.HyperlinkRun;
+                    string uri = dlg.UiTbUrl.Text;
+                    string text = dlg.UiTbText.Text;
+
+                    if (run != null)
+                    {
+                        run.Text = text;
+                    }
+
+                    if (string.IsNullOrEmpty(uri))
+                    {
+                        Paragraph para = _selectedHyperlink.Parent as Paragraph;
+                        if (para != null)
+                        {
+                            para.Inlines.Remove(_selectedHyperlink);
+                        }
+                    }
+                    else
+                    {
+                        try
+                        {
+                            _selectedHyperlink.NavigateUri = new Uri(uri);
+                        }
+                        catch { }
+                    }
+                }
             }
         }
 
@@ -580,7 +689,7 @@ namespace ChessForge
                 }
                 AppState.MainWin.DisplayPosition(_selectedNode);
 
-                EnableMenuItems(false, true, nd);
+                EnableMenuItems(false, true, false, nd);
             }
 
             return nd;
@@ -620,7 +729,7 @@ namespace ChessForge
                             _selectedNode = nd;
                             AppState.MainWin.DisplayPosition(nd);
 
-                            EnableMenuItems(true, false, nd);
+                            EnableMenuItems(true, false, false, nd);
 
                             if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
                             {
@@ -754,6 +863,11 @@ namespace ChessForge
                         iuc.MouseDown -= EventDiagramClicked;
                         iuc.MouseDown += EventDiagramClicked;
                     }
+                }
+                else if (inline is Hyperlink hyperlink)
+                {
+                    hyperlink.MouseDown -= EventHyperlinkClicked;
+                    hyperlink.MouseDown += EventHyperlinkClicked;
                 }
             }
         }
