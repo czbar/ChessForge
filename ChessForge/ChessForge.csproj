@@ -133,6 +133,9 @@
       <DependentUpon>DownloadedGamesActionDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="DownloadWebGamesManager.cs" />
+    <Compile Include="EditHyperlinkDialog.xaml.cs">
+      <DependentUpon>EditHyperlinkDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EngineGameView.cs" />
     <Compile Include="EngineOptionsDialog.xaml.cs">
       <DependentUpon>EngineOptionsDialog.xaml</DependentUpon>
@@ -329,6 +332,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DownloadedGamesActionDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditHyperlinkDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
