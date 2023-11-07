@@ -51,6 +51,21 @@ namespace ChessForge
         public string MaxECO;
 
         /// <summary>
+        /// Start year for search.
+        /// </summary>
+        public uint MinYear;
+
+        /// <summary>
+        /// End year for search.
+        /// </summary>
+        public uint MaxYear;
+
+        /// <summary>
+        /// Whether to include games with year not specified 
+        /// </summary>
+        public bool IncludeEmptyYear;
+
+        /// <summary>
         /// Search for White wins
         /// </summary>
         public bool ResultWhiteWin;
@@ -87,12 +102,6 @@ namespace ChessForge
             }
 
             ArticleSearchCriteriaDialog dlg = new ArticleSearchCriteriaDialog();
-            //{
-            //    Left = AppState.MainWin.ChessForgeMain.Left + 100,
-            //    Top = AppState.MainWin.ChessForgeMain.Top + 100,
-            //    Topmost = false,
-            //    Owner = AppState.MainWin
-            //};
             GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
             if (dlg.ShowDialog() == true)
@@ -118,12 +127,6 @@ namespace ChessForge
                         FoundArticlesDialog dlgEx = new FoundArticlesDialog(null,
                                                             FoundArticlesDialog.Mode.FILTER_GAMES,
                                                             ref lstGames);
-                        //{
-                        //    Left = AppState.MainWin.ChessForgeMain.Left + 100,
-                        //    Top = AppState.MainWin.ChessForgeMain.Top + 100,
-                        //    Topmost = false,
-                        //    Owner = AppState.MainWin
-                        //};
                         GuiUtilities.PositionDialog(dlgEx, AppState.MainWin, 100);
 
                         if (dlgEx.ShowDialog() == true)
@@ -224,6 +227,12 @@ namespace ChessForge
                 matchGameLen = true;
             }
 
+            bool matchYear = false;
+            if (MeetsYearsCrit(article.Tree, crits))
+            {
+                matchYear = true;
+            }
+
             bool matchEco = false;
             if (MeetsEcoCrit(article.Tree.Header, crits))
             {
@@ -236,7 +245,7 @@ namespace ChessForge
                 matchResult = true;
             }
 
-            return matchResult && matchEco && matchName && matchGameLen;
+            return matchResult && matchEco && matchName && matchGameLen && matchYear;
         }
 
         /// <summary>
@@ -355,6 +364,39 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// If min or max year specified, check if meets criteria.
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <param name="crits"></param>
+        /// <returns></returns>
+        private static bool MeetsYearsCrit(VariationTree tree, FindGamesCriteria crits)
+        {
+            bool match = false;
+
+            if (crits.MinYear > 0 || crits.MaxYear > 0)
+            {
+                int year = tree.Header.GetYear();
+                if (year == 0 && crits.IncludeEmptyYear)
+                {
+                    match = true;
+                }
+                else 
+                {
+                    if ((crits.MinYear == 0 || year >= crits.MinYear) && (crits.MaxYear == 0 || year <= crits.MaxYear))
+                    {
+                        match = true;
+                    }
+                }
+            }
+            else
+            {
+                match = true;
+            }
+
+            return match;
+        }
+
+        /// <summary>
         /// Return true if one if min or max is specified
         /// AND matches.
         /// </summary>
@@ -408,6 +450,11 @@ namespace ChessForge
             uint.TryParse(dlg.UiTbMinMoves.Text, out crits.MinGameLength);
             uint.TryParse(dlg.UiTbMaxMoves.Text, out crits.MaxGameLength);
 
+            uint.TryParse(dlg.UiTbMinYear.Text, out crits.MinYear);
+            uint.TryParse(dlg.UiTbMaxYear.Text, out crits.MaxYear);
+
+            crits.IncludeEmptyYear = dlg.UiCbEmptyYear.IsChecked == true;
+
             // massage the crits so no nulls and valid ECOs
             crits.MinECO = dlg.UiTbMinEco.Text ?? string.Empty;
             crits.MaxECO = dlg.UiTbMaxEco.Text ?? string.Empty;
@@ -448,6 +495,7 @@ namespace ChessForge
             if (string.IsNullOrWhiteSpace(crits.WhiteName) && string.IsNullOrWhiteSpace(crits.BlackName)
                 && string.IsNullOrWhiteSpace(crits.MinECO) && string.IsNullOrWhiteSpace(crits.MaxECO)
                 && crits.MinGameLength == 0 && crits.MaxGameLength == 0
+                && crits.MinYear == 0 && crits.MaxYear == 0
                 && !crits.ResultWhiteWin && !crits.ResultBlackWin && !crits.ResultDraw && !crits.ResultNone)
             {
                 return true;
