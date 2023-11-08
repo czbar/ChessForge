@@ -16,6 +16,8 @@ namespace ChessForge
     {
         NONE,
         DELETE_CHAPTER,
+        DELETE_CHAPTERS,
+        MERGE_CHAPTERS,
         CREATE_CHAPTER,
         RENAME_CHAPTER,
         CREATE_ARTICLE,
