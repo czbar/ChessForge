@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Text;
-using System.Windows.Input;
 using ChessPosition;
 using ChessPosition.GameTree;
 using GameTree;
@@ -723,8 +720,67 @@ namespace ChessForge
         {
             try
             {
+                if (index < 0 || index > Chapters.Count)
+                {
+                    index = Chapters.Count;
+                }
                 Chapters.Insert(index, chapter);
                 ActiveChapter = chapter;
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// Undo deletion of multiple chapters.
+        /// </summary>
+        /// <param name="chapters"></param>
+        /// <param name="indices"></param>
+        public void UndoDeleteChapters(object objChapterList, object objIndexList)
+        {
+            try
+            {
+                List<Chapter> chapters = objChapterList as List<Chapter>;
+                List<int> indices = objIndexList as List<int>;
+
+                if (chapters != null && indices != null && chapters.Count == indices.Count)
+                {
+                    // reverse order to when we were deleting so that indices work correctly
+                    for (int i = chapters.Count - 1; i >= 0; i--)
+                    {
+                        UndoDeleteChapter(chapters[i], indices[i]);
+                    }
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// Undo merging of chapters.
+        /// Delete created chapter and restore deleted (source) ones
+        /// </summary>
+        /// <param name="chapters"></param>
+        /// <param name="indices"></param>
+        public void UndoMergeChapters(Chapter chapter, object objChapterList, object objIndexList)
+        {
+            try
+            {
+                DeleteChapter(chapter);
+             
+                List<Chapter> chapters = objChapterList as List<Chapter>;
+                List<int> indices = objIndexList as List<int>;
+
+                if (chapters != null && indices != null && chapters.Count == indices.Count)
+                {
+                    // reverse order to when we were deleting so that indices work correctly
+                    for (int i = chapters.Count - 1; i >= 0; i--)
+                    {
+                        UndoDeleteChapter(chapters[i], indices[i]);
+                    }
+                }
             }
             catch
             {
@@ -962,14 +1018,70 @@ namespace ChessForge
         /// <param name="ch"></param>
         public void DeleteChapter(Chapter ch)
         {
-            int index = Chapters.IndexOf(ch);
-            if (index >= 0)
+            try
             {
-                Chapters.Remove(ch);
-                WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.DELETE_CHAPTER, ch, index);
-                WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
-                AppState.ConfigureMenusForManualReview();       
+                int index = Chapters.IndexOf(ch);
+                if (index >= 0)
+                {
+                    Chapters.Remove(ch);
+                    WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.DELETE_CHAPTER, ch, index);
+                    WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
+                    AppState.ConfigureMenusForManualReview();
+                }
             }
+            catch { }
+        }
+
+        /// <summary>
+        /// Deletes a chapter from this workbook
+        /// </summary>
+        /// <param name="ch"></param>
+        public void DeleteChapters(List<Chapter> chapters)
+        {
+            if (chapters != null && chapters.Count > 0)
+            {
+                List<int> indices = new List<int>();
+                foreach (Chapter chapter in chapters)
+                {
+                    indices.Add(chapter.Index);
+                    Chapters.Remove(chapter);
+                }
+
+                WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.DELETE_CHAPTERS, null, -1, chapters, indices);
+                WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
+                AppState.ConfigureMenusForManualReview();
+            }
+        }
+
+        /// <summary>
+        /// Creates a new chapter from the passed tree and deletes the source chapters
+        /// </summary>
+        /// <param name="mergedTree"></param>
+        /// <param name="title"></param>
+        /// <param name="sourceChapters"></param>
+        public void MergeChapters(VariationTree mergedTree, string title, List<Chapter> sourceChapters)
+        {
+            // create new chapter
+            Chapter mergedChapter = new Chapter();
+            mergedChapter.SetTitle(title);
+            mergedChapter.StudyTree = new Article(mergedTree);
+            Chapters.Add(mergedChapter);
+            SetActiveChapter(mergedChapter);
+
+            CopyGamesToChapter(mergedChapter, sourceChapters);
+            CopyExercisesToChapter(mergedChapter, sourceChapters);
+
+            // delete source chapters
+            List<int> indices = new List<int>();
+            foreach (Chapter ch in sourceChapters)
+            {
+                indices.Add(ch.Index);
+                Chapters.Remove(ch);
+            }
+
+            WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.MERGE_CHAPTERS, mergedChapter, -1, sourceChapters, indices);
+            WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
+            AppState.ConfigureMenusForManualReview();
         }
 
         /// <summary>
@@ -993,6 +1105,38 @@ namespace ChessForge
             }
 
             return ret;
+        }
+
+        /// <summary>
+        /// Copies all games from the selected chapters in the list to the target chapter
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="chapters"></param>
+        private void CopyGamesToChapter(Chapter target, List<Chapter> chapters)
+        {
+            foreach (Chapter ch in chapters)
+            {
+                foreach (Article game in ch.ModelGames)
+                {
+                    target.AddModelGame(game.Tree);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Copies all exercises from the selected chapters in the list to the target chapter
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="sources"></param>
+        private void CopyExercisesToChapter(Chapter target, List<Chapter> sources)
+        {
+            foreach (Chapter ch in sources)
+            {
+                foreach (Article item in ch.Exercises)
+                {
+                    target.AddExercise(item.Tree);
+                }
+            }
         }
 
         /// <summary>
