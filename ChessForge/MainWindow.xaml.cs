@@ -1717,6 +1717,7 @@ namespace ChessForge
             try
             {
                 _modelGameTreeView = new VariationTreeView(UiRtbModelGamesView.Document, this, GameData.ContentType.MODEL_GAME, gameIndex);
+                UiRtbModelGamesView.IsDocumentEnabled = true;
                 if (ActiveVariationTree.Nodes.Count == 0)
                 {
                     ActiveVariationTree.CreateNew();
