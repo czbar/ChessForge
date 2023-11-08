@@ -279,9 +279,6 @@
   <data name="ECO" xml:space="preserve">
     <value>ECO</value>
   </data>
-  <data name="EcoFromTo" xml:space="preserve">
-    <value>ECO (from/to)</value>
-  </data>
   <data name="Elo" xml:space="preserve">
     <value>Elo</value>
   </data>
@@ -777,6 +774,15 @@
   <data name="MovesInGameMinMax" xml:space="preserve">
     <value>Moves (min/max)</value>
   </data>
+  <data name="EcoFromTo" xml:space="preserve">
+    <value>ECO (from/to)</value>
+  </data>
+  <data name="YearFromTo" xml:space="preserve">
+    <value>Years (from/to)</value>
+  </data>
+  <data name="IncludeYearUnspecified" xml:space="preserve">
+    <value>Include unspecified</value>
+  </data>
   <data name="CritMaxMovesLessMin" xml:space="preserve">
     <value>Invalid criterion: min number of moves cannot be greater than max.</value>
   </data>
@@ -837,11 +843,14 @@
   <data name="StopDetectLevel" xml:space="preserve">
     <value>No Detection Beyond (cp)</value>
   </data>
-  <data name="SelectCopyMove" xml:space="preserve">
-    <value>Select to Copy or Move...</value>
-  </data>
   <data name="DlgTitleIdenticalPositions" xml:space="preserve">
     <value>List of Identical Positions</value>
+  </data>
+  <data name="DlgSearchResults" xml:space="preserve">
+    <value>Search Results</value>
+  </data>
+  <data name="SelectCopyMove" xml:space="preserve">
+    <value>Select to Copy or Move...</value>
   </data>
   <data name="DlgLabelIdenticalPositionHint" xml:space="preserve">
     <value>Double click an item to open its view.</value>

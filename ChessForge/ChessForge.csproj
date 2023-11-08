@@ -229,6 +229,9 @@
     <Compile Include="RepositionPieceProcessor.cs" />
     <Compile Include="ResourceUtils.cs" />
     <Compile Include="RichTextBoxUtilities.cs" />
+    <Compile Include="RtbTreeView\VariationDisplayLine.cs" />
+    <Compile Include="RtbTreeView\VariationDisplayRun.cs" />
+    <Compile Include="RtbTreeView\VariationSingleLine.cs" />
     <Compile Include="SelectArticlesDialog.xaml.cs">
       <DependentUpon>SelectArticlesDialog.xaml</DependentUpon>
     </Compile>

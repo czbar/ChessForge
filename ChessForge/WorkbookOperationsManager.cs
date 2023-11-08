@@ -79,7 +79,26 @@ namespace ChessForge
                     case WorkbookOperationType.DELETE_CHAPTER:
                         selectedChapterIndex = op.ChapterIndex;
                         WorkbookManager.SessionWorkbook.UndoDeleteChapter(op.Chapter, op.ChapterIndex);
-                        WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
+                        break;
+                    case WorkbookOperationType.DELETE_CHAPTERS:
+                        WorkbookManager.SessionWorkbook.UndoDeleteChapters(op.OpData_1, op.OpData_2);
+                        if (op.OpData_1 is List<Chapter> chapters)
+                        {
+                            if (chapters.Count > 0)
+                            {
+                                WorkbookManager.SessionWorkbook.ActiveChapter = chapters[0];
+                            }
+                        }
+                        break;
+                    case WorkbookOperationType.MERGE_CHAPTERS:
+                        WorkbookManager.SessionWorkbook.UndoMergeChapters(op.Chapter, op.OpData_1, op.OpData_2);
+                        if (op.OpData_1 is List<Chapter> sourceChapters)
+                        {
+                            if (sourceChapters.Count > 0)
+                            {
+                                WorkbookManager.SessionWorkbook.ActiveChapter = sourceChapters[0];
+                            }
+                        }
                         break;
                     case WorkbookOperationType.CREATE_CHAPTER:
                         if (WorkbookManager.SessionWorkbook.GetChapterCount() > 1)

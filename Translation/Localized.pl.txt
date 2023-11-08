@@ -234,10 +234,6 @@ OrderNo=No
 #english: ECO=ECO
 ECO=ECO
 
-#description: ECO from/to
-#english: EcoFromTo=ECO (from/to)
-EcoFromTo=ECO (od/do)
-
 #description: Elo
 #english: Elo=Elo
 Elo=Elo
@@ -986,6 +982,18 @@ IgnoreColors=Ignoruj kolory
 #english: MovesInGameMinMax=Moves (min/max)
 MovesInGameMinMax=Posunięcia (min/maks)
 
+#description: ECO from/to
+#english: EcoFromTo=ECO (from/to)
+EcoFromTo=ECO (od/do)
+
+#description: Year from/to
+#english: YearFromTo=Years (from/to)
+YearFromTo=Rok (od/do)
+
+#description: Include empty year
+#english: IncludeYearUnspecified=Include unspecified
+IncludeYearUnspecified=Także gdy nie podany
+
 #description: Msg: max number of games less than min
 #english: CritMaxMovesLessMin=Invalid criterion: min number of moves cannot be greater than max.
 CritMaxMovesLessMin=Maksymalna liczba posunięć nie może być mniejsza niż minimalna.
@@ -1085,16 +1093,21 @@ StopDetectLevel=Poziom poza detekcją (cp)
 
 #######################################
 #
-# Header: DIALOG Find Identical Positions
+# Header: DIALOG Find Identical Positions / Found Games
 #
-
-#description: Select to Copy/Move
-#english: SelectCopyMove=Select to Copy or Move...
-SelectCopyMove=Wybierz i Kopiuj lub Przenieś...
 
 #description: Identical Positions dialog title
 #english: DlgTitleIdenticalPositions=List of Identical Positions
 DlgTitleIdenticalPositions=Lista Identycznych Pozycji
+
+#description: Found games dialog title
+#english: DlgSearchResults=Search Results
+DlgSearchResults=Wynik Wyszukiwania
+
+
+#description: Select to Copy/Move
+#english: SelectCopyMove=Select to Copy or Move...
+SelectCopyMove=Wybierz i Kopiuj lub Przenieś...
 
 #description:  Label explaining clicks in the Identical Positions dialog.
 #english: DlgLabelIdenticalPositionHint=Double click an item to open its view.

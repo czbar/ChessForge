@@ -6,40 +6,48 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        Title="{x:Static p:Resources.SearchCriteria}" Height="380" Width="360">
+        Title="{x:Static p:Resources.SearchCriteria}" Height="340" Width="560">
     <Grid>
-        <GroupBox x:Name="UiGbPlayers" Header="{x:Static p:Resources.Players}" Margin="10,10,0,0" Width="340" Height="130" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <GroupBox x:Name="UiGbPlayers" Header="{x:Static p:Resources.Players}" Margin="10,10,0,0" Width="340" Height="145" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Canvas>
                 <Label x:Name="UiLblWhite" Content="{x:Static p:Resources.White}" HorizontalAlignment="Left" Margin="10,10,0,0"/>
                 <TextBox x:Name="UiTbWhite" TabIndex="0" Text="" HorizontalAlignment="Left" Margin="80,15,0,0" Width="220" />
-                <Label x:Name="UiLblBlack" Content="{x:Static p:Resources.Black}" HorizontalAlignment="Left" Margin="10,40,0,0"/>
-                <TextBox x:Name="UiTbBlack" TabIndex="1" Text="" HorizontalAlignment="Left" Margin="80,45,0,0" Width="220" />
-                <CheckBox x:Name="UiCbIgnoreColors" TabIndex="2"  Content="{x:Static p:Resources.IgnoreColors}" Canvas.Left="80" Canvas.Top="75"/>
+                <Label x:Name="UiLblBlack" Content="{x:Static p:Resources.Black}" HorizontalAlignment="Left" Margin="10,45,0,0"/>
+                <TextBox x:Name="UiTbBlack" TabIndex="1" Text="" HorizontalAlignment="Left" Margin="80,50,0,0" Width="220" />
+                <CheckBox x:Name="UiCbIgnoreColors" TabIndex="2"  Content="{x:Static p:Resources.IgnoreColors}" Canvas.Left="80" Canvas.Top="85"/>
             </Canvas>
         </GroupBox>
-        <GroupBox x:Name="UiGbResults" Header="{x:Static p:Resources.Result}" Margin="10,145,0,0" Width="340" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <GroupBox x:Name="UiGbResults" Header="{x:Static p:Resources.Result}" Margin="10,160,0,0" Width="340" Height="80" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Canvas>
-                <CheckBox x:Name="UiCbWhiteWin" Content="1-0" Canvas.Left="40" Canvas.Top="10"/>
-                <CheckBox x:Name="UiCbWhiteLoss" Content="0-1" Canvas.Left="110" Canvas.Top="10"/>
-                <CheckBox x:Name="UiCbDraw" Content="½-½" Canvas.Left="180" Canvas.Top="10"/>
-                <CheckBox x:Name="UiCbNoResult" Content="*" Canvas.Left="250" Canvas.Top="10"/>
+                <CheckBox x:Name="UiCbWhiteWin" TabIndex="4" Content="1-0" Canvas.Left="40" Canvas.Top="20"/>
+                <CheckBox x:Name="UiCbWhiteLoss" TabIndex="5" Content="0-1" Canvas.Left="110" Canvas.Top="20"/>
+                <CheckBox x:Name="UiCbDraw" TabIndex="6" Content="½-½" Canvas.Left="180" Canvas.Top="20"/>
+                <CheckBox x:Name="UiCbNoResult" TabIndex="7" Content="*" Canvas.Left="250" Canvas.Top="20"/>
             </Canvas>
         </GroupBox>
-        <GroupBox x:Name="UiGbGameLength" Header="{x:Static p:Resources.MovesInGameMinMax}" Margin="10,210,0,0" Width="165" Height="70" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <GroupBox x:Name="UiGbGameLength" Header="{x:Static p:Resources.MovesInGameMinMax}" Margin="360,10,0,0" Width="175" Height="70" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Canvas>
-                <TextBox x:Name="UiTbMinMoves" TabIndex="3" HorizontalAlignment="Left" Margin="20,15,0,0" HorizontalContentAlignment="Center" TextWrapping="NoWrap" Text="" Width="40"/>
-                <Label x:Name="UiLblDash" Content=" - " HorizontalAlignment="Left" Margin="65,10,0,0"/>
-                <TextBox x:Name="UiTbMaxMoves" TabIndex="4"  HorizontalAlignment="Left" Margin="92,15,0,0" HorizontalContentAlignment="Center" TextWrapping="NoWrap" Text="" Width="40"/>
+                <TextBox x:Name="UiTbMinMoves" TabIndex="8" HorizontalAlignment="Left" Margin="20,15,0,0" HorizontalContentAlignment="Center" TextWrapping="NoWrap" Text="" Width="40"/>
+                <Label x:Name="UiLblDash" Content=" - " HorizontalAlignment="Left" Margin="70,10,0,0"/>
+                <TextBox x:Name="UiTbMaxMoves" TabIndex="9"  HorizontalAlignment="Left" Margin="102,15,0,0" HorizontalContentAlignment="Center" TextWrapping="NoWrap" Text="" Width="40"/>
             </Canvas>
         </GroupBox>
-        <GroupBox x:Name="UiGbEco" Header="{x:Static p:Resources.EcoFromTo}" Margin="185,210,0,0" Width="165" Height="70" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <GroupBox x:Name="UiGbEco" Header="{x:Static p:Resources.EcoFromTo}" Margin="360,85,0,0" Width="175" Height="70" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Canvas>
-                <TextBox x:Name="UiTbMinEco" TabIndex="5" HorizontalAlignment="Left" Margin="20,15,0,0" HorizontalContentAlignment="Center" TextWrapping="NoWrap" Text="" Width="40"/>
-                <Label x:Name="UiLblDash2" Content=" - " HorizontalAlignment="Left" Margin="65,10,0,0"/>
-                <TextBox x:Name="UiTbMaxEco" TabIndex="6"  HorizontalAlignment="Left" Margin="92,15,0,0" HorizontalContentAlignment="Center" TextWrapping="NoWrap" Text="" Width="40"/>
+                <TextBox x:Name="UiTbMinEco" TabIndex="10" HorizontalAlignment="Left" Margin="20,15,0,0" HorizontalContentAlignment="Center" TextWrapping="NoWrap" Text="" Width="40"/>
+                <Label x:Name="UiLblDash2" Content=" - " HorizontalAlignment="Left" Margin="70,10,0,0"/>
+                <TextBox x:Name="UiTbMaxEco" TabIndex="11"  HorizontalAlignment="Left" Margin="102,15,0,0" HorizontalContentAlignment="Center" TextWrapping="NoWrap" Text="" Width="40"/>
             </Canvas>
         </GroupBox>
-        <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="-120,300,0,0" VerticalAlignment="Top" Width="80" Click="UiBtnOk_Click"/>
-        <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="120,300,0,0" VerticalAlignment="Top" Width="80"/>
+        <GroupBox x:Name="UiGbYears" Header="{x:Static p:Resources.YearFromTo}" Margin="360,160,0,0" Width="175" Height="80" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Canvas>
+                <TextBox x:Name="UiTbMinYear" TabIndex="12" HorizontalAlignment="Left" Margin="20,10,0,0" HorizontalContentAlignment="Center" TextWrapping="NoWrap" Text="" Width="40"/>
+                <Label x:Name="UiLblDash3" Content=" - " HorizontalAlignment="Left" Margin="70,5,0,0"/>
+                <TextBox x:Name="UiTbMaxYear" TabIndex="13"  HorizontalAlignment="Left" Margin="102,10,0,0" HorizontalContentAlignment="Center" TextWrapping="NoWrap" Text="" Width="40"/>
+                <CheckBox x:Name="UiCbEmptyYear" TabIndex="14"  Content="{x:Static p:Resources.IncludeYearUnspecified}" HorizontalAlignment="Left" Margin="20,37,0,0" />
+            </Canvas>
+        </GroupBox>
+        <Button x:Name="UiBtnOk" IsDefault="True" TabIndex="15" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="-120,260,0,0" VerticalAlignment="Top" Width="80" Click="UiBtnOk_Click"/>
+        <Button x:Name="UiBtnCancel" IsCancel="True" TabIndex="16" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="120,260,0,0" VerticalAlignment="Top" Width="80"/>
     </Grid>
 </Window>

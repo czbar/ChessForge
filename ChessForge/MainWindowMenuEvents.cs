@@ -294,12 +294,6 @@ namespace ChessForge
         private void UiMnMergeChapters_Click(object sender, RoutedEventArgs e)
         {
             SelectChaptersDialog dlg = new SelectChaptersDialog(WorkbookManager.SessionWorkbook, Properties.Resources.SelectChaptersToMerge);
-            //{
-            //    Left = AppState.MainWin.ChessForgeMain.Left + 100,
-            //    Top = AppState.MainWin.ChessForgeMain.Top + 100,
-            //    Topmost = false,
-            //    Owner = AppState.MainWin
-            //};
             GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
             dlg.ShowDialog();
@@ -328,56 +322,21 @@ namespace ChessForge
 
                 if (mergedCount > 1 && _chaptersView != null)
                 {
-                    Chapter mergedChapter = WorkbookManager.SessionWorkbook.CreateNewChapter(merged);
-                    mergedChapter.SetTitle(title);
-                    CopyGamesToChapter(mergedChapter, dlg.ChapterList);
-                    CopyExercisesToChapter(mergedChapter, dlg.ChapterList);
-                    DeleteChapters(dlg.ChapterList);
+                    List<Chapter> sourceChapters = new List<Chapter>();
+                    foreach (SelectedChapter ch in dlg.ChapterList)
+                    {
+                        if (ch.IsSelected)
+                        {
+                            sourceChapters.Add(ch.Chapter);
+                        }
+                    }
 
+                    WorkbookManager.SessionWorkbook.MergeChapters(merged, title, sourceChapters);
                     _chaptersView.BuildFlowDocumentForChaptersView();
-                    AppState.DoEvents();
-                    _chaptersView.BringChapterIntoView(WorkbookManager.SessionWorkbook.GetChapterCount() - 1);
+                    PulseManager.ChaperIndexToBringIntoView = WorkbookManager.SessionWorkbook.GetChapterCount() - 1;
                 }
 
                 AppState.IsDirty = mergedCount > 1;
-            }
-        }
-
-        /// <summary>
-        /// Copies all games from the selected chapters in the list to the target chapter
-        /// </summary>
-        /// <param name="target"></param>
-        /// <param name="sources"></param>
-        private void CopyGamesToChapter(Chapter target, ObservableCollection<SelectedChapter> sources)
-        {
-            foreach (SelectedChapter ch in sources)
-            {
-                if (ch.IsSelected)
-                {
-                    foreach (Article game in ch.Chapter.ModelGames)
-                    {
-                        target.AddModelGame(game.Tree);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Copies all exercises from the selected chapters in the list to the target chapter
-        /// </summary>
-        /// <param name="target"></param>
-        /// <param name="sources"></param>
-        private void CopyExercisesToChapter(Chapter target, ObservableCollection<SelectedChapter> sources)
-        {
-            foreach (SelectedChapter ch in sources)
-            {
-                if (ch.IsSelected)
-                {
-                    foreach (Article item in ch.Chapter.Exercises)
-                    {
-                        target.AddExercise(item.Tree);
-                    }
-                }
             }
         }
 
@@ -387,12 +346,18 @@ namespace ChessForge
         /// <param name="sources"></param>
         private void DeleteChapters(ObservableCollection<SelectedChapter> chapters)
         {
+            List<Chapter> lstChapters = new List<Chapter>();
             foreach (SelectedChapter ch in chapters)
             {
                 if (ch.IsSelected)
                 {
-                    WorkbookManager.SessionWorkbook.DeleteChapter(ch.Chapter);
+                    lstChapters.Add(ch.Chapter);
                 }
+            }
+
+            if (lstChapters.Count > 0)
+            {
+                WorkbookManager.SessionWorkbook.DeleteChapters(lstChapters);
             }
         }
 
@@ -531,6 +496,8 @@ namespace ChessForge
                         break;
                     case WorkbookOperationType.DELETE_MODEL_GAME:
                     case WorkbookOperationType.DELETE_MODEL_GAMES:
+                    case WorkbookOperationType.DELETE_CHAPTERS:
+                    case WorkbookOperationType.MERGE_CHAPTERS:
                         AppState.MainWin.ChaptersView.IsDirty = true;
                         GuiUtilities.RefreshChaptersView(null);
                         AppState.MainWin.UiTabChapters.Focus();

@@ -1457,6 +1457,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search Results.
+        /// </summary>
+        public static string DlgSearchResults {
+            get {
+                return ResourceManager.GetString("DlgSearchResults", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Application Options.
         /// </summary>
         public static string DlgTitleApplicationOptions {
@@ -3010,6 +3019,15 @@ namespace ChessForge.Properties {
         public static string ImportPgn {
             get {
                 return ResourceManager.GetString("ImportPgn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Include unspecified.
+        /// </summary>
+        public static string IncludeYearUnspecified {
+            get {
+                return ResourceManager.GetString("IncludeYearUnspecified", resourceCulture);
             }
         }
         
@@ -5954,6 +5972,15 @@ namespace ChessForge.Properties {
         public static string WrongTypeEntitiesNotImported {
             get {
                 return ResourceManager.GetString("WrongTypeEntitiesNotImported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Years (from/to).
+        /// </summary>
+        public static string YearFromTo {
+            get {
+                return ResourceManager.GetString("YearFromTo", resourceCulture);
             }
         }
         
