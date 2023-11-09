@@ -6,7 +6,7 @@ Bookcase:Tournaments
 Description: Games from tournaments and matches.
 
     Shelf:World Championship 
-    Description: Games from World Championship Matches
+    Description: Games from World Championship Matches.
     
 	  Book:Men's World Championships
       Description: All games from Men's World Championship Matches and Tournaments.
@@ -23,7 +23,7 @@ Description:Workbooks examining theory and practice of various Openings.
       File: Openings/General/London System.pgn
     
 	Shelf:White repertoire
-    Description: Openings analyzed from the White player's point of view
+    Description: Openings analyzed from the White player's point of view.
       
 	  Book:Budapest Gambit
       Description: A few of options to safely counter the Budapest Gambit.
@@ -38,7 +38,7 @@ Description:Workbooks examining theory and practice of various Openings.
       File: Openings/White/Smith Morra Gambit.pgn
       
 	Shelf:Black repertoire
-    Description: Openings analyzed from the Black player's point of view
+    Description: Openings analyzed from the Black player's point of view.
     
 	  Book:Classical Sicilian 2...d6, 5...Nc6
       Description: The classical, always popular at the highest level system in the Sicilian Defense.
@@ -55,6 +55,13 @@ Description:Workbooks examining theory and practice of various Openings.
       Book:Ragozin Defense
       Description: A solid addition to one's repertoire against 1.d4.
       File: Openings/Black/Ragozin for Black.pgn
+
+	Shelf:Unorthodox Openings
+    Description: Short booklets on rare, unorthodox openings. 
+    
+	  Book:The Elephant Gambit
+      Description: These days extict in masters' practice but a 1.e4 player must know it.
+      File: Openings/Unorthodox/Elephant Gambit.pgn
 
 
 Bookcase: Endgames and Exercises
