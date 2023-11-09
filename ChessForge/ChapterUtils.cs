@@ -94,22 +94,16 @@ namespace ChessForge
             }
 
             SelectArticlesDialog dlg = new SelectArticlesDialog(null, allChaptersCheckbox, title, ref lstIdenticalPositions, showAllChapters, action);
-            //{
-            //    Left = AppState.MainWin.ChessForgeMain.Left + 100,
-            //    Top = AppState.MainWin.ChessForgeMain.Top + 100,
-            //    Topmost = false,
-            //    Owner = AppState.MainWin
-            //};
             GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
             if (action == ArticlesAction.COPY_OR_MOVE)
             {
                 dlg.SetupGuiForGamesCopyOrMove();
-                action = dlg.ActionOnArticles;
             }
 
             if (dlg.ShowDialog() == true)
             {
+                action = dlg.ActionOnArticles;
                 RemoveUnselectedArticles(lstIdenticalPositions);
 
                 if (HasAtLeastNArticles(lstIdenticalPositions, 1))
