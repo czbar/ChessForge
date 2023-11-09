@@ -25,12 +25,6 @@ namespace ChessForge
         public static void DownloadGames()
         {
             DownloadWebGamesDialog dlg = new DownloadWebGamesDialog();
-            //{
-            //    Left = AppState.MainWin.ChessForgeMain.Left + 150,
-            //    Top = AppState.MainWin.Top + 150,
-            //    Topmost = false,
-            //    Owner = AppState.MainWin
-            //};
             GuiUtilities.PositionDialog(dlg, AppState.MainWin, 150);
 
             if (dlg.ShowDialog() == true)
