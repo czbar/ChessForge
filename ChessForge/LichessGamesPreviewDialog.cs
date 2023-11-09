@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using WebAccess;
-using static ChessForge.WorkbookOperation;
 
 namespace ChessForge
 {
