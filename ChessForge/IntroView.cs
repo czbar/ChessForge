@@ -261,7 +261,7 @@ namespace ChessForge
                     _rtb.Selection.Select(_rtb.Selection.Start, _rtb.Selection.Start);
                     // get insertion place
                     RichTextBoxUtilities.GetMoveInsertionPlace(_rtb, out Paragraph para, out Inline insertBefore, out double fontSize);
-                    
+
                     Run run = new Run(dlg.UiTbText.Text);
                     run.Cursor = Cursors.Hand;
                     run.FontSize = fontSize;
@@ -1683,6 +1683,14 @@ namespace ChessForge
                             Command_Undo(null, null);
                             e.Handled = true;
                             break;
+                        case Key.Home:
+                            _rtb.ScrollToHome();
+                            e.Handled = true;
+                            break;
+                        case Key.End:
+                            _rtb.ScrollToEnd();
+                            e.Handled = true;
+                            break;
                     }
                 }
                 catch
@@ -1696,6 +1704,16 @@ namespace ChessForge
             else if (e.Key == Key.F3)
             {
                 AppState.MainWin.UiMnFindIdenticalPosition_Click(null, null);
+                e.Handled = true;
+            }
+            else if (e.Key == Key.PageUp)
+            {
+                _rtb.PageUp();
+                e.Handled = true;
+            }
+            else if (e.Key == Key.PageDown)
+            {
+                _rtb.PageDown();
                 e.Handled = true;
             }
         }

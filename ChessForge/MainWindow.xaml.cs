@@ -2394,8 +2394,35 @@ namespace ChessForge
                             handled = true;
                         }
                         break;
+                    case Key.Home:
+                        if (AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS)
+                        {
+                            UiRtbChaptersView.ScrollToHome();
+                            handled = true;
+                        }
+                        break;
+                    case Key.End:
+                        if (AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS)
+                        {
+                            UiRtbChaptersView.ScrollToEnd();
+                            handled = true;
+                        }
+                        break;
                     default:
                         break;
+                }
+            }
+            else if (AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS)
+            {
+                if (e.Key == Key.PageUp)
+                {
+                    UiRtbChaptersView.PageUp();
+                    handled = true;
+                }
+                else if (e.Key == Key.PageDown)
+                {
+                    UiRtbChaptersView.PageDown();
+                    handled = true;
                 }
             }
 
