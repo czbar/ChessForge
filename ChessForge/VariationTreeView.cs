@@ -12,7 +12,6 @@ using System.Windows.Media;
 using ChessPosition.GameTree;
 using ChessPosition.Utils;
 using System.Diagnostics;
-using System.Windows.Markup;
 
 namespace ChessForge
 {
