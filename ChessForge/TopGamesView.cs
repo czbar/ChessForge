@@ -11,6 +11,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using WebAccess;
+using static ChessForge.WorkbookManager;
 using Label = System.Windows.Controls.Label;
 
 namespace ChessForge
@@ -273,28 +274,26 @@ namespace ChessForge
         public void OpenReplayDialog()
         {
             // pass ActiveTab so that we can add a reference if this is a Study Tree
+            TabViewType activeTab = WorkbookManager.ActiveTab;
+
             LichessGamesPreviewDialog dlg = new LichessGamesPreviewDialog(_clickedGameId, _gameIdList, AppState.ActiveTab);
-            //{
-            //    Left = AppState.MainWin.ChessForgeMain.Left + 100,
-            //    Top = AppState.MainWin.Top + 100,
-            //    Topmost = false,
-            //    Owner = AppState.MainWin
-            //};
             GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
             dlg.ShowDialog();
 
-            switch (dlg.ActiveTabOnExit)
-            {
-                case WorkbookManager.TabViewType.STUDY:
-                    AppState.MainWin.UiTabStudyTree.Focus();
-                    break;
-                case WorkbookManager.TabViewType.MODEL_GAME:
-                    AppState.MainWin.UiTabModelGames.Focus();
-                    break;
-                case WorkbookManager.TabViewType.EXERCISE:
-                    AppState.MainWin.UiTabExercises.Focus();
-                    break;
-            }
+            WorkbookManager.ActiveTab = TabViewType.NONE;
+            GuiUtilities.ForceFocus(activeTab);
+            //switch (activeTab)
+            //{
+            //    case WorkbookManager.TabViewType.STUDY:
+            //        AppState.MainWin.UiTabStudyTree.Focus();
+            //        break;
+            //    case WorkbookManager.TabViewType.MODEL_GAME:
+            //        AppState.MainWin.UiTabModelGames.Focus();
+            //        break;
+            //    case WorkbookManager.TabViewType.EXERCISE:
+            //        AppState.MainWin.UiTabExercises.Focus();
+            //        break;
+            //}
         }
 
         /// <summary>
