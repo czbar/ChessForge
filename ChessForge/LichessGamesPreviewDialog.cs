@@ -177,7 +177,7 @@ namespace ChessForge
                     _importedGameIds.Add(_currentGameId);
 
                     AppState.FinalizeLichessDownload(chapter, _tree, _currentGameId, _activeTabOnEntry);
-                    _activeTabOnExit = WorkbookManager.TabViewType.MODEL_GAME;
+                    //_activeTabOnExit = WorkbookManager.TabViewType.MODEL_GAME;
                 }
             }
         }
