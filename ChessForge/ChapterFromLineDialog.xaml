@@ -14,7 +14,7 @@
         <Label x:Name="UiLblNewChapterCreated" Content="{x:Static p:Resources.NewChapterToBeCreated}" HorizontalAlignment="Center" Margin="0,11,0,0" VerticalAlignment="Top"/>
 
         <Label x:Name="UiLblTitle" Content="{x:Static p:Resources.Title}" HorizontalAlignment="Left" Margin="30,43,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="UiTbChapterTitle" Text="" HorizontalAlignment="Center" Margin="40,47,0,0" VerticalAlignment="Top" Width="270" BorderBrush="Black" BorderThickness="1" />
+        <TextBox x:Name="UiTbChapterTitle" Text="" HorizontalAlignment="Center" Margin="40,47,0,0" VerticalAlignment="Top" Width="270" BorderBrush="Black" BorderThickness="1" PreviewKeyDown="UiTbChapterTitle_PreviewKeyDown_1" />
 
         <CheckBox x:Name="UiCbDeleteOrig" Content="{x:Static p:Resources.DeleteSubTreeFromSource}" HorizontalAlignment="Left" Margin="70,83,0,0" VerticalAlignment="Top"/>
         <CheckBox x:Name="UiCbGoToNew" Content="{x:Static p:Resources.GotoNewChapter}" HorizontalAlignment="Left" Margin="70,110,0,0" VerticalAlignment="Top"/>
