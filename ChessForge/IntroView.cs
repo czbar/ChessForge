@@ -180,6 +180,7 @@ namespace ChessForge
                 string xaml = EncodingUtils.Base64Decode(Intro.CodedContent);
                 StringToFlowDocument(xaml);
                 _rtb.Document = Document;
+                _maxRunId = GetHighestId();
             }
         }
 
@@ -400,6 +401,32 @@ namespace ChessForge
                 AppLog.Message("EnableMenuItems()", ex);
             }
 
+        }
+
+        /// <summary>
+        /// Finds the highest inline id in the document
+        /// </summary>
+        /// <returns></returns>
+        private int GetHighestId()
+        {
+            int maxId = 0;
+
+            foreach (Block block in Document.Blocks)
+            {
+                if (block is Paragraph para)
+                {
+                    foreach (Inline inl in para.Inlines)
+                    {
+                        int id = TextUtils.GetIdFromPrefixedString(inl.Name);
+                        if (id > maxId)
+                        {
+                            maxId = id;
+                        }
+                    }
+                }
+            }
+
+            return maxId;
         }
 
         /// <summary>
