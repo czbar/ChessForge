@@ -231,7 +231,8 @@
     <Compile Include="RichTextBoxUtilities.cs" />
     <Compile Include="RtbTreeView\VariationDisplayLine.cs" />
     <Compile Include="RtbTreeView\VariationDisplayRun.cs" />
-    <Compile Include="RtbTreeView\VariationSingleLine.cs" />
+    <Compile Include="RtbTreeView\VariationLineSector.cs" />
+    <Compile Include="RtbTreeView\VariationTreeLineManager.cs" />
     <Compile Include="SelectArticlesDialog.xaml.cs">
       <DependentUpon>SelectArticlesDialog.xaml</DependentUpon>
     </Compile>

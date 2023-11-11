@@ -41,7 +41,7 @@ namespace ChessForge
     public class VariationDisplayLine
     {
         // single lines represented by this object
-        private List<VariationSingleLine> _lines;
+        private List<VariationLineSector> _lines;
 
         // how the line is currently shown in the view
         private DisplayLineVisibility _visibility;
