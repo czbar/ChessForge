@@ -62,7 +62,6 @@
     <Compile Include="GameTree\RichTextPara.cs" />
     <Compile Include="GameTree\VariationTree.cs" />
     <Compile Include="GameTree\TreeNode.cs" />
-    <Compile Include="GameTree\VariationLine.cs" />
     <Compile Include="GameTree\TreeMerge.cs" />
     <Compile Include="Parsers\FenParser.cs" />
     <Compile Include="Parsers\GameData.cs" />
