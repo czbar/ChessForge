@@ -130,7 +130,7 @@ namespace ChessForge
                         {
                             AppLog.Message("OnMouseDown rejected: CanMovePiece returned false");
                             // if we can't move because we're in exercise hiding mode, try to help the user
-                            if (AppState.ActiveTab == WorkbookManager.TabViewType.EXERCISE && ActiveArticle != null && ActiveArticle.Solver != null && !ActiveArticle.Solver.IsMovingAllowed())
+                            if (AppState.ActiveTab == TabViewType.EXERCISE && ActiveArticle != null && ActiveArticle.Solver != null && !ActiveArticle.Solver.IsMovingAllowed())
                             {
                                 if (_exerciseTreeView != null)
                                 {
@@ -191,7 +191,7 @@ namespace ChessForge
                                     || LearningMode.CurrentMode == LearningMode.Mode.TRAINING && TrainingSession.CurrentState == TrainingSession.State.AWAITING_USER_TRAINING_MOVE
                                     || LearningMode.CurrentMode == LearningMode.Mode.MANUAL_REVIEW)
                                 {
-                                    if (AppState.ActiveTab == WorkbookManager.TabViewType.INTRO)
+                                    if (AppState.ActiveTab == TabViewType.INTRO)
                                     {
                                         HandleMoveOnIntroView(targetSquare);
                                     }
@@ -220,7 +220,7 @@ namespace ChessForge
             {
             }
 
-            if (AppState.MainWin.ActiveTreeView != null && AppState.ActiveTab != WorkbookManager.TabViewType.INTRO)
+            if (AppState.MainWin.ActiveTreeView != null && AppState.ActiveTab != TabViewType.INTRO)
             {
                 try
                 {
@@ -369,7 +369,7 @@ namespace ChessForge
                 MainChessBoard.Shapes.FinalizeShape(targetSquare, true, true);
                 _lastRightClickedPoint = null;
 
-                if (AppState.ActiveTab == WorkbookManager.TabViewType.INTRO)
+                if (AppState.ActiveTab == TabViewType.INTRO)
                 {
                     if (_introView != null)
                     {
@@ -392,7 +392,7 @@ namespace ChessForge
             if (Configuration.AllowMouseWheelForMoves
                 && LearningMode.CurrentMode != LearningMode.Mode.TRAINING
                 && LearningMode.CurrentMode != LearningMode.Mode.ENGINE_GAME
-                && (AppState.ActiveTab == WorkbookManager.TabViewType.STUDY || AppState.ActiveTab == WorkbookManager.TabViewType.MODEL_GAME || AppState.ActiveTab == WorkbookManager.TabViewType.EXERCISE))
+                && (AppState.ActiveTab == TabViewType.STUDY || AppState.ActiveTab == TabViewType.MODEL_GAME || AppState.ActiveTab == TabViewType.EXERCISE))
             {
                 if (e.Delta > 0)
                 {
@@ -749,7 +749,7 @@ namespace ChessForge
             UiImgExplorersOn.Visibility = Visibility.Visible;
             WebAccessManager.IsEnabledExplorerQueries = true;
 
-            if (ActiveVariationTree != null && ActiveVariationTree.SelectedNode != null || AppState.ActiveTab == WorkbookManager.TabViewType.INTRO)
+            if (ActiveVariationTree != null && ActiveVariationTree.SelectedNode != null || AppState.ActiveTab == TabViewType.INTRO)
             {
                 _openingStatsView.SetOpeningName();
                 WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, ActiveVariationTree.SelectedNode);
@@ -1004,7 +1004,7 @@ namespace ChessForge
         /// <param name="e"></param>
         public void UiTabChapters_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS)
+            if (AppState.ActiveTab == TabViewType.CHAPTERS)
             {
                 return;
             }
@@ -1013,10 +1013,10 @@ namespace ChessForge
             EngineMessageProcessor.StopEngineEvaluation();
             ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
 
-            WorkbookManager.ActiveTab = WorkbookManager.TabViewType.CHAPTERS;
+            WorkbookManager.ActiveTab = TabViewType.CHAPTERS;
             AppState.ShowExplorers(false, false);
 
-            WorkbookLocationNavigator.SaveNewLocation(WorkbookManager.TabViewType.CHAPTERS);
+            WorkbookLocationNavigator.SaveNewLocation(TabViewType.CHAPTERS);
 
             // we may need to show/hide Intro headers if something has changed
             // TODO: consider creating it here if null, then we don't need to build it in Initialize() thus improving perf in some scenarios.
@@ -1068,12 +1068,12 @@ namespace ChessForge
                     _introView.Clear();
                 }
 
-                if (AppState.ActiveTab == WorkbookManager.TabViewType.INTRO)
+                if (AppState.ActiveTab == TabViewType.INTRO)
                 {
                     return;
                 }
 
-                WorkbookManager.ActiveTab = WorkbookManager.TabViewType.INTRO;
+                WorkbookManager.ActiveTab = TabViewType.INTRO;
                 RebuildIntroView();
                 if (WorkbookManager.SessionWorkbook != null)
                 {
@@ -1134,13 +1134,13 @@ namespace ChessForge
         /// <param name="e"></param>
         public void UiTabStudyTree_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (AppState.ActiveTab == WorkbookManager.TabViewType.STUDY)
+            if (AppState.ActiveTab == TabViewType.STUDY)
             {
                 return;
             }
 
 
-            WorkbookManager.ActiveTab = WorkbookManager.TabViewType.STUDY;
+            WorkbookManager.ActiveTab = TabViewType.STUDY;
             if (_studyTreeView == null || _studyTreeView.Document == null || _studyTreeView.Document.Blocks.Count == 0)
             {
                 SetupGuiForActiveStudyTree(true);
@@ -1179,13 +1179,13 @@ namespace ChessForge
         {
             StopReplayIfActive();
 
-            if (AppState.ActiveTab == WorkbookManager.TabViewType.BOOKMARKS)
+            if (AppState.ActiveTab == TabViewType.BOOKMARKS)
             {
                 return;
             }
 
             DisplayPosition(PositionUtils.SetupStartingPosition());
-            WorkbookManager.ActiveTab = WorkbookManager.TabViewType.BOOKMARKS;
+            WorkbookManager.ActiveTab = TabViewType.BOOKMARKS;
             AppState.ConfigureMenusForManualReview();
             AppState.ShowExplorers(false, false);
 
@@ -1293,14 +1293,14 @@ namespace ChessForge
         /// <param name="e"></param>
         public void UiTabModelGames_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (AppState.ActiveTab == WorkbookManager.TabViewType.MODEL_GAME)
+            if (AppState.ActiveTab == TabViewType.MODEL_GAME)
             {
                 return;
             }
 
             StopReplayIfActive();
 
-            WorkbookManager.ActiveTab = WorkbookManager.TabViewType.MODEL_GAME;
+            WorkbookManager.ActiveTab = TabViewType.MODEL_GAME;
             AppState.ConfigureMenusForManualReview();
             RefreshGamesView(out Chapter chapter, out int articleIndex);
             WorkbookLocationNavigator.SaveNewLocation(chapter, GameData.ContentType.MODEL_GAME, articleIndex);
@@ -1317,7 +1317,7 @@ namespace ChessForge
             UiImgEngineOn.IsEnabled = true;
             UiImgEngineOff.IsEnabled = true;
 
-            WorkbookManager.ActiveTab = WorkbookManager.TabViewType.MODEL_GAME;
+            WorkbookManager.ActiveTab = TabViewType.MODEL_GAME;
             if (AppState.ActiveChapterGamesCount > 0)
             {
                 AppState.ShowExplorers(AppState.AreExplorersOn, true);
@@ -1400,14 +1400,14 @@ namespace ChessForge
         /// <param name="e"></param>
         public void UiTabExercises_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (AppState.ActiveTab == WorkbookManager.TabViewType.EXERCISE)
+            if (AppState.ActiveTab == TabViewType.EXERCISE)
             {
                 return;
             }
 
             StopReplayIfActive();
 
-            WorkbookManager.ActiveTab = WorkbookManager.TabViewType.EXERCISE;
+            WorkbookManager.ActiveTab = TabViewType.EXERCISE;
             AppState.ConfigureMenusForManualReview();
             RefreshExercisesView(out Chapter chapter, out int articleIndex);
             WorkbookLocationNavigator.SaveNewLocation(chapter, GameData.ContentType.MODEL_GAME, articleIndex);
@@ -1424,7 +1424,7 @@ namespace ChessForge
             UiImgEngineOn.IsEnabled = true;
             UiImgEngineOff.IsEnabled = true;
 
-            WorkbookManager.ActiveTab = WorkbookManager.TabViewType.EXERCISE;
+            WorkbookManager.ActiveTab = TabViewType.EXERCISE;
             if (AppState.ActiveChapterExerciseCount > 0)
             {
                 AppState.ShowExplorers(AppState.AreExplorersOn, true);

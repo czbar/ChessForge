@@ -382,13 +382,13 @@ namespace ChessForge
                     return;
                 }
 
-                if (AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS || AppState.ActiveVariationTree == null)
+                if (AppState.ActiveTab == TabViewType.CHAPTERS || AppState.ActiveVariationTree == null)
                 {
                     UndoWorkbookOperation();
                 }
-                else if (AppState.ActiveTab == WorkbookManager.TabViewType.STUDY
-                     || AppState.ActiveTab == WorkbookManager.TabViewType.MODEL_GAME
-                     || AppState.ActiveTab == WorkbookManager.TabViewType.EXERCISE)
+                else if (AppState.ActiveTab == TabViewType.STUDY
+                     || AppState.ActiveTab == TabViewType.MODEL_GAME
+                     || AppState.ActiveTab == TabViewType.EXERCISE)
                 {
                     if (WorkbookManager.SessionWorkbook.OpsManager.Timestamp > AppState.ActiveVariationTree.OpsManager.Timestamp)
                     {
@@ -476,7 +476,7 @@ namespace ChessForge
                     case WorkbookOperationType.DELETE_CHAPTER:
                     case WorkbookOperationType.CREATE_CHAPTER:
                         _chaptersView.BuildFlowDocumentForChaptersView();
-                        if (AppState.ActiveTab != WorkbookManager.TabViewType.CHAPTERS)
+                        if (AppState.ActiveTab != TabViewType.CHAPTERS)
                         {
                             UiTabChapters.Focus();
                         }
@@ -484,7 +484,7 @@ namespace ChessForge
                         _chaptersView.BringChapterIntoViewByIndex(selectedChapterIndex);
                         break;
                     case WorkbookOperationType.CREATE_ARTICLE:
-                        if (AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS)
+                        if (AppState.ActiveTab == TabViewType.CHAPTERS)
                         {
                             _chaptersView.BuildFlowDocumentForChaptersView();
                         }
@@ -505,7 +505,7 @@ namespace ChessForge
                     case WorkbookOperationType.DELETE_EXERCISE:
                     case WorkbookOperationType.DELETE_EXERCISES:
                         _chaptersView.BuildFlowDocumentForChaptersView();
-                        SelectExercise(selectedArticleIndex, AppState.ActiveTab != WorkbookManager.TabViewType.CHAPTERS);
+                        SelectExercise(selectedArticleIndex, AppState.ActiveTab != TabViewType.CHAPTERS);
                         break;
                     case WorkbookOperationType.COPY_ARTICLES:
                     case WorkbookOperationType.MOVE_ARTICLES:
@@ -727,7 +727,7 @@ namespace ChessForge
         {
             bool isTrainingOrSolving = TrainingSession.IsTrainingInProgress || AppState.IsUserSolving();
 
-            if (isTrainingOrSolving || ActiveVariationTree == null || AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS)
+            if (isTrainingOrSolving || ActiveVariationTree == null || AppState.ActiveTab == TabViewType.CHAPTERS)
             {
                 return;
             }
@@ -762,7 +762,7 @@ namespace ChessForge
 
             // double check that we are in the Study or Games tab,
             // we don't allow starting a game from anywhere else
-            if (AppState.ActiveTab == WorkbookManager.TabViewType.STUDY || AppState.ActiveTab == WorkbookManager.TabViewType.MODEL_GAME)
+            if (AppState.ActiveTab == TabViewType.STUDY || AppState.ActiveTab == TabViewType.MODEL_GAME)
             {
                 if (!EngineMessageProcessor.IsEngineAvailable)
                 {
@@ -2564,7 +2564,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiRtbTrainingProgress_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (AppState.ActiveTab == WorkbookManager.TabViewType.TRAINING)
+            if (AppState.ActiveTab == TabViewType.TRAINING)
             {
                 return;
             }
@@ -2581,7 +2581,7 @@ namespace ChessForge
             bool visible = (bool)e.NewValue;
             if (visible == true)
             {
-                WorkbookManager.ActiveTab = WorkbookManager.TabViewType.TRAINING;
+                WorkbookManager.ActiveTab = TabViewType.TRAINING;
             }
         }
 
@@ -2595,7 +2595,7 @@ namespace ChessForge
             bool visible = (bool)e.NewValue;
             if (visible == true)
             {
-                WorkbookManager.ActiveTab = WorkbookManager.TabViewType.ENGINE_GAME;
+                WorkbookManager.ActiveTab = TabViewType.ENGINE_GAME;
             }
         }
 
@@ -3082,13 +3082,13 @@ namespace ChessForge
             bool isFlipped = MainChessBoard.FlipBoard();
             switch (WorkbookManager.ActiveTab)
             {
-                case WorkbookManager.TabViewType.STUDY:
+                case TabViewType.STUDY:
                     SetCustomBoardOrientation((isFlipped ? PieceColor.Black : PieceColor.White), WorkbookManager.ItemType.STUDY);
                     break;
-                case WorkbookManager.TabViewType.MODEL_GAME:
+                case TabViewType.MODEL_GAME:
                     SetCustomBoardOrientation((isFlipped ? PieceColor.Black : PieceColor.White), WorkbookManager.ItemType.MODEL_GAME);
                     break;
-                case WorkbookManager.TabViewType.EXERCISE:
+                case TabViewType.EXERCISE:
                     _exerciseTreeView?.AlignExerciseAndMainBoards();
                     SetCustomBoardOrientation((isFlipped ? PieceColor.Black : PieceColor.White), WorkbookManager.ItemType.EXERCISE);
                     break;
@@ -3128,7 +3128,7 @@ namespace ChessForge
         /// <param name="e"></param>
         public void CustomCommand_MoveItemUp(object sender, RoutedEventArgs e)
         {
-            if (_chaptersView != null && AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS)
+            if (_chaptersView != null && AppState.ActiveTab == TabViewType.CHAPTERS)
             {
                 switch (_chaptersView.LastClickedItemType)
                 {
@@ -3154,7 +3154,7 @@ namespace ChessForge
         /// <param name="e"></param>
         public void CustomCommand_MoveItemDown(object sender, RoutedEventArgs e)
         {
-            if (_chaptersView != null && AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS)
+            if (_chaptersView != null && AppState.ActiveTab == TabViewType.CHAPTERS)
             {
                 switch (_chaptersView.LastClickedItemType)
                 {
@@ -3243,7 +3243,7 @@ namespace ChessForge
                         = WorkbookManager.SessionWorkbook.ActiveChapter.GetModelGameCount() - 1;
                     _chaptersView.BuildFlowDocumentForChaptersView();
 
-                    if (AppState.ActiveTab == WorkbookManager.TabViewType.MODEL_GAME)
+                    if (AppState.ActiveTab == TabViewType.MODEL_GAME)
                     {
                         SelectModelGame(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex, true);
                         //RefreshGamesView(out Chapter chapter, out int articleIndex);
@@ -3369,7 +3369,7 @@ namespace ChessForge
                         }
 
                         _chaptersView.RebuildChapterParagraph(WorkbookManager.SessionWorkbook.ActiveChapter);
-                        if (WorkbookManager.ActiveTab == WorkbookManager.TabViewType.MODEL_GAME)
+                        if (WorkbookManager.ActiveTab == TabViewType.MODEL_GAME)
                         {
                             SelectModelGame(chapter.ActiveModelGameIndex, false);
                         }
@@ -3416,7 +3416,7 @@ namespace ChessForge
 
                         _chaptersView.RebuildChapterParagraph(WorkbookManager.SessionWorkbook.ActiveChapter);
                         AppState.SetupGuiForCurrentStates();
-                        if (WorkbookManager.ActiveTab == WorkbookManager.TabViewType.EXERCISE)
+                        if (WorkbookManager.ActiveTab == TabViewType.EXERCISE)
                         {
                             SelectExercise(chapter.ActiveExerciseIndex, false);
                         }
@@ -3517,7 +3517,7 @@ namespace ChessForge
                 {
                     AppState.IsDirty = true;
                     _chaptersView.BuildFlowDocumentForChaptersView();
-                    if (WorkbookManager.ActiveTab == WorkbookManager.TabViewType.MODEL_GAME)
+                    if (WorkbookManager.ActiveTab == TabViewType.MODEL_GAME)
                     {
                         _modelGameTreeView.BuildFlowDocumentForVariationTree();
                     }
@@ -3556,7 +3556,7 @@ namespace ChessForge
                 {
                     AppState.IsDirty = true;
                     _chaptersView.BuildFlowDocumentForChaptersView();
-                    if (WorkbookManager.ActiveTab == WorkbookManager.TabViewType.EXERCISE)
+                    if (WorkbookManager.ActiveTab == TabViewType.EXERCISE)
                     {
                         _exerciseTreeView.BuildFlowDocumentForVariationTree();
                     }
@@ -3761,7 +3761,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnFontSizeUp_Click(object sender, RoutedEventArgs e)
         {
-            if (AppState.ActiveTab == WorkbookManager.TabViewType.INTRO)
+            if (AppState.ActiveTab == TabViewType.INTRO)
             {
                 UiBtnIntroFontSizeUp_Click(sender, e);
             }
@@ -3781,7 +3781,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnFontSizeDown_Click(object sender, RoutedEventArgs e)
         {
-            if (AppState.ActiveTab == WorkbookManager.TabViewType.INTRO)
+            if (AppState.ActiveTab == TabViewType.INTRO)
             {
                 UiBtnIntroFontSizeDown_Click(sender, e);
             }
@@ -3873,16 +3873,16 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnPrint_Click(object sender, RoutedEventArgs e)
         {
-            WorkbookManager.TabViewType vt = AppState.ActiveTab;
+            TabViewType vt = AppState.ActiveTab;
             switch (vt)
             {
-                case WorkbookManager.TabViewType.STUDY:
+                case TabViewType.STUDY:
                     PrintView(UiRtbStudyTreeView);
                     break;
-                case WorkbookManager.TabViewType.MODEL_GAME:
+                case TabViewType.MODEL_GAME:
                     PrintView(UiRtbModelGamesView);
                     break;
-                case WorkbookManager.TabViewType.EXERCISE:
+                case TabViewType.EXERCISE:
                     PrintView(UiRtbExercisesView);
                     break;
             }

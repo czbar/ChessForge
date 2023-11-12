@@ -141,7 +141,7 @@ namespace ChessForge
             _dgActiveLine.ItemsSource = Line.MoveList;
             if (Configuration.DebugLevel > 0)
             {
-                if (WorkbookManager.ActiveTab == WorkbookManager.TabViewType.EXERCISE)
+                if (WorkbookManager.ActiveTab == TabViewType.EXERCISE)
                 {
                     AppLog.Message(2, "_dgActiveLine.ItemsSource bound to Exercise, Line.MoveList.Count=" + Line.MoveList.Count.ToString());
                 }
@@ -653,7 +653,7 @@ namespace ChessForge
         /// <returns></returns>
         public bool HandleKeyDown(Key key)
         {
-            if (AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS) // || AppState.ActiveTab == WorkbookManager.TabViewType.BOOKMARKS)
+            if (AppState.ActiveTab == TabViewType.CHAPTERS) // || AppState.ActiveTab == TabViewType.BOOKMARKS)
             {
                 if (key == Key.Up || key == Key.Down)
                 {
@@ -670,7 +670,7 @@ namespace ChessForge
             if (_mainWin.ActiveVariationTree == null 
                 || !_mainWin.ActiveVariationTree.ShowTreeLines 
                 || AppState.CurrentSolvingMode == VariationTree.SolvingMode.GUESS_MOVE
-                || AppState.ActiveTab == WorkbookManager.TabViewType.BOOKMARKS)
+                || AppState.ActiveTab == TabViewType.BOOKMARKS)
             {
                 return true;
             }

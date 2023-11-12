@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using ChessPosition;
 
 namespace ChessForge
 {
@@ -16,7 +16,7 @@ namespace ChessForge
         private string _chapterGuid;
 
         // Type of the view
-        private WorkbookManager.TabViewType _viewType;
+        private TabViewType _viewType;
 
         // Guid of the article where applicable
         private string _articleGuid;
@@ -57,7 +57,7 @@ namespace ChessForge
         /// <summary>
         /// Type of the view
         /// </summary>
-        public WorkbookManager.TabViewType ViewType
+        public TabViewType ViewType
         {
             get
             {
@@ -71,7 +71,7 @@ namespace ChessForge
         /// <param name="chapterGuid"></param>
         /// <param name="viewType"></param>
         /// <param name="articleGuid"></param>
-        public WorkbookLocation(string chapterGuid, WorkbookManager.TabViewType viewType, string articleGuid, int articleIndex)
+        public WorkbookLocation(string chapterGuid, TabViewType viewType, string articleGuid, int articleIndex)
         {
             _chapterGuid = chapterGuid;
             _viewType = viewType;

@@ -19,22 +19,6 @@ namespace ChessForge
     public class WorkbookManager
     {
         /// <summary>
-        /// Type of the tab control.
-        /// </summary>
-        public enum TabViewType
-        {
-            NONE,
-            INTRO,
-            CHAPTERS,
-            STUDY,
-            BOOKMARKS,
-            MODEL_GAME,
-            EXERCISE,
-            TRAINING,
-            ENGINE_GAME
-        }
-
-        /// <summary>
         /// Types of items that can be manipulated in the GUI
         /// </summary>
         public enum ItemType

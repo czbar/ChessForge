@@ -45,7 +45,7 @@ namespace ChessForge
         private static bool _areExplorersOn;
 
         // last active tab in the Manual Review tab control
-        private static WorkbookManager.TabViewType _lastActiveManualReviewTab = WorkbookManager.TabViewType.NONE;
+        private static TabViewType _lastActiveManualReviewTab = TabViewType.NONE;
 
         /// <summary>
         /// Determines whether the Explorers are on.
@@ -70,7 +70,7 @@ namespace ChessForge
         /// <summary>
         /// The currently Active Tab.
         /// </summary>
-        public static WorkbookManager.TabViewType ActiveTab
+        public static TabViewType ActiveTab
         {
             get => WorkbookManager.ActiveTab;
         }
@@ -105,9 +105,9 @@ namespace ChessForge
         public static bool IsTreeViewTabActive(bool ignoreActiveTree = false)
         {
             return (ActiveVariationTree != null || ignoreActiveTree) &&
-                (ActiveTab == WorkbookManager.TabViewType.STUDY
-                || ActiveTab == WorkbookManager.TabViewType.MODEL_GAME
-                || ActiveTab == WorkbookManager.TabViewType.EXERCISE);
+                (ActiveTab == TabViewType.STUDY
+                || ActiveTab == TabViewType.MODEL_GAME
+                || ActiveTab == TabViewType.EXERCISE);
         }
 
         /// <summary>
@@ -117,10 +117,10 @@ namespace ChessForge
         public static bool IsTabAllowingBoardDraw
         {
             get =>
-                 ActiveTab == WorkbookManager.TabViewType.STUDY
-                || ActiveTab == WorkbookManager.TabViewType.MODEL_GAME
-                || (ActiveTab == WorkbookManager.TabViewType.EXERCISE) // && !AppState.IsUserSolving())
-                || ActiveTab == WorkbookManager.TabViewType.INTRO;
+                 ActiveTab == TabViewType.STUDY
+                || ActiveTab == TabViewType.MODEL_GAME
+                || (ActiveTab == TabViewType.EXERCISE) // && !AppState.IsUserSolving())
+                || ActiveTab == TabViewType.INTRO;
         }
 
         /// <summary>
@@ -129,9 +129,9 @@ namespace ChessForge
         public static bool IsVariationTreeTabType
         {
             get =>
-                 ActiveTab == WorkbookManager.TabViewType.STUDY
-                || ActiveTab == WorkbookManager.TabViewType.MODEL_GAME
-                || ActiveTab == WorkbookManager.TabViewType.EXERCISE;
+                 ActiveTab == TabViewType.STUDY
+                || ActiveTab == TabViewType.MODEL_GAME
+                || ActiveTab == TabViewType.EXERCISE;
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace ChessForge
         /// This value does not include the Training tab which is in a different
         /// tab control.
         /// </summary>
-        public static WorkbookManager.TabViewType LastActiveManualReviewTab
+        public static TabViewType LastActiveManualReviewTab
         {
             get => _lastActiveManualReviewTab;
             set => _lastActiveManualReviewTab = value;
@@ -434,7 +434,7 @@ namespace ChessForge
         /// <param name="tabType"></param>
         /// <param name="lastClickedNodeId"></param>
         /// <param name="isEnabled"></param>
-        public static void EnableTabViewMenuItems(WorkbookManager.TabViewType tabType, int lastClickedNodeId, bool isEnabled)
+        public static void EnableTabViewMenuItems(TabViewType tabType, int lastClickedNodeId, bool isEnabled)
         {
             TreeNode selectedNode = null;
             if (MainWin.ActiveTreeView != null)
@@ -445,13 +445,13 @@ namespace ChessForge
             int activeNode = selectedNode == null ? -1 : selectedNode.NodeId;
             switch (tabType)
             {
-                case WorkbookManager.TabViewType.STUDY:
+                case TabViewType.STUDY:
                     EnableStudyTreeMenuItems(selectedNode == null ? -1 : selectedNode.NodeId, isEnabled);
                     break;
-                case WorkbookManager.TabViewType.MODEL_GAME:
+                case TabViewType.MODEL_GAME:
                     EnableModelGamesMenuItems(selectedNode == null ? -1 : selectedNode.NodeId);
                     break;
-                case WorkbookManager.TabViewType.EXERCISE:
+                case TabViewType.EXERCISE:
                     EnableExercisesMenuItems(activeNode);
                     break;
             }
@@ -646,7 +646,7 @@ namespace ChessForge
         /// <param name="lichessGameId"></param>
         /// <param name="activeTabOnEntry"></param>
         /// <returns></returns>
-        public static bool FinalizeLichessDownload(Chapter chapter, VariationTree tree, string lichessGameId, WorkbookManager.TabViewType activeTabOnEntry)
+        public static bool FinalizeLichessDownload(Chapter chapter, VariationTree tree, string lichessGameId, TabViewType activeTabOnEntry)
         {
             bool added = false;
 
@@ -665,7 +665,7 @@ namespace ChessForge
                 string guid = tree.Header.GetGuid(out _);
 
                 // if the current active tree is Study Tree, add reference
-                if (activeTabOnEntry == WorkbookManager.TabViewType.STUDY)
+                if (activeTabOnEntry == TabViewType.STUDY)
                 {
                     TreeNode nd = chapter.StudyTree.Tree.SelectedNode;
                     if (nd != null)
@@ -827,10 +827,10 @@ namespace ChessForge
         /// <param name="visible"></param>
         public static void ShowExplorers(bool visible, bool anythingToShow)
         {
-            bool validTabActive = ActiveTab == WorkbookManager.TabViewType.STUDY
-                || ActiveTab == WorkbookManager.TabViewType.MODEL_GAME
-                || ActiveTab == WorkbookManager.TabViewType.EXERCISE && (ActiveVariationTree == null || ActiveVariationTree.ShowTreeLines)
-                || ActiveTab == WorkbookManager.TabViewType.INTRO;
+            bool validTabActive = ActiveTab == TabViewType.STUDY
+                || ActiveTab == TabViewType.MODEL_GAME
+                || ActiveTab == TabViewType.EXERCISE && (ActiveVariationTree == null || ActiveVariationTree.ShowTreeLines)
+                || ActiveTab == TabViewType.INTRO;
 
             if (visible && validTabActive && WorkbookManager.SessionWorkbook != null)
             {
@@ -1040,24 +1040,24 @@ namespace ChessForge
         /// Sets the image for the main chessboard matching the current active tab.
         /// </summary>
         /// <param name="tabType"></param>
-        public static void SetChessboardForTab(WorkbookManager.TabViewType tabType)
+        public static void SetChessboardForTab(TabViewType tabType)
         {
             switch (tabType)
             {
-                case WorkbookManager.TabViewType.CHAPTERS:
+                case TabViewType.CHAPTERS:
                     MainWin.UiImgMainChessboard.Source = Configuration.StudyBoardSet.MainBoard;
                     break;
-                case WorkbookManager.TabViewType.STUDY:
+                case TabViewType.STUDY:
                     MainWin.UiImgMainChessboard.Source = Configuration.StudyBoardSet.MainBoard;
                     break;
-                case WorkbookManager.TabViewType.MODEL_GAME:
+                case TabViewType.MODEL_GAME:
                     //bool res = UiTabModelGames.Focus();
                     MainWin.UiImgMainChessboard.Source = Configuration.GameBoardSet.MainBoard;
                     break;
-                case WorkbookManager.TabViewType.EXERCISE:
+                case TabViewType.EXERCISE:
                     MainWin.UiImgMainChessboard.Source = Configuration.ExerciseBoardSet.MainBoard;
                     break;
-                case WorkbookManager.TabViewType.BOOKMARKS:
+                case TabViewType.BOOKMARKS:
                     MainWin.UiImgMainChessboard.Source = Configuration.StudyBoardSet.MainBoard;
                     break;
                 default:
@@ -1336,8 +1336,8 @@ namespace ChessForge
                 //MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
                 SetChessboardForActiveTab();
 
-                if (AppState.ActiveContentType == GameData.ContentType.STUDY_TREE && WorkbookManager.ActiveTab == WorkbookManager.TabViewType.STUDY
-                   || WorkbookManager.ActiveTab == WorkbookManager.TabViewType.MODEL_GAME)
+                if (AppState.ActiveContentType == GameData.ContentType.STUDY_TREE && WorkbookManager.ActiveTab == TabViewType.STUDY
+                   || WorkbookManager.ActiveTab == TabViewType.MODEL_GAME)
                 {
                     _mainWin.UiDgActiveLine.Visibility = Visibility.Visible;
                     _mainWin.UiLblScoresheet.Visibility = Visibility.Visible;
@@ -1511,7 +1511,7 @@ namespace ChessForge
                 _mainWin.UiMnExitTraining.IsEnabled = false;
 
                 bool engGameEnabled = ActiveVariationTree != null
-                    && (ActiveTab == WorkbookManager.TabViewType.STUDY || ActiveTab == WorkbookManager.TabViewType.MODEL_GAME);
+                    && (ActiveTab == TabViewType.STUDY || ActiveTab == TabViewType.MODEL_GAME);
                 _mainWin.UiMnMainPlayEngine.Visibility = Visibility.Visible;
                 _mainWin.UiMnMainPlayEngine.IsEnabled = engGameEnabled;
 
@@ -1601,7 +1601,7 @@ namespace ChessForge
                         _mainWin.UiMnciExitTraining.Visibility = Visibility.Collapsed;
 
                         bool engGameEnabled = ActiveVariationTree != null
-                            && (ActiveTab == WorkbookManager.TabViewType.STUDY || ActiveTab == WorkbookManager.TabViewType.MODEL_GAME);
+                            && (ActiveTab == TabViewType.STUDY || ActiveTab == TabViewType.MODEL_GAME);
                         _mainWin.UiMnMainPlayEngine.Visibility = Visibility.Visible;
                         _mainWin.UiMnMainPlayEngine.IsEnabled = engGameEnabled;
 
@@ -1800,7 +1800,7 @@ namespace ChessForge
             _mainWin.Dispatcher.Invoke(() =>
             {
                 // only applicable to StudyTree
-                if (ActiveContentType == GameData.ContentType.STUDY_TREE && WorkbookManager.ActiveTab == WorkbookManager.TabViewType.STUDY
+                if (ActiveContentType == GameData.ContentType.STUDY_TREE && WorkbookManager.ActiveTab == TabViewType.STUDY
                     && CurrentLearningMode != LearningMode.Mode.ENGINE_GAME)
                 {
                     _mainWin.UiDgActiveLine.Visibility = Visibility.Visible;

@@ -1310,12 +1310,12 @@ namespace ChessForge
             for (int i = 0; i < runsToClear.Count; i++)
             {
                 Run r = runsToClear[i];
-                WorkbookManager.TabViewType runType = GetRunTypeFromName(runsToClear[i].Name);
-                if (runType == WorkbookManager.TabViewType.CHAPTERS)
+                TabViewType runType = GetRunTypeFromName(runsToClear[i].Name);
+                if (runType == TabViewType.CHAPTERS)
                 {
                     ShowSelectionMark(ref r, false, SELECTED_CHAPTER_PREFIX, NON_SELECTED_CHAPTER_PREFIX);
                 }
-                else if (runType == WorkbookManager.TabViewType.MODEL_GAME || runType == WorkbookManager.TabViewType.EXERCISE)
+                else if (runType == TabViewType.MODEL_GAME || runType == TabViewType.EXERCISE)
                 {
                     ShowSelectionMark(ref r, false, SELECTED_ARTICLE_PREFIX, NON_SELECTED_ARTICLE_PREFIX);
                 }
@@ -1353,14 +1353,14 @@ namespace ChessForge
                         run.FontWeight = FontWeights.Normal;
                     }
 
-                    WorkbookManager.TabViewType runType = GetRunTypeFromName(run.Name);
+                    TabViewType runType = GetRunTypeFromName(run.Name);
                     int index = TextUtils.GetIdFromPrefixedString(run.Name);
                     switch (runType)
                     {
-                        case WorkbookManager.TabViewType.CHAPTERS:
+                        case TabViewType.CHAPTERS:
                             chapterRunToSelect = run;
                             break;
-                        case WorkbookManager.TabViewType.MODEL_GAME:
+                        case TabViewType.MODEL_GAME:
                             if (index == chapter.ActiveModelGameIndex)
                             {
                                 gameRunToSelect = run;
@@ -1370,7 +1370,7 @@ namespace ChessForge
                                 gameRunToClear = run;
                             }
                             break;
-                        case WorkbookManager.TabViewType.EXERCISE:
+                        case TabViewType.EXERCISE:
                             if (index == chapter.ActiveExerciseIndex)
                             {
                                 exerciseRunToSelect = run;
@@ -1412,25 +1412,25 @@ namespace ChessForge
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        private WorkbookManager.TabViewType GetRunTypeFromName(string name)
+        private TabViewType GetRunTypeFromName(string name)
         {
-            WorkbookManager.TabViewType typ = WorkbookManager.TabViewType.NONE;
+            TabViewType typ = TabViewType.NONE;
 
             if (string.IsNullOrEmpty(name))
             {
-                return WorkbookManager.TabViewType.NONE;
+                return TabViewType.NONE;
             }
             else if (name.StartsWith(_run_chapter_title_))
             {
-                typ = WorkbookManager.TabViewType.CHAPTERS;
+                typ = TabViewType.CHAPTERS;
             }
             else if (name.StartsWith(_run_model_game_))
             {
-                typ = WorkbookManager.TabViewType.MODEL_GAME;
+                typ = TabViewType.MODEL_GAME;
             }
             else if (name.StartsWith(_run_exercise_))
             {
-                typ = WorkbookManager.TabViewType.EXERCISE;
+                typ = TabViewType.EXERCISE;
             }
 
             return typ;
@@ -1484,14 +1484,14 @@ namespace ChessForge
                 int xOffset = 20;
                 int yOffset = 20;
                 _mainWin.UiVbChaptersFloatingBoard.Margin = new Thickness(pt.X + xOffset, pt.Y + yOffset, 0, 0);
-                _mainWin.ShowChaptersFloatingBoard(true, WorkbookManager.TabViewType.CHAPTERS);
+                _mainWin.ShowChaptersFloatingBoard(true, TabViewType.CHAPTERS);
             }
         }
 
         /// <summary>
         /// Hides the floating chessboard.
         /// </summary>
-        private void HideFloatingBoard(WorkbookManager.TabViewType viewType)
+        private void HideFloatingBoard(TabViewType viewType)
         {
             _mainWin.ShowChaptersFloatingBoard(false, viewType);
         }
@@ -1625,7 +1625,7 @@ namespace ChessForge
                     TreeNode thumb = chapter.StudyTree.Tree.GetThumbnail();
                     if (thumb != null)
                     {
-                        ShowFloatingBoardForNode(e, thumb, WorkbookManager.TabViewType.CHAPTERS);
+                        ShowFloatingBoardForNode(e, thumb, TabViewType.CHAPTERS);
                     }
                 }
             }
@@ -1641,7 +1641,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void EventChapterHeaderLeft(object sender, MouseEventArgs e)
         {
-            HideFloatingBoard(WorkbookManager.TabViewType.CHAPTERS);
+            HideFloatingBoard(TabViewType.CHAPTERS);
         }
 
         /// <summary>
@@ -1806,7 +1806,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void EventStudyTreeHeaderLeft(object sender, MouseEventArgs e)
         {
-            HideFloatingBoard(WorkbookManager.TabViewType.CHAPTERS);
+            HideFloatingBoard(TabViewType.CHAPTERS);
         }
 
         /// <summary>
@@ -1816,7 +1816,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void EventIntroHeaderLeft(object sender, MouseEventArgs e)
         {
-            HideFloatingBoard(WorkbookManager.TabViewType.CHAPTERS);
+            HideFloatingBoard(TabViewType.CHAPTERS);
         }
 
         /// <summary>
@@ -2004,7 +2004,7 @@ namespace ChessForge
                 {
                     node = game.Tree.GetFinalPosition();
                 }
-                ShowFloatingBoardForNode(e, node, WorkbookManager.TabViewType.MODEL_GAME);
+                ShowFloatingBoardForNode(e, node, TabViewType.MODEL_GAME);
             }
             catch
             {
@@ -2018,7 +2018,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void EventModelGameRunLeft(object sender, MouseEventArgs e)
         {
-            HideFloatingBoard(WorkbookManager.TabViewType.MODEL_GAME);
+            HideFloatingBoard(TabViewType.MODEL_GAME);
         }
 
         /// <summary>
@@ -2096,7 +2096,7 @@ namespace ChessForge
                 {
                     node = exer.Tree.Nodes[0];
                 }
-                ShowFloatingBoardForNode(e, node, WorkbookManager.TabViewType.EXERCISE);
+                ShowFloatingBoardForNode(e, node, TabViewType.EXERCISE);
             }
             catch
             {
@@ -2110,7 +2110,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void EventExerciseRunLeft(object sender, MouseEventArgs e)
         {
-            HideFloatingBoard(WorkbookManager.TabViewType.EXERCISE);
+            HideFloatingBoard(TabViewType.EXERCISE);
         }
 
         /// <summary>
@@ -2179,19 +2179,19 @@ namespace ChessForge
         /// <param name="e"></param>
         /// <param name="nd"></param>
         /// <param name="viewType"></param>
-        private void ShowFloatingBoardForNode(MouseEventArgs e, TreeNode nd, WorkbookManager.TabViewType viewType)
+        private void ShowFloatingBoardForNode(MouseEventArgs e, TreeNode nd, TabViewType viewType)
         {
             Point pt = e.GetPosition(_mainWin.UiRtbChaptersView);
             ChessBoardSmall floatingBoard = null;
             switch (viewType)
             {
-                case WorkbookManager.TabViewType.CHAPTERS:
+                case TabViewType.CHAPTERS:
                     floatingBoard = _mainWin.ChaptersFloatingBoard;
                     break;
-                case WorkbookManager.TabViewType.MODEL_GAME:
+                case TabViewType.MODEL_GAME:
                     floatingBoard = _mainWin.ModelGameFloatingBoard;
                     break;
-                case WorkbookManager.TabViewType.EXERCISE:
+                case TabViewType.EXERCISE:
                     floatingBoard = _mainWin.ExerciseFloatingBoard;
                     break;
             }
@@ -2214,13 +2214,13 @@ namespace ChessForge
 
                 switch (viewType)
                 {
-                    case WorkbookManager.TabViewType.CHAPTERS:
+                    case TabViewType.CHAPTERS:
                         _mainWin.UiVbChaptersFloatingBoard.Margin = new Thickness(xCoord, pt.Y + yOffset, 0, 0);
                         break;
-                    case WorkbookManager.TabViewType.MODEL_GAME:
+                    case TabViewType.MODEL_GAME:
                         _mainWin.UiVbModelGameFloatingBoard.Margin = new Thickness(xCoord, pt.Y + yOffset, 0, 0);
                         break;
-                    case WorkbookManager.TabViewType.EXERCISE:
+                    case TabViewType.EXERCISE:
                         _mainWin.UiVbExerciseFloatingBoard.Margin = new Thickness(xCoord, pt.Y + yOffset, 0, 0);
                         break;
                 }

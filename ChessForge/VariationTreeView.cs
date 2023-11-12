@@ -750,19 +750,19 @@ namespace ChessForge
 
             switch (WorkbookManager.ActiveTab)
             {
-                case WorkbookManager.TabViewType.STUDY:
-                    AppState.EnableTabViewMenuItems(WorkbookManager.TabViewType.STUDY, LastClickedNodeId, isEnabled);
+                case TabViewType.STUDY:
+                    AppState.EnableTabViewMenuItems(TabViewType.STUDY, LastClickedNodeId, isEnabled);
                     break;
-                case WorkbookManager.TabViewType.MODEL_GAME:
-                    AppState.EnableTabViewMenuItems(WorkbookManager.TabViewType.MODEL_GAME, LastClickedNodeId, true);
+                case TabViewType.MODEL_GAME:
+                    AppState.EnableTabViewMenuItems(TabViewType.MODEL_GAME, LastClickedNodeId, true);
                     if (!_contextMenuPrimed)
                     {
                         _mainWin.UiCmModelGames.IsOpen = true;
                         _contextMenuPrimed = true;
                     }
                     break;
-                case WorkbookManager.TabViewType.EXERCISE:
-                    AppState.EnableTabViewMenuItems(WorkbookManager.TabViewType.EXERCISE, LastClickedNodeId, true);
+                case TabViewType.EXERCISE:
+                    AppState.EnableTabViewMenuItems(TabViewType.EXERCISE, LastClickedNodeId, true);
                     if (!_contextMenuPrimed)
                     {
                         _mainWin.UiCmExercises.IsOpen = true;

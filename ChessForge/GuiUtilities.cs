@@ -62,7 +62,7 @@ namespace ChessForge
         /// </summary>
         public static void RefreshChaptersView(Chapter chapterToView)
         {
-            if (AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS || AppState.MainWin.UiTabChapters.IsFocused)
+            if (AppState.ActiveTab == TabViewType.CHAPTERS || AppState.MainWin.UiTabChapters.IsFocused)
             {
                 AppState.MainWin.ChaptersView.BuildFlowDocumentForChaptersView();
                 if (chapterToView != null)
@@ -81,7 +81,7 @@ namespace ChessForge
         /// <param name="articleToViewIndex"></param>
         public static void RefreshChaptersView(Chapter chapterToView, Article articleToView, int articleToViewIndex)
         {
-            if (AppState.ActiveTab == WorkbookManager.TabViewType.CHAPTERS || AppState.MainWin.UiTabChapters.IsFocused)
+            if (AppState.ActiveTab == TabViewType.CHAPTERS || AppState.MainWin.UiTabChapters.IsFocused)
             {
                 AppState.MainWin.ChaptersView.BuildFlowDocumentForChaptersView();
                 if (chapterToView != null && articleToView != null)
@@ -98,11 +98,11 @@ namespace ChessForge
         /// otherwise the handler will not be invoked so we have to call it explicitly.
         /// </summary>
         /// <param name="vt"></param>
-        public static void ForceFocus(WorkbookManager.TabViewType vt, WorkbookManager.TabViewType vtDefault = WorkbookManager.TabViewType.NONE)
+        public static void ForceFocus(TabViewType vt, TabViewType vtDefault = TabViewType.NONE)
         {
             switch (vt)
             {
-                case WorkbookManager.TabViewType.CHAPTERS:
+                case TabViewType.CHAPTERS:
                     if (AppState.MainWin.UiTabChapters.IsFocused)
                     {
                         AppState.MainWin.UiTabChapters_GotFocus(null, null);
@@ -112,7 +112,7 @@ namespace ChessForge
                         AppState.MainWin.UiTabChapters.Focus();
                     }
                     break;
-                case WorkbookManager.TabViewType.STUDY:
+                case TabViewType.STUDY:
                     if (AppState.MainWin.UiTabStudyTree.IsFocused)
                     {
                         AppState.MainWin.UiTabStudyTree_GotFocus(null, null);
@@ -122,7 +122,7 @@ namespace ChessForge
                         AppState.MainWin.UiTabStudyTree.Focus();
                     }
                     break;
-                case WorkbookManager.TabViewType.INTRO:
+                case TabViewType.INTRO:
                     if (AppState.MainWin.UiTabIntro.IsFocused)
                     {
                         AppState.MainWin.UiTabIntro_GotFocus(null, null);
@@ -132,7 +132,7 @@ namespace ChessForge
                         AppState.MainWin.UiTabIntro.Focus();
                     }
                     break;
-                case WorkbookManager.TabViewType.MODEL_GAME:
+                case TabViewType.MODEL_GAME:
                     if (AppState.MainWin.UiTabModelGames.IsFocused)
                     {
                         AppState.MainWin.UiTabModelGames_GotFocus(null, null);
@@ -142,7 +142,7 @@ namespace ChessForge
                         AppState.MainWin.UiTabModelGames.Focus();
                     }
                     break;
-                case WorkbookManager.TabViewType.EXERCISE:
+                case TabViewType.EXERCISE:
                     if (AppState.MainWin.UiTabExercises.IsFocused)
                     {
                         AppState.MainWin.UiTabExercises_GotFocus(null, null);
