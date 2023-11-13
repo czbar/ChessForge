@@ -1646,7 +1646,7 @@ namespace ChessForge
                 if (!article.IsReady)
                 {
                     AppState.ActiveChapter.StudyTree = WorkbookManager.SessionWorkbook.GamesManager.ProcessArticleSync(article);
-                    studyTree = article.Tree;
+                    studyTree = AppState.ActiveChapter.StudyTree.Tree;
                 }
                 else
                 {
