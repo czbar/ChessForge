@@ -36,7 +36,11 @@ Description:Teoria i praktyka debiutów szachowych.
 	  Book:Gambit Morry (jęz. ang.)
       Description: Popularny oręż przeciwko Obronie Sycylijskiej.
       File: Openings/White/Smith Morra Gambit.pgn
-      
+          
+	  Book:Gambit Evansa (jęz. ang.)
+      Description: Zwięzłe opracowanie jednego z najsłynnniejszych, klasycznych gambitów.
+      File: Openings/White/Evans Gambit Starter Kit.pgn
+	
 	Shelf:Repertuar dla Czarnych
     Description: Debiuty analizowane z punktu widzenia czarnych.
         

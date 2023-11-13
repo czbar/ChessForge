@@ -36,6 +36,10 @@ Description:Workbooks examining theory and practice of various Openings.
 	  Book:Smith-Morra Gambit
       Description: A popular anti-Sicilian weapon.
       File: Openings/White/Smith Morra Gambit.pgn
+          
+	  Book:Evans Gambit
+      Description: A concise presentation of one of the most famous, classical gambits.
+      File: Openings/White/Evans Gambit Starter Kit.pgn
       
 	Shelf:Black repertoire
     Description: Openings analyzed from the Black player's point of view.
