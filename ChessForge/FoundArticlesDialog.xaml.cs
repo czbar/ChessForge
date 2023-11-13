@@ -689,6 +689,47 @@ namespace ChessForge
             DialogResult = false;
         }
 
+
+        /// <summary>
+        /// Handle key down so we can scroll with the keyboard
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+
+            if ((Keyboard.Modifiers & ModifierKeys.Control) > 0)
+            {
+                try
+                {
+                    switch (e.Key)
+                    {
+                        case Key.Home:
+                            UiRtbIdenticalPositions.ScrollToHome();
+                            e.Handled = true;
+                            break;
+                        case Key.End:
+                            UiRtbIdenticalPositions.ScrollToEnd();
+                            e.Handled = true;
+                            break;
+                    }
+                }
+                catch
+                {
+                }
+            }
+            else if (e.Key == Key.PageUp)
+            {
+                UiRtbIdenticalPositions.PageUp();
+                e.Handled = true;
+            }
+            else if (e.Key == Key.PageDown)
+            {
+                UiRtbIdenticalPositions.PageDown();
+                e.Handled = true;
+            }
+        }
+
         /// <summary>
         /// Open browser to the Help web page.
         /// </summary>

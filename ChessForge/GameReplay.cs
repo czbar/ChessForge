@@ -41,7 +41,7 @@ namespace ChessForge
         private VariationTree _activeVariationTree;
 
         // active type where the replay occurs
-        private WorkbookManager.TabViewType _viewType;
+        private TabViewType _viewType;
 
         /// <summary>
         /// The variation being currently animated.

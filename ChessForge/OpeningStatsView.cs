@@ -596,10 +596,10 @@ namespace ChessForge
             try
             {
                 Run rMove = e.Source as Run;
-                WorkbookManager.TabViewType tab = AppState.ActiveTab;
-                if (tab == WorkbookManager.TabViewType.STUDY
-                    || tab == WorkbookManager.TabViewType.MODEL_GAME
-                    || tab == WorkbookManager.TabViewType.EXERCISE)
+                TabViewType tab = AppState.ActiveTab;
+                if (tab == TabViewType.STUDY
+                    || tab == TabViewType.MODEL_GAME
+                    || tab == TabViewType.EXERCISE)
                 {
                     string moveEngCode = GetMoveCodeFromCellName(rMove.Name);
                     MoveUtils.EngineNotationToCoords(moveEngCode, out _, out SquareCoords destSquare, out PieceType promoteTo);
@@ -635,7 +635,7 @@ namespace ChessForge
         /// <returns></returns>
         private string BuildMoveNumberString(TreeNode nd)
         {
-            if (AppState.ActiveTab == WorkbookManager.TabViewType.INTRO)
+            if (AppState.ActiveTab == TabViewType.INTRO)
             {
                 return nd.ColorToMove == ChessPosition.PieceColor.Black ? "#..." : "#.";
             }

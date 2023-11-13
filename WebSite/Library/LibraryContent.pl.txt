@@ -36,7 +36,11 @@ Description:Teoria i praktyka debiutów szachowych.
 	  Book:Gambit Morry (jęz. ang.)
       Description: Popularny oręż przeciwko Obronie Sycylijskiej.
       File: Openings/White/Smith Morra Gambit.pgn
-      
+          
+	  Book:Gambit Evansa (jęz. ang.)
+      Description: Zwięzłe opracowanie jednego z najsłynnniejszych, klasycznych gambitów.
+      File: Openings/White/Evans Gambit Starter Kit.pgn
+	
 	Shelf:Repertuar dla Czarnych
     Description: Debiuty analizowane z punktu widzenia czarnych.
         
@@ -55,6 +59,14 @@ Description:Teoria i praktyka debiutów szachowych.
       Book:Obrona Ragozina (jęz. ang.)
       Description: Solidne element repertuaru czarnych przeciwko 1.d4.
       File: Openings/Black/Ragozin for Black.pgn
+
+	Shelf:Nietypowe Otwarcia 
+    Description: Krótkie podręczniki dla rzadkich i nietypowych debiutów. 
+    
+	  Book:The Gambit Słonia
+      Description: Nie spotykany już w praktyce mistrzowskiej, ale każdy kto gra 1.e4 musi gi znać.
+      File: Openings/Unorthodox/Elephant Gambit.pgn
+
 
 
 Bookcase: Końcówki i Ćwiczenia

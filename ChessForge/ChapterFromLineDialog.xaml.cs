@@ -84,5 +84,18 @@ namespace ChessForge
         {
             Close();
         }
+
+        /// <summary>
+        /// Check if the user pressed key combination to enter a figurine.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTbChapterTitle_PreviewKeyDown_1(object sender, KeyEventArgs e)
+        {
+            if (GuiUtilities.InsertFigurine(UiTbChapterTitle, sender, e))
+            {
+                e.Handled = true;
+            }
+        }
     }
 }

@@ -354,6 +354,10 @@ namespace ChessForge
                         AppState.BackgroundReadFinished();
                         ReportErrors();
                         AppState.MainWin.BoardCommentBox.ShowTabHints();
+                        if (AppState.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW)
+                        {
+                            AppState.ConfigureMenusForManualReview();
+                        }
                     }
                 }
                 catch (Exception ex)

@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
+using System.Windows.Input;
 
 namespace ChessForge
 {
@@ -117,6 +118,7 @@ namespace ChessForge
                 }
                 else
                 {
+                    Mouse.SetCursor(Cursors.Wait);
                     ObservableCollection<ArticleListItem> lstGames = FindGamesByCrits(crits);
                     if (lstGames.Count == 0)
                     {
@@ -150,6 +152,7 @@ namespace ChessForge
                             }
                         }
                     }
+                    Mouse.SetCursor(Cursors.Arrow);
                 }
             }
         }

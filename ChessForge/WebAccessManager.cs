@@ -102,27 +102,30 @@ namespace ChessForge
         /// <returns></returns>
         public static bool RequestWebAccess(int treeId, TreeNode nd, bool force = false)
         {
-            lock (_lockWebUpdate)
+            if (nd != null)
             {
-                if (force || nd != WebAccessState.ReadyNode)
+                lock (_lockWebUpdate)
                 {
-                    AppLog.Message(2, "Requesting Web Access for:" + nd.LastMoveAlgebraicNotation);
-
-                    if (WebAccessState.ReadyNode != null)
+                    if (force || nd != WebAccessState.ReadyNode)
                     {
-                        AppLog.Message(2, "Cancelling Web Access for:" + WebAccessState.ReadyNode.LastMoveAlgebraicNotation);
-                    }
+                        AppLog.Message(2, "Requesting Web Access for:" + nd.LastMoveAlgebraicNotation);
 
-                    WebAccessState.QueuedNode = nd;
-                    WebAccessState.QueuedNodeTreeId = treeId;
-                    WebAccessState.HasQueuedRequest = true;
+                        if (WebAccessState.ReadyNode != null)
+                        {
+                            AppLog.Message(2, "Cancelling Web Access for:" + WebAccessState.ReadyNode.LastMoveAlgebraicNotation);
+                        }
 
-                    if (WebAccessState.IsMandatoryDelayOn)
-                    {
-                        // reset the "mandatory delay" counter.
-                        // this is to prevent processing of requests when too many come in a short
-                        // period of time e.g. when the user keep the right arrow depressed.
-                        _webAccessCounter = 0;
+                        WebAccessState.QueuedNode = nd;
+                        WebAccessState.QueuedNodeTreeId = treeId;
+                        WebAccessState.HasQueuedRequest = true;
+
+                        if (WebAccessState.IsMandatoryDelayOn)
+                        {
+                            // reset the "mandatory delay" counter.
+                            // this is to prevent processing of requests when too many come in a short
+                            // period of time e.g. when the user keep the right arrow depressed.
+                            _webAccessCounter = 0;
+                        }
                     }
                 }
             }

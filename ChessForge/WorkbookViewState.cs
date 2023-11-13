@@ -32,7 +32,7 @@ namespace ChessForge
         public int ActiveChapterIndex = -1;
 
         // type of UI Tab that is open
-        public WorkbookManager.TabViewType ActiveViewType;
+        public TabViewType ActiveViewType;
 
         /// Constructor.
         /// </summary>

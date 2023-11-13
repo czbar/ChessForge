@@ -241,19 +241,19 @@ namespace ChessForge
                         string commentText = "";
                         switch (AppState.ActiveTab)
                         {
-                            case WorkbookManager.TabViewType.CHAPTERS:
+                            case TabViewType.CHAPTERS:
                                 commentText = Strings.QuickInstructionForChapters;
                                 break;
-                            case WorkbookManager.TabViewType.INTRO:
+                            case TabViewType.INTRO:
                                 commentText = Strings.QuickInstructionForIntro;
                                 break;
-                            case WorkbookManager.TabViewType.STUDY:
+                            case TabViewType.STUDY:
                                 commentText = Strings.QuickInstructionForStudy;
                                 break;
-                            case WorkbookManager.TabViewType.BOOKMARKS:
+                            case TabViewType.BOOKMARKS:
                                 commentText = Strings.QuickInstructionForBookmarks;
                                 break;
-                            case WorkbookManager.TabViewType.MODEL_GAME:
+                            case TabViewType.MODEL_GAME:
                                 if (AppState.ActiveChapterGamesCount > 0)
                                 {
                                     commentText = Strings.QuickInstructionForGames;
@@ -263,7 +263,7 @@ namespace ChessForge
                                     commentText = Strings.QuickInstructionForGamesEmpty;
                                 }
                                 break;
-                            case WorkbookManager.TabViewType.EXERCISE:
+                            case TabViewType.EXERCISE:
                                 if (AppState.ActiveChapterExerciseCount == 0)
                                 {
                                     commentText = Strings.QuickInstructionForExercisesEmpty;

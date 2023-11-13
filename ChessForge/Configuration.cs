@@ -339,6 +339,13 @@ namespace ChessForge
         /// </summary>
         public static int DebugLevel = 1;
 
+        /// <summary>
+        /// Version of the GUI being used.  
+        /// 0 is default,
+        /// 1 is new. unstable version
+        /// </summary>
+        public static int GuiVersion = 0;
+
         // depth of the auto-generated tree
         private static uint _autogenTreeDepth = 12;
 
@@ -444,7 +451,11 @@ namespace ChessForge
         // name of the file in which this configuration is stored.
         public static string ConfigurationFile = "config.txt";
 
+        // debug level
         private const string CFG_DEBUG_MODE = "DebugMode";
+
+        // gui version to use
+        private const string CFG_GUI_VERSION = "GuiVersion";
 
         // position of the main application window
         public static Thickness MainWinPos = new Thickness();
@@ -555,6 +566,7 @@ namespace ChessForge
                 string fileName = Path.Combine(StartDirectory, ConfigurationFile);
 
                 sb.Append(CFG_DEBUG_MODE + "=" + DebugLevel.ToString() + Environment.NewLine);
+                sb.Append(CFG_GUI_VERSION + "=" + GuiVersion.ToString() + Environment.NewLine);
 
                 sb.Append(CFG_AUTOGEN_TREE_DEPTH + "=" + AutogenTreeDepth.ToString() + Environment.NewLine);
                 sb.Append(CFG_MOVE_SPEED + "=" + MoveSpeed.ToString() + Environment.NewLine);
@@ -848,6 +860,9 @@ namespace ChessForge
                             break;
                         case CFG_DEBUG_MODE:
                             int.TryParse(value, out DebugLevel);
+                            break;
+                        case CFG_GUI_VERSION:
+                            int.TryParse(value, out GuiVersion);
                             break;
                         case CFG_LAST_DIRECTORY:
                             LastOpenDirectory = value;

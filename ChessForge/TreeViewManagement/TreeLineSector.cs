@@ -9,13 +9,16 @@ namespace ChessForge
     /// A list of nodes forming a single path from one node to another
     /// without any branches included.
     /// </summary>
-    public class VariationSingleLine
+    public class TreeLineSector
     {
         // the list of nodes forming a single linear path.
         private List<TreeNode> _nodes = new List<TreeNode>();
 
         // whether the line has any forks
         private bool _hasForks;
+
+        // level at which to display the sector
+        private int _displayLevel;
 
         /// <summary>
         /// The list of nodes in this line.
@@ -35,6 +38,15 @@ namespace ChessForge
         {
             get => _hasForks;
             set => _hasForks = value;
+        }
+
+        /// <summary>
+        /// Level at which to display the sector
+        /// </summary>
+        public int DisplayLevel
+        {
+            get => _displayLevel;
+            set => _displayLevel = value;
         }
     }
 }

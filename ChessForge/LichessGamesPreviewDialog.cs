@@ -1,4 +1,5 @@
 ﻿using GameTree;
+using ChessPosition;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using WebAccess;
-using static ChessForge.WorkbookOperation;
 
 namespace ChessForge
 {
@@ -40,7 +40,7 @@ namespace ChessForge
         /// <summary>
         /// The tab that should be made active by the caller.
         /// </summary>
-        public WorkbookManager.TabViewType ActiveTabOnExit
+        public TabViewType ActiveTabOnExit
         {
             get { return _activeTabOnExit; }
         }
@@ -49,17 +49,17 @@ namespace ChessForge
         private TopGamesView _topGamesView;
 
         // active tab when entering the dialog
-        private WorkbookManager.TabViewType _activeTabOnEntry;
+        private TabViewType _activeTabOnEntry;
 
         // active tab when exiting the dialog
-        private WorkbookManager.TabViewType _activeTabOnExit;
+        private TabViewType _activeTabOnExit;
 
         /// <summary>
         /// Initializes the dialog.
         /// </summary>
         /// <param name="lichessGameId"></param>
         /// <param name="gameIdList"></param>
-        public LichessGamesPreviewDialog(string lichessGameId, List<string> gameIdList, WorkbookManager.TabViewType activeTab)
+        public LichessGamesPreviewDialog(string lichessGameId, List<string> gameIdList, TabViewType activeTab)
             : base(lichessGameId, gameIdList)
         {
             GameDownload.GameReceived += GameReceived;
@@ -177,7 +177,7 @@ namespace ChessForge
                     _importedGameIds.Add(_currentGameId);
 
                     AppState.FinalizeLichessDownload(chapter, _tree, _currentGameId, _activeTabOnEntry);
-                    _activeTabOnExit = WorkbookManager.TabViewType.MODEL_GAME;
+                    //_activeTabOnExit = TabViewType.MODEL_GAME;
                 }
             }
         }

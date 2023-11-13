@@ -76,6 +76,22 @@ namespace ChessPosition
     };
 
     /// <summary>
+    /// Type of the tab control.
+    /// </summary>
+    public enum TabViewType
+    {
+        NONE,
+        INTRO,
+        CHAPTERS,
+        STUDY,
+        BOOKMARKS,
+        MODEL_GAME,
+        EXERCISE,
+        TRAINING,
+        ENGINE_GAME
+    }
+
+    /// <summary>
     /// Sizes in which the TabControls may be displayed.
     /// </summary>
     public enum TabControlSizeMode

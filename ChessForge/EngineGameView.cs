@@ -419,7 +419,7 @@ namespace ChessForge
             }
             catch (Exception ex)
             {
-                AppLog.Message("AddRunToParagraph()", ex);
+                AppLog.Message("AddRunToParagraph() " + (run == null ? "null" : (run.Name ?? "")) , ex);
             }
 
             return run;

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using ChessPosition;
 using System.Windows;
 
 namespace ChessForge
@@ -20,9 +20,9 @@ namespace ChessForge
             AppState.MainWin.UiBtnFontSizeVariable.Visibility = (AppState.IsTreeViewTabActive(true) && AppState.ActiveVariationTree != null) 
                                                             ? Visibility.Visible : Visibility.Hidden;
 
-            AppState.MainWin.UiBtnFontSizeUp.Visibility = (AppState.IsTreeViewTabActive(true) && AppState.ActiveVariationTree != null || AppState.ActiveTab == WorkbookManager.TabViewType.INTRO) 
+            AppState.MainWin.UiBtnFontSizeUp.Visibility = (AppState.IsTreeViewTabActive(true) && AppState.ActiveVariationTree != null || AppState.ActiveTab == TabViewType.INTRO) 
                                                             ? Visibility.Visible : Visibility.Hidden;
-            AppState.MainWin.UiBtnFontSizeDown.Visibility = (AppState.IsTreeViewTabActive(true) && AppState.ActiveVariationTree != null || AppState.ActiveTab == WorkbookManager.TabViewType.INTRO) 
+            AppState.MainWin.UiBtnFontSizeDown.Visibility = (AppState.IsTreeViewTabActive(true) && AppState.ActiveVariationTree != null || AppState.ActiveTab == TabViewType.INTRO) 
                                                             ? Visibility.Visible : Visibility.Hidden;
         }
     }

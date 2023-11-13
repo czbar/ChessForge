@@ -394,20 +394,10 @@ namespace GameTree
         public List<Bookmark> Bookmarks = new List<Bookmark>();
 
         /// <summary>
-        /// The complete Workbook flattened into individual lines.
-        /// Unlike in the Nodes list, the same moves may be included here multiple
-        /// times as they may appear in multiple lines.  Essentially, all moves  
-        /// that appear anywhere in the tree before a fork (a node with multiple children)
-        /// will be included more than ones.
-        /// </summary>
-        private ObservableCollection<VariationLine> VariationLines = new ObservableCollection<VariationLine>();
-
-        /// <summary>
         /// Creates a new Tree with the root node at the starting position. 
         /// </summary>
         public void CreateNew()
         {
-            VariationLines.Clear();
             Nodes.Clear();
 
             TreeNode root = new TreeNode(null, "", 0);
@@ -422,7 +412,6 @@ namespace GameTree
         /// <param name="nodes"></param>
         public void CreateNew(List<TreeNode> nodes)
         {
-            VariationLines.Clear();
             Nodes = nodes;
             CalculateMaxNodeId();
             BuildLines();
@@ -434,7 +423,6 @@ namespace GameTree
         /// <param name="position"></param>
         public void CreateNew(BoardPosition position)
         {
-            VariationLines.Clear();
             Nodes.Clear();
 
             TreeNode root = new TreeNode(null, "", 0);
@@ -452,7 +440,6 @@ namespace GameTree
         /// </summary>
         public void BuildLines()
         {
-            VariationLines.Clear();
             TreeNode root = Nodes[0];
             root.LineId = "1";
             BuildLine(root);
@@ -1400,12 +1387,6 @@ namespace GameTree
         {
             if (nd.Children.Count == 0)
             {
-                // this is the end of the line
-                // so create a line and add to the
-                // list of lines
-                List<VariationLine> vls = VariationLine.BuildVariationLine(nd);
-                VariationLines.Add(vls[0]);
-                VariationLines.Add(vls[1]);
                 return;
             }
 

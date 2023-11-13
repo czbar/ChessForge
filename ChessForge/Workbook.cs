@@ -601,13 +601,13 @@ namespace ChessForge
 
                 switch (WorkbookManager.ActiveTab)
                 {
-                    case WorkbookManager.TabViewType.STUDY:
+                    case TabViewType.STUDY:
                         contentType = GameData.ContentType.STUDY_TREE;
                         break;
-                    case WorkbookManager.TabViewType.MODEL_GAME:
+                    case TabViewType.MODEL_GAME:
                         contentType = GameData.ContentType.MODEL_GAME;
                         break;
-                    case WorkbookManager.TabViewType.EXERCISE:
+                    case TabViewType.EXERCISE:
                         contentType = GameData.ContentType.EXERCISE;
                         break;
                     default:

@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
         ShowInTaskbar="True"
-        Title="{x:Static p:Resources.DlgSearchResults}"  Height="550" Width="800">
+        Title="{x:Static p:Resources.DlgSearchResults}"  Height="550" Width="800" PreviewKeyDown="Window_PreviewKeyDown">
     <Grid>
         <RichTextBox x:Name="UiRtbIdenticalPositions" IsReadOnly="True" Cursor="Arrow"  
                      PreviewMouseMove="UiRtbIdenticalPositions_PreviewMouseMove" Margin="10,10,10,50" VerticalScrollBarVisibility="Auto">
