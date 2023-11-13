@@ -38,10 +38,10 @@ namespace ChessForge
     /// branchless branches e.g. "15.e4 e5 (15...Nf6 16.Nf3; 15...f6 16.Bc2) 16.Qe4"
     /// Therefor, it represents one or more VariationSingleLine objects.
     /// </summary>
-    public class VariationDisplayLine
+    public class TreeViewDisplayLine
     {
         // single lines represented by this object
-        private List<VariationLineSector> _lines;
+        private List<TreeLineSector> _lines;
 
         // how the line is currently shown in the view
         private DisplayLineVisibility _visibility;
@@ -50,13 +50,13 @@ namespace ChessForge
         private int _level;
 
         // list of display objects
-        private List<VariationDisplayRun> _runList;
+        private List<TreeViewDisplayRun> _runList;
 
         /// <summary>
         /// List of display objects to show in a single paragrapph.
         /// They could represent one or more VariationSingleLine objects.
         /// </summary>
-        public List<VariationDisplayRun> RunList
+        public List<TreeViewDisplayRun> RunList
         {
             get => _runList;
             set => _runList = value;

@@ -9,7 +9,7 @@ namespace ChessForge
     /// A list of nodes forming a single path from one node to another
     /// without any branches included.
     /// </summary>
-    public class VariationLineSector
+    public class TreeLineSector
     {
         // the list of nodes forming a single linear path.
         private List<TreeNode> _nodes = new List<TreeNode>();

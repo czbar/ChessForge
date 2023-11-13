@@ -11,7 +11,7 @@ namespace ChessForge
     /// <summary>
     /// Combines a Run shown in the Variation view with associated objects.
     /// </summary>
-    public class VariationDisplayRun
+    public class TreeViewDisplayRun
     {
         // the Run to show
         Run _run;
