@@ -281,19 +281,11 @@ namespace ChessForge
             dlg.ShowDialog();
 
             WorkbookManager.ActiveTab = TabViewType.NONE;
+            if (dlg.GoToGamesOnExit)
+            {
+                activeTab = TabViewType.MODEL_GAME;
+            }
             GuiUtilities.ForceFocus(activeTab);
-            //switch (activeTab)
-            //{
-            //    case WorkbookManager.TabViewType.STUDY:
-            //        AppState.MainWin.UiTabStudyTree.Focus();
-            //        break;
-            //    case WorkbookManager.TabViewType.MODEL_GAME:
-            //        AppState.MainWin.UiTabModelGames.Focus();
-            //        break;
-            //    case WorkbookManager.TabViewType.EXERCISE:
-            //        AppState.MainWin.UiTabExercises.Focus();
-            //        break;
-            //}
         }
 
         /// <summary>

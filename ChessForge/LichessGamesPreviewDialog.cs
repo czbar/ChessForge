@@ -60,7 +60,7 @@ namespace ChessForge
         /// <param name="lichessGameId"></param>
         /// <param name="gameIdList"></param>
         public LichessGamesPreviewDialog(string lichessGameId, List<string> gameIdList, TabViewType activeTab)
-            : base(lichessGameId, gameIdList)
+            : base(lichessGameId, gameIdList, true)
         {
             GameDownload.GameReceived += GameReceived;
             _activeTabOnEntry = activeTab;
