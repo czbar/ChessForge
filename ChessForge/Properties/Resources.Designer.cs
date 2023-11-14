@@ -4509,6 +4509,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Return.
+        /// </summary>
+        public static string Return {
+            get {
+                return ResourceManager.GetString("Return", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Round.
         /// </summary>
         public static string Round {
@@ -5810,6 +5819,15 @@ namespace ChessForge.Properties {
         public static string ViewExercise {
             get {
                 return ResourceManager.GetString("ViewExercise", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go to Games.
+        /// </summary>
+        public static string ViewImportedGames {
+            get {
+                return ResourceManager.GetString("ViewImportedGames", resourceCulture);
             }
         }
         

@@ -258,6 +258,9 @@
   <data name="Exit" xml:space="preserve">
     <value>Wyjście</value>
   </data>
+  <data name="Return" xml:space="preserve">
+    <value>Powrót</value>
+  </data>
   <data name="Close" xml:space="preserve">
     <value>Zamknij</value>
   </data>
@@ -1154,6 +1157,9 @@
   </data>
   <data name="UseFigurines" xml:space="preserve">
     <value>Używaj figurek</value>
+  </data>
+  <data name="ViewImportedGames" xml:space="preserve">
+    <value>Przejdź do Partii</value>
   </data>
   <data name="FileError" xml:space="preserve">
     <value>Błąd w Pliku</value>
