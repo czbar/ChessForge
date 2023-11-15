@@ -564,7 +564,7 @@
                             </Grid>
                             <RichTextBox x:Name="UiRtbStudyTreeView"  ContextMenu="{x:Null}" IsUndoEnabled="False"  Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                                   Height="620" MinHeight="500" IsReadOnly="True" PreviewKeyDown="UiRtbStudyTree_PreviewKeyDown">
+                                   Height="600" MinHeight="500" IsReadOnly="True" PreviewKeyDown="UiRtbStudyTree_PreviewKeyDown">
                                 <RichTextBox.Resources>
                                     <Style TargetType="{x:Type Paragraph}">
                                         <Setter Property="Margin" Value="0" />
@@ -576,6 +576,23 @@
                                 <FlowDocument>
                                 </FlowDocument>
                             </RichTextBox>
+                            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" Height="48" Margin="0,588,0,0" VerticalAlignment="Top">
+                                <Button x:Name="UiBtnStPencil" Background="Transparent" Margin="0,0,0,0" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnPencil_Click"  />
+                                <Button x:Name="UiBtnStEvalWin" Background="Transparent" Margin="30,0,0,0" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalWin_Click" />
+                                <Button x:Name="UiBtnStEvalPlusMinus" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalPlusMinus_Click" />
+                                <Button x:Name="UiBtnStEvalPlusEqual" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalPlusEqual_Click" />
+                                <Button x:Name="UiBtnStEvalEqual" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalEqual_Click" />
+                                <Button x:Name="UiBtnStEvalUnclear" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalUnclear_Click" />
+                                <Button x:Name="UiBtnStEvalEqualPlus" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalEqualPlus_Click" />
+                                <Button x:Name="UiBtnStEvalMinusPlus" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalMinusPlus_Click" />
+                                <Button x:Name="UiBtnStEvalLoss" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalLoss_Click" />
+                                <Button x:Name="UiBtnStEvalExclamExclam" Background="Transparent" Margin="30,0,0,0" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalExclamExclam_Click" />
+                                <Button x:Name="UiBtnStEvalExclam" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalExclam_Click" />
+                                <Button x:Name="UiBtnStEvalExclamQuest" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalExclamQuest_Click" />
+                                <Button x:Name="UiBtnStEvalQuestExclam" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalQuestExclam_Click" />
+                                <Button x:Name="UiBtnStEvalQuest" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalQuest_Click" />
+                                <Button x:Name="UiBtnStEvalQuestQuest" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalQuestQuest_Click" />
+                            </StackPanel>
                         </Grid>
                     </TabItem>
                     <TabItem x:Name="UiTabModelGames"  Header="{x:Static p:Resources.Games}" GotFocus="UiTabModelGames_GotFocus" PreviewKeyDown="UiTabModelGames_PreviewKeyDown" LostFocus="UiTabModelGames_LostFocus" >
@@ -650,7 +667,7 @@
                             </Grid>
                             <RichTextBox x:Name="UiRtbModelGamesView"  ContextMenu="{x:Null}" IsUndoEnabled="False" Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                                   Height="620" MinHeight="500" IsReadOnly="True" >
+                                   Height="600" MinHeight="500" IsReadOnly="True" >
                                 <RichTextBox.Resources>
                                     <Style TargetType="{x:Type Paragraph}">
                                         <Setter Property="Margin" Value="0" />
@@ -659,6 +676,23 @@
                                 <FlowDocument>
                                 </FlowDocument>
                             </RichTextBox>
+                            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" Height="48" Margin="0,588,0,0" VerticalAlignment="Top">
+                                <Button x:Name="UiBtnGmPencil" Background="Transparent" Margin="0,0,0,0" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnPencil_Click"  />
+                                <Button x:Name="UiBtnGmEvalWin" Background="Transparent" Margin="30,0,0,0" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalWin_Click" />
+                                <Button x:Name="UiBtnGmEvalPlusMinus" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalPlusMinus_Click" />
+                                <Button x:Name="UiBtnGmEvalPlusEqual" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalPlusEqual_Click" />
+                                <Button x:Name="UiBtnGmEvalEqual" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalEqual_Click" />
+                                <Button x:Name="UiBtnGmEvalUnclear" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalUnclear_Click" />
+                                <Button x:Name="UiBtnGmEvalEqualPlus" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalEqualPlus_Click" />
+                                <Button x:Name="UiBtnGmEvalMinusPlus" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalMinusPlus_Click" />
+                                <Button x:Name="UiBtnGmEvalLoss" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalLoss_Click" />
+                                <Button x:Name="UiBtnGmEvalExclamExclam" Background="Transparent" Margin="30,0,0,0" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalExclamExclam_Click" />
+                                <Button x:Name="UiBtnGmEvalExclam" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalExclam_Click" />
+                                <Button x:Name="UiBtnGmEvalExclamQuest" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalExclamQuest_Click" />
+                                <Button x:Name="UiBtnGmEvalQuestExclam" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalQuestExclam_Click" />
+                                <Button x:Name="UiBtnGmEvalQuest" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalQuest_Click" />
+                                <Button x:Name="UiBtnGmEvalQuestQuest" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalQuestQuest_Click" />
+                            </StackPanel>
                         </Grid>
                     </TabItem>
                     <TabItem x:Name="UiTabExercises"  Header="{x:Static p:Resources.Exercises}"  ContextMenu="{x:Null}" GotFocus="UiTabExercises_GotFocus" PreviewKeyDown="UiTabExercises_PreviewKeyDown" LostFocus="UiTabExercises_LostFocus" >
@@ -735,7 +769,7 @@
                             </Grid>
                             <RichTextBox x:Name="UiRtbExercisesView" IsUndoEnabled="False" Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
                                  SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                                   Height="620" MinHeight="500" IsReadOnly="True"  BorderThickness="0">
+                                   Height="600" MinHeight="500" IsReadOnly="True"  BorderThickness="0">
                                 <RichTextBox.Resources>
                                     <Style TargetType="{x:Type Paragraph}">
                                         <Setter Property="Margin" Value="0" />
@@ -744,6 +778,23 @@
                                 <FlowDocument>
                                 </FlowDocument>
                             </RichTextBox>
+                            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" Height="48" Margin="0,588,0,0" VerticalAlignment="Top">
+                                <Button x:Name="UiBtnExPencil" Background="Transparent" Margin="0,0,0,0" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnPencil_Click"  />
+                                <Button x:Name="UiBtnExEvalWin" Background="Transparent" Margin="30,0,0,0" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalWin_Click" />
+                                <Button x:Name="UiBtnExEvalPlusMinus" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalPlusMinus_Click" />
+                                <Button x:Name="UiBtnExEvalPlusEqual" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalPlusEqual_Click" />
+                                <Button x:Name="UiBtnExEvalEqual" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalEqual_Click" />
+                                <Button x:Name="UiBtnExEvalUnclear" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalUnclear_Click" />
+                                <Button x:Name="UiBtnExEvalEqualPlus" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalEqualPlus_Click" />
+                                <Button x:Name="UiBtnExEvalMinusPlus" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalMinusPlus_Click" />
+                                <Button x:Name="UiBtnExEvalLoss" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalLoss_Click" />
+                                <Button x:Name="UiBtnExEvalExclamExclam" Background="Transparent" Margin="30,0,0,0" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalExclamExclam_Click" />
+                                <Button x:Name="UiBtnExEvalExclam" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalExclam_Click" />
+                                <Button x:Name="UiBtnExEvalExclamQuest" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalExclamQuest_Click" />
+                                <Button x:Name="UiBtnExEvalQuestExclam" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalQuestExclam_Click" />
+                                <Button x:Name="UiBtnExEvalQuest" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalQuest_Click" />
+                                <Button x:Name="UiBtnExEvalQuestQuest" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalQuestQuest_Click" />
+                            </StackPanel>
                         </Grid>
                     </TabItem>
                     <TabItem x:Name="UiTabBookmarks" Header="{x:Static p:Resources.Bookmarks}"  ContextMenu="{x:Null}" GotFocus="UiTabBookmarks_GotFocus" >

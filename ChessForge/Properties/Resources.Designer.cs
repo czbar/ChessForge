@@ -1637,6 +1637,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit Annotations.
+        /// </summary>
+        public static string EditAnnotations {
+            get {
+                return ResourceManager.GetString("EditAnnotations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit Diagram.
         /// </summary>
         public static string EditDiagram {
@@ -5247,6 +5256,51 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Black has an advantage.
+        /// </summary>
+        public static string TooltipBlackAdvantage {
+            get {
+                return ResourceManager.GetString("TooltipBlackAdvantage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Black has an edge.
+        /// </summary>
+        public static string TooltipBlackEdge {
+            get {
+                return ResourceManager.GetString("TooltipBlackEdge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Black is winning.
+        /// </summary>
+        public static string TooltipBlackWinning {
+            get {
+                return ResourceManager.GetString("TooltipBlackWinning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Blunder.
+        /// </summary>
+        public static string TooltipBlunder {
+            get {
+                return ResourceManager.GetString("TooltipBlunder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dubious move.
+        /// </summary>
+        public static string TooltipDubiousMove {
+            get {
+                return ResourceManager.GetString("TooltipDubiousMove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Assessed as a blunder by the engine.
         /// </summary>
         public static string TooltipEngineBlunderDetect {
@@ -5256,11 +5310,92 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Great move.
+        /// </summary>
+        public static string TooltipGreatMove {
+            get {
+                return ResourceManager.GetString("TooltipGreatMove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Interesting move.
+        /// </summary>
+        public static string TooltipInterestingMove {
+            get {
+                return ResourceManager.GetString("TooltipInterestingMove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Poor move.
+        /// </summary>
+        public static string TooltipPoorMove {
+            get {
+                return ResourceManager.GetString("TooltipPoorMove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Position is equal.
+        /// </summary>
+        public static string TooltipPositionEqual {
+            get {
+                return ResourceManager.GetString("TooltipPositionEqual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Position is unclear.
+        /// </summary>
+        public static string TooltipPositionUnclear {
+            get {
+                return ResourceManager.GetString("TooltipPositionUnclear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Determines some default settings.
         /// </summary>
         public static string TooltipSideToMove {
             get {
                 return ResourceManager.GetString("TooltipSideToMove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Very good move.
+        /// </summary>
+        public static string TooltipVeryGoodMove {
+            get {
+                return ResourceManager.GetString("TooltipVeryGoodMove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to White has an advantage.
+        /// </summary>
+        public static string TooltipWhiteAdvantage {
+            get {
+                return ResourceManager.GetString("TooltipWhiteAdvantage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to White has an edge.
+        /// </summary>
+        public static string TooltipWhiteEdge {
+            get {
+                return ResourceManager.GetString("TooltipWhiteEdge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to White is winning.
+        /// </summary>
+        public static string TooltipWhiteWinning {
+            get {
+                return ResourceManager.GetString("TooltipWhiteWinning", resourceCulture);
             }
         }
         

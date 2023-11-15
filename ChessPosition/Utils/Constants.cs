@@ -164,6 +164,25 @@ namespace ChessPosition
                     [19] = "-+"
                 };
 
+        /// <summary>
+        /// Min id of the move NAG
+        /// </summary>
+        public static int MinMoveNagId = 1;
+
+        /// <summary>
+        /// Max id of the move NAG
+        /// </summary>
+        public static int MaxMoveNagId = 6;
+
+        /// <summary>
+        /// Min id of the position NAG
+        /// </summary>
+        public static int MinPositionNagId = 11;
+
+        /// <summary>
+        /// Max id of the position NAG
+        /// </summary>
+        public static int MaxPositionNagId = 19;
 
         /// <summary>
         /// Returns a NAG id if the passed represents one.
@@ -277,6 +296,20 @@ namespace ChessPosition
         /// The reference mark character
         /// </summary>
         public const char CHAR_SELECTED = '\u27A4';
+
+        /// <summary>
+        /// The pencil icon
+        /// </summary>
+        public const char CHAR_PENCIL = '\u270E';
+
+        /// <summary>
+        /// Evaluation symbols
+        /// </summary>
+        public const char CHAR_WHITE_ADVANTAGE = '\u00B1';
+        public const char CHAR_WHITE_EDGE = '\u2A72';
+        public const char CHAR_POSITION_UNCLEAR = '\u221E';
+        public const char CHAR_BLACK_ADVANTAGE = '\u2213';
+        public const char CHAR_BLACK_EDGE = '\u2A71';
 
         /// <summary>
         /// Min and Max dimensions of the chess board

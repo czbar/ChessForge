@@ -448,6 +448,8 @@ namespace ChessForge
             AddDebugMenu();
 
             ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
+            SetEvaluationLabels();
+
             LearningMode.ChangeCurrentMode(LearningMode.Mode.IDLE);
             AppState.SetupGuiForCurrentStates();
 

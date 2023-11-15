@@ -104,7 +104,7 @@ namespace ChessForge
 
             if (!string.IsNullOrEmpty(nags))
             {
-                int id = GetNagId(11, 19, nags);
+                int id = NagUtils.GetNagId(11, 19, nags);
                 if (id != 0)
                 {
                     SelectPositionButton(id);
@@ -120,43 +120,12 @@ namespace ChessForge
         {
             if (!string.IsNullOrEmpty(nags))
             {
-                int id = GetNagId(1, 6, nags);
+                int id = NagUtils.GetNagId(1, 6, nags);
                 if (id != 0)
                 {
                     SelectMoveButton(id);
                 }
             }
-        }
-
-        /// <summary>
-        /// Parses the string in the form "$[id] $[id]"
-        /// and returns the first id found in the requested range.
-        /// </summary>
-        /// <param name="from"></param>
-        /// <param name="to"></param>
-        /// <param name="nags"></param>
-        /// <returns></returns>
-        private int GetNagId(int from, int to, string nags)
-        {
-            int ret = 0;
-            if (!string.IsNullOrEmpty(nags))
-            {
-                string[] tokens = nags.Split(' ');
-                foreach (string token in tokens)
-                {
-                    // skip the leading $ sign
-                    if (token.Length > 1 && int.TryParse(token.Substring(1), out int id))
-                    {
-                        if (id >= from && id <= to)
-                        {
-                            ret = id;
-                            break;
-                        }
-                    }
-                }
-            }
-
-            return ret;
         }
 
         /// <summary>

@@ -2071,6 +2071,51 @@
   <data name="EngineReplaced" xml:space="preserve">
     <value>Selected engine loaded</value>
   </data>
+  <data name="EditAnnotations" xml:space="preserve">
+    <value>Edit Annotations</value>
+  </data>
+  <data name="TooltipWhiteWinning" xml:space="preserve">
+    <value>White is winning</value>
+  </data>
+  <data name="TooltipBlackWinning" xml:space="preserve">
+    <value>Black is winning</value>
+  </data>
+  <data name="TooltipWhiteAdvantage" xml:space="preserve">
+    <value>White has an advantage</value>
+  </data>
+  <data name="TooltipBlackAdvantage" xml:space="preserve">
+    <value>Black has an advantage</value>
+  </data>
+  <data name="TooltipWhiteEdge" xml:space="preserve">
+    <value>White has an edge</value>
+  </data>
+  <data name="TooltipBlackEdge" xml:space="preserve">
+    <value>Black has an edge</value>
+  </data>
+  <data name="TooltipPositionEqual" xml:space="preserve">
+    <value>Position is equal</value>
+  </data>
+  <data name="TooltipPositionUnclear" xml:space="preserve">
+    <value>Position is unclear</value>
+  </data>
+  <data name="TooltipGreatMove" xml:space="preserve">
+    <value>Great move</value>
+  </data>
+  <data name="TooltipVeryGoodMove" xml:space="preserve">
+    <value>Very good move</value>
+  </data>
+  <data name="TooltipPoorMove" xml:space="preserve">
+    <value>Poor move</value>
+  </data>
+  <data name="TooltipBlunder" xml:space="preserve">
+    <value>Blunder</value>
+  </data>
+  <data name="TooltipInterestingMove" xml:space="preserve">
+    <value>Interesting move</value>
+  </data>
+  <data name="TooltipDubiousMove" xml:space="preserve">
+    <value>Dubious move</value>
+  </data>
   <data name="PgnMissingMoveAfter" xml:space="preserve">
     <value>Missing move after</value>
   </data>
