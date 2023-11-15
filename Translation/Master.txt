@@ -2242,6 +2242,58 @@ InfoExitGameBeforeTabSwitch=Exit the game against the engine before switching ta
 #Info: the selected engine was loaded
 EngineReplaced=Selected engine loaded
 
+##################################
+#
+# Header: Evaluation ButtonTooltips
+#
+
+#Open Annotation dialog
+EditAnnotations=Edit Annotations
+
+
+#White is winning
+TooltipWhiteWinning=White is winning
+
+#Black is winning
+TooltipBlackWinning=Black is winning
+
+#White has an advantage
+TooltipWhiteAdvantage=White has an advantage
+
+#Black has an advantage
+TooltipBlackAdvantage=Black has an advantage
+
+#White has an edge
+TooltipWhiteEdge=White has an edge
+
+#Black has an advantage
+TooltipBlackEdge=Black has an edge
+
+#Position is equal
+TooltipPositionEqual=Position is equal
+
+#Position is unclear
+TooltipPositionUnclear=Position is unclear
+
+
+#Very good move
+TooltipGreatMove=Great move
+
+#Good move
+TooltipVeryGoodMove=Very good move
+
+#Poor move
+TooltipPoorMove=Poor move
+
+#Poor move
+TooltipBlunder=Blunder
+
+#Interesting move
+TooltipInterestingMove=Interesting move
+
+#Dubious move
+TooltipDubiousMove=Dubious move
+
 
 ##################################
 #

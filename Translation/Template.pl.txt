@@ -2893,6 +2893,73 @@ InfoExitGameBeforeTabSwitch=Zakończ partię zanim zmienisz Widok.
 #english: EngineReplaced=Selected engine loaded
 EngineReplaced=Załadowano wybrany silnik
 
+##################################
+#
+# Header: Evaluation ButtonTooltips
+#
+
+#description: Open Annotation dialog
+#english: EditAnnotations=Edit Annotations
+EditAnnotations=Edytuj komentarza
+
+
+#description: White is winning
+#english: TooltipWhiteWinning=White is winning
+TooltipWhiteWinning=Białe wygrywają
+
+#description: Black is winning
+#english: TooltipBlackWinning=Black is winning
+TooltipBlackWinning=Czarne wygrywają
+
+#description: White has an advantage
+#english: TooltipWhiteAdvantage=White has an advantage
+TooltipWhiteAdvantage=Przewaga białych
+
+#description: Black has an advantage
+#english: TooltipBlackAdvantage=Black has an advantage
+TooltipBlackAdvantage=Przewaga czarnych
+
+#description: White has an edge
+#english: TooltipWhiteEdge=White has an edge
+TooltipWhiteEdge=Niewielka przewaga białych
+
+#description: Black has an advantage
+#english: TooltipBlackEdge=Black has an edge
+TooltipBlackEdge=Niewielka przewaga czarnych
+
+#description: Position is equal
+#english: TooltipPositionEqual=Position is equal
+TooltipPositionEqual=Pozycja jest równa
+
+#description: Position is unclear
+#english: TooltipPositionUnclear=Position is unclear
+TooltipPositionUnclear=Pozycja jest niejasna
+
+
+#description: Very good move
+#english: TooltipGreatMove=Great move
+TooltipGreatMove=Znakomite posunięcie
+
+#description: Good move
+#english: TooltipVeryGoodMove=Very good move
+TooltipVeryGoodMove=Bardzo dobre posunięcie
+
+#description: Poor move
+#english: TooltipPoorMove=Poor move
+TooltipPoorMove=Słabe posunięcie
+
+#description: Poor move
+#english: TooltipBlunder=Blunder
+TooltipBlunder=Duży błąd
+
+#description: Interesting move
+#english: TooltipInterestingMove=Interesting move
+TooltipInterestingMove=Ciekawe posunięcie
+
+#description: Dubious move
+#english: TooltipDubiousMove=Dubious move
+TooltipDubiousMove=Wątpliwe posunięcie
+
 
 ##################################
 #

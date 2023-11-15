@@ -2070,6 +2070,51 @@
   <data name="EngineReplaced" xml:space="preserve">
     <value>Załadowano wybrany silnik</value>
   </data>
+  <data name="EditAnnotations" xml:space="preserve">
+    <value>Edytuj komentarza</value>
+  </data>
+  <data name="TooltipWhiteWinning" xml:space="preserve">
+    <value>Białe wygrywają</value>
+  </data>
+  <data name="TooltipBlackWinning" xml:space="preserve">
+    <value>Czarne wygrywają</value>
+  </data>
+  <data name="TooltipWhiteAdvantage" xml:space="preserve">
+    <value>Przewaga białych</value>
+  </data>
+  <data name="TooltipBlackAdvantage" xml:space="preserve">
+    <value>Przewaga czarnych</value>
+  </data>
+  <data name="TooltipWhiteEdge" xml:space="preserve">
+    <value>Niewielka przewaga białych</value>
+  </data>
+  <data name="TooltipBlackEdge" xml:space="preserve">
+    <value>Niewielka przewaga czarnych</value>
+  </data>
+  <data name="TooltipPositionEqual" xml:space="preserve">
+    <value>Pozycja jest równa</value>
+  </data>
+  <data name="TooltipPositionUnclear" xml:space="preserve">
+    <value>Pozycja jest niejasna</value>
+  </data>
+  <data name="TooltipGreatMove" xml:space="preserve">
+    <value>Znakomite posunięcie</value>
+  </data>
+  <data name="TooltipVeryGoodMove" xml:space="preserve">
+    <value>Bardzo dobre posunięcie</value>
+  </data>
+  <data name="TooltipPoorMove" xml:space="preserve">
+    <value>Słabe posunięcie</value>
+  </data>
+  <data name="TooltipBlunder" xml:space="preserve">
+    <value>Duży błąd</value>
+  </data>
+  <data name="TooltipInterestingMove" xml:space="preserve">
+    <value>Ciekawe posunięcie</value>
+  </data>
+  <data name="TooltipDubiousMove" xml:space="preserve">
+    <value>Wątpliwe posunięcie</value>
+  </data>
   <data name="PgnMissingMoveAfter" xml:space="preserve">
     <value>Brakuje ruchu po</value>
   </data>

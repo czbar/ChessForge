@@ -2893,6 +2893,73 @@ InfoExitGameBeforeTabSwitch=
 #english: EngineReplaced=Selected engine loaded
 EngineReplaced=
 
+##################################
+#
+# Header: Evaluation ButtonTooltips
+#
+
+#description: Open Annotation dialog
+#english: EditAnnotations=Edit Annotations
+EditAnnotations=
+
+
+#description: White is winning
+#english: TooltipWhiteWinning=White is winning
+TooltipWhiteWinning=
+
+#description: Black is winning
+#english: TooltipBlackWinning=Black is winning
+TooltipBlackWinning=
+
+#description: White has an advantage
+#english: TooltipWhiteAdvantage=White has an advantage
+TooltipWhiteAdvantage=
+
+#description: Black has an advantage
+#english: TooltipBlackAdvantage=Black has an advantage
+TooltipBlackAdvantage=
+
+#description: White has an edge
+#english: TooltipWhiteEdge=White has an edge
+TooltipWhiteEdge=
+
+#description: Black has an advantage
+#english: TooltipBlackEdge=Black has an edge
+TooltipBlackEdge=
+
+#description: Position is equal
+#english: TooltipPositionEqual=Position is equal
+TooltipPositionEqual=
+
+#description: Position is unclear
+#english: TooltipPositionUnclear=Position is unclear
+TooltipPositionUnclear=
+
+
+#description: Very good move
+#english: TooltipGreatMove=Great move
+TooltipGreatMove=
+
+#description: Good move
+#english: TooltipVeryGoodMove=Very good move
+TooltipVeryGoodMove=
+
+#description: Poor move
+#english: TooltipPoorMove=Poor move
+TooltipPoorMove=
+
+#description: Poor move
+#english: TooltipBlunder=Blunder
+TooltipBlunder=
+
+#description: Interesting move
+#english: TooltipInterestingMove=Interesting move
+TooltipInterestingMove=
+
+#description: Dubious move
+#english: TooltipDubiousMove=Dubious move
+TooltipDubiousMove=
+
 
 ##################################
 #
