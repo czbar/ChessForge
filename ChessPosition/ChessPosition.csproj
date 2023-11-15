@@ -86,6 +86,7 @@
     <Compile Include="Utils\MoveEvalEventArgs.cs" />
     <Compile Include="Utils\MoveOrigDest.cs" />
     <Compile Include="Utils\MoveUtils.cs" />
+    <Compile Include="Utils\NagUtils.cs" />
     <Compile Include="Utils\PieceMoves.cs" />
     <Compile Include="Utils\PositionUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
