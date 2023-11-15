@@ -290,6 +290,65 @@ namespace ChessForge
             UiBtnExEvalQuest.Content = "?";
             UiBtnExEvalQuestQuest.Content = "??";
 
+            //
+            // Tooltips
+            //
+
+            // for Study view
+            UiBtnStPencil.ToolTip = Properties.Resources.EditAnnotations;
+            UiBtnStEvalWin.ToolTip = Properties.Resources.TooltipWhiteWinning;
+            UiBtnStEvalPlusMinus.ToolTip = Properties.Resources.TooltipWhiteAdvantage;
+            UiBtnStEvalPlusEqual.ToolTip = Properties.Resources.TooltipWhiteEdge;
+            UiBtnStEvalEqual.ToolTip = Properties.Resources.TooltipPositionEqual;
+            UiBtnStEvalUnclear.ToolTip = Properties.Resources.TooltipPositionUnclear;
+            UiBtnStEvalEqualPlus.ToolTip = Properties.Resources.TooltipBlackEdge;
+            UiBtnStEvalMinusPlus.ToolTip = Properties.Resources.TooltipBlackAdvantage;
+            UiBtnStEvalLoss.ToolTip = Properties.Resources.TooltipBlackWinning;
+
+            UiBtnStEvalExclamExclam.ToolTip = Properties.Resources.TooltipGreatMove;
+            UiBtnStEvalExclam.ToolTip = Properties.Resources.TooltipVeryGoodMove;
+            UiBtnStEvalExclamQuest.ToolTip = Properties.Resources.TooltipInterestingMove;
+            UiBtnStEvalQuestExclam.ToolTip = Properties.Resources.TooltipDubiousMove;
+            UiBtnStEvalQuest.ToolTip = Properties.Resources.TooltipPoorMove;
+            UiBtnStEvalQuestQuest.ToolTip = Properties.Resources.TooltipBlunder;
+
+
+            // for Games view
+            UiBtnGmPencil.ToolTip = Properties.Resources.EditAnnotations;
+            UiBtnGmEvalWin.ToolTip = Properties.Resources.TooltipWhiteWinning;
+            UiBtnGmEvalPlusMinus.ToolTip = Properties.Resources.TooltipWhiteAdvantage;
+            UiBtnGmEvalPlusEqual.ToolTip = Properties.Resources.TooltipWhiteEdge;
+            UiBtnGmEvalEqual.ToolTip = Properties.Resources.TooltipPositionEqual;
+            UiBtnGmEvalUnclear.ToolTip = Properties.Resources.TooltipPositionUnclear;
+            UiBtnGmEvalEqualPlus.ToolTip = Properties.Resources.TooltipBlackEdge;
+            UiBtnGmEvalMinusPlus.ToolTip = Properties.Resources.TooltipBlackAdvantage;
+            UiBtnGmEvalLoss.ToolTip = Properties.Resources.TooltipBlackWinning;
+
+            UiBtnGmEvalExclamExclam.ToolTip = Properties.Resources.TooltipGreatMove;
+            UiBtnGmEvalExclam.ToolTip = Properties.Resources.TooltipVeryGoodMove;
+            UiBtnGmEvalExclamQuest.ToolTip = Properties.Resources.TooltipInterestingMove;
+            UiBtnGmEvalQuestExclam.ToolTip = Properties.Resources.TooltipDubiousMove;
+            UiBtnGmEvalQuest.ToolTip = Properties.Resources.TooltipPoorMove;
+            UiBtnGmEvalQuestQuest.ToolTip = Properties.Resources.TooltipBlunder;
+
+
+            // for Exercises view
+            UiBtnExPencil.ToolTip = Properties.Resources.EditAnnotations;
+            UiBtnExEvalWin.ToolTip = Properties.Resources.TooltipWhiteWinning;
+            UiBtnExEvalPlusMinus.ToolTip = Properties.Resources.TooltipWhiteAdvantage;
+            UiBtnExEvalPlusEqual.ToolTip = Properties.Resources.TooltipWhiteEdge;
+            UiBtnExEvalEqual.ToolTip = Properties.Resources.TooltipPositionEqual;
+            UiBtnExEvalUnclear.ToolTip = Properties.Resources.TooltipPositionUnclear;
+            UiBtnExEvalEqualPlus.ToolTip = Properties.Resources.TooltipBlackEdge;
+            UiBtnExEvalMinusPlus.ToolTip = Properties.Resources.TooltipBlackAdvantage;
+            UiBtnExEvalLoss.ToolTip = Properties.Resources.TooltipBlackWinning;
+
+            UiBtnExEvalExclamExclam.ToolTip = Properties.Resources.TooltipGreatMove;
+            UiBtnExEvalExclam.ToolTip = Properties.Resources.TooltipVeryGoodMove;
+            UiBtnExEvalExclamQuest.ToolTip = Properties.Resources.TooltipInterestingMove;
+            UiBtnExEvalQuestExclam.ToolTip = Properties.Resources.TooltipDubiousMove;
+            UiBtnExEvalQuest.ToolTip = Properties.Resources.TooltipPoorMove;
+            UiBtnExEvalQuestQuest.ToolTip = Properties.Resources.TooltipBlunder;
         }
     }
 }
