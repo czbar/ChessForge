@@ -258,6 +258,9 @@
   <data name="Exit" xml:space="preserve">
     <value>Exit</value>
   </data>
+  <data name="Return" xml:space="preserve">
+    <value>Return</value>
+  </data>
   <data name="Close" xml:space="preserve">
     <value>Close</value>
   </data>
@@ -1154,6 +1157,9 @@
   </data>
   <data name="UseFigurines" xml:space="preserve">
     <value>Use Figurines</value>
+  </data>
+  <data name="ViewImportedGames" xml:space="preserve">
+    <value>Go to Games</value>
   </data>
   <data name="FileError" xml:space="preserve">
     <value>File Error</value>

@@ -158,6 +158,9 @@ Tablebases=Tablebases
 #Exit
 Exit=Exit
 
+#Return
+Return=Return
+
 #Close
 Close=Close
 
@@ -1241,6 +1244,9 @@ Notation=Notation
 
 #Use figurines
 UseFigurines=Use Figurines
+
+#ViewImportedGames
+ViewImportedGames=Go to Games
 
 ##################################
 #

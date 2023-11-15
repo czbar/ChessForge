@@ -828,13 +828,16 @@ namespace ChessForge
             }
 
             // no eval in auto-replay
-            if (ActiveLineReplay.IsReplayActive)
+            if (ActiveLineReplay.IsReplayActive 
+                || AppState.ActiveTab == TabViewType.INTRO
+                || AppState.ActiveTab == TabViewType.BOOKMARKS
+                || AppState.ActiveTab == TabViewType.CHAPTERS)
             {
                 e.Handled = true;
                 return;
             }
 
-            if (AppState.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW) // && ActiveVariationTree != null)
+            if (AppState.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW)
             {
                 EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.CONTINUOUS);
                 UiImgEngineOff.Visibility = Visibility.Collapsed;

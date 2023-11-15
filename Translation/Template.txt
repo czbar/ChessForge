@@ -205,6 +205,10 @@ Tablebases=
 #english: Exit=Exit
 Exit=
 
+#description: Return
+#english: Return=Return
+Return=
+
 #description: Close
 #english: Close=Close
 Close=
@@ -1587,6 +1591,10 @@ Notation=
 #description: Use figurines
 #english: UseFigurines=Use Figurines
 UseFigurines=
+
+#description: ViewImportedGames
+#english: ViewImportedGames=Go to Games
+ViewImportedGames=
 
 ##################################
 #

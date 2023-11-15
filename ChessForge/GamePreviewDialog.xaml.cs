@@ -76,12 +76,27 @@ namespace ChessForge
         protected string _currentGameId;
 
         /// <summary>
+        /// Whether the user requested navigation to the Games view on exit.
+        /// </summary>
+        public bool GoToGamesOnExit = false;
+
+        /// <summary>
         /// Creates the dialog for previewing games from a list.
         /// </summary>
         /// <param name="gameId"></param>
-        public GamePreviewDialog(string gameId, List<string> gameIdList)
+        public GamePreviewDialog(string gameId, List<string> gameIdList, bool exitOptions = false)
         {
             InitializeComponent();
+
+            if (exitOptions)
+            {
+                Thickness btnExitThickness = UiBtnExit.Margin;
+                btnExitThickness.Top += 10;
+                UiBtnExit.Margin = btnExitThickness;
+
+                UiBtnGoToGames.Visibility = Visibility.Visible;
+            }
+
             _gameIdList = gameIdList;
             _currentGameId = gameId;
 
@@ -528,7 +543,8 @@ namespace ChessForge
 
 
         /// <summary>
-        /// User clicked Exit.
+        /// User clicked Return.
+        /// Exit and set the exit value.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -538,6 +554,18 @@ namespace ChessForge
             Close();
         }
 
+        /// <summary>
+        /// The user clicked the Go To Games button.
+        /// Exit and set the exit value.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnGoToGames_Click(object sender, RoutedEventArgs e)
+        {
+            GoToGamesOnExit = true;
+            _isExiting = true;
+            Close();
+        }
 
         /// <summary>
         /// The dialog is closing
