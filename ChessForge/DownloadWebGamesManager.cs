@@ -180,9 +180,13 @@ namespace ChessForge
         /// one for White and one for Black games of the player.
         /// </summary>
         /// <param name="games"></param>
-        private static void AddGamesToNewChapter(ObservableCollection<GameData> games,
-            string player, bool buildRepertoireChapters,
-            bool createWhiteChapter, out int addedGames, out int addedExercises)
+        private static void AddGamesToNewChapter(
+            ObservableCollection<GameData> games,
+            string player, 
+            bool buildRepertoireChapters,
+            bool createWhiteChapter, 
+            out int addedGames, 
+            out int addedExercises)
         {
             addedGames = 0;
             addedExercises = 0;
@@ -210,7 +214,7 @@ namespace ChessForge
                 }
                 if (blackGames.Count > 0)
                 {
-                    if (createWhiteChapter)
+                    if (createWhiteChapter || buildRepertoireChapters)
                     {
                         // create a new chapter for Black games if createWhiteChapter is true
                         WorkbookManager.SessionWorkbook.CreateNewChapter();
