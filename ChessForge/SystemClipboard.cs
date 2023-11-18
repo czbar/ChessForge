@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChessPosition;
+using GameTree;
 using System.Collections.Generic;
 using System.Windows;
 
@@ -22,6 +23,31 @@ namespace ChessForge
                 Clipboard.Clear();
             }
             catch { };
+        }
+
+        /// <summary>
+        /// Returns true if the clipboard has a list of Nodes.
+        /// </summary>
+        /// <returns></returns>
+        public static bool HasSerializedData()
+        {
+            bool res = false;
+            try
+            {
+                if (Clipboard.ContainsData(DataFormats.Serializable))
+                {
+                    IDataObject dataObject = Clipboard.GetDataObject();
+                    if (dataObject != null)
+                    {
+                        res = (dataObject.GetData(DataFormats.Serializable) as List<TreeNode>) != null;
+                    }
+                }
+            }
+            catch
+            {
+            }
+
+            return res;
         }
 
         /// <summary>
@@ -71,5 +97,22 @@ namespace ChessForge
         {
             return GetText() != _lastText;
         }
+
+        /// <summary>
+        /// Saves a node list in the clipboard.
+        /// </summary>
+        /// <param name="lst"></param>
+        public static void CopyMoveList(List<TreeNode> lst, uint moveNumberOffset)
+        {
+            try
+            {
+                IDataObject dataObject = new DataObject();
+                dataObject.SetData(DataFormats.UnicodeText, TextUtils.BuildLineText(lst, moveNumberOffset));
+                dataObject.SetData(DataFormats.Serializable, lst);
+                Clipboard.SetDataObject(dataObject);
+            }
+            catch { }
+        }
+
     }
 }
