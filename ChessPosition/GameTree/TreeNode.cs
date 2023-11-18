@@ -17,6 +17,7 @@ namespace GameTree
     /// If that was a White's move, the color to move in the position will be Black
     /// and vice versa.
     /// </summary>
+    [Serializable()]
     public class TreeNode
     {
         /// <summary>
@@ -465,6 +466,13 @@ namespace GameTree
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Default constructor need for serialization.
+        /// </summary>
+        public TreeNode()
+        {
         }
 
         /// <summary>
