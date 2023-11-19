@@ -27,7 +27,7 @@ namespace ChessForge
         /// <summary>
         /// The list of elements operated on.
         /// </summary>
-        public static List<IntroViewClipboardElement> Elements = new List<IntroViewClipboardElement>();
+        public static List<IntroViewElement> Elements = new List<IntroViewElement>();
 
         /// <summary>
         /// Clears the list of elements.
@@ -43,7 +43,7 @@ namespace ChessForge
         /// <param name="run"></param>
         public static void AddRun(Run run, Thickness? margins = null)
         {
-            IntroViewClipboardElement element = new IntroViewClipboardElement(ElementType.Run);
+            IntroViewElement element = new IntroViewElement(ElementType.Run);
             if (margins != null)
             {
                 element.SetMargins(margins.Value);
@@ -62,7 +62,7 @@ namespace ChessForge
         /// <param name="para"></param>
         public static void AddParagraph(Paragraph para)
         {
-            IntroViewClipboardElement element = new IntroViewClipboardElement(ElementType.Paragraph);
+            IntroViewElement element = new IntroViewElement(ElementType.Paragraph);
 
             element.SetAsParagraph(para);
             Elements.Add(element);
@@ -74,7 +74,7 @@ namespace ChessForge
         /// <param name="node"></param>
         public static void AddMove(TreeNode node)
         {
-            IntroViewClipboardElement element = new IntroViewClipboardElement(ElementType.Move);
+            IntroViewElement element = new IntroViewElement(ElementType.Move);
             element.SetAsMove(node);
             Elements.Add(element);
         }
@@ -85,7 +85,7 @@ namespace ChessForge
         /// <param name="diagram"></param>
         public static void AddDiagram(TreeNode node, bool? flipped)
         {
-            IntroViewClipboardElement element = new IntroViewClipboardElement(ElementType.Diagram);
+            IntroViewElement element = new IntroViewElement(ElementType.Diagram);
             element.SetAsDiagram(node);
 
             if (flipped != null)

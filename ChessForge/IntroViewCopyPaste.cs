@@ -308,9 +308,9 @@ namespace ChessForge
             bool result = false;
             Type type = obj.GetType();
 
-            if (type == typeof(List<IntroViewClipboardElement>))
+            if (type == typeof(List<IntroViewElement>))
             {
-                PasteElements(obj as List<IntroViewClipboardElement>);
+                PasteElements(obj as List<IntroViewElement>);
                 result = true;
             }
             else if (type == typeof(List<TreeNode>))
@@ -347,14 +347,14 @@ namespace ChessForge
         /// Pastes a list of IntroView Elements.
         /// </summary>
         /// <param name="elements"></param>
-        private void PasteElements(List<IntroViewClipboardElement> elements)
+        private void PasteElements(List<IntroViewElement> elements)
         {
             ClearSelection();
             AppState.IsDirty = true;
 
             bool isFirstElem = true;
 
-            foreach (IntroViewClipboardElement element in elements)
+            foreach (IntroViewElement element in elements)
             {
                 switch (element.Type)
                 {

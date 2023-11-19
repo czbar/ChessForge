@@ -171,7 +171,7 @@
     </Compile>
     <Compile Include="IntroView.cs" />
     <Compile Include="IntroViewClipboard.cs" />
-    <Compile Include="IntroViewClipboardElement.cs" />
+    <Compile Include="IntroViewElement.cs" />
     <Compile Include="IntroViewCopyPaste.cs" />
     <Compile Include="IntroViewDiagram.cs" />
     <Compile Include="IntroViewEditCommands.cs" />

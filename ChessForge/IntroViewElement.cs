@@ -10,12 +10,12 @@ namespace ChessForge
     /// A class for elements to store in the IntroViewClipboard
     /// </summary>
     [Serializable()]
-    public class IntroViewClipboardElement
+    public class IntroViewElement
     {
         /// <summary>
         /// Default constructor for serialization
         /// </summary>
-        public IntroViewClipboardElement()
+        public IntroViewElement()
         {
         }
 
@@ -23,7 +23,7 @@ namespace ChessForge
         /// Constructs an element of a specified type.
         /// </summary>
         /// <param name="type"></param>
-        public IntroViewClipboardElement(IntroViewClipboard.ElementType type)
+        public IntroViewElement(IntroViewClipboard.ElementType type)
         {
             Type = type;
         }
