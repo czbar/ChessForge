@@ -14,7 +14,7 @@ namespace ChessForge
     public partial class IntroView : RichTextBuilder
     {
         /// <summary>
-        /// Calls the built-in Undo and the calls 
+        /// Calls the built-in Undo and then calls 
         /// SetEventHandlers so that event associations are restored
         /// if any Diagram or Move was part of Undo.
         /// </summary>
@@ -22,31 +22,43 @@ namespace ChessForge
         /// <param name="e"></param>
         public void Undo(object sender, RoutedEventArgs e)
         {
-            _rtb.Undo();
-            SetEventHandlers();
+            try
+            {
+                _rtb.Undo();
+                SetEventHandlers();
+            }
+            catch { }
         }
 
         /// <summary>
-        /// Stores the current selection before calling
-        /// the built-in cut operation.
+        /// Stores the current selection in a DataObject,
+        /// then uses the built-in cut operation and finally
+        /// puts the cut selection in the system clipboard.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         public void Cut(object sender, RoutedEventArgs e)
         {
-            IntroViewClipboard.Clear();
-            CopySelectionToClipboard();
-            
-            // the call to _rtb.Cut() is convenient but we need to preserve
-            // the content of the system clipboard
-            string txt = SystemClipboard.GetText();
-            _rtb.Cut();
-            SystemClipboard.SetText(txt);
+            try
+            {
+                IntroViewClipboard.Clear();
+                string plainText = CopySelectionToClipboard();
+
+                IDataObject dataObject = new DataObject();
+                dataObject.SetData(DataFormats.UnicodeText, plainText);
+                dataObject.SetData(DataFormats.Serializable, IntroViewClipboard.Elements);
+
+                // call _rtb.Cut() to conveniently remove the current selection
+                _rtb.Cut();
+
+                // .Cut put some stuff into the clipboard which we will overwrite now
+                Clipboard.SetDataObject(dataObject);
+            }
+            catch { }
         }
 
         /// <summary>
-        /// Stores the current selection in custom format
-        /// so that it can get properly restored.
+        /// Places the current selection in the system clipboard.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -55,14 +67,22 @@ namespace ChessForge
             try
             {
                 IntroViewClipboard.Clear();
-                CopySelectionToClipboard();
+                string plainText = CopySelectionToClipboard();
+
+                IDataObject dataObject = new DataObject();
+                dataObject.SetData(DataFormats.UnicodeText, plainText);
+                dataObject.SetData(DataFormats.Serializable, IntroViewClipboard.Elements);
+                Clipboard.SetDataObject(dataObject);
             }
             catch { }
         }
 
         /// <summary>
-        /// Pastes stored selection into the view.
-        /// If System Clipboard is not empty, takes text from it and clears Intro clipboard
+        /// Pastes the content of the clipboard into the view.
+        /// First checks if the clipboard has a serializable content.
+        /// If so, checks if it is of recognizable format i.e. a list of nodes
+        /// or IntroViewElements.
+        /// If none of the above, inserts whatever text is in the clipboard.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -70,149 +90,32 @@ namespace ChessForge
         {
             try
             {
-                if (!SystemClipboard.IsEmpty() && SystemClipboard.IsUpdated())
+                IDataObject dataObject = Clipboard.GetDataObject();
+                if (dataObject != null)
                 {
-                    IntroViewClipboard.Clear();
-                    Run r = new Run(SystemClipboard.GetText());
-
-                    Run currentRun = _rtb.CaretPosition.Parent as Run;
-                    if (currentRun != null)
+                    if (dataObject.GetDataPresent(DataFormats.Serializable))
                     {
-                        r.FontFamily = currentRun.FontFamily;
-                        r.FontSize = currentRun.FontSize;
-                        r.FontStyle = currentRun.FontStyle;
-                        r.FontWeight = currentRun.FontWeight;
+                        PasteSerializable(dataObject.GetData(DataFormats.Serializable));
+
                     }
-
-                    InsertRunFromClipboard(r, null, out _);
-                    return;
-                }
-
-                if (IntroViewClipboard.Elements.Count == 0)
-                {
-                    return;
-                }
-
-                AppState.IsDirty = true;
-
-                // We will paste objects from the clipboard one by one
-
-                // first delete the current selection if any
-                if (!_rtb.Selection.IsEmpty)
-                {
-                    TextRange selection = new TextRange(_rtb.Selection.Start, _rtb.Selection.End);
-                    selection.Text = "";
-                }
-
-                bool isFirstElem = true;
-
-                foreach (IntroViewClipboardElement element in IntroViewClipboard.Elements)
-                {
-                    switch (element.Type)
+                    else if (dataObject.GetDataPresent(DataFormats.UnicodeText))
                     {
-                        case IntroViewClipboard.ElementType.Paragraph:
-                            Paragraph paragraph = element.DataObject as Paragraph;
-                            TextPointer tp = InsertParagraphFromClipboard(paragraph);
-                            _rtb.CaretPosition = tp;
-                            break;
-                        case IntroViewClipboard.ElementType.Diagram:
-                            InsertDiagramFromClipboard(element.DataObject as TreeNode, element.BoolState == true);
-                            break;
-                        case IntroViewClipboard.ElementType.Run:
-                            InsertRunFromClipboard(element.DataObject as Run, isFirstElem ? element.Margins : null, out _);
-                            break;
-                        case IntroViewClipboard.ElementType.Move:
-                            InsertMoveFromClipboard(element.DataObject as TreeNode);
-                            break;
+                        PasteUnicodeText(dataObject.GetData(DataFormats.UnicodeText) as string);
                     }
-
-                    isFirstElem = false;
                 }
             }
-            catch { }
-        }
-
-        /// <summary>
-        /// Makes a copy of a paragraph from the clipboard
-        /// and insert it at the current position.
-        /// </summary>
-        /// <param name="paraToInsert"></param>
-        public TextPointer InsertParagraphFromClipboard(Paragraph paraToInsert)
-        {
-            Paragraph paraToInsertAfter = null;
-            if (_rtb.CaretPosition.Paragraph != null)
+            catch (Exception ex)
             {
-                paraToInsertAfter = _rtb.CaretPosition.Paragraph;
-            }
-
-            Paragraph para = RichTextBoxUtilities.CopyParagraph(paraToInsert);
-
-            if (paraToInsertAfter != null)
-            {
-                _rtb.Document.Blocks.InsertAfter(paraToInsertAfter, para);
-            }
-            else
-            {
-                _rtb.Document.Blocks.Add(para);
-            }
-            return para.ContentEnd;
-            //return _rtb.CaretPosition.InsertParagraphBreak();
-        }
-
-        /// <summary>
-        /// Creats a new diagram paragraph and inserts it.
-        /// </summary>
-        /// <param name="diagPara"></param>
-        public void InsertDiagramFromClipboard(TreeNode nodeForDiag, bool isFlipped)
-        {
-            TreeNode nd = nodeForDiag.CloneMe(true);
-            if (nd != null)
-            {
-                Paragraph para = InsertDiagram(nd, isFlipped);
-                _rtb.CaretPosition = para.ElementEnd;
-                _rtb.CaretPosition = _rtb.CaretPosition.GetNextContextPosition(LogicalDirection.Forward);
+                AppLog.Message("IntroViewPaste()", ex);
             }
         }
 
-        /// <summary>
-        /// If parent is a run, split the run and insert this one in between.
-        /// If parent is a Paragraph and it is not a diagram paragraph, insert it at the caret point.
-        /// </summary>
-        /// <param name="run"></param>
-        private void InsertRunFromClipboard(Run runToInsert, Thickness? margins, out double fontSize)
-        {
-            RichTextBoxUtilities.GetMoveInsertionPlace(_rtb, out Paragraph para, out Inline insertBefore, out fontSize);
-            if (para != null)
-            {
-                if (margins != null)
-                {
-                    para.Margin = margins.Value;
-                }
+        //***********************************************************************
+        //
+        // IMPLEMENTATION
+        //
+        //***********************************************************************
 
-                Run run = RichTextBoxUtilities.CopyRun(runToInsert);
-                if (insertBefore == null)
-                {
-                    para.Inlines.Add(run);
-                }
-                else
-                {
-                    para.Inlines.InsertBefore(insertBefore, run);
-                }
-
-                _rtb.CaretPosition = run.ElementEnd;
-            }
-        }
-
-        /// <summary>
-        /// Makes a copy of the passed node, inserts it into the Tree
-        /// creates an InlineUiContainer for the Move and inserts it.
-        /// </summary>
-        /// <param name="nodeForMove"></param>
-        private void InsertMoveFromClipboard(TreeNode nodeForMove)
-        {
-            TreeNode node = nodeForMove.CloneMe(true);
-            InsertMove(node, true);
-        }
 
         /// <summary>
         /// Builds a list of elements in the current selection and puts them in the clipboard
@@ -349,14 +252,199 @@ namespace ChessForge
 
                 position = position.GetNextContextPosition(LogicalDirection.Forward);
             }
-            
-            if (plainText.Length > 0)
-            {
-                SystemClipboard.Clear();
-                SystemClipboard.SetText(plainText.ToString());
-            }
 
             return plainText.ToString();
+        }
+
+        /// <summary>
+        /// Makes a copy of a paragraph from the clipboard
+        /// and insert it at the current position.
+        /// </summary>
+        /// <param name="paraToInsert"></param>
+        private TextPointer InsertParagraphFromClipboard(Paragraph paraToInsert)
+        {
+            Paragraph paraToInsertAfter = null;
+            if (_rtb.CaretPosition.Paragraph != null)
+            {
+                paraToInsertAfter = _rtb.CaretPosition.Paragraph;
+            }
+
+            Paragraph para = RichTextBoxUtilities.CopyParagraph(paraToInsert);
+
+            if (paraToInsertAfter != null)
+            {
+                _rtb.Document.Blocks.InsertAfter(paraToInsertAfter, para);
+            }
+            else
+            {
+                _rtb.Document.Blocks.Add(para);
+            }
+            return para.ContentEnd;
+        }
+
+        /// <summary>
+        /// Creats a new diagram paragraph and inserts it.
+        /// </summary>
+        /// <param name="diagPara"></param>
+        private void InsertDiagramFromClipboard(TreeNode nodeForDiag, bool isFlipped)
+        {
+            TreeNode nd = nodeForDiag.CloneMe(true);
+            if (nd != null)
+            {
+                Paragraph para = InsertDiagram(nd, isFlipped);
+                _rtb.CaretPosition = para.ElementEnd;
+                _rtb.CaretPosition = _rtb.CaretPosition.GetNextContextPosition(LogicalDirection.Forward);
+            }
+        }
+
+        /// <summary>
+        /// Inserts a serializable object found in the clipboard.
+        /// This could be a List of IntroViewElements or Nodes.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns>true, if objects of the recognizable type found; false otherwise.</returns>
+        private bool PasteSerializable(object obj)
+        {
+            bool result = false;
+            Type type = obj.GetType();
+
+            if (type == typeof(List<IntroViewClipboardElement>))
+            {
+                PasteElements(obj as List<IntroViewClipboardElement>);
+                result = true;
+            }
+            else if (type == typeof(List<TreeNode>))
+            {
+                PasteMoves(obj as List<TreeNode>);
+                result = true;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Pastes the passed Unicode text.
+        /// </summary>
+        /// <param name="text"></param>
+        private void PasteUnicodeText(string text)
+        {
+            Run run = new Run(text);
+
+            Run currentRun = _rtb.CaretPosition.Parent as Run;
+            if (currentRun != null)
+            {
+                run.FontFamily = currentRun.FontFamily;
+                run.FontSize = currentRun.FontSize;
+                run.FontStyle = currentRun.FontStyle;
+                run.FontWeight = currentRun.FontWeight;
+            }
+
+            AppState.IsDirty = true;
+            InsertRunFromClipboard(run, null, out _);
+        }
+
+        /// <summary>
+        /// Pastes a list of IntroView Elements.
+        /// </summary>
+        /// <param name="elements"></param>
+        private void PasteElements(List<IntroViewClipboardElement> elements)
+        {
+            ClearSelection();
+            AppState.IsDirty = true;
+
+            bool isFirstElem = true;
+
+            foreach (IntroViewClipboardElement element in elements)
+            {
+                switch (element.Type)
+                {
+                    case IntroViewClipboard.ElementType.Paragraph:
+                        Paragraph paragraph = element.CreateParagraph();
+                        TextPointer tp = InsertParagraphFromClipboard(paragraph);
+                        _rtb.CaretPosition = tp;
+                        break;
+                    case IntroViewClipboard.ElementType.Diagram:
+                        InsertDiagramFromClipboard(element.Node, element.BoolState == true);
+                        break;
+                    case IntroViewClipboard.ElementType.Run:
+                        Thickness? thick = element.GetThickness();
+                        InsertRunFromClipboard(element.CreateRun(), isFirstElem ? thick : null, out _);
+                        break;
+                    case IntroViewClipboard.ElementType.Move:
+                        InsertMoveFromClipboard(element.Node);
+                        break;
+                }
+
+                isFirstElem = false;
+            }
+        }
+
+        /// <summary>
+        /// Pastes a list of Moves
+        /// </summary>
+        /// <param name="nodes"></param>
+        private void PasteMoves(List<TreeNode> nodes)
+        {
+            ClearSelection();
+            AppState.IsDirty = true;
+
+            foreach (TreeNode node in nodes)
+            {
+                TreeNode ndToInsert = node.CloneMe(true);
+                InsertMove(ndToInsert);
+            }
+        }
+
+        /// <summary>
+        /// If parent is a run, split the run and insert this one in between.
+        /// If parent is a Paragraph and it is not a diagram paragraph, insert it at the caret point.
+        /// </summary>
+        /// <param name="run"></param>
+        private void InsertRunFromClipboard(Run runToInsert, Thickness? margins, out double fontSize)
+        {
+            RichTextBoxUtilities.GetMoveInsertionPlace(_rtb, out Paragraph para, out Inline insertBefore, out fontSize);
+            if (para != null)
+            {
+                if (margins != null)
+                {
+                    para.Margin = margins.Value;
+                }
+
+                Run run = RichTextBoxUtilities.CopyRun(runToInsert);
+                if (insertBefore == null)
+                {
+                    para.Inlines.Add(run);
+                }
+                else
+                {
+                    para.Inlines.InsertBefore(insertBefore, run);
+                }
+
+                _rtb.CaretPosition = run.ElementEnd;
+            }
+        }
+
+        /// <summary>
+        /// Makes a copy of the passed node, inserts it into the Tree
+        /// creates an InlineUiContainer for the Move and inserts it.
+        /// </summary>
+        /// <param name="nodeForMove"></param>
+        private void InsertMoveFromClipboard(TreeNode nodeForMove)
+        {
+            TreeNode node = nodeForMove.CloneMe(true);
+            InsertMove(node, true);
+        }
+
+        /// <summary>
+        /// Removes the current selection.
+        /// </summary>
+        private void ClearSelection()
+        {
+            if (!_rtb.Selection.IsEmpty)
+            {
+                TextRange selection = new TextRange(_rtb.Selection.Start, _rtb.Selection.End);
+                selection.Text = "";
+            }
         }
 
     }
