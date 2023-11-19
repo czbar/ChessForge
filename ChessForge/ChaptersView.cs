@@ -3,6 +3,7 @@ using ChessPosition;
 using GameTree;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -149,6 +150,74 @@ namespace ChessForge
             {
                 AppLog.Message("BuildFlowDocumentForChaptersView()", ex);
             }
+        }
+
+        /// <summary>
+        /// Swaps lines for 2 model games in the view identified by their indices.
+        /// The game at the targetIndex is the new active game.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="sourceIndex"></param>
+        /// <param name="targetIndex"></param>
+        public bool SwapModelGames(Chapter chapter, int sourceIndex, int targetIndex)
+        {
+            bool res = false;
+
+            Paragraph para = FindChapterParagraph(chapter.Index);
+            if (para != null)
+            {
+                Run first = FindArticleRunInParagraph(para, GameData.ContentType.MODEL_GAME, sourceIndex);
+                Run second = FindArticleRunInParagraph(para, GameData.ContentType.MODEL_GAME, targetIndex);
+
+                if (first != null && second != null)
+                {
+                    res = true;
+
+                    first.Text = BuildModelGameTitleText(chapter, sourceIndex);
+                    ShowSelectionMark(ref first, false, SELECTED_ARTICLE_PREFIX, NON_SELECTED_ARTICLE_PREFIX);
+
+                    second.Text = BuildModelGameTitleText(chapter, targetIndex);
+                    ShowSelectionMark(ref second, true, SELECTED_ARTICLE_PREFIX, NON_SELECTED_ARTICLE_PREFIX);
+                 
+                    PulseManager.SetArticleToBringIntoView(chapter.Index, GameData.ContentType.MODEL_GAME, targetIndex);
+                }
+            }
+
+            return res;
+        }
+
+        /// <summary>
+        /// Swaps lines for 2 model games in the view identified by their indices.
+        /// The game at the targetIndex is the new active game.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="sourceIndex"></param>
+        /// <param name="targetIndex"></param>
+        public bool SwapExercises(Chapter chapter, int sourceIndex, int targetIndex)
+        {
+            bool res = false;
+
+            Paragraph para = FindChapterParagraph(chapter.Index);
+            if (para != null)
+            {
+                Run first = FindArticleRunInParagraph(para, GameData.ContentType.EXERCISE, sourceIndex);
+                Run second = FindArticleRunInParagraph(para, GameData.ContentType.EXERCISE, targetIndex);
+
+                if (first != null && second != null)
+                {
+                    res = true;
+
+                    first.Text = BuildExerciseTitleText(chapter, sourceIndex);
+                    ShowSelectionMark(ref first, false, SELECTED_ARTICLE_PREFIX, NON_SELECTED_ARTICLE_PREFIX);
+
+                    second.Text = BuildExerciseTitleText(chapter, targetIndex);
+                    ShowSelectionMark(ref second, true, SELECTED_ARTICLE_PREFIX, NON_SELECTED_ARTICLE_PREFIX);
+
+                    PulseManager.SetArticleToBringIntoView(chapter.Index, GameData.ContentType.EXERCISE, targetIndex);
+                }
+            }
+
+            return res;
         }
 
         /// <summary>
@@ -649,6 +718,17 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Builds text of a model game line
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        private string BuildModelGameTitleText(Chapter chapter, int index)
+        {
+            return SUBHEADER_DOUBLE_INDENT + (index + 1).ToString() + ". " + chapter.ModelGames[index].Tree.Header.BuildGameHeaderLine(false, true, true, true);
+        }
+
+        /// <summary>
         /// Inserts the Model Games subheader
         /// and model games titles
         /// </summary>
@@ -670,7 +750,8 @@ namespace ChessForge
                 for (int i = 0; i < chapter.ModelGames.Count; i++)
                 {
                     para.Inlines.Add(new Run("\n"));
-                    Run rGame = CreateRun(STYLE_SUBHEADER, SUBHEADER_DOUBLE_INDENT + (i + 1).ToString() + ". " + chapter.ModelGames[i].Tree.Header.BuildGameHeaderLine(false, true, true, true), true);
+                    string lineText = BuildModelGameTitleText(chapter, i);
+                    Run rGame = CreateRun(STYLE_SUBHEADER, lineText, true);
                     rGame.Name = _run_model_game_ + i.ToString();
                     rGame.MouseDown += EventModelGameRunClicked;
                     rGame.MouseMove += EventModelGameRunHovered;
@@ -684,6 +765,17 @@ namespace ChessForge
             }
 
             return r;
+        }
+
+        /// <summary>
+        /// Builds text of an exercise line
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        private string BuildExerciseTitleText(Chapter chapter, int index)
+        {
+            return SUBHEADER_DOUBLE_INDENT + (index + 1).ToString() + ". " + chapter.Exercises[index].Tree.Header.BuildGameHeaderLine(true, false, true, true);
         }
 
         /// <summary>
@@ -708,7 +800,8 @@ namespace ChessForge
                 for (int i = 0; i < chapter.Exercises.Count; i++)
                 {
                     para.Inlines.Add(new Run("\n"));
-                    Run rGame = CreateRun(STYLE_SUBHEADER, SUBHEADER_DOUBLE_INDENT + (i + 1).ToString() + ". " + chapter.Exercises[i].Tree.Header.BuildGameHeaderLine(true, false, true, true), false);
+                    string lineText = BuildExerciseTitleText(chapter, i);
+                    Run rGame = CreateRun(STYLE_SUBHEADER, lineText, false);
                     rGame.Name = _run_exercise_ + i.ToString();
                     rGame.MouseDown += EventExerciseRunClicked;
                     rGame.MouseMove += EventExerciseRunHovered;

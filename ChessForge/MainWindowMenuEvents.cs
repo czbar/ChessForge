@@ -1341,7 +1341,6 @@ namespace ChessForge
             {
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                 int index = chapter.ActiveModelGameIndex;
-                //int index = WorkbookManager.LastClickedModelGameIndex;
                 int gameCount = chapter.GetModelGameCount();
 
                 if (index > 0 && index < gameCount)
@@ -1351,7 +1350,7 @@ namespace ChessForge
                     chapter.ModelGames[index - 1] = hold;
                     chapter.ActiveModelGameIndex = index - 1;
 
-                    _chaptersView.BuildFlowDocumentForChaptersView();
+                    _chaptersView.SwapModelGames(chapter, index, index - 1);
                     AppState.IsDirty = true;
                 }
             }
@@ -1372,7 +1371,6 @@ namespace ChessForge
             {
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                 int index = chapter.ActiveExerciseIndex;
-                //                int index = WorkbookManager.LastClickedExerciseIndex;
                 int exerciseCount = chapter.GetExerciseCount();
 
                 if (index > 0 && index < exerciseCount)
@@ -1382,7 +1380,7 @@ namespace ChessForge
                     chapter.Exercises[index - 1] = hold;
                     chapter.ActiveExerciseIndex = index - 1;
 
-                    _chaptersView.BuildFlowDocumentForChaptersView();
+                    _chaptersView.SwapExercises(chapter, index, index - 1);
                     AppState.IsDirty = true;
                 }
             }
@@ -1413,7 +1411,7 @@ namespace ChessForge
                     chapter.ModelGames[index + 1] = hold;
                     chapter.ActiveModelGameIndex = index + 1;
 
-                    _chaptersView.BuildFlowDocumentForChaptersView();
+                    _chaptersView.SwapModelGames(chapter, index, index + 1);
                     AppState.IsDirty = true;
                 }
             }
@@ -1434,7 +1432,6 @@ namespace ChessForge
             {
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                 int index = chapter.ActiveExerciseIndex;
-                //int index = WorkbookManager.LastClickedExerciseIndex;
                 int exerciseCount = chapter.GetExerciseCount();
 
                 if (index >= 0 && index < exerciseCount - 1)
@@ -1444,7 +1441,7 @@ namespace ChessForge
                     chapter.Exercises[index + 1] = hold;
                     chapter.ActiveExerciseIndex = index + 1;
 
-                    _chaptersView.BuildFlowDocumentForChaptersView();
+                    _chaptersView.SwapExercises(chapter, index, index + 1);
                     AppState.IsDirty = true;
                 }
             }
