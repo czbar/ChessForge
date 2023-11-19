@@ -6,12 +6,12 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        Title="{x:Static p:Resources.EditHyperlink}" Height="175" Width="340">
+        Title="{x:Static p:Resources.EditHyperlink}" Height="175" Width="500">
     <Grid>
         <Label x:Name="UiLblText" Content="{x:Static p:Resources.Text}" HorizontalAlignment="Left" Margin="10,15,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="UiTbText" TabIndex="0" HorizontalAlignment="Left" Foreground="Black" Margin="70,20,0,0" Width="235" TextWrapping="Wrap" Text="" VerticalAlignment="Top" />
+        <TextBox x:Name="UiTbText" TabIndex="0" TextWrapping="NoWrap" HorizontalAlignment="Left" Foreground="Black" Margin="70,20,0,0" Width="395" Text="" VerticalAlignment="Top" />
         <Label x:Name="Url" Content="{x:Static p:Resources.Url}" HorizontalAlignment="Left" Margin="10,45,0,0" VerticalAlignment="Top" />
-        <TextBox x:Name="UiTbUrl" TabIndex="1" HorizontalAlignment="Left" Foreground="Blue" Margin="70,50,0,0" Width="235" TextWrapping="Wrap" Text="" VerticalAlignment="Top" />
+        <TextBox x:Name="UiTbUrl" TabIndex="1" TextWrapping="NoWrap"  HorizontalAlignment="Left" Foreground="Blue" Margin="70,50,0,0" Width="395" Text="" VerticalAlignment="Top" />
         <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Ok}" IsDefault="True" HorizontalAlignment="Center" Margin="-100,90,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
         <Button x:Name="UiBtnCancel" Content="{x:Static p:Resources.Cancel}" IsCancel="True" HorizontalAlignment="Center" Margin="100,90,0,0" Width="80" VerticalAlignment="Top"/>
     </Grid>
