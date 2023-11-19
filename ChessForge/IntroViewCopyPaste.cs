@@ -221,32 +221,28 @@ namespace ChessForge
                         }
                         break;
                     case TextPointerContext.Text:
-                        Run r = (Run)position.Parent;
+                        Run run = (Run)position.Parent;
                         Thickness? margins = null;
-                        if (r.Parent is Paragraph para)
+                        if (run.Parent is Paragraph para)
                         {
                             margins = para.Margin;
                         }
 
-                        if (r.ElementEnd.CompareTo(end) > 0)
+                        TextPointer textEnd = run.ElementEnd;
+                        if (run.ElementEnd.CompareTo(end) > 0)
                         {
-                            TextRange tr = new TextRange(position, end);
-                            Run runCopy = RichTextBoxUtilities.CopyRun(r);
-                            runCopy.Text = tr.Text;
-                            if (!plainTextOnly)
-                            {
-                                IntroViewClipboard.AddRun(runCopy, margins);
-                            }
-                            plainText.Append(RichTextBoxUtilities.GetRunPlainText(runCopy));
+                            textEnd = end;
                         }
-                        else
+
+                        TextRange tr = new TextRange(position, textEnd);
+                        Run runCopy = RichTextBoxUtilities.CopyRun(run);
+                        runCopy.Text = tr.Text;
+                        if (!plainTextOnly)
                         {
-                            if (!plainTextOnly)
-                            {
-                                IntroViewClipboard.AddRun(r, margins);
-                            }
-                            plainText.Append(RichTextBoxUtilities.GetRunPlainText(r));
+                            IntroViewClipboard.AddRun(runCopy, margins);
                         }
+                        plainText.Append(RichTextBoxUtilities.GetRunPlainText(runCopy));
+
                         break;
                 }
 
