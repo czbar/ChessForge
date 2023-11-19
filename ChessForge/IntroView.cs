@@ -252,14 +252,15 @@ namespace ChessForge
         {
             try
             {
-                EditHyperlinkDialog dlg = new EditHyperlinkDialog(null);
+                string hlText = _rtb.Selection.Text;
+                EditHyperlinkDialog dlg = new EditHyperlinkDialog(null, hlText);
                 GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
                 if (dlg.ShowDialog() == true)
                 {
                     TextPointer tp = _rtb.CaretPosition;
                     // clear selection
-                    _rtb.Selection.Select(_rtb.Selection.Start, _rtb.Selection.Start);
+                    _rtb.Selection.Text = "";
                     // get insertion place
                     RichTextBoxUtilities.GetMoveInsertionPlace(_rtb, out Paragraph para, out Inline insertBefore, out double fontSize);
 
@@ -614,7 +615,7 @@ namespace ChessForge
         {
             if (_selectedHyperlink != null)
             {
-                EditHyperlinkDialog dlg = new EditHyperlinkDialog(_selectedHyperlink);
+                EditHyperlinkDialog dlg = new EditHyperlinkDialog(_selectedHyperlink, null);
                 if (dlg.ShowDialog() == true)
                 {
                     Run run = dlg.HyperlinkRun;
