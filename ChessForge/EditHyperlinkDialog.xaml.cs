@@ -35,7 +35,7 @@ namespace ChessForge
         /// <summary>
         /// Constructor.
         /// </summary>
-        public EditHyperlinkDialog(Hyperlink hyperlink)
+        public EditHyperlinkDialog(Hyperlink hyperlink, string txt)
         {
             InitializeComponent();
             _hyperlink = hyperlink;
@@ -50,6 +50,13 @@ namespace ChessForge
                     {
                         UiTbText.Text = _runLink.Text;
                     }
+                }
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(txt))
+                {
+                    UiTbText.Text = txt;
                 }
             }
         }

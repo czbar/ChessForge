@@ -1111,7 +1111,7 @@ namespace ChessForge
                                 menuItem.IsEnabled = view != null && view.HasMovesSelectedForCopy;
                                 break;
                             case "UiMnStPasteMoves":
-                                menuItem.IsEnabled = ChfClipboard.Type == ChfClipboard.ItemType.NODE_LIST && ChfClipboard.Value != null;
+                                menuItem.IsEnabled = SystemClipboard.HasSerializedData();
                                 break;
                         }
                     }
@@ -1185,7 +1185,7 @@ namespace ChessForge
                                 menuItem.IsEnabled = view != null && view.HasMovesSelectedForCopy;
                                 break;
                             case "UiMnGamePasteMoves":
-                                menuItem.IsEnabled = ChfClipboard.Type == ChfClipboard.ItemType.NODE_LIST && ChfClipboard.Value != null;
+                                menuItem.IsEnabled = SystemClipboard.HasSerializedData();
                                 break;
                         }
                     }
@@ -1283,7 +1283,7 @@ namespace ChessForge
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "UiMnExercPasteMoves":
-                                menuItem.IsEnabled = ChfClipboard.Type == ChfClipboard.ItemType.NODE_LIST && ChfClipboard.Value != null;
+                                menuItem.IsEnabled = SystemClipboard.HasSerializedData();
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "UiMnExerc_ImportExercises":

@@ -2,22 +2,18 @@
 using GameTree;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
 
 namespace ChessForge
 {
     /// <summary>
-    /// Holds the last selection that the user sent a request to Copy on
+    /// Utilities for handling operations on a list of IntroView elements.
     /// </summary>
     public class IntroViewClipboard
     {
         /// <summary>
-        /// Types of elements that can be found in the view
+        /// Types of elements supported by the view.
         /// </summary>
         public enum ElementType
         {
@@ -29,12 +25,12 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// The list of elements in the Clipboard.
+        /// The list of elements operated on.
         /// </summary>
-        public static List<IntroViewClipboardElement> Elements = new List<IntroViewClipboardElement>();
+        public static List<IntroViewElement> Elements = new List<IntroViewElement>();
 
         /// <summary>
-        /// Clears the clipboard.
+        /// Clears the list of elements.
         /// </summary>
         public static void Clear()
         {
@@ -42,58 +38,55 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Adds a Run element to the Clipboard.
+        /// Adds a Run element to the list.
         /// </summary>
         /// <param name="run"></param>
         public static void AddRun(Run run, Thickness? margins = null)
         {
-            IntroViewClipboardElement element = new IntroViewClipboardElement(ElementType.Run);
+            IntroViewElement element = new IntroViewElement(ElementType.Run);
             if (margins != null)
             {
-                element.Margins = margins.Value;
+                element.SetMargins(margins.Value);
             }
 
             // make a copy of the run
             Run runToAdd = RichTextBoxUtilities.CopyRun(run);
-            element.DataObject = runToAdd;
+            element.SetAsRun(runToAdd);
 
             Elements.Add(element);
         }
 
         /// <summary>
-        /// Adds a paragraph element to the Clipboard.
+        /// Adds a paragraph element to the list.
         /// </summary>
         /// <param name="para"></param>
         public static void AddParagraph(Paragraph para)
         {
-            IntroViewClipboardElement element = new IntroViewClipboardElement(ElementType.Paragraph);
+            IntroViewElement element = new IntroViewElement(ElementType.Paragraph);
 
-            // make a copy of the paragraph (without content)
-            Paragraph paraToAdd = RichTextBoxUtilities.CopyParagraph(para);
-            element.DataObject = paraToAdd;
-
+            element.SetAsParagraph(para);
             Elements.Add(element);
         }
 
         /// <summary>
-        /// Adds a Move element to the Clipboard.
+        /// Adds a Move element to the list.
         /// </summary>
         /// <param name="node"></param>
         public static void AddMove(TreeNode node)
         {
-            IntroViewClipboardElement element = new IntroViewClipboardElement(ElementType.Move);
-            element.DataObject = node;
+            IntroViewElement element = new IntroViewElement(ElementType.Move);
+            element.SetAsMove(node);
             Elements.Add(element);
         }
 
         /// <summary>
-        /// Adds a diagram element to the clipboard.
+        /// Adds a diagram element to the list.
         /// </summary>
         /// <param name="diagram"></param>
         public static void AddDiagram(TreeNode node, bool? flipped)
         {
-            IntroViewClipboardElement element = new IntroViewClipboardElement(ElementType.Diagram);
-            element.DataObject = node;
+            IntroViewElement element = new IntroViewElement(ElementType.Diagram);
+            element.SetAsDiagram(node);
 
             if (flipped != null)
             {

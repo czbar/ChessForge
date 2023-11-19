@@ -58,12 +58,6 @@ namespace ChessForge
                         FoundArticlesDialog dlgEx = new FoundArticlesDialog(searchNode,
                                                             FoundArticlesDialog.Mode.IDENTICAL_ARTICLES,
                                                             ref lstIdenticalPositions);
-                        //{
-                        //    Left = AppState.MainWin.ChessForgeMain.Left + 100,
-                        //    Top = AppState.MainWin.ChessForgeMain.Top + 100,
-                        //    Topmost = false,
-                        //    Owner = AppState.MainWin
-                        //};
                         GuiUtilities.PositionDialog(dlgEx, AppState.MainWin, 100);
 
                         if (dlgEx.ShowDialog() == true)
@@ -108,16 +102,14 @@ namespace ChessForge
             {
                 case FoundArticlesDialog.Action.CopyLine:
                     nodelList = TreeUtils.CopyNodeList(item.TailLine);
-                    ChfClipboard.HoldNodeList(nodelList, moveNumberOffset);
-                    AppState.MainWin.PasteChfClipboard();
+                    CopyPasteMoves.PasteVariation(nodelList);
                     AppState.IsDirty = true;
                     break;
                 case FoundArticlesDialog.Action.CopyTree:
                     foreach (TreeNode node in item.TailLine[0].Parent.Children)
                     {
                         nodelList = TreeUtils.CopySubtree(node);
-                        ChfClipboard.HoldNodeList(nodelList, moveNumberOffset);
-                        AppState.MainWin.PasteChfClipboard();
+                        CopyPasteMoves.PasteVariation(nodelList);
                     }
                     AppState.IsDirty = true;
                     break;

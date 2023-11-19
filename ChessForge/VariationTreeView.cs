@@ -2018,7 +2018,7 @@ namespace ChessForge
             if (_selectedForCopy.Count > 0)
             {
                 List<TreeNode> lstNodes = TreeUtils.CopyNodeList(_selectedForCopy);
-                ChfClipboard.HoldNodeList(lstNodes, ShownVariationTree.MoveNumberOffset);
+                SystemClipboard.CopyMoveList(lstNodes, ShownVariationTree.MoveNumberOffset);
             }
         }
 

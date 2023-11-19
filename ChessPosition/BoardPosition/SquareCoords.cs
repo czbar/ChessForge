@@ -1,4 +1,5 @@
-﻿
+﻿using System;
+
 namespace ChessPosition
 {
     // Chess board's square coordinates where
@@ -8,6 +9,7 @@ namespace ChessPosition
     // (0 is the first rank and 7 is the 8th rank).
     // For example: SquareCoords [0,0] represents square 'a1' and [3,4] is 'd5'
     // in the algebraic notation.
+    [Serializable()]
     public class SquareCoords
     {
         /// <summary>

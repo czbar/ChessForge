@@ -13,6 +13,7 @@ namespace ChessPosition
     /// Note that GUI layer has no move related logic. It will rely entirely
     /// on this data to visualize the move.
     /// </summary>
+    [Serializable()]
     public class MoveUI
     {
         public MoveUI() 

@@ -14,6 +14,7 @@ namespace ChessPosition
     /// In particular, it can be used to generate FEN 
     /// and/or to check if 2 positions are identical.
     /// </summary>
+    [Serializable()]
     public class BoardPosition
     {
         /// <summary>
