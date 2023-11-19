@@ -10,9 +10,6 @@ namespace ChessForge
     /// </summary>
     public class SystemClipboard
     {
-        // stores the last text that went into the system clipboard
-        private static string _lastText = "";
-
         /// <summary>
         /// Clear the clipboard.
         /// </summary>
@@ -57,7 +54,6 @@ namespace ChessForge
         {
             try
             {
-                _lastText = txt;
                 Clipboard.SetText(txt);
             }
             catch { };
@@ -76,26 +72,6 @@ namespace ChessForge
             catch { };
 
             return txt;
-        }
-
-        /// <summary>
-        /// Determines if the text in the clipboard is empty.
-        /// </summary>
-        /// <returns></returns>
-        public static bool IsEmpty()
-        {
-            string txt = GetText();
-            return string.IsNullOrEmpty(txt);
-        }
-
-        /// <summary>
-        /// Determines whether the system clipboard contains the same text as the last
-        /// set from Chess Forge. If so, returns false;
-        /// </summary>
-        /// <returns></returns>
-        public static bool IsUpdated()
-        {
-            return GetText() != _lastText;
         }
 
         /// <summary>
