@@ -464,13 +464,14 @@ namespace ChessForge
         public Paragraph RebuildChapterParagraph(Chapter chapter)
         {
             Paragraph para = null; ;
+            int chapterIndex = chapter.Index;
 
             foreach (Block b in Document.Blocks)
             {
                 if (b is Paragraph)
                 {
                     int id = TextUtils.GetIdFromPrefixedString((b as Paragraph).Name);
-                    if (id == chapter.Index)
+                    if (id == chapterIndex)
                     {
                         para = b as Paragraph;
                         break;
