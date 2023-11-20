@@ -1297,14 +1297,17 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnChapterUp_Click(object sender, RoutedEventArgs e)
         {
-            int index = WorkbookManager.SessionWorkbook.ActiveChapterIndex;
+            int index = AppState.Workbook.ActiveChapterIndex;
             if (index > 0)
             {
                 Chapter hold = WorkbookManager.SessionWorkbook.Chapters[index];
-                WorkbookManager.SessionWorkbook.Chapters[index] = WorkbookManager.SessionWorkbook.Chapters[index - 1];
-                WorkbookManager.SessionWorkbook.Chapters[index - 1] = hold;
-                _chaptersView.BuildFlowDocumentForChaptersView();
+                AppState.Workbook.Chapters[index] = AppState.Workbook.Chapters[index - 1];
+                AppState.Workbook.Chapters[index - 1] = hold;
+
+                _chaptersView.RebuildChapterParagraph(AppState.Workbook.Chapters[index]);
+                _chaptersView.RebuildChapterParagraph(AppState.Workbook.Chapters[index-1]);
                 SelectChapterByIndex(index - 1, false, false);
+
                 PulseManager.ChaperIndexToBringIntoView = index - 1;
                 AppState.IsDirty = true;
             }
@@ -1317,14 +1320,17 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnChapterDown_Click(object sender, RoutedEventArgs e)
         {
-            int index = WorkbookManager.SessionWorkbook.ActiveChapterIndex;
-            if (index >= 0 && index < WorkbookManager.SessionWorkbook.Chapters.Count - 1)
+            int index = AppState.Workbook.ActiveChapterIndex;
+            if (index >= 0 && index < AppState.Workbook.Chapters.Count - 1)
             {
-                Chapter hold = WorkbookManager.SessionWorkbook.Chapters[index];
-                WorkbookManager.SessionWorkbook.Chapters[index] = WorkbookManager.SessionWorkbook.Chapters[index + 1];
-                WorkbookManager.SessionWorkbook.Chapters[index + 1] = hold;
-                _chaptersView.BuildFlowDocumentForChaptersView();
+                Chapter hold = AppState.Workbook.Chapters[index];
+                AppState.Workbook.Chapters[index] = AppState.Workbook.Chapters[index + 1];
+                AppState.Workbook.Chapters[index + 1] = hold;
+
+                _chaptersView.RebuildChapterParagraph(AppState.Workbook.Chapters[index]);
+                _chaptersView.RebuildChapterParagraph(AppState.Workbook.Chapters[index + 1]);
                 SelectChapterByIndex(index + 1, false, false);
+
                 PulseManager.ChaperIndexToBringIntoView = index + 1;
                 AppState.IsDirty = true;
             }
