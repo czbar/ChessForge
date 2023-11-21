@@ -151,6 +151,34 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Moves a game to a different index, optionally a different chapter.
+        /// </summary>
+        /// <param name="sourceChapterIndex"></param>
+        /// <param name="articleIndex"></param>
+        /// <param name="targetChapterIndex"></param>
+        /// <param name="insertBeforeGame"></param>
+        public void MoveModelGame(int sourceChapterIndex, int articleIndex, int targetChapterIndex, int insertBeforeGame)
+        {
+            try
+            {
+                Chapter sourceChapter = Chapters[sourceChapterIndex];
+                Article game = sourceChapter.ModelGames[articleIndex];
+                sourceChapter.ModelGames.Remove(game);
+
+                Chapter targetChapter = Chapters[targetChapterIndex];
+                if (sourceChapter != targetChapter || articleIndex != insertBeforeGame)
+                {
+                    if (sourceChapter == targetChapter && articleIndex < insertBeforeGame)
+                    {
+                        insertBeforeGame--;
+                    }
+                    targetChapter.InsertModelGame(game, insertBeforeGame);
+                }
+            }
+            catch { }
+        }
+
+        /// <summary>
         /// Called when creating a Workbook to populate article lists across the workbook.
         /// The created list must have the exact same number of elements as the passed collection
         /// and they must match their source by index.
