@@ -156,23 +156,35 @@ namespace ChessForge
         /// <param name="sourceChapterIndex"></param>
         /// <param name="articleIndex"></param>
         /// <param name="targetChapterIndex"></param>
-        /// <param name="insertBeforeGame"></param>
-        public void MoveModelGame(int sourceChapterIndex, int articleIndex, int targetChapterIndex, int insertBeforeGame)
+        /// <param name="insertBeforeArticle"></param>
+        public void MoveArticle(GameData.ContentType content, int sourceChapterIndex, int articleIndex, int targetChapterIndex, int insertBeforeArticle)
         {
             try
             {
                 Chapter sourceChapter = Chapters[sourceChapterIndex];
-                Article game = sourceChapter.ModelGames[articleIndex];
-                sourceChapter.ModelGames.Remove(game);
+                Article article = null;
+
+                switch (content)
+                {
+                    case GameData.ContentType.MODEL_GAME:
+                        article = sourceChapter.ModelGames[articleIndex];
+                        break;
+                    case GameData.ContentType.EXERCISE:
+                        article = sourceChapter.Exercises[articleIndex];
+                        break;
+                }
 
                 Chapter targetChapter = Chapters[targetChapterIndex];
-                if (sourceChapter != targetChapter || articleIndex != insertBeforeGame)
+
+                if (sourceChapter != targetChapter || articleIndex != insertBeforeArticle)
                 {
-                    if (sourceChapter == targetChapter && articleIndex < insertBeforeGame)
+                    sourceChapter.DeleteArticle(article);
+
+                    if (sourceChapter == targetChapter && articleIndex < insertBeforeArticle)
                     {
-                        insertBeforeGame--;
+                        insertBeforeArticle--;
                     }
-                    targetChapter.InsertModelGame(game, insertBeforeGame);
+                    targetChapter.InsertArticle(article, insertBeforeArticle);
                 }
             }
             catch { }
@@ -797,7 +809,7 @@ namespace ChessForge
             try
             {
                 DeleteChapter(chapter);
-             
+
                 List<Chapter> chapters = objChapterList as List<Chapter>;
                 List<int> indices = objIndexList as List<int>;
 
