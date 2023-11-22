@@ -459,7 +459,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiRtbChaptersView_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void UiRtbChaptersView_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             _chaptersView.MouseLeftButtonUp(sender, e);
         }
