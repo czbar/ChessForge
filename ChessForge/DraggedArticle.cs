@@ -36,10 +36,11 @@ namespace ChessForge
         /// </summary>
         /// <param name="chapter"></param>
         /// <param name="article"></param>
-        public static void StartDragOperation(int chapterIndex, int articleIndex)
+        public static void StartDragOperation(int chapterIndex, int articleIndex, GameData.ContentType content)
         {
             ArticleIndex = articleIndex;
             ChapterIndex = chapterIndex;
+            ContentType = content;
             IsDragInProgress = true;
         }
 
