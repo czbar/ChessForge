@@ -111,8 +111,9 @@ namespace ChessForge
         public ChaptersView(FlowDocument doc, MainWindow mainWin) : base(doc)
         {
             _mainWin = mainWin;
+            _mainWin.UiRtbChaptersView.AllowDrop = false;
+            _mainWin.UiRtbChaptersView.IsReadOnly = true;
         }
-
         /// <summary>
         /// Flags whether the view needs refreshing
         /// </summary>
@@ -146,10 +147,34 @@ namespace ChessForge
 
                 IsDirty = false;
             }
-            catch(Exception ex)    
+            catch(Exception ex)
             {
                 AppLog.Message("BuildFlowDocumentForChaptersView()", ex);
             }
+        }
+
+        /// <summary>
+        /// Left mouse button has been released.
+        /// Stop any drag operation that may be in progress.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            DraggedArticle.StopDragOperation();
+            _mainWin.UiRtbChaptersView.Cursor = Cursors.Arrow;
+        }
+
+        /// <summary>
+        /// Mouse left the Chapters View area.
+        /// Stop any drag operation that may be in progress.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void MouseLeave(object sender, MouseEventArgs e)
+        {
+            DraggedArticle.StopDragOperation();
+            _mainWin.UiRtbChaptersView.Cursor = Cursors.Arrow;
         }
 
         /// <summary>
@@ -178,7 +203,7 @@ namespace ChessForge
 
                     second.Text = BuildModelGameTitleText(chapter, targetIndex);
                     ShowSelectionMark(ref second, true, SELECTED_ARTICLE_PREFIX, NON_SELECTED_ARTICLE_PREFIX);
-                 
+
                     PulseManager.SetArticleToBringIntoView(chapter.Index, GameData.ContentType.MODEL_GAME, targetIndex);
                 }
             }
@@ -754,7 +779,10 @@ namespace ChessForge
                     string lineText = BuildModelGameTitleText(chapter, i);
                     Run rGame = CreateRun(STYLE_SUBHEADER, lineText, true);
                     rGame.Name = _run_model_game_ + i.ToString();
-                    rGame.MouseDown += EventModelGameRunClicked;
+                    // use Preview for MouseDn/Up but "plain" MouseMove. Otherwise drag-and-drop logic won't work
+                    // as move events won't be received until mouse button is no longer down.
+                    rGame.PreviewMouseDown += EventModelGameRunClicked;
+                    rGame.PreviewMouseUp += EventModelGameRunDrop;
                     rGame.MouseMove += EventModelGameRunHovered;
                     rGame.MouseLeave += EventModelGameRunLeft;
                     if (LastClickedItemType == WorkbookManager.ItemType.MODEL_GAME && i == chapter.ActiveModelGameIndex && chapter == WorkbookManager.SessionWorkbook.ActiveChapter)
@@ -2024,6 +2052,59 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// A mouse button was released over the game run.
+        /// If drag-n-drop is in progress, insert the dragged run here, 
+        /// remove from the original spot and rebuild the chapter(s).
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventModelGameRunDrop(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                Run run = e.Source as Run;
+                if (run != null)
+                {
+                    try
+                    {
+                        _mainWin.UiRtbChaptersView.Cursor = Cursors.Arrow;
+
+                        int targetChapterIndex = GetChapterIndexFromChildRun(run);
+                        int targetGameIndex = TextUtils.GetIdFromPrefixedString(run.Name);
+
+                        // figure out if we hit the upper or the lower half of the Run
+                        Point ptMousePos = e.GetPosition(_mainWin.UiRtbChaptersView);
+                        TextPointer tpMousePos = _mainWin.UiRtbChaptersView.GetPositionFromPoint(ptMousePos, true);
+
+                        // if we move down by half the font size, is it still the same the same TextPointer
+                        Point ptBelow = new Point(ptMousePos.X, ptMousePos.Y);
+                        ptBelow.Y += run.FontSize / 2;
+
+                        TextPointer tpBelow = _mainWin.UiRtbChaptersView.GetPositionFromPoint(ptBelow, true);
+                        if (tpMousePos.CompareTo(tpBelow) != 0)
+                        {
+                            targetGameIndex++;
+                        }
+
+                        Chapter targetChapter = AppState.Workbook.Chapters[targetChapterIndex];
+                        AppState.Workbook.MoveModelGame(DraggedArticle.ChapterIndex, DraggedArticle.ArticleIndex, targetChapterIndex, targetGameIndex);
+                        RebuildChapterParagraph(AppState.Workbook.Chapters[DraggedArticle.ChapterIndex]);
+                        if (DraggedArticle.ChapterIndex != targetGameIndex)
+                        {
+                            RebuildChapterParagraph(targetChapter);
+                        }
+                    }
+                    catch { }
+                }
+            }
+
+            DraggedArticle.StopDragOperation();
+            _mainWin.UiRtbChaptersView.Cursor = Cursors.Arrow;
+
+            e.Handled = true;
+        }
+
+        /// <summary>
         /// Event handler invoked when a Model Game Run was clicked.
         /// </summary>
         /// <param name="sender"></param>
@@ -2078,10 +2159,13 @@ namespace ChessForge
             {
                 AppLog.Message("Exception in EventModelGameRunClicked(): " + ex.Message);
             }
+
+            e.Handled = true;
         }
 
         /// <summary>
-        /// Display Model Game's Thumbnail.
+        /// Displays Model Game's thumbnail or final position on the floating board.
+        /// If the left button is pressed, initiates the game drag-and-drop.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -2089,16 +2173,31 @@ namespace ChessForge
         {
             try
             {
-                Run r = (Run)e.Source;
+                Run run = (Run)e.Source;
 
-                Chapter chapter = GetChapterAndItemIndexFromRun(r, out int index);
-                Article game = chapter.GetModelGameAtIndex(index);
+                Chapter chapter = GetChapterAndItemIndexFromRun(run, out int gameIndex);
+                Point p = e.GetPosition(run);
+                Article game = chapter.GetModelGameAtIndex(gameIndex);
                 TreeNode node = game.Tree.GetThumbnail();
-                if (node == null)
+
+                if (e.LeftButton == MouseButtonState.Pressed)
                 {
-                    node = game.Tree.GetFinalPosition();
+                    // if not already in progress start the drag
+                    if (!DraggedArticle.IsDragInProgress)
+                    {
+                        DraggedArticle.StartDragOperation(chapter.Index, gameIndex);
+                        _mainWin.UiRtbChaptersView.Cursor = Cursors.Hand;
+                    }
                 }
-                ShowFloatingBoardForNode(e, node, TabViewType.MODEL_GAME);
+                else
+                {
+                    if (node == null)
+                    {
+                        node = game.Tree.GetFinalPosition();
+                    }
+                    ShowFloatingBoardForNode(e, node, TabViewType.MODEL_GAME);
+                }
+                e.Handled = true;
             }
             catch
             {
