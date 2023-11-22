@@ -147,7 +147,7 @@ namespace ChessForge
 
                 IsDirty = false;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLog.Message("BuildFlowDocumentForChaptersView()", ex);
             }
@@ -175,6 +175,21 @@ namespace ChessForge
         {
             DraggedArticle.StopDragOperation();
             _mainWin.UiRtbChaptersView.Cursor = Cursors.Arrow;
+        }
+
+        /// <summary>
+        /// Mouse moved within the area and the event was not handled
+        /// downstream.
+        /// If drag is in progress show the "barred" cursor.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void MouseMove(object sender, MouseEventArgs e)
+        {
+            if (DraggedArticle.IsDragInProgress)
+            {
+                _mainWin.UiRtbChaptersView.Cursor = DragAndDropCursors.GetBarredDropCursor();
+            }
         }
 
         /// <summary>
@@ -830,16 +845,20 @@ namespace ChessForge
                 {
                     para.Inlines.Add(new Run("\n"));
                     string lineText = BuildExerciseTitleText(chapter, i);
-                    Run rGame = CreateRun(STYLE_SUBHEADER, lineText, false);
-                    rGame.Name = _run_exercise_ + i.ToString();
-                    rGame.MouseDown += EventExerciseRunClicked;
-                    rGame.MouseMove += EventExerciseRunHovered;
-                    rGame.MouseLeave += EventExerciseRunLeft;
+                    Run rExercise = CreateRun(STYLE_SUBHEADER, lineText, false);
+                    rExercise.Name = _run_exercise_ + i.ToString();
+
+                    // use Preview for MouseDn/Up but "plain" MouseMove. Otherwise drag-and-drop logic won't work
+                    // as move events won't be received until mouse button is no longer down.
+                    rExercise.PreviewMouseDown += EventExerciseRunClicked;
+                    rExercise.PreviewMouseUp += EventExerciseRunDrop;
+                    rExercise.MouseMove += EventExerciseRunHovered;
+                    rExercise.MouseLeave += EventExerciseRunLeft;
                     if (LastClickedItemType == WorkbookManager.ItemType.EXERCISE && i == chapter.ActiveExerciseIndex && chapter == WorkbookManager.SessionWorkbook.ActiveChapter)
                     {
-                        ShowSelectionMark(ref rGame, true, SELECTED_ARTICLE_PREFIX, NON_SELECTED_ARTICLE_PREFIX);
+                        ShowSelectionMark(ref rExercise, true, SELECTED_ARTICLE_PREFIX, NON_SELECTED_ARTICLE_PREFIX);
                     }
-                    para.Inlines.Add(rGame);
+                    para.Inlines.Add(rExercise);
                 }
             }
 
@@ -2087,12 +2106,71 @@ namespace ChessForge
                         }
 
                         Chapter targetChapter = AppState.Workbook.Chapters[targetChapterIndex];
-                        AppState.Workbook.MoveModelGame(DraggedArticle.ChapterIndex, DraggedArticle.ArticleIndex, targetChapterIndex, targetGameIndex);
+                        AppState.Workbook.MoveArticle(DraggedArticle.ContentType, DraggedArticle.ChapterIndex, DraggedArticle.ArticleIndex, targetChapterIndex, targetGameIndex);
+                        AppState.IsDirty = true;
+
                         RebuildChapterParagraph(AppState.Workbook.Chapters[DraggedArticle.ChapterIndex]);
                         if (DraggedArticle.ChapterIndex != targetGameIndex)
                         {
                             RebuildChapterParagraph(targetChapter);
                         }
+                        HighlightActiveChapter();
+                    }
+                    catch { }
+                }
+            }
+
+            DraggedArticle.StopDragOperation();
+            _mainWin.UiRtbChaptersView.Cursor = Cursors.Arrow;
+
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// A mouse button was released over an exercise run.
+        /// If drag-n-drop is in progress, insert the dragged run here, 
+        /// remove from the original spot and rebuild the chapter(s).
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventExerciseRunDrop(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                Run run = e.Source as Run;
+                if (run != null)
+                {
+                    try
+                    {
+                        _mainWin.UiRtbChaptersView.Cursor = Cursors.Arrow;
+
+                        int targetChapterIndex = GetChapterIndexFromChildRun(run);
+                        int targetExerciseIndex = TextUtils.GetIdFromPrefixedString(run.Name);
+
+                        // figure out if we hit the upper or the lower half of the Run
+                        Point ptMousePos = e.GetPosition(_mainWin.UiRtbChaptersView);
+                        TextPointer tpMousePos = _mainWin.UiRtbChaptersView.GetPositionFromPoint(ptMousePos, true);
+
+                        // if we move down by half the font size, is it still the same the same TextPointer
+                        Point ptBelow = new Point(ptMousePos.X, ptMousePos.Y);
+                        ptBelow.Y += run.FontSize / 2;
+
+                        TextPointer tpBelow = _mainWin.UiRtbChaptersView.GetPositionFromPoint(ptBelow, true);
+                        if (tpMousePos.CompareTo(tpBelow) != 0)
+                        {
+                            targetExerciseIndex++;
+                        }
+
+                        Chapter targetChapter = AppState.Workbook.Chapters[targetChapterIndex];
+                        AppState.Workbook.MoveArticle(DraggedArticle.ContentType, DraggedArticle.ChapterIndex, DraggedArticle.ArticleIndex, targetChapterIndex, targetExerciseIndex);
+                        AppState.IsDirty = true;
+
+                        RebuildChapterParagraph(AppState.Workbook.Chapters[DraggedArticle.ChapterIndex]);
+                        if (DraggedArticle.ChapterIndex != targetExerciseIndex)
+                        {
+                            RebuildChapterParagraph(targetChapter);
+                        }
+                        HighlightActiveChapter();
                     }
                     catch { }
                 }
@@ -2185,8 +2263,16 @@ namespace ChessForge
                     // if not already in progress start the drag
                     if (!DraggedArticle.IsDragInProgress)
                     {
-                        DraggedArticle.StartDragOperation(chapter.Index, gameIndex);
-                        _mainWin.UiRtbChaptersView.Cursor = Cursors.Hand;
+                        DraggedArticle.StartDragOperation(chapter.Index, gameIndex, GameData.ContentType.MODEL_GAME);
+                    }
+                    // drag in progress; set appropriate cursor
+                    if (DraggedArticle.ContentType == GameData.ContentType.MODEL_GAME)
+                    {
+                        _mainWin.UiRtbChaptersView.Cursor = DragAndDropCursors.GetAllowDropCursor();
+                    }
+                    else
+                    {
+                        _mainWin.UiRtbChaptersView.Cursor = DragAndDropCursors.GetBarredDropCursor();
                     }
                 }
                 else
@@ -2269,6 +2355,8 @@ namespace ChessForge
             {
                 AppLog.Message("Exception in EventExerciseRunClicked(): " + ex.Message);
             }
+
+            e.Handled = true;
         }
 
         /// <summary>
@@ -2282,14 +2370,36 @@ namespace ChessForge
             {
                 Run r = (Run)e.Source;
 
-                Chapter chapter = GetChapterAndItemIndexFromRun(r, out int index);
-                Article exer = chapter.GetExerciseAtIndex(index);
-                TreeNode node = exer.Tree.GetThumbnail();
-                if (node == null)
+                Chapter chapter = GetChapterAndItemIndexFromRun(r, out int exerciseIndex);
+                Article exer = chapter.GetExerciseAtIndex(exerciseIndex);
+                if (e.LeftButton == MouseButtonState.Pressed)
                 {
-                    node = exer.Tree.Nodes[0];
+                    // if not already in progress start the drag
+                    if (!DraggedArticle.IsDragInProgress)
+                    {
+                        DraggedArticle.StartDragOperation(chapter.Index, exerciseIndex, GameData.ContentType.EXERCISE);
+                    }
+                    // drag in progress; set appropriate cursor
+                    if (DraggedArticle.ContentType == GameData.ContentType.EXERCISE)
+                    {
+                        _mainWin.UiRtbChaptersView.Cursor = DragAndDropCursors.GetAllowDropCursor();
+                    }
+                    else
+                    {
+                        _mainWin.UiRtbChaptersView.Cursor = DragAndDropCursors.GetBarredDropCursor();
+                    }
                 }
-                ShowFloatingBoardForNode(e, node, TabViewType.EXERCISE);
+                else
+                {
+                    TreeNode node = exer.Tree.GetThumbnail();
+                    if (node == null)
+                    {
+                        node = exer.Tree.Nodes[0];
+                    }
+                    ShowFloatingBoardForNode(e, node, TabViewType.EXERCISE);
+                }
+
+                e.Handled = true;
             }
             catch
             {
