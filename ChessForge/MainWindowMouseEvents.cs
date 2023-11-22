@@ -454,6 +454,26 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Left mouse button released in the Chapters View
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiRtbChaptersView_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            _chaptersView.MouseLeftButtonUp(sender, e);
+        }
+
+        /// <summary>
+        /// Mouse left the Chapters View area
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiRtbChaptersView_MouseLeave(object sender, MouseEventArgs e)
+        {
+            _chaptersView.MouseLeave(sender, e);
+        }
+
 
         //**************************************************************
         //
