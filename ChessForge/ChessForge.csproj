@@ -133,6 +133,7 @@
       <DependentUpon>DownloadedGamesActionDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="DownloadWebGamesManager.cs" />
+    <Compile Include="DragAndDropCursors.cs" />
     <Compile Include="DraggedArticle.cs" />
     <Compile Include="EditHyperlinkDialog.xaml.cs">
       <DependentUpon>EditHyperlinkDialog.xaml</DependentUpon>
