@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Windows.Media;
 using ChessPosition;
 using ChessPosition.GameTree;
 using GameTree;
@@ -148,6 +149,73 @@ namespace ChessForge
         public bool IsBackgroundLoadingInProgress
         {
             get => GamesManager.State == ProcessState.RUNNING;
+        }
+
+        /// <summary>
+        /// Moves chapter from one index position to another.
+        /// </summary>
+        /// <param name="sourceIndex"></param>
+        /// <param name="targetIndex"></param>
+        public bool MoveChapter(int sourceIndex, int targetIndex)
+        {
+            bool ret = false;
+
+            if (sourceIndex != targetIndex
+                && sourceIndex >= 0 && targetIndex >= 0
+                && sourceIndex < Chapters.Count && targetIndex < Chapters.Count)
+            {
+                try
+                {
+                    Chapter hold = WorkbookManager.SessionWorkbook.Chapters[sourceIndex];
+                    AppState.Workbook.Chapters.Remove(hold);
+                    AppState.Workbook.Chapters.Insert(targetIndex, hold);
+                    AppState.IsDirty = true;
+                }
+                catch { }
+                ret = true;
+            }
+
+            return ret;
+        }
+
+        /// <summary>
+        /// Moves a game to a different index, optionally a different chapter.
+        /// </summary>
+        /// <param name="sourceChapterIndex"></param>
+        /// <param name="articleIndex"></param>
+        /// <param name="targetChapterIndex"></param>
+        /// <param name="insertBeforeArticle"></param>
+        public void MoveArticle(GameData.ContentType content, int sourceChapterIndex, int articleIndex, int targetChapterIndex, int insertBeforeArticle)
+        {
+            try
+            {
+                Chapter sourceChapter = Chapters[sourceChapterIndex];
+                Article article = null;
+
+                switch (content)
+                {
+                    case GameData.ContentType.MODEL_GAME:
+                        article = sourceChapter.ModelGames[articleIndex];
+                        break;
+                    case GameData.ContentType.EXERCISE:
+                        article = sourceChapter.Exercises[articleIndex];
+                        break;
+                }
+
+                Chapter targetChapter = Chapters[targetChapterIndex];
+
+                if (sourceChapter != targetChapter || articleIndex != insertBeforeArticle)
+                {
+                    sourceChapter.DeleteArticle(article);
+
+                    if (sourceChapter == targetChapter && articleIndex < insertBeforeArticle)
+                    {
+                        insertBeforeArticle--;
+                    }
+                    targetChapter.InsertArticle(article, insertBeforeArticle);
+                }
+            }
+            catch { }
         }
 
         /// <summary>
@@ -769,7 +837,7 @@ namespace ChessForge
             try
             {
                 DeleteChapter(chapter);
-             
+
                 List<Chapter> chapters = objChapterList as List<Chapter>;
                 List<int> indices = objIndexList as List<int>;
 

@@ -114,6 +114,7 @@
       <DependentUpon>ChapterFromLineDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="ChaptersView.cs" />
+    <Compile Include="ChaptersViewMouseEvents.cs" />
     <Compile Include="ChaptersViewRunAttrs.cs" />
     <Compile Include="ChapterTitleDialog.xaml.cs">
       <DependentUpon>ChapterTitleDialog.xaml</DependentUpon>
@@ -133,6 +134,8 @@
       <DependentUpon>DownloadedGamesActionDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="DownloadWebGamesManager.cs" />
+    <Compile Include="DragAndDropCursors.cs" />
+    <Compile Include="DraggedArticle.cs" />
     <Compile Include="EditHyperlinkDialog.xaml.cs">
       <DependentUpon>EditHyperlinkDialog.xaml</DependentUpon>
     </Compile>
