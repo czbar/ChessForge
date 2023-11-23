@@ -114,6 +114,7 @@
       <DependentUpon>ChapterFromLineDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="ChaptersView.cs" />
+    <Compile Include="ChaptersViewMouseEvents.cs" />
     <Compile Include="ChaptersViewRunAttrs.cs" />
     <Compile Include="ChapterTitleDialog.xaml.cs">
       <DependentUpon>ChapterTitleDialog.xaml</DependentUpon>
