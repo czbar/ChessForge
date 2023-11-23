@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Windows.Media;
 using ChessPosition;
 using ChessPosition.GameTree;
 using GameTree;
@@ -148,6 +149,33 @@ namespace ChessForge
         public bool IsBackgroundLoadingInProgress
         {
             get => GamesManager.State == ProcessState.RUNNING;
+        }
+
+        /// <summary>
+        /// Moves chapter from one index position to another.
+        /// </summary>
+        /// <param name="sourceIndex"></param>
+        /// <param name="targetIndex"></param>
+        public bool MoveChapter(int sourceIndex, int targetIndex)
+        {
+            bool ret = false;
+
+            if (sourceIndex != targetIndex
+                && sourceIndex >= 0 && targetIndex >= 0
+                && sourceIndex < Chapters.Count && targetIndex < Chapters.Count)
+            {
+                try
+                {
+                    Chapter hold = WorkbookManager.SessionWorkbook.Chapters[sourceIndex];
+                    AppState.Workbook.Chapters.Remove(hold);
+                    AppState.Workbook.Chapters.Insert(targetIndex, hold);
+                    AppState.IsDirty = true;
+                }
+                catch { }
+                ret = true;
+            }
+
+            return ret;
         }
 
         /// <summary>
