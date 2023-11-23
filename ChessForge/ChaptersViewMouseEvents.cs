@@ -40,6 +40,8 @@ namespace ChessForge
                 {
                     _mainWin.ShowWorkbookOptionsDialog(false);
                 }
+
+                e.Handled = true;
             }
             catch (Exception ex)
             {
@@ -87,6 +89,8 @@ namespace ChessForge
 
                     HighlightChapterSelections(chapter);
                 }
+
+                e.Handled = true;
             }
             catch (Exception ex)
             {
@@ -128,6 +132,8 @@ namespace ChessForge
             {
                 AppLog.Message("Exception in EventStudyTreeRunClicked(): " + ex.Message);
             }
+
+            e.Handled = true;
         }
 
         /// <summary>
@@ -164,6 +170,8 @@ namespace ChessForge
             {
                 AppLog.Message("Exception in EventIntroRunClicked(): " + ex.Message);
             }
+
+            e.Handled = true;
         }
 
         /// <summary>
@@ -202,6 +210,8 @@ namespace ChessForge
             {
                 AppLog.Message("Exception in EventIntroRunClicked(): " + ex.Message);
             }
+
+            e.Handled = true;
         }
 
         /// <summary>
@@ -257,6 +267,8 @@ namespace ChessForge
             {
                 AppLog.Message("Exception in EventModelGamesHeaderClicked(): " + ex.Message);
             }
+
+            e.Handled = true;
         }
 
         /// <summary>
@@ -312,6 +324,8 @@ namespace ChessForge
             {
                 AppLog.Message("Exception in EventModelGamesHeaderClicked(): " + ex.Message);
             }
+
+            e.Handled = true;
         }
 
 
@@ -465,6 +479,8 @@ namespace ChessForge
             catch
             {
             }
+
+            e.Handled = true;
         }
 
         /// <summary>
@@ -495,6 +511,8 @@ namespace ChessForge
             {
                 AppLog.Message("Exception in EventExpandSymbolClicked(): " + ex.Message);
             }
+
+            e.Handled = true;
         }
 
         /// <summary>
@@ -525,6 +543,8 @@ namespace ChessForge
             {
                 AppLog.Message("Exception in EventExercisesExpandSymbolClicked(): " + ex.Message);
             }
+
+            e.Handled = true;
         }
 
         //*******************************************************************************************
@@ -547,9 +567,16 @@ namespace ChessForge
                 int chapterIndex = TextUtils.GetIdFromPrefixedString(rChapter.Name);
                 if (chapterIndex >= 0)
                 {
-                    if (e.LeftButton == MouseButtonState.Pressed && DraggedArticle.IsDragInProgress)
+                    if (e.LeftButton == MouseButtonState.Pressed)
                     {
-                        if (DraggedArticle.ContentType == GameData.ContentType.MODEL_GAME || DraggedArticle.ContentType == GameData.ContentType.EXERCISE)
+                        if (!DraggedArticle.IsDragInProgress)
+                        {
+                            DraggedArticle.StartDragOperation(chapterIndex, -1, GameData.ContentType.NONE);
+                        }
+
+                        if (DraggedArticle.ContentType == GameData.ContentType.MODEL_GAME 
+                            || DraggedArticle.ContentType == GameData.ContentType.EXERCISE
+                            || DraggedArticle.IsChapterDragged())
                         {
                             _mainWin.UiRtbChaptersView.Cursor = DragAndDropCursors.GetAllowDropCursor();
                         }
@@ -825,11 +852,17 @@ namespace ChessForge
                 {
                     try
                     {
-                        if (DraggedArticle.IsDragInProgress && 
-                            (DraggedArticle.ContentType == GameData.ContentType.MODEL_GAME || DraggedArticle.ContentType == GameData.ContentType.EXERCISE))
+                        if (DraggedArticle.IsDragInProgress)
                         {
                             int targetChapterIndex = GetChapterIndexFromChildRun(run);
-                            MoveArticle(targetChapterIndex, 0);
+                            if (DraggedArticle.IsChapterDragged())
+                            {
+                                MoveChapter(DraggedArticle.ChapterIndex, targetChapterIndex);
+                            }
+                            else if (DraggedArticle.ContentType == GameData.ContentType.MODEL_GAME || DraggedArticle.ContentType == GameData.ContentType.EXERCISE)
+                            {
+                                MoveArticle(targetChapterIndex, 0);
+                            }
                         }
                     }
                     catch { }
@@ -840,6 +873,26 @@ namespace ChessForge
             _mainWin.UiRtbChaptersView.Cursor = Cursors.Arrow;
 
             e.Handled = true;
+        }
+
+        /// <summary>
+        /// Handle mouse left button up as if it was a chapter header
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventIntroHeaderDrop(object sender, MouseButtonEventArgs e)
+        {
+            EventChapterHeaderDrop(sender, e);
+        }
+
+        /// <summary>
+        /// Handle mouse left button up as if it was a chapter header
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventStudyTreeHeaderDrop(object sender, MouseButtonEventArgs e)
+        {
+            EventChapterHeaderDrop(sender, e);
         }
 
         /// <summary>
@@ -1018,6 +1071,23 @@ namespace ChessForge
             }
             HighlightActiveChapter();
         }
+
+        /// <summary>
+        /// Moves chapter from one index position to another. 
+        /// </summary>
+        /// <param name="sourceIndex"></param>
+        /// <param name="targetIndex"></param>
+        public void MoveChapter(int sourceIndex, int targetIndex)
+        {
+            if (AppState.Workbook.MoveChapter(sourceIndex, targetIndex))
+            {
+                BuildFlowDocumentForChaptersView();
+
+                AppState.MainWin.SelectChapterByIndex(targetIndex, false, false);
+                PulseManager.ChaperIndexToBringIntoView = targetIndex;
+            }
+        }
+
 
     }
 }

@@ -562,10 +562,10 @@ namespace ChessForge
                     ShowSelectionMark(ref rChapter, true, SELECTED_CHAPTER_PREFIX, NON_SELECTED_CHAPTER_PREFIX);
                 }
                 rChapter.Name = _run_chapter_title_ + chapter.Index.ToString();
-                rChapter.MouseDown += EventChapterHeaderClicked;
+                rChapter.PreviewMouseDown += EventChapterHeaderClicked;
+                rChapter.PreviewMouseUp += EventChapterHeaderDrop;
                 rChapter.MouseMove += EventChapterHeaderHovered;
                 rChapter.MouseLeave += EventChapterHeaderLeft;
-                rChapter.PreviewMouseUp += EventChapterHeaderDrop;
                 para.Inlines.Add(rChapter);
 
                 if (chapter.IsViewExpanded)
@@ -681,17 +681,18 @@ namespace ChessForge
         private Run InsertStudyRun(Paragraph para, Chapter chapter)
         {
             string res = Resources.Study;
-            Run r = CreateRun(STYLE_SUBHEADER, "\n" + SUBHEADER_INDENT + res, true);
-            r.Name = _run_study_tree_ + chapter.Index.ToString();
+            Run runStudy = CreateRun(STYLE_SUBHEADER, "\n" + SUBHEADER_INDENT + res, true);
+            runStudy.Name = _run_study_tree_ + chapter.Index.ToString();
             if (LastClickedItemType == WorkbookManager.ItemType.STUDY)
             {
-                ShowSelectionMark(ref r, true, SELECTED_STUDY_PREFIX, NON_SELECTED_STUDY_PREFIX);
+                ShowSelectionMark(ref runStudy, true, SELECTED_STUDY_PREFIX, NON_SELECTED_STUDY_PREFIX);
             }
-            r.MouseDown += EventStudyTreeHeaderClicked;
-            r.MouseMove += EventStudyTreeHeaderHovered;
-            r.MouseLeave += EventStudyTreeHeaderLeft;
-            para.Inlines.Add(r);
-            return r;
+            runStudy.PreviewMouseDown += EventStudyTreeHeaderClicked;
+            runStudy.PreviewMouseUp += EventStudyTreeHeaderDrop;
+            runStudy.MouseMove += EventStudyTreeHeaderHovered;
+            runStudy.MouseLeave += EventStudyTreeHeaderLeft;
+            para.Inlines.Add(runStudy);
+            return runStudy;
         }
 
         /// <summary>
@@ -711,7 +712,8 @@ namespace ChessForge
                 {
                     ShowSelectionMark(ref r, true, SELECTED_STUDY_PREFIX, NON_SELECTED_STUDY_PREFIX);
                 }
-                r.MouseDown += EventIntroHeaderClicked;
+                r.PreviewMouseDown += EventIntroHeaderClicked;
+                r.PreviewMouseUp += EventIntroHeaderDrop;
                 r.MouseMove += EventIntroHeaderHovered;
                 r.MouseLeave += EventIntroHeaderLeft;
                 if (studyRun == null)
