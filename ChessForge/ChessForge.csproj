@@ -123,6 +123,9 @@
     <Compile Include="ChapterViewState.cs" />
     <Compile Include="ChessBoardSmall.cs" />
     <Compile Include="ChessForgeEventArgs.cs" />
+    <Compile Include="CommentBeforeMoveDialog.xaml.cs">
+      <DependentUpon>CommentBeforeMoveDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ContentTypeListItem.cs" />
     <Compile Include="CopyPasteMoves.cs" />
     <Compile Include="CustomCommands.cs" />
@@ -332,6 +335,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ChapterTitleDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CommentBeforeMoveDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

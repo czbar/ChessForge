@@ -1,0 +1,17 @@
+﻿<Window x:Class="ChessForge.CommentBeforeMoveDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:p="clr-namespace:ChessForge.Properties"
+        xmlns:local="clr-namespace:ChessForge"
+        ShowInTaskbar="True"
+        mc:Ignorable="d"
+        Title="{x:Static p:Resources.CommentBeforeMove}" Height="180" Width="445">
+        <Grid Margin="0,0,0,0">
+            <TextBox x:Name="UiTbCommentBeforeMove" HorizontalAlignment="Left" Margin="14,10" TextWrapping="Wrap" Text="" Width="400" Height="80" VerticalAlignment="Top" PreviewKeyDown="UiTbComment_PreviewKeyDown" />
+            <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Ok}" Width="70" HorizontalAlignment="Center" Margin="-180,105,0,0" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
+            <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" Width="70" HorizontalAlignment="Center" Margin="0,105,0,0" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
+            <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" Width="70" HorizontalAlignment="Center" Margin="180,105,0,0" VerticalAlignment="Top" Click="UiBtnHelp_Click" />
+        </Grid>
+</Window>
