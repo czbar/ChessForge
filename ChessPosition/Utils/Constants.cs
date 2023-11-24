@@ -303,6 +303,16 @@ namespace ChessPosition
         public const char CHAR_PENCIL = '\u270E';
 
         /// <summary>
+        /// The "small t" icon
+        /// </summary>
+        public const char CHAR_SMALL_T = '\u0442';
+
+        /// <summary>
+        /// The small question mark
+        /// </summary>
+        public const char CHAR_EXCLAM_QUESTION = '\u2049';
+
+        /// <summary>
         /// Evaluation symbols
         /// </summary>
         public const char CHAR_WHITE_ADVANTAGE = '\u00B1';
