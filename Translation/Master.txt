@@ -447,6 +447,9 @@ Edit=Edit
 #Opens the Annotations dialog
 Annotations=Annotations
 
+#Comment before move
+CommentBeforeMove=Comment Before Move
+
 #Allows the user to merge multiple chapters into one
 MergeChapters=Merge Chapters...
 
@@ -2249,6 +2252,9 @@ EngineReplaced=Selected engine loaded
 
 #Open Annotation dialog
 EditAnnotations=Edit Annotations
+
+#Edit comment before move
+EditCommentBeforeMove=Edit Comment Before Move
 
 
 #White is winning

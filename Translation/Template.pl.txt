@@ -580,6 +580,10 @@ Edit=Edytuj
 #english: Annotations=Annotations
 Annotations=Komentarz
 
+#description: Comment before move
+#english: CommentBeforeMove=Comment Before Move
+CommentBeforeMove=Komentarz przed posunięciem
+
 #description: Allows the user to merge multiple chapters into one
 #english: MergeChapters=Merge Chapters...
 MergeChapters=Połącz rozdziały
@@ -2900,7 +2904,11 @@ EngineReplaced=Załadowano wybrany silnik
 
 #description: Open Annotation dialog
 #english: EditAnnotations=Edit Annotations
-EditAnnotations=Edytuj komentarza
+EditAnnotations=Edytuj komentarz i oceny
+
+#description: Edit comment before move
+#english: EditCommentBeforeMove=Edit Comment Before Move
+EditCommentBeforeMove=Edytuj komentarz przed posunięciem
 
 
 #description: White is winning
