@@ -51,6 +51,10 @@ namespace GameTree
                         _owningTree.UndoUpdateAnnotation(op.Node);
                         selectedNodeId = op.Node.NodeId;
                         break;
+                    case EditOperation.EditType.UPDATE_COMMENT_BEFORE_MOVE:
+                        _owningTree.UndoUpdateCommentBeforeMove(op.Node);
+                        selectedNodeId = op.Node.NodeId;
+                        break;
                     case EditOperation.EditType.MERGE_TREE:
                         _owningTree.UndoAddedNodeList(op.OpData_1);
                         break;

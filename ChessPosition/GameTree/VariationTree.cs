@@ -1578,6 +1578,22 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Restores comment-before-move from before the last edit.
+        /// </summary>
+        /// <param name="dummyNode"></param>
+        public void UndoUpdateCommentBeforeMove(TreeNode dummyNode)
+        {
+            try
+            {
+                TreeNode nd = GetNodeFromNodeId(dummyNode.NodeId);
+                nd.CommentBeforeMove = dummyNode.CommentBeforeMove;
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
         /// Undoes the merge of trees by removing all added nodes.
         /// The passed argument is the list of of nodes that the 
         /// original tree had.
