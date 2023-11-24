@@ -288,6 +288,8 @@ namespace GameTree
         private void ParseBranch(TreeNode parentNode, VariationTree tree)
         {
             string token;
+            bool hasMove = false;
+            string comment = "";
 
             TreeNode previousNode = parentNode;
 
@@ -307,22 +309,22 @@ namespace GameTree
                     case PgnTokenType.BranchEnd:
                         return;
                     case PgnTokenType.CommentStart:
-                        ProcessComment(parentNode);
+                        comment = ProcessComment(hasMove ? parentNode : null);
                         break;
                     case PgnTokenType.Move:
                         // ProcessMove() will return a new node that will then be the "parentNode"
                         // for the processing of the next move (ply)
                         TreeNode newNode = MoveUtils.ProcessAlgMove(token, parentNode, _runningNodeId);
+                        if (!hasMove && !string.IsNullOrEmpty(comment))
+                        {
+                            newNode.CommentBeforeMove = comment;
+                        }
+                        hasMove = true;
                         _runningNodeId++;
                         parentNode.AddChild(newNode);
                         previousNode = parentNode;
                         parentNode = newNode;
                         tree.AddNode(parentNode);
-                        //if (DEBUG_MODE)
-                        //{
-                        //    DebugUtils.PrintPosition(newNode.Position);
-                        //}
-
                         break;
                     case PgnTokenType.MoveNumber:
                         TreeNode adjustedParent = ProcessMoveNumber(token, parentNode);
@@ -526,42 +528,45 @@ namespace GameTree
         /// The comment will also be stored with the node, stripped of the Chess Forge commands.
         /// </summary>
         /// <param name="node"></param>
-        private void ProcessComment(TreeNode node)
+        private string ProcessComment(TreeNode node)
         {
             int endPos = _remainingGameText.IndexOf('}');
             // if end of comment not found, there is something wrong with the file, force end of processing.
             if (endPos < 0)
             {
                 _remainingGameText = "";
-                return;
+                return "";
             }
 
             bool preserveCRLF = false;
 
             // process any Chess Forge commands
-            while (true)
+            if (node != null)
             {
-                int commandStart = _remainingGameText.IndexOf("[%", 0, endPos);
-                if (commandStart < 0)
-                    break;
-
-                int commandEnd = _remainingGameText.IndexOf(']', 0, endPos);
-                if (commandEnd > 0)
+                while (true)
                 {
-                    string command = _remainingGameText.Substring(commandStart + 1, commandEnd - (commandStart + 1));
-                    if (command.Trim().Length > 0)
-                    {
-                        // remove CRLF
-                        command = command.Replace("\r", "");
-                        command = command.Replace("\n", "");
-                    }
-                    if (_tree.AddChfCommand(node, command) == ChfCommands.Command.BINARY)
-                    {
-                        preserveCRLF = true;
-                    }
+                    int commandStart = _remainingGameText.IndexOf("[%", 0, endPos);
+                    if (commandStart < 0)
+                        break;
 
-                    _remainingGameText = _remainingGameText.Substring(commandEnd + 1);
-                    endPos = endPos - (commandEnd + 1);
+                    int commandEnd = _remainingGameText.IndexOf(']', 0, endPos);
+                    if (commandEnd > 0)
+                    {
+                        string command = _remainingGameText.Substring(commandStart + 1, commandEnd - (commandStart + 1));
+                        if (command.Trim().Length > 0)
+                        {
+                            // remove CRLF
+                            command = command.Replace("\r", "");
+                            command = command.Replace("\n", "");
+                        }
+                        if (_tree.AddChfCommand(node, command) == ChfCommands.Command.BINARY)
+                        {
+                            preserveCRLF = true;
+                        }
+
+                        _remainingGameText = _remainingGameText.Substring(commandEnd + 1);
+                        endPos = endPos - (commandEnd + 1);
+                    }
                 }
             }
 
@@ -589,10 +594,15 @@ namespace GameTree
                         comment = comment.Replace("\n", "");
                     }
 
-                    node.Comment = comment;
+                    if (node != null)
+                    {
+                        node.Comment = comment;
+                    }
                 }
             }
             _remainingGameText = _remainingGameText.Substring(endPos + 1);
+
+            return comment;
         }
 
         /// <summary>
