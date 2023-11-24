@@ -755,6 +755,7 @@ namespace ChessForge
                 || nd.IsThumbnail
                 || !string.IsNullOrEmpty(nd.ArticleRefs)
                 || !string.IsNullOrEmpty(nd.Comment)
+                || !string.IsNullOrEmpty(nd.CommentBeforeMove)
                 || !string.IsNullOrEmpty(nd.EngineEvaluation)
                 || nd.QuizPoints != 0
                 || !string.IsNullOrEmpty(nd.Arrows)
