@@ -449,6 +449,11 @@ namespace ChessForge
             {
                 AppState.MainWin.ActiveTreeView.InsertOrUpdateCommentRun(selectedNode);
             }
+            else if (opType == EditOperation.EditType.UPDATE_COMMENT_BEFORE_MOVE)
+            {
+                AppState.MainWin.ActiveTreeView.InsertOrUpdateCommentBeforeMoveRun(selectedNode);
+            }
+
             if (!string.IsNullOrEmpty(selectedLineId))
             {
                 AppState.MainWin.ActiveTreeView.SelectLineAndMove(selectedLineId, selectedNodeId);
