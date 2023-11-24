@@ -503,6 +503,9 @@ namespace GameTree
                             }
                         }
                         break;
+                    case ChfCommands.Command.COMMENT_BEFORE_MOVE:
+                        nd.CommentBeforeMove = tokens[1];
+                        break;
                     case ChfCommands.Command.XAML:
                         if (tokens.Length > 1)
                         {

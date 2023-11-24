@@ -807,6 +807,13 @@ namespace ChessForge
                     sb.Append("[" + sCmd + "]");
                 }
 
+                // Process the CommentBeforeMove
+                if (!string.IsNullOrEmpty(nd.CommentBeforeMove))
+                {
+                    string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.COMMENT_BEFORE_MOVE) + " " + nd.CommentBeforeMove;
+                    sb.Append("[" + sCmd + "]");
+                }
+
                 // Process the Arrows string
                 if (!string.IsNullOrEmpty(nd.Arrows))
                 {
