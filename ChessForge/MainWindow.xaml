@@ -577,7 +577,8 @@
                                 </FlowDocument>
                             </RichTextBox>
                             <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" Height="48" Margin="0,588,0,0" VerticalAlignment="Top">
-                                <Button x:Name="UiBtnStPencil" Background="Transparent" Margin="0,0,0,0" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnPencil_Click"  />
+                                <Button x:Name="UiBtnStPencil" Background="Transparent" Margin="0,0,0,0" Width="30" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnPencil_Click"  />
+                                <Button x:Name="UiBtnStCommentBeforeMove" Background="Transparent" Margin="0,0,0,0" Width="30" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnCommentBeforeMove_Click"  />
                                 <Button x:Name="UiBtnStEvalWin" Background="Transparent" Margin="30,0,0,0" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalWin_Click" />
                                 <Button x:Name="UiBtnStEvalPlusMinus" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalPlusMinus_Click" />
                                 <Button x:Name="UiBtnStEvalPlusEqual" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalPlusEqual_Click" />
@@ -677,7 +678,8 @@
                                 </FlowDocument>
                             </RichTextBox>
                             <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" Height="48" Margin="0,588,0,0" VerticalAlignment="Top">
-                                <Button x:Name="UiBtnGmPencil" Background="Transparent" Margin="0,0,0,0" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnPencil_Click"  />
+                                <Button x:Name="UiBtnGmPencil" Background="Transparent" Margin="0,0,0,0" Width="30" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnPencil_Click"  />
+                                <Button x:Name="UiBtnGmCommentBeforeMove" Background="Transparent" Margin="0,0,0,0" Width="30" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnCommentBeforeMove_Click"  />
                                 <Button x:Name="UiBtnGmEvalWin" Background="Transparent" Margin="30,0,0,0" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalWin_Click" />
                                 <Button x:Name="UiBtnGmEvalPlusMinus" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalPlusMinus_Click" />
                                 <Button x:Name="UiBtnGmEvalPlusEqual" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalPlusEqual_Click" />
@@ -779,7 +781,8 @@
                                 </FlowDocument>
                             </RichTextBox>
                             <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" Height="48" Margin="0,588,0,0" VerticalAlignment="Top">
-                                <Button x:Name="UiBtnExPencil" Background="Transparent" Margin="0,0,0,0" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnPencil_Click"  />
+                                <Button x:Name="UiBtnExPencil" Background="Transparent" Margin="0,0,0,0" Width="30" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnPencil_Click"  />
+                                <Button x:Name="UiBtnExCommentBeforeMove" Background="Transparent" Margin="0,0,0,0" Width="30" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnCommentBeforeMove_Click"  />
                                 <Button x:Name="UiBtnExEvalWin" Background="Transparent" Margin="30,0,0,0" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalWin_Click" />
                                 <Button x:Name="UiBtnExEvalPlusMinus" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalPlusMinus_Click" />
                                 <Button x:Name="UiBtnExEvalPlusEqual" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalPlusEqual_Click" />

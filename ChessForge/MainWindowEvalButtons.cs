@@ -76,6 +76,20 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// The "comment before move" button was clicked.  Invoke the Comment Before Move dialog.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnCommentBeforeMove_Click(object sender, RoutedEventArgs e)
+        {
+            TreeNode nd = ActiveLine.GetSelectedTreeNode();
+            if (InvokeCommentBeforeMoveDialog(nd))
+            {
+                ActiveTreeView.InsertOrUpdateCommentBeforeMoveRun(nd);
+            }
+        }
+
+        /// <summary>
         /// The "+-" button was clicked.
         /// Updated NAGs and assessment.
         /// </summary>
@@ -234,8 +248,12 @@ namespace ChessForge
         /// </summary>
         private void SetEvaluationLabels()
         {
+            string btnAnnotationsText = Constants.CHAR_SMALL_T.ToString() + Constants.CHAR_PENCIL.ToString() + Constants.CHAR_EXCLAM_QUESTION.ToString();
+            string btnCommentText = Constants.CHAR_PENCIL.ToString() + Constants.CHAR_SMALL_T.ToString();
+
             // for Study view
-            UiBtnStPencil.Content = Constants.CHAR_PENCIL;
+            UiBtnStPencil.Content = btnAnnotationsText;
+            UiBtnStCommentBeforeMove.Content = btnCommentText;
             UiBtnStEvalWin.Content = "+-";
             UiBtnStEvalPlusMinus.Content = Constants.CHAR_WHITE_ADVANTAGE;
             UiBtnStEvalPlusEqual.Content = Constants.CHAR_WHITE_EDGE;
@@ -254,7 +272,8 @@ namespace ChessForge
 
 
             // for Games view
-            UiBtnGmPencil.Content = Constants.CHAR_PENCIL;
+            UiBtnGmPencil.Content = btnAnnotationsText;
+            UiBtnGmCommentBeforeMove.Content = btnCommentText;
             UiBtnGmEvalWin.Content = "+-";
             UiBtnGmEvalPlusMinus.Content = Constants.CHAR_WHITE_ADVANTAGE;
             UiBtnGmEvalPlusEqual.Content = Constants.CHAR_WHITE_EDGE;
@@ -273,7 +292,8 @@ namespace ChessForge
 
 
             // for Exercises view
-            UiBtnExPencil.Content = Constants.CHAR_PENCIL;
+            UiBtnExPencil.Content = btnAnnotationsText;
+            UiBtnExCommentBeforeMove.Content = btnCommentText;
             UiBtnExEvalWin.Content = "+-";
             UiBtnExEvalPlusMinus.Content = Constants.CHAR_WHITE_ADVANTAGE;
             UiBtnExEvalPlusEqual.Content = Constants.CHAR_WHITE_EDGE;
@@ -296,6 +316,7 @@ namespace ChessForge
 
             // for Study view
             UiBtnStPencil.ToolTip = Properties.Resources.EditAnnotations;
+            UiBtnStCommentBeforeMove.ToolTip = Properties.Resources.EditCommentBeforeMove;
             UiBtnStEvalWin.ToolTip = Properties.Resources.TooltipWhiteWinning;
             UiBtnStEvalPlusMinus.ToolTip = Properties.Resources.TooltipWhiteAdvantage;
             UiBtnStEvalPlusEqual.ToolTip = Properties.Resources.TooltipWhiteEdge;
@@ -315,6 +336,7 @@ namespace ChessForge
 
             // for Games view
             UiBtnGmPencil.ToolTip = Properties.Resources.EditAnnotations;
+            UiBtnGmCommentBeforeMove.ToolTip = Properties.Resources.EditCommentBeforeMove;
             UiBtnGmEvalWin.ToolTip = Properties.Resources.TooltipWhiteWinning;
             UiBtnGmEvalPlusMinus.ToolTip = Properties.Resources.TooltipWhiteAdvantage;
             UiBtnGmEvalPlusEqual.ToolTip = Properties.Resources.TooltipWhiteEdge;
@@ -334,6 +356,7 @@ namespace ChessForge
 
             // for Exercises view
             UiBtnExPencil.ToolTip = Properties.Resources.EditAnnotations;
+            UiBtnExCommentBeforeMove.ToolTip = Properties.Resources.EditCommentBeforeMove;
             UiBtnExEvalWin.ToolTip = Properties.Resources.TooltipWhiteWinning;
             UiBtnExEvalPlusMinus.ToolTip = Properties.Resources.TooltipWhiteAdvantage;
             UiBtnExEvalPlusEqual.ToolTip = Properties.Resources.TooltipWhiteEdge;
