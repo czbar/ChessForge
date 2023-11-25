@@ -78,25 +78,32 @@ namespace ChessForge
 
             try
             {
-                if (backForth)
+                if (AppState.MainWin.ActiveLine.GetNodeAtIndex(currIndex).Parent.Children.Count > 1)
                 {
-                    for (int i = currIndex; i > 0; i--)
-                    {
-                        if (AppState.MainWin.ActiveLine.GetNodeAtIndex(i).Children.Count > 1)
-                        {
-                            forkIndex = i;
-                            break;
-                        }
-                    }
+                    forkIndex = currIndex - 1;
                 }
                 else
                 {
-                    for (int i = currIndex; i < AppState.MainWin.ActiveLine.GetNodeCount(); i++)
+                    if (backForth)
                     {
-                        if (AppState.MainWin.ActiveLine.GetNodeAtIndex(i).Children.Count > 1)
+                        for (int i = currIndex; i > 0; i--)
                         {
-                            forkIndex = i;
-                            break;
+                            if (AppState.MainWin.ActiveLine.GetNodeAtIndex(i).Children.Count > 1)
+                            {
+                                forkIndex = i;
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (int i = currIndex; i < AppState.MainWin.ActiveLine.GetNodeCount(); i++)
+                        {
+                            if (AppState.MainWin.ActiveLine.GetNodeAtIndex(i).Children.Count > 1)
+                            {
+                                forkIndex = i;
+                                break;
+                            }
                         }
                     }
                 }
