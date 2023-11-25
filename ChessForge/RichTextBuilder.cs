@@ -367,8 +367,11 @@ namespace ChessForge
         /// <param name="inl"></param>
         public void RemoveRunFromHostingParagraph(Inline inl)
         {
-            Paragraph parent = inl.Parent as Paragraph;
-            parent.Inlines.Remove(inl);
+            if (inl != null)
+            {
+                Paragraph parent = inl.Parent as Paragraph;
+                parent.Inlines.Remove(inl);
+            }
         }
 
         /// <summary>

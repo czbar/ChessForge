@@ -503,6 +503,9 @@ namespace GameTree
                             }
                         }
                         break;
+                    case ChfCommands.Command.COMMENT_BEFORE_MOVE:
+                        nd.CommentBeforeMove = tokens[1];
+                        break;
                     case ChfCommands.Command.XAML:
                         if (tokens.Length > 1)
                         {
@@ -1568,6 +1571,22 @@ namespace GameTree
                 nd.SetNags(dummyNode.Nags);
                 nd.Comment = dummyNode.Comment;
                 nd.QuizPoints = dummyNode.QuizPoints;
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// Restores comment-before-move from before the last edit.
+        /// </summary>
+        /// <param name="dummyNode"></param>
+        public void UndoUpdateCommentBeforeMove(TreeNode dummyNode)
+        {
+            try
+            {
+                TreeNode nd = GetNodeFromNodeId(dummyNode.NodeId);
+                nd.CommentBeforeMove = dummyNode.CommentBeforeMove;
             }
             catch
             {

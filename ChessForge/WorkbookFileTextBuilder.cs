@@ -755,6 +755,7 @@ namespace ChessForge
                 || nd.IsThumbnail
                 || !string.IsNullOrEmpty(nd.ArticleRefs)
                 || !string.IsNullOrEmpty(nd.Comment)
+                || !string.IsNullOrEmpty(nd.CommentBeforeMove)
                 || !string.IsNullOrEmpty(nd.EngineEvaluation)
                 || nd.QuizPoints != 0
                 || !string.IsNullOrEmpty(nd.Arrows)
@@ -804,6 +805,13 @@ namespace ChessForge
                 if (nd.Assessment != 0)
                 {
                     string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.ASSESSMENT) + " " + nd.Assessment;
+                    sb.Append("[" + sCmd + "]");
+                }
+
+                // Process the CommentBeforeMove
+                if (!string.IsNullOrEmpty(nd.CommentBeforeMove))
+                {
+                    string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.COMMENT_BEFORE_MOVE) + " " + nd.CommentBeforeMove;
                     sb.Append("[" + sCmd + "]");
                 }
 

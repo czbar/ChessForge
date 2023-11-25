@@ -2912,12 +2912,6 @@ namespace ChessForge
                 }
 
                 AnnotationsDialog dlg = new AnnotationsDialog(nd);
-                //{
-                //    Left = ChessForgeMain.Left + 100,
-                //    Top = ChessForgeMain.Top + 100,
-                //    Topmost = false,
-                //    Owner = this
-                //};
                 GuiUtilities.PositionDialog(dlg, this, 100);
                 dlg.ShowDialog();
                 if (dlg.ExitOk)
@@ -2941,6 +2935,48 @@ namespace ChessForge
             return changed;
         }
 
+        /// <summary>
+        /// Invokes the Comment Before Move dialog.
+        /// </summary>
+        /// <param name="nd"></param>
+        public bool InvokeCommentBeforeMoveDialog(TreeNode nd)
+        {
+            if (!WorkbookManager.IsAnyArticleTabActive)
+            {
+                return false;
+            }
+
+            bool changed = false;
+
+            if (nd != null && nd.NodeId != 0)
+            {
+                EditOperation op = null;
+
+                if (AppState.ActiveVariationTree != null)
+                {
+                    op = new EditOperation(EditOperation.EditType.UPDATE_COMMENT_BEFORE_MOVE, nd);
+                }
+
+                CommentBeforeMoveDialog dlg = new CommentBeforeMoveDialog(nd);
+                GuiUtilities.PositionDialog(dlg, this, 200);
+                if (dlg.ShowDialog() == true)
+                {
+                    if (nd.Comment != dlg.CommentBeforeMove)
+                    {
+                        changed = true;
+                        nd.CommentBeforeMove = dlg.CommentBeforeMove;
+                        AppState.IsDirty = true;
+
+                        if (op != null)
+                        {
+                            AppState.ActiveVariationTree.OpsManager.PushOperation(op);
+                        }
+                    }
+                }
+            }
+
+            return changed;
+        }
 
         /// <summary>
         /// Resizes the tab control to show/hide ActiveLine/GameLine controls.

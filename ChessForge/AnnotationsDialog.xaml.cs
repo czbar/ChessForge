@@ -73,6 +73,8 @@ namespace ChessForge
                 MoveButtonHporizontally(UiBtnCancel, -50);
                 MoveButtonHporizontally(UiBtnHelp, -50);
             }
+
+            UiTbComment.Focus();
         }
 
         /// <summary>

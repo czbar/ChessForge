@@ -19,6 +19,7 @@ namespace GameTree
             PROMOTE_LINE,
             ADD_MOVE,
             UPDATE_ANNOTATION,
+            UPDATE_COMMENT_BEFORE_MOVE,
             MERGE_TREE,
             PASTE_MOVES,
             SAVE_TRAINING_MOVES,
@@ -101,13 +102,20 @@ namespace GameTree
         public EditOperation(EditType tp, TreeNode nd) : base()
         {
             _opType = tp;
-            if (tp == EditType.UPDATE_ANNOTATION)
+            if (tp == EditType.UPDATE_ANNOTATION || tp == EditType.UPDATE_COMMENT_BEFORE_MOVE)
             {
                 // create a dummy node to keep the data of relevance
                 _node = new TreeNode(null, "", nd.NodeId);
-                _node.Nags = nd.Nags;
-                _node.Comment= nd.Comment;
-                _node.QuizPoints= nd.QuizPoints;
+                if (tp == EditType.UPDATE_ANNOTATION)
+                {
+                    _node.Nags = nd.Nags;
+                    _node.Comment = nd.Comment;
+                    _node.QuizPoints = nd.QuizPoints;
+                }
+                else if (tp == EditType.UPDATE_COMMENT_BEFORE_MOVE)
+                {
+                    _node.CommentBeforeMove = nd.CommentBeforeMove;
+                }
             }
             else
             {

@@ -516,6 +516,9 @@
   <data name="Annotations" xml:space="preserve">
     <value>Annotations</value>
   </data>
+  <data name="CommentBeforeMove" xml:space="preserve">
+    <value>Comment Before Move</value>
+  </data>
   <data name="MergeChapters" xml:space="preserve">
     <value>Merge Chapters...</value>
   </data>
@@ -2073,6 +2076,9 @@
   </data>
   <data name="EditAnnotations" xml:space="preserve">
     <value>Edit Annotations</value>
+  </data>
+  <data name="EditCommentBeforeMove" xml:space="preserve">
+    <value>Edit Comment Before Move</value>
   </data>
   <data name="TooltipWhiteWinning" xml:space="preserve">
     <value>White is winning</value>

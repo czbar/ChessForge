@@ -247,6 +247,11 @@ namespace GameTree
         /// </summary>
         public string Comment = null;
 
+        /// <summary>
+        /// A text comment to insert before the move
+        /// </summary>
+        public string CommentBeforeMove = null;
+
         // the move leading to this position (algebraic notation)
         private string _lastMoveAlg;
 

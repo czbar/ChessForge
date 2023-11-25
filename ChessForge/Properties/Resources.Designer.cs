@@ -908,6 +908,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Comment Before Move.
+        /// </summary>
+        public static string CommentBeforeMove {
+            get {
+                return ResourceManager.GetString("CommentBeforeMove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirm.
         /// </summary>
         public static string Confirm {
@@ -1642,6 +1651,15 @@ namespace ChessForge.Properties {
         public static string EditAnnotations {
             get {
                 return ResourceManager.GetString("EditAnnotations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Comment Before Move.
+        /// </summary>
+        public static string EditCommentBeforeMove {
+            get {
+                return ResourceManager.GetString("EditCommentBeforeMove", resourceCulture);
             }
         }
         

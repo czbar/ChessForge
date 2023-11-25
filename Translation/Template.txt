@@ -580,6 +580,10 @@ Edit=
 #english: Annotations=Annotations
 Annotations=
 
+#description: Comment before move
+#english: CommentBeforeMove=Comment Before Move
+CommentBeforeMove=
+
 #description: Allows the user to merge multiple chapters into one
 #english: MergeChapters=Merge Chapters...
 MergeChapters=
@@ -2901,6 +2905,10 @@ EngineReplaced=
 #description: Open Annotation dialog
 #english: EditAnnotations=Edit Annotations
 EditAnnotations=
+
+#description: Edit comment before move
+#english: EditCommentBeforeMove=Edit Comment Before Move
+EditCommentBeforeMove=
 
 
 #description: White is winning

@@ -287,6 +287,21 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Request to open the Comment Before Move dialog.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnCommentBeforeMoveDialog_Click(object sender, RoutedEventArgs e)
+        {
+            TreeNode nd = ActiveLine.GetSelectedTreeNode();
+            if (InvokeCommentBeforeMoveDialog(nd))
+            {
+                ActiveTreeView.InsertOrUpdateCommentBeforeMoveRun(nd);
+            }
+        }
+        
+
+        /// <summary>
         /// The users requesting merging of chapters.
         /// </summary>
         /// <param name="sender"></param>
@@ -449,6 +464,11 @@ namespace ChessForge
             {
                 AppState.MainWin.ActiveTreeView.InsertOrUpdateCommentRun(selectedNode);
             }
+            else if (opType == EditOperation.EditType.UPDATE_COMMENT_BEFORE_MOVE)
+            {
+                AppState.MainWin.ActiveTreeView.InsertOrUpdateCommentBeforeMoveRun(selectedNode);
+            }
+
             if (!string.IsNullOrEmpty(selectedLineId))
             {
                 AppState.MainWin.ActiveTreeView.SelectLineAndMove(selectedLineId, selectedNodeId);

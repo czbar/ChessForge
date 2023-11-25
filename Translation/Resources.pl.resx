@@ -516,6 +516,9 @@
   <data name="Annotations" xml:space="preserve">
     <value>Komentarz</value>
   </data>
+  <data name="CommentBeforeMove" xml:space="preserve">
+    <value>Komentarz przed posunięciem</value>
+  </data>
   <data name="MergeChapters" xml:space="preserve">
     <value>Połącz rozdziały</value>
   </data>
@@ -2071,7 +2074,10 @@
     <value>Załadowano wybrany silnik</value>
   </data>
   <data name="EditAnnotations" xml:space="preserve">
-    <value>Edytuj komentarza</value>
+    <value>Edytuj komentarz i oceny</value>
+  </data>
+  <data name="EditCommentBeforeMove" xml:space="preserve">
+    <value>Edytuj komentarz przed posunięciem</value>
   </data>
   <data name="TooltipWhiteWinning" xml:space="preserve">
     <value>Białe wygrywają</value>
