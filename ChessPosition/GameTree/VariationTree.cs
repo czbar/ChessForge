@@ -1332,54 +1332,6 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Get the adjacent sibling of the passed node.
-        /// If there are no siblings returns null.
-        /// It there are no more siblings in the requested direction (prev/next)
-        /// wraps around.
-        /// </summary>
-        /// <param name="nd"></param>
-        /// <param name="prevNext"></param>
-        /// <returns></returns>
-        public TreeNode GetNextSibling(TreeNode nd, bool prevNext)
-        {
-            TreeNode sib = null;
-
-            if (nd != null && nd.Parent != null && nd.Parent.Children.Count > 1)
-            {
-                for (int i = 0; i < nd.Parent.Children.Count; i++)
-                {
-                    if (nd.Parent.Children[i] == nd)
-                    {
-                        if (prevNext)
-                        {
-                            if (i > 0)
-                            {
-                                sib = nd.Parent.Children[i - 1];
-                            }
-                            else
-                            {
-                                sib = nd.Parent.Children[nd.Parent.Children.Count - 1];
-                            }
-                        }
-                        else
-                        {
-                            if (i < nd.Parent.Children.Count - 1)
-                            {
-                                sib = nd.Parent.Children[i + 1];
-                            }
-                            else
-                            {
-                                sib = nd.Parent.Children[0];
-                            }
-                        }
-                    }
-                }
-            }
-
-            return sib;
-        }
-
-        /// <summary>
         /// Each invocation of this method builds a Line for 
         /// the flattened view of the Workbook.
         /// The method calls itself recursively to build
@@ -1801,27 +1753,6 @@ namespace GameTree
             }
 
             return _subTree;
-        }
-
-        /// <summary>
-        /// Find next fork after the given node.
-        /// </summary>
-        /// <param name="fromNode"></param>
-        /// <returns></returns>
-        private TreeNode FindNextFork(TreeNode fromNode)
-        {
-            TreeNode nd = fromNode;
-
-            while (nd.Children.Count != 0)
-            {
-                if (nd.Children.Count > 1)
-                {
-                    return nd;
-                }
-                nd = nd.Children[0];
-            }
-
-            return null;
         }
 
     }
