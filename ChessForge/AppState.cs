@@ -773,6 +773,7 @@ namespace ChessForge
                 MainWin.UiRtbStudyTreeView.IsEnabled = true;
 
                 MainWin.UiMnAnnotations.IsEnabled = false;
+                MainWin.UiMnCommentBeforeMove.IsEnabled = false;
                 MainWin.UiMnMergeChapters.IsEnabled = false;
 
                 MainWin.UiMnWorkbookOptions.IsEnabled = WorkbookManager.SessionWorkbook != null;
@@ -1526,6 +1527,7 @@ namespace ChessForge
                 MainWin.UiMnManageChapter.IsEnabled = AppState.ActiveChapter != null;
 
                 _mainWin.UiMnAnnotations.IsEnabled = IsTreeViewTabActive();
+                _mainWin.UiMnCommentBeforeMove.IsEnabled = IsTreeViewTabActive();
                 _mainWin.UiMnMergeChapters.IsEnabled = WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.GetChapterCount() > 1;
 
                 MainWin.UiMnMainDeleteGames.IsEnabled = WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.HasAnyModelGames;
@@ -1576,6 +1578,7 @@ namespace ChessForge
             _mainWin.Dispatcher.Invoke(() =>
             {
                 MainWin.UiMnAnnotations.IsEnabled = false;
+                MainWin.UiMnCommentBeforeMove.IsEnabled = false;
                 MainWin.UiMnMergeChapters.IsEnabled = false;
 
                 MainWin.UiMnciBookmarkPosition.IsEnabled = false;
