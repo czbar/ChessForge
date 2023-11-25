@@ -2346,11 +2346,11 @@ namespace ChessForge
                 switch (e.Key)
                 {
                     case Key.Up:
-                        node = ActiveTreeView.SelectSiblingLineAndMove(true);
+                        node = ActiveTreeView.SelectParallelLine(true);
                         handled = true;
                         break;
                     case Key.Down:
-                        node = ActiveTreeView.SelectSiblingLineAndMove(false);
+                        node = ActiveTreeView.SelectParallelLine(false);
                         handled = true;
                         break;
                 }
