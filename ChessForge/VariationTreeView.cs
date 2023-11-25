@@ -1988,7 +1988,7 @@ namespace ChessForge
                 run.FontStyle = FontStyles.Normal;
                 run.Foreground = Brushes.Black;
                 run.FontWeight = FontWeights.Normal;
-                run.PreviewMouseDown += EventCommentRunClicked;
+                run.PreviewMouseDown += EventCommentBeforeMoveRunClicked;
                 run.Name = _run_comment_ + nd.NodeId.ToString();
 
                 run.Name = _run_comment_before_move_ + nd.NodeId.ToString();
@@ -2442,6 +2442,37 @@ namespace ChessForge
                     if (_mainWin.InvokeAnnotationsDialog(nd))
                     {
                         InsertOrUpdateCommentRun(nd);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// A "comment before move run" was clicked.
+        /// Invoke the dialog and update the run as needed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventCommentBeforeMoveRunClicked(object sender, MouseButtonEventArgs e)
+        {
+            if (!IsSelectionEnabled())
+            {
+                return;
+            }
+
+            if (e.ClickCount == 2)
+            {
+                Run r = (Run)e.Source;
+
+                int nodeId = TextUtils.GetIdFromPrefixedString(r.Name);
+                TreeNode nd = _mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId);
+
+                if (_dictNodeToRun.ContainsKey(nd.NodeId))
+                {
+                    SelectRun(_dictNodeToRun[nd.NodeId], 1, MouseButton.Left);
+                    if (_mainWin.InvokeCommentBeforeMoveDialog(nd))
+                    {
+                        InsertOrUpdateCommentBeforeMoveRun(nd);
                     }
                 }
             }
