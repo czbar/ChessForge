@@ -1,17 +1,16 @@
 ﻿using ChessPosition;
+using ChessPosition.Utils;
 using GameTree;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using ChessPosition.GameTree;
-using ChessPosition.Utils;
-using System.Diagnostics;
 
 namespace ChessForge
 {
@@ -189,6 +188,7 @@ namespace ChessForge
         private readonly string _run_fork_move_ = "_run_fork_move_";
         private readonly string _run_ = "run_";
         private readonly string _run_comment_ = "run_comment_";
+        private readonly string _run_comment_before_move_ = "run_comment_before_move_";
         private readonly string _run_reference_ = "run_reference_";
 
         // name of the header paragraph
@@ -236,6 +236,11 @@ namespace ChessForge
         private Dictionary<int, Inline> _dictNodeToCommentRun = new Dictionary<int, Inline>();
 
         /// <summary>
+        /// Maps Node Ids to CommentBeforeMove Runs for quick access.
+        /// </summary>
+        private Dictionary<int, Inline> _dictNodeToCommentBeforeMoveRun = new Dictionary<int, Inline>();
+
+        /// <summary>
         /// Maps Node Ids to Reference Runs for quick access.
         /// </summary>
         private Dictionary<int, Run> _dictNodeToReferenceRun = new Dictionary<int, Run>();
@@ -249,6 +254,11 @@ namespace ChessForge
         /// Maps Comment Runs to Paragraphs for quick access.
         /// </summary>
         private Dictionary<Inline, Paragraph> _dictCommentRunToParagraph = new Dictionary<Inline, Paragraph>();
+
+        /// <summary>
+        /// Maps CommentBeforeMove Runs to Paragraphs for quick access.
+        /// </summary>
+        private Dictionary<Inline, Paragraph> _dictCommentBeforeMoveRunToParagraph = new Dictionary<Inline, Paragraph>();
 
         /// <summary>
         /// Maps Reference Runs to Paragraphs for quick access.
@@ -952,7 +962,9 @@ namespace ChessForge
             _dictRunToParagraph.Clear();
 
             _dictNodeToCommentRun.Clear();
+            _dictNodeToCommentBeforeMoveRun.Clear();
             _dictCommentRunToParagraph.Clear();
+            _dictCommentBeforeMoveRunToParagraph.Clear();
 
             _dictNodeToReferenceRun.Clear();
             _dictReferenceRunToParagraph.Clear();
@@ -1684,12 +1696,14 @@ namespace ChessForge
                 }
             }
 
-            Run r = AddRunToParagraph(nd, para, nodeText, fontColor);
+            Run rMove = AddRunToParagraph(nd, para, nodeText, fontColor);
+            // must use Insert... because cannot Add... before rMove is created.
+            InsertOrUpdateCommentBeforeMoveRun(nd);
             AddReferenceRunToParagraph(nd, para);
             AddCommentRunsToParagraph(nd, para, out bool isBlunder);
             if (isBlunder)
             {
-                TextUtils.RemoveBlunderNagFromText(r);
+                TextUtils.RemoveBlunderNagFromText(rMove);
             }
         }
 
@@ -1949,6 +1963,45 @@ namespace ChessForge
             catch (Exception ex)
             {
                 AppLog.Message("AddCommentRunsToParagraph()", ex);
+            }
+        }
+
+
+        /// <summary>
+        /// Creates the comment-before-move Run if there is a CommentBeforeRun with the move.
+        /// Adds the run to the paragraph.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="para"></param>
+        private void AddCommentBeforeMoveRunToParagraph(TreeNode nd, Paragraph para)
+        {
+            if (string.IsNullOrEmpty(nd.CommentBeforeMove))
+            {
+                return;
+            }
+
+            try
+            {
+
+                string commentText = "[ " + nd.CommentBeforeMove + " ] ";
+                Run run = new Run(commentText);
+                run.FontStyle = FontStyles.Normal;
+                run.Foreground = Brushes.Black;
+                run.FontWeight = FontWeights.Normal;
+                run.PreviewMouseDown += EventCommentRunClicked;
+                run.Name = _run_comment_ + nd.NodeId.ToString();
+
+                run.Name = _run_comment_before_move_ + nd.NodeId.ToString();
+
+                _dictNodeToCommentBeforeMoveRun.Add(nd.NodeId, run);
+                _dictCommentBeforeMoveRunToParagraph.Add(run, para);
+
+                Run rNode = _dictNodeToRun[nd.NodeId];
+                para.Inlines.InsertBefore(rNode,run);
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("AddCommentBeforeMoveRunToParagraph()", ex);
             }
         }
 
@@ -2575,6 +2628,60 @@ namespace ChessForge
             }
 
             return inlComment;
+        }
+
+        /// <summary>
+        /// If the Comment Before Run for the passed node already exists, it will be updated.
+        /// If it does not exist, it will be created.
+        /// </summary>
+        /// <param name="nd"></param>
+        public Inline InsertOrUpdateCommentBeforeMoveRun(TreeNode nd)
+        {
+            Inline inlCommentBeforeMove;
+
+            if (nd == null)
+            {
+                return null;
+            }
+
+            try
+            {
+                Run rMove;
+                _dictNodeToRun.TryGetValue(nd.NodeId, out rMove);
+
+                if (rMove == null)
+                {
+                    // something seriously wrong
+                    AppLog.Message("ERROR: InsertOrUpdateCommentBeforeRun()- Run " + nd.NodeId.ToString() + " not found in _dictNodeToRun");
+                    return null;
+                }
+
+                _dictNodeToCommentBeforeMoveRun.TryGetValue(nd.NodeId, out inlCommentBeforeMove);
+
+                if (string.IsNullOrEmpty(nd.CommentBeforeMove))
+                {
+                    // if the comment run existed, remove it
+                    if (inlCommentBeforeMove != null)
+                    {
+                        _dictNodeToCommentBeforeMoveRun.Remove(nd.NodeId);
+                        RemoveRunFromHostingParagraph(inlCommentBeforeMove);
+                    }
+                }
+                else
+                {
+                    _dictNodeToCommentBeforeMoveRun.Remove(nd.NodeId);
+                    RemoveRunFromHostingParagraph(inlCommentBeforeMove);
+
+                    Paragraph para = rMove.Parent as Paragraph;
+                    AddCommentBeforeMoveRunToParagraph(nd, para);
+                }
+            }
+            catch
+            {
+                inlCommentBeforeMove = null;
+            }
+
+            return inlCommentBeforeMove;
         }
 
         /// <summary>
