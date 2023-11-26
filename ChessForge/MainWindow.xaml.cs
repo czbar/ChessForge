@@ -2961,7 +2961,7 @@ namespace ChessForge
                 GuiUtilities.PositionDialog(dlg, this, 200);
                 if (dlg.ShowDialog() == true)
                 {
-                    if (nd.Comment != dlg.CommentBeforeMove)
+                    if (nd.CommentBeforeMove != dlg.CommentBeforeMove)
                     {
                         changed = true;
                         nd.CommentBeforeMove = dlg.CommentBeforeMove;
