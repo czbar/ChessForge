@@ -80,6 +80,8 @@ namespace ChessForge
                         {
                             SelectChapterHeader(chapter, false);
                         }
+
+                        e.Handled = true;
                     }
                     else if (e.ChangedButton == MouseButton.Right)
                     {
@@ -89,8 +91,6 @@ namespace ChessForge
 
                     HighlightChapterSelections(chapter);
                 }
-
-                e.Handled = true;
             }
             catch (Exception ex)
             {
@@ -867,12 +867,12 @@ namespace ChessForge
                     }
                     catch { }
                 }
+
+                e.Handled = true;
             }
 
             DraggedArticle.StopDragOperation();
             _mainWin.UiRtbChaptersView.Cursor = Cursors.Arrow;
-
-            e.Handled = true;
         }
 
         /// <summary>
@@ -919,12 +919,12 @@ namespace ChessForge
                     }
                     catch { }
                 }
+
+                e.Handled = true;
             }
 
             DraggedArticle.StopDragOperation();
             _mainWin.UiRtbChaptersView.Cursor = Cursors.Arrow;
-
-            e.Handled = true;
         }
 
         /// <summary>
@@ -951,12 +951,12 @@ namespace ChessForge
                     }
                     catch { }
                 }
+
+                e.Handled = true;
             }
 
             DraggedArticle.StopDragOperation();
             _mainWin.UiRtbChaptersView.Cursor = Cursors.Arrow;
-
-            e.Handled = true;
         }
 
         /// <summary>
@@ -998,12 +998,12 @@ namespace ChessForge
                     }
                     catch { }
                 }
+
+                e.Handled = true;
             }
 
             DraggedArticle.StopDragOperation();
             _mainWin.UiRtbChaptersView.Cursor = Cursors.Arrow;
-
-            e.Handled = true;
         }
 
         /// <summary>
@@ -1044,13 +1044,13 @@ namespace ChessForge
                         MoveArticle(targetChapterIndex, targetExerciseIndex);
                     }
                     catch { }
+
+                    e.Handled = true;
                 }
             }
 
             DraggedArticle.StopDragOperation();
             _mainWin.UiRtbChaptersView.Cursor = Cursors.Arrow;
-
-            e.Handled = true;
         }
 
         /// <summary>
