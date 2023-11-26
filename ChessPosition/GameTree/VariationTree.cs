@@ -504,7 +504,11 @@ namespace GameTree
                         }
                         break;
                     case ChfCommands.Command.COMMENT_BEFORE_MOVE:
-                        nd.CommentBeforeMove = tokens[1];
+                        int pos = command.IndexOf(' ');
+                        if (pos > 0 && pos < command.Length - 1)
+                        {
+                            nd.CommentBeforeMove = command.Substring(pos + 1);
+                        }
                         break;
                     case ChfCommands.Command.XAML:
                         if (tokens.Length > 1)
