@@ -1,4 +1,5 @@
-﻿using ChessPosition;
+﻿using ChessForge;
+using ChessPosition;
 using ChessPosition.Utils;
 using System;
 using System.IO;
@@ -281,6 +282,13 @@ namespace GameTree
         }
 
         /// <summary>
+        /// flags if we are reading before the first branch so that we can
+        /// read correctly the Intro and also allow correct reading of the
+        /// chess.com / chessbase.com
+        /// </summary>
+        private bool _preBranch = true;
+
+        /// <summary>
         /// Parses a branch of the tree.
         /// </summary>
         /// <param name="parentNode"></param>
@@ -304,12 +312,13 @@ namespace GameTree
                 {
                     // if this is a new branch then invoke this method again
                     case PgnTokenType.BranchStart:
+                        _preBranch = false;
                         ParseBranch(previousNode, tree);
                         break;
                     case PgnTokenType.BranchEnd:
                         return;
                     case PgnTokenType.CommentStart:
-                        comment = ProcessComment(hasMove ? parentNode : null);
+                        comment = ProcessComment((hasMove || _preBranch) ? parentNode : null);
                         break;
                     case PgnTokenType.Move:
                         // ProcessMove() will return a new node that will then be the "parentNode"
@@ -530,77 +539,86 @@ namespace GameTree
         /// <param name="node"></param>
         private string ProcessComment(TreeNode node)
         {
-            int endPos = _remainingGameText.IndexOf('}');
-            // if end of comment not found, there is something wrong with the file, force end of processing.
-            if (endPos < 0)
-            {
-                _remainingGameText = "";
-                return "";
-            }
+            string comment = "";
 
-            bool preserveCRLF = false;
-
-            // process any Chess Forge commands
-            if (node != null)
+            try
             {
-                while (true)
+                int endPos = _remainingGameText.IndexOf('}');
+                // if end of comment not found, there is something wrong with the file, force end of processing.
+                if (endPos < 0)
                 {
-                    int commandStart = _remainingGameText.IndexOf("[%", 0, endPos);
-                    if (commandStart < 0)
-                        break;
+                    _remainingGameText = "";
+                    return "";
+                }
 
-                    int commandEnd = _remainingGameText.IndexOf(']', 0, endPos);
-                    if (commandEnd > 0)
+                bool preserveCRLF = false;
+
+                // process any Chess Forge commands
+                if (node != null)
+                {
+                    while (true)
                     {
-                        string command = _remainingGameText.Substring(commandStart + 1, commandEnd - (commandStart + 1));
-                        if (command.Trim().Length > 0)
+                        int commandStart = _remainingGameText.IndexOf("[%", 0, endPos);
+                        if (commandStart < 0)
+                            break;
+
+                        int commandEnd = _remainingGameText.IndexOf(']', 0, endPos);
+                        if (commandEnd > 0)
+                        {
+                            string command = _remainingGameText.Substring(commandStart + 1, commandEnd - (commandStart + 1));
+                            if (command.Trim().Length > 0)
+                            {
+                                // remove CRLF
+                                command = command.Replace("\r", "");
+                                command = command.Replace("\n", "");
+                            }
+                            if (_tree.AddChfCommand(node, command) == ChfCommands.Command.BINARY)
+                            {
+                                preserveCRLF = true;
+                            }
+
+                            _remainingGameText = _remainingGameText.Substring(commandEnd + 1);
+                            endPos = endPos - (commandEnd + 1);
+                        }
+                    }
+                }
+
+                // update endPos as it may have been changed above when removing commands
+                endPos = _remainingGameText.IndexOf('}');
+
+                // extract comment text
+                comment = _remainingGameText.Substring(0, endPos);
+
+                // check if this is a NAG disguised as comment
+                string nag = GetNagMascaradingAsComment(comment);
+                if (nag != null)
+                {
+                    AddNAGtoLastMove(_tree, nag);
+                }
+                else
+                {
+                    // trim to check if there is any comment but do not trim the comment if it is there.
+                    if (comment.Trim().Length > 0)
+                    {
+                        if (!preserveCRLF)
                         {
                             // remove CRLF
-                            command = command.Replace("\r", "");
-                            command = command.Replace("\n", "");
+                            comment = comment.Replace("\r", "");
+                            comment = comment.Replace("\n", "");
                         }
-                        if (_tree.AddChfCommand(node, command) == ChfCommands.Command.BINARY)
+
+                        if (node != null)
                         {
-                            preserveCRLF = true;
+                            node.Comment = comment;
                         }
-
-                        _remainingGameText = _remainingGameText.Substring(commandEnd + 1);
-                        endPos = endPos - (commandEnd + 1);
                     }
                 }
+                _remainingGameText = _remainingGameText.Substring(endPos + 1);
             }
-
-            // update endPos as it may have been changed above when removing commands
-            endPos = _remainingGameText.IndexOf('}');
-
-            // extract comment text
-            string comment = _remainingGameText.Substring(0, endPos);
-
-            // check if this is a NAG disguised as comment
-            string nag = GetNagMascaradingAsComment(comment);
-            if (nag != null)
+            catch (Exception ex)
             {
-                AddNAGtoLastMove(_tree, nag);
+                AppLog.Message("ProcessComment() " + comment, ex);
             }
-            else
-            {
-                // trim to check if there is any comment but do not trim the comment if it is there.
-                if (comment.Trim().Length > 0)
-                {
-                    if (!preserveCRLF)
-                    {
-                        // remove CRLF
-                        comment = comment.Replace("\r", "");
-                        comment = comment.Replace("\n", "");
-                    }
-
-                    if (node != null)
-                    {
-                        node.Comment = comment;
-                    }
-                }
-            }
-            _remainingGameText = _remainingGameText.Substring(endPos + 1);
 
             return comment;
         }
