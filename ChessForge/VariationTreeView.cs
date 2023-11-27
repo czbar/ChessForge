@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -120,6 +121,8 @@ namespace ChessForge
         // the list of nodes currently selected for copying into clipboard
         private List<TreeNode> _selectedForCopy = new List<TreeNode>();
 
+        // the RichTextBox control underlying this view.
+        private RichTextBox _richTextBox;
 
         /// <summary>
         /// Constructor. Sets a reference to the 
@@ -127,10 +130,11 @@ namespace ChessForge
         /// a call to the base class's constructor.
         /// </summary>
         /// <param name="doc"></param>
-        public VariationTreeView(FlowDocument doc, MainWindow mainWin, GameData.ContentType contentType, int entityIndex) : base(doc)
+        public VariationTreeView(RichTextBox rtb, GameData.ContentType contentType, int entityIndex) : base(rtb.Document)
         {
-            _mainWin = mainWin;
+            _mainWin = AppState.MainWin;
             _contentType = contentType;
+            _richTextBox = rtb;
         }
 
         /// <summary>

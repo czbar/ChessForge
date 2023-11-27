@@ -1637,7 +1637,7 @@ namespace ChessForge
 
             try
             {
-                _studyTreeView = new VariationTreeView(UiRtbStudyTreeView.Document, this, GameData.ContentType.STUDY_TREE, -1);
+                _studyTreeView = new VariationTreeView(UiRtbStudyTreeView, GameData.ContentType.STUDY_TREE, -1);
 
                 _studyTreeView.ArticleSelected -= ArticleSelected;
                 _studyTreeView.ArticleSelected += ArticleSelected;
@@ -1718,7 +1718,7 @@ namespace ChessForge
 
             try
             {
-                _modelGameTreeView = new VariationTreeView(UiRtbModelGamesView.Document, this, GameData.ContentType.MODEL_GAME, gameIndex);
+                _modelGameTreeView = new VariationTreeView(UiRtbModelGamesView, GameData.ContentType.MODEL_GAME, gameIndex);
                 UiRtbModelGamesView.IsDocumentEnabled = true;
                 if (ActiveVariationTree.Nodes.Count == 0)
                 {
@@ -1790,7 +1790,7 @@ namespace ChessForge
 
             try
             {
-                _exerciseTreeView = new ExerciseTreeView(UiRtbExercisesView.Document, this, GameData.ContentType.EXERCISE, exerciseIndex);
+                _exerciseTreeView = new ExerciseTreeView(GameData.ContentType.EXERCISE, exerciseIndex);
                 UiRtbExercisesView.IsDocumentEnabled = true;
 
                 if (ActiveVariationTree.Nodes.Count == 0)
@@ -2839,7 +2839,7 @@ namespace ChessForge
                 // TODO: update only the Header
                 if (_studyTreeView == null)
                 {
-                    _studyTreeView = new VariationTreeView(UiRtbStudyTreeView.Document, this, GameData.ContentType.STUDY_TREE, -1);
+                    _studyTreeView = new VariationTreeView(UiRtbStudyTreeView, GameData.ContentType.STUDY_TREE, -1);
                 }
 
                 _studyTreeView.BuildFlowDocumentForVariationTree();

@@ -258,8 +258,8 @@ namespace ChessForge
         /// <param name="mainWin"></param>
         /// <param name="contentType"></param>
         /// <param name="entityIndex"></param>
-        public ExerciseTreeView(FlowDocument doc, MainWindow mainWin, GameData.ContentType contentType, int entityIndex)
-            : base(doc, mainWin, contentType, entityIndex)
+        public ExerciseTreeView(GameData.ContentType contentType, int entityIndex)
+            : base(AppState.MainWin.UiRtbExercisesView, contentType, entityIndex)
         {
         }
 
