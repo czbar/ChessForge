@@ -318,7 +318,12 @@ namespace GameTree
                     case PgnTokenType.BranchEnd:
                         return;
                     case PgnTokenType.CommentStart:
-                        comment = ProcessComment((hasMove || _preBranch) ? parentNode : null);
+                        bool isCommentBeforeMove = !hasMove && !_preBranch;
+                        comment = ProcessComment(isCommentBeforeMove ? null : parentNode);
+                        if (!isCommentBeforeMove)
+                        {
+                            comment = null;
+                        }
                         break;
                     case PgnTokenType.Move:
                         // ProcessMove() will return a new node that will then be the "parentNode"
