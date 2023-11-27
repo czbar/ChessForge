@@ -178,6 +178,20 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Mouse entered the Chapters View area.
+        /// If the left button is down block entering of the drag-and-drop mode.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void MouseEnter(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                DraggedArticle.IsBlocked = true;
+            }
+        }
+
+        /// <summary>
         /// Mouse moved within the area and the event was not handled
         /// downstream.
         /// If drag is in progress show the "barred" cursor.
