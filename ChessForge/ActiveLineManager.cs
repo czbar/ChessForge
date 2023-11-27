@@ -563,22 +563,30 @@ namespace ChessForge
         {
             if (Keyboard.Modifiers != ModifierKeys.Control)
             {
-                if (e.Key == Key.Delete)
+                switch (e.Key)
                 {
-                    _mainWin.DeleteRemainingMoves();
-                    e.Handled = true;
-                }
-                else if (e.Key == Key.F3)
-                {
-                    _mainWin.UiMnFindIdenticalPosition_Click(null, null);
-                    e.Handled = true;
-                }
-                else
-                {
-                    if (HandleKeyDown(e.Key))
-                    {
+                    case Key.Delete:
+                        _mainWin.DeleteRemainingMoves();
                         e.Handled = true;
-                    }
+                        break;
+                    case Key.F3:
+                        _mainWin.UiMnFindIdenticalPosition_Click(null, null);
+                        e.Handled = true;
+                        break;
+                    case Key.PageUp:
+                        _mainWin.ActiveTreeView?.RichTextBoxControl.PageUp();
+                        e.Handled = true;
+                        break;
+                    case Key.PageDown:
+                        _mainWin.ActiveTreeView?.RichTextBoxControl.PageDown();
+                        e.Handled = true;
+                        break;
+                    default:
+                        if (HandleKeyDown(e.Key))
+                        {
+                            e.Handled = true;
+                        }
+                        break;
                 }
             }
             else
@@ -589,6 +597,14 @@ namespace ChessForge
                     {
                         switch (e.Key)
                         {
+                            case Key.Home:
+                                _mainWin.ActiveTreeView?.RichTextBoxControl.ScrollToHome();
+                                e.Handled = true;
+                                break;
+                            case Key.End:
+                                _mainWin.ActiveTreeView?.RichTextBoxControl.ScrollToEnd();
+                                e.Handled = true;
+                                break;
                             case Key.U:
                                 _mainWin.CustomCommand_MoveItemUp(null, null);
                                 e.Handled = true;
@@ -763,6 +779,12 @@ namespace ChessForge
             return handled;
         }
 
+        /// <summary>
+        /// Brings the selected run into view on key up.
+        /// For some keys (CTRL-Home/End, PageUp/Down we don't want it because the intent was to scroll.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         public bool HandleKeyUp(Key key)
         {
             if (_mainWin.ActiveVariationTree == null || !_mainWin.ActiveVariationTree.ShowTreeLines || AppState.CurrentSolvingMode == VariationTree.SolvingMode.GUESS_MOVE)
@@ -770,7 +792,11 @@ namespace ChessForge
                 return true;
             }
 
-            _mainWin.BringSelectedRunIntoView();
+            // for some keys we do not want to bring the selected run into view
+            if (key != Key.LeftCtrl && key != Key.RightCtrl && key != Key.Next && key != Key.PageUp && key != Key.PageDown)
+            {
+                _mainWin.BringSelectedRunIntoView();
+            }
 
             return true;
         }
