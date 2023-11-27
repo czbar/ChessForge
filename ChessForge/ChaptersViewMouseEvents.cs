@@ -563,11 +563,16 @@ namespace ChessForge
         {
             try
             {
+                if (e.LeftButton != MouseButtonState.Pressed)
+                {
+                    DraggedArticle.IsBlocked = false;
+                }
+
                 Run rChapter = (Run)e.Source;
                 int chapterIndex = TextUtils.GetIdFromPrefixedString(rChapter.Name);
                 if (chapterIndex >= 0)
                 {
-                    if (e.LeftButton == MouseButtonState.Pressed)
+                    if (e.LeftButton == MouseButtonState.Pressed && !DraggedArticle.IsBlocked)
                     {
                         if (!DraggedArticle.IsDragInProgress)
                         {
@@ -630,6 +635,11 @@ namespace ChessForge
         {
             try
             {
+                if (e.LeftButton != MouseButtonState.Pressed)
+                {
+                    DraggedArticle.IsBlocked = false;
+                }
+
                 if (e.LeftButton == MouseButtonState.Pressed && DraggedArticle.IsDragInProgress)
                 {
                     if (DraggedArticle.ContentType == GameData.ContentType.MODEL_GAME)
@@ -657,6 +667,11 @@ namespace ChessForge
         {
             try
             {
+                if (e.LeftButton != MouseButtonState.Pressed)
+                {
+                    DraggedArticle.IsBlocked = false;
+                }
+
                 if (e.LeftButton == MouseButtonState.Pressed && DraggedArticle.IsDragInProgress)
                 {
                     if (DraggedArticle.ContentType == GameData.ContentType.EXERCISE)
@@ -685,6 +700,11 @@ namespace ChessForge
         {
             try
             {
+                if (e.LeftButton != MouseButtonState.Pressed)
+                {
+                    DraggedArticle.IsBlocked = false;
+                }
+
                 Run run = (Run)e.Source;
 
                 Chapter chapter = GetChapterAndItemIndexFromRun(run, out int gameIndex);
@@ -692,7 +712,7 @@ namespace ChessForge
                 Article game = chapter.GetModelGameAtIndex(gameIndex);
                 TreeNode node = game.Tree.GetThumbnail();
 
-                if (e.LeftButton == MouseButtonState.Pressed)
+                if (e.LeftButton == MouseButtonState.Pressed && !DraggedArticle.IsBlocked)
                 {
                     // if not already in progress start the drag
                     if (!DraggedArticle.IsDragInProgress)
@@ -734,11 +754,16 @@ namespace ChessForge
         {
             try
             {
+                if (e.LeftButton != MouseButtonState.Pressed)
+                {
+                    DraggedArticle.IsBlocked = false;
+                }
+
                 Run r = (Run)e.Source;
 
                 Chapter chapter = GetChapterAndItemIndexFromRun(r, out int exerciseIndex);
                 Article exer = chapter.GetExerciseAtIndex(exerciseIndex);
-                if (e.LeftButton == MouseButtonState.Pressed)
+                if (e.LeftButton == MouseButtonState.Pressed && !DraggedArticle.IsBlocked)
                 {
                     // if not already in progress start the drag
                     if (!DraggedArticle.IsDragInProgress)
