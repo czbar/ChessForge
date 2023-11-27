@@ -122,7 +122,7 @@ namespace ChessForge
         private List<TreeNode> _selectedForCopy = new List<TreeNode>();
 
         // the RichTextBox control underlying this view.
-        private RichTextBox _richTextBox;
+        public RichTextBox RichTextBoxControl;
 
         /// <summary>
         /// Constructor. Sets a reference to the 
@@ -134,7 +134,7 @@ namespace ChessForge
         {
             _mainWin = AppState.MainWin;
             _contentType = contentType;
-            _richTextBox = rtb;
+            RichTextBoxControl = rtb;
         }
 
         /// <summary>
