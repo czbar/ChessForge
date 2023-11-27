@@ -474,6 +474,16 @@ namespace ChessForge
             _chaptersView?.MouseLeave(sender, e);
         }
 
+        /// <summary>
+        /// Mouse entered the Chapters View area
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiRtbChaptersView_MouseEnter(object sender, MouseEventArgs e)
+        {
+            _chaptersView?.MouseEnter(sender, e);
+        }
+
 
         /// <summary>
         /// Mouse move within the Chapters View area.
