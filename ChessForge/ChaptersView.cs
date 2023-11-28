@@ -1611,7 +1611,7 @@ namespace ChessForge
         /// <returns></returns>
         private Paragraph GetParagraphForChapter(Chapter chapter)
         {
-            Paragraph para = null; ;
+            Paragraph para = null;
 
             if (chapter != null)
             {
