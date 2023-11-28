@@ -10,10 +10,10 @@
         Title="{x:Static p:Resources.DlgTitleEngineOptions}" Height="376" SizeToContent="Width">
     <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"  >
         <Label x:Name="UiLblEngineExe" Content="{x:Static p:Resources.EngineExecutable}" HorizontalAlignment="Left" Margin="17,31,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="UiBtnLocateEngine" Content=". . ." HorizontalAlignment="Left" Margin="536,34,15,0" VerticalAlignment="Top" RenderTransformOrigin="-0.681,0.002" Width="28" Click="UiBtnLocateEngine_Click"/>
+        <Button x:Name="UiBtnLocateEngine" Content=". . ." HorizontalAlignment="Left" Margin="536,34,15,0" VerticalAlignment="Top" Width="28" Click="UiBtnLocateEngine_Click"/>
         <TextBox x:Name="UiTbEngineExe" IsEnabled="False" HorizontalAlignment="Left" Margin="132,36,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="387"/>
 
-        <GroupBox x:Name="UiGbGameParams" Header="{x:Static p:Resources.InEngineGame}" Margin="300,80,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="193" Width="250">
+        <GroupBox x:Name="UiGbGameParams" Header="{x:Static p:Resources.InEngineGame}" Margin="300,80,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="195" Width="250">
             <StackPanel HorizontalAlignment="Center" Margin="0,0,0,0" Width="240">
                 <Label x:Name="UiLblThinkTimeInGame" Content="{x:Static p:Resources.ThinkTimeInGame}" HorizontalAlignment="Left" Margin="5,10,0,0" VerticalAlignment="Top" />
                 <TextBox x:Name="UiTbEngTimeInGame" HorizontalAlignment="Left" HorizontalContentAlignment="Center"  Margin="158,-22,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="40"/>
@@ -26,7 +26,7 @@
             </StackPanel>
         </GroupBox>
 
-        <GroupBox x:Name="UiGbEngParameters" HorizontalAlignment="Left" Height="90" Header="{x:Static p:Resources.InEvaluation}" Margin="15,79,0,0" VerticalAlignment="Top" Width="248">
+        <GroupBox x:Name="UiGbEngParameters" HorizontalAlignment="Left" Height="90" Header="{x:Static p:Resources.InEvaluation}" Margin="15,80,0,0" VerticalAlignment="Top" Width="248">
             <StackPanel>
                 <Label x:Name="UiLblEvalTime" Content="{x:Static p:Resources.ThinkTimeEvaluation}" HorizontalAlignment="Left" Margin="5,10,0,0" VerticalAlignment="Top"/>
                 <TextBox x:Name="UiTbEngEvalTime" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="158,-22,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="40"/>
@@ -35,7 +35,7 @@
             </StackPanel>
         </GroupBox>
 
-        <GroupBox x:Name="UiGbProcess" Header="{x:Static p:Resources.ProcessParameters}" HorizontalAlignment="Left" Width="248" Height="95" Margin="15,90,0,0">
+        <GroupBox x:Name="UiGbProcess" Header="{x:Static p:Resources.ProcessParameters}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="248" Height="95" Margin="15,180,0,0">
             <StackPanel>
                 <Label x:Name="UiLblThreads" Content="{x:Static p:Resources.EngineThreads}" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top"/>
                 <TextBox x:Name="UiTbThreads" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="158,-20,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="40"/>
