@@ -563,6 +563,7 @@ namespace ChessForge
         {
             try
             {
+                AutoScroll(e);
                 if (e.LeftButton != MouseButtonState.Pressed)
                 {
                     DraggedArticle.IsBlocked = false;
@@ -635,6 +636,7 @@ namespace ChessForge
         {
             try
             {
+                AutoScroll(e);
                 if (e.LeftButton != MouseButtonState.Pressed)
                 {
                     DraggedArticle.IsBlocked = false;
@@ -667,6 +669,7 @@ namespace ChessForge
         {
             try
             {
+                AutoScroll(e);
                 if (e.LeftButton != MouseButtonState.Pressed)
                 {
                     DraggedArticle.IsBlocked = false;
@@ -700,6 +703,7 @@ namespace ChessForge
         {
             try
             {
+                AutoScroll(e);
                 if (e.LeftButton != MouseButtonState.Pressed)
                 {
                     DraggedArticle.IsBlocked = false;
@@ -754,6 +758,7 @@ namespace ChessForge
         {
             try
             {
+                AutoScroll(e);
                 if (e.LeftButton != MouseButtonState.Pressed)
                 {
                     DraggedArticle.IsBlocked = false;
@@ -1113,6 +1118,26 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Scrolls one line up/down when the mouse is close to the top/bottom
+        /// of the view and the left mouse key is pressed.
+        /// </summary>
+        /// <param name="e"></param>
+        private void AutoScroll(MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                Point pt = e.GetPosition(AppState.MainWin.UiRtbChaptersView);
+                if (pt.Y < 50)
+                {
+                    AppState.MainWin.UiRtbChaptersView.LineUp();
+                }
+                else if (pt.Y > AppState.MainWin.UiRtbChaptersView.ActualHeight - 50)
+                {
+                    AppState.MainWin.UiRtbChaptersView.LineDown();
+                }
+            }
+        }
 
     }
 }

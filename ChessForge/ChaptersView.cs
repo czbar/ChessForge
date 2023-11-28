@@ -200,6 +200,7 @@ namespace ChessForge
         /// <param name="e"></param>
         public void MouseMove(object sender, MouseEventArgs e)
         {
+            AutoScroll(e);
             if (DraggedArticle.IsDragInProgress)
             {
                 _mainWin.UiRtbChaptersView.Cursor = DragAndDropCursors.GetBarredDropCursor();
