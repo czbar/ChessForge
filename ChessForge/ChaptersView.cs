@@ -3,8 +3,8 @@ using ChessPosition;
 using GameTree;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -19,6 +19,9 @@ namespace ChessForge
     {
         // Application's Main Window
         private MainWindow _mainWin;
+
+        // RichTextBox underpinning this view
+        private RichTextBox _richTextBox;
 
         // whether the view needs refreshing
         private bool _isDirty;
@@ -113,6 +116,8 @@ namespace ChessForge
             _mainWin = mainWin;
             _mainWin.UiRtbChaptersView.AllowDrop = false;
             _mainWin.UiRtbChaptersView.IsReadOnly = true;
+
+            _richTextBox = AppState.MainWin.UiRtbChaptersView;
         }
         /// <summary>
         /// Flags whether the view needs refreshing
@@ -1628,38 +1633,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Displays the floating board for the passed position.
-        /// </summary>
-        /// <param name="thumb"></param>
-        /// <param name="e"></param>
-        private void ShowFloatingBoard(TreeNode thumb, MouseEventArgs e, PieceColor sideAtBottom = PieceColor.None)
-        {
-            if (thumb != null)
-            {
-                if (sideAtBottom == PieceColor.None)
-                {
-                    sideAtBottom = WorkbookManager.SessionWorkbook.TrainingSideConfig;
-                }
-
-                Point pt = e.GetPosition(_mainWin.UiRtbChaptersView);
-                _mainWin.ChaptersFloatingBoard.FlipBoard(sideAtBottom == PieceColor.Black);
-                _mainWin.ChaptersFloatingBoard.DisplayPosition(thumb, false);
-                int xOffset = 20;
-                int yOffset = 20;
-                _mainWin.UiVbChaptersFloatingBoard.Margin = new Thickness(pt.X + xOffset, pt.Y + yOffset, 0, 0);
-                _mainWin.ShowChaptersFloatingBoard(true, TabViewType.CHAPTERS);
-            }
-        }
-
-        /// <summary>
-        /// Hides the floating chessboard.
-        /// </summary>
-        private void HideFloatingBoard(TabViewType viewType)
-        {
-            _mainWin.ShowChaptersFloatingBoard(false, viewType);
-        }
-
-        /// <summary>
         /// Modifies the text of the run to include or remove the SELECTION MARK.
         /// </summary>
         /// <param name="run"></param>
@@ -1693,7 +1666,6 @@ namespace ChessForge
                 }
             }
         }
-
 
         /// <summary>
         /// Shows the floating board of the requested type.
@@ -1749,6 +1721,15 @@ namespace ChessForge
                 _mainWin.ShowChaptersFloatingBoard(true, viewType);
             }
         }
+
+        /// <summary>
+        /// Hides the floating chessboard.
+        /// </summary>
+        private void HideFloatingBoard(TabViewType viewType)
+        {
+            _mainWin.ShowChaptersFloatingBoard(false, viewType);
+        }
+
     }
 
     class IntroRunsToModify
