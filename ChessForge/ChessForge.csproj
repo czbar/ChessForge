@@ -140,6 +140,9 @@
     <Compile Include="DownloadWebGamesManager.cs" />
     <Compile Include="DragAndDropCursors.cs" />
     <Compile Include="DraggedArticle.cs" />
+    <Compile Include="EditFenDialog.xaml.cs">
+      <DependentUpon>EditFenDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EditHyperlinkDialog.xaml.cs">
       <DependentUpon>EditHyperlinkDialog.xaml</DependentUpon>
     </Compile>
@@ -348,6 +351,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DownloadedGamesActionDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditFenDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
