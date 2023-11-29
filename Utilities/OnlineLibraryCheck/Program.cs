@@ -54,15 +54,22 @@ namespace OnlineLibraryCheck
             }
 
             // check if all specified files exist, and report omissions
-            CheckFilesExist();
+            bool hasIssues = CheckFilesExist();
+
+            if (!hasIssues)
+            {
+                Console.WriteLine("Content OK");
+            }
         }
 
         /// <summary>
         /// Checks if all files specified in the online library content files exist.
         /// Report those that do not.
         /// </summary>
-        private static void CheckFilesExist()
+        private static bool CheckFilesExist()
         {
+            bool hasIssues = false;
+
             foreach (string file in _dictFilesInLibraries.Keys)
             {
                 string path = Path.Combine(_libraryRoot, file);
@@ -73,9 +80,12 @@ namespace OnlineLibraryCheck
                     foreach (string contentFile in _dictFilesInLibraries[file])
                     {
                         Console.WriteLine("        " + contentFile);
+                        hasIssues = true;
                     }
                 }
             }
+
+            return hasIssues;
         }
 
         /// <summary>
