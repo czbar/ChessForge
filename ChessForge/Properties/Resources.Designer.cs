@@ -431,7 +431,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Keyboard: ←/→ (back/forth); SHIFT ↑↓ or Home/End (go to start/end); ↑↓ (choose a move at fork).
+        ///   Looks up a localized string similar to Keyboard: ←/→ (back/forth); SHIFT ←/→ or Home/End (start/end); ↑↓ (next/previous line).
         /// </summary>
         public static string cbClickThruMoves {
             get {
@@ -1480,6 +1480,15 @@ namespace ChessForge.Properties {
         public static string DlgTitleApplicationOptions {
             get {
                 return ResourceManager.GetString("DlgTitleApplicationOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit FEN.
+        /// </summary>
+        public static string DlgTitleEditFen {
+            get {
+                return ResourceManager.GetString("DlgTitleEditFen", resourceCulture);
             }
         }
         
@@ -3194,6 +3203,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid FEN.
+        /// </summary>
+        public static string InvalidFen {
+            get {
+                return ResourceManager.GetString("InvalidFen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid Position Setup.
         /// </summary>
         public static string InvalidPositionSetup {
@@ -4640,6 +4658,15 @@ namespace ChessForge.Properties {
         public static string Scoresheet {
             get {
                 return ResourceManager.GetString("Scoresheet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search by FEN....
+        /// </summary>
+        public static string SearchByFen {
+            get {
+                return ResourceManager.GetString("SearchByFen", resourceCulture);
             }
         }
         

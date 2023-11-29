@@ -572,7 +572,12 @@ ExitTraining=
 #english: ExitSolvingMode=Exit Solving Mode
 ExitSolvingMode=
 
-#description: TOP LEVEL MENU: Edit
+#################################
+#
+# Header: MAIN MENU: View
+#
+
+#description: Edit
 #english: Edit=Edit
 Edit=
 
@@ -584,13 +589,14 @@ Annotations=
 #english: CommentBeforeMove=Comment Before Move
 CommentBeforeMove=
 
-#description: Allows the user to merge multiple chapters into one
-#english: MergeChapters=Merge Chapters...
-MergeChapters=
+#description: Search by FEN
+#english: SearchByFen=Search by FEN...
+SearchByFen=
 
 #description: Undoes the previous operation
 #english: Undo=Undo
 Undo=
+
 
 #description: Advice to exit
 #english: ExitTrainingAdvice=Exit the training session to use this function.
@@ -712,6 +718,11 @@ ManageChapter=
 #description: Find Games
 #english: FindGames=Find Games...
 FindGames=
+
+#description: Allows the user to merge multiple chapters into one
+#english: MergeChapters=Merge Chapters...
+MergeChapters=
+
 
 ###########################
 #
@@ -855,6 +866,16 @@ EgSelectionAccuracyLabel=
 #description: Cenitpawn accuracy
 #english: EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
 EgCentipawnAccuracy=
+
+#######################################
+#
+# Header: DIALOG Edit FEN
+#
+
+#description: Dialog title
+#english: DlgTitleEditFen=Edit FEN
+DlgTitleEditFen=
+
 
 #######################################
 #
@@ -1640,6 +1661,10 @@ PositionSetup=
 #description: Invalid Position Setup
 #english: InvalidPositionSetup=Invalid Position Setup
 InvalidPositionSetup=
+
+#description: Invalid FEN
+#english: InvalidFen=Invalid FEN
+InvalidFen=
 
 #description: Import from a PGN file
 #english: ImportPgn=Import from PGN

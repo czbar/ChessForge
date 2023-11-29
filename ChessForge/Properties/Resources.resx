@@ -519,8 +519,8 @@
   <data name="CommentBeforeMove" xml:space="preserve">
     <value>Comment Before Move</value>
   </data>
-  <data name="MergeChapters" xml:space="preserve">
-    <value>Merge Chapters...</value>
+  <data name="SearchByFen" xml:space="preserve">
+    <value>Search by FEN...</value>
   </data>
   <data name="Undo" xml:space="preserve">
     <value>Undo</value>
@@ -605,6 +605,9 @@
   </data>
   <data name="FindGames" xml:space="preserve">
     <value>Find Games...</value>
+  </data>
+  <data name="MergeChapters" xml:space="preserve">
+    <value>Merge Chapters...</value>
   </data>
   <data name="Help" xml:space="preserve">
     <value>Help</value>
@@ -695,6 +698,9 @@
   </data>
   <data name="EgCentipawnAccuracy" xml:space="preserve">
     <value>max allowed centipawn deviation from the best move is</value>
+  </data>
+  <data name="DlgTitleEditFen" xml:space="preserve">
+    <value>Edit FEN</value>
   </data>
   <data name="DlgTitleLibraryContent" xml:space="preserve">
     <value>Library Content</value>
@@ -1190,6 +1196,9 @@
   </data>
   <data name="InvalidPositionSetup" xml:space="preserve">
     <value>Invalid Position Setup</value>
+  </data>
+  <data name="InvalidFen" xml:space="preserve">
+    <value>Invalid FEN</value>
   </data>
   <data name="ImportPgn" xml:space="preserve">
     <value>Import from PGN</value>

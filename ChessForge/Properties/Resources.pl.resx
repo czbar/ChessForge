@@ -519,8 +519,8 @@
   <data name="CommentBeforeMove" xml:space="preserve">
     <value>Komentarz przed posunięciem</value>
   </data>
-  <data name="MergeChapters" xml:space="preserve">
-    <value>Połącz rozdziały</value>
+  <data name="SearchByFen" xml:space="preserve">
+    <value>Szukaj pozycji z FEN...</value>
   </data>
   <data name="Undo" xml:space="preserve">
     <value>Cofnij Operację</value>
@@ -605,6 +605,9 @@
   </data>
   <data name="FindGames" xml:space="preserve">
     <value>Znajdź partie...</value>
+  </data>
+  <data name="MergeChapters" xml:space="preserve">
+    <value>Połącz rozdziały</value>
   </data>
   <data name="Help" xml:space="preserve">
     <value>Pomoc</value>
@@ -695,6 +698,9 @@
   </data>
   <data name="EgCentipawnAccuracy" xml:space="preserve">
     <value>maksymalne odchylenie od najlepszego ruchu wynosi</value>
+  </data>
+  <data name="DlgTitleEditFen" xml:space="preserve">
+    <value>Edytuj FEN</value>
   </data>
   <data name="DlgTitleLibraryContent" xml:space="preserve">
     <value>Zawartość Biblioteki</value>
@@ -1190,6 +1196,9 @@
   </data>
   <data name="InvalidPositionSetup" xml:space="preserve">
     <value>Niepoprawna Pozycja</value>
+  </data>
+  <data name="InvalidFen" xml:space="preserve">
+    <value>Niepoprawny FEN</value>
   </data>
   <data name="ImportPgn" xml:space="preserve">
     <value>Import z Pliku PGN</value>
