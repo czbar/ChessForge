@@ -754,7 +754,6 @@ namespace ChessForge
 
             try
             {
-                //TreeNode nd = ActiveLine.GetSelectedTreeNode();
                 TreeNode nd = ActiveVariationTree == null ? null : ActiveVariationTree.SelectedNode;
 
                 bool externalSearch = !AppState.IsTreeViewTabActive();
@@ -763,6 +762,41 @@ namespace ChessForge
             catch (Exception ex)
             {
                 AppLog.Message("UiMnFindIdenticalPosition_Click()", ex);
+            }
+        }
+
+        /// <summary>
+        /// Invoke the Edit FEN dialog and perform search by the specified FEN
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void UiMnSearchByFen_Click(object sender, RoutedEventArgs e)
+        {
+            bool isTrainingOrSolving = TrainingSession.IsTrainingInProgress || AppState.IsUserSolving();
+
+            if (isTrainingOrSolving || ActiveVariationTree == null || AppState.ActiveTab == TabViewType.CHAPTERS)
+            {
+                return;
+            }
+
+            try
+            {
+                EditFenDialog dlg = new EditFenDialog();
+                GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
+
+                if (dlg.ShowDialog() == true)
+                {
+                    TreeNode nd = new TreeNode();
+                    nd.Position = dlg.DlgBoardPosition;
+
+                    bool externalSearch = !AppState.IsTreeViewTabActive();
+                    FindIdenticalPositions.Search(nd, FindIdenticalPositions.Mode.FIND_AND_REPORT, externalSearch);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("SearchByFen_Click()", ex);
             }
         }
 
