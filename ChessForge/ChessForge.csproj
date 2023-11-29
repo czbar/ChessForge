@@ -80,6 +80,7 @@
     <Compile Include="AboutBoxDialog.xaml.cs">
       <DependentUpon>AboutBoxDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ActiveLineUtilities.cs" />
     <Compile Include="AnimationState.cs" />
     <Compile Include="AppOptionsDialog.xaml.cs">
       <DependentUpon>AppOptionsDialog.xaml</DependentUpon>

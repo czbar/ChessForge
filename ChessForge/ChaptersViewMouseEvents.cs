@@ -80,6 +80,8 @@ namespace ChessForge
                         {
                             SelectChapterHeader(chapter, false);
                         }
+
+                        e.Handled = true;
                     }
                     else if (e.ChangedButton == MouseButton.Right)
                     {
@@ -89,8 +91,6 @@ namespace ChessForge
 
                     HighlightChapterSelections(chapter);
                 }
-
-                e.Handled = true;
             }
             catch (Exception ex)
             {
@@ -563,11 +563,17 @@ namespace ChessForge
         {
             try
             {
+                AutoScroll(e);
+                if (e.LeftButton != MouseButtonState.Pressed)
+                {
+                    DraggedArticle.IsBlocked = false;
+                }
+
                 Run rChapter = (Run)e.Source;
                 int chapterIndex = TextUtils.GetIdFromPrefixedString(rChapter.Name);
                 if (chapterIndex >= 0)
                 {
-                    if (e.LeftButton == MouseButtonState.Pressed)
+                    if (e.LeftButton == MouseButtonState.Pressed && !DraggedArticle.IsBlocked)
                     {
                         if (!DraggedArticle.IsDragInProgress)
                         {
@@ -630,6 +636,12 @@ namespace ChessForge
         {
             try
             {
+                AutoScroll(e);
+                if (e.LeftButton != MouseButtonState.Pressed)
+                {
+                    DraggedArticle.IsBlocked = false;
+                }
+
                 if (e.LeftButton == MouseButtonState.Pressed && DraggedArticle.IsDragInProgress)
                 {
                     if (DraggedArticle.ContentType == GameData.ContentType.MODEL_GAME)
@@ -657,6 +669,12 @@ namespace ChessForge
         {
             try
             {
+                AutoScroll(e);
+                if (e.LeftButton != MouseButtonState.Pressed)
+                {
+                    DraggedArticle.IsBlocked = false;
+                }
+
                 if (e.LeftButton == MouseButtonState.Pressed && DraggedArticle.IsDragInProgress)
                 {
                     if (DraggedArticle.ContentType == GameData.ContentType.EXERCISE)
@@ -685,6 +703,12 @@ namespace ChessForge
         {
             try
             {
+                AutoScroll(e);
+                if (e.LeftButton != MouseButtonState.Pressed)
+                {
+                    DraggedArticle.IsBlocked = false;
+                }
+
                 Run run = (Run)e.Source;
 
                 Chapter chapter = GetChapterAndItemIndexFromRun(run, out int gameIndex);
@@ -692,7 +716,7 @@ namespace ChessForge
                 Article game = chapter.GetModelGameAtIndex(gameIndex);
                 TreeNode node = game.Tree.GetThumbnail();
 
-                if (e.LeftButton == MouseButtonState.Pressed)
+                if (e.LeftButton == MouseButtonState.Pressed && !DraggedArticle.IsBlocked)
                 {
                     // if not already in progress start the drag
                     if (!DraggedArticle.IsDragInProgress)
@@ -734,11 +758,17 @@ namespace ChessForge
         {
             try
             {
+                AutoScroll(e);
+                if (e.LeftButton != MouseButtonState.Pressed)
+                {
+                    DraggedArticle.IsBlocked = false;
+                }
+
                 Run r = (Run)e.Source;
 
                 Chapter chapter = GetChapterAndItemIndexFromRun(r, out int exerciseIndex);
                 Article exer = chapter.GetExerciseAtIndex(exerciseIndex);
-                if (e.LeftButton == MouseButtonState.Pressed)
+                if (e.LeftButton == MouseButtonState.Pressed && !DraggedArticle.IsBlocked)
                 {
                     // if not already in progress start the drag
                     if (!DraggedArticle.IsDragInProgress)
@@ -867,12 +897,12 @@ namespace ChessForge
                     }
                     catch { }
                 }
+
+                e.Handled = true;
             }
 
             DraggedArticle.StopDragOperation();
             _mainWin.UiRtbChaptersView.Cursor = Cursors.Arrow;
-
-            e.Handled = true;
         }
 
         /// <summary>
@@ -919,12 +949,12 @@ namespace ChessForge
                     }
                     catch { }
                 }
+
+                e.Handled = true;
             }
 
             DraggedArticle.StopDragOperation();
             _mainWin.UiRtbChaptersView.Cursor = Cursors.Arrow;
-
-            e.Handled = true;
         }
 
         /// <summary>
@@ -951,12 +981,12 @@ namespace ChessForge
                     }
                     catch { }
                 }
+
+                e.Handled = true;
             }
 
             DraggedArticle.StopDragOperation();
             _mainWin.UiRtbChaptersView.Cursor = Cursors.Arrow;
-
-            e.Handled = true;
         }
 
         /// <summary>
@@ -998,12 +1028,12 @@ namespace ChessForge
                     }
                     catch { }
                 }
+
+                e.Handled = true;
             }
 
             DraggedArticle.StopDragOperation();
             _mainWin.UiRtbChaptersView.Cursor = Cursors.Arrow;
-
-            e.Handled = true;
         }
 
         /// <summary>
@@ -1044,13 +1074,13 @@ namespace ChessForge
                         MoveArticle(targetChapterIndex, targetExerciseIndex);
                     }
                     catch { }
+
+                    e.Handled = true;
                 }
             }
 
             DraggedArticle.StopDragOperation();
             _mainWin.UiRtbChaptersView.Cursor = Cursors.Arrow;
-
-            e.Handled = true;
         }
 
         /// <summary>
@@ -1088,6 +1118,26 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Scrolls one line up/down when the mouse is close to the top/bottom
+        /// of the view and the left mouse key is pressed.
+        /// </summary>
+        /// <param name="e"></param>
+        private void AutoScroll(MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                Point pt = e.GetPosition(AppState.MainWin.UiRtbChaptersView);
+                if (pt.Y < 50)
+                {
+                    AppState.MainWin.UiRtbChaptersView.LineUp();
+                }
+                else if (pt.Y > AppState.MainWin.UiRtbChaptersView.ActualHeight - 50)
+                {
+                    AppState.MainWin.UiRtbChaptersView.LineDown();
+                }
+            }
+        }
 
     }
 }

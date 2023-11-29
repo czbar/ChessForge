@@ -563,22 +563,30 @@ namespace ChessForge
         {
             if (Keyboard.Modifiers != ModifierKeys.Control)
             {
-                if (e.Key == Key.Delete)
+                switch (e.Key)
                 {
-                    _mainWin.DeleteRemainingMoves();
-                    e.Handled = true;
-                }
-                else if (e.Key == Key.F3)
-                {
-                    _mainWin.UiMnFindIdenticalPosition_Click(null, null);
-                    e.Handled= true;
-                }
-                else
-                {
-                    if (HandleKeyDown(e.Key))
-                    {
+                    case Key.Delete:
+                        _mainWin.DeleteRemainingMoves();
                         e.Handled = true;
-                    }
+                        break;
+                    case Key.F3:
+                        _mainWin.UiMnFindIdenticalPosition_Click(null, null);
+                        e.Handled = true;
+                        break;
+                    case Key.PageUp:
+                        _mainWin.ActiveTreeView?.RichTextBoxControl.PageUp();
+                        e.Handled = true;
+                        break;
+                    case Key.PageDown:
+                        _mainWin.ActiveTreeView?.RichTextBoxControl.PageDown();
+                        e.Handled = true;
+                        break;
+                    default:
+                        if (HandleKeyDown(e.Key))
+                        {
+                            e.Handled = true;
+                        }
+                        break;
                 }
             }
             else
@@ -589,6 +597,14 @@ namespace ChessForge
                     {
                         switch (e.Key)
                         {
+                            case Key.Home:
+                                _mainWin.ActiveTreeView?.RichTextBoxControl.ScrollToHome();
+                                e.Handled = true;
+                                break;
+                            case Key.End:
+                                _mainWin.ActiveTreeView?.RichTextBoxControl.ScrollToEnd();
+                                e.Handled = true;
+                                break;
                             case Key.U:
                                 _mainWin.CustomCommand_MoveItemUp(null, null);
                                 e.Handled = true;
@@ -667,8 +683,8 @@ namespace ChessForge
             }
 
             // prevent "cheating" in exercises
-            if (_mainWin.ActiveVariationTree == null 
-                || !_mainWin.ActiveVariationTree.ShowTreeLines 
+            if (_mainWin.ActiveVariationTree == null
+                || !_mainWin.ActiveVariationTree.ShowTreeLines
                 || AppState.CurrentSolvingMode == VariationTree.SolvingMode.GUESS_MOVE
                 || AppState.ActiveTab == TabViewType.BOOKMARKS)
             {
@@ -763,6 +779,12 @@ namespace ChessForge
             return handled;
         }
 
+        /// <summary>
+        /// Brings the selected run into view on key up.
+        /// For some keys (CTRL-Home/End, PageUp/Down we don't want it because the intent was to scroll.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         public bool HandleKeyUp(Key key)
         {
             if (_mainWin.ActiveVariationTree == null || !_mainWin.ActiveVariationTree.ShowTreeLines || AppState.CurrentSolvingMode == VariationTree.SolvingMode.GUESS_MOVE)
@@ -770,7 +792,11 @@ namespace ChessForge
                 return true;
             }
 
-            _mainWin.BringSelectedRunIntoView();
+            // for some keys we do not want to bring the selected run into view
+            if (key != Key.LeftCtrl && key != Key.RightCtrl && key != Key.Next && key != Key.PageUp && key != Key.PageDown)
+            {
+                _mainWin.BringSelectedRunIntoView();
+            }
 
             return true;
         }
@@ -808,52 +834,51 @@ namespace ChessForge
                 switch (key)
                 {
                     case Key.Left:
-                        postKeyDownColumn = currColumn == _dgActiveLineWhitePlyColumn ? _dgActiveLineBlackPlyColumn : _dgActiveLineWhitePlyColumn;
-                        postKeyDownRow = currColumn == _dgActiveLineWhitePlyColumn ? currRow - 1 : currRow;
-                        // check for Exercise starting with Black move
-                        if (Line.NodeList[0].ColorToMove == PieceColor.Black && postKeyDownRow == -1)
+                        if (Keyboard.Modifiers == 0)
                         {
-                            postKeyDownRow = 0;
-                            postKeyDownColumn = _dgActiveLineWhitePlyColumn;
+                            postKeyDownColumn = currColumn == _dgActiveLineWhitePlyColumn ? _dgActiveLineBlackPlyColumn : _dgActiveLineWhitePlyColumn;
+                            postKeyDownRow = currColumn == _dgActiveLineWhitePlyColumn ? currRow - 1 : currRow;
+                            // check for Exercise starting with Black move
+                            if (Line.NodeList[0].ColorToMove == PieceColor.Black && postKeyDownRow == -1)
+                            {
+                                postKeyDownRow = 0;
+                                postKeyDownColumn = _dgActiveLineWhitePlyColumn;
+                            }
+                        }
+                        else if (Keyboard.Modifiers == ModifierKeys.Shift)
+                        {
+                            GotoFirstMove(out postKeyDownRow, out postKeyDownColumn);
                         }
                         break;
                     case Key.Right:
-                        postKeyDownColumn = currColumn == _dgActiveLineWhitePlyColumn ? _dgActiveLineBlackPlyColumn : 1;
-                        postKeyDownRow = currColumn == _dgActiveLineWhitePlyColumn ? currRow : currRow + 1;
-                        // if we went beyond the last move (because it is White's and Black cell is empty.)
-                        // switch back to the White column
-                        int selectedPlyIndex = (postKeyDownRow * 2) + (postKeyDownColumn == _dgActiveLineWhitePlyColumn ? 0 : 1) + 1;
+                        if (Keyboard.Modifiers == 0)
+                        {
+                            postKeyDownColumn = currColumn == _dgActiveLineWhitePlyColumn ? _dgActiveLineBlackPlyColumn : 1;
+                            postKeyDownRow = currColumn == _dgActiveLineWhitePlyColumn ? currRow : currRow + 1;
+                            // if we went beyond the last move (because it is White's and Black cell is empty.)
+                            // switch back to the White column
+                            int selectedPlyIndex = (postKeyDownRow * 2) + (postKeyDownColumn == _dgActiveLineWhitePlyColumn ? 0 : 1) + 1;
 
-                        // check for Exercise starting with Black move
-                        if (selectedPlyIndex != 0 && Line.NodeList[0].ColorToMove == PieceColor.Black)
-                        {
-                            selectedPlyIndex--;
+                            // check for Exercise starting with Black move
+                            if (selectedPlyIndex != 0 && Line.NodeList[0].ColorToMove == PieceColor.Black)
+                            {
+                                selectedPlyIndex--;
+                            }
+                            if (selectedPlyIndex >= Line.GetPlyCount())
+                            {
+                                postKeyDownColumn = _dgActiveLineWhitePlyColumn;
+                            }
                         }
-                        if (selectedPlyIndex >= Line.GetPlyCount())
+                        else if (Keyboard.Modifiers == ModifierKeys.Shift)
                         {
-                            postKeyDownColumn = _dgActiveLineWhitePlyColumn;
-                        }
-                        break;
-                    case Key.Up:
-                        if (Keyboard.Modifiers == ModifierKeys.Shift)
-                        {
-                            postKeyDownColumn = _dgActiveLineWhitePlyColumn;
-                            postKeyDownRow = 0;
+                            GotoLastMove(out postKeyDownRow, out postKeyDownColumn);
                         }
                         break;
                     case Key.Home:
                         postKeyDownRow = -1;
                         break;
-                    case Key.Down:
-                        if (Keyboard.Modifiers == ModifierKeys.Shift)
-                        {
-                            postKeyDownRow = _dgActiveLine.Items.Count - 1;
-                            postKeyDownColumn = (Line.GetPlyCount() % 2) == 0 ? _dgActiveLineWhitePlyColumn : _dgActiveLineBlackPlyColumn;
-                        }
-                        break;
                     case Key.End:
-                        postKeyDownRow = _dgActiveLine.Items.Count - 1;
-                        postKeyDownColumn = (Line.GetPlyCount() % 2) == 0 ? _dgActiveLineWhitePlyColumn : _dgActiveLineBlackPlyColumn;
+                        GotoLastMove(out postKeyDownRow, out postKeyDownColumn);
                         break;
                     default:
                         validKey = false;
@@ -866,6 +891,28 @@ namespace ChessForge
             }
 
             return validKey;
+        }
+
+        /// <summary>
+        /// Move selection to the first ply
+        /// </summary>
+        /// <param name="postKeyDownRow"></param>
+        /// <param name="postKeyDownColumn"></param>
+        private void GotoFirstMove(out int postKeyDownRow, out int postKeyDownColumn)
+        {
+            postKeyDownColumn = _dgActiveLineWhitePlyColumn;
+            postKeyDownRow = 0;
+        }
+
+        /// <summary>
+        /// Move selection to the last ply.
+        /// </summary>
+        /// <param name="postKeyDownRow"></param>
+        /// <param name="postKeyDownColumn"></param>
+        private void GotoLastMove(out int postKeyDownRow, out int postKeyDownColumn)
+        {
+            postKeyDownRow = _dgActiveLine.Items.Count - 1;
+            postKeyDownColumn = (Line.GetPlyCount() % 2) == 0 ? _dgActiveLineWhitePlyColumn : _dgActiveLineBlackPlyColumn;
         }
 
         /// <summary>

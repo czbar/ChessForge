@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -120,6 +121,8 @@ namespace ChessForge
         // the list of nodes currently selected for copying into clipboard
         private List<TreeNode> _selectedForCopy = new List<TreeNode>();
 
+        // the RichTextBox control underlying this view.
+        public RichTextBox RichTextBoxControl;
 
         /// <summary>
         /// Constructor. Sets a reference to the 
@@ -127,10 +130,11 @@ namespace ChessForge
         /// a call to the base class's constructor.
         /// </summary>
         /// <param name="doc"></param>
-        public VariationTreeView(FlowDocument doc, MainWindow mainWin, GameData.ContentType contentType, int entityIndex) : base(doc)
+        public VariationTreeView(RichTextBox rtb, GameData.ContentType contentType, int entityIndex) : base(rtb.Document)
         {
-            _mainWin = mainWin;
+            _mainWin = AppState.MainWin;
             _contentType = contentType;
+            RichTextBoxControl = rtb;
         }
 
         /// <summary>
@@ -822,18 +826,19 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Selects the move and line for the sibling node
-        /// of the current selection.
+        /// Selects a line for the next/prev sibling from the last fork, if found.
+        /// Then select the node with the same number/color as the same one
+        /// or, if not available, the last node on that line.
         /// </summary>
         /// <param name="prevNext"></param>
         /// <returns></returns>
-        public TreeNode SelectSiblingLineAndMove(bool prevNext)
+        public TreeNode SelectParallelLine(bool prevNext)
         {
             TreeNode node = null;
 
             try
             {
-                node = ShownVariationTree.GetNextSibling(GetSelectedNode(), prevNext);
+                node = ActiveLineUtilities.GetNextLineNode(GetSelectedNode(), prevNext);
                 if (node != null)
                 {
                     SelectNode(node);

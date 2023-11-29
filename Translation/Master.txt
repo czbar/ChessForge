@@ -2070,7 +2070,7 @@ cbEditCommands=CTRL+B bold, CTRL+I italics
 cbClickForContextMenu=Right click to open context menu
 
 #Click thru the moves
-cbClickThruMoves=Keyboard: ←/→ (back/forth); SHIFT ↑↓ or Home/End (go to start/end); ↑↓ (choose a move at fork)
+cbClickThruMoves=Keyboard: ←/→ (back/forth); SHIFT ←/→ or Home/End (start/end); ↑↓ (next/previous line)
 
 
 #Double click to annotate

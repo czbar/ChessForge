@@ -99,7 +99,7 @@ namespace ChessForge
         /// <returns></returns>
         public static bool IsMoveNag(int nagId)
         {
-            return nagId >= Constants.MinMoveNagId && nagId < Constants.MaxMoveNagId;
+            return nagId >= Constants.MinMoveNagId && nagId <= Constants.MaxMoveNagId;
         }
     }
 }

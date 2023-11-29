@@ -10,6 +10,54 @@ namespace ChessPosition
     public class TreeUtils
     {
         /// <summary>
+        /// Get the adjacent sibling of the passed node.
+        /// If there are no siblings returns null.
+        /// It there are no more siblings in the requested direction (prev/next)
+        /// wraps around if wrap is set to true.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="prevNext"></param>
+        /// <returns></returns>
+        public static TreeNode GetNextSibling(TreeNode nd, bool prevNext, bool wrap)
+        {
+            TreeNode sib = nd;
+
+            if (nd != null && nd.Parent != null && nd.Parent.Children.Count > 1)
+            {
+                for (int i = 0; i < nd.Parent.Children.Count; i++)
+                {
+                    if (nd.Parent.Children[i] == nd)
+                    {
+                        if (prevNext)
+                        {
+                            if (i > 0)
+                            {
+                                sib = nd.Parent.Children[i - 1];
+                            }
+                            else if (wrap)
+                            {
+                                sib = nd.Parent.Children[nd.Parent.Children.Count - 1];
+                            }
+                        }
+                        else
+                        {
+                            if (i < nd.Parent.Children.Count - 1)
+                            {
+                                sib = nd.Parent.Children[i + 1];
+                            }
+                            else if (wrap)
+                            {
+                                sib = nd.Parent.Children[0];
+                            }
+                        }
+                    }
+                }
+            }
+
+            return sib;
+        }
+
+        /// <summary>
         /// Makes a deep copy of the passed variation tree.
         /// </summary>
         /// <param name="source"></param>
@@ -265,7 +313,7 @@ namespace ChessPosition
         public static uint GetLastMoveNumberInMainLine(VariationTree tree)
         {
             uint moveNo = 0;
-            
+
             if (tree != null || tree.Nodes.Count == 0)
             {
 
@@ -410,7 +458,7 @@ namespace ChessPosition
                 if (nd != null)
                 {
                     nd.Comment = attrs.Comment;
-                    nd.Nags= attrs.Nags;
+                    nd.Nags = attrs.Nags;
                 }
             }
         }

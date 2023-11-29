@@ -32,6 +32,20 @@ namespace ChessForge
         public static int ArticleIndex { get; set; }
 
         /// <summary>
+        /// Whether entering the drag state is prohibited
+        /// e.g. because mouse entered with a left button down before
+        /// hovering over any itmem.
+        /// </summary>
+        public static bool IsBlocked
+        {
+            get => _isBlocked;
+            set => _isBlocked = value;
+        }
+
+        /// whether entering the drag state is prohibited
+        private static bool _isBlocked;
+
+        /// <summary>
         /// Return true if the dragged object is chapter
         /// </summary>
         /// <returns></returns>
@@ -45,12 +59,20 @@ namespace ChessForge
         /// </summary>
         /// <param name="chapter"></param>
         /// <param name="article"></param>
-        public static void StartDragOperation(int chapterIndex, int articleIndex, GameData.ContentType content)
+        public static bool StartDragOperation(int chapterIndex, int articleIndex, GameData.ContentType content)
         {
-            ArticleIndex = articleIndex;
-            ChapterIndex = chapterIndex;
-            ContentType = content;
-            IsDragInProgress = true;
+            if (IsBlocked)
+            {
+                return false;
+            }
+            else
+            {
+                ArticleIndex = articleIndex;
+                ChapterIndex = chapterIndex;
+                ContentType = content;
+                IsDragInProgress = true;
+                return true;
+            }
         }
 
         /// <summary>

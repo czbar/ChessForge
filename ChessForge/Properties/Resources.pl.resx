@@ -1924,7 +1924,7 @@
     <value>Naciśnij prawy przycisk, by wywołać menu</value>
   </data>
   <data name="cbClickThruMoves" xml:space="preserve">
-    <value>Klawiatura: ←/→ (naprzód/wstecz); SHIFT←/→ or Home/End (początek/koniec); ↑↓ (wybierz ruch w rozgałęzieniu)</value>
+    <value>Klawiatura: ←/→ (naprzód/wstecz); SHIFT←/→ or Home/End (początek/koniec); ↑↓ (wariant)</value>
   </data>
   <data name="cbDoubleClickToAnnotate" xml:space="preserve">
     <value>Kliknij na dowolne posunięcie. Dwukrotnie kliknij, by wprowadzić komentarz.</value>
