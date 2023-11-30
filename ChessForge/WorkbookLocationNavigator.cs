@@ -2,9 +2,6 @@
 using ChessPosition;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChessForge
 {
@@ -19,6 +16,9 @@ namespace ChessForge
         // index of the current location in the _locations list
         private static int _currentLocationIndex = -1;
 
+        // whether the location changes are being tracked
+        private static bool _isNavigationTrackingOn;
+
         /// <summary>
         /// Clears the locations cache
         /// </summary>
@@ -26,6 +26,18 @@ namespace ChessForge
         {
             _currentLocationIndex = -1;
             _locations.Clear();
+        }
+
+        /// <summary>
+        /// Whether the location changes are being tracked.
+        /// For example, we don't want to track them if we are navigating in response
+        /// to the user asking for previous/next location. Doing so would cause 
+        /// dupes/confusion in navigation tracking.
+        /// </summary>
+        public static bool IsNavigationTrackingOn
+        {
+            get => _isNavigationTrackingOn;
+            set => _isNavigationTrackingOn = value;
         }
 
         /// <summary>
@@ -181,44 +193,47 @@ namespace ChessForge
         /// <param name="articleIndex"></param>
         public static void SaveNewLocation(Chapter chapter, GameData.ContentType contentType, int articleIndex = -1)
         {
-            try
+            if (_isNavigationTrackingOn)
             {
-                if (chapter != null)
+                try
                 {
-                    TabViewType tab = TabViewType.NONE;
-
-                    string articleGuid = null;
-
-                    switch (contentType)
+                    if (chapter != null)
                     {
-                        case GameData.ContentType.INTRO:
-                            tab = TabViewType.INTRO;
-                            break;
-                        case GameData.ContentType.STUDY_TREE:
-                            tab = TabViewType.STUDY;
-                            break;
-                        case GameData.ContentType.MODEL_GAME:
-                            tab = TabViewType.MODEL_GAME;
-                            if (articleIndex >= 0)
-                            {
-                                articleGuid = chapter.ModelGames[articleIndex].Guid;
-                            }
-                            break;
-                        case GameData.ContentType.EXERCISE:
-                            tab = TabViewType.EXERCISE;
-                            if (articleIndex >= 0)
-                            {
-                                articleGuid = chapter.Exercises[articleIndex].Guid;
-                            }
-                            break;
-                    }
+                        TabViewType tab = TabViewType.NONE;
 
-                    WorkbookLocation location = new WorkbookLocation(chapter.Guid, tab, articleGuid, articleIndex);
-                    VerifyNewLocation(location);
+                        string articleGuid = null;
+
+                        switch (contentType)
+                        {
+                            case GameData.ContentType.INTRO:
+                                tab = TabViewType.INTRO;
+                                break;
+                            case GameData.ContentType.STUDY_TREE:
+                                tab = TabViewType.STUDY;
+                                break;
+                            case GameData.ContentType.MODEL_GAME:
+                                tab = TabViewType.MODEL_GAME;
+                                if (articleIndex >= 0)
+                                {
+                                    articleGuid = chapter.ModelGames[articleIndex].Guid;
+                                }
+                                break;
+                            case GameData.ContentType.EXERCISE:
+                                tab = TabViewType.EXERCISE;
+                                if (articleIndex >= 0)
+                                {
+                                    articleGuid = chapter.Exercises[articleIndex].Guid;
+                                }
+                                break;
+                        }
+
+                        WorkbookLocation location = new WorkbookLocation(chapter.Guid, tab, articleGuid, articleIndex);
+                        VerifyNewLocation(location);
+                    }
                 }
-            }
-            catch
-            {
+                catch
+                {
+                }
             }
         }
 
@@ -228,8 +243,11 @@ namespace ChessForge
         /// <param name="tabType"></param>
         public static void SaveNewLocation(TabViewType tabType)
         {
-            WorkbookLocation location = new WorkbookLocation(null, tabType, null, -1);
-            VerifyNewLocation(location);
+            if (_isNavigationTrackingOn)
+            {
+                WorkbookLocation location = new WorkbookLocation(null, tabType, null, -1);
+                VerifyNewLocation(location);
+            }
         }
 
         /// <summary>
