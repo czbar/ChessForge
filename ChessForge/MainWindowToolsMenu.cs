@@ -217,18 +217,15 @@ namespace ChessForge
             }
             else
             {
+                // do not track location changes as we evaluate game after game 
+                WorkbookLocationNavigator.IsNavigationTrackingOn = false;
+
                 try
                 {
                     ObservableCollection<ArticleListItem> gameList = WorkbookManager.SessionWorkbook.GenerateArticleList(null, GameData.ContentType.MODEL_GAME);
 
                     string title = Properties.Resources.EvaluateGames;
                     SelectArticlesDialog dlg = new SelectArticlesDialog(null, true, title, ref gameList, false, ArticlesAction.NONE, GameData.ContentType.MODEL_GAME);
-                    //{
-                    //    Left = ChessForgeMain.Left + 100,
-                    //    Top = ChessForgeMain.Top + 100,
-                    //    Topmost = false,
-                    //    Owner = this
-                    //};
                     GuiUtilities.PositionDialog(dlg, this, 100);
                     dlg.SetupGuiForGamesEval();
 
@@ -256,6 +253,7 @@ namespace ChessForge
                 catch { }
             }
 
+            WorkbookLocationNavigator.IsNavigationTrackingOn = true;
             e.Handled = true;
         }
 
