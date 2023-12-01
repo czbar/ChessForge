@@ -172,7 +172,7 @@ namespace ChessForge
         /// the current view, depending on what that view is and what operation
         /// was performed.
         /// </summary>
-        private static void UpdateViewAfterCopyMoveArticles(Chapter targetChapter, ArticlesAction action, GameData.ContentType contentType)
+        public static void UpdateViewAfterCopyMoveArticles(Chapter targetChapter, ArticlesAction action, GameData.ContentType contentType)
         {
             try
             {
@@ -198,17 +198,11 @@ namespace ChessForge
                 {
                     if (contentType == GameData.ContentType.MODEL_GAME || contentType == GameData.ContentType.GENERIC)
                     {
-                        PreviousNextViewBars.BuildPreviousNextBar(GameData.ContentType.MODEL_GAME);
-                        int updatedIndex = chapter.VerifyGameIndex(chapter.ActiveModelGameIndex);
-                        chapter.ActiveModelGameIndex = updatedIndex;
-                        AppState.MainWin.SelectModelGame(chapter.ActiveModelGameIndex, AppState.ActiveTab == TabViewType.MODEL_GAME);
+                        UpdateModelGamesView(chapter);
                     }
                     if (contentType == GameData.ContentType.EXERCISE || contentType == GameData.ContentType.GENERIC)
                     {
-                        PreviousNextViewBars.BuildPreviousNextBar(GameData.ContentType.EXERCISE);
-                        int updatedIndex = chapter.VerifyExerciseIndex(chapter.ActiveExerciseIndex);
-                        chapter.ActiveExerciseIndex = updatedIndex;
-                        AppState.MainWin.SelectExercise(chapter.ActiveExerciseIndex, AppState.ActiveTab == TabViewType.EXERCISE);
+                        UpdateExercisesView(chapter);
                     }
                 }
             }
@@ -216,6 +210,30 @@ namespace ChessForge
             {
                 AppLog.Message("UpdateViewAfterCopyMoveArticles", ex);
             }
+        }
+
+        /// <summary>
+        /// Updates the Model Games View when the game list has changed
+        /// </summary>
+        /// <param name="chapter"></param>
+        public static void UpdateModelGamesView(Chapter chapter)
+        {
+            PreviousNextViewBars.BuildPreviousNextBar(GameData.ContentType.MODEL_GAME);
+            int updatedIndex = chapter.VerifyGameIndex(chapter.ActiveModelGameIndex);
+            chapter.ActiveModelGameIndex = updatedIndex;
+            AppState.MainWin.SelectModelGame(chapter.ActiveModelGameIndex, AppState.ActiveTab == TabViewType.MODEL_GAME);
+        }
+
+        /// <summary>
+        /// Updates the Exercises View when the exercise list has changed
+        /// </summary>
+        /// <param name="chapter"></param>
+        public static void UpdateExercisesView(Chapter chapter)
+        {
+            PreviousNextViewBars.BuildPreviousNextBar(GameData.ContentType.EXERCISE);
+            int updatedIndex = chapter.VerifyExerciseIndex(chapter.ActiveExerciseIndex);
+            chapter.ActiveExerciseIndex = updatedIndex;
+            AppState.MainWin.SelectExercise(chapter.ActiveExerciseIndex, AppState.ActiveTab == TabViewType.EXERCISE);
         }
 
         /// <summary>
