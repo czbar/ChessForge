@@ -923,10 +923,6 @@ namespace ChessForge
                     MainChessBoard.FlipBoard(orient);
 
                     SetupGuiForActiveModelGame(gameIndex, setFocus);
-                    if (setFocus && WorkbookManager.SessionWorkbook != null)
-                    {
-                        WorkbookLocationNavigator.SaveNewLocation(activeChapter, GameData.ContentType.MODEL_GAME, gameIndex);
-                    }
                 }
                 else
                 {
@@ -934,7 +930,13 @@ namespace ChessForge
                     {
                         _modelGameTreeView.Clear(GameData.ContentType.MODEL_GAME);
                         activeChapter.SetActiveVariationTree(GameData.ContentType.NONE);
+                        AppState.MainWin.UiTabModelGames.Focus();
                     }
+                }
+
+                if (setFocus && WorkbookManager.SessionWorkbook != null)
+                {
+                    WorkbookLocationNavigator.SaveNewLocation(activeChapter, GameData.ContentType.MODEL_GAME, gameIndex);
                 }
             }
             catch (Exception ex)
