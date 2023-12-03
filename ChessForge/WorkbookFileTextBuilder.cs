@@ -812,6 +812,8 @@ namespace ChessForge
                 if (!string.IsNullOrEmpty(nd.CommentBeforeMove))
                 {
                     string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.COMMENT_BEFORE_MOVE) + " " + nd.CommentBeforeMove;
+                    // replace '[' and ']'
+                    sCmd = sCmd.Replace('[', '(').Replace(']', ')');
                     sb.Append("[" + sCmd + "]");
                 }
 
@@ -839,6 +841,8 @@ namespace ChessForge
                 // Comment, if any
                 if (!string.IsNullOrEmpty(nd.Comment))
                 {
+                    // replace '[', '{', '}', and ']'
+                    nd.Comment = nd.Comment.Replace('[', '(').Replace(']', ')').Replace('{','(').Replace('}', ')');
                     sb.Append(nd.Comment);
                 }
 
