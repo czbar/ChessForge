@@ -3,6 +3,7 @@ using GameTree;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -37,6 +38,11 @@ namespace ChessForge
         /// The list of games to process.
         /// </summary>
         private ObservableCollection<ArticleListItem> _articleList;
+
+        /// <summary>
+        /// The temporary list to bind with the ListView in the GUI.
+        /// </summary>
+        private ObservableCollection<ArticleListItem> _articleListItemsSource;
 
         // type of articles handled
         private GameData.ContentType _articleType;
@@ -110,7 +116,9 @@ namespace ChessForge
             }
             UiCbSelectAll.IsChecked = isAllSelected;
 
-            UiLvGames.ItemsSource = _articleList;
+            _articleListItemsSource = new ObservableCollection<ArticleListItem>();
+            CopyVisibleToItemsSource(false);
+            UiLvGames.ItemsSource = _articleListItemsSource;
         }
 
         /// <summary>
@@ -144,7 +152,7 @@ namespace ChessForge
         {
             List<string> refs = new List<string>();
 
-            foreach (ArticleListItem item in _articleList)
+            foreach (ArticleListItem item in _articleListItemsSource)
             {
                 if (item.Article != null && item.IsSelected)
                 {
@@ -157,6 +165,43 @@ namespace ChessForge
             }
 
             return refs;
+        }
+
+        /// <summary>
+        /// Copies the items marked as Visible from the main list
+        /// to the GUI bound list.
+        /// </summary>
+        private void CopyVisibleToItemsSource(bool updateSelected)
+        {
+            if (updateSelected)
+            {
+                UpdateSelectedInOriginal();
+            }
+
+            _articleListItemsSource.Clear();
+            foreach (ArticleListItem item in _articleList)
+            {
+                if (item.IsShown == true)
+                {
+                    _articleListItemsSource.Add(item);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates selection status in the original list
+        /// based on the content of the GUI bound list.
+        /// </summary>
+        private void UpdateSelectedInOriginal()
+        {
+            foreach (ArticleListItem item in _articleListItemsSource)
+            {
+                ArticleListItem orig = _articleList.FirstOrDefault(x => x == item);
+                if (orig != null)
+                {
+                    orig.IsSelected = item.IsSelected;
+                }
+            }
         }
 
         /// <summary>
@@ -176,7 +221,7 @@ namespace ChessForge
                     string[] refs = _node.ArticleRefs.Split('|');
                     foreach (string guid in refs)
                     {
-                        foreach (ArticleListItem item in _articleList)
+                        foreach (ArticleListItem item in _articleListItemsSource)
                         {
                             if (item.Article != null)
                             {
@@ -383,6 +428,8 @@ namespace ChessForge
             {
             }
 
+            CopyVisibleToItemsSource(true);
+
             return !expanded;
         }
 
@@ -418,7 +465,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiCbSelectAll_Checked(object sender, RoutedEventArgs e)
         {
-            foreach (var item in _articleList)
+            foreach (var item in _articleListItemsSource)
             {
                 if (item.IsShown)
                 {
@@ -435,7 +482,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiCbSelectAll_Unchecked(object sender, RoutedEventArgs e)
         {
-            foreach (var item in _articleList)
+            foreach (var item in _articleListItemsSource)
             {
                 if (item.IsShown)
                 {
@@ -453,6 +500,13 @@ namespace ChessForge
         {
             _showActiveChapterOnly = false;
             SetItemVisibility();
+            CopyVisibleToItemsSource(true);
+
+            ArticleListItem chapterHeader = _articleListItemsSource.FirstOrDefault(x => x.Chapter == AppState.Workbook.ActiveChapter);
+            if (chapterHeader != null)
+            {
+                UiLvGames.ScrollIntoView(chapterHeader);
+            }
         }
 
         /// <summary>
@@ -464,6 +518,7 @@ namespace ChessForge
         {
             _showActiveChapterOnly = true;
             SetItemVisibility();
+            CopyVisibleToItemsSource(true);
         }
 
         /// <summary>
@@ -474,28 +529,6 @@ namespace ChessForge
         private void UiLvGames_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             return;
-#if false
-            ListViewItem item = GetListViewItemFromPoint(UiLvGames, e.GetPosition(UiLvGames));
-            if (item != null && item.Content is ArticleListItem)
-            {
-                Article art = (item.Content as ArticleListItem).Article;
-                _lastClickedArticle = art;
-                if (art != null)
-                {
-                    if (art.Tree.Header.GetContentType(out _) == GameData.ContentType.EXERCISE)
-                    {
-                        UiMnPreviewGame.Header = Properties.Resources.PreviewExercise;
-                        UiMnOpenGame.Header = Properties.Resources.GoToExercises;
-                    }
-                    else
-                    {
-                        UiMnPreviewGame.Header = Properties.Resources.PreviewGame;
-                        UiMnOpenGame.Header = Properties.Resources.GoToGames;
-                    }
-                    UiCmGame.IsOpen = true;
-                }
-            }
-#endif
         }
 
         /// <summary>
@@ -549,9 +582,9 @@ namespace ChessForge
                 ArticleListItem item = cb.DataContext as ArticleListItem;
                 if (item.IsChapterHeader)
                 {
-                    for (int i = 0; i < _articleList.Count; i++)
+                    for (int i = 0; i < _articleListItemsSource.Count; i++)
                     {
-                        ArticleListItem art = _articleList[i];
+                        ArticleListItem art = _articleListItemsSource[i];
                         if (art.ChapterIndex == item.ChapterIndex && !art.IsChapterHeader)
                         {
                             art.IsSelected = true;
@@ -581,9 +614,9 @@ namespace ChessForge
                 ArticleListItem item = cb.DataContext as ArticleListItem;
                 if (item.IsChapterHeader)
                 {
-                    for (int i = 0; i < _articleList.Count; i++)
+                    for (int i = 0; i < _articleListItemsSource.Count; i++)
                     {
-                        ArticleListItem art = _articleList[i];
+                        ArticleListItem art = _articleListItemsSource[i];
                         if (art.ChapterIndex == item.ChapterIndex && !art.IsChapterHeader)
                         {
                             art.IsSelected = false;
@@ -628,6 +661,7 @@ namespace ChessForge
         private void UiBtnCopy_Click(object sender, RoutedEventArgs e)
         {
             ActionOnArticles = ArticlesAction.COPY;
+            UpdateSelectedInOriginal();
             DialogResult = true;
         }
 
@@ -639,6 +673,7 @@ namespace ChessForge
         private void UiBtnMove_Click(object sender, RoutedEventArgs e)
         {
             ActionOnArticles = ArticlesAction.MOVE;
+            UpdateSelectedInOriginal();
             DialogResult = true;
         }
 
@@ -649,6 +684,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnOk_Click(object sender, RoutedEventArgs e)
         {
+            UpdateSelectedInOriginal();
             DialogResult = true;
         }
 
