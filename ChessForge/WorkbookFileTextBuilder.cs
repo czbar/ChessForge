@@ -832,7 +832,7 @@ namespace ChessForge
                 }
 
                 // Write out commands that we did not recognize but do not want to lose.
-                // E.g. we may ne running an earlier version of Chess Forge.
+                // E.g. we may be running an earlier version of Chess Forge.
                 foreach (string cmd in nd.UnprocessedChfCommands)
                 {
                     sb.Append("[" + cmd + "]");
