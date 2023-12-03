@@ -47,34 +47,6 @@ namespace GameTree
         private bool DEBUG_MODE = false;
 
         /// <summary>
-        /// The constructor takes the entire game notation as a string.
-        /// </summary>
-        /// <param name="tree"></param>
-        public PgnGameParser(string pgnGametext, VariationTree tree, out bool multiGame, bool debugMode = false)
-        {
-            try
-            {
-                multiGame = false;
-
-                if (debugMode)
-                {
-                    DEBUG_MODE = true;
-                }
-
-                ProcessPgnGameText(tree, pgnGametext, null);
-
-                if (_remainingGameText.IndexOf("[White") >= 0)
-                {
-                    multiGame = true;
-                }
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Parses a single PGN game
         /// </summary>
         /// <param name="pgnGametext"></param>
@@ -206,7 +178,7 @@ namespace GameTree
         /// The game text consists of White and Black moves with each White move
         /// preceded by the move number in the form of "N." where N is a positive integer.
         /// Each game must start with "1." or a comment.
-        /// Comments strat with a '{' character and end with '}'
+        /// Comments start with a '{' character and end with '}'
         /// A Black move follows the White move with a space character between them. If there is an intervening
         /// branch after the White move, the Black move after the return from the branch will be preceded by
         /// "N..." where N is the last White move number.
