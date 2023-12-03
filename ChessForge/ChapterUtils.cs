@@ -68,16 +68,16 @@ namespace ChessForge
         /// <summary>
         /// Processes a response from the dialog, where the user requested to copy/move articles
         /// </summary>
-        /// <param name="lstIdenticalPositions"></param>
+        /// <param name="lstArticleItems"></param>
         /// <param name="request"></param>
         public static void RequestCopyMoveArticles(TreeNode searchNode,
                                 bool allChaptersCheckbox,
-                                ObservableCollection<ArticleListItem> lstIdenticalPositions,
+                                ObservableCollection<ArticleListItem> lstArticleItems,
                                 ArticlesAction action,
                                 bool showAllChapters)
         {
             // make a list with only games and exercises
-            RemoveStudies(lstIdenticalPositions);
+            RemoveStudies(lstArticleItems);
 
             string title = "";
             switch (action)
@@ -93,7 +93,7 @@ namespace ChessForge
                     break;
             }
 
-            SelectArticlesDialog dlg = new SelectArticlesDialog(null, allChaptersCheckbox, title, ref lstIdenticalPositions, showAllChapters, action);
+            SelectArticlesDialog dlg = new SelectArticlesDialog(null, allChaptersCheckbox, title, ref lstArticleItems, showAllChapters, action);
             GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
             if (action == ArticlesAction.COPY_OR_MOVE)
@@ -104,11 +104,11 @@ namespace ChessForge
             if (dlg.ShowDialog() == true)
             {
                 action = dlg.ActionOnArticles;
-                RemoveUnselectedArticles(lstIdenticalPositions);
+                RemoveUnselectedArticles(lstArticleItems);
 
-                if (HasAtLeastNArticles(lstIdenticalPositions, 1))
+                if (HasAtLeastNArticles(lstArticleItems, 1))
                 {
-                    ProcessCopyOrMoveArticles(searchNode, lstIdenticalPositions, action);
+                    ProcessCopyOrMoveArticles(searchNode, lstArticleItems, action);
                 }
             }
         }
