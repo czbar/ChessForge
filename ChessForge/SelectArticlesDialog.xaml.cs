@@ -37,18 +37,21 @@ namespace ChessForge
         /// <summary>
         /// The list of games to process.
         /// </summary>
-        private ObservableCollection<ArticleListItem> _articleList;
+        private ObservableCollection<ArticleListItem> _articleListOriginal;
 
         /// <summary>
         /// The temporary list to bind with the ListView in the GUI.
         /// </summary>
-        private ObservableCollection<ArticleListItem> _articleListItemsSource;
+        private ObservableCollection<ArticleListItem> _articleListItemsSource = new ObservableCollection<ArticleListItem>();
 
         // type of articles handled
         private GameData.ContentType _articleType;
 
         // Node for which this dialog was invoked.
         private TreeNode _node;
+
+        // flag to block processing of CheckBox events
+        private bool _doNotProcessCheckEvents = false;
 
         /// <summary>
         /// The dialog for selecting Articles (games or exercises) from multiple chapters.
@@ -59,20 +62,23 @@ namespace ChessForge
         /// <param name="articleList">list of articles to show</param>
         /// <param name="allChapters">whether to start with all chapters</param>
         /// <param name="articleType"></param>
-        public SelectArticlesDialog(TreeNode nd, 
-            bool allChaptersCheckbox, string title, 
-            ref ObservableCollection<ArticleListItem> articleList, 
-            bool allChapters, 
+        public SelectArticlesDialog(TreeNode nd,
+            bool allChaptersCheckbox, string title,
+            ref ObservableCollection<ArticleListItem> articleList,
+            bool allChapters,
             ArticlesAction actionOnArticles,
             GameData.ContentType articleType = GameData.ContentType.GENERIC)
         {
             _node = nd;
-            _articleList = articleList;
+            _articleListOriginal = articleList;
             _articleType = articleType;
             ActionOnArticles = actionOnArticles;
 
             // if there is any selection outside the active chapter show all chapters (issue #465)
             InitializeComponent();
+
+            // do not process CheckBox events while in the constructor
+            _doNotProcessCheckEvents = true;
 
             UiLblEvalTime.Visibility = Visibility.Collapsed;
             UiTbEngEvalTime.Visibility = Visibility.Collapsed;
@@ -80,20 +86,15 @@ namespace ChessForge
             UiBtnCopy.Visibility = Visibility.Collapsed;
             UiBtnMove.Visibility = Visibility.Collapsed;
 
-            if (title != null)
-            {
-                Title = title;
-            }
-            if (allChaptersCheckbox)
-            {
-                UiCbAllChapters.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                UiCbAllChapters.Visibility = Visibility.Collapsed;
-            }
+            Title = title ?? Title;
 
-            SelectNodeReferences();
+            UiCbAllChapters.Visibility = allChaptersCheckbox ? Visibility.Visible : UiCbAllChapters.Visibility = Visibility.Collapsed;
+
+            if (nd != null)
+            {
+                // this dialog was invoked to edit references
+                SelectNodeReferences();
+            }
 
             if (!allChapters)
             {
@@ -101,12 +102,11 @@ namespace ChessForge
             }
             _showActiveChapterOnly = !allChapters;
             UiCbAllChapters.IsChecked = allChapters;
-
-            SetItemVisibility();
+            SetOriginalItemsVisibility();
 
             // if everything is selected, check the box
             bool isAllSelected = true;
-            foreach (ArticleListItem item in _articleList)
+            foreach (ArticleListItem item in _articleListOriginal)
             {
                 if (!item.IsSelected)
                 {
@@ -115,10 +115,16 @@ namespace ChessForge
                 }
             }
             UiCbSelectAll.IsChecked = isAllSelected;
+            if (isAllSelected)
+            {
+                SelectAllShownOriginalItems();
+            }
 
-            _articleListItemsSource = new ObservableCollection<ArticleListItem>();
-            CopyVisibleToItemsSource(false);
+            // populate the list bound to the GUI ListView
+            CopyShownItemsToItemsSource(false);
             UiLvGames.ItemsSource = _articleListItemsSource;
+
+            _doNotProcessCheckEvents = false;
         }
 
         /// <summary>
@@ -168,18 +174,26 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Copies the items marked as Visible from the main list
+        /// Copies the items marked as Shown from the main list
         /// to the GUI bound list.
         /// </summary>
-        private void CopyVisibleToItemsSource(bool updateSelected)
+        /// <param name="updateSelected">If true, update item selection flags in the original list
+        /// based on the selection flags in the GUI bound list </param>
+        private void CopyShownItemsToItemsSource(bool updateSelected)
         {
+            if (_articleListItemsSource == null)
+            {
+                // the GUI bound list is null so this is called too early (from the constructor)
+                return;
+            }
+
             if (updateSelected)
             {
                 UpdateSelectedInOriginal();
             }
 
             _articleListItemsSource.Clear();
-            foreach (ArticleListItem item in _articleList)
+            foreach (ArticleListItem item in _articleListOriginal)
             {
                 if (item.IsShown == true)
                 {
@@ -189,14 +203,14 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Updates selection status in the original list
+        /// Updates item selection flags in the original list
         /// based on the content of the GUI bound list.
         /// </summary>
         private void UpdateSelectedInOriginal()
         {
             foreach (ArticleListItem item in _articleListItemsSource)
             {
-                ArticleListItem orig = _articleList.FirstOrDefault(x => x == item);
+                ArticleListItem orig = _articleListOriginal.FirstOrDefault(x => x == item);
                 if (orig != null)
                 {
                     orig.IsSelected = item.IsSelected;
@@ -206,6 +220,8 @@ namespace ChessForge
 
         /// <summary>
         /// Marks as selected all references currently in the node.
+        /// This will only run if _node is not null i.e. when this dialog
+        /// is invoked for setting up references.
         /// </summary>
         private void SelectNodeReferences()
         {
@@ -221,7 +237,7 @@ namespace ChessForge
                     string[] refs = _node.ArticleRefs.Split('|');
                     foreach (string guid in refs)
                     {
-                        foreach (ArticleListItem item in _articleListItemsSource)
+                        foreach (ArticleListItem item in _articleListOriginal)
                         {
                             if (item.Article != null)
                             {
@@ -246,7 +262,7 @@ namespace ChessForge
         {
             bool res = false;
 
-            foreach (ArticleListItem item in _articleList)
+            foreach (ArticleListItem item in _articleListOriginal)
             {
                 if (item.IsSelected && item.Chapter != WorkbookManager.SessionWorkbook.ActiveChapter)
                 {
@@ -259,11 +275,12 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Sets the IsShown property on all items.
+        /// Sets the IsShown property on all items
+        /// in the original list.
         /// </summary>
-        private void SetItemVisibility()
+        private void SetOriginalItemsVisibility()
         {
-            foreach (ArticleListItem item in _articleList)
+            foreach (ArticleListItem item in _articleListOriginal)
             {
                 if (!_showActiveChapterOnly)
                 {
@@ -340,7 +357,7 @@ namespace ChessForge
                 artItem.IsChapterAllUnselected = !anySelected && anyUnselected;
                 artItem.IsChapterExpanded = ExpandCollapseChapter(artItem);
 
-                artItem.ChapterCheckBoxVisible =  (artItem.IsChapterExpanded || artItem.IsChapterAllSelected || artItem.IsChapterAllUnselected) ? "Visible" : "Collapsed";
+                artItem.ChapterCheckBoxVisible = (artItem.IsChapterExpanded || artItem.IsChapterAllSelected || artItem.IsChapterAllUnselected) ? "Visible" : "Collapsed";
                 artItem.ChapterGrayedCheckBoxVisible = (!artItem.IsChapterExpanded && !artItem.IsChapterAllSelected && !artItem.IsChapterAllUnselected) ? "Visible" : "Collapsed";
             }
         }
@@ -358,7 +375,7 @@ namespace ChessForge
             anyUnSelected = false;
 
             // TODO: this can be optimized but is it worthwhile?
-            foreach (ArticleListItem item in _articleList)
+            foreach (ArticleListItem item in _articleListOriginal)
             {
                 if (!item.IsChapterHeader && item.ChapterIndex == chapterIndex)
                 {
@@ -388,7 +405,7 @@ namespace ChessForge
         private bool AnyItemsShownFromChapter(int chapterIndex)
         {
             bool shown = false;
-            foreach (ArticleListItem item in _articleList)
+            foreach (ArticleListItem item in _articleListOriginal)
             {
                 if (item.ChapterIndex == chapterIndex && !item.IsChapterHeader && item.IsShown)
                 {
@@ -402,6 +419,8 @@ namespace ChessForge
 
         /// <summary>
         /// Expands or collapses a chapter.
+        /// First the Shown status is updated in the original list
+        /// and then the GUI bound list is recreated.
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
@@ -414,9 +433,9 @@ namespace ChessForge
                 expanded = AnyItemsShownFromChapter(item.ChapterIndex);
                 if (item.IsChapterHeader)
                 {
-                    for (int i = 0; i < _articleList.Count; i++)
+                    for (int i = 0; i < _articleListOriginal.Count; i++)
                     {
-                        ArticleListItem art = _articleList[i];
+                        ArticleListItem art = _articleListOriginal[i];
                         if (art.ChapterIndex == item.ChapterIndex && !art.IsChapterHeader)
                         {
                             art.IsShown = !expanded;
@@ -428,7 +447,7 @@ namespace ChessForge
             {
             }
 
-            CopyVisibleToItemsSource(true);
+            CopyShownItemsToItemsSource(true);
 
             return !expanded;
         }
@@ -446,25 +465,39 @@ namespace ChessForge
                 gameIdList.Add(art.Tree.Header.GetGuid(out _));
 
                 SingleGamePreviewDialog dlg = new SingleGamePreviewDialog(gameIdList, games);
-                //{
-                //    Left = this.Left + 20,
-                //    Top = this.Top + 20,
-                //    Topmost = false,
-                //    Owner = this
-                //};
                 GuiUtilities.PositionDialog(dlg, this, 20);
                 dlg.ShowDialog();
             }
         }
 
         /// <summary>
-        /// SelectAll box was checked
-        /// Check all currently shown items.
+        /// Sets the IsSelected flag on all shown items
+        /// in the original list.
+        /// </summary>
+        private void SelectAllShownOriginalItems()
+        {
+            foreach (var item in _articleListOriginal)
+            {
+                if (item.IsShown)
+                {
+                    item.IsSelected = true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// SelectAll box was checked.
+        /// Set IsSelected flag on all items in the GUI bound list.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void UiCbSelectAll_Checked(object sender, RoutedEventArgs e)
         {
+            if (_doNotProcessCheckEvents)
+            {
+                return;
+            }
+
             foreach (var item in _articleListItemsSource)
             {
                 if (item.IsShown)
@@ -476,12 +509,17 @@ namespace ChessForge
 
         /// <summary>
         /// SelectAll box was unchecked.
-        /// Uncheck all currently shown items.
+        /// Reset IsSelected flag on all items in the GUI bound list.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void UiCbSelectAll_Unchecked(object sender, RoutedEventArgs e)
         {
+            if (_doNotProcessCheckEvents)
+            {
+                return;
+            }
+
             foreach (var item in _articleListItemsSource)
             {
                 if (item.IsShown)
@@ -498,9 +536,15 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiCbAllChapters_Checked(object sender, RoutedEventArgs e)
         {
+            if (_doNotProcessCheckEvents)
+            {
+                return;
+            }
+
             _showActiveChapterOnly = false;
-            SetItemVisibility();
-            CopyVisibleToItemsSource(true);
+
+            SetOriginalItemsVisibility();
+            CopyShownItemsToItemsSource(true);
 
             ArticleListItem chapterHeader = _articleListItemsSource.FirstOrDefault(x => x.Chapter == AppState.Workbook.ActiveChapter);
             if (chapterHeader != null)
@@ -516,9 +560,14 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiCbAllChapters_Unchecked(object sender, RoutedEventArgs e)
         {
+            if (_doNotProcessCheckEvents)
+            {
+                return;
+            }
+
             _showActiveChapterOnly = true;
-            SetItemVisibility();
-            CopyVisibleToItemsSource(true);
+            SetOriginalItemsVisibility();
+            CopyShownItemsToItemsSource(true);
         }
 
         /// <summary>
@@ -582,6 +631,11 @@ namespace ChessForge
                 ArticleListItem item = cb.DataContext as ArticleListItem;
                 if (item.IsChapterHeader)
                 {
+                    if (!item.IsChapterExpanded)
+                    {
+                        ChapterHeaderDoubleClicked(item);
+                    }
+
                     for (int i = 0; i < _articleListItemsSource.Count; i++)
                     {
                         ArticleListItem art = _articleListItemsSource[i];
@@ -589,10 +643,6 @@ namespace ChessForge
                         {
                             art.IsSelected = true;
                         }
-                    }
-                    if (!item.IsChapterExpanded)
-                    {
-                        ChapterHeaderDoubleClicked(item);
                     }
                 }
             }
@@ -614,6 +664,10 @@ namespace ChessForge
                 ArticleListItem item = cb.DataContext as ArticleListItem;
                 if (item.IsChapterHeader)
                 {
+                    if (!item.IsChapterExpanded)
+                    {
+                        ChapterHeaderDoubleClicked(item);
+                    }
                     for (int i = 0; i < _articleListItemsSource.Count; i++)
                     {
                         ArticleListItem art = _articleListItemsSource[i];
@@ -621,10 +675,6 @@ namespace ChessForge
                         {
                             art.IsSelected = false;
                         }
-                    }
-                    if (!item.IsChapterExpanded)
-                    {
-                        ChapterHeaderDoubleClicked(item);
                     }
                 }
             }
@@ -661,8 +711,7 @@ namespace ChessForge
         private void UiBtnCopy_Click(object sender, RoutedEventArgs e)
         {
             ActionOnArticles = ArticlesAction.COPY;
-            UpdateSelectedInOriginal();
-            DialogResult = true;
+            ExitOk();
         }
 
         /// <summary>
@@ -673,8 +722,7 @@ namespace ChessForge
         private void UiBtnMove_Click(object sender, RoutedEventArgs e)
         {
             ActionOnArticles = ArticlesAction.MOVE;
-            UpdateSelectedInOriginal();
-            DialogResult = true;
+            ExitOk();
         }
 
         /// <summary>
@@ -684,8 +732,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnOk_Click(object sender, RoutedEventArgs e)
         {
-            UpdateSelectedInOriginal();
-            DialogResult = true;
+            ExitOk();
         }
 
         /// <summary>
@@ -696,6 +743,34 @@ namespace ChessForge
         private void UiBtnCancel_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
+        }
+
+        /// <summary>
+        /// Copy all selection flags to the original.
+        /// Deselect all not in the active chapter if the all chapters CheckBox is unchecked
+        /// </summary>
+        private void ExitOk()
+        {
+            UpdateSelectedInOriginal();
+            if (_showActiveChapterOnly)
+            {
+                ClearNonActiveChapterSelectedInOriginal();
+            }
+            DialogResult = true;
+        }
+
+        /// <summary>
+        /// Ensures that all items not from the active chapter are deselected.
+        /// </summary>
+        private void ClearNonActiveChapterSelectedInOriginal()
+        {
+            foreach (ArticleListItem item in _articleListOriginal)
+            {
+                if (item.ChapterIndex != AppState.Workbook.ActiveChapterIndex)
+                {
+                    item.IsSelected = false;
+                }
+            }
         }
     }
 }
