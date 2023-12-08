@@ -150,6 +150,13 @@ namespace ChessForge
             UiBtnMove.Content = Properties.Resources.MoveArticles + "...";
         }
 
+
+        //***********************************************************************************
+        //
+        // Functions dealing with references when the dialog is invoked to select references
+        //
+        //***********************************************************************************
+
         /// <summary>
         /// Returns a list of selected references.
         /// </summary>
@@ -174,11 +181,53 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Marks as selected all references currently in the node.
+        /// This will only run if _node is not null i.e. when this dialog
+        /// is invoked for setting up references.
+        /// </summary>
+        private void SelectNodeReferences()
+        {
+            if (_node == null)
+            {
+                return;
+            }
+
+            try
+            {
+                if (!string.IsNullOrEmpty(_node.ArticleRefs))
+                {
+                    string[] refs = _node.ArticleRefs.Split('|');
+                    foreach (string guid in refs)
+                    {
+                        foreach (ArticleListItem item in _articleListOriginal)
+                        {
+                            if (item.Article != null)
+                            {
+                                if (item.Article.Tree.Header.GetGuid(out _) == guid)
+                                {
+                                    item.IsSelected = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch { }
+        }
+
+        //*************** END of reference handling
+
+
+
+        /// <summary>
         /// Copies the items marked as Shown from the main list
         /// to the GUI bound list.
         /// </summary>
         /// <param name="updateSelected">If true, update item selection flags in the original list
-        /// based on the selection flags in the GUI bound list </param>
+        /// based on the selection flags in the GUI bound list. This must be done before
+        /// copying the items.
+        /// </param>
         private void CopyShownItemsToItemsSource(bool updateSelected)
         {
             if (_articleListItemsSource == null)
@@ -216,42 +265,6 @@ namespace ChessForge
                     orig.IsSelected = item.IsSelected;
                 }
             }
-        }
-
-        /// <summary>
-        /// Marks as selected all references currently in the node.
-        /// This will only run if _node is not null i.e. when this dialog
-        /// is invoked for setting up references.
-        /// </summary>
-        private void SelectNodeReferences()
-        {
-            if (_node == null)
-            {
-                return;
-            }
-
-            try
-            {
-                if (!string.IsNullOrEmpty(_node.ArticleRefs))
-                {
-                    string[] refs = _node.ArticleRefs.Split('|');
-                    foreach (string guid in refs)
-                    {
-                        foreach (ArticleListItem item in _articleListOriginal)
-                        {
-                            if (item.Article != null)
-                            {
-                                if (item.Article.Tree.Header.GetGuid(out _) == guid)
-                                {
-                                    item.IsSelected = true;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            catch { }
         }
 
         /// <summary>
@@ -623,7 +636,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        private void SelectionCheckBox_Checked(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -656,7 +669,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        private void SelectionCheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             try
             {
