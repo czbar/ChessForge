@@ -411,7 +411,7 @@ namespace ChessForge
             string eco = header.GetECO(out _);
             if (string.IsNullOrWhiteSpace(eco) || eco.Length != 3)
             {
-                return false;
+                return true;
             }
 
             eco = eco.ToUpper();
