@@ -894,7 +894,7 @@ namespace ChessForge
                             {
                                 // special treatment for the first one
                                 GameHeader gh = WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree.Header.CloneMe(true);
-                                PgnGameParser pgp = new PgnGameParser(games[i].GameText, WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree, out bool multi);
+                                PgnGameParser pgp = new PgnGameParser(games[i].GameText, WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree, null);
                                 WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree.Header = gh;
                             }
                             catch (Exception ex)
@@ -909,7 +909,7 @@ namespace ChessForge
                             VariationTree workbook2 = new VariationTree(GameData.ContentType.STUDY_TREE);
                             try
                             {
-                                PgnGameParser pgp = new PgnGameParser(games[i].GameText, workbook2, out bool multi);
+                                PgnGameParser pgp = new PgnGameParser(games[i].GameText, workbook2, null);
                             }
                             catch (Exception ex)
                             {

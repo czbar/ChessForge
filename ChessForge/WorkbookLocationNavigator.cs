@@ -2,9 +2,6 @@
 using ChessPosition;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChessForge
 {
@@ -19,6 +16,9 @@ namespace ChessForge
         // index of the current location in the _locations list
         private static int _currentLocationIndex = -1;
 
+        // whether the location changes are being tracked
+        private static bool _isNavigationTrackingOn = true;
+
         /// <summary>
         /// Clears the locations cache
         /// </summary>
@@ -26,6 +26,18 @@ namespace ChessForge
         {
             _currentLocationIndex = -1;
             _locations.Clear();
+        }
+
+        /// <summary>
+        /// Whether the location changes are being tracked.
+        /// For example, we don't want to track them if we are navigating in response
+        /// to the user asking for previous/next location. Doing so would cause 
+        /// dupes/confusion in navigation tracking.
+        /// </summary>
+        public static bool IsNavigationTrackingOn
+        {
+            get => _isNavigationTrackingOn;
+            set => _isNavigationTrackingOn = value;
         }
 
         /// <summary>
@@ -63,7 +75,6 @@ namespace ChessForge
                 }
 
                 WorkbookManager.SessionWorkbook.ActiveChapter = chapter;
-                //AppState.MainWin.HighlightActiveChapterHeader();
                 GameData.ContentType contentType = GameData.ContentType.NONE;
                 int articleIndex = -1;
                 switch (tabType)
@@ -112,25 +123,11 @@ namespace ChessForge
                     if (contentType == GameData.ContentType.MODEL_GAME)
                     {
                         // TODO: should SelectModelGame/Exercise be part of SetActiveChapterTreeByIndex above?
-                        if (articleIndex < 0)
-                        {
-                            AppState.MainWin.UiTabModelGames.Focus();
-                        }
-                        else
-                        {
-                            AppState.MainWin.SelectModelGame(articleIndex, true);
-                        }
+                        AppState.MainWin.SelectModelGame(articleIndex, true);
                     }
                     else if (contentType == GameData.ContentType.EXERCISE)
                     {
-                        if (articleIndex < 0)
-                        {
-                            AppState.MainWin.UiTabExercises.Focus();
-                        }
-                        else
-                        {
-                            AppState.MainWin.SelectExercise(articleIndex, true);
-                        }
+                        AppState.MainWin.SelectExercise(articleIndex, true);
                     }
                     else if (contentType == GameData.ContentType.STUDY_TREE)
                     {
@@ -152,12 +149,12 @@ namespace ChessForge
         /// </summary>
         public static void MoveToNextLocation()
         {
-            if (_currentLocationIndex < _locations.Count - 1)
+            try
             {
-                _currentLocationIndex++;
-                GotoLocation(_locations[_currentLocationIndex]);
+                GotoLocation(GetNextLocation());
                 AppState.EnableNavigationArrows();
             }
+            catch { }
         }
 
         /// <summary>
@@ -165,14 +162,13 @@ namespace ChessForge
         /// </summary>
         public static void MoveToPreviousLocation()
         {
-            if (_currentLocationIndex > 0)
+            try
             {
-                _currentLocationIndex--;
-                GotoLocation(_locations[_currentLocationIndex]);
+                GotoLocation(GetPreviousLocation());
                 AppState.EnableNavigationArrows();
             }
+            catch { }
         }
-
         /// <summary>
         /// Creates a new location object and saves it to the list of locations.
         /// </summary>
@@ -181,44 +177,47 @@ namespace ChessForge
         /// <param name="articleIndex"></param>
         public static void SaveNewLocation(Chapter chapter, GameData.ContentType contentType, int articleIndex = -1)
         {
-            try
+            if (_isNavigationTrackingOn)
             {
-                if (chapter != null)
+                try
                 {
-                    TabViewType tab = TabViewType.NONE;
-
-                    string articleGuid = null;
-
-                    switch (contentType)
+                    if (chapter != null)
                     {
-                        case GameData.ContentType.INTRO:
-                            tab = TabViewType.INTRO;
-                            break;
-                        case GameData.ContentType.STUDY_TREE:
-                            tab = TabViewType.STUDY;
-                            break;
-                        case GameData.ContentType.MODEL_GAME:
-                            tab = TabViewType.MODEL_GAME;
-                            if (articleIndex >= 0)
-                            {
-                                articleGuid = chapter.ModelGames[articleIndex].Guid;
-                            }
-                            break;
-                        case GameData.ContentType.EXERCISE:
-                            tab = TabViewType.EXERCISE;
-                            if (articleIndex >= 0)
-                            {
-                                articleGuid = chapter.Exercises[articleIndex].Guid;
-                            }
-                            break;
-                    }
+                        TabViewType tab = TabViewType.NONE;
 
-                    WorkbookLocation location = new WorkbookLocation(chapter.Guid, tab, articleGuid, articleIndex);
-                    VerifyNewLocation(location);
+                        string articleGuid = null;
+
+                        switch (contentType)
+                        {
+                            case GameData.ContentType.INTRO:
+                                tab = TabViewType.INTRO;
+                                break;
+                            case GameData.ContentType.STUDY_TREE:
+                                tab = TabViewType.STUDY;
+                                break;
+                            case GameData.ContentType.MODEL_GAME:
+                                tab = TabViewType.MODEL_GAME;
+                                if (articleIndex >= 0)
+                                {
+                                    articleGuid = chapter.ModelGames[articleIndex].Guid;
+                                }
+                                break;
+                            case GameData.ContentType.EXERCISE:
+                                tab = TabViewType.EXERCISE;
+                                if (articleIndex >= 0)
+                                {
+                                    articleGuid = chapter.Exercises[articleIndex].Guid;
+                                }
+                                break;
+                        }
+
+                        WorkbookLocation location = new WorkbookLocation(chapter.Guid, tab, articleGuid, articleIndex);
+                        VerifyNewLocation(location);
+                    }
                 }
-            }
-            catch
-            {
+                catch
+                {
+                }
             }
         }
 
@@ -228,8 +227,11 @@ namespace ChessForge
         /// <param name="tabType"></param>
         public static void SaveNewLocation(TabViewType tabType)
         {
-            WorkbookLocation location = new WorkbookLocation(null, tabType, null, -1);
-            VerifyNewLocation(location);
+            if (_isNavigationTrackingOn)
+            {
+                WorkbookLocation location = new WorkbookLocation(null, tabType, null, -1);
+                VerifyNewLocation(location);
+            }
         }
 
         /// <summary>
@@ -247,16 +249,33 @@ namespace ChessForge
                 lastLocation = _locations[_currentLocationIndex];
             }
 
-            if (lastLocation == null
-                || lastLocation.ChapterGuid != location.ChapterGuid
-                || lastLocation.ViewType != location.ViewType
-                || lastLocation.ArticleGuid != location.ArticleGuid
-                || lastLocation.ArticleIndex != location.ArticleIndex)
+            if (lastLocation == null || !AreLocationsIdentical(lastLocation, location))
             {
                 AppendLocation(location);
             }
 
             AppState.EnableNavigationArrows();
+        }
+
+        /// <summary>
+        /// Compares 2 locations and returns true if the are
+        /// identical.
+        /// </summary>
+        /// <returns></returns>
+        private static bool AreLocationsIdentical(WorkbookLocation loc1, WorkbookLocation loc2)
+        {
+            bool identical = false;
+
+            if (loc1 != null && loc2 != null
+                && loc1.ChapterGuid == loc2.ChapterGuid
+                && loc1.ViewType == loc2.ViewType
+                && loc1.ArticleGuid == loc2.ArticleGuid
+                && loc1.ArticleIndex == loc2.ArticleIndex)
+            {
+                identical = true;
+            }
+
+            return identical;
         }
 
         /// <summary>
@@ -277,6 +296,13 @@ namespace ChessForge
         /// <param name="location"></param>
         private static void GotoLocation(WorkbookLocation location)
         {
+            if (location == null)
+            {
+                return;
+            }
+
+            _isNavigationTrackingOn = false;
+
             try
             {
                 if (location.ViewType == TabViewType.CHAPTERS)
@@ -315,6 +341,131 @@ namespace ChessForge
             catch
             {
             }
+
+            _isNavigationTrackingOn = true;
+        }
+
+        /// <summary>
+        /// Identifies the next valid location in the list.
+        /// Returns null if not found.
+        /// </summary>
+        /// <returns></returns>
+        private static WorkbookLocation GetNextLocation()
+        {
+            WorkbookLocation location = null;
+
+            List<WorkbookLocation> locationsToDelete = new List<WorkbookLocation>();
+            if (_currentLocationIndex < _locations.Count - 1)
+            {
+                while (_currentLocationIndex < _locations.Count - 1)
+                {
+                    _currentLocationIndex++;
+                    WorkbookLocation nextLoc = _locations[_currentLocationIndex];
+                    if (IsLocationValid(nextLoc))
+                    {
+                        location = nextLoc;
+                        break;
+                    }
+                    else
+                    {
+                        locationsToDelete.Add(nextLoc);
+                    }
+                }
+            }
+
+            foreach (WorkbookLocation loc in locationsToDelete)
+            {
+                _locations.Remove(loc);
+                _currentLocationIndex--;
+            }
+
+            return location;
+        }
+
+        /// <summary>
+        /// Identifies the previous valid location in the list.
+        /// Returns null if not found.
+        /// </summary>
+        /// <returns></returns>
+        private static WorkbookLocation GetPreviousLocation()
+        {
+            WorkbookLocation location = null;
+
+            List<WorkbookLocation> locationsToDelete = new List<WorkbookLocation>();
+            if (_currentLocationIndex > 0)
+            {
+                while (_currentLocationIndex > 0)
+                {
+                    _currentLocationIndex--;
+                    WorkbookLocation previousLoc = _locations[_currentLocationIndex];
+                    if (IsLocationValid(previousLoc))
+                    {
+                        location = previousLoc;
+                        break;
+                    }
+                    else
+                    {
+                        locationsToDelete.Add(previousLoc);
+                    }
+                }
+            }
+
+            foreach (WorkbookLocation loc in locationsToDelete)
+            {
+                _locations.Remove(loc);
+            }
+
+            return location;
+        }
+
+        /// <summary>
+        /// Checks if the specified location exists.
+        /// It may not exists, e.g. after an article was removed
+        /// somewhere along the line.
+        /// </summary>
+        /// <param name="location"></param>
+        /// <returns></returns>
+        private static bool IsLocationValid(WorkbookLocation location)
+        {
+            bool exists = false;
+
+            if (AppState.Workbook != null)
+            {
+                if (location.ViewType == TabViewType.CHAPTERS
+                    || location.ViewType == TabViewType.STUDY
+                    || location.ViewType == TabViewType.STUDY
+                    || location.ViewType == TabViewType.BOOKMARKS)
+                {
+                    exists = true;
+                }
+                else
+                {
+                    Chapter chapter = AppState.Workbook.GetChapterByGuid(location.ChapterGuid, out _);
+                    bool hasArticleId = location.ArticleGuid != null || location.ArticleIndex >= 0;
+                    if (chapter != null)
+                    {
+                        // location without article being specified is valid if no article exists in the view
+                        if (location.ViewType == TabViewType.MODEL_GAME)
+                        {
+                            if (!hasArticleId && chapter.GetModelGameCount() == 0
+                                || chapter.GetModelGameByGuid(location.ArticleGuid, out _) != null)
+                            {
+                                exists = true;
+                            }
+                        }
+                        else if (location.ViewType == TabViewType.EXERCISE)
+                        {
+                            if (!hasArticleId && chapter.GetExerciseCount() == 0
+                                || chapter.GetExerciseByGuid(location.ArticleGuid, out _) != null)
+                            {
+                                exists = true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return exists;
         }
 
         /// <summary>

@@ -1454,7 +1454,7 @@ namespace ChessForge
             WorkbookManager.ActiveTab = TabViewType.EXERCISE;
             AppState.ConfigureMenusForManualReview();
             RefreshExercisesView(out Chapter chapter, out int articleIndex);
-            WorkbookLocationNavigator.SaveNewLocation(chapter, GameData.ContentType.MODEL_GAME, articleIndex);
+            WorkbookLocationNavigator.SaveNewLocation(chapter, GameData.ContentType.EXERCISE, articleIndex);
         }
 
         /// <summary>

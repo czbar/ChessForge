@@ -34,6 +34,7 @@ namespace ChessForge
             InitializeComponent();
             UiTbChapterTitle.Text = chapter.GetTitle();
             UiTbChapterTitle.Focus();
+            UiTbChapterTitle.SelectAll();
         }
 
         /// <summary>

@@ -572,7 +572,12 @@ ExitTraining=Zakończ trening
 #english: ExitSolvingMode=Exit Solving Mode
 ExitSolvingMode=Wyjdź z trybu rozwiązywania
 
-#description: TOP LEVEL MENU: Edit
+#################################
+#
+# Header: MAIN MENU: View
+#
+
+#description: Edit
 #english: Edit=Edit
 Edit=Edytuj
 
@@ -584,13 +589,14 @@ Annotations=Komentarz
 #english: CommentBeforeMove=Comment Before Move
 CommentBeforeMove=Komentarz przed posunięciem
 
-#description: Allows the user to merge multiple chapters into one
-#english: MergeChapters=Merge Chapters...
-MergeChapters=Połącz rozdziały
+#description: Search by FEN
+#english: SearchByFen=Search by FEN...
+SearchByFen=Szukaj pozycji z FEN...
 
 #description: Undoes the previous operation
 #english: Undo=Undo
 Undo=Cofnij Operację
+
 
 #description: Advice to exit
 #english: ExitTrainingAdvice=Exit the training session to use this function.
@@ -712,6 +718,11 @@ ManageChapter=Organizuj Rozdział...
 #description: Find Games
 #english: FindGames=Find Games...
 FindGames=Znajdź partie...
+
+#description: Allows the user to merge multiple chapters into one
+#english: MergeChapters=Merge Chapters...
+MergeChapters=Połącz rozdziały
+
 
 ###########################
 #
@@ -855,6 +866,16 @@ EgSelectionAccuracyLabel=Dokładność wyboru ruchów wynosi
 #description: Cenitpawn accuracy
 #english: EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
 EgCentipawnAccuracy=maksymalne odchylenie od najlepszego ruchu wynosi
+
+#######################################
+#
+# Header: DIALOG Edit FEN
+#
+
+#description: Dialog title
+#english: DlgTitleEditFen=Edit FEN
+DlgTitleEditFen=Edytuj FEN
+
 
 #######################################
 #
@@ -1640,6 +1661,10 @@ PositionSetup=Ustaw Pozycję
 #description: Invalid Position Setup
 #english: InvalidPositionSetup=Invalid Position Setup
 InvalidPositionSetup=Niepoprawna Pozycja
+
+#description: Invalid FEN
+#english: InvalidFen=Invalid FEN
+InvalidFen=Niepoprawny FEN
 
 #description: Import from a PGN file
 #english: ImportPgn=Import from PGN

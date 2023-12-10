@@ -78,7 +78,7 @@ namespace ChessForge
             _whiteName = UiTbWhite.Text;
             _blackName = UiTbBlack.Text;
 
-            UiCbIgnoreColors.IsChecked = _ignoreColors;
+            _ignoreColors = UiCbIgnoreColors.IsChecked;
 
             _minMoves = UiTbMinMoves.Text;
             _maxMoves = UiTbMaxMoves.Text;

@@ -441,7 +441,12 @@ ExitTraining=Exit Training
 #Exit solving mode
 ExitSolvingMode=Exit Solving Mode
 
-#TOP LEVEL MENU: Edit
+#################################
+#
+# Header: MAIN MENU: View
+#
+
+#Edit
 Edit=Edit
 
 #Opens the Annotations dialog
@@ -450,11 +455,12 @@ Annotations=Annotations
 #Comment before move
 CommentBeforeMove=Comment Before Move
 
-#Allows the user to merge multiple chapters into one
-MergeChapters=Merge Chapters...
+#Search by FEN
+SearchByFen=Search by FEN...
 
 #Undoes the previous operation
 Undo=Undo
+
 
 #Advice to exit
 ExitTrainingAdvice=Exit the training session to use this function.
@@ -549,6 +555,10 @@ ManageChapter=Manage Chapter...
 
 #Find Games
 FindGames=Find Games...
+
+#Allows the user to merge multiple chapters into one
+MergeChapters=Merge Chapters...
+
 
 ###########################
 #
@@ -662,6 +672,15 @@ EgSelectionAccuracyLabel=Move selection accuracy is
 
 #Cenitpawn accuracy
 EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
+
+#######################################
+#
+# Header: DIALOG Edit FEN
+#
+
+#Dialog title
+DlgTitleEditFen=Edit FEN
+
 
 #######################################
 #
@@ -1282,6 +1301,9 @@ PositionSetup=Position Setup
 
 #Invalid Position Setup
 InvalidPositionSetup=Invalid Position Setup
+
+#Invalid FEN
+InvalidFen=Invalid FEN
 
 #Import from a PGN file
 ImportPgn=Import from PGN

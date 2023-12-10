@@ -222,7 +222,7 @@ namespace ChessPositionTest
         {
             VariationTree tree = new VariationTree(GameData.ContentType.STUDY_TREE);
             string gameText = File.ReadAllText(fileName);
-            PgnGameParser pgnGame = new PgnGameParser(gameText, tree, out bool multi, true);
+            PgnGameParser pgnGame = new PgnGameParser(gameText, tree, "", false);
 
             return tree;
         }
@@ -318,7 +318,7 @@ namespace ChessPositionTest
         {
             VariationTree variationTree = new VariationTree(GameData.ContentType.STUDY_TREE);
             string gameText = File.ReadAllText("../../../ChessPositionTest/TestData/GameTreeTest_1.pgn");
-            PgnGameParser pgnGame = new PgnGameParser(gameText, variationTree, out bool multi, true);
+            PgnGameParser pgnGame = new PgnGameParser(gameText, variationTree, "", false);
             PrintVariationTree(variationTree);
         }
 

@@ -217,18 +217,15 @@ namespace ChessForge
             }
             else
             {
+                // do not track location changes as we evaluate game after game 
+                WorkbookLocationNavigator.IsNavigationTrackingOn = false;
+
                 try
                 {
                     ObservableCollection<ArticleListItem> gameList = WorkbookManager.SessionWorkbook.GenerateArticleList(null, GameData.ContentType.MODEL_GAME);
 
                     string title = Properties.Resources.EvaluateGames;
                     SelectArticlesDialog dlg = new SelectArticlesDialog(null, true, title, ref gameList, false, ArticlesAction.NONE, GameData.ContentType.MODEL_GAME);
-                    //{
-                    //    Left = ChessForgeMain.Left + 100,
-                    //    Top = ChessForgeMain.Top + 100,
-                    //    Topmost = false,
-                    //    Owner = this
-                    //};
                     GuiUtilities.PositionDialog(dlg, this, 100);
                     dlg.SetupGuiForGamesEval();
 
@@ -256,6 +253,7 @@ namespace ChessForge
                 catch { }
             }
 
+            WorkbookLocationNavigator.IsNavigationTrackingOn = true;
             e.Handled = true;
         }
 
@@ -325,12 +323,6 @@ namespace ChessForge
                 }
 
                 SelectArticlesDialog dlg = new SelectArticlesDialog(null, true, title, ref articleList, allChapters, ArticlesAction.NONE, articleType);
-                //{
-                //    Left = ChessForgeMain.Left + 100,
-                //    Top = ChessForgeMain.Top + 100,
-                //    Topmost = false,
-                //    Owner = this
-                //};
                 GuiUtilities.PositionDialog(dlg, this, 100);
                 if (dlg.ShowDialog() == true)
                 {
@@ -372,8 +364,6 @@ namespace ChessForge
 
                         AppState.MainWin.ChaptersView.IsDirty = true;
                         AppState.IsDirty = true;
-                        GuiUtilities.RefreshChaptersView(null);
-                        AppState.SetupGuiForCurrentStates();
 
                         if (ActiveVariationTree == null || AppState.CurrentEvaluationMode != EvaluationManager.Mode.CONTINUOUS)
                         {
@@ -381,7 +371,22 @@ namespace ChessForge
                             BoardCommentBox.ShowTabHints();
                         }
 
-                        AppState.MainWin.UiTabChapters.Focus();
+
+                        AppState.MainWin.ChaptersView.IsDirty = true;
+                        if (AppState.ActiveTab == TabViewType.CHAPTERS)
+                        {
+                            GuiUtilities.RefreshChaptersView(null);
+                            AppState.SetupGuiForCurrentStates();
+                            AppState.MainWin.UiTabChapters.Focus();
+                        }
+                        else if (AppState.ActiveTab == TabViewType.MODEL_GAME)
+                        {
+                            ChapterUtils.UpdateModelGamesView(AppState.Workbook.ActiveChapter);
+                        }
+                        else if (AppState.ActiveTab == TabViewType.EXERCISE)
+                        {
+                            ChapterUtils.UpdateExercisesView(AppState.Workbook.ActiveChapter);
+                        }
                     }
                 }
             }

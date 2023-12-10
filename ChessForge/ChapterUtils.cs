@@ -68,17 +68,17 @@ namespace ChessForge
         /// <summary>
         /// Processes a response from the dialog, where the user requested to copy/move articles
         /// </summary>
-        /// <param name="lstIdenticalPositions"></param>
+        /// <param name="lstArticleItems"></param>
         /// <param name="request"></param>
-        public static void RequestCopyMoveArticles(TreeNode searchNode, 
-                                bool allChaptersCheckbox, 
-                                ObservableCollection<ArticleListItem> lstIdenticalPositions, 
-                                ArticlesAction action, 
+        public static void RequestCopyMoveArticles(TreeNode searchNode,
+                                bool allChaptersCheckbox,
+                                ObservableCollection<ArticleListItem> lstArticleItems,
+                                ArticlesAction action,
                                 bool showAllChapters)
         {
             // make a list with only games and exercises
-            RemoveStudies(lstIdenticalPositions);
-            
+            RemoveStudies(lstArticleItems);
+
             string title = "";
             switch (action)
             {
@@ -93,7 +93,7 @@ namespace ChessForge
                     break;
             }
 
-            SelectArticlesDialog dlg = new SelectArticlesDialog(null, allChaptersCheckbox, title, ref lstIdenticalPositions, showAllChapters, action);
+            SelectArticlesDialog dlg = new SelectArticlesDialog(null, allChaptersCheckbox, title, ref lstArticleItems, showAllChapters, action);
             GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
             if (action == ArticlesAction.COPY_OR_MOVE)
@@ -104,11 +104,11 @@ namespace ChessForge
             if (dlg.ShowDialog() == true)
             {
                 action = dlg.ActionOnArticles;
-                RemoveUnselectedArticles(lstIdenticalPositions);
+                RemoveUnselectedArticles(lstArticleItems);
 
-                if (HasAtLeastNArticles(lstIdenticalPositions, 1))
+                if (HasAtLeastNArticles(lstArticleItems, 1))
                 {
-                    ProcessCopyOrMoveArticles(searchNode, lstIdenticalPositions, action);
+                    ProcessCopyOrMoveArticles(searchNode, lstArticleItems, action);
                 }
             }
         }
@@ -142,18 +142,15 @@ namespace ChessForge
                     List<ArticleListItem> articlesToInsert = CreateListToMoveOrCopy(lstArticles, action, targetChapter);
                     if (articlesToInsert.Count > 0)
                     {
-                        CopyOrMoveArticles(targetChapter, articlesToInsert, action);
+                        GameData.ContentType contentType = CopyOrMoveArticles(targetChapter, articlesToInsert, action);
 
                         targetChapter.IsViewExpanded = true;
                         targetChapter.IsModelGamesListExpanded = true;
                         targetChapter.IsExercisesListExpanded = true;
 
-                        AppState.MainWin.ChaptersView.IsDirty = true;
                         AppState.IsDirty = true;
 
-                        GuiUtilities.RefreshChaptersView(null);
-                        AppState.MainWin.UiTabChapters.Focus();
-                        PulseManager.ChaperIndexToBringIntoView = targetChapter.Index;
+                        UpdateViewAfterCopyMoveArticles(targetChapter, action, contentType);
                     }
                     else
                     {
@@ -171,99 +168,72 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Moves a game between chapters after invoking a dialog
-        /// to select the target chapter
+        /// After articles have been copied or moved there may be a need to refresh
+        /// the current view, depending on what that view is and what operation
+        /// was performed.
         /// </summary>
-        /// <returns></returns>
-        public static int MoveGameBetweenChapters(Chapter sourceChapter)
+        public static void UpdateViewAfterCopyMoveArticles(Chapter targetChapter, ArticlesAction action, GameData.ContentType contentType)
         {
-            int targetChapterIndex = -1;
-            if (sourceChapter == null)
-            {
-                return -1;
-            }
-
             try
             {
-                int sourceChapterIndex = sourceChapter.Index;
-                int gameIndex = sourceChapter.ActiveModelGameIndex;
-                Article game = sourceChapter.GetModelGameAtIndex(gameIndex);
+                AppState.MainWin.ChaptersView.IsDirty = true;
+                Chapter chapter = AppState.Workbook.ActiveChapter;
 
-                targetChapterIndex = InvokeSelectSingleChapterDialog(out _);
-
-                if (game != null && targetChapterIndex >= 0 && targetChapterIndex != sourceChapterIndex)
+                // if we are in the Chapters view, we want to refresh the view
+                // and bring the target chapter into view.
+                if (AppState.ActiveTab == TabViewType.CHAPTERS)
                 {
-                    Chapter targetChapter = WorkbookManager.SessionWorkbook.Chapters[targetChapterIndex];
-
-                    targetChapter.ModelGames.Add(game);
-                    sourceChapter.ModelGames.Remove(game);
-
-                    WorkbookManager.SessionWorkbook.ActiveChapter = targetChapter;
-                    targetChapter.IsModelGamesListExpanded = true;
-                    targetChapter.ActiveModelGameIndex = targetChapter.GetModelGameCount() - 1;
-
-                    AppState.IsDirty = true;
-                    AppState.MainWin.ChaptersView.IsDirty = true;
-
                     GuiUtilities.RefreshChaptersView(null);
                     AppState.MainWin.UiTabChapters.Focus();
                     PulseManager.ChaperIndexToBringIntoView = targetChapter.Index;
                 }
+                else if (action == ArticlesAction.COPY)
+                {
+                    // if the action was COPY and we are not in the chapters view,
+                    // at most, it may be necessary to update the prev/next bar
+                    PreviousNextViewBars.BuildPreviousNextBar(GameData.ContentType.MODEL_GAME);
+                    PreviousNextViewBars.BuildPreviousNextBar(GameData.ContentType.EXERCISE);
+                }
+                else if (action == ArticlesAction.MOVE)
+                {
+                    if (contentType == GameData.ContentType.MODEL_GAME || contentType == GameData.ContentType.GENERIC)
+                    {
+                        UpdateModelGamesView(chapter);
+                    }
+                    if (contentType == GameData.ContentType.EXERCISE || contentType == GameData.ContentType.GENERIC)
+                    {
+                        UpdateExercisesView(chapter);
+                    }
+                }
             }
             catch (Exception ex)
             {
-                AppLog.Message("MoveGameBetweenChapters()", ex);
+                AppLog.Message("UpdateViewAfterCopyMoveArticles", ex);
             }
-
-            return targetChapterIndex;
         }
 
         /// <summary>
-        /// Moves an exercise between chapters after invoking a dialog
-        /// to select the target chapter
+        /// Updates the Model Games View when the game list has changed
         /// </summary>
-        /// <returns></returns>
-        public static int MoveExerciseBetweenChapters(Chapter sourceChapter)
+        /// <param name="chapter"></param>
+        public static void UpdateModelGamesView(Chapter chapter)
         {
-            int targetChapterIndex = -1;
-            if (sourceChapter == null)
-            {
-                return -1;
-            }
+            PreviousNextViewBars.BuildPreviousNextBar(GameData.ContentType.MODEL_GAME);
+            int updatedIndex = chapter.VerifyGameIndex(chapter.ActiveModelGameIndex);
+            chapter.ActiveModelGameIndex = updatedIndex;
+            AppState.MainWin.SelectModelGame(chapter.ActiveModelGameIndex, AppState.ActiveTab == TabViewType.MODEL_GAME);
+        }
 
-            try
-            {
-                int sourceChapterIndex = sourceChapter.Index;
-                int exerciseIndex = sourceChapter.ActiveExerciseIndex;
-                Article exercise = sourceChapter.GetExerciseAtIndex(exerciseIndex);
-
-                targetChapterIndex = InvokeSelectSingleChapterDialog(out _);
-
-                if (exercise != null && targetChapterIndex >= 0 && targetChapterIndex != sourceChapterIndex)
-                {
-                    Chapter targetChapter = WorkbookManager.SessionWorkbook.Chapters[targetChapterIndex];
-
-                    targetChapter.Exercises.Add(exercise);
-                    sourceChapter.Exercises.Remove(exercise);
-
-                    WorkbookManager.SessionWorkbook.ActiveChapter = targetChapter;
-                    targetChapter.IsExercisesListExpanded = true;
-                    targetChapter.ActiveExerciseIndex = targetChapter.GetExerciseCount() - 1;
-
-                    AppState.IsDirty = true;
-                    AppState.MainWin.ChaptersView.IsDirty = true;
-
-                    GuiUtilities.RefreshChaptersView(null);
-                    AppState.MainWin.UiTabChapters.Focus();
-                    PulseManager.ChaperIndexToBringIntoView = targetChapter.Index;
-                }
-            }
-            catch (Exception ex)
-            {
-                AppLog.Message("MoveExerciseBetweenChapters()", ex);
-            }
-
-            return targetChapterIndex;
+        /// <summary>
+        /// Updates the Exercises View when the exercise list has changed
+        /// </summary>
+        /// <param name="chapter"></param>
+        public static void UpdateExercisesView(Chapter chapter)
+        {
+            PreviousNextViewBars.BuildPreviousNextBar(GameData.ContentType.EXERCISE);
+            int updatedIndex = chapter.VerifyExerciseIndex(chapter.ActiveExerciseIndex);
+            chapter.ActiveExerciseIndex = updatedIndex;
+            AppState.MainWin.SelectExercise(chapter.ActiveExerciseIndex, AppState.ActiveTab == TabViewType.EXERCISE);
         }
 
         /// <summary>
@@ -337,13 +307,16 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// 
+        /// Performs the copy/move operation.
         /// </summary>
         /// <param name="targetChapter"></param>
         /// <param name="articlesToInsert"></param>
         /// <param name="copy"></param>
-        private static void CopyOrMoveArticles(Chapter targetChapter, List<ArticleListItem> articlesToInsert, ArticlesAction action)
+        /// <returns>whether we are copying Games or Exercise; GENERIC if both types</returns>
+        private static GameData.ContentType CopyOrMoveArticles(Chapter targetChapter, List<ArticleListItem> articlesToInsert, ArticlesAction action)
         {
+            GameData.ContentType contentType = GameData.ContentType.NONE;
+
             // place the articles in the target chapter
             foreach (ArticleListItem ali in articlesToInsert)
             {
@@ -352,10 +325,26 @@ namespace ChessForge
                     if (ali.ContentType == GameData.ContentType.MODEL_GAME)
                     {
                         targetChapter.AddModelGame(ali.Article);
+                        if (contentType == GameData.ContentType.EXERCISE || contentType == GameData.ContentType.GENERIC)
+                        {
+                            contentType = GameData.ContentType.GENERIC;
+                        }
+                        else
+                        {
+                            contentType = GameData.ContentType.MODEL_GAME;
+                        }
                     }
                     else if (ali.ContentType == GameData.ContentType.EXERCISE)
                     {
                         targetChapter.AddExercise(ali.Article);
+                        if (contentType == GameData.ContentType.MODEL_GAME || contentType == GameData.ContentType.GENERIC)
+                        {
+                            contentType = GameData.ContentType.GENERIC;
+                        }
+                        else
+                        {
+                            contentType = GameData.ContentType.EXERCISE;
+                        }
                     }
                 }
             }
@@ -376,6 +365,8 @@ namespace ChessForge
             WorkbookOperationType typ = action == ArticlesAction.COPY ? WorkbookOperationType.COPY_ARTICLES : WorkbookOperationType.MOVE_ARTICLES;
             WorkbookOperation op = new WorkbookOperation(typ, targetChapter, (object)articlesToInsert);
             WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
+
+            return contentType;
         }
 
         /// <summary>
@@ -393,11 +384,6 @@ namespace ChessForge
 
                 SelectSingleChapterDialog dlg = new SelectSingleChapterDialog();
                 {
-                    ////TODO: if maximized, ChessForgeMain will be wrong!
-                    //Left = AppState.MainWin.ChessForgeMain.Left + 100,
-                    //Top = AppState.MainWin.Top + 100,
-                    //Topmost = false,
-                    //Owner = AppState.MainWin
                 };
                 GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
