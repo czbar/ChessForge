@@ -1126,12 +1126,6 @@ namespace ChessForge
                     Workbook workbook = new Workbook();
                     WorkbookManager.CreateWorkbookFromGameList(ref workbook, ref games);
                     SelectChaptersDialog dlg = new SelectChaptersDialog(workbook);
-                    //{
-                    //    Left = AppState.MainWin.ChessForgeMain.Left + 100,
-                    //    Top = AppState.MainWin.ChessForgeMain.Top + 100,
-                    //    Topmost = false,
-                    //    Owner = AppState.MainWin
-                    //};
                     GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
                     dlg.ShowDialog();
