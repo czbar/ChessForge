@@ -40,6 +40,8 @@ namespace ChessForge
         /// <param name="workbook"></param>
         public SelectChaptersDialog(Workbook workbook, string title = null)
         {
+            InitializeComponent();
+
             _workbook = workbook;
 
             int index = 0;
@@ -49,10 +51,9 @@ namespace ChessForge
                 SelectedChapter sel = new SelectedChapter();
                 sel.Chapter = ch;
                 sel.ChapterTitle = index.ToString() + ". " + ch.GetTitle();
-                sel.IsSelected = true;
+                sel.IsSelected = false;
                 ChapterList.Add(sel);
             }
-            InitializeComponent();
             if (title != null)
             {
                 UiLblInstruct.Content = title;
