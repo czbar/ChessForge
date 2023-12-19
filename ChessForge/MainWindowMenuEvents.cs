@@ -255,9 +255,18 @@ namespace ChessForge
             bool proceed = true;
 
             // check with the user if required
-            if (WorkbookManager.SessionWorkbook != null && AppState.IsDirty)
+            if (WorkbookManager.SessionWorkbook != null)
             {
-                proceed = WorkbookManager.PromptAndSaveWorkbook(false, out _);
+                if (AppState.IsDirty)
+                {
+                    proceed = WorkbookManager.PromptAndSaveWorkbook(false, out _);
+                }
+                else
+                {
+                    // not dirty but the state may have changed
+                    WorkbookViewState wvs = new WorkbookViewState(SessionWorkbook);
+                    wvs.SaveState();
+                }
             }
 
             if (proceed && ChangeAppModeWarning(LearningMode.Mode.MANUAL_REVIEW))
