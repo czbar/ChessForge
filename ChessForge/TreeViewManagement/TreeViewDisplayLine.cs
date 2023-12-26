@@ -36,7 +36,7 @@ namespace ChessForge
     /// A variation to be displayed in a single paragraph.
     /// This is either a line without any branches, or with one or more
     /// branchless branches e.g. "15.e4 e5 (15...Nf6 16.Nf3; 15...f6 16.Bc2) 16.Qe4"
-    /// Therefor, it represents one or more VariationSingleLine objects.
+    /// Therefore, it represents one or more TreeLineSector objects.
     /// </summary>
     public class TreeViewDisplayLine
     {
@@ -53,8 +53,8 @@ namespace ChessForge
         private List<TreeViewDisplayRun> _runList;
 
         /// <summary>
-        /// List of display objects to show in a single paragrapph.
-        /// They could represent one or more VariationSingleLine objects.
+        /// List of display objects to show in a single paragraph.
+        /// They could represent one or more TreeLineSector objects.
         /// </summary>
         public List<TreeViewDisplayRun> RunList
         {
