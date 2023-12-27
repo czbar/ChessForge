@@ -145,6 +145,14 @@ Date=
 #english: Count=Count
 Count=
 
+#description: Game count
+#english: GameCount=Number of Games 
+GameCount=
+
+#description: Exercise count
+#english: ExerciseCount=Number of Exercises 
+ExerciseCount=
+
 #description: A line in a variation tree
 #english: Line=Line
 Line=
