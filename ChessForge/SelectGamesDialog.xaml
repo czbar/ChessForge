@@ -36,7 +36,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <CheckBox x:Name="UiCbSelectAll" IsChecked="True" Grid.Row="1" Content="" HorizontalAlignment="Left" Margin="10,3,0,0" VerticalAlignment="Top" Checked="UiCbSelectAll_Checked" Unchecked="UiCbSelectAll_Unchecked"/>
+        <CheckBox x:Name="UiCbSelectAll" IsChecked="False" Grid.Row="1" Content="" HorizontalAlignment="Left" Margin="10,3,0,0" VerticalAlignment="Top" />
         <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="-100,24,0,0" Grid.Row="2" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
         <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="100,24,0,0" Grid.Row="2" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnCancel_Click" RenderTransformOrigin="-1.488,-1.598"/>
         <Label x:Name="UiLblInstruct" Content="{x:Static p:Resources.SelectItems}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Width="766"/>

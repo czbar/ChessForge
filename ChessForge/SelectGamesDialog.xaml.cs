@@ -45,7 +45,7 @@ namespace ChessForge
         /// <summary>
         /// Creates the dialog object. Sets ItemsSource for the ListView
         /// to GamesHeaders list.
-        /// This dialog will be invoked in the follwoing contexts:
+        /// This dialog will be invoked in the following contexts:
         /// - Selecting Games and Exercise to create a new Chapter
         /// - Importing Games into a chapter
         /// - Importing Exercises into a chapter
@@ -55,17 +55,42 @@ namespace ChessForge
         {
             _mode = mode;
             _gameList = gameList;
+
             SetGameAndExerciseCount();
             InitializeComponent();
-
+            CheckIfAllSelected();
+            
             if (mode == Mode.DOWNLOAD_WEB_GAMES)
             {
                 PrepareGuiInDownloadMode();
             }
 
+            UiCbSelectAll.Checked += UiCbSelectAll_Checked;
+            UiCbSelectAll.Unchecked += UiCbSelectAll_Unchecked;
+
             UiLvGames.ItemsSource = gameList;
 
             SetInstructionText();
+        }
+
+        /// <summary>
+        /// if all items are selected, check the SelectAll Checkbox
+        /// </summary>
+        private void CheckIfAllSelected()
+        {
+            bool allSelected = true;
+            foreach (GameData gameData in _gameList)
+            {
+                if (!gameData.IsSelected)
+                {
+                    allSelected = false;
+                    break;
+                }
+            }
+            if (allSelected && _gameList.Count > 0)
+            {
+                UiCbSelectAll.IsChecked = true;
+            }
         }
 
         /// <summary>
