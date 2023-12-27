@@ -59,10 +59,14 @@ namespace ChessForge
             SetGameAndExerciseCount();
             InitializeComponent();
             CheckIfAllSelected();
-            
+
             if (mode == Mode.DOWNLOAD_WEB_GAMES)
             {
                 PrepareGuiInDownloadMode();
+            }
+            else
+            {
+                (UiLvGames.View as GridView).Columns[1].Header = BuildItemsHeaderText();
             }
 
             UiCbSelectAll.Checked += UiCbSelectAll_Checked;
@@ -71,6 +75,33 @@ namespace ChessForge
             UiLvGames.ItemsSource = gameList;
 
             SetInstructionText();
+        }
+
+        /// <summary>
+        /// Builds text for the header of the column with item titles.
+        /// </summary>
+        /// <returns></returns>
+        private string BuildItemsHeaderText()
+        {
+            StringBuilder sb = new StringBuilder();
+            if (_gameCount > 0)
+            {
+                sb.Append(Properties.Resources.GameCount + " = " + _gameCount.ToString());
+                if (_exerciseCount > 0)
+                {
+                    sb.Append(" / ");
+                }
+            }
+            if (_exerciseCount > 0)
+            {
+                sb.Append(Properties.Resources.ExerciseCount + " = " + _exerciseCount.ToString());
+                if (_exerciseCount > 0)
+                {
+                    sb.Append(" / ");
+                }
+            }
+
+            return sb.ToString();
         }
 
         /// <summary>
@@ -116,6 +147,7 @@ namespace ChessForge
 
             GridViewColumn game = ListViewHelper.CreateColumn(Properties.Resources.Game, 570, "GameTitle");
             gridView.Columns.Add(game);
+            game.Header = BuildItemsHeaderText();
 
             GridViewColumn date = ListViewHelper.CreateColumn(Properties.Resources.Date, 90, "Date");
             gridView.Columns.Add(date);
