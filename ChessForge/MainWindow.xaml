@@ -131,6 +131,7 @@
                     </MenuItem>
                     <MenuItem Header="{x:Static p:Resources.Tools}" Margin="0,0,0,0">
                         <MenuItem x:Name="UiMnFindGames" Header="{x:Static p:Resources.FindGames}" Click="UiMnFindGames_Click"/>
+                        <MenuItem x:Name="UiMnImportGames" Header="{x:Static p:Resources.ImportGames}" Click="UiMnGame_ImportGames_Click"  />
                         <Separator />
                         <MenuItem x:Name="UiMnDownloadWebGames" Header="{x:Static p:Resources.DownloadGamesFromWeb}" Click="UiMnDownloadWebGames_Click" />
                         <MenuItem x:Name="UiMnEvaluateGames" Header="{x:Static p:Resources.MnEvaluateGames}" Click="UiMnEvaluateGames_Click" />
