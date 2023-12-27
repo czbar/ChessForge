@@ -41,7 +41,7 @@ namespace ChessForge
     public class TreeViewDisplayLine
     {
         // single lines represented by this object
-        private List<TreeLineSector> _lines;
+        private List<LineSector> _lines;
 
         // how the line is currently shown in the view
         private DisplayLineVisibility _visibility;

@@ -15,14 +15,8 @@ namespace ChessForge
         // managed tree 
         private VariationTree _tree;
 
-        // list of lines 
-        private List<TreeLineSector> _lineSectors = new List<TreeLineSector>();
-
-        // TODO: change to contain DisplayLines
-        public List<TreeLineSector> DisplayLines
-        {
-            get => _lineSectors;
-        }
+        // the tree holding all LineSectors.
+        private LineSectorsTree _lineSectorsTree;
 
         /// <summary>
         /// The VariationTree whose lines are managed by this objects
@@ -46,11 +40,11 @@ namespace ChessForge
         /// </summary>
         public void BuildLineSectors(VariationTree tree)
         {
+            _lineSectorsTree = new LineSectorsTree();
             _tree = tree;
-            _lineSectors.Clear();
             TreeNode root = _tree.RootNode;
             root.LineId = "1";
-            BuildLineSector(root, 0);
+            BuildLineSector(_lineSectorsTree.Root, root, 1);
         }
 
         /// <summary>
@@ -58,21 +52,21 @@ namespace ChessForge
         /// The method calls itself recursively to build the complete set of clean lines.
         /// </summary>
         /// <param name="nd"></param>
-        public void BuildLineSector(TreeNode nd, int level)
+        public void BuildLineSector(LineSector parent, TreeNode nd, int level)
         {
-            TreeLineSector sector = new TreeLineSector();
+            LineSector sector = new LineSector();
             sector.DisplayLevel = level;
             sector.Nodes.Add(nd);
 
             if (nd.Children.Count > 1)
             {
-                sector.HasForks = true;
-                _lineSectors.Add(sector);
+                sector.SectorType = LineSectorType.FORKING;
+                parent.AddChild(sector);
                 level++;
                 for (int i = 0; i < nd.Children.Count; i++)
                 {
                     nd.Children[i].LineId = nd.LineId + "." + (i + 1).ToString();
-                    BuildLineSector(nd.Children[i], level);
+                    BuildLineSector(sector, nd.Children[i], level);
                 }
             }
             else
@@ -85,18 +79,18 @@ namespace ChessForge
                 }
                 if (nd.Children.Count == 0)
                 {
-                    sector.HasForks = false;
-                    _lineSectors.Add(sector);
+                    sector.SectorType = LineSectorType.LEAF;
+                    parent.AddChild(sector);
                 }
                 else
                 {
-                    sector.HasForks = true;
-                    _lineSectors.Add(sector);
+                    sector.SectorType = LineSectorType.FORKING;
+                    parent.AddChild(sector);
                     level++;
                     for (int i = 0; i < nd.Children.Count; i++)
                     {
                         nd.Children[i].LineId = nd.LineId + "." + (i + 1).ToString();
-                        BuildLineSector(nd.Children[i], level);
+                        BuildLineSector(sector, nd.Children[i], level);
                     }
                 }
             }
