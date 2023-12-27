@@ -1282,12 +1282,6 @@ namespace ChessForge
         public bool SelectArticlesFromPgnFile(ref ObservableCollection<GameData> games, SelectGamesDialog.Mode mode)
         {
             SelectGamesDialog dlg = new SelectGamesDialog(ref games, mode);
-            //{
-            //    Left = AppState.MainWin.ChessForgeMain.Left + 100,
-            //    Top = AppState.MainWin.ChessForgeMain.Top + 100,
-            //    Topmost = false,
-            //    Owner = AppState.MainWin
-            //};
             GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
             bool res = dlg.ShowDialog() == true;
@@ -1598,6 +1592,12 @@ namespace ChessForge
                     Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                     ObservableCollection<GameData> games = new ObservableCollection<GameData>();
                     gameCount = WorkbookManager.ReadPgnFile(fileName, ref games, contentType, targetcontentType);
+
+                    // clear the default selections
+                    foreach (GameData gd in games)
+                    {
+                        gd.IsSelected = false;
+                    }
 
                     int errorCount = 0;
                     StringBuilder sbErrors = new StringBuilder();
@@ -2165,12 +2165,6 @@ namespace ChessForge
             }
 
             SelectGamesDialog dlg = new SelectGamesDialog(ref games, mode);
-            //{
-            //    Left = ChessForgeMain.Left + 100,
-            //    Top = ChessForgeMain.Top + 100,
-            //    Topmost = false,
-            //    Owner = AppState.MainWin
-            //};
             GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
             return dlg.ShowDialog() == true;
         }
