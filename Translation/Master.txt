@@ -113,6 +113,12 @@ Date=Date
 #Count
 Count=Count
 
+#Game count
+GameCount=Number of Games 
+
+#Exercise count
+ExerciseCount=Number of Exercises 
+
 #A line in a variation tree
 Line=Line
 

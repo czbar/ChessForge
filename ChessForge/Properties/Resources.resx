@@ -213,6 +213,12 @@
   <data name="Count" xml:space="preserve">
     <value>Count</value>
   </data>
+  <data name="GameCount" xml:space="preserve">
+    <value>Number of Games </value>
+  </data>
+  <data name="ExerciseCount" xml:space="preserve">
+    <value>Number of Exercises </value>
+  </data>
   <data name="Line" xml:space="preserve">
     <value>Line</value>
   </data>

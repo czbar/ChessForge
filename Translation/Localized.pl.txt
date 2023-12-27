@@ -145,6 +145,14 @@ Date=Data
 #english: Count=Count
 Count=Ilość
 
+#description: Game count
+#english: GameCount=Number of Games 
+GameCount=Liczba partii 
+
+#description: Exercise count
+#english: ExerciseCount=Number of Exercises 
+ExerciseCount=Liczba ćwiczeń 
+
 #description: A line in a variation tree
 #english: Line=Line
 Line=Wariant

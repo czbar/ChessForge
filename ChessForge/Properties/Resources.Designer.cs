@@ -2357,6 +2357,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Number of Exercises .
+        /// </summary>
+        public static string ExerciseCount {
+            get {
+                return ResourceManager.GetString("ExerciseCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exercise Header.
         /// </summary>
         public static string ExerciseHeader {
@@ -2749,6 +2758,15 @@ namespace ChessForge.Properties {
         public static string GameAgainstEngine {
             get {
                 return ResourceManager.GetString("GameAgainstEngine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of Games .
+        /// </summary>
+        public static string GameCount {
+            get {
+                return ResourceManager.GetString("GameCount", resourceCulture);
             }
         }
         

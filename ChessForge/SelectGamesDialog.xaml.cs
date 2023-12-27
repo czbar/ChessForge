@@ -45,7 +45,7 @@ namespace ChessForge
         /// <summary>
         /// Creates the dialog object. Sets ItemsSource for the ListView
         /// to GamesHeaders list.
-        /// This dialog will be invoked in the follwoing contexts:
+        /// This dialog will be invoked in the following contexts:
         /// - Selecting Games and Exercise to create a new Chapter
         /// - Importing Games into a chapter
         /// - Importing Exercises into a chapter
@@ -55,17 +55,73 @@ namespace ChessForge
         {
             _mode = mode;
             _gameList = gameList;
+
             SetGameAndExerciseCount();
             InitializeComponent();
+            CheckIfAllSelected();
 
             if (mode == Mode.DOWNLOAD_WEB_GAMES)
             {
                 PrepareGuiInDownloadMode();
             }
+            else
+            {
+                (UiLvGames.View as GridView).Columns[1].Header = BuildItemsHeaderText();
+            }
+
+            UiCbSelectAll.Checked += UiCbSelectAll_Checked;
+            UiCbSelectAll.Unchecked += UiCbSelectAll_Unchecked;
 
             UiLvGames.ItemsSource = gameList;
 
             SetInstructionText();
+        }
+
+        /// <summary>
+        /// Builds text for the header of the column with item titles.
+        /// </summary>
+        /// <returns></returns>
+        private string BuildItemsHeaderText()
+        {
+            StringBuilder sb = new StringBuilder();
+            if (_gameCount > 0)
+            {
+                sb.Append(Properties.Resources.GameCount + " = " + _gameCount.ToString());
+                if (_exerciseCount > 0)
+                {
+                    sb.Append(" / ");
+                }
+            }
+            if (_exerciseCount > 0)
+            {
+                sb.Append(Properties.Resources.ExerciseCount + " = " + _exerciseCount.ToString());
+                if (_exerciseCount > 0)
+                {
+                    sb.Append(" / ");
+                }
+            }
+
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// if all items are selected, check the SelectAll Checkbox
+        /// </summary>
+        private void CheckIfAllSelected()
+        {
+            bool allSelected = true;
+            foreach (GameData gameData in _gameList)
+            {
+                if (!gameData.IsSelected)
+                {
+                    allSelected = false;
+                    break;
+                }
+            }
+            if (allSelected && _gameList.Count > 0)
+            {
+                UiCbSelectAll.IsChecked = true;
+            }
         }
 
         /// <summary>
@@ -91,6 +147,7 @@ namespace ChessForge
 
             GridViewColumn game = ListViewHelper.CreateColumn(Properties.Resources.Game, 570, "GameTitle");
             gridView.Columns.Add(game);
+            game.Header = BuildItemsHeaderText();
 
             GridViewColumn date = ListViewHelper.CreateColumn(Properties.Resources.Date, 90, "Date");
             gridView.Columns.Add(date);
