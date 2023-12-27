@@ -213,12 +213,6 @@ namespace ChessForge
             }
 
             SelectGamesDialog dlg = new SelectGamesDialog(ref games, SelectGamesDialog.Mode.DOWNLOAD_WEB_GAMES);
-            //{
-            //    Left = AppState.MainWin.ChessForgeMain.Left + 100,
-            //    Top = AppState.MainWin.ChessForgeMain.Top + 100,
-            //    Topmost = false,
-            //    Owner = AppState.MainWin
-            //};
             GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
             return dlg.ShowDialog() == true;
         }
