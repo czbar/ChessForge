@@ -250,12 +250,15 @@ namespace ChessForge
                 {
                     LineSector sector = tree.LineSectors[i];
                     sb.Append("LineSector index = " + i.ToString() + Environment.NewLine);
+                    sb.Append("Display level = " + sector.DisplayLevel.ToString() + Environment.NewLine);
+                    sb.Append("Sector type = " + sector.SectorType.ToString() + Environment.NewLine);
                     sb.Append("LineSector Id = " + sector.LineSectorId.ToString() + Environment.NewLine);
                     sb.Append("Parent LineSector Id = " + (sector.Parent == null ? "-" : sector.Parent.LineSectorId.ToString()) + Environment.NewLine);
                     for (int j = 0; j < sector.Children.Count; j++)
                     {
                         sb.Append("    Child " + j.ToString() + " LineSector Id = " + sector.Children[j].LineSectorId.ToString() + Environment.NewLine);
                     }
+                    sb.AppendLine();
                     sb.Append("**** Line Sector Nodes ****" + Environment.NewLine);
                     foreach (TreeNode nd in sector.Nodes)
                     {
@@ -264,8 +267,8 @@ namespace ChessForge
                         sb.Append("Line Id = " + nd.LineId.ToString() + Environment.NewLine);
                         sb.Append("Move Number = " + nd.MoveNumber.ToString() + Environment.NewLine);
                         sb.Append("Move alg = " + nd.LastMoveAlgebraicNotationWithNag + Environment.NewLine);
-                        sb.AppendLine();
                     }
+                    sb.AppendLine();
                     sb.Append("********" + Environment.NewLine);
                     sb.Append(Environment.NewLine + Environment.NewLine);
                 }
