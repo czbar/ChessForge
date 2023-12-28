@@ -1,11 +1,8 @@
-﻿using GameTree;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace ChessForge
+namespace GameTree
 {
     /// <summary>
     /// Holds a tree structure with LineSectorNodes as nodes.
