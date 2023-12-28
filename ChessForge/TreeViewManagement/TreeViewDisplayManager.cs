@@ -16,7 +16,7 @@ namespace ChessForge
         private VariationTree _tree;
 
         // the tree holding all LineSectors.
-        private LineSectorsTree _lineSectorsTree;
+        public LineSectorsTree SectorsTree;
 
         /// <summary>
         /// The VariationTree whose lines are managed by this objects
@@ -26,6 +26,9 @@ namespace ChessForge
             get => _tree;
             set => _tree = value;
         }
+
+        // sector id to assign
+        private int _runningSectorId = 0;
 
         /// <summary>
         /// Constructs the object.
@@ -40,11 +43,11 @@ namespace ChessForge
         /// </summary>
         public void BuildLineSectors(VariationTree tree)
         {
-            _lineSectorsTree = new LineSectorsTree();
+            SectorsTree = new LineSectorsTree();
             _tree = tree;
             TreeNode root = _tree.RootNode;
             root.LineId = "1";
-            BuildLineSector(_lineSectorsTree.Root, root, 1);
+            BuildLineSector(SectorsTree.Root, root, 1);
         }
 
         /// <summary>
@@ -54,7 +57,11 @@ namespace ChessForge
         /// <param name="nd"></param>
         public void BuildLineSector(LineSector parent, TreeNode nd, int level)
         {
+            _runningSectorId++;
             LineSector sector = new LineSector();
+            sector.LineSectorId = _runningSectorId;
+            SectorsTree.LineSectors.Add(sector);
+
             sector.DisplayLevel = level;
             sector.Nodes.Add(nd);
 
