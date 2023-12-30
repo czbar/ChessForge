@@ -43,11 +43,19 @@ namespace ChessForge
         /// </summary>
         public void BuildLineSectors(VariationTree tree)
         {
-            SectorsTree = new LineSectorsTree();
             _tree = tree;
             TreeNode root = _tree.RootNode;
             root.LineId = "1";
-            BuildLineSector(SectorsTree.Root, root, 1);
+
+            // create a SectorsTrre and add the root TreeNode to its root LineSector
+            SectorsTree = new LineSectorsTree();
+            SectorsTree.Root.Nodes.Add(root);
+
+            // for each child of the root TreeNode, build LineSectors adding them to the tree. 
+            foreach (TreeNode child in SectorsTree.Root.Nodes[0].Children)
+            {
+                BuildLineSector(SectorsTree.Root, child, 1);
+            }
         }
 
         /// <summary>
@@ -65,8 +73,18 @@ namespace ChessForge
             sector.DisplayLevel = level;
             sector.Nodes.Add(nd);
 
+            // add all leaf nodes that follow
+            while (nd.Children.Count == 1)
+            {
+                nd.Children[0].LineId = nd.LineId;
+                nd = nd.Children[0];
+                sector.Nodes.Add(nd);
+            }
+
+            // now the nd node has either 0 children or more than 1
             if (nd.Children.Count > 1)
             {
+                // mark the sector as FORKING and build a subtree from here
                 sector.SectorType = LineSectorType.FORKING;
                 parent.AddChild(sector);
                 level++;
@@ -76,30 +94,12 @@ namespace ChessForge
                     BuildLineSector(sector, nd.Children[i], level);
                 }
             }
-            else
+
+            if (nd.Children.Count == 0)
             {
-                while (nd.Children.Count == 1)
-                {
-                    nd.Children[0].LineId = nd.LineId;
-                    nd = nd.Children[0];
-                    sector.Nodes.Add(nd);
-                }
-                if (nd.Children.Count == 0)
-                {
-                    sector.SectorType = LineSectorType.LEAF;
-                    parent.AddChild(sector);
-                }
-                else
-                {
-                    sector.SectorType = LineSectorType.FORKING;
-                    parent.AddChild(sector);
-                    level++;
-                    for (int i = 0; i < nd.Children.Count; i++)
-                    {
-                        nd.Children[i].LineId = nd.LineId + "." + (i + 1).ToString();
-                        BuildLineSector(sector, nd.Children[i], level);
-                    }
-                }
+                // we reached the end of the branch so return
+                sector.SectorType = LineSectorType.LEAF;
+                parent.AddChild(sector);
             }
         }
     }
