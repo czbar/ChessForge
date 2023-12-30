@@ -240,8 +240,7 @@
     <Compile Include="RepositionPieceProcessor.cs" />
     <Compile Include="ResourceUtils.cs" />
     <Compile Include="RichTextBoxUtilities.cs" />
-    <Compile Include="TreeViewManagement\TreeViewDisplayLine.cs" />
-    <Compile Include="TreeViewManagement\TreeViewDisplayRun.cs" />
+    <Compile Include="TreeViewManagement\DisplaySector.cs" />
     <Compile Include="TreeViewManagement\TreeViewDisplayManager.cs" />
     <Compile Include="SelectArticlesDialog.xaml.cs">
       <DependentUpon>SelectArticlesDialog.xaml</DependentUpon>
