@@ -32,7 +32,7 @@ namespace ChessForge
             for (int i = 1; i < tree.LineSectors.Count; i++)
             {
                 LineSector sector = tree.LineSectors[i];
-                Paragraph para = CreateParagraph((sector.DisplayLevel - 1).ToString(), true);
+                Paragraph para = CreateParagraph((sector.BranchLevel - 1).ToString(), true);
                 if (i == 1)
                 {
                     CreateRunForStartingNode(para, root);

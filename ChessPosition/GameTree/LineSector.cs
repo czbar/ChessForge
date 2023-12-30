@@ -29,11 +29,8 @@ namespace GameTree
         // the list of nodes forming a single linear path.
         private List<TreeNode> _nodes = new List<TreeNode>();
 
-        // whether the line has any forks
-        private bool _hasForks;
-
         // level at which to display the sector
-        private int _displayLevel = 0;
+        private int _branchLevel = 0;
 
         /// <summary>
         /// Id of this LineSector.
@@ -77,10 +74,10 @@ namespace GameTree
         /// <summary>
         /// Level at which to display the sector
         /// </summary>
-        public int DisplayLevel
+        public int BranchLevel
         {
-            get => _displayLevel;
-            set => _displayLevel = value;
+            get => _branchLevel;
+            set => _branchLevel = value;
         }
     }
 }

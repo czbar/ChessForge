@@ -22,6 +22,7 @@ namespace GameTree
             LineSectors = new List<LineSector>();
 
             LineSector sector = new LineSector();
+            sector.BranchLevel = 0;
             LineSectors.Add(sector);
         }
 

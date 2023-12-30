@@ -250,7 +250,7 @@ namespace ChessForge
                 {
                     LineSector sector = tree.LineSectors[i];
                     sb.Append("LineSector index = " + i.ToString() + Environment.NewLine);
-                    sb.Append("Display level = " + sector.DisplayLevel.ToString() + Environment.NewLine);
+                    sb.Append("Display level = " + sector.BranchLevel.ToString() + Environment.NewLine);
                     sb.Append("Sector type = " + sector.SectorType.ToString() + Environment.NewLine);
                     sb.Append("LineSector Id = " + sector.LineSectorId.ToString() + Environment.NewLine);
                     sb.Append("Parent LineSector Id = " + (sector.Parent == null ? "-" : sector.Parent.LineSectorId.ToString()) + Environment.NewLine);
