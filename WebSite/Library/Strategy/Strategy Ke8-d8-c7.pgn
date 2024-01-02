@@ -28,53 +28,7 @@ Chess Forge is a Free and Open Source Windows application.}
 [White "Chapter"]
 [Black "Introduction"]
 
-{The recent Rapid World Championship in Samarkand has delivered fantastic entertainment on the full spectrum, from an 8-move game where a 2600+ grandmaster copped a Scholar's Mate (!) to strategic masterpieces and spectacular tactics.
-
-
-
-To me, one of the highlights was the clash of the leaders that was critically important to the final standings. 
-
-
-
-In the diagrammed game Fedoseev - Carlsen, White has just played 11. ♗e2 and to my astonishment, Black replied  11... ♚d8 .
-
-        ♜⨯♝⨯♚⨯⨯♜
-        ♟♟⨯♞♛♟♟⨯
-        ⨯⨯⨯♟⨯♞⨯♟
-        ⨯⨯♟♙♟⨯⨯⨯
-        ♙⨯♙⨯♙⨯⨯♙
-        ⨯⨯♙⨯⨯♘⨯⨯
-        ⨯⨯♕⨯♗♙♙⨯
-        ♖⨯♗⨯♔⨯⨯♖
-
-  
-
-Directing the king towards what looks like a dangerous, semi-open b-line, with the White's queen and rook ready to pounce, seemed to me extravagant to say the least.  
-
-However, having consulted the databases and various commentaries, I realized that the idea of "hiding" the king on c7 was not as unique as I thought. It would have been familiar to many players studying certain openings that feature the closed center with the doubled white c-pawns.
-
-This type of position will typically arise when the black bishop is exchanged for the white knight on c3. Interestingly, this can occur in the Nimzo-Indian after ♝b4 takes♘c3 but also in the Modern Defense, and the like, where the black bishop strikes from g7.
-
-Ok, so "Now" refers to the game above but what about "Then"? Well, when I searched the databases, the earliest game that closely resembled the one above was a gem by none other than Anatoly Karpov, just before he was crowned World Champion.  
-
-        ♜⨯♝⨯⨯⨯♜⨯
-        ⨯♟♚♞♛♟⨯⨯
-        ⨯⨯⨯♟⨯♞⨯⨯
-        ♟⨯♟♙⨯⨯♟⨯
-        ♙⨯♙⨯♟⨯⨯⨯
-        ⨯⨯♙⨯♙⨯♗⨯
-        ♖⨯♗⨯♘♙♙⨯
-        ⨯♕⨯⨯♔⨯⨯♖
-
-  
-
-You can view both those games in the "Games" tab of this chapter.
-
-Chapters 2 & 3 present a collection of annotated games and tactical exercises where a similar pawn struture and black king's march to the queenside can be encountered.
-
-
-
-}
+{The recent Rapid World Championship in Samarkand has delivered fantastic entertainment on the full spectrum, from an 8-move game where a 2600+ grandmaster copped a Scholar's Mate (!) to strategic masterpieces and spectacular tactics.To me, one of the highlights was the clash of the leaders that was critically important to the final standings. In the diagrammed game Fedoseev - Carlsen, White has just played 11. ♗e2 and to my astonishment, Black replied  11... ♚d8 .        ♜⨯♝⨯♚⨯⨯♜        ♟♟⨯♞♛♟♟⨯        ⨯⨯⨯♟⨯♞⨯♟        ⨯⨯♟♙♟⨯⨯⨯        ♙⨯♙⨯♙⨯⨯♙        ⨯⨯♙⨯⨯♘⨯⨯        ⨯⨯♕⨯♗♙♙⨯        ♖⨯♗⨯♔⨯⨯♖  Directing the king towards what looks like a dangerous, semi-open b-line, with the White's queen and rook ready to pounce, seemed to me extravagant to say the least.  However, having consulted the databases and various commentaries, I realized that the idea of "hiding" the king on c7 was not as unique as I thought. It would have been familiar to many players studying certain openings that feature the closed center with the doubled white c-pawns.This type of position will typically arise when the black bishop is exchanged for the white knight on c3. Interestingly, this can occur in the Nimzo-Indian after ♝b4 takes♘c3 but also in the Modern Defense, and the like, where the black bishop strikes from g7.Ok, so "Now" refers to the game above but what about "Then"? Well, when I searched the databases, the earliest game that closely resembled the one above was a gem by none other than Anatoly Karpov, just before he was crowned World Champion.          ♜⨯♝⨯⨯⨯♜⨯        ⨯♟♚♞♛♟⨯⨯        ⨯⨯⨯♟⨯♞⨯⨯        ♟⨯♟♙⨯⨯♟⨯        ♙⨯♙⨯♟⨯⨯⨯        ⨯⨯♙⨯♙⨯♗⨯        ♖⨯♗⨯♘♙♙⨯        ⨯♕⨯⨯♔⨯⨯♖  You can view both those games in the "Games" tab of this chapter.Chapters 2 & 3 present a collection of annotated games and tactical exercises where a similar pawn struture and black king's march to the queenside can be encountered.}
 
 {[%xaml PEZsb3dEb2N1bWVudCBQYWdlUGFkZGluZz0iNSwwLDUsMCIgQWxsb3dEcm9wPSJGYWxzZSIg
 eG1sbnM9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd2luZngvMjAwNi94YW1sL3ByZXNlbnRh
@@ -570,8 +524,8 @@ e5 {[%eval -0.29]}  9. Bd3 {[%eval -0.60]}  e4 {[%eval -0.75]}  10. Bc2 {[%eval 
 g5 {[%eval -0.62]}  11. Bg3 {[%eval -0.67]}  Qe7 {[%eval -0.51]}  12. h4 {[%eval -0.71]}  
 Rg8 {[%eval -0.62]}  13. hxg5 {[%eval -0.64]}  hxg5 {[%eval -0.57]}  14. Ne2 {[%eval -0.67]}  
 Nbd7 {[%eval -0.67]}  15. Qb1 {[%eval -0.74]}  Kd8 $1 {[%eval -0.65]}  16. a4 {[%eval -0.71]}  
-a5 {[%eval -0.91]This position, and the associated ideas, have been repreated in multiple games since. See the "Games" tab for more analysis (press F3 to locate the game with the exact same position). }  
-17. Ra2 {[%eval -0.80]}  Kc7 $15 {[%thmb][%eval -0.93]We have arrived at the typical structure with the partially closed center, White king on c7 and the pawn on a5.  Typically, Black will protect his king with ♜a6 followed by either b7-b6 or ♞d7-b6. The king may conitinue his travels to b8 and a7, if needed.}  
+a5 {[%eval -0.91]This position, and the associated ideas, have been repeated in multiple games since. See the "Games" tab for more analysis (press F3 to locate the game with the exact same position). }  
+17. Ra2 {[%eval -0.80]}  Kc7 $15 {[%thmb][%eval -0.93]We have arrived at the typical structure with the partially closed center, the black king on c7 and the pawn on a5.  Typically, Black will protect his king with ♜a6 followed by either b7-b6 or ♞d7-b6. The king may conitinue his trek to b8 and a7, if needed.}  
 18. Rh6 $6 {[%eval -1.67]}  Ra6 $17 {[%eval -1.45]}  19. Qb5 {[%eval -1.81]}  
 Kb8 {[%eval -1.95]}  20. Rb2 {[%eval -1.89]}  Ka7 {[%eval -1.85]}  21. Qb3 {[%eval -2.26]}  
 Ng4 $1 {[%eval -2.28]White is already lost.}  22. Rh1 {[%eval -2.66]}  f5 {[%eval -2.35]}  
@@ -618,7 +572,7 @@ Here's the scheme for such an operation:
 
   
 
- 1. ♘d4  cxd4  2. c5 where the pawn cannot be recapture due to the pin.
+ 1. ♘d4  cxd4  2. c5 where the pawn cannot be recaptured due to the pin.
 
 
 
@@ -830,18 +784,18 @@ PjwvSW5saW5lVUlDb250YWluZXI+PElubGluZVVJQ29udGFpbmVyIE5hbWU9InVpY19tb3ZlXzQiPjxU
 ZXh0QmxvY2sgTmFtZT0idGJfbW92ZV80Ij48UnVuIEZvbnRXZWlnaHQ9IkJvbGQiIEZvbnRTaXplPSIx
 NCIgRm9yZWdyb3VuZD0iI0ZGMDAwMEZGIiBOYW1lPSJydW5fbW92ZV80IiB4bWw6c3BhY2U9InByZXNl
 cnZlIj4gMi4gYzUgPC9SdW4+PC9UZXh0QmxvY2s+PC9JbmxpbmVVSUNvbnRhaW5lcj53aGVyZSB0aGUg
-cGF3biBjYW5ub3QgYmUgcmVjYXB0dXJlIGR1ZSB0byB0aGUgcGluLjwvUGFyYWdyYXBoPjxQYXJhZ3Jh
-cGggTmFtZT0iUmY5ZGQyOWY5ZmE1NDQ4NWE5ZTQ2YTZkNWUzZTI5YWJiIiAvPjxQYXJhZ3JhcGggTmFt
-ZT0iUjgwZWNkY2E4Y2QwOTQ4M2I4ZWY5NWRjZmQ5NjYzYTc2IiB4bWw6c3BhY2U9InByZXNlcnZlIj5O
-b3RlIHRoYXQg4pmYZDQgbWF5IHNvbWV0aW1lcyBiZSBwb3NzaWJsZSBldmVuIHdpdGggdGhlIGUtcGF3
-biBvbiBlNSEgIFNlZSB0aGUgIkV4ZXJjaXNlcyIgaW4gdGhpcyBhbmQgdGhlIG5leHQgY2hhcHRlciBm
-b3IgZXhhbXBsZXMuPC9QYXJhZ3JhcGg+PC9GbG93RG9jdW1lbnQ+ node_id=0 text= fen=cm5icWt
-ibnIvcHBwcHBwcHAvOC84LzgvOC9QUFBQUFBQUC9STkJRS0JOUiB3IEtRa3EgLSAwIDE= node_id=1 
-text= fen=OC8xcGs1LzNwNC9wMXBQNC9QMVAxcDMvMlAzQjEvNE4zLzggdyAtIC0gMSAx cal=Ge2d4
-,Gc4c5,Yc5d4 node_id=2 text=MS4g4pmYZDQ= fen=OC8xcGs1LzNwNC9wMXBQNC8yUE5wMy8yUDN
-CMS84LzggYiAtIC0gMSAw node_id=3 text=Y3hkNA== fen=OC8xcGs1LzNwNC9wMlA0LzJQcHAzLz
-JQM0IxLzgvOCB3IC0gLSAxIDE= node_id=4 text=Mi4gYzU= fen=OC8xcGs1LzNwNC9wMVBQNC8zc
-HAzLzJQM0IxLzgvOCBiIC0gLSAxIDA= ]}
+cGF3biBjYW5ub3QgYmUgcmVjYXB0dXJlPFJ1biB4bWw6bGFuZz0icGwtcGwiPmQ8L1J1bj4gZHVlIHRv
+IHRoZSBwaW4uPC9QYXJhZ3JhcGg+PFBhcmFncmFwaCBOYW1lPSJSZjlkZDI5ZjlmYTU0NDg1YTllNDZh
+NmQ1ZTNlMjlhYmIiIC8+PFBhcmFncmFwaCBOYW1lPSJSODBlY2RjYThjZDA5NDgzYjhlZjk1ZGNmZDk2
+NjNhNzYiIHhtbDpzcGFjZT0icHJlc2VydmUiPk5vdGUgdGhhdCDimZhkNCBtYXkgc29tZXRpbWVzIGJl
+IHBvc3NpYmxlIGV2ZW4gd2l0aCB0aGUgZS1wYXduIG9uIGU1ISAgU2VlIHRoZSAiRXhlcmNpc2VzIiBp
+biB0aGlzIGFuZCB0aGUgbmV4dCBjaGFwdGVyIGZvciBleGFtcGxlcy48L1BhcmFncmFwaD48L0Zsb3dE
+b2N1bWVudD4= node_id=0 text= fen=cm5icWtibnIvcHBwcHBwcHAvOC84LzgvOC9QUFBQUFBQUC9
+STkJRS0JOUiB3IEtRa3EgLSAwIDE= node_id=1 text= fen=OC8xcGs1LzNwNC9wMXBQNC9QMVAxcD
+MvMlAzQjEvNE4zLzggdyAtIC0gMSAx cal=Ge2d4,Gc4c5,Yc5d4 node_id=2 text=MS4g4pmYZDQ=
+ fen=OC8xcGs1LzNwNC9wMXBQNC8yUE5wMy8yUDNCMS84LzggYiAtIC0gMSAw node_id=3 text=Y3h
+kNA== fen=OC8xcGs1LzNwNC9wMlA0LzJQcHAzLzJQM0IxLzgvOCB3IC0gLSAxIDE= node_id=4 tex
+t=Mi4gYzU= fen=OC8xcGs1LzNwNC9wMVBQNC8zcHAzLzJQM0IxLzgvOCBiIC0gLSAxIDA= ]}
  *
 
 [ContentType "Model Game"]
@@ -1322,28 +1276,7 @@ O-O {[%eval 0.00]}  f5 {[%eval +0.13]}  4. Qc2 {[%eval +0.11]}  Rec8 $13 {[%eval
 [White "Chapter"]
 [Black "Introduction"]
 
-{Databases hold many games leading to our structure of interest where Black chooses an opening from the Indian openings family, fianchettos their dark-squared bishop and then exchanges it for the white knight on c3.
-
-
-
-        ⨯⨯⨯⨯♚⨯⨯⨯
-        ⨯♟⨯⨯⨯♟♝♟
-        ⨯⨯⨯♟⨯⨯♟⨯
-        ♟⨯♟♙⨯⨯⨯⨯
-        ♙⨯♙⨯⨯⨯⨯⨯
-        ⨯⨯♘⨯⨯⨯⨯⨯
-        ⨯♙⨯⨯⨯⨯⨯⨯
-        ⨯⨯⨯⨯⨯⨯⨯⨯
-
-  
-
-
-
-Interestingly though, most of those games come from blitz tournaments with the main "culprit" being GM Aleksandr Shimanov.
-
-
-
-Not surprisingly then, we have fewer games and more tactical exercises in this chapter!}
+{Databases hold many games leading to our structure of interest where Black chooses an opening from the Indian openings family, fianchettos their dark-squared bishop and then exchanges it for the white knight on c3.        ⨯⨯⨯⨯♚⨯⨯⨯        ⨯♟⨯⨯⨯♟♝♟        ⨯⨯⨯♟⨯⨯♟⨯        ♟⨯♟♙⨯⨯⨯⨯        ♙⨯♙⨯⨯⨯⨯⨯        ⨯⨯♘⨯⨯⨯⨯⨯        ⨯♙⨯⨯⨯⨯⨯⨯        ⨯⨯⨯⨯⨯⨯⨯⨯  Interestingly though, most of those games come from blitz tournaments with the main "culprit" being GM Aleksandr Shimanov.Not surprisingly then, we have fewer games and more tactical exercises in this chapter!}
 
 {[%xaml PEZsb3dEb2N1bWVudCBQYWdlUGFkZGluZz0iNSwwLDUsMCIgQWxsb3dEcm9wPSJGYWxzZSIg
 eG1sbnM9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd2luZngvMjAwNi94YW1sL3ByZXNlbnRh
