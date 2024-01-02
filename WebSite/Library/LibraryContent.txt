@@ -12,6 +12,16 @@ Description: Games from tournaments and matches.
       Description: All games from Men's World Championship Matches and Tournaments.
       File:Tournaments/Mens World Individual Championships.pgn
 
+Bookcase:Strategy Morsels
+Description:Small studies of specific strategic questions.
+
+    Shelf:
+    Description: 
+    
+	  Book:Black King into the Line of Fire
+      Description: Black king hides in open view (semi-open b-file) on the queenside.
+      File: Strategy/Strategy Ke8-d8-c7.pgn
+
 Bookcase:Openings
 Description:Workbooks examining theory and practice of various Openings.
     
@@ -66,6 +76,10 @@ Description:Workbooks examining theory and practice of various Openings.
 	  Book:The Elephant Gambit
       Description: These days extict in masters' practice but a 1.e4 player must know it.
       File: Openings/Unorthodox/Elephant Gambit.pgn
+
+	  Book:The Nakhmanson Gambit
+      Description: An aggressive knight sacrifice in the Italian Game.
+      File: Openings/Unorthodox/Nakhmanson Gambit.pgn
 
 
 Bookcase: Endgames and Exercises

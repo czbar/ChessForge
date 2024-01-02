@@ -12,6 +12,16 @@ Description: Partie z turniejów i meczów.
       Description: Wszystkie partie z meczów o mistrzostwo świata mężczyzn.
       File:Tournaments/Mens World Individual Championships.pgn
 
+Bookcase:Strategiczne Kąski
+Description:Przyczynkowe opracowania o strategii.
+
+    Shelf:
+    Description: 
+    
+	  Book:Królem na linię ognia (jęz. ang.)
+      Description: Czarny król wędruje na skrzydło hetmańskie gdzie białe mają półotwartą linię b.
+      File: Strategy/Strategy Ke8-d8-c7.pgn
+
 Bookcase:Openings
 Description:Teoria i praktyka debiutów szachowych.
     
@@ -66,6 +76,10 @@ Description:Teoria i praktyka debiutów szachowych.
 	  Book:The Gambit Słonia
       Description: Nie spotykany już w praktyce mistrzowskiej, ale każdy kto gra 1.e4 musi gi znać.
       File: Openings/Unorthodox/Elephant Gambit.pgn
+
+	  Book:Gambit Nakhmansona
+      Description: Agresywna ofiara skoczka w Partii Włoskiej.
+      File: Openings/Unorthodox/Nakhmanson Gambit.pgn
 
 
 
