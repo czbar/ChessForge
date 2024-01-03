@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("MindRose Pty Ltd")]
 [assembly: AssemblyProduct("WebAccess")]
-[assembly: AssemblyCopyright("Copyright © MindRose Pty Ltd 2023")]
+[assembly: AssemblyCopyright("Copyright © MindRose Pty Ltd 2024")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
