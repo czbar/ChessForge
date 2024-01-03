@@ -240,6 +240,9 @@
     <Compile Include="RepositionPieceProcessor.cs" />
     <Compile Include="ResourceUtils.cs" />
     <Compile Include="RichTextBoxUtilities.cs" />
+    <Compile Include="SplitChapterDialog.xaml.cs">
+      <DependentUpon>SplitChapterDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TreeViewManagement\DisplaySector.cs" />
     <Compile Include="TreeViewManagement\TreeViewDisplayManager.cs" />
     <Compile Include="SelectArticlesDialog.xaml.cs">
@@ -438,6 +441,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SelectSingleChapterDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SplitChapterDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
