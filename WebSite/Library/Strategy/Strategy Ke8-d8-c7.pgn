@@ -555,28 +555,7 @@ e5 {[%eval -0.18][%cal Yb1b6,Ge8d8,Gd8c7,Ga7a5][%csl Rc3,Rc4]The center is close
 [White "Chapter"]
 [Black "Introduction"]
 
-{Most of the games in this chapter are played in the Leningrad Variation of the Nimzo-Indian. This means that White's dark-squared bishop is developed to g5 and often ends up on g3.  A typical idea for Black is to play e5-e4 in the center but then they must beware of tactical motifs involving the knight sacrifice on d4. 
-
-
-
-Here's the scheme for such an operation:
-
-        ⨯⨯⨯⨯⨯⨯⨯⨯
-        ⨯♟♚⨯⨯⨯⨯⨯
-        ⨯⨯⨯♟⨯⨯⨯⨯
-        ♟⨯♟♙⨯⨯⨯⨯
-        ♙⨯♙⨯♟⨯⨯⨯
-        ⨯⨯♙⨯⨯⨯♗⨯
-        ⨯⨯⨯⨯♘⨯⨯⨯
-        ⨯⨯⨯⨯⨯⨯⨯⨯
-
-  
-
- 1. ♘d4  cxd4  2. c5 where the pawn cannot be recaptured due to the pin.
-
-
-
-Note that ♘d4 may sometimes be possible even with the e-pawn on e5!  See the "Exercises" in this and the next chapter for examples.}
+{Most of the games in this chapter are played in the Leningrad Variation of the Nimzo-Indian. This means that White's dark-squared bishop is developed to g5 and often ends up on g3.  A typical idea for Black is to play e5-e4 in the center but then they must beware of tactical motifs involving the knight sacrifice on d4. Here's the scheme for such an operation:        ⨯⨯⨯⨯⨯⨯⨯⨯        ⨯♟♚⨯⨯⨯⨯⨯        ⨯⨯⨯♟⨯⨯⨯⨯        ♟⨯♟♙⨯⨯⨯⨯        ♙⨯♙⨯♟⨯⨯⨯        ⨯⨯♙⨯⨯⨯♗⨯        ⨯⨯⨯⨯♘⨯⨯⨯        ⨯⨯⨯⨯⨯⨯⨯⨯   1. ♘d4  cxd4  2. c5 where the pawn cannot be recaptured due to the pin.Note that ♘d4 may sometimes be possible even with the e-pawn on e5!  See the "Exercises" in this and the next chapter for examples.}
 
 {[%xaml PEZsb3dEb2N1bWVudCBQYWdlUGFkZGluZz0iNSwwLDUsMCIgQWxsb3dEcm9wPSJGYWxzZSIg
 eG1sbnM9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd2luZngvMjAwNi94YW1sL3ByZXNlbnRh
@@ -1037,7 +1016,7 @@ a5 {[%eval -0.78]In Williams-Karpov we saw 17.♖a2.  Other options have been tr
 17. Qb5 {[%eval -1.10]}  (17. Nc1 {[%eval -0.84]}  Ra6 18. Nb3 Ng4 $1 19. Bxe4 
 Rb6 20. Bf3 (20. Qc2 f5 21. Bxf5 Nxe3 $18) 20... Nxe3 $1 21. fxe3 Qxe3+ 22. Kf1 
 Qxc3 $17)  (17. Kd2 {[%eval -1.21]}  Ra6 {[%eval -1.15]}  18. Ra2 {[%eval 
--1.39]}  Nb6 {[%eval -1.29]}  19. Qb3 {Black has numerous moves that maintain the advantage but should be mindful of some tactical ideas from White. One such idea is to play ♘e2-d4 when the black king is on c7 or b8 and the other is to sacrifice the queen on b6 for the knight and the bishop hoping that the pressure on d6 will compensate the material loss.}  
+-1.39]}  Nb6 {[%eval -1.29]}  19. Qb3 {Black has numerous moves that maintain the advantage but should be mindful of some tactical ideas from White. One such idea is to play ♘e2-d4 when the black king is on c7 or b8 and the other is to sacrifice the queen on b6 for the knight and the rook hoping that the pressure on d6 will compensate the material loss.}  
 Ng4 $1 {This is the strongest, tactically sound response that takes the sting out of the two ideas mentioned above.}  
 (19... Bf5 20. Rb2 Nfd7 $1 $17 {[%eval -1.10]This is the best response but let's look at other responses to see the tactics that we would like to avoid as Black.}  
 (20... Kc7 $2 {Black walks into a sharp line that at least equalizes for White.} 
@@ -1166,8 +1145,9 @@ Qb3 {[%eval 0.00]}  Qd7 {[%eval +0.68]}  23. Qd1 {[%eval -0.28]}  Rg8 {[%eval -0
 30. Bxf3 {[%eval -0.38]}  Qh4 {[%eval 0.00]}  31. Qxh4 $2 {[%eval -1.69]}  (31. 
 Qe3 $11 {[%eval -0.08]} ) 31... Nxf3+ {[%eval -1.94]}  32. Kh1 {[%eval -1.78]}  
 Nxh4 {[%eval -1.71]}  33. Rf2 {[%eval -1.43]}  Rg4 {[%eval -1.63]}  34. g3 {[%eval -2.18]}  
-Rxc4 {[%eval -2.18]}  35. Rc1 {[%eval -4.38]}  Rxa4 {[%eval -4.35]}  36. gxh4 {[%eval -4.43]}  
-Re4 {[%eval -4.03]}  37. Re2 {[%eval -7.76]}  Rxe2 {[%eval -6.52]}  0-1
+Rxc4 {[%eval -2.18]}  35. Rc1 {[%eval -4.38]}  Rxa4 $18 {[%eval -4.35]}  36. 
+gxh4 {[%eval -4.43]}  Re4 {[%eval -4.03]}  37. Re2 {[%eval -7.76]}  Rxe2 {[%eval -6.52]} 
+ 0-1
 
 [ContentType "Exercise"]
 [FEN "r1bk4/1p1nqpr1/3p3p/p1pPpB2/P1P1NP2/2P5/1Q4P1/4RRK1 b - - 3 22"]
@@ -1267,8 +1247,8 @@ O-O {[%eval 0.00]}  f5 {[%eval +0.13]}  4. Qc2 {[%eval +0.11]}  Rec8 $13 {[%eval
 [Black "Black's Fianchetto with ♝g7xc3"]
 
 
- {[%eval +0.34]} 1. d4 {[%eval +0.31]}  c5 2. d5 g6 {[%eval +0.80]In this chapter we are looking at games where our structure of interest arises after Black finchettos their bishop and then exchanges it for the white knight on c3.}  
-3. c4 Bg7 4. Nf3 d6 5. e4 e6 6. Nc3 Bxc3+ 7. bxc3 e5 {[%eval +0.51][%cal Yb1b6,Ge8d8,Gd8c7,Ga7a5][%csl Rc4,Rc3]As in the previous chapter, we are arriving at a structure where Black can seriously consider removing their king to the queenside and starting activities on the kingside. } 
+ {[%eval +0.34]} 1. d4 {[%eval +0.31]}  c5 2. d5 g6 {[%eval +0.80]In this chapter we are looking at games where our structure of interest arises after Black fianchettos their bishop and then exchanges it for the white knight on c3.}  
+3. c4 Bg7 4. Nf3 d6 5. e4 e6 6. Nc3 Bxc3+ 7. bxc3 e5 {[%eval +0.51][%cal Yb1b6,Ge8d8,Gd8c7,Ga7a5][%csl Rc4,Rc3]As in the previous chapter, we are arriving at a structure where Black can seriously consider moving their king to the queenside and starting activities on the kingside. } 
  *
 
 [Guid "Rcdc8fd01b97448e9bf48e73621c51b24"]
@@ -1666,7 +1646,7 @@ g5 {[%eval -2.04]although the position seems lost here too.} ) 31... Bxa4 $18 {[
 [WhiteElo "2547"]
 [BlackElo "2597"]
 [Result "1-0"]
-[Preamble "Analysis line. Black could try to ease the pressure and create counter-play on the kingside by offering thier rook for the light-squared bishop. White has a sacrifice of their own though..."]
+[Preamble "Analysis line. Black could try to ease the pressure and create counter-play on the kingside by offering their rook for the light-squared bishop. White has a sacrifice of their own though..."]
 
 
  {[%eval +1.60]} 1. Nb4 $3 {[%eval +1.80]}  axb4 {[%eval +1.80]}  2. cxb4 {[%eval +1.72]}  
@@ -1676,10 +1656,10 @@ bxa5 $18 {[%eval +3.07]} ) 4. bxc5 {[%eval +1.28]}  dxc5 {[%eval +1.31]}  5.
 Bxg6 {[%eval +1.53]}  Nxg6 {[%eval +1.83]}  6. axb6 {[%eval +1.82]}  Qd6 {[%eval +1.98]}  
 7. Bxc5 $1 {[%eval +1.70]}  Nxc5 {[%eval +1.74]}  8. Qe3 {[%eval +1.70]}  Nxe4 {[%eval +1.71]}  
 (8... Nd7 {[%eval +4.02]}  9. c5 $18 {[%eval +3.77]} ) 9. Qxe4 $16 {[%eval +1.69]} 
-) 3. Qxb4 {[%eval +3.22]}  Qd8 {[%eval +7.91]}  4. a5 {[%eval +6.30]}  bxa5 {[%eval +#2]}  
-(4... Kb8 {[%eval +6.55]}  5. Bxg6 {[%eval +6.26]}  Nxg6 {[%eval +6.47]}  6. 
-Qxd6+ {[%eval +6.29]}  Qc7 {[%eval +5.95]}  7. Qb4 $18 {[%eval +6.15]} ) 5. Rb7+ 
-{[%eval +#1]}  Bxb7 {[%eval +#1]}  6. Qxb7# {[%eval #]}  1-0
+) 3. Qxb4 {[%eval +2.78]}  Kd8 {[%eval +2.60]}  4. Bxb6+ {[%eval +2.76]}  Nxb6 {[%eval +2.77]}  
+5. Rxb6 {[%eval +2.84]}  Rxb6 {[%eval +2.95]}  6. Qxb6+ {[%eval +2.98]}  Qc7 {[%eval +2.85]}  
+7. Bxg6 {[%eval +2.87]}  fxg6 {[%eval +3.19]}  8. c5 {[%eval +3.40]}  dxc5 {[%eval +4.63]}  
+9. a5 $18 {[%eval +4.65]}  1-0
 
 [ContentType "Exercise"]
 [FEN "2b3nr/1pk1q2p/rn1p2p1/pQpPp3/P1P1P3/2PB4/4N1PP/1RB2RK1 w - - 0 17"]
