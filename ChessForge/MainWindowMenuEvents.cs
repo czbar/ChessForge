@@ -1014,7 +1014,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="expand">true to expand / false to collapse</param>
         /// <param name="all">true to expand everything / false to expand chapter headers only</param>
-        private void ExpandCollapseChaptersView(bool expand, bool all)
+        public void ExpandCollapseChaptersView(bool expand, bool all)
         {
             List<Chapter> chapters = WorkbookManager.SessionWorkbook.Chapters;
             foreach (Chapter chapter in chapters)
