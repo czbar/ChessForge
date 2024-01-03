@@ -243,6 +243,7 @@
     <Compile Include="SplitChapterDialog.xaml.cs">
       <DependentUpon>SplitChapterDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SplitChapterUtils.cs" />
     <Compile Include="TreeViewManagement\DisplaySector.cs" />
     <Compile Include="TreeViewManagement\TreeViewDisplayManager.cs" />
     <Compile Include="SelectArticlesDialog.xaml.cs">

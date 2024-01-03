@@ -33,7 +33,7 @@ namespace ChessForge
                     {
                         if (dlg.CallSplitChapterDialog)
                         {
-                            InvokeSplitChapterDialog(chapter);
+                            SplitChapterUtils.InvokeSplitChapterDialog(chapter);
                         }
                         else
                         {
@@ -63,19 +63,6 @@ namespace ChessForge
                         AppLog.Message("ManageChapter()", ex);
                     }
                 }
-            }
-        }
-
-        /// <summary>
-        /// Invokes the Split Chapter dialog.
-        /// </summary>
-        /// <param name="chapter"></param>
-        public static void InvokeSplitChapterDialog(Chapter chapter)
-        {
-            SplitChapterDialog dlg = new SplitChapterDialog();
-            GuiUtilities.PositionDialog(dlg, AppState.MainWin, 150);
-            if (dlg.ShowDialog() == true)
-            {
             }
         }
 
