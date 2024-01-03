@@ -17,10 +17,9 @@
         </GroupBox>
         <GroupBox x:Name="UiGbDateCrit" Header="{x:Static p:Resources.Granularity}" Margin="180,10,0,0" Width="155" HorizontalAlignment="Left" VerticalAlignment="Top" Height="135">
             <StackPanel>
-                <RadioButton x:Name="UiRbCritDecade" Content="{x:Static p:Resources.Decade}" HorizontalAlignment="Left" Margin="10,15,0,0"/>
-                <RadioButton x:Name="UiRbCritYear" Content="{x:Static p:Resources.Year}" HorizontalAlignment="Left" Margin="10,10,0,0"/>
-                <RadioButton x:Name="UiRbCritMonth" Content="{x:Static p:Resources.Month}" HorizontalAlignment="Left" Margin="10,10,0,0"/>
-                <RadioButton x:Name="UiRbCritDay" Content="{x:Static p:Resources.Day}" HorizontalAlignment="Left" Margin="10,10,0,0"/>
+                <RadioButton x:Name="UiRbCritYear" Content="{x:Static p:Resources.Year}" HorizontalAlignment="Left" Margin="10,15,0,0"/>
+                <RadioButton x:Name="UiRbCritMonth" Content="{x:Static p:Resources.Month}" HorizontalAlignment="Left" Margin="10,22,0,0"/>
+                <RadioButton x:Name="UiRbCritDay" Content="{x:Static p:Resources.Day}" HorizontalAlignment="Left" Margin="10,22,0,0"/>
             </StackPanel>
         </GroupBox>
         <GroupBox x:Name="UiGbEcoCrit" Header="{x:Static p:Resources.Granularity}" Margin="180,10,0,0" Width="155" HorizontalAlignment="Left" VerticalAlignment="Top" Height="135">

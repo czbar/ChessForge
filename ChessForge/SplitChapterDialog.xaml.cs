@@ -25,7 +25,6 @@ namespace ChessForge
         ECO_A0E9,
         ECO_A00E99,
 
-        DATE_DECADE,
         DATE_YEAR,
         DATE_MONTH,
         DATE_DAY
@@ -106,9 +105,6 @@ namespace ChessForge
                     UiRbCritA00toE99.IsChecked = true;
                     break;
 
-                case SplitByCriterion.DATE_DECADE:
-                    UiRbCritDecade.IsChecked = true;
-                    break;
                 case SplitByCriterion.DATE_YEAR:
                     UiRbCritYear.IsChecked = true;
                     break;
@@ -168,11 +164,7 @@ namespace ChessForge
             else if (UiRbSplitByDate.IsChecked == true)
             {
                 LastSplitBy = SplitBy.DATE;
-                if (UiRbCritDecade.IsChecked == true)
-                {
-                    LastSplitByCrtierion = SplitByCriterion.DATE_DECADE;
-                }
-                else if (UiRbCritYear.IsChecked == true)
+                if (UiRbCritYear.IsChecked == true)
                 {
                     LastSplitByCrtierion = SplitByCriterion.DATE_YEAR;
                 }
