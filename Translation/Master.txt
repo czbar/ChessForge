@@ -110,6 +110,15 @@ Round=Round
 #Date
 Date=Date
 
+#Year
+Year=Year
+
+#Month
+Month=Month
+
+#Day
+Day=Day
+
 #Count
 Count=Count
 
@@ -678,6 +687,27 @@ EgSelectionAccuracyLabel=Move selection accuracy is
 
 #Cenitpawn accuracy
 EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
+
+
+#######################################
+#
+# Header: DIALOG Split Chapter
+#
+
+#Split
+Split=Split
+
+#Split by
+SplitBy=Split by
+
+#Split chapter
+SplitChapter=Split Chapter
+
+#Decade (10 years)
+Decade=Decade
+
+#Granularity
+Granularity=Granularity
 
 #######################################
 #

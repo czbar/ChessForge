@@ -141,6 +141,18 @@ Round=
 #english: Date=Date
 Date=
 
+#description: Year
+#english: Year=Year
+Year=
+
+#description: Month
+#english: Month=Month
+Month=
+
+#description: Day
+#english: Day=Day
+Day=
+
 #description: Count
 #english: Count=Count
 Count=
@@ -874,6 +886,32 @@ EgSelectionAccuracyLabel=
 #description: Cenitpawn accuracy
 #english: EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
 EgCentipawnAccuracy=
+
+
+#######################################
+#
+# Header: DIALOG Split Chapter
+#
+
+#description: Split
+#english: Split=Split
+Split=
+
+#description: Split by
+#english: SplitBy=Split by
+SplitBy=
+
+#description: Split chapter
+#english: SplitChapter=Split Chapter
+SplitChapter=
+
+#description: Decade (10 years)
+#english: Decade=Decade
+Decade=
+
+#description: Granularity
+#english: Granularity=Granularity
+Granularity=
 
 #######################################
 #

@@ -210,6 +210,15 @@
   <data name="Date" xml:space="preserve">
     <value>Data</value>
   </data>
+  <data name="Year" xml:space="preserve">
+    <value>Rok</value>
+  </data>
+  <data name="Month" xml:space="preserve">
+    <value>Miesiąc</value>
+  </data>
+  <data name="Day" xml:space="preserve">
+    <value>Dzień</value>
+  </data>
   <data name="Count" xml:space="preserve">
     <value>Ilość</value>
   </data>
@@ -704,6 +713,21 @@
   </data>
   <data name="EgCentipawnAccuracy" xml:space="preserve">
     <value>maksymalne odchylenie od najlepszego ruchu wynosi</value>
+  </data>
+  <data name="Split" xml:space="preserve">
+    <value>Podziel</value>
+  </data>
+  <data name="SplitBy" xml:space="preserve">
+    <value>Podziel według</value>
+  </data>
+  <data name="SplitChapter" xml:space="preserve">
+    <value>Podziel Rozdział</value>
+  </data>
+  <data name="Decade" xml:space="preserve">
+    <value>Dekada</value>
+  </data>
+  <data name="Granularity" xml:space="preserve">
+    <value>Rozdzielczość</value>
   </data>
   <data name="DlgTitleEditFen" xml:space="preserve">
     <value>Edytuj FEN</value>

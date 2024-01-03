@@ -875,6 +875,30 @@ EgSelectionAccuracyLabel=Dokładność wyboru ruchów wynosi
 #english: EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
 EgCentipawnAccuracy=maksymalne odchylenie od najlepszego ruchu wynosi
 
+
+#######################################
+#
+# Header: DIALOG Spli Chapter
+#
+
+#description: Split
+#english: Split=Split
+Split=Podziel
+
+#Split chapter
+SplitChapter=Podziel Rozdział
+
+#Split by
+SplitBy=Podziel według
+
+#description: Decade (10 years)
+#english: Decade=Decade
+Decade=Dekada
+
+#description: Granularity
+#english: Granularity=Granularity
+Granularity=Rozdzielczość
+
 #######################################
 #
 # Header: DIALOG Edit FEN
@@ -3059,3 +3083,12 @@ IllegalCastling=Niedozwolona roszada.
 #description: Workbook info
 #english: AboutWorkbook=This PGN Workbook is optimized for viewing in Chess Forge https://sourceforge.net/projects/chessforge/ \nChess Forge is a Free and Open Source Windows application.
 AboutWorkbook=Ten podręcznik PGN najlepiej oglądać w programie Chess Forge https://sourceforge.net/projects/chessforge/ \nChess Forge to Wolne i Otwarte Oprogramowanie do systemu Windows.
+
+#Year
+Year=Rok
+
+#Month
+Month=Miesiąc
+
+#Day
+Day=Dzień
