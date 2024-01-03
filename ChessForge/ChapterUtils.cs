@@ -25,36 +25,37 @@ namespace ChessForge
             if (chapter != null)
             {
                 ManageChapterDialog dlg = new ManageChapterDialog();
-                //{
-                //    Left = AppState.MainWin.ChessForgeMain.Left + 100,
-                //    Top = AppState.MainWin.ChessForgeMain.Top + 100,
-                //    Topmost = false,
-                //    Owner = AppState.MainWin
-                //};
                 GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
                 if (dlg.ShowDialog() == true)
                 {
                     try
                     {
-                        bool regenerateStudy = dlg.RegenerateStudy;
-                        bool sortGames = dlg.SortGamesBy != GameSortCriterion.SortItem.NONE && chapter.ModelGames.Count > 1;
-                        if (dlg.RegenerateStudy)
+                        if (dlg.CallSplitChapterDialog)
                         {
-                            RegenerateStudy(chapter);
-                            if (!sortGames)
-                            {
-                                AppState.MainWin.SetupGuiForActiveStudyTree(true);
-                            }
+                            InvokeSplitChapterDialog(chapter);
                         }
-
-                        if (sortGames)
+                        else
                         {
-                            SortGames(chapter, dlg.SortGamesBy, dlg.SortGamesDirection);
+                            bool regenerateStudy = dlg.RegenerateStudy;
+                            bool sortGames = dlg.SortGamesBy != GameSortCriterion.SortItem.NONE && chapter.ModelGames.Count > 1;
+                            if (dlg.RegenerateStudy)
+                            {
+                                RegenerateStudy(chapter);
+                                if (!sortGames)
+                                {
+                                    AppState.MainWin.SetupGuiForActiveStudyTree(true);
+                                }
+                            }
 
-                            GuiUtilities.RefreshChaptersView(null);
-                            AppState.MainWin.UiTabChapters.Focus();
-                            PulseManager.ChaperIndexToBringIntoView = chapter.Index;
+                            if (sortGames)
+                            {
+                                SortGames(chapter, dlg.SortGamesBy, dlg.SortGamesDirection);
+
+                                GuiUtilities.RefreshChaptersView(null);
+                                AppState.MainWin.UiTabChapters.Focus();
+                                PulseManager.ChaperIndexToBringIntoView = chapter.Index;
+                            }
                         }
                     }
                     catch (Exception ex)
@@ -62,6 +63,19 @@ namespace ChessForge
                         AppLog.Message("ManageChapter()", ex);
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Invokes the Split Chapter dialog.
+        /// </summary>
+        /// <param name="chapter"></param>
+        public static void InvokeSplitChapterDialog(Chapter chapter)
+        {
+            SplitChapterDialog dlg = new SplitChapterDialog();
+            GuiUtilities.PositionDialog(dlg, AppState.MainWin, 150);
+            if (dlg.ShowDialog() == true)
+            {
             }
         }
 
