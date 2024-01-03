@@ -19,6 +19,11 @@ namespace ChessForge
         public bool RegenerateStudy = false;
 
         /// <summary>
+        /// Set to true if user clicked the SplitChapter button
+        /// </summary>
+        public bool CallSplitChapterDialog = false;
+
+        /// <summary>
         /// Selected Sort Criterion
         /// </summary>
         public GameSortCriterion.SortItem SortGamesBy = GameSortCriterion.SortItem.NONE;
@@ -34,6 +39,8 @@ namespace ChessForge
         public ManageChapterDialog()
         {
             InitializeComponent();
+
+            UiBtnSplit.Content = Properties.Resources.SplitChapter + "...";
 
             UiCbGenerateStudyTree.IsChecked = false;
             UiCbGenerateStudyTree_Unchecked(null, null);
@@ -142,6 +149,17 @@ namespace ChessForge
         private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Manage-Chapter-Dialog");
+        }
+
+        /// <summary>
+        /// The "Split chapter" was pressed so do nothing and set action to Split.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnSplit_Click(object sender, RoutedEventArgs e)
+        {
+            CallSplitChapterDialog = true;
+            DialogResult = true;
         }
     }
 
