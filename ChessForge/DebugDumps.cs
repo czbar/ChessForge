@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Windows;
+using GameTree;
 
 namespace ChessForge
 {
@@ -85,6 +86,57 @@ namespace ChessForge
             catch
             {
                 MessageBox.Show("DEBUG", "Error writing out Workbook Tree to " + filePath, MessageBoxButton.OK, MessageBoxImage.Error);
+            };
+        }
+
+        /// <summary>
+        /// Writes out states and timers.
+        /// </summary>
+        /// <param name="filePath"></param>
+        [Conditional("DEBUG")]
+        public static void DumpDisplaySectorTree(string filePath, List<DisplaySector> sectors)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            if (sectors == null)
+            {
+                sb.Append("DisplaySectorTree reference is null.");
+            }
+            else
+            {
+                for (int i = 0; i < sectors.Count; i++)
+                {
+                    DisplaySector sector = sectors[i];
+                    sb.Append("DisplaySector index = " + i.ToString() + Environment.NewLine);
+                    sb.Append("Display level = " + sector.DisplayLevel.ToString() + Environment.NewLine);
+                    //sb.Append("Parent LineSector Id = " + (sector.Parent == null ? "-" : sector.Parent.LineSectorId.ToString()) + Environment.NewLine);
+                    //for (int j = 0; j < sector.Children.Count; j++)
+                    //{
+                    //    sb.Append("    Child " + j.ToString() + " LineSector Id = " + sector.Children[j].LineSectorId.ToString() + Environment.NewLine);
+                    //}
+                    sb.AppendLine();
+                    sb.Append("**** Display Sector Nodes ****" + Environment.NewLine);
+                    foreach (TreeNode nd in sector.Nodes)
+                    {
+                        sb.AppendLine();
+                        sb.Append("Node Id = " + nd.NodeId.ToString() + Environment.NewLine);
+                        sb.Append("Line Id = " + nd.LineId.ToString() + Environment.NewLine);
+                        sb.Append("Move Number = " + nd.MoveNumber.ToString() + Environment.NewLine);
+                        sb.Append("Move alg = " + nd.LastMoveAlgebraicNotationWithNag + Environment.NewLine);
+                    }
+                    sb.AppendLine();
+                    sb.Append("********" + Environment.NewLine);
+                    sb.Append(Environment.NewLine + Environment.NewLine);
+                }
+            }
+
+            try
+            {
+                File.WriteAllText(filePath, sb.ToString());
+            }
+            catch
+            {
+                MessageBox.Show("DEBUG", "Error writing out DisplaySectorTree to " + filePath, MessageBoxButton.OK, MessageBoxImage.Error);
             };
         }
     }
