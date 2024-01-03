@@ -33,6 +33,6 @@
         </GroupBox>
         <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="-220,0,0,15" Width="100" VerticalAlignment="Bottom" Click="UiBtnOk_Click"  />
         <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="0,0,0,15" Width="100" VerticalAlignment="Bottom"/>
-        <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Center" Margin="220,0,0,15" Width="100" VerticalAlignment="Bottom" />
+        <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Center" Margin="220,0,0,15" Width="100" VerticalAlignment="Bottom" Click="UiBtnHelp_Click" />
     </Grid>
 </Window>

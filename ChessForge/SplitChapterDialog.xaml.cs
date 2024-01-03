@@ -139,6 +139,36 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// The ECO split by button was clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiRbSplitByEco_Checked(object sender, RoutedEventArgs e)
+        {
+            SetSplitBySelection(SplitBy.ECO);
+        }
+
+        /// <summary>
+        /// The Date split by button was clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiRbSplitByDate_Checked(object sender, RoutedEventArgs e)
+        {
+            SetSplitBySelection(SplitBy.DATE);
+        }
+
+        /// <summary>
+        /// The Round split by button was clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiRbSplitByRound_Checked(object sender, RoutedEventArgs e)
+        {
+            SetSplitBySelection(SplitBy.ROUND);
+        }
+
+        /// <summary>
         /// Set the static constants and exit.
         /// </summary>
         /// <param name="sender"></param>
@@ -186,33 +216,13 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// The ECO split by button was clicked.
+        /// Links to the relevant Wiki page.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiRbSplitByEco_Checked(object sender, RoutedEventArgs e)
+        private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
         {
-            SetSplitBySelection(SplitBy.ECO);
-        }
-
-        /// <summary>
-        /// The Date split by button was clicked.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiRbSplitByDate_Checked(object sender, RoutedEventArgs e)
-        {
-            SetSplitBySelection(SplitBy.DATE);
-        }
-
-        /// <summary>
-        /// The Round split by button was clicked.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiRbSplitByRound_Checked(object sender, RoutedEventArgs e)
-        {
-            SetSplitBySelection(SplitBy.ROUND);
+            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Split-Chapter-Dialog");
         }
     }
 }
