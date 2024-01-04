@@ -141,6 +141,18 @@ Round=Runda
 #english: Date=Date
 Date=Data
 
+#description: Year
+#english: Year=Year
+Year=Rok
+
+#description: Month
+#english: Month=Month
+Month=Miesiąc
+
+#description: Day
+#english: Day=Day
+Day=Dzień
+
 #description: Count
 #english: Count=Count
 Count=Ilość
@@ -719,10 +731,6 @@ StripComments=Usuń komentarze...
 #english: DeleteEngineEvals=Delete Engine Evaluations...
 DeleteEngineEvals=Usuń oceny silnika...
 
-#description: Manage Chapter
-#english: ManageChapter=Manage Chapter...
-ManageChapter=Organizuj Rozdział...
-
 #description: Find Games
 #english: FindGames=Find Games...
 FindGames=Znajdź partie...
@@ -730,6 +738,15 @@ FindGames=Znajdź partie...
 #description: Allows the user to merge multiple chapters into one
 #english: MergeChapters=Merge Chapters...
 MergeChapters=Połącz rozdziały
+
+#description: Manage Chapter
+#english: ManageChapter=Manage Chapter...
+ManageChapter=Organizuj Rozdział...
+
+#description: Split Chapter
+#english: SplitChapterMenu=Split Chapter...
+SplitChapterMenu=Podziel Rozdział...
+
 
 
 ###########################
@@ -878,18 +895,20 @@ EgCentipawnAccuracy=maksymalne odchylenie od najlepszego ruchu wynosi
 
 #######################################
 #
-# Header: DIALOG Spli Chapter
+# Header: DIALOG Split Chapter
 #
 
 #description: Split
 #english: Split=Split
 Split=Podziel
 
-#Split chapter
-SplitChapter=Podziel Rozdział
-
-#Split by
+#description: Split by
+#english: SplitBy=Split by
 SplitBy=Podziel według
+
+#description: Split chapter
+#english: SplitChapter=Split Chapter
+SplitChapter=Podziel Rozdział
 
 #description: Decade (10 years)
 #english: Decade=Decade
@@ -3083,12 +3102,3 @@ IllegalCastling=Niedozwolona roszada.
 #description: Workbook info
 #english: AboutWorkbook=This PGN Workbook is optimized for viewing in Chess Forge https://sourceforge.net/projects/chessforge/ \nChess Forge is a Free and Open Source Windows application.
 AboutWorkbook=Ten podręcznik PGN najlepiej oglądać w programie Chess Forge https://sourceforge.net/projects/chessforge/ \nChess Forge to Wolne i Otwarte Oprogramowanie do systemu Windows.
-
-#Year
-Year=Rok
-
-#Month
-Month=Miesiąc
-
-#Day
-Day=Dzień

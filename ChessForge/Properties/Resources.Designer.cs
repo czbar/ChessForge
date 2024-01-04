@@ -5166,6 +5166,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Split Chapter....
+        /// </summary>
+        public static string SplitChapterMenu {
+            get {
+                return ResourceManager.GetString("SplitChapterMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to stalemate.
         /// </summary>
         public static string Stalemate {

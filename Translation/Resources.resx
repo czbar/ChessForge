@@ -615,14 +615,17 @@
   <data name="DeleteEngineEvals" xml:space="preserve">
     <value>Delete Engine Evaluations...</value>
   </data>
-  <data name="ManageChapter" xml:space="preserve">
-    <value>Manage Chapter...</value>
-  </data>
   <data name="FindGames" xml:space="preserve">
     <value>Find Games...</value>
   </data>
   <data name="MergeChapters" xml:space="preserve">
     <value>Merge Chapters...</value>
+  </data>
+  <data name="ManageChapter" xml:space="preserve">
+    <value>Manage Chapter...</value>
+  </data>
+  <data name="SplitChapterMenu" xml:space="preserve">
+    <value>Split Chapter...</value>
   </data>
   <data name="Help" xml:space="preserve">
     <value>Help</value>

@@ -731,10 +731,6 @@ StripComments=
 #english: DeleteEngineEvals=Delete Engine Evaluations...
 DeleteEngineEvals=
 
-#description: Manage Chapter
-#english: ManageChapter=Manage Chapter...
-ManageChapter=
-
 #description: Find Games
 #english: FindGames=Find Games...
 FindGames=
@@ -742,6 +738,15 @@ FindGames=
 #description: Allows the user to merge multiple chapters into one
 #english: MergeChapters=Merge Chapters...
 MergeChapters=
+
+#description: Manage Chapter
+#english: ManageChapter=Manage Chapter...
+ManageChapter=
+
+#description: Split Chapter
+#english: SplitChapterMenu=Split Chapter...
+SplitChapterMenu=
+
 
 
 ###########################
