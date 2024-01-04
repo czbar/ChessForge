@@ -1526,6 +1526,7 @@ namespace ChessForge
                 _mainWin.UiMnCopyArticles.IsEnabled = WorkbookManager.SessionWorkbook != null;
                 _mainWin.UiMnMoveArticles.IsEnabled = WorkbookManager.SessionWorkbook != null;
                 MainWin.UiMnManageChapter.IsEnabled = AppState.ActiveChapter != null;
+                MainWin.UiMnSplitChapter.IsEnabled = AppState.ActiveChapter != null;
 
                 _mainWin.UiMnAnnotations.IsEnabled = IsTreeViewTabActive();
                 _mainWin.UiMnCommentBeforeMove.IsEnabled = IsTreeViewTabActive();

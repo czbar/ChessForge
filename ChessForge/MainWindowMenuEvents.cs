@@ -2423,6 +2423,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Invokes dialog to split the active chapter.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnSplitChapter_Click(object sender, RoutedEventArgs e)
+        {
+            SplitChapterUtils.InvokeSplitChapterDialog(AppState.ActiveChapter);
+        }
+
+        /// <summary>
         /// Opens the dialog for importing games from the Web
         /// </summary>
         /// <param name="sender"></param>
