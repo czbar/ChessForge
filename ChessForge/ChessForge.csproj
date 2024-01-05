@@ -140,6 +140,7 @@
     <Compile Include="DownloadWebGamesManager.cs" />
     <Compile Include="DragAndDropCursors.cs" />
     <Compile Include="DraggedArticle.cs" />
+    <Compile Include="EcoUtils.cs" />
     <Compile Include="EditFenDialog.xaml.cs">
       <DependentUpon>EditFenDialog.xaml</DependentUpon>
     </Compile>
