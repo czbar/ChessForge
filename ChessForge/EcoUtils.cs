@@ -32,5 +32,45 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Attempts to find the opening's Eco and Opening Name for the passed article.
+        /// </summary>
+        /// <param name="article"></param>
+        /// <param name="eco"></param>
+        /// <returns></returns>
+        public static string GetArticleEcoFromDictionary(Article article, out string eco)
+        {
+            string name = "";
+            eco = "";
+
+            try
+            {
+                VariationTree tree = article.Tree;
+                // collect the list of Nodes on the main line until move 14
+                // (after which opening ECOs do not change in our dictionary, even though the name may somewhat change, we will ignore it)
+                List<TreeNode> line = new List<TreeNode>();
+                TreeNode node = tree.RootNode;
+                while (node != null && node.Children.Count > 0 && node.MoveNumber < 15)
+                {
+                    node = node.Children[0];
+                    line.Add(node);
+                }
+
+                // walk back the list until you find eco
+                for (int i = line.Count - 1; i >= 0; i--)
+                {
+                    name = GetOpeningNameFromDictionary(line[i], out eco);
+                    if (!string.IsNullOrEmpty(eco))
+                    {
+                        break;
+                    }
+                }
+            }
+            catch
+            {
+            }
+
+            return name;
+        }
     }
 }
