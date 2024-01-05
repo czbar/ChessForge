@@ -190,6 +190,7 @@ namespace ChessForge
             WHITE_NAME,
             BLACK_NAME,
             DATE,
+            ROUND,
 
             ASCENDING,
             DESCENDING
