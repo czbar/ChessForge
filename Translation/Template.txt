@@ -991,6 +991,10 @@ SortByBlackName=
 #english: SortByDate=Date
 SortByDate=
 
+#description: Sort by round
+#english: SortByRound=Round
+SortByRound=
+
 #description: Sort direction
 #english: SortDirection=Direction
 SortDirection=

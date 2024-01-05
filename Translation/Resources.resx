@@ -774,6 +774,9 @@
   <data name="SortByDate" xml:space="preserve">
     <value>Date</value>
   </data>
+  <data name="SortByRound" xml:space="preserve">
+    <value>Round</value>
+  </data>
   <data name="SortDirection" xml:space="preserve">
     <value>Direction</value>
   </data>

@@ -772,6 +772,9 @@ SortByBlackName=Black Name
 #Sort by date 
 SortByDate=Date
 
+#Sort by round
+SortByRound=Round
+
 #Sort direction
 SortDirection=Direction
 

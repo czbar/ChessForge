@@ -763,16 +763,19 @@
     <value>Nowe drzewo zastąpi istniejącą teorię. Kontynuować?</value>
   </data>
   <data name="SortByEco" xml:space="preserve">
-    <value>Kod Otwarcia</value>
+    <value>Kodu Otwarcia (ECO)</value>
   </data>
   <data name="SortByWhiteName" xml:space="preserve">
-    <value>Grający Białymi</value>
+    <value>Grającego Białymi</value>
   </data>
   <data name="SortByBlackName" xml:space="preserve">
-    <value>Grający Czarnymi</value>
+    <value>Grającego Czarnymi</value>
   </data>
   <data name="SortByDate" xml:space="preserve">
-    <value>Data</value>
+    <value>Daty</value>
+  </data>
+  <data name="SortByRound" xml:space="preserve">
+    <value>Rundy</value>
   </data>
   <data name="SortDirection" xml:space="preserve">
     <value>Kierunek</value>

@@ -977,19 +977,23 @@ MsgThisOverwritesStudy=Nowe drzewo zastąpi istniejącą teorię. Kontynuować?
 
 #description: Sort by ECO
 #english: SortByEco=ECO
-SortByEco=Kod Otwarcia
+SortByEco=Kodu Otwarcia (ECO)
 
 #description: Sort by White Player
 #english: SortByWhiteName=White Name
-SortByWhiteName=Grający Białymi
+SortByWhiteName=Grającego Białymi
 
 #description: Sort by Black Player
 #english: SortByBlackName=Black Name
-SortByBlackName=Grający Czarnymi
+SortByBlackName=Grającego Czarnymi
 
 #description: Sort by date 
 #english: SortByDate=Date
-SortByDate=Data
+SortByDate=Daty
+
+#description: Sort by round
+#english: SortByRound=Round
+SortByRound=Rundy
 
 #description: Sort direction
 #english: SortDirection=Direction

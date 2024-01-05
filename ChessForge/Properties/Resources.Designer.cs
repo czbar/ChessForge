@@ -5094,6 +5094,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Round.
+        /// </summary>
+        public static string SortByRound {
+            get {
+                return ResourceManager.GetString("SortByRound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to White Name.
         /// </summary>
         public static string SortByWhiteName {

@@ -977,19 +977,19 @@ MsgThisOverwritesStudy=Nowe drzewo zastąpi istniejącą teorię. Kontynuować?
 
 #description: Sort by ECO
 #english: SortByEco=ECO
-SortByEco=Kod Otwarcia
+SortByEco=Kodu Otwarcia (ECO)
 
 #description: Sort by White Player
 #english: SortByWhiteName=White Name
-SortByWhiteName=Grający Białymi
+SortByWhiteName=Grającego Białymi
 
 #description: Sort by Black Player
 #english: SortByBlackName=Black Name
-SortByBlackName=Grający Czarnymi
+SortByBlackName=Grającego Czarnymi
 
 #description: Sort by date 
 #english: SortByDate=Date
-SortByDate=Data
+SortByDate=Daty
 
 #description: Sort direction
 #english: SortDirection=Direction
@@ -3102,3 +3102,5 @@ IllegalCastling=Niedozwolona roszada.
 #description: Workbook info
 #english: AboutWorkbook=This PGN Workbook is optimized for viewing in Chess Forge https://sourceforge.net/projects/chessforge/ \nChess Forge is a Free and Open Source Windows application.
 AboutWorkbook=Ten podręcznik PGN najlepiej oglądać w programie Chess Forge https://sourceforge.net/projects/chessforge/ \nChess Forge to Wolne i Otwarte Oprogramowanie do systemu Windows.
+#Sort by round
+SortByRound=Rundy
