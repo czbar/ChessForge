@@ -57,6 +57,39 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Performs comparison of 2 round numbers.
+        /// If both strings represent an int or both are strings
+        /// if we compare them normally against each other.
+        /// If one represents an integer and the other does not,
+        /// the former gets preference.
+        /// </summary>
+        /// <param name="sRoundNo1"></param>
+        /// <param name="sRoundNo2"></param>
+        /// <returns></returns>
+        public static int CompareRoundNo(string sRoundNo1, string sRoundNo2)
+        {
+            int res;
+
+            bool isInt1 = int.TryParse(sRoundNo1, out int intRoundNo1);
+            bool isInt2 = int.TryParse(sRoundNo2, out int intRoundNo2);
+
+            if (isInt1 && isInt2)
+            {
+                res = intRoundNo1 - intRoundNo2;
+            }
+            else if (!isInt1 && !isInt2)
+            {
+                res = string.Compare(sRoundNo1, sRoundNo2);
+            }
+            else
+            {
+                res = isInt1 ? -1 : 1;
+            }
+
+            return res;
+        }
+
+        /// <summary>
         /// Splits the passed chapter into multiple chapters based on 
         /// the games' ECO (or parts of ECO).
         /// Exercises go into a separate chapter.
@@ -84,9 +117,9 @@ namespace ChessForge
                     _dictResChapters[critPart].ModelGames.Add(game);
                 }
 
-                // sort chapters by round
+                // sort chapters by Eco
                 List<string> lstEcoParts = _dictResChapters.Keys.ToList();
-                lstEcoParts.Sort(CompareDate);
+                lstEcoParts.Sort(CompareECO);
 
                 foreach (string sEcoPart in lstEcoParts)
                 {
@@ -325,39 +358,6 @@ namespace ChessForge
         private static int CompareDate(string sDate1, string sDate2)
         {
             return string.Compare(sDate1, sDate2);
-        }
-
-        /// <summary>
-        /// Performs comparison of 2 round numbers.
-        /// If both strings represent an int or both are strings
-        /// if we compare them normally against each other.
-        /// If one represents an integer and the other does not,
-        /// the former gets preference.
-        /// </summary>
-        /// <param name="sRoundNo1"></param>
-        /// <param name="sRoundNo2"></param>
-        /// <returns></returns>
-        private static int CompareRoundNo(string sRoundNo1, string sRoundNo2)
-        {
-            int res;
-
-            bool isInt1 = int.TryParse(sRoundNo1, out int intRoundNo1);
-            bool isInt2 = int.TryParse(sRoundNo2, out int intRoundNo2);
-
-            if (isInt1 && isInt2)
-            {
-                res = intRoundNo1 - intRoundNo2;
-            }
-            else if (!isInt1 && !isInt2)
-            {
-                res = string.Compare(sRoundNo1, sRoundNo2);
-            }
-            else
-            {
-                res = isInt1 ? -1 : 1;
-            }
-
-            return res;
         }
 
     }
