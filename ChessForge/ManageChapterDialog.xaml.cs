@@ -47,6 +47,7 @@ namespace ChessForge
 
             UiComboBoxSortBy.Items.Add(new GameSortCriterion(GameSortCriterion.SortItem.NONE, "-"));
             UiComboBoxSortBy.Items.Add(new GameSortCriterion(GameSortCriterion.SortItem.DATE, Properties.Resources.SortByDate));
+            UiComboBoxSortBy.Items.Add(new GameSortCriterion(GameSortCriterion.SortItem.ROUND, Properties.Resources.SortByRound));
             UiComboBoxSortBy.Items.Add(new GameSortCriterion(GameSortCriterion.SortItem.ECO, Properties.Resources.SortByEco));
             UiComboBoxSortBy.Items.Add(new GameSortCriterion(GameSortCriterion.SortItem.WHITE_NAME, Properties.Resources.SortByWhiteName));
             UiComboBoxSortBy.Items.Add(new GameSortCriterion(GameSortCriterion.SortItem.BLACK_NAME, Properties.Resources.SortByBlackName));
