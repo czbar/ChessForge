@@ -37,6 +37,9 @@ namespace ChessForge
 
                 if (createdChapters != null && createdChapters.Count > 1)
                 {
+                    //collect info for the Undo operation
+                    WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.SPLIT_CHAPTER, chapter, createdChapters);
+                    WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
 
                     // remove the current chapter, insert the new chapters
                     // and set the first new one as Active (so the ActiveChapterIndex will not change)

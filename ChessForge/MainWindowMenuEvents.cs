@@ -527,6 +527,7 @@ namespace ChessForge
                     case WorkbookOperationType.DELETE_MODEL_GAMES:
                     case WorkbookOperationType.DELETE_CHAPTERS:
                     case WorkbookOperationType.MERGE_CHAPTERS:
+                    case WorkbookOperationType.SPLIT_CHAPTER:
                         AppState.MainWin.ChaptersView.IsDirty = true;
                         GuiUtilities.RefreshChaptersView(null);
                         AppState.MainWin.UiTabChapters.Focus();

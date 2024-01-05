@@ -836,7 +836,7 @@ namespace ChessForge
         {
             try
             {
-                DeleteChapter(chapter);
+                Chapters.Remove(chapter);
 
                 List<Chapter> chapters = objChapterList as List<Chapter>;
                 List<int> indices = objIndexList as List<int>;
@@ -849,6 +849,38 @@ namespace ChessForge
                         UndoDeleteChapter(chapters[i], indices[i]);
                     }
                 }
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// Undo splitting of a chpater.
+        /// The chapters from the objChapterList will be deleted and the "chapter"
+        /// will be inserted in place of the first chapter from the list.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="objChapterList"></param>
+        public void UndoSplitChapter(Chapter chapter, object objChapterList)
+        {
+            try
+            {
+                List<Chapter> chapters = objChapterList as List<Chapter>;
+                int index = chapters[0].Index;
+
+                List<Chapter> chaptersToDelete = new List<Chapter>();
+                foreach (Chapter ch in Chapters)
+                {
+                    chaptersToDelete.Add(ch);
+                }
+                
+                foreach (Chapter ch in chaptersToDelete)
+                {
+                    Chapters.Remove(ch);
+                }
+
+                Chapters.Insert(index, chapter);
             }
             catch
             {
