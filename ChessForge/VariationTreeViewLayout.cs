@@ -19,6 +19,7 @@ namespace ChessForge
         /// </summary>
         private void BuildFlowDocument()
         {
+#if false
             LineSectorsTree tree = DisplayManager.SectorsTree;
 
             if (tree.LineSectors.Count <= 1)
@@ -48,7 +49,7 @@ namespace ChessForge
 
                 Document.Blocks.Add(para);
             }
-
+#endif
         }
     }
 }
