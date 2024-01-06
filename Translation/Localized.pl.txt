@@ -731,6 +731,10 @@ StripComments=Usuń komentarze...
 #english: DeleteEngineEvals=Delete Engine Evaluations...
 DeleteEngineEvals=Usuń oceny silnika...
 
+#description: Delete all engine evals
+#english: AssignECO=Assign ECO...
+AssignECO=Przypisz kody ECO...
+
 #description: Find Games
 #english: FindGames=Find Games...
 FindGames=Znajdź partie...
@@ -991,6 +995,10 @@ SortByBlackName=Grającego Czarnymi
 #english: SortByDate=Date
 SortByDate=Daty
 
+#description: Sort by round
+#english: SortByRound=Round
+SortByRound=Rundy
+
 #description: Sort direction
 #english: SortDirection=Direction
 SortDirection=Kierunek
@@ -1016,6 +1024,10 @@ ScopeForDeleteComments=Usuń Komentarze
 #description: Scope for deleting engine evals - dialog title
 #english: ScopeForDeleteEvals=Delete Engine Evaluations
 ScopeForDeleteEvals=Usuń Oceny Silnika
+
+#description: Scope for Assign ECO - dialog title
+#english: ScopeForAssignECO=Assign ECO
+ScopeForAssignECO=Przypisz kody ECO
 
 #description: Operation Scope label
 #english: OperationScope=Apply to the following:
@@ -3102,5 +3114,3 @@ IllegalCastling=Niedozwolona roszada.
 #description: Workbook info
 #english: AboutWorkbook=This PGN Workbook is optimized for viewing in Chess Forge https://sourceforge.net/projects/chessforge/ \nChess Forge is a Free and Open Source Windows application.
 AboutWorkbook=Ten podręcznik PGN najlepiej oglądać w programie Chess Forge https://sourceforge.net/projects/chessforge/ \nChess Forge to Wolne i Otwarte Oprogramowanie do systemu Windows.
-#Sort by round
-SortByRound=Rundy

@@ -615,6 +615,9 @@
   <data name="DeleteEngineEvals" xml:space="preserve">
     <value>Usuń oceny silnika...</value>
   </data>
+  <data name="AssignECO" xml:space="preserve">
+    <value>Przypisz kody ECO...</value>
+  </data>
   <data name="FindGames" xml:space="preserve">
     <value>Znajdź partie...</value>
   </data>
@@ -791,6 +794,9 @@
   </data>
   <data name="ScopeForDeleteEvals" xml:space="preserve">
     <value>Usuń Oceny Silnika</value>
+  </data>
+  <data name="ScopeForAssignECO" xml:space="preserve">
+    <value>Przypisz kody ECO</value>
   </data>
   <data name="OperationScope" xml:space="preserve">
     <value>Zastosuj do:</value>

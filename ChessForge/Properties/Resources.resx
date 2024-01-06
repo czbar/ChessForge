@@ -615,6 +615,9 @@
   <data name="DeleteEngineEvals" xml:space="preserve">
     <value>Delete Engine Evaluations...</value>
   </data>
+  <data name="AssignECO" xml:space="preserve">
+    <value>Assign ECOs...</value>
+  </data>
   <data name="FindGames" xml:space="preserve">
     <value>Find Games...</value>
   </data>
@@ -791,6 +794,9 @@
   </data>
   <data name="ScopeForDeleteEvals" xml:space="preserve">
     <value>Delete Engine Evaluations</value>
+  </data>
+  <data name="ScopeForAssignECO" xml:space="preserve">
+    <value>Assign ECOs</value>
   </data>
   <data name="OperationScope" xml:space="preserve">
     <value>Apply to the following:</value>

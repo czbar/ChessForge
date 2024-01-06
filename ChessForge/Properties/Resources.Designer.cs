@@ -179,6 +179,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Assign ECOs....
+        /// </summary>
+        public static string AssignECO {
+            get {
+                return ResourceManager.GetString("AssignECO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Auto Speed (s).
         /// </summary>
         public static string AutoReplaySpeed {
@@ -4685,6 +4694,15 @@ namespace ChessForge.Properties {
         public static string Scope {
             get {
                 return ResourceManager.GetString("Scope", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Assign ECOs.
+        /// </summary>
+        public static string ScopeForAssignECO {
+            get {
+                return ResourceManager.GetString("ScopeForAssignECO", resourceCulture);
             }
         }
         

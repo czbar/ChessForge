@@ -565,6 +565,9 @@ StripComments=Delete Comments...
 #Delete all engine evals
 DeleteEngineEvals=Delete Engine Evaluations...
 
+#Delete all engine evals
+AssignECO=Assign ECOs...
+
 #Find Games
 FindGames=Find Games...
 
@@ -795,6 +798,9 @@ ScopeForDeleteComments=Delete Comments
 
 #Scope for deleting engine evals - dialog title
 ScopeForDeleteEvals=Delete Engine Evaluations
+
+#Scope for Assign ECO - dialog title
+ScopeForAssignECO=Assign ECOs
 
 #Operation Scope label
 OperationScope=Apply to the following:
