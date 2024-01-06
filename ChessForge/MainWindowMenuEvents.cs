@@ -527,6 +527,7 @@ namespace ChessForge
                     case WorkbookOperationType.DELETE_MODEL_GAMES:
                     case WorkbookOperationType.DELETE_CHAPTERS:
                     case WorkbookOperationType.MERGE_CHAPTERS:
+                    case WorkbookOperationType.SPLIT_CHAPTER:
                         AppState.MainWin.ChaptersView.IsDirty = true;
                         GuiUtilities.RefreshChaptersView(null);
                         AppState.MainWin.UiTabChapters.Focus();
@@ -1014,7 +1015,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="expand">true to expand / false to collapse</param>
         /// <param name="all">true to expand everything / false to expand chapter headers only</param>
-        private void ExpandCollapseChaptersView(bool expand, bool all)
+        public void ExpandCollapseChaptersView(bool expand, bool all)
         {
             List<Chapter> chapters = WorkbookManager.SessionWorkbook.Chapters;
             foreach (Chapter chapter in chapters)
@@ -2420,6 +2421,16 @@ namespace ChessForge
         private void UiMnManageChapter_Click(object sender, RoutedEventArgs e)
         {
             ChapterUtils.ManageChapter(AppState.ActiveChapter);
+        }
+
+        /// <summary>
+        /// Invokes dialog to split the active chapter.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnSplitChapter_Click(object sender, RoutedEventArgs e)
+        {
+            SplitChapterUtils.InvokeSplitChapterDialog(AppState.ActiveChapter);
         }
 
         /// <summary>

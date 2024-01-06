@@ -219,7 +219,7 @@ namespace ChessForge
                     }
                     else
                     {
-                        header = _article.Tree.Header.BuildGameHeaderLine(true, _contentType == GameData.ContentType.MODEL_GAME);
+                        header = _article.Tree.Header.BuildGameHeaderLine(true, _contentType == GameData.ContentType.MODEL_GAME, true, true);
                     }
 
                     string prefix = string.Empty;

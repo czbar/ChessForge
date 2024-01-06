@@ -25,36 +25,37 @@ namespace ChessForge
             if (chapter != null)
             {
                 ManageChapterDialog dlg = new ManageChapterDialog();
-                //{
-                //    Left = AppState.MainWin.ChessForgeMain.Left + 100,
-                //    Top = AppState.MainWin.ChessForgeMain.Top + 100,
-                //    Topmost = false,
-                //    Owner = AppState.MainWin
-                //};
                 GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
                 if (dlg.ShowDialog() == true)
                 {
                     try
                     {
-                        bool regenerateStudy = dlg.RegenerateStudy;
-                        bool sortGames = dlg.SortGamesBy != GameSortCriterion.SortItem.NONE && chapter.ModelGames.Count > 1;
-                        if (dlg.RegenerateStudy)
+                        if (dlg.CallSplitChapterDialog)
                         {
-                            RegenerateStudy(chapter);
-                            if (!sortGames)
-                            {
-                                AppState.MainWin.SetupGuiForActiveStudyTree(true);
-                            }
+                            SplitChapterUtils.InvokeSplitChapterDialog(chapter);
                         }
-
-                        if (sortGames)
+                        else
                         {
-                            SortGames(chapter, dlg.SortGamesBy, dlg.SortGamesDirection);
+                            bool regenerateStudy = dlg.RegenerateStudy;
+                            bool sortGames = dlg.SortGamesBy != GameSortCriterion.SortItem.NONE && chapter.ModelGames.Count > 1;
+                            if (dlg.RegenerateStudy)
+                            {
+                                RegenerateStudy(chapter);
+                                if (!sortGames)
+                                {
+                                    AppState.MainWin.SetupGuiForActiveStudyTree(true);
+                                }
+                            }
 
-                            GuiUtilities.RefreshChaptersView(null);
-                            AppState.MainWin.UiTabChapters.Focus();
-                            PulseManager.ChaperIndexToBringIntoView = chapter.Index;
+                            if (sortGames)
+                            {
+                                SortGames(chapter, dlg.SortGamesBy, dlg.SortGamesDirection);
+
+                                GuiUtilities.RefreshChaptersView(null);
+                                AppState.MainWin.UiTabChapters.Focus();
+                                PulseManager.ChaperIndexToBringIntoView = chapter.Index;
+                            }
                         }
                     }
                     catch (Exception ex)
@@ -507,6 +508,9 @@ namespace ChessForge
 
         /// <summary>
         /// Sorts games in the chapter per specified criteria.
+        /// Keep the original order if items cannot be separated by those criteria.
+        /// This method is superior to the standard QuickSort because it does keep 
+        /// the original order.
         /// </summary>
         /// <param name="chapter"></param>
         /// <param name="sortBy"></param>
@@ -515,6 +519,29 @@ namespace ChessForge
         {
             IComparer<Article> comparer = new ArticleComparer(sortBy, direction);
             chapter.ModelGames = chapter.ModelGames
+                .Select((item, index) => new { item, index })
+                .OrderBy(z => z.item, comparer)
+                .ThenBy(z => z.index)
+                .Select(z => z.item)
+                .ToList();
+
+            AppState.MainWin.ChaptersView.IsDirty = true;
+            AppState.IsDirty = true;
+        }
+
+        /// <summary>
+        /// Sorts exercises in the chapter per specified criteria.
+        /// Keep the original order if items cannot be separated by those criteria.
+        /// This method is superior to the standard QuickSort because it does keep 
+        /// the original order.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="sortBy"></param>
+        /// <param name="direction"></param>
+        private static void SortExercises(Chapter chapter, GameSortCriterion.SortItem sortBy, GameSortCriterion.SortItem direction)
+        {
+            IComparer<Article> comparer = new ArticleComparer(sortBy, direction);
+            chapter.Exercises = chapter.Exercises
                 .Select((item, index) => new { item, index })
                 .OrderBy(z => z.item, comparer)
                 .ThenBy(z => z.index)

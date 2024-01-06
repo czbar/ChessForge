@@ -215,7 +215,7 @@ namespace ChessForge
                     string eco;
                     if (_node != null)
                     {
-                        string opening = GetOpeningNameFromDictionary(_node, out eco);
+                        string opening = EcoUtils.GetOpeningNameFromDictionary(_node, out eco);
                         if (opening != null)
                         {
                             _node.Eco = eco;
@@ -287,28 +287,6 @@ namespace ChessForge
                 }
 
                 _lblEcoCode.Content = eco;
-            }
-        }
-
-        /// <summary>
-        /// Gets the opening name from the built-in dictionary, if available.
-        /// </summary>
-        /// <param name="nd"></param>
-        /// <param name="eco"></param>
-        /// <returns></returns>
-        private string GetOpeningNameFromDictionary(TreeNode nd, out string eco)
-        {
-            string shFen = TextUtils.AdjustResourceStringForXml(FenParser.GenerateShortFen(nd.Position));
-            string opening = Properties.OpeningNames.ResourceManager.GetString(shFen);
-            if (opening != null && opening.Length > 4)
-            {
-                eco = opening.Substring(0, 3);
-                return opening.Substring(4);
-            }
-            else
-            {
-                eco = "";
-                return null;
             }
         }
 
@@ -451,7 +429,7 @@ namespace ChessForge
                 }
                 else
                 {
-                    name = GetOpeningNameFromDictionary(nd, out eco);
+                    name = EcoUtils.GetOpeningNameFromDictionary(nd, out eco);
                     if (name != null)
                     {
                         // we have a valid name

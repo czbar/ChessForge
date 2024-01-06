@@ -140,6 +140,7 @@
     <Compile Include="DownloadWebGamesManager.cs" />
     <Compile Include="DragAndDropCursors.cs" />
     <Compile Include="DraggedArticle.cs" />
+    <Compile Include="EcoUtils.cs" />
     <Compile Include="EditFenDialog.xaml.cs">
       <DependentUpon>EditFenDialog.xaml</DependentUpon>
     </Compile>
@@ -240,9 +241,12 @@
     <Compile Include="RepositionPieceProcessor.cs" />
     <Compile Include="ResourceUtils.cs" />
     <Compile Include="RichTextBoxUtilities.cs" />
-    <Compile Include="TreeViewManagement\TreeViewDisplayLine.cs" />
-    <Compile Include="TreeViewManagement\TreeViewDisplayRun.cs" />
-    <Compile Include="TreeViewManagement\TreeLineSector.cs" />
+    <Compile Include="SplitChapterDialog.xaml.cs">
+      <DependentUpon>SplitChapterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SplitChapterUtils.cs" />
+    <Compile Include="Tools.cs" />
+    <Compile Include="TreeViewManagement\DisplaySector.cs" />
     <Compile Include="TreeViewManagement\TreeViewDisplayManager.cs" />
     <Compile Include="SelectArticlesDialog.xaml.cs">
       <DependentUpon>SelectArticlesDialog.xaml</DependentUpon>
@@ -254,6 +258,7 @@
     <Compile Include="SystemClipboard.cs" />
     <Compile Include="TopGamesViewRow.cs" />
     <Compile Include="TrainingViewMoveHandlers.cs" />
+    <Compile Include="VariationTreeViewLayout.cs" />
     <Compile Include="WorkbookLocation.cs" />
     <Compile Include="WorkbookLocationNavigator.cs" />
     <Compile Include="WorkbookOperation.cs" />
@@ -439,6 +444,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SelectSingleChapterDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SplitChapterDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using GameTree;
 using System.Windows;
-using System.Runtime.InteropServices;
 using System.Diagnostics;
 using ChessPosition;
 using System.Threading;
@@ -229,6 +227,60 @@ namespace ChessForge
             catch
             {
                 MessageBox.Show("DEBUG", "Error writing out Variation Tree to " + filePath, MessageBoxButton.OK, MessageBoxImage.Error);
+            };
+        }
+
+        /// <summary>
+        /// Writes out a LineSectorTree
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <param name="tree"></param>
+        [Conditional("DEBUG")]
+        public static void DumpLineSectorTree(string filePath, LineSectorsTree tree)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            if (tree == null)
+            {
+                sb.Append("LineSectorTree reference is null.");
+            }
+            else
+            {
+                for (int i = 0; i < tree.LineSectors.Count; i++)
+                {
+                    LineSector sector = tree.LineSectors[i];
+                    sb.Append("LineSector index = " + i.ToString() + Environment.NewLine);
+                    sb.Append("Display level = " + sector.BranchLevel.ToString() + Environment.NewLine);
+                    sb.Append("Sector type = " + sector.SectorType.ToString() + Environment.NewLine);
+                    sb.Append("LineSector Id = " + sector.LineSectorId.ToString() + Environment.NewLine);
+                    sb.Append("Parent LineSector Id = " + (sector.Parent == null ? "-" : sector.Parent.LineSectorId.ToString()) + Environment.NewLine);
+                    for (int j = 0; j < sector.Children.Count; j++)
+                    {
+                        sb.Append("    Child " + j.ToString() + " LineSector Id = " + sector.Children[j].LineSectorId.ToString() + Environment.NewLine);
+                    }
+                    sb.AppendLine();
+                    sb.Append("**** Line Sector Nodes ****" + Environment.NewLine);
+                    foreach (TreeNode nd in sector.Nodes)
+                    {
+                        sb.AppendLine();
+                        sb.Append("Node Id = " + nd.NodeId.ToString() + Environment.NewLine);
+                        sb.Append("Line Id = " + nd.LineId.ToString() + Environment.NewLine);
+                        sb.Append("Move Number = " + nd.MoveNumber.ToString() + Environment.NewLine);
+                        sb.Append("Move alg = " + nd.LastMoveAlgebraicNotationWithNag + Environment.NewLine);
+                    }
+                    sb.AppendLine();
+                    sb.Append("********" + Environment.NewLine);
+                    sb.Append(Environment.NewLine + Environment.NewLine);
+                }
+            }
+
+            try
+            {
+                File.WriteAllText(filePath, sb.ToString());
+            }
+            catch
+            {
+                MessageBox.Show("DEBUG", "Error writing out LineSectorTree to " + filePath, MessageBoxButton.OK, MessageBoxImage.Error);
             };
         }
     }

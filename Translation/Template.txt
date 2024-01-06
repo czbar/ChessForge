@@ -141,6 +141,18 @@ Round=
 #english: Date=Date
 Date=
 
+#description: Year
+#english: Year=Year
+Year=
+
+#description: Month
+#english: Month=Month
+Month=
+
+#description: Day
+#english: Day=Day
+Day=
+
 #description: Count
 #english: Count=Count
 Count=
@@ -719,9 +731,9 @@ StripComments=
 #english: DeleteEngineEvals=Delete Engine Evaluations...
 DeleteEngineEvals=
 
-#description: Manage Chapter
-#english: ManageChapter=Manage Chapter...
-ManageChapter=
+#description: Delete all engine evals
+#english: AssignECO=Assign ECOs...
+AssignECO=
 
 #description: Find Games
 #english: FindGames=Find Games...
@@ -730,6 +742,15 @@ FindGames=
 #description: Allows the user to merge multiple chapters into one
 #english: MergeChapters=Merge Chapters...
 MergeChapters=
+
+#description: Manage Chapter
+#english: ManageChapter=Manage Chapter...
+ManageChapter=
+
+#description: Split Chapter
+#english: SplitChapterMenu=Split Chapter...
+SplitChapterMenu=
+
 
 
 ###########################
@@ -875,6 +896,32 @@ EgSelectionAccuracyLabel=
 #english: EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
 EgCentipawnAccuracy=
 
+
+#######################################
+#
+# Header: DIALOG Split Chapter
+#
+
+#description: Split
+#english: Split=Split
+Split=
+
+#description: Split by
+#english: SplitBy=Split by
+SplitBy=
+
+#description: Split chapter
+#english: SplitChapter=Split Chapter
+SplitChapter=
+
+#description: Decade (10 years)
+#english: Decade=Decade
+Decade=
+
+#description: Granularity
+#english: Granularity=Granularity
+Granularity=
+
 #######################################
 #
 # Header: DIALOG Edit FEN
@@ -948,6 +995,10 @@ SortByBlackName=
 #english: SortByDate=Date
 SortByDate=
 
+#description: Sort by round
+#english: SortByRound=Round
+SortByRound=
+
 #description: Sort direction
 #english: SortDirection=Direction
 SortDirection=
@@ -973,6 +1024,10 @@ ScopeForDeleteComments=
 #description: Scope for deleting engine evals - dialog title
 #english: ScopeForDeleteEvals=Delete Engine Evaluations
 ScopeForDeleteEvals=
+
+#description: Scope for Assign ECO - dialog title
+#english: ScopeForAssignECO=Assign ECOs
+ScopeForAssignECO=
 
 #description: Operation Scope label
 #english: OperationScope=Apply to the following:

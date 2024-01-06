@@ -179,6 +179,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Assign ECOs....
+        /// </summary>
+        public static string AssignECO {
+            get {
+                return ResourceManager.GetString("AssignECO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Auto Speed (s).
         /// </summary>
         public static string AutoReplaySpeed {
@@ -1223,11 +1232,29 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Day.
+        /// </summary>
+        public static string Day {
+            get {
+                return ResourceManager.GetString("Day", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to days.
         /// </summary>
         public static string Days {
             get {
                 return ResourceManager.GetString("Days", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Decade.
+        /// </summary>
+        public static string Decade {
+            get {
+                return ResourceManager.GetString("Decade", resourceCulture);
             }
         }
         
@@ -2933,6 +2960,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Granularity.
+        /// </summary>
+        public static string Granularity {
+            get {
+                return ResourceManager.GetString("Granularity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Start guessing moves.  Make them on the main chessboard..
         /// </summary>
         public static string GuessMoves {
@@ -3487,6 +3523,15 @@ namespace ChessForge.Properties {
         public static string MnGameExerciseReferences {
             get {
                 return ResourceManager.GetString("MnGameExerciseReferences", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Month.
+        /// </summary>
+        public static string Month {
+            get {
+                return ResourceManager.GetString("Month", resourceCulture);
             }
         }
         
@@ -4653,6 +4698,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Assign ECOs.
+        /// </summary>
+        public static string ScopeForAssignECO {
+            get {
+                return ResourceManager.GetString("ScopeForAssignECO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete Comments.
         /// </summary>
         public static string ScopeForDeleteComments {
@@ -5058,6 +5112,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Round.
+        /// </summary>
+        public static string SortByRound {
+            get {
+                return ResourceManager.GetString("SortByRound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to White Name.
         /// </summary>
         public static string SortByWhiteName {
@@ -5099,6 +5162,42 @@ namespace ChessForge.Properties {
         public static string SourceForgeSite {
             get {
                 return ResourceManager.GetString("SourceForgeSite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Split.
+        /// </summary>
+        public static string Split {
+            get {
+                return ResourceManager.GetString("Split", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Split by.
+        /// </summary>
+        public static string SplitBy {
+            get {
+                return ResourceManager.GetString("SplitBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Split Chapter.
+        /// </summary>
+        public static string SplitChapter {
+            get {
+                return ResourceManager.GetString("SplitChapter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Split Chapter....
+        /// </summary>
+        public static string SplitChapterMenu {
+            get {
+                return ResourceManager.GetString("SplitChapterMenu", resourceCulture);
             }
         }
         
@@ -6188,6 +6287,15 @@ namespace ChessForge.Properties {
         public static string WrongTypeEntitiesNotImported {
             get {
                 return ResourceManager.GetString("WrongTypeEntitiesNotImported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Year.
+        /// </summary>
+        public static string Year {
+            get {
+                return ResourceManager.GetString("Year", resourceCulture);
             }
         }
         

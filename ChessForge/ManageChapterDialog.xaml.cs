@@ -19,6 +19,11 @@ namespace ChessForge
         public bool RegenerateStudy = false;
 
         /// <summary>
+        /// Set to true if user clicked the SplitChapter button
+        /// </summary>
+        public bool CallSplitChapterDialog = false;
+
+        /// <summary>
         /// Selected Sort Criterion
         /// </summary>
         public GameSortCriterion.SortItem SortGamesBy = GameSortCriterion.SortItem.NONE;
@@ -35,11 +40,14 @@ namespace ChessForge
         {
             InitializeComponent();
 
+            UiBtnSplit.Content = Properties.Resources.SplitChapter + "...";
+
             UiCbGenerateStudyTree.IsChecked = false;
             UiCbGenerateStudyTree_Unchecked(null, null);
 
             UiComboBoxSortBy.Items.Add(new GameSortCriterion(GameSortCriterion.SortItem.NONE, "-"));
             UiComboBoxSortBy.Items.Add(new GameSortCriterion(GameSortCriterion.SortItem.DATE, Properties.Resources.SortByDate));
+            UiComboBoxSortBy.Items.Add(new GameSortCriterion(GameSortCriterion.SortItem.ROUND, Properties.Resources.SortByRound));
             UiComboBoxSortBy.Items.Add(new GameSortCriterion(GameSortCriterion.SortItem.ECO, Properties.Resources.SortByEco));
             UiComboBoxSortBy.Items.Add(new GameSortCriterion(GameSortCriterion.SortItem.WHITE_NAME, Properties.Resources.SortByWhiteName));
             UiComboBoxSortBy.Items.Add(new GameSortCriterion(GameSortCriterion.SortItem.BLACK_NAME, Properties.Resources.SortByBlackName));
@@ -143,6 +151,17 @@ namespace ChessForge
         {
             System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Manage-Chapter-Dialog");
         }
+
+        /// <summary>
+        /// The "Split chapter" was pressed so do nothing and set action to Split.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnSplit_Click(object sender, RoutedEventArgs e)
+        {
+            CallSplitChapterDialog = true;
+            DialogResult = true;
+        }
     }
 
     /// <summary>
@@ -172,6 +191,7 @@ namespace ChessForge
             WHITE_NAME,
             BLACK_NAME,
             DATE,
+            ROUND,
 
             ASCENDING,
             DESCENDING

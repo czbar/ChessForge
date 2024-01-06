@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft IT")]
 [assembly: AssemblyProduct("GenerateOpeningsDictionary")]
-[assembly: AssemblyCopyright("Copyright © Microsoft IT 2023")]
+[assembly: AssemblyCopyright("Copyright © Mindrose Pty Ltd 2024")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

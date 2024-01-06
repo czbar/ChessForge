@@ -45,6 +45,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Lets the user the select the scope and figure out ECOs in that scope
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiAssignEco_Click(object sender, RoutedEventArgs e)
+        {
+            Tools.UiAssignEcoToArticles();
+        }
+
+        /// <summary>
         /// Deletes all comments from the currently shown tree. 
         /// </summary>
         /// <param name="sender"></param>

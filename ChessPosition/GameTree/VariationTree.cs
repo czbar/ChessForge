@@ -294,7 +294,7 @@ namespace GameTree
         }
 
         /// <summary>
-        /// The complete list of Nodes for the current Workbook.
+        /// The list of Nodes in the Tree.
         /// </summary>
         public List<TreeNode> Nodes = new List<TreeNode>();
 

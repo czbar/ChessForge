@@ -141,6 +141,18 @@ Round=Runda
 #english: Date=Date
 Date=Data
 
+#description: Year
+#english: Year=Year
+Year=Rok
+
+#description: Month
+#english: Month=Month
+Month=Miesiąc
+
+#description: Day
+#english: Day=Day
+Day=Dzień
+
 #description: Count
 #english: Count=Count
 Count=Ilość
@@ -719,9 +731,9 @@ StripComments=Usuń komentarze...
 #english: DeleteEngineEvals=Delete Engine Evaluations...
 DeleteEngineEvals=Usuń oceny silnika...
 
-#description: Manage Chapter
-#english: ManageChapter=Manage Chapter...
-ManageChapter=Organizuj Rozdział...
+#description: Delete all engine evals
+#english: AssignECO=Assign ECO...
+AssignECO=Przypisz kody ECO...
 
 #description: Find Games
 #english: FindGames=Find Games...
@@ -730,6 +742,15 @@ FindGames=Znajdź partie...
 #description: Allows the user to merge multiple chapters into one
 #english: MergeChapters=Merge Chapters...
 MergeChapters=Połącz rozdziały
+
+#description: Manage Chapter
+#english: ManageChapter=Manage Chapter...
+ManageChapter=Organizuj Rozdział...
+
+#description: Split Chapter
+#english: SplitChapterMenu=Split Chapter...
+SplitChapterMenu=Podziel Rozdział...
+
 
 
 ###########################
@@ -875,6 +896,32 @@ EgSelectionAccuracyLabel=Dokładność wyboru ruchów wynosi
 #english: EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
 EgCentipawnAccuracy=maksymalne odchylenie od najlepszego ruchu wynosi
 
+
+#######################################
+#
+# Header: DIALOG Split Chapter
+#
+
+#description: Split
+#english: Split=Split
+Split=Podziel
+
+#description: Split by
+#english: SplitBy=Split by
+SplitBy=Podziel według
+
+#description: Split chapter
+#english: SplitChapter=Split Chapter
+SplitChapter=Podziel Rozdział
+
+#description: Decade (10 years)
+#english: Decade=Decade
+Decade=Dekada
+
+#description: Granularity
+#english: Granularity=Granularity
+Granularity=Rozdzielczość
+
 #######################################
 #
 # Header: DIALOG Edit FEN
@@ -934,19 +981,23 @@ MsgThisOverwritesStudy=Nowe drzewo zastąpi istniejącą teorię. Kontynuować?
 
 #description: Sort by ECO
 #english: SortByEco=ECO
-SortByEco=Kod Otwarcia
+SortByEco=Kodu Otwarcia (ECO)
 
 #description: Sort by White Player
 #english: SortByWhiteName=White Name
-SortByWhiteName=Grający Białymi
+SortByWhiteName=Grającego Białymi
 
 #description: Sort by Black Player
 #english: SortByBlackName=Black Name
-SortByBlackName=Grający Czarnymi
+SortByBlackName=Grającego Czarnymi
 
 #description: Sort by date 
 #english: SortByDate=Date
-SortByDate=Data
+SortByDate=Daty
+
+#description: Sort by round
+#english: SortByRound=Round
+SortByRound=Rundy
 
 #description: Sort direction
 #english: SortDirection=Direction
@@ -973,6 +1024,10 @@ ScopeForDeleteComments=Usuń Komentarze
 #description: Scope for deleting engine evals - dialog title
 #english: ScopeForDeleteEvals=Delete Engine Evaluations
 ScopeForDeleteEvals=Usuń Oceny Silnika
+
+#description: Scope for Assign ECO - dialog title
+#english: ScopeForAssignECO=Assign ECO
+ScopeForAssignECO=Przypisz kody ECO
 
 #description: Operation Scope label
 #english: OperationScope=Apply to the following:

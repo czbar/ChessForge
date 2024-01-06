@@ -1523,9 +1523,11 @@ namespace ChessForge
                 _mainWin.UiMnImportGames.IsEnabled = AppState.Workbook != null && Workbook.IsReady;
                 _mainWin.UiMnDeleteComments.IsEnabled = WorkbookManager.SessionWorkbook != null;
                 _mainWin.UiMnDeleteEngineEvals.IsEnabled = WorkbookManager.SessionWorkbook != null;
+                _mainWin.UiMnAssignECO.IsEnabled = WorkbookManager.SessionWorkbook != null;
                 _mainWin.UiMnCopyArticles.IsEnabled = WorkbookManager.SessionWorkbook != null;
                 _mainWin.UiMnMoveArticles.IsEnabled = WorkbookManager.SessionWorkbook != null;
                 MainWin.UiMnManageChapter.IsEnabled = AppState.ActiveChapter != null;
+                MainWin.UiMnSplitChapter.IsEnabled = AppState.ActiveChapter != null;
 
                 _mainWin.UiMnAnnotations.IsEnabled = IsTreeViewTabActive();
                 _mainWin.UiMnCommentBeforeMove.IsEnabled = IsTreeViewTabActive();
@@ -1551,6 +1553,7 @@ namespace ChessForge
 
                 _mainWin.UiMnDeleteComments.IsEnabled = false;
                 _mainWin.UiMnDeleteEngineEvals.IsEnabled = false;
+                _mainWin.UiMnAssignECO.IsEnabled = false;
             });
         }
 

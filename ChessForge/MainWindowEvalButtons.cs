@@ -174,7 +174,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnEvalLoss_Click(object sender, RoutedEventArgs e)
         {
-            UpdateNagIdOnSelectedMove("+-".ToString());
+            UpdateNagIdOnSelectedMove("-+".ToString());
         }
 
         /// <summary>

@@ -1005,26 +1005,32 @@ namespace ChessForge
                 {
                     try
                     {
-                        _mainWin.UiRtbChaptersView.Cursor = Cursors.Arrow;
-
-                        int targetChapterIndex = GetChapterIndexFromChildRun(run);
-                        int targetGameIndex = TextUtils.GetIdFromPrefixedString(run.Name);
-
-                        // figure out if we hit the upper or the lower half of the Run
-                        Point ptMousePos = e.GetPosition(_mainWin.UiRtbChaptersView);
-                        TextPointer tpMousePos = _mainWin.UiRtbChaptersView.GetPositionFromPoint(ptMousePos, true);
-
-                        // if we move down by half the font size, is it still the same the same TextPointer
-                        Point ptBelow = new Point(ptMousePos.X, ptMousePos.Y);
-                        ptBelow.Y += run.FontSize / 2;
-
-                        TextPointer tpBelow = _mainWin.UiRtbChaptersView.GetPositionFromPoint(ptBelow, true);
-                        if (tpMousePos.CompareTo(tpBelow) != 0)
+                        if (DraggedArticle.IsDragInProgress && DraggedArticle.ContentType == GameData.ContentType.MODEL_GAME)
                         {
-                            targetGameIndex++;
-                        }
+                            _mainWin.UiRtbChaptersView.Cursor = Cursors.Arrow;
 
-                        MoveArticle(targetChapterIndex, targetGameIndex);
+                            int targetChapterIndex = GetChapterIndexFromChildRun(run);
+                            int targetGameIndex = TextUtils.GetIdFromPrefixedString(run.Name);
+
+                            // figure out if we hit the upper or the lower half of the Run
+                            Point ptMousePos = e.GetPosition(_mainWin.UiRtbChaptersView);
+                            TextPointer tpMousePos = _mainWin.UiRtbChaptersView.GetPositionFromPoint(ptMousePos, true);
+
+                            // if we move down by half the font size, is it still the same the same TextPointer
+                            Point ptBelow = new Point(ptMousePos.X, ptMousePos.Y);
+                            ptBelow.Y += run.FontSize / 2;
+
+                            TextPointer tpBelow = _mainWin.UiRtbChaptersView.GetPositionFromPoint(ptBelow, true);
+                            if (tpMousePos.CompareTo(tpBelow) != 0)
+                            {
+                                targetGameIndex++;
+                            }
+
+                            if (DraggedArticle.ChapterIndex != targetChapterIndex || DraggedArticle.ArticleIndex != targetGameIndex)
+                            {
+                                MoveArticle(targetChapterIndex, targetGameIndex);
+                            }
+                        }
                     }
                     catch { }
                 }
@@ -1052,26 +1058,32 @@ namespace ChessForge
                 {
                     try
                     {
-                        _mainWin.UiRtbChaptersView.Cursor = Cursors.Arrow;
-
-                        int targetChapterIndex = GetChapterIndexFromChildRun(run);
-                        int targetExerciseIndex = TextUtils.GetIdFromPrefixedString(run.Name);
-
-                        // figure out if we hit the upper or the lower half of the Run
-                        Point ptMousePos = e.GetPosition(_mainWin.UiRtbChaptersView);
-                        TextPointer tpMousePos = _mainWin.UiRtbChaptersView.GetPositionFromPoint(ptMousePos, true);
-
-                        // if we move down by half the font size, is it still the same the same TextPointer
-                        Point ptBelow = new Point(ptMousePos.X, ptMousePos.Y);
-                        ptBelow.Y += run.FontSize / 2;
-
-                        TextPointer tpBelow = _mainWin.UiRtbChaptersView.GetPositionFromPoint(ptBelow, true);
-                        if (tpMousePos.CompareTo(tpBelow) != 0)
+                        if (DraggedArticle.IsDragInProgress && DraggedArticle.ContentType == GameData.ContentType.EXERCISE)
                         {
-                            targetExerciseIndex++;
-                        }
+                            _mainWin.UiRtbChaptersView.Cursor = Cursors.Arrow;
 
-                        MoveArticle(targetChapterIndex, targetExerciseIndex);
+                            int targetChapterIndex = GetChapterIndexFromChildRun(run);
+                            int targetExerciseIndex = TextUtils.GetIdFromPrefixedString(run.Name);
+
+                            // figure out if we hit the upper or the lower half of the Run
+                            Point ptMousePos = e.GetPosition(_mainWin.UiRtbChaptersView);
+                            TextPointer tpMousePos = _mainWin.UiRtbChaptersView.GetPositionFromPoint(ptMousePos, true);
+
+                            // if we move down by half the font size, is it still the same the same TextPointer
+                            Point ptBelow = new Point(ptMousePos.X, ptMousePos.Y);
+                            ptBelow.Y += run.FontSize / 2;
+
+                            TextPointer tpBelow = _mainWin.UiRtbChaptersView.GetPositionFromPoint(ptBelow, true);
+                            if (tpMousePos.CompareTo(tpBelow) != 0)
+                            {
+                                targetExerciseIndex++;
+                            }
+
+                            if (DraggedArticle.ChapterIndex != targetChapterIndex || DraggedArticle.ArticleIndex != targetExerciseIndex)
+                            {
+                                MoveArticle(targetChapterIndex, targetExerciseIndex);
+                            }
+                        }
                     }
                     catch { }
 

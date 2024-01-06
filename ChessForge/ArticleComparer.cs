@@ -56,6 +56,9 @@ namespace ChessForge
                 case GameSortCriterion.SortItem.BLACK_NAME:
                     res = string.Compare(art1.Tree.Header.GetBlackPlayer(out _), art2.Tree.Header.GetBlackPlayer(out _));
                     break;
+                case GameSortCriterion.SortItem.ROUND:
+                    res = SplitChapterUtils.CompareRoundNo(art1.Tree.Header.GetRound(out _), art2.Tree.Header.GetRound(out _));
+                    break;
             }
 
             if (res != 0 && SortDirection == GameSortCriterion.SortItem.DESCENDING)

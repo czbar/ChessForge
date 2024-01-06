@@ -210,6 +210,15 @@
   <data name="Date" xml:space="preserve">
     <value>Data</value>
   </data>
+  <data name="Year" xml:space="preserve">
+    <value>Rok</value>
+  </data>
+  <data name="Month" xml:space="preserve">
+    <value>Miesiąc</value>
+  </data>
+  <data name="Day" xml:space="preserve">
+    <value>Dzień</value>
+  </data>
   <data name="Count" xml:space="preserve">
     <value>Ilość</value>
   </data>
@@ -606,14 +615,20 @@
   <data name="DeleteEngineEvals" xml:space="preserve">
     <value>Usuń oceny silnika...</value>
   </data>
-  <data name="ManageChapter" xml:space="preserve">
-    <value>Organizuj Rozdział...</value>
+  <data name="AssignECO" xml:space="preserve">
+    <value>Przypisz kody ECO...</value>
   </data>
   <data name="FindGames" xml:space="preserve">
     <value>Znajdź partie...</value>
   </data>
   <data name="MergeChapters" xml:space="preserve">
     <value>Połącz rozdziały</value>
+  </data>
+  <data name="ManageChapter" xml:space="preserve">
+    <value>Organizuj Rozdział...</value>
+  </data>
+  <data name="SplitChapterMenu" xml:space="preserve">
+    <value>Podziel Rozdział...</value>
   </data>
   <data name="Help" xml:space="preserve">
     <value>Pomoc</value>
@@ -705,6 +720,21 @@
   <data name="EgCentipawnAccuracy" xml:space="preserve">
     <value>maksymalne odchylenie od najlepszego ruchu wynosi</value>
   </data>
+  <data name="Split" xml:space="preserve">
+    <value>Podziel</value>
+  </data>
+  <data name="SplitBy" xml:space="preserve">
+    <value>Podziel według</value>
+  </data>
+  <data name="SplitChapter" xml:space="preserve">
+    <value>Podziel Rozdział</value>
+  </data>
+  <data name="Decade" xml:space="preserve">
+    <value>Dekada</value>
+  </data>
+  <data name="Granularity" xml:space="preserve">
+    <value>Rozdzielczość</value>
+  </data>
   <data name="DlgTitleEditFen" xml:space="preserve">
     <value>Edytuj FEN</value>
   </data>
@@ -736,16 +766,19 @@
     <value>Nowe drzewo zastąpi istniejącą teorię. Kontynuować?</value>
   </data>
   <data name="SortByEco" xml:space="preserve">
-    <value>Kod Otwarcia</value>
+    <value>Kodu Otwarcia (ECO)</value>
   </data>
   <data name="SortByWhiteName" xml:space="preserve">
-    <value>Grający Białymi</value>
+    <value>Grającego Białymi</value>
   </data>
   <data name="SortByBlackName" xml:space="preserve">
-    <value>Grający Czarnymi</value>
+    <value>Grającego Czarnymi</value>
   </data>
   <data name="SortByDate" xml:space="preserve">
-    <value>Data</value>
+    <value>Daty</value>
+  </data>
+  <data name="SortByRound" xml:space="preserve">
+    <value>Rundy</value>
   </data>
   <data name="SortDirection" xml:space="preserve">
     <value>Kierunek</value>
@@ -761,6 +794,9 @@
   </data>
   <data name="ScopeForDeleteEvals" xml:space="preserve">
     <value>Usuń Oceny Silnika</value>
+  </data>
+  <data name="ScopeForAssignECO" xml:space="preserve">
+    <value>Przypisz kody ECO</value>
   </data>
   <data name="OperationScope" xml:space="preserve">
     <value>Zastosuj do:</value>
