@@ -55,6 +55,11 @@ namespace ChessForge
                     AppState.SetupGuiForCurrentStates();
                     AppState.MainWin.UiTabChapters.Focus();
                 }
+                else if (AppState.MainWin.ActiveTreeView != null)
+                {
+                    // TODO: implement function to refresh just the page header.
+                    AppState.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
+                }
             }
 
             return anyUpdated;
