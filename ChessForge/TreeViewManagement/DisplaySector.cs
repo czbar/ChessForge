@@ -46,6 +46,6 @@ namespace ChessForge
         /// List of TreeNodes from the main sector.
         /// If there are sub-sectors they will be accessed via the _subSectors list.
         /// </summary>
-        public List<TreeNode> Nodes;
+        public List<TreeNode> Nodes = new List<TreeNode>();
     }
 }
