@@ -144,6 +144,7 @@
                         <Separator />
                         <MenuItem x:Name="UiMnDeleteComments" Header="{x:Static p:Resources.StripComments}" Click="UiDeleteComments_Click" />
                         <MenuItem x:Name="UiMnDeleteEngineEvals" Header="{x:Static p:Resources.DeleteEngineEvals}" Click="UiDeleteEngineEvals_Click" />
+                        <MenuItem x:Name="UiMnAssignECO" Header="{x:Static p:Resources.AssignECO}" Click="UiAssignEco_Click" />
                         <Separator />
                         <MenuItem x:Name="UiMnMainDeleteGames" Header="{x:Static p:Resources.DeleteGames}" Click="UiMnToolsDeleteGames_Click" />
                         <MenuItem x:Name="UiMnMainDeleteExercises" Header="{x:Static p:Resources.DeleteExercises}" Click="UiMnToolsDeleteExercises_Click"  />

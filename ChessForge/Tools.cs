@@ -1,4 +1,5 @@
-﻿using GameTree;
+﻿using ChessPosition;
+using GameTree;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,13 +13,13 @@ namespace ChessForge
         /// Invokes the scope dialog and works out ECOs for articles
         /// in the selected scope.
         /// </summary>
-        public static bool AssignEcoToArticles()
+        public static bool UiAssignEcoToArticles()
         {
             bool anyUpdated = false;
 
             try
             {
-                OperationScopeDialog dlg = new OperationScopeDialog(Properties.Resources.ECO);
+                OperationScopeDialog dlg = new OperationScopeDialog(Properties.Resources.AssignECO);
                 GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
                 if (dlg.ShowDialog() == true)
@@ -26,13 +27,13 @@ namespace ChessForge
                     Mouse.SetCursor(Cursors.Wait);
                     switch (dlg.ApplyScope)
                     {
-                        case ChessPosition.OperationScope.ACTIVE_ITEM:
+                        case OperationScope.ACTIVE_ITEM:
                             anyUpdated = AssignEcoToArticle(AppState.Workbook.ActiveArticle);
                             break;
-                        case ChessPosition.OperationScope.CHAPTER:
+                        case OperationScope.CHAPTER:
                             anyUpdated = AssignEcosInChapter(AppState.ActiveChapter);
                             break;
-                        case ChessPosition.OperationScope.WORKBOOK:
+                        case OperationScope.WORKBOOK:
                             anyUpdated = AssignEcosInWorbook(AppState.Workbook);
                             break;
                     }
@@ -43,6 +44,19 @@ namespace ChessForge
             }
 
             Mouse.SetCursor(Cursors.Arrow);
+
+            if (anyUpdated)
+            {
+                AppState.IsDirty = true;
+                AppState.MainWin.ChaptersView.IsDirty = true;
+                if (AppState.ActiveTab == TabViewType.CHAPTERS)
+                {
+                    GuiUtilities.RefreshChaptersView(null);
+                    AppState.SetupGuiForCurrentStates();
+                    AppState.MainWin.UiTabChapters.Focus();
+                }
+            }
+
             return anyUpdated;
         }
 
