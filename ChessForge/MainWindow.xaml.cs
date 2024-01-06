@@ -932,6 +932,7 @@ namespace ChessForge
                         activeChapter.SetActiveVariationTree(GameData.ContentType.NONE);
                         AppState.MainWin.UiTabModelGames.Focus();
                     }
+                    PreviousNextViewBars.BuildPreviousNextBar(GameData.ContentType.MODEL_GAME);
                 }
 
                 if (setFocus && WorkbookManager.SessionWorkbook != null)
@@ -1031,6 +1032,7 @@ namespace ChessForge
                         _exerciseTreeView.Clear(GameData.ContentType.EXERCISE);
                         activeChapter.SetActiveVariationTree(GameData.ContentType.NONE);
                     }
+                    PreviousNextViewBars.BuildPreviousNextBar(GameData.ContentType.EXERCISE);
                 }
             }
             catch (Exception ex)
