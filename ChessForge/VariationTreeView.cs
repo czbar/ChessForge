@@ -19,7 +19,7 @@ namespace ChessForge
     /// Manages text and events in the main Workbook view.
     /// The view is built in a RichTextBox.
     /// </summary>
-    public class VariationTreeView : RichTextBuilder
+    public partial class VariationTreeView : RichTextBuilder
     {
         /// <summary>
         /// Indicates whether the view is "fresh"
