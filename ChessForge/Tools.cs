@@ -31,10 +31,10 @@ namespace ChessForge
                             anyUpdated = AssignEcoToArticle(AppState.Workbook.ActiveArticle);
                             break;
                         case OperationScope.CHAPTER:
-                            anyUpdated = AssignEcosInChapter(AppState.ActiveChapter);
+                            anyUpdated = AssignEcosInChapter(AppState.ActiveChapter, dlg.ApplyToStudies, dlg.ApplyToGames, dlg.ApplyToExercises);
                             break;
                         case OperationScope.WORKBOOK:
-                            anyUpdated = AssignEcosInWorbook(AppState.Workbook);
+                            anyUpdated = AssignEcosInWorbook(AppState.Workbook, dlg.ApplyToStudies, dlg.ApplyToGames, dlg.ApplyToExercises);
                             break;
                     }
                 }
@@ -93,20 +93,29 @@ namespace ChessForge
         /// </summary>
         /// <param name="chapter"></param>
         /// <returns></returns>
-        private static bool AssignEcosInChapter(Chapter chapter)
+        private static bool AssignEcosInChapter(Chapter chapter, bool study, bool games, bool exercises)
         {
             bool anyUpdated = false;
 
-            anyUpdated = AssignEcoToArticle(chapter.StudyTree) ? true : anyUpdated;
-
-            foreach (Article article in chapter.ModelGames)
+            if (study)
             {
-                anyUpdated = AssignEcoToArticle(article) ? true : anyUpdated;
+                anyUpdated = AssignEcoToArticle(chapter.StudyTree) ? true : anyUpdated;
             }
 
-            foreach (Article article in chapter.Exercises)
+            if (games)
             {
-                anyUpdated = AssignEcoToArticle(article) ? true : anyUpdated;
+                foreach (Article article in chapter.ModelGames)
+                {
+                    anyUpdated = AssignEcoToArticle(article) ? true : anyUpdated;
+                }
+            }
+
+            if (exercises)
+            {
+                foreach (Article article in chapter.Exercises)
+                {
+                    anyUpdated = AssignEcoToArticle(article) ? true : anyUpdated;
+                }
             }
 
             return anyUpdated;
@@ -117,13 +126,13 @@ namespace ChessForge
         /// </summary>
         /// <param name="workbook"></param>
         /// <returns></returns>
-        private static bool AssignEcosInWorbook(Workbook workbook)
+        private static bool AssignEcosInWorbook(Workbook workbook, bool studies, bool games, bool exercises)
         {
             bool anyUpdated = false;
 
             foreach (Chapter chapter in workbook.Chapters)
             {
-                anyUpdated = AssignEcosInChapter(chapter) ? true : anyUpdated;
+                anyUpdated = AssignEcosInChapter(chapter, studies, games, exercises) ? true : anyUpdated;
             }
 
             return anyUpdated;
