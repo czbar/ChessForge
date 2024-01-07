@@ -54,6 +54,7 @@ namespace ChessForge
                     }
 
                     AppState.MainWin.ExpandCollapseChaptersView(false, false);
+                    AppState.SetupGuiForCurrentStates();
                     AppState.IsDirty = true;
                 }
             }
