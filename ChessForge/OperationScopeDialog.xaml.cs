@@ -2,12 +2,9 @@
 using GameTree;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace ChessForge
 {
@@ -17,10 +14,25 @@ namespace ChessForge
     public partial class OperationScopeDialog : Window
     {
         /// <summary>
+        /// Type of action that is being scoped so the correct GUI behavior 
+        /// can be implemented.
+        /// </summary>
+        public enum ScopedAction
+        {
+            DEFAULT,
+            ASSIGN_ECO
+        }
+
+        /// <summary>
+        /// Type of the action being scoped in this session.
+        /// </summary>
+        public ScopedAction Action;
+
+        /// <summary>
         /// The scope selected by the user.
         /// </summary>
         public OperationScope ApplyScope { get; set; }
-        
+
         /// <summary>
         /// Whether to apply the operation to Study/Studies.
         /// </summary>
@@ -40,29 +52,62 @@ namespace ChessForge
         private bool firstTimeCheck = true;
 
         /// <summary>
+        /// Whether Study should be shown at all
+        /// </summary>
+        private bool _allowStudies
+        {
+            get => Action != ScopedAction.ASSIGN_ECO;
+        }
+
+        /// <summary>
         /// Constructor. Sets the title of the dialog
         /// and checks the controls as per the current state
         /// of the application.
         /// </summary>
         /// <param name="title"></param>
-        public OperationScopeDialog(string title)
+        public OperationScopeDialog(string title, ScopedAction action)
         {
+            Action = action;
             InitializeComponent();
 
             this.Title = title;
 
-            UiCbStudy.IsChecked = true;
-            UiCbGames.IsChecked = false;
-            UiCbExercises.IsChecked = false;
-
-            if (AppState.MainWin.ActiveVariationTree == null)
+            if (_allowStudies)
             {
-                UiRbCurrentChapter.IsChecked = true;
-                UiRbCurrentItem.IsEnabled = false;
+                UiCbStudy.IsChecked = true;
+                UiCbGames.IsChecked = false;
+                UiCbExercises.IsChecked = false;
+
+                UiCbStudy.Visibility = Visibility.Visible;
+                if (AppState.MainWin.ActiveVariationTree == null)
+                {
+                    UiRbCurrentChapter.IsChecked = true;
+                }
+                else
+                {
+                    UiRbCurrentItem.IsChecked = true;
+                }
             }
             else
             {
-                UiRbCurrentItem.IsChecked = true;
+                UiCbStudy.Content = "   -   ";
+                UiCbStudy.IsChecked = false;
+                UiCbGames.IsChecked = true;
+                UiCbExercises.IsChecked = false;
+
+                UiCbStudy.IsEnabled = false;
+
+                if (AppState.Workbook.ActiveArticle != null &&
+                    (AppState.Workbook.ActiveArticle.ContentType == GameData.ContentType.MODEL_GAME
+                    || AppState.Workbook.ActiveArticle.ContentType == GameData.ContentType.EXERCISE))
+                {
+                    UiRbCurrentItem.IsChecked = true;
+                }
+                else
+                {
+                    UiRbCurrentItem.IsEnabled = false;
+                    UiRbCurrentChapter.IsChecked = true;
+                }
             }
 
             ApplyScope = OperationScope.NONE;
@@ -75,7 +120,11 @@ namespace ChessForge
         /// <param name="itemType"></param>
         private void ShowItemType(GameData.ContentType itemType, bool enabled)
         {
-            UiCbStudy.IsChecked = false;
+            if (!_allowStudies && itemType == GameData.ContentType.STUDY_TREE)
+            {
+                return;
+            }
+
             UiCbGames.IsChecked = false;
             UiCbExercises.IsChecked = false;
 
@@ -109,13 +158,17 @@ namespace ChessForge
         /// <param name="plural"></param>
         private void ShowEnableAllItemTypes(bool showHide, bool plural)
         {
-            UiCbStudy.IsEnabled = true;
+            UiCbStudy.IsEnabled = _allowStudies;
             UiCbGames.IsEnabled = true;
             UiCbExercises.IsEnabled = true;
-            
-            UiCbStudy.Visibility = showHide ? Visibility.Visible : Visibility.Hidden;
+
+            UiCbStudy.Visibility = (showHide && _allowStudies) ? Visibility.Visible : Visibility.Hidden;
             UiCbGames.Visibility = showHide ? Visibility.Visible : Visibility.Hidden;
             UiCbExercises.Visibility = showHide ? Visibility.Visible : Visibility.Hidden;
+
+            //UiCbStudy.IsEnabled = (showHide && _allowStudies) ? true : false;
+            //UiCbGames.IsEnabled = showHide ? true : false;
+            //UiCbExercises.IsEnabled = showHide ? true : false;
 
             UiCbGames.Content = plural ? Properties.Resources.Games : Properties.Resources.Game;
             UiCbExercises.Content = plural ? Properties.Resources.Exercises : Properties.Resources.Exercise;
@@ -127,7 +180,7 @@ namespace ChessForge
         /// <param name="isChecked"></param>
         private void CheckAll(bool isChecked)
         {
-            UiCbStudy.IsChecked = isChecked;
+            UiCbStudy.IsChecked = isChecked && _allowStudies;
             UiCbGames.IsChecked = isChecked;
             UiCbExercises.IsChecked = isChecked;
         }
@@ -156,7 +209,11 @@ namespace ChessForge
                 ShowEnableAllItemTypes(false, false);
                 ShowItemType(AppState.MainWin.ActiveVariationTree.ContentType, false);
             }
-            UiCbStudy.Content = Properties.Resources.Study;
+
+            if (_allowStudies)
+            {
+                UiCbStudy.Content = Properties.Resources.Study;
+            }
         }
 
         /// <summary>
@@ -167,7 +224,10 @@ namespace ChessForge
         private void UiRbCurrentChapter_Checked(object sender, RoutedEventArgs e)
         {
             ShowEnableAllItemTypes(true, true);
-            UiCbStudy.Content = Properties.Resources.Study;
+            if (_allowStudies)
+            {
+                UiCbStudy.Content = Properties.Resources.Study;
+            }
             if (firstTimeCheck)
             {
                 CheckAll(true);
@@ -183,7 +243,10 @@ namespace ChessForge
         private void UiRbWorkbook_Checked(object sender, RoutedEventArgs e)
         {
             ShowEnableAllItemTypes(true, true);
-            UiCbStudy.Content = (AppState.Workbook != null && AppState.Workbook.GetChapterCount() > 1) ? Properties.Resources.Studies : Properties.Resources.Study;
+            if (_allowStudies)
+            {
+                UiCbStudy.Content = (AppState.Workbook != null && AppState.Workbook.GetChapterCount() > 1) ? Properties.Resources.Studies : Properties.Resources.Study;
+            }
             if (firstTimeCheck)
             {
                 CheckAll(true);
