@@ -17,25 +17,65 @@ namespace ChessForge
         {
             bool anyUpdated = false;
 
+            Dictionary<string, string> _dictArticleGuidToEco = new Dictionary<string, string>();
+
             try
             {
-                OperationScopeDialog dlg = new OperationScopeDialog(Properties.Resources.ScopeForAssignECO);
+                OperationScopeDialog dlg = new OperationScopeDialog(Properties.Resources.ScopeForAssignECO, OperationScopeDialog.ScopedAction.ASSIGN_ECO);
                 GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
                 if (dlg.ShowDialog() == true)
                 {
                     Mouse.SetCursor(Cursors.Wait);
+
                     switch (dlg.ApplyScope)
                     {
                         case OperationScope.ACTIVE_ITEM:
-                            anyUpdated = AssignEcoToArticle(AppState.Workbook.ActiveArticle);
+                            anyUpdated = AssignEcoToArticle(AppState.Workbook.ActiveArticle, _dictArticleGuidToEco);
                             break;
                         case OperationScope.CHAPTER:
-                            anyUpdated = AssignEcosInChapter(AppState.ActiveChapter);
+                            anyUpdated = AssignEcosInChapter(AppState.ActiveChapter, dlg.ApplyToStudies, dlg.ApplyToGames, dlg.ApplyToExercises, _dictArticleGuidToEco);
                             break;
                         case OperationScope.WORKBOOK:
-                            anyUpdated = AssignEcosInWorbook(AppState.Workbook);
+                            anyUpdated = AssignEcosInWorbook(AppState.Workbook, dlg.ApplyToStudies, dlg.ApplyToGames, dlg.ApplyToExercises, _dictArticleGuidToEco);
                             break;
+                    }
+                }
+                Mouse.SetCursor(Cursors.Arrow);
+
+                if (anyUpdated)
+                {
+                    PostEcoAssignCleanup();
+                }
+
+                // create Undo even of nothing changed so we don't confuse the user who won't know if anything was updated.
+                WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.ASSIGN_ECO, _dictArticleGuidToEco);
+                AppState.Workbook.OpsManager.PushOperation(op);
+            }
+            catch
+            {
+            }
+
+            return anyUpdated;
+        }
+
+        /// <summary>
+        /// Performs the Undo operation.
+        /// </summary>
+        /// <param name="opData"></param>
+        public static void UndoAssignEco(object opData)
+        {
+            try
+            {
+                if (opData is Dictionary<string, string> dictEcos)
+                {
+                    foreach (string key in dictEcos.Keys)
+                    {
+                        Article article = AppState.Workbook.GetArticleByGuid(key, out _, out _);
+                        if (article != null)
+                        {
+                            article.Tree.Header.SetHeaderValue(PgnHeaders.KEY_ECO, dictEcos[key]);
+                        }
                     }
                 }
             }
@@ -43,21 +83,27 @@ namespace ChessForge
             {
             }
 
-            Mouse.SetCursor(Cursors.Arrow);
+            PostEcoAssignCleanup();
+        }
 
-            if (anyUpdated)
+        /// <summary>
+        /// Refreshes relevant views after ECOs have been assigned.
+        /// </summary>
+        private static void PostEcoAssignCleanup()
+        {
+            AppState.IsDirty = true;
+            AppState.MainWin.ChaptersView.IsDirty = true;
+            if (AppState.ActiveTab == TabViewType.CHAPTERS)
             {
-                AppState.IsDirty = true;
-                AppState.MainWin.ChaptersView.IsDirty = true;
-                if (AppState.ActiveTab == TabViewType.CHAPTERS)
-                {
-                    GuiUtilities.RefreshChaptersView(null);
-                    AppState.SetupGuiForCurrentStates();
-                    AppState.MainWin.UiTabChapters.Focus();
-                }
+                GuiUtilities.RefreshChaptersView(null);
+                AppState.SetupGuiForCurrentStates();
+                AppState.MainWin.UiTabChapters.Focus();
             }
-
-            return anyUpdated;
+            else if (AppState.MainWin.ActiveTreeView != null)
+            {
+                // TODO: implement function to refresh just the page header.
+                AppState.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
+            }
         }
 
         /// <summary>
@@ -65,7 +111,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="article"></param>
         /// <returns>true if an ECO was found and it was different to the current one.</returns>
-        private static bool AssignEcoToArticle(Article article)
+        private static bool AssignEcoToArticle(Article article, Dictionary<string, string> oldEcoForUndo)
         {
             bool res = false;
 
@@ -75,6 +121,7 @@ namespace ChessForge
                 string oldEco = article.Tree.Header.GetECO(out _);
                 if (oldEco != eco)
                 {
+                    oldEcoForUndo[article.Guid] = oldEco;
                     article.Tree.Header.SetHeaderValue(PgnHeaders.KEY_ECO, eco);
                     res = true;
                 }
@@ -88,20 +135,29 @@ namespace ChessForge
         /// </summary>
         /// <param name="chapter"></param>
         /// <returns></returns>
-        private static bool AssignEcosInChapter(Chapter chapter)
+        private static bool AssignEcosInChapter(Chapter chapter, bool study, bool games, bool exercises, Dictionary<string, string> oldEcoForUndo)
         {
             bool anyUpdated = false;
 
-            anyUpdated = AssignEcoToArticle(chapter.StudyTree) ? true : anyUpdated;
-
-            foreach (Article article in chapter.ModelGames)
+            if (study)
             {
-                anyUpdated = AssignEcoToArticle(article) ? true : anyUpdated;
+                anyUpdated = AssignEcoToArticle(chapter.StudyTree, oldEcoForUndo) ? true : anyUpdated;
             }
 
-            foreach (Article article in chapter.Exercises)
+            if (games)
             {
-                anyUpdated = AssignEcoToArticle(article) ? true : anyUpdated;
+                foreach (Article article in chapter.ModelGames)
+                {
+                    anyUpdated = AssignEcoToArticle(article, oldEcoForUndo) ? true : anyUpdated;
+                }
+            }
+
+            if (exercises)
+            {
+                foreach (Article article in chapter.Exercises)
+                {
+                    anyUpdated = AssignEcoToArticle(article, oldEcoForUndo) ? true : anyUpdated;
+                }
             }
 
             return anyUpdated;
@@ -112,13 +168,13 @@ namespace ChessForge
         /// </summary>
         /// <param name="workbook"></param>
         /// <returns></returns>
-        private static bool AssignEcosInWorbook(Workbook workbook)
+        private static bool AssignEcosInWorbook(Workbook workbook, bool studies, bool games, bool exercises, Dictionary<string, string> oldEcoForUndo)
         {
             bool anyUpdated = false;
 
             foreach (Chapter chapter in workbook.Chapters)
             {
-                anyUpdated = AssignEcosInChapter(chapter) ? true : anyUpdated;
+                anyUpdated = AssignEcosInChapter(chapter, studies, games, exercises, oldEcoForUndo) ? true : anyUpdated;
             }
 
             return anyUpdated;

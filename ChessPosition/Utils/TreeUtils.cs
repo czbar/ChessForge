@@ -379,20 +379,6 @@ namespace ChessPosition
         }
 
         /// <summary>
-        /// Walks the tree and inserts all nodes into the passed list.
-        /// </summary>
-        /// <param name="node"></param>
-        /// <param name="lstNodes"></param>
-        private static void EnlistNodeAndChildren(TreeNode node, ref List<TreeNode> lstNodes)
-        {
-            lstNodes.Add(node);
-            foreach (TreeNode child in node.Children)
-            {
-                EnlistNodeAndChildren(child, ref lstNodes);
-            }
-        }
-
-        /// <summary>
         /// <summary>
         /// Inserts a Subtree into a tree.
         /// If nodeToInsertAt has the opposite ColorToMove to the root node of the subtree, 
@@ -477,6 +463,34 @@ namespace ChessPosition
                 {
                     nd.SetEngineEvaluation(attrs.EngineEval);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Removes ECO codes and Opening Names (that btw are not persisted) from the tree.
+        /// We will use this when creating an Exercise from a game.
+        /// </summary>
+        /// <param name="tree"></param>
+        public static void RemoveOpeningInfo(VariationTree tree)
+        {
+            foreach (TreeNode nd in tree.Nodes)
+            {
+                nd.Eco = "";
+                nd.OpeningName = "";
+            }
+        }
+
+        /// <summary>
+        /// Walks the tree and inserts all nodes into the passed list.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="lstNodes"></param>
+        private static void EnlistNodeAndChildren(TreeNode node, ref List<TreeNode> lstNodes)
+        {
+            lstNodes.Add(node);
+            foreach (TreeNode child in node.Children)
+            {
+                EnlistNodeAndChildren(child, ref lstNodes);
             }
         }
 

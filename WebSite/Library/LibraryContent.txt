@@ -12,6 +12,14 @@ Description: Games from tournaments and matches.
       Description: All games from Men's World Championship Matches and Tournaments.
       File:Tournaments/Mens World Individual Championships.pgn
 
+	  Book:World Rapid Championship 2023 (Men)
+      Description: World Rapid Championship (Men), Samarkand, December 2023.
+      File:Tournaments/World Rapid Chess Championship Men 2023.pgn
+
+	  Book:World Rapid Championship 2023 (Women)
+      Description: World Rapid Championship (Women), Samarkand, December 2023.
+      File:Tournaments/World Rapid Chess Championship Women 2023.pgn
+
 Bookcase:Strategy Morsels
 Description:Small studies of specific strategic questions.
 

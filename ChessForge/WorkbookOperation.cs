@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using static GameTree.EditOperation;
@@ -32,6 +31,7 @@ namespace ChessForge
         COPY_ARTICLES,
         DELETE_COMMENTS,
         DELETE_ENGINE_EVALS,
+        ASSIGN_ECO,
     }
 
     /// <summary>

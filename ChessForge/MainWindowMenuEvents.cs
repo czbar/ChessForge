@@ -308,7 +308,7 @@ namespace ChessForge
                 ActiveTreeView.InsertOrUpdateCommentBeforeMoveRun(nd);
             }
         }
-        
+
 
         /// <summary>
         /// The users requesting merging of chapters.
@@ -1357,7 +1357,7 @@ namespace ChessForge
                 AppState.Workbook.Chapters[index - 1] = hold;
 
                 _chaptersView.RebuildChapterParagraph(AppState.Workbook.Chapters[index]);
-                _chaptersView.RebuildChapterParagraph(AppState.Workbook.Chapters[index-1]);
+                _chaptersView.RebuildChapterParagraph(AppState.Workbook.Chapters[index - 1]);
                 SelectChapterByIndex(index - 1, false, false);
 
                 PulseManager.ChaperIndexToBringIntoView = index - 1;
@@ -1865,10 +1865,17 @@ namespace ChessForge
                     }
 
                     VariationTree tree = TreeUtils.CreateNewTreeFromNode(nd, GameData.ContentType.EXERCISE);
+                    // preserve opening info from the first node
+                    string firstNodeEco = tree.RootNode.Eco;
+                    TreeUtils.RemoveOpeningInfo(tree);
                     tree.MoveNumberOffset = moveNumberOffset;
 
                     Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                     CopyHeaderFromGame(tree, ActiveVariationTree.Header, false);
+                    if (!string.IsNullOrEmpty(firstNodeEco))
+                    {
+                        tree.Header.SetHeaderValue(PgnHeaders.KEY_ECO, firstNodeEco);
+                    }
                     if (ActiveVariationTree.Header.GetContentType(out _) == GameData.ContentType.STUDY_TREE)
                     {
                         tree.Header.SetHeaderValue(PgnHeaders.KEY_WHITE, chapter.Title);

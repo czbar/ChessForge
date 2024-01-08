@@ -47,7 +47,7 @@ namespace ChessForge
 
             lock (_lockWebUpdate)
             {
-                // if there a new queued request, and we are not in "mandatory delay", slot it in for immediate execution,
+                // if there is a new queued request, and we are not in "mandatory delay", slot it in for immediate execution,
                 // we are no longer interested in the current one
                 if (WebAccessState.HasQueuedRequest && !WebAccessState.IsMandatoryDelayOn)
                 {
