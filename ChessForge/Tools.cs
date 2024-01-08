@@ -21,7 +21,7 @@ namespace ChessForge
 
             try
             {
-                OperationScopeDialog dlg = new OperationScopeDialog(Properties.Resources.ScopeForAssignECO);
+                OperationScopeDialog dlg = new OperationScopeDialog(Properties.Resources.ScopeForAssignECO, OperationScopeDialog.ScopedAction.ASSIGN_ECO);
                 GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
                 if (dlg.ShowDialog() == true)

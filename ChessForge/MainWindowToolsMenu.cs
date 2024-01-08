@@ -72,7 +72,7 @@ namespace ChessForge
                     break;
             }
 
-            OperationScopeDialog dlg = new OperationScopeDialog(dlgTitle);
+            OperationScopeDialog dlg = new OperationScopeDialog(dlgTitle, OperationScopeDialog.ScopedAction.DEFAULT);
             GuiUtilities.PositionDialog(dlg, this, 100);
             if (dlg.ShowDialog() == true)
             {
