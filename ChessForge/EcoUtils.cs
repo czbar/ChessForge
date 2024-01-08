@@ -46,11 +46,13 @@ namespace ChessForge
             try
             {
                 VariationTree tree = article.Tree;
+                uint moveNumberOffset = article.Tree.MoveNumberOffset;
                 // collect the list of Nodes on the main line until move 14
                 // (after which opening ECOs do not change in our dictionary, even though the name may somewhat change, we will ignore it)
                 List<TreeNode> line = new List<TreeNode>();
                 TreeNode node = tree.RootNode;
-                while (node != null && node.Children.Count > 0 && node.MoveNumber < 15)
+                line.Add(node);
+                while (node != null && node.Children.Count > 0 && node.MoveNumber + moveNumberOffset < 15)
                 {
                     node = node.Children[0];
                     line.Add(node);
