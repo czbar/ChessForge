@@ -1861,7 +1861,7 @@ namespace ChessForge
         private void InitializeChaptersView()
         {
             _chaptersView = new ChaptersView(UiRtbChaptersView.Document, this);
-            
+
             // if this is very big, make sure the view is collapsed
             // to speed up initial reading
             // int articleCount = AppState.Workbook.GetArticleCount();
@@ -1869,7 +1869,7 @@ namespace ChessForge
             //{
             //    ExpandCollapseChaptersView(false, true);
             //}
-            
+
             _chaptersView.BuildFlowDocumentForChaptersView();
             AppState.DoEvents();
             _chaptersView.BringChapterIntoView(WorkbookManager.SessionWorkbook.ActiveChapterIndex);
@@ -2027,6 +2027,7 @@ namespace ChessForge
                     {
                         MainChessBoard.DisplayPosition(nd, true);
                         _openingStatsView.SetOpeningName();
+                        // TODO: should this be only called when AppState.AreExplorersOn == true? Check carefully.
                         WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, nd);
                     }
                     if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS && AppState.ActiveTab != TabViewType.CHAPTERS)
