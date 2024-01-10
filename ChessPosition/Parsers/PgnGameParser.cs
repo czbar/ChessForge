@@ -59,8 +59,15 @@ namespace GameTree
             }
             catch (Exception ex)
             {
-                LocalizedStrings.Values.TryGetValue(LocalizedStrings.StringId.PGN, out string msg);
-                throw new Exception(msg + " " + ex.Message);
+                if (ex is ParserException)
+                {
+                    throw;
+                }
+                else
+                {
+                    LocalizedStrings.Values.TryGetValue(LocalizedStrings.StringId.PGN, out string msg);
+                    throw new Exception(msg + " " + ex.Message);
+                }
             }
         }
 
@@ -300,7 +307,17 @@ namespace GameTree
                     case PgnTokenType.Move:
                         // ProcessMove() will return a new node that will then be the "parentNode"
                         // for the processing of the next move (ply)
-                        TreeNode newNode = MoveUtils.ProcessAlgMove(token, parentNode, _runningNodeId);
+                        TreeNode newNode = null;
+                        try
+                        {
+                            newNode = MoveUtils.ProcessAlgMove(token, parentNode, _runningNodeId);
+                        }
+                        catch
+                        {
+                            ParserException ex = new ParserException(ParserException.ParseErrorType.PGN_INVALID_MOVE, token);
+                            throw ex;
+                        }
+
                         if (!hasMove && !string.IsNullOrEmpty(comment))
                         {
                             newNode.CommentBeforeMove = comment;
