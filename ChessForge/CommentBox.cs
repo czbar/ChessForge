@@ -161,7 +161,7 @@ namespace ChessForge
         /// to close it later on.
         /// </summary>
         /// <param name="txt"></param>
-        public void ShowFlashAnnouncement(string txt, Brush brush = null)
+        public void ShowFlashAnnouncement(string txt, Brush brush = null, int fontSize = 0)
         {
             _mainWin.Dispatcher.Invoke(() =>
             {
@@ -176,6 +176,10 @@ namespace ChessForge
                     Document.Blocks.Add(dummy);
 
                     Paragraph para = CreateParagraphWithText("big_red", txt, false);
+                    if (fontSize > 0)
+                    {
+                        para.FontSize = fontSize;
+                    }
                     Document.Blocks.Add(para);
                     para.Foreground = Brushes.Red;
                     if (brush != null)
