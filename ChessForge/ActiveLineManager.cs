@@ -626,7 +626,7 @@ namespace ChessForge
                                 e.Handled = true;
                                 break;
                             case Key.V:
-                                _mainWin.PasteMoveList();
+                                CopyPasteMoves.PasteMoveList();
                                 e.Handled = true;
                                 break;
                             case Key.A:
