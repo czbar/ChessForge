@@ -2749,28 +2749,6 @@ namespace ChessForge
         //**********************
 
         /// <summary>
-        /// Checks the type of the clipboard content and undertakes appropriate action.
-        /// </summary>
-        public void PasteMoveList()
-        {
-            try
-            {
-                IDataObject dataObject = Clipboard.GetDataObject();
-                if (dataObject != null && dataObject.GetDataPresent(DataFormats.Serializable))
-                {
-                    List<TreeNode> lstNodes = dataObject.GetData(DataFormats.Serializable) as List<TreeNode>;
-                    CopyPasteMoves.PasteVariation(lstNodes);
-                }
-
-                AppState.IsDirty = true;
-            }
-            catch (Exception ex)
-            {
-                AppLog.Message("PasteChfClipboard()", ex);
-            }
-        }
-
-        /// <summary>
         /// Handles Game import from the Games context menu
         /// </summary>
         /// <param name="sender"></param>
@@ -2962,7 +2940,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnPasteMoves_Click(object sender, RoutedEventArgs e)
         {
-            PasteMoveList();
+            CopyPasteMoves.PasteMoveList();
         }
 
         /// <summary>

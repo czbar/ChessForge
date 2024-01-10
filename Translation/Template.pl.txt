@@ -950,8 +950,8 @@ ChessForgeOnlineLibrary=Biblioteka Chess Forge w Sieci
 Bookcase=Regał
 
 #description: Shelf
-#english: Shelf = Shelf
-Shelf = Półka
+#english: Shelf=Shelf
+Shelf=Półka
 
 #description: Intro line
 #english: OnlineLibraryInfo=Click on any blue link below to download the corresponding workbook. You will be able to view the workbook as well as edit it and save a copy to your PC.
@@ -1453,7 +1453,7 @@ BookmarkAllOptionsHere=Utwórz zakładki dla wszystkich opcji
 
 #description: Mark the current position as a thumbnail
 #english: MarkAsThumbnail=Mark as Thumbnail
-MarkAsThumbnail= Zaznacz jako Wizytówkę Rozdziału
+MarkAsThumbnail=Zaznacz jako Wizytówkę Rozdziału
 
 #description: ChapterThumbnail
 #english: ChapterThumbnail=Thumbnail for Chapters View
@@ -1516,8 +1516,8 @@ Chapter0of0=Rozdział $0 z $1
 StartTrainingFromThisBookmark=Rozpocznij tu Trening
 
 #description: Go to bookmarked position
-#english: GoToPosition= Go To Position
-GoToPosition= Idź do Pozycji
+#english: GoToPosition=Go To Position
+GoToPosition=Idź do Pozycji
 
 #description: Generate bookmarks
 #english: GenerateBookmarks=Generate Bookmarks
@@ -1778,13 +1778,29 @@ MbtTitleCopyPasteError=Błąd w Kopiuj/Wklej
 #english: MsgNeedValidUrlOrEmpty=Enter valid Url or leave empty to delete link. 
 MsgNeedValidUrlOrEmpty=Podaj prawidłowy Url or zostaw pusty aby usunąć link. 
 
+#description: Invalid Move
+#english: InvalidMove=Invalid Move
+InvalidMove=Nierozpoznany ruch
+
+#description: Invalid PGN
+#english: InvalidPgn=Invalid PGN
+InvalidPgn=Tekst nierozponany jako PGN
+
+#description: Variation already in the tree
+#english: VariationAlreadyExists=Variation already present
+VariationAlreadyExists=Wariant już istnieje
+
 #description: Background read is in progress
 #english: DataProcessingInProgress=File processing is in progress. Please wait...
 DataProcessingInProgress=Trwa wczytywanie pliku. Proszę czekać...
 
+#description: Error while parsing PGN
+#english: PgnParsingError=PGN parsing error
+PgnParsingError=Błąd w analizie PGN
+
 #description: Error while parsing Intro data
 #english: ErrorParsingIntro=The Intro data has been corrupted.
-ErrorParsingIntro=Dane Wstępu zostały Uszkodzone.
+ErrorParsingIntro=Dane Wstępu zostały uszkodzone.
 
 #description: Flash message: Game Imported Successfully.
 #english: FlMsgGameImportSuccess=Game Imported Successfully.
@@ -2068,8 +2084,8 @@ TextForDisplay=Tekst na Ekran
 EditPosition=Ustaw Pozycję
 
 #description: Number of occurrences
-#english: NumberOfOccurrences = Number of occurrences
-NumberOfOccurrences = Liczba znalezionych pozycji
+#english: NumberOfOccurrences=Number of occurrences
+NumberOfOccurrences=Liczba znalezionych pozycji
 
 #description: Info in the View References Dialog
 #english: InfoGameExerciseReferences=Double click to preview, right click for options
@@ -2797,7 +2813,7 @@ cbRightClickCreateGame=Naciśnij prawy przycisk, by otworzyć menu partii
 cbRightClickCreateExercise=Naciśnij prawy przycisk, by otworzyć menu ćwiczeń
 
 #description: Make moves on main board
-#english: cbMoveToEnterSolution= Make moves on the main board to enter solution
+#english: cbMoveToEnterSolution=Make moves on the main board to enter solution
 cbMoveToEnterSolution=Użyj głównej szachownicy, by wprowadzić rozwiązanie
 
 #description: Double click to assign quiz points

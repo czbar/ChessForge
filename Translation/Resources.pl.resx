@@ -1275,11 +1275,23 @@
   <data name="MsgNeedValidUrlOrEmpty" xml:space="preserve">
     <value>Podaj prawidłowy Url or zostaw pusty aby usunąć link. </value>
   </data>
+  <data name="InvalidMove" xml:space="preserve">
+    <value>Nierozpoznany ruch</value>
+  </data>
+  <data name="InvalidPgn" xml:space="preserve">
+    <value>Tekst nierozponany jako PGN</value>
+  </data>
+  <data name="VariationAlreadyExists" xml:space="preserve">
+    <value>Wariant już istnieje</value>
+  </data>
   <data name="DataProcessingInProgress" xml:space="preserve">
     <value>Trwa wczytywanie pliku. Proszę czekać...</value>
   </data>
+  <data name="PgnParsingError" xml:space="preserve">
+    <value>Błąd w analizie PGN</value>
+  </data>
   <data name="ErrorParsingIntro" xml:space="preserve">
-    <value>Dane Wstępu zostały Uszkodzone.</value>
+    <value>Dane Wstępu zostały uszkodzone.</value>
   </data>
   <data name="FlMsgGameImportSuccess" xml:space="preserve">
     <value>Partia Została Zaimportowana.</value>
