@@ -1288,10 +1288,10 @@
     <value>Trwa wczytywanie pliku. Proszę czekać...</value>
   </data>
   <data name="PgnParsingError" xml:space="preserve">
-    <value>Błąd w analiziePGN</value>
+    <value>Błąd w analizie PGN</value>
   </data>
   <data name="ErrorParsingIntro" xml:space="preserve">
-    <value>Dane Wstępu zostały Uszkodzone.</value>
+    <value>Dane Wstępu zostały uszkodzone.</value>
   </data>
   <data name="FlMsgGameImportSuccess" xml:space="preserve">
     <value>Partia Została Zaimportowana.</value>

@@ -1796,11 +1796,11 @@ DataProcessingInProgress=Trwa wczytywanie pliku. Proszę czekać...
 
 #description: Error while parsing PGN
 #english: PgnParsingError=PGN parsing error
-PgnParsingError=Błąd w analiziePGN
+PgnParsingError=Błąd w analizie PGN
 
 #description: Error while parsing Intro data
 #english: ErrorParsingIntro=The Intro data has been corrupted.
-ErrorParsingIntro=Dane Wstępu zostały Uszkodzone.
+ErrorParsingIntro=Dane Wstępu zostały uszkodzone.
 
 #description: Flash message: Game Imported Successfully.
 #english: FlMsgGameImportSuccess=Game Imported Successfully.
