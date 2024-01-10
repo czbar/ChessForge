@@ -18,6 +18,7 @@ namespace GameTree
         public enum ParseErrorType
         {
             PGN_GAME_EXPECTED_MOVE_NUMBER,
+            PGN_INVALID_MOVE,
         }
 
         /// <summary>

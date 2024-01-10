@@ -404,6 +404,11 @@ namespace ChessForge
                         + " " + Properties.Resources.ErrInsteadOfMoveNumber
                         + ", " + Properties.Resources.ErrAfterMove + " " + ex.PreviousMove);
                     break;
+                case ParserException.ParseErrorType.PGN_INVALID_MOVE:
+                    sb.Append(Properties.Resources.PgnParsingError
+                        + ": " + Properties.Resources.InvalidMove + " "
+                        + ex.CurrentToken);
+                    break;
                 default:
                     return ex.Message;
             }
