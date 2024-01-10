@@ -3266,6 +3266,24 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid Move.
+        /// </summary>
+        public static string InvalidMove {
+            get {
+                return ResourceManager.GetString("InvalidMove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid PGN.
+        /// </summary>
+        public static string InvalidPgn {
+            get {
+                return ResourceManager.GetString("InvalidPgn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid Position Setup.
         /// </summary>
         public static string InvalidPositionSetup {
@@ -4226,6 +4244,15 @@ namespace ChessForge.Properties {
         public static string PgnMissingMoveAfter {
             get {
                 return ResourceManager.GetString("PgnMissingMoveAfter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PGN parsing error.
+        /// </summary>
+        public static string PgnParsingError {
+            get {
+                return ResourceManager.GetString("PgnParsingError", resourceCulture);
             }
         }
         
@@ -6089,6 +6116,15 @@ namespace ChessForge.Properties {
         public static string UseVariableFontSize {
             get {
                 return ResourceManager.GetString("UseVariableFontSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Variation already present.
+        /// </summary>
+        public static string VariationAlreadyExists {
+            get {
+                return ResourceManager.GetString("VariationAlreadyExists", resourceCulture);
             }
         }
         

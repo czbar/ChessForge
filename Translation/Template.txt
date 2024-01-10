@@ -950,8 +950,8 @@ ChessForgeOnlineLibrary=
 Bookcase=
 
 #description: Shelf
-#english: Shelf = Shelf
-Shelf =
+#english: Shelf=Shelf
+Shelf=
 
 #description: Intro line
 #english: OnlineLibraryInfo=Click on any blue link below to download the corresponding workbook. You will be able to view the workbook as well as edit it and save a copy to your PC.
@@ -1516,7 +1516,7 @@ Chapter0of0=
 StartTrainingFromThisBookmark=
 
 #description: Go to bookmarked position
-#english: GoToPosition= Go To Position
+#english: GoToPosition=Go To Position
 GoToPosition=
 
 #description: Generate bookmarks
@@ -1778,9 +1778,25 @@ MbtTitleCopyPasteError=
 #english: MsgNeedValidUrlOrEmpty=Enter valid Url or leave empty to delete link. 
 MsgNeedValidUrlOrEmpty=
 
+#description: Invalid Move
+#english: InvalidMove=Invalid Move
+InvalidMove=
+
+#description: Invalid PGN
+#english: InvalidPgn=Invalid PGN
+InvalidPgn=
+
+#description: Variation already in the tree
+#english: VariationAlreadyExists=Variation already present
+VariationAlreadyExists=
+
 #description: Background read is in progress
 #english: DataProcessingInProgress=File processing is in progress. Please wait...
 DataProcessingInProgress=
+
+#description: Error while parsing PGN
+#english: PgnParsingError=PGN parsing error
+PgnParsingError=
 
 #description: Error while parsing Intro data
 #english: ErrorParsingIntro=The Intro data has been corrupted.
@@ -2068,8 +2084,8 @@ TextForDisplay=
 EditPosition=
 
 #description: Number of occurrences
-#english: NumberOfOccurrences = Number of occurrences
-NumberOfOccurrences =
+#english: NumberOfOccurrences=Number of occurrences
+NumberOfOccurrences=
 
 #description: Info in the View References Dialog
 #english: InfoGameExerciseReferences=Double click to preview, right click for options
@@ -2797,7 +2813,7 @@ cbRightClickCreateGame=
 cbRightClickCreateExercise=
 
 #description: Make moves on main board
-#english: cbMoveToEnterSolution= Make moves on the main board to enter solution
+#english: cbMoveToEnterSolution=Make moves on the main board to enter solution
 cbMoveToEnterSolution=
 
 #description: Double click to assign quiz points

@@ -740,7 +740,7 @@ ChessForgeOnlineLibrary=Chess Forge Online Library
 Bookcase=Bookcase
 
 #Shelf
-Shelf = Shelf
+Shelf=Shelf
 
 #Intro line
 OnlineLibraryInfo=Click on any blue link below to download the corresponding workbook. You will be able to view the workbook as well as edit it and save a copy to your PC.
@@ -1183,7 +1183,7 @@ Chapter0of0=Chapter $0 of $1
 StartTrainingFromThisBookmark=Start Training from This Bookmark
 
 #Go to bookmarked position
-GoToPosition= Go To Position
+GoToPosition=Go To Position
 
 #Generate bookmarks
 GenerateBookmarks=Generate Bookmarks
@@ -1392,8 +1392,20 @@ MbtTitleCopyPasteError=Copy/Paste Error
 #Invalid Url
 MsgNeedValidUrlOrEmpty=Enter valid Url or leave empty to delete link. 
 
+#Invalid Move
+InvalidMove=Invalid Move
+
+#Invalid PGN
+InvalidPgn=Invalid PGN
+
+#Variation already in the tree
+VariationAlreadyExists=Variation already present
+
 #Background read is in progress
 DataProcessingInProgress=File processing is in progress. Please wait...
+
+#Error while parsing PGN
+PgnParsingError=PGN parsing error
 
 #Error while parsing Intro data
 ErrorParsingIntro=The Intro data has been corrupted.
@@ -1612,7 +1624,7 @@ TextForDisplay=Text for Display
 EditPosition=Edit Position
 
 #Number of occurrences
-NumberOfOccurrences = Number of occurrences
+NumberOfOccurrences=Number of occurrences
 
 #Info in the View References Dialog
 InfoGameExerciseReferences=Double click to preview, right click for options
@@ -2169,7 +2181,7 @@ cbRightClickCreateGame=Right click to open menu to create or import a Game
 cbRightClickCreateExercise=Right click to open menu to create or import an Exercise
 
 #Make moves on main board
-cbMoveToEnterSolution= Make moves on the main board to enter solution
+cbMoveToEnterSolution=Make moves on the main board to enter solution
 
 #Double click to assign quiz points
 cbDoubleClickToAssignPoints=Double click a move to assign quiz points

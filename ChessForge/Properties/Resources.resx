@@ -1275,8 +1275,20 @@
   <data name="MsgNeedValidUrlOrEmpty" xml:space="preserve">
     <value>Enter valid Url or leave empty to delete link. </value>
   </data>
+  <data name="InvalidMove" xml:space="preserve">
+    <value>Invalid Move</value>
+  </data>
+  <data name="InvalidPgn" xml:space="preserve">
+    <value>Invalid PGN</value>
+  </data>
+  <data name="VariationAlreadyExists" xml:space="preserve">
+    <value>Variation already present</value>
+  </data>
   <data name="DataProcessingInProgress" xml:space="preserve">
     <value>File processing is in progress. Please wait...</value>
+  </data>
+  <data name="PgnParsingError" xml:space="preserve">
+    <value>PGN parsing error</value>
   </data>
   <data name="ErrorParsingIntro" xml:space="preserve">
     <value>The Intro data has been corrupted.</value>
