@@ -245,6 +245,7 @@
       <DependentUpon>SplitChapterDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="SplitChapterUtils.cs" />
+    <Compile Include="StatsData.cs" />
     <Compile Include="StatsUtils.cs" />
     <Compile Include="Tools.cs" />
     <Compile Include="TreeViewManagement\DisplaySector.cs" />
