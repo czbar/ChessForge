@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading;
 using ChessPosition;
 
 namespace ChessForge
@@ -25,7 +23,7 @@ namespace ChessForge
         /// <param name="draws"></param>
         /// <param name="commonPlayer_1"></param>
         /// <param name="commonPlayer_2"></param>
-        public void GetResultsStats(OperationScope scope, 
+        public static void GetResultsStats(OperationScope scope, 
                                     out int whiteWins, 
                                     out int blackWins, 
                                     out int draws,
@@ -51,25 +49,36 @@ namespace ChessForge
                 bool hasCommonPlayer_1 = true;
                 bool hasCommonPlayer_2 = true;
 
+                bool firstChapter = true;
+
                 foreach (Chapter chapter in AppState.Workbook.Chapters)
                 {
-                    if (GetChapterResultsStats(AppState.ActiveChapter, out int whiteChapterWins, out int blackChapterWins, out int chapterDraws,
+                    if (GetChapterResultsStats(chapter, out int whiteChapterWins, out int blackChapterWins, out int chapterDraws,
                                             out string chapterPlayer_1, out string chapterPlayer_2))
                     {
                         whiteWins += whiteChapterWins;
                         blackWins += blackChapterWins;
                         draws += chapterDraws;
 
-                        // check if we keep the current "common players"
-                        if (hasCommonPlayer_1 && commonPlayer_1 != chapterPlayer_1 && commonPlayer_1 != chapterPlayer_2)
+                        if (firstChapter)
                         {
-                            commonPlayer_1 = null;
-                            hasCommonPlayer_1 = false;
+                            commonPlayer_1 = chapterPlayer_1;
+                            commonPlayer_2 = chapterPlayer_2;
+                            firstChapter = false;
                         }
-                        if (hasCommonPlayer_2 && commonPlayer_2 != chapterPlayer_1 && commonPlayer_2 != chapterPlayer_2)
+                        else
                         {
-                            commonPlayer_2 = null;
-                            hasCommonPlayer_2 = false;
+                            // check if we keep the current "common players"
+                            if (hasCommonPlayer_1 && commonPlayer_1 != chapterPlayer_1 && commonPlayer_1 != chapterPlayer_2)
+                            {
+                                commonPlayer_1 = null;
+                                hasCommonPlayer_1 = false;
+                            }
+                            if (hasCommonPlayer_2 && commonPlayer_2 != chapterPlayer_1 && commonPlayer_2 != chapterPlayer_2)
+                            {
+                                commonPlayer_2 = null;
+                                hasCommonPlayer_2 = false;
+                            }
                         }
                     }
                 }
@@ -86,7 +95,7 @@ namespace ChessForge
         /// <param name="commonPlayer_1"></param>
         /// <param name="commonPlayer_2"></param>
         /// <returns>true if any games were processed</returns>
-        private bool GetChapterResultsStats(Chapter chapter,
+        private static bool GetChapterResultsStats(Chapter chapter,
                                             out int whiteWins,
                                             out int blackWins,
                                             out int draws,
@@ -127,7 +136,7 @@ namespace ChessForge
                     // update player stats
                     if (!_playersGameCounts.ContainsKey(whitePlayer))
                     {
-                        _playersGameCounts.Add(whitePlayer, 0);
+                        _playersGameCounts.Add(whitePlayer, 1);
                     }
                     else
                     {
@@ -138,7 +147,7 @@ namespace ChessForge
                     // otherwise we may get into some unwanted cases when a player plays vs themselves
                     if (!_playersGameCounts.ContainsKey(blackPlayer))
                     {
-                        _playersGameCounts.Add(blackPlayer, 0);
+                        _playersGameCounts.Add(blackPlayer, 1);
                     }
                     else
                     {
