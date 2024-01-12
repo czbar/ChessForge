@@ -43,43 +43,22 @@ namespace ChessForge
         /// <summary>
         /// Name of the player if there was one found in every game
         /// </summary>
-        public string CommonPlayer_1;
+        public string CommonPlayer_1 = null;
 
         /// <summary>
         /// Name of another player if there was one found in every game
         /// </summary>
-        public string CommonPlayer_2;
+        public string CommonPlayer_2 = null;
 
         /// <summary>
         /// Statistics for player 1.
         /// </summary>
-        PlayerScoresStats Player_1_Stats = new PlayerScoresStats();
+        public PlayerScoresStats Player_1_Stats = new PlayerScoresStats();
 
         /// <summary>
         /// Statistics for player 2.
         /// </summary>
-        PlayerScoresStats Player_2_Stats = new PlayerScoresStats();
-
-        /// <summary>
-        /// Statistics for player 1 with White
-        /// </summary>
-        PlayerScoresStats Player_1_WhiteStats = new PlayerScoresStats();
-
-        /// <summary>
-        /// Statistics for player 2 with White
-        /// </summary>
-        PlayerScoresStats Player_2_WhiteStats = new PlayerScoresStats();
-
-
-        /// <summary>
-        /// Statistics for player 1 with Black
-        /// </summary>
-        PlayerScoresStats Player_1_BlackStats = new PlayerScoresStats();
-
-        /// <summary>
-        /// Statistics for player 2 with Black
-        /// </summary>
-        PlayerScoresStats Player_2_BlackStats = new PlayerScoresStats();
+        public PlayerScoresStats Player_2_Stats = new PlayerScoresStats();
     }
 
     /// <summary>
@@ -106,5 +85,26 @@ namespace ChessForge
         /// Number of draws
         /// </summary>
         public int Draws;
+
+        /// <summary>
+        /// Stats for games with White
+        /// </summary>
+        public PlayerScoresStats WhiteScoreStats = new PlayerScoresStats();
+
+        /// <summary>
+        /// Stats for games with Black
+        /// </summary>
+        public PlayerScoresStats BlackScoreStats = new PlayerScoresStats();
+
+        /// <summary>
+        /// Sums up color scores to arrive at the total.
+        /// </summary>
+        public void SumupColorTotals()
+        {
+            GameCount = WhiteScoreStats.GameCount + BlackScoreStats.GameCount;
+            Wins = WhiteScoreStats.Wins + BlackScoreStats.Wins;
+            Losses = WhiteScoreStats.Losses + BlackScoreStats.Losses;
+            Draws = WhiteScoreStats.Draws + BlackScoreStats.Draws;
+        }
     }
 }
