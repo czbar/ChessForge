@@ -512,6 +512,14 @@ namespace ChessForge
                             menuItem.IsEnabled = showEnabled && SessionWorkbook != null && SessionWorkbook.HasAnyModelGames;
                             menuItem.Visibility = !isMini ? Visibility.Visible : Visibility.Collapsed;
                             break;
+                        case "UiMnChapterScores":
+                            menuItem.IsEnabled = showEnabled && SessionWorkbook != null;
+                            menuItem.Visibility = !isMini ? Visibility.Visible : Visibility.Collapsed;
+                            break;
+                        case "UiMnWorkbookScores":
+                            menuItem.IsEnabled = showEnabled && SessionWorkbook != null;
+                            menuItem.Visibility = !isMini ? Visibility.Visible : Visibility.Collapsed;
+                            break;
                     }
                 }
                 else if (item is Separator)

@@ -991,6 +991,26 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Reports chapter statistics
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnChapterStats_Click(object sender, RoutedEventArgs e)
+        {
+            StatsUtils.ReportStats(OperationScope.CHAPTER);
+        }
+
+        /// <summary>
+        /// Report workbook statistics
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnWorkbookStats_Click(object sender, RoutedEventArgs e)
+        {
+            StatsUtils.ReportStats(OperationScope.WORKBOOK);
+        }
+
+        /// <summary>
         /// Expand all chapters and article headers.
         /// </summary>
         /// <param name="sender"></param>
