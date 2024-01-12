@@ -558,13 +558,22 @@ ExpandAll=Rozwiń Wszystko
 #english: CollapseAll=Collapse All
 CollapseAll=Zwiń Wszystko
 
+#description: Collapse chapters
+#english: CollapseChapters=Collapse Chapters
+CollapseChapters=Zwiń rozdziały
+
 #description: Expand chapters
 #english: ExpandChapters=Expand Chapters
 ExpandChapters=Rozwiń rozdziały
 
-#description: Collapse chapters
-#english: CollapseChapters=Collapse Chapters
-CollapseChapters=Zwiń rozdziały
+#description: Chapter Stats
+#english: ChapterStats=Chapter Stats
+ChapterStats=Statystyki rozdziału
+
+#description: Workbook Stats
+#english: WorkbookStats=Workbook Stats
+WorkbookStats=Statystyki podręcznika
+
 
 #################################
 #

@@ -728,6 +728,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chapter Scores.
+        /// </summary>
+        public static string ChapterStats {
+            get {
+                return ResourceManager.GetString("ChapterStats", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Thumbnail for Chapters View.
         /// </summary>
         public static string ChapterThumbnail {
@@ -6305,6 +6314,15 @@ namespace ChessForge.Properties {
         public static string Workbooks {
             get {
                 return ResourceManager.GetString("Workbooks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Workbook Scores.
+        /// </summary>
+        public static string WorkbookStats {
+            get {
+                return ResourceManager.GetString("WorkbookStats", resourceCulture);
             }
         }
         

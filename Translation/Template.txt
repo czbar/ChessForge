@@ -558,13 +558,22 @@ ExpandAll=
 #english: CollapseAll=Collapse All
 CollapseAll=
 
+#description: Collapse chapters
+#english: CollapseChapters=Collapse Chapters
+CollapseChapters=
+
 #description: Expand chapters
 #english: ExpandChapters=Expand Chapters
 ExpandChapters=
 
-#description: Collapse chapters
-#english: CollapseChapters=Collapse Chapters
-CollapseChapters=
+#description: Chapter Stats
+#english: ChapterStats=Chapter Stats
+ChapterStats=
+
+#description: Workbook Stats
+#english: WorkbookStats=Workbook Stats
+WorkbookStats=
+
 
 #################################
 #

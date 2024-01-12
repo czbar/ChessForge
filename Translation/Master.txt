@@ -429,11 +429,18 @@ ExpandAll=Expand All
 #Collapse all
 CollapseAll=Collapse All
 
+#Collapse chapters
+CollapseChapters=Collapse Chapters
+
 #Expand chapters
 ExpandChapters=Expand Chapters
 
-#Collapse chapters
-CollapseChapters=Collapse Chapters
+#Chapter Stats
+ChapterStats=Chapter Stats
+
+#Workbook Stats
+WorkbookStats=Workbook Stats
+
 
 #################################
 #

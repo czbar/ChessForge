@@ -504,11 +504,17 @@
   <data name="CollapseAll" xml:space="preserve">
     <value>Collapse All</value>
   </data>
+  <data name="CollapseChapters" xml:space="preserve">
+    <value>Collapse Chapters</value>
+  </data>
   <data name="ExpandChapters" xml:space="preserve">
     <value>Expand Chapters</value>
   </data>
-  <data name="CollapseChapters" xml:space="preserve">
-    <value>Collapse Chapters</value>
+  <data name="ChapterStats" xml:space="preserve">
+    <value>Chapter Stats</value>
+  </data>
+  <data name="WorkbookStats" xml:space="preserve">
+    <value>Workbook Stats</value>
   </data>
   <data name="Training" xml:space="preserve">
     <value>Training</value>
