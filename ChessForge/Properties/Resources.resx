@@ -726,6 +726,30 @@
   <data name="EgCentipawnAccuracy" xml:space="preserve">
     <value>max allowed centipawn deviation from the best move is</value>
   </data>
+  <data name="Statistics" xml:space="preserve">
+    <value>Statistics</value>
+  </data>
+  <data name="WhiteWins" xml:space="preserve">
+    <value>White Wins</value>
+  </data>
+  <data name="BlackWins" xml:space="preserve">
+    <value>Black Wins</value>
+  </data>
+  <data name="Draws" xml:space="preserve">
+    <value>Draws</value>
+  </data>
+  <data name="PlayerResults" xml:space="preserve">
+    <value>Player's Game Results</value>
+  </data>
+  <data name="Overall" xml:space="preserve">
+    <value>Overall</value>
+  </data>
+  <data name="PlayedEveryGame" xml:space="preserve">
+    <value>*** Played Every Game</value>
+  </data>
+  <data name="Alphabetically" xml:space="preserve">
+    <value>*** Alphabetically</value>
+  </data>
   <data name="Split" xml:space="preserve">
     <value>Split</value>
   </data>

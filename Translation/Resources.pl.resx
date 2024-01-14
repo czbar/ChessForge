@@ -726,6 +726,30 @@
   <data name="EgCentipawnAccuracy" xml:space="preserve">
     <value>maksymalne odchylenie od najlepszego ruchu wynosi</value>
   </data>
+  <data name="Statistics" xml:space="preserve">
+    <value>Statystyka</value>
+  </data>
+  <data name="WhiteWins" xml:space="preserve">
+    <value>Wygrane białych</value>
+  </data>
+  <data name="BlackWins" xml:space="preserve">
+    <value>Wygrane czarnych</value>
+  </data>
+  <data name="Draws" xml:space="preserve">
+    <value>Remisy</value>
+  </data>
+  <data name="PlayerResults" xml:space="preserve">
+    <value>Wyniki Partii Zawodnika</value>
+  </data>
+  <data name="Overall" xml:space="preserve">
+    <value>Ogółem</value>
+  </data>
+  <data name="PlayedEveryGame" xml:space="preserve">
+    <value>*** Grał wszystkie partie</value>
+  </data>
+  <data name="Alphabetically" xml:space="preserve">
+    <value>*** Alfabetycznie</value>
+  </data>
   <data name="Split" xml:space="preserve">
     <value>Podziel</value>
   </data>

@@ -906,6 +906,44 @@ EgSelectionAccuracyLabel=Dokładność wyboru ruchów wynosi
 EgCentipawnAccuracy=maksymalne odchylenie od najlepszego ruchu wynosi
 
 
+
+#######################################
+#
+# Header: DIALOG Statistics
+#
+
+#description: Statistics
+#english: Statistics=Statistics
+Statistics=Statystyka
+
+#description: White wins
+#english: WhiteWins=White Wins
+WhiteWins=Wygrane białych
+
+#description: Black wins
+#english: BlackWins=Black Wins
+BlackWins=Wygrane czarnych
+
+#description: Draws
+#english: Draws=Draws
+Draws=Remisy
+
+#description: Player Results
+#english: PlayerResults=Player's Game Results
+PlayerResults=Wyniki Partii Zawodnika
+
+#description: Overall
+#english: Overall=Overall
+Overall=Ogółem
+
+#description: Played every game
+#english: PlayedEveryGame=*** Played Every Game
+PlayedEveryGame=*** Grał wszystkie partie
+
+#description: Alphabetically
+#english: Alphabetically=*** Alphabetically
+Alphabetically=*** Alfabetycznie
+
 #######################################
 #
 # Header: DIALOG Split Chapter

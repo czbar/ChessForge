@@ -567,11 +567,11 @@ CollapseChapters=Zwiń rozdziały
 ExpandChapters=Rozwiń rozdziały
 
 #description: Chapter Stats
-#english: ChapterStats=Chapter Scores
+#english: ChapterStats=Chapter Stats
 ChapterStats=Statystyki rozdziału
 
 #description: Workbook Stats
-#english: WorkbookStats=Workbook Scores
+#english: WorkbookStats=Workbook Stats
 WorkbookStats=Statystyki podręcznika
 
 
@@ -905,6 +905,44 @@ EgSelectionAccuracyLabel=Dokładność wyboru ruchów wynosi
 #english: EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
 EgCentipawnAccuracy=maksymalne odchylenie od najlepszego ruchu wynosi
 
+
+
+#######################################
+#
+# Header: DIALOG Statistics
+#
+
+#description: Statistics
+#english: Statistics=Statistics
+Statistics=Statystyka
+
+#description: White wins
+#english: WhiteWins=White Wins
+WhiteWins=Wygrane białych
+
+#description: Black wins
+#english: BlackWins=Black Wins
+BlackWins=Wygrane czarnych
+
+#description: Draws
+#english: Draws=Draws
+Draws=Remisy
+
+#description: Player Results
+#english: PlayerResults=Player's Game Results
+PlayerResults=Wyniki Partii Zawodnika
+
+#description: Overall
+#english: Overall=Overall
+Overall=Ogółem
+
+#description: Played every game
+#english: PlayedEveryGame=*** Played Every Game
+PlayedEveryGame=*** Grał wszystkie partie
+
+#description: Alphabetically
+#english: Alphabetically=*** Alphabetically
+Alphabetically=*** Alfabetycznie
 
 #######################################
 #

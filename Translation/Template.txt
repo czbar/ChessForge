@@ -906,6 +906,44 @@ EgSelectionAccuracyLabel=
 EgCentipawnAccuracy=
 
 
+
+#######################################
+#
+# Header: DIALOG Statistics
+#
+
+#description: Statistics
+#english: Statistics=Statistics
+Statistics=
+
+#description: White wins
+#english: WhiteWins=White Wins
+WhiteWins=
+
+#description: Black wins
+#english: BlackWins=Black Wins
+BlackWins=
+
+#description: Draws
+#english: Draws=Draws
+Draws=
+
+#description: Player Results
+#english: PlayerResults=Player's Game Results
+PlayerResults=
+
+#description: Overall
+#english: Overall=Overall
+Overall=
+
+#description: Played every game
+#english: PlayedEveryGame=*** Played Every Game
+PlayedEveryGame=
+
+#description: Alphabetically
+#english: Alphabetically=*** Alphabetically
+Alphabetically=
+
 #######################################
 #
 # Header: DIALOG Split Chapter
