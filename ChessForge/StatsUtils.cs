@@ -18,12 +18,16 @@ namespace ChessForge
         /// <param name="scope"></param>
         public static void ReportStats(OperationScope scope)
         {
-            Dictionary<string, PlayerAggregatedStats> _dictPlayersStats = new Dictionary<string, PlayerAggregatedStats>();
+            Dictionary<string, PlayerAggregatedStats> dictPlayersStats = new Dictionary<string, PlayerAggregatedStats>();
             StatsData stats = new StatsData();
-            GetResultsStats(scope, stats, _dictPlayersStats);
+
+            Chapter chapter = AppState.ActiveChapter;
+            GetResultsStats(scope, chapter, stats, dictPlayersStats);
 
             // report in the dialog
-            // identify the common player(s)
+            StatsDialog dlg = new StatsDialog(scope, chapter, stats, dictPlayersStats);
+            GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
+            dlg.ShowDialog();
         }
 
         /// <summary>
@@ -38,29 +42,29 @@ namespace ChessForge
         /// <param name="draws"></param>
         /// <param name="commonPlayer_1"></param>
         /// <param name="commonPlayer_2"></param>
-        public static void GetResultsStats(OperationScope scope, StatsData stats, Dictionary<string, PlayerAggregatedStats> dictPlayersStats)
+        public static void GetResultsStats(OperationScope scope, Chapter chapter, StatsData stats, Dictionary<string, PlayerAggregatedStats> dictPlayersStats)
         {
             if (scope == OperationScope.CHAPTER)
             {
-                if (AppState.ActiveChapter != null)
+                if (chapter != null)
                 {
-                    GetChapterResultsStats(AppState.ActiveChapter, stats, dictPlayersStats);
+                    GetChapterResultsStats(chapter, stats, dictPlayersStats);
 
                     stats.ChapterCount = 1;
-                    stats.GameCount = AppState.ActiveChapter.GetModelGameCount();
-                    stats.ExerciseCount = AppState.ActiveChapter.GetExerciseCount();
+                    stats.GameCount = chapter.GetModelGameCount();
+                    stats.ExerciseCount = chapter.GetExerciseCount();
                 }
             }
             else if (scope == OperationScope.WORKBOOK && AppState.Workbook != null)
             {
-                foreach (Chapter chapter in AppState.Workbook.Chapters)
+                foreach (Chapter ch in AppState.Workbook.Chapters)
                 {
                     stats.ChapterCount++;
-                    stats.GameCount += chapter.GetModelGameCount();
-                    stats.ExerciseCount += chapter.GetExerciseCount();
+                    stats.GameCount += ch.GetModelGameCount();
+                    stats.ExerciseCount += ch.GetExerciseCount();
 
                     StatsData chapterStats = new StatsData();
-                    if (GetChapterResultsStats(chapter, chapterStats, dictPlayersStats))
+                    if (GetChapterResultsStats(ch, chapterStats, dictPlayersStats))
                     {
                         stats.WhiteWins += chapterStats.WhiteWins;
                         stats.BlackWins += chapterStats.BlackWins;
