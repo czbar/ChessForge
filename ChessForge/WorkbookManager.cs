@@ -1191,20 +1191,23 @@ namespace ChessForge
         /// <returns></returns>
         public static bool AskToSaveWorkbookOnClose()
         {
-            if (!PromptAndSaveWorkbook(false, out _))
+            if (SessionWorkbook != null)
             {
-                // the user chose cancel so we are not closing after all
-                return false;
-            }
-            else
-            {
-                SessionWorkbook.GamesManager.CancelAll();
-            }
+                if (!PromptAndSaveWorkbook(false, out _))
+                {
+                    // the user chose cancel so we are not closing after all
+                    return false;
+                }
+                else
+                {
+                    SessionWorkbook.GamesManager.CancelAll();
+                }
 
-            WorkbookViewState wvs = new WorkbookViewState(SessionWorkbook);
-            wvs.SaveState();
+                WorkbookViewState wvs = new WorkbookViewState(SessionWorkbook);
+                wvs.SaveState();
 
-            AppState.RestartInIdleMode();
+                AppState.RestartInIdleMode();
+            }
             return true;
         }
 
