@@ -372,6 +372,9 @@
   <data name="EndDate" xml:space="preserve">
     <value>End Date</value>
   </data>
+  <data name="Today" xml:space="preserve">
+    <value>Today</value>
+  </data>
   <data name="WebSite" xml:space="preserve">
     <value>Site</value>
   </data>

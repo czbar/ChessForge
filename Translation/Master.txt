@@ -274,6 +274,10 @@ StartDate=Start Date
 #End date
 EndDate=End Date
 
+#Today
+Today=Today
+
+
 #Web site
 WebSite=Site
 

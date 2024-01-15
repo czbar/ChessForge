@@ -359,6 +359,11 @@ StartDate=Data początkowa
 #english: EndDate=End Date
 EndDate=Data końcowa
 
+#description: Today
+#english: Today=Today
+Today=Dzisiaj
+
+
 #description: Web site
 #english: WebSite=Site
 WebSite=Strona
