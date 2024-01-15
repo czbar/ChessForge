@@ -562,6 +562,7 @@
     <Resource Include="Resources\Images\arrow-right.png" />
     <Resource Include="Resources\Images\BlackPromoInverted.png" />
     <Resource Include="Resources\Images\WhitePromoInverted.png" />
+    <Resource Include="Resources\Images\ResetDates.png" />
     <Content Include="Resources\Sounds\Confirmation.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
