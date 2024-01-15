@@ -36,6 +36,6 @@
             </Canvas>
         </GroupBox>
         <Button x:Name="UiBtnClose" IsCancel="True" Content="{x:Static p:Resources.Close}" HorizontalAlignment="Center" Margin="-120,360,0,0" Width="100" VerticalAlignment="Top"/>
-        <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Center" Margin="120,360,0,0" Width="100" VerticalAlignment="Top"/>
+        <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Center" Margin="120,360,0,0" Width="100" VerticalAlignment="Top" Click="UiBtnHelp_Click"/>
     </Grid>
 </Window>
