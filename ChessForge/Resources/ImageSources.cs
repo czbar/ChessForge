@@ -24,5 +24,6 @@ namespace ChessForge
         public static BitmapImage ChevronDown = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/chevron-down.png", UriKind.RelativeOrAbsolute));
         public static BitmapImage LichessLogo = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/lichess_logo.png", UriKind.RelativeOrAbsolute));
         public static BitmapImage FlipBoard = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/flip_board.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage ResetDates = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ResetDates.png", UriKind.RelativeOrAbsolute));
     }
 }

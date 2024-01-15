@@ -274,6 +274,10 @@ StartDate=Start Date
 #End date
 EndDate=End Date
 
+#Today
+Today=Today
+
+
 #Web site
 WebSite=Site
 
@@ -429,11 +433,18 @@ ExpandAll=Expand All
 #Collapse all
 CollapseAll=Collapse All
 
+#Collapse chapters
+CollapseChapters=Collapse Chapters
+
 #Expand chapters
 ExpandChapters=Expand Chapters
 
-#Collapse chapters
-CollapseChapters=Collapse Chapters
+#Chapter Stats
+ChapterStats=Chapter Stats
+
+#Workbook Stats
+WorkbookStats=Workbook Stats
+
 
 #################################
 #
@@ -695,6 +706,36 @@ EgSelectionAccuracyLabel=Move selection accuracy is
 #Cenitpawn accuracy
 EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
 
+
+
+#######################################
+#
+# Header: DIALOG Statistics
+#
+
+#Statistics
+Statistics=Statistics
+
+#White wins
+WhiteWins=White Wins
+
+#Black wins
+BlackWins=Black Wins
+
+#Draws
+Draws=Draws
+
+#Player Results
+PlayerResults=Player's Game Results
+
+#Overall
+Overall=Overall
+
+#Played every game
+PlayedEveryGame=*** Played Every Game
+
+#Alphabetically
+Alphabetically=*** Alphabetically
 
 #######################################
 #

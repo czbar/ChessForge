@@ -1,0 +1,41 @@
+﻿<Window x:Class="ChessForge.StatsDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:p="clr-namespace:ChessForge.Properties"
+        xmlns:local="clr-namespace:ChessForge"
+        mc:Ignorable="d"
+        Title="{x:Static p:Resources.Statistics}" Height="440" Width="500">
+    <Grid>
+        <GroupBox x:Name="UiGbChapterStats" Header="" VerticalAlignment="Top" Margin="10,10" Height="160">
+            <Canvas>
+                <Label x:Name="UiLblChapters" Content="{x:Static p:Resources.Chapters}" HorizontalAlignment="Left" Margin="10,5"/>
+                <Label x:Name="UiLblChaptersCount" Content="" HorizontalAlignment="Left" Margin="150,5" Width="40" HorizontalContentAlignment="Right" />
+                <Label x:Name="UiLblGames" Content="{x:Static p:Resources.Games}" HorizontalAlignment="Left" Margin="10,28"/>
+                <Label x:Name="UiLblGamesCount" Content="" HorizontalAlignment="Left" Margin="150,28" Width="40" HorizontalContentAlignment="Right" />
+                <Label x:Name="UiLblWhiteWins" Content="{x:Static p:Resources.WhiteWins}" HorizontalAlignment="Left" Margin="40,48"/>
+                <Label x:Name="UiLblWhiteWinsCount" Content="" HorizontalAlignment="Left" Margin="180,48" Width="40" HorizontalContentAlignment="Right" />
+                <Label x:Name="UiLblBlackWins" Content="{x:Static p:Resources.BlackWins}" HorizontalAlignment="Left" Margin="40,68"/>
+                <Label x:Name="UiLblBlackWinsCount" Content="" HorizontalAlignment="Left" Margin="180,68" Width="40" HorizontalContentAlignment="Right" />
+                <Label x:Name="UiLblDraws" Content="{x:Static p:Resources.Draws}" HorizontalAlignment="Left" Margin="40,88"/>
+                <Label x:Name="UiLblDrawsCount" Content="" HorizontalAlignment="Left" Margin="180,88" Width="40" HorizontalContentAlignment="Right" />
+                <Label x:Name="UiLblExercises" Content="{x:Static p:Resources.Exercises}" HorizontalAlignment="Left" Margin="10,108"/>
+                <Label x:Name="UiLblExercisesCount" Content="" HorizontalAlignment="Left" Margin="150,108" Width="40" HorizontalContentAlignment="Right" />
+            </Canvas>
+        </GroupBox>
+        <GroupBox x:Name="UiGbPlayerStats" Header="{x:Static p:Resources.PlayerResults}" VerticalAlignment="Top" Height="160" Margin="10,180,10,10">
+            <Canvas>
+                <ListBox x:Name="UiLbPlayers" ItemsSource="{Binding}" SelectionMode="Single" Height="120" Margin="10,10" Width="160" SelectionChanged="UiLbPlayers_SelectionChanged" />
+                <Label x:Name="UiLblOverall" Content="{x:Static p:Resources.Overall}" HorizontalAlignment="Left" Margin="200,20"/>
+                <Label x:Name="UiLblOverallCount" Content="" HorizontalAlignment="Left" Margin="300,20" HorizontalContentAlignment="Right" />
+                <Label x:Name="UiLblWhite" Content="{x:Static p:Resources.White}" HorizontalAlignment="Left" Margin="200,60"/>
+                <Label x:Name="UiLblWhiteCount" Content="" HorizontalAlignment="Left" Margin="300,60" HorizontalContentAlignment="Right" />
+                <Label x:Name="UiLblBlack" Content="{x:Static p:Resources.Black}" HorizontalAlignment="Left" Margin="200,90"/>
+                <Label x:Name="UiLblBlackCount" Content="" HorizontalAlignment="Left" Margin="300,90" HorizontalContentAlignment="Right" />
+            </Canvas>
+        </GroupBox>
+        <Button x:Name="UiBtnClose" IsCancel="True" Content="{x:Static p:Resources.Close}" HorizontalAlignment="Center" Margin="-120,360,0,0" Width="100" VerticalAlignment="Top"/>
+        <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Center" Margin="120,360,0,0" Width="100" VerticalAlignment="Top" Click="UiBtnHelp_Click"/>
+    </Grid>
+</Window>

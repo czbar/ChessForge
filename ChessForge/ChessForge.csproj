@@ -224,6 +224,7 @@
     <Compile Include="OperationScopeDialog.xaml.cs">
       <DependentUpon>OperationScopeDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PlayerStats.cs" />
     <Compile Include="PositionBoardDragEvents.cs" />
     <Compile Include="PreviousNextViewBars.cs" />
     <Compile Include="Properties\OpeningNames.Designer.cs">
@@ -245,6 +246,11 @@
       <DependentUpon>SplitChapterDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="SplitChapterUtils.cs" />
+    <Compile Include="StatsData.cs" />
+    <Compile Include="StatsDialog.xaml.cs">
+      <DependentUpon>StatsDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StatsUtils.cs" />
     <Compile Include="Tools.cs" />
     <Compile Include="TreeViewManagement\DisplaySector.cs" />
     <Compile Include="TreeViewManagement\TreeViewDisplayManager.cs" />
@@ -451,6 +457,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="StatsDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="TextBoxDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -552,6 +562,7 @@
     <Resource Include="Resources\Images\arrow-right.png" />
     <Resource Include="Resources\Images\BlackPromoInverted.png" />
     <Resource Include="Resources\Images\WhitePromoInverted.png" />
+    <Resource Include="Resources\Images\ResetDates.png" />
     <Content Include="Resources\Sounds\Confirmation.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -357,6 +357,7 @@ namespace ChessForge
 
                     WorkbookManager.SessionWorkbook.MergeChapters(merged, title, sourceChapters);
                     _chaptersView.BuildFlowDocumentForChaptersView();
+                    UiTabChapters.Focus();
                     PulseManager.ChaperIndexToBringIntoView = WorkbookManager.SessionWorkbook.GetChapterCount() - 1;
                 }
 
@@ -988,6 +989,26 @@ namespace ChessForge
         private void UiMnChptCollapseChapters_Click(object sender, RoutedEventArgs e)
         {
             ExpandCollapseChaptersView(false, false);
+        }
+
+        /// <summary>
+        /// Reports chapter statistics
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnChapterStats_Click(object sender, RoutedEventArgs e)
+        {
+            StatsUtils.ReportStats(OperationScope.CHAPTER);
+        }
+
+        /// <summary>
+        /// Report workbook statistics
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnWorkbookStats_Click(object sender, RoutedEventArgs e)
+        {
+            StatsUtils.ReportStats(OperationScope.WORKBOOK);
         }
 
         /// <summary>

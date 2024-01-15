@@ -154,7 +154,6 @@ namespace ChessForge
 
             // change the title and the "instruction" label
             this.Title = Properties.Resources.DownloadedGames;
-            UiLblInstruct.Content = Properties.Resources.SelectGames;
         }
 
         /// <summary>
@@ -189,6 +188,9 @@ namespace ChessForge
                     break;
                 case Mode.IMPORT_INTO_NEW_CHAPTER:
                     UiLblInstruct.Content = Properties.Resources.SelectItemsForChapter;
+                    break;
+                case Mode.DOWNLOAD_WEB_GAMES:
+                    UiLblInstruct.Content = Properties.Resources.SelectGames;
                     break;
             }
         }

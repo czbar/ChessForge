@@ -372,6 +372,9 @@
   <data name="EndDate" xml:space="preserve">
     <value>Data końcowa</value>
   </data>
+  <data name="Today" xml:space="preserve">
+    <value>Dzisiaj</value>
+  </data>
   <data name="WebSite" xml:space="preserve">
     <value>Strona</value>
   </data>
@@ -504,11 +507,17 @@
   <data name="CollapseAll" xml:space="preserve">
     <value>Zwiń Wszystko</value>
   </data>
+  <data name="CollapseChapters" xml:space="preserve">
+    <value>Zwiń rozdziały</value>
+  </data>
   <data name="ExpandChapters" xml:space="preserve">
     <value>Rozwiń rozdziały</value>
   </data>
-  <data name="CollapseChapters" xml:space="preserve">
-    <value>Zwiń rozdziały</value>
+  <data name="ChapterStats" xml:space="preserve">
+    <value>Statystyki rozdziału</value>
+  </data>
+  <data name="WorkbookStats" xml:space="preserve">
+    <value>Statystyki podręcznika</value>
   </data>
   <data name="Training" xml:space="preserve">
     <value>Trening</value>
@@ -719,6 +728,30 @@
   </data>
   <data name="EgCentipawnAccuracy" xml:space="preserve">
     <value>maksymalne odchylenie od najlepszego ruchu wynosi</value>
+  </data>
+  <data name="Statistics" xml:space="preserve">
+    <value>Statystyka</value>
+  </data>
+  <data name="WhiteWins" xml:space="preserve">
+    <value>Wygrane białych</value>
+  </data>
+  <data name="BlackWins" xml:space="preserve">
+    <value>Wygrane czarnych</value>
+  </data>
+  <data name="Draws" xml:space="preserve">
+    <value>Remisy</value>
+  </data>
+  <data name="PlayerResults" xml:space="preserve">
+    <value>Wyniki Partii Zawodnika</value>
+  </data>
+  <data name="Overall" xml:space="preserve">
+    <value>Ogółem</value>
+  </data>
+  <data name="PlayedEveryGame" xml:space="preserve">
+    <value>*** Grał wszystkie partie</value>
+  </data>
+  <data name="Alphabetically" xml:space="preserve">
+    <value>*** Alfabetycznie</value>
   </data>
   <data name="Split" xml:space="preserve">
     <value>Podziel</value>

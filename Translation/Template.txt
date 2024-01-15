@@ -359,6 +359,11 @@ StartDate=
 #english: EndDate=End Date
 EndDate=
 
+#description: Today
+#english: Today=Today
+Today=
+
+
 #description: Web site
 #english: WebSite=Site
 WebSite=
@@ -558,13 +563,22 @@ ExpandAll=
 #english: CollapseAll=Collapse All
 CollapseAll=
 
+#description: Collapse chapters
+#english: CollapseChapters=Collapse Chapters
+CollapseChapters=
+
 #description: Expand chapters
 #english: ExpandChapters=Expand Chapters
 ExpandChapters=
 
-#description: Collapse chapters
-#english: CollapseChapters=Collapse Chapters
-CollapseChapters=
+#description: Chapter Stats
+#english: ChapterStats=Chapter Stats
+ChapterStats=
+
+#description: Workbook Stats
+#english: WorkbookStats=Workbook Stats
+WorkbookStats=
+
 
 #################################
 #
@@ -896,6 +910,44 @@ EgSelectionAccuracyLabel=
 #english: EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
 EgCentipawnAccuracy=
 
+
+
+#######################################
+#
+# Header: DIALOG Statistics
+#
+
+#description: Statistics
+#english: Statistics=Statistics
+Statistics=
+
+#description: White wins
+#english: WhiteWins=White Wins
+WhiteWins=
+
+#description: Black wins
+#english: BlackWins=Black Wins
+BlackWins=
+
+#description: Draws
+#english: Draws=Draws
+Draws=
+
+#description: Player Results
+#english: PlayerResults=Player's Game Results
+PlayerResults=
+
+#description: Overall
+#english: Overall=Overall
+Overall=
+
+#description: Played every game
+#english: PlayedEveryGame=*** Played Every Game
+PlayedEveryGame=
+
+#description: Alphabetically
+#english: Alphabetically=*** Alphabetically
+Alphabetically=
 
 #######################################
 #
