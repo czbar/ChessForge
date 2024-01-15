@@ -196,8 +196,27 @@ namespace ChessForge
             EnableDateControls(!Configuration.WebGamesMostRecent);
             UiCbOnlyNew.IsChecked = Configuration.WebGamesMostRecent;
 
+            SetDatesValues();
+        }
+
+        /// <summary>
+        /// Set the values for the dates controls per the configuration.
+        /// </summary>
+        private void SetDatesValues()
+        {
             UiDtStartDate.SelectedDate = Configuration.WebGamesStartDate;
             UiDtEndDate.SelectedDate = Configuration.WebGamesEndDate;
+        }
+
+        /// <summary>
+        /// Resets the dates so that the start date is the previous last date
+        /// and the last date is today.
+        /// </summary>
+        private void ResetDates()
+        {
+            UiDtStartDate.SelectedDate = UiDtEndDate.SelectedDate;
+            UiDtEndDate.SelectedDate = DateTime.Now;
+            AdjustDates(true);
         }
 
         /// <summary>
@@ -241,8 +260,10 @@ namespace ChessForge
             UiCmbSite.IsEnabled = !isDownloading;
             UiTbMaxGames.IsEnabled = !isDownloading;
             UiTbUserName.IsEnabled = !isDownloading;
+
             UiDtStartDate.IsEnabled = !isDownloading && !UiCbOnlyNew.IsChecked == true;
             UiDtEndDate.IsEnabled = !isDownloading && !UiCbOnlyNew.IsChecked == true;
+            UiBtnResetDates.IsEnabled = !isDownloading && !UiCbOnlyNew.IsChecked == true;
         }
 
         /// <summary>
@@ -341,6 +362,7 @@ namespace ChessForge
         {
             UiDtStartDate.IsEnabled = enable;
             UiDtEndDate.IsEnabled = enable;
+            UiBtnResetDates.IsEnabled = enable;
         }
 
         /// <summary>
@@ -426,6 +448,17 @@ namespace ChessForge
         {
             LichessUserGames.UserGamesReceived -= UserGamesReceived;
             ChesscomUserGames.UserGamesReceived -= UserGamesReceived;
+        }
+
+        /// <summary>
+        /// Reset dates buttom was clicked.
+        /// Set the end date to today and start date tpo the last end date
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnResetDates_Click(object sender, RoutedEventArgs e)
+        {
+            ResetDates();
         }
     }
 }
