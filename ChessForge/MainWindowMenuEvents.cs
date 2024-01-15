@@ -357,6 +357,7 @@ namespace ChessForge
 
                     WorkbookManager.SessionWorkbook.MergeChapters(merged, title, sourceChapters);
                     _chaptersView.BuildFlowDocumentForChaptersView();
+                    UiTabChapters.Focus();
                     PulseManager.ChaperIndexToBringIntoView = WorkbookManager.SessionWorkbook.GetChapterCount() - 1;
                 }
 
