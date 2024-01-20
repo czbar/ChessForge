@@ -3,12 +3,9 @@ using GameTree;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Input;
 using WebAccess;
 
 namespace ChessForge
@@ -84,7 +81,7 @@ namespace ChessForge
 
                         // sort games from earliest to latest
                         lstGames = GameUtils.SortGamesByDateTime(lstGames);
-                        lstGames = GameUtils.RemoveGamesOutOfDateRange(lstGames, e.GamesFilter.StartDate, e.GamesFilter.EndDate);
+                        lstGames = GameUtils.RemoveGamesOutOfDateRange(lstGames, e.GamesFilter.StartDateEpochTicks, e.GamesFilter.EndDateEpochTicks);
 
                         int gamesCount = lstGames.Count;
                         if (gamesCount >= e.GamesFilter.MaxGames && e.GamesFilter.MaxGames != 0)
@@ -301,8 +298,8 @@ namespace ChessForge
                 }
                 else
                 {
-                    filter.StartDate = UiDtStartDate.SelectedDate;
-                    filter.EndDate = UiDtEndDate.SelectedDate;
+                    filter.StartDate = UiDtStartDate.SelectedDate.Value;
+                    filter.EndDate = UiDtEndDate.SelectedDate.Value;
                 }
 
                 // adjust the end date to end of day
