@@ -6201,6 +6201,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dates in UTC.
+        /// </summary>
+        public static string UtcDates {
+            get {
+                return ResourceManager.GetString("UtcDates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Variation already present.
         /// </summary>
         public static string VariationAlreadyExists {

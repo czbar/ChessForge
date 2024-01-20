@@ -359,6 +359,11 @@ StartDate=Data początkowa
 #english: EndDate=End Date
 EndDate=Data końcowa
 
+#description: UTC dates
+#english: UtcDates=Dates in UTC
+UtcDates=Daty w UTC
+
+
 #description: Today
 #english: Today=Today
 Today=Dzisiaj

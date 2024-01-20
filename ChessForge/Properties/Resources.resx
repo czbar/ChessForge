@@ -372,6 +372,9 @@
   <data name="EndDate" xml:space="preserve">
     <value>End Date</value>
   </data>
+  <data name="UtcDates" xml:space="preserve">
+    <value>Dates in UTC</value>
+  </data>
   <data name="Today" xml:space="preserve">
     <value>Today</value>
   </data>
