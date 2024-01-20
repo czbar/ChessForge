@@ -49,21 +49,14 @@ namespace ChessPosition
         /// </summary>
         /// <param name="date"></param>
         /// <returns></returns>
-        public static long? ConvertDateToEpoch(DateTime? date, bool dayStart)
+        public static long? ConvertDateToEpoch(DateTime? date)
         {
             long? millisec = null;
 
             if (date != null)
             {
                 DateTime dt;
-                if (dayStart)
-                {
-                    dt = date.Value;
-                }
-                else
-                {
-                    dt = date.Value.AddDays(1).AddMilliseconds(-1);
-                }
+                dt = date.Value;
                 DateTimeOffset dateTimeOffset = dt.ToUniversalTime();
                 millisec = dateTimeOffset.ToUnixTimeMilliseconds();
             }
