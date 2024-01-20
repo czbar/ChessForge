@@ -495,7 +495,7 @@ namespace ChessForge
         {
             PieceType piece = PieceType.None;
 
-            if (pt.X >= _promoTrayLeftTop.X && pt.X <= _promoTrayLeftTop.X + SquareSize)
+            if (pt.X >= _promoTrayLeftTop.X && pt.X <= _promoTrayLeftTop.X + SquareSize && pt.Y >= _promoTrayLeftTop.Y)
             {
                 int index = (int)((pt.Y - _promoTrayLeftTop.Y) / (double)SquareSize);
                 if (index >= 0 && index <= 5)
