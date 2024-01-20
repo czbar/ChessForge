@@ -98,6 +98,8 @@ namespace WebAccess
                 var newGames = PgnMultiGameParser.ParsePgnMultiGameText(text);
                 games.AddRange(newGames);
 
+                // remove games out of date range before checking the count!
+                games = GameUtils.RemoveGamesOutOfDateRange(games, filter.StartDateEpochTicks, filter.EndDateEpochTicks);
                 downloadedCount += newGames.Count;
                 if (downloadedCount >= filter.MaxGames)
                 {
