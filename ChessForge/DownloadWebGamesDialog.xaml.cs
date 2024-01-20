@@ -188,7 +188,14 @@ namespace ChessForge
         /// </summary>
         private void SetControlValues()
         {
-            UiTbMaxGames.Text = Math.Max(Configuration.WebGamesMaxCount, 1).ToString();
+            if (Configuration.WebGamesMaxCount <= 0)
+            {
+                UiTbMaxGames.Text = "";
+            }
+            else
+            {
+                UiTbMaxGames.Text = Configuration.WebGamesMaxCount.ToString();
+            }
 
             EnableDateControls(!Configuration.WebGamesMostRecent);
             UiCbOnlyNew.IsChecked = Configuration.WebGamesMostRecent;
@@ -203,6 +210,7 @@ namespace ChessForge
         {
             UiDtStartDate.SelectedDate = Configuration.WebGamesStartDate;
             UiDtEndDate.SelectedDate = Configuration.WebGamesEndDate;
+            UiCbUtc.IsChecked = Configuration.WebGamesDatesUtc == 1;
         }
 
         /// <summary>
@@ -261,6 +269,7 @@ namespace ChessForge
             UiDtStartDate.IsEnabled = !isDownloading && !UiCbOnlyNew.IsChecked == true;
             UiDtEndDate.IsEnabled = !isDownloading && !UiCbOnlyNew.IsChecked == true;
             UiBtnResetDates.IsEnabled = !isDownloading && !UiCbOnlyNew.IsChecked == true;
+            UiCbUtc.IsEnabled = !isDownloading && !UiCbOnlyNew.IsChecked == true;
         }
 
         /// <summary>
@@ -301,12 +310,7 @@ namespace ChessForge
                     filter.StartDate = UiDtStartDate.SelectedDate.Value;
                     filter.EndDate = UiDtEndDate.SelectedDate.Value;
                 }
-
-                // adjust the end date to end of day
-                if (filter.EndDate.HasValue)
-                {
-                    filter.EndDate = filter.EndDate.Value.AddDays(1).AddTicks(-1);
-                }
+                filter.IsUtcTimes = UiCbUtc.IsChecked == true;
 
                 if (IsChesscomDownload())
                 {
@@ -349,6 +353,7 @@ namespace ChessForge
             Configuration.WebGamesMostRecent = UiCbOnlyNew.IsChecked == true;
             Configuration.WebGamesStartDate = UiDtStartDate.SelectedDate;
             Configuration.WebGamesEndDate = UiDtEndDate.SelectedDate;
+            Configuration.WebGamesDatesUtc = UiCbUtc.IsChecked == true ? 1 : 0;
         }
 
         /// <summary>
@@ -360,6 +365,7 @@ namespace ChessForge
             UiDtStartDate.IsEnabled = enable;
             UiDtEndDate.IsEnabled = enable;
             UiBtnResetDates.IsEnabled = enable;
+            UiCbUtc.IsEnabled = enable;
         }
 
         /// <summary>
@@ -456,6 +462,16 @@ namespace ChessForge
         private void UiBtnResetDates_Click(object sender, RoutedEventArgs e)
         {
             ResetDates();
+        }
+
+        /// <summary>
+        /// Links to the relevant Wiki page.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Importing-or-Downloading-Games#downloading-games-of-a-player-from-chesscom-or-lichess");        
         }
     }
 }
