@@ -148,6 +148,7 @@
                         <Separator />
                         <MenuItem x:Name="UiMnMainDeleteGames" Header="{x:Static p:Resources.DeleteGames}" Click="UiMnToolsDeleteGames_Click" />
                         <MenuItem x:Name="UiMnMainDeleteExercises" Header="{x:Static p:Resources.DeleteExercises}" Click="UiMnToolsDeleteExercises_Click"  />
+                        <MenuItem x:Name="UiMnRemoveDuplicates" Header="{x:Static p:Resources.RemoveDuplicates}" Click="UiMnRemoveDuplicates_Click"  />
                     </MenuItem>
                     <MenuItem Header="{x:Static p:Resources.Help}" Margin="0,0,0,0">
                         <MenuItem Header="{x:Static p:Resources.Wiki}" Click="UiMnHelpWiki_Click" />

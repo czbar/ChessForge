@@ -4608,6 +4608,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remove Duplicates....
+        /// </summary>
+        public static string RemoveDuplicates {
+            get {
+                return ResourceManager.GetString("RemoveDuplicates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rename Selected Chapter.
         /// </summary>
         public static string RenameSelectedChapter {

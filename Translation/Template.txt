@@ -770,6 +770,10 @@ ManageChapter=
 #english: SplitChapterMenu=Split Chapter...
 SplitChapterMenu=
 
+#description: Remove duplicates
+#english: RemoveDuplicates=Remove Duplicates...
+RemoveDuplicates=
+
 
 
 ###########################

@@ -642,6 +642,9 @@
   <data name="SplitChapterMenu" xml:space="preserve">
     <value>Split Chapter...</value>
   </data>
+  <data name="RemoveDuplicates" xml:space="preserve">
+    <value>Remove Duplicates...</value>
+  </data>
   <data name="Help" xml:space="preserve">
     <value>Help</value>
   </data>

@@ -595,6 +595,9 @@ ManageChapter=Manage Chapter...
 #Split Chapter
 SplitChapterMenu=Split Chapter...
 
+#Remove duplicates
+RemoveDuplicates=Remove Duplicates...
+
 
 
 ###########################

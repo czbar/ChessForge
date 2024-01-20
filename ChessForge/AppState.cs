@@ -1535,6 +1535,8 @@ namespace ChessForge
 
                 MainWin.UiMnMainDeleteGames.IsEnabled = WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.HasAnyModelGames;
                 MainWin.UiMnMainDeleteExercises.IsEnabled = WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.HasAnyExercises;
+                MainWin.UiMnRemoveDuplicates.IsEnabled = WorkbookManager.SessionWorkbook != null && 
+                        (WorkbookManager.SessionWorkbook.HasAnyModelGames || WorkbookManager.SessionWorkbook.HasAnyExercises);
             });
         }
 
