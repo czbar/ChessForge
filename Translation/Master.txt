@@ -274,6 +274,10 @@ StartDate=Start Date
 #End date
 EndDate=End Date
 
+#UTC dates
+UtcDates=Dates in UTC
+
+
 #Today
 Today=Today
 
@@ -590,6 +594,9 @@ ManageChapter=Manage Chapter...
 
 #Split Chapter
 SplitChapterMenu=Split Chapter...
+
+#Remove duplicates
+RemoveDuplicates=Remove Duplicates...
 
 
 

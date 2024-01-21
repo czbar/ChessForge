@@ -290,6 +290,15 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Calls the function to identify and select duplicates for removal.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnRemoveDuplicates_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        /// <summary>
         /// Invokes the dialog to select Exercises to delete and deletes them. 
         /// The initial state of the dialog will be to show Exercises from the active chapter only.
         /// </summary>

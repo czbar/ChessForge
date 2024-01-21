@@ -170,6 +170,11 @@ namespace ChessForge
         /// </summary>
         public static DateTime? WebGamesEndDate = null;
 
+        /// <summary>
+        /// Date Kind for Dates (UTC if 1 or Local otherwise).
+        /// </summary>
+        public static int WebGamesDatesUtc = 0;
+
         // time per move for engine evaluation
         private static int _engineEvaluationTime = 1000;
 
@@ -444,6 +449,7 @@ namespace ChessForge
         private const string CFG_WG_MOST_RECENT = "WebGamesMostRecent";
         private const string CFG_WG_START_DATE = "WebGamesStartDate";
         private const string CFG_WG_END_DATE = "WebGamesEndDate";
+        private const string CFG_WG_DATES_UTC = "WebGamesDatesUtc";
 
 
         public static string StartDirectory = "";
@@ -615,6 +621,7 @@ namespace ChessForge
                 sb.AppendLine(CFG_WG_MOST_RECENT + "=" + (WebGamesMostRecent ? "1" : "0"));
                 sb.AppendLine(CFG_WG_START_DATE + "=" + WebGamesStartDate);
                 sb.AppendLine(CFG_WG_END_DATE + "=" + WebGamesEndDate);
+                sb.AppendLine(CFG_WG_DATES_UTC + "=" + WebGamesDatesUtc);
 
                 sb.Append(Environment.NewLine);
 
@@ -970,6 +977,9 @@ namespace ChessForge
                             break;
                         case CFG_WG_END_DATE:
                             WebGamesEndDate = GetDate(value);
+                            break;
+                        case CFG_WG_DATES_UTC:
+                            int.TryParse(value, out WebGamesDatesUtc);
                             break;
                         case CFG_MAIN_WINDOW_POS:
                             string[] sizes = value.Split(',');

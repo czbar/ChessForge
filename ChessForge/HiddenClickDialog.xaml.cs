@@ -41,7 +41,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            ClickPoint = e.GetPosition(AppState.MainWin.UiImgMainChessboard);
+            ClickPoint = e.GetPosition(AppState.MainWin.MainCanvas);
             e.Handled = true;
             DialogResult = true;
         }

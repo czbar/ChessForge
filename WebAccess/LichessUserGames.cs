@@ -87,21 +87,18 @@ namespace WebAccess
                 hasParam = true;
             }
 
-            long? startTime = EncodingUtils.ConvertDateToEpoch(filter.StartDate, true);
-            long? endTime = EncodingUtils.ConvertDateToEpoch(filter.EndDate, false);
-
-            if (startTime.HasValue)
+            if (filter.StartDate.HasValue)
             {
                 url.Append(hasParam ? "&" : "?");
                 hasParam = true;
-                url.Append("since=" + startTime.Value.ToString());
+                url.Append("since=" + filter.StartDateEpochTicks.Value.ToString());
             }
 
-            if (endTime.HasValue)
+            if (filter.EndDate.HasValue)
             {
                 url.Append(hasParam ? "&" : "?");
                 hasParam = true;
-                url.Append("until=" + endTime.Value.ToString());
+                url.Append("until=" + filter.EndDateEpochTicks.Value.ToString());
             }
 
             return url.ToString();

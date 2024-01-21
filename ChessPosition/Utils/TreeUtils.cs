@@ -379,6 +379,61 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Returns the main line of the tree.
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <returns></returns>
+        public static List<TreeNode> GetMainLine(VariationTree tree)
+        {
+            return GetTailLine(tree.RootNode);
+        }
+
+        /// <summary>
+        /// Returns the number of nodes with some kind of comment 
+        /// entered for them.
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <returns></returns>
+        public static int GetCommentsCount(VariationTree tree)
+        {
+            int count = 0;
+
+            foreach (TreeNode node in tree.Nodes)
+            {
+                if (!string.IsNullOrEmpty(node.Comment)
+                    || !string.IsNullOrEmpty(node.CommentBeforeMove)
+                    || !string.IsNullOrEmpty(node.Circles)
+                    || !string.IsNullOrEmpty(node.Arrows)
+                    || (node.Assessment != 0))
+                {
+                    count++;
+                }
+            }
+
+            return count;
+        }
+
+        /// <summary>
+        /// Number of nodes with engine evaluation.
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <returns></returns>
+        public static int GetNodesWithEvalCount(VariationTree tree)
+        {
+            int count = 0;
+
+            foreach (TreeNode node in tree.Nodes)
+            {
+                if (!string.IsNullOrEmpty(node.EngineEvaluation))
+                {
+                    count++;
+                }
+            }
+
+            return count;
+        }
+
+        /// <summary>
         /// <summary>
         /// Inserts a Subtree into a tree.
         /// If nodeToInsertAt has the opposite ColorToMove to the root node of the subtree, 

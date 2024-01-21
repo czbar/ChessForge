@@ -7,11 +7,12 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         mc:Ignorable="d"
         ShowInTaskbar="True"
-        Title="{x:Static p:Resources.DownloadGamesFromWeb}" Height="330" Width="500" Closing="Window_Closing">
+        Title="{x:Static p:Resources.DownloadGamesFromWeb}" Height="345" Width="500" Closing="Window_Closing">
     <Grid>
         <Label x:Name="UiLblLoading" Background="Blue" Foreground="White" FontSize="16" FontWeight="Bold" Content="{x:Static p:Resources.DownloadingFromLichess}" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Panel.ZIndex="1"/>
         <Button x:Name="UiBtnDownload" Content="{x:Static p:Resources.PerformDownload}" HorizontalAlignment="Left" Margin="358,56,0,0" Width="100"  VerticalAlignment="Top" Click="UiBtnDownload_Click"/>
         <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Left" Margin="358,88,0,0" Width="100" VerticalAlignment="Top"/>
+        <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Left" Margin="358,150,0,0" Width="100" VerticalAlignment="Top" Click="UiBtnHelp_Click"/>
         <GroupBox x:Name="UiGbAccount" Header="{x:Static p:Resources.Account}" Margin="18,5,0,0" Width="300" Height="95" HorizontalAlignment="Left" VerticalAlignment="Top">
             <StackPanel>
                 <Label x:Name="UiLblSite" Content="{x:Static p:Resources.WebSite}" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"/>
@@ -20,8 +21,8 @@
                 <TextBox x:Name="UiTbUserName" HorizontalAlignment="Left" Margin="150,-20,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
             </StackPanel>
         </GroupBox>
-        <GroupBox x:Name="UiGbGameFilter" Header="{x:Static p:Resources.Filter}" Margin="18,110,0,0"  HorizontalAlignment="Left" VerticalAlignment="Top" Height="165" Width="300">
-            <StackPanel>
+        <GroupBox x:Name="UiGbGameFilter" Header="{x:Static p:Resources.Filter}" Margin="18,110,0,0"  HorizontalAlignment="Left" VerticalAlignment="Top" Height="180" Width="300">
+            <StackPanel >
                 <Label x:Name="UiLblMaxGames" Content="{x:Static p:Resources.NoMoreThan}" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"/>
                 <TextBox x:Name="UiTbMaxGames" HorizontalAlignment="Left" Margin="150,-20,0,0" HorizontalContentAlignment="Center" TextWrapping="Wrap" Text="50" VerticalAlignment="Top" Width="60"/>
                 <CheckBox x:Name="UiCbOnlyNew" Content="{x:Static p:Resources.MostRecentGames}" HorizontalAlignment="Left" Margin="12,10,0,0" VerticalAlignment="Top" Checked="UiCbOnlyNew_Checked" Unchecked="UiCbOnlyNew_Unchecked"/>
@@ -32,6 +33,7 @@
                 <Button Name="UiBtnResetDates" Width="23" Height="23"  HorizontalAlignment="Left" Margin="260,-40,0,0" VerticalAlignment="Top" ToolTip="{x:Static p:Resources.Today}" Click="UiBtnResetDates_Click" >
                     <Image Source="Resources/Images/ResetDates.png" Width="16" Height="16"></Image>
                 </Button>
+                <CheckBox x:Name="UiCbUtc" Content="{x:Static p:Resources.UtcDates}" Margin="130, 5, 30, 0"/>
             </StackPanel>
         </GroupBox>
 

@@ -372,6 +372,9 @@
   <data name="EndDate" xml:space="preserve">
     <value>Data końcowa</value>
   </data>
+  <data name="UtcDates" xml:space="preserve">
+    <value>Daty w UTC</value>
+  </data>
   <data name="Today" xml:space="preserve">
     <value>Dzisiaj</value>
   </data>
@@ -638,6 +641,9 @@
   </data>
   <data name="SplitChapterMenu" xml:space="preserve">
     <value>Podziel Rozdział...</value>
+  </data>
+  <data name="RemoveDuplicates" xml:space="preserve">
+    <value>Usuń duplikaty...</value>
   </data>
   <data name="Help" xml:space="preserve">
     <value>Pomoc</value>

@@ -56,7 +56,7 @@ namespace ChessPosition
         /// <param name="startDate"></param>
         /// <param name="endDate"></param>
         /// <returns></returns>
-        public static List<GameData> RemoveGamesOutOfDateRange(List<GameData> games, DateTime? startDate, DateTime? endDate)
+        public static List<GameData> RemoveGamesOutOfDateRange(List<GameData> games, long? startDate, long? endDate)
         {
             List<GameData> lstGames = new List<GameData>();
             foreach (GameData game in games)
@@ -76,13 +76,14 @@ namespace ChessPosition
         /// <param name="game"></param>
         /// <param name="dtRef"></param>
         /// <returns></returns>
-        public static int CompareGameDateToDate(GameData game, DateTime dtRef)
+        public static long CompareGameDateToDate(GameData game, long dtRef)
         {
             DateTime? dtGame = GetDateTimeFromGameData(game);
+            long? gameUtc = EncodingUtils.ConvertDateToEpoch(dtGame);
 
-            if (dtGame.HasValue)
+            if (gameUtc.HasValue)
             {
-                return (DateTime.Compare(dtGame.Value, dtRef));
+                return gameUtc.Value - dtRef;
             }
             else
             {
@@ -114,7 +115,8 @@ namespace ChessPosition
 
             if (res)
             {
-                return dt;
+                DateTime ret = new DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, DateTimeKind.Utc);
+                return ret;
             }
             else
             {
