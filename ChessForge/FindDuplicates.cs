@@ -2,6 +2,7 @@
 using GameTree;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
@@ -43,9 +44,121 @@ namespace ChessForge
             {
                 VerifyDupes(duplicates);
                 ExposeOriginal(duplicates);
+                SelectDuplicatesToDelete(duplicates);
             }
 
             return hasDupes;
+        }
+
+        /// <summary>
+        /// Invokes the dialog for selecting Articles/
+        /// </summary>
+        private static void SelectDuplicatesToDelete(List<List<Article>> duplicates)
+        {
+            string title = Properties.Resources.RemoveDuplicates;
+            title = TextUtils.RemoveTrailingDots(title);
+
+            List<ArticleListItem> articleList = BuildArticleItemList(duplicates);
+            ObservableCollection<ArticleListItem> list = SortDuplicateList(articleList);
+
+            SelectArticlesDialog dlg = new SelectArticlesDialog(null, true, title, ref list, true, ArticlesAction.DELETE_DUPLICATES);
+            GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
+            if (dlg.ShowDialog() == true)
+            {
+                DeleteArticlesUtils.DeleteArticles(list);
+            }
+        }
+
+        /// <summary>
+        /// Adds items representing chapter headers
+        /// and then sorts the entire list
+        /// </summary>
+        /// <param name="articleList"></param>
+        private static ObservableCollection<ArticleListItem> SortDuplicateList(List<ArticleListItem> articleList)
+        {
+            // first insert items for chapter headers
+            Dictionary<int, Chapter> dictChapters = new Dictionary<int, Chapter>();
+            List<ArticleListItem> chapterItems = new List<ArticleListItem>();
+            foreach (ArticleListItem item in articleList)
+            {
+                if (!dictChapters.ContainsKey(item.ChapterIndex))
+                {
+                    Chapter chapter = AppState.Workbook.Chapters[item.ChapterIndex]; ;
+                    dictChapters[item.ChapterIndex] = chapter;
+                    chapterItems.Add(new ArticleListItem(chapter));
+                }
+            }
+
+            foreach (ArticleListItem chapterItem in chapterItems)
+            {
+                articleList.Add(chapterItem);
+            }
+
+            // sort the list
+            articleList.Sort(CompareDuplicates);
+
+            ObservableCollection<ArticleListItem> list = new ObservableCollection<ArticleListItem>();
+            foreach (ArticleListItem item in articleList)
+            {
+                list.Add(item);
+            }
+
+            return list;
+        }
+
+        private static int CompareDuplicates(ArticleListItem item1, ArticleListItem item2)
+        {
+            if (item1.ChapterIndex != item2.ChapterIndex)
+            {
+                return item1.ChapterIndex - item2.ChapterIndex;
+            }
+
+            if (item1.Article == null && item2.Article != null)
+            {
+                return -1;
+            }
+
+            if (item1.Article != null && item2.Article == null)
+            {
+                return 1;
+            }
+
+            // once here, we are in the same chapter and neither item is a chapter header
+            if (item1.Article.ContentType == GameData.ContentType.MODEL_GAME && item2.ContentType != GameData.ContentType.MODEL_GAME)
+            {
+                return -1;
+            }
+
+            if (item1.Article.ContentType != GameData.ContentType.MODEL_GAME && item2.ContentType == GameData.ContentType.MODEL_GAME)
+            {
+                return 1;
+            }
+
+            return item1.ArticleIndex - item2.ArticleIndex;
+        }
+
+        /// <summary>
+        /// Builds Article list based on the passed list of duplicates.
+        /// We add all articles that are NOT at index 0 in the sublists.
+        /// </summary>
+        /// <returns></returns>
+        private static List<ArticleListItem> BuildArticleItemList(List<List<Article>> duplicates)
+        {
+            List<ArticleListItem> articleList = new List<ArticleListItem>();
+
+            foreach (List<Article> sublist in duplicates)
+            {
+                if (sublist.Count > 1)
+                {
+                    for (int i = 1; i < sublist.Count; i++)
+                    {
+                        Article art = AppState.Workbook.GetArticleByGuid(sublist[i].Guid, out int chapterIndex, out int articleIndex);
+                        ArticleListItem item = new ArticleListItem(AppState.Workbook.Chapters[chapterIndex], chapterIndex, art, articleIndex);
+                        articleList.Add(item);
+                    }
+                }
+            }
+            return articleList;
         }
 
         /// <summary>
@@ -65,7 +178,7 @@ namespace ChessForge
                 int origEvals = TreeUtils.GetNodesWithEvalCount(dupes[0].Tree);
 
                 int originalIndex = 0;
-                for (int i = 1; i < duplicates.Count; i++)
+                for (int i = 1; i < dupes.Count; i++)
                 {
                     bool isOrigin = false;
                     if (dupes[i].Tree.Nodes.Count > origNodes)
