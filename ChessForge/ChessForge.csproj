@@ -131,6 +131,7 @@
     <Compile Include="CopyPasteMoves.cs" />
     <Compile Include="CustomCommands.cs" />
     <Compile Include="DebugDumps.cs" />
+    <Compile Include="DeleteArticlesUtils.cs" />
     <Compile Include="DiagramSetupDialog.xaml.cs">
       <DependentUpon>DiagramSetupDialog.xaml</DependentUpon>
     </Compile>
