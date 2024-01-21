@@ -25,6 +25,7 @@ namespace ChessForge
         DELETE_MODEL_GAMES,
         DELETE_EXERCISE,
         DELETE_EXERCISES,
+        DELETE_ARTICLES,
         EDIT_MODEL_GAME_HEADER,
         EDIT_EXERCISE_HEADER,
         MOVE_ARTICLES,

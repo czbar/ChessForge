@@ -993,6 +993,38 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Undo deletion of multiple articles (games or exercises)
+        /// </summary>
+        /// <param name="objArticleList"></param>
+        /// <param name="objIndices"></param>
+        public void UndoDeleteArticles(object objArticleList, object objIndexList)
+        {
+            try
+            {
+                List<ArticleListItem> articleList = objArticleList as List<ArticleListItem>;
+                List<int> indexList = objIndexList as List<int>;
+                // undo in the reverse order to how they were deleted
+                for (int i = articleList.Count - 1; i >= 0; i--)
+                {
+                    Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(articleList[i].ChapterIndex);
+                    if (articleList[i].Article.ContentType == GameData.ContentType.MODEL_GAME)
+                    {
+                        chapter.InsertModelGame(articleList[i].Article, indexList[i]);
+                        chapter.ActiveModelGameIndex = indexList[i];
+                    }
+                    else if (articleList[i].Article.ContentType == GameData.ContentType.EXERCISE)
+                    {
+                        chapter.InsertExercise(articleList[i].Article, indexList[i]);
+                        chapter.ActiveExerciseIndex = indexList[i];
+                    }
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
         /// Undo deletion of comments and NAGs from articles
         /// </summary>
         /// <param name="dictMoveAttributes"></param>
