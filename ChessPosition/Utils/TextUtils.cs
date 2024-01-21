@@ -2,13 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.NetworkInformation;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Documents;
-using System.Windows.Media;
-using ChessPosition.GameTree;
 using ChessPosition.Utils;
 using GameTree;
 
@@ -56,6 +52,39 @@ namespace ChessPosition
         {
             int hash = Math.Abs(s.GetHashCode());
             return s.Replace('/', '_').Replace(' ', '0').Replace('-', '_') + "_" + hash.ToString();
+        }
+
+        /// <summary>
+        /// Remove any trailing dots from a string.
+        /// It is useful e.g. when we have a menu item with trailing "..."
+        /// and want to use it as a dialog name without the dots.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string RemoveTrailingDots(string str)
+        {
+            if (!string.IsNullOrEmpty(str))
+            {
+                int trailingDotCount = 0;
+                for (int i = str.Length - 1; i > 0; i--)
+                {
+                    if (str[i] == '.')
+                    {
+                        trailingDotCount++;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+
+                if (trailingDotCount > 0)
+                {
+                    str = str.Substring(0, str.Length - trailingDotCount);
+                }
+            }
+
+            return str;
         }
 
         /// <summary>
