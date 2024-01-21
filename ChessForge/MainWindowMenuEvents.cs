@@ -526,6 +526,7 @@ namespace ChessForge
                         break;
                     case WorkbookOperationType.DELETE_MODEL_GAME:
                     case WorkbookOperationType.DELETE_MODEL_GAMES:
+                    case WorkbookOperationType.DELETE_ARTICLES:
                     case WorkbookOperationType.DELETE_CHAPTERS:
                     case WorkbookOperationType.MERGE_CHAPTERS:
                     case WorkbookOperationType.SPLIT_CHAPTER:
