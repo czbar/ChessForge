@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Windows;
 
 namespace ChessForge
 {
@@ -45,6 +46,10 @@ namespace ChessForge
                 VerifyDupes(duplicates);
                 ExposeOriginal(duplicates);
                 SelectDuplicatesToDelete(duplicates);
+            }
+            else
+            {
+                MessageBox.Show(Properties.Resources.MsgNoDuplicatesFound, Properties.Resources.Information, MessageBoxButton.OK, MessageBoxImage.Information);
             }
 
             return hasDupes;
