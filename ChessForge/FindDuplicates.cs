@@ -16,6 +16,9 @@ namespace ChessForge
     /// </summary>
     public class FindDuplicates
     {
+        // list of duplicates created/refreshed at the start of FindDuplicateArticles()
+        private static List<List<Article>> _duplicates = new List<List<Article>>();
+
         /// <summary>
         /// Identifies duplicate articles in a chapter or workbook in terms
         /// of having the identical main lines.
@@ -24,7 +27,7 @@ namespace ChessForge
         /// <returns>true, if any duplicates found</returns>
         public static bool FindDuplicateArticles(Chapter chapter)
         {
-            List<List<Article>> duplicates = new List<List<Article>>();
+            _duplicates = new List<List<Article>>();
 
             Dictionary<int, List<Article>> dictHashes = new Dictionary<int, List<Article>>();
             CalculateArticleHashes(chapter, dictHashes);
@@ -37,15 +40,15 @@ namespace ChessForge
                 {
                     // identify the duplicates 
                     hasDupes = true;
-                    duplicates.Add(dictHashes[key]);
+                    _duplicates.Add(dictHashes[key]);
                 }
             }
 
             if (hasDupes)
             {
-                VerifyDupes(duplicates);
-                ExposeOriginal(duplicates);
-                SelectDuplicatesToDelete(duplicates);
+                VerifyDupes(_duplicates);
+                ExposeOriginal(_duplicates);
+                SelectDuplicatesToDelete(_duplicates);
             }
             else
             {
@@ -53,6 +56,28 @@ namespace ChessForge
             }
 
             return hasDupes;
+        }
+
+        /// <summary>
+        /// Finds the list of duplicates (including the original)
+        /// that contains the passed Article.
+        /// </summary>
+        /// <param name="article"></param>
+        /// <returns></returns>
+        public static List<Article> GetArticleDuplicates(Article article)
+        {
+            foreach (List<Article> dupeList in _duplicates)
+            {
+                foreach (Article dupe in dupeList)
+                {
+                    if (dupe == article)
+                    {
+                        return dupeList;
+                    }
+                }
+            }
+
+            return null;
         }
 
         /// <summary>
