@@ -1655,6 +1655,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Duplicates of.
+        /// </summary>
+        public static string DuplicatesOf {
+            get {
+                return ResourceManager.GetString("DuplicatesOf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Append Games to the current Chapter.
         /// </summary>
         public static string DwnLdAppendToCurrentChapter {
@@ -3779,6 +3788,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No duplicates found..
+        /// </summary>
+        public static string MsgNoDuplicatesFound {
+            get {
+                return ResourceManager.GetString("MsgNoDuplicatesFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No games matching search criteria found..
         /// </summary>
         public static string MsgNoGamesFound {
@@ -4856,6 +4874,15 @@ namespace ChessForge.Properties {
         public static string Seconds {
             get {
                 return ResourceManager.GetString("Seconds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Ones to Delete.
+        /// </summary>
+        public static string SelectArticleDuplicatesToDelete {
+            get {
+                return ResourceManager.GetString("SelectArticleDuplicatesToDelete", resourceCulture);
             }
         }
         

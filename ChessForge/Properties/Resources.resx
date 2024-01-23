@@ -735,6 +735,12 @@
   <data name="EgCentipawnAccuracy" xml:space="preserve">
     <value>max allowed centipawn deviation from the best move is</value>
   </data>
+  <data name="DuplicatesOf" xml:space="preserve">
+    <value>Duplicates of</value>
+  </data>
+  <data name="SelectArticleDuplicatesToDelete" xml:space="preserve">
+    <value>Select Ones to Delete</value>
+  </data>
   <data name="Statistics" xml:space="preserve">
     <value>Statistics</value>
   </data>
@@ -1310,6 +1316,9 @@
   </data>
   <data name="MbtTitleCopyPasteError" xml:space="preserve">
     <value>Copy/Paste Error</value>
+  </data>
+  <data name="MsgNoDuplicatesFound" xml:space="preserve">
+    <value>No duplicates found.</value>
   </data>
   <data name="MsgNeedValidUrlOrEmpty" xml:space="preserve">
     <value>Enter valid Url or leave empty to delete link. </value>

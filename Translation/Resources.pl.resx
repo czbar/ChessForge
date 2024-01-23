@@ -735,6 +735,12 @@
   <data name="EgCentipawnAccuracy" xml:space="preserve">
     <value>maksymalne odchylenie od najlepszego ruchu wynosi</value>
   </data>
+  <data name="DuplicatesOf" xml:space="preserve">
+    <value>Duplikaty</value>
+  </data>
+  <data name="SelectArticleDuplicatesToDelete" xml:space="preserve">
+    <value>Zaznacz te do usunięcia</value>
+  </data>
   <data name="Statistics" xml:space="preserve">
     <value>Statystyka</value>
   </data>
@@ -1310,6 +1316,9 @@
   </data>
   <data name="MbtTitleCopyPasteError" xml:space="preserve">
     <value>Błąd w Kopiuj/Wklej</value>
+  </data>
+  <data name="MsgNoDuplicatesFound" xml:space="preserve">
+    <value>Nie znaleziono duplikatów.</value>
   </data>
   <data name="MsgNeedValidUrlOrEmpty" xml:space="preserve">
     <value>Podaj prawidłowy Url or zostaw pusty aby usunąć link. </value>

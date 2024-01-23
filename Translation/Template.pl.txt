@@ -923,6 +923,21 @@ EgCentipawnAccuracy=maksymalne odchylenie od najlepszego ruchu wynosi
 
 #######################################
 #
+# Header: DIALOG Duplicates
+#
+
+
+#description: Duplicates of
+#english: DuplicatesOf=Duplicates of
+DuplicatesOf=Duplikaty
+
+#description: Select article duplicates to delete
+#english: SelectArticleDuplicatesToDelete=Select Ones to Delete
+SelectArticleDuplicatesToDelete=Zaznacz te do usunięcia
+
+
+#######################################
+#
 # Header: DIALOG Statistics
 #
 
@@ -1834,6 +1849,10 @@ MbtTitleCopyPasteError=Błąd w Kopiuj/Wklej
 #
 # Header: MESSAGES
 #
+
+#description: No duplicates found
+#english: MsgNoDuplicatesFound=No duplicates found.
+MsgNoDuplicatesFound=Nie znaleziono duplikatów.
 
 #description: Invalid Url
 #english: MsgNeedValidUrlOrEmpty=Enter valid Url or leave empty to delete link. 

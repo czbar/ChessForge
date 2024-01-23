@@ -923,6 +923,21 @@ EgCentipawnAccuracy=
 
 #######################################
 #
+# Header: DIALOG Duplicates
+#
+
+
+#description: Duplicates of
+#english: DuplicatesOf=Duplicates of
+DuplicatesOf=
+
+#description: Select article duplicates to delete
+#english: SelectArticleDuplicatesToDelete=Select Ones to Delete
+SelectArticleDuplicatesToDelete=
+
+
+#######################################
+#
 # Header: DIALOG Statistics
 #
 
@@ -1834,6 +1849,10 @@ MbtTitleCopyPasteError=
 #
 # Header: MESSAGES
 #
+
+#description: No duplicates found
+#english: MsgNoDuplicatesFound=No duplicates found.
+MsgNoDuplicatesFound=
 
 #description: Invalid Url
 #english: MsgNeedValidUrlOrEmpty=Enter valid Url or leave empty to delete link. 
