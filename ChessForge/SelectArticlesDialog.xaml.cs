@@ -346,7 +346,14 @@ namespace ChessForge
                 if (art != null)
                 {
                     _lastClickedArticle = art;
-                    InvokeGamePreviewDialog(art);
+                    if (ActionOnArticles == ArticlesAction.DELETE_DUPLICATES)
+                    {
+                        InvokeDuplicateSelectionDialog(art);
+                    }
+                    else
+                    {
+                        InvokeGamePreviewDialog(art);
+                    }
                 }
                 else
                 {
@@ -354,6 +361,19 @@ namespace ChessForge
                     ChapterHeaderDoubleClicked(artItem);
                 }
             }
+        }
+
+        /// <summary>
+        /// Invokes a dialog allowing the user to decide which duplicates 
+        /// of the passed item to keep or delete.
+        /// </summary>
+        /// <param name="art"></param>
+        private void InvokeDuplicateSelectionDialog(Article art)
+        {
+            SelectDuplicatesDialog dlg = new SelectDuplicatesDialog(art);
+            GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
+
+            dlg.ShowDialog();
         }
 
         /// <summary>
