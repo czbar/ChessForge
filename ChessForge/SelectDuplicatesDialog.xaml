@@ -1,0 +1,31 @@
+﻿<Window x:Class="ChessForge.SelectDuplicatesDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:p="clr-namespace:ChessForge.Properties"
+        xmlns:local="clr-namespace:ChessForge"
+        mc:Ignorable="d"
+        Title="{x:Static p:Resources.DuplicatesOf}" Height="450" Width="800">
+    <Grid>
+        <ListView x:Name="UiLvArticles" Margin="20, 42, 20, 80" d:ItemsSource="{Binding}">
+            <ListView.Resources>
+                <DataTemplate x:Key="SelectionCell">
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox BorderThickness="2" IsChecked="{Binding Path=IsSelected}"    />
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.Resources>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn CellTemplate="{StaticResource SelectionCell}"  Width="40"/>
+                    <GridViewColumn Header="{x:Static p:Resources.Item}" DisplayMemberBinding="{Binding Path=ArticleTitleForDuplicateList}" Width="680"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="-220,0,0,40" Width="80" Height="20" VerticalAlignment="Bottom" />
+        <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="0,0,0,40" Width="80" Height="20" VerticalAlignment="Bottom" />
+        <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Center" Margin="220,0,0,40" Width="80" Height="20" VerticalAlignment="Bottom" />
+        <Label x:Name="UiLblInstruction" Content="{x:Static p:Resources.SelectArticleDuplicatesToDelete}" HorizontalAlignment="Left" Margin="292,10,0,0" VerticalAlignment="Top"/>
+    </Grid>
+</Window>
