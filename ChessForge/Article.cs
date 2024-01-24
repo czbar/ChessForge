@@ -58,6 +58,15 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Stores arbitary data element for temporary use
+        /// by custom scenarios.
+        /// Not to be persisted!
+        /// This can be used e.g. to mark articles as duplicates
+        /// while figuring out the duplicates.
+        /// </summary>
+        public object Data;
+
+        /// <summary>
         /// Article content type
         /// </summary>
         public GameData.ContentType ContentType => Tree.ContentType;
