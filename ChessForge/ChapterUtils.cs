@@ -522,7 +522,7 @@ namespace ChessForge
         /// <param name="chapter"></param>
         /// <param name="sortBy"></param>
         /// <param name="direction"></param>
-        private static void SortGames(Chapter chapter, GameSortCriterion.SortItem sortBy, GameSortCriterion.SortItem direction)
+        public static void SortGames(Chapter chapter, GameSortCriterion.SortItem sortBy, GameSortCriterion.SortItem direction)
         {
             if (chapter != null)
             {
