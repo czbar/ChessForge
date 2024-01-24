@@ -834,6 +834,9 @@
   <data name="SortDesc" xml:space="preserve">
     <value>Malejący</value>
   </data>
+  <data name="ApplyToAllChapters" xml:space="preserve">
+    <value>Zastosuj do wszystkich rozdziałów</value>
+  </data>
   <data name="ScopeForDeleteComments" xml:space="preserve">
     <value>Usuń Komentarze</value>
   </data>

@@ -848,6 +848,8 @@ SortAsc=Ascending
 #Sort Descending
 SortDesc=Descending
 
+#Apply to all chapters
+ApplyToAllChapters=Apply to All Chapters
 
 #######################################
 #

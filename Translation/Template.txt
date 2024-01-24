@@ -1087,6 +1087,9 @@ SortAsc=
 #english: SortDesc=Descending
 SortDesc=
 
+#description: Apply to all chapters
+#english: ApplyToAllChapters=Apply to All Chapters
+ApplyToAllChapters=
 
 #######################################
 #

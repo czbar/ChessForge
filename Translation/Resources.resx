@@ -834,6 +834,9 @@
   <data name="SortDesc" xml:space="preserve">
     <value>Descending</value>
   </data>
+  <data name="ApplyToAllChapters" xml:space="preserve">
+    <value>Apply to All Chapters</value>
+  </data>
   <data name="ScopeForDeleteComments" xml:space="preserve">
     <value>Delete Comments</value>
   </data>

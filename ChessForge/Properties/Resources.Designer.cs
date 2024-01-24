@@ -188,6 +188,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Apply to All Chapters.
+        /// </summary>
+        public static string ApplyToAllChapters {
+            get {
+                return ResourceManager.GetString("ApplyToAllChapters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Assign ECOs....
         /// </summary>
         public static string AssignECO {
