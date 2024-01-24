@@ -373,7 +373,23 @@ namespace ChessForge
             SelectDuplicatesDialog dlg = new SelectDuplicatesDialog(art);
             GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
-            dlg.ShowDialog();
+            if (dlg.ShowDialog() == true)
+            {
+                _articleListItemsSource.Clear();
+                _articleListOriginal.Clear();
+                ObservableCollection<ArticleListItem> list = FindDuplicates.UpdateDuplicatesStatus(dlg.DuplicateArticles);
+                foreach (ArticleListItem item in list)
+                {
+                    item.IsShown = true;
+                    _articleListItemsSource.Add(item);
+                    _articleListOriginal.Add(item);
+                }
+            }
+
+            //UiLvGames.ItemsSource = null;
+            //UiLvGames.ItemsSource = _articleListItemsSource;
+
+            //UiLvGames.Items.Refresh();
         }
 
         /// <summary>
