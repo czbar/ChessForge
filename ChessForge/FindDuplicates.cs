@@ -46,9 +46,10 @@ namespace ChessForge
 
             if (hasDupes)
             {
-                VerifyDupes(_duplicates);
-                ExposeOriginal(_duplicates);
-                SelectDuplicatesToDelete(_duplicates);
+                VerifyDupes();
+                ExposeOriginal();
+                MarkNonOriginals();
+                SelectDuplicatesToDelete();
             }
             else
             {
@@ -81,22 +82,60 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Invokes the dialog for selecting Articles/
+        /// Called from the SelectArticles dialog to update the ArticleListItem
+        /// managed there.
+        /// The passed list of items is from the SelectDuplicates dialog with the 
+        /// items' Data field indicating whether the item should be considered for deletion
+        /// and therefore shown in the SeclectionArticles dialog.
         /// </summary>
-        private static void SelectDuplicatesToDelete(List<List<Article>> duplicates)
+        /// <param name="articlesToUpdate"></param>
+        /// <returns></returns>
+        public static ObservableCollection<ArticleListItem> UpdateDuplicatesStatus(ObservableCollection<ArticleListItem> articlesToUpdate)
+        {
+            foreach (List<Article> sublist in _duplicates)
+            {
+                for (int i = 0; i < sublist.Count; i++)
+                {
+                    foreach (ArticleListItem item in articlesToUpdate)
+                    {
+                        if (item.Article == sublist[i])
+                        {
+                            sublist[i].Data = item.Article.Data;
+                        }
+                    }
+                }
+            }
+
+            return CreateArticleItemList();
+        }
+
+        /// <summary>
+        /// Invokes the dialog for selecting Articles
+        /// </summary>
+        private static void SelectDuplicatesToDelete()
         {
             string title = Properties.Resources.RemoveDuplicates;
             title = TextUtils.RemoveTrailingDots(title);
 
-            List<ArticleListItem> articleList = BuildArticleItemList(duplicates);
-            ObservableCollection<ArticleListItem> list = SortDuplicateList(articleList);
+            List<ArticleListItem> articleList = BuildArticleItemList();
+            ObservableCollection<ArticleListItem> list = CreateArticleItemList();
 
-            SelectArticlesDialog dlg = new SelectArticlesDialog(null, true, title, ref list, true, ArticlesAction.DELETE_DUPLICATES);
+            SelectArticlesDialog dlg = new SelectArticlesDialog(null, false, title, ref list, true, ArticlesAction.DELETE_DUPLICATES);
             GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
             if (dlg.ShowDialog() == true)
             {
                 DeleteArticlesUtils.DeleteArticles(list);
             }
+        }
+
+        /// <summary>
+        /// Build and sorts the ArticleItems list.
+        /// </summary>
+        /// <returns></returns>
+        private static ObservableCollection<ArticleListItem> CreateArticleItemList()
+        {
+            List<ArticleListItem> articleList = BuildArticleItemList();
+            return SortDuplicateList(articleList);
         }
 
         /// <summary>
@@ -136,6 +175,12 @@ namespace ChessForge
             return list;
         }
 
+        /// <summary>
+        /// Compares to Articles to put them in order in the duplicates list.
+        /// </summary>
+        /// <param name="item1"></param>
+        /// <param name="item2"></param>
+        /// <returns></returns>
         private static int CompareDuplicates(ArticleListItem item1, ArticleListItem item2)
         {
             if (item1.ChapterIndex != item2.ChapterIndex)
@@ -172,17 +217,17 @@ namespace ChessForge
         /// We add all articles that are NOT at index 0 in the sublists.
         /// </summary>
         /// <returns></returns>
-        private static List<ArticleListItem> BuildArticleItemList(List<List<Article>> duplicates)
+        private static List<ArticleListItem> BuildArticleItemList()
         {
             List<ArticleListItem> articleList = new List<ArticleListItem>();
 
-            foreach (List<Article> sublist in duplicates)
+            foreach (List<Article> sublist in _duplicates)
             {
-                if (sublist.Count > 1)
+                for (int i = 0; i < sublist.Count; i++)
                 {
-                    for (int i = 1; i < sublist.Count; i++)
+                    Article art = AppState.Workbook.GetArticleByGuid(sublist[i].Guid, out int chapterIndex, out int articleIndex);
+                    if (art.Data is bool bDupe && bDupe)
                     {
-                        Article art = AppState.Workbook.GetArticleByGuid(sublist[i].Guid, out int chapterIndex, out int articleIndex);
                         ArticleListItem item = new ArticleListItem(AppState.Workbook.Chapters[chapterIndex], chapterIndex, art, articleIndex);
                         articleList.Add(item);
                     }
@@ -192,16 +237,32 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Marks first item in each sublist as the "original",
+        /// not to be deleted.
+        /// This must only be called from the constructor as the
+        /// markings may change later on in the process.
+        /// </summary>
+        private static void MarkNonOriginals()
+        {
+            foreach (List<Article> sublist in _duplicates)
+            {
+                for (int i = 0; i < sublist.Count; i++)
+                {
+                    sublist[i].Data = (i != 0);
+                }
+            }
+        }
+
+        /// <summary>
         /// In each sub-list of dupes, we will identify the "original" and make sure
         /// it is placed at index 0.
         /// The "original" article is identified as the one with modes nodes, 
         /// then most comments, then most engine evaluations if previous criteria do not differentiate.
         /// The idea is not remove the article that the user worked with before importing a duplicate.
         /// </summary>
-        /// <param name="duplicates"></param>
-        private static void ExposeOriginal(List<List<Article>> duplicates)
+        private static void ExposeOriginal()
         {
-            foreach (List<Article> dupes in duplicates)
+            foreach (List<Article> dupes in _duplicates)
             {
                 int origNodes = dupes[0].Tree.Nodes.Count;
                 int origComments = TreeUtils.GetCommentsCount(dupes[0].Tree);
@@ -252,10 +313,9 @@ namespace ChessForge
         /// <summary>
         /// Removes dupes that are false positives due to hash collision.
         /// </summary>
-        /// <param name="duplicates"></param>
-        private static void VerifyDupes(List<List<Article>> duplicates)
+        private static void VerifyDupes()
         {
-            foreach (List<Article> dupes in duplicates)
+            foreach (List<Article> dupes in _duplicates)
             {
                 List<Article> toRemove = new List<Article>();
                 Article first = dupes[0];
@@ -341,7 +401,7 @@ namespace ChessForge
             // append White and Black as with different players we do not consider articles as duplicates
             string white = tree.Header.GetWhitePlayer(out _);
             string black = tree.Header.GetBlackPlayer(out _);
-            return (mainLine +white + black).GetHashCode();
+            return (mainLine + white + black).GetHashCode();
         }
 
         /// <summary>
