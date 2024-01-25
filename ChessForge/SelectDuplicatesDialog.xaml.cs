@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace ChessForge
 {
@@ -50,6 +52,28 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Invoke game preview on double click.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiLvArticles_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            ListViewItem item = GuiUtilities.GetListViewItemFromPoint(UiLvArticles, e.GetPosition(UiLvArticles));
+            if (item != null && item.Content is DuplicateListItem)
+            {
+                DuplicateListItem artItem = (DuplicateListItem)item.Content;
+                if (artItem != null && artItem.ArticleItem != null)
+                {
+                    Article art = artItem.ArticleItem.Article;
+                    if (art != null)
+                    {
+                        GuiUtilities.InvokeGamePreviewDialog(art, this);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Close the dialog on OK
         /// </summary>
         /// <param name="sender"></param>
@@ -78,5 +102,6 @@ namespace ChessForge
         {
             System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Remove-Duplicates-Dialog");
         }
+
     }
 }
