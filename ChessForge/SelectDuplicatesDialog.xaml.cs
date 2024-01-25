@@ -1,11 +1,8 @@
-﻿using System;
+﻿using ChessPosition;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
 
 namespace ChessForge
 {
@@ -16,54 +13,40 @@ namespace ChessForge
     public partial class SelectDuplicatesDialog : Window
     {
         // Collection bound to the ListView control
-        public ObservableCollection<ArticleListItem> DuplicateArticles = new ObservableCollection<ArticleListItem>();
+        public ObservableCollection<DuplicateListItem> DuplicateList = new ObservableCollection<DuplicateListItem>();
 
         /// <summary>
         /// Creates the dialog, builds the list of items to display
         /// in the list view, and binds them.
         /// </summary>
         /// <param name="article"></param>
-        public SelectDuplicatesDialog(Article article)
+        public SelectDuplicatesDialog(ObservableCollection<DuplicateListItem> duplicateList)
         {
             InitializeComponent();
 
-            List<Article> dupes = FindDuplicates.GetArticleDuplicates(article);
-            BuildArticleItemList(dupes);
+            string title = Properties.Resources.RemoveDuplicates;
+            Title = TextUtils.RemoveTrailingDots(title);
 
-            Title = Properties.Resources.DuplicatesOf + ": " + BuildNamesString(article);
-
-            UiLvArticles.ItemsSource = DuplicateArticles;
+            // populate _duplicateList
+            InsertEmptyItems(duplicateList);
+            UiLvArticles.ItemsSource = DuplicateList;
         }
 
         /// <summary>
-        /// Builds the collection to bind to the ListView
+        /// Inserts empty lines in between the duplicate sets.
         /// </summary>
-        /// <param name="dupes"></param>
-        /// <returns></returns>
-        public void BuildArticleItemList(List<Article> dupes)
+        /// <param name="duplicateList"></param>
+        private void InsertEmptyItems(ObservableCollection<DuplicateListItem> duplicateList)
         {
-            DuplicateArticles = new ObservableCollection<ArticleListItem>();
-
-            bool isFirst = true;
-            foreach (Article article in dupes)
+            DuplicateList.Clear();
+            for (int i = 0; i < duplicateList.Count; i++)
             {
-                Article art = AppState.Workbook.GetArticleByGuid(article.Guid, out int chapterIndex, out int articleIndex);
-                ArticleListItem item = new ArticleListItem(AppState.Workbook.Chapters[chapterIndex], chapterIndex, art, articleIndex);
-                item.IsSelected = !isFirst;
-                DuplicateArticles.Add(item);
-                isFirst = false;
+                DuplicateList.Add(duplicateList[i]);
+                if (i < duplicateList.Count - 1 && duplicateList[i].DuplicateNo != duplicateList[i+1].DuplicateNo)
+                {
+                    DuplicateList.Add(new DuplicateListItem(null));
+                }
             }
-        }
-
-        /// <summary>
-        /// Builds a string combining the White and Black players' names 
-        /// to show in the dialog's title bar
-        /// </summary>
-        /// <param name="article"></param>
-        /// <returns></returns>
-        private string BuildNamesString(Article article)
-        {
-            return (article.Tree.Header.GetWhitePlayer(out _) ?? "NN") + " - " + (article.Tree.Header.GetBlackPlayer(out _) ?? "NN");
         }
 
         /// <summary>
@@ -73,11 +56,6 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnOk_Click(object sender, RoutedEventArgs e)
         {
-            foreach (ArticleListItem item in DuplicateArticles)
-            {
-                item.Article.Data = item.IsSelected;
-            }
-
             DialogResult = true;
         }
 
@@ -98,7 +76,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Select-Duplicates-Dialog");
+            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Remove-Duplicates-Dialog");
         }
     }
 }
