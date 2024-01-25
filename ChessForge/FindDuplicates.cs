@@ -74,6 +74,8 @@ namespace ChessForge
             if (dlg.ShowDialog() == true)
             {
                 DeleteArticlesUtils.DeleteArticles(dlg.DuplicateList);
+                AppState.MainWin.ChaptersView.IsDirty = true;
+                AppState.MainWin.UiTabChapters.Focus();
             }
         }
 
