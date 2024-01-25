@@ -137,7 +137,13 @@ Bookmark=Bookmark
 #Games plural
 Bookmarks=Bookmarks
 
-#Move
+#Copy
+Copy=Copy
+
+#Move item
+MoveItem=Move
+
+#Move (in a game)
 Move=Move
 
 #Moves plural
@@ -178,6 +184,9 @@ Return=Return
 
 #Close
 Close=Close
+
+#Delete
+Delete=Delete
 
 #Confirm
 Confirm=Confirm
@@ -717,6 +726,19 @@ EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
 
 #######################################
 #
+# Header: DIALOG Duplicates
+#
+
+
+#Duplicates of
+DuplicatesOf=Duplicates of
+
+#Select article duplicates to delete
+SelectArticleDuplicatesToDelete=Select Items to Delete
+
+
+#######################################
+#
 # Header: DIALOG Statistics
 #
 
@@ -835,6 +857,8 @@ SortAsc=Ascending
 #Sort Descending
 SortDesc=Descending
 
+#Apply to all chapters
+ApplyToAllChapters=Apply to All Chapters
 
 #######################################
 #
@@ -1436,6 +1460,9 @@ MbtTitleCopyPasteError=Copy/Paste Error
 #
 # Header: MESSAGES
 #
+
+#No duplicates found
+MsgNoDuplicatesFound=No duplicates found.
 
 #Invalid Url
 MsgNeedValidUrlOrEmpty=Enter valid Url or leave empty to delete link. 

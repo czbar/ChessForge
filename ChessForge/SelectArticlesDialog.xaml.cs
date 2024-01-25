@@ -77,6 +77,22 @@ namespace ChessForge
             // if there is any selection outside the active chapter show all chapters (issue #465)
             InitializeComponent();
 
+            switch (ActionOnArticles)
+            {
+                case ArticlesAction.COPY_OR_MOVE:
+                    UiBtnOk.Visibility = Visibility.Collapsed;
+                    break;
+                case ArticlesAction.DELETE:
+                    UiBtnOk.Content = Properties.Resources.Delete;
+                    break;
+                case ArticlesAction.COPY:
+                    UiBtnOk.Content = Properties.Resources.Copy;
+                    break;
+                case ArticlesAction.MOVE:
+                    UiBtnOk.Content = Properties.Resources.Move;
+                    break;
+            }
+
             // do not process CheckBox events while in the constructor
             _doNotProcessCheckEvents = true;
 

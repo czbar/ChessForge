@@ -3,11 +3,8 @@ using GameTree;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ChessForge
 {
@@ -148,7 +145,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// The property that binds in the SelectGames ListView control.
+        /// The property that can be bound in the SelectGames ListView control as the title of an Article.
         /// </summary>
         public string GameTitleForList
         {
@@ -179,6 +176,36 @@ namespace ChessForge
                 }
 
                 return prefix + header;
+            }
+        }
+
+        /// <summary>
+        /// The property that can be bound in the SelectGames ListView control 
+        /// as the title of an Article in the duplicates list.
+        /// </summary>
+        public string ArticleTitleForDuplicateList
+        {
+            get
+            {
+                StringBuilder sb = new StringBuilder();
+
+                sb.Append(Properties.Resources.Chapter + " " + (ChapterIndex + 1).ToString() + ", ");
+                if (_contentType == GameData.ContentType.MODEL_GAME)
+                {
+                    sb.Append(Properties.Resources.Game);
+                }
+                else if (_contentType == GameData.ContentType.EXERCISE)
+                {
+                    sb.Append(Properties.Resources.Exercise);
+                }
+                sb.Append(" " + (ArticleIndex + 1).ToString());
+
+                if (_article != null)
+                {
+                    sb.Append(": " + _article.Tree.Header.BuildGameHeaderLine(true, _contentType == GameData.ContentType.MODEL_GAME));
+                }
+
+                return sb.ToString();
             }
         }
 

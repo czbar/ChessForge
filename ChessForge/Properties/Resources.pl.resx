@@ -237,6 +237,12 @@
   <data name="Bookmarks" xml:space="preserve">
     <value>Zakładki</value>
   </data>
+  <data name="Copy" xml:space="preserve">
+    <value>Kopiuj</value>
+  </data>
+  <data name="MoveItem" xml:space="preserve">
+    <value>Przenieś</value>
+  </data>
   <data name="Move" xml:space="preserve">
     <value>Posunięcie</value>
   </data>
@@ -278,6 +284,9 @@
   </data>
   <data name="Close" xml:space="preserve">
     <value>Zamknij</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Usuń</value>
   </data>
   <data name="Confirm" xml:space="preserve">
     <value>Potwierdź</value>
@@ -735,6 +744,12 @@
   <data name="EgCentipawnAccuracy" xml:space="preserve">
     <value>maksymalne odchylenie od najlepszego ruchu wynosi</value>
   </data>
+  <data name="DuplicatesOf" xml:space="preserve">
+    <value>Duplikaty</value>
+  </data>
+  <data name="SelectArticleDuplicatesToDelete" xml:space="preserve">
+    <value>Zaznacz pozycje do usunięcia</value>
+  </data>
   <data name="Statistics" xml:space="preserve">
     <value>Statystyka</value>
   </data>
@@ -827,6 +842,9 @@
   </data>
   <data name="SortDesc" xml:space="preserve">
     <value>Malejący</value>
+  </data>
+  <data name="ApplyToAllChapters" xml:space="preserve">
+    <value>Zastosuj do wszystkich rozdziałów</value>
   </data>
   <data name="ScopeForDeleteComments" xml:space="preserve">
     <value>Usuń Komentarze</value>
@@ -1310,6 +1328,9 @@
   </data>
   <data name="MbtTitleCopyPasteError" xml:space="preserve">
     <value>Błąd w Kopiuj/Wklej</value>
+  </data>
+  <data name="MsgNoDuplicatesFound" xml:space="preserve">
+    <value>Nie znaleziono duplikatów.</value>
   </data>
   <data name="MsgNeedValidUrlOrEmpty" xml:space="preserve">
     <value>Podaj prawidłowy Url or zostaw pusty aby usunąć link. </value>

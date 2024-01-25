@@ -177,7 +177,15 @@ Bookmark=
 #english: Bookmarks=Bookmarks
 Bookmarks=
 
-#description: Move
+#description: Copy
+#english: Copy=Copy
+Copy=
+
+#description: Move item
+#english: MoveItem=Move
+MoveItem=
+
+#description: Move (in a game)
 #english: Move=Move
 Move=
 
@@ -232,6 +240,10 @@ Return=
 #description: Close
 #english: Close=Close
 Close=
+
+#description: Delete
+#english: Delete=Delete
+Delete=
 
 #description: Confirm
 #english: Confirm=Confirm
@@ -923,6 +935,21 @@ EgCentipawnAccuracy=
 
 #######################################
 #
+# Header: DIALOG Duplicates
+#
+
+
+#description: Duplicates of
+#english: DuplicatesOf=Duplicates of
+DuplicatesOf=
+
+#description: Select article duplicates to delete
+#english: SelectArticleDuplicatesToDelete=Select Items to Delete
+SelectArticleDuplicatesToDelete=
+
+
+#######################################
+#
 # Header: DIALOG Statistics
 #
 
@@ -1072,6 +1099,9 @@ SortAsc=
 #english: SortDesc=Descending
 SortDesc=
 
+#description: Apply to all chapters
+#english: ApplyToAllChapters=Apply to All Chapters
+ApplyToAllChapters=
 
 #######################################
 #
@@ -1834,6 +1864,10 @@ MbtTitleCopyPasteError=
 #
 # Header: MESSAGES
 #
+
+#description: No duplicates found
+#english: MsgNoDuplicatesFound=No duplicates found.
+MsgNoDuplicatesFound=
 
 #description: Invalid Url
 #english: MsgNeedValidUrlOrEmpty=Enter valid Url or leave empty to delete link. 

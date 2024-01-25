@@ -34,6 +34,11 @@ namespace ChessForge
         public GameSortCriterion.SortItem SortGamesDirection = GameSortCriterion.SortItem.ASCENDING;
 
         /// <summary>
+        /// Whether the Sort command should be applied to all chapters.
+        /// </summary>
+        public bool ApplyToAllChapters = false;
+
+        /// <summary>
         /// Constructors. Initializes the list box values.
         /// </summary>
         public ManageChapterDialog()
@@ -138,6 +143,8 @@ namespace ChessForge
                     SortGamesDirection = GameSortCriterion.SortItem.DESCENDING;
                 }
             }
+
+            ApplyToAllChapters = UiCbAllChapters.IsChecked == true;
 
             DialogResult = true;
         }

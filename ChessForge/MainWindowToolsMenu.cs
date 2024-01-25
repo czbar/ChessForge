@@ -296,6 +296,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnRemoveDuplicates_Click(object sender, RoutedEventArgs e)
         {
+            FindDuplicates.FindDuplicateArticles(null);
         }
 
         /// <summary>
@@ -341,72 +342,11 @@ namespace ChessForge
                     title = Properties.Resources.SelectExercisesForDeletion;
                 }
 
-                SelectArticlesDialog dlg = new SelectArticlesDialog(null, true, title, ref articleList, allChapters, ArticlesAction.NONE, articleType);
+                SelectArticlesDialog dlg = new SelectArticlesDialog(null, true, title, ref articleList, allChapters, ArticlesAction.DELETE, articleType);
                 GuiUtilities.PositionDialog(dlg, this, 100);
                 if (dlg.ShowDialog() == true)
                 {
-                    List<ArticleListItem> articlesToDelete = new List<ArticleListItem>();
-                    List<int> indicesToDelete = new List<int>();
-                    foreach (ArticleListItem item in articleList)
-                    {
-                        if (item.IsSelected && item.Article != null)
-                        {
-                            articlesToDelete.Add(item);
-                            indicesToDelete.Add(item.ArticleIndex);
-                        }
-                    }
-
-                    List<ArticleListItem> deletedArticles = new List<ArticleListItem>();
-                    List<int> deletedIndices = new List<int>();
-                    for (int i = 0; i < articlesToDelete.Count; i++)
-                    {
-                        ArticleListItem item = articlesToDelete[i];
-                        Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(item.ChapterIndex);
-                        if (chapter != null && item.Article != null)
-                        {
-                            int index = chapter.GetArticleIndex(item.Article);
-                            bool res = chapter.DeleteArticle(item.Article);
-                            if (res)
-                            {
-                                deletedArticles.Add(item);
-                                deletedIndices.Add(indicesToDelete[i]);
-                            }
-                        }
-                    }
-
-                    if (deletedArticles.Count > 0)
-                    {
-                        WorkbookOperationType wot =
-                            articleType == GameData.ContentType.MODEL_GAME ? WorkbookOperationType.DELETE_MODEL_GAMES : WorkbookOperationType.DELETE_EXERCISES;
-                        WorkbookOperation op = new WorkbookOperation(wot, null, -1, deletedArticles, deletedIndices);
-                        WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
-
-                        AppState.MainWin.ChaptersView.IsDirty = true;
-                        AppState.IsDirty = true;
-
-                        if (ActiveVariationTree == null || AppState.CurrentEvaluationMode != EvaluationManager.Mode.CONTINUOUS)
-                        {
-                            StopEvaluation(true);
-                            BoardCommentBox.ShowTabHints();
-                        }
-
-
-                        AppState.MainWin.ChaptersView.IsDirty = true;
-                        if (AppState.ActiveTab == TabViewType.CHAPTERS)
-                        {
-                            GuiUtilities.RefreshChaptersView(null);
-                            AppState.SetupGuiForCurrentStates();
-                            AppState.MainWin.UiTabChapters.Focus();
-                        }
-                        else if (AppState.ActiveTab == TabViewType.MODEL_GAME)
-                        {
-                            ChapterUtils.UpdateModelGamesView(AppState.Workbook.ActiveChapter);
-                        }
-                        else if (AppState.ActiveTab == TabViewType.EXERCISE)
-                        {
-                            ChapterUtils.UpdateExercisesView(AppState.Workbook.ActiveChapter);
-                        }
-                    }
+                    DeleteArticlesUtils.DeleteArticles(articleList, articleType);
                 }
             }
             catch { }

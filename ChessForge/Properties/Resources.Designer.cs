@@ -188,6 +188,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Apply to All Chapters.
+        /// </summary>
+        public static string ApplyToAllChapters {
+            get {
+                return ResourceManager.GetString("ApplyToAllChapters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Assign ECOs....
         /// </summary>
         public static string AssignECO {
@@ -1018,6 +1027,15 @@ namespace ChessForge.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Copy.
         /// </summary>
+        public static string Copy {
+            get {
+                return ResourceManager.GetString("Copy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy.
+        /// </summary>
         public static string CopyArticles {
             get {
                 return ResourceManager.GetString("CopyArticles", resourceCulture);
@@ -1300,6 +1318,15 @@ namespace ChessForge.Properties {
         public static string DecreaseIndent {
             get {
                 return ResourceManager.GetString("DecreaseIndent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
             }
         }
         
@@ -1651,6 +1678,15 @@ namespace ChessForge.Properties {
         public static string Draws {
             get {
                 return ResourceManager.GetString("Draws", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duplicates of.
+        /// </summary>
+        public static string DuplicatesOf {
+            get {
+                return ResourceManager.GetString("DuplicatesOf", resourceCulture);
             }
         }
         
@@ -3698,6 +3734,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Move.
+        /// </summary>
+        public static string MoveItem {
+            get {
+                return ResourceManager.GetString("MoveItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Move Replay.
         /// </summary>
         public static string MoveReplay {
@@ -3775,6 +3820,15 @@ namespace ChessForge.Properties {
         public static string MsgNeedValidUrlOrEmpty {
             get {
                 return ResourceManager.GetString("MsgNeedValidUrlOrEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No duplicates found..
+        /// </summary>
+        public static string MsgNoDuplicatesFound {
+            get {
+                return ResourceManager.GetString("MsgNoDuplicatesFound", resourceCulture);
             }
         }
         
@@ -4856,6 +4910,15 @@ namespace ChessForge.Properties {
         public static string Seconds {
             get {
                 return ResourceManager.GetString("Seconds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Items to Delete.
+        /// </summary>
+        public static string SelectArticleDuplicatesToDelete {
+            get {
+                return ResourceManager.GetString("SelectArticleDuplicatesToDelete", resourceCulture);
             }
         }
         

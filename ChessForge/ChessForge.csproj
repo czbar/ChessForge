@@ -131,6 +131,7 @@
     <Compile Include="CopyPasteMoves.cs" />
     <Compile Include="CustomCommands.cs" />
     <Compile Include="DebugDumps.cs" />
+    <Compile Include="DeleteArticlesUtils.cs" />
     <Compile Include="DiagramSetupDialog.xaml.cs">
       <DependentUpon>DiagramSetupDialog.xaml</DependentUpon>
     </Compile>
@@ -140,6 +141,7 @@
     <Compile Include="DownloadWebGamesManager.cs" />
     <Compile Include="DragAndDropCursors.cs" />
     <Compile Include="DraggedArticle.cs" />
+    <Compile Include="DuplicateListItem.cs" />
     <Compile Include="EcoUtils.cs" />
     <Compile Include="EditFenDialog.xaml.cs">
       <DependentUpon>EditFenDialog.xaml</DependentUpon>
@@ -243,6 +245,9 @@
     <Compile Include="RepositionPieceProcessor.cs" />
     <Compile Include="ResourceUtils.cs" />
     <Compile Include="RichTextBoxUtilities.cs" />
+    <Compile Include="SelectDuplicatesDialog.xaml.cs">
+      <DependentUpon>SelectDuplicatesDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SplitChapterDialog.xaml.cs">
       <DependentUpon>SplitChapterDialog.xaml</DependentUpon>
     </Compile>
@@ -443,6 +448,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SelectChaptersDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SelectDuplicatesDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

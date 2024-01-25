@@ -177,7 +177,15 @@ Bookmark=Zakładka
 #english: Bookmarks=Bookmarks
 Bookmarks=Zakładki
 
-#description: Move
+#description: Copy
+#english: Copy=Copy
+Copy=Kopiuj
+
+#description: Move item
+#english: MoveItem=Move
+MoveItem=Przenieś
+
+#description: Move (in a game)
 #english: Move=Move
 Move=Posunięcie
 
@@ -232,6 +240,10 @@ Return=Powrót
 #description: Close
 #english: Close=Close
 Close=Zamknij
+
+#description: Delete
+#english: Delete=Delete
+Delete=Usuń
 
 #description: Confirm
 #english: Confirm=Confirm
@@ -923,6 +935,21 @@ EgCentipawnAccuracy=maksymalne odchylenie od najlepszego ruchu wynosi
 
 #######################################
 #
+# Header: DIALOG Duplicates
+#
+
+
+#description: Duplicates of
+#english: DuplicatesOf=Duplicates of
+DuplicatesOf=Duplikaty
+
+#description: Select article duplicates to delete
+#english: SelectArticleDuplicatesToDelete=Select Items to Delete
+SelectArticleDuplicatesToDelete=Zaznacz pozycje do usunięcia
+
+
+#######################################
+#
 # Header: DIALOG Statistics
 #
 
@@ -1072,6 +1099,9 @@ SortAsc=Rosnący
 #english: SortDesc=Descending
 SortDesc=Malejący
 
+#description: Apply to all chapters
+#english: ApplyToAllChapters=Apply to All Chapters
+ApplyToAllChapters=Zastosuj do wszystkich rozdziałów
 
 #######################################
 #
@@ -1834,6 +1864,10 @@ MbtTitleCopyPasteError=Błąd w Kopiuj/Wklej
 #
 # Header: MESSAGES
 #
+
+#description: No duplicates found
+#english: MsgNoDuplicatesFound=No duplicates found.
+MsgNoDuplicatesFound=Nie znaleziono duplikatów.
 
 #description: Invalid Url
 #english: MsgNeedValidUrlOrEmpty=Enter valid Url or leave empty to delete link. 

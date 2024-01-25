@@ -145,6 +145,11 @@ namespace ChessForge
                         selectedArticleIndex = op.ArticleIndex;
                         WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
                         break;
+                    case WorkbookOperationType.DELETE_ARTICLES:
+                        WorkbookManager.SessionWorkbook.UndoDeleteArticles(op.OpData_1, op.OpData_2);
+                        selectedArticleIndex = op.ArticleIndex;
+                        WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
+                        break;
                     case WorkbookOperationType.COPY_ARTICLES:
                         ChapterUtils.UndoCopyArticles(op.Chapter, op.OpData_1);
                         break;

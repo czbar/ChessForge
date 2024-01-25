@@ -41,7 +41,7 @@ namespace ChessForge
                             bool sortGames = dlg.SortGamesBy != GameSortCriterion.SortItem.NONE && chapter.ModelGames.Count > 1;
                             if (dlg.RegenerateStudy)
                             {
-                                RegenerateStudy(chapter);
+                                RegenerateStudy(dlg.ApplyToAllChapters ? null : chapter);
                                 if (!sortGames)
                                 {
                                     AppState.MainWin.SetupGuiForActiveStudyTree(true);
@@ -50,7 +50,14 @@ namespace ChessForge
 
                             if (sortGames)
                             {
-                                SortGames(chapter, dlg.SortGamesBy, dlg.SortGamesDirection);
+                                if (dlg.ApplyToAllChapters)
+                                {
+                                    SortGames(null, dlg.SortGamesBy, dlg.SortGamesDirection);
+                                }
+                                else
+                                {
+                                    SortGames(chapter, dlg.SortGamesBy, dlg.SortGamesDirection);
+                                }
 
                                 GuiUtilities.RefreshChaptersView(null);
                                 AppState.MainWin.UiTabChapters.Focus();
@@ -515,7 +522,31 @@ namespace ChessForge
         /// <param name="chapter"></param>
         /// <param name="sortBy"></param>
         /// <param name="direction"></param>
-        private static void SortGames(Chapter chapter, GameSortCriterion.SortItem sortBy, GameSortCriterion.SortItem direction)
+        public static void SortGames(Chapter chapter, GameSortCriterion.SortItem sortBy, GameSortCriterion.SortItem direction)
+        {
+            if (chapter != null)
+            {
+                SortGamesInChapter(chapter, sortBy, direction);
+            }
+            else
+            {
+                foreach (Chapter ch in AppState.Workbook.Chapters)
+                {
+                    SortGamesInChapter(ch, sortBy, direction);
+                }
+            }
+
+            AppState.MainWin.ChaptersView.IsDirty = true;
+            AppState.IsDirty = true;
+        }
+
+        /// <summary>
+        /// Sorts games in a single chapter per specified criteria.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="sortBy"></param>
+        /// <param name="direction"></param>
+        private static void SortGamesInChapter(Chapter chapter, GameSortCriterion.SortItem sortBy, GameSortCriterion.SortItem direction)
         {
             IComparer<Article> comparer = new ArticleComparer(sortBy, direction);
             chapter.ModelGames = chapter.ModelGames
@@ -524,9 +555,6 @@ namespace ChessForge
                 .ThenBy(z => z.index)
                 .Select(z => z.item)
                 .ToList();
-
-            AppState.MainWin.ChaptersView.IsDirty = true;
-            AppState.IsDirty = true;
         }
 
         /// <summary>
@@ -557,6 +585,25 @@ namespace ChessForge
         /// </summary>
         /// <param name="chapter"></param>
         private static void RegenerateStudy(Chapter chapter)
+        {
+            if (chapter != null)
+            {
+                RegenerateChapterStudy(chapter);
+            }
+            else
+            {
+                foreach (Chapter ch in AppState.Workbook.Chapters)
+                {
+                    RegenerateChapterStudy(ch);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Regenerates the Study Tree in a single chapter.
+        /// </summary>
+        /// <param name="chapter"></param>
+        private static void RegenerateChapterStudy(Chapter chapter)
         {
             if (chapter.StudyTree.Tree.Nodes.Count <= 1 ||
                 MessageBox.Show(Properties.Resources.MsgThisOverwritesStudy,

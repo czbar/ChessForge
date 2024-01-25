@@ -2,8 +2,10 @@
 using GameTree;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Windows;
 
 namespace ChessForge
 {
@@ -14,38 +16,156 @@ namespace ChessForge
     /// </summary>
     public class FindDuplicates
     {
+        // list of duplicates created/refreshed at the start of FindDuplicateArticles()
+        private static List<List<Article>> _duplicatesSets = new List<List<Article>>();
+
         /// <summary>
-        /// Identifies duplicate articles in a chapter or workbook in terms
-        /// of having the identical main lines.
+        /// Identifies duplicate articles in a chapter or workbook i.e. those that have
+        /// the identical players' names and main lines.
         /// </summary>
         /// <param name="chapter">if null, the entire workbook will be checked</param>
         /// <returns>true, if any duplicates found</returns>
         public static bool FindDuplicateArticles(Chapter chapter)
         {
-            List<List<Article>> duplicates = new List<List<Article>>();
-
             Dictionary<int, List<Article>> dictHashes = new Dictionary<int, List<Article>>();
             CalculateArticleHashes(chapter, dictHashes);
 
-            bool hasDupes = false;
+            _duplicatesSets = new List<List<Article>>();
 
+            // identify articles with the same hash of players names combined with main line moves
+            bool hasDupes = false;
             foreach (int key in dictHashes.Keys)
             {
                 if (dictHashes[key].Count > 1)
                 {
-                    // identify the duplicates 
                     hasDupes = true;
-                    duplicates.Add(dictHashes[key]);
+                    _duplicatesSets.Add(dictHashes[key]);
                 }
             }
 
             if (hasDupes)
             {
-                VerifyDupes(duplicates);
-                ExposeOriginal(duplicates);
+                // perform the prepartory operations on the Article list
+                VerifyDupes();
+                MoveOriginalsToFront();
+                
+                // build the item list for the selection dialog and invoke it
+                InvokeSelectDuplicatesDialog();
+            }
+            else
+            {
+                MessageBox.Show(Properties.Resources.MsgNoDuplicatesFound, Properties.Resources.Information, MessageBoxButton.OK, MessageBoxImage.Information);
             }
 
             return hasDupes;
+        }
+
+        /// <summary>
+        /// Invokes the dialog for selecting Duplicates to delete
+        /// </summary>
+        private static void InvokeSelectDuplicatesDialog()
+        {
+            // create and sort the list fpor the dialog
+            List<DuplicateListItem> articleList = BuildDuplicateItemList();
+            ObservableCollection<DuplicateListItem> duplicateList = SortDuplicateList(articleList);
+
+            SelectDuplicatesDialog dlg = new SelectDuplicatesDialog(duplicateList);
+            GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
+            if (dlg.ShowDialog() == true)
+            {
+                DeleteArticlesUtils.DeleteArticles(dlg.DuplicateList);
+                AppState.MainWin.ChaptersView.IsDirty = true;
+                AppState.MainWin.UiTabChapters.Focus();
+            }
+        }
+
+        /// <summary>
+        /// Sorts the list of duplicates into a new ObservableCollection.
+        /// </summary>
+        /// <param name="duplicateList"></param>
+        private static ObservableCollection<DuplicateListItem> SortDuplicateList(List<DuplicateListItem> duplicateList)
+        {
+            // sort the list
+            duplicateList.Sort(CompareDuplicates);
+
+            ObservableCollection<DuplicateListItem> list = new ObservableCollection<DuplicateListItem>();
+            foreach (DuplicateListItem item in duplicateList)
+            {
+                list.Add(item);
+            }
+
+            return list;
+        }
+
+        /// <summary>
+        /// Compares two Articles so thay can be put in the appropriate order in the duplicates list.
+        /// First we look at the id (number) of the duplicate set, then we place the "original"
+        /// at the top of each set and we sort per position in the workbook.
+        /// </summary>
+        /// <param name="item1"></param>
+        /// <param name="item2"></param>
+        /// <returns></returns>
+        private static int CompareDuplicates(DuplicateListItem item1, DuplicateListItem item2)
+        {
+            // which sublist of dupes they are from
+            if (item1.DuplicateNo != item2.DuplicateNo)
+            {
+                return item1.DuplicateNo  - item2.DuplicateNo;
+            }
+
+            // keep the original at the top
+            if (item1.IsOriginal && !item2.IsOriginal)
+            {
+                return -1;
+            }
+            if (!item1.IsOriginal && item2.IsOriginal)
+            {
+                return 1;
+            }
+
+            if (item1.ChapterIndex != item2.ChapterIndex)
+            {
+                return item1.ChapterIndex - item2.ChapterIndex;
+            }
+
+            // once here, we are in the same chapter 
+            if (item1.ContentType == GameData.ContentType.MODEL_GAME && item2.ContentType != GameData.ContentType.MODEL_GAME)
+            {
+                return -1;
+            }
+
+            if (item1.ContentType != GameData.ContentType.MODEL_GAME && item2.ContentType == GameData.ContentType.MODEL_GAME)
+            {
+                return 1;
+            }
+
+            return item1.ArticleIndex - item2.ArticleIndex;
+        }
+
+        /// <summary>
+        /// Builds Article list based on the passed list of duplicates.
+        /// </summary>
+        /// <returns></returns>
+        private static List<DuplicateListItem> BuildDuplicateItemList()
+        {
+            List<DuplicateListItem> duplicateList = new List<DuplicateListItem>();
+
+            for (int listNo = 0; listNo < _duplicatesSets.Count; listNo++) // List<Article> sublist in _duplicates)
+            {
+                List<Article> dupeSet = _duplicatesSets[listNo];
+                for (int i = 0; i < dupeSet.Count; i++)
+                {
+                    Article art = AppState.Workbook.GetArticleByGuid(dupeSet[i].Guid, out int chapterIndex, out int articleIndex);
+                    ArticleListItem item = new ArticleListItem(AppState.Workbook.Chapters[chapterIndex], chapterIndex, art, articleIndex);
+
+                    DuplicateListItem dupe = new DuplicateListItem(item);
+                    dupe.DuplicateNo = listNo;
+                    dupe.IsOriginal = i == 0;
+                    dupe.IsSelected = i != 0;
+                    duplicateList.Add(dupe);
+                }
+            }
+            return duplicateList;
         }
 
         /// <summary>
@@ -55,17 +175,16 @@ namespace ChessForge
         /// then most comments, then most engine evaluations if previous criteria do not differentiate.
         /// The idea is not remove the article that the user worked with before importing a duplicate.
         /// </summary>
-        /// <param name="duplicates"></param>
-        private static void ExposeOriginal(List<List<Article>> duplicates)
+        private static void MoveOriginalsToFront()
         {
-            foreach (List<Article> dupes in duplicates)
+            foreach (List<Article> dupes in _duplicatesSets)
             {
                 int origNodes = dupes[0].Tree.Nodes.Count;
                 int origComments = TreeUtils.GetCommentsCount(dupes[0].Tree);
                 int origEvals = TreeUtils.GetNodesWithEvalCount(dupes[0].Tree);
 
                 int originalIndex = 0;
-                for (int i = 1; i < duplicates.Count; i++)
+                for (int i = 1; i < dupes.Count; i++)
                 {
                     bool isOrigin = false;
                     if (dupes[i].Tree.Nodes.Count > origNodes)
@@ -109,10 +228,9 @@ namespace ChessForge
         /// <summary>
         /// Removes dupes that are false positives due to hash collision.
         /// </summary>
-        /// <param name="duplicates"></param>
-        private static void VerifyDupes(List<List<Article>> duplicates)
+        private static void VerifyDupes()
         {
-            foreach (List<Article> dupes in duplicates)
+            foreach (List<Article> dupes in _duplicatesSets)
             {
                 List<Article> toRemove = new List<Article>();
                 Article first = dupes[0];
@@ -198,7 +316,7 @@ namespace ChessForge
             // append White and Black as with different players we do not consider articles as duplicates
             string white = tree.Header.GetWhitePlayer(out _);
             string black = tree.Header.GetBlackPlayer(out _);
-            return (mainLine +white + black).GetHashCode();
+            return (mainLine + white + black).GetHashCode();
         }
 
         /// <summary>
