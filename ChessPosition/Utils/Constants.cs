@@ -63,8 +63,7 @@ namespace ChessPosition
         NONE,
         COPY,
         MOVE,
-        COPY_OR_MOVE,
-        DELETE_DUPLICATES
+        COPY_OR_MOVE
     }
 
     /// <summary>
