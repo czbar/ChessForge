@@ -1,12 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Security.RightsManagement;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Media3D;
 using ChessPosition;
 using GameTree;
 
@@ -31,6 +32,47 @@ namespace ChessForge
             dlg.Top = leftTop.Y + offset;
             dlg.Topmost = false;
             dlg.Owner = owner;
+        }
+
+        /// <summary>
+        /// Identifies a List View item from the click coordinates. 
+        /// </summary>
+        /// <param name="listView"></param>
+        /// <param name="point"></param>
+        /// <returns></returns>
+        public static ListViewItem GetListViewItemFromPoint(ListView listView, Point point)
+        {
+            HitTestResult result = VisualTreeHelper.HitTest(listView, point);
+            if (result == null)
+            {
+                return null;
+            }
+
+            DependencyObject hitObject = result.VisualHit;
+            while (hitObject != null && !(hitObject is ListViewItem))
+            {
+                hitObject = VisualTreeHelper.GetParent(hitObject);
+            }
+
+            return hitObject as ListViewItem;
+        }
+
+        /// <summary>
+        /// Opens a game preview dialog.
+        /// </summary>
+        /// <param name="article"></param>
+        public static void InvokeGamePreviewDialog(Article article, Window owner)
+        {
+            if (article != null)
+            {
+                List<string> gameIdList = new List<string>();
+                List<Article> games = new List<Article> { article };
+                gameIdList.Add(article.Tree.Header.GetGuid(out _));
+
+                SingleGamePreviewDialog dlg = new SingleGamePreviewDialog(gameIdList, games);
+                PositionDialog(dlg, owner, 20);
+                dlg.ShowDialog();
+            }
         }
 
         /// <summary>
