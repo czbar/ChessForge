@@ -1027,6 +1027,15 @@ namespace ChessForge.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Copy.
         /// </summary>
+        public static string Copy {
+            get {
+                return ResourceManager.GetString("Copy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy.
+        /// </summary>
         public static string CopyArticles {
             get {
                 return ResourceManager.GetString("CopyArticles", resourceCulture);
@@ -3721,6 +3730,15 @@ namespace ChessForge.Properties {
         public static string MoveGameUp {
             get {
                 return ResourceManager.GetString("MoveGameUp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move.
+        /// </summary>
+        public static string MoveItem {
+            get {
+                return ResourceManager.GetString("MoveItem", resourceCulture);
             }
         }
         

@@ -237,6 +237,12 @@
   <data name="Bookmarks" xml:space="preserve">
     <value>Zakładki</value>
   </data>
+  <data name="Copy" xml:space="preserve">
+    <value>Kopiuj</value>
+  </data>
+  <data name="MoveItem" xml:space="preserve">
+    <value>Przenieś</value>
+  </data>
   <data name="Move" xml:space="preserve">
     <value>Posunięcie</value>
   </data>

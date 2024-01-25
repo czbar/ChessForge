@@ -177,7 +177,15 @@ Bookmark=
 #english: Bookmarks=Bookmarks
 Bookmarks=
 
-#description: Move
+#description: Copy
+#english: Copy=Copy
+Copy=
+
+#description: Move item
+#english: MoveItem=Move
+MoveItem=
+
+#description: Move (in a game)
 #english: Move=Move
 Move=
 

@@ -177,7 +177,15 @@ Bookmark=Zakładka
 #english: Bookmarks=Bookmarks
 Bookmarks=Zakładki
 
-#description: Move
+#description: Copy
+#english: Copy=Copy
+Copy=Kopiuj
+
+#description: Move item
+#english: MoveItem=Move
+MoveItem=Przenieś
+
+#description: Move (in a game)
 #english: Move=Move
 Move=Posunięcie
 

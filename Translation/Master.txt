@@ -137,7 +137,13 @@ Bookmark=Bookmark
 #Games plural
 Bookmarks=Bookmarks
 
-#Move
+#Copy
+Copy=Copy
+
+#Move item
+MoveItem=Move
+
+#Move (in a game)
 Move=Move
 
 #Moves plural
