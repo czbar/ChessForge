@@ -77,6 +77,11 @@ namespace ChessForge
             // if there is any selection outside the active chapter show all chapters (issue #465)
             InitializeComponent();
 
+            if (actionOnArticles == ArticlesAction.COPY_OR_MOVE)
+            {
+                UiBtnOk.Visibility = Visibility.Collapsed;
+            }
+
             // do not process CheckBox events while in the constructor
             _doNotProcessCheckEvents = true;
 
