@@ -98,5 +98,25 @@ namespace ChessForge
                 }
             }
         }
+
+        /// <summary>
+        /// Overloaded method for deleting articles given a list of DuplicateListItem.
+        /// </summary>
+        /// <param name="dupeList"></param>
+        public static void DeleteArticles(ObservableCollection<DuplicateListItem> dupeList)
+        {
+            ObservableCollection<ArticleListItem> articleList = new ObservableCollection<ArticleListItem>();
+
+            foreach (DuplicateListItem item in dupeList)
+            {
+                if (item.ArticleItem != null)
+                {
+                    articleList.Add(item.ArticleItem);  
+                }
+            }
+
+            DeleteArticles(articleList);
+        }
+
     }
 }
