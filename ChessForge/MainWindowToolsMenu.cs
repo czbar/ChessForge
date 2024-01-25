@@ -342,7 +342,7 @@ namespace ChessForge
                     title = Properties.Resources.SelectExercisesForDeletion;
                 }
 
-                SelectArticlesDialog dlg = new SelectArticlesDialog(null, true, title, ref articleList, allChapters, ArticlesAction.NONE, articleType);
+                SelectArticlesDialog dlg = new SelectArticlesDialog(null, true, title, ref articleList, allChapters, ArticlesAction.DELETE, articleType);
                 GuiUtilities.PositionDialog(dlg, this, 100);
                 if (dlg.ShowDialog() == true)
                 {
