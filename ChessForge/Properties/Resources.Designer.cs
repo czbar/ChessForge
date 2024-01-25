@@ -1313,6 +1313,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete All Bookmarks.
         /// </summary>
         public static string DeleteAllBookmarks {
@@ -4887,7 +4896,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select Ones to Delete.
+        ///   Looks up a localized string similar to Select Items to Delete.
         /// </summary>
         public static string SelectArticleDuplicatesToDelete {
             get {

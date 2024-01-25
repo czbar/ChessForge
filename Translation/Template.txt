@@ -233,6 +233,10 @@ Return=
 #english: Close=Close
 Close=
 
+#description: Delete
+#english: Delete=Delete
+Delete=
+
 #description: Confirm
 #english: Confirm=Confirm
 Confirm=
@@ -932,7 +936,7 @@ EgCentipawnAccuracy=
 DuplicatesOf=
 
 #description: Select article duplicates to delete
-#english: SelectArticleDuplicatesToDelete=Select Ones to Delete
+#english: SelectArticleDuplicatesToDelete=Select Items to Delete
 SelectArticleDuplicatesToDelete=
 
 

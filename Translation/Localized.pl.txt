@@ -233,6 +233,10 @@ Return=Powrót
 #english: Close=Close
 Close=Zamknij
 
+#description: Delete
+#english: Delete=Delete
+Delete=Usuń
+
 #description: Confirm
 #english: Confirm=Confirm
 Confirm=Potwierdź
@@ -932,8 +936,8 @@ EgCentipawnAccuracy=maksymalne odchylenie od najlepszego ruchu wynosi
 DuplicatesOf=Duplikaty
 
 #description: Select article duplicates to delete
-#english: SelectArticleDuplicatesToDelete=Select Ones to Delete
-SelectArticleDuplicatesToDelete=Zaznacz te do usunięcia
+#english: SelectArticleDuplicatesToDelete=Select Items to Delete
+SelectArticleDuplicatesToDelete=Zaznacz pozycje do usunięcia
 
 
 #######################################

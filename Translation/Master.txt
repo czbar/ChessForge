@@ -179,6 +179,9 @@ Return=Return
 #Close
 Close=Close
 
+#Delete
+Delete=Delete
+
 #Confirm
 Confirm=Confirm
 
@@ -725,7 +728,7 @@ EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
 DuplicatesOf=Duplicates of
 
 #Select article duplicates to delete
-SelectArticleDuplicatesToDelete=Select Ones to Delete
+SelectArticleDuplicatesToDelete=Select Items to Delete
 
 
 #######################################

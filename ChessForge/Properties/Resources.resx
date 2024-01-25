@@ -279,6 +279,9 @@
   <data name="Close" xml:space="preserve">
     <value>Close</value>
   </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="Confirm" xml:space="preserve">
     <value>Confirm</value>
   </data>
@@ -739,7 +742,7 @@
     <value>Duplicates of</value>
   </data>
   <data name="SelectArticleDuplicatesToDelete" xml:space="preserve">
-    <value>Select Ones to Delete</value>
+    <value>Select Items to Delete</value>
   </data>
   <data name="Statistics" xml:space="preserve">
     <value>Statistics</value>
