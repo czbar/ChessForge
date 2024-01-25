@@ -17,39 +17,40 @@ namespace ChessForge
     public class FindDuplicates
     {
         // list of duplicates created/refreshed at the start of FindDuplicateArticles()
-        private static List<List<Article>> _duplicates = new List<List<Article>>();
+        private static List<List<Article>> _duplicatesSets = new List<List<Article>>();
 
         /// <summary>
-        /// Identifies duplicate articles in a chapter or workbook in terms
-        /// of having the identical main lines.
+        /// Identifies duplicate articles in a chapter or workbook i.e. those that have
+        /// the identical players' names and main lines.
         /// </summary>
         /// <param name="chapter">if null, the entire workbook will be checked</param>
         /// <returns>true, if any duplicates found</returns>
         public static bool FindDuplicateArticles(Chapter chapter)
         {
-            _duplicates = new List<List<Article>>();
-
             Dictionary<int, List<Article>> dictHashes = new Dictionary<int, List<Article>>();
             CalculateArticleHashes(chapter, dictHashes);
 
-            bool hasDupes = false;
+            _duplicatesSets = new List<List<Article>>();
 
+            // identify articles with the same hash of players names combined with main line moves
+            bool hasDupes = false;
             foreach (int key in dictHashes.Keys)
             {
                 if (dictHashes[key].Count > 1)
                 {
-                    // identify the duplicates 
                     hasDupes = true;
-                    _duplicates.Add(dictHashes[key]);
+                    _duplicatesSets.Add(dictHashes[key]);
                 }
             }
 
             if (hasDupes)
             {
+                // perform the prepartory operations on the Article list
                 VerifyDupes();
-                ExposeOriginal();
-                MarkNonOriginals();
-                SelectDuplicatesToDelete();
+                MoveOriginalsToFront();
+                
+                // build the item list for the selection dialog and invoke it
+                InvokeSelectDuplicatesDialog();
             }
             else
             {
@@ -60,114 +61,33 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Finds the list of duplicates (including the original)
-        /// that contains the passed Article.
+        /// Invokes the dialog for selecting Duplicates to delete
         /// </summary>
-        /// <param name="article"></param>
-        /// <returns></returns>
-        public static List<Article> GetArticleDuplicates(Article article)
+        private static void InvokeSelectDuplicatesDialog()
         {
-            foreach (List<Article> dupeList in _duplicates)
-            {
-                foreach (Article dupe in dupeList)
-                {
-                    if (dupe == article)
-                    {
-                        return dupeList;
-                    }
-                }
-            }
+            // create and sort the list fpor the dialog
+            List<DuplicateListItem> articleList = BuildDuplicateItemList();
+            ObservableCollection<DuplicateListItem> duplicateList = SortDuplicateList(articleList);
 
-            return null;
-        }
-
-        /// <summary>
-        /// Called from the SelectArticles dialog to update the ArticleListItem
-        /// managed there.
-        /// The passed list of items is from the SelectDuplicates dialog with the 
-        /// items' Data field indicating whether the item should be considered for deletion
-        /// and therefore shown in the SeclectionArticles dialog.
-        /// </summary>
-        /// <param name="articlesToUpdate"></param>
-        /// <returns></returns>
-        public static ObservableCollection<ArticleListItem> UpdateDuplicatesStatus(ObservableCollection<ArticleListItem> articlesToUpdate)
-        {
-            foreach (List<Article> sublist in _duplicates)
-            {
-                for (int i = 0; i < sublist.Count; i++)
-                {
-                    foreach (ArticleListItem item in articlesToUpdate)
-                    {
-                        if (item.Article == sublist[i])
-                        {
-                            sublist[i].Data = item.Article.Data;
-                        }
-                    }
-                }
-            }
-
-            return CreateArticleItemList();
-        }
-
-        /// <summary>
-        /// Invokes the dialog for selecting Articles
-        /// </summary>
-        private static void SelectDuplicatesToDelete()
-        {
-            string title = Properties.Resources.RemoveDuplicates;
-            title = TextUtils.RemoveTrailingDots(title);
-
-            List<ArticleListItem> articleList = BuildArticleItemList();
-            ObservableCollection<ArticleListItem> list = CreateArticleItemList();
-
-            SelectArticlesDialog dlg = new SelectArticlesDialog(null, false, title, ref list, true, ArticlesAction.DELETE_DUPLICATES);
+            SelectDuplicatesDialog dlg = new SelectDuplicatesDialog(duplicateList);
             GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
             if (dlg.ShowDialog() == true)
             {
-                DeleteArticlesUtils.DeleteArticles(list);
+                DeleteArticlesUtils.DeleteArticles(duplicateList);
             }
         }
 
         /// <summary>
-        /// Build and sorts the ArticleItems list.
+        /// Sorts the list of duplicates into a new ObservableCollection.
         /// </summary>
-        /// <returns></returns>
-        private static ObservableCollection<ArticleListItem> CreateArticleItemList()
+        /// <param name="duplicateList"></param>
+        private static ObservableCollection<DuplicateListItem> SortDuplicateList(List<DuplicateListItem> duplicateList)
         {
-            List<ArticleListItem> articleList = BuildArticleItemList();
-            return SortDuplicateList(articleList);
-        }
-
-        /// <summary>
-        /// Adds items representing chapter headers
-        /// and then sorts the entire list
-        /// </summary>
-        /// <param name="articleList"></param>
-        private static ObservableCollection<ArticleListItem> SortDuplicateList(List<ArticleListItem> articleList)
-        {
-            // first insert items for chapter headers
-            Dictionary<int, Chapter> dictChapters = new Dictionary<int, Chapter>();
-            List<ArticleListItem> chapterItems = new List<ArticleListItem>();
-            foreach (ArticleListItem item in articleList)
-            {
-                if (!dictChapters.ContainsKey(item.ChapterIndex))
-                {
-                    Chapter chapter = AppState.Workbook.Chapters[item.ChapterIndex]; ;
-                    dictChapters[item.ChapterIndex] = chapter;
-                    chapterItems.Add(new ArticleListItem(chapter));
-                }
-            }
-
-            foreach (ArticleListItem chapterItem in chapterItems)
-            {
-                articleList.Add(chapterItem);
-            }
-
             // sort the list
-            articleList.Sort(CompareDuplicates);
+            duplicateList.Sort(CompareDuplicates);
 
-            ObservableCollection<ArticleListItem> list = new ObservableCollection<ArticleListItem>();
-            foreach (ArticleListItem item in articleList)
+            ObservableCollection<DuplicateListItem> list = new ObservableCollection<DuplicateListItem>();
+            foreach (DuplicateListItem item in duplicateList)
             {
                 list.Add(item);
             }
@@ -176,35 +96,43 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Compares to Articles to put them in order in the duplicates list.
+        /// Compares two Articles so thay can be put in the appropriate order in the duplicates list.
+        /// First we look at the id (number) of the duplicate set, then we place the "original"
+        /// at the top of each set and we sort per position in the workbook.
         /// </summary>
         /// <param name="item1"></param>
         /// <param name="item2"></param>
         /// <returns></returns>
-        private static int CompareDuplicates(ArticleListItem item1, ArticleListItem item2)
+        private static int CompareDuplicates(DuplicateListItem item1, DuplicateListItem item2)
         {
+            // which sublist of dupes they are from
+            if (item1.DuplicateNo != item2.DuplicateNo)
+            {
+                return item1.DuplicateNo  - item2.DuplicateNo;
+            }
+
+            // keep the original at the top
+            if (item1.IsOriginal && !item2.IsOriginal)
+            {
+                return -1;
+            }
+            if (!item1.IsOriginal && item2.IsOriginal)
+            {
+                return 1;
+            }
+
             if (item1.ChapterIndex != item2.ChapterIndex)
             {
                 return item1.ChapterIndex - item2.ChapterIndex;
             }
 
-            if (item1.Article == null && item2.Article != null)
+            // once here, we are in the same chapter 
+            if (item1.ContentType == GameData.ContentType.MODEL_GAME && item2.ContentType != GameData.ContentType.MODEL_GAME)
             {
                 return -1;
             }
 
-            if (item1.Article != null && item2.Article == null)
-            {
-                return 1;
-            }
-
-            // once here, we are in the same chapter and neither item is a chapter header
-            if (item1.Article.ContentType == GameData.ContentType.MODEL_GAME && item2.ContentType != GameData.ContentType.MODEL_GAME)
-            {
-                return -1;
-            }
-
-            if (item1.Article.ContentType != GameData.ContentType.MODEL_GAME && item2.ContentType == GameData.ContentType.MODEL_GAME)
+            if (item1.ContentType != GameData.ContentType.MODEL_GAME && item2.ContentType == GameData.ContentType.MODEL_GAME)
             {
                 return 1;
             }
@@ -214,43 +142,28 @@ namespace ChessForge
 
         /// <summary>
         /// Builds Article list based on the passed list of duplicates.
-        /// We add all articles that are NOT at index 0 in the sublists.
         /// </summary>
         /// <returns></returns>
-        private static List<ArticleListItem> BuildArticleItemList()
+        private static List<DuplicateListItem> BuildDuplicateItemList()
         {
-            List<ArticleListItem> articleList = new List<ArticleListItem>();
+            List<DuplicateListItem> duplicateList = new List<DuplicateListItem>();
 
-            foreach (List<Article> sublist in _duplicates)
+            for (int listNo = 0; listNo < _duplicatesSets.Count; listNo++) // List<Article> sublist in _duplicates)
             {
-                for (int i = 0; i < sublist.Count; i++)
+                List<Article> dupeSet = _duplicatesSets[listNo];
+                for (int i = 0; i < dupeSet.Count; i++)
                 {
-                    Article art = AppState.Workbook.GetArticleByGuid(sublist[i].Guid, out int chapterIndex, out int articleIndex);
-                    if (art.Data is bool bDupe && bDupe)
-                    {
-                        ArticleListItem item = new ArticleListItem(AppState.Workbook.Chapters[chapterIndex], chapterIndex, art, articleIndex);
-                        articleList.Add(item);
-                    }
+                    Article art = AppState.Workbook.GetArticleByGuid(dupeSet[i].Guid, out int chapterIndex, out int articleIndex);
+                    ArticleListItem item = new ArticleListItem(AppState.Workbook.Chapters[chapterIndex], chapterIndex, art, articleIndex);
+
+                    DuplicateListItem dupe = new DuplicateListItem(item);
+                    dupe.DuplicateNo = listNo;
+                    dupe.IsOriginal = i == 0;
+                    dupe.IsSelected = i != 0;
+                    duplicateList.Add(dupe);
                 }
             }
-            return articleList;
-        }
-
-        /// <summary>
-        /// Marks first item in each sublist as the "original",
-        /// not to be deleted.
-        /// This must only be called from the constructor as the
-        /// markings may change later on in the process.
-        /// </summary>
-        private static void MarkNonOriginals()
-        {
-            foreach (List<Article> sublist in _duplicates)
-            {
-                for (int i = 0; i < sublist.Count; i++)
-                {
-                    sublist[i].Data = (i != 0);
-                }
-            }
+            return duplicateList;
         }
 
         /// <summary>
@@ -260,9 +173,9 @@ namespace ChessForge
         /// then most comments, then most engine evaluations if previous criteria do not differentiate.
         /// The idea is not remove the article that the user worked with before importing a duplicate.
         /// </summary>
-        private static void ExposeOriginal()
+        private static void MoveOriginalsToFront()
         {
-            foreach (List<Article> dupes in _duplicates)
+            foreach (List<Article> dupes in _duplicatesSets)
             {
                 int origNodes = dupes[0].Tree.Nodes.Count;
                 int origComments = TreeUtils.GetCommentsCount(dupes[0].Tree);
@@ -315,7 +228,7 @@ namespace ChessForge
         /// </summary>
         private static void VerifyDupes()
         {
-            foreach (List<Article> dupes in _duplicates)
+            foreach (List<Article> dupes in _duplicatesSets)
             {
                 List<Article> toRemove = new List<Article>();
                 Article first = dupes[0];
