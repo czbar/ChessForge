@@ -874,7 +874,7 @@ namespace ChessForge
                 {
                     chaptersToDelete.Add(ch);
                 }
-                
+
                 foreach (Chapter ch in chaptersToDelete)
                 {
                     Chapters.Remove(ch);
@@ -935,8 +935,8 @@ namespace ChessForge
             {
                 List<ArticleListItem> articleList = objArticleList as List<ArticleListItem>;
                 List<int> indexList = objIndexList as List<int>;
-                // undo in the reverse order to how they were deleted
-                for (int i = articleList.Count - 1; i >= 0; i--)
+                // undo in the same order as supplied (undo is created with the same order as in the workbook) so the undo indices exist. 
+                for (int i = 0; i < articleList.Count; i++)
                 {
                     Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(articleList[i].ChapterIndex);
                     chapter.InsertModelGame(articleList[i].Article, indexList[i]);
@@ -979,8 +979,8 @@ namespace ChessForge
             {
                 List<ArticleListItem> articleList = objArticleList as List<ArticleListItem>;
                 List<int> indexList = objIndexList as List<int>;
-                // undo in the reverse order to how they were deleted
-                for (int i = articleList.Count - 1; i >= 0; i--)
+                // undo in the same order as supplied (undo is created with the same order as in the workbook) so the undo indices exist. 
+                for (int i = 0; i < articleList.Count; i++)
                 {
                     Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(articleList[i].ChapterIndex);
                     chapter.InsertExercise(articleList[i].Article, indexList[i]);
