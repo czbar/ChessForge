@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace ChessForge
 {
@@ -22,40 +23,47 @@ namespace ChessForge
 
             if (dlg.ShowDialog() == true)
             {
-                switch (SplitChapterDialog.LastSplitBy)
+                if (dlg.MoveToChaptersPerECO)
                 {
-                    case SplitBy.ECO:
-                        createdChapters = SplitChapterByECO(SplitChapterDialog.LastSplitByCrtierion, chapter, origTitle);
-                        break;
-                    case SplitBy.DATE:
-                        createdChapters = SplitChapterByDate(SplitChapterDialog.LastSplitByCrtierion, chapter, origTitle);
-                        break;
-                    case SplitBy.ROUND:
-                        createdChapters = SplitChapterByRound(chapter, origTitle);
-                        break;
+                    DistributGamesByECO(chapter);
                 }
-
-                if (createdChapters != null && createdChapters.Count > 1)
+                else
                 {
-                    //collect info for the Undo operation
-                    WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.SPLIT_CHAPTER, chapter, createdChapters);
-                    WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
-
-                    // remove the current chapter, insert the new chapters
-                    // and set the first new one as Active (so the ActiveChapterIndex will not change)
-                    int index = AppState.Workbook.ActiveChapterIndex;
-
-                    // replace the chapter at index with the first one from the list
-                    AppState.Workbook.Chapters[index] = createdChapters[0];
-
-                    for (int i = 1; i < createdChapters.Count; i++)
+                    switch (SplitChapterDialog.LastSplitBy)
                     {
-                        AppState.Workbook.Chapters.Insert(index + i, createdChapters[i]);
+                        case SplitBy.ECO:
+                            createdChapters = SplitChapterByECO(SplitChapterDialog.LastSplitByCrtierion, chapter, origTitle);
+                            break;
+                        case SplitBy.DATE:
+                            createdChapters = SplitChapterByDate(SplitChapterDialog.LastSplitByCrtierion, chapter, origTitle);
+                            break;
+                        case SplitBy.ROUND:
+                            createdChapters = SplitChapterByRound(chapter, origTitle);
+                            break;
                     }
 
-                    AppState.MainWin.ExpandCollapseChaptersView(false, false);
-                    AppState.SetupGuiForCurrentStates();
-                    AppState.IsDirty = true;
+                    if (createdChapters != null && createdChapters.Count > 1)
+                    {
+                        //collect info for the Undo operation
+                        WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.SPLIT_CHAPTER, chapter, createdChapters);
+                        WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
+
+                        // remove the current chapter, insert the new chapters
+                        // and set the first new one as Active (so the ActiveChapterIndex will not change)
+                        int index = AppState.Workbook.ActiveChapterIndex;
+
+                        // replace the chapter at index with the first one from the list
+                        AppState.Workbook.Chapters[index] = createdChapters[0];
+
+                        for (int i = 1; i < createdChapters.Count; i++)
+                        {
+                            AppState.Workbook.Chapters.Insert(index + i, createdChapters[i]);
+                        }
+
+                        AppState.MainWin.ExpandCollapseChaptersView(false, false);
+                        AppState.SetupGuiForCurrentStates();
+                        AppState.IsDirty = true;
+                    }
                 }
             }
         }
@@ -94,6 +102,15 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Identifies the best target chapter for each game 
+        /// based on the ECO and moves it there.
+        /// </summary>
+        /// <param name="chapter"></param>
+        private static void DistributGamesByECO(Chapter chapter)
+        {
+        }
+
+        /// <summary>
         /// Splits the passed chapter into multiple chapters based on 
         /// the games' ECO (or parts of ECO).
         /// Exercises go into a separate chapter.
@@ -116,6 +133,7 @@ namespace ChessForge
                     if (!_dictResChapters.ContainsKey(critPart))
                     {
                         _dictResChapters[critPart] = new Chapter();
+                        origTitle = RemoveEcoFromOriginalChapterTitle(origTitle);
                         _dictResChapters[critPart].SetTitle(origTitle + " (" + critPart + ")");
                     }
                     _dictResChapters[critPart].ModelGames.Add(game);
@@ -156,6 +174,29 @@ namespace ChessForge
             }
 
             return resChapters;
+        }
+
+        /// <summary>
+        /// Removes the ECO code if found in parenthesis at the end
+        /// of the chapter's name
+        /// </summary>
+        /// <param name="origTitle"></param>
+        /// <returns></returns>
+        private static string RemoveEcoFromOriginalChapterTitle(string origTitle)
+        {
+            origTitle = origTitle.TrimEnd();
+
+            Regex ecoRegex = new Regex(@"\((?:A|B|C|D|E)\d{0,2}\)$", RegexOptions.Compiled);
+            if (ecoRegex.Match(origTitle).Success)
+            {
+                int pos = origTitle.LastIndexOf('(');
+                if (pos > 0)
+                {
+                    origTitle = origTitle.Substring(0, pos);
+                }
+            }
+
+            return origTitle;
         }
 
         /// <summary>
