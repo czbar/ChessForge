@@ -1010,6 +1010,10 @@ Decade=Dekada
 #english: Granularity=Granularity
 Granularity=Rozdzielczość
 
+#description: Move games to other chapters per ECO
+#english: MoveGamesPerEco=Move games to other chapters per ECO
+MoveGamesPerEco=Przenieś partie do innych rozdziałów wg ECO
+
 #######################################
 #
 # Header: DIALOG Edit FEN

@@ -789,6 +789,9 @@
   <data name="Granularity" xml:space="preserve">
     <value>Granularity</value>
   </data>
+  <data name="MoveGamesPerEco" xml:space="preserve">
+    <value>Move games to other chapters per ECO</value>
+  </data>
   <data name="DlgTitleEditFen" xml:space="preserve">
     <value>Edit FEN</value>
   </data>

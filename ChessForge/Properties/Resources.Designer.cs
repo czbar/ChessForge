@@ -3761,6 +3761,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Move games to other chapters per ECO.
+        /// </summary>
+        public static string MoveGamesPerEco {
+            get {
+                return ResourceManager.GetString("MoveGamesPerEco", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Move Game To Chapter....
         /// </summary>
         public static string MoveGameToChapter {

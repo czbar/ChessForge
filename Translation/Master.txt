@@ -786,6 +786,9 @@ Decade=Decade
 #Granularity
 Granularity=Granularity
 
+#Move games to other chapters per ECO
+MoveGamesPerEco=Move games to other chapters per ECO
+
 #######################################
 #
 # Header: DIALOG Edit FEN
