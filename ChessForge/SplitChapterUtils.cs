@@ -25,7 +25,7 @@ namespace ChessForge
             {
                 if (dlg.MoveToChaptersPerECO)
                 {
-                    DistributGamesByECO(chapter);
+                    DistributeGamesByECO(chapter);
                 }
                 else
                 {
@@ -106,8 +106,87 @@ namespace ChessForge
         /// based on the ECO and moves it there.
         /// </summary>
         /// <param name="chapter"></param>
-        private static void DistributGamesByECO(Chapter chapter)
+        private static void DistributeGamesByECO(Chapter currChapter)
         {
+            List<EcoChapterStats> stats = CalculateEcoStats(currChapter);
+            AllocateGamesToChapterByEco(currChapter, stats);
+        }
+
+        /// <summary>
+        /// Allocates games to appropriate chapters
+        /// </summary>
+        /// <param name="stats"></param>
+        private static void AllocateGamesToChapterByEco(Chapter currChapter, List<EcoChapterStats> stats)
+        {
+            foreach (Article game in currChapter.ModelGames)
+            {
+                int eco = EcoChapterStats.EcoToInt(game.Tree.Header.GetECO(out _));
+                if (eco > 0)
+                {
+                    EcoChapterStats bestStat = null;
+                    int bestGameCount = 0;
+                    int minChapterRange = -1;
+                    bool foundExactMatch = false;
+
+                    foreach (EcoChapterStats stat in stats)
+                    {
+                        int count = stat.GetEcoCount(eco);
+                        if (count > 0)
+                        {
+                            if (count > bestGameCount)
+                            {
+                                bestStat = stat;
+                                bestGameCount = count;
+                                foundExactMatch = true;
+                            }
+                        }
+                        else if (!foundExactMatch && stat.IsEcoInRange(eco))
+                        {
+                            if (stat.EcoRange < minChapterRange || minChapterRange == -1)
+                            {
+                                bestStat = stat;
+                                minChapterRange = stat.EcoRange;
+                            }
+                        }
+                    }
+
+                    if (bestStat != null)
+                    {
+                        bestStat.AddGame(game);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Calculates ECO stats that we need to allocate games.
+        /// </summary>
+        /// <param name="currChapter"></param>
+        /// <returns></returns>
+        private static List<EcoChapterStats> CalculateEcoStats(Chapter currChapter)
+        {
+            List<EcoChapterStats> stats = new List<EcoChapterStats>();
+
+            // iterate over each chapter except the current one
+            // and build a list of ECO counts in each
+            foreach (Chapter chapter in AppState.Workbook.Chapters)
+            {
+                EcoChapterStats chapterStats = new EcoChapterStats(chapter, chapter == currChapter);
+                if (chapter != currChapter)
+                {
+                    stats.Add(chapterStats);
+                    foreach (Article game in chapter.ModelGames)
+                    {
+                        string eco = game.Tree.Header.GetECO(out _);
+                        if (!string.IsNullOrEmpty(eco))
+                        {
+                            chapterStats.AddEco(eco);
+                        }
+                    }
+                }
+            }
+
+            return stats;
         }
 
         /// <summary>
@@ -221,7 +300,7 @@ namespace ChessForge
                     if (!_dictResChapters.ContainsKey(critPart))
                     {
                         _dictResChapters[critPart] = new Chapter();
-                        _dictResChapters[critPart].SetTitle(origTitle + " " +  critPart);
+                        _dictResChapters[critPart].SetTitle(origTitle + " " + critPart);
                     }
                     _dictResChapters[critPart].ModelGames.Add(game);
                 }
@@ -332,7 +411,7 @@ namespace ChessForge
                 case SplitByCriterion.ECO_AE:
                     if (eco.Length >= 1)
                     {
-                        ecoPart = eco.Substring(0,1);
+                        ecoPart = eco.Substring(0, 1);
                     }
                     break;
                 case SplitByCriterion.ECO_A0E9:
