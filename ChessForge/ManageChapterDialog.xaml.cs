@@ -1,10 +1,12 @@
-﻿using System;
+﻿using ChessPosition;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 
 namespace ChessForge
 {
@@ -19,11 +21,6 @@ namespace ChessForge
         public bool RegenerateStudy = false;
 
         /// <summary>
-        /// Set to true if user clicked the SplitChapter button
-        /// </summary>
-        public bool CallSplitChapterDialog = false;
-
-        /// <summary>
         /// Selected Sort Criterion
         /// </summary>
         public GameSortCriterion.SortItem SortGamesBy = GameSortCriterion.SortItem.NONE;
@@ -32,6 +29,21 @@ namespace ChessForge
         /// Selected sort direction.
         /// </summary>
         public GameSortCriterion.SortItem SortGamesDirection = GameSortCriterion.SortItem.ASCENDING;
+
+        /// <summary>
+        /// Number of the move at which to place a thumbnail 
+        /// </summary>
+        public int ThumbnailMove = -1;
+
+        /// <summary>
+        /// Whether to overwrite existing thumbnails
+        /// </summary>
+        public bool OverwriteThumbnails = false;
+
+        /// <summary>
+        /// Whether the thumbnail should be placed at the White's or Black's move.
+        /// </summary>
+        public PieceColor ThumbnailMoveColor = PieceColor.White;
 
         /// <summary>
         /// Whether the Sort command should be applied to all chapters.
@@ -44,8 +56,6 @@ namespace ChessForge
         public ManageChapterDialog()
         {
             InitializeComponent();
-
-            UiBtnSplit.Content = Properties.Resources.SplitChapter + "...";
 
             UiCbGenerateStudyTree.IsChecked = false;
             UiCbGenerateStudyTree_Unchecked(null, null);
@@ -62,6 +72,8 @@ namespace ChessForge
             UiComboBoxSortDirection.Items.Add(new GameSortCriterion(GameSortCriterion.SortItem.DESCENDING, Properties.Resources.SortDesc));
             UiComboBoxSortDirection.SelectedIndex = 0;
 
+            UiTbThumbMove.Text = "";
+            EnableThumbnailControls(false);
 
             if (Configuration.AutogenTreeDepth == 0)
             {
@@ -144,6 +156,17 @@ namespace ChessForge
                 }
             }
 
+            ThumbnailMove = -1;
+            if (int.TryParse(UiTbThumbMove.Text, out int moveNo))
+            {
+                if (moveNo > 0)
+                {
+                    ThumbnailMove = moveNo;
+                    ThumbnailMoveColor = UiRbBlack.IsChecked == true ? PieceColor.Black : PieceColor.White;
+                    OverwriteThumbnails = UiCbOverwriteThumb.IsChecked == true;
+                }
+            }
+
             ApplyToAllChapters = UiCbAllChapters.IsChecked == true;
 
             DialogResult = true;
@@ -160,14 +183,33 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// The "Split chapter" was pressed so do nothing and set action to Split.
+        /// Text changed in the thumbnail move number box
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiBtnSplit_Click(object sender, RoutedEventArgs e)
+        private void UiTbThumbMove_TextChanged(object sender, TextChangedEventArgs e)
         {
-            CallSplitChapterDialog = true;
-            DialogResult = true;
+            bool enable = false;
+
+            if (int.TryParse(UiTbThumbMove.Text, out int moveNo))
+            {
+                if (moveNo > 0)
+                {
+                    enable = true;
+                }
+            }
+            EnableThumbnailControls(enable);
+        }
+
+        /// <summary>
+        /// Enable/disable thumbnail group box controls.
+        /// </summary>
+        /// <param name="enable"></param>
+        private void EnableThumbnailControls(bool enable)
+        {
+            UiRbWhite.IsEnabled = enable;
+            UiRbBlack.IsEnabled = enable;
+            UiCbOverwriteThumb.IsEnabled = enable;
         }
     }
 

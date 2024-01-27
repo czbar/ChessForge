@@ -31,38 +31,46 @@ namespace ChessForge
                 {
                     try
                     {
-                        if (dlg.CallSplitChapterDialog)
+                        bool regenerateStudy = dlg.RegenerateStudy;
+                        bool sortGames = dlg.SortGamesBy != GameSortCriterion.SortItem.NONE && chapter.ModelGames.Count > 1;
+                        if (dlg.RegenerateStudy)
                         {
-                            SplitChapterUtils.InvokeSplitChapterDialog(chapter);
+                            RegenerateStudy(dlg.ApplyToAllChapters ? null : chapter);
+                            AppState.IsDirty = true;
+                            if (!sortGames)
+                            {
+                                AppState.MainWin.SetupGuiForActiveStudyTree(true);
+                            }
                         }
-                        else
+
+                        if (sortGames)
                         {
-                            bool regenerateStudy = dlg.RegenerateStudy;
-                            bool sortGames = dlg.SortGamesBy != GameSortCriterion.SortItem.NONE && chapter.ModelGames.Count > 1;
-                            if (dlg.RegenerateStudy)
+                            if (dlg.ApplyToAllChapters)
                             {
-                                RegenerateStudy(dlg.ApplyToAllChapters ? null : chapter);
-                                if (!sortGames)
-                                {
-                                    AppState.MainWin.SetupGuiForActiveStudyTree(true);
-                                }
+                                SortGames(null, dlg.SortGamesBy, dlg.SortGamesDirection);
                             }
-
-                            if (sortGames)
+                            else
                             {
-                                if (dlg.ApplyToAllChapters)
-                                {
-                                    SortGames(null, dlg.SortGamesBy, dlg.SortGamesDirection);
-                                }
-                                else
-                                {
-                                    SortGames(chapter, dlg.SortGamesBy, dlg.SortGamesDirection);
-                                }
-
-                                GuiUtilities.RefreshChaptersView(null);
-                                AppState.MainWin.UiTabChapters.Focus();
-                                PulseManager.ChaperIndexToBringIntoView = chapter.Index;
+                                SortGames(chapter, dlg.SortGamesBy, dlg.SortGamesDirection);
                             }
+                            AppState.IsDirty = true;
+
+                            GuiUtilities.RefreshChaptersView(null);
+                            AppState.MainWin.UiTabChapters.Focus();
+                            PulseManager.ChaperIndexToBringIntoView = chapter.Index;
+                        }
+                        if (dlg.ThumbnailMove > 0)
+                        {
+                            if (dlg.ApplyToAllChapters)
+                            {
+                                SetThumbnails(null, dlg.ThumbnailMove, dlg.ThumbnailMoveColor, dlg.OverwriteThumbnails);
+                            }
+                            else
+                            {
+                                SetThumbnails(chapter, dlg.ThumbnailMove, dlg.ThumbnailMoveColor, dlg.OverwriteThumbnails);
+                            }
+                            AppState.IsDirty = true;
+                            AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgGamesThumbnailsSet, System.Windows.Media.Brushes.Green);
                         }
                     }
                     catch (Exception ex)
@@ -578,6 +586,82 @@ namespace ChessForge
 
             AppState.MainWin.ChaptersView.IsDirty = true;
             AppState.IsDirty = true;
+        }
+
+        /// <summary>
+        /// Sets thumbnails at the requested move in all games of a chapter
+        /// or of all chapters.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="moveNo"></param>
+        /// <param name="color"></param>
+        /// <param name="overwrite"></param>
+        private static void SetThumbnails(Chapter chapter, int moveNo, PieceColor color, bool overwrite)
+        {
+            try
+            {
+                if (chapter != null)
+                {
+                    SetThumbnailsInChapter(chapter, moveNo, color, overwrite);
+                }
+                else
+                {
+                    foreach (Chapter ch in AppState.Workbook.Chapters)
+                    {
+                        SetThumbnailsInChapter(ch, moveNo, color, overwrite);
+                    }
+                }
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// Sets thumbnails at the requested move in all games of a chapter.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="moveNo"></param>
+        /// <param name="color"></param>
+        /// <param name="overwrite"></param>
+        private static void SetThumbnailsInChapter(Chapter chapter, int moveNo, PieceColor color, bool overwrite)
+        {
+            foreach (Article game in chapter.ModelGames)
+            {
+                List<TreeNode> nodes = game.Tree.Nodes;
+
+                TreeNode thumbCandidate = null;
+                TreeNode thumbCurrent = null;
+
+                foreach (TreeNode node in nodes)
+                {
+                    if (node.MoveNumber == moveNo && color != node.ColorToMove)
+                    {
+                        thumbCandidate = node;
+                    }
+                    if (node.IsThumbnail)
+                    {
+                        thumbCurrent = node;
+                    }
+                }
+
+                if (overwrite)
+                {
+                    if (thumbCandidate != null)
+                    {
+                        thumbCandidate.IsThumbnail = true;
+                        if (thumbCurrent != null)
+                        {
+                            thumbCurrent.IsThumbnail = false;
+                        }
+                    }
+                }
+                else
+                {
+                    if (thumbCurrent == null && thumbCandidate != null)
+                    {
+                        thumbCandidate.IsThumbnail = true;
+                    }
+                }
+            }
         }
 
         /// <summary>
