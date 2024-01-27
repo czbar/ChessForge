@@ -814,7 +814,7 @@
     <value>Sort By</value>
   </data>
   <data name="RegenerateStudyTree" xml:space="preserve">
-    <value>Regenerate Study Tree</value>
+    <value>Regenerate</value>
   </data>
   <data name="MsgThisOverwritesStudy" xml:space="preserve">
     <value>This will replace the current Study. Proceed?</value>
@@ -845,6 +845,24 @@
   </data>
   <data name="ApplyToAllChapters" xml:space="preserve">
     <value>Apply to All Chapters</value>
+  </data>
+  <data name="GamesOrder" xml:space="preserve">
+    <value>Games Order</value>
+  </data>
+  <data name="GameThumbnails" xml:space="preserve">
+    <value>Game Thumbnails</value>
+  </data>
+  <data name="CreateAtMove" xml:space="preserve">
+    <value>Create at Move</value>
+  </data>
+  <data name="OverwriteExisting" xml:space="preserve">
+    <value>Overwrite Existing</value>
+  </data>
+  <data name="WhiteMove" xml:space="preserve">
+    <value>White</value>
+  </data>
+  <data name="BlackMove" xml:space="preserve">
+    <value>Black</value>
   </data>
   <data name="ScopeForDeleteComments" xml:space="preserve">
     <value>Delete Comments</value>
@@ -1329,6 +1347,12 @@
   <data name="MbtTitleCopyPasteError" xml:space="preserve">
     <value>Copy/Paste Error</value>
   </data>
+  <data name="FlMsgGameImportSuccess" xml:space="preserve">
+    <value>Game Imported Successfully.</value>
+  </data>
+  <data name="FlMsgGamesThumbnailsSet" xml:space="preserve">
+    <value>Games thumbnails have been set.</value>
+  </data>
   <data name="MsgNoDuplicatesFound" xml:space="preserve">
     <value>No duplicates found.</value>
   </data>
@@ -1352,9 +1376,6 @@
   </data>
   <data name="ErrorParsingIntro" xml:space="preserve">
     <value>The Intro data has been corrupted.</value>
-  </data>
-  <data name="FlMsgGameImportSuccess" xml:space="preserve">
-    <value>Game Imported Successfully.</value>
   </data>
   <data name="RefGamesNotFound" xml:space="preserve">
     <value>Referenced games not found.</value>
@@ -1775,7 +1796,7 @@
     <value>Create Repertoire Chapters</value>
   </data>
   <data name="TrimStudyTree" xml:space="preserve">
-    <value>Trim Study Tree after Move</value>
+    <value>Trim after Move</value>
   </data>
   <data name="DwnLdAppendToCurrentChapter" xml:space="preserve">
     <value>Append Games to the current Chapter</value>

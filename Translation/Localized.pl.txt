@@ -1060,8 +1060,8 @@ DlgManageChapter=Organizacja Rozdziału
 SortBy=Sortuj wg.
 
 #description: Regenerate Study Tree
-#english: RegenerateStudyTree=Regenerate Study Tree
-RegenerateStudyTree=Wygeneruj drzewo teorii
+#english: RegenerateStudyTree=Regenerate
+RegenerateStudyTree=Wygeneruj
 
 #description: Warning for regenerate study tree
 #english: MsgThisOverwritesStudy=This will replace the current Study. Proceed?
@@ -1102,6 +1102,36 @@ SortDesc=Malejący
 #description: Apply to all chapters
 #english: ApplyToAllChapters=Apply to All Chapters
 ApplyToAllChapters=Zastosuj do wszystkich rozdziałów
+
+
+#######################################
+#
+# Header: DIALOG Manage Chapter
+#
+
+#description: Sort order for games
+#english: GamesOrder=Games Order
+GamesOrder=Kolejność Partii
+
+#description: Game Thumbnails
+#english: GameThumbnails=Game Thumbnails
+GameThumbnails=Wizytówki Partii
+
+#description: Create at Move
+#english: CreateAtMove=Create at Move
+CreateAtMove=Utwórz po ruchu
+
+#description: Overwrite existing
+#english: OverwriteExisting=Overwrite Existing
+OverwriteExisting=Zastąp istniejące
+
+#description: White move - use when indicating whose move it is
+#english: WhiteMove=White
+WhiteMove=Białych
+
+#description: Black move - use when indicating whose move it is
+#english: BlackMove=Black
+BlackMove=Czarnych
 
 #######################################
 #
@@ -1860,6 +1890,22 @@ MsgConfirmDeleteEngineEvals=Usunąć wszystkie oceny w tym widoku?
 #english: MbtTitleCopyPasteError=Copy/Paste Error
 MbtTitleCopyPasteError=Błąd w Kopiuj/Wklej
 
+
+##################################
+#
+# Header: FLASH ANNOUNCEMENETS
+#
+
+#description: Flash message: Game Imported Successfully.
+#english: FlMsgGameImportSuccess=Game Imported Successfully.
+FlMsgGameImportSuccess=Partia Została Zaimportowana.
+
+#description: Flash message: Game thumbnails set.
+#english: FlMsgGamesThumbnailsSet=Games thumbnails have been set.
+FlMsgGamesThumbnailsSet=Wizytówki partii zostały dodane.
+
+
+
 ##################################
 #
 # Header: MESSAGES
@@ -1896,10 +1942,6 @@ PgnParsingError=Błąd w analizie PGN
 #description: Error while parsing Intro data
 #english: ErrorParsingIntro=The Intro data has been corrupted.
 ErrorParsingIntro=Dane Wstępu zostały uszkodzone.
-
-#description: Flash message: Game Imported Successfully.
-#english: FlMsgGameImportSuccess=Game Imported Successfully.
-FlMsgGameImportSuccess=Partia Została Zaimportowana.
 
 #description: Referenced Games not Found
 #english: RefGamesNotFound=Referenced games not found.
@@ -2472,8 +2514,8 @@ CreateChapterPerGame=Utwórz Rozdział do Każdej Partii
 DwnLdCreateRepertoireChapter=Utwórz rozdziały repertuarowe
 
 #description: Move number aftre which to trim the study tree
-#english: TrimStudyTree=Trim Study Tree after Move
-TrimStudyTree=Drzewo teorii do ruchu
+#english: TrimStudyTree=Trim after Move
+TrimStudyTree=Do ruchu
 
 #description: Append games to the current chapter
 #english: DwnLdAppendToCurrentChapter=Append Games to the current Chapter

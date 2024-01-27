@@ -828,7 +828,7 @@ DlgManageChapter=Manage Chapter
 SortBy=Sort By
 
 #Regenerate Study Tree
-RegenerateStudyTree=Regenerate Study Tree
+RegenerateStudyTree=Regenerate
 
 #Warning for regenerate study tree
 MsgThisOverwritesStudy=This will replace the current Study. Proceed?
@@ -859,6 +859,30 @@ SortDesc=Descending
 
 #Apply to all chapters
 ApplyToAllChapters=Apply to All Chapters
+
+
+#######################################
+#
+# Header: DIALOG Manage Chapter
+#
+
+#Sort order for games
+GamesOrder=Games Order
+
+#Game Thumbnails
+GameThumbnails=Game Thumbnails
+
+#Create at Move
+CreateAtMove=Create at Move
+
+#Overwrite existing
+OverwriteExisting=Overwrite Existing
+
+#White move - use when indicating whose move it is
+WhiteMove=White
+
+#Black move - use when indicating whose move it is
+BlackMove=Black
 
 #######################################
 #
@@ -1456,6 +1480,20 @@ MsgConfirmDeleteEngineEvals=Delete all evaluations in this view?
 #Copy Paste error
 MbtTitleCopyPasteError=Copy/Paste Error
 
+
+##################################
+#
+# Header: FLASH ANNOUNCEMENETS
+#
+
+#Flash message: Game Imported Successfully.
+FlMsgGameImportSuccess=Game Imported Successfully.
+
+#Flash message: Game thumbnails set.
+FlMsgGamesThumbnailsSet=Games thumbnails have been set.
+
+
+
 ##################################
 #
 # Header: MESSAGES
@@ -1484,9 +1522,6 @@ PgnParsingError=PGN parsing error
 
 #Error while parsing Intro data
 ErrorParsingIntro=The Intro data has been corrupted.
-
-#Flash message: Game Imported Successfully.
-FlMsgGameImportSuccess=Game Imported Successfully.
 
 #Referenced Games not Found
 RefGamesNotFound=Referenced games not found.
@@ -1920,7 +1955,7 @@ CreateChapterPerGame=Create Chapter per Game
 DwnLdCreateRepertoireChapter=Create Repertoire Chapters
 
 #Move number aftre which to trim the study tree
-TrimStudyTree=Trim Study Tree after Move
+TrimStudyTree=Trim after Move
 
 #Append games to the current chapter
 DwnLdAppendToCurrentChapter=Append Games to the current Chapter

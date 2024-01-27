@@ -25,14 +25,21 @@ namespace ChessForge
         public static void DeleteArticles(ObservableCollection<ArticleListItem> articleList, GameData.ContentType articleType = GameData.ContentType.GENERIC)
         {
             List<ArticleListItem> articlesToDelete = new List<ArticleListItem>();
-            List<int> indicesToDelete = new List<int>();
             foreach (ArticleListItem item in articleList)
             {
                 if (item.IsSelected && item.Article != null)
                 {
                     articlesToDelete.Add(item);
-                    indicesToDelete.Add(item.ArticleIndex);
                 }
+            }
+
+            // sort "normally" as in some scenarios the sorting would have been messed up (e.g. Remove Duplicates)
+            articlesToDelete.Sort(CompareArticlesNormal);
+
+            List<int> indicesToDelete = new List<int>();
+            foreach (ArticleListItem item in articlesToDelete)
+            {
+                indicesToDelete.Add(item.ArticleIndex);
             }
 
             List<ArticleListItem> deletedArticles = new List<ArticleListItem>();
@@ -43,7 +50,6 @@ namespace ChessForge
                 Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(item.ChapterIndex);
                 if (chapter != null && item.Article != null)
                 {
-                    int index = chapter.GetArticleIndex(item.Article);
                     bool res = chapter.DeleteArticle(item.Article);
                     if (res)
                     {
@@ -118,5 +124,48 @@ namespace ChessForge
             DeleteArticles(articleList);
         }
 
+        /// <summary>
+        /// Compares items for sorting as they would be placed in the Workbook.
+        /// </summary>
+        /// <param name="item1"></param>
+        /// <param name="item2"></param>
+        /// <returns></returns>
+        private static int CompareArticlesNormal(ArticleListItem item1, ArticleListItem item2)
+        {
+            int res = 0;
+
+            if (item1 == null && item2 == null)
+            {
+                return 0;
+            }
+            if (item1 == null && item2 != null)
+            {
+                return -1;
+            }
+            if (item1 != null && item2 == null)
+            {
+                return 1;
+            }
+
+            if (item1.ChapterIndex != item2.ChapterIndex)
+            {
+                res = item1.ChapterIndex - item2.ChapterIndex;
+            } 
+            else if (item1.ContentType == GameData.ContentType.MODEL_GAME && item2.ContentType != GameData.ContentType.MODEL_GAME)
+            {
+                res = -1;
+            }
+            else if (item1.ContentType != GameData.ContentType.MODEL_GAME && item2.ContentType == GameData.ContentType.MODEL_GAME)
+            {
+                res = 1;
+            }
+
+            else if (item1.ArticleIndex != item2.ArticleIndex)
+            {
+                res = item1.ArticleIndex - item2.ArticleIndex;
+            }
+
+            return res;
+        }
     }
 }

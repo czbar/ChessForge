@@ -1060,7 +1060,7 @@ DlgManageChapter=
 SortBy=
 
 #description: Regenerate Study Tree
-#english: RegenerateStudyTree=Regenerate Study Tree
+#english: RegenerateStudyTree=Regenerate
 RegenerateStudyTree=
 
 #description: Warning for regenerate study tree
@@ -1102,6 +1102,36 @@ SortDesc=
 #description: Apply to all chapters
 #english: ApplyToAllChapters=Apply to All Chapters
 ApplyToAllChapters=
+
+
+#######################################
+#
+# Header: DIALOG Manage Chapter
+#
+
+#description: Sort order for games
+#english: GamesOrder=Games Order
+GamesOrder=
+
+#description: Game Thumbnails
+#english: GameThumbnails=Game Thumbnails
+GameThumbnails=
+
+#description: Create at Move
+#english: CreateAtMove=Create at Move
+CreateAtMove=
+
+#description: Overwrite existing
+#english: OverwriteExisting=Overwrite Existing
+OverwriteExisting=
+
+#description: White move - use when indicating whose move it is
+#english: WhiteMove=White
+WhiteMove=
+
+#description: Black move - use when indicating whose move it is
+#english: BlackMove=Black
+BlackMove=
 
 #######################################
 #
@@ -1860,6 +1890,22 @@ MsgConfirmDeleteEngineEvals=
 #english: MbtTitleCopyPasteError=Copy/Paste Error
 MbtTitleCopyPasteError=
 
+
+##################################
+#
+# Header: FLASH ANNOUNCEMENETS
+#
+
+#description: Flash message: Game Imported Successfully.
+#english: FlMsgGameImportSuccess=Game Imported Successfully.
+FlMsgGameImportSuccess=
+
+#description: Flash message: Game thumbnails set.
+#english: FlMsgGamesThumbnailsSet=Games thumbnails have been set.
+FlMsgGamesThumbnailsSet=
+
+
+
 ##################################
 #
 # Header: MESSAGES
@@ -1896,10 +1942,6 @@ PgnParsingError=
 #description: Error while parsing Intro data
 #english: ErrorParsingIntro=The Intro data has been corrupted.
 ErrorParsingIntro=
-
-#description: Flash message: Game Imported Successfully.
-#english: FlMsgGameImportSuccess=Game Imported Successfully.
-FlMsgGameImportSuccess=
 
 #description: Referenced Games not Found
 #english: RefGamesNotFound=Referenced games not found.
@@ -2472,7 +2514,7 @@ CreateChapterPerGame=
 DwnLdCreateRepertoireChapter=
 
 #description: Move number aftre which to trim the study tree
-#english: TrimStudyTree=Trim Study Tree after Move
+#english: TrimStudyTree=Trim after Move
 TrimStudyTree=
 
 #description: Append games to the current chapter
