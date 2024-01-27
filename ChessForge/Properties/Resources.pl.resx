@@ -814,7 +814,7 @@
     <value>Sortuj wg.</value>
   </data>
   <data name="RegenerateStudyTree" xml:space="preserve">
-    <value>Wygeneruj drzewo teorii</value>
+    <value>Wygeneruj</value>
   </data>
   <data name="MsgThisOverwritesStudy" xml:space="preserve">
     <value>Nowe drzewo zastąpi istniejącą teorię. Kontynuować?</value>
@@ -845,6 +845,24 @@
   </data>
   <data name="ApplyToAllChapters" xml:space="preserve">
     <value>Zastosuj do wszystkich rozdziałów</value>
+  </data>
+  <data name="GamesOrder" xml:space="preserve">
+    <value>Kolejność Partii</value>
+  </data>
+  <data name="GameThumbnails" xml:space="preserve">
+    <value>Wizytówki Partii</value>
+  </data>
+  <data name="CreateAtMove" xml:space="preserve">
+    <value>Utwórz po ruchu</value>
+  </data>
+  <data name="OverwriteExisting" xml:space="preserve">
+    <value>Zastąp istniejące</value>
+  </data>
+  <data name="WhiteMove" xml:space="preserve">
+    <value>Białych</value>
+  </data>
+  <data name="BlackMove" xml:space="preserve">
+    <value>Czarnych</value>
   </data>
   <data name="ScopeForDeleteComments" xml:space="preserve">
     <value>Usuń Komentarze</value>
@@ -1329,6 +1347,12 @@
   <data name="MbtTitleCopyPasteError" xml:space="preserve">
     <value>Błąd w Kopiuj/Wklej</value>
   </data>
+  <data name="FlMsgGameImportSuccess" xml:space="preserve">
+    <value>Partia Została Zaimportowana.</value>
+  </data>
+  <data name="FlMsgGamesThumbnailsSet" xml:space="preserve">
+    <value>Wizytówki partii zostały dodane.</value>
+  </data>
   <data name="MsgNoDuplicatesFound" xml:space="preserve">
     <value>Nie znaleziono duplikatów.</value>
   </data>
@@ -1352,9 +1376,6 @@
   </data>
   <data name="ErrorParsingIntro" xml:space="preserve">
     <value>Dane Wstępu zostały uszkodzone.</value>
-  </data>
-  <data name="FlMsgGameImportSuccess" xml:space="preserve">
-    <value>Partia Została Zaimportowana.</value>
   </data>
   <data name="RefGamesNotFound" xml:space="preserve">
     <value>Partii nie znaleziono.</value>
@@ -1774,7 +1795,7 @@
     <value>Utwórz rozdziały repertuarowe</value>
   </data>
   <data name="TrimStudyTree" xml:space="preserve">
-    <value>Drzewo teorii do ruchu</value>
+    <value>Do ruchu</value>
   </data>
   <data name="DwnLdAppendToCurrentChapter" xml:space="preserve">
     <value>Dodaj partie do obecnego rozdziału</value>

@@ -251,6 +251,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Black.
+        /// </summary>
+        public static string BlackMove {
+            get {
+                return ResourceManager.GetString("BlackMove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Black to Move.
         /// </summary>
         public static string BlackToMove {
@@ -1129,6 +1138,15 @@ namespace ChessForge.Properties {
         public static string Count {
             get {
                 return ResourceManager.GetString("Count", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create at Move.
+        /// </summary>
+        public static string CreateAtMove {
+            get {
+                return ResourceManager.GetString("CreateAtMove", resourceCulture);
             }
         }
         
@@ -2780,6 +2798,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Games thumbnails have been set..
+        /// </summary>
+        public static string FlMsgGamesThumbnailsSet {
+            get {
+                return ResourceManager.GetString("FlMsgGamesThumbnailsSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bold.
         /// </summary>
         public static string FontBold {
@@ -2942,6 +2969,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Games Order.
+        /// </summary>
+        public static string GamesOrder {
+            get {
+                return ResourceManager.GetString("GamesOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Games with Black.
         /// </summary>
         public static string GamesWithBlack {
@@ -2956,6 +2992,15 @@ namespace ChessForge.Properties {
         public static string GamesWithWhite {
             get {
                 return ResourceManager.GetString("GamesWithWhite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game Thumbnails.
+        /// </summary>
+        public static string GameThumbnails {
+            get {
+                return ResourceManager.GetString("GameThumbnails", resourceCulture);
             }
         }
         
@@ -4284,6 +4329,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Overwrite Existing.
+        /// </summary>
+        public static string OverwriteExisting {
+            get {
+                return ResourceManager.GetString("OverwriteExisting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Page $0 of $1.
         /// </summary>
         public static string Page0of0 {
@@ -4653,7 +4707,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Regenerate Study Tree.
+        ///   Looks up a localized string similar to Regenerate.
         /// </summary>
         public static string RegenerateStudyTree {
             get {
@@ -5787,7 +5841,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Trim Study Tree after Move.
+        ///   Looks up a localized string similar to Trim after Move.
         /// </summary>
         public static string TrimStudyTree {
             get {
@@ -6386,6 +6440,15 @@ namespace ChessForge.Properties {
         public static string White {
             get {
                 return ResourceManager.GetString("White", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to White.
+        /// </summary>
+        public static string WhiteMove {
+            get {
+                return ResourceManager.GetString("WhiteMove", resourceCulture);
             }
         }
         
