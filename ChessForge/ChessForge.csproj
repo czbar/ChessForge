@@ -142,6 +142,7 @@
     <Compile Include="DragAndDropCursors.cs" />
     <Compile Include="DraggedArticle.cs" />
     <Compile Include="DuplicateListItem.cs" />
+    <Compile Include="EcoChapterStats.cs" />
     <Compile Include="EcoUtils.cs" />
     <Compile Include="EditFenDialog.xaml.cs">
       <DependentUpon>EditFenDialog.xaml</DependentUpon>
