@@ -473,7 +473,7 @@ namespace ChessForge
                 {
                     Chapter sourceChapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(item.ChapterIndex);
                     // since this the same order we were removing the articles in.
-                    // the indexes should be valid as we ,ove down the list
+                    // the indexes should be valid as we move down the list
                     sourceChapter.InsertArticle(item.Article, item.ArticleIndex);
                     if (firstChapter == null)
                     {
@@ -488,6 +488,32 @@ namespace ChessForge
                 }
 
                 GuiUtilities.RefreshChaptersView(firstChapter);
+                AppState.MainWin.UiTabChapters.Focus();
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// Undoes the move articles from a single chapter
+        /// to multiple chapters (e.g. when moving by ECO).
+        /// </summary>
+        /// <param name="sourceChapter"></param>
+        /// <param name="items"></param>
+        public static void UndoMoveMultiChapterArticles(Chapter sourceChapter, object items)
+        {
+            try
+            {
+                ObservableCollection<ArticleListItem> articles = items as ObservableCollection<ArticleListItem>;
+                // add the articles to the source chapter
+                foreach (ArticleListItem item in articles)
+                {
+                    AppState.Workbook.DeleteArticle(item.Article);
+                    sourceChapter.InsertArticle(item.Article, item.ArticleIndex);
+                }
+
+                GuiUtilities.RefreshChaptersView(sourceChapter);
                 AppState.MainWin.UiTabChapters.Focus();
             }
             catch
