@@ -24,7 +24,7 @@ namespace ChessForge
         private Dictionary<int, int> _dictEcoCounts = new Dictionary<int, int>();
 
         // games that have been assigned to this chapter after analysis
-        private List<Article> _games = new List<Article>();
+        private List<ArticleListItem> _games = new List<ArticleListItem>();
 
         // whether this is the chapter that we are splitting
         private bool _isSourceChapter;
@@ -68,7 +68,7 @@ namespace ChessForge
         /// Associate a game with this chapter.
         /// </summary>
         /// <param name="game"></param>
-        public void AddGame(Article game)
+        public void AddGame(ArticleListItem game)
         {
             if (game != null)
             {
@@ -85,6 +85,25 @@ namespace ChessForge
             {
                 return _maxEco - _minEco;
             }
+        }
+
+        /// <summary>
+        /// List of games captured in this object.
+        /// </summary>
+        public List<ArticleListItem> Games
+        {
+            get
+            {
+                return _games;
+            }
+        }
+
+        /// <summary>
+        /// Chapter for which this object has been created
+        /// </summary>
+        public Chapter Chapter
+        {
+            get { return _chapter; }
         }
 
         /// <summary>
