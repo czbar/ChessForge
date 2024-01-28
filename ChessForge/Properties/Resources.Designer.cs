@@ -5112,6 +5112,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select Games to Move to the Suggested Chapters.
+        /// </summary>
+        public static string SelectGamesToMoveToChapters {
+            get {
+                return ResourceManager.GetString("SelectGamesToMoveToChapters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select Items.
         /// </summary>
         public static string SelectItems {

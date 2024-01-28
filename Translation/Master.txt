@@ -1073,6 +1073,9 @@ SelectChaptersToImport=Select Chapters to Import
 #Select chapters to merge
 SelectChaptersToMerge=Select Chapters to Merge
 
+#Select games to move to suggested chapters
+SelectGamesToMoveToChapters=Move Games to the Suggested Chapters
+
 
 #
 # Header: CONTEXT MENU in Training View

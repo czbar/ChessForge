@@ -1014,6 +1014,9 @@
   <data name="SelectChaptersToMerge" xml:space="preserve">
     <value>Wybierz Rozdziały do Połączenia.</value>
   </data>
+  <data name="SelectGamesToMoveToChapters" xml:space="preserve">
+    <value>Przenieś do proponowanych rozdziałów</value>
+  </data>
   <data name="RestartGameAfter" xml:space="preserve">
     <value>Cofnij Partię do</value>
   </data>
