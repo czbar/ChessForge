@@ -1,11 +1,18 @@
-﻿using System;
+﻿using ChessPosition;
+using GameTree;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
 namespace ChessForge
 {
+    /// <summary>
+    /// Utilities to handle splitting chapters into multiple chapters
+    /// and "dispersing" the games.
+    /// </summary>
     public class SplitChapterUtils
     {
         /// <summary>
@@ -101,6 +108,14 @@ namespace ChessForge
             return res;
         }
 
+
+        //**********************************************************
+        //
+        // Distributing chapter games to other chapters by ECO.
+        //
+        //**********************************************************
+
+
         /// <summary>
         /// Identifies the best target chapter for each game 
         /// based on the ECO and moves it there.
@@ -110,6 +125,79 @@ namespace ChessForge
         {
             List<EcoChapterStats> stats = CalculateEcoStats(currChapter);
             AllocateGamesToChapterByEco(currChapter, stats);
+
+            // Expose the items per target chapter
+            ObservableCollection<ArticleListItem> list = BuildTargetEcoArticleList(stats);
+
+            SelectArticlesDialog dlg = new SelectArticlesDialog(null, false, Properties.Resources.SelectGamesToMoveToChapters, ref list, true, ChessPosition.ArticlesAction.MOVE);
+            GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
+
+            if (dlg.ShowDialog() == true)
+            {
+                list = RemoveChapterAndUnselectedItems(list);
+                if (list.Count > 0)
+                {
+                    // move articles 
+                    MoveArticlesToTargetEcoChapters(currChapter, list);
+
+                    // collect info for the Undo operation
+                    WorkbookOperationType typ = WorkbookOperationType.MOVE_ARTICLES_MULTI_CHAPTER;
+                    WorkbookOperation op = new WorkbookOperation(typ, currChapter, (object)list);
+                    WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
+                }
+
+                ChapterUtils.UpdateViewAfterCopyMoveArticles(currChapter, ArticlesAction.MOVE, GameData.ContentType.MODEL_GAME);
+
+            }
+        }
+
+        /// <summary>
+        /// Adds games to the target chapter specified in the ArticleListItem object
+        /// and deletes them from the source chapter.
+        /// </summary>
+        /// <param name="sourceChapter"></param>
+        /// <param name="items"></param>
+        private static void MoveArticlesToTargetEcoChapters(Chapter sourceChapter, ObservableCollection<ArticleListItem> items)
+        {
+            foreach (ArticleListItem item in items)
+            {
+                Chapter target = AppState.Workbook.GetChapterByIndex(item.ChapterIndex);
+                if (target != null)
+                {
+                    target.AddModelGame(item.Article);
+                    sourceChapter.DeleteArticle(item.Article);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Creates a list of ArticleListItems to pass on to the selection dialog.
+        /// </summary>
+        /// <param name="stats"></param>
+        /// <returns></returns>
+        private static ObservableCollection<ArticleListItem> BuildTargetEcoArticleList(List<EcoChapterStats> stats)
+        {
+            ObservableCollection<ArticleListItem> articleList = new ObservableCollection<ArticleListItem>();
+
+            foreach (EcoChapterStats stat in stats)
+            {
+                Chapter chapter = stat.Chapter;
+                int chapterIndex = chapter.Index;
+
+                if (stat.Games.Count > 0)
+                {
+                    ArticleListItem chaptItem = new ArticleListItem(chapter);
+                    articleList.Add(chaptItem);
+
+                    foreach (var item in stat.Games)
+                    {
+                        articleList.Add(item);
+                        item.ChapterIndex = chapterIndex;
+                    }
+                }
+            }
+
+            return articleList;
         }
 
         /// <summary>
@@ -118,8 +206,9 @@ namespace ChessForge
         /// <param name="stats"></param>
         private static void AllocateGamesToChapterByEco(Chapter currChapter, List<EcoChapterStats> stats)
         {
-            foreach (Article game in currChapter.ModelGames)
+            for (int gameIndex = 0; gameIndex < currChapter.ModelGames.Count; gameIndex++)
             {
+                Article game = currChapter.ModelGames[gameIndex];
                 int eco = EcoChapterStats.EcoToInt(game.Tree.Header.GetECO(out _));
                 if (eco > 0)
                 {
@@ -152,7 +241,8 @@ namespace ChessForge
 
                     if (bestStat != null)
                     {
-                        bestStat.AddGame(game);
+                        ArticleListItem item = new ArticleListItem(bestStat.Chapter, bestStat.Chapter.Index, game, gameIndex);
+                        bestStat.AddGame(item);
                     }
                 }
             }
@@ -276,6 +366,31 @@ namespace ChessForge
             }
 
             return origTitle;
+        }
+
+
+        //**************************************************************
+        //
+        // END split chapter by ECO
+        //
+        //**************************************************************
+
+        /// <summary>
+        /// Builds a list of selected items.
+        /// </summary>
+        /// <param name="items"></param>
+        /// <returns></returns>
+        private static ObservableCollection<ArticleListItem> RemoveChapterAndUnselectedItems(ObservableCollection<ArticleListItem> items)
+        {
+            ObservableCollection<ArticleListItem> retList = new ObservableCollection<ArticleListItem>();
+            foreach (ArticleListItem item in items)
+            {
+                if (item.Article != null && item.IsSelected)
+                {
+                    retList.Add(item);
+                }
+            }
+            return retList;
         }
 
         /// <summary>
