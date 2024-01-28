@@ -89,7 +89,7 @@ namespace ChessForge
                     UiBtnOk.Content = Properties.Resources.Copy;
                     break;
                 case ArticlesAction.MOVE:
-                    UiBtnOk.Content = Properties.Resources.Move;
+                    UiBtnOk.Content = Properties.Resources.MoveArticles;
                     break;
             }
 
