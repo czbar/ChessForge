@@ -156,6 +156,9 @@ namespace ChessForge
                     case WorkbookOperationType.MOVE_ARTICLES:
                         ChapterUtils.UndoMoveArticles(op.Chapter, op.OpData_1);
                         break;
+                    case WorkbookOperationType.MOVE_ARTICLES_MULTI_CHAPTER:
+                        ChapterUtils.UndoMoveMultiChapterArticles(op.Chapter, op.OpData_1);
+                        break;
                     case WorkbookOperationType.DELETE_COMMENTS:
                         AppState.Workbook.UndoDeleteComments(op.OpData_1);
                         break;
