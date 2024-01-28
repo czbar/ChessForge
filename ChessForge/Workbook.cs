@@ -1240,6 +1240,44 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Deletes an Article (a ModelGame or an Exercise) from the Workbook.
+        /// Note that we do not rely on the article's GUID as there may be duplicates
+        /// due to bugs etc.
+        /// </summary>
+        /// <param name="article"></param>
+        public void DeleteArticle(Article article)
+        {
+            if (article != null)
+            {
+                try
+                {
+                    foreach (Chapter chapter in Chapters)
+                    {
+                        List<Article> articles = null;
+                        if (article.ContentType == GameData.ContentType.MODEL_GAME)
+                        {
+                            articles = chapter.ModelGames;
+                        }
+                        else if (article.ContentType == GameData.ContentType.EXERCISE)
+                        {
+                            articles = chapter.Exercises;
+                        }
+
+                        foreach (Article item in articles)
+                        {
+                            if (item == article)
+                            {
+                                chapter.ModelGames.Remove(item);
+                                break;
+                            }
+                        }
+                    }
+                }
+                catch { }
+            }
+        }
+
+        /// <summary>
         /// Copies all games from the selected chapters in the list to the target chapter
         /// </summary>
         /// <param name="target"></param>
