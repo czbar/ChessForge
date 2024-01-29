@@ -22,7 +22,7 @@ namespace ChessForge
         /// <param name="chapter"></param>
         public static void InvokeSplitChapterDialog(Chapter chapter)
         {
-            SplitChapterDialog dlg = new SplitChapterDialog();
+            SplitChapterDialog dlg = new SplitChapterDialog(chapter);
             GuiUtilities.PositionDialog(dlg, AppState.MainWin, 150);
 
             List<Chapter> createdChapters = null;
@@ -155,7 +155,7 @@ namespace ChessForge
             }
             else
             {
-                MessageBox.Show("", Properties.Resources.Information, MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(Properties.Resources.MsgNoGoodChapterForAnyGame, Properties.Resources.Information, MessageBoxButton.OK, MessageBoxImage.Information);
             }
 
         }
