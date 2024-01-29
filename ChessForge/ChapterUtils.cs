@@ -24,7 +24,7 @@ namespace ChessForge
         {
             if (chapter != null)
             {
-                ManageChapterDialog dlg = new ManageChapterDialog();
+                ManageChapterDialog dlg = new ManageChapterDialog(chapter);
                 GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
                 if (dlg.ShowDialog() == true)
