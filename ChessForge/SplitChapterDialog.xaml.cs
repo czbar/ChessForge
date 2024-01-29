@@ -54,10 +54,11 @@ namespace ChessForge
         /// <summary>
         /// Sets default selection and visibility
         /// </summary>
-        public SplitChapterDialog()
+        public SplitChapterDialog(Chapter chapter)
         {
             InitializeComponent();
 
+            UiLabelChapterTitle.Content = Properties.Resources.Chapter + ": " + chapter.GetTitle(); 
             SetSplitBySelection(LastSplitBy);
             SetDefaultCriterionButton(LastSplitBy);
             SetActiveCriterionButton(LastSplitBy);
