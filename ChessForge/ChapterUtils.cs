@@ -8,6 +8,7 @@ using ChessPosition;
 using System.Collections.ObjectModel;
 using System.Windows;
 using ChessPosition.GameTree;
+using System.Windows.Input;
 
 namespace ChessForge
 {
@@ -696,30 +697,52 @@ namespace ChessForge
         /// <param name="chapter"></param>
         private static void RegenerateStudy(Chapter chapter)
         {
-            if (chapter != null)
+            bool overwriteWarningIssued = false;
+
+            Mouse.SetCursor(Cursors.Wait);
+            try
             {
-                RegenerateChapterStudy(chapter);
-            }
-            else
-            {
-                foreach (Chapter ch in AppState.Workbook.Chapters)
+                if (chapter != null)
                 {
-                    RegenerateChapterStudy(ch);
+                    RegenerateChapterStudy(chapter, ref overwriteWarningIssued);
+                }
+                else
+                {
+                    foreach (Chapter ch in AppState.Workbook.Chapters)
+                    {
+                        bool cont = RegenerateChapterStudy(ch, ref overwriteWarningIssued);
+                        if (!cont)
+                        {
+                            break;
+                        }
+                    }
                 }
             }
+            catch { }
+
+            Mouse.SetCursor(Cursors.Arrow);
         }
 
         /// <summary>
         /// Regenerates the Study Tree in a single chapter.
         /// </summary>
         /// <param name="chapter"></param>
-        private static void RegenerateChapterStudy(Chapter chapter)
+        private static bool RegenerateChapterStudy(Chapter chapter, ref bool overwriteWarningIssued)
         {
-            if (chapter.StudyTree.Tree.Nodes.Count <= 1 ||
-                MessageBox.Show(Properties.Resources.MsgThisOverwritesStudy,
+            if (chapter.StudyTree.Tree.Nodes.Count > 1 && !overwriteWarningIssued)
+            {
+                overwriteWarningIssued = true;
+
+                if (MessageBox.Show(Properties.Resources.MsgThisOverwritesStudy,
                     Properties.Resources.Information,
                     MessageBoxButton.YesNo,
-                    MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    MessageBoxImage.Question) != MessageBoxResult.Yes)
+                {
+                    return false;
+                }
+            }
+
+            if (chapter.StudyTree.Tree.Nodes.Count <= 1)
             {
                 List<VariationTree> trees = new List<VariationTree>();
                 foreach (Article game in chapter.ModelGames)
@@ -737,6 +760,8 @@ namespace ChessForge
                     AppState.IsDirty = true;
                 }
             }
+
+            return true;
         }
 
         /// <summary>
