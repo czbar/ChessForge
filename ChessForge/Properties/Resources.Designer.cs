@@ -3896,6 +3896,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No suitable chapter has been found for any of the games..
+        /// </summary>
+        public static string MsgNoGoodChapterForAnyGame {
+            get {
+                return ResourceManager.GetString("MsgNoGoodChapterForAnyGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No identical positions found..
         /// </summary>
         public static string MsgNoIdenticalPositions {
@@ -5112,7 +5121,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select Games to Move to the Suggested Chapters.
+        ///   Looks up a localized string similar to Move Games to the Suggested Chapters.
         /// </summary>
         public static string SelectGamesToMoveToChapters {
             get {

@@ -792,6 +792,9 @@
   <data name="MoveGamesPerEco" xml:space="preserve">
     <value>Move games to other chapters per ECO</value>
   </data>
+  <data name="MsgNoGoodChapterForAnyGame" xml:space="preserve">
+    <value>No suitable chapter has been found for any of the games.</value>
+  </data>
   <data name="DlgTitleEditFen" xml:space="preserve">
     <value>Edit FEN</value>
   </data>

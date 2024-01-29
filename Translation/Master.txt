@@ -789,6 +789,9 @@ Granularity=Granularity
 #Move games to other chapters per ECO
 MoveGamesPerEco=Move games to other chapters per ECO
 
+#Message: there no target chapters found for any game
+MsgNoGoodChapterForAnyGame=No suitable chapter has been found for any of the games.
+
 #######################################
 #
 # Header: DIALOG Edit FEN
@@ -1077,6 +1080,7 @@ SelectChaptersToMerge=Select Chapters to Merge
 SelectGamesToMoveToChapters=Move Games to the Suggested Chapters
 
 
+#######################################
 #
 # Header: CONTEXT MENU in Training View
 #

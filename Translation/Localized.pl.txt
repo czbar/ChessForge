@@ -1014,6 +1014,10 @@ Granularity=Rozdzielczość
 #english: MoveGamesPerEco=Move games to other chapters per ECO
 MoveGamesPerEco=Przenieś partie do innych rozdziałów wg ECO
 
+#description: Message: there no target chapters found for any game
+#english: MsgNoGoodChapterForAnyGame=No suitable chapter has been found for any of the games.
+MsgNoGoodChapterForAnyGame=Nie znaleziono odpowiedniego rozdziału dla żadnej partii.
+
 #######################################
 #
 # Header: DIALOG Edit FEN
@@ -1373,10 +1377,11 @@ SelectChaptersToImport=Wybierz Rozdziały do Importu
 SelectChaptersToMerge=Wybierz Rozdziały do Połączenia.
 
 #description: Select games to move to suggested chapters
-#english: SelectGamesToMoveToChapters=Select Games to Move to the Suggested Chapters
+#english: SelectGamesToMoveToChapters=Move Games to the Suggested Chapters
 SelectGamesToMoveToChapters=Przenieś do proponowanych rozdziałów
 
 
+#######################################
 #
 # Header: CONTEXT MENU in Training View
 #
