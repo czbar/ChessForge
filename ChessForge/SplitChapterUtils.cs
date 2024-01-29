@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Windows;
 
 namespace ChessForge
 {
@@ -129,26 +130,34 @@ namespace ChessForge
             // Expose the items per target chapter
             ObservableCollection<ArticleListItem> list = BuildTargetEcoArticleList(stats);
 
-            SelectArticlesDialog dlg = new SelectArticlesDialog(null, false, Properties.Resources.SelectGamesToMoveToChapters, ref list, true, ChessPosition.ArticlesAction.MOVE);
-            GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
-
-            if (dlg.ShowDialog() == true)
+            if (list.Count > 0)
             {
-                list = RemoveChapterAndUnselectedItems(list);
-                if (list.Count > 0)
+                SelectArticlesDialog dlg = new SelectArticlesDialog(null, false, Properties.Resources.SelectGamesToMoveToChapters, ref list, true, ChessPosition.ArticlesAction.MOVE);
+                GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
+
+                if (dlg.ShowDialog() == true)
                 {
-                    // move articles 
-                    MoveArticlesToTargetEcoChapters(currChapter, list);
+                    list = RemoveChapterAndUnselectedItems(list);
+                    if (list.Count > 0)
+                    {
+                        // move articles 
+                        MoveArticlesToTargetEcoChapters(currChapter, list);
 
-                    // collect info for the Undo operation
-                    WorkbookOperationType typ = WorkbookOperationType.MOVE_ARTICLES_MULTI_CHAPTER;
-                    WorkbookOperation op = new WorkbookOperation(typ, currChapter, (object)list);
-                    WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
+                        // collect info for the Undo operation
+                        WorkbookOperationType typ = WorkbookOperationType.MOVE_ARTICLES_MULTI_CHAPTER;
+                        WorkbookOperation op = new WorkbookOperation(typ, currChapter, (object)list);
+                        WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
+                    }
+
+                    ChapterUtils.UpdateViewAfterCopyMoveArticles(currChapter, ArticlesAction.MOVE, GameData.ContentType.MODEL_GAME);
+
                 }
-
-                ChapterUtils.UpdateViewAfterCopyMoveArticles(currChapter, ArticlesAction.MOVE, GameData.ContentType.MODEL_GAME);
-
             }
+            else
+            {
+                MessageBox.Show("", Properties.Resources.Information, MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+
         }
 
         /// <summary>
