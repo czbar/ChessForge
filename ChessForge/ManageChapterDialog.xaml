@@ -6,9 +6,10 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        Title="{x:Static p:Resources.DlgManageChapter}" Height="335" Width="495">
+        Title="{x:Static p:Resources.DlgManageChapter}" Height="355" Width="495">
     <Grid>
-        <GroupBox x:Name="UiGbGames" Header="{x:Static p:Resources.GamesOrder}" Height="115" HorizontalAlignment="Left" Width="225" VerticalAlignment="Top" Margin="10, 10, 0, 0">
+        <Label x:Name="UiLabelChapterTitle" Content="{x:Static p:Resources.Chapter}" HorizontalAlignment="Center" HorizontalContentAlignment="Left" Margin="-15,6,0,0" Padding="35,0,20,0" VerticalAlignment="Top"/>
+        <GroupBox x:Name="UiGbGames" Header="{x:Static p:Resources.GamesOrder}" Height="115" HorizontalAlignment="Left" Width="225" VerticalAlignment="Top" Margin="10, 30, 0, 0">
             <Canvas Margin="0,0,0,0">
                 <Label x:Name="UiLblSortBy" Margin="10,10,0,0" HorizontalAlignment="Left" Content="{x:Static p:Resources.SortBy}" />
                 <ComboBox x:Name="UiComboBoxSortBy" Margin="95,12,10,0" Width="100" VerticalAlignment="Top" SelectionChanged="UiComboBoxSortBy_SelectionChanged" />
@@ -16,7 +17,7 @@
                 <ComboBox x:Name="UiComboBoxSortDirection" Margin="95,50,0,0"  Width="100" />
             </Canvas>
         </GroupBox>
-        <GroupBox x:Name="UiGbThumbnails" Header="{x:Static p:Resources.GameThumbnails}" Height="115" VerticalAlignment="Top" Width="225" HorizontalAlignment="Left" Margin="245, 10, 0, 0">
+        <GroupBox x:Name="UiGbThumbnails" Header="{x:Static p:Resources.GameThumbnails}" Height="115" VerticalAlignment="Top" Width="225" HorizontalAlignment="Left" Margin="245, 30, 0, 0">
             <Canvas Margin="0,0,0,0">
                 <Label x:Name="UiLblThumbMove" Margin="10,8,0,0" HorizontalAlignment="Left" Content="{x:Static p:Resources.CreateAtMove}" />
                 <TextBox x:Name="UiTbThumbMove" Margin="140,12,0,0" HorizontalAlignment="Left" Width="40" Text="" TextChanged="UiTbThumbMove_TextChanged" />
@@ -25,14 +26,14 @@
                 <CheckBox x:Name="UiCbOverwriteThumb" Content="{x:Static p:Resources.OverwriteExisting}" Margin="15,67,0,0" />
             </Canvas>
         </GroupBox>
-        <GroupBox x:Name="UiGbStudyTree" Header="{x:Static p:Resources.StudyTree}" Height="110" VerticalAlignment="Top" HorizontalAlignment="Left" Width="225" Margin="10, 130, 0, 0">
+        <GroupBox x:Name="UiGbStudyTree" Header="{x:Static p:Resources.StudyTree}" Height="110" VerticalAlignment="Top" HorizontalAlignment="Left" Width="225" Margin="10, 150, 0, 0">
             <Canvas>
                 <CheckBox x:Name="UiCbGenerateStudyTree" Content="{x:Static p:Resources.RegenerateStudyTree}" Margin="8,15,0,0" Checked="UiCbGenerateStudyTree_Checked" Unchecked="UiCbGenerateStudyTree_Unchecked" />
                 <Label x:Name="UiLblLastTreeMoveNo" Margin="5,45,0,0" HorizontalAlignment="Left" Content="{x:Static p:Resources.TrimStudyTree}" />
                 <TextBox x:Name="UiTbLastTreeMoveNo" Width="40" Margin="120,50, 0, 0" />
             </Canvas>
         </GroupBox>
-        <CheckBox x:Name="UiCbAllChapters" IsChecked="False" Content="{x:Static p:Resources.ApplyToAllChapters}" Margin="265, 175, 10, 0" Height="20" VerticalAlignment="Top"/>
+        <CheckBox x:Name="UiCbAllChapters" IsChecked="False" Content="{x:Static p:Resources.ApplyToAllChapters}" Margin="265, 195, 10, 0" Height="20" VerticalAlignment="Top"/>
         <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="-220,0,0,20" Width="100" VerticalAlignment="Bottom" Click="UiBtnOk_Click" />
         <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="0,0,0,20" Width="100" VerticalAlignment="Bottom"/>
         <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Center" Margin="220,0,0,20" Width="100" VerticalAlignment="Bottom" Click="UiBtnHelp_Click" />
