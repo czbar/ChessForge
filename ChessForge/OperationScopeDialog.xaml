@@ -8,7 +8,7 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         Title="{x:Static p:Resources.ScopeForDeleteComments}" Height="230" Width="440">
     <Grid>
-        <Label x:Name="UiLblScopeInfo" Content="{x:Static p:Resources.OperationScope}" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="UiLblScopeInfo" Content="{x:Static p:Resources.OperationScope}" HorizontalAlignment="Center" Margin="0,0,0,0" Padding="20,0,20,0" VerticalAlignment="Top"/>
         <GroupBox Header="{x:Static p:Resources.Scope}" Margin="10,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Height="105">
             <StackPanel>
                 <RadioButton x:Name="UiRbCurrentItem" Content="{x:Static p:Resources.CurrentItem}" HorizontalAlignment="Left" Margin="15,10,0,0" VerticalAlignment="Top" Checked="UiRbCurrentItem_Checked"/>
