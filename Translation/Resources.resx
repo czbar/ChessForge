@@ -2093,7 +2093,7 @@
     <value>Click through the moves. Double click to annotate.</value>
   </data>
   <data name="cbFindIdenticalPositions" xml:space="preserve">
-    <value>Press F3 to find identical positions.</value>
+    <value>Press F3 to find identical positions or SHIFT+F3 to search for any.</value>
   </data>
   <data name="cbAdvancedEditig" xml:space="preserve">
     <value>Right click to open menu for advanced editing, FEN, creating exercise and more.</value>

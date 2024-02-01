@@ -2092,7 +2092,7 @@
     <value>Kliknij na dowolne posunięcie. Dwukrotnie kliknij, by wprowadzić komentarz.</value>
   </data>
   <data name="cbFindIdenticalPositions" xml:space="preserve">
-    <value>Naciśnij F3 by znaleźć identyczne pozycje.</value>
+    <value>Naciśnij F3 by znaleźć identyczne pozycje albo SHIFT+F3 by szukać innej.</value>
   </data>
   <data name="cbAdvancedEditig" xml:space="preserve">
     <value>Naciśnij prawy przycisk, by wywołać menu do edycji, kopiowania FEN i inne.</value>

@@ -2295,7 +2295,7 @@ cbClickThruMoves=Keyboard: ←/→ (back/forth); SHIFT ←/→ or Home/End (star
 cbDoubleClickToAnnotate=Click through the moves. Double click to annotate.
 
 #F3 to find identical positions
-cbFindIdenticalPositions=Press F3 to find identical positions.
+cbFindIdenticalPositions=Press F3 to find identical positions or SHIFT+F3 to search for any.
 
 #Right click for context menu
 cbAdvancedEditig=Right click to open menu for advanced editing, FEN, creating exercise and more.

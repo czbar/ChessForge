@@ -548,7 +548,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Press F3 to find identical positions..
+        ///   Looks up a localized string similar to Press F3 to find identical positions or SHIFT+F3 to search for any..
         /// </summary>
         public static string cbFindIdenticalPositions {
             get {

@@ -2953,7 +2953,7 @@ cbClickThruMoves=
 cbDoubleClickToAnnotate=
 
 #description: F3 to find identical positions
-#english: cbFindIdenticalPositions=Press F3 to find identical positions.
+#english: cbFindIdenticalPositions=Press F3 to find identical positions or SHIFT+F3 to search for any.
 cbFindIdenticalPositions=
 
 #description: Right click for context menu
