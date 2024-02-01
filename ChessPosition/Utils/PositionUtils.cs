@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using ChessPosition.Utils;
 using GameTree;
 
@@ -1022,6 +1023,32 @@ namespace ChessPosition
                 pos.EnPassantSquare = (byte)((move.Origin.Xcoord << 4) | GetYposFromRankNo(3, move.Color == PieceColor.White ? PieceColor.White : PieceColor.Black));
             }
         }
+
+        /// <summary>
+        /// Gets FEN from clipboard if it is there.
+        /// </summary>
+        /// <returns></returns>
+        public static string GetFenFromClipboard()
+        {
+            string fen = "";
+
+            try
+            {
+                if (Clipboard.ContainsData(DataFormats.Text))
+                {
+                    fen = Clipboard.GetData(DataFormats.Text) as string;
+                    BoardPosition boardPosition = new BoardPosition();
+                    FenParser.ParseFenIntoBoard(fen, ref boardPosition);
+                }
+            }
+            catch
+            {
+                fen = "";
+            }
+
+            return fen;
+        }
+
 
         /// <summary>
         /// Given a position identifies potential enpassant squares based on the pawn

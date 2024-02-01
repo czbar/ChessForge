@@ -23,34 +23,9 @@ namespace ChessForge
         public EditFenDialog()
         {
             InitializeComponent();
-            UiTbFen.Text = GetFenFromClipboard();
+            UiTbFen.Text = PositionUtils.GetFenFromClipboard();
             UiTbFen.Focus();
             UiTbFen.SelectAll();
-        }
-
-        /// <summary>
-        /// Gets FEN from clipboard if it is there.
-        /// </summary>
-        /// <returns></returns>
-        private string GetFenFromClipboard()
-        {
-            string fen = "";
-
-            try
-            {
-                if (Clipboard.ContainsData(DataFormats.Text))
-                {
-                    fen = Clipboard.GetData(DataFormats.Text) as string;
-                    BoardPosition boardPosition = new BoardPosition();
-                    FenParser.ParseFenIntoBoard(fen, ref boardPosition);
-                }
-            }
-            catch 
-            {
-                fen = "";
-            }
-
-            return fen;
         }
 
         /// <summary>
