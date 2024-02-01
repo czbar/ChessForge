@@ -246,6 +246,9 @@
     <Compile Include="RepositionPieceProcessor.cs" />
     <Compile Include="ResourceUtils.cs" />
     <Compile Include="RichTextBoxUtilities.cs" />
+    <Compile Include="SearchPositionDialog.xaml.cs">
+      <DependentUpon>SearchPositionDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SelectDuplicatesDialog.xaml.cs">
       <DependentUpon>SelectDuplicatesDialog.xaml</DependentUpon>
     </Compile>
@@ -441,6 +444,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GamePreviewDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SearchPositionDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
