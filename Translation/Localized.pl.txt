@@ -245,6 +245,10 @@ Close=Zamknij
 #english: Delete=Delete
 Delete=Usuń
 
+#description: Search
+#english: Search=Search 
+Search=Szukaj 
+
 #description: Confirm
 #english: Confirm=Confirm
 Confirm=Potwierdź
@@ -641,8 +645,8 @@ Annotations=Komentarz
 CommentBeforeMove=Komentarz przed posunięciem
 
 #description: Search by FEN
-#english: SearchByFen=Search by FEN...
-SearchByFen=Szukaj pozycji z FEN...
+#english: SearchByFen=Find Positions...
+SearchByFen=Szukaj pozycji...
 
 #description: Undoes the previous operation
 #english: Undo=Undo
@@ -933,6 +937,20 @@ EgCentipawnAccuracy=maksymalne odchylenie od najlepszego ruchu wynosi
 
 
 
+
+#######################################
+#
+# Header: DIALOG Search Positions
+#
+
+#description: Dialog title: Setup position to search for
+#english: SetupPositionToSearch=Set up position to search for
+SetupPositionToSearch=Ustaw szukaną pozycję
+
+#description: Message: no positions found
+#english: MsgNoPositionsFound=Specified position has not been found.
+MsgNoPositionsFound=Nie znaleziono takicj pozycji.
+
 #######################################
 #
 # Header: DIALOG Duplicates
@@ -1009,6 +1027,14 @@ Decade=Dekada
 #description: Granularity
 #english: Granularity=Granularity
 Granularity=Rozdzielczość
+
+#description: Move games to other chapters per ECO
+#english: MoveGamesPerEco=Move games to other chapters per ECO
+MoveGamesPerEco=Przenieś partie do innych rozdziałów wg ECO
+
+#description: Message: there no target chapters found for any game
+#english: MsgNoGoodChapterForAnyGame=No suitable chapter has been found for any of the games.
+MsgNoGoodChapterForAnyGame=Nie znaleziono odpowiedniego rozdziału dla żadnej partii.
 
 #######################################
 #
@@ -1368,7 +1394,12 @@ SelectChaptersToImport=Wybierz Rozdziały do Importu
 #english: SelectChaptersToMerge=Select Chapters to Merge
 SelectChaptersToMerge=Wybierz Rozdziały do Połączenia.
 
+#description: Select games to move to suggested chapters
+#english: SelectGamesToMoveToChapters=Move Games to the Suggested Chapters
+SelectGamesToMoveToChapters=Przenieś do proponowanych rozdziałów
 
+
+#######################################
 #
 # Header: CONTEXT MENU in Training View
 #
@@ -2922,8 +2953,8 @@ cbClickThruMoves=Klawiatura: ←/→ (naprzód/wstecz); SHIFT←/→ or Home/End
 cbDoubleClickToAnnotate=Kliknij na dowolne posunięcie. Dwukrotnie kliknij, by wprowadzić komentarz.
 
 #description: F3 to find identical positions
-#english: cbFindIdenticalPositions=Press F3 to find identical positions.
-cbFindIdenticalPositions=Naciśnij F3 by znaleźć identyczne pozycje.
+#english: cbFindIdenticalPositions=Press F3 to find identical positions or SHIFT+F3 to search for any.
+cbFindIdenticalPositions=Naciśnij F3 by znaleźć identyczne pozycje albo SHIFT+F3 by szukać innej.
 
 #description: Right click for context menu
 #english: cbAdvancedEditig=Right click to open menu for advanced editing, FEN, creating exercise and more.

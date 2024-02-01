@@ -541,6 +541,7 @@ namespace ChessForge
                         break;
                     case WorkbookOperationType.COPY_ARTICLES:
                     case WorkbookOperationType.MOVE_ARTICLES:
+                    case WorkbookOperationType.MOVE_ARTICLES_MULTI_CHAPTER:
                         _chaptersView.IsDirty = true;
                         UiTabChapters.Focus();
                         break;
@@ -782,29 +783,46 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void UiMnSearchByFen_Click(object sender, RoutedEventArgs e)
+        public void UiMnFindPositions_Click(object sender, RoutedEventArgs e)
         {
             bool isTrainingOrSolving = TrainingSession.IsTrainingInProgress || AppState.IsUserSolving();
 
-            if (isTrainingOrSolving || ActiveVariationTree == null || AppState.ActiveTab == TabViewType.CHAPTERS)
+            if (isTrainingOrSolving)
             {
                 return;
             }
 
             try
             {
-                EditFenDialog dlg = new EditFenDialog();
-                GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
-
-                if (dlg.ShowDialog() == true)
+                BoardPosition position = null;
+                TreeNode nd = ActiveVariationTree == null ? null : ActiveVariationTree.SelectedNode;
+                if (nd == null)
                 {
-                    TreeNode nd = new TreeNode();
-                    nd.Position = dlg.DlgBoardPosition;
-
-                    bool externalSearch = !AppState.IsTreeViewTabActive();
-                    FindIdenticalPositions.Search(nd, FindIdenticalPositions.Mode.FIND_AND_REPORT, externalSearch);
+                    string fen = PositionUtils.GetFenFromClipboard();
+                    if (string.IsNullOrEmpty(fen))
+                    {
+                        try
+                        {
+                            FenParser.ParseFenIntoBoard(fen, ref position);
+                        }
+                        catch
+                        {
+                            position = null;
+                            position = PositionUtils.SetupStartingPosition();
+                        }
+                    }
+                }
+                else
+                {
+                    position = nd.Position;
                 }
 
+                SearchPositionDialog dlg = new SearchPositionDialog(position);
+                GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
+                if (dlg.ShowDialog() == true)
+                {
+                    FindIdenticalPositions.Search(dlg.SearchNode, FindIdenticalPositions.Mode.FIND_AND_REPORT, true);
+                }
             }
             catch (Exception ex)
             {
@@ -2021,12 +2039,6 @@ namespace ChessForge
                 {
                     VariationTree tree = chapter.Exercises[index].Tree;
                     PositionSetupDialog dlg = new PositionSetupDialog(tree);
-                    //{
-                    //    Left = ChessForgeMain.Left + 100,
-                    //    Top = ChessForgeMain.Top + 100,
-                    //    Topmost = false,
-                    //    Owner = this
-                    //};
                     GuiUtilities.PositionDialog(dlg, this, 100);
                     dlg.ShowDialog();
                     if (dlg.ExitOK)

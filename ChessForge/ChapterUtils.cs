@@ -8,6 +8,7 @@ using ChessPosition;
 using System.Collections.ObjectModel;
 using System.Windows;
 using ChessPosition.GameTree;
+using System.Windows.Input;
 
 namespace ChessForge
 {
@@ -24,7 +25,7 @@ namespace ChessForge
         {
             if (chapter != null)
             {
-                ManageChapterDialog dlg = new ManageChapterDialog();
+                ManageChapterDialog dlg = new ManageChapterDialog(chapter);
                 GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
                 if (dlg.ShowDialog() == true)
@@ -473,7 +474,7 @@ namespace ChessForge
                 {
                     Chapter sourceChapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(item.ChapterIndex);
                     // since this the same order we were removing the articles in.
-                    // the indexes should be valid as we ,ove down the list
+                    // the indexes should be valid as we move down the list
                     sourceChapter.InsertArticle(item.Article, item.ArticleIndex);
                     if (firstChapter == null)
                     {
@@ -488,6 +489,32 @@ namespace ChessForge
                 }
 
                 GuiUtilities.RefreshChaptersView(firstChapter);
+                AppState.MainWin.UiTabChapters.Focus();
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// Undoes the move articles from a single chapter
+        /// to multiple chapters (e.g. when moving by ECO).
+        /// </summary>
+        /// <param name="sourceChapter"></param>
+        /// <param name="items"></param>
+        public static void UndoMoveMultiChapterArticles(Chapter sourceChapter, object items)
+        {
+            try
+            {
+                ObservableCollection<ArticleListItem> articles = items as ObservableCollection<ArticleListItem>;
+                // add the articles to the source chapter
+                foreach (ArticleListItem item in articles)
+                {
+                    AppState.Workbook.DeleteArticle(item.Article);
+                    sourceChapter.InsertArticle(item.Article, item.ArticleIndex);
+                }
+
+                GuiUtilities.RefreshChaptersView(sourceChapter);
                 AppState.MainWin.UiTabChapters.Focus();
             }
             catch
@@ -670,30 +697,52 @@ namespace ChessForge
         /// <param name="chapter"></param>
         private static void RegenerateStudy(Chapter chapter)
         {
-            if (chapter != null)
+            bool overwriteWarningIssued = false;
+
+            Mouse.SetCursor(Cursors.Wait);
+            try
             {
-                RegenerateChapterStudy(chapter);
-            }
-            else
-            {
-                foreach (Chapter ch in AppState.Workbook.Chapters)
+                if (chapter != null)
                 {
-                    RegenerateChapterStudy(ch);
+                    RegenerateChapterStudy(chapter, ref overwriteWarningIssued);
+                }
+                else
+                {
+                    foreach (Chapter ch in AppState.Workbook.Chapters)
+                    {
+                        bool cont = RegenerateChapterStudy(ch, ref overwriteWarningIssued);
+                        if (!cont)
+                        {
+                            break;
+                        }
+                    }
                 }
             }
+            catch { }
+
+            Mouse.SetCursor(Cursors.Arrow);
         }
 
         /// <summary>
         /// Regenerates the Study Tree in a single chapter.
         /// </summary>
         /// <param name="chapter"></param>
-        private static void RegenerateChapterStudy(Chapter chapter)
+        private static bool RegenerateChapterStudy(Chapter chapter, ref bool overwriteWarningIssued)
         {
-            if (chapter.StudyTree.Tree.Nodes.Count <= 1 ||
-                MessageBox.Show(Properties.Resources.MsgThisOverwritesStudy,
+            if (chapter.StudyTree.Tree.Nodes.Count > 1 && !overwriteWarningIssued)
+            {
+                overwriteWarningIssued = true;
+
+                if (MessageBox.Show(Properties.Resources.MsgThisOverwritesStudy,
                     Properties.Resources.Information,
                     MessageBoxButton.YesNo,
-                    MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    MessageBoxImage.Question) != MessageBoxResult.Yes)
+                {
+                    return false;
+                }
+            }
+
+            if (chapter.StudyTree.Tree.Nodes.Count <= 1)
             {
                 List<VariationTree> trees = new List<VariationTree>();
                 foreach (Article game in chapter.ModelGames)
@@ -711,6 +760,8 @@ namespace ChessForge
                     AppState.IsDirty = true;
                 }
             }
+
+            return true;
         }
 
         /// <summary>

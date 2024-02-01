@@ -199,6 +199,8 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiRbCurrentItem_Checked(object sender, RoutedEventArgs e)
         {
+            UiLblScopeInfo.Content = Properties.Resources.OperationScope;
+
             if (AppState.MainWin.ActiveVariationTree == null)
             {
                 ShowItemType(GameData.ContentType.NONE, false);
@@ -233,6 +235,12 @@ namespace ChessForge
                 CheckAll(true);
                 firstTimeCheck = false;
             }
+
+            Chapter chapter = AppState.ActiveChapter;
+            if (chapter != null)
+            {
+                UiLblScopeInfo.Content = Properties.Resources.Chapter + ": " + chapter.GetTitle();
+            }
         }
 
         /// <summary>
@@ -242,6 +250,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiRbWorkbook_Checked(object sender, RoutedEventArgs e)
         {
+            UiLblScopeInfo.Content = Properties.Resources.OperationScope;
             ShowEnableAllItemTypes(true, true);
             if (_allowStudies)
             {

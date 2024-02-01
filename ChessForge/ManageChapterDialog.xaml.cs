@@ -53,9 +53,11 @@ namespace ChessForge
         /// <summary>
         /// Constructors. Initializes the list box values.
         /// </summary>
-        public ManageChapterDialog()
+        public ManageChapterDialog(Chapter chapter)
         {
             InitializeComponent();
+
+            UiLabelChapterTitle.Content = Properties.Resources.Chapter + ": " + chapter.GetTitle();
 
             UiCbGenerateStudyTree.IsChecked = false;
             UiCbGenerateStudyTree_Unchecked(null, null);

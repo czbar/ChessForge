@@ -548,7 +548,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Press F3 to find identical positions..
+        ///   Looks up a localized string similar to Press F3 to find identical positions or SHIFT+F3 to search for any..
         /// </summary>
         public static string cbFindIdenticalPositions {
             get {
@@ -3761,6 +3761,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Move games to other chapters per ECO.
+        /// </summary>
+        public static string MoveGamesPerEco {
+            get {
+                return ResourceManager.GetString("MoveGamesPerEco", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Move Game To Chapter....
         /// </summary>
         public static string MoveGameToChapter {
@@ -3887,11 +3896,29 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No suitable chapter has been found for any of the games..
+        /// </summary>
+        public static string MsgNoGoodChapterForAnyGame {
+            get {
+                return ResourceManager.GetString("MsgNoGoodChapterForAnyGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No identical positions found..
         /// </summary>
         public static string MsgNoIdenticalPositions {
             get {
                 return ResourceManager.GetString("MsgNoIdenticalPositions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specified position has not been found..
+        /// </summary>
+        public static string MsgNoPositionsFound {
+            get {
+                return ResourceManager.GetString("MsgNoPositionsFound", resourceCulture);
             }
         }
         
@@ -4941,7 +4968,16 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search by FEN....
+        ///   Looks up a localized string similar to Search .
+        /// </summary>
+        public static string Search {
+            get {
+                return ResourceManager.GetString("Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find Positions....
         /// </summary>
         public static string SearchByFen {
             get {
@@ -5103,6 +5139,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Move Games to the Suggested Chapters.
+        /// </summary>
+        public static string SelectGamesToMoveToChapters {
+            get {
+                return ResourceManager.GetString("SelectGamesToMoveToChapters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select Items.
         /// </summary>
         public static string SelectItems {
@@ -5198,6 +5243,15 @@ namespace ChessForge.Properties {
         public static string SelectTargetChapter {
             get {
                 return ResourceManager.GetString("SelectTargetChapter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set up position to search for.
+        /// </summary>
+        public static string SetupPositionToSearch {
+            get {
+                return ResourceManager.GetString("SetupPositionToSearch", resourceCulture);
             }
         }
         

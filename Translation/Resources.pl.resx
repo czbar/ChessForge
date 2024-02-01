@@ -288,6 +288,9 @@
   <data name="Delete" xml:space="preserve">
     <value>Usuń</value>
   </data>
+  <data name="Search" xml:space="preserve">
+    <value>Szukaj </value>
+  </data>
   <data name="Confirm" xml:space="preserve">
     <value>Potwierdź</value>
   </data>
@@ -556,7 +559,7 @@
     <value>Komentarz przed posunięciem</value>
   </data>
   <data name="SearchByFen" xml:space="preserve">
-    <value>Szukaj pozycji z FEN...</value>
+    <value>Szukaj pozycji...</value>
   </data>
   <data name="Undo" xml:space="preserve">
     <value>Cofnij Operację</value>
@@ -744,6 +747,12 @@
   <data name="EgCentipawnAccuracy" xml:space="preserve">
     <value>maksymalne odchylenie od najlepszego ruchu wynosi</value>
   </data>
+  <data name="SetupPositionToSearch" xml:space="preserve">
+    <value>Ustaw szukaną pozycję</value>
+  </data>
+  <data name="MsgNoPositionsFound" xml:space="preserve">
+    <value>Nie znaleziono takicj pozycji.</value>
+  </data>
   <data name="DuplicatesOf" xml:space="preserve">
     <value>Duplikaty</value>
   </data>
@@ -788,6 +797,12 @@
   </data>
   <data name="Granularity" xml:space="preserve">
     <value>Rozdzielczość</value>
+  </data>
+  <data name="MoveGamesPerEco" xml:space="preserve">
+    <value>Przenieś partie do innych rozdziałów wg ECO</value>
+  </data>
+  <data name="MsgNoGoodChapterForAnyGame" xml:space="preserve">
+    <value>Nie znaleziono odpowiedniego rozdziału dla żadnej partii.</value>
   </data>
   <data name="DlgTitleEditFen" xml:space="preserve">
     <value>Edytuj FEN</value>
@@ -1010,6 +1025,9 @@
   </data>
   <data name="SelectChaptersToMerge" xml:space="preserve">
     <value>Wybierz Rozdziały do Połączenia.</value>
+  </data>
+  <data name="SelectGamesToMoveToChapters" xml:space="preserve">
+    <value>Przenieś do proponowanych rozdziałów</value>
   </data>
   <data name="RestartGameAfter" xml:space="preserve">
     <value>Cofnij Partię do</value>
@@ -2074,7 +2092,7 @@
     <value>Kliknij na dowolne posunięcie. Dwukrotnie kliknij, by wprowadzić komentarz.</value>
   </data>
   <data name="cbFindIdenticalPositions" xml:space="preserve">
-    <value>Naciśnij F3 by znaleźć identyczne pozycje.</value>
+    <value>Naciśnij F3 by znaleźć identyczne pozycje albo SHIFT+F3 by szukać innej.</value>
   </data>
   <data name="cbAdvancedEditig" xml:space="preserve">
     <value>Naciśnij prawy przycisk, by wywołać menu do edycji, kopiowania FEN i inne.</value>
