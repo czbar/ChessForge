@@ -561,7 +561,7 @@ namespace ChessForge
         /// <param name="e"></param>
         public void PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (Keyboard.Modifiers != ModifierKeys.Control)
+            if ((Keyboard.Modifiers & (ModifierKeys.Control | ModifierKeys.Shift)) == 0)
             {
                 switch (e.Key)
                 {
@@ -640,6 +640,23 @@ namespace ChessForge
                         }
                     }
                     catch { }
+                }
+                else
+                {
+                    if ((Keyboard.Modifiers & ModifierKeys.Shift) > 0)
+                    {
+                        try
+                        {
+                            switch (e.Key)
+                            {
+                                case Key.F3:
+                                    _mainWin.UiMnFindPositions_Click(null, null);
+                                    e.Handled = true;
+                                    break;
+                            }
+                        }
+                        catch { }
+                    }
                 }
             }
         }
