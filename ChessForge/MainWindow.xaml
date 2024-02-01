@@ -95,7 +95,7 @@
                         <MenuItem x:Name="UiMnCommentBeforeMove" Header="{x:Static p:Resources.CommentBeforeMove}" Click="UiMnCommentBeforeMoveDialog_Click" />
                         <Separator />
                         <MenuItem x:Name="UiMnFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}"  Click="UiMnFindIdenticalPosition_Click" InputGestureText="F3" />
-                        <MenuItem x:Name="UiMnSearchByFen" Header="{x:Static p:Resources.SearchByFen}"  Click="UiMnSearchByFen_Click" />
+                        <MenuItem x:Name="UiMnFindPositions" Header="{x:Static p:Resources.SearchByFen}"  Click="UiMnFindPositions_Click" InputGestureText="Shift+F3" />
                         <Separator />
                         <MenuItem x:Name="UiMnUndo" Header="{x:Static p:Resources.Undo}" Click="UiMnUndo_Click" InputGestureText="Ctrl+Z" />
                     </MenuItem>
@@ -229,6 +229,7 @@
                                 <MenuItem x:Name="UiMnciEvalPos" Header="{x:Static p:Resources.EvaluatePosition}" Click="UiMnEvaluatePosition_Click" />
                                 <MenuItem x:Name="UiMnciEvalLine" Header="{x:Static p:Resources.EvaluateLine}" Click="UiMnEvaluateLine_Click" />
                                 <MenuItem x:Name="UiMnciFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}" Click="UiMnFindIdenticalPosition_Click" InputGestureText="F3"/>
+                                <MenuItem x:Name="UiMnciFindPositions" Header="{x:Static p:Resources.SearchByFen}"  Click="UiMnFindPositions_Click" InputGestureText="Shift+F3" />
                                 <Separator x:Name="UiMncMainBoardSepar_2" />
                                 <MenuItem x:Name="UiMnciBookmarkPosition" Header="{x:Static p:Resources.BookmarkThisPosition}" Click="UiMnMarkBookmark_Click" />
                                 <MenuItem x:Name="UiMnciDeleteBookmark" Visibility="Collapsed" Header="{x:Static p:Resources.DeleteThisBookmark}" Click="UiMnciDeleteBookmark_Click" />
@@ -553,6 +554,7 @@
                                     <MenuItem x:Name="_mnWorkbookEvalMove" Header="{x:Static p:Resources.EvaluatePosition}"  Click="UiMnEvaluatePosition_Click" />
                                     <MenuItem x:Name="_mnWorkbookEvalLine" Header="{x:Static p:Resources.EvaluateLine}"  Click="UiMnEvaluateLine_Click" />
                                     <MenuItem x:Name="UiMnStudyFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}"  Click="UiMnFindIdenticalPosition_Click" InputGestureText="F3" />
+                                    <MenuItem x:Name="UiMnStudyFindPositions" Header="{x:Static p:Resources.SearchByFen}"  Click="UiMnFindPositions_Click" InputGestureText="Shift+F3" />
                                     <Separator />
                                     <MenuItem x:Name="UiMnMarkBookmark" Header="{x:Static p:Resources.BookmarkThisPosition}" Click="UiMnMarkBookmark_Click" />
                                     <MenuItem x:Name="UiMnStDeleteBookmark" Visibility="Collapsed" Header="{x:Static p:Resources.DeleteThisBookmark}" Click="UiMnciDeleteBookmark_Click" />
@@ -644,6 +646,7 @@
                                     <MenuItem x:Name="_mnGame_EvalMove" Header="{x:Static p:Resources.EvaluatePosition}"  Click="UiMnEvaluatePosition_Click" />
                                     <MenuItem x:Name="_mnGame_EvalLine" Header="{x:Static p:Resources.EvaluateLine}"  Click="UiMnEvaluateLine_Click" />
                                     <MenuItem x:Name="UiMnGameFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}" Click="UiMnFindIdenticalPosition_Click" InputGestureText="F3" />
+                                    <MenuItem x:Name="UiMnGameFindPositions" Header="{x:Static p:Resources.SearchByFen}"  Click="UiMnFindPositions_Click" InputGestureText="Shift+F3" />
                                     <Separator />
                                     <MenuItem x:Name="UiMnGameMarkBookmark" Header="{x:Static p:Resources.BookmarkThisPosition}" Click="UiMnMarkBookmark_Click" />
                                     <MenuItem x:Name="UiMnGameDeleteBookmark" Visibility="Collapsed" Header="{x:Static p:Resources.DeleteThisBookmark}" Click="UiMnciDeleteBookmark_Click" />
@@ -746,6 +749,7 @@
                                     <MenuItem x:Name="UiMnExerc_EvalMove" Header="{x:Static p:Resources.EvaluatePosition}"  Click="UiMnEvaluatePosition_Click" />
                                     <MenuItem x:Name="_mnExerc_EvalLine" Header="{x:Static p:Resources.EvaluateLine}"  Click="UiMnEvaluateLine_Click" />
                                     <MenuItem x:Name="UiMnExercFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}" Click="UiMnFindIdenticalPosition_Click" InputGestureText="F3" />
+                                    <MenuItem x:Name="UiMnExercFindPositions" Header="{x:Static p:Resources.SearchByFen}"  Click="UiMnFindPositions_Click" InputGestureText="Shift+F3" />
                                     <Separator x:Name="UiMnExerc_Separator_7"/>
                                     <MenuItem x:Name="UiMnExercMarkBookmark" Header="{x:Static p:Resources.BookmarkThisPosition}" Click="UiMnMarkBookmark_Click" />
                                     <MenuItem x:Name="UiMnExercDeleteBookmark" Visibility="Collapsed" Header="{x:Static p:Resources.DeleteThisBookmark}" Click="UiMnciDeleteBookmark_Click" />
