@@ -188,6 +188,9 @@ Close=Close
 #Delete
 Delete=Delete
 
+#Search
+Search=Search 
+
 #Confirm
 Confirm=Confirm
 
@@ -495,7 +498,7 @@ Annotations=Annotations
 CommentBeforeMove=Comment Before Move
 
 #Search by FEN
-SearchByFen=Search by FEN...
+SearchByFen=Find Positions...
 
 #Undoes the previous operation
 Undo=Undo
@@ -723,6 +726,18 @@ EgSelectionAccuracyLabel=Move selection accuracy is
 EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
 
 
+
+
+#######################################
+#
+# Header: DIALOG Search Positions
+#
+
+#Dialog title: Setup position to search for
+SetupPositionToSearch=Set up position to search for
+
+#Message: no positions found
+MsgNoPositionsFound=Specified position has not been found.
 
 #######################################
 #

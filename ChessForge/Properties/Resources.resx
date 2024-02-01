@@ -288,6 +288,9 @@
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search </value>
+  </data>
   <data name="Confirm" xml:space="preserve">
     <value>Confirm</value>
   </data>
@@ -556,7 +559,7 @@
     <value>Comment Before Move</value>
   </data>
   <data name="SearchByFen" xml:space="preserve">
-    <value>Search by FEN...</value>
+    <value>Find Positions...</value>
   </data>
   <data name="Undo" xml:space="preserve">
     <value>Undo</value>
@@ -743,6 +746,12 @@
   </data>
   <data name="EgCentipawnAccuracy" xml:space="preserve">
     <value>max allowed centipawn deviation from the best move is</value>
+  </data>
+  <data name="SetupPositionToSearch" xml:space="preserve">
+    <value>Set up position to search for</value>
+  </data>
+  <data name="MsgNoPositionsFound" xml:space="preserve">
+    <value>Specified position has not been found.</value>
   </data>
   <data name="DuplicatesOf" xml:space="preserve">
     <value>Duplicates of</value>

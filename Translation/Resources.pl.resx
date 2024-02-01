@@ -288,6 +288,9 @@
   <data name="Delete" xml:space="preserve">
     <value>Usuń</value>
   </data>
+  <data name="Search" xml:space="preserve">
+    <value>Szukaj </value>
+  </data>
   <data name="Confirm" xml:space="preserve">
     <value>Potwierdź</value>
   </data>
@@ -556,7 +559,7 @@
     <value>Komentarz przed posunięciem</value>
   </data>
   <data name="SearchByFen" xml:space="preserve">
-    <value>Szukaj pozycji z FEN...</value>
+    <value>Szukaj pozycji...</value>
   </data>
   <data name="Undo" xml:space="preserve">
     <value>Cofnij Operację</value>
@@ -743,6 +746,12 @@
   </data>
   <data name="EgCentipawnAccuracy" xml:space="preserve">
     <value>maksymalne odchylenie od najlepszego ruchu wynosi</value>
+  </data>
+  <data name="SetupPositionToSearch" xml:space="preserve">
+    <value>Ustaw szukaną pozycję</value>
+  </data>
+  <data name="MsgNoPositionsFound" xml:space="preserve">
+    <value>Nie znaleziono takicj pozycji.</value>
   </data>
   <data name="DuplicatesOf" xml:space="preserve">
     <value>Duplikaty</value>

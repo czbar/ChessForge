@@ -3914,6 +3914,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Specified position has not been found..
+        /// </summary>
+        public static string MsgNoPositionsFound {
+            get {
+                return ResourceManager.GetString("MsgNoPositionsFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select position to paste the moves at..
         /// </summary>
         public static string MsgSelectNodeToInserAt {
@@ -4959,7 +4968,16 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search by FEN....
+        ///   Looks up a localized string similar to Search .
+        /// </summary>
+        public static string Search {
+            get {
+                return ResourceManager.GetString("Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find Positions....
         /// </summary>
         public static string SearchByFen {
             get {
@@ -5225,6 +5243,15 @@ namespace ChessForge.Properties {
         public static string SelectTargetChapter {
             get {
                 return ResourceManager.GetString("SelectTargetChapter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set up position to search for.
+        /// </summary>
+        public static string SetupPositionToSearch {
+            get {
+                return ResourceManager.GetString("SetupPositionToSearch", resourceCulture);
             }
         }
         

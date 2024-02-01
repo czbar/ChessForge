@@ -245,6 +245,10 @@ Close=Zamknij
 #english: Delete=Delete
 Delete=Usuń
 
+#description: Search
+#english: Search=Search 
+Search=Szukaj 
+
 #description: Confirm
 #english: Confirm=Confirm
 Confirm=Potwierdź
@@ -641,8 +645,8 @@ Annotations=Komentarz
 CommentBeforeMove=Komentarz przed posunięciem
 
 #description: Search by FEN
-#english: SearchByFen=Search by FEN...
-SearchByFen=Szukaj pozycji z FEN...
+#english: SearchByFen=Find Positions...
+SearchByFen=Szukaj pozycji...
 
 #description: Undoes the previous operation
 #english: Undo=Undo
@@ -932,6 +936,20 @@ EgSelectionAccuracyLabel=Dokładność wyboru ruchów wynosi
 EgCentipawnAccuracy=maksymalne odchylenie od najlepszego ruchu wynosi
 
 
+
+
+#######################################
+#
+# Header: DIALOG Search Positions
+#
+
+#description: Dialog title: Setup position to search for
+#english: SetupPositionToSearch=Set up position to search for
+SetupPositionToSearch=Ustaw szukaną pozycję
+
+#description: Message: no positions found
+#english: MsgNoPositionsFound=Specified position has not been found.
+MsgNoPositionsFound=Nie znaleziono takicj pozycji.
 
 #######################################
 #

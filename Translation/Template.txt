@@ -245,6 +245,10 @@ Close=
 #english: Delete=Delete
 Delete=
 
+#description: Search
+#english: Search=Search 
+Search=
+
 #description: Confirm
 #english: Confirm=Confirm
 Confirm=
@@ -641,7 +645,7 @@ Annotations=
 CommentBeforeMove=
 
 #description: Search by FEN
-#english: SearchByFen=Search by FEN...
+#english: SearchByFen=Find Positions...
 SearchByFen=
 
 #description: Undoes the previous operation
@@ -932,6 +936,20 @@ EgSelectionAccuracyLabel=
 EgCentipawnAccuracy=
 
 
+
+
+#######################################
+#
+# Header: DIALOG Search Positions
+#
+
+#description: Dialog title: Setup position to search for
+#english: SetupPositionToSearch=Set up position to search for
+SetupPositionToSearch=
+
+#description: Message: no positions found
+#english: MsgNoPositionsFound=Specified position has not been found.
+MsgNoPositionsFound=
 
 #######################################
 #
