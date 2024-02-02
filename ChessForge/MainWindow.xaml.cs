@@ -2983,6 +2983,10 @@ namespace ChessForge
                     }
                 }
             }
+            else
+            {
+                MessageBox.Show(Properties.Resources.MsgNoMoveSelected, Properties.Resources.Information, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
 
             return changed;
         }
