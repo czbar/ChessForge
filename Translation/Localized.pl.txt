@@ -486,6 +486,10 @@ ErrNoGamesDownloaded=Nie pobrano żadnych partii
 #english: ErrNoGamesSelected=No games have been selected
 ErrNoGamesSelected=Nie wybrano żadnych partii
 
+#description: No games selected
+#english: ErrNoItemsSelected=No items have been selected
+ErrNoItemsSelected=Nie wybrano żadnych pozycji
+
 #description: No games were copied
 #english: ErrNoGamesCopied=No games have been copied
 ErrNoGamesCopied=Nie skopiowano żadnej partii

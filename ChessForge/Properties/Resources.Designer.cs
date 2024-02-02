@@ -2276,6 +2276,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No items have been selected.
+        /// </summary>
+        public static string ErrNoItemsSelected {
+            get {
+                return ResourceManager.GetString("ErrNoItemsSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Not all games were copied.
         /// </summary>
         public static string ErrNotAllGamesCopied {

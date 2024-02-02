@@ -453,6 +453,9 @@
   <data name="ErrNoGamesSelected" xml:space="preserve">
     <value>No games have been selected</value>
   </data>
+  <data name="ErrNoItemsSelected" xml:space="preserve">
+    <value>No items have been selected</value>
+  </data>
   <data name="ErrNoGamesCopied" xml:space="preserve">
     <value>No games have been copied</value>
   </data>
