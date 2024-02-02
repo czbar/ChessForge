@@ -1232,11 +1232,6 @@ namespace ChessForge
                 {
                     if (SelectArticlesFromPgnFile(ref games, SelectGamesDialog.Mode.IMPORT_INTO_NEW_CHAPTER))
                     {
-                        //if (createStudy)
-                        //{
-                        //    WorkbookManager.MergeGames(ref chapter.StudyTree.Tree, ref games);
-                        //}
-
                         // content type may have been reset to GENERIC in MergeGames above
                         chapter.StudyTree.Tree.ContentType = GameData.ContentType.STUDY_TREE;
 
@@ -1322,10 +1317,36 @@ namespace ChessForge
         /// <returns></returns>
         public bool SelectArticlesFromPgnFile(ref ObservableCollection<GameData> games, SelectGamesDialog.Mode mode)
         {
+            bool res = false;
+
             SelectGamesDialog dlg = new SelectGamesDialog(ref games, mode);
             GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
-            bool res = dlg.ShowDialog() == true;
+            if (dlg.ShowDialog() == true)
+            {
+                // remove articles that are not selected
+                List<GameData> gamesToDelete = new List<GameData>();
+                foreach (GameData game in games)
+                {
+                    if (!game.IsSelected)
+                    {
+                        gamesToDelete.Add(game);
+                    }
+                }
+                foreach (GameData game in gamesToDelete)
+                {
+                    games.Remove(game);
+                }
+
+                if (games.Count == 0)
+                {
+                    MessageBox.Show(Properties.Resources.ErrNoItemsSelected, Properties.Resources.Information, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                }
+                else
+                {
+                    res = true;
+                }
+            }
             return res;
         }
 
