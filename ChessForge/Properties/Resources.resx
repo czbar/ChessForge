@@ -597,6 +597,9 @@
   <data name="DlgMergeErrors" xml:space="preserve">
     <value>Merge Errors</value>
   </data>
+  <data name="MsgNoMoveSelected" xml:space="preserve">
+    <value>No move selected</value>
+  </data>
   <data name="MsgNoIdenticalPositions" xml:space="preserve">
     <value>No identical positions found.</value>
   </data>
@@ -1048,7 +1051,7 @@
     <value>Create New Game</value>
   </data>
   <data name="ImportGames" xml:space="preserve">
-    <value>Import Games</value>
+    <value>Import Games from PGN</value>
   </data>
   <data name="CreateNewExercise" xml:space="preserve">
     <value>Create New Exercise</value>

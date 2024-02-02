@@ -704,6 +704,10 @@ DlgParseErrors=Błędy przetwarzania zapisu
 DlgMergeErrors=Błędy przetwarzania zapisu
 
 
+#description: Message about node not selected
+#english: MsgNoMoveSelected=No move selected
+MsgNoMoveSelected=Nie wybrano żadnego posunięcia
+
 #description: Message about identical position not found
 #english: MsgNoIdenticalPositions=No identical positions found.
 MsgNoIdenticalPositions=Nie znaleziono identycznych pozycji.
@@ -1434,8 +1438,8 @@ ImportNewChapter=Importuj Nowy Rozdział
 CreateNewGame=Utwórz Nową Partię
 
 #description: Import a new game
-#english: ImportGames=Import Games
-ImportGames=Importuj Partie
+#english: ImportGames=Import Games from PGN
+ImportGames=Importuj Partie z Pliku PGN
 
 #description: Create a new exercise
 #english: CreateNewExercise=Create New Exercise

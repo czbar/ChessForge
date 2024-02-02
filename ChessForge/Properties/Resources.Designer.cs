@@ -3185,7 +3185,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Import Games.
+        ///   Looks up a localized string similar to Import Games from PGN.
         /// </summary>
         public static string ImportGames {
             get {
@@ -3910,6 +3910,15 @@ namespace ChessForge.Properties {
         public static string MsgNoIdenticalPositions {
             get {
                 return ResourceManager.GetString("MsgNoIdenticalPositions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No move selected.
+        /// </summary>
+        public static string MsgNoMoveSelected {
+            get {
+                return ResourceManager.GetString("MsgNoMoveSelected", resourceCulture);
             }
         }
         

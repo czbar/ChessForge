@@ -704,6 +704,10 @@ DlgParseErrors=
 DlgMergeErrors=
 
 
+#description: Message about node not selected
+#english: MsgNoMoveSelected=No move selected
+MsgNoMoveSelected=
+
 #description: Message about identical position not found
 #english: MsgNoIdenticalPositions=No identical positions found.
 MsgNoIdenticalPositions=
@@ -1434,7 +1438,7 @@ ImportNewChapter=
 CreateNewGame=
 
 #description: Import a new game
-#english: ImportGames=Import Games
+#english: ImportGames=Import Games from PGN
 ImportGames=
 
 #description: Create a new exercise

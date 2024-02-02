@@ -544,6 +544,9 @@ DlgParseErrors=Parsing Errors
 DlgMergeErrors=Merge Errors
 
 
+#Message about node not selected
+MsgNoMoveSelected=No move selected
+
 #Message about identical position not found
 MsgNoIdenticalPositions=No identical positions found.
 
@@ -1124,7 +1127,7 @@ ImportNewChapter=Import New Chapter
 CreateNewGame=Create New Game
 
 #Import a new game
-ImportGames=Import Games
+ImportGames=Import Games from PGN
 
 #Create a new exercise
 CreateNewExercise=Create New Exercise
