@@ -230,6 +230,9 @@
     </Compile>
     <Compile Include="PlayerStats.cs" />
     <Compile Include="PositionBoardDragEvents.cs" />
+    <Compile Include="PostCopyMoveDialog.xaml.cs">
+      <DependentUpon>PostCopyMoveDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PreviousNextViewBars.cs" />
     <Compile Include="Properties\OpeningNames.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -436,6 +439,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PositionSetupDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PostCopyMoveDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
