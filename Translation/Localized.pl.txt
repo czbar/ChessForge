@@ -704,6 +704,10 @@ DlgParseErrors=Błędy przetwarzania zapisu
 DlgMergeErrors=Błędy przetwarzania zapisu
 
 
+#description: Message about node not selected
+#english: MsgNoMoveSelected=No move selected
+MsgNoMoveSelected=Nie wybrano żadnego posunięcia
+
 #description: Message about identical position not found
 #english: MsgNoIdenticalPositions=No identical positions found.
 MsgNoIdenticalPositions=Nie znaleziono identycznych pozycji.
@@ -935,6 +939,42 @@ EgSelectionAccuracyLabel=Dokładność wyboru ruchów wynosi
 #english: EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
 EgCentipawnAccuracy=maksymalne odchylenie od najlepszego ruchu wynosi
 
+
+
+#######################################
+#
+# Header: DIALOG PostCopyMoveDialog
+#
+
+#description: Target Chapter
+#english: TargetChapter=Target Chapter
+TargetChapter=Docelowy Rozdział
+
+#description: Label: go to chapters 
+#english: LblGoToChaptersView=Go To Chapters List
+LblGoToChaptersView=Idź do Listy Rozdziałów
+
+#description: Label: stay here 
+#english: LblStayHere=Stay Here
+LblStayHere=Zostań Tutaj
+
+#description: Label: number of items copied
+#english: LblNumberOfItemsCopied=Number of Items Copied
+LblNumberOfItemsCopied=Liczba skopiowanych elementów
+
+#description: Label: number of items moved
+#english: LblNumberOfItemsMoved=Number of Items Moved
+LblNumberOfItemsMoved=Liczba przesuniętych elementów
+
+
+#description: Label: number of items deleted
+#english: LblNumberOfItemsDeleted=Number of Items Deleted
+LblNumberOfItemsDeleted=Liczba usuniętych elementów
+
+
+#description: Label: number of items acted upon
+#english: LblNumberOfItemsActedOn=Number of Items Acted On
+LblNumberOfItemsActedOn=Liczba elementów
 
 
 
@@ -1434,8 +1474,8 @@ ImportNewChapter=Importuj Nowy Rozdział
 CreateNewGame=Utwórz Nową Partię
 
 #description: Import a new game
-#english: ImportGames=Import Games
-ImportGames=Importuj Partie
+#english: ImportGames=Import Games from PGN
+ImportGames=Importuj Partie z Pliku PGN
 
 #description: Create a new exercise
 #english: CreateNewExercise=Create New Exercise

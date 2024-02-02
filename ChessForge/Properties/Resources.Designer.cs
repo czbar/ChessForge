@@ -3185,7 +3185,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Import Games.
+        ///   Looks up a localized string similar to Import Games from PGN.
         /// </summary>
         public static string ImportGames {
             get {
@@ -3487,6 +3487,60 @@ namespace ChessForge.Properties {
         public static string LastFileNotFound {
             get {
                 return ResourceManager.GetString("LastFileNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go To Chapters List.
+        /// </summary>
+        public static string LblGoToChaptersView {
+            get {
+                return ResourceManager.GetString("LblGoToChaptersView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of Items Acted On.
+        /// </summary>
+        public static string LblNumberOfItemsActedOn {
+            get {
+                return ResourceManager.GetString("LblNumberOfItemsActedOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of Items Copied.
+        /// </summary>
+        public static string LblNumberOfItemsCopied {
+            get {
+                return ResourceManager.GetString("LblNumberOfItemsCopied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of Items Deleted.
+        /// </summary>
+        public static string LblNumberOfItemsDeleted {
+            get {
+                return ResourceManager.GetString("LblNumberOfItemsDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of Items Moved.
+        /// </summary>
+        public static string LblNumberOfItemsMoved {
+            get {
+                return ResourceManager.GetString("LblNumberOfItemsMoved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stay Here.
+        /// </summary>
+        public static string LblStayHere {
+            get {
+                return ResourceManager.GetString("LblStayHere", resourceCulture);
             }
         }
         
@@ -3910,6 +3964,15 @@ namespace ChessForge.Properties {
         public static string MsgNoIdenticalPositions {
             get {
                 return ResourceManager.GetString("MsgNoIdenticalPositions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No move selected.
+        /// </summary>
+        public static string MsgNoMoveSelected {
+            get {
+                return ResourceManager.GetString("MsgNoMoveSelected", resourceCulture);
             }
         }
         
@@ -5621,6 +5684,15 @@ namespace ChessForge.Properties {
         public static string Tablebases {
             get {
                 return ResourceManager.GetString("Tablebases", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Target Chapter.
+        /// </summary>
+        public static string TargetChapter {
+            get {
+                return ResourceManager.GetString("TargetChapter", resourceCulture);
             }
         }
         

@@ -597,6 +597,9 @@
   <data name="DlgMergeErrors" xml:space="preserve">
     <value>Błędy przetwarzania zapisu</value>
   </data>
+  <data name="MsgNoMoveSelected" xml:space="preserve">
+    <value>Nie wybrano żadnego posunięcia</value>
+  </data>
   <data name="MsgNoIdenticalPositions" xml:space="preserve">
     <value>Nie znaleziono identycznych pozycji.</value>
   </data>
@@ -746,6 +749,27 @@
   </data>
   <data name="EgCentipawnAccuracy" xml:space="preserve">
     <value>maksymalne odchylenie od najlepszego ruchu wynosi</value>
+  </data>
+  <data name="TargetChapter" xml:space="preserve">
+    <value>Docelowy Rozdział</value>
+  </data>
+  <data name="LblGoToChaptersView" xml:space="preserve">
+    <value>Idź do Listy Rozdziałów</value>
+  </data>
+  <data name="LblStayHere" xml:space="preserve">
+    <value>Zostań Tutaj</value>
+  </data>
+  <data name="LblNumberOfItemsCopied" xml:space="preserve">
+    <value>Liczba skopiowanych elementów</value>
+  </data>
+  <data name="LblNumberOfItemsMoved" xml:space="preserve">
+    <value>Liczba przesuniętych elementów</value>
+  </data>
+  <data name="LblNumberOfItemsDeleted" xml:space="preserve">
+    <value>Liczba usuniętych elementów</value>
+  </data>
+  <data name="LblNumberOfItemsActedOn" xml:space="preserve">
+    <value>Liczba elementów</value>
   </data>
   <data name="SetupPositionToSearch" xml:space="preserve">
     <value>Ustaw szukaną pozycję</value>
@@ -1048,7 +1072,7 @@
     <value>Utwórz Nową Partię</value>
   </data>
   <data name="ImportGames" xml:space="preserve">
-    <value>Importuj Partie</value>
+    <value>Importuj Partie z Pliku PGN</value>
   </data>
   <data name="CreateNewExercise" xml:space="preserve">
     <value>Utwórz Nowe Ćwiczenie</value>

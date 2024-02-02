@@ -168,6 +168,20 @@ namespace ChessForge
                         AppState.IsDirty = true;
 
                         UpdateViewAfterCopyMoveArticles(targetChapter, action, contentType);
+
+                        if (AppState.ActiveTab != TabViewType.CHAPTERS)
+                        {
+                            // ask the user whether to stay here or show the target chapter
+                            PostCopyMoveDialog dlg = new PostCopyMoveDialog(targetChapter, action, articlesToInsert.Count);
+                            if (dlg.ShowDialog() == true)
+                            {
+                                targetChapter.IsViewExpanded = true;
+                                // show chapter view with the target chapter in the view and expanded
+                                AppState.MainWin.ChaptersView.IsDirty = true;
+                                AppState.MainWin.UiTabChapters.Focus();
+                                PulseManager.ChaperIndexToBringIntoView = targetChapter.Index;
+                            }
+                        }
                     }
                     else
                     {
