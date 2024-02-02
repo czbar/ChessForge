@@ -3231,7 +3231,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnHelpWiki_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki");
+            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/User's-Manual");
         }
 
 
