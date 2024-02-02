@@ -91,11 +91,12 @@
                         <MenuItem x:Name="UiMnMainPlayEngine" Header="{x:Static p:Resources.PlayAgainstComputer}"  Click="UiMnPlayEngine_Click" />
                     </MenuItem>
                     <MenuItem Header="{x:Static p:Resources.Edit}" Margin="0,0,0,0">
+                        <MenuItem x:Name="UiMnFindGames" Header="{x:Static p:Resources.FindGames}" Click="UiMnFindGames_Click"/>
+                        <MenuItem x:Name="UiMnFindPositions" Header="{x:Static p:Resources.SearchByFen}"  Click="UiMnFindPositions_Click" InputGestureText="Shift+F3" />
+                        <MenuItem x:Name="UiMnFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}"  Click="UiMnFindIdenticalPosition_Click" InputGestureText="F3" />
+                        <Separator />
                         <MenuItem x:Name="UiMnAnnotations" Header="{x:Static p:Resources.Annotations}" Click="UiMnAnnotationsDialog_Click" />
                         <MenuItem x:Name="UiMnCommentBeforeMove" Header="{x:Static p:Resources.CommentBeforeMove}" Click="UiMnCommentBeforeMoveDialog_Click" />
-                        <Separator />
-                        <MenuItem x:Name="UiMnFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}"  Click="UiMnFindIdenticalPosition_Click" InputGestureText="F3" />
-                        <MenuItem x:Name="UiMnFindPositions" Header="{x:Static p:Resources.SearchByFen}"  Click="UiMnFindPositions_Click" InputGestureText="Shift+F3" />
                         <Separator />
                         <MenuItem x:Name="UiMnUndo" Header="{x:Static p:Resources.Undo}" Click="UiMnUndo_Click" InputGestureText="Ctrl+Z" />
                     </MenuItem>
@@ -130,25 +131,25 @@
                         <MenuItem  x:Name="UiMnFontDefaults" Header="{x:Static p:Resources.RestoreFontDefaults}" Click="UiMnFontDefaults_Click" />
                     </MenuItem>
                     <MenuItem Header="{x:Static p:Resources.Tools}" Margin="0,0,0,0">
-                        <MenuItem x:Name="UiMnFindGames" Header="{x:Static p:Resources.FindGames}" Click="UiMnFindGames_Click"/>
                         <MenuItem x:Name="UiMnImportGames" Header="{x:Static p:Resources.ImportGames}" Click="UiMnGame_ImportGames_Click"  />
-                        <Separator />
                         <MenuItem x:Name="UiMnDownloadWebGames" Header="{x:Static p:Resources.DownloadGamesFromWeb}" Click="UiMnDownloadWebGames_Click" />
+                        <Separator />
                         <MenuItem x:Name="UiMnEvaluateGames" Header="{x:Static p:Resources.MnEvaluateGames}" Click="UiMnEvaluateGames_Click" />
+                        <MenuItem x:Name="UiMnAssignECO" Header="{x:Static p:Resources.AssignECO}" Click="UiAssignEco_Click" />
                         <Separator />
                         <MenuItem x:Name="UiMnCopyArticles" Header="{x:Static p:Resources.CopyArticlesToChapter}" Click="UiMnCopyArticles_Click" />
                         <MenuItem x:Name="UiMnMoveArticles" Header="{x:Static p:Resources.MoveArticlesToChapter}" Click="UiMnMoveArticles_Click" />
+                        <Separator />
+                        <MenuItem x:Name="UiMnMainDeleteGames" Header="{x:Static p:Resources.DeleteGames}" Click="UiMnToolsDeleteGames_Click" />
+                        <MenuItem x:Name="UiMnMainDeleteExercises" Header="{x:Static p:Resources.DeleteExercises}" Click="UiMnToolsDeleteExercises_Click"  />
+                        <MenuItem x:Name="UiMnRemoveDuplicates" Header="{x:Static p:Resources.RemoveDuplicates}" Click="UiMnRemoveDuplicates_Click"  />
+                        <Separator />
                         <MenuItem x:Name="UiMnMergeChapters" Header="{x:Static p:Resources.MergeChapters}" Click="UiMnMergeChapters_Click" />
                         <MenuItem x:Name="UiMnManageChapter" Header="{x:Static p:Resources.ManageChapter}"  Click="UiMnManageChapter_Click" />
                         <MenuItem x:Name="UiMnSplitChapter" Header="{x:Static p:Resources.SplitChapterMenu}"  Click="UiMnSplitChapter_Click" />
                         <Separator />
                         <MenuItem x:Name="UiMnDeleteComments" Header="{x:Static p:Resources.StripComments}" Click="UiDeleteComments_Click" />
                         <MenuItem x:Name="UiMnDeleteEngineEvals" Header="{x:Static p:Resources.DeleteEngineEvals}" Click="UiDeleteEngineEvals_Click" />
-                        <MenuItem x:Name="UiMnAssignECO" Header="{x:Static p:Resources.AssignECO}" Click="UiAssignEco_Click" />
-                        <Separator />
-                        <MenuItem x:Name="UiMnMainDeleteGames" Header="{x:Static p:Resources.DeleteGames}" Click="UiMnToolsDeleteGames_Click" />
-                        <MenuItem x:Name="UiMnMainDeleteExercises" Header="{x:Static p:Resources.DeleteExercises}" Click="UiMnToolsDeleteExercises_Click"  />
-                        <MenuItem x:Name="UiMnRemoveDuplicates" Header="{x:Static p:Resources.RemoveDuplicates}" Click="UiMnRemoveDuplicates_Click"  />
                     </MenuItem>
                     <MenuItem Header="{x:Static p:Resources.Help}" Margin="0,0,0,0">
                         <MenuItem Header="{x:Static p:Resources.Wiki}" Click="UiMnHelpWiki_Click" />
@@ -635,7 +636,7 @@
                                     <MenuItem x:Name="UiMnGameCutMoves" Header="{x:Static p:Resources.CutMoves}"  InputGestureText="Ctrl+X" Click="UiMnCutMoves_Click" />
                                     <MenuItem x:Name="UiMnGamePasteMoves" Header="{x:Static p:Resources.PasteMoves}"  InputGestureText="Ctrl+V" Click="UiMnPasteMoves_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="UiMnGameSelectHighlighted" Header="{x:Static p:Resources.CopyHighlightedLine}"  InputGestureText="Ctrl+A" Click="UiMnSelectHighlighted_Click" />
+                                    <MenuItem x:Name="UiMnGameSelectHighlighted" Header="{x:Static p:Resources.CopyHighlightedLine}"  InputGestureText="Ctrl+L" Click="UiMnSelectHighlighted_Click" />
                                     <MenuItem x:Name="UiMnGameSelectSubtree" Header="{x:Static p:Resources.CopySubtree}" InputGestureText="Ctrl+A" Click="UiMnSelectSubtree_Click" />
                                     <Separator />
                                     <MenuItem x:Name="_mnGame_PromoteLine" Header="{x:Static p:Resources.PromoteLine}" Click="UiMnGame_PromoteLine_Click" />
@@ -738,7 +739,7 @@
                                     <MenuItem x:Name="UiMnExercCutMoves" Header="{x:Static p:Resources.CutMoves}"  InputGestureText="Ctrl+X" Click="UiMnCutMoves_Click" />
                                     <MenuItem x:Name="UiMnExercPasteMoves" Header="{x:Static p:Resources.PasteMoves}"  InputGestureText="Ctrl+V" Click="UiMnPasteMoves_Click" />
                                     <Separator x:Name="UiMnExerc_Separator_3"/>
-                                    <MenuItem x:Name="UiMnExercSelectHighlighted" Header="{x:Static p:Resources.CopyHighlightedLine}"  InputGestureText="Ctrl+A" Click="UiMnSelectHighlighted_Click" />
+                                    <MenuItem x:Name="UiMnExercSelectHighlighted" Header="{x:Static p:Resources.CopyHighlightedLine}"  InputGestureText="Ctrl+L" Click="UiMnSelectHighlighted_Click" />
                                     <MenuItem x:Name="UiMnExercSelectSubtree" Header="{x:Static p:Resources.CopySubtree}" InputGestureText="Ctrl+A" Click="UiMnSelectSubtree_Click" />
                                     <Separator x:Name="UiMnExerc_Separator_4"/>
                                     <MenuItem x:Name="_mnExerc_PromoteLine" Header="{x:Static p:Resources.PromoteLine}" Click="UiMnExerc_PromoteLine_Click" />
