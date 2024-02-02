@@ -750,6 +750,27 @@
   <data name="EgCentipawnAccuracy" xml:space="preserve">
     <value>max allowed centipawn deviation from the best move is</value>
   </data>
+  <data name="TargetChapter" xml:space="preserve">
+    <value>Target Chapter</value>
+  </data>
+  <data name="LblGoToChaptersView" xml:space="preserve">
+    <value>Go To Chapters List</value>
+  </data>
+  <data name="LblStayHere" xml:space="preserve">
+    <value>Stay Here</value>
+  </data>
+  <data name="LblNumberOfItemsCopied" xml:space="preserve">
+    <value>Number of Items Copied</value>
+  </data>
+  <data name="LblNumberOfItemsMoved" xml:space="preserve">
+    <value>Number of Items Moved</value>
+  </data>
+  <data name="LblNumberOfItemsDeleted" xml:space="preserve">
+    <value>Number of Items Deleted</value>
+  </data>
+  <data name="LblNumberOfItemsActedOn" xml:space="preserve">
+    <value>Number of Items Acted On</value>
+  </data>
   <data name="SetupPositionToSearch" xml:space="preserve">
     <value>Set up position to search for</value>
   </data>

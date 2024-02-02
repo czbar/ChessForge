@@ -750,6 +750,27 @@
   <data name="EgCentipawnAccuracy" xml:space="preserve">
     <value>maksymalne odchylenie od najlepszego ruchu wynosi</value>
   </data>
+  <data name="TargetChapter" xml:space="preserve">
+    <value>Docelowy Rozdział</value>
+  </data>
+  <data name="LblGoToChaptersView" xml:space="preserve">
+    <value>Idź do Listy Rozdziałów</value>
+  </data>
+  <data name="LblStayHere" xml:space="preserve">
+    <value>Zostań Tutaj</value>
+  </data>
+  <data name="LblNumberOfItemsCopied" xml:space="preserve">
+    <value>Liczba skopiowanych elementów</value>
+  </data>
+  <data name="LblNumberOfItemsMoved" xml:space="preserve">
+    <value>Liczba przesuniętych elementów</value>
+  </data>
+  <data name="LblNumberOfItemsDeleted" xml:space="preserve">
+    <value>Liczba usuniętych elementów</value>
+  </data>
+  <data name="LblNumberOfItemsActedOn" xml:space="preserve">
+    <value>Liczba elementów</value>
+  </data>
   <data name="SetupPositionToSearch" xml:space="preserve">
     <value>Ustaw szukaną pozycję</value>
   </data>

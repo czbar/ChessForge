@@ -941,6 +941,42 @@ EgCentipawnAccuracy=
 
 
 
+#######################################
+#
+# Header: DIALOG PostCopyMoveDialog
+#
+
+#description: Target Chapter
+#english: TargetChapter=Target Chapter
+TargetChapter=
+
+#description: Label: go to chapters 
+#english: LblGoToChaptersView=Go To Chapters List
+LblGoToChaptersView=
+
+#description: Label: stay here 
+#english: LblStayHere=Stay Here
+LblStayHere=
+
+#description: Label: number of items copied
+#english: LblNumberOfItemsCopied=Number of Items Copied
+LblNumberOfItemsCopied=
+
+#description: Label: number of items moved
+#english: LblNumberOfItemsMoved=Number of Items Moved
+LblNumberOfItemsMoved=
+
+
+#description: Label: number of items deleted
+#english: LblNumberOfItemsDeleted=Number of Items Deleted
+LblNumberOfItemsDeleted=
+
+
+#description: Label: number of items acted upon
+#english: LblNumberOfItemsActedOn=Number of Items Acted On
+LblNumberOfItemsActedOn=
+
+
 
 #######################################
 #

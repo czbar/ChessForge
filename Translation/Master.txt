@@ -730,6 +730,35 @@ EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
 
 
 
+#######################################
+#
+# Header: DIALOG PostCopyMoveDialog
+#
+
+#Target Chapter
+TargetChapter=Target Chapter
+
+#Label: go to chapters 
+LblGoToChaptersView=Go To Chapters List
+
+#Label: stay here 
+LblStayHere=Stay Here
+
+#Label: number of items copied
+LblNumberOfItemsCopied=Number of Items Copied
+
+#Label: number of items moved
+LblNumberOfItemsMoved=Number of Items Moved
+
+
+#Label: number of items deleted
+LblNumberOfItemsDeleted=Number of Items Deleted
+
+
+#Label: number of items acted upon
+LblNumberOfItemsActedOn=Number of Items Acted On
+
+
 
 #######################################
 #
