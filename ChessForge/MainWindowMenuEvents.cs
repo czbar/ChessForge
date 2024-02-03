@@ -821,7 +821,9 @@ namespace ChessForge
                 GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
                 if (dlg.ShowDialog() == true)
                 {
-                    FindIdenticalPositions.Search(dlg.SearchNode, FindIdenticalPositions.Mode.FIND_AND_REPORT, true);
+                    TreeNode searchNode = new TreeNode(null, "", 1);
+                    searchNode.Position = new BoardPosition(dlg.PositionSetup);
+                    FindIdenticalPositions.Search(searchNode, FindIdenticalPositions.Mode.FIND_AND_REPORT, true);
                 }
             }
             catch (Exception ex)
