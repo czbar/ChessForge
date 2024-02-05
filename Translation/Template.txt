@@ -486,6 +486,10 @@ ErrNoGamesDownloaded=
 #english: ErrNoGamesSelected=No games have been selected
 ErrNoGamesSelected=
 
+#description: No games selected
+#english: ErrNoItemsSelected=No items have been selected
+ErrNoItemsSelected=
+
 #description: No games were copied
 #english: ErrNoGamesCopied=No games have been copied
 ErrNoGamesCopied=

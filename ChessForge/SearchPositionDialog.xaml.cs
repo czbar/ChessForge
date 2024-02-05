@@ -13,11 +13,6 @@ namespace ChessForge
     /// </summary>
     public partial class SearchPositionDialog : Window
     {
-        /// <summary>
-        /// A node built from the position setup in this dialog.
-        /// </summary>
-        public TreeNode SearchNode;
-
         // square side's size
         private int _squareSize = 30;
 
@@ -621,8 +616,6 @@ namespace ChessForge
         {
             if (GuiUtilities.ValidatePosition(ref PositionSetup, out string errorText))
             {
-                SearchNode = new TreeNode(null, "", 1);
-                SearchNode.Position = new BoardPosition(_position);
                 DialogResult = true;
             }
             else
