@@ -1487,7 +1487,7 @@ CreateNewExercise=Utwórz Nowe Ćwiczenie
 
 #description: Import Exercise
 #english: ImportExercises=Import Exercises
-ImportExercises=Importuj Ćwiczenie
+ImportExercises=Importuj Ćwiczenia z Pliku PGN
 
 #description: Open the selected chapter
 #english: OpenSelectedChapter=Open Selected Chapter

@@ -1081,7 +1081,7 @@
     <value>Create New Exercise</value>
   </data>
   <data name="ImportExercises" xml:space="preserve">
-    <value>Import Exercises</value>
+    <value>Import Exercises from PGN</value>
   </data>
   <data name="OpenSelectedChapter" xml:space="preserve">
     <value>Open Selected Chapter</value>
