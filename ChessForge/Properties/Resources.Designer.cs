@@ -3185,7 +3185,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Import Exercises.
+        ///   Looks up a localized string similar to Import Exercises from PGN.
         /// </summary>
         public static string ImportExercises {
             get {

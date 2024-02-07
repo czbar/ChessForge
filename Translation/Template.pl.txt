@@ -1486,8 +1486,8 @@ ImportGames=Importuj Partie z Pliku PGN
 CreateNewExercise=Utwórz Nowe Ćwiczenie
 
 #description: Import Exercise
-#english: ImportExercises=Import Exercises
-ImportExercises=Importuj Ćwiczenie
+#english: ImportExercises=Import Exercises from PGN
+ImportExercises=Importuj Ćwiczenia z Pliku PGN
 
 #description: Open the selected chapter
 #english: OpenSelectedChapter=Open Selected Chapter

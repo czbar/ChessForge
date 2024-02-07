@@ -1165,7 +1165,7 @@ ImportGames=Import Games from PGN
 CreateNewExercise=Create New Exercise
 
 #Import Exercise
-ImportExercises=Import Exercises
+ImportExercises=Import Exercises from PGN
 
 #Open the selected chapter
 OpenSelectedChapter=Open Selected Chapter

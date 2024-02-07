@@ -1081,7 +1081,7 @@
     <value>Utwórz Nowe Ćwiczenie</value>
   </data>
   <data name="ImportExercises" xml:space="preserve">
-    <value>Importuj Ćwiczenie</value>
+    <value>Importuj Ćwiczenia z Pliku PGN</value>
   </data>
   <data name="OpenSelectedChapter" xml:space="preserve">
     <value>Otwórz Wybrany Rozdział</value>

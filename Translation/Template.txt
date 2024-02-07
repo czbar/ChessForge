@@ -1486,7 +1486,7 @@ ImportGames=
 CreateNewExercise=
 
 #description: Import Exercise
-#english: ImportExercises=Import Exercises
+#english: ImportExercises=Import Exercises from PGN
 ImportExercises=
 
 #description: Open the selected chapter
