@@ -173,7 +173,7 @@ namespace ChessForge
                 _angle = CalculateAngle(_startPoint, _endPoint);
                 _distance = GuiUtilities.CalculateDistance(_startPoint, _endPoint);
 
-                _scaleFactor = (_distance + 1 - _triangle.Source.Height) / _stem.Source.Height;
+                _scaleFactor = (_distance + 1 - (_triangle.Source.Height - 11)) / _stem.Source.Height;
 
                 CreateTransforms();
 
