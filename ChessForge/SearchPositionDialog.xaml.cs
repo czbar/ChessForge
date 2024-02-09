@@ -74,6 +74,8 @@ namespace ChessForge
 
             PositionSetup.HalfMove50Clock = 1;
             SetFen();
+            UiTbFen.Focus();
+            UiTbFen.SelectAll();
         }
 
         /// <summary>
