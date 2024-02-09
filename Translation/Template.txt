@@ -1979,6 +1979,10 @@ FlMsgGameImportSuccess=
 #english: FlMsgGamesThumbnailsSet=Games thumbnails have been set.
 FlMsgGamesThumbnailsSet=
 
+#description: Flash message: FEN copied.
+#english: FlMsgCopiedFEN=FEN Copied to Clipboard
+FlMsgCopiedFEN=
+
 
 
 ##################################

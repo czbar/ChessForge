@@ -1398,6 +1398,9 @@
   <data name="FlMsgGamesThumbnailsSet" xml:space="preserve">
     <value>Games thumbnails have been set.</value>
   </data>
+  <data name="FlMsgCopiedFEN" xml:space="preserve">
+    <value>FEN Copied to Clipboard</value>
+  </data>
   <data name="MsgNoDuplicatesFound" xml:space="preserve">
     <value>No duplicates found.</value>
   </data>

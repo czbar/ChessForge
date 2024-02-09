@@ -224,7 +224,7 @@
                                 <MenuItem x:Name="UiMnciExitTraining" Header="{x:Static p:Resources.ExitTraining}" Click="UiMnStopTraining_Click"/>
                                 <Separator x:Name="UiMncMainBoardSepar_1" />
                                 <MenuItem x:Name="UiMnMain_CreateExercise" Header="{x:Static p:Resources.CreateExerciseFromHere}" Click="UiMn_CreateExercise_Click"  />
-                                <MenuItem x:Name="UiMnciCopyFen" Header="{x:Static p:Resources.CopyFENtoClipboard}" Click="UiMnciCopyFen_Click" />
+                                <MenuItem x:Name="UiMnciCopyFen" Header="{x:Static p:Resources.CopyFENtoClipboard}" Click="UiMnciCopyFen_Click" InputGestureText="Ctrl+E" />
                                 <Separator x:Name="UiMncMainBoardSepar_1a" />
                                 <MenuItem x:Name="UiMnciEvalPos" Header="{x:Static p:Resources.EvaluatePosition}" Click="UiMnEvaluatePosition_Click" />
                                 <MenuItem x:Name="UiMnciEvalLine" Header="{x:Static p:Resources.EvaluateLine}" Click="UiMnEvaluateLine_Click" />
@@ -547,7 +547,7 @@
                                     <Separator />
                                     <MenuItem x:Name="UiMnStSelectHighlighted" Header="{x:Static p:Resources.CopyHighlightedLine}"  InputGestureText="Ctrl+L" Click="UiMnSelectHighlighted_Click" />
                                     <MenuItem x:Name="UiMnStSelectSubtree" Header="{x:Static p:Resources.CopySubtree}" InputGestureText="Ctrl+A" Click="UiMnSelectSubtree_Click" />
-                                    <MenuItem x:Name="UiMnCopyFen" Header="{x:Static p:Resources.CopyFENtoClipboard}" Click="UiMnCopyFen_Click" />
+                                    <MenuItem x:Name="UiMnCopyFen" Header="{x:Static p:Resources.CopyFENtoClipboard}" Click="UiMnCopyFen_Click" InputGestureText="Ctrl+E" />
                                     <Separator />
                                     <MenuItem x:Name="_mnWorkbookEvalMove" Header="{x:Static p:Resources.EvaluatePosition}"  Click="UiMnEvaluatePosition_Click" />
                                     <MenuItem x:Name="_mnWorkbookEvalLine" Header="{x:Static p:Resources.EvaluateLine}"  Click="UiMnEvaluateLine_Click" />
@@ -638,7 +638,7 @@
                                     <Separator />
                                     <MenuItem x:Name="UiMnGameSelectHighlighted" Header="{x:Static p:Resources.CopyHighlightedLine}"  InputGestureText="Ctrl+L" Click="UiMnSelectHighlighted_Click" />
                                     <MenuItem x:Name="UiMnGameSelectSubtree" Header="{x:Static p:Resources.CopySubtree}" InputGestureText="Ctrl+A" Click="UiMnSelectSubtree_Click" />
-                                    <MenuItem x:Name="_mnGame_CopyFen" Header="{x:Static p:Resources.CopyFENtoClipboard}" Click="UiMnGame_CopyFen_Click" />
+                                    <MenuItem x:Name="_mnGame_CopyFen" Header="{x:Static p:Resources.CopyFENtoClipboard}" Click="UiMnGame_CopyFen_Click" InputGestureText="Ctrl+E" />
                                     <Separator />
                                     <MenuItem x:Name="_mnGame_EvalMove" Header="{x:Static p:Resources.EvaluatePosition}"  Click="UiMnEvaluatePosition_Click" />
                                     <MenuItem x:Name="_mnGame_EvalLine" Header="{x:Static p:Resources.EvaluateLine}"  Click="UiMnEvaluateLine_Click" />
@@ -741,7 +741,7 @@
                                     <Separator x:Name="UiMnExerc_Separator_3"/>
                                     <MenuItem x:Name="UiMnExercSelectHighlighted" Header="{x:Static p:Resources.CopyHighlightedLine}"  InputGestureText="Ctrl+L" Click="UiMnSelectHighlighted_Click" />
                                     <MenuItem x:Name="UiMnExercSelectSubtree" Header="{x:Static p:Resources.CopySubtree}" InputGestureText="Ctrl+A" Click="UiMnSelectSubtree_Click" />
-                                    <MenuItem x:Name="_mnExerc_CopyFen" Header="{x:Static p:Resources.CopyFENtoClipboard}" Click="UiMnExerc_CopyFen_Click" />
+                                    <MenuItem x:Name="_mnExerc_CopyFen" Header="{x:Static p:Resources.CopyFENtoClipboard}" Click="UiMnExerc_CopyFen_Click" InputGestureText="Ctrl+E" />
                                     <Separator x:Name="UiMnExerc_Separator_5"/>
                                     <MenuItem x:Name="UiMnExerc_EvalMove" Header="{x:Static p:Resources.EvaluatePosition}"  Click="UiMnEvaluatePosition_Click" />
                                     <MenuItem x:Name="_mnExerc_EvalLine" Header="{x:Static p:Resources.EvaluateLine}"  Click="UiMnEvaluateLine_Click" />

@@ -2798,6 +2798,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to FEN Copied to Clipboard.
+        /// </summary>
+        public static string FlMsgCopiedFEN {
+            get {
+                return ResourceManager.GetString("FlMsgCopiedFEN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Game Imported Successfully..
         /// </summary>
         public static string FlMsgGameImportSuccess {

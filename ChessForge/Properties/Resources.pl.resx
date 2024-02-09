@@ -1398,6 +1398,9 @@
   <data name="FlMsgGamesThumbnailsSet" xml:space="preserve">
     <value>Wizytówki partii zostały dodane.</value>
   </data>
+  <data name="FlMsgCopiedFEN" xml:space="preserve">
+    <value>FEN wpisany do schowka.</value>
+  </data>
   <data name="MsgNoDuplicatesFound" xml:space="preserve">
     <value>Nie znaleziono duplikatów.</value>
   </data>

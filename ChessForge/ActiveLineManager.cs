@@ -633,6 +633,10 @@ namespace ChessForge
                                 _mainWin.UiMnSelectSubtree_Click(null, null);
                                 e.Handled = true;
                                 break;
+                            case Key.E:
+                                _mainWin.UiMnciCopyFen_Click(null, null);
+                                e.Handled = true;
+                                break;
                             case Key.L:
                                 _mainWin.UiMnSelectHighlighted_Click(null, null);
                                 e.Handled = true;

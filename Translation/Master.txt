@@ -1552,6 +1552,9 @@ FlMsgGameImportSuccess=Game Imported Successfully.
 #Flash message: Game thumbnails set.
 FlMsgGamesThumbnailsSet=Games thumbnails have been set.
 
+#Flash message: FEN copied.
+FlMsgCopiedFEN=FEN Copied to Clipboard
+
 
 
 ##################################

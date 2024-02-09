@@ -1979,6 +1979,10 @@ FlMsgGameImportSuccess=Partia Została Zaimportowana.
 #english: FlMsgGamesThumbnailsSet=Games thumbnails have been set.
 FlMsgGamesThumbnailsSet=Wizytówki partii zostały dodane.
 
+#description: Flash message: FEN copied.
+#english: FlMsgCopiedFEN=FEN Copied to Clipboard
+FlMsgCopiedFEN=FEN wpisany do schowka.
+
 
 
 ##################################
