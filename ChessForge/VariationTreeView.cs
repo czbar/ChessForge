@@ -826,9 +826,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Selects a line for the next/prev sibling from the last fork, if found.
-        /// Then select the node with the same number/color as the same one
-        /// or, if not available, the last node on that line.
+        /// Selects a line for the next/prev sibling if we are at fork.
         /// </summary>
         /// <param name="prevNext"></param>
         /// <returns></returns>
@@ -838,13 +836,15 @@ namespace ChessForge
 
             try
             {
-                node = ActiveLineUtilities.GetNextLineNode(GetSelectedNode(), prevNext);
-                if (node != null)
-                {
-                    SelectNode(node);
-                }
+                TreeNode currNode = GetSelectedNode();
+                node = TreeUtils.GetNextSibling(currNode, prevNext, true);
             }
             catch { }
+
+            if (node != null)
+            {
+                SelectNode(node);
+            }
 
             return node;
         }
