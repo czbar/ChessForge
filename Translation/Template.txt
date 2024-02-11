@@ -1983,6 +1983,17 @@ FlMsgGamesThumbnailsSet=
 #english: FlMsgCopiedFEN=FEN Copied to Clipboard
 FlMsgCopiedFEN=
 
+#description: Flash message: Line copied.
+#english: FlMsgCopiedLine=Line Copied to Clipboard
+FlMsgCopiedLine=
+
+#description: Flash message: Tree copied.
+#english: FlMsgCopiedTree=Tree Copied to Clipboard
+FlMsgCopiedTree=
+
+#description: Flash message: Moves copied.
+#english: FlMsgCopiedMoves=Moves Copied to Clipboard
+FlMsgCopiedMoves=
 
 
 ##################################

@@ -1983,6 +1983,17 @@ FlMsgGamesThumbnailsSet=Wizytówki partii zostały dodane.
 #english: FlMsgCopiedFEN=FEN Copied to Clipboard
 FlMsgCopiedFEN=FEN wpisany do schowka.
 
+#description: Flash message: Line copied.
+#english: FlMsgCopiedLine=Line Copied to Clipboard
+FlMsgCopiedLine=Wariant skopiowany do schowka
+
+#description: Flash message: Tree copied.
+#english: FlMsgCopiedTree=Tree Copied to Clipboard
+FlMsgCopiedTree=Drzewo skopiowane do schowka
+
+#description: Flash message: Moves copied.
+#english: FlMsgCopiedMoves=Moves Copied to Clipboard
+FlMsgCopiedMoves=Posunięcia skopiowane do schowka
 
 
 ##################################

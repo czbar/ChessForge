@@ -2988,6 +2988,7 @@ namespace ChessForge
             {
                 ActiveTreeView.PlaceSelectedForCopyInClipboard();
                 ActiveTreeView.DeleteRemainingMoves();
+                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgCopiedMoves, System.Windows.Media.Brushes.Green);
             }
         }
 
@@ -3012,6 +3013,7 @@ namespace ChessForge
             {
                 ActiveTreeView.SelectActiveLineForCopy();
                 ActiveTreeView.PlaceSelectedForCopyInClipboard();
+                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgCopiedLine, System.Windows.Media.Brushes.Green);
             }
         }
 
@@ -3026,6 +3028,7 @@ namespace ChessForge
             {
                 ActiveTreeView.SelectSubtreeForCopy();
                 ActiveTreeView.PlaceSelectedForCopyInClipboard();
+                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgCopiedTree, System.Windows.Media.Brushes.Green);
             }
         }
 
