@@ -5,7 +5,7 @@ using System.Text;
 namespace GameTree
 {
     /// <summary>
-    /// Holds a tree structure with LineSectorNodes as nodes.
+    /// Holds a tree structure with LineSectors as nodes.
     /// </summary>
     public class LineSectorsTree
     {
