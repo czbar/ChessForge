@@ -22,7 +22,7 @@ namespace GameTree
     /// A list of nodes forming a single path from one node to another
     /// without any branches included.
     /// All LineSectors begin at a child of the root node (LineSectorId = 0) or at a child of a fork.
-    /// They end at a leaf node (a node with no children) or at a fork.
+    /// They end at a leaf node (a node with no children) or at a fork (which is included).
     /// </summary>
     public class LineSector
     {
