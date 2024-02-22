@@ -169,6 +169,17 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Return the margin (Thickness) for the passed style.
+        /// </summary>
+        /// <param name="style"></param>
+        /// <returns></returns>
+        public Thickness GetParagraphMargin(string style)
+        {
+            RichTextPara attrs = GetParaAttrs(style, true);
+            return new Thickness(attrs.LeftIndent, 0, 0, attrs.BottomMargin);
+        }
+
+        /// <summary>
         /// Create a table for the specified style.
         /// Sets the right margin same as the left one.
         /// Sets Foreground color to Black
