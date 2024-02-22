@@ -389,6 +389,25 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Returns the branch level represented by the passed string.
+        /// "1" will return level 1,
+        /// "1.1" will return level 2 and so on.
+        /// Null/empty string will return -1.
+        /// </summary>
+        /// <param name="lineId"></param>
+        /// <returns></returns>
+        public static int GetBranchLevel(string lineId)
+        {
+            int level = -1;
+            if (!string.IsNullOrEmpty(lineId))
+            {
+                level = lineId.Split('.').Length - 1;
+            }
+
+            return level;
+        }
+
+        /// <summary>
         /// Returns the number of nodes with some kind of comment 
         /// entered for them.
         /// </summary>
