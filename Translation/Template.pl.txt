@@ -109,6 +109,10 @@ Study=Teoria
 #english: Studies=Studies
 Studies=Teoria
 
+#description: Variation Index
+#english: VariationIndex=Variation Index
+VariationIndex=Wykaz Wariantów
+
 #description: Game
 #english: Game=Game
 Game=Partia

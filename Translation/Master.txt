@@ -86,6 +86,9 @@ Study=Study
 #Study Trees plural
 Studies=Studies
 
+#Variation Index
+VariationIndex=Variation Index
+
 #Game
 Game=Game
 

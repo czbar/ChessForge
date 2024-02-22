@@ -6516,6 +6516,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Variation Index.
+        /// </summary>
+        public static string VariationIndex {
+            get {
+                return ResourceManager.GetString("VariationIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Version.
         /// </summary>
         public static string Version {

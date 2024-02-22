@@ -186,6 +186,9 @@
   <data name="Studies" xml:space="preserve">
     <value>Studies</value>
   </data>
+  <data name="VariationIndex" xml:space="preserve">
+    <value>Variation Index</value>
+  </data>
   <data name="Game" xml:space="preserve">
     <value>Game</value>
   </data>

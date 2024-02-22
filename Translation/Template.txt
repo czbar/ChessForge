@@ -109,6 +109,10 @@ Study=
 #english: Studies=Studies
 Studies=
 
+#description: Variation Index
+#english: VariationIndex=Variation Index
+VariationIndex=
+
 #description: Game
 #english: Game=Game
 Game=
