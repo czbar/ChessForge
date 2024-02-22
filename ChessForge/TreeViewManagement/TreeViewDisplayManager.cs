@@ -1,9 +1,7 @@
 ﻿using GameTree;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ChessForge
 {
@@ -12,25 +10,21 @@ namespace ChessForge
     /// </summary>
     public class TreeViewDisplayManager
     {
-        // managed tree 
-        private VariationTree _tree;
-
-        // the tree holding all LineSectors.
+        /// <summary>
+        /// The tree holding all LineSectors.
+        /// </summary>
         public LineSectorsTree SectorsTree;
 
-        public List<DisplaySector> DisplaySectors;
-
         /// <summary>
-        /// The VariationTree whose lines are managed by this objects
+        /// The list of DisplaySectors
         /// </summary>
-        public VariationTree Tree
-        {
-            get => _tree;
-            set => _tree = value;
-        }
+        public List<DisplaySector> DisplaySectors;
 
         // sector id to assign
         private int _runningSectorId = 0;
+
+        // Variation Index depth
+        public static int SECTION_TITLE_LEVELS = 5;
 
         /// <summary>
         /// Constructs the object.
@@ -43,13 +37,11 @@ namespace ChessForge
         /// Separates lines out of the tree, sets line Ids on the nodes
         /// and places the lines in the list.
         /// </summary>
-        public void BuildLineSectors(VariationTree tree)
+        public void BuildLineSectors(TreeNode root)
         {
-            _tree = tree;
-            TreeNode root = _tree.RootNode;
             root.LineId = "1";
 
-            // create a SectorsTrre and add the root TreeNode to its root LineSector
+            // create a SectorsTree and add the root TreeNode to its root LineSector
             SectorsTree = new LineSectorsTree();
             SectorsTree.Root.Nodes.Add(root);
 
@@ -125,9 +117,22 @@ namespace ChessForge
         {
             LineSector lastProcessedSector = lineSector;
 
-            DisplaySector displaySector = new DisplaySector();
+            if (lineSector.BranchLevel < SECTION_TITLE_LEVELS)
+            {
+                isSectionTitle = true;
+            }
+            else
+            {
+                isSectionTitle = false;
+            }
+
+            DisplaySector displaySector = new DisplaySector(lineSector);
             displaySector.DisplayLevel = displayLevel;
-            DisplaySectors.Add(displaySector);
+
+            if (lineSector.LineSectorId != 0)
+            {
+                DisplaySectors.Add(displaySector);
+            }
 
             // copy TreeNodes from the lineSector
             foreach (TreeNode node in lineSector.Nodes)
@@ -137,10 +142,11 @@ namespace ChessForge
 
             if (isSectionTitle)
             {
+                displayLevel = 0;
                 // finish here and self-invoke to continue down the tree
                 foreach (LineSector sector in lineSector.Children)
                 {
-                    BuildDisplaySector(sector, displayLevel++, isSectionTitle);
+                    BuildDisplaySector(sector, displayLevel + 1, isSectionTitle);
                 }
             }
             else
@@ -149,13 +155,20 @@ namespace ChessForge
                 {
                     // all done so just return
                 }
-                else if (lineSector.SectorType == LineSectorType.FORKING)
+                else if (lineSector.SectorType == LineSectorType.FORKING || lineSector.SectorType == LineSectorType.UNKNOWN)
                 {
                     // not a section title line so the main line takes the first move of the first child
                     displaySector.Nodes.Add(lineSector.Children[0].Nodes[0]);
                     // if we have just 2 children and the second is of type LEAF, add it as a sub-sector
                     // and keep going with the first child as if it was the same sector
-                    lastProcessedSector = HandleSubSectors(displaySector, lineSector);
+                    
+                    //TODO: temporarily commented out
+                    //lastProcessedSector = HandleSubSectors(displaySector, lineSector);
+
+                    if (lastProcessedSector == null)
+                    {
+                        lastProcessedSector = lineSector;
+                    }
 
                     foreach (LineSector sector in lastProcessedSector.Children)
                     {
@@ -167,6 +180,12 @@ namespace ChessForge
             return lastProcessedSector;
         }
 
+        /// <summary>
+        /// Processes the sub-sectors (inline variations)
+        /// </summary>
+        /// <param name="displaySector"></param>
+        /// <param name="lineSector"></param>
+        /// <returns></returns>
         private LineSector HandleSubSectors(DisplaySector displaySector, LineSector lineSector)
         {
             LineSector subSector = GetSubSector(lineSector);
