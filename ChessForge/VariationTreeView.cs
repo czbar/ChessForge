@@ -232,7 +232,7 @@ namespace ChessForge
         /// <summary>
         /// Maps Node Ids to Runs for quick access.
         /// </summary>
-        private Dictionary<int, Run> _dictNodeToRun = new Dictionary<int, Run>();
+        protected Dictionary<int, Run> _dictNodeToRun = new Dictionary<int, Run>();
 
         /// <summary>
         /// Maps Node Ids to Comment Runs for quick access.
@@ -1563,7 +1563,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd"></param>
         /// <param name="includeNumber"></param>
-        private void BuildTreeLineText(TreeNode nd, Paragraph para, bool includeNumber)
+        virtual protected void BuildTreeLineText(TreeNode nd, Paragraph para, bool includeNumber)
         {
             while (true)
             {
@@ -1688,7 +1688,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd"></param>
         /// <param name="includeNumber"></param>
-        private void BuildNodeTextAndAddToPara(TreeNode nd, bool includeNumber, Paragraph para)
+        protected Run BuildNodeTextAndAddToPara(TreeNode nd, bool includeNumber, Paragraph para)
         {
             string nodeText = BuildNodeText(nd, includeNumber);
 
@@ -1710,6 +1710,8 @@ namespace ChessForge
             {
                 TextUtils.RemoveBlunderNagFromText(rMove);
             }
+
+            return rMove;
         }
 
         /// <summary>
@@ -1718,7 +1720,7 @@ namespace ChessForge
         /// <param name="nd"></param>
         /// <param name="includeNumber"></param>
         /// <returns></returns>
-        private string BuildNodeText(TreeNode nd, bool includeNumber)
+        protected string BuildNodeText(TreeNode nd, bool includeNumber)
         {
             if (nd.NodeId == 0)
             {
@@ -2204,7 +2206,7 @@ namespace ChessForge
         /// <summary>
         /// Clears the "for Copy" selection.
         /// </summary>
-        private void ClearCopySelect()
+        protected void ClearCopySelect()
         {
             try
             {
@@ -2238,7 +2240,7 @@ namespace ChessForge
         /// <param name="r"></param>
         /// <param name="clickCount"></param>
         /// <param name="changedButton"></param>
-        private void SelectRun(Run r, int clickCount, MouseButton changedButton)
+        protected void SelectRun(Run r, int clickCount, MouseButton changedButton)
         {
             if (!IsSelectionEnabled() || r == null)
             {
