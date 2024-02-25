@@ -401,7 +401,7 @@ namespace ChessPosition
             int level = -1;
             if (!string.IsNullOrEmpty(lineId))
             {
-                level = lineId.Split('.').Length - 1;
+                level = lineId.Split('.').Length;
             }
 
             return level;
