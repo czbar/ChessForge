@@ -29,8 +29,11 @@ namespace GameTree
         // the list of nodes forming a single linear path.
         private List<TreeNode> _nodes = new List<TreeNode>();
 
-        // level at which to display the sector
+        // branch depth at which the sector is placed
         private int _branchLevel = 0;
+
+        // display level at whihc to show the sector
+        private int _displayLevel = 0;
 
         /// <summary>
         /// Id of this LineSector.
@@ -72,12 +75,58 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Level at which to display the sector
+        /// Branch depth level at which the sector belongs.
         /// </summary>
         public int BranchLevel
         {
             get => _branchLevel;
             set => _branchLevel = value;
         }
+
+        /// <summary>
+        /// Level at which to display the sector
+        /// </summary>
+        public int DisplayLevel;
+        {
+            get => _displayLevel;
+            set => _displayLevel = value;
+        }
+
+        /// <summary>
+        /// NodeId code for open parenthesis
+        /// </summary>
+        public readonly int OPEN_BRACKET = -100;
+
+        /// <summary>
+        /// NodeId code for close parenthesis
+        /// </summary>
+        public readonly int CLOSE_BRACKET = -101;
+
+        /// <summary>
+        /// Inserts a Node representing an open parenthesis
+        /// at the specified index in the Nodes list.
+        /// </summary>
+        /// <param name="index"></param>
+        public void InsertOpenBracketNode(int index)
+        {
+            TreeNode node = new TreeNode();
+            node.NodeId = OPEN_BRACKET;
+            node.LastMoveAlgebraicNotation = "(";
+            Nodes.Insert(index, node);
+        }
+
+        /// <summary>
+        /// Inserts a Node representing a close parenthesis
+        /// at the specified index in the Nodes list.
+        /// </summary>
+        /// <param name="index"></param>
+        public void InsertCloseBracketNode(int index)
+        {
+            TreeNode node = new TreeNode();
+            node.NodeId = CLOSE_BRACKET;
+            node.LastMoveAlgebraicNotation = ")";
+            Nodes.Insert(index, node);
+        }
+
     }
 }
