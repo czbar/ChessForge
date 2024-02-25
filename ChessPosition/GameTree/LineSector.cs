@@ -86,7 +86,7 @@ namespace GameTree
         /// <summary>
         /// Level at which to display the sector
         /// </summary>
-        public int DisplayLevel;
+        public int DisplayLevel
         {
             get => _displayLevel;
             set => _displayLevel = value;
