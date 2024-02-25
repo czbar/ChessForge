@@ -82,7 +82,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="branchLevel"></param>
         /// <returns></returns>
-        private bool IsLastIndexLine(int branchLevel)
+        public bool IsLastIndexLine(int branchLevel)
         {
             return branchLevel == SECTION_TITLE_LEVELS;
         }
@@ -257,21 +257,11 @@ namespace ChessForge
             _lineSectorsToDelete.Clear();
             foreach (LineSector lineSector in LineSectors)
             {
-                if (!IsIndexLevel(lineSector.BranchLevel))
+                while (true)
                 {
-                    if (lineSector.Children.Count == 1)
+                    if (!MergeTopLines(lineSector))
                     {
-                        foreach (TreeNode nd in lineSector.Children[0].Nodes)
-                        {
-                            lineSector.Nodes.Add(nd);
-                        }
-                        foreach (LineSector child in lineSector.Children[0].Children)
-                        {
-                            lineSector.Children.Add(child);
-                            child.Parent = lineSector;
-                        }
-                        _lineSectorsToDelete.Add(lineSector.Children[0]);
-                        lineSector.Children.Remove(lineSector.Children[0]);
+                        break;
                     }
                 }
             }
@@ -279,6 +269,39 @@ namespace ChessForge
             {
                 LineSectors.Remove(s);
             }
+        }
+
+        /// <summary>
+        /// Merges 2 top line sectors.
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        private bool MergeTopLines(LineSector target)
+        {
+            bool merged = false;
+
+            if (target.Children.Count == 1)
+            {
+                // do not process sectors already marked for deletion
+                if (_lineSectorsToDelete.Find(x => x == target.Children[0]) == null && _lineSectorsToDelete.Find(x => x == target) == null)
+                {
+                    foreach (TreeNode nd in target.Children[0].Nodes)
+                    {
+                        target.Nodes.Add(nd);
+                    }
+                    foreach (LineSector child in target.Children[0].Children)
+                    {
+                        target.Children.Add(child);
+                        child.Parent = target;
+                    }
+                    _lineSectorsToDelete.Add(target.Children[0]);
+                    target.Children.Remove(target.Children[0]);
+
+                    merged = true;
+                }
+            }
+
+            return merged;
         }
 
         /// <summary>
