@@ -1688,7 +1688,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd"></param>
         /// <param name="includeNumber"></param>
-        protected Run BuildNodeTextAndAddToPara(TreeNode nd, bool includeNumber, Paragraph para)
+        protected Run BuildNodeTextAndAddToPara(TreeNode nd, bool includeNumber, Paragraph para, int displayLevel = -1)
         {
             string nodeText = BuildNodeText(nd, includeNumber);
 
@@ -1697,7 +1697,11 @@ namespace ChessForge
             {
                 if (!nd.IsFirstChild())
                 {
-                    fontColor = GetParaAttrs(_currParagraphLevel.ToString(), true).FirstCharColor;
+                    if (displayLevel < 0)
+                    {
+                        displayLevel = _currParagraphLevel;
+                    }
+                    fontColor = GetParaAttrs(displayLevel.ToString(), true).FirstCharColor;
                 }
             }
 
