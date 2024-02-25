@@ -149,6 +149,13 @@ namespace ChessForge
 
                         para.FontWeight = FontWeights.Bold;
                     }
+                    else
+                    {
+                        if (DisplayManager.IsLastIndexLine(sector.DisplayLevel + 1))
+                        {
+                            para.FontWeight = FontWeights.Bold;
+                        }
+                    }
 
                     bool includeNumber = true;
                     bool parenthesis = false;
@@ -171,7 +178,7 @@ namespace ChessForge
                             {
                                 includeNumber = true;
                             }
-                            BuildNodeTextAndAddToPara(nd, includeNumber, para);
+                            BuildNodeTextAndAddToPara(nd, includeNumber, para, sector.DisplayLevel);
                             parenthesis = false;
                         }
                         includeNumber = false;
