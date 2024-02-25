@@ -2088,7 +2088,7 @@ namespace ChessForge
                 AppLog.DumpVariationTree(DebugUtils.BuildLogFileName(App.AppPath, "wktree", distinct), ActiveVariationTree);
                 if (_studyTreeView != null)
                 {
-                    AppLog.DumpLineSectorTree(DebugUtils.BuildLogFileName(App.AppPath, "lstree", distinct), _studyTreeView.DisplayManager.SectorsTree);
+                    AppLog.DumpLineSectorTree(DebugUtils.BuildLogFileName(App.AppPath, "lstree", distinct), _studyTreeView.DisplayManager.LineSectors);
                 }
                 DebugDumps.DumpStatesAndTimers(DebugUtils.BuildLogFileName(App.AppPath, "timest", distinct));
             }
