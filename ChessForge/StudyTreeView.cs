@@ -26,7 +26,7 @@ namespace ChessForge
         /// <summary>
         /// Object managing the layout for this view
         /// </summary>
-        public TreeViewDisplayManager DisplayManager = new TreeViewDisplayManager();
+        public LineSectorManager DisplayManager = new LineSectorManager();
 
         /// <summary>
         /// Instantiates the view.
@@ -51,7 +51,6 @@ namespace ChessForge
         override protected void BuildTreeLineText(TreeNode root, Paragraph para, bool includeNumber)
         {
             DisplayManager.BuildLineSectors(root);
-            DisplayManager.BuildDisplaySectors();
 
             CreateVariationIndexPara();
             CreateParagraphs(para);
@@ -67,10 +66,10 @@ namespace ChessForge
             para.FontWeight = FontWeights.Normal;
 
             bool first = true;
-            foreach (DisplaySector sector in DisplayManager.DisplaySectors)
+            foreach (LineSector sector in DisplayManager.LineSectors)
             {
-                int level = sector.LineSector.BranchLevel;
-                if (level < TreeViewDisplayManager.SECTION_TITLE_LEVELS)
+                int level = sector.BranchLevel;
+                if (DisplayManager.IsIndexLevel(level))
                 {
                     if (first)
                     {
@@ -116,38 +115,73 @@ namespace ChessForge
         /// <param name="firstPara"></param>
         private void CreateParagraphs(Paragraph firstPara)
         {
-            foreach (DisplaySector sector in DisplayManager.DisplaySectors)
+            foreach (LineSector sector in DisplayManager.LineSectors)
             {
-                Paragraph para;
-                // TODO: redo so that we used the "firstPara" for VariationIndex.
-                if (firstPara != null)
+                if (sector.Nodes.Count == 0 || sector.Nodes.Count == 1 && sector.Nodes[0].NodeId == 0)
                 {
-                    para = firstPara;
-                    firstPara = null;
-                }
-                else
-                {
-                    para = CreateParagraph(sector.DisplayLevel.ToString(), true);
-                    Thickness margin = GetParagraphMargin((sector.LineSector.BranchLevel - 2).ToString());
-                    para.Margin = margin;
+                    continue;
                 }
 
-                if (sector.LineSector.BranchLevel < TreeViewDisplayManager.SECTION_TITLE_LEVELS)
+                try
                 {
-                    Run rIdTitle = BuildSectionIdTitle(sector.Nodes[0].LineId);
-                    para.Inlines.Add(rIdTitle);
+                    Paragraph para;
+                    // TODO: redo so that we used the "firstPara" for VariationIndex.
+                    if (firstPara != null)
+                    {
+                        para = firstPara;
+                        firstPara = null;
+                    }
+                    else
+                    {
+                        if (sector.DisplayLevel < 0)
+                        {
+                            sector.DisplayLevel = 0;
+                        }
+                        para = CreateParagraph(sector.DisplayLevel.ToString(), true);
+                        Thickness margin = GetParagraphMargin((sector.DisplayLevel).ToString());
+                        para.Margin = margin;
+                    }
 
-                    para.FontWeight = FontWeights.Bold;
+                    if (DisplayManager.IsIndexLevel(sector.BranchLevel))
+                    {
+                        Run rIdTitle = BuildSectionIdTitle(sector.Nodes[0].LineId);
+                        para.Inlines.Add(rIdTitle);
+
+                        para.FontWeight = FontWeights.Bold;
+                    }
+
+                    bool includeNumber = true;
+                    bool parenthesis = false;
+
+                    foreach (TreeNode nd in sector.Nodes)
+                    {
+                        if (nd.NodeId == -100)
+                        {
+                            para.Inlines.Add(new Run("("));
+                            parenthesis = true;
+                        }
+                        else if (nd.NodeId == -101)
+                        {
+                            para.Inlines.Add(new Run(") "));
+                            parenthesis = true;
+                        }
+                        else
+                        {
+                            if (parenthesis)
+                            {
+                                includeNumber = true;
+                            }
+                            BuildNodeTextAndAddToPara(nd, includeNumber, para);
+                            parenthesis = false;
+                        }
+                        includeNumber = false;
+                    }
+
+                    Document.Blocks.Add(para);
                 }
-
-                bool includeNumber = true;
-                foreach (TreeNode nd in sector.Nodes)
+                catch (Exception ex)
                 {
-                    BuildNodeTextAndAddToPara(nd, includeNumber, para);
-                    includeNumber = false;
                 }
-
-                Document.Blocks.Add(para);
             }
         }
 
