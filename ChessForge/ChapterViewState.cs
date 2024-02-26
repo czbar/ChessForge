@@ -23,6 +23,8 @@ namespace ChessForge
         private const string ACTIVE_GAME_INDEX = "ActiveGameIndex";
         private const string ACTIVE_EXERCISE_INDEX = "ActiveExerciseIndex";
 
+        private const string VARIATION_INDEX_DEPTH = "VariationIndexDepth";
+
         // Chapter object represented by this object
         private Chapter _chapter;
 
@@ -101,6 +103,15 @@ namespace ChessForge
             set => _activeExerciseIndex = value;
         }
 
+        /// <summary>
+        // Depth of the variation index in the study tree
+        /// </summary>
+        public int? VariationIndexDepth
+        {
+            get => _variationIndexDepth;
+            set => _variationIndexDepth = value;
+        }
+
         // typ eof the selected article
         private WorkbookManager.ItemType _chaptersViewSelectedArticleType;
 
@@ -109,6 +120,9 @@ namespace ChessForge
 
         // index of the active exercise
         private int _activeExerciseIndex = -1;
+
+        // depth of the variation index in the study tree
+        private int? _variationIndexDepth = null;
 
         // index of the selected article 
         private int _chaptersViewSelectedArticleIndex = -1;
@@ -120,6 +134,8 @@ namespace ChessForge
         /// <param name="value"></param>
         public void ProcessConfigLine(string key, string value)
         {
+            int inpVal;
+
             switch (key)
             {
                 case IS_EXPANDED:
@@ -136,6 +152,12 @@ namespace ChessForge
                     break;
                 case ACTIVE_EXERCISE_INDEX:
                     int.TryParse(value, out _activeExerciseIndex);
+                    break;
+                case VARIATION_INDEX_DEPTH:
+                    if (int.TryParse(value, out inpVal))
+                    {
+                        _variationIndexDepth = inpVal;
+                    }
                     break;
                 case CHAPTERS_VIEW_SELECTED_ARTICLE_INDEX:
                     int.TryParse(value, out _chaptersViewSelectedArticleIndex);
@@ -172,6 +194,7 @@ namespace ChessForge
             sb.AppendLine(TextUtils.BuildKeyValueLine(ACTIVE_GAME_INDEX, _chapter.ActiveModelGameIndex));
             sb.AppendLine(TextUtils.BuildKeyValueLine(ACTIVE_EXERCISE_INDEX, _chapter.ActiveExerciseIndex));
 
+            sb.AppendLine(TextUtils.BuildKeyValueLine(VARIATION_INDEX_DEPTH, _chapter.VariationIndexDepth));
 
             if (_isActiveChapter)
             {
