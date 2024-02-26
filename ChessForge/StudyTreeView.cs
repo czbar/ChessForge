@@ -20,13 +20,13 @@ namespace ChessForge
         // prefix for Runs in the index paragraph.
         private readonly string _indexrun_ = "indexrun_";
 
-        // indent between levels in the index paragrpah.
+        // indent between levels in the index paragraph.
         private readonly string _indent = "    ";
 
         /// <summary>
         /// Object managing the layout for this view
         /// </summary>
-        public LineSectorManager DisplayManager = new LineSectorManager();
+        public LineSectorManager DisplayManager;
 
         /// <summary>
         /// Instantiates the view.
@@ -36,6 +36,27 @@ namespace ChessForge
         /// <param name="entityIndex"></param>
         public StudyTreeView(RichTextBox rtb, GameData.ContentType contentType, int entityIndex) : base(rtb, contentType, entityIndex)
         {
+            DisplayManager = new LineSectorManager(this);
+        }
+
+        /// <summary>
+        /// Returns the variation index depth applicable to this Study Tree.
+        /// </summary>
+        /// <returns></returns>
+        public int VariationIndexDepth
+        {
+            get
+            {
+                Chapter chapter = AppState.ActiveChapter;
+                if (chapter == null)
+                {
+                    return Configuration.VariationIndexDepth;
+                }
+                else 
+                {
+                    return chapter.VariationIndexDepth.Value;
+                }
+            }
         }
 
         /// <summary>
@@ -55,58 +76,97 @@ namespace ChessForge
             CreateVariationIndexPara();
             CreateParagraphs(para);
         }
-
         /// <summary>
         /// Creates the Index paragraph.
         /// </summary>
         private void CreateVariationIndexPara()
         {
-            Paragraph para = CreateParagraph("0", true);
-            para.Foreground = Brushes.Blue;
-            para.FontWeight = FontWeights.Normal;
-
-            bool first = true;
-            foreach (LineSector sector in DisplayManager.LineSectors)
+            if (VariationIndexDepth >= 0)
             {
-                int level = sector.BranchLevel;
-                if (DisplayManager.IsIndexLevel(level))
+                Paragraph para = CreateParagraph("0", true);
+                para.Foreground = Brushes.Blue;
+                para.FontWeight = FontWeights.Normal;
+
+                bool first = true;
+                foreach (LineSector sector in DisplayManager.LineSectors)
                 {
-                    if (first)
+                    int level = sector.BranchLevel;
+                    if (DisplayManager.IsIndexLevel(level))
                     {
-                        Run r = new Run(Properties.Resources.VariationIndex + "\n");
-                        para.Inlines.Add(r);
-                        para.FontWeight = FontWeights.Bold;
-                        first = false;
-                    }
-
-                    for (int i = 0; i < level; i++)
-                    {
-                        Run r = new Run(_indent);
-                        para.Inlines.Add(r);
-                    }
-
-                    if (sector.Nodes[0].LineId == "1")
-                    {
-                        foreach (TreeNode nd in sector.Nodes)
+                        if (first)
                         {
-                            Run rMove = BuildIndexNodeAndAddToPara(nd, false, para);
-                            rMove.TextDecorations = TextDecorations.Underline;
-                            rMove.FontWeight = FontWeights.Bold;
+                            Run r = new Run(Properties.Resources.VariationIndex + "  ");
+                            para.Inlines.Add(r);
+                            para.FontWeight = FontWeights.Bold;
+
+                            InsertArrowRuns(para);
+
+                            first = false;
+                        }
+
+                        for (int i = 0; i < level; i++)
+                        {
+                            Run r = new Run(_indent);
+                            para.Inlines.Add(r);
+                        }
+
+                        if (sector.Nodes[0].LineId == "1")
+                        {
+                            bool validMove = false;
+                            foreach (TreeNode nd in sector.Nodes)
+                            {
+                                Run rMove = BuildIndexNodeAndAddToPara(nd, false, para);
+                                rMove.TextDecorations = TextDecorations.Underline;
+                                rMove.FontWeight = FontWeights.Bold;
+                                if (nd.NodeId != 0)
+                                {
+                                    validMove = true;
+                                }
+                            }
+
+                            if (validMove)
+                            {
+                                para.Inlines.Add(new Run("\n"));
+                            }
+                        }
+                        else
+                        {
+                            Run rIdTitle = BuildSectionIdTitle(sector.Nodes[0].LineId);
+                            para.Inlines.Add(rIdTitle);
+                            BuildIndexNodeAndAddToPara(sector.Nodes[0], true, para);
+                            rIdTitle.FontWeight = FontWeights.Bold;
+
+                            para.Inlines.Add(new Run("\n"));
                         }
                     }
-                    else
-                    {
-                        Run rIdTitle = BuildSectionIdTitle(sector.Nodes[0].LineId);
-                        para.Inlines.Add(rIdTitle);
-                        BuildIndexNodeAndAddToPara(sector.Nodes[0], true, para);
-                        rIdTitle.FontWeight = FontWeights.Bold;
-                    }
-
-                    para.Inlines.Add(new Run("\n"));
                 }
+                Document.Blocks.Add(para);
+            }
+        }
+
+        /// <summary>
+        /// Inserts the Runs with arrow for incrementing/decrementing the Variation Index depth.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <param name="downOnly"></param>
+        private void InsertArrowRuns(Paragraph para, bool downOnly = false)
+        {
+            Run rPlus = new Run(Constants.CHAR_DOWN_ARROW.ToString());
+            rPlus.FontWeight = FontWeights.Normal;
+            rPlus.Foreground = Brushes.Black;
+            rPlus.PreviewMouseDown += EventDownArrowClicked;
+            para.Inlines.Add(rPlus);
+
+            if (!downOnly)
+            {
+                Run rMinus = new Run(Constants.CHAR_UP_ARROW.ToString());
+                rMinus.FontWeight = FontWeights.Normal;
+                rMinus.Foreground = Brushes.Black;
+                rMinus.PreviewMouseDown += EventUpArrowClicked;
+                para.Inlines.Add(rMinus);
             }
 
-            Document.Blocks.Add(para);
+            para.Inlines.Add(new Run("\n"));
         }
 
         /// <summary>
@@ -186,7 +246,7 @@ namespace ChessForge
 
                     Document.Blocks.Add(para);
                 }
-                catch (Exception ex)
+                catch
                 {
                 }
             }
@@ -210,6 +270,37 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Adds the single-click behaviour to the base function.
+        /// When the header is clicked while there is no Variation Index,
+        /// it will be created.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        override protected void EventPageHeaderClicked(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                if (e.ClickCount == 1)
+                {
+                    if (VariationIndexDepth == -1)
+                    {
+                        AppState.ActiveChapter?.IncrementVariationIndexDepth();
+                    }
+                    BuildFlowDocumentForVariationTree();
+                    e.Handled = true;
+                }
+                else
+                {
+                    base.EventPageHeaderClicked(sender, e);
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("EventPageHeaderClicked()", ex);
+            }
+        }
+
+        /// <summary>
         /// Handles a mouse click on over a move in the index paragraph.
         /// </summary>
         /// <param name="sender"></param>
@@ -226,6 +317,44 @@ namespace ChessForge
                 SelectRun(target, 1, MouseButton.Middle);
                 BringSelectedRunIntoView();
             }
+        }
+
+        /// <summary>
+        /// The Up Arrow to decrement the depth of the Variation Index was clicked. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventUpArrowClicked(object sender, MouseButtonEventArgs e)
+        {
+            Run r = e.Source as Run;
+            if (r != null)
+            {
+                if (VariationIndexDepth > -1)
+                {
+                    AppState.ActiveChapter?.DecrementVariationIndexDepth();
+                }
+                BuildFlowDocumentForVariationTree();
+            }
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// The Down Arrow to increment the depth of the Variation Index was clicked. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventDownArrowClicked(object sender, MouseButtonEventArgs e)
+        {
+            Run r = e.Source as Run;
+            if (r != null)
+            {
+                if (VariationIndexDepth < Configuration.MAX_INDEX_DEPTH)
+                {
+                    AppState.ActiveChapter?.IncrementVariationIndexDepth();
+                }
+                BuildFlowDocumentForVariationTree();
+            }
+            e.Handled = true;
         }
 
         /// <summary>
