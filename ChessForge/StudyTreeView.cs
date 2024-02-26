@@ -84,7 +84,7 @@ namespace ChessForge
             if (VariationIndexDepth >= 0)
             {
                 Paragraph para = CreateParagraph("0", true);
-                para.Foreground = Brushes.Blue;
+                para.Foreground = ChessForgeColors.VARIATION_INDEX_FORE;
                 para.FontWeight = FontWeights.Normal;
 
                 bool first = true;
@@ -205,6 +205,7 @@ namespace ChessForge
                     if (DisplayManager.IsIndexLevel(sector.BranchLevel))
                     {
                         Run rIdTitle = BuildSectionIdTitle(sector.Nodes[0].LineId);
+                        rIdTitle.Foreground = ChessForgeColors.INDEX_SECTION_TITLE;
                         para.Inlines.Add(rIdTitle);
 
                         para.FontWeight = FontWeights.Bold;
