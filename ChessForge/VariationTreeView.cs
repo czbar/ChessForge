@@ -2556,7 +2556,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void EventPageHeaderClicked(object sender, MouseButtonEventArgs e)
+        virtual protected void EventPageHeaderClicked(object sender, MouseButtonEventArgs e)
         {
             try
             {
