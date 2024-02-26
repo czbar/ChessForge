@@ -61,7 +61,7 @@ namespace ChessForge
         /// <returns></returns>
         public bool IsIndexLevel(int branchLevel)
         {
-            return branchLevel <= SECTION_TITLE_LEVELS;
+            return branchLevel <= (SECTION_TITLE_LEVELS + 1);
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace ChessForge
         /// <returns></returns>
         public bool IsLastIndexLine(int branchLevel)
         {
-            return branchLevel == SECTION_TITLE_LEVELS;
+            return branchLevel == (SECTION_TITLE_LEVELS + 1);
         }
 
         /// <summary>
