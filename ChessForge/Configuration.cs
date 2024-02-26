@@ -36,6 +36,16 @@ namespace ChessForge
         //*********************************
 
         /// <summary>
+        /// Number of levels on the Variation Index of a Study.
+        /// </summary>
+        public static int VariationIndexDepth = 3;
+
+        /// <summary>
+        /// Maximum allowed depth of the variation index
+        /// </summary>
+        public static int MAX_INDEX_DEPTH = 8;
+
+        /// <summary>
         /// Last directory from which a Workbook PGN file was read.
         /// </summary>
         public static string LastOpenDirectory = "";
