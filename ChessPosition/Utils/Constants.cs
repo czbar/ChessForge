@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using static GameTree.ChfCommands;
 
 namespace ChessPosition
 {
@@ -274,9 +271,24 @@ namespace ChessPosition
         public const char CHAR_RESPONSE = '\u21A9';
 
         /// <summary>
+        /// The left arrow character
+        /// </summary>
+        public const char CHAR_LEFT_ARROW = '\u2190';
+
+        /// <summary>
+        /// The up arrow character
+        /// </summary>
+        public const char CHAR_UP_ARROW = '\u2191';
+
+        /// <summary>
         /// The right arrow character
         /// </summary>
         public const char CHAR_RIGHT_ARROW = '\u2192';
+
+        /// <summary>
+        /// The down arrow character
+        /// </summary>
+        public const char CHAR_DOWN_ARROW = '\u2193';
 
         /// <summary>
         /// The low asterisk character
