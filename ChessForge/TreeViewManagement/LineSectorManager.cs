@@ -44,11 +44,6 @@ namespace ChessForge
         private List<LineSector> _lineSectorsToDelete;
 
         /// <summary>
-        /// Variation index depth.
-        /// </summary>
-        public int SECTION_TITLE_LEVELS = 3;
-
-        /// <summary>
         /// The list of LineSectors
         /// </summary>
         public List<LineSector> LineSectors;
@@ -61,7 +56,15 @@ namespace ChessForge
         /// <returns></returns>
         public bool IsIndexLevel(int branchLevel)
         {
-            return branchLevel <= (SECTION_TITLE_LEVELS + 1);
+            return branchLevel <= (_studyView.VariationIndexDepth + 1);
+        }
+
+        // hosting Study View
+        private StudyTreeView _studyView;
+
+        public LineSectorManager(StudyTreeView tree)
+        {
+            _studyView = tree;
         }
 
         /// <summary>
@@ -84,7 +87,7 @@ namespace ChessForge
         /// <returns></returns>
         public bool IsLastIndexLine(int branchLevel)
         {
-            return branchLevel == (SECTION_TITLE_LEVELS + 1);
+            return branchLevel == (_studyView.VariationIndexDepth + 1);
         }
 
         /// <summary>
@@ -116,7 +119,8 @@ namespace ChessForge
                 _firstIndexBranchLevel = 1;
             }
 
-            BuildLineSector(rootSector, root, 0);
+            ProcessChildSectors(rootSector, root);
+            //BuildLineSector(rootSector, root, 0);
 
             CombineSiblingLineSectors();
             CombineTopLineSectors();
@@ -311,13 +315,13 @@ namespace ChessForge
         /// <returns></returns>
         private LineSector CreateRootLineSector(TreeNode root)
         {
+            _runningSectorId = 0;
+
             LineSector rootSector = new LineSector();
             rootSector.Nodes.Add(root);
-            rootSector.LineSectorId = 0;
+            rootSector.LineSectorId = _runningSectorId;
             rootSector.BranchLevel = 0;
             rootSector.DisplayLevel = -1;
-
-            _runningSectorId = 1;
 
             return rootSector;
         }
