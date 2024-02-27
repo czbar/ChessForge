@@ -3,6 +3,7 @@ using GameTree;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -52,7 +53,7 @@ namespace ChessForge
                 {
                     return Configuration.VariationIndexDepth;
                 }
-                else 
+                else
                 {
                     return chapter.VariationIndexDepth.Value;
                 }
@@ -270,6 +271,9 @@ namespace ChessForge
             return rMove;
         }
 
+        // guid for checking single click versus double click.
+        private Guid _clickPageHeaderGuid;
+
         /// <summary>
         /// Adds the single-click behaviour to the base function.
         /// When the header is clicked while there is no Variation Index,
@@ -283,15 +287,36 @@ namespace ChessForge
             {
                 if (e.ClickCount == 1)
                 {
-                    if (VariationIndexDepth == -1)
+                    // generate fresh guid to hold in Delay
+                    Guid guid = Guid.NewGuid();
+                    _clickPageHeaderGuid = guid;
+
+                    Task.Run(async () =>
                     {
-                        AppState.ActiveChapter?.IncrementVariationIndexDepth();
-                    }
-                    BuildFlowDocumentForVariationTree();
-                    e.Handled = true;
+                        // Delay in case the double-click is coming.
+                        await Task.Delay(300);
+
+                        // if new guid was generated, it means that there was a second click
+                        if (guid == _clickPageHeaderGuid)
+                        {
+                            if (VariationIndexDepth == -1)
+                            {
+                                AppState.ActiveChapter?.IncrementVariationIndexDepth();
+                            }
+
+                            _mainWin.Dispatcher.Invoke(() =>
+                            {
+                                BuildFlowDocumentForVariationTree();
+                            });
+
+                            e.Handled = true;
+                            return;
+                        }
+                    });
                 }
-                else
+                else if (e.ClickCount == 2)
                 {
+                    _clickPageHeaderGuid = Guid.NewGuid();
                     base.EventPageHeaderClicked(sender, e);
                 }
             }
