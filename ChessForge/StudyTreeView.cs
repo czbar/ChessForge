@@ -135,7 +135,14 @@ namespace ChessForge
                 }
                 if (chapter.VariationIndexDepth == 0 && !DisplayManager.HasIndexLevelZero())
                 {
-                    chapter.VariationIndexDepth = -1;
+                    if (DisplayManager.MaxBranchLevel > 1)
+                    {
+                        chapter.VariationIndexDepth = 1;
+                    }
+                    else
+                    {
+                        chapter.VariationIndexDepth = -1;
+                    }
                 }
             }
 
