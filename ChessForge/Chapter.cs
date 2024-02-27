@@ -391,28 +391,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Decrements the value of VariationIndexDepth.
-        /// Calls VariationIndexDepth to apply the limits.
-        /// </summary>
-        public void DecrementVariationIndexDepth()
-        {
-            _variationIndexDepth = VariationIndexDepth;
-            _variationIndexDepth--;
-            _variationIndexDepth = VariationIndexDepth;
-        }
-
-        /// <summary>
-        /// Increments the value of VariationIndexDepth
-        /// Calls VariationIndexDepth to apply the limits.
-        /// </summary>
-        public void IncrementVariationIndexDepth()
-        {
-            _variationIndexDepth = VariationIndexDepth;
-            _variationIndexDepth++;
-            _variationIndexDepth = VariationIndexDepth;
-        }
-
-        /// <summary>
         /// Corrects the index if it is out of range e.g. after deletion.
         /// </summary>
         public void CorrectActiveModelGameIndex()
