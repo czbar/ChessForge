@@ -61,6 +61,58 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Increment the index depth paying attention to limits
+        /// and empty level 0 (in case of e.g. 1.e4 and 1.d4)
+        /// </summary>
+        public void IncrementVariationIndexDepth()
+        {
+            Chapter chapter = AppState.ActiveChapter;
+            if (chapter != null)
+            {
+                int depth = VariationIndexDepth;
+                if (depth == -1 && !DisplayManager.HasIndexLevelZero())
+                {
+                    depth = 1;
+                }
+                else
+                {
+                    if (depth + 1 < DisplayManager.MaxBranchLevel)
+                    {
+                        depth++;
+                    }
+                }
+                chapter.VariationIndexDepth = depth;
+            }
+        }
+
+        /// <summary>
+        /// Decrement the index depth paying attention to limits
+        /// and empty level 0 (in case of e.g. 1.e4 and 1.d4)
+        /// </summary>
+        public void DecrementVariationIndexDepth()
+        {
+            Chapter chapter = AppState.ActiveChapter;
+            if (chapter != null)
+            {
+                int depth = VariationIndexDepth;
+                if (depth == 1 && !DisplayManager.HasIndexLevelZero())
+                {
+                    depth = -1;
+                }
+                else
+                {
+                    if (depth > -1)
+                    {
+                        depth--;
+                    }
+                }
+                chapter.VariationIndexDepth = depth;
+            }
+        }
+
+
+
+        /// <summary>
         /// Overrides the parent's method building the view with the layout specific
         /// to the Study view.
         /// Unlike, in the parent's view this is method does not call itself recursively.
@@ -74,6 +126,19 @@ namespace ChessForge
         {
             DisplayManager.BuildLineSectors(root);
 
+            Chapter chapter = AppState.ActiveChapter;
+            if (chapter != null)
+            {
+                if (chapter.VariationIndexDepth > DisplayManager.MaxBranchLevel)
+                {
+                    chapter.VariationIndexDepth = DisplayManager.MaxBranchLevel;
+                }
+                if (chapter.VariationIndexDepth == 0 && !DisplayManager.HasIndexLevelZero())
+                {
+                    chapter.VariationIndexDepth = -1;
+                }
+            }
+
             CreateVariationIndexPara();
             CreateParagraphs(para);
         }
@@ -82,11 +147,12 @@ namespace ChessForge
         /// </summary>
         private void CreateVariationIndexPara()
         {
-            if (VariationIndexDepth >= 0)
+            if (VariationIndexDepth > 0 || VariationIndexDepth == 0 && DisplayManager.HasIndexLevelZero())
             {
                 Paragraph para = CreateParagraph("0", true);
                 para.Foreground = ChessForgeColors.VARIATION_INDEX_FORE;
                 para.FontWeight = FontWeights.Normal;
+                para.FontSize = para.FontSize - 1;
 
                 bool first = true;
                 foreach (LineSector sector in DisplayManager.LineSectors)
@@ -134,7 +200,41 @@ namespace ChessForge
                         {
                             Run rIdTitle = BuildSectionIdTitle(sector.Nodes[0].LineId);
                             para.Inlines.Add(rIdTitle);
-                            BuildIndexNodeAndAddToPara(sector.Nodes[0], true, para);
+                            if (DisplayManager.IsLastIndexLine(level) || sector.Nodes[sector.Nodes.Count - 1].Children.Count == 0)
+                            {
+                                BuildIndexNodeAndAddToPara(sector.Nodes[0], true, para);
+                            }
+                            else
+                            {
+                                bool firstMove = true;
+
+                                int nodeCount = sector.Nodes.Count;
+                                int firstSkip = nodeCount;
+                                int lastSkip = -1;
+
+                                if (nodeCount >= 5)
+                                {
+                                    firstSkip = 2;
+                                    lastSkip = nodeCount - 3;
+                                }
+
+                                for (int i = 0; i < sector.Nodes.Count; i++)
+                                {
+                                    if (i < firstSkip || i > lastSkip)
+                                    {
+                                        TreeNode nd = sector.Nodes[i];
+                                        BuildIndexNodeAndAddToPara(nd, firstMove, para);
+                                        firstMove = false;
+                                    }
+                                    else if (i == firstSkip)
+                                    {
+                                        Run rElipsis = new Run(" [...] ");
+                                        rElipsis.FontWeight = FontWeights.Normal;
+                                        para.Inlines.Add(rElipsis);
+                                        firstMove = true;
+                                    }
+                                }
+                            }
                             rIdTitle.FontWeight = FontWeights.Bold;
 
                             para.Inlines.Add(new Run("\n"));
@@ -301,7 +401,7 @@ namespace ChessForge
                         {
                             if (VariationIndexDepth == -1)
                             {
-                                AppState.ActiveChapter?.IncrementVariationIndexDepth();
+                                IncrementVariationIndexDepth();
                             }
 
                             _mainWin.Dispatcher.Invoke(() =>
@@ -357,7 +457,11 @@ namespace ChessForge
             {
                 if (VariationIndexDepth > -1)
                 {
-                    AppState.ActiveChapter?.DecrementVariationIndexDepth();
+                    Chapter chapter = AppState.ActiveChapter;
+                    if (chapter != null)
+                    {
+                        DecrementVariationIndexDepth();
+                    }
                 }
                 BuildFlowDocumentForVariationTree();
             }
@@ -374,9 +478,13 @@ namespace ChessForge
             Run r = e.Source as Run;
             if (r != null)
             {
-                if (VariationIndexDepth < Configuration.MAX_INDEX_DEPTH)
+                if (VariationIndexDepth < Configuration.MAX_INDEX_DEPTH && VariationIndexDepth < DisplayManager.MaxBranchLevel - 1)
                 {
-                    AppState.ActiveChapter?.IncrementVariationIndexDepth();
+                    Chapter chapter = AppState.ActiveChapter;
+                    if (chapter != null)
+                    {
+                        IncrementVariationIndexDepth();
+                    }
                 }
                 BuildFlowDocumentForVariationTree();
             }
