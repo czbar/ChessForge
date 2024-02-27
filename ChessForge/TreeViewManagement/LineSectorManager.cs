@@ -43,6 +43,17 @@ namespace ChessForge
         // helper list for deletions in processing
         private List<LineSector> _lineSectorsToDelete;
 
+        // highest branch level in the view
+        private int _maxBranchLevel = -1;
+
+        /// <summary>
+        // Accessor tp the highest branch level value in the view
+        /// </summary>
+        public int MaxBranchLevel
+        {
+            get { return _maxBranchLevel; }
+        }
+
         /// <summary>
         /// The list of LineSectors
         /// </summary>
@@ -80,6 +91,26 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Checks if the tree has a non-empty index at level 0.
+        /// If the first child of node 0 has branch level 2, then we 
+        /// do not have index level 0
+        /// </summary>
+        /// <returns></returns>
+        public bool HasIndexLevelZero()
+        {
+            TreeNode root = LineSectors[0].Nodes[0];
+            if (root.Children.Count > 0)
+            {
+                int startLevel = TreeUtils.GetBranchLevel(root.Children[0].LineId);
+                return startLevel == 1;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Checks if the passed branch level corresponds
         /// to the last index section level.
         /// </summary>
@@ -105,6 +136,7 @@ namespace ChessForge
         public void BuildLineSectors(TreeNode root)
         {
             _lineSectorsToDelete = new List<LineSector>();
+            _maxBranchLevel = -1;
 
             LineSectors = new List<LineSector>();
             LineSector rootSector = CreateRootLineSector(root);
@@ -142,6 +174,10 @@ namespace ChessForge
             LineSectors.Add(sector);
 
             sector.BranchLevel = TreeUtils.GetBranchLevel(nd.LineId);
+            if (sector.BranchLevel > _maxBranchLevel)
+            {
+                _maxBranchLevel = sector.BranchLevel;
+            }
             sector.Nodes.Add(nd);
 
             // add all leaf nodes that follow
@@ -228,9 +264,10 @@ namespace ChessForge
         {
             foreach (LineSector lineSector in LineSectors)
             {
-                if (!IsIndexLevel(lineSector.BranchLevel - 1))
+                if (!IsIndexLevel(lineSector.BranchLevel - 1) && lineSector.Parent != null)
                 {
-                    if (lineSector.Parent.Children.Count == 2 && lineSector.Parent.Children[1] == lineSector && lineSector.Parent.Children[0].SectorType == LineSectorType.LEAF)
+                    // do not proceed if Parent.Parent == null 'coz we then get a parenthesis first (after the 0 move!)
+                    if (lineSector.Parent.Children.Count == 2 && lineSector.Parent.Parent != null && lineSector.Parent.Children[1] == lineSector && lineSector.Parent.Children[0].SectorType == LineSectorType.LEAF)
                     {
                         int index = 0;
                         lineSector.Parent.Children[1].InsertOpenBracketNode(index);
