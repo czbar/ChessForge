@@ -390,8 +390,8 @@ namespace ChessPosition
 
         /// <summary>
         /// Returns the branch level represented by the passed string.
-        /// "1" will return level 1,
-        /// "1.1" will return level 2 and so on.
+        /// "1" will return level 0,
+        /// "1.1" will return level 1 and so on.
         /// Null/empty string will return -1.
         /// </summary>
         /// <param name="lineId"></param>
