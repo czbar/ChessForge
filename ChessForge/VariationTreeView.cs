@@ -958,23 +958,30 @@ namespace ChessForge
         /// </summary>
         public void Clear(GameData.ContentType contentType)
         {
-            Document.Blocks.Clear();
+            try
+            {
+                Document.Blocks.Clear();
 
-            PreviousNextViewBars.BuildPreviousNextBar(contentType);
+                PreviousNextViewBars.BuildPreviousNextBar(contentType);
 
-            // resets
-            _dictNodeToRun.Clear();
-            _dictRunToParagraph.Clear();
+                // resets
+                _dictNodeToRun.Clear();
+                _dictRunToParagraph.Clear();
 
-            _dictNodeToCommentRun.Clear();
-            _dictNodeToCommentBeforeMoveRun.Clear();
-            _dictCommentRunToParagraph.Clear();
-            _dictCommentBeforeMoveRunToParagraph.Clear();
+                _dictNodeToCommentRun.Clear();
+                _dictNodeToCommentBeforeMoveRun.Clear();
+                _dictCommentRunToParagraph.Clear();
+                _dictCommentBeforeMoveRunToParagraph.Clear();
 
-            _dictNodeToReferenceRun.Clear();
-            _dictReferenceRunToParagraph.Clear();
+                _dictNodeToReferenceRun.Clear();
+                _dictReferenceRunToParagraph.Clear();
 
-            _currParagraphLevel = 0;
+                _currParagraphLevel = 0;
+            }
+            catch(Exception ex)
+            {
+                AppLog.Message("Clear Blocks", ex);
+            }
         }
 
         /// <summary>
@@ -2008,7 +2015,7 @@ namespace ChessForge
                 _dictCommentBeforeMoveRunToParagraph.Add(run, para);
 
                 Run rNode = _dictNodeToRun[nd.NodeId];
-                para.Inlines.InsertBefore(rNode,run);
+                para.Inlines.InsertBefore(rNode, run);
             }
             catch (Exception ex)
             {
