@@ -299,8 +299,9 @@ namespace ChessForge
             // TODO: redo so that we used the "firstPara" for VariationIndex.
             Document.Blocks.Remove(firstPara);
 
-            foreach (LineSector sector in DisplayManager.LineSectors)
+            for (int n = 0; n < DisplayManager.LineSectors.Count; n++)
             {
+                LineSector sector = DisplayManager.LineSectors[n];
                 if (sector.Nodes.Count == 0 || sector.Nodes.Count == 1 && sector.Nodes[0].NodeId == 0)
                 {
                     continue;
@@ -321,6 +322,18 @@ namespace ChessForge
 
                     Thickness margin = GetParagraphMargin((sector.DisplayLevel).ToString());
                     para.Margin = margin;
+
+                    if (!DisplayManager.IsIndexLevel(sector.BranchLevel))
+                    {
+                        if (n > 0 && DisplayManager.LineSectors[n - 1].DisplayLevel < sector.DisplayLevel)
+                        {
+                            DisplayLevelAttrs.AdjustParagraphMargin(para, true);
+                        }
+                        if (n < DisplayManager.LineSectors.Count - 1 && DisplayManager.LineSectors[n + 1].DisplayLevel < sector.DisplayLevel)
+                        {
+                            DisplayLevelAttrs.AdjustParagraphMargin(para, false);
+                        }
+                    }
 
                     if (DisplayManager.IsIndexLevel(sector.BranchLevel))
                     {
