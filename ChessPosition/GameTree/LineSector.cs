@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Media;
 
 namespace GameTree
 {
@@ -26,6 +27,11 @@ namespace GameTree
     /// </summary>
     public class LineSector
     {
+        /// <summary>
+        /// Color to use for the first node in the sector, if any
+        /// </summary>
+        public Brush FirstNodeColor = null;
+
         // the list of nodes forming a single linear path.
         private List<TreeNode> _nodes = new List<TreeNode>();
 
