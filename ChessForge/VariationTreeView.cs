@@ -1875,10 +1875,12 @@ namespace ChessForge
                     return;
                 }
 
-                CommentPart startPart = new CommentPart(CommentPartType.TEXT, nd.NodeId == 0 ? "[ " : "[ ");
+                //CommentPart startPart = new CommentPart(CommentPartType.TEXT, nd.NodeId == 0 ? "[ " : "[ ");
+                CommentPart startPart = new CommentPart(CommentPartType.TEXT, " ");
                 parts.Insert(0, startPart);
 
-                CommentPart endPart = new CommentPart(CommentPartType.TEXT, nd.NodeId == 0 ? " ] " : " ] ");
+                //CommentPart endPart = new CommentPart(CommentPartType.TEXT, nd.NodeId == 0 ? " ] " : " ] ");
+                CommentPart endPart = new CommentPart(CommentPartType.TEXT, " ");
                 parts.Add(endPart);
 
                 // in front of that start bracket!
@@ -2001,7 +2003,8 @@ namespace ChessForge
             try
             {
 
-                string commentText = "[ " + nd.CommentBeforeMove + " ] ";
+                //string commentText = "[ " + nd.CommentBeforeMove + " ] ";
+                string commentText = " " + nd.CommentBeforeMove + " ";
                 Run run = new Run(commentText);
                 run.FontStyle = FontStyles.Normal;
                 run.Foreground = Brushes.Black;
