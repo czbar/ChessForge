@@ -111,7 +111,6 @@ namespace ChessForge
         }
 
 
-
         /// <summary>
         /// Overrides the parent's method building the view with the layout specific
         /// to the Study view.
@@ -149,6 +148,25 @@ namespace ChessForge
             CreateVariationIndexPara();
             CreateParagraphs(para);
         }
+
+        /// <summary>
+        /// Creates a paragraph for the "Variation Index" title and the depth arrows.
+        /// </summary>
+        private void CreateVariationIndexHeader()
+        {
+            Paragraph para = new Paragraph
+            {
+                Margin = new Thickness(0, 0, 0, 6),
+            };
+
+            Run r = new Run(Properties.Resources.VariationIndex + "  ");
+            para.Inlines.Add(r);
+            para.FontWeight = FontWeights.DemiBold;
+
+            InsertArrowRuns(para);
+            Document.Blocks.Add(para);
+        }
+
         /// <summary>
         /// Creates the Index paragraph.
         /// </summary>
@@ -160,6 +178,8 @@ namespace ChessForge
                 para.Foreground = ChessForgeColors.VARIATION_INDEX_FORE;
                 para.FontWeight = FontWeights.Normal;
                 para.FontSize = para.FontSize - 1;
+                para.Margin = new Thickness(0, 0, 0, 0);
+
 
                 bool first = true;
                 foreach (LineSector sector in DisplayManager.LineSectors)
@@ -169,12 +189,7 @@ namespace ChessForge
                     {
                         if (first)
                         {
-                            Run r = new Run(Properties.Resources.VariationIndex + "  ");
-                            para.Inlines.Add(r);
-                            para.FontWeight = FontWeights.Bold;
-
-                            InsertArrowRuns(para);
-
+                            CreateVariationIndexHeader();
                             first = false;
                         }
 
@@ -191,7 +206,7 @@ namespace ChessForge
                             {
                                 Run rMove = BuildIndexNodeAndAddToPara(nd, false, para);
                                 rMove.TextDecorations = TextDecorations.Underline;
-                                rMove.FontWeight = FontWeights.Bold;
+                                rMove.FontWeight = FontWeights.DemiBold;
                                 if (nd.NodeId != 0)
                                 {
                                     validMove = true;
@@ -242,7 +257,7 @@ namespace ChessForge
                                     }
                                 }
                             }
-                            rIdTitle.FontWeight = FontWeights.Bold;
+                            rIdTitle.FontWeight = FontWeights.DemiBold;
 
                             para.Inlines.Add(new Run("\n"));
                         }
@@ -273,8 +288,6 @@ namespace ChessForge
                 rMinus.PreviewMouseDown += EventUpArrowClicked;
                 para.Inlines.Add(rMinus);
             }
-
-            para.Inlines.Add(new Run("\n"));
         }
 
         /// <summary>
@@ -283,6 +296,9 @@ namespace ChessForge
         /// <param name="firstPara"></param>
         private void CreateParagraphs(Paragraph firstPara)
         {
+            // TODO: redo so that we used the "firstPara" for VariationIndex.
+            Document.Blocks.Remove(firstPara);
+
             foreach (LineSector sector in DisplayManager.LineSectors)
             {
                 if (sector.Nodes.Count == 0 || sector.Nodes.Count == 1 && sector.Nodes[0].NodeId == 0)
@@ -293,22 +309,18 @@ namespace ChessForge
                 try
                 {
                     Paragraph para;
-                    // TODO: redo so that we used the "firstPara" for VariationIndex.
-                    if (firstPara != null)
+                    if (sector.DisplayLevel < 0)
                     {
-                        para = firstPara;
-                        firstPara = null;
+                        sector.DisplayLevel = 0;
                     }
-                    else
+                    para = CreateParagraph(sector.DisplayLevel.ToString(), true);
+                    if (para.FontWeight == FontWeights.Bold)
                     {
-                        if (sector.DisplayLevel < 0)
-                        {
-                            sector.DisplayLevel = 0;
-                        }
-                        para = CreateParagraph(sector.DisplayLevel.ToString(), true);
-                        Thickness margin = GetParagraphMargin((sector.DisplayLevel).ToString());
-                        para.Margin = margin;
+                        para.FontWeight = FontWeights.Normal;
                     }
+
+                    Thickness margin = GetParagraphMargin((sector.DisplayLevel).ToString());
+                    para.Margin = margin;
 
                     if (DisplayManager.IsIndexLevel(sector.BranchLevel))
                     {
@@ -316,21 +328,22 @@ namespace ChessForge
                         rIdTitle.Foreground = ChessForgeColors.INDEX_SECTION_TITLE;
                         para.Inlines.Add(rIdTitle);
 
-                        para.FontWeight = FontWeights.Bold;
+                        para.FontWeight = FontWeights.DemiBold;
                     }
                     else
                     {
                         if (DisplayManager.IsLastIndexLine(sector.DisplayLevel + 1))
                         {
-                            para.FontWeight = FontWeights.Bold;
+                            para.FontWeight = FontWeights.DemiBold;
                         }
                     }
 
                     bool includeNumber = true;
                     bool parenthesis = false;
 
-                    foreach (TreeNode nd in sector.Nodes)
+                    for (int i = 0; i < sector.Nodes.Count; i++)
                     {
+                        TreeNode nd = sector.Nodes[i];
                         if (nd.NodeId == -100)
                         {
                             para.Inlines.Add(new Run("("));
@@ -347,8 +360,22 @@ namespace ChessForge
                             {
                                 includeNumber = true;
                             }
-                            BuildNodeTextAndAddToPara(nd, includeNumber, para, sector.DisplayLevel);
+                            Run r = BuildNodeTextAndAddToPara(nd, includeNumber, para, sector.DisplayLevel);
+                            if (r.FontWeight == FontWeights.Bold)
+                            {
+                                r.FontWeight = FontWeights.DemiBold;
+                            }
+                            r.Foreground = Brushes.Black;
                             parenthesis = false;
+
+                            if (i == 0 && sector.FirstNodeColor != null)
+                            {
+                                r.Foreground = sector.FirstNodeColor;
+                            }
+                            else if (i == sector.Nodes.Count - 1)
+                            {
+                                ColorLastNode(sector, r, nd);
+                            }
                         }
                         includeNumber = false;
                     }
@@ -357,6 +384,35 @@ namespace ChessForge
                 }
                 catch
                 {
+                }
+            }
+        }
+
+        /// <summary>
+        /// Sets the foreground color for the passed Run.
+        /// If this is within the index levels do not set the color
+        /// but set FirstMoveColor on the child sectors that are
+        /// at the lower level
+        /// </summary>
+        /// <param name="sector"></param>
+        /// <param name="r"></param>
+        /// <param name="nd"></param>
+        private void ColorLastNode(LineSector sector, Run r, TreeNode nd)
+        {
+            if (!DisplayManager.IsIndexLevel(sector.BranchLevel) || DisplayManager.IsLastIndexLine(sector.BranchLevel))
+            {
+                if (sector.Nodes.Count > 1 && nd.Parent != null && nd.Parent.Children.Count > 1)
+                {
+                    r.Foreground = DisplayLevelAttrs.GetBrushForLastMove(sector.DisplayLevel);
+                }
+
+                // except the first child as it will be the conitinuation of the top line
+                foreach (LineSector ls in sector.Children)
+                {
+                    if (ls.Nodes[0] != nd.Children[0])
+                    {
+                        ls.FirstNodeColor = DisplayLevelAttrs.GetBrushForLastMove(sector.DisplayLevel);
+                    }
                 }
             }
         }
@@ -520,12 +576,12 @@ namespace ChessForge
                 if (fontColor != null && para.Inlines.Count == 0)
                 {
                     r.Foreground = fontColor;
-                    r.FontWeight = FontWeights.Bold;
+                    r.FontWeight = FontWeights.DemiBold;
                 }
 
                 if (para.Margin.Left == 0 && nd.IsMainLine())
                 {
-                    r.FontWeight = FontWeights.Bold;
+                    r.FontWeight = FontWeights.DemiBold;
                     para.Inlines.Add(r);
                 }
                 else
