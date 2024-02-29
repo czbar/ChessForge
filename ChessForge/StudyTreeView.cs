@@ -27,7 +27,7 @@ namespace ChessForge
         /// <summary>
         /// Object managing the layout for this view
         /// </summary>
-        public LineSectorManager DisplayManager;
+        public LineSectorManager LineManager;
 
         /// <summary>
         /// Instantiates the view.
@@ -37,7 +37,7 @@ namespace ChessForge
         /// <param name="entityIndex"></param>
         public StudyTreeView(RichTextBox rtb, GameData.ContentType contentType, int entityIndex) : base(rtb, contentType, entityIndex)
         {
-            DisplayManager = new LineSectorManager(this);
+            LineManager = new LineSectorManager(this);
         }
 
         /// <summary>
@@ -70,13 +70,13 @@ namespace ChessForge
             if (chapter != null)
             {
                 int depth = VariationIndexDepth;
-                if (depth == -1 && !DisplayManager.HasIndexLevelZero())
+                if (depth == -1 && !LineManager.HasIndexLevelZero())
                 {
                     depth = 1;
                 }
                 else
                 {
-                    if (depth + 1 < DisplayManager.MaxBranchLevel)
+                    if (depth + 1 < LineManager.MaxBranchLevel)
                     {
                         depth++;
                     }
@@ -95,7 +95,7 @@ namespace ChessForge
             if (chapter != null)
             {
                 int depth = VariationIndexDepth;
-                if (depth == 1 && !DisplayManager.HasIndexLevelZero())
+                if (depth == 1 && !LineManager.HasIndexLevelZero())
                 {
                     depth = -1;
                 }
@@ -123,18 +123,18 @@ namespace ChessForge
         /// <param name="includeNumber"></param>
         override protected void BuildTreeLineText(TreeNode root, Paragraph para, bool includeNumber)
         {
-            DisplayManager.BuildLineSectors(root);
+            LineManager.BuildLineSectors(root);
 
             Chapter chapter = AppState.ActiveChapter;
             if (chapter != null)
             {
-                if (chapter.VariationIndexDepth > DisplayManager.MaxBranchLevel)
+                if (chapter.VariationIndexDepth > LineManager.MaxBranchLevel)
                 {
-                    chapter.VariationIndexDepth = DisplayManager.MaxBranchLevel;
+                    chapter.VariationIndexDepth = LineManager.MaxBranchLevel;
                 }
-                if (chapter.VariationIndexDepth == 0 && !DisplayManager.HasIndexLevelZero())
+                if (chapter.VariationIndexDepth == 0 && !LineManager.HasIndexLevelZero())
                 {
-                    if (DisplayManager.MaxBranchLevel > 1)
+                    if (LineManager.MaxBranchLevel > 1)
                     {
                         chapter.VariationIndexDepth = 1;
                     }
@@ -172,7 +172,7 @@ namespace ChessForge
         /// </summary>
         private void CreateVariationIndexPara()
         {
-            if (VariationIndexDepth > 0 || VariationIndexDepth == 0 && DisplayManager.HasIndexLevelZero())
+            if (VariationIndexDepth > 0 || VariationIndexDepth == 0 && LineManager.HasIndexLevelZero())
             {
                 Paragraph para = CreateParagraph("0", true);
                 para.Foreground = ChessForgeColors.VARIATION_INDEX_FORE;
@@ -182,10 +182,10 @@ namespace ChessForge
 
 
                 bool first = true;
-                foreach (LineSector sector in DisplayManager.LineSectors)
+                foreach (LineSector sector in LineManager.LineSectors)
                 {
                     int level = sector.BranchLevel;
-                    if (DisplayManager.IsIndexLevel(level))
+                    if (LineManager.IsIndexLevel(level))
                     {
                         if (first)
                         {
@@ -222,7 +222,7 @@ namespace ChessForge
                         {
                             Run rIdTitle = BuildSectionIdTitle(sector.Nodes[0].LineId);
                             para.Inlines.Add(rIdTitle);
-                            if (DisplayManager.IsLastIndexLine(level) || sector.Nodes[sector.Nodes.Count - 1].Children.Count == 0)
+                            if (LineManager.IsLastIndexLine(level) || sector.Nodes[sector.Nodes.Count - 1].Children.Count == 0)
                             {
                                 BuildIndexNodeAndAddToPara(sector.Nodes[0], true, para);
                             }
@@ -301,14 +301,14 @@ namespace ChessForge
 
             int levelGroup = 0;
 
-            for (int n = 0; n < DisplayManager.LineSectors.Count; n++)
+            for (int n = 0; n < LineManager.LineSectors.Count; n++)
             {
-                LineSector sector = DisplayManager.LineSectors[n];
+                LineSector sector = LineManager.LineSectors[n];
                 if (sector.Nodes.Count == 0 || sector.Nodes.Count == 1 && sector.Nodes[0].NodeId == 0)
                 {
                     continue;
                 }
-                if (n > 0 && sector.DisplayLevel != DisplayManager.LineSectors[n - 1].BranchLevel)
+                if (n > 0 && sector.DisplayLevel != LineManager.LineSectors[n - 1].BranchLevel)
                 {
                     levelGroup++;
                 }
@@ -323,13 +323,13 @@ namespace ChessForge
 
                     int topMarginExtra = 0;
                     int bottomMarginExtra = 0;
-                    if (!DisplayManager.IsIndexLevel(sector.BranchLevel))
+                    if (!LineManager.IsIndexLevel(sector.BranchLevel))
                     {
-                        if (n > 0 && DisplayManager.LineSectors[n - 1].DisplayLevel < sector.DisplayLevel)
+                        if (n > 0 && LineManager.LineSectors[n - 1].DisplayLevel < sector.DisplayLevel)
                         {
                             topMarginExtra = DisplayLevelAttrs.EXTRA_MARGIN;
                         }
-                        if (n < DisplayManager.LineSectors.Count - 1 && DisplayManager.LineSectors[n + 1].DisplayLevel < sector.DisplayLevel)
+                        if (n < LineManager.LineSectors.Count - 1 && LineManager.LineSectors[n + 1].DisplayLevel < sector.DisplayLevel)
                         {
                             bottomMarginExtra = DisplayLevelAttrs.EXTRA_MARGIN;
                         }
@@ -341,7 +341,7 @@ namespace ChessForge
                         para.FontWeight = FontWeights.Normal;
                     }
 
-                    if (DisplayManager.IsIndexLevel(sector.BranchLevel))
+                    if (LineManager.IsIndexLevel(sector.BranchLevel))
                     {
                         Run rIdTitle = BuildSectionIdTitle(sector.Nodes[0].LineId);
                         rIdTitle.Foreground = ChessForgeColors.VARIATION_INDEX_FORE;
@@ -351,7 +351,7 @@ namespace ChessForge
                     }
                     else
                     {
-                        if (DisplayManager.IsLastIndexLine(sector.DisplayLevel + 1))
+                        if (LineManager.IsLastIndexLine(sector.DisplayLevel + 1))
                         {
                             para.FontWeight = FontWeights.DemiBold;
                         }
@@ -408,11 +408,11 @@ namespace ChessForge
                     r.Foreground = Brushes.Black;
                     parenthesis = false;
 
-                    if (i == 0 && sector.FirstNodeColor != null)
+                    if (i == 0 && sector.FirstNodeColor != null && !LineManager.IsIndexLevel(sector.BranchLevel))
                     {
                         r.Foreground = sector.FirstNodeColor;
                     }
-                    if (i == sector.Nodes.Count - 1)
+                    if (i == sector.Nodes.Count - 1 && !LineManager.IsIndexLevel(sector.BranchLevel + 1))
                     {
                         ColorLastNode(sector, r, nd, levelGroup);
                     }
@@ -432,17 +432,18 @@ namespace ChessForge
         /// <param name="nd"></param>
         private void ColorLastNode(LineSector sector, Run r, TreeNode nd, int levelGroup)
         {
-            if (!DisplayManager.IsIndexLevel(sector.BranchLevel) || DisplayManager.IsLastIndexLine(sector.BranchLevel))
+            // do not color if this is an index level unless this is the last index level and is not the first node.
+            if (!LineManager.IsIndexLevel(sector.BranchLevel) || LineManager.IsLastIndexLine(sector.BranchLevel) && nd != sector.Nodes[0] )
             {
                 if (sector.Nodes.Count > 0 && nd.Parent != null && nd.Parent.Children.Count > 1)
                 {
                     r.Foreground = DisplayLevelAttrs.GetBrushForLastMove(sector.DisplayLevel, levelGroup);
                 }
 
-                // except the first child as it will be the conitinuation of the top line
+                // except the first child as it will be the continuation of the top line
                 foreach (LineSector ls in sector.Children)
                 {
-                    if (ls.Nodes[0] != nd.Children[0])
+                    if (nd.Children.Count > 0 && ls.Nodes[0] != nd.Children[0])
                     {
                         ls.FirstNodeColor = DisplayLevelAttrs.GetBrushForLastMove(sector.DisplayLevel, levelGroup);
                     }
@@ -574,7 +575,7 @@ namespace ChessForge
             Run r = e.Source as Run;
             if (r != null)
             {
-                if (VariationIndexDepth < Configuration.MAX_INDEX_DEPTH && VariationIndexDepth < DisplayManager.MaxBranchLevel - 1)
+                if (VariationIndexDepth < Configuration.MAX_INDEX_DEPTH && VariationIndexDepth < LineManager.MaxBranchLevel - 1)
                 {
                     Chapter chapter = AppState.ActiveChapter;
                     if (chapter != null)
