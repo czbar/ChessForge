@@ -19,6 +19,23 @@ namespace ChessForge
     public class GuiUtilities
     {
         /// <summary>
+        /// Adjusts the configured font size per configuration parameters.
+        /// </summary>
+        /// <param name="origSize"></param>
+        /// <returns></returns>
+        public static int AdjustFontSize(int origSize)
+        {
+            if (Configuration.UseFixedFont)
+            {
+                return Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff;
+            }
+            else
+            {
+                return origSize + Configuration.FontSizeDiff;
+            }
+        }
+
+        /// <summary>
         /// Positions a dialog in relation to the main window. 
         /// </summary>
         /// <param name="dlg"></param>

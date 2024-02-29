@@ -183,6 +183,11 @@ namespace ChessPosition
         public static int MaxPositionNagId = 19;
 
         /// <summary>
+        /// Base size of the font when fixed size font is selected for the views..
+        /// </summary>
+        public const int BASE_FIXED_FONT_SIZE = 14;
+
+        /// <summary>
         /// Returns a NAG id if the passed represents one.
         /// Returns 0 otherwise.
         /// </summary>

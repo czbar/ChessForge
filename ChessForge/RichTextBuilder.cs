@@ -27,11 +27,6 @@ namespace ChessForge
         internal abstract Dictionary<string, RichTextPara> RichTextParas { get; }
 
         /// <summary>
-        /// Base size of the font when fixed size font is selected for the views..
-        /// </summary>
-        private const int BASE_FIXED_SIZE = 14;
-
-        /// <summary>
         /// Constructs the object and sets pointer to its associated FlowDocument.
         /// </summary>
         /// <param name="doc"></param>
@@ -108,7 +103,7 @@ namespace ChessForge
             RichTextPara attrs = rtAttrs.CloneMe();
             if (adjustFontSize)
             {
-                attrs.FontSize = AdjustFontSize(rtAttrs.FontSize);
+                attrs.FontSize = GuiUtilities.AdjustFontSize(rtAttrs.FontSize);
             }
             return attrs;
         }
@@ -127,23 +122,6 @@ namespace ChessForge
             {
                 source.Blocks.Remove(blk);
                 target.Blocks.Add(blk);
-            }
-        }
-
-        /// <summary>
-        /// Adjusts the configured font size per configuration parameters.
-        /// </summary>
-        /// <param name="origSize"></param>
-        /// <returns></returns>
-        private int AdjustFontSize(int origSize)
-        {
-            if (Configuration.UseFixedFont)
-            {
-                return BASE_FIXED_SIZE + Configuration.FontSizeDiff;
-            }
-            else
-            {
-                return origSize + Configuration.FontSizeDiff;
             }
         }
 
