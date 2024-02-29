@@ -60,8 +60,10 @@ namespace ChessForge
         public List<LineSector> LineSectors;
 
         /// <summary>
-        /// Returns true of the passed branch level is within
-        /// index section levels.
+        /// Returns true of the passed branch level is within index section levels.
+        /// Since the first "true" (i.e. not the stem line) index level is 2, 
+        /// the last one is 1 + VariationIndexDepth
+        /// e.g if VariationIndexDepth = 3 then the first "true" index is 2 and the last one is 4.
         /// </summary>
         /// <param name="branchLevel"></param>
         /// <returns></returns>
@@ -76,18 +78,6 @@ namespace ChessForge
         public LineSectorManager(StudyTreeView tree)
         {
             _studyView = tree;
-        }
-
-        /// <summary>
-        /// Returns the level within the index table for the passed branch level.
-        /// It will be 0 for the stem line
-        /// and then 1 for the first line with the index "title" and so on.
-        /// </summary>
-        /// <param name="branchLevel"></param>
-        /// <returns></returns>
-        public int GetIndexLevelForBranchLevel(int branchLevel)
-        {
-            return branchLevel - _firstIndexBranchLevel;
         }
 
         /// <summary>
