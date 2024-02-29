@@ -328,7 +328,7 @@ namespace ChessForge
         /// <summary>
         /// Whether fixed size font should be used.
         /// </summary>
-        public static bool UseFixedFont = false;
+        public static bool UseFixedFont = true;
 
         /// <summary>
         /// Whether to allow replaying moves with the mouse wheel. 
