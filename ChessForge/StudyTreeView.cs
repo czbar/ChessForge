@@ -300,6 +300,7 @@ namespace ChessForge
             Document.Blocks.Remove(firstPara);
 
             int levelGroup = 0;
+            bool firstAtIndexLevel2 = true;
 
             for (int n = 0; n < LineManager.LineSectors.Count; n++)
             {
@@ -323,8 +324,10 @@ namespace ChessForge
 
                     int topMarginExtra = 0;
                     int bottomMarginExtra = 0;
+
                     if (!LineManager.IsIndexLevel(sector.BranchLevel))
                     {
+                        // add extra room above/below first/last line in a block at the same level 
                         if (n > 0 && LineManager.LineSectors[n - 1].DisplayLevel < sector.DisplayLevel)
                         {
                             topMarginExtra = DisplayLevelAttrs.EXTRA_MARGIN;
@@ -332,6 +335,18 @@ namespace ChessForge
                         if (n < LineManager.LineSectors.Count - 1 && LineManager.LineSectors[n + 1].DisplayLevel < sector.DisplayLevel)
                         {
                             bottomMarginExtra = DisplayLevelAttrs.EXTRA_MARGIN;
+                        }
+                    }
+                    else
+                    {
+                        // add extra room above an index line, unless this is the first line at level 2
+                        if (sector.BranchLevel == 2 && firstAtIndexLevel2)
+                        {
+                            firstAtIndexLevel2 = false;
+                        }
+                        else
+                        {
+                            topMarginExtra = DisplayLevelAttrs.EXTRA_MARGIN;
                         }
                     }
 
