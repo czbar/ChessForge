@@ -24,6 +24,9 @@ namespace ChessForge
         // indent between levels in the index paragraph.
         private readonly string _indent = "    ";
 
+        // whether BuildTreeLineText is being invoked for the first time
+        private bool _firstInvocation = true;
+
         /// <summary>
         /// Object managing the layout for this view
         /// </summary>
@@ -110,7 +113,6 @@ namespace ChessForge
             }
         }
 
-
         /// <summary>
         /// Overrides the parent's method building the view with the layout specific
         /// to the Study view.
@@ -147,6 +149,13 @@ namespace ChessForge
 
             CreateVariationIndexPara();
             CreateParagraphs(para);
+
+            // if first invocation then this was already called by the client in the SetUpGUI method. 
+            if (!_firstInvocation)
+            {
+                SelectLineAndMove(_mainVariationTree.SelectedLineId, _mainVariationTree.SelectedNodeId);
+            }
+            _firstInvocation = false;
         }
 
         /// <summary>
