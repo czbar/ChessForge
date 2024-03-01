@@ -609,6 +609,12 @@
   <data name="MsgNoIdenticalPositions" xml:space="preserve">
     <value>No identical positions found.</value>
   </data>
+  <data name="MsgEditPositionSearch" xml:space="preserve">
+    <value>Positions not found. Edit search?</value>
+  </data>
+  <data name="MsgTitlePositionSearch" xml:space="preserve">
+    <value>Position Search</value>
+  </data>
   <data name="WorkbookOptions" xml:space="preserve">
     <value>Workbook Options...</value>
   </data>

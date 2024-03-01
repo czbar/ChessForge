@@ -720,6 +720,14 @@ MsgNoMoveSelected=
 #english: MsgNoIdenticalPositions=No identical positions found.
 MsgNoIdenticalPositions=
 
+#description: Ask whether to edit search when identical positions not found
+#english: MsgEditPositionSearch=Positions not found. Edit search?
+MsgEditPositionSearch=
+
+#description: Message Box Title for Position Search
+#english: MsgTitlePositionSearch=Position Search
+MsgTitlePositionSearch=
+
 #description: Opens the Workbook Options dialog
 #english: WorkbookOptions=Workbook Options...
 WorkbookOptions=

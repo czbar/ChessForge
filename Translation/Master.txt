@@ -556,6 +556,12 @@ MsgNoMoveSelected=No move selected
 #Message about identical position not found
 MsgNoIdenticalPositions=No identical positions found.
 
+#Ask whether to edit search when identical positions not found
+MsgEditPositionSearch=Positions not found. Edit search?
+
+#Message Box Title for Position Search
+MsgTitlePositionSearch=Position Search
+
 #Opens the Workbook Options dialog
 WorkbookOptions=Workbook Options...
 
