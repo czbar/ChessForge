@@ -44,22 +44,36 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Returns the variation index depth applicable to this Study Tree.
+        /// Safe accessor to the chapter's variation index depth.
         /// </summary>
         /// <returns></returns>
         public int VariationIndexDepth
         {
             get
             {
-                Chapter chapter = AppState.ActiveChapter;
-                if (chapter == null)
+                return AppState.ActiveChapter == null ? Configuration.VariationIndexDepth : AppState.ActiveChapter.VariationIndexDepth.Value;
+            }
+        }
+
+        /// <summary>
+        /// Returns the value VariationIndexDepth that will be adjusted
+        /// if we currently do not have enough branch levels
+        /// </summary>
+        private int EffectiveIndexDepth
+        {
+            get
+            {
+                int depth = VariationIndexDepth;
+                if (depth > LineManager.MaxBranchLevel)
                 {
-                    return Configuration.VariationIndexDepth;
+                    depth = LineManager.MaxBranchLevel;
                 }
-                else
+                else if (VariationIndexDepth == 0 && !LineManager.HasIndexLevelZero())
                 {
-                    return chapter.VariationIndexDepth.Value;
+                    // we configured level 0 but there is no stem line to show
+                    depth = -1;
                 }
+                return depth;
             }
         }
 
@@ -72,7 +86,7 @@ namespace ChessForge
             Chapter chapter = AppState.ActiveChapter;
             if (chapter != null)
             {
-                int depth = VariationIndexDepth;
+                int depth = EffectiveIndexDepth;
                 if (depth == -1 && !LineManager.HasIndexLevelZero())
                 {
                     depth = 1;
@@ -84,20 +98,25 @@ namespace ChessForge
                         depth++;
                     }
                 }
-                chapter.VariationIndexDepth = depth;
+                // do not set the chapter value if this is still lower than previously configured.
+                if (depth > chapter.VariationIndexDepth)
+                {
+                    chapter.VariationIndexDepth = depth;
+                }
             }
         }
 
         /// <summary>
         /// Decrement the index depth paying attention to limits
-        /// and empty level 0 (in case of e.g. 1.e4 and 1.d4)
+        /// and empty level 0 (in case of e.g. 1.e4 and 1.d4).
+        /// Update the Chapter's VariationIndexDepth.
         /// </summary>
         public void DecrementVariationIndexDepth()
         {
             Chapter chapter = AppState.ActiveChapter;
             if (chapter != null)
             {
-                int depth = VariationIndexDepth;
+                int depth = EffectiveIndexDepth;
                 if (depth == 1 && !LineManager.HasIndexLevelZero())
                 {
                     depth = -1;
@@ -126,26 +145,6 @@ namespace ChessForge
         override protected void BuildTreeLineText(TreeNode root, Paragraph para, bool includeNumber)
         {
             LineManager.BuildLineSectors(root);
-
-            Chapter chapter = AppState.ActiveChapter;
-            if (chapter != null)
-            {
-                if (chapter.VariationIndexDepth > LineManager.MaxBranchLevel)
-                {
-                    chapter.VariationIndexDepth = LineManager.MaxBranchLevel;
-                }
-                if (chapter.VariationIndexDepth == 0 && !LineManager.HasIndexLevelZero())
-                {
-                    if (LineManager.MaxBranchLevel > 1)
-                    {
-                        chapter.VariationIndexDepth = 1;
-                    }
-                    else
-                    {
-                        chapter.VariationIndexDepth = -1;
-                    }
-                }
-            }
 
             CreateVariationIndexPara();
             CreateParagraphs(para);
@@ -181,7 +180,7 @@ namespace ChessForge
         /// </summary>
         private void CreateVariationIndexPara()
         {
-            if (VariationIndexDepth > 0 || VariationIndexDepth == 0 && LineManager.HasIndexLevelZero())
+            if (EffectiveIndexDepth >= 0)
             {
                 Paragraph para = CreateParagraph("0", true);
                 para.Foreground = ChessForgeColors.VARIATION_INDEX_FORE;
@@ -457,7 +456,7 @@ namespace ChessForge
         private void ColorLastNode(LineSector sector, Run r, TreeNode nd, int levelGroup)
         {
             // do not color if this is an index level unless this is the last index level and is not the first node.
-            if (!LineManager.IsIndexLevel(sector.BranchLevel) || LineManager.IsLastIndexLine(sector.BranchLevel) && nd != sector.Nodes[0] )
+            if (!LineManager.IsIndexLevel(sector.BranchLevel) || LineManager.IsLastIndexLine(sector.BranchLevel) && nd != sector.Nodes[0])
             {
                 if (sector.Nodes.Count > 0 && nd.Parent != null && nd.Parent.Children.Count > 1)
                 {
@@ -576,7 +575,7 @@ namespace ChessForge
             Run r = e.Source as Run;
             if (r != null)
             {
-                if (VariationIndexDepth > -1)
+                if (EffectiveIndexDepth > -1)
                 {
                     Chapter chapter = AppState.ActiveChapter;
                     if (chapter != null)
@@ -599,7 +598,7 @@ namespace ChessForge
             Run r = e.Source as Run;
             if (r != null)
             {
-                if (VariationIndexDepth < Configuration.MAX_INDEX_DEPTH && VariationIndexDepth < LineManager.MaxBranchLevel - 1)
+                if (EffectiveIndexDepth < Configuration.MAX_INDEX_DEPTH && EffectiveIndexDepth < LineManager.MaxBranchLevel - 1)
                 {
                     Chapter chapter = AppState.ActiveChapter;
                     if (chapter != null)
