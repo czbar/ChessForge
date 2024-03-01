@@ -299,7 +299,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Creates paragraphs from the DisplaySectors.
+        /// Creates paragraphs from the LineSectors.
         /// </summary>
         /// <param name="firstPara"></param>
         private void CreateParagraphs(Paragraph firstPara)
