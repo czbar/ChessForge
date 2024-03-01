@@ -124,6 +124,16 @@ namespace ChessForge
                 }
             }
 
+            // we are updating diagram shapes so that everything looks ok even if
+            // we changed shape graphics in the meantime.
+            // However the call will set AppState.IsDirty so let's preserve what it is now.
+            bool currDirty = AppState.IsDirty;
+            foreach (var node in Nodes)
+            {
+                UpdateDiagramShapes(node);
+            }
+            AppState.IsDirty = currDirty;
+
             _selectedNode = Nodes[0];
             if (AppState.ActiveVariationTree != null)
             {

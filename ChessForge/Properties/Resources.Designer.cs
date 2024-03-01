@@ -2798,6 +2798,42 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to FEN Copied to Clipboard.
+        /// </summary>
+        public static string FlMsgCopiedFEN {
+            get {
+                return ResourceManager.GetString("FlMsgCopiedFEN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Line Copied to Clipboard.
+        /// </summary>
+        public static string FlMsgCopiedLine {
+            get {
+                return ResourceManager.GetString("FlMsgCopiedLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Moves Copied to Clipboard.
+        /// </summary>
+        public static string FlMsgCopiedMoves {
+            get {
+                return ResourceManager.GetString("FlMsgCopiedMoves", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tree Copied to Clipboard.
+        /// </summary>
+        public static string FlMsgCopiedTree {
+            get {
+                return ResourceManager.GetString("FlMsgCopiedTree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Game Imported Successfully..
         /// </summary>
         public static string FlMsgGameImportSuccess {
@@ -6476,6 +6512,15 @@ namespace ChessForge.Properties {
         public static string VariationAlreadyExists {
             get {
                 return ResourceManager.GetString("VariationAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Variation Index.
+        /// </summary>
+        public static string VariationIndex {
+            get {
+                return ResourceManager.GetString("VariationIndex", resourceCulture);
             }
         }
         

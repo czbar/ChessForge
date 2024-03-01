@@ -69,7 +69,7 @@ namespace ChessForge
         /// <summary>
         /// The RichTextBox based Study Tree view
         /// </summary>
-        private VariationTreeView _studyTreeView;
+        private StudyTreeView _studyTreeView;
 
         /// <summary>
         /// The RichTextBox based Model Game view
@@ -1641,7 +1641,7 @@ namespace ChessForge
 
             try
             {
-                _studyTreeView = new VariationTreeView(UiRtbStudyTreeView, GameData.ContentType.STUDY_TREE, -1);
+                _studyTreeView = new StudyTreeView(UiRtbStudyTreeView, GameData.ContentType.STUDY_TREE, -1);
 
                 _studyTreeView.ArticleSelected -= ArticleSelected;
                 _studyTreeView.ArticleSelected += ArticleSelected;
@@ -2088,7 +2088,7 @@ namespace ChessForge
                 AppLog.DumpVariationTree(DebugUtils.BuildLogFileName(App.AppPath, "wktree", distinct), ActiveVariationTree);
                 if (_studyTreeView != null)
                 {
-                    //AppLog.DumpLineSectorTree(DebugUtils.BuildLogFileName(App.AppPath, "lstree", distinct), _studyTreeView.DisplayManager.SectorsTree);
+                    AppLog.DumpLineSectorTree(DebugUtils.BuildLogFileName(App.AppPath, "lstree", distinct), _studyTreeView.LineManager.LineSectors);
                 }
                 DebugDumps.DumpStatesAndTimers(DebugUtils.BuildLogFileName(App.AppPath, "timest", distinct));
             }
@@ -2848,7 +2848,7 @@ namespace ChessForge
                 // TODO: update only the Header
                 if (_studyTreeView == null)
                 {
-                    _studyTreeView = new VariationTreeView(UiRtbStudyTreeView, GameData.ContentType.STUDY_TREE, -1);
+                    _studyTreeView = new StudyTreeView(UiRtbStudyTreeView, GameData.ContentType.STUDY_TREE, -1);
                 }
 
                 _studyTreeView.BuildFlowDocumentForVariationTree();

@@ -134,7 +134,7 @@ namespace ChessForge
                             {
                                 if (_exerciseTreeView != null)
                                 {
-                                    if (MessageBox.Show(Properties.Resources.ViewExercise, Properties.Resources.Exercise, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                                    if (MessageBox.Show(Properties.Resources.ViewExercise, Properties.Resources.Exercise, MessageBoxButton.YesNoCancel, MessageBoxImage.Question) == MessageBoxResult.Yes)
                                     {
                                         _exerciseTreeView.EventShowHideButtonClicked(null, null);
                                     }

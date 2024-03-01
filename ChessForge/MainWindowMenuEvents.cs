@@ -35,7 +35,7 @@ namespace ChessForge
             WorkbookManager.CreateNewWorkbook();
 
             // TODO: this call looks unnecessary as SetupGuiForNewSession() below creates this view again.
-            _studyTreeView = new VariationTreeView(UiRtbStudyTreeView, GameData.ContentType.STUDY_TREE, -1);
+            _studyTreeView = new StudyTreeView(UiRtbStudyTreeView, GameData.ContentType.STUDY_TREE, -1);
 
             // ask for the options
             if (!ShowWorkbookOptionsDialog(false))
@@ -2354,9 +2354,10 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiMnciCopyFen_Click(object sender, RoutedEventArgs e)
+        public void UiMnciCopyFen_Click(object sender, RoutedEventArgs e)
         {
             ActiveTreeView.CopyFenToClipboard();
+            BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgCopiedFEN, System.Windows.Media.Brushes.Green);
         }
 
         /// <summary>
@@ -2987,6 +2988,7 @@ namespace ChessForge
             {
                 ActiveTreeView.PlaceSelectedForCopyInClipboard();
                 ActiveTreeView.DeleteRemainingMoves();
+                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgCopiedMoves, System.Windows.Media.Brushes.Green);
             }
         }
 
@@ -3011,6 +3013,7 @@ namespace ChessForge
             {
                 ActiveTreeView.SelectActiveLineForCopy();
                 ActiveTreeView.PlaceSelectedForCopyInClipboard();
+                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgCopiedLine, System.Windows.Media.Brushes.Green);
             }
         }
 
@@ -3025,6 +3028,7 @@ namespace ChessForge
             {
                 ActiveTreeView.SelectSubtreeForCopy();
                 ActiveTreeView.PlaceSelectedForCopyInClipboard();
+                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgCopiedTree, System.Windows.Media.Brushes.Green);
             }
         }
 

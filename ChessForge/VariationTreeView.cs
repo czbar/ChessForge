@@ -232,7 +232,7 @@ namespace ChessForge
         /// <summary>
         /// Maps Node Ids to Runs for quick access.
         /// </summary>
-        private Dictionary<int, Run> _dictNodeToRun = new Dictionary<int, Run>();
+        protected Dictionary<int, Run> _dictNodeToRun = new Dictionary<int, Run>();
 
         /// <summary>
         /// Maps Node Ids to Comment Runs for quick access.
@@ -826,9 +826,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Selects a line for the next/prev sibling from the last fork, if found.
-        /// Then select the node with the same number/color as the same one
-        /// or, if not available, the last node on that line.
+        /// Selects a line for the next/prev sibling if we are at fork.
         /// </summary>
         /// <param name="prevNext"></param>
         /// <returns></returns>
@@ -838,13 +836,15 @@ namespace ChessForge
 
             try
             {
-                node = ActiveLineUtilities.GetNextLineNode(GetSelectedNode(), prevNext);
-                if (node != null)
-                {
-                    SelectNode(node);
-                }
+                TreeNode currNode = GetSelectedNode();
+                node = TreeUtils.GetNextSibling(currNode, prevNext, true);
             }
             catch { }
+
+            if (node != null)
+            {
+                SelectNode(node);
+            }
 
             return node;
         }
@@ -958,23 +958,30 @@ namespace ChessForge
         /// </summary>
         public void Clear(GameData.ContentType contentType)
         {
-            Document.Blocks.Clear();
+            try
+            {
+                Document.Blocks.Clear();
 
-            PreviousNextViewBars.BuildPreviousNextBar(contentType);
+                PreviousNextViewBars.BuildPreviousNextBar(contentType);
 
-            // resets
-            _dictNodeToRun.Clear();
-            _dictRunToParagraph.Clear();
+                // resets
+                _dictNodeToRun.Clear();
+                _dictRunToParagraph.Clear();
 
-            _dictNodeToCommentRun.Clear();
-            _dictNodeToCommentBeforeMoveRun.Clear();
-            _dictCommentRunToParagraph.Clear();
-            _dictCommentBeforeMoveRunToParagraph.Clear();
+                _dictNodeToCommentRun.Clear();
+                _dictNodeToCommentBeforeMoveRun.Clear();
+                _dictCommentRunToParagraph.Clear();
+                _dictCommentBeforeMoveRunToParagraph.Clear();
 
-            _dictNodeToReferenceRun.Clear();
-            _dictReferenceRunToParagraph.Clear();
+                _dictNodeToReferenceRun.Clear();
+                _dictReferenceRunToParagraph.Clear();
 
-            _currParagraphLevel = 0;
+                _currParagraphLevel = 0;
+            }
+            catch(Exception ex)
+            {
+                AppLog.Message("Clear Blocks", ex);
+            }
         }
 
         /// <summary>
@@ -1563,7 +1570,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd"></param>
         /// <param name="includeNumber"></param>
-        private void BuildTreeLineText(TreeNode nd, Paragraph para, bool includeNumber)
+        virtual protected void BuildTreeLineText(TreeNode nd, Paragraph para, bool includeNumber)
         {
             while (true)
             {
@@ -1688,7 +1695,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd"></param>
         /// <param name="includeNumber"></param>
-        private void BuildNodeTextAndAddToPara(TreeNode nd, bool includeNumber, Paragraph para)
+        protected Run BuildNodeTextAndAddToPara(TreeNode nd, bool includeNumber, Paragraph para, int displayLevel = -1)
         {
             string nodeText = BuildNodeText(nd, includeNumber);
 
@@ -1697,7 +1704,11 @@ namespace ChessForge
             {
                 if (!nd.IsFirstChild())
                 {
-                    fontColor = GetParaAttrs(_currParagraphLevel.ToString(), true).FirstCharColor;
+                    if (displayLevel < 0)
+                    {
+                        displayLevel = _currParagraphLevel;
+                    }
+                    fontColor = GetParaAttrs(displayLevel.ToString(), true).FirstCharColor;
                 }
             }
 
@@ -1710,6 +1721,8 @@ namespace ChessForge
             {
                 TextUtils.RemoveBlunderNagFromText(rMove);
             }
+
+            return rMove;
         }
 
         /// <summary>
@@ -1718,7 +1731,7 @@ namespace ChessForge
         /// <param name="nd"></param>
         /// <param name="includeNumber"></param>
         /// <returns></returns>
-        private string BuildNodeText(TreeNode nd, bool includeNumber)
+        protected string BuildNodeText(TreeNode nd, bool includeNumber)
         {
             if (nd.NodeId == 0)
             {
@@ -1862,10 +1875,12 @@ namespace ChessForge
                     return;
                 }
 
-                CommentPart startPart = new CommentPart(CommentPartType.TEXT, nd.NodeId == 0 ? "[ " : "[ ");
+                //CommentPart startPart = new CommentPart(CommentPartType.TEXT, nd.NodeId == 0 ? "[ " : "[ ");
+                CommentPart startPart = new CommentPart(CommentPartType.TEXT, " ");
                 parts.Insert(0, startPart);
 
-                CommentPart endPart = new CommentPart(CommentPartType.TEXT, nd.NodeId == 0 ? " ] " : " ] ");
+                //CommentPart endPart = new CommentPart(CommentPartType.TEXT, nd.NodeId == 0 ? " ] " : " ] ");
+                CommentPart endPart = new CommentPart(CommentPartType.TEXT, " ");
                 parts.Add(endPart);
 
                 // in front of that start bracket!
@@ -1988,7 +2003,8 @@ namespace ChessForge
             try
             {
 
-                string commentText = "[ " + nd.CommentBeforeMove + " ] ";
+                //string commentText = "[ " + nd.CommentBeforeMove + " ] ";
+                string commentText = " " + nd.CommentBeforeMove + " ";
                 Run run = new Run(commentText);
                 run.FontStyle = FontStyles.Normal;
                 run.Foreground = Brushes.Black;
@@ -2002,7 +2018,7 @@ namespace ChessForge
                 _dictCommentBeforeMoveRunToParagraph.Add(run, para);
 
                 Run rNode = _dictNodeToRun[nd.NodeId];
-                para.Inlines.InsertBefore(rNode,run);
+                para.Inlines.InsertBefore(rNode, run);
             }
             catch (Exception ex)
             {
@@ -2077,6 +2093,7 @@ namespace ChessForge
             {
                 List<TreeNode> lstNodes = TreeUtils.CopyNodeList(_selectedForCopy);
                 SystemClipboard.CopyMoveList(lstNodes, ShownVariationTree.MoveNumberOffset);
+                _mainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgCopiedMoves, Brushes.Green);
             }
         }
 
@@ -2203,7 +2220,7 @@ namespace ChessForge
         /// <summary>
         /// Clears the "for Copy" selection.
         /// </summary>
-        private void ClearCopySelect()
+        protected void ClearCopySelect()
         {
             try
             {
@@ -2237,7 +2254,7 @@ namespace ChessForge
         /// <param name="r"></param>
         /// <param name="clickCount"></param>
         /// <param name="changedButton"></param>
-        private void SelectRun(Run r, int clickCount, MouseButton changedButton)
+        protected void SelectRun(Run r, int clickCount, MouseButton changedButton)
         {
             if (!IsSelectionEnabled() || r == null)
             {
@@ -2549,7 +2566,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void EventPageHeaderClicked(object sender, MouseButtonEventArgs e)
+        virtual protected void EventPageHeaderClicked(object sender, MouseButtonEventArgs e)
         {
             try
             {

@@ -138,6 +138,8 @@ namespace ChessForge
                 chapter.IsExercisesListExpanded = cvs.IsExerciseListExpanded;
                 chapter.ActiveModelGameIndex = chapter.VerifyGameIndex(cvs.ActiveGameIndex);
                 chapter.ActiveExerciseIndex = chapter.VerifyExerciseIndex(cvs.ActiveExerciseIndex);
+
+                chapter.VariationIndexDepth = cvs.VariationIndexDepth;
             }
         }
 

@@ -186,6 +186,9 @@
   <data name="Studies" xml:space="preserve">
     <value>Studies</value>
   </data>
+  <data name="VariationIndex" xml:space="preserve">
+    <value>Variation Index</value>
+  </data>
   <data name="Game" xml:space="preserve">
     <value>Game</value>
   </data>
@@ -1397,6 +1400,18 @@
   </data>
   <data name="FlMsgGamesThumbnailsSet" xml:space="preserve">
     <value>Games thumbnails have been set.</value>
+  </data>
+  <data name="FlMsgCopiedFEN" xml:space="preserve">
+    <value>FEN Copied to Clipboard</value>
+  </data>
+  <data name="FlMsgCopiedLine" xml:space="preserve">
+    <value>Line Copied to Clipboard</value>
+  </data>
+  <data name="FlMsgCopiedTree" xml:space="preserve">
+    <value>Tree Copied to Clipboard</value>
+  </data>
+  <data name="FlMsgCopiedMoves" xml:space="preserve">
+    <value>Moves Copied to Clipboard</value>
   </data>
   <data name="MsgNoDuplicatesFound" xml:space="preserve">
     <value>No duplicates found.</value>

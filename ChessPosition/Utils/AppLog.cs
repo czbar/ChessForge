@@ -234,25 +234,26 @@ namespace ChessForge
         /// Writes out a LineSectorTree
         /// </summary>
         /// <param name="filePath"></param>
-        /// <param name="tree"></param>
+        /// <param name="lineSectors"></param>
         [Conditional("DEBUG")]
-        public static void DumpLineSectorTree(string filePath, LineSectorsTree tree)
+        public static void DumpLineSectorTree(string filePath, List<LineSector> lineSectors)
         {
             StringBuilder sb = new StringBuilder();
 
-            if (tree == null)
+            if (lineSectors == null)
             {
                 sb.Append("LineSectorTree reference is null.");
             }
             else
             {
-                for (int i = 0; i < tree.LineSectors.Count; i++)
+                for (int i = 0; i < lineSectors.Count; i++)
                 {
-                    LineSector sector = tree.LineSectors[i];
-                    sb.Append("LineSector index = " + i.ToString() + Environment.NewLine);
-                    sb.Append("Display level = " + sector.BranchLevel.ToString() + Environment.NewLine);
-                    sb.Append("Sector type = " + sector.SectorType.ToString() + Environment.NewLine);
+                    LineSector sector = lineSectors[i];
                     sb.Append("LineSector Id = " + sector.LineSectorId.ToString() + Environment.NewLine);
+                    sb.Append("LineSector index = " + i.ToString() + Environment.NewLine);
+                    sb.Append("Branch level = " + sector.BranchLevel.ToString() + Environment.NewLine);
+                    sb.Append("Display level = " + sector.DisplayLevel.ToString() + Environment.NewLine);
+                    sb.Append("Sector type = " + sector.SectorType.ToString() + Environment.NewLine);
                     sb.Append("Parent LineSector Id = " + (sector.Parent == null ? "-" : sector.Parent.LineSectorId.ToString()) + Environment.NewLine);
                     for (int j = 0; j < sector.Children.Count; j++)
                     {
@@ -269,7 +270,7 @@ namespace ChessForge
                         sb.Append("Move alg = " + nd.LastMoveAlgebraicNotationWithNag + Environment.NewLine);
                     }
                     sb.AppendLine();
-                    sb.Append("********" + Environment.NewLine);
+                    sb.Append("************" + Environment.NewLine);
                     sb.Append(Environment.NewLine + Environment.NewLine);
                 }
             }

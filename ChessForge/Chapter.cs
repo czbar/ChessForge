@@ -88,6 +88,9 @@ namespace ChessForge
         // index of the currently shown exercise in the Exercises list
         private int _activeExerciseIndex = -1;
 
+        // number of levels in the variation index of the Study view.
+        private int? _variationIndexDepth = null;
+
         // whether the chapter is expanded in the ChaptersView
         private bool _isViewExpanded = true;
 
@@ -359,6 +362,33 @@ namespace ChessForge
                 return _activeExerciseIndex;
             }
             set => _activeExerciseIndex = value;
+        }
+
+        /// <summary>
+        /// Holds the depth of the variation index in the study tree.
+        /// Ensures that the return value is within -1 to Configuration.MAX_INDEX_DEPTH range.
+        /// </summary>
+        public int? VariationIndexDepth
+        {
+            get
+            {
+                if (_variationIndexDepth == null)
+                {
+                    _variationIndexDepth = Configuration.VariationIndexDepth;
+                }
+                else if (_variationIndexDepth < -1)
+                {
+                    _variationIndexDepth = -1;
+                }
+                else if (_variationIndexDepth > Configuration.MAX_INDEX_DEPTH)
+                {
+                    _variationIndexDepth = Configuration.MAX_INDEX_DEPTH;
+                }
+
+                return _variationIndexDepth;
+            }
+
+            set => _variationIndexDepth = value;
         }
 
         /// <summary>

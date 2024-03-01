@@ -186,6 +186,9 @@
   <data name="Studies" xml:space="preserve">
     <value>Teoria</value>
   </data>
+  <data name="VariationIndex" xml:space="preserve">
+    <value>Wykaz Wariantów</value>
+  </data>
   <data name="Game" xml:space="preserve">
     <value>Partia</value>
   </data>
@@ -1397,6 +1400,18 @@
   </data>
   <data name="FlMsgGamesThumbnailsSet" xml:space="preserve">
     <value>Wizytówki partii zostały dodane.</value>
+  </data>
+  <data name="FlMsgCopiedFEN" xml:space="preserve">
+    <value>FEN wpisany do schowka.</value>
+  </data>
+  <data name="FlMsgCopiedLine" xml:space="preserve">
+    <value>Wariant skopiowany do schowka</value>
+  </data>
+  <data name="FlMsgCopiedTree" xml:space="preserve">
+    <value>Drzewo skopiowane do schowka</value>
+  </data>
+  <data name="FlMsgCopiedMoves" xml:space="preserve">
+    <value>Posunięcia skopiowane do schowka</value>
   </data>
   <data name="MsgNoDuplicatesFound" xml:space="preserve">
     <value>Nie znaleziono duplikatów.</value>

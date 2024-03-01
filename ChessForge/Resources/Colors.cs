@@ -26,6 +26,9 @@ namespace ChessForge
             ShowExplorerLinearBrush = CreateGradientBrushForResult(TABLE_HEADER_GREEN.Color, TABLE_HIGHLIGHT_GREEN.Color);
         }
 
+        public static SolidColorBrush VARIATION_INDEX_FORE = new SolidColorBrush(Color.FromRgb(18, 55, 97));
+        public static SolidColorBrush INDEX_SECTION_TITLE = new SolidColorBrush(Color.FromRgb(0x09, 0x4e, 0x89));
+
         public static SolidColorBrush WORKBOOK_TABLE_HILITE_FORE = new SolidColorBrush(Color.FromRgb(255, 0, 0));
         public static SolidColorBrush WORKBOOK_TABLE_REGULAR_FORE = new SolidColorBrush(Color.FromRgb(0, 0, 0));
 
