@@ -556,6 +556,12 @@ MsgNoMoveSelected=No move selected
 #Message about identical position not found
 MsgNoIdenticalPositions=No identical positions found.
 
+#Ask whether to edit search when identical positions not found
+MsgEditPositionSearch=Positions not found. Edit search?
+
+#Message Box Title for Position Search
+MsgTitlePositionSearch=Position Search
+
 #Opens the Workbook Options dialog
 WorkbookOptions=Workbook Options...
 
@@ -1092,6 +1098,9 @@ DlgSearchResults=Search Results
 
 #Select to Copy/Move
 SelectCopyMove=Select to Copy or Move...
+
+#Search again button
+SearchAgain=Search Again
 
 # Label explaining clicks in the Identical Positions dialog.
 DlgLabelIdenticalPositionHint=Double click an item to open its view.

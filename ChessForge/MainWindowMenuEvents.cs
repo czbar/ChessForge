@@ -9,9 +9,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using static ChessForge.WorkbookOperation;
 using ChessPosition.GameTree;
-using ChessForge;
 using System.Windows.Documents;
 using System.Linq;
 
@@ -770,7 +768,7 @@ namespace ChessForge
                 TreeNode nd = ActiveVariationTree == null ? null : ActiveVariationTree.SelectedNode;
 
                 bool externalSearch = !AppState.IsTreeViewTabActive();
-                FindIdenticalPositions.Search(nd, FindIdenticalPositions.Mode.FIND_AND_REPORT, externalSearch);
+                FindIdenticalPositions.Search(false, nd, FindIdenticalPositions.Mode.FIND_AND_REPORT, externalSearch, true, out _);
             }
             catch (Exception ex)
             {
@@ -817,13 +815,34 @@ namespace ChessForge
                     position = nd.Position;
                 }
 
-                SearchPositionDialog dlg = new SearchPositionDialog(position);
-                GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
-                if (dlg.ShowDialog() == true)
+                TreeNode searchNode = new TreeNode(null, "", 1);
+                bool stopSearch = false;
+                while (!stopSearch)
                 {
-                    TreeNode searchNode = new TreeNode(null, "", 1);
-                    searchNode.Position = new BoardPosition(dlg.PositionSetup);
-                    FindIdenticalPositions.Search(searchNode, FindIdenticalPositions.Mode.FIND_AND_REPORT, true);
+                    SearchPositionDialog dlg = new SearchPositionDialog(position);
+                    GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
+                    if (dlg.ShowDialog() == true)
+                    {
+                        searchNode.Position = new BoardPosition(dlg.PositionSetup);
+                        // store for another possible loop
+                        position = searchNode.Position;
+                        stopSearch = FindIdenticalPositions.Search(true, searchNode, FindIdenticalPositions.Mode.FIND_AND_REPORT, true, false, out bool searchAgain);
+                        if (searchAgain)
+                        {
+                            stopSearch = false;
+                        }
+                        else if (!stopSearch)
+                        {
+                            if (MessageBox.Show(Properties.Resources.MsgEditPositionSearch, Properties.Resources.MsgTitlePositionSearch, MessageBoxButton.YesNoCancel, MessageBoxImage.Question) != MessageBoxResult.Yes)
+                            {
+                                stopSearch = true;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        stopSearch = true;
+                    }
                 }
             }
             catch (Exception ex)

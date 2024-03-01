@@ -720,6 +720,14 @@ MsgNoMoveSelected=Nie wybrano żadnego posunięcia
 #english: MsgNoIdenticalPositions=No identical positions found.
 MsgNoIdenticalPositions=Nie znaleziono identycznych pozycji.
 
+#description: Ask whether to edit search when identical positions not found
+#english: MsgEditPositionSearch=Positions not found. Edit search?
+MsgEditPositionSearch=Pozycki nie znaleziono. Wrócić do edycji?
+
+#description: Message Box Title for Position Search
+#english: MsgTitlePositionSearch=Position Search
+MsgTitlePositionSearch=Wyszukiwanie Pozycji
+
 #description: Opens the Workbook Options dialog
 #english: WorkbookOptions=Workbook Options...
 WorkbookOptions=Opcje Podręcznika
@@ -1395,6 +1403,10 @@ DlgSearchResults=Wynik Wyszukiwania
 #description: Select to Copy/Move
 #english: SelectCopyMove=Select to Copy or Move...
 SelectCopyMove=Wybierz i Kopiuj lub Przenieś...
+
+#description: Search again button
+#english: SearchAgain=Search Again
+SearchAgain=Szukaj Ponownie
 
 #description:  Label explaining clicks in the Identical Positions dialog.
 #english: DlgLabelIdenticalPositionHint=Double click an item to open its view.

@@ -23,6 +23,7 @@
             </Canvas>
         </Viewbox>
         <Button x:Name="UiBtnCopyMove" Content="{x:Static p:Resources.SelectCopyMove}" HorizontalAlignment="Left" Margin="20,0,0,15" VerticalAlignment="Bottom" Click="UiBtnCopyMove_Click" />
+        <Button x:Name="UiBtnSearchAgain" Content="{x:Static p:Resources.SearchAgain}" HorizontalAlignment="Center" Margin="0,0,0,15" VerticalAlignment="Bottom" Click="UiBtnSearchAgain_Click" />
         <Button x:Name="UiBtnClose" IsCancel="True" Content="{x:Static p:Resources.Close}" HorizontalAlignment="Right" Margin="0,0,140,15" VerticalAlignment="Bottom" Width="100" Click="UiBtnClose_Click" />
         <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Right" Margin="0,0,20,15" VerticalAlignment="Bottom" Width="100" Click="UiBtnHelp_Click" />
     </Grid>

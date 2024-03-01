@@ -3968,6 +3968,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Positions not found. Edit search?.
+        /// </summary>
+        public static string MsgEditPositionSearch {
+            get {
+                return ResourceManager.GetString("MsgEditPositionSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter valid Url or leave empty to delete link. .
         /// </summary>
         public static string MsgNeedValidUrlOrEmpty {
@@ -4063,6 +4072,15 @@ namespace ChessForge.Properties {
         public static string MsgThisOverwritesStudy {
             get {
                 return ResourceManager.GetString("MsgThisOverwritesStudy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Position Search.
+        /// </summary>
+        public static string MsgTitlePositionSearch {
+            get {
+                return ResourceManager.GetString("MsgTitlePositionSearch", resourceCulture);
             }
         }
         
@@ -5081,6 +5099,15 @@ namespace ChessForge.Properties {
         public static string Search {
             get {
                 return ResourceManager.GetString("Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search Again.
+        /// </summary>
+        public static string SearchAgain {
+            get {
+                return ResourceManager.GetString("SearchAgain", resourceCulture);
             }
         }
         

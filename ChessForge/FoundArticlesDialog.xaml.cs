@@ -35,7 +35,8 @@ namespace ChessForge
             OpenView,
             CopyArticles,
             MoveArticles,
-            CopyOrMoveArticles
+            CopyOrMoveArticles,
+            SearchAgain
         }
 
         /// <summary>
@@ -95,21 +96,28 @@ namespace ChessForge
         /// </summary>
         private Mode _mode;
 
+        // determines whethere to show button to request editing of the search 
+        private bool _editableSearch;
+
         /// <summary>
         /// Creates the dialog and builds the content of the rich text box.
         /// </summary>
         /// <param name="nd"></param>
         /// <param name="articleList"></param>
-        public FoundArticlesDialog(TreeNode nd, Mode mode, ref ObservableCollection<ArticleListItem> articleList)
+        public FoundArticlesDialog(TreeNode nd, Mode mode, ref ObservableCollection<ArticleListItem> articleList, bool editableSearch)
         {
             _node = nd;
             _mode = mode;
             _articleList = articleList;
+            _editableSearch = editableSearch;
 
             InitializeComponent();
 
             UiBtnCopyMove.Content = "   " + Properties.Resources.SelectCopyMove + "    ";
+            UiBtnSearchAgain.Content = "   " + Properties.Resources.SearchAgain + "    ";
             IdenticalPositionFloatingBoard = new ChessBoardSmall(_cnvFloatingBoard, UiImgFloatingBoard, null, null, true, false);
+
+            UiBtnSearchAgain.Visibility = _editableSearch ? Visibility.Visible : Visibility.Collapsed;
 
             BuildSummaryParagraph();
             BuildAllItemParagraphs();
@@ -168,6 +176,11 @@ namespace ChessForge
             CreateItemCountRun(para, Properties.Resources.Exercises, exerciseCount);
 
             UiRtbIdenticalPositions.Document.Blocks.Add(para);
+
+            if (gameCount == 0 && exerciseCount == 0)
+            {
+                UiBtnCopyMove.Visibility = Visibility.Collapsed;
+            }
         }
 
         /// <summary>
@@ -686,6 +699,19 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnClose_Click(object sender, RoutedEventArgs e)
         {
+            DialogResult = false;
+        }
+
+
+        /// <summary>
+        /// The user pressed the Search Again button
+        /// so exit the dialod with false and set action to SearchAgain
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnSearchAgain_Click(object sender, RoutedEventArgs e)
+        {
+            Request = Action.SearchAgain;
             DialogResult = false;
         }
 

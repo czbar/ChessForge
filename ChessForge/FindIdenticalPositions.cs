@@ -34,8 +34,10 @@ namespace ChessForge
         /// <param name="mode"></param>
         /// <param name="externalSearch">whether this was invoked from the view that is not subject to search e.g. INTRO</param>
         /// <returns></returns>
-        public static bool Search(TreeNode searchNode, Mode mode, bool externalSearch)
+        public static bool Search(bool editableSearch, TreeNode searchNode, Mode mode, bool externalSearch, bool reportNoFind, out bool searchAgain)
         {
+            searchAgain = false;
+
             bool anyFound = false;
             ObservableCollection<ArticleListItem> lstIdenticalPositions;
             try
@@ -50,14 +52,18 @@ namespace ChessForge
                     // if externalSearch, a single match is good (as it is not in the invoking view)
                     if (!ChapterUtils.HasAtLeastNArticles(lstIdenticalPositions, externalSearch ? 1 : 2 ))
                     {
-                        // we only have 1 result which is the current position
-                        MessageBox.Show(Properties.Resources.MsgNoIdenticalPositions, Properties.Resources.ChessForge, MessageBoxButton.OK, MessageBoxImage.Information);
+                        if (reportNoFind)
+                        {
+                            // we only have 1 result which is the current position
+                            MessageBox.Show(Properties.Resources.MsgNoIdenticalPositions, Properties.Resources.ChessForge, MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
                     }
                     else
                     {
                         FoundArticlesDialog dlgEx = new FoundArticlesDialog(searchNode,
                                                             FoundArticlesDialog.Mode.IDENTICAL_ARTICLES,
-                                                            ref lstIdenticalPositions);
+                                                            ref lstIdenticalPositions,
+                                                            editableSearch);
                         GuiUtilities.PositionDialog(dlgEx, AppState.MainWin, 100);
 
                         if (dlgEx.ShowDialog() == true)
@@ -70,6 +76,10 @@ namespace ChessForge
                             {
                                 ProcessSelectedPosition(lstIdenticalPositions, dlgEx.Request, dlgEx.ArticleIndexId);
                             }
+                        }
+                        else
+                        {
+                            searchAgain = dlgEx.Request == FoundArticlesDialog.Action.SearchAgain;
                         }
                     }
                 }
