@@ -1032,6 +1032,9 @@
   <data name="SelectCopyMove" xml:space="preserve">
     <value>Select to Copy or Move...</value>
   </data>
+  <data name="SearchAgain" xml:space="preserve">
+    <value>Search Again</value>
+  </data>
   <data name="DlgLabelIdenticalPositionHint" xml:space="preserve">
     <value>Double click an item to open its view.</value>
   </data>

@@ -1099,6 +1099,9 @@ DlgSearchResults=Search Results
 #Select to Copy/Move
 SelectCopyMove=Select to Copy or Move...
 
+#Search again button
+SearchAgain=Search Again
+
 # Label explaining clicks in the Identical Positions dialog.
 DlgLabelIdenticalPositionHint=Double click an item to open its view.
 

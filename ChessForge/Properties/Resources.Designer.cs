@@ -5103,6 +5103,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search Again.
+        /// </summary>
+        public static string SearchAgain {
+            get {
+                return ResourceManager.GetString("SearchAgain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Find Positions....
         /// </summary>
         public static string SearchByFen {

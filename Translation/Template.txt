@@ -1404,6 +1404,10 @@ DlgSearchResults=
 #english: SelectCopyMove=Select to Copy or Move...
 SelectCopyMove=
 
+#description: Search again button
+#english: SearchAgain=Search Again
+SearchAgain=
+
 #description:  Label explaining clicks in the Identical Positions dialog.
 #english: DlgLabelIdenticalPositionHint=Double click an item to open its view.
 DlgLabelIdenticalPositionHint=
