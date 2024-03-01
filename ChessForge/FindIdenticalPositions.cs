@@ -34,7 +34,7 @@ namespace ChessForge
         /// <param name="mode"></param>
         /// <param name="externalSearch">whether this was invoked from the view that is not subject to search e.g. INTRO</param>
         /// <returns></returns>
-        public static bool Search(TreeNode searchNode, Mode mode, bool externalSearch)
+        public static bool Search(TreeNode searchNode, Mode mode, bool externalSearch, bool reportNoFind)
         {
             bool anyFound = false;
             ObservableCollection<ArticleListItem> lstIdenticalPositions;
@@ -50,8 +50,11 @@ namespace ChessForge
                     // if externalSearch, a single match is good (as it is not in the invoking view)
                     if (!ChapterUtils.HasAtLeastNArticles(lstIdenticalPositions, externalSearch ? 1 : 2 ))
                     {
-                        // we only have 1 result which is the current position
-                        MessageBox.Show(Properties.Resources.MsgNoIdenticalPositions, Properties.Resources.ChessForge, MessageBoxButton.OK, MessageBoxImage.Information);
+                        if (reportNoFind)
+                        {
+                            // we only have 1 result which is the current position
+                            MessageBox.Show(Properties.Resources.MsgNoIdenticalPositions, Properties.Resources.ChessForge, MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
                     }
                     else
                     {
