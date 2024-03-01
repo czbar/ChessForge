@@ -75,6 +75,10 @@ namespace ChessForge
         // hosting Study View
         private StudyTreeView _studyView;
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="tree"></param>
         public LineSectorManager(StudyTreeView tree)
         {
             _studyView = tree;
@@ -142,7 +146,6 @@ namespace ChessForge
             }
 
             ProcessChildSectors(rootSector, root);
-            //BuildLineSector(rootSector, root, 0);
 
             CombineSiblingLineSectors();
             CombineTopLineSectors();
@@ -185,11 +188,6 @@ namespace ChessForge
                 sector.SectorType = LineSectorType.FORKING;
                 parent.AddChild(sector);
                 ProcessChildSectors(sector, nd);
-                //for (int i = 0; i < nd.Children.Count; i++)
-                //{
-                //    nd.Children[i].LineId = nd.LineId + "." + (i + 1).ToString();
-                //    BuildLineSector(sector, nd.Children[i], level);
-                //}
             }
 
             if (nd.Children.Count == 0)
@@ -221,10 +219,6 @@ namespace ChessForge
             else
             {
                 int displayLevel = parent.DisplayLevel;
-                if (IsLastIndexLine(parent.BranchLevel))
-                {
-                    //displayLevel = 0;
-                }
 
                 if (nd.Children.Count > 0)
                 {
