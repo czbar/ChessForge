@@ -365,7 +365,8 @@ namespace ChessForge
         }
 
         /// <summary>
-        // Depth of the variation index in the study tree
+        /// Holds the depth of the variation index in the study tree.
+        /// Ensures that the return value is within -1 to Configuration.MAX_INDEX_DEPTH range.
         /// </summary>
         public int? VariationIndexDepth
         {
