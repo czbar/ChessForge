@@ -168,6 +168,11 @@ namespace ChessForge
             CreateItemCountRun(para, Properties.Resources.Exercises, exerciseCount);
 
             UiRtbIdenticalPositions.Document.Blocks.Add(para);
+
+            if (gameCount == 0 && exerciseCount == 0)
+            {
+                UiBtnCopyMove.Visibility = Visibility.Collapsed;
+            }
         }
 
         /// <summary>
