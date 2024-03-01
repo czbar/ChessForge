@@ -34,8 +34,10 @@ namespace ChessForge
         /// <param name="mode"></param>
         /// <param name="externalSearch">whether this was invoked from the view that is not subject to search e.g. INTRO</param>
         /// <returns></returns>
-        public static bool Search(TreeNode searchNode, Mode mode, bool externalSearch, bool reportNoFind)
+        public static bool Search(bool editableSearch, TreeNode searchNode, Mode mode, bool externalSearch, bool reportNoFind, out bool searchAgain)
         {
+            searchAgain = false;
+
             bool anyFound = false;
             ObservableCollection<ArticleListItem> lstIdenticalPositions;
             try
@@ -60,7 +62,8 @@ namespace ChessForge
                     {
                         FoundArticlesDialog dlgEx = new FoundArticlesDialog(searchNode,
                                                             FoundArticlesDialog.Mode.IDENTICAL_ARTICLES,
-                                                            ref lstIdenticalPositions);
+                                                            ref lstIdenticalPositions,
+                                                            editableSearch);
                         GuiUtilities.PositionDialog(dlgEx, AppState.MainWin, 100);
 
                         if (dlgEx.ShowDialog() == true)
@@ -73,6 +76,10 @@ namespace ChessForge
                             {
                                 ProcessSelectedPosition(lstIdenticalPositions, dlgEx.Request, dlgEx.ArticleIndexId);
                             }
+                        }
+                        else
+                        {
+                            searchAgain = dlgEx.Request == FoundArticlesDialog.Action.SearchAgain;
                         }
                     }
                 }
