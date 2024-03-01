@@ -128,7 +128,7 @@ namespace ChessForge
                     {
                         FoundArticlesDialog dlgEx = new FoundArticlesDialog(null,
                                                             FoundArticlesDialog.Mode.FILTER_GAMES,
-                                                            ref lstGames);
+                                                            ref lstGames, false);
                         GuiUtilities.PositionDialog(dlgEx, AppState.MainWin, 100);
 
                         if (dlgEx.ShowDialog() == true)
