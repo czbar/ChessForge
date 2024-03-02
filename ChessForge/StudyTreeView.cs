@@ -166,6 +166,7 @@ namespace ChessForge
         /// <param name="includeNumber"></param>
         override protected void BuildTreeLineText(TreeNode root, Paragraph para, bool includeNumber)
         {
+            DisplayLevelAttrs.ResetLastMoveBrush();
             LineManager.BuildLineSectors(root);
 
             CreateVariationIndexPara();
