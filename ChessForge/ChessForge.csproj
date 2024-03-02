@@ -267,6 +267,7 @@
     <Compile Include="StudyTreeView.cs" />
     <Compile Include="Tools.cs" />
     <Compile Include="TreeViewManagement\DisplayLevelAttrs.cs" />
+    <Compile Include="TreeViewManagement\DisplaySector.cs" />
     <Compile Include="TreeViewManagement\LineSectorManager.cs" />
     <Compile Include="SelectArticlesDialog.xaml.cs">
       <DependentUpon>SelectArticlesDialog.xaml</DependentUpon>
