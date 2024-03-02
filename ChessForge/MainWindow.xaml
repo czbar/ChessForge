@@ -218,7 +218,7 @@
                 <Viewbox x:Name="MainBoard" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Height="680" Margin="0,0,0,0" VerticalAlignment="Top" Width="680" PreviewMouseWheel="OnPreviewMouseWheel">
                     <Canvas x:Name="MainCanvas" Grid.Column="0" HorizontalAlignment="Left" Height="680" Margin="0,0,0,0" VerticalAlignment="Top" Width="680" ContextMenuOpening="MainCanvas_ContextMenuOpening">
                         <Canvas.ContextMenu>
-                            <ContextMenu  x:Name="UiMnMainBoard">
+                            <ContextMenu  x:Name="UiMncMainBoard">
                                 <MenuItem x:Name="UiMnciStartTrainingHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere_Click" />
                                 <MenuItem x:Name="UiMnciRestartTraining"  Header="{x:Static p:Resources.RestartTraining}" Click="UiMnTrainRestartTraining_Click"/>
                                 <MenuItem x:Name="UiMnciExitTraining" Header="{x:Static p:Resources.ExitTraining}" Click="UiMnStopTraining_Click"/>
@@ -274,7 +274,7 @@
                     <TabItem x:Name="UiTabTrainingProgress"  Header="{x:Static p:Resources.Training}" IsVisibleChanged="UiTabTrainingProgress_IsVisibleChanged">
                         <Grid Background="#FFE5E5E5">
                             <Grid.ContextMenu>
-                                <ContextMenu x:Name="_cmTrainingView">
+                                <ContextMenu x:Name="UiMncTrainingView">
                                     <MenuItem x:Name="_mnTrainRestartTraining" Header="{x:Static p:Resources.RestartTrainingSession}" Click="UiMnTrainRestartTraining_Click" />
                                     <MenuItem x:Name="_mnTrainExitTraining" Header="{x:Static p:Resources.ExitTraining}"  Click="UiMnStopTraining_Click" />
                                     <Separator x:Name="_mnTrainSepar_1" />
@@ -313,7 +313,7 @@
                              PreviewKeyDown="UiTabEngineGame_PreviewKeyDown" PreviewKeyUp="UiTabEngineGame_PreviewKeyUp" PreviewMouseDown="UiTabEngineGame_PreviewMouseDown"  >
                         <Grid Background="#FFE5E5E5">
                             <Grid.ContextMenu>
-                                <ContextMenu x:Name="UiCmEngineGame">
+                                <ContextMenu x:Name="UiMncEngineGame">
                                     <MenuItem x:Name="UiMnEngGame_SwapSides" Header="{x:Static p:Resources.EngGameSwapSides}" Click="UiMnEngGame_SwapSides_Click"  />
                                     <MenuItem x:Name="UiMnEngGame_RestartFromMove" Header="{x:Static p:Resources.EngGameRestartFrom}" Click="UiMnEngGame_RestartFromMove_Click"  />
                                     <MenuItem x:Name="UiMnEngGame_StartFromInit" Header="{x:Static p:Resources.EngGameStartFromInitial}" Click="UiMnEngGame_StartFromInit_Click"  />
@@ -340,7 +340,7 @@
                              PreviewKeyDown="ChessForgeMain_PreviewKeyDown" PreviewKeyUp="ChessForgeMain_PreviewKeyUp">
                         <Grid Background="#FFE5E5E5" PreviewMouseDown="Chapters_PreviewMouseDown" ContextMenuOpening="SupressContextMenu" PreviewMouseUp="Chapters_PreviewMouseUp" >
                             <Grid.ContextMenu>
-                                <ContextMenu x:Name="_cmChapters">
+                                <ContextMenu x:Name="UiMncChapters">
                                     <MenuItem x:Name="_mnAddChapter" Header="{x:Static p:Resources.CreateNewChapter}" Click="UiMnCreateNewChapter_Click"  />
                                     <MenuItem x:Name="_mnImportChapter" Header="{x:Static p:Resources.ImportNewChapter}" Click="UiMnImportChapter_Click" />
                                     <MenuItem x:Name="_mnImportModelGames" Header="{x:Static p:Resources.ImportGames}" Click="UiMnImportModelGames_Click" />
@@ -495,7 +495,7 @@
                                     <CommandBinding Command="ApplicationCommands.Cut"   Executed="IntroViewCut_Click"/>
                                 </RichTextBox.CommandBindings>
                                 <RichTextBox.ContextMenu>
-                                    <ContextMenu x:Name="UiCmIntro">
+                                    <ContextMenu x:Name="UiMncIntro">
                                         <MenuItem Command="ApplicationCommands.Cut"/>
                                         <MenuItem Command="ApplicationCommands.Copy"/>
                                         <MenuItem Command="ApplicationCommands.Paste"/>
@@ -531,7 +531,7 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <Grid.ContextMenu>
-                                <ContextMenu x:Name="UiCmnStudyTree">
+                                <ContextMenu x:Name="UiMncStudyTree">
                                     <MenuItem x:Name="UiMnStudyStartTrainingHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere_Click" />
                                     <MenuItem x:Name="UiMnStudy_CreateExercise" Header="{x:Static p:Resources.CreateExerciseFromHere}" Click="UiMn_CreateExercise_Click"  />
                                     <MenuItem x:Name="UiMnReferenceArticles" Header="{x:Static p:Resources.MnGameExerciseReferences}" Click="UiMnReferenceArticles_Click"/>
@@ -617,7 +617,7 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <Grid.ContextMenu>
-                                <ContextMenu x:Name="UiCmModelGames">
+                                <ContextMenu x:Name="UiMncModelGames">
                                     <MenuItem x:Name="_mnGame_ImportGames" Header="{x:Static p:Resources.ImportGames}" Click="UiMnGame_ImportGames_Click"  />
                                     <MenuItem x:Name="_mnGame_CreateModelGame" Header="{x:Static p:Resources.CreateNewGame}" Click="UiMnGame_CreateModelGame_Click" />
                                     <MenuItem x:Name="_mnGame_EditHeader" Header="{x:Static p:Resources.EditGameHeader}" Click="UiMnGame_EditHeader_Click" />
@@ -719,7 +719,7 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <Grid.ContextMenu>
-                                <ContextMenu x:Name="UiCmExercises">
+                                <ContextMenu x:Name="UiMncExercises">
                                     <MenuItem x:Name="UiMnExerc_ImportExercises" Header="{x:Static p:Resources.ImportExercises}" Click="UiMnExerc_ImportExercises_Click"  />
                                     <MenuItem x:Name="_mnExerc_CreateExercise" Header="{x:Static p:Resources.CreateNewExercise}" Click="UiMnExerc_CreateExercise_Click" />
                                     <MenuItem x:Name="_mnExerc_EditHeader" Header="{x:Static p:Resources.EditExerciseHeader}" Click="UiMnExerc_EditHeader_Click" />
@@ -815,7 +815,7 @@
                     <TabItem x:Name="UiTabBookmarks" Header="{x:Static p:Resources.Bookmarks}"  ContextMenu="{x:Null}" GotFocus="UiTabBookmarks_GotFocus" >
                         <Grid Background="#FFE5E5E5" PreviewMouseDown="Bookmarks_PreviewMouseDown" ContextMenuOpening="UiBookmarkMenuOpening">
                             <Grid.ContextMenu>
-                                <ContextMenu x:Name="_cmBookmarks">
+                                <ContextMenu x:Name="UiMncBookmarks">
                                     <MenuItem x:Name="_mnDeleteBookmark" Header="{x:Static p:Resources.DeleteThisBookmark}" Click="UiMnDeleteBookmark_Click" />
                                     <MenuItem x:Name="_mnDeleteAllBookmarks" Header="{x:Static p:Resources.DeleteAllBookmarks}" Click="UiMnDeleteAllBookmarks_Click" />
                                     <Separator />
@@ -1117,7 +1117,7 @@
                         </Style>
                     </RichTextBox.Resources>
                     <RichTextBox.ContextMenu>
-                        <ContextMenu x:Name="UiCmTopGames">
+                        <ContextMenu x:Name="UiMncTopGames">
                             <MenuItem x:Name="UiMnTopGamePreview" Header="{x:Static p:Resources.PreviewGame}" Click="UiMnTopGamePreview_Click" />
                             <MenuItem x:Name="UiMnTopGameImport" Header="{x:Static p:Resources.ImportIntoThisChapter}" Click="UiMnTopGameImport_Click" />
                             <MenuItem x:Name="UiMnTopGameLichessView" Header="{x:Static p:Resources.ViewOnLichess}" Click="UiMnTopGameLichessView_Click" />

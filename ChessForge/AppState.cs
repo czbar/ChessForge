@@ -1081,7 +1081,7 @@ namespace ChessForge
 
                 ConfigureBookmarkMenuOptions(MainWin.UiMnMarkBookmark, MainWin.UiMnStDeleteBookmark);
 
-                foreach (var item in MainWin.UiCmnStudyTree.Items)
+                foreach (var item in MainWin.UiMncStudyTree.Items)
                 {
                     if (item is MenuItem)
                     {
@@ -1141,7 +1141,7 @@ namespace ChessForge
 
                 ConfigureBookmarkMenuOptions(MainWin.UiMnGameMarkBookmark, MainWin.UiMnGameDeleteBookmark);
 
-                foreach (var item in MainWin.UiCmModelGames.Items)
+                foreach (var item in MainWin.UiMncModelGames.Items)
                 {
                     if (item is MenuItem)
                     {
@@ -1223,7 +1223,7 @@ namespace ChessForge
                     ConfigureBookmarkMenuOptions(MainWin.UiMnExercMarkBookmark, MainWin.UiMnExercDeleteBookmark);
                 }
 
-                foreach (var item in MainWin.UiCmExercises.Items)
+                foreach (var item in MainWin.UiMncExercises.Items)
                 {
                     if (item is MenuItem)
                     {

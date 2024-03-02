@@ -68,7 +68,7 @@ namespace ChessForge
                 {
                     Chapter chapter = WorkbookManager.SessionWorkbook.Chapters[chapterIndex];
                     WorkbookManager.LastClickedChapterIndex = chapterIndex;
-                    WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.GENERIC);
+                    WorkbookManager.EnableChaptersContextMenuItems(_mainWin.UiMncChapters, true, GameData.ContentType.GENERIC);
 
                     if (e.ChangedButton == MouseButton.Left)
                     {
@@ -123,7 +123,7 @@ namespace ChessForge
                     }
                     else if (e.ChangedButton == MouseButton.Right)
                     {
-                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.STUDY_TREE);
+                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin.UiMncChapters, true, GameData.ContentType.STUDY_TREE);
                         SelectChapter(chapterIndex, false);
                     }
                 }
@@ -160,7 +160,7 @@ namespace ChessForge
                     }
                     else if (e.ChangedButton == MouseButton.Right)
                     {
-                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.INTRO);
+                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin.UiMncChapters, true, GameData.ContentType.INTRO);
                         SelectChapter(chapterIndex, false);
                     }
                     _mainWin.UiTabIntro.Focus();
@@ -199,7 +199,7 @@ namespace ChessForge
                     }
                     else if (e.ChangedButton == MouseButton.Right)
                     {
-                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.INTRO);
+                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin.UiMncChapters, true, GameData.ContentType.INTRO);
                         SelectChapter(chapterIndex, false);
                     }
 
@@ -250,15 +250,15 @@ namespace ChessForge
                         }
                         else
                         {
-                            WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.MODEL_GAME, true);
-                            _mainWin._cmChapters.IsOpen = true;
+                            WorkbookManager.EnableChaptersContextMenuItems(_mainWin.UiMncChapters, true, GameData.ContentType.MODEL_GAME, true);
+                            _mainWin.UiMncChapters.IsOpen = true;
                             e.Handled = true;
                         }
                     }
                     else if (e.ChangedButton == MouseButton.Right)
                     {
                         WorkbookManager.LastClickedModelGameIndex = -1;
-                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.MODEL_GAME);
+                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin.UiMncChapters, true, GameData.ContentType.MODEL_GAME);
                         SelectChapter(chapterIndex, false);
                     }
                 }
@@ -307,15 +307,15 @@ namespace ChessForge
                         }
                         else
                         {
-                            WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.EXERCISE, true);
-                            _mainWin._cmChapters.IsOpen = true;
+                            WorkbookManager.EnableChaptersContextMenuItems(_mainWin.UiMncChapters, true, GameData.ContentType.EXERCISE, true);
+                            _mainWin.UiMncChapters.IsOpen = true;
                             e.Handled = true;
                         }
                     }
                     else if (e.ChangedButton == MouseButton.Right)
                     {
                         WorkbookManager.LastClickedExerciseIndex = -1;
-                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.EXERCISE);
+                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin.UiMncChapters, true, GameData.ContentType.EXERCISE);
                         SelectChapter(chapterIndex, false);
                     }
                 }
@@ -378,7 +378,7 @@ namespace ChessForge
                     }
                     else if (e.ChangedButton == MouseButton.Right)
                     {
-                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.MODEL_GAME);
+                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin.UiMncChapters, true, GameData.ContentType.MODEL_GAME);
                     }
                 }
 
@@ -437,7 +437,7 @@ namespace ChessForge
                     }
                     else if (e.ChangedButton == MouseButton.Right)
                     {
-                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin._cmChapters, true, GameData.ContentType.EXERCISE);
+                        WorkbookManager.EnableChaptersContextMenuItems(_mainWin.UiMncChapters, true, GameData.ContentType.EXERCISE);
                     }
                 }
 

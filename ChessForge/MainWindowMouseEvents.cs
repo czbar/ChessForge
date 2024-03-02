@@ -526,7 +526,7 @@ namespace ChessForge
             //UiTrainingView.SetLastClickedNode(null);
             Dispatcher.Invoke(() =>
             {
-                ContextMenu cm = _cmTrainingView;
+                ContextMenu cm = UiMncTrainingView;
                 foreach (object o in cm.Items)
                 {
                     if (o is MenuItem)
@@ -583,7 +583,7 @@ namespace ChessForge
         {
             if (sender is Canvas canvas)
             {
-                BookmarkManager.ChessboardClickedEvent(canvas.Name, _cmBookmarks, e);
+                BookmarkManager.ChessboardClickedEvent(canvas.Name, UiMncBookmarks, e);
             }
         }
 
@@ -598,7 +598,7 @@ namespace ChessForge
         private void Bookmarks_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             BookmarkManager.ClickedIndex = -1;
-            BookmarkManager.EnableBookmarkMenus(_cmBookmarks, false);
+            BookmarkManager.EnableBookmarkMenus(UiMncBookmarks, false);
         }
 
         /// <summary>

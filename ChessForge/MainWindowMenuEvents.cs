@@ -997,7 +997,7 @@ namespace ChessForge
             {
                 WorkbookManager.LastClickedChapterIndex = -1;
             }
-            WorkbookManager.EnableChaptersContextMenuItems(_cmChapters, WorkbookManager.LastClickedChapterIndex >= 0, GameData.ContentType.GENERIC);
+            WorkbookManager.EnableChaptersContextMenuItems(UiMncChapters, WorkbookManager.LastClickedChapterIndex >= 0, GameData.ContentType.GENERIC);
         }
 
         /// <summary>

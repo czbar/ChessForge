@@ -448,7 +448,7 @@ namespace ChessForge
 
             InitializeContentTypeSelectionComboBox();
 
-            UiDgActiveLine.ContextMenu = UiMnMainBoard;
+            UiDgActiveLine.ContextMenu = UiMncMainBoard;
             UiBtnExitGame.Background = ChessForgeColors.ExitButtonLinearBrush;
             UiBtnExitTraining.Background = ChessForgeColors.ExitButtonLinearBrush;
             UiBtnShowExplorer.Background = ChessForgeColors.ShowExplorerLinearBrush;
@@ -3162,11 +3162,11 @@ namespace ChessForge
                     MainChessBoard.Shapes.CancelShapeDraw(true);
                 }
                 AppState.ConfigureMainBoardContextMenu();
-                UiMnMainBoard.Visibility = Visibility.Visible;
+                UiMncMainBoard.Visibility = Visibility.Visible;
             }
             else
             {
-                UiMnMainBoard.Visibility = Visibility.Collapsed;
+                UiMncMainBoard.Visibility = Visibility.Collapsed;
                 e.Handled = true;
             }
         }

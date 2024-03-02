@@ -1401,7 +1401,7 @@ namespace ChessForge
             {
                 string moveTxt = BuildMoveTextForMenu(_lastClickedNode);
 
-                ContextMenu cm = _mainWin._cmTrainingView;
+                ContextMenu cm = _mainWin.UiMncTrainingView;
                 foreach (object o in cm.Items)
                 {
                     if (o is MenuItem)

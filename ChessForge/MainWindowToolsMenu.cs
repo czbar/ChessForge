@@ -21,16 +21,16 @@ namespace ChessForge
         {
             UiMainMenu.FontSize = size;
 
-            UiMnMainBoard.FontSize = size;
-            _cmTrainingView.FontSize = size;
-            UiCmEngineGame.FontSize = size;
-            _cmChapters.FontSize = size;
-            UiCmIntro.FontSize = size;
-            UiCmnStudyTree.FontSize = size;
-            UiCmModelGames.FontSize = size;
-            UiCmExercises.FontSize = size;
-            _cmBookmarks.FontSize = size;
-            UiCmTopGames.FontSize = size;
+            UiMncMainBoard.FontSize = size;
+            UiMncTrainingView.FontSize = size;
+            UiMncEngineGame.FontSize = size;
+            UiMncChapters.FontSize = size;
+            UiMncIntro.FontSize = size;
+            UiMncStudyTree.FontSize = size;
+            UiMncModelGames.FontSize = size;
+            UiMncExercises.FontSize = size;
+            UiMncBookmarks.FontSize = size;
+            UiMncTopGames.FontSize = size;
 
         }
 

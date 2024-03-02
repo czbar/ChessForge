@@ -771,7 +771,7 @@ namespace ChessForge
                     AppState.EnableTabViewMenuItems(TabViewType.MODEL_GAME, LastClickedNodeId, true);
                     if (!_contextMenuPrimed)
                     {
-                        _mainWin.UiCmModelGames.IsOpen = true;
+                        _mainWin.UiMncModelGames.IsOpen = true;
                         _contextMenuPrimed = true;
                     }
                     break;
@@ -779,7 +779,7 @@ namespace ChessForge
                     AppState.EnableTabViewMenuItems(TabViewType.EXERCISE, LastClickedNodeId, true);
                     if (!_contextMenuPrimed)
                     {
-                        _mainWin.UiCmExercises.IsOpen = true;
+                        _mainWin.UiMncExercises.IsOpen = true;
                         _contextMenuPrimed = true;
                     }
                     break;

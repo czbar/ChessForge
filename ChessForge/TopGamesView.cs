@@ -317,7 +317,7 @@ namespace ChessForge
                     {
                         if (!string.IsNullOrWhiteSpace(id))
                         {
-                            AppState.MainWin.UiCmTopGames.IsOpen = true;
+                            AppState.MainWin.UiMncTopGames.IsOpen = true;
                             e.Handled = true;
                         }
                     }
