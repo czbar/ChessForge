@@ -78,6 +78,28 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Checks if the passed branch level is within
+        /// the effective levels.
+        /// </summary>
+        /// <param name="branchLevel"></param>
+        /// <returns></returns>
+        private bool IsEffectiveIndexLevel(int branchLevel)
+        {
+            return branchLevel <= EffectiveIndexDepth + 1;
+        }
+
+        /// <summary>
+        /// Checks if the passed branch level is the
+        /// last within the effective levels.
+        /// </summary>
+        /// <param name="branchLevel"></param>
+        /// <returns></returns>
+        private bool IsLastEffectiveIndexLine(int branchLevel)
+        {
+            return branchLevel == EffectiveIndexDepth + 1;
+        }
+
+        /// <summary>
         /// Increment the index depth paying attention to limits
         /// and empty level 0 (in case of e.g. 1.e4 and 1.d4)
         /// </summary>
@@ -193,7 +215,7 @@ namespace ChessForge
                 foreach (LineSector sector in LineManager.LineSectors)
                 {
                     int level = sector.BranchLevel;
-                    if (LineManager.IsIndexLevel(level))
+                    if (IsEffectiveIndexLevel(level))
                     {
                         if (first)
                         {
@@ -230,7 +252,7 @@ namespace ChessForge
                         {
                             Run rIdTitle = BuildSectionIdTitle(sector.Nodes[0].LineId);
                             para.Inlines.Add(rIdTitle);
-                            if (LineManager.IsLastIndexLine(level) || sector.Nodes[sector.Nodes.Count - 1].Children.Count == 0)
+                            if (IsLastEffectiveIndexLine(level) || sector.Nodes[sector.Nodes.Count - 1].Children.Count == 0)
                             {
                                 BuildIndexNodeAndAddToPara(sector.Nodes[0], true, para);
                             }
@@ -333,7 +355,7 @@ namespace ChessForge
                     int topMarginExtra = 0;
                     int bottomMarginExtra = 0;
 
-                    if (!LineManager.IsIndexLevel(sector.BranchLevel))
+                    if (!IsEffectiveIndexLevel(sector.BranchLevel))
                     {
                         // add extra room above/below first/last line in a block at the same level 
                         if (n > 0 && LineManager.LineSectors[n - 1].DisplayLevel < sector.DisplayLevel)
@@ -364,7 +386,7 @@ namespace ChessForge
                         para.FontWeight = FontWeights.Normal;
                     }
 
-                    if (LineManager.IsIndexLevel(sector.BranchLevel))
+                    if (IsEffectiveIndexLevel(sector.BranchLevel))
                     {
                         Run rIdTitle = BuildSectionIdTitle(sector.Nodes[0].LineId);
                         rIdTitle.Foreground = ChessForgeColors.VARIATION_INDEX_FORE;
@@ -374,7 +396,7 @@ namespace ChessForge
                     }
                     else
                     {
-                        if (LineManager.IsLastIndexLine(sector.DisplayLevel + 1))
+                        if (IsLastEffectiveIndexLine(sector.DisplayLevel + 1))
                         {
                             para.FontWeight = FontWeights.DemiBold;
                         }
@@ -431,11 +453,11 @@ namespace ChessForge
                     r.Foreground = Brushes.Black;
                     parenthesis = false;
 
-                    if (i == 0 && sector.FirstNodeColor != null && !LineManager.IsIndexLevel(sector.BranchLevel))
+                    if (i == 0 && sector.FirstNodeColor != null && !IsEffectiveIndexLevel(sector.BranchLevel))
                     {
                         r.Foreground = sector.FirstNodeColor;
                     }
-                    if (i == sector.Nodes.Count - 1 && !LineManager.IsIndexLevel(sector.BranchLevel + 1))
+                    if (i == sector.Nodes.Count - 1 && sector.BranchLevel >= EffectiveIndexDepth)
                     {
                         ColorLastNode(sector, r, nd, levelGroup);
                     }
@@ -456,7 +478,8 @@ namespace ChessForge
         private void ColorLastNode(LineSector sector, Run r, TreeNode nd, int levelGroup)
         {
             // do not color if this is an index level unless this is the last index level and is not the first node.
-            if (!LineManager.IsIndexLevel(sector.BranchLevel) || LineManager.IsLastIndexLine(sector.BranchLevel) && nd != sector.Nodes[0])
+            //if (!LineManager.IsIndexLevel(sector.BranchLevel) || LineManager.IsLastIndexLine(sector.BranchLevel) && nd != sector.Nodes[0])
+            if (!IsEffectiveIndexLevel(sector.BranchLevel) || IsLastEffectiveIndexLine(sector.BranchLevel) && nd != sector.Nodes[0])
             {
                 if (sector.Nodes.Count > 0 && nd.Parent != null && nd.Parent.Children.Count > 1)
                 {
