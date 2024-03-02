@@ -466,7 +466,7 @@ namespace ChessForge
                 // except the first child as it will be the continuation of the top line
                 foreach (LineSector ls in sector.Children)
                 {
-                    if (nd.Children.Count > 0 && ls.Nodes[0] != nd.Children[0])
+                    if (nd.Children.Count == 0 || ls.Nodes[0] != nd.Children[0])
                     {
                         ls.FirstNodeColor = DisplayLevelAttrs.GetBrushForLastMove(sector.DisplayLevel, levelGroup);
                     }
