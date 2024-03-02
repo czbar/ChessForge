@@ -2423,15 +2423,19 @@ AutoReplaySpeed=Auto (s)
 
 #description: Allow manual replay with a mouse wheel 
 #english: AllowMouseWheel=Allow Mouse Wheel
-AllowMouseWheel=Uaktywnij Kółko Myszy
+AllowMouseWheel=Uaktywnij kółko myszy
 
 #description: Whether to show inline table with move options at a fork
 #english: ShowMovesAtFork=Show Moves at Fork
-ShowMovesAtFork=Tabelka przy Rozgałęzieniu
+ShowMovesAtFork=Tabelka przy rozgałęzieniu
 
 #description: Whether sound for the moves is turned on
 #english: SoundOn=Sound On
-SoundOn=Włącz Dźwięk
+SoundOn=Włącz dźwięk
+
+#description: Large menu font
+#english: LargeMenuFont=Large Menu Font
+LargeMenuFont=Większa czcionka w menu
 
 #description: Current version
 #english: CurrentVersion=The current version $0 will be backed up as

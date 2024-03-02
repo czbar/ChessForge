@@ -2433,6 +2433,10 @@ ShowMovesAtFork=
 #english: SoundOn=Sound On
 SoundOn=
 
+#description: Large menu font
+#english: LargeMenuFont=Large Menu Font
+LargeMenuFont=
+
 #description: Current version
 #english: CurrentVersion=The current version $0 will be backed up as
 CurrentVersion=

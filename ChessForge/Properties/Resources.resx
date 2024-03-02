@@ -1726,6 +1726,9 @@
   <data name="SoundOn" xml:space="preserve">
     <value>Sound On</value>
   </data>
+  <data name="LargeMenuFont" xml:space="preserve">
+    <value>Large Menu Font</value>
+  </data>
   <data name="CurrentVersion" xml:space="preserve">
     <value>The current version $0 will be backed up as</value>
   </data>

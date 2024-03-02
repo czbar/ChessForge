@@ -3527,6 +3527,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Large Menu Font.
+        /// </summary>
+        public static string LargeMenuFont {
+            get {
+                return ResourceManager.GetString("LargeMenuFont", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Most recent file $0 could not be found..
         /// </summary>
         public static string LastFileNotFound {

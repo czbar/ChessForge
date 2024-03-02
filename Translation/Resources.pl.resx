@@ -1717,13 +1717,16 @@
     <value>Auto (s)</value>
   </data>
   <data name="AllowMouseWheel" xml:space="preserve">
-    <value>Uaktywnij Kółko Myszy</value>
+    <value>Uaktywnij kółko myszy</value>
   </data>
   <data name="ShowMovesAtFork" xml:space="preserve">
-    <value>Tabelka przy Rozgałęzieniu</value>
+    <value>Tabelka przy rozgałęzieniu</value>
   </data>
   <data name="SoundOn" xml:space="preserve">
-    <value>Włącz Dźwięk</value>
+    <value>Włącz dźwięk</value>
+  </data>
+  <data name="LargeMenuFont" xml:space="preserve">
+    <value>Większa czcionka w menu</value>
   </data>
   <data name="CurrentVersion" xml:space="preserve">
     <value>Kopia aktualnej wersji $0 będzie zapisana w</value>
