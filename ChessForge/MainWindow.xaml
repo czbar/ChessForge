@@ -586,7 +586,7 @@
                                 <FlowDocument>
                                 </FlowDocument>
                             </RichTextBox>
-                            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" Height="48" Margin="0,588,0,0" VerticalAlignment="Top">
+                            <StackPanel x:Name="UiStpStNags" Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" Height="48" Margin="0,588,0,0" VerticalAlignment="Top">
                                 <Button x:Name="UiBtnStPencil" Background="Transparent" Margin="0,0,0,0" Width="30" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnPencil_Click"  />
                                 <Button x:Name="UiBtnStCommentBeforeMove" Background="Transparent" Margin="0,0,0,0" Width="30" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnCommentBeforeMove_Click"  />
                                 <Button x:Name="UiBtnStEvalWin" Background="Transparent" Margin="30,0,0,0" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalWin_Click" />
@@ -792,7 +792,7 @@
                                 <FlowDocument>
                                 </FlowDocument>
                             </RichTextBox>
-                            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" Height="48" Margin="0,588,0,0" VerticalAlignment="Top">
+                            <StackPanel x:Name="UiStpExNags" Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" Height="48" Margin="0,588,0,0" VerticalAlignment="Top">
                                 <Button x:Name="UiBtnExPencil" Background="Transparent" Margin="0,0,0,0" Width="30" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnPencil_Click"  />
                                 <Button x:Name="UiBtnExCommentBeforeMove" Background="Transparent" Margin="0,0,0,0" Width="30" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnCommentBeforeMove_Click"  />
                                 <Button x:Name="UiBtnExEvalWin" Background="Transparent" Margin="30,0,0,0" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalWin_Click" />

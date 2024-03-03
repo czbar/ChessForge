@@ -332,6 +332,21 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Hide NAG buttons when in Solving Mode.
+        /// </summary>
+        public static void EnableNagBar()
+        {
+            bool enable = !IsUserSolving();
+            foreach (var child in MainWin.UiStpExNags.Children)
+            {
+                if (child is Button button)
+                {
+                    button.Visibility = enable ? Visibility.Visible : Visibility.Collapsed;
+                }
+            }
+        }
+
+        /// <summary>
         /// Returns the ContentType of the curent ActiveVariationTree
         /// </summary>
         public static GameData.ContentType ActiveContentType
