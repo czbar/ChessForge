@@ -603,7 +603,7 @@ namespace ChessForge
             switch (color)
             {
                 case Constants.COLOR_GREEN:
-                    return 'G';
+                    return Constants.COLOR_GREEN_CHAR;
                 case Constants.COLOR_BLUE:
                     return Constants.COLOR_BLUE_CHAR;
                 case Constants.COLOR_RED:
