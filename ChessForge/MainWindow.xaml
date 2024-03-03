@@ -658,9 +658,9 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto "/>
                                 </Grid.RowDefinitions>
-                                <Image x:Name="UiImgModelGameLeftArrow" Grid.Column="0" Cursor="Hand"  HorizontalAlignment="Left"  Margin="10,0,0,0" Source="Resources/Images/LeftArrow.png" PreviewMouseLeftButtonDown="UiImgModelGameLeftArrow_PreviewMouseLeftButtonDown"  />
+                                <Image x:Name="UiImgModelGameLeftArrow" Grid.Column="0" Cursor="Hand"  HorizontalAlignment="Left"  Margin="10,0,0,0" Source="Resources/Images/LeftArrow.png" PreviewMouseLeftButtonDown="UiPreviousModelGame_ButtonDown"  />
                                 <Label x:Name="UiLblGameCounter" Grid.Column="1" Content="" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="10,-3,0,0" FontWeight="Bold"/>
-                                <Image x:Name="UiImgModelGameRightArrow" Grid.Column="2" Cursor="Hand"  HorizontalAlignment="Right" Margin="10,0,0,0" Source="Resources/Images/RightArrow.png" PreviewMouseLeftButtonDown="UiImgModelGameRightArrow_PreviewMouseLeftButtonDown"  />
+                                <Image x:Name="UiImgModelGameRightArrow" Grid.Column="2" Cursor="Hand"  HorizontalAlignment="Right" Margin="10,0,0,0" Source="Resources/Images/RightArrow.png" PreviewMouseLeftButtonDown="UiNextModelGame_ButtonDown"  />
                             </Grid>
                             <Label x:Name="UiGamesLblChapterTitle" Grid.Column="0" Height="30" Content="" MaxWidth="220" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,-3,0,0" FontWeight="Normal" FontStyle="Normal" MouseDoubleClick="UiGamesLblChapterTitle_MouseDoubleClick"  />
                             <Grid x:Name="UiGridModelGamePrevNextChapter" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Visible" >

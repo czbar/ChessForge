@@ -958,7 +958,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiImgModelGameLeftArrow_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void UiPreviousModelGame_ButtonDown(object sender, MouseButtonEventArgs e)
         {
             try
             {
@@ -978,7 +978,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiImgModelGameRightArrow_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void UiNextModelGame_ButtonDown(object sender, MouseButtonEventArgs e)
         {
             try
             {
