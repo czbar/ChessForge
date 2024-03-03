@@ -32,6 +32,9 @@ namespace ChessForge
             UiMncBookmarks.FontSize = size;
             UiMncTopGames.FontSize = size;
 
+            UiLblAutoSave.FontSize = size;
+            UiLblExplorers.FontSize = size;
+            UiLblEngine.FontSize = size;
         }
 
         /// <summary>
