@@ -969,7 +969,7 @@ namespace ChessForge
             }
             catch
             {
-                AppLog.Message("Exception in UiImgModelGameLeftArrow_PreviewMouseLeftButtonDown()");
+                AppLog.Message("Exception in UiPreviousModelGame_ButtonDown()");
             }
         }
 
@@ -989,7 +989,7 @@ namespace ChessForge
             }
             catch
             {
-                AppLog.Message("Exception in UiImgModelGameRightArrow_PreviewMouseLeftButtonDown()");
+                AppLog.Message("Exception in UiNextModelGame_ButtonDown()");
             }
         }
 
