@@ -590,6 +590,14 @@
     <Resource Include="Resources\Images\BlackPromoInverted.png" />
     <Resource Include="Resources\Images\WhitePromoInverted.png" />
     <Resource Include="Resources\Images\ResetDates.png" />
+    <Resource Include="Resources\Images\ChessBoardBlueIcon.png" />
+    <Resource Include="Resources\Images\ChessBoardBrownIcon.png" />
+    <Resource Include="Resources\Images\ChessBoardGreenIcon.png" />
+    <Resource Include="Resources\Images\ChessBoardGreyIcon.png" />
+    <Resource Include="Resources\Images\ChessBoardLightBlueIcon.png" />
+    <Resource Include="Resources\Images\ChessBoardOrangeShadesIcon.png" />
+    <Resource Include="Resources\Images\ChessBoardPaleBlueIcon.png" />
+    <Resource Include="Resources\Images\ChessBoardLightGreenIcon.png" />
     <Content Include="Resources\Sounds\Confirmation.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
