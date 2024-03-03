@@ -167,7 +167,7 @@ namespace ChessForge
             Run runTotal = new Run();
             runTotal.Text = Properties.Resources.NumberOfOccurrences + ": " + count.ToString();
             runTotal.FontWeight = FontWeights.Bold;
-            runTotal.FontSize = 16 + Configuration.FontSizeDiff;
+            runTotal.FontSize = Constants.BASE_FIXED_FONT_SIZE + 2 + Configuration.FontSizeDiff;
             para.Inlines.Add(runTotal);
 
             CreateItemCountRun(para, Properties.Resources.Chapters, chapterCount);
@@ -196,7 +196,7 @@ namespace ChessForge
                 Run run = new Run();
                 run.Text = "\n     " + label + ": " + count.ToString();
                 run.FontWeight = FontWeights.Bold;
-                run.FontSize = 14 + Configuration.FontSizeDiff;
+                run.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff;
                 para.Inlines.Add(run);
             }
         }
@@ -283,7 +283,7 @@ namespace ChessForge
                 Run rChapter = new Run();
                 rChapter.Text = Properties.Resources.Chapter + " " + (item.ChapterIndex + 1).ToString() + ". " + item.Chapter.Title;
                 rChapter.FontWeight = FontWeights.Bold;
-                rChapter.FontSize = 16 + Configuration.FontSizeDiff;
+                rChapter.FontSize = Constants.BASE_FIXED_FONT_SIZE + 2 + Configuration.FontSizeDiff;
                 para.Inlines.Add(rChapter);
             }
 
@@ -301,7 +301,7 @@ namespace ChessForge
             rThisPosition.Text = "    (" + Properties.Resources.CurrentlyViewed + ")\n";
             rThisPosition.FontWeight = FontWeights.Bold;
             rThisPosition.Foreground = Brushes.Green;
-            rThisPosition.FontSize = 12 + Configuration.FontSizeDiff;
+            rThisPosition.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff;
             para.Inlines.Add(rThisPosition);
         }
 
@@ -317,7 +317,7 @@ namespace ChessForge
                 Run rArticle = new Run();
                 rArticle.Text = item.ElementTitleForDisplay + "\n";
                 rArticle.FontWeight = FontWeights.Bold;
-                rArticle.FontSize = 14 + Configuration.FontSizeDiff;
+                rArticle.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff;
                 para.Inlines.Add(rArticle);
             }
         }
@@ -341,7 +341,7 @@ namespace ChessForge
                 }
                 rStem.Text = MoveUtils.BuildSingleMoveText(nd, nd.Parent.NodeId == 0, true, moveNumberOffset) + " ";
                 rStem.FontWeight = FontWeights.Bold;
-                rStem.FontSize = 13 + Configuration.FontSizeDiff;
+                rStem.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff;
                 rStem.MouseMove += EventRunMoveOver;
                 para.Inlines.Add(rStem);
             }
@@ -358,7 +358,9 @@ namespace ChessForge
 
             if (item.TailLine.Count > 0)
             {
-                para.Inlines.Add(new Run(" (" + Properties.Resources.MainLine + ": "));
+                Run r = new Run(" (" + Properties.Resources.MainLine + ": ");
+                r.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff;
+                para.Inlines.Add(r);
             }
 
             foreach (TreeNode nd in item.TailLine)
@@ -373,7 +375,7 @@ namespace ChessForge
                 rTail.Text = MoveUtils.BuildSingleMoveText(nd, nd.Parent.NodeId == 0 || plyCount == 0, true, moveNumberOffset) + " ";
                 rTail.FontStyle = FontStyles.Italic;
                 rTail.FontWeight = FontWeights.Normal;
-                rTail.FontSize = 12 + Configuration.FontSizeDiff;
+                rTail.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff;
                 rTail.MouseMove += EventRunMoveOver;
                 para.Inlines.Add(rTail);
                 plyCount++;
@@ -408,7 +410,7 @@ namespace ChessForge
                 rMain.Text = MoveUtils.BuildSingleMoveText(nd, nd.Parent.NodeId == 0 || plyCount == 0, true, moveNumberOffset) + " ";
                 rMain.FontStyle = FontStyles.Normal;
                 rMain.FontWeight = FontWeights.Normal;
-                rMain.FontSize = 12 + Configuration.FontSizeDiff;
+                rMain.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff;
                 rMain.MouseMove += EventRunMoveOver;
                 para.Inlines.Add(rMain);
                 plyCount++;
@@ -443,7 +445,7 @@ namespace ChessForge
 
                 rCopyLine.TextDecorations = TextDecorations.Underline;
                 rCopyLine.FontWeight = FontWeights.Normal;
-                rCopyLine.FontSize = 12 + Configuration.FontSizeDiff;
+                rCopyLine.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff;
                 rCopyLine.Foreground = Brushes.Blue;
                 para.Inlines.Add(rCopyLine);
                 para.Inlines.Add(new Run("\n"));
@@ -477,7 +479,7 @@ namespace ChessForge
 
                 rCopyTree.TextDecorations = TextDecorations.Underline;
                 rCopyTree.FontWeight = FontWeights.Normal;
-                rCopyTree.FontSize = 12 + Configuration.FontSizeDiff;
+                rCopyTree.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff;
                 rCopyTree.Foreground = Brushes.Blue;
                 para.Inlines.Add(rCopyTree);
                 para.Inlines.Add(new Run("\n"));
@@ -501,7 +503,7 @@ namespace ChessForge
 
             rOpenView.TextDecorations = TextDecorations.Underline;
             rOpenView.FontWeight = FontWeights.Normal;
-            rOpenView.FontSize = 12 + Configuration.FontSizeDiff;
+            rOpenView.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff;
             rOpenView.Foreground = Brushes.Blue;
             para.Inlines.Add(rOpenView);
             para.Inlines.Add(new Run("\n"));
