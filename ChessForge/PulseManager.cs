@@ -49,6 +49,7 @@ namespace ChessForge
         /// <param name="e"></param>
         public static void PulseEventHandler(object source, ElapsedEventArgs e)
         {
+            ArticleBrowseBooster.IncrementPulseCounter();
             WebAccessManager.UpdateWebAccess();
             UpdateEvaluationBar();
             if (_chapterIndexToBringIntoView >= 0)

@@ -88,6 +88,7 @@
     <Compile Include="AnnotationsDialog.xaml.cs">
       <DependentUpon>AnnotationsDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ArticleBrowseBooster.cs" />
     <Compile Include="ArticleComparer.cs" />
     <Compile Include="ArticleListBuilder.cs" />
     <Compile Include="ArticleListItem.cs" />
