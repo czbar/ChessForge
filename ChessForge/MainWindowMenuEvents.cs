@@ -3134,29 +3134,33 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnChessboards_Click(object sender, RoutedEventArgs e)
         {
-            ChessboardColorsDialog dlg = new ChessboardColorsDialog();
-            GuiUtilities.PositionDialog(dlg, this, 100);
-            if (dlg.ShowDialog() == true)
+            try
             {
-                switch (AppState.ActiveTab)
+                ChessboardColorsDialog dlg = new ChessboardColorsDialog();
+                GuiUtilities.PositionDialog(dlg, this, 100);
+                if (dlg.ShowDialog() == true)
                 {
-                    case TabViewType.STUDY:
-                    case TabViewType.INTRO:
-                    case TabViewType.CHAPTERS:
-                    case TabViewType.BOOKMARKS:
-                        UiImgMainChessboard.Source = Configuration.StudyBoardSet.MainBoard;
-                        break;
-                    case TabViewType.MODEL_GAME:
-                        UiImgMainChessboard.Source = Configuration.GameBoardSet.MainBoard;
-                        break;
-                    case TabViewType.EXERCISE:
-                        UiImgMainChessboard.Source = Configuration.ExerciseBoardSet.MainBoard;
-                        break;
-                    case TabViewType.TRAINING:
-                        UiImgMainChessboard.Source = Configuration.TrainingBoardSet.MainBoard;
-                        break;
+                    switch (AppState.ActiveTab)
+                    {
+                        case TabViewType.STUDY:
+                        case TabViewType.INTRO:
+                        case TabViewType.CHAPTERS:
+                        case TabViewType.BOOKMARKS:
+                            UiImgMainChessboard.Source = Configuration.StudyBoardSet.MainBoard;
+                            break;
+                        case TabViewType.MODEL_GAME:
+                            UiImgMainChessboard.Source = Configuration.GameBoardSet.MainBoard;
+                            break;
+                        case TabViewType.EXERCISE:
+                            UiImgMainChessboard.Source = Configuration.ExerciseBoardSet.MainBoard;
+                            break;
+                        case TabViewType.TRAINING:
+                            UiImgMainChessboard.Source = Configuration.TrainingBoardSet.MainBoard;
+                            break;
+                    }
                 }
             }
+            catch { }
         }
 
         /// <summary>
