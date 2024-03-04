@@ -570,11 +570,7 @@ namespace ChessForge
         /// </summary>
         public static void ReadConfigurationFile()
         {
-            // defaults for board colors
-            StudyBoardSet = ChessBoards.BoardSets[ColorSet.BLUE];
-            GameBoardSet = ChessBoards.BoardSets[ColorSet.LIGHT_BLUE];
-            ExerciseBoardSet = ChessBoards.BoardSets[ColorSet.LIGHT_GREEN];
-            TrainingBoardSet = ChessBoards.BoardSets[ColorSet.GREEN];
+            SetChessboardDefaults();
 
             try
             {
@@ -787,6 +783,17 @@ namespace ChessForge
             {
                 return "";
             }
+        }
+
+        /// <summary>
+        /// Sets the default chessboard colors.
+        /// </summary>
+        public static void SetChessboardDefaults()
+        {
+            StudyBoardSet = ChessBoards.BoardSets[ColorSet.BLUE];
+            GameBoardSet = ChessBoards.BoardSets[ColorSet.LIGHT_BLUE];
+            ExerciseBoardSet = ChessBoards.BoardSets[ColorSet.LIGHT_GREEN];
+            TrainingBoardSet = ChessBoards.BoardSets[ColorSet.GREEN];
         }
 
         /// <summary>

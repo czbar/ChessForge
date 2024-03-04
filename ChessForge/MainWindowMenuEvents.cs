@@ -3158,6 +3158,7 @@ namespace ChessForge
                             UiImgMainChessboard.Source = Configuration.TrainingBoardSet.MainBoard;
                             break;
                     }
+                    Configuration.WriteOutConfiguration();
                 }
             }
             catch { }

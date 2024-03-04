@@ -29,7 +29,7 @@
         <Image x:Name="UiImgSelected" Source="/Resources/Images/ChessBoardPaleBlueSmall.png" HorizontalAlignment="Left" Height="240" Width="240" Margin="275,15,0,0" VerticalAlignment="Top" />
         <Button x:Name="UiBtnSave" Content="{x:Static p:Resources.Save}" IsDefault="True" HorizontalAlignment="Center" Margin="-300,0,0,20" Width="80" VerticalAlignment="Bottom" Click="UiBtnSave_Click"/>
         <Button x:Name="UiBtnCancel" Content="{x:Static p:Resources.Cancel}" IsCancel="True" HorizontalAlignment="Center" Margin="-120,0,0,20" Width="80" VerticalAlignment="Bottom"/>
-        <Button x:Name="UiBtnDefaults" Content="{x:Static p:Resources.Defaults}" HorizontalAlignment="Center" Margin="120,0,0,20" Width="80" VerticalAlignment="Bottom"/>
+        <Button x:Name="UiBtnDefaults" Content="{x:Static p:Resources.Defaults}" HorizontalAlignment="Center" Margin="120,0,0,20" Width="80" VerticalAlignment="Bottom" Click="UiBtnDefaults_Click"/>
         <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Center" Margin="300,0,0,20" Width="80" VerticalAlignment="Bottom"/>
     </Grid>
 </Window>

@@ -42,6 +42,18 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Updates the current selection tracker per the current configuration.
+        /// This will be called after the defaults are requested.
+        /// </summary>
+        private void UpdateViewColorSelections()
+        {
+            _dictViewToColorSet[TabViewType.STUDY] = Configuration.StudyBoardSet.Colors;
+            _dictViewToColorSet[TabViewType.MODEL_GAME] = Configuration.GameBoardSet.Colors;
+            _dictViewToColorSet[TabViewType.EXERCISE] = Configuration.ExerciseBoardSet.Colors;
+            _dictViewToColorSet[TabViewType.TRAINING] = Configuration.TrainingBoardSet.Colors;
+        }
+
+        /// <summary>
         /// Initializes the mapping of icon image controls to chessboard color sets
         /// </summary>
         private void IconsToBoardSets()
@@ -270,6 +282,18 @@ namespace ChessForge
             Configuration.ExerciseBoardSet = ChessBoards.BoardSets[_dictViewToColorSet[TabViewType.EXERCISE]];
             Configuration.TrainingBoardSet = ChessBoards.BoardSets[_dictViewToColorSet[TabViewType.TRAINING]];
             DialogResult = true;
+        }
+
+        /// <summary>
+        /// The user requested to restore defaults.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnDefaults_Click(object sender, RoutedEventArgs e)
+        {
+            Configuration.SetChessboardDefaults();
+            UpdateViewColorSelections();
+            SelectViewType(_selectedView);
         }
     }
 }
