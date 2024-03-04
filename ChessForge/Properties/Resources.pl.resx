@@ -585,6 +585,9 @@
   <data name="ApplicationOptions" xml:space="preserve">
     <value>Opcje Aplikacji</value>
   </data>
+  <data name="Chessboards" xml:space="preserve">
+    <value>Szachownice...</value>
+  </data>
   <data name="DlgTitleApplicationOptions" xml:space="preserve">
     <value>Opcje Aplikacji</value>
   </data>
@@ -761,6 +764,12 @@
   </data>
   <data name="EgCentipawnAccuracy" xml:space="preserve">
     <value>maksymalne odchylenie od najlepszego ruchu wynosi</value>
+  </data>
+  <data name="SelectChessboards" xml:space="preserve">
+    <value>Wybierz Szachownice</value>
+  </data>
+  <data name="Defaults" xml:space="preserve">
+    <value>Domyślne</value>
   </data>
   <data name="TargetChapter" xml:space="preserve">
     <value>Docelowy Rozdział</value>

@@ -491,7 +491,7 @@ ExitSolvingMode=Exit Solving Mode
 
 #################################
 #
-# Header: MAIN MENU: View
+# Header: MAIN MENU: Edit
 #
 
 #Edit
@@ -530,6 +530,9 @@ FlipBoard=Flip Board
 
 #Opens the Application Options dialog
 ApplicationOptions=Application Options...
+
+#Chessboards
+Chessboards=Chessboards...
 
 #Application Options dialog title
 DlgTitleApplicationOptions=Application Options
@@ -741,6 +744,16 @@ EgSelectionAccuracyLabel=Move selection accuracy is
 EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
 
 
+#######################################
+#
+# Header: DIALOG Chessboards
+#
+
+#Select Chessboard colors
+SelectChessboards=Select Chessboards
+
+#Defaults
+Defaults=Defaults
 
 #######################################
 #

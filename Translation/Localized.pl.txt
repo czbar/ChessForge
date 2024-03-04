@@ -637,7 +637,7 @@ ExitSolvingMode=Wyjdź z trybu rozwiązywania
 
 #################################
 #
-# Header: MAIN MENU: View
+# Header: MAIN MENU: Edit
 #
 
 #description: Edit
@@ -686,6 +686,10 @@ FlipBoard=Odwróć Szachownicę
 #description: Opens the Application Options dialog
 #english: ApplicationOptions=Application Options...
 ApplicationOptions=Opcje Aplikacji
+
+#description: Chessboards
+#english: Chessboards=Chessboards...
+Chessboards=Szachownice...
 
 #description: Application Options dialog title
 #english: DlgTitleApplicationOptions=Application Options
@@ -956,6 +960,18 @@ EgSelectionAccuracyLabel=Dokładność wyboru ruchów wynosi
 EgCentipawnAccuracy=maksymalne odchylenie od najlepszego ruchu wynosi
 
 
+#######################################
+#
+# Header: DIALOG Chessboards
+#
+
+#description: Select Chessboard colors
+#english: SelectChessboards=Select Chessboards
+SelectChessboards=Wybierz Szachownice
+
+#description: Defaults
+#english: Defaults=Defaults
+Defaults=Domyślne
 
 #######################################
 #
