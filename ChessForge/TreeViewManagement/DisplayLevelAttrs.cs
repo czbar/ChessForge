@@ -80,6 +80,13 @@ namespace ChessForge
                 _lastLevelCombo = level + levelGroup;
                 _lastMoveBrushIndex++;
             }
+            else
+            {
+                if (_lastMoveBrushIndex < 0)
+                {
+                    _lastMoveBrushIndex = 0;
+                }
+            }
 
             int modLevel = _lastMoveBrushIndex % 4;
 
