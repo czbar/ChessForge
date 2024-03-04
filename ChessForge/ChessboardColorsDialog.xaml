@@ -1,0 +1,35 @@
+﻿<Window x:Class="ChessForge.ChessboardColorsDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:p="clr-namespace:ChessForge.Properties"
+        xmlns:local="clr-namespace:ChessForge"
+        mc:Ignorable="d"
+        Title="{x:Static p:Resources.SelectChessboards}" Height="355" Width="556">
+    <Grid>
+        <StackPanel Margin="15,35" Width="140" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Button x:Name="UiBtnStudyBoard" FontSize="14" BorderThickness="0" Width="100" Height="30" Content="{x:Static p:Resources.Study}" HorizontalAlignment="Left" Margin="10,10" VerticalAlignment="Top" Click="UiBtnStudyBoard_Click"/>
+            <Button x:Name="UiBtnGamesBoard" FontSize="14" BorderThickness="0" Width="100" Height="30" Content="{x:Static p:Resources.Games}" HorizontalAlignment="Left" Margin="10,10" VerticalAlignment="Top" Click="UiBtnGamesBoard_Click"/>
+            <Button x:Name="UiBtnExercisesBoard" FontSize="14" BorderThickness="0" Width="100" Height="30" Content="{x:Static p:Resources.Exercises}" HorizontalAlignment="Left" Margin="10,10" VerticalAlignment="Top" Click="UiBtnExercisesBoard_Click"/>
+            <Button x:Name="UiBtnTrainingBoard" FontSize="14" BorderThickness="0" Width="100" Height="30" Content="{x:Static p:Resources.Training}" HorizontalAlignment="Left" Margin="10,10" VerticalAlignment="Top" Click="UiBtnTrainingBoard_Click"/>
+        </StackPanel>
+        <StackPanel Margin="150, 35" Width="50" HorizontalAlignment="Left">
+            <Image x:Name="UiImg1" Source="/Resources/Images/ChessBoardBlueIcon.png" HorizontalAlignment="Left" Height="30" Margin="10,10" VerticalAlignment="Top" Width="30" MouseDown="UiImg1_MouseDown"/>
+            <Image x:Name="UiImg2" Source="/Resources/Images/ChessBoardGreenIcon.png" HorizontalAlignment="Left" Height="30" Margin="10,10" VerticalAlignment="Top" Width="30" MouseDown="UiImg2_MouseDown"/>
+            <Image x:Name="UiImg3" Source="/Resources/Images/ChessBoardLightBlueIcon.png" HorizontalAlignment="Left" Height="30" Margin="10,10" VerticalAlignment="Top" Width="30" MouseDown="UiImg3_MouseDown"/>
+            <Image x:Name="UiImg4" Source="/Resources/Images/ChessBoardLightGreenIcon.png" HorizontalAlignment="Left" Height="30" Margin="10,10" VerticalAlignment="Top" Width="30" MouseDown="UiImg4_MouseDown"/>
+        </StackPanel>
+        <StackPanel Margin="200, 35" Width="50" HorizontalAlignment="Left">
+            <Image x:Name="UiImg5" Source="/Resources/Images/ChessBoardPaleBlueIcon.png" HorizontalAlignment="Left" Height="30" Margin="10,10" VerticalAlignment="Top" Width="30" MouseDown="UiImg5_MouseDown"/>
+            <Image x:Name="UiImg6" Source="/Resources/Images/ChessBoardGreyIcon.png" HorizontalAlignment="Left" Height="30" Margin="10,10" VerticalAlignment="Top" Width="30" MouseDown="UiImg6_MouseDown"/>
+            <Image x:Name="UiImg7" Source="/Resources/Images/ChessBoardBrownIcon.png" HorizontalAlignment="Left" Height="30" Margin="10,10" VerticalAlignment="Top" Width="30" MouseDown="UiImg7_MouseDown"/>
+            <Image x:Name="UiImg8" Source="/Resources/Images/ChessBoardOrangeShadesIcon.png" HorizontalAlignment="Left" Height="30" Margin="10,10" VerticalAlignment="Top" Width="30" MouseDown="UiImg8_MouseDown"/>
+        </StackPanel>
+        <Image x:Name="UiImgSelected" Source="/Resources/Images/ChessBoardPaleBlueSmall.png" HorizontalAlignment="Left" Height="240" Width="240" Margin="275,15,0,0" VerticalAlignment="Top" />
+        <Button x:Name="UiBtnSave" Content="{x:Static p:Resources.Save}" IsDefault="True" HorizontalAlignment="Center" Margin="-300,0,0,20" Width="80" VerticalAlignment="Bottom" Click="UiBtnSave_Click"/>
+        <Button x:Name="UiBtnCancel" Content="{x:Static p:Resources.Cancel}" IsCancel="True" HorizontalAlignment="Center" Margin="-120,0,0,20" Width="80" VerticalAlignment="Bottom"/>
+        <Button x:Name="UiBtnDefaults" Content="{x:Static p:Resources.Defaults}" HorizontalAlignment="Center" Margin="120,0,0,20" Width="80" VerticalAlignment="Bottom" Click="UiBtnDefaults_Click"/>
+        <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Center" Margin="300,0,0,20" Width="80" VerticalAlignment="Bottom" Click="UiBtnHelp_Click"/>
+    </Grid>
+</Window>

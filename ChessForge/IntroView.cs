@@ -378,7 +378,7 @@ namespace ChessForge
         {
             try
             {
-                foreach (var item in AppState.MainWin.UiCmIntro.Items)
+                foreach (var item in AppState.MainWin.UiMncIntro.Items)
                 {
                     if (item is MenuItem)
                     {

@@ -332,6 +332,21 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Hide NAG buttons when in Solving Mode.
+        /// </summary>
+        public static void EnableNagBar()
+        {
+            bool enable = !IsUserSolving();
+            foreach (var child in MainWin.UiStpExNags.Children)
+            {
+                if (child is Button button)
+                {
+                    button.Visibility = enable ? Visibility.Visible : Visibility.Collapsed;
+                }
+            }
+        }
+
+        /// <summary>
         /// Returns the ContentType of the curent ActiveVariationTree
         /// </summary>
         public static GameData.ContentType ActiveContentType
@@ -1081,7 +1096,7 @@ namespace ChessForge
 
                 ConfigureBookmarkMenuOptions(MainWin.UiMnMarkBookmark, MainWin.UiMnStDeleteBookmark);
 
-                foreach (var item in MainWin.UiCmnStudyTree.Items)
+                foreach (var item in MainWin.UiMncStudyTree.Items)
                 {
                     if (item is MenuItem)
                     {
@@ -1125,13 +1140,13 @@ namespace ChessForge
         /// <summary>
         /// Sets up ModelGames context menu.
         /// </summary>
-        /// <param name="lastClickedNodeId"></param>
+        /// <param name="selectedNodeId"></param>
         /// <param name="isEnabled"></param>
-        private static void EnableModelGamesMenuItems(int lastClickedNodeId)
+        private static void EnableModelGamesMenuItems(int selectedNodeId)
         {
             try
             {
-                bool isMate = IsCheckMateOrStalemate(lastClickedNodeId);
+                bool isMate = IsCheckMateOrStalemate(selectedNodeId);
 
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                 int gameCount = chapter.GetModelGameCount();
@@ -1141,7 +1156,7 @@ namespace ChessForge
 
                 ConfigureBookmarkMenuOptions(MainWin.UiMnGameMarkBookmark, MainWin.UiMnGameDeleteBookmark);
 
-                foreach (var item in MainWin.UiCmModelGames.Items)
+                foreach (var item in MainWin.UiMncModelGames.Items)
                 {
                     if (item is MenuItem)
                     {
@@ -1159,25 +1174,28 @@ namespace ChessForge
                                 menuItem.IsEnabled = gameIndex >= 0 && !isMate;
                                 break;
                             case "_mnGame_MergeToStudy":
-                                menuItem.IsEnabled = gameIndex >= 0 && lastClickedNodeId >= 0;
+                                menuItem.IsEnabled = gameIndex >= 0 && selectedNodeId >= 0;
                                 break;
                             case "_mnGame_CopyFen":
                                 menuItem.IsEnabled = gameIndex >= 0 && ActiveVariationTree != null;
                                 break;
                             case "_mnGame_CreateExercise":
-                                menuItem.IsEnabled = gameIndex >= 0 && lastClickedNodeId >= 0 && !isMate;
+                                menuItem.IsEnabled = gameIndex >= 0 && selectedNodeId > 0 && !isMate;
                                 break;
                             case "_mnGame_PromoteLine":
-                                menuItem.IsEnabled = gameIndex >= 0 && lastClickedNodeId >= 0;
+                                menuItem.IsEnabled = gameIndex >= 0 && selectedNodeId > 0;
                                 break;
                             case "_mnGame_DeleteMovesFromHere":
-                                menuItem.IsEnabled = gameIndex >= 0 && lastClickedNodeId >= 0;
+                                menuItem.IsEnabled = gameIndex >= 0 && selectedNodeId > 0;
                                 break;
                             case "_mnGame_DeleteModelGame":
                                 menuItem.IsEnabled = gameIndex >= 0;
                                 break;
+                            case "UiMnGameMarkBookmark":
+                                menuItem.IsEnabled = gameIndex >= 0 && selectedNodeId > 0;
+                                break;
                             case "_mnGame_MarkThumbnail":
-                                menuItem.IsEnabled = gameIndex >= 0 && lastClickedNodeId >= 0;
+                                menuItem.IsEnabled = gameIndex >= 0 && selectedNodeId > 0;
                                 break;
                             case "UiMnGameCopyMoves":
                             case "UiMnGameCutMoves":
@@ -1199,10 +1217,10 @@ namespace ChessForge
         /// <summary>
         /// Sets up Exercises context menu.
         /// </summary>
-        /// <param name="lastClickedNodeId"></param>
-        private static void EnableExercisesMenuItems(int lastClickedNodeId)
+        /// <param name="selectedNodeId"></param>
+        private static void EnableExercisesMenuItems(int selectedNodeId)
         {
-            bool isMate = IsCheckMateOrStalemate(lastClickedNodeId);
+            bool isMate = IsCheckMateOrStalemate(selectedNodeId);
 
             try
             {
@@ -1212,6 +1230,7 @@ namespace ChessForge
 
                 bool isTrainingOrSolving = TrainingSession.IsTrainingInProgress || IsUserSolving();
                 VariationTreeView view = AppState.MainWin.ActiveTreeView;
+                bool isSolutionShown = ActiveVariationTree == null ? false : ActiveVariationTree.ShowTreeLines;
 
                 if (isTrainingOrSolving)
                 {
@@ -1223,7 +1242,7 @@ namespace ChessForge
                     ConfigureBookmarkMenuOptions(MainWin.UiMnExercMarkBookmark, MainWin.UiMnExercDeleteBookmark);
                 }
 
-                foreach (var item in MainWin.UiCmExercises.Items)
+                foreach (var item in MainWin.UiMncExercises.Items)
                 {
                     if (item is MenuItem)
                     {
@@ -1254,18 +1273,22 @@ namespace ChessForge
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "_mnExerc_CopyFen":
-                                menuItem.IsEnabled = exerciseIndex >= 0 && ActiveVariationTree != null;
+                                menuItem.IsEnabled = exerciseIndex >= 0 && ActiveVariationTree != null && isSolutionShown;
                                 break;
                             case "_mnExerc_PromoteLine":
-                                menuItem.IsEnabled = exerciseIndex >= 0 && lastClickedNodeId >= 0;
+                                menuItem.IsEnabled = exerciseIndex >= 0 && selectedNodeId > 0 && isSolutionShown;
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "_mnExerc_DeleteMovesFromHere":
-                                menuItem.IsEnabled = exerciseIndex >= 0 && lastClickedNodeId >= 0;
+                                menuItem.IsEnabled = exerciseIndex >= 0 && selectedNodeId > 0 && isSolutionShown;
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "_mnExerc_DeleteThisExercise":
                                 menuItem.IsEnabled = exerciseIndex >= 0;
+                                menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
+                                break;
+                            case "UiMnExercMarkBookmark":
+                                menuItem.IsEnabled = exerciseIndex >= 0 && selectedNodeId > 0 && isSolutionShown;
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "_mnExerc_EvalLine":
@@ -1273,22 +1296,26 @@ namespace ChessForge
                                 menuItem.Visibility = Visibility.Collapsed;
                                 break;
                             case "_mnExerc_MarkThumbnail":
-                                menuItem.IsEnabled = exerciseIndex >= 0;
+                                menuItem.IsEnabled = exerciseIndex >= 0 && selectedNodeId > 0 && isSolutionShown;
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "UiMnExercCopyMoves":
                             case "UiMnExercCutMoves":
-                                menuItem.IsEnabled = view != null && view.HasMovesSelectedForCopy;
+                                menuItem.IsEnabled = view != null && view.HasMovesSelectedForCopy && isSolutionShown;
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "UiMnExercPasteMoves":
-                                menuItem.IsEnabled = SystemClipboard.HasSerializedData();
+                                menuItem.IsEnabled = SystemClipboard.HasSerializedData() && isSolutionShown;
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "UiMnExerc_ImportExercises":
+                                menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
+                                break;
                             case "UiMnExercSelectHighlighted":
                             case "UiMnExercSelectSubtree":
                             case "UiMnExercFindIdentical":
+                            case "UiMnExercFindPositions":
+                                menuItem.IsEnabled = isSolutionShown;
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                         }
@@ -1533,7 +1560,7 @@ namespace ChessForge
 
                 MainWin.UiMnMainDeleteGames.IsEnabled = WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.HasAnyModelGames;
                 MainWin.UiMnMainDeleteExercises.IsEnabled = WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.HasAnyExercises;
-                MainWin.UiMnRemoveDuplicates.IsEnabled = WorkbookManager.SessionWorkbook != null && 
+                MainWin.UiMnRemoveDuplicates.IsEnabled = WorkbookManager.SessionWorkbook != null &&
                         (WorkbookManager.SessionWorkbook.HasAnyModelGames || WorkbookManager.SessionWorkbook.HasAnyExercises);
             });
         }

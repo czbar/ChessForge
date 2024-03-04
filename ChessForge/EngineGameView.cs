@@ -267,7 +267,7 @@ namespace ChessForge
 
             bool isEnabled = EngineGame.CurrentState != EngineGame.GameState.ENGINE_THINKING;
 
-            foreach (var item in AppState.MainWin.UiCmEngineGame.Items)
+            foreach (var item in AppState.MainWin.UiMncEngineGame.Items)
             {
                 if (item is MenuItem)
                 {

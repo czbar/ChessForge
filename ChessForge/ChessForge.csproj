@@ -88,6 +88,7 @@
     <Compile Include="AnnotationsDialog.xaml.cs">
       <DependentUpon>AnnotationsDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ArticleBrowseBooster.cs" />
     <Compile Include="ArticleComparer.cs" />
     <Compile Include="ArticleListBuilder.cs" />
     <Compile Include="ArticleListItem.cs" />
@@ -122,6 +123,9 @@
     </Compile>
     <Compile Include="ChapterUtils.cs" />
     <Compile Include="ChapterViewState.cs" />
+    <Compile Include="ChessboardColorsDialog.xaml.cs">
+      <DependentUpon>ChessboardColorsDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ChessBoardSmall.cs" />
     <Compile Include="ChessForgeEventArgs.cs" />
     <Compile Include="CommentBeforeMoveDialog.xaml.cs">
@@ -267,6 +271,7 @@
     <Compile Include="StudyTreeView.cs" />
     <Compile Include="Tools.cs" />
     <Compile Include="TreeViewManagement\DisplayLevelAttrs.cs" />
+    <Compile Include="TreeViewManagement\DisplaySector.cs" />
     <Compile Include="TreeViewManagement\LineSectorManager.cs" />
     <Compile Include="SelectArticlesDialog.xaml.cs">
       <DependentUpon>SelectArticlesDialog.xaml</DependentUpon>
@@ -363,6 +368,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ChapterTitleDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ChessboardColorsDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -588,6 +597,14 @@
     <Resource Include="Resources\Images\BlackPromoInverted.png" />
     <Resource Include="Resources\Images\WhitePromoInverted.png" />
     <Resource Include="Resources\Images\ResetDates.png" />
+    <Resource Include="Resources\Images\ChessBoardBlueIcon.png" />
+    <Resource Include="Resources\Images\ChessBoardBrownIcon.png" />
+    <Resource Include="Resources\Images\ChessBoardGreenIcon.png" />
+    <Resource Include="Resources\Images\ChessBoardGreyIcon.png" />
+    <Resource Include="Resources\Images\ChessBoardLightBlueIcon.png" />
+    <Resource Include="Resources\Images\ChessBoardOrangeShadesIcon.png" />
+    <Resource Include="Resources\Images\ChessBoardPaleBlueIcon.png" />
+    <Resource Include="Resources\Images\ChessBoardLightGreenIcon.png" />
     <Content Include="Resources\Sounds\Confirmation.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

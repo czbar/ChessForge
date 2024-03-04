@@ -585,6 +585,9 @@
   <data name="ApplicationOptions" xml:space="preserve">
     <value>Opcje Aplikacji</value>
   </data>
+  <data name="Chessboards" xml:space="preserve">
+    <value>Szachownice...</value>
+  </data>
   <data name="DlgTitleApplicationOptions" xml:space="preserve">
     <value>Opcje Aplikacji</value>
   </data>
@@ -761,6 +764,12 @@
   </data>
   <data name="EgCentipawnAccuracy" xml:space="preserve">
     <value>maksymalne odchylenie od najlepszego ruchu wynosi</value>
+  </data>
+  <data name="SelectChessboards" xml:space="preserve">
+    <value>Wybierz Szachownice</value>
+  </data>
+  <data name="Defaults" xml:space="preserve">
+    <value>Domyślne</value>
   </data>
   <data name="TargetChapter" xml:space="preserve">
     <value>Docelowy Rozdział</value>
@@ -1717,13 +1726,16 @@
     <value>Auto (s)</value>
   </data>
   <data name="AllowMouseWheel" xml:space="preserve">
-    <value>Uaktywnij Kółko Myszy</value>
+    <value>Uaktywnij kółko myszy</value>
   </data>
   <data name="ShowMovesAtFork" xml:space="preserve">
-    <value>Tabelka przy Rozgałęzieniu</value>
+    <value>Tabelka przy rozgałęzieniu</value>
   </data>
   <data name="SoundOn" xml:space="preserve">
-    <value>Włącz Dźwięk</value>
+    <value>Włącz dźwięk</value>
+  </data>
+  <data name="LargeMenuFont" xml:space="preserve">
+    <value>Większa czcionka w menu</value>
   </data>
   <data name="CurrentVersion" xml:space="preserve">
     <value>Kopia aktualnej wersji $0 będzie zapisana w</value>

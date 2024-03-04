@@ -637,7 +637,7 @@ ExitSolvingMode=
 
 #################################
 #
-# Header: MAIN MENU: View
+# Header: MAIN MENU: Edit
 #
 
 #description: Edit
@@ -686,6 +686,10 @@ FlipBoard=
 #description: Opens the Application Options dialog
 #english: ApplicationOptions=Application Options...
 ApplicationOptions=
+
+#description: Chessboards
+#english: Chessboards=Chessboards...
+Chessboards=
 
 #description: Application Options dialog title
 #english: DlgTitleApplicationOptions=Application Options
@@ -956,6 +960,18 @@ EgSelectionAccuracyLabel=
 EgCentipawnAccuracy=
 
 
+#######################################
+#
+# Header: DIALOG Chessboards
+#
+
+#description: Select Chessboard colors
+#english: SelectChessboards=Select Chessboards
+SelectChessboards=
+
+#description: Defaults
+#english: Defaults=Defaults
+Defaults=
 
 #######################################
 #
@@ -2432,6 +2448,10 @@ ShowMovesAtFork=
 #description: Whether sound for the moves is turned on
 #english: SoundOn=Sound On
 SoundOn=
+
+#description: Large menu font
+#english: LargeMenuFont=Large Menu Font
+LargeMenuFont=
 
 #description: Current version
 #english: CurrentVersion=The current version $0 will be backed up as

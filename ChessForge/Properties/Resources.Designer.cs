@@ -818,6 +818,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chessboards....
+        /// </summary>
+        public static string Chessboards {
+            get {
+                return ResourceManager.GetString("Chessboards", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chess Engine.
         /// </summary>
         public static string ChessEngine {
@@ -1336,6 +1345,15 @@ namespace ChessForge.Properties {
         public static string DecreaseIndent {
             get {
                 return ResourceManager.GetString("DecreaseIndent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Defaults.
+        /// </summary>
+        public static string Defaults {
+            get {
+                return ResourceManager.GetString("Defaults", resourceCulture);
             }
         }
         
@@ -3527,6 +3545,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Large Menu Font.
+        /// </summary>
+        public static string LargeMenuFont {
+            get {
+                return ResourceManager.GetString("LargeMenuFont", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Most recent file $0 could not be found..
         /// </summary>
         public static string LastFileNotFound {
@@ -5171,6 +5198,15 @@ namespace ChessForge.Properties {
         public static string SelectChaptersToMerge {
             get {
                 return ResourceManager.GetString("SelectChaptersToMerge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Chessboards.
+        /// </summary>
+        public static string SelectChessboards {
+            get {
+                return ResourceManager.GetString("SelectChessboards", resourceCulture);
             }
         }
         

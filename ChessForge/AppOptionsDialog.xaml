@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
         ShowInTaskbar="True"
-        Title="{x:Static p:Resources.DlgTitleApplicationOptions}" Height="360" Width="420">
+        Title="{x:Static p:Resources.DlgTitleApplicationOptions}" Height="380" Width="420">
     <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"  >
         <GroupBox x:Name="UiGbLanguage" Margin="15,15,0,0" Height="130" Width="190" Header="{x:Static p:Resources.LanguageNotation}" HorizontalAlignment="Left" VerticalAlignment="Top">
             <StackPanel>
@@ -15,23 +15,24 @@
                 <CheckBox x:Name="UiCbFigurines" Content="{x:Static p:Resources.UseFigurines}" HorizontalAlignment="Left" Margin="15,10,0,0" VerticalAlignment="Top"/>
             </StackPanel>
         </GroupBox>
-        <GroupBox x:Name="UiGbViews" Header="{x:Static p:Resources.Views}" HorizontalAlignment="Left" Height="100" Margin="15,160,0,0" VerticalAlignment="Top" Width="190">
+        <Button x:Name="UiBtnEngine" Content="{x:Static p:Resources.EngineOptions}" HorizontalAlignment="Left" Margin="236,62,0,0" VerticalAlignment="Top" Width="135" Height="22" Click="UiBtnEngine_Click"/>
+        <GroupBox x:Name="UiGbViews" Header="{x:Static p:Resources.Views}" HorizontalAlignment="Left" Height="120" Margin="15,160,0,0" VerticalAlignment="Top" Width="190">
             <StackPanel>
-                <CheckBox x:Name="UiCbShowForkMoves" Content="{x:Static p:Resources.ShowMovesAtFork}" HorizontalAlignment="Left" Margin="5,15,10,0" VerticalAlignment="Top"/>
+                <CheckBox x:Name="UiCbShowForkMoves" Content="{x:Static p:Resources.ShowMovesAtFork}" HorizontalAlignment="Left" Margin="5,12,10,0" VerticalAlignment="Top"/>
                 <CheckBox x:Name="UiCbSoundOn" Content="{x:Static p:Resources.SoundOn}" HorizontalAlignment="Left" Margin="5,15,0,0" VerticalAlignment="Top"/>
+                <CheckBox x:Name="UiCbLargeMenuFont" Content="{x:Static p:Resources.LargeMenuFont}" HorizontalAlignment="Left" Margin="5,15,0,0" VerticalAlignment="Top"/>
             </StackPanel>
         </GroupBox>
-        <GroupBox x:Name="UiGbAutoReplay" HorizontalAlignment="Left" Height="100" Header="{x:Static p:Resources.MoveReplay}" Margin="219,160,0,0" VerticalAlignment="Top" Width="190">
+        <GroupBox x:Name="UiGbAutoReplay" HorizontalAlignment="Left" Height="120" Header="{x:Static p:Resources.MoveReplay}" Margin="219,160,0,0" VerticalAlignment="Top" Width="190">
             <StackPanel Margin="0,0,0,0">
-                <Label x:Name="UiLblReplaySpeed" Content="{x:Static p:Resources.AutoReplaySpeed}" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="UiLblReplaySpeed" Content="{x:Static p:Resources.AutoReplaySpeed}" HorizontalAlignment="Left" Margin="0,18,0,0" VerticalAlignment="Top"/>
                 <TextBox x:Name="UiTbReplaySpeed" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="115,-22,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="40"/>
                 <CheckBox x:Name="UiCbAllowWheel" Content="{x:Static p:Resources.AllowMouseWheel}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4,10,0,0" Height="20"/>
             </StackPanel>
         </GroupBox>
-        <Button x:Name="UiBtnSave" IsDefault="True" Content="{x:Static p:Resources.Save}" HorizontalAlignment="Center" Margin="-230,280,0,0" VerticalAlignment="Top" Width="100" Height="22"  Visibility="Visible" Click="UiBtnSave_Click"/>
-        <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="0,280,0,0" VerticalAlignment="Top" Width="100" Height="22"  Visibility="Visible" Click="UiBtnCancel_Click" />
-        <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Center" Margin="230,280,0,0" VerticalAlignment="Top" Width="100" Height="22"  Visibility="Visible" Click="UiBtnHelp_Click" />
-        <Button x:Name="UiBtnEngine" Content="{x:Static p:Resources.EngineOptions}" HorizontalAlignment="Left" Margin="236,62,0,0" VerticalAlignment="Top" Width="135" Height="22" Click="UiBtnEngine_Click"/>
+        <Button x:Name="UiBtnSave" IsDefault="True" Content="{x:Static p:Resources.Save}" HorizontalAlignment="Center" Margin="-230,300,0,0" VerticalAlignment="Top" Width="100" Height="22"  Visibility="Visible" Click="UiBtnSave_Click"/>
+        <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="0,300,0,0" VerticalAlignment="Top" Width="100" Height="22"  Visibility="Visible" Click="UiBtnCancel_Click" />
+        <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Center" Margin="230,300,0,0" VerticalAlignment="Top" Width="100" Height="22"  Visibility="Visible" Click="UiBtnHelp_Click" />
 
     </Grid>
 </Window>

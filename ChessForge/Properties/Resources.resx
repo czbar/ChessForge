@@ -585,6 +585,9 @@
   <data name="ApplicationOptions" xml:space="preserve">
     <value>Application Options...</value>
   </data>
+  <data name="Chessboards" xml:space="preserve">
+    <value>Chessboards...</value>
+  </data>
   <data name="DlgTitleApplicationOptions" xml:space="preserve">
     <value>Application Options</value>
   </data>
@@ -761,6 +764,12 @@
   </data>
   <data name="EgCentipawnAccuracy" xml:space="preserve">
     <value>max allowed centipawn deviation from the best move is</value>
+  </data>
+  <data name="SelectChessboards" xml:space="preserve">
+    <value>Select Chessboards</value>
+  </data>
+  <data name="Defaults" xml:space="preserve">
+    <value>Defaults</value>
   </data>
   <data name="TargetChapter" xml:space="preserve">
     <value>Target Chapter</value>
@@ -1725,6 +1734,9 @@
   </data>
   <data name="SoundOn" xml:space="preserve">
     <value>Sound On</value>
+  </data>
+  <data name="LargeMenuFont" xml:space="preserve">
+    <value>Large Menu Font</value>
   </data>
   <data name="CurrentVersion" xml:space="preserve">
     <value>The current version $0 will be backed up as</value>

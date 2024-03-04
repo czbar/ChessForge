@@ -67,7 +67,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="branchLevel"></param>
         /// <returns></returns>
-        public bool IsIndexLevel(int branchLevel)
+        private bool IsIndexLevel(int branchLevel)
         {
             return branchLevel <= (_studyView.VariationIndexDepth + 1);
         }
@@ -110,7 +110,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="branchLevel"></param>
         /// <returns></returns>
-        public bool IsLastIndexLine(int branchLevel)
+        private bool IsLastIndexLine(int branchLevel)
         {
             return branchLevel == (_studyView.VariationIndexDepth + 1);
         }
@@ -163,10 +163,9 @@ namespace ChessForge
             LineSector sector = new LineSector();
             sector.LineSectorId = _runningSectorId;
             sector.DisplayLevel = displayLevel;
-            sector.BranchLevel = parent.BranchLevel + 1;
+            sector.BranchLevel = TreeUtils.GetBranchLevel(nd.LineId);
             LineSectors.Add(sector);
 
-            sector.BranchLevel = TreeUtils.GetBranchLevel(nd.LineId);
             if (sector.BranchLevel > _maxBranchLevel)
             {
                 _maxBranchLevel = sector.BranchLevel;
@@ -341,7 +340,7 @@ namespace ChessForge
             LineSector rootSector = new LineSector();
             rootSector.Nodes.Add(root);
             rootSector.LineSectorId = _runningSectorId;
-            rootSector.BranchLevel = 0;
+            rootSector.BranchLevel = 1;
             rootSector.DisplayLevel = -1;
 
             return rootSector;

@@ -526,7 +526,7 @@ namespace ChessForge
             //UiTrainingView.SetLastClickedNode(null);
             Dispatcher.Invoke(() =>
             {
-                ContextMenu cm = _cmTrainingView;
+                ContextMenu cm = UiMncTrainingView;
                 foreach (object o in cm.Items)
                 {
                     if (o is MenuItem)
@@ -583,7 +583,7 @@ namespace ChessForge
         {
             if (sender is Canvas canvas)
             {
-                BookmarkManager.ChessboardClickedEvent(canvas.Name, _cmBookmarks, e);
+                BookmarkManager.ChessboardClickedEvent(canvas.Name, UiMncBookmarks, e);
             }
         }
 
@@ -598,7 +598,7 @@ namespace ChessForge
         private void Bookmarks_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             BookmarkManager.ClickedIndex = -1;
-            BookmarkManager.EnableBookmarkMenus(_cmBookmarks, false);
+            BookmarkManager.EnableBookmarkMenus(UiMncBookmarks, false);
         }
 
         /// <summary>
@@ -958,7 +958,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiImgModelGameLeftArrow_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void UiPreviousModelGame_ButtonDown(object sender, MouseButtonEventArgs e)
         {
             try
             {
@@ -969,7 +969,7 @@ namespace ChessForge
             }
             catch
             {
-                AppLog.Message("Exception in UiImgModelGameLeftArrow_PreviewMouseLeftButtonDown()");
+                AppLog.Message("Exception in UiPreviousModelGame_ButtonDown()");
             }
         }
 
@@ -978,7 +978,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiImgModelGameRightArrow_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void UiNextModelGame_ButtonDown(object sender, MouseButtonEventArgs e)
         {
             try
             {
@@ -989,7 +989,7 @@ namespace ChessForge
             }
             catch
             {
-                AppLog.Message("Exception in UiImgModelGameRightArrow_PreviewMouseLeftButtonDown()");
+                AppLog.Message("Exception in UiNextModelGame_ButtonDown()");
             }
         }
 

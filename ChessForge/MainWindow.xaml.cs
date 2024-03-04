@@ -57,6 +57,11 @@ namespace ChessForge
         public TopGamesView TopGamesView { get => _topGamesView; }
 
         /// <summary>
+        /// Default menu size
+        /// </summary>
+        public double DefaultMenuFontSize;
+
+        /// <summary>
         /// The RichTextBox based Chapters view
         /// </summary>
         private ChaptersView _chaptersView;
@@ -426,6 +431,16 @@ namespace ChessForge
             }
             catch { }
 
+            if (Configuration.LargeMenuFont)
+            {
+                DefaultMenuFontSize = Constants.DEAFULT_MENU_FONT_SIZE;
+                SetMenuFontSize(Constants.LARGE_MENU_FONT_SIZE);
+            }
+            else
+            {
+                DefaultMenuFontSize = UiMainMenu.FontSize;
+            }
+
             if (Configuration.IsMainWinMaximized())
             {
                 this.WindowState = WindowState.Maximized;
@@ -433,7 +448,7 @@ namespace ChessForge
 
             InitializeContentTypeSelectionComboBox();
 
-            UiDgActiveLine.ContextMenu = UiMnMainBoard;
+            UiDgActiveLine.ContextMenu = UiMncMainBoard;
             UiBtnExitGame.Background = ChessForgeColors.ExitButtonLinearBrush;
             UiBtnExitTraining.Background = ChessForgeColors.ExitButtonLinearBrush;
             UiBtnShowExplorer.Background = ChessForgeColors.ShowExplorerLinearBrush;
@@ -2736,12 +2751,6 @@ namespace ChessForge
         private void ShowApplicationOptionsDialog()
         {
             AppOptionsDialog dlg = new AppOptionsDialog();
-            //{
-            //    Left = ChessForgeMain.Left + 100,
-            //    Top = ChessForgeMain.Top + 100,
-            //    Topmost = false,
-            //    Owner = this
-            //};
             GuiUtilities.PositionDialog(dlg, this, 100);
             dlg.ShowDialog();
 
@@ -2752,6 +2761,11 @@ namespace ChessForge
                     Configuration.CultureName = dlg.ExitLanguage;
                     Languages.SetSessionLanguage(dlg.ExitLanguage);
                     MessageBox.Show(Properties.Resources.ChangeLanguageNote, Properties.Resources.Language, MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+
+                if (dlg.LargeMenuFontChanged)
+                {
+                    SetMenuFontSize(Configuration.LargeMenuFont ? Constants.LARGE_MENU_FONT_SIZE : DefaultMenuFontSize);
                 }
 
                 Configuration.WriteOutConfiguration();
@@ -3148,11 +3162,11 @@ namespace ChessForge
                     MainChessBoard.Shapes.CancelShapeDraw(true);
                 }
                 AppState.ConfigureMainBoardContextMenu();
-                UiMnMainBoard.Visibility = Visibility.Visible;
+                UiMncMainBoard.Visibility = Visibility.Visible;
             }
             else
             {
-                UiMnMainBoard.Visibility = Visibility.Collapsed;
+                UiMncMainBoard.Visibility = Visibility.Collapsed;
                 e.Handled = true;
             }
         }

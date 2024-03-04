@@ -50,6 +50,21 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Resets the last move color selection.
+        /// </summary>
+        public static void ResetLastMoveBrush()
+        {
+            _lastMoveBrushIndex = -1;
+            _lastLevelCombo = 0;
+        }
+
+        // last move color selection index
+        private static int _lastMoveBrushIndex = -1;
+
+        // last level + levelGroup combination for which color was requested
+        private static int _lastLevelCombo = 0;
+
+        /// <summary>
         /// Color for the last node at the given level. 
         /// </summary>
         /// <param name="level"></param>
@@ -59,7 +74,21 @@ namespace ChessForge
         {
             Brush brush;
 
-            int modLevel = (level + levelGroup) % 4;
+            // increment the index if this is not the last combination.
+            if (level + levelGroup != _lastLevelCombo)
+            {
+                _lastLevelCombo = level + levelGroup;
+                _lastMoveBrushIndex++;
+            }
+            else
+            {
+                if (_lastMoveBrushIndex < 0)
+                {
+                    _lastMoveBrushIndex = 0;
+                }
+            }
+
+            int modLevel = _lastMoveBrushIndex % 4;
 
             switch (modLevel)
             {
@@ -67,10 +96,10 @@ namespace ChessForge
                     brush = Brushes.Blue;
                     break;
                 case 1:
-                    brush = Brushes.DarkGreen;
+                    brush = Brushes.Green;
                     break;
                 case 2:
-                    brush = Brushes.Purple;
+                    brush = Brushes.Magenta;
                     break;
                 case 3:
                     brush = Brushes.Firebrick;

@@ -52,6 +52,7 @@ namespace ChessForge
                 _mainWin.ActiveArticle.Solver.IsGuessingFinished = false;
             }
 
+            AppState.EnableNagBar();
             _mainWin.BoardCommentBox.ShowTabHints();
         }
 

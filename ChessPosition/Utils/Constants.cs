@@ -163,6 +163,16 @@ namespace ChessPosition
                 };
 
         /// <summary>
+        /// Normal menu fony size
+        /// </summary>
+        public static double DEAFULT_MENU_FONT_SIZE = 12;
+
+        /// <summary>
+        /// Increased menu font size
+        /// </summary>
+        public static double LARGE_MENU_FONT_SIZE = 14;
+
+        /// <summary>
         /// Min id of the move NAG
         /// </summary>
         public static int MinMoveNagId = 1;

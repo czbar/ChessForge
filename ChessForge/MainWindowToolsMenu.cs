@@ -14,6 +14,30 @@ namespace ChessForge
     public partial class MainWindow : Window
     {
         /// <summary>
+        /// Sets the font size for the main menu and all context menus.
+        /// </summary>
+        /// <param name="size"></param>
+        private void SetMenuFontSize(double size)
+        {
+            UiMainMenu.FontSize = size;
+
+            UiMncMainBoard.FontSize = size;
+            UiMncTrainingView.FontSize = size;
+            UiMncEngineGame.FontSize = size;
+            UiMncChapters.FontSize = size;
+            UiMncIntro.FontSize = size;
+            UiMncStudyTree.FontSize = size;
+            UiMncModelGames.FontSize = size;
+            UiMncExercises.FontSize = size;
+            UiMncBookmarks.FontSize = size;
+            UiMncTopGames.FontSize = size;
+
+            UiLblAutoSave.FontSize = size;
+            UiLblExplorers.FontSize = size;
+            UiLblEngine.FontSize = size;
+        }
+
+        /// <summary>
         /// Invokes the Search Games dialog, collects user specified criteria
         /// executes the search and opens the Found Articles dialog.
         /// </summary>

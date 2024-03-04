@@ -61,6 +61,14 @@ namespace ChessForge
         public static string LastWorkbookFile = "";
 
         /// <summary>
+        /// Chessboard colors coded for the views in the form of
+        /// ChessboardColors = "1,3,3,2" where the numbers correspond to the 
+        /// values in ChessBoard.ColorSets and apply to Study, Games, Exercises
+        /// and Training int he order
+        /// </summary>
+        public static string ChessboardColors = "";
+
+        /// <summary>
         /// Path to the engine executable
         /// </summary>
         public static string EngineExePath = "";
@@ -321,6 +329,11 @@ namespace ChessForge
         public static bool SoundOn = true;
 
         /// <summary>
+        /// Whether to use large font in the menus
+        /// </summary>
+        public static bool LargeMenuFont = false;
+
+        /// <summary>
         /// Whether to use figurines in chess notation
         /// </summary>
         public static bool UseFigurines = false;
@@ -395,7 +408,12 @@ namespace ChessForge
         /// <summary>
         /// Board sets for Exercises.
         /// </summary>
-        public static BoardSet ExerciseBoardSet = ChessBoards.BoardSets[ColorSet.LIGH_GREEN];
+        public static BoardSet ExerciseBoardSet = ChessBoards.BoardSets[ColorSet.LIGHT_GREEN];
+
+        /// <summary>
+        /// Board sets for Training.
+        /// </summary>
+        public static BoardSet TrainingBoardSet = ChessBoards.BoardSets[ColorSet.GREEN];
 
         //*********************************
         // CONFIGURATION ITEM NAMES
@@ -411,6 +429,9 @@ namespace ChessForge
         private const string CFG_ENGINE_EXE = "EngineExe";
         private const string CFG_DO_NOT_SHOW_VERSION = "DoNotShowVersion";
         private const string CFG_CULTURE_NAME = "CultureName";
+
+        // coded chess board colors for the views
+        private const string CFG_CHESS_BOARD_COLORS = "ChessboardColors";
 
         /// <summary>
         /// Time the engine has to make a move in a training game
@@ -440,6 +461,7 @@ namespace ChessForge
 
         private const string CFG_AUTO_SAVE = "AutoSave";
         private const string CFG_SOUND_ON = "SoundOn";
+        private const string CFG_LARGE_MENU_FONT = "LargeMenuFont";
         private const string CFG_USE_FIGURINES = "UseFigurines";
         private const string CFG_USE_FIXED_FONT = "UseFixedFont";
         private const string CFG_SHOW_MOVES_AT_FORK = "ShowMovesAtFork";
@@ -548,10 +570,7 @@ namespace ChessForge
         /// </summary>
         public static void ReadConfigurationFile()
         {
-            // defaults for board colors
-            StudyBoardSet = ChessBoards.BoardSets[ColorSet.BLUE];
-            GameBoardSet = ChessBoards.BoardSets[ColorSet.LIGHT_BLUE];
-            ExerciseBoardSet = ChessBoards.BoardSets[ColorSet.LIGH_GREEN];
+            SetChessboardDefaults();
 
             try
             {
@@ -596,6 +615,8 @@ namespace ChessForge
                 sb.Append(CFG_DO_NOT_SHOW_VERSION + "=" + DoNotShowVersion + Environment.NewLine);
                 sb.Append(CFG_CULTURE_NAME + "=" + CultureName + Environment.NewLine);
 
+                sb.Append(CFG_CHESS_BOARD_COLORS + "=" + EncodeChessboardColors() + Environment.NewLine);
+
                 sb.Append(CFG_ENGINE_MOVE_TIME + "=" + EngineMoveTime.ToString() + Environment.NewLine);
                 sb.Append(CFG_ENGINE_EVALUATION_TIME + "=" + EngineEvaluationTime.ToString() + Environment.NewLine);
                 sb.Append(CFG_ENGINE_THREADS + "=" + EngineThreads.ToString() + Environment.NewLine);
@@ -614,6 +635,7 @@ namespace ChessForge
 
                 sb.Append(CFG_AUTO_SAVE + "=" + (AutoSave ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_SOUND_ON + "=" + (SoundOn ? "1" : "0") + Environment.NewLine);
+                sb.Append(CFG_LARGE_MENU_FONT + "=" + (LargeMenuFont ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_USE_FIGURINES + "=" + (UseFigurines ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_USE_FIXED_FONT + "=" + (UseFixedFont ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_SHOW_MOVES_AT_FORK + "=" + (ShowMovesAtFork ? "1" : "0") + Environment.NewLine);
@@ -764,6 +786,17 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Sets the default chessboard colors.
+        /// </summary>
+        public static void SetChessboardDefaults()
+        {
+            StudyBoardSet = ChessBoards.BoardSets[ColorSet.BLUE];
+            GameBoardSet = ChessBoards.BoardSets[ColorSet.LIGHT_BLUE];
+            ExerciseBoardSet = ChessBoards.BoardSets[ColorSet.LIGHT_GREEN];
+            TrainingBoardSet = ChessBoards.BoardSets[ColorSet.GREEN];
+        }
+
+        /// <summary>
         /// Finds engine executable by checking if it is already set
         /// and if not, if we have it in the current directory.
         /// If all fails, asks the user to find it.
@@ -893,6 +926,10 @@ namespace ChessForge
                         case CFG_ENGINE_EXE:
                             EngineExePath = value;
                             break;
+                        case CFG_CHESS_BOARD_COLORS:
+                            ChessboardColors = value;
+                            DecodeChessboardColors(value);
+                            break;
                         case CFG_DO_NOT_SHOW_VERSION:
                             DoNotShowVersion = value;
                             break;
@@ -958,6 +995,9 @@ namespace ChessForge
                         case CFG_SOUND_ON:
                             SoundOn = value != "0" ? true : false;
                             break;
+                        case CFG_LARGE_MENU_FONT:
+                            LargeMenuFont = value != "0" ? true : false;
+                            break;
                         case CFG_USE_FIGURINES:
                             UseFigurines = value != "0" ? true : false;
                             break;
@@ -1010,6 +1050,74 @@ namespace ChessForge
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Encodes the configured board colors as a string to be saved in the config file.
+        /// </summary>
+        /// <returns></returns>
+        private static string EncodeChessboardColors()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            // study
+            sb.Append(((int)StudyBoardSet.Colors).ToString() + ',');
+
+            // games
+            sb.Append(((int)GameBoardSet.Colors).ToString() + ',');
+
+            // exercises
+            sb.Append(((int)ExerciseBoardSet.Colors).ToString() + ',');
+
+            // training
+            sb.Append(((int)TrainingBoardSet.Colors).ToString() + ',');
+
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// Decodes the chessboards colors configuration string and sets the boards accordingly.
+        /// </summary>
+        /// <param name="colors"></param>
+        private static void DecodeChessboardColors(string colors)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(colors))
+                {
+                    string[] tokens = colors.Split(',');
+                    int val = 0;
+                    if (tokens.Length >= 1 && int.TryParse(tokens[0], out val))
+                    {
+                        if (BoardSets.ContainsKey((ColorSet)val))
+                        {
+                            StudyBoardSet = BoardSets[(ColorSet)val];
+                        }
+                    }
+                    if (tokens.Length >= 2 && int.TryParse(tokens[1], out val))
+                    {
+                        if (BoardSets.ContainsKey((ColorSet)val))
+                        {
+                            GameBoardSet = BoardSets[(ColorSet)val];
+                        }
+                    }
+                    if (tokens.Length >= 3 && int.TryParse(tokens[2], out val))
+                    {
+                        if (BoardSets.ContainsKey((ColorSet)val))
+                        {
+                            ExerciseBoardSet = BoardSets[(ColorSet)val];
+                        }
+                    }
+                    if (tokens.Length >= 4 && int.TryParse(tokens[3], out val))
+                    {
+                        if (BoardSets.ContainsKey((ColorSet)val))
+                        {
+                            TrainingBoardSet = BoardSets[(ColorSet)val];
+                        }
+                    }
+                }
+            }
+            catch { }
         }
 
         /// <summary>

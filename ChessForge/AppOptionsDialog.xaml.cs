@@ -25,6 +25,9 @@ namespace ChessForge
         // hash table size on entry
         private long _currentEngineHashSize;
 
+        // LargeMenuFont on entry
+        private bool _currentLargeMenuFont;
+
         /// <summary>
         /// The language selected upon exit
         /// </summary>
@@ -47,6 +50,11 @@ namespace ChessForge
         /// that require updating engine options.
         /// </summary>
         public bool EngineParamsChanged = false;
+
+        /// <summary>
+        /// Set on Exit to indicate whether LargeMenuFont param changed
+        /// </summary>
+        public bool LargeMenuFontChanged = false;
 
         /// <summary>
         /// Configured path to the engine's executable.
@@ -107,6 +115,11 @@ namespace ChessForge
         public bool SoundOn;
 
         /// <summary>
+        /// Whether to use larger font in the menus
+        /// </summary>
+        public bool LargeMenuFont;
+
+        /// <summary>
         // Whether the engine path was changed by the user in this dialog.
         /// </summary>
         public bool ChangedEnginePath = false;
@@ -134,15 +147,18 @@ namespace ChessForge
             AllowMouseWheel = Configuration.AllowMouseWheelForMoves;
             ShowMovesAtFork = Configuration.ShowMovesAtFork;
             SoundOn = Configuration.SoundOn;
+            LargeMenuFont = Configuration.LargeMenuFont;
 
             _currentUseFigurines = Configuration.UseFigurines;
             _currentEngineThreads = Configuration.EngineThreads;
             _currentEngineHashSize = Configuration.EngineHashSize;
+            _currentLargeMenuFont = Configuration.LargeMenuFont;
 
             UiTbReplaySpeed.Text = ReplaySpeed.ToString("F1");
             UiCbAllowWheel.IsChecked = (AllowMouseWheel == true);
             UiCbShowForkMoves.IsChecked = (ShowMovesAtFork == true);
             UiCbSoundOn.IsChecked = (SoundOn == true);
+            UiCbLargeMenuFont.IsChecked = (LargeMenuFont == true);
             UiCbFigurines.IsChecked = (Configuration.UseFigurines == true);
 
             Languages.AvailableLanguages.Sort();
@@ -184,7 +200,10 @@ namespace ChessForge
             Configuration.AllowMouseWheelForMoves = (UiCbAllowWheel.IsChecked == true);
             Configuration.ShowMovesAtFork = (UiCbShowForkMoves.IsChecked == true);
             Configuration.SoundOn = (UiCbSoundOn.IsChecked == true);
+            Configuration.LargeMenuFont = (UiCbLargeMenuFont.IsChecked == true);
             Configuration.UseFigurines = (UiCbFigurines.IsChecked == true);
+
+            LargeMenuFontChanged = Configuration.LargeMenuFont != _currentLargeMenuFont;
 
             if (UiLbLanguages.SelectedItem != null)
             {
