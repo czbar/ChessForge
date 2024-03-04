@@ -59,9 +59,9 @@ namespace ChessForge
         private void IconsToBoardSets()
         {
             _dictIconImageToBoardSet.Add(UiImg1, ChessBoards.BoardSets[ChessBoards.ColorSet.BLUE]);
-            _dictIconImageToBoardSet.Add(UiImg2, ChessBoards.BoardSets[ChessBoards.ColorSet.GREEN]);
-            _dictIconImageToBoardSet.Add(UiImg3, ChessBoards.BoardSets[ChessBoards.ColorSet.LIGHT_BLUE]);
-            _dictIconImageToBoardSet.Add(UiImg4, ChessBoards.BoardSets[ChessBoards.ColorSet.LIGHT_GREEN]);
+            _dictIconImageToBoardSet.Add(UiImg2, ChessBoards.BoardSets[ChessBoards.ColorSet.LIGHT_BLUE]);
+            _dictIconImageToBoardSet.Add(UiImg3, ChessBoards.BoardSets[ChessBoards.ColorSet.LIGHT_GREEN]);
+            _dictIconImageToBoardSet.Add(UiImg4, ChessBoards.BoardSets[ChessBoards.ColorSet.GREEN]);
             _dictIconImageToBoardSet.Add(UiImg5, ChessBoards.BoardSets[ChessBoards.ColorSet.PALE_BLUE]);
             _dictIconImageToBoardSet.Add(UiImg6, ChessBoards.BoardSets[ChessBoards.ColorSet.GREY]);
             _dictIconImageToBoardSet.Add(UiImg7, ChessBoards.BoardSets[ChessBoards.ColorSet.BROWN]);
