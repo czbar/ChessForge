@@ -36,9 +36,9 @@ namespace ChessForge
         //*********************************
 
         /// <summary>
-        /// Number of levels on the Variation Index of a Study.
+        /// Default number of levels on the Variation Index of a Study.
         /// </summary>
-        public static int VariationIndexDepth = 3;
+        public static int DefaultIndexDepth = 3;
 
         /// <summary>
         /// Maximum allowed depth of the variation index

@@ -374,7 +374,7 @@ namespace ChessForge
             {
                 if (_variationIndexDepth == null)
                 {
-                    _variationIndexDepth = Configuration.VariationIndexDepth;
+                    _variationIndexDepth = Configuration.DefaultIndexDepth;
                 }
                 else if (_variationIndexDepth < -1)
                 {
