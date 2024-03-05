@@ -51,7 +51,7 @@ namespace ChessForge
         {
             get
             {
-                return AppState.ActiveChapter == null ? Configuration.VariationIndexDepth : AppState.ActiveChapter.VariationIndexDepth.Value;
+                return AppState.ActiveChapter == null ? Configuration.DefaultIndexDepth : AppState.ActiveChapter.VariationIndexDepth.Value;
             }
         }
 
@@ -296,6 +296,10 @@ namespace ChessForge
                 }
                 Document.Blocks.Add(para);
             }
+            else if (_pageHeaderParagraph != null)
+            {
+                _pageHeaderParagraph.ToolTip = Properties.Resources.ShowIndex;
+            }
         }
 
         /// <summary>
@@ -308,6 +312,7 @@ namespace ChessForge
             Run rPlus = new Run(Constants.CHAR_DOWN_ARROW.ToString());
             rPlus.FontWeight = FontWeights.Normal;
             rPlus.Foreground = Brushes.Black;
+            rPlus.ToolTip = Properties.Resources.ToolTipIncreaseIndexDepth;
             rPlus.PreviewMouseDown += EventDownArrowClicked;
             para.Inlines.Add(rPlus);
 
@@ -316,6 +321,7 @@ namespace ChessForge
                 Run rMinus = new Run(Constants.CHAR_UP_ARROW.ToString());
                 rMinus.FontWeight = FontWeights.Normal;
                 rMinus.Foreground = Brushes.Black;
+                rMinus.ToolTip = Properties.Resources.ToolTipDecreaseIndexDepth;
                 rMinus.PreviewMouseDown += EventUpArrowClicked;
                 para.Inlines.Add(rMinus);
             }
