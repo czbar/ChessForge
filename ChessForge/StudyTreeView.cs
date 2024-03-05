@@ -232,6 +232,7 @@ namespace ChessForge
 
                         if (sector.Nodes[0].LineId == "1")
                         {
+                            // build the stem line
                             bool validMove = false;
                             foreach (TreeNode nd in sector.Nodes)
                             {
@@ -247,6 +248,11 @@ namespace ChessForge
                             if (validMove)
                             {
                                 para.Inlines.Add(new Run("\n"));
+                            }
+                            else
+                            {
+                                // if there was no valid move, clear the paragraph (the indent run was inserted!)
+                                para.Inlines.Clear();
                             }
                         }
                         else
