@@ -64,9 +64,9 @@ namespace ChessForge
             get
             {
                 int depth = VariationIndexDepth;
-                if (depth > LineManager.MaxBranchLevel)
+                if (depth > LineManager.MaxBranchLevel - 1)
                 {
-                    depth = LineManager.MaxBranchLevel;
+                    depth = LineManager.MaxBranchLevel - 1;
                 }
                 else if (VariationIndexDepth == 0 && !LineManager.HasIndexLevelZero())
                 {
