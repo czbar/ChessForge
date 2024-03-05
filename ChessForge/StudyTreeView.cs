@@ -224,15 +224,10 @@ namespace ChessForge
                             first = false;
                         }
 
-                        for (int i = 0; i < level; i++)
-                        {
-                            Run r = new Run(_indent);
-                            para.Inlines.Add(r);
-                        }
-
                         if (sector.Nodes[0].LineId == "1")
                         {
-                            // build the stem line
+                            // Build the stem line
+                            // Note we don't want an indent here 'coz if the stem line is long it will wrap ugly
                             bool validMove = false;
                             foreach (TreeNode nd in sector.Nodes)
                             {
@@ -249,14 +244,15 @@ namespace ChessForge
                             {
                                 para.Inlines.Add(new Run("\n"));
                             }
-                            else
-                            {
-                                // if there was no valid move, clear the paragraph (the indent run was inserted!)
-                                para.Inlines.Clear();
-                            }
                         }
                         else
                         {
+                            for (int i = 0; i < level; i++)
+                            {
+                                Run r = new Run(_indent);
+                                para.Inlines.Add(r);
+                            }
+
                             Run rIdTitle = BuildSectionIdTitle(sector.Nodes[0].LineId);
                             para.Inlines.Add(rIdTitle);
                             if (IsLastEffectiveIndexLine(level) || sector.Nodes[sector.Nodes.Count - 1].Children.Count == 0)
