@@ -91,6 +91,9 @@ namespace ChessForge
             }
         }
 
+        // Page Header paragraph
+        protected Paragraph _pageHeaderParagraph = null;
+
         // flags freshness of the view
         private bool _isFresh = false;
 
@@ -1005,7 +1008,7 @@ namespace ChessForge
         /// <returns></returns>
         private Paragraph BuildPageHeader(GameData.ContentType contentType)
         {
-            Paragraph para = null;
+            _pageHeaderParagraph = null;
 
             if (_mainVariationTree != null)
             {
@@ -1019,10 +1022,10 @@ namespace ChessForge
                         string whitePlayerElo = _mainVariationTree.Header.GetWhitePlayerElo(out _);
                         string blackPlayerElo = _mainVariationTree.Header.GetBlackPlayerElo(out _);
 
-                        para = CreateParagraph("0", true);
-                        para.Margin = new Thickness(0, 0, 0, 0);
-                        para.Name = _para_header_;
-                        para.MouseLeftButtonDown += EventPageHeaderClicked;
+                        _pageHeaderParagraph = CreateParagraph("0", true);
+                        _pageHeaderParagraph.Margin = new Thickness(0, 0, 0, 0);
+                        _pageHeaderParagraph.Name = _para_header_;
+                        _pageHeaderParagraph.MouseLeftButtonDown += EventPageHeaderClicked;
 
                         bool hasPlayerNames = !(string.IsNullOrWhiteSpace(whitePlayer) && string.IsNullOrWhiteSpace(blackPlayer));
 
@@ -1030,17 +1033,17 @@ namespace ChessForge
                         {
                             Run rWhiteSquare = CreateRun("0", (Constants.CharWhiteSquare.ToString() + " "), true);
                             rWhiteSquare.FontWeight = FontWeights.Normal;
-                            para.Inlines.Add(rWhiteSquare);
+                            _pageHeaderParagraph.Inlines.Add(rWhiteSquare);
 
                             Run rWhite = CreateRun("0", (BuildPlayerLine(whitePlayer, whitePlayerElo) + "\n"), true);
-                            para.Inlines.Add(rWhite);
+                            _pageHeaderParagraph.Inlines.Add(rWhite);
 
                             Run rBlackSquare = CreateRun("0", (Constants.CharBlackSquare.ToString() + " "), true);
                             rBlackSquare.FontWeight = FontWeights.Normal;
-                            para.Inlines.Add(rBlackSquare);
+                            _pageHeaderParagraph.Inlines.Add(rBlackSquare);
 
                             Run rBlack = CreateRun("0", (BuildPlayerLine(blackPlayer, blackPlayerElo)) + "\n", true);
-                            para.Inlines.Add(rBlack);
+                            _pageHeaderParagraph.Inlines.Add(rBlack);
                         }
 
                         if (!string.IsNullOrEmpty(_mainVariationTree.Header.GetEventName(out _)))
@@ -1058,12 +1061,12 @@ namespace ChessForge
                                 }
                                 string eventName = _mainVariationTree.Header.GetEventName(out _) + round;
                                 Run rEvent = CreateRun("1", "      " + eventName + "\n", true);
-                                para.Inlines.Add(rEvent);
+                                _pageHeaderParagraph.Inlines.Add(rEvent);
                             }
                             else
                             {
                                 Run rEvent = CreateRun("0", _mainVariationTree.Header.GetEventName(out _) + "\n", true);
-                                para.Inlines.Add(rEvent);
+                                _pageHeaderParagraph.Inlines.Add(rEvent);
                             }
                         }
 
@@ -1071,7 +1074,7 @@ namespace ChessForge
                         if (!string.IsNullOrEmpty(dateForDisplay))
                         {
                             Run rDate = CreateRun("1", "      " + Properties.Resources.Date + ": " + dateForDisplay + "\n", true);
-                            para.Inlines.Add(rDate);
+                            _pageHeaderParagraph.Inlines.Add(rDate);
                         }
 
                         string eco = _mainVariationTree.Header.GetECO(out _);
@@ -1081,42 +1084,42 @@ namespace ChessForge
                         {
                             Run rIndent = new Run("      ");
                             rIndent.FontWeight = FontWeights.Normal;
-                            para.Inlines.Add(rIndent);
+                            _pageHeaderParagraph.Inlines.Add(rIndent);
 
                             if (rEco != null)
                             {
                                 rEco.FontWeight = FontWeights.Bold;
-                                para.Inlines.Add(rEco);
+                                _pageHeaderParagraph.Inlines.Add(rEco);
                             }
                             if (rResult != null)
                             {
                                 rResult.FontWeight = FontWeights.Normal;
-                                para.Inlines.Add(rResult);
+                                _pageHeaderParagraph.Inlines.Add(rResult);
                             }
 
                             Run rNewLine = new Run("\n");
-                            para.Inlines.Add(rNewLine);
+                            _pageHeaderParagraph.Inlines.Add(rNewLine);
                         }
                         break;
                     case GameData.ContentType.STUDY_TREE:
                         if (WorkbookManager.SessionWorkbook.ActiveChapter != null)
                         {
-                            para = CreateParagraph("0", true);
-                            para.MouseLeftButtonDown += EventPageHeaderClicked;
+                            _pageHeaderParagraph = CreateParagraph("0", true);
+                            _pageHeaderParagraph.MouseLeftButtonDown += EventPageHeaderClicked;
 
                             Run rPrefix = new Run();
                             rPrefix.TextDecorations = TextDecorations.Underline;
-                            para.Inlines.Add(rPrefix);
+                            _pageHeaderParagraph.Inlines.Add(rPrefix);
 
                             Run r = new Run(WorkbookManager.SessionWorkbook.ActiveChapter.GetTitle());
                             r.TextDecorations = TextDecorations.Underline;
-                            para.Inlines.Add(r);
+                            _pageHeaderParagraph.Inlines.Add(r);
                         }
                         break;
                 }
             }
 
-            return para;
+            return _pageHeaderParagraph;
         }
 
         /// <summary>
