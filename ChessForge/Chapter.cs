@@ -559,7 +559,7 @@ namespace ChessForge
         /// </summary>
         public string TitleWithNumber
         {
-            get => "[" + (Index + 1).ToString() + "] " + (_title ?? "");
+            get => "[" + (Index + 1).ToString() + "] " + (GetTitle());
         }
 
         /// <summary>
