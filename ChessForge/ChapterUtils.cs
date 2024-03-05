@@ -173,6 +173,7 @@ namespace ChessForge
                         {
                             // ask the user whether to stay here or show the target chapter
                             PostCopyMoveDialog dlg = new PostCopyMoveDialog(targetChapter, action, articlesToInsert.Count);
+                            GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
                             if (dlg.ShowDialog() == true)
                             {
                                 targetChapter.IsViewExpanded = true;
