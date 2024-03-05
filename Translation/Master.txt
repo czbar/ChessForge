@@ -15,9 +15,6 @@ ChessForge=Chess Forge
 #Language
 Language=Language
 
-#Language/Notation
-LanguageNotation=Language / Notation
-
 
 #Language System
 LangSystem=System
@@ -534,9 +531,6 @@ ApplicationOptions=Application Options...
 #Chessboards
 Chessboards=Chessboards...
 
-#Application Options dialog title
-DlgTitleApplicationOptions=Application Options
-
 #Opens the Engine Options dialog
 EngineOptions=Engine Options...
 
@@ -745,6 +739,43 @@ EgSelectionAccuracyLabel=Move selection accuracy is
 
 #Cenitpawn accuracy
 EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
+
+
+#######################################
+#
+# Header: DIALOG Application Options
+#
+
+#Application Options dialog title
+DlgTitleApplicationOptions=Application Options
+
+#Language/Notation
+LanguageNotation=Language / Notation
+
+#Use figurines
+UseFigurines=Use Figurines
+
+#Whether sound for the moves is turned on
+SoundOn=Sound On
+
+#Whether to show inline table with move options at a fork
+ShowMovesAtFork=Show Moves at Fork
+
+#Large menu font
+LargeMenuFont=Large Menu Font
+
+#Default index depth
+DefaultIndexDepth=Default Index Depth
+
+#Move Replay(group frame title)
+MoveReplay=Move Replay
+
+#Time per move in auto replay in seconds (inside a frame titled "Move Replay")
+AutoReplaySpeed=Auto Speed (s)
+
+#Allow manual replay with a mouse wheel 
+AllowMouseWheel=Allow Mouse Wheel
+
 
 
 #######################################
@@ -1513,9 +1544,6 @@ Clear=Clear
 #Notation
 Notation=Notation
 
-#Use figurines
-UseFigurines=Use Figurines
-
 #ViewImportedGames
 ViewImportedGames=Go to Games
 
@@ -1911,26 +1939,6 @@ QuizPoints=Quiz points
 
 #Lost quiz points
 LostQuizPoints=Lost quiz points
-
-
-#Move Replay(group frame title)
-MoveReplay=Move Replay
-
-
-#Time per move in auto replay in seconds (inside a frame titled "Move Replay")
-AutoReplaySpeed=Auto Speed (s)
-
-#Allow manual replay with a mouse wheel 
-AllowMouseWheel=Allow Mouse Wheel
-
-#Whether to show inline table with move options at a fork
-ShowMovesAtFork=Show Moves at Fork
-
-#Whether sound for the moves is turned on
-SoundOn=Sound On
-
-#Large menu font
-LargeMenuFont=Large Menu Font
 
 #Current version
 CurrentVersion=The current version $0 will be backed up as

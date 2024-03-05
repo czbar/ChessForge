@@ -17,10 +17,6 @@ ChessForge=Chess Forge
 #english: Language=Language
 Language=Język
 
-#description: Language/Notation
-#english: LanguageNotation=Language / Notation
-LanguageNotation=Język / Notacja
-
 
 #description: Language System
 #english: LangSystem=System
@@ -691,10 +687,6 @@ ApplicationOptions=Opcje Aplikacji
 #english: Chessboards=Chessboards...
 Chessboards=Szachownice...
 
-#description: Application Options dialog title
-#english: DlgTitleApplicationOptions=Application Options
-DlgTitleApplicationOptions=Opcje Aplikacji
-
 #description: Opens the Engine Options dialog
 #english: EngineOptions=Engine Options...
 EngineOptions=Opcje Silnika...
@@ -961,6 +953,53 @@ EgSelectionAccuracyLabel=Dokładność wyboru ruchów wynosi
 #description: Cenitpawn accuracy
 #english: EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
 EgCentipawnAccuracy=maksymalne odchylenie od najlepszego ruchu wynosi
+
+
+#######################################
+#
+# Header: DIALOG Application Options
+#
+
+#description: Application Options dialog title
+#english: DlgTitleApplicationOptions=Application Options
+DlgTitleApplicationOptions=Opcje Aplikacji
+
+#description: Language/Notation
+#english: LanguageNotation=Language / Notation
+LanguageNotation=Język / Notacja
+
+#description: Use figurines
+#english: UseFigurines=Use Figurines
+UseFigurines=Używaj figurek
+
+#description: Whether sound for the moves is turned on
+#english: SoundOn=Sound On
+SoundOn=Włącz dźwięk
+
+#description: Whether to show inline table with move options at a fork
+#english: ShowMovesAtFork=Show Moves at Fork
+ShowMovesAtFork=Tabelka przy rozgałęzieniu
+
+#description: Large menu font
+#english: LargeMenuFont=Large Menu Font
+LargeMenuFont=Większa czcionka w menu
+
+#description: Default index depth
+#english: DefaultIndexDepth=Default Index Depth
+DefaultIndexDepth=Domyślny poziom indeksu
+
+#description: Move Replay(group frame title)
+#english: MoveReplay=Move Replay
+MoveReplay=Odtwarzanie Ruchów
+
+#description: Time per move in auto replay in seconds (inside a frame titled "Move Replay")
+#english: AutoReplaySpeed=Auto Speed (s)
+AutoReplaySpeed=Auto (s)
+
+#description: Allow manual replay with a mouse wheel 
+#english: AllowMouseWheel=Allow Mouse Wheel
+AllowMouseWheel=Uaktywnij kółko myszy
+
 
 
 #######################################
@@ -1926,10 +1965,6 @@ Clear=Wyczyść
 #english: Notation=Notation
 Notation=Zapis
 
-#description: Use figurines
-#english: UseFigurines=Use Figurines
-UseFigurines=Używaj figurek
-
 #description: ViewImportedGames
 #english: ViewImportedGames=Go to Games
 ViewImportedGames=Przejdź do Partii
@@ -2448,32 +2483,6 @@ QuizPoints=Punktacja do Quizu
 #description: Lost quiz points
 #english: LostQuizPoints=Lost quiz points
 LostQuizPoints=Punkty stracone
-
-
-#description: Move Replay(group frame title)
-#english: MoveReplay=Move Replay
-MoveReplay=Odtwarzanie Ruchów
-
-
-#description: Time per move in auto replay in seconds (inside a frame titled "Move Replay")
-#english: AutoReplaySpeed=Auto Speed (s)
-AutoReplaySpeed=Auto (s)
-
-#description: Allow manual replay with a mouse wheel 
-#english: AllowMouseWheel=Allow Mouse Wheel
-AllowMouseWheel=Uaktywnij kółko myszy
-
-#description: Whether to show inline table with move options at a fork
-#english: ShowMovesAtFork=Show Moves at Fork
-ShowMovesAtFork=Tabelka przy rozgałęzieniu
-
-#description: Whether sound for the moves is turned on
-#english: SoundOn=Sound On
-SoundOn=Włącz dźwięk
-
-#description: Large menu font
-#english: LargeMenuFont=Large Menu Font
-LargeMenuFont=Większa czcionka w menu
 
 #description: Current version
 #english: CurrentVersion=The current version $0 will be backed up as

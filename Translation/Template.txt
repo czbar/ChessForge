@@ -17,10 +17,6 @@ ChessForge=
 #english: Language=Language
 Language=
 
-#description: Language/Notation
-#english: LanguageNotation=Language / Notation
-LanguageNotation=
-
 
 #description: Language System
 #english: LangSystem=System
@@ -691,10 +687,6 @@ ApplicationOptions=
 #english: Chessboards=Chessboards...
 Chessboards=
 
-#description: Application Options dialog title
-#english: DlgTitleApplicationOptions=Application Options
-DlgTitleApplicationOptions=
-
 #description: Opens the Engine Options dialog
 #english: EngineOptions=Engine Options...
 EngineOptions=
@@ -961,6 +953,53 @@ EgSelectionAccuracyLabel=
 #description: Cenitpawn accuracy
 #english: EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
 EgCentipawnAccuracy=
+
+
+#######################################
+#
+# Header: DIALOG Application Options
+#
+
+#description: Application Options dialog title
+#english: DlgTitleApplicationOptions=Application Options
+DlgTitleApplicationOptions=
+
+#description: Language/Notation
+#english: LanguageNotation=Language / Notation
+LanguageNotation=
+
+#description: Use figurines
+#english: UseFigurines=Use Figurines
+UseFigurines=
+
+#description: Whether sound for the moves is turned on
+#english: SoundOn=Sound On
+SoundOn=
+
+#description: Whether to show inline table with move options at a fork
+#english: ShowMovesAtFork=Show Moves at Fork
+ShowMovesAtFork=
+
+#description: Large menu font
+#english: LargeMenuFont=Large Menu Font
+LargeMenuFont=
+
+#description: Default index depth
+#english: DefaultIndexDepth=Default Index Depth
+DefaultIndexDepth=
+
+#description: Move Replay(group frame title)
+#english: MoveReplay=Move Replay
+MoveReplay=
+
+#description: Time per move in auto replay in seconds (inside a frame titled "Move Replay")
+#english: AutoReplaySpeed=Auto Speed (s)
+AutoReplaySpeed=
+
+#description: Allow manual replay with a mouse wheel 
+#english: AllowMouseWheel=Allow Mouse Wheel
+AllowMouseWheel=
+
 
 
 #######################################
@@ -1926,10 +1965,6 @@ Clear=
 #english: Notation=Notation
 Notation=
 
-#description: Use figurines
-#english: UseFigurines=Use Figurines
-UseFigurines=
-
 #description: ViewImportedGames
 #english: ViewImportedGames=Go to Games
 ViewImportedGames=
@@ -2448,32 +2483,6 @@ QuizPoints=
 #description: Lost quiz points
 #english: LostQuizPoints=Lost quiz points
 LostQuizPoints=
-
-
-#description: Move Replay(group frame title)
-#english: MoveReplay=Move Replay
-MoveReplay=
-
-
-#description: Time per move in auto replay in seconds (inside a frame titled "Move Replay")
-#english: AutoReplaySpeed=Auto Speed (s)
-AutoReplaySpeed=
-
-#description: Allow manual replay with a mouse wheel 
-#english: AllowMouseWheel=Allow Mouse Wheel
-AllowMouseWheel=
-
-#description: Whether to show inline table with move options at a fork
-#english: ShowMovesAtFork=Show Moves at Fork
-ShowMovesAtFork=
-
-#description: Whether sound for the moves is turned on
-#english: SoundOn=Sound On
-SoundOn=
-
-#description: Large menu font
-#english: LargeMenuFont=Large Menu Font
-LargeMenuFont=
 
 #description: Current version
 #english: CurrentVersion=The current version $0 will be backed up as

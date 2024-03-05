@@ -123,9 +123,6 @@
   <data name="Language" xml:space="preserve">
     <value>Language</value>
   </data>
-  <data name="LanguageNotation" xml:space="preserve">
-    <value>Language / Notation</value>
-  </data>
   <data name="LangSystem" xml:space="preserve">
     <value>System</value>
   </data>
@@ -588,9 +585,6 @@
   <data name="Chessboards" xml:space="preserve">
     <value>Chessboards...</value>
   </data>
-  <data name="DlgTitleApplicationOptions" xml:space="preserve">
-    <value>Application Options</value>
-  </data>
   <data name="EngineOptions" xml:space="preserve">
     <value>Engine Options...</value>
   </data>
@@ -764,6 +758,36 @@
   </data>
   <data name="EgCentipawnAccuracy" xml:space="preserve">
     <value>max allowed centipawn deviation from the best move is</value>
+  </data>
+  <data name="DlgTitleApplicationOptions" xml:space="preserve">
+    <value>Application Options</value>
+  </data>
+  <data name="LanguageNotation" xml:space="preserve">
+    <value>Language / Notation</value>
+  </data>
+  <data name="UseFigurines" xml:space="preserve">
+    <value>Use Figurines</value>
+  </data>
+  <data name="SoundOn" xml:space="preserve">
+    <value>Sound On</value>
+  </data>
+  <data name="ShowMovesAtFork" xml:space="preserve">
+    <value>Show Moves at Fork</value>
+  </data>
+  <data name="LargeMenuFont" xml:space="preserve">
+    <value>Large Menu Font</value>
+  </data>
+  <data name="DefaultIndexDepth" xml:space="preserve">
+    <value>Default Index Depth</value>
+  </data>
+  <data name="MoveReplay" xml:space="preserve">
+    <value>Move Replay</value>
+  </data>
+  <data name="AutoReplaySpeed" xml:space="preserve">
+    <value>Auto Speed (s)</value>
+  </data>
+  <data name="AllowMouseWheel" xml:space="preserve">
+    <value>Allow Mouse Wheel</value>
   </data>
   <data name="SelectChessboards" xml:space="preserve">
     <value>Select Chessboards</value>
@@ -1356,9 +1380,6 @@
   <data name="Notation" xml:space="preserve">
     <value>Notation</value>
   </data>
-  <data name="UseFigurines" xml:space="preserve">
-    <value>Use Figurines</value>
-  </data>
   <data name="ViewImportedGames" xml:space="preserve">
     <value>Go to Games</value>
   </data>
@@ -1728,24 +1749,6 @@
   </data>
   <data name="LostQuizPoints" xml:space="preserve">
     <value>Lost quiz points</value>
-  </data>
-  <data name="MoveReplay" xml:space="preserve">
-    <value>Move Replay</value>
-  </data>
-  <data name="AutoReplaySpeed" xml:space="preserve">
-    <value>Auto Speed (s)</value>
-  </data>
-  <data name="AllowMouseWheel" xml:space="preserve">
-    <value>Allow Mouse Wheel</value>
-  </data>
-  <data name="ShowMovesAtFork" xml:space="preserve">
-    <value>Show Moves at Fork</value>
-  </data>
-  <data name="SoundOn" xml:space="preserve">
-    <value>Sound On</value>
-  </data>
-  <data name="LargeMenuFont" xml:space="preserve">
-    <value>Large Menu Font</value>
   </data>
   <data name="CurrentVersion" xml:space="preserve">
     <value>The current version $0 will be backed up as</value>

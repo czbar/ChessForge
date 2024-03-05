@@ -1349,6 +1349,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Default Index Depth.
+        /// </summary>
+        public static string DefaultIndexDepth {
+            get {
+                return ResourceManager.GetString("DefaultIndexDepth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Defaults.
         /// </summary>
         public static string Defaults {
