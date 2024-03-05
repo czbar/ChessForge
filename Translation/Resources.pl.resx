@@ -792,6 +792,15 @@
   <data name="LblNumberOfItemsActedOn" xml:space="preserve">
     <value>Liczba elementów</value>
   </data>
+  <data name="ToolTipDecreaseIndexDepth" xml:space="preserve">
+    <value>Zmniejsz poziom indeksowania</value>
+  </data>
+  <data name="ToolTipIncreaseIndexDepth" xml:space="preserve">
+    <value>Zwiększ poziom indeksowania</value>
+  </data>
+  <data name="ShowIndex" xml:space="preserve">
+    <value>Pokaż indeks</value>
+  </data>
   <data name="SetupPositionToSearch" xml:space="preserve">
     <value>Ustaw szukaną pozycję</value>
   </data>

@@ -886,6 +886,8 @@ TurnEngineOn=
 #english: TopGames=Top Games
 TopGames=
 
+
+###########################
 #
 # Header: CONTEXT MENU for the Main Chessboard
 #
@@ -939,6 +941,7 @@ StudyTreeAfter=
 NotNamed=
 
 
+###########################
 #
 # Header: VIEW Engine Game
 #
@@ -1008,6 +1011,25 @@ LblNumberOfItemsDeleted=
 #english: LblNumberOfItemsActedOn=Number of Items Acted On
 LblNumberOfItemsActedOn=
 
+
+
+
+#######################################
+#
+# Header: View Index
+#
+
+#description: Index depth up arrow tool tip
+#english: ToolTipDecreaseIndexDepth=Decrease index depth
+ToolTipDecreaseIndexDepth=
+
+#description: Index depth down arrow tool tip
+#english: ToolTipIncreaseIndexDepth=Increase index depth
+ToolTipIncreaseIndexDepth=
+
+#description: Show index
+#english: ShowIndex=Show Index
+ShowIndex=
 
 
 #######################################

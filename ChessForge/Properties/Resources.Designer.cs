@@ -5454,6 +5454,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show Index.
+        /// </summary>
+        public static string ShowIndex {
+            get {
+                return ResourceManager.GetString("ShowIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show Moves at Fork.
         /// </summary>
         public static string ShowMovesAtFork {
@@ -5922,6 +5931,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Decrease index depth.
+        /// </summary>
+        public static string ToolTipDecreaseIndexDepth {
+            get {
+                return ResourceManager.GetString("ToolTipDecreaseIndexDepth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dubious move.
         /// </summary>
         public static string TooltipDubiousMove {
@@ -5945,6 +5963,15 @@ namespace ChessForge.Properties {
         public static string TooltipGreatMove {
             get {
                 return ResourceManager.GetString("TooltipGreatMove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Increase index depth.
+        /// </summary>
+        public static string ToolTipIncreaseIndexDepth {
+            get {
+                return ResourceManager.GetString("ToolTipIncreaseIndexDepth", resourceCulture);
             }
         }
         

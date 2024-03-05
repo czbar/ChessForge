@@ -686,6 +686,8 @@ TurnEngineOn=Turn the Engine On
 #Top Games box title
 TopGames=Top Games
 
+
+###########################
 #
 # Header: CONTEXT MENU for the Main Chessboard
 #
@@ -727,6 +729,7 @@ StudyTreeAfter=Study position after
 NotNamed=[not named]
 
 
+###########################
 #
 # Header: VIEW Engine Game
 #
@@ -785,6 +788,22 @@ LblNumberOfItemsActedOn=Number of Items Acted On
 
 
 
+
+#######################################
+#
+# Header: View Index
+#
+
+#Index depth up arrow tool tip
+ToolTipDecreaseIndexDepth=Decrease index depth
+ 
+#Index depth down arrow tool tip
+ToolTipIncreaseIndexDepth=Increase index depth
+
+#Show index
+ShowIndex=Show Index
+
+ 
 #######################################
 #
 # Header: DIALOG Search Positions

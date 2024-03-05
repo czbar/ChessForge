@@ -886,6 +886,8 @@ TurnEngineOn=Włącz silnik
 #english: TopGames=Top Games
 TopGames=Partie Mistrzowskie
 
+
+###########################
 #
 # Header: CONTEXT MENU for the Main Chessboard
 #
@@ -939,6 +941,7 @@ StudyTreeAfter=Pozycja z Teorii po
 NotNamed=brak nazwy
 
 
+###########################
 #
 # Header: VIEW Engine Game
 #
@@ -1008,6 +1011,25 @@ LblNumberOfItemsDeleted=Liczba usuniętych elementów
 #english: LblNumberOfItemsActedOn=Number of Items Acted On
 LblNumberOfItemsActedOn=Liczba elementów
 
+
+
+
+#######################################
+#
+# Header: View Index
+#
+
+#description: Index depth up arrow tool tip
+#english: ToolTipDecreaseIndexDepth=Decrease index depth
+ToolTipDecreaseIndexDepth=Zmniejsz poziom indeksowania
+
+#description: Index depth down arrow tool tip
+#english: ToolTipIncreaseIndexDepth=Increase index depth
+ToolTipIncreaseIndexDepth=Zwiększ poziom indeksowania
+
+#description: Show index
+#english: ShowIndex=Show Index
+ShowIndex=Pokaż indeks
 
 
 #######################################
