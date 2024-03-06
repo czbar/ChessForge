@@ -878,7 +878,11 @@ namespace ChessForge
         /// <param name="node"></param>
         public void SelectNode(TreeNode node)
         {
-            SelectRun(_dictNodeToRun[node.NodeId], 1, MouseButton.Left);
+            try
+            {
+                SelectRun(_dictNodeToRun[node.NodeId], 1, MouseButton.Left);
+            }
+            catch { }
         }
 
         /// <summary>
@@ -1005,7 +1009,7 @@ namespace ChessForge
 
                 _currParagraphLevel = 0;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLog.Message("Clear Blocks", ex);
             }
@@ -1217,13 +1221,13 @@ namespace ChessForge
                 return null;
             }
 
-            Run r = _dictNodeToRun[node.NodeId];
-            Paragraph para = _dictRunToParagraph[r];
-            _forkTable = null;
-
-            if (ShownVariationTree != null)
+            try
             {
-                try
+                Run r = _dictNodeToRun[node.NodeId];
+                Paragraph para = _dictRunToParagraph[r];
+                _forkTable = null;
+
+                if (ShownVariationTree != null)
                 {
                     _forkTable = CreateTable(para.Margin.Left);
 
@@ -1294,11 +1298,12 @@ namespace ChessForge
                     }
 
                     Document.Blocks.InsertAfter(para, _forkTable);
+
                 }
-                catch (Exception ex)
-                {
-                    AppLog.Message("EventForkChildClicked()", ex);
-                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("EventForkChildClicked()", ex);
             }
 
             return _forkTable;
@@ -1550,44 +1555,48 @@ namespace ChessForge
             Inline rParent;
             Paragraph para;
 
-            if (_dictNodeToCommentRun.ContainsKey(parent.NodeId))
+            try
             {
-                rParent = _dictNodeToCommentRun[parent.NodeId];
-                para = _dictCommentRunToParagraph[rParent];
-            }
-            else if (_dictNodeToReferenceRun.ContainsKey(parent.NodeId))
-            {
-                rParent = _dictNodeToReferenceRun[parent.NodeId];
-                para = _dictReferenceRunToParagraph[rParent as Run];
-            }
-            else
-            {
-                rParent = _dictNodeToRun[parent.NodeId];
-                para = _dictRunToParagraph[rParent as Run];
-            }
+                if (_dictNodeToCommentRun.ContainsKey(parent.NodeId))
+                {
+                    rParent = _dictNodeToCommentRun[parent.NodeId];
+                    para = _dictCommentRunToParagraph[rParent];
+                }
+                else if (_dictNodeToReferenceRun.ContainsKey(parent.NodeId))
+                {
+                    rParent = _dictNodeToReferenceRun[parent.NodeId];
+                    para = _dictReferenceRunToParagraph[rParent as Run];
+                }
+                else
+                {
+                    rParent = _dictNodeToRun[parent.NodeId];
+                    para = _dictRunToParagraph[rParent as Run];
+                }
 
 
-            Run r = new Run(" " + MoveUtils.BuildSingleMoveText(nd, false, false, ShownVariationTree.MoveNumberOffset));
-            r.Name = _run_ + nd.NodeId.ToString();
-            r.PreviewMouseDown += EventRunClicked;
+                Run r = new Run(" " + MoveUtils.BuildSingleMoveText(nd, false, false, ShownVariationTree.MoveNumberOffset));
+                r.Name = _run_ + nd.NodeId.ToString();
+                r.PreviewMouseDown += EventRunClicked;
 
-            r.FontStyle = rParent.FontStyle;
-            r.FontSize = rParent.FontSize;
-            if (nd.IsMainLine())
-            {
-                r.FontWeight = FontWeights.Bold;
+                r.FontStyle = rParent.FontStyle;
+                r.FontSize = rParent.FontSize;
+                if (nd.IsMainLine())
+                {
+                    r.FontWeight = FontWeights.Bold;
+                }
+                else
+                {
+                    r.FontWeight = FontWeights.Normal;
+                }
+                r.Foreground = Brushes.Black;
+
+                _dictNodeToRun[nd.NodeId] = r;
+                _dictRunToParagraph[r] = para;
+
+                para.Inlines.InsertAfter(rParent, r);
+                _lastAddedRun = r;
             }
-            else
-            {
-                r.FontWeight = FontWeights.Normal;
-            }
-            r.Foreground = Brushes.Black;
-
-            _dictNodeToRun[nd.NodeId] = r;
-            _dictRunToParagraph[r] = para;
-
-            para.Inlines.InsertAfter(rParent, r);
-            _lastAddedRun = r;
+            catch { }
         }
 
         /// <summary>
@@ -2289,102 +2298,106 @@ namespace ChessForge
                 return;
             }
 
-            if (changedButton == MouseButton.Left)
+            try
             {
-                ClearCopySelect();
-            }
-
-            if (clickCount == 2)
-            {
-                if (r != null)
+                if (changedButton == MouseButton.Left)
                 {
-                    int nodeId = TextUtils.GetIdFromPrefixedString(r.Name);
-                    TreeNode nd = ShownVariationTree.GetNodeFromNodeId(nodeId);
-                    if (_mainWin.InvokeAnnotationsDialog(nd))
-                    {
-                        InsertOrUpdateCommentRun(nd);
-                    }
+                    ClearCopySelect();
                 }
-            }
-            else
-            {
-                if (changedButton == MouseButton.Left && (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift)))
+
+                if (clickCount == 2)
                 {
-                    SetCopySelect(r);
+                    if (r != null)
+                    {
+                        int nodeId = TextUtils.GetIdFromPrefixedString(r.Name);
+                        TreeNode nd = ShownVariationTree.GetNodeFromNodeId(nodeId);
+                        if (_mainWin.InvokeAnnotationsDialog(nd))
+                        {
+                            InsertOrUpdateCommentRun(nd);
+                        }
+                    }
                 }
                 else
                 {
-                    if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
+                    if (changedButton == MouseButton.Left && (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift)))
                     {
-                        _mainWin.StopEvaluation(true);
-                        AppState.SwapCommentBoxForEngineLines(false);
-                    }
-
-                    if (_selectedRun != null)
-                    {
-                        _selectedRun.Background = _selectedRunBkg;
-                        _selectedRun.Foreground = _selectedRunFore;
-                    }
-
-                    foreach (TreeNode nd in _mainWin.ActiveLine.Line.NodeList)
-                    {
-                        if (nd.NodeId != 0)
-                        {
-                            Run run;
-                            // if we are dealing with a subtree, we may not have all nodes from the line.
-                            if (_dictNodeToRun.TryGetValue(nd.NodeId, out run))
-                            {
-                                run.Background = _brushRegularBkg;
-                            }
-                        }
-                    }
-
-                    _selectedRun = r;
-
-                    int idd = TextUtils.GetIdFromPrefixedString(r.Name);
-                    BuildForkTable(idd);
-
-                    int nodeId = -1;
-                    if (r.Name != null && r.Name.StartsWith(_run_))
-                    {
-                        nodeId = TextUtils.GetIdFromPrefixedString(r.Name);
-
-                        // This should never be needed but protect against unexpected timoing issue with sync/async processing
-                        if (!ShownVariationTree.HasLinesCalculated())
-                        {
-                            ShownVariationTree.BuildLines();
-                        }
-
-                        string lineId = ShownVariationTree.GetDefaultLineIdForNode(nodeId);
-
-                        SelectAndHighlightLine(lineId, nodeId);
-                        LearningMode.ActiveLineId = lineId;
-                    }
-
-                    _selectedRunBkg = (SolidColorBrush)r.Background;
-                    _selectedRunFore = (SolidColorBrush)r.Foreground;
-
-                    r.Background = _brushSelectedMoveBkg;
-                    r.Foreground = _brushSelectedMoveFore;
-
-                    // this is a right click offer the context menu
-                    if (changedButton == MouseButton.Right)
-                    {
-                        _lastClickedNodeId = nodeId;
-                        EnableActiveTreeViewMenus(changedButton, true);
+                        SetCopySelect(r);
                     }
                     else
                     {
-                        _lastClickedNodeId = nodeId;
-                    }
+                        if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
+                        {
+                            _mainWin.StopEvaluation(true);
+                            AppState.SwapCommentBoxForEngineLines(false);
+                        }
 
-                    if (changedButton != MouseButton.Left)
-                    {
-                        // restore selection for copy
-                        HighlightSelectedForCopy();
+                        if (_selectedRun != null)
+                        {
+                            _selectedRun.Background = _selectedRunBkg;
+                            _selectedRun.Foreground = _selectedRunFore;
+                        }
+
+                        foreach (TreeNode nd in _mainWin.ActiveLine.Line.NodeList)
+                        {
+                            if (nd.NodeId != 0)
+                            {
+                                Run run;
+                                // if we are dealing with a subtree, we may not have all nodes from the line.
+                                if (_dictNodeToRun.TryGetValue(nd.NodeId, out run))
+                                {
+                                    run.Background = _brushRegularBkg;
+                                }
+                            }
+                        }
+
+                        _selectedRun = r;
+
+                        int idd = TextUtils.GetIdFromPrefixedString(r.Name);
+                        BuildForkTable(idd);
+
+                        int nodeId = -1;
+                        if (r.Name != null && r.Name.StartsWith(_run_))
+                        {
+                            nodeId = TextUtils.GetIdFromPrefixedString(r.Name);
+
+                            // This should never be needed but protect against unexpected timoing issue with sync/async processing
+                            if (!ShownVariationTree.HasLinesCalculated())
+                            {
+                                ShownVariationTree.BuildLines();
+                            }
+
+                            string lineId = ShownVariationTree.GetDefaultLineIdForNode(nodeId);
+
+                            SelectAndHighlightLine(lineId, nodeId);
+                            LearningMode.ActiveLineId = lineId;
+                        }
+
+                        _selectedRunBkg = (SolidColorBrush)r.Background;
+                        _selectedRunFore = (SolidColorBrush)r.Foreground;
+
+                        r.Background = _brushSelectedMoveBkg;
+                        r.Foreground = _brushSelectedMoveFore;
+
+                        // this is a right click offer the context menu
+                        if (changedButton == MouseButton.Right)
+                        {
+                            _lastClickedNodeId = nodeId;
+                            EnableActiveTreeViewMenus(changedButton, true);
+                        }
+                        else
+                        {
+                            _lastClickedNodeId = nodeId;
+                        }
+
+                        if (changedButton != MouseButton.Left)
+                        {
+                            // restore selection for copy
+                            HighlightSelectedForCopy();
+                        }
                     }
                 }
             }
+            catch { }
         }
 
         /// <summary>
@@ -2553,12 +2566,6 @@ namespace ChessForge
                 SelectRun(_dictNodeToRun[nd.NodeId], e.ClickCount, e.ChangedButton);
 
                 ArticleReferencesDialog dlg = new ArticleReferencesDialog(nd);
-                //{
-                //    Left = AppState.MainWin.Left + 100,
-                //    Top = AppState.MainWin.Top + 100,
-                //    Topmost = false,
-                //    Owner = AppState.MainWin
-                //};
                 GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
                 dlg.ShowDialog();
