@@ -99,6 +99,19 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Whether this sector should be shown as collapsed.
+        /// It is determined by the IsCollapsed state of the first Node
+        /// of the sector.
+        /// </summary>
+        public bool IsCollapsed
+        {
+            get
+            {
+                return (Nodes.Count > 0 && Nodes[0].IsCollapsed);
+            }
+        }
+
+        /// <summary>
         /// NodeId code for open parenthesis
         /// </summary>
         public readonly int OPEN_BRACKET = -100;
