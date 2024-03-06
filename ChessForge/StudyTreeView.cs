@@ -21,6 +21,12 @@ namespace ChessForge
         // prefix for Runs in the index paragraph.
         private readonly string _indexrun_ = "indexrun_";
 
+        // prefix for index level lines in the main body
+        private readonly string _idxprefix_ = "idxprefix_";
+
+        // prefix for expand elipsis runs
+        private readonly string _expelipsis_ = "expelipsis_";
+
         // indent between levels in the index paragraph.
         private readonly string _indent = "    ";
 
@@ -335,6 +341,9 @@ namespace ChessForge
         /// <param name="firstPara"></param>
         private void CreateParagraphs(Paragraph firstPara)
         {
+            // sectors that are under a collapsed sector
+            List<LineSector> doNotShow = new List<LineSector>();
+
             // TODO: redo so that we used the "firstPara" for VariationIndex.
             Document.Blocks.Remove(firstPara);
 
@@ -344,6 +353,11 @@ namespace ChessForge
             for (int n = 0; n < LineManager.LineSectors.Count; n++)
             {
                 LineSector sector = LineManager.LineSectors[n];
+                if (doNotShow.Find(x => x == sector) != null)
+                {
+                    continue;
+                }
+
                 if (sector.Nodes.Count == 0 || sector.Nodes.Count == 1 && sector.Nodes[0].NodeId == 0)
                 {
                     continue;
@@ -397,11 +411,7 @@ namespace ChessForge
 
                     if (IsEffectiveIndexLevel(sector.BranchLevel))
                     {
-                        Run rIdTitle = BuildSectionIdTitle(sector.Nodes[0].LineId);
-                        rIdTitle.Foreground = ChessForgeColors.VARIATION_INDEX_FORE;
-                        para.Inlines.Add(rIdTitle);
-
-                        para.FontWeight = FontWeights.DemiBold;
+                        InsertIndexPrefixRun(sector, para);
                     }
                     else
                     {
@@ -411,7 +421,7 @@ namespace ChessForge
                         }
                     }
 
-                    BuildSectorRuns(sector, para, levelGroup);
+                    BuildSectorRuns(sector, para, levelGroup, doNotShow);
                     Document.Blocks.Add(para);
                 }
                 catch
@@ -426,13 +436,20 @@ namespace ChessForge
         /// <param name="sector"></param>
         /// <param name="para"></param>
         /// <param name="levelGroup"></param>
-        private void BuildSectorRuns(LineSector sector, Paragraph para, int levelGroup)
+        private void BuildSectorRuns(LineSector sector, Paragraph para, int levelGroup, List<LineSector> doNotShow)
         {
             bool includeNumber = true;
             bool parenthesis = false;
 
+            bool collapsed = false;
             for (int i = 0; i < sector.Nodes.Count; i++)
             {
+                if (sector.IsCollapsed)
+                {
+                    // mark as collapsed and let this iteration complete to insert the first Run
+                    collapsed = true;
+                }
+
                 TreeNode nd = sector.Nodes[i];
                 if (nd.NodeId == -100)
                 {
@@ -472,7 +489,54 @@ namespace ChessForge
                     }
                 }
                 includeNumber = false;
+
+                if (collapsed)
+                {
+                    // insert the elipsis Run and exit
+                    InsertCollapseElipsisRun(para, nd, sector, doNotShow);
+                    break;
+                }
             }
+        }
+
+        /// <summary>
+        /// Inserts a Run with the index level Id
+        /// </summary>
+        /// <param name="sector"></param>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        private Run InsertIndexPrefixRun(LineSector sector, Paragraph para)
+        {
+            TreeNode startNode = sector.Nodes[0];
+
+            Run rIndexTitle = BuildSectionIdTitle(startNode.LineId);
+            rIndexTitle.Name = _idxprefix_ + startNode.NodeId.ToString();
+            rIndexTitle.PreviewMouseDown += EventIdxPrefixRunClicked;
+            rIndexTitle.Foreground = ChessForgeColors.VARIATION_INDEX_FORE;
+            para.Inlines.Add(rIndexTitle);
+            para.FontWeight = FontWeights.DemiBold;
+
+            return rIndexTitle;
+        }
+
+        /// <summary>
+        /// Inserts a Run symbolizing the collapsed state of the Sector.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <param name="nd"></param>
+        /// <param name="sector"></param>
+        /// <param name="doNotShow"></param>
+        /// <returns></returns>
+        private Run InsertCollapseElipsisRun(Paragraph para, TreeNode nd, LineSector sector, List<LineSector> doNotShow)
+        {
+            Run elipsis = new Run(" [...]");
+
+            elipsis.Name = _expelipsis_ + nd.NodeId.ToString();
+            elipsis.PreviewMouseDown += EventIdxPrefixRunClicked;
+            para.Inlines.Add(elipsis);
+            LineManager.GetSubTree(sector, doNotShow);
+
+            return elipsis;
         }
 
         /// <summary>
@@ -590,10 +654,61 @@ namespace ChessForge
             {
                 ClearCopySelect();
                 int nodeId = TextUtils.GetIdFromPrefixedString(r.Name);
-                Run target = _dictNodeToRun[nodeId];
-                // we don't want any handling of letf/right button so fake it to Middle
-                SelectRun(target, 1, MouseButton.Middle);
-                BringSelectedRunIntoView();
+                // if sectors are collpase the Run may not be present
+                if (_dictNodeToRun.ContainsKey(nodeId))
+                {
+                    Run target = _dictNodeToRun[nodeId];
+                    // we don't want any handling of letf/right button so fake it to Middle
+                    SelectRun(target, 1, MouseButton.Middle);
+                    BringSelectedRunIntoView();
+                }
+            }
+        }
+
+        /// <summary>
+        /// An index prefix Run was clicked.
+        /// Toggle its collapse/expand status.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventIdxPrefixRunClicked(object sender, MouseButtonEventArgs e)
+        {
+            Run r = e.Source as Run;
+            if (r != null && e.ChangedButton == MouseButton.Left)
+            {
+                try
+                {
+                    ClearCopySelect();
+                    int nodeId = TextUtils.GetIdFromPrefixedString(r.Name);
+
+                    if (nodeId > 0)
+                    {
+                        TreeNode nd = _mainVariationTree.GetNodeFromNodeId(nodeId);
+                        nd.IsCollapsed = !nd.IsCollapsed;
+
+                        //if collapsed, check if we need to update the selection
+                        if (nd.IsCollapsed)
+                        {
+                            TreeNode selectedNode = GetSelectedNode();
+                            if (selectedNode != null && selectedNode.NodeId != 0)
+                            {
+                                if (TreeUtils.IsAncestor(selectedNode, nd))
+                                {
+                                    TreeNode ancestor = TreeUtils.GetFirstExpandedAncestor(nd);
+                                    if (ancestor != null)
+                                    {
+                                        SelectLineAndMove(ancestor.LineId, ancestor.NodeId);
+                                        BringSelectedRunIntoView();
+                                    }
+                                }
+                            }
+                        }
+                        BuildFlowDocumentForVariationTree();
+                    }
+                }
+                catch { }
+
+                e.Handled = true;
             }
         }
 
