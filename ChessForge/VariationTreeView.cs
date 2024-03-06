@@ -103,6 +103,9 @@ namespace ChessForge
         // game/exercise index in this view
         private int _entityIndex = -1;
 
+        // the node for whcih a thumbnail was last created.
+        private TreeNode _lastThumbnailNode = null;
+
         // The small chessboard shown in Exercises.
         protected ChessBoardSmall _exercisePassiveChessBoard;
 
@@ -593,6 +596,22 @@ namespace ChessForge
             catch
             {
             }
+        }
+
+        /// <summary>
+        /// The thumbnail Node has changed. Remove any thumbnail icon
+        /// that may be set and place it on the current thumbnail.
+        /// </summary>
+        public void UpdateThumbnail()
+        {
+            if (_lastThumbnailNode != null)
+            {
+                _mainVariationTree.ClearThumbnail(_lastThumbnailNode);
+                InsertOrUpdateCommentRun(_lastThumbnailNode);
+            }
+
+            _lastThumbnailNode = _mainVariationTree.GetThumbnail();
+            InsertOrUpdateCommentRun(_lastThumbnailNode);
         }
 
         /// <summary>
@@ -1937,6 +1956,7 @@ namespace ChessForge
                             {
                                 thmb = Constants.CHAR_SQUARED_SQUARE.ToString();
                             }
+                            _lastThumbnailNode = nd;
                             inl = new Run(thmb);
                             inl.ToolTip = nd.IsThumbnail ? Properties.Resources.ChapterThumbnail : null;
                             inl.FontStyle = FontStyles.Normal;

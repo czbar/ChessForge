@@ -653,6 +653,8 @@ namespace ChessForge
                         SetThumbnailsInChapter(ch, moveNo, color, overwrite);
                     }
                 }
+
+                AppState.MainWin.ActiveTreeView?.UpdateThumbnail();
             }
             catch { }
         }
