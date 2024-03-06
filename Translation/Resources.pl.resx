@@ -520,10 +520,10 @@
     <value>Zwiń</value>
   </data>
   <data name="ExpandAll" xml:space="preserve">
-    <value>Rozwiń Wszystko</value>
+    <value>Rozwiń wszystko</value>
   </data>
   <data name="CollapseAll" xml:space="preserve">
-    <value>Zwiń Wszystko</value>
+    <value>Zwiń wszystko</value>
   </data>
   <data name="CollapseChapters" xml:space="preserve">
     <value>Zwiń rozdziały</value>
@@ -746,6 +746,27 @@
   </data>
   <data name="NotNamed" xml:space="preserve">
     <value>brak nazwy</value>
+  </data>
+  <data name="TtClickToExpandCollapse" xml:space="preserve">
+    <value>Kliknij by zwinąć/rozwinąć</value>
+  </data>
+  <data name="TtClickToExpand" xml:space="preserve">
+    <value>Kliknij by rozwinąć</value>
+  </data>
+  <data name="CmExpand" xml:space="preserve">
+    <value>Rozwiń</value>
+  </data>
+  <data name="CmCollapse" xml:space="preserve">
+    <value>Zwiń</value>
+  </data>
+  <data name="CmExpandAll" xml:space="preserve">
+    <value>Rozwiń wszystko</value>
+  </data>
+  <data name="CmCollapseAll" xml:space="preserve">
+    <value>Zwiń wszystko</value>
+  </data>
+  <data name="CmExpandThisOnly" xml:space="preserve">
+    <value>Zwiń wszystkie inne</value>
   </data>
   <data name="EgEngineConfiguration" xml:space="preserve">
     <value>Opcje Silnika</value>

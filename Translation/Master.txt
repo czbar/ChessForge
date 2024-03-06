@@ -725,6 +725,33 @@ NotNamed=[not named]
 
 ###########################
 #
+# Header: Self-indexing view
+#
+
+#Tool tip click to expand/collapse
+TtClickToExpandCollapse=Click to Expand/Collapse
+
+#Tool tip click to expand
+TtClickToExpand=Click to Expand
+
+#Context Menu Item: Expand
+CmExpand=Expand
+
+#Context Menu Item: Collapse
+CmCollapse=Collapse
+
+#Context Menu Item: Expand All
+CmExpandAll=Expand All
+
+#Context Menu Item: Collapse All
+CmCollapseAll=Collapse All
+
+#Context Menu Item: Expand only this one
+CmExpandThisOnly=Collapse All Else
+
+
+###########################
+#
 # Header: VIEW Engine Game
 #
 

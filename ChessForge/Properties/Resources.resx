@@ -747,6 +747,27 @@
   <data name="NotNamed" xml:space="preserve">
     <value>[not named]</value>
   </data>
+  <data name="TtClickToExpandCollapse" xml:space="preserve">
+    <value>Click to Expand/Collapse</value>
+  </data>
+  <data name="TtClickToExpand" xml:space="preserve">
+    <value>Click to Expand</value>
+  </data>
+  <data name="CmExpand" xml:space="preserve">
+    <value>Expand</value>
+  </data>
+  <data name="CmCollapse" xml:space="preserve">
+    <value>Collapse</value>
+  </data>
+  <data name="CmExpandAll" xml:space="preserve">
+    <value>Expand All</value>
+  </data>
+  <data name="CmCollapseAll" xml:space="preserve">
+    <value>Collapse All</value>
+  </data>
+  <data name="CmExpandThisOnly" xml:space="preserve">
+    <value>Collapse All Else</value>
+  </data>
   <data name="EgEngineConfiguration" xml:space="preserve">
     <value>Engine Options</value>
   </data>

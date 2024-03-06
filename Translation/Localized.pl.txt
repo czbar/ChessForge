@@ -582,11 +582,11 @@ Collapse=Zwiń
 
 #description: Expand all
 #english: ExpandAll=Expand All
-ExpandAll=Rozwiń Wszystko
+ExpandAll=Rozwiń wszystko
 
 #description: Collapse all
 #english: CollapseAll=Collapse All
-CollapseAll=Zwiń Wszystko
+CollapseAll=Zwiń wszystko
 
 #description: Collapse chapters
 #english: CollapseChapters=Collapse Chapters
@@ -931,6 +931,40 @@ StudyTreeAfter=Pozycja z Teorii po
 #description: Not Named (opening position from lichess)
 #english: NotNamed=[not named]
 NotNamed=brak nazwy
+
+
+###########################
+#
+# Header: Self-indexing view
+#
+
+#description: Tool tip click to expand/collapse
+#english: TtClickToExpandCollapse=Click to Expand/Collapse
+TtClickToExpandCollapse=Kliknij by zwinąć/rozwinąć
+
+#description: Tool tip click to expand
+#english: TtClickToExpand=Click to Expand
+TtClickToExpand=Kliknij by rozwinąć
+
+#description: Context Menu Item: Expand
+#english: CmExpand=Expand
+CmExpand=Rozwiń
+
+#description: Context Menu Item: Collapse
+#english: CmCollapse=Collapse
+CmCollapse=Zwiń
+
+#description: Context Menu Item: Expand All
+#english: CmExpandAll=Expand All
+CmExpandAll=Rozwiń wszystko
+
+#description: Context Menu Item: Collapse All
+#english: CmCollapseAll=Collapse All
+CmCollapseAll=Zwiń wszystko
+
+#description: Context Menu Item: Expand only this one
+#english: CmExpandThisOnly=Expand Only This One
+CmExpandThisOnly=Zwiń wszystkie inne
 
 
 ###########################
