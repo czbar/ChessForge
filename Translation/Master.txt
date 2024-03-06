@@ -832,7 +832,7 @@ ToolTipDecreaseIndexDepth=Decrease index depth
 ToolTipIncreaseIndexDepth=Increase index depth
 
 #Show index
-ShowIndex=Show Index
+ShowIndex=Click to Show Index
 
  
 #######################################

@@ -823,7 +823,7 @@
     <value>Zwiększ poziom indeksowania</value>
   </data>
   <data name="ShowIndex" xml:space="preserve">
-    <value>Pokaż indeks</value>
+    <value>Kliknij by pokazać indeks</value>
   </data>
   <data name="SetupPositionToSearch" xml:space="preserve">
     <value>Ustaw szukaną pozycję</value>

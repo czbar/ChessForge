@@ -1067,7 +1067,7 @@ ToolTipDecreaseIndexDepth=
 ToolTipIncreaseIndexDepth=
 
 #description: Show index
-#english: ShowIndex=Show Index
+#english: ShowIndex=Click to Show Index
 ShowIndex=
 
 

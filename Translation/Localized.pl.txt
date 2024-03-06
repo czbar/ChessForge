@@ -1067,8 +1067,8 @@ ToolTipDecreaseIndexDepth=Zmniejsz poziom indeksowania
 ToolTipIncreaseIndexDepth=Zwiększ poziom indeksowania
 
 #description: Show index
-#english: ShowIndex=Show Index
-ShowIndex=Pokaż indeks
+#english: ShowIndex=Click to Show Index
+ShowIndex=Kliknij by pokazać indeks
 
 
 #######################################
