@@ -513,6 +513,7 @@ namespace ChessForge
             rIndexTitle.Name = _idxprefix_ + startNode.NodeId.ToString();
             rIndexTitle.PreviewMouseDown += EventIdxPrefixRunClicked;
             rIndexTitle.Foreground = ChessForgeColors.VARIATION_INDEX_FORE;
+            rIndexTitle.ToolTip = Properties.Resources.TtClickToExpandCollapse;
             para.Inlines.Add(rIndexTitle);
             para.FontWeight = FontWeights.DemiBold;
 
@@ -533,6 +534,7 @@ namespace ChessForge
 
             elipsis.Name = _expelipsis_ + nd.NodeId.ToString();
             elipsis.PreviewMouseDown += EventIdxPrefixRunClicked;
+            elipsis.ToolTip = Properties.Resources.TtClickToExpand;
             para.Inlines.Add(elipsis);
             LineManager.GetSubTree(sector, doNotShow);
 
