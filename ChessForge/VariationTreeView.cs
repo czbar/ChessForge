@@ -878,6 +878,11 @@ namespace ChessForge
 
             if (ShownVariationTree.ShowTreeLines)
             {
+                if (nodeId == 0)
+                {
+                    RichTextBoxControl.ScrollToHome();
+                }
+
                 try
                 {
                     BuildForkTable(nodeId);
