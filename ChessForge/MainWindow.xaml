@@ -12,6 +12,16 @@
         MouseEnter="ChessForgeMain_MouseEnter" >
 
     <Window.Resources>
+        <ContextMenu x:Name="UiCmIndexExpandCollapse" x:Key="CmIndexExpandCollapse">
+            <MenuItem x:Name="UiMnciExpand" Header="{x:Static p:Resources.CmExpand}" Click="UiMnciExpand_Click"/>
+            <MenuItem x:Name="UiMnciCollapse" Header="{x:Static p:Resources.CmCollapse}" Click="UiMnciCollapse_Click"/>
+            <Separator />
+            <MenuItem x:Name="UiMnciExpandAll" Header="{x:Static p:Resources.CmExpandAll}" Click="UiMnciExpandAll_Click"/>
+            <MenuItem x:Name="UiMnciCollapseAll" Header="{x:Static p:Resources.CmCollapseAll}" Click="UiMnciCollapseAll_Click"/>
+            <Separator />
+            <MenuItem x:Name="UiMnciExpandThisOne" Header="{x:Static p:Resources.CmExpandThisOnly}" Click="UiMnciExpandThisOne_Click"/>
+        </ContextMenu>
+        
         <Style  x:Key="RoundedBorder" TargetType="Label">
             <Setter Property="Template">
                 <Setter.Value>
@@ -1133,5 +1143,4 @@
             </Grid>
         </Viewbox>
     </Grid>
-
 </Window>
