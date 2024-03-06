@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Xml.Linq;
 
 namespace ChessForge
@@ -31,6 +32,12 @@ namespace ChessForge
             UiMncExercises.FontSize = size;
             UiMncBookmarks.FontSize = size;
             UiMncTopGames.FontSize = size;
+
+            ContextMenu expCollapse = Resources["CmIndexExpandCollapse"] as ContextMenu;
+            if (expCollapse != null)
+            {
+                expCollapse.FontSize = size;
+            }
 
             UiLblAutoSave.FontSize = size;
             UiLblExplorers.FontSize = size;
