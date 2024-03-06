@@ -3695,6 +3695,67 @@ namespace ChessForge
             }
         }
 
+        //*****************************************************************
+        //
+        // SELF-INDEXING VIEW methods
+        //
+        //*****************************************************************
+
+        /// <summary>
+        /// Expand the clicked sector
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnciExpand_Click(object sender, RoutedEventArgs e)
+        {
+            _studyTreeView?.ExpandSector(sender);
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// Collapse the clicked sector
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnciCollapse_Click(object sender, RoutedEventArgs e)
+        {
+            _studyTreeView?.CollapseSector(sender);
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// Expand all sectors
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnciExpandAll_Click(object sender, RoutedEventArgs e)
+        {
+            _studyTreeView?.ExpandAllSectors(sender);
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// Collapse all sectors
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
+        private void UiMnciCollapseAll_Click(object sender, RoutedEventArgs e)
+        {
+            _studyTreeView?.CollapseAllSectors(sender);
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// Expand just the clicked sector
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnciExpandThisOne_Click(object sender, RoutedEventArgs e)
+        {
+            _studyTreeView?.ExpandOnlySector(sender);
+            e.Handled = true;
+        }
 
         //*****************************************************************
         //
