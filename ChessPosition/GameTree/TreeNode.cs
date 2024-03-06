@@ -235,6 +235,15 @@ namespace GameTree
         public bool IsNewTrainingMove = false;
 
         /// <summary>
+        // Expanded/collapsed state of the branch starting at this node.
+        /// </summary>
+        public bool IsCollapsed
+        {
+            get => _isCollapsed;
+            set => _isCollapsed = value;
+        }
+
+        /// <summary>
         /// Marks a node that was not in the tree when it was open.
         /// This is an edit by the user.
         /// Depending on user choices, it may be later on removed from the tree
@@ -266,6 +275,9 @@ namespace GameTree
 
         // coded assessment of the move
         private uint _assessment;
+
+        // expanded/collapsed state of the branch starting at this node.
+        private bool _isCollapsed;
 
         /// <summary>
         /// Numeric Annotation Glyphs associated with this
