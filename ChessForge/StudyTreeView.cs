@@ -42,6 +42,15 @@ namespace ChessForge
         public LineSectorManager LineManager;
 
         /// <summary>
+        /// Safe accessor to the chapter's variation index depth.
+        /// </summary>
+        /// <returns></returns>
+        public int VariationIndexDepth
+        {
+            get { return AppState.ActiveChapter == null ? Configuration.DefaultIndexDepth : AppState.ActiveChapter.VariationIndexDepth.Value; }
+        }
+
+        /// <summary>
         /// Instantiates the view.
         /// </summary>
         /// <param name="rtb"></param>
@@ -53,15 +62,33 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Safe accessor to the chapter's variation index depth.
+        /// Overrides the parent's method building the view with the layout specific
+        /// to the Study view.
+        /// Unlike in the parent's view this is method does not call itself recursively.
+        /// It builds the list of lines first (there is a recursion there) and only then 
+        /// populates the view with the lines.
         /// </summary>
-        /// <returns></returns>
-        public int VariationIndexDepth
+        /// <param name="root"></param>
+        /// <param name="para"></param>
+        /// <param name="includeNumber"></param>
+        override protected void BuildTreeLineText(TreeNode root, Paragraph para, bool includeNumber)
         {
-            get
+            DisplayLevelAttrs.ResetLastMoveBrush();
+            LineManager.BuildLineSectors(root);
+
+            // it could be that a new move was made and it is "hidden" under a collapsed root
+            UncollapseMove(_mainWin.ActiveLine.GetSelectedTreeNode());
+
+            CreateVariationIndexPara();
+            CreateParagraphs(para);
+
+            // if first invocation then this was already called by the client in the SetUpGUI method. 
+            if (!_firstInvocation)
             {
-                return AppState.ActiveChapter == null ? Configuration.DefaultIndexDepth : AppState.ActiveChapter.VariationIndexDepth.Value;
+                //_mainWin.SetActiveLine(_mainVariationTree.SelectedLineId, _mainVariationTree.SelectedNodeId);
+                //SelectLineAndMove(_mainVariationTree.SelectedLineId, _mainVariationTree.SelectedNodeId);
             }
+            _firstInvocation = false;
         }
 
         /// <summary>
@@ -80,7 +107,8 @@ namespace ChessForge
         /// <param name="sender"></param>
         public void CollapseSector(object sender)
         {
-            CollapseSector(_lastClickedIndexPrefix);
+            TreeNode nd = CollapseSector(_lastClickedIndexPrefix);
+            AppState.MainWin.SetActiveLine(nd.LineId, nd.NodeId, false);
             BuildFlowDocumentForVariationTree();
         }
 
@@ -110,8 +138,7 @@ namespace ChessForge
                 // get the last node in the stem line
                 LineSector stemLine = LineManager.LineSectors[0];
                 int nodeCount = stemLine.Nodes.Count;
-                _mainVariationTree.SelectedLineId = "1";
-                _mainVariationTree.SetSelectedNodeId(stemLine.Nodes[nodeCount - 1].NodeId);
+                AppState.MainWin.SetActiveLine("1", stemLine.Nodes[nodeCount - 1].NodeId, false);
             }
             catch { }
 
@@ -129,10 +156,7 @@ namespace ChessForge
             ExpandSector(_lastClickedIndexPrefix);
 
             TreeNode nd = _mainVariationTree.GetNodeFromNodeId(_lastClickedIndexPrefix);
-            _mainVariationTree.SelectedLineId = nd.LineId;
-            _mainVariationTree.SetSelectedNodeId(nd.NodeId);
-            _mainWin.SetActiveLine(_mainVariationTree.SelectedLineId, _mainVariationTree.SelectedNodeId);
-            SelectLineAndMove(_mainVariationTree.SelectedLineId, _mainVariationTree.SelectedNodeId);
+            AppState.MainWin.SetActiveLine(nd.LineId, nd.NodeId, false);
 
             BuildFlowDocumentForVariationTree();
         }
@@ -254,30 +278,46 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Overrides the parent's method building the view with the layout specific
-        /// to the Study view.
-        /// Unlike, in the parent's view this is method does not call itself recursively.
-        /// It builds the list of lines first (there is a recursion there) and only then 
-        /// populates the view with the lines.
+        /// Finds out is the move has a collapsed ancestor
+        /// and if so, invokes UncollapseSector on that ancestor.
         /// </summary>
-        /// <param name="root"></param>
-        /// <param name="para"></param>
-        /// <param name="includeNumber"></param>
-        override protected void BuildTreeLineText(TreeNode root, Paragraph para, bool includeNumber)
+        /// <param name="nd"></param>
+        private void UncollapseMove(TreeNode nd)
         {
-            DisplayLevelAttrs.ResetLastMoveBrush();
-            LineManager.BuildLineSectors(root);
-
-            CreateVariationIndexPara();
-            CreateParagraphs(para);
-
-            // if first invocation then this was already called by the client in the SetUpGUI method. 
-            if (!_firstInvocation)
+            if (nd != null)
             {
-                _mainWin.SetActiveLine(_mainVariationTree.SelectedLineId, _mainVariationTree.SelectedNodeId);
-                SelectLineAndMove(_mainVariationTree.SelectedLineId, _mainVariationTree.SelectedNodeId);
+                TreeNode collapsedAncestor = null;
+                while (nd.Parent != null)
+                {
+                    if (nd.Parent.IsCollapsed)
+                    {
+                        collapsedAncestor = nd.Parent;
+                        break;
+                    }
+                    nd = nd.Parent;
+                }
+
+                UncollapseSector(collapsedAncestor);
             }
-            _firstInvocation = false;
+        }
+
+        /// <summary>
+        /// Finds sector with the passed node and ensures it is not collapsed
+        /// </summary>
+        /// <param name="nd"></param>
+        private void UncollapseSector(TreeNode nd)
+        {
+            if (nd != null)
+            {
+                foreach (LineSector sector in LineManager.LineSectors)
+                {
+                    if (sector.Nodes.Count > 0 && sector.Nodes.Find(x => x == nd) != null)
+                    {
+                        sector.Nodes[0].IsCollapsed = false;
+                        break;
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -405,31 +445,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Inserts the Runs with arrow for incrementing/decrementing the Variation Index depth.
-        /// </summary>
-        /// <param name="para"></param>
-        /// <param name="downOnly"></param>
-        private void InsertArrowRuns(Paragraph para, bool downOnly = false)
-        {
-            Run rPlus = new Run(Constants.CHAR_DOWN_ARROW.ToString());
-            rPlus.FontWeight = FontWeights.Normal;
-            rPlus.Foreground = Brushes.Black;
-            rPlus.ToolTip = Properties.Resources.ToolTipIncreaseIndexDepth;
-            rPlus.PreviewMouseDown += EventDownArrowClicked;
-            para.Inlines.Add(rPlus);
-
-            if (!downOnly)
-            {
-                Run rMinus = new Run(Constants.CHAR_UP_ARROW.ToString());
-                rMinus.FontWeight = FontWeights.Normal;
-                rMinus.Foreground = Brushes.Black;
-                rMinus.ToolTip = Properties.Resources.ToolTipDecreaseIndexDepth;
-                rMinus.PreviewMouseDown += EventUpArrowClicked;
-                para.Inlines.Add(rMinus);
-            }
-        }
-
-        /// <summary>
         /// Creates paragraphs from the LineSectors.
         /// </summary>
         /// <param name="firstPara"></param>
@@ -516,11 +531,37 @@ namespace ChessForge
                     }
 
                     BuildSectorRuns(sector, para, levelGroup, doNotShow);
+                    sector.HostPara = para;
                     Document.Blocks.Add(para);
                 }
                 catch
                 {
                 }
+            }
+        }
+
+        /// <summary>
+        /// Inserts the Runs with arrow for incrementing/decrementing the Variation Index depth.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <param name="downOnly"></param>
+        private void InsertArrowRuns(Paragraph para, bool downOnly = false)
+        {
+            Run rPlus = new Run(Constants.CHAR_DOWN_ARROW.ToString());
+            rPlus.FontWeight = FontWeights.Normal;
+            rPlus.Foreground = Brushes.Black;
+            rPlus.ToolTip = Properties.Resources.ToolTipIncreaseIndexDepth;
+            rPlus.PreviewMouseDown += EventDownArrowClicked;
+            para.Inlines.Add(rPlus);
+
+            if (!downOnly)
+            {
+                Run rMinus = new Run(Constants.CHAR_UP_ARROW.ToString());
+                rMinus.FontWeight = FontWeights.Normal;
+                rMinus.Foreground = Brushes.Black;
+                rMinus.ToolTip = Properties.Resources.ToolTipDecreaseIndexDepth;
+                rMinus.PreviewMouseDown += EventUpArrowClicked;
+                para.Inlines.Add(rMinus);
             }
         }
 
@@ -784,12 +825,26 @@ namespace ChessForge
                             TreeNode nd = _mainVariationTree.GetNodeFromNodeId(nodeId);
                             nd.IsCollapsed = !nd.IsCollapsed;
 
-                            //if collapsed, check if we need to update the selection
+                            //if now collapsed, check if we need to update the selection
+                            TreeNode adjustedSelection = null;
                             if (nd.IsCollapsed)
                             {
-                                AdjustSelectedNodeAfterCollapse(nd);
+                                adjustedSelection = UpdateSelectedNodeAfterCollapse(nd);
+                            }
+                            else
+                            {
+                                adjustedSelection = GetSelectedNode();
+                            }
+
+                            if (adjustedSelection != null && _dictNodeToRun.ContainsKey(adjustedSelection.NodeId))
+                            {
+                                SelectRun(_dictNodeToRun[adjustedSelection.NodeId], 1, MouseButton.Left);
                             }
                             BuildFlowDocumentForVariationTree();
+                            if (adjustedSelection != null && _dictNodeToRun.ContainsKey(adjustedSelection.NodeId))
+                            {
+                                SelectRun(_dictNodeToRun[adjustedSelection.NodeId], 1, MouseButton.Left);
+                            }
                         }
                     }
                     catch { }
@@ -832,8 +887,10 @@ namespace ChessForge
         }
 
 
-        private void CollapseSector(int nodeId)
+        private TreeNode CollapseSector(int nodeId)
         {
+            TreeNode adjustedNode = null;
+
             if (nodeId >= 0)
             {
                 TreeNode nd = _mainVariationTree.GetNodeFromNodeId(nodeId);
@@ -842,32 +899,43 @@ namespace ChessForge
                     nd.IsCollapsed = true;
 
                     //if collapsed, check if we need to update the selection
-                    AdjustSelectedNodeAfterCollapse(nd);
+                    adjustedNode = UpdateSelectedNodeAfterCollapse(nd);
                 }
             }
+
+            return adjustedNode;
         }
 
-        private void AdjustSelectedNodeAfterCollapse(TreeNode nd)
+        /// <summary>
+        /// The passed node was where the user requested a sector collapse.
+        /// If the currenly selected node is the node being collapsed or the
+        /// passed node is its ancestor then we need to update selection to the 
+        /// first expanded ancestor of the node that was clicked.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        private TreeNode UpdateSelectedNodeAfterCollapse(TreeNode nd)
         {
+            TreeNode adjustedNode = null;
+
             TreeNode selectedNode = GetSelectedNode();
             if (selectedNode != null && selectedNode.NodeId != 0)
             {
-                if (TreeUtils.IsAncestor(selectedNode, nd))
+                if (selectedNode == nd || TreeUtils.IsAncestor(selectedNode, nd))
                 {
                     TreeNode ancestor = TreeUtils.GetFirstExpandedAncestor(nd);
                     if (ancestor != null)
                     {
-                        _mainWin.SetActiveLine(ancestor.LineId, ancestor.NodeId);
-                        SelectLineAndMove(ancestor.LineId, ancestor.NodeId);
+                        adjustedNode = ancestor;
                     }
                 }
             }
             else
             {
-                _mainWin.SetActiveLine("1", 0);
-                SelectLineAndMove("1", 0);
-                //SelectAndHighlightLine("1", 0);
+                adjustedNode = selectedNode;
             }
+
+            return adjustedNode;
         }
 
         /// <summary>
