@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Documents;
 using System.Windows.Media;
 
 namespace GameTree
@@ -60,6 +61,11 @@ namespace GameTree
         /// Parent of this LineSector.
         /// </summary>
         public LineSector Parent;
+
+        /// <summary>
+        /// Paragraph hosting this LineSector
+        /// </summary>
+        public Paragraph HostPara;
 
         /// <summary>
         /// Adds a child LineSector.
