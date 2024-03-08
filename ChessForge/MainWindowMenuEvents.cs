@@ -3708,7 +3708,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnciExpand_Click(object sender, RoutedEventArgs e)
         {
-            _studyTreeView?.ExpandSector(sender);
+            _studyTreeView?.ExpandSectorFromMenu(sender);
             e.Handled = true;
         }
 
@@ -3719,7 +3719,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnciCollapse_Click(object sender, RoutedEventArgs e)
         {
-            _studyTreeView?.CollapseSector(sender);
+            _studyTreeView?.CollapseSectorFromMenu(sender);
             e.Handled = true;
         }
 
@@ -3730,7 +3730,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnciExpandAll_Click(object sender, RoutedEventArgs e)
         {
-            _studyTreeView?.ExpandAllSectors(sender);
+            _studyTreeView?.ExpandAllSectorsFromMenu(sender);
             e.Handled = true;
         }
 
@@ -3742,7 +3742,7 @@ namespace ChessForge
 
         private void UiMnciCollapseAll_Click(object sender, RoutedEventArgs e)
         {
-            _studyTreeView?.CollapseAllSectors(sender);
+            _studyTreeView?.CollapseAllSectorsFromMenu(sender);
             e.Handled = true;
         }
 
@@ -3753,7 +3753,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnciExpandThisOne_Click(object sender, RoutedEventArgs e)
         {
-            _studyTreeView?.ExpandOnlySector(sender);
+            _studyTreeView?.ExpandThisSectorOnlyFromMenu(sender);
             e.Handled = true;
         }
 
