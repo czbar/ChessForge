@@ -30,9 +30,6 @@ namespace ChessForge
         // indent between levels in the index paragraph.
         private readonly string _indent = "    ";
 
-        // whether BuildTreeLineText is being invoked for the first time
-        private bool _firstInvocation = true;
-
         // id of the first node in the sector for which index prefix was last clicked 
         private int _lastClickedIndexPrefix = -1;
 
@@ -81,55 +78,83 @@ namespace ChessForge
 
             CreateVariationIndexPara();
             CreateParagraphs(para);
+        }
 
-            // if first invocation then this was already called by the client in the SetUpGUI method. 
-            if (!_firstInvocation)
+        /// <summary>
+        /// Finds out is the move has a collapsed ancestor
+        /// and if so, invokes UncollapseSector on that ancestor.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns>true if the uncollapse was required</returns>
+        public bool UncollapseMove(TreeNode nd)
+        {
+            bool result = false;
+
+            if (nd != null)
             {
-                //_mainWin.SetActiveLine(_mainVariationTree.SelectedLineId, _mainVariationTree.SelectedNodeId);
-                //SelectLineAndMove(_mainVariationTree.SelectedLineId, _mainVariationTree.SelectedNodeId);
+                TreeNode collapsedAncestor = null;
+                while (nd.Parent != null)
+                {
+                    if (nd.Parent.IsCollapsed)
+                    {
+                        collapsedAncestor = nd.Parent;
+                        result = true;
+                        break;
+                    }
+                    nd = nd.Parent;
+                }
+
+                UncollapseSector(collapsedAncestor);
             }
-            _firstInvocation = false;
+
+            return result;
         }
 
         /// <summary>
-        /// Expand the clicked sector
+        /// Expanding the clicked sector was requested from the menu.
         /// </summary>
         /// <param name="sender"></param>
-        public void ExpandSector(object sender)
+        public void ExpandSectorFromMenu(object sender)
         {
-            ExpandSector(_lastClickedIndexPrefix);
-            BuildFlowDocumentForVariationTree();
+            TreeNode node = _mainVariationTree.GetNodeFromNodeId(_lastClickedIndexPrefix);
+            ExpandSector(node);
         }
 
         /// <summary>
-        /// Collapse the clicked sector
+        /// Collapsing of the clicked sector was requested from the menu.
         /// </summary>
         /// <param name="sender"></param>
-        public void CollapseSector(object sender)
+        public void CollapseSectorFromMenu(object sender)
         {
-            TreeNode nd = CollapseSector(_lastClickedIndexPrefix);
-            AppState.MainWin.SetActiveLine(nd.LineId, nd.NodeId, false);
-            BuildFlowDocumentForVariationTree();
+            TreeNode node = _mainVariationTree.GetNodeFromNodeId(_lastClickedIndexPrefix);
+            CollapseSector(node);
         }
 
         /// <summary>
-        /// Expand all sectors
+        /// Expanding of all sectors was requested from the menu.
         /// </summary>
         /// <param name="sender"></param>
-        public void ExpandAllSectors(object sender)
+        public void ExpandAllSectorsFromMenu(object sender)
         {
             foreach (TreeNode nd in _mainVariationTree.Nodes)
             {
                 nd.IsCollapsed = false;
             }
             BuildFlowDocumentForVariationTree();
+
+            TreeNode selNode = GetSelectedNode();
+            if (selNode != null && _dictNodeToRun.ContainsKey(selNode.NodeId))
+            {
+                SelectRun(_dictNodeToRun[selNode.NodeId], 1, MouseButton.Left);
+            }
+            BringSelectedRunIntoView();
         }
 
         /// <summary>
-        /// Collapse all sectors
+        /// Collapsing of all sectors was requested from the menu.
         /// </summary>
         /// <param name="sender"></param>
-        public void CollapseAllSectors(object sender)
+        public void CollapseAllSectorsFromMenu(object sender)
         {
             MarkAllSectorsAsCollapsed();
 
@@ -138,31 +163,34 @@ namespace ChessForge
                 // get the last node in the stem line
                 LineSector stemLine = LineManager.LineSectors[0];
                 int nodeCount = stemLine.Nodes.Count;
-                AppState.MainWin.SetActiveLine("1", stemLine.Nodes[nodeCount - 1].NodeId, false);
+
+                TreeNode selNode = stemLine.Nodes[nodeCount - 1];
+                AppState.MainWin.SetActiveLine("1", selNode.NodeId, false);
+                BuildFlowDocumentForVariationTree();
+
+                if (selNode != null && _dictNodeToRun.ContainsKey(selNode.NodeId))
+                {
+                    SelectRun(_dictNodeToRun[selNode.NodeId], 1, MouseButton.Left);
+                }
+                BringSelectedRunIntoView();
             }
             catch { }
-
-            BuildFlowDocumentForVariationTree();
-            BringSelectedRunIntoView();
         }
 
         /// <summary>
-        /// Expand just the clicked sector
+        /// Expanding of the clicked sector and collapsing of all others 
+        /// was requested from the menu.
         /// </summary>
         /// <param name="sender"></param>
-        public void ExpandOnlySector(object sender)
+        public void ExpandThisSectorOnlyFromMenu(object sender)
         {
             MarkAllSectorsAsCollapsed();
-            ExpandSector(_lastClickedIndexPrefix);
-
             TreeNode nd = _mainVariationTree.GetNodeFromNodeId(_lastClickedIndexPrefix);
-            AppState.MainWin.SetActiveLine(nd.LineId, nd.NodeId, false);
-
-            BuildFlowDocumentForVariationTree();
+            ExpandSector(nd);
         }
 
         /// <summary>
-        /// Mark all sectors as collapsed
+        /// Mark all sectors as collapsed.
         /// </summary>
         private void MarkAllSectorsAsCollapsed()
         {
@@ -274,30 +302,6 @@ namespace ChessForge
                     }
                 }
                 chapter.VariationIndexDepth = depth;
-            }
-        }
-
-        /// <summary>
-        /// Finds out is the move has a collapsed ancestor
-        /// and if so, invokes UncollapseSector on that ancestor.
-        /// </summary>
-        /// <param name="nd"></param>
-        private void UncollapseMove(TreeNode nd)
-        {
-            if (nd != null)
-            {
-                TreeNode collapsedAncestor = null;
-                while (nd.Parent != null)
-                {
-                    if (nd.Parent.IsCollapsed)
-                    {
-                        collapsedAncestor = nd.Parent;
-                        break;
-                    }
-                    nd = nd.Parent;
-                }
-
-                UncollapseSector(collapsedAncestor);
             }
         }
 
@@ -825,25 +829,13 @@ namespace ChessForge
                             TreeNode nd = _mainVariationTree.GetNodeFromNodeId(nodeId);
                             nd.IsCollapsed = !nd.IsCollapsed;
 
-                            //if now collapsed, check if we need to update the selection
-                            TreeNode adjustedSelection = null;
                             if (nd.IsCollapsed)
                             {
-                                adjustedSelection = UpdateSelectedNodeAfterCollapse(nd);
+                                CollapseSector(nd);
                             }
                             else
                             {
-                                adjustedSelection = GetSelectedNode();
-                            }
-
-                            if (adjustedSelection != null && _dictNodeToRun.ContainsKey(adjustedSelection.NodeId))
-                            {
-                                SelectRun(_dictNodeToRun[adjustedSelection.NodeId], 1, MouseButton.Left);
-                            }
-                            BuildFlowDocumentForVariationTree();
-                            if (adjustedSelection != null && _dictNodeToRun.ContainsKey(adjustedSelection.NodeId))
-                            {
-                                SelectRun(_dictNodeToRun[adjustedSelection.NodeId], 1, MouseButton.Left);
+                                ExpandSector(nd);
                             }
                         }
                     }
@@ -867,15 +859,15 @@ namespace ChessForge
             }
         }
 
-        private void ExpandSector(int nodeId)
+        /// <summary>
+        /// Expands the sector starting with the passed NodeId.
+        /// </summary>
+        /// <param name="nodeId"></param>
+        private void ExpandSector(TreeNode nd)
         {
-            if (nodeId >= 0)
+            if (nd != null && nd.NodeId >= 0)
             {
-                TreeNode nd = _mainVariationTree.GetNodeFromNodeId(nodeId);
-                if (nd != null)
-                {
-                    nd.IsCollapsed = false;
-                }
+                nd.IsCollapsed = false;
 
                 // make sure all above are not collapsed, as in some cases they may be
                 while (nd.Parent != null)
@@ -883,27 +875,50 @@ namespace ChessForge
                     nd.IsCollapsed = false;
                     nd = nd.Parent;
                 }
+
+                BuildFlowDocumentForVariationTree();
+                TreeNode selNode = GetSelectedNode();
+                if (selNode != null && _dictNodeToRun.ContainsKey(selNode.NodeId))
+                {
+                    SelectRun(_dictNodeToRun[selNode.NodeId], 1, MouseButton.Left);
+                }
+                BringSelectedRunIntoView();
             }
         }
 
 
-        private TreeNode CollapseSector(int nodeId)
+        /// <summary>
+        /// Collapses the sector beginning atthe passed NodeId
+        /// </summary>
+        /// <param name="nodeId"></param>
+        /// <returns></returns>
+        private TreeNode CollapseSector(TreeNode nd)
         {
-            TreeNode adjustedNode = null;
+            TreeNode adjustedSelection = null;
 
-            if (nodeId >= 0)
+            if (nd != null && nd.NodeId >= 0)
             {
-                TreeNode nd = _mainVariationTree.GetNodeFromNodeId(nodeId);
-                if (nd != null)
-                {
-                    nd.IsCollapsed = true;
+                nd.IsCollapsed = true;
 
-                    //if collapsed, check if we need to update the selection
-                    adjustedNode = UpdateSelectedNodeAfterCollapse(nd);
+                //if collapsed, check if we need to update the selection
+                adjustedSelection = UpdateSelectedNodeAfterCollapse(nd);
+                if (adjustedSelection != null)
+                {
+                    AppState.MainWin.SetActiveLine(adjustedSelection.LineId, adjustedSelection.NodeId, false);
+                }
+                BuildFlowDocumentForVariationTree();
+
+                if (adjustedSelection == null)
+                {
+                    adjustedSelection = GetSelectedNode();
+                }
+                if (adjustedSelection != null && _dictNodeToRun.ContainsKey(adjustedSelection.NodeId))
+                {
+                    SelectRun(_dictNodeToRun[adjustedSelection.NodeId], 1, MouseButton.Left);
                 }
             }
 
-            return adjustedNode;
+            return adjustedSelection;
         }
 
         /// <summary>
