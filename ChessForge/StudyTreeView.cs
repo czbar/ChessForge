@@ -615,7 +615,7 @@ namespace ChessForge
                     {
                         includeNumber = true;
                     }
-                    Run r = BuildNodeTextAndAddToPara(nd, includeNumber, para, sector.DisplayLevel);
+                    Run r = BuildNodeTextAndAddToPara(nd, includeNumber, para, sector.DisplayLevel, !collapsed);
                     if (r.FontWeight == FontWeights.Bold)
                     {
                         r.FontWeight = FontWeights.DemiBold;
