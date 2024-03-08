@@ -926,6 +926,51 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Collapse.
+        /// </summary>
+        public static string CmCollapse {
+            get {
+                return ResourceManager.GetString("CmCollapse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Collapse All.
+        /// </summary>
+        public static string CmCollapseAll {
+            get {
+                return ResourceManager.GetString("CmCollapseAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expand.
+        /// </summary>
+        public static string CmExpand {
+            get {
+                return ResourceManager.GetString("CmExpand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expand All.
+        /// </summary>
+        public static string CmExpandAll {
+            get {
+                return ResourceManager.GetString("CmExpandAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Collapse All Else.
+        /// </summary>
+        public static string CmExpandThisOnly {
+            get {
+                return ResourceManager.GetString("CmExpandThisOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The coach played.
         /// </summary>
         public static string CoachPlayed {
@@ -1345,6 +1390,15 @@ namespace ChessForge.Properties {
         public static string DecreaseIndent {
             get {
                 return ResourceManager.GetString("DecreaseIndent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default Index Depth.
+        /// </summary>
+        public static string DefaultIndexDepth {
+            get {
+                return ResourceManager.GetString("DefaultIndexDepth", resourceCulture);
             }
         }
         
@@ -5454,6 +5508,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Click to Show Index.
+        /// </summary>
+        public static string ShowIndex {
+            get {
+                return ResourceManager.GetString("ShowIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show Moves at Fork.
         /// </summary>
         public static string ShowMovesAtFork {
@@ -5922,6 +5985,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Decrease index depth.
+        /// </summary>
+        public static string ToolTipDecreaseIndexDepth {
+            get {
+                return ResourceManager.GetString("ToolTipDecreaseIndexDepth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dubious move.
         /// </summary>
         public static string TooltipDubiousMove {
@@ -5945,6 +6017,15 @@ namespace ChessForge.Properties {
         public static string TooltipGreatMove {
             get {
                 return ResourceManager.GetString("TooltipGreatMove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Increase index depth.
+        /// </summary>
+        public static string ToolTipIncreaseIndexDepth {
+            get {
+                return ResourceManager.GetString("ToolTipIncreaseIndexDepth", resourceCulture);
             }
         }
         
@@ -6368,6 +6449,24 @@ namespace ChessForge.Properties {
         public static string TrnUserPlaysWhite {
             get {
                 return ResourceManager.GetString("TrnUserPlaysWhite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click to Expand.
+        /// </summary>
+        public static string TtClickToExpand {
+            get {
+                return ResourceManager.GetString("TtClickToExpand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click to Expand/Collapse.
+        /// </summary>
+        public static string TtClickToExpandCollapse {
+            get {
+                return ResourceManager.GetString("TtClickToExpandCollapse", resourceCulture);
             }
         }
         

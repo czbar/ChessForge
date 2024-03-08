@@ -130,6 +130,13 @@ namespace ChessForge
                         AppState.MainWin.SetupGuiForActiveStudyTree(true);
                     }
                     AppState.MainWin.SetActiveLine(item.Node.LineId, item.Node.NodeId);
+                    if (AppState.MainWin.ActiveTreeView is StudyTreeView view)
+                    {
+                        if (view.UncollapseMove(item.Node))
+                        {
+                            view.BuildFlowDocumentForVariationTree();
+                        }
+                    }
                     AppState.MainWin.ActiveTreeView.SelectLineAndMove(item.Node.LineId, item.Node.NodeId);
                     break;
             }

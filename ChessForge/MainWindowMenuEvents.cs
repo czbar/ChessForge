@@ -3695,6 +3695,67 @@ namespace ChessForge
             }
         }
 
+        //*****************************************************************
+        //
+        // SELF-INDEXING VIEW methods
+        //
+        //*****************************************************************
+
+        /// <summary>
+        /// Expand the clicked sector
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnciExpand_Click(object sender, RoutedEventArgs e)
+        {
+            _studyTreeView?.ExpandSectorFromMenu(sender);
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// Collapse the clicked sector
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnciCollapse_Click(object sender, RoutedEventArgs e)
+        {
+            _studyTreeView?.CollapseSectorFromMenu(sender);
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// Expand all sectors
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnciExpandAll_Click(object sender, RoutedEventArgs e)
+        {
+            _studyTreeView?.ExpandAllSectorsFromMenu(sender);
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// Collapse all sectors
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
+        private void UiMnciCollapseAll_Click(object sender, RoutedEventArgs e)
+        {
+            _studyTreeView?.CollapseAllSectorsFromMenu(sender);
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// Expand just the clicked sector
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnciExpandThisOne_Click(object sender, RoutedEventArgs e)
+        {
+            _studyTreeView?.ExpandThisSectorOnlyFromMenu(sender);
+            e.Handled = true;
+        }
 
         //*****************************************************************
         //

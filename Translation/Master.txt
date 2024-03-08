@@ -15,9 +15,6 @@ ChessForge=Chess Forge
 #Language
 Language=Language
 
-#Language/Notation
-LanguageNotation=Language / Notation
-
 
 #Language System
 LangSystem=System
@@ -534,9 +531,6 @@ ApplicationOptions=Application Options...
 #Chessboards
 Chessboards=Chessboards...
 
-#Application Options dialog title
-DlgTitleApplicationOptions=Application Options
-
 #Opens the Engine Options dialog
 EngineOptions=Engine Options...
 
@@ -686,6 +680,8 @@ TurnEngineOn=Turn the Engine On
 #Top Games box title
 TopGames=Top Games
 
+
+###########################
 #
 # Header: CONTEXT MENU for the Main Chessboard
 #
@@ -727,6 +723,34 @@ StudyTreeAfter=Study position after
 NotNamed=[not named]
 
 
+###########################
+#
+# Header: Self-indexing view
+#
+
+#Tool tip click to expand/collapse
+TtClickToExpandCollapse=Click to Expand/Collapse
+
+#Tool tip click to expand
+TtClickToExpand=Click to Expand
+
+#Context Menu Item: Expand
+CmExpand=Expand
+
+#Context Menu Item: Collapse
+CmCollapse=Collapse
+
+#Context Menu Item: Expand All
+CmExpandAll=Expand All
+
+#Context Menu Item: Collapse All
+CmCollapseAll=Collapse All
+
+#Context Menu Item: Expand only this one
+CmExpandThisOnly=Collapse All Else
+
+
+###########################
 #
 # Header: VIEW Engine Game
 #
@@ -742,6 +766,43 @@ EgSelectionAccuracyLabel=Move selection accuracy is
 
 #Cenitpawn accuracy
 EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
+
+
+#######################################
+#
+# Header: DIALOG Application Options
+#
+
+#Application Options dialog title
+DlgTitleApplicationOptions=Application Options
+
+#Language/Notation
+LanguageNotation=Language / Notation
+
+#Use figurines
+UseFigurines=Use Figurines
+
+#Whether sound for the moves is turned on
+SoundOn=Sound On
+
+#Whether to show inline table with move options at a fork
+ShowMovesAtFork=Show Moves at Fork
+
+#Large menu font
+LargeMenuFont=Large Menu Font
+
+#Default index depth
+DefaultIndexDepth=Default Index Depth
+
+#Move Replay(group frame title)
+MoveReplay=Move Replay
+
+#Time per move in auto replay in seconds (inside a frame titled "Move Replay")
+AutoReplaySpeed=Auto Speed (s)
+
+#Allow manual replay with a mouse wheel 
+AllowMouseWheel=Allow Mouse Wheel
+
 
 
 #######################################
@@ -785,6 +846,22 @@ LblNumberOfItemsActedOn=Number of Items Acted On
 
 
 
+
+#######################################
+#
+# Header: View Index
+#
+
+#Index depth up arrow tool tip
+ToolTipDecreaseIndexDepth=Decrease index depth
+ 
+#Index depth down arrow tool tip
+ToolTipIncreaseIndexDepth=Increase index depth
+
+#Show index
+ShowIndex=Click to Show Index
+
+ 
 #######################################
 #
 # Header: DIALOG Search Positions
@@ -1494,9 +1571,6 @@ Clear=Clear
 #Notation
 Notation=Notation
 
-#Use figurines
-UseFigurines=Use Figurines
-
 #ViewImportedGames
 ViewImportedGames=Go to Games
 
@@ -1892,26 +1966,6 @@ QuizPoints=Quiz points
 
 #Lost quiz points
 LostQuizPoints=Lost quiz points
-
-
-#Move Replay(group frame title)
-MoveReplay=Move Replay
-
-
-#Time per move in auto replay in seconds (inside a frame titled "Move Replay")
-AutoReplaySpeed=Auto Speed (s)
-
-#Allow manual replay with a mouse wheel 
-AllowMouseWheel=Allow Mouse Wheel
-
-#Whether to show inline table with move options at a fork
-ShowMovesAtFork=Show Moves at Fork
-
-#Whether sound for the moves is turned on
-SoundOn=Sound On
-
-#Large menu font
-LargeMenuFont=Large Menu Font
 
 #Current version
 CurrentVersion=The current version $0 will be backed up as

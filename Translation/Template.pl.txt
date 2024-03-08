@@ -17,10 +17,6 @@ ChessForge=Chess Forge
 #english: Language=Language
 Language=Język
 
-#description: Language/Notation
-#english: LanguageNotation=Language / Notation
-LanguageNotation=Język / Notacja
-
 
 #description: Language System
 #english: LangSystem=System
@@ -586,11 +582,11 @@ Collapse=Zwiń
 
 #description: Expand all
 #english: ExpandAll=Expand All
-ExpandAll=Rozwiń Wszystko
+ExpandAll=Rozwiń wszystko
 
 #description: Collapse all
 #english: CollapseAll=Collapse All
-CollapseAll=Zwiń Wszystko
+CollapseAll=Zwiń wszystko
 
 #description: Collapse chapters
 #english: CollapseChapters=Collapse Chapters
@@ -690,10 +686,6 @@ ApplicationOptions=Opcje Aplikacji
 #description: Chessboards
 #english: Chessboards=Chessboards...
 Chessboards=Szachownice...
-
-#description: Application Options dialog title
-#english: DlgTitleApplicationOptions=Application Options
-DlgTitleApplicationOptions=Opcje Aplikacji
 
 #description: Opens the Engine Options dialog
 #english: EngineOptions=Engine Options...
@@ -886,6 +878,8 @@ TurnEngineOn=Włącz silnik
 #english: TopGames=Top Games
 TopGames=Partie Mistrzowskie
 
+
+###########################
 #
 # Header: CONTEXT MENU for the Main Chessboard
 #
@@ -939,6 +933,41 @@ StudyTreeAfter=Pozycja z Teorii po
 NotNamed=brak nazwy
 
 
+###########################
+#
+# Header: Self-indexing view
+#
+
+#description: Tool tip click to expand/collapse
+#english: TtClickToExpandCollapse=Click to Expand/Collapse
+TtClickToExpandCollapse=Kliknij by zwinąć/rozwinąć
+
+#description: Tool tip click to expand
+#english: TtClickToExpand=Click to Expand
+TtClickToExpand=Kliknij by rozwinąć
+
+#description: Context Menu Item: Expand
+#english: CmExpand=Expand
+CmExpand=Rozwiń
+
+#description: Context Menu Item: Collapse
+#english: CmCollapse=Collapse
+CmCollapse=Zwiń
+
+#description: Context Menu Item: Expand All
+#english: CmExpandAll=Expand All
+CmExpandAll=Rozwiń wszystko
+
+#description: Context Menu Item: Collapse All
+#english: CmCollapseAll=Collapse All
+CmCollapseAll=Zwiń wszystko
+
+#description: Context Menu Item: Expand only this one
+#english: CmExpandThisOnly=Collapse All Else
+CmExpandThisOnly=Zwiń wszystkie inne
+
+
+###########################
 #
 # Header: VIEW Engine Game
 #
@@ -958,6 +987,53 @@ EgSelectionAccuracyLabel=Dokładność wyboru ruchów wynosi
 #description: Cenitpawn accuracy
 #english: EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
 EgCentipawnAccuracy=maksymalne odchylenie od najlepszego ruchu wynosi
+
+
+#######################################
+#
+# Header: DIALOG Application Options
+#
+
+#description: Application Options dialog title
+#english: DlgTitleApplicationOptions=Application Options
+DlgTitleApplicationOptions=Opcje Aplikacji
+
+#description: Language/Notation
+#english: LanguageNotation=Language / Notation
+LanguageNotation=Język / Notacja
+
+#description: Use figurines
+#english: UseFigurines=Use Figurines
+UseFigurines=Używaj figurek
+
+#description: Whether sound for the moves is turned on
+#english: SoundOn=Sound On
+SoundOn=Włącz dźwięk
+
+#description: Whether to show inline table with move options at a fork
+#english: ShowMovesAtFork=Show Moves at Fork
+ShowMovesAtFork=Tabelka przy rozgałęzieniu
+
+#description: Large menu font
+#english: LargeMenuFont=Large Menu Font
+LargeMenuFont=Większa czcionka w menu
+
+#description: Default index depth
+#english: DefaultIndexDepth=Default Index Depth
+DefaultIndexDepth=Domyślny poziom indeksu
+
+#description: Move Replay(group frame title)
+#english: MoveReplay=Move Replay
+MoveReplay=Odtwarzanie Ruchów
+
+#description: Time per move in auto replay in seconds (inside a frame titled "Move Replay")
+#english: AutoReplaySpeed=Auto Speed (s)
+AutoReplaySpeed=Auto (s)
+
+#description: Allow manual replay with a mouse wheel 
+#english: AllowMouseWheel=Allow Mouse Wheel
+AllowMouseWheel=Uaktywnij kółko myszy
+
 
 
 #######################################
@@ -1008,6 +1084,25 @@ LblNumberOfItemsDeleted=Liczba usuniętych elementów
 #english: LblNumberOfItemsActedOn=Number of Items Acted On
 LblNumberOfItemsActedOn=Liczba elementów
 
+
+
+
+#######################################
+#
+# Header: View Index
+#
+
+#description: Index depth up arrow tool tip
+#english: ToolTipDecreaseIndexDepth=Decrease index depth
+ToolTipDecreaseIndexDepth=Zmniejsz poziom indeksowania
+
+#description: Index depth down arrow tool tip
+#english: ToolTipIncreaseIndexDepth=Increase index depth
+ToolTipIncreaseIndexDepth=Zwiększ poziom indeksowania
+
+#description: Show index
+#english: ShowIndex=Click to Show Index
+ShowIndex=Kliknij by pokazać indeks
 
 
 #######################################
@@ -1904,10 +1999,6 @@ Clear=Wyczyść
 #english: Notation=Notation
 Notation=Zapis
 
-#description: Use figurines
-#english: UseFigurines=Use Figurines
-UseFigurines=Używaj figurek
-
 #description: ViewImportedGames
 #english: ViewImportedGames=Go to Games
 ViewImportedGames=Przejdź do Partii
@@ -2426,32 +2517,6 @@ QuizPoints=Punktacja do Quizu
 #description: Lost quiz points
 #english: LostQuizPoints=Lost quiz points
 LostQuizPoints=Punkty stracone
-
-
-#description: Move Replay(group frame title)
-#english: MoveReplay=Move Replay
-MoveReplay=Odtwarzanie Ruchów
-
-
-#description: Time per move in auto replay in seconds (inside a frame titled "Move Replay")
-#english: AutoReplaySpeed=Auto Speed (s)
-AutoReplaySpeed=Auto (s)
-
-#description: Allow manual replay with a mouse wheel 
-#english: AllowMouseWheel=Allow Mouse Wheel
-AllowMouseWheel=Uaktywnij kółko myszy
-
-#description: Whether to show inline table with move options at a fork
-#english: ShowMovesAtFork=Show Moves at Fork
-ShowMovesAtFork=Tabelka przy rozgałęzieniu
-
-#description: Whether sound for the moves is turned on
-#english: SoundOn=Sound On
-SoundOn=Włącz dźwięk
-
-#description: Large menu font
-#english: LargeMenuFont=Large Menu Font
-LargeMenuFont=Większa czcionka w menu
 
 #description: Current version
 #english: CurrentVersion=The current version $0 will be backed up as

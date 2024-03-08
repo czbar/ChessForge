@@ -374,7 +374,7 @@ namespace ChessForge
             {
                 if (_variationIndexDepth == null)
                 {
-                    _variationIndexDepth = Configuration.VariationIndexDepth;
+                    _variationIndexDepth = Configuration.DefaultIndexDepth;
                 }
                 else if (_variationIndexDepth < -1)
                 {
@@ -559,7 +559,7 @@ namespace ChessForge
         /// </summary>
         public string TitleWithNumber
         {
-            get => "[" + (Index + 1).ToString() + "] " + (_title ?? "");
+            get => "[" + (Index + 1).ToString() + "] " + (GetTitle());
         }
 
         /// <summary>

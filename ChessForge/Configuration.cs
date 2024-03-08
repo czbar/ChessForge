@@ -36,9 +36,28 @@ namespace ChessForge
         //*********************************
 
         /// <summary>
-        /// Number of levels on the Variation Index of a Study.
+        /// Default number of levels on the Variation Index of a Study.
         /// </summary>
-        public static int VariationIndexDepth = 3;
+        public static int DefaultIndexDepth
+        {
+            get
+            {
+                if (_defaultIndexDepth > MAX_INDEX_DEPTH)
+                {
+                    return MAX_INDEX_DEPTH;
+                }
+                else if (_defaultIndexDepth <= 0)
+                {
+                    // if configured 0 return -1 as the intent is not to have the index at all rather than just level 0
+                    return -1;
+                }
+                else
+                {
+                    return _defaultIndexDepth;
+                }
+            }
+            set => _defaultIndexDepth = value;
+        }
 
         /// <summary>
         /// Maximum allowed depth of the variation index
@@ -374,6 +393,9 @@ namespace ChessForge
         /// </summary>
         public static int GuiVersion = 0;
 
+        // default depth of the view index
+        private static int _defaultIndexDepth = 3;
+
         // depth of the auto-generated tree
         private static uint _autogenTreeDepth = 12;
 
@@ -420,6 +442,7 @@ namespace ChessForge
         //*********************************
 
         private const string CFG_MOVE_SPEED = "MoveSpeed";
+        private const string CFG_DEFAULT_INDEX_DEPTH = "DefaultIndexDepth";
         private const string CFG_AUTOGEN_TREE_DEPTH = "AutogenTreeDepth";
         private const string CFG_LAST_DIRECTORY = "LastDirectory";
         private const string CFG_LAST_IMPORT_DIRECTORY = "LastImportDirectory";
@@ -605,6 +628,7 @@ namespace ChessForge
 
                 sb.Append(CFG_AUTOGEN_TREE_DEPTH + "=" + AutogenTreeDepth.ToString() + Environment.NewLine);
                 sb.Append(CFG_MOVE_SPEED + "=" + MoveSpeed.ToString() + Environment.NewLine);
+                sb.Append(CFG_DEFAULT_INDEX_DEPTH + "=" + DefaultIndexDepth.ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_DIRECTORY + "=" + LastOpenDirectory.ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_IMPORT_DIRECTORY + "=" + LastImportDirectory.ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_FILE + "=" + LastWorkbookFile.ToString() + Environment.NewLine);
@@ -907,6 +931,9 @@ namespace ChessForge
                             break;
                         case CFG_MOVE_SPEED:
                             int.TryParse(value, out MoveSpeed);
+                            break;
+                        case CFG_DEFAULT_INDEX_DEPTH:
+                            int.TryParse(value, out _defaultIndexDepth);
                             break;
                         case CFG_DEBUG_MODE:
                             int.TryParse(value, out DebugLevel);

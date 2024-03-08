@@ -60,7 +60,23 @@ namespace ChessForge
         public List<LineSector> LineSectors;
 
         /// <summary>
-        /// Returns true of the passed branch level is within index section levels.
+        /// Gets the list of all sectors in the subtree
+        /// of LineSectors starting at sector.
+        /// The passed sector is not included.
+        /// </summary>
+        /// <param name="sector"></param>
+        /// <param name="lstSectors"></param>
+        public void GetSubTree(LineSector sector, List<LineSector> lstSectors)
+        {
+            foreach (LineSector ls in sector.Children)
+            {
+                lstSectors.Add(ls);
+                GetSubTree(ls, lstSectors);
+            }
+        }
+
+        /// <summary>
+        /// Returns true if the passed branch level is within index section levels.
         /// Since the first "true" (i.e. not the stem line) index level is 2, 
         /// the last one is 1 + VariationIndexDepth
         /// e.g if VariationIndexDepth = 3 then the first "true" index is 2 and the last one is 4.

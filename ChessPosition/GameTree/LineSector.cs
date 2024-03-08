@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Documents;
 using System.Windows.Media;
 
 namespace GameTree
@@ -62,6 +63,11 @@ namespace GameTree
         public LineSector Parent;
 
         /// <summary>
+        /// Paragraph hosting this LineSector
+        /// </summary>
+        public Paragraph HostPara;
+
+        /// <summary>
         /// Adds a child LineSector.
         /// </summary>
         /// <param name="sector"></param>
@@ -96,6 +102,19 @@ namespace GameTree
         {
             get => _displayLevel;
             set => _displayLevel = value;
+        }
+
+        /// <summary>
+        /// Whether this sector should be shown as collapsed.
+        /// It is determined by the IsCollapsed state of the first Node
+        /// of the sector.
+        /// </summary>
+        public bool IsCollapsed
+        {
+            get
+            {
+                return (Nodes.Count > 0 && Nodes[0].IsCollapsed);
+            }
         }
 
         /// <summary>

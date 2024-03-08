@@ -10,6 +10,63 @@ namespace ChessPosition
     public class TreeUtils
     {
         /// <summary>
+        /// Checks if the first passed node has the second node as its ancestor (at any lavel).
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="ancestor"></param>
+        /// <returns></returns>
+        public static bool IsAncestor(TreeNode node, TreeNode ancestor)
+        {
+            bool result = false;
+
+            if (node != null && ancestor != null)
+            {
+                while (node.Parent != null)
+                {
+                    if (node.Parent == ancestor)
+                    {
+                        result = true;
+                        break;
+                    }
+                    else
+                    {
+                        node = node.Parent;
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Returns the closest ancestor that is not collapsed.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        public static TreeNode GetFirstExpandedAncestor(TreeNode node)
+        {
+            TreeNode ancestor = null;
+
+            if (node != null)
+            {
+                while (node.Parent != null)
+                {
+                    if (!node.Parent.IsCollapsed)
+                    {
+                        ancestor = node.Parent;
+                        break;
+                    }
+                    else
+                    {
+                        node = node.Parent;
+                    }
+                }
+            }
+
+            return ancestor;
+        }
+
+        /// <summary>
         /// Get the adjacent sibling of the passed node.
         /// If there are no siblings returns null.
         /// It there are no more siblings in the requested direction (prev/next)

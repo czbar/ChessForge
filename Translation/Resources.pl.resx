@@ -123,9 +123,6 @@
   <data name="Language" xml:space="preserve">
     <value>Język</value>
   </data>
-  <data name="LanguageNotation" xml:space="preserve">
-    <value>Język / Notacja</value>
-  </data>
   <data name="LangSystem" xml:space="preserve">
     <value>Systemowy</value>
   </data>
@@ -523,10 +520,10 @@
     <value>Zwiń</value>
   </data>
   <data name="ExpandAll" xml:space="preserve">
-    <value>Rozwiń Wszystko</value>
+    <value>Rozwiń wszystko</value>
   </data>
   <data name="CollapseAll" xml:space="preserve">
-    <value>Zwiń Wszystko</value>
+    <value>Zwiń wszystko</value>
   </data>
   <data name="CollapseChapters" xml:space="preserve">
     <value>Zwiń rozdziały</value>
@@ -587,9 +584,6 @@
   </data>
   <data name="Chessboards" xml:space="preserve">
     <value>Szachownice...</value>
-  </data>
-  <data name="DlgTitleApplicationOptions" xml:space="preserve">
-    <value>Opcje Aplikacji</value>
   </data>
   <data name="EngineOptions" xml:space="preserve">
     <value>Opcje Silnika...</value>
@@ -753,6 +747,27 @@
   <data name="NotNamed" xml:space="preserve">
     <value>brak nazwy</value>
   </data>
+  <data name="TtClickToExpandCollapse" xml:space="preserve">
+    <value>Kliknij by zwinąć/rozwinąć</value>
+  </data>
+  <data name="TtClickToExpand" xml:space="preserve">
+    <value>Kliknij by rozwinąć</value>
+  </data>
+  <data name="CmExpand" xml:space="preserve">
+    <value>Rozwiń</value>
+  </data>
+  <data name="CmCollapse" xml:space="preserve">
+    <value>Zwiń</value>
+  </data>
+  <data name="CmExpandAll" xml:space="preserve">
+    <value>Rozwiń wszystko</value>
+  </data>
+  <data name="CmCollapseAll" xml:space="preserve">
+    <value>Zwiń wszystko</value>
+  </data>
+  <data name="CmExpandThisOnly" xml:space="preserve">
+    <value>Zwiń wszystkie inne</value>
+  </data>
   <data name="EgEngineConfiguration" xml:space="preserve">
     <value>Opcje Silnika</value>
   </data>
@@ -764,6 +779,36 @@
   </data>
   <data name="EgCentipawnAccuracy" xml:space="preserve">
     <value>maksymalne odchylenie od najlepszego ruchu wynosi</value>
+  </data>
+  <data name="DlgTitleApplicationOptions" xml:space="preserve">
+    <value>Opcje Aplikacji</value>
+  </data>
+  <data name="LanguageNotation" xml:space="preserve">
+    <value>Język / Notacja</value>
+  </data>
+  <data name="UseFigurines" xml:space="preserve">
+    <value>Używaj figurek</value>
+  </data>
+  <data name="SoundOn" xml:space="preserve">
+    <value>Włącz dźwięk</value>
+  </data>
+  <data name="ShowMovesAtFork" xml:space="preserve">
+    <value>Tabelka przy rozgałęzieniu</value>
+  </data>
+  <data name="LargeMenuFont" xml:space="preserve">
+    <value>Większa czcionka w menu</value>
+  </data>
+  <data name="DefaultIndexDepth" xml:space="preserve">
+    <value>Domyślny poziom indeksu</value>
+  </data>
+  <data name="MoveReplay" xml:space="preserve">
+    <value>Odtwarzanie Ruchów</value>
+  </data>
+  <data name="AutoReplaySpeed" xml:space="preserve">
+    <value>Auto (s)</value>
+  </data>
+  <data name="AllowMouseWheel" xml:space="preserve">
+    <value>Uaktywnij kółko myszy</value>
   </data>
   <data name="SelectChessboards" xml:space="preserve">
     <value>Wybierz Szachownice</value>
@@ -791,6 +836,15 @@
   </data>
   <data name="LblNumberOfItemsActedOn" xml:space="preserve">
     <value>Liczba elementów</value>
+  </data>
+  <data name="ToolTipDecreaseIndexDepth" xml:space="preserve">
+    <value>Zmniejsz poziom indeksowania</value>
+  </data>
+  <data name="ToolTipIncreaseIndexDepth" xml:space="preserve">
+    <value>Zwiększ poziom indeksowania</value>
+  </data>
+  <data name="ShowIndex" xml:space="preserve">
+    <value>Kliknij by pokazać indeks</value>
   </data>
   <data name="SetupPositionToSearch" xml:space="preserve">
     <value>Ustaw szukaną pozycję</value>
@@ -1347,9 +1401,6 @@
   <data name="Notation" xml:space="preserve">
     <value>Zapis</value>
   </data>
-  <data name="UseFigurines" xml:space="preserve">
-    <value>Używaj figurek</value>
-  </data>
   <data name="ViewImportedGames" xml:space="preserve">
     <value>Przejdź do Partii</value>
   </data>
@@ -1718,24 +1769,6 @@
   </data>
   <data name="LostQuizPoints" xml:space="preserve">
     <value>Punkty stracone</value>
-  </data>
-  <data name="MoveReplay" xml:space="preserve">
-    <value>Odtwarzanie Ruchów</value>
-  </data>
-  <data name="AutoReplaySpeed" xml:space="preserve">
-    <value>Auto (s)</value>
-  </data>
-  <data name="AllowMouseWheel" xml:space="preserve">
-    <value>Uaktywnij kółko myszy</value>
-  </data>
-  <data name="ShowMovesAtFork" xml:space="preserve">
-    <value>Tabelka przy rozgałęzieniu</value>
-  </data>
-  <data name="SoundOn" xml:space="preserve">
-    <value>Włącz dźwięk</value>
-  </data>
-  <data name="LargeMenuFont" xml:space="preserve">
-    <value>Większa czcionka w menu</value>
   </data>
   <data name="CurrentVersion" xml:space="preserve">
     <value>Kopia aktualnej wersji $0 będzie zapisana w</value>

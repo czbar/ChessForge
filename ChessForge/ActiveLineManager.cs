@@ -791,6 +791,13 @@ namespace ChessForge
                         {
                             _mainWin.DisplayPosition(nd);
                         }
+                        if (_mainWin.ActiveTreeView is StudyTreeView view)
+                        {
+                            if (view.UncollapseMove(nd))
+                            {
+                                _mainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
+                            }
+                        }
                         _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, Line.GetLineId(), plyIndex, true);
                     }
                 }

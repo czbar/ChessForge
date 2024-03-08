@@ -154,6 +154,8 @@ namespace ChessForge
             _currentEngineHashSize = Configuration.EngineHashSize;
             _currentLargeMenuFont = Configuration.LargeMenuFont;
 
+            UiTbIndexDepth.Text = Configuration.DefaultIndexDepth.ToString();
+
             UiTbReplaySpeed.Text = ReplaySpeed.ToString("F1");
             UiCbAllowWheel.IsChecked = (AllowMouseWheel == true);
             UiCbShowForkMoves.IsChecked = (ShowMovesAtFork == true);
@@ -195,6 +197,11 @@ namespace ChessForge
             if (double.TryParse(UiTbReplaySpeed.Text, out dval))
             {
                 Configuration.MoveSpeed = (int)(dval * 1000);
+            }
+
+            if (int.TryParse(UiTbIndexDepth.Text, out int iVal))
+            {
+                Configuration.DefaultIndexDepth = iVal;
             }
 
             Configuration.AllowMouseWheelForMoves = (UiCbAllowWheel.IsChecked == true);
