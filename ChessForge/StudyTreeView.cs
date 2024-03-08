@@ -502,6 +502,12 @@ namespace ChessForge
                         {
                             bottomMarginExtra = DisplayLevelAttrs.EXTRA_MARGIN;
                         }
+                        // also make sure that the sector outside the indexed range is not expanded!
+                        foreach (TreeNode node in sector.Nodes)
+                        {
+                            node.IsCollapsed = false;
+                        }
+
                     }
                     else
                     {
