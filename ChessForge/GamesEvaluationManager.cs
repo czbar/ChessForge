@@ -92,7 +92,8 @@ namespace ChessForge
                         }
                         if (game.IsSelected)
                         {
-                            _plyCountToEvaluate += (game.Article.Tree.SelectLine("1").Count - 1);
+                            int plyCount = CalculatePlyCount(game);
+                            _plyCountToEvaluate += plyCount;
                             _gamesToEvaluate++;
                         }
                     }
@@ -182,7 +183,7 @@ namespace ChessForge
                         _dlgProgress.UiLblProgressPct.Content = pct.ToString() + "%";
                         _dlgProgress.UiPbProgress.Value = pct;
 
-                        if (e.IsLastMove)
+                        if (e.IsLastMove || IsAboveMoveRangeEnd(e.MoveIndex))
                         {
                             // reset the selected node id to 0
                             AppState.ActiveVariationTree?.SetSelectedLineAndMove("1", 0);
@@ -245,9 +246,9 @@ namespace ChessForge
             ArticleListItem game = _games[gameIndex];
             AppState.MainWin.SelectArticle(game.ChapterIndex, GameData.ContentType.MODEL_GAME, game.ArticleIndex);
             ObservableCollection<TreeNode> lineToSelect = game.Article.Tree.SelectLine("1");
-            if (game.Article.Tree.Nodes.Count > 1)
+            if (HasMovesToEvaluate(game))
             {
-                int firstNodeId = game.Article.Tree.Nodes[0].Children[0].NodeId;
+                int firstNodeId = FirstNodeToEvaluate(lineToSelect);
                 AppState.MainWin.SetActiveLine(lineToSelect, firstNodeId);
                 AppState.MainWin.UiMnEvaluateLine_Click(null, null);
             }
@@ -258,6 +259,95 @@ namespace ChessForge
                 args.IsLastMove = true;
                 MoveEvalFinished(null, args);
             }
+        }
+
+        /// <summary>
+        /// Calculate the number of plies to calculate, taking into
+        /// account configured range.
+        /// </summary>
+        /// <param name="game"></param>
+        /// <returns></returns>
+        private static int CalculatePlyCount(ArticleListItem game)
+        {
+            int plyCount = game.Article.Tree.SelectLine("1").Count - 1;
+            if (Configuration.EvalMoveRangeEnd > 0)
+            {
+                plyCount = Math.Min(plyCount, Configuration.EvalMoveRangeEnd * 2);
+            }
+
+            if (Configuration.EvalMoveRangeStart > 0)
+            {
+                plyCount = plyCount - (Configuration.EvalMoveRangeStart - 1) * 2;
+                if (plyCount < 0)
+                {
+                    plyCount = 0;
+                }
+            }
+
+            return plyCount;
+        }
+
+        /// <summary>
+        /// Checks if the game is long enough so that at least one move
+        /// falls within the configured move range.
+        /// </summary>
+        /// <param name="game"></param>
+        /// <returns></returns>
+        private static bool HasMovesToEvaluate(ArticleListItem game)
+        {
+            bool result = false;
+
+            int plyCount = game.Article.Tree.Nodes.Count - 1;
+            if (plyCount > 0)
+            {
+                uint lastMoveNumber = game.Article.Tree.Nodes[plyCount].MoveNumber;
+                if (lastMoveNumber >= Configuration.EvalMoveRangeStart)
+                {
+                    result = true;
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Determines NodeId of the node to start the evaluation from.
+        /// </summary>
+        /// <param name="game"></param>
+        /// <returns></returns>
+        private static int FirstNodeToEvaluate(ObservableCollection<TreeNode> lineToSelect)
+        {
+            int startNodeIndex = 0;
+            if (Configuration.EvalMoveRangeStart > 0)
+            {
+                startNodeIndex = (Configuration.EvalMoveRangeStart - 1) * 2;
+            }
+
+            int firstNodeId = 0;
+
+            if (startNodeIndex < lineToSelect.Count && lineToSelect[startNodeIndex].Children.Count > 0)
+            {
+                firstNodeId = lineToSelect[startNodeIndex].Children[0].NodeId;
+            }
+            
+            return firstNodeId;
+        }
+
+        /// <summary>
+        /// Checks if the passed move index (ply number) is outside the configured range.
+        /// </summary>
+        /// <param name="moveIndex"></param>
+        /// <returns></returns>
+        private static bool IsAboveMoveRangeEnd(int moveIndex)
+        {
+            bool result = false;
+
+            if (Configuration.EvalMoveRangeEnd > 0 && Configuration.EvalMoveRangeEnd * 2 <= moveIndex)
+            {
+                result = true;
+            }
+
+            return result;
         }
     }
 }
