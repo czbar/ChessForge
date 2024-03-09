@@ -1541,6 +1541,10 @@ MoveArticles=
 #english: SelectItems=Select Items
 SelectItems=
 
+#description: Move range
+#english: MoveRange=Move Range
+MoveRange=
+
 #description: All chapters
 #english: AllChapters=All Chapters
 AllChapters=

@@ -3977,6 +3977,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Move Range.
+        /// </summary>
+        public static string MoveRange {
+            get {
+                return ResourceManager.GetString("MoveRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Move Replay.
         /// </summary>
         public static string MoveReplay {

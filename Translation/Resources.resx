@@ -1110,6 +1110,9 @@
   <data name="SelectItems" xml:space="preserve">
     <value>Select Items</value>
   </data>
+  <data name="MoveRange" xml:space="preserve">
+    <value>Move Range</value>
+  </data>
   <data name="AllChapters" xml:space="preserve">
     <value>All Chapters</value>
   </data>

@@ -1541,6 +1541,10 @@ MoveArticles=Przenieś
 #english: SelectItems=Select Items
 SelectItems=Zaznacz swój wybór
 
+#description: Move range
+#english: MoveRange=Move Range
+MoveRange=Ruchy od - do
+
 #description: All chapters
 #english: AllChapters=All Chapters
 AllChapters=Wszystkie Rozdziały

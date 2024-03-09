@@ -1210,6 +1210,9 @@ MoveArticles=Move
 #Select items
 SelectItems=Select Items
 
+#Move range
+MoveRange=Move Range
+
 #All chapters
 AllChapters=All Chapters
 
