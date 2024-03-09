@@ -277,6 +277,25 @@ namespace ChessForge
                             Configuration.EngineEvaluationTime = (int)(dval * 1000);
                         }
 
+                        int ival;
+                        if (int.TryParse(dlg.UiTbFromMove.Text, out ival))
+                        {
+                            Configuration.EvalMoveRangeStart = ival;
+                        }
+                        else if (string.IsNullOrEmpty(dlg.UiTbFromMove.Text))
+                        {
+                            Configuration.EvalMoveRangeStart = 0;
+                        }
+
+                        if (int.TryParse(dlg.UiTbToMove.Text, out ival))
+                        {
+                            Configuration.EvalMoveRangeEnd = ival;
+                        }
+                        else if (string.IsNullOrEmpty(dlg.UiTbToMove.Text))
+                        {
+                            Configuration.EvalMoveRangeEnd = 0;
+                        }
+
                         ObservableCollection<ArticleListItem> gamesToEvaluate = new ObservableCollection<ArticleListItem>();
                         foreach (ArticleListItem item in gameList)
                         {
