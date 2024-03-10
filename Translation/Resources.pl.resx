@@ -1485,6 +1485,9 @@
   <data name="FlMsgCopiedMoves" xml:space="preserve">
     <value>Posunięcia skopiowane do schowka</value>
   </data>
+  <data name="FlMsgPastedMovesCount" xml:space="preserve">
+    <value>Liczba nowych wklejonych posunięć</value>
+  </data>
   <data name="MsgNoDuplicatesFound" xml:space="preserve">
     <value>Nie znaleziono duplikatów.</value>
   </data>

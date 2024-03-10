@@ -2924,6 +2924,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Number of Pasted New Moves.
+        /// </summary>
+        public static string FlMsgPastedMovesCount {
+            get {
+                return ResourceManager.GetString("FlMsgPastedMovesCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bold.
         /// </summary>
         public static string FontBold {

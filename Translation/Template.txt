@@ -2122,6 +2122,9 @@ FlMsgCopiedTree=
 #english: FlMsgCopiedMoves=Moves Copied to Clipboard
 FlMsgCopiedMoves=
 
+#description: Flash message: Number of moves pasted.
+#english: FlMsgPastedMovesCount=Number of Pasted New Moves
+FlMsgPastedMovesCount=
 
 ##################################
 #
