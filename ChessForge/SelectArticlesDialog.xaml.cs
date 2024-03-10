@@ -98,6 +98,9 @@ namespace ChessForge
 
             UiLblEvalTime.Visibility = Visibility.Collapsed;
             UiTbEngEvalTime.Visibility = Visibility.Collapsed;
+            
+            UiLblMoveRange.Visibility = Visibility.Collapsed;
+            UiLblDash.Visibility = Visibility.Collapsed;
 
             UiBtnCopy.Visibility = Visibility.Collapsed;
             UiBtnMove.Visibility = Visibility.Collapsed;
@@ -153,6 +156,33 @@ namespace ChessForge
             UiTbEngEvalTime.Visibility = Visibility.Visible;
             double dval = (double)Configuration.EngineEvaluationTime / 1000.0;
             UiTbEngEvalTime.Text = dval.ToString("F1");
+
+            UiLblMoveRange.Visibility = Visibility.Visible;
+            UiTbFromMove.Visibility = Visibility.Visible;
+            if (Configuration.EvalMoveRangeStart == 0)
+            {
+                UiTbFromMove.Text = "";
+            }
+            else
+            {
+                UiTbFromMove.Text = Configuration.EvalMoveRangeStart.ToString();
+            }
+            UiLblDash.Visibility = Visibility.Visible;
+            UiTbToMove.Visibility = Visibility.Visible;
+            if (Configuration.EvalMoveRangeEnd == 0)
+            {
+                UiTbToMove.Text = "";
+            }
+            else
+            {
+                UiTbToMove.Text = Configuration.EvalMoveRangeEnd.ToString();
+            }
+
+            GridLength row0Height = UiGridMain.RowDefinitions[0].Height;
+            GridLength row1Height = UiGridMain.RowDefinitions[1].Height;
+
+            UiGridMain.RowDefinitions[0].Height = new GridLength(row0Height.Value + 40);
+            UiGridMain.RowDefinitions[1].Height = new GridLength(row1Height.Value - 40);
         }
 
         /// <summary>

@@ -98,6 +98,7 @@ namespace ChessForge
                 {
                     if (string.IsNullOrEmpty(GameDownload.GameText))
                     {
+                        UiLblLoading.Visibility = Visibility.Collapsed;
                         MessageBox.Show(Properties.Resources.EmptyGameTextFromLichess, Properties.Resources.Information, MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     }
                     else

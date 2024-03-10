@@ -873,13 +873,19 @@ namespace ChessForge
                 _position = new BoardPosition(node.Position);
                 if (isActiveBoard && Shapes != null)
                 {
+                    // DEVNOTE: this area needs reviewing, when going from Chapters to e.g. Exercise
+                    // with arrows, we get AppState.IsTabAllowingBoardDraw == false here.
+                    // Shapes.Reset(false) was resetting the node's shapes so we changed it to Shapes.Reset(false, false).
+                    // It solves the problem because DisplayPosition is then called multiple times in a better context
+                    // but that is a problem in itself too!
+                    //
                     if (AppState.IsTabAllowingBoardDraw)
                     {
                         Shapes.Reset(node.Arrows, node.Circles, false);
                     }
                     else
                     {
-                        Shapes.Reset(false);
+                        Shapes.Reset(false, false);
                     }
                 }
             }

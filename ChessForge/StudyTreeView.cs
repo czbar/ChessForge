@@ -2,6 +2,7 @@
 using GameTree;
 using System;
 using System.Collections.Generic;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -9,6 +10,8 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
+using System.Xml.Linq;
 
 namespace ChessForge
 {
@@ -612,7 +615,7 @@ namespace ChessForge
                     {
                         includeNumber = true;
                     }
-                    Run r = BuildNodeTextAndAddToPara(nd, includeNumber, para, sector.DisplayLevel);
+                    Run r = BuildNodeTextAndAddToPara(nd, includeNumber, para, sector.DisplayLevel, !collapsed);
                     if (r.FontWeight == FontWeights.Bold)
                     {
                         r.FontWeight = FontWeights.DemiBold;
@@ -855,6 +858,7 @@ namespace ChessForge
                         ContextMenu contextMenu = _mainWin.Resources["CmIndexExpandCollapse"] as ContextMenu;
                         if (contextMenu != null)
                         {
+                            EnableExpandCollapseMenuItems(contextMenu, nodeId);
                             contextMenu.IsOpen = true;
                         }
                     }
@@ -863,6 +867,117 @@ namespace ChessForge
 
                 e.Handled = true;
             }
+        }
+
+        /// <summary>
+        /// Enables disable menu items according to the state of the clicked node. 
+        /// </summary>
+        /// <param name="nodeId"></param>
+        private void EnableExpandCollapseMenuItems(ContextMenu contextMenu, int nodeId)
+        {
+            try
+            {
+                TreeNode nd = _mainVariationTree.GetNodeFromNodeId(nodeId);
+                if (nd != null)
+                {
+                    foreach (var item in contextMenu.Items)
+                    {
+                        if (item is MenuItem)
+                        {
+                            MenuItem menuItem = item as MenuItem;
+                            switch (menuItem.Name)
+                            {
+                                case "UiMnciExpand":
+                                    menuItem.IsEnabled = nd.IsCollapsed;
+                                    break;
+                                case "UiMnciCollapse":
+                                    menuItem.IsEnabled = !nd.IsCollapsed;
+                                    break;
+                                case "UiMnciExpandAll":
+                                    menuItem.IsEnabled = !IsAllExpanded();
+                                    break;
+                                case "UiMnciCollapseAll":
+                                    menuItem.IsEnabled = !IsAllCollapsed(null);
+                                    break;
+                                case "UiMnciExpandThisOne":
+                                    menuItem.IsEnabled = !IsAllElseCollapsed(nd);
+                                    break;
+
+                            }
+                        }
+                    }
+                }
+            }
+            catch {}
+        }
+
+        /// <summary>
+        /// Checks if all sectors are expanded
+        /// </summary>
+        /// <returns></returns>
+        private bool IsAllExpanded()
+        {
+            bool res = true;
+
+            foreach (TreeNode nd in _mainVariationTree.Nodes)
+            {
+                if (nd.IsCollapsed)
+                {
+                    res = false;
+                    break;
+                }
+            }
+
+            return res;
+        }
+
+        /// <summary>
+        /// Checks if all sectors are collapsed except the one passed (if not null).
+        /// </summary>
+        /// <returns></returns>
+        private bool IsAllCollapsed(TreeNode leftExpanded)
+        {
+            bool res = true;
+
+            foreach (LineSector sector in LineManager.LineSectors)
+            {
+                if (!IsEffectiveIndexLevel(sector.BranchLevel))
+                {
+                    break;
+                }
+                if (sector.Nodes.Count > 0 && sector.Nodes[0].LineId != "1" && !sector.Nodes[0].IsCollapsed && sector.Nodes[0] != leftExpanded)
+                {
+                    res = false;
+                    break;
+                }
+            }
+
+            return res;
+        }
+
+        /// <summary>
+        /// Checks if all sectors are collapsed except the one passed 
+        /// which should be expanded..
+        /// </summary>
+        /// <param name="leftExpanded"></param>
+        /// <returns></returns>
+        private bool IsAllElseCollapsed(TreeNode leftExpanded)
+        {
+            bool res = false;
+
+            if (leftExpanded != null)
+            {
+                if (leftExpanded.IsCollapsed)
+                {
+                    res = false;
+                }
+                else if (IsAllCollapsed(leftExpanded))
+                {
+                    res = true;
+                }
+            }
+
+            return res;
         }
 
         /// <summary>

@@ -1731,7 +1731,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd"></param>
         /// <param name="includeNumber"></param>
-        protected Run BuildNodeTextAndAddToPara(TreeNode nd, bool includeNumber, Paragraph para, int displayLevel = -1)
+        protected Run BuildNodeTextAndAddToPara(TreeNode nd, bool includeNumber, Paragraph para, int displayLevel = -1, bool inclComment = true)
         {
             string nodeText = BuildNodeText(nd, includeNumber);
 
@@ -1750,12 +1750,16 @@ namespace ChessForge
 
             Run rMove = AddRunToParagraph(nd, para, nodeText, fontColor);
             // must use Insert... because cannot Add... before rMove is created.
-            InsertOrUpdateCommentBeforeMoveRun(nd);
-            AddReferenceRunToParagraph(nd, para);
-            AddCommentRunsToParagraph(nd, para, out bool isBlunder);
-            if (isBlunder)
+
+            if (inclComment)
             {
-                TextUtils.RemoveBlunderNagFromText(rMove);
+                InsertOrUpdateCommentBeforeMoveRun(nd);
+                AddReferenceRunToParagraph(nd, para);
+                AddCommentRunsToParagraph(nd, para, out bool isBlunder);
+                if (isBlunder)
+                {
+                    TextUtils.RemoveBlunderNagFromText(rMove);
+                }
             }
 
             return rMove;

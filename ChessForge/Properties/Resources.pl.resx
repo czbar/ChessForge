@@ -1110,6 +1110,9 @@
   <data name="SelectItems" xml:space="preserve">
     <value>Zaznacz swój wybór</value>
   </data>
+  <data name="MoveRange" xml:space="preserve">
+    <value>Ruchy od - do</value>
+  </data>
   <data name="AllChapters" xml:space="preserve">
     <value>Wszystkie Rozdziały</value>
   </data>
