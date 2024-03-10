@@ -137,6 +137,7 @@ namespace ChessForge
 
                     _isEvaluationInProgress = false;
                     AppState.MainWin.Timers.Stop(AppTimers.TimerId.GAMES_EVALUATION);
+                    AppState.MainWin.StopEvaluation(true);
                 }
             });
         }
