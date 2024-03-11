@@ -574,20 +574,37 @@ namespace ChessForge
         /// <param name="direction"></param>
         public static void SortGames(Chapter chapter, GameSortCriterion.SortItem sortBy, GameSortCriterion.SortItem direction)
         {
-            if (chapter != null)
+            Mouse.SetCursor(Cursors.Wait);
+            
+            try
             {
-                SortGamesInChapter(chapter, sortBy, direction);
-            }
-            else
-            {
-                foreach (Chapter ch in AppState.Workbook.Chapters)
+                if (chapter != null)
                 {
-                    SortGamesInChapter(ch, sortBy, direction);
+                    SortGamesInChapter(chapter, sortBy, direction);
                 }
+                else
+                {
+                    foreach (Chapter ch in AppState.Workbook.Chapters)
+                    {
+                        SortGamesInChapter(ch, sortBy, direction);
+                    }
+                }
+
+                AppState.MainWin.ChaptersView.IsDirty = true;
+                AppState.IsDirty = true;
+
+                if (AppState.ActiveTab == TabViewType.CHAPTERS)
+                {
+                    AppState.MainWin.ChaptersView.BuildFlowDocumentForChaptersView();
+                }
+
+                AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgGamesSorted, System.Windows.Media.Brushes.Green);
+            }
+            catch
+            {
             }
 
-            AppState.MainWin.ChaptersView.IsDirty = true;
-            AppState.IsDirty = true;
+            Mouse.SetCursor(Cursors.Arrow);
         }
 
         /// <summary>
