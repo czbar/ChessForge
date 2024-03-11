@@ -2126,6 +2126,11 @@ FlMsgCopiedMoves=
 #english: FlMsgPastedMovesCount=Number of Pasted New Moves
 FlMsgPastedMovesCount=
 
+#description: Flash message: Games sorted.
+#english: FlMsgGamesSorted=Games have been sorted
+FlMsgGamesSorted=
+
+
 ##################################
 #
 # Header: MESSAGES

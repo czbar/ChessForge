@@ -1669,6 +1669,10 @@ FlMsgCopiedMoves=Moves Copied to Clipboard
 #Flash message: Number of moves pasted.
 FlMsgPastedMovesCount=Number of Pasted New Moves
 
+#Flash message: Games sorted.
+FlMsgGamesSorted=Games have been sorted
+
+
 ##################################
 #
 # Header: MESSAGES

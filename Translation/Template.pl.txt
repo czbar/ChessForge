@@ -2126,6 +2126,11 @@ FlMsgCopiedMoves=Posunięcia skopiowane do schowka
 #english: FlMsgPastedMovesCount=Number of Pasted New Moves
 FlMsgPastedMovesCount=Liczba nowych wklejonych posunięć
 
+#description: Flash message: Games sorted.
+#english: FlMsgGamesSorted=Games have been sorted
+FlMsgGamesSorted=Partie zostały posortowane
+
+
 ##################################
 #
 # Header: MESSAGES
