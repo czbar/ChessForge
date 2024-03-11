@@ -117,9 +117,10 @@ namespace ChessPosition
         /// <summary>
         /// Makes a deep copy of the passed variation tree.
         /// </summary>
-        /// <param name="source"></param>
+        /// <param name="source">VariationTree to copy</param>
+        /// <param name="maxDepth">The last move number which to copy. No limit if set to 0.</param>
         /// <returns></returns>
-        public static VariationTree CopyVariationTree(VariationTree source)
+        public static VariationTree CopyVariationTree(VariationTree source, uint maxDepth = 0)
         {
             try
             {
@@ -134,6 +135,12 @@ namespace ChessPosition
                 // build a list of Nodes with dictionaries for NodeIds, parent and childre node ids
                 for (int i = 0; i < source.Nodes.Count; i++)
                 {
+                    if (maxDepth != 0 && source.Nodes[i].MoveNumber > maxDepth)
+                    {
+                        // skip if outside the specified depth
+                        continue;
+                    }
+
                     TreeNode node = source.Nodes[i].CloneJustMe();
                     node.Children = new List<TreeNode>();
 
@@ -151,7 +158,16 @@ namespace ChessPosition
                     dictChildrenAtIndex[i] = new List<int>();
                     foreach (TreeNode child in source.Nodes[i].Children)
                     {
-                        dictChildrenAtIndex[i].Add(child.NodeId);
+                        // only register children if they are within the specified depth.
+                        if (maxDepth == 0 || child.MoveNumber <= maxDepth)
+                        {
+                            dictChildrenAtIndex[i].Add(child.NodeId);
+                        }
+                        else
+                        {
+                            // other children would have the same move number so break out
+                            break;
+                        }
                     }
                 }
 
