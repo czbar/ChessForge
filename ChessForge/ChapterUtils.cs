@@ -735,7 +735,10 @@ namespace ChessForge
                     }
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                AppLog.Message("RegenerateStudy()", ex);
+            }
 
             Mouse.SetCursor(Cursors.Arrow);
         }
@@ -759,23 +762,37 @@ namespace ChessForge
                 }
             }
 
-            if (chapter.StudyTree.Tree.Nodes.Count <= 1)
+            if (chapter.StudyTree.Tree.Nodes.Count >= 1)
             {
-                List<VariationTree> trees = new List<VariationTree>();
-                foreach (Article game in chapter.ModelGames)
+                Mouse.SetCursor(Cursors.Wait);
+                try
                 {
-                    trees.Add(game.Tree);
-                }
+                    List<VariationTree> trees = new List<VariationTree>();
+                    foreach (Article game in chapter.ModelGames)
+                    {
+                        trees.Add(game.Tree);
+                    }
 
-                // TODO: trimming while merging would be more effective; implement MergeWithTrim()
-                VariationTree tree = TreeMerge.MergeVariationTrees(trees);
-                if (tree != null)
-                {
-                    TreeUtils.TrimTree(ref tree, Configuration.AutogenTreeDepth, PieceColor.Black);
-                    tree.ContentType = GameData.ContentType.STUDY_TREE;
-                    chapter.StudyTree.Tree = tree;
-                    AppState.IsDirty = true;
+                    VariationTree tree = TreeMerge.MergeVariationTreeList(trees, Configuration.AutogenTreeDepth, true);
+                    if (tree != null)
+                    {
+                        TreeUtils.TrimTree(ref tree, Configuration.AutogenTreeDepth, PieceColor.Black);
+                        tree.ContentType = GameData.ContentType.STUDY_TREE;
+                        chapter.StudyTree.Tree = tree;
+
+                        // if we are in the study tab, must set the new tree as active tree (does not happen automatically)
+                        if (AppState.ActiveTab == TabViewType.STUDY)
+                        {
+                            AppState.Workbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.STUDY_TREE);
+                        }
+                        AppState.IsDirty = true;
+                    }
                 }
+                catch(Exception ex) 
+                {
+                    AppLog.Message("RegenerateChapterStudy()", ex);
+                }
+                Mouse.SetCursor(Cursors.Arrow);
             }
 
             return true;
