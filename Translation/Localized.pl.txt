@@ -712,6 +712,10 @@ DlgMergeErrors=Błędy przetwarzania zapisu
 #english: MsgNoMoveSelected=No move selected
 MsgNoMoveSelected=Nie wybrano żadnego posunięcia
 
+#description: Message about no move selected for evaluation
+#english: MsgNothingSelectedForEvaluation=No moves to evaluate in the specified scope. 
+MsgNothingSelectedForEvaluation=Brak posunięć do oceny w wybranym zakresie. 
+
 #description: Message about identical position not found
 #english: MsgNoIdenticalPositions=No identical positions found.
 MsgNoIdenticalPositions=Nie znaleziono identycznych pozycji.
@@ -2127,7 +2131,7 @@ FlMsgCopiedMoves=Posunięcia skopiowane do schowka
 FlMsgPastedMovesCount=Liczba nowych wklejonych posunięć
 
 #description: Flash message: Games sorted.
-#english: FlGamesSorted=Games have been sorted
+#english: FlMsgGamesSorted=Games have been sorted
 FlMsgGamesSorted=Partie zostały posortowane
 
 

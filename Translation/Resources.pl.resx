@@ -603,6 +603,9 @@
   <data name="MsgNoMoveSelected" xml:space="preserve">
     <value>Nie wybrano żadnego posunięcia</value>
   </data>
+  <data name="MsgNothingSelectedForEvaluation" xml:space="preserve">
+    <value>Brak posunięć do oceny w wybranym zakresie. </value>
+  </data>
   <data name="MsgNoIdenticalPositions" xml:space="preserve">
     <value>Nie znaleziono identycznych pozycji.</value>
   </data>

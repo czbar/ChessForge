@@ -4148,6 +4148,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No moves to evaluate in the specified scope. .
+        /// </summary>
+        public static string MsgNothingSelectedForEvaluation {
+            get {
+                return ResourceManager.GetString("MsgNothingSelectedForEvaluation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select position to paste the moves at..
         /// </summary>
         public static string MsgSelectNodeToInserAt {

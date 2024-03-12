@@ -712,6 +712,10 @@ DlgMergeErrors=
 #english: MsgNoMoveSelected=No move selected
 MsgNoMoveSelected=
 
+#description: Message about no move selected for evaluation
+#english: MsgNothingSelectedForEvaluation=No moves to evaluate in the specified scope. 
+MsgNothingSelectedForEvaluation=
+
 #description: Message about identical position not found
 #english: MsgNoIdenticalPositions=No identical positions found.
 MsgNoIdenticalPositions=

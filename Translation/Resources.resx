@@ -603,6 +603,9 @@
   <data name="MsgNoMoveSelected" xml:space="preserve">
     <value>No move selected</value>
   </data>
+  <data name="MsgNothingSelectedForEvaluation" xml:space="preserve">
+    <value>No moves to evaluate in the specified scope. </value>
+  </data>
   <data name="MsgNoIdenticalPositions" xml:space="preserve">
     <value>No identical positions found.</value>
   </data>

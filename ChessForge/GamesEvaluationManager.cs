@@ -122,7 +122,7 @@ namespace ChessForge
                     AppState.MainWin.UiTabModelGames.Focus();
                     _isEvaluationStarted = true;
                     _evalGameIndex = FindNextGameIndex(_evalGameIndex);
-                    if (_evalGameIndex >= 0)
+                    if (_evalGameIndex >= 0 && _plyCountToEvaluate > 0)
                     {
                         _dlgProgress = new GamesEvalDialog(_plyCountToEvaluate, _estExecutionTime);
                         GuiUtilities.PositionDialog(_dlgProgress, AppState.MainWin, 100);
@@ -131,6 +131,10 @@ namespace ChessForge
                         SetGameNoLabel();
                         KickoffSingleGameEval(_evalGameIndex);
                         _dlgProgress.ShowDialog();
+                    }
+                    else
+                    {
+                        MessageBox.Show(Properties.Resources.MsgNothingSelectedForEvaluation, Properties.Resources.Information, MessageBoxButton.OK, MessageBoxImage.Information);
                     }
 
                     _dlgProgress = null;

@@ -550,6 +550,9 @@ DlgMergeErrors=Merge Errors
 #Message about node not selected
 MsgNoMoveSelected=No move selected
 
+#Message about no move selected for evaluation
+MsgNothingSelectedForEvaluation=No moves to evaluate in the specified scope. 
+
 #Message about identical position not found
 MsgNoIdenticalPositions=No identical positions found.
 
