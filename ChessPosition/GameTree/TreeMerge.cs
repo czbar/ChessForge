@@ -14,25 +14,41 @@ namespace ChessPosition.GameTree
         // the VariationTree that will be built and returned
         private static VariationTree _mergedTree;
 
+        // depth to which we track position frequency
+        private static int FREQ_TRACK_DEPTH = 15;
+
         /// <summary>
         /// Merges a list of trees into one and returns a deep copy
         /// of the merged product.
         /// </summary>
         /// <param name="treeList"></param>
         /// <returns></returns>
-        public static VariationTree MergeVariationTrees(List<VariationTree> treeList)
+        public static VariationTree MergeVariationTreeList(List<VariationTree> treeList, uint maxDepth, bool reorderLines)
         {
             VariationTree returnTree = null;
 
             if (treeList != null && treeList.Count != 0)   
             {
-                returnTree = TreeUtils.CopyVariationTree(treeList[0]);
+                returnTree = TreeUtils.CopyVariationTree(treeList[0], maxDepth);
                 if (treeList.Count > 1)
                 {
+                    Dictionary<string, int> fenCounts = null;
+                    if (reorderLines)
+                    {
+                        fenCounts = new Dictionary<string, int>();
+                        // add the first tree to the Counts directory
+                        CountFenOccurences(returnTree, fenCounts);
+                    }
                     for (int i = 1; i < treeList.Count; i++)
                     {
-                        returnTree = MergeVariationTrees(returnTree, treeList[i]);
+                        returnTree = MergeVariationTrees(returnTree, treeList[i], maxDepth, fenCounts);
                     }
+
+                    if (fenCounts != null)
+                    {
+                        OrderChildrenByOccurence(returnTree, fenCounts);
+                    }
+
                 }
             }
 
@@ -45,17 +61,21 @@ namespace ChessPosition.GameTree
         /// <param name="tree1"></param>
         /// <param name="tree2"></param>
         /// <returns></returns>
-        public static VariationTree MergeVariationTrees(VariationTree tree1, VariationTree tree2)
+        public static VariationTree MergeVariationTrees(VariationTree tree1, VariationTree tree2, uint maxDepth = 0, Dictionary<string,int> fenCounts = null)
         {
+            if (fenCounts != null)
+            {
+                // only add nodes from the tree2. Nodes from tree1 already accounted for
+                CountFenOccurences(tree2, fenCounts);
+            }
+
             // create a new Variation Tree and create a root Node
             _mergedTree = new VariationTree(GameData.ContentType.STUDY_TREE);
             _mergedTree.CreateNew();
 
-            MergeTrees(tree1.Nodes[0], tree2.Nodes[0], _mergedTree.Nodes[0]);
-
+            MergeSubtrees(tree1.Nodes[0], tree2.Nodes[0], _mergedTree.Nodes[0], maxDepth);
             return _mergedTree;
         }
-
 
         /// <summary>
         /// Merges 2 subtrees beginning from the passed Nodes.
@@ -71,7 +91,7 @@ namespace ChessPosition.GameTree
         /// </summary>
         /// <param name="tn1"></param>
         /// <param name="tn2"></param>
-        private static void MergeTrees(TreeNode tn1, TreeNode tn2, TreeNode outParent)
+        private static void MergeSubtrees(TreeNode tn1, TreeNode tn2, TreeNode outParent, uint maxDepth)
         {
             Dictionary<string, TreeNode> _dict1 = new Dictionary<string, TreeNode>();
             Dictionary<string, TreeNode> _dict2 = new Dictionary<string, TreeNode>();
@@ -86,13 +106,27 @@ namespace ChessPosition.GameTree
             // add all children of tn1 to the dictionary
             foreach (TreeNode nd in tn1.Children)
             {
-                _dict1[FenParser.GenerateFenFromPosition(nd.Position)] = nd;
+                if (maxDepth == 0 || nd.MoveNumber <= maxDepth)
+                {
+                    _dict1[FenParser.GenerateFenFromPosition(nd.Position)] = nd;
+                }
+                else
+                {
+                    break;
+                }
             }
 
             // add all children of tn2 to the dictionary
             foreach (TreeNode nd in tn2.Children)
             {
-                _dict2[FenParser.GenerateFenFromPosition(nd.Position)] = nd;
+                if (maxDepth == 0 || nd.MoveNumber <= maxDepth)
+                {
+                    _dict2[FenParser.GenerateFenFromPosition(nd.Position)] = nd;
+                }
+                else
+                {
+                    break;
+                }
             }
 
             _dupes1.Clear();
@@ -146,7 +180,7 @@ namespace ChessPosition.GameTree
                 }
 
                 TreeNode outNode = InsertNode(_dupes1[i], outParent);
-                MergeTrees(_dupes1[i], _dupes2[i], outNode);
+                MergeSubtrees(_dupes1[i], _dupes2[i], outNode, maxDepth);
             }
         }
 
@@ -168,5 +202,128 @@ namespace ChessPosition.GameTree
 
             return newNodeForFinalTree;
         }
+
+        /// <summary>
+        /// Updates occurence counts for the positions in the tree.
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <param name="fenCounts"></param>
+        private static void CountFenOccurences(VariationTree tree, Dictionary<string, int> fenCounts)
+        {
+            if (tree == null || fenCounts == null)
+            {
+                return;
+            }
+
+            foreach (TreeNode nd in tree.Nodes)
+            {
+                if (nd.MoveNumber > FREQ_TRACK_DEPTH)
+                {
+                    break;
+                }
+                else
+                {
+                    string fen = FenParser.GenerateFenFromPosition(nd.Position);
+                    if (fenCounts.ContainsKey(fen))
+                    {
+                        fenCounts[fen]++;
+                    }
+                    else
+                    {
+                        fenCounts[fen] = 1;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Orders children (lines) at each fork per frequency counts
+        /// by calling the recursive function OrderChildrenNodes()
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <param name="fenCounts"></param>
+        private static void OrderChildrenByOccurence(VariationTree tree, Dictionary<string, int> fenCounts)
+        {
+            OrderChildrenNodes(tree.RootNode, fenCounts);
+        }
+
+        /// <summary>
+        /// Recursively identifies siblings and orders them per frequency
+        /// registered in fenCounts.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="fenCounts"></param>
+        private static void OrderChildrenNodes(TreeNode nd, Dictionary<string, int> fenCounts)
+        {
+            if (nd.MoveNumber >= FREQ_TRACK_DEPTH)
+            {
+                return;
+            }
+
+            List<FenFrequency> lstFenFreq = new List<FenFrequency>();
+
+            foreach (TreeNode child in nd.Children)
+            {
+                string fen = FenParser.GenerateFenFromPosition(child.Position);
+                if (fenCounts.ContainsKey(fen))
+                {
+                    lstFenFreq.Add(CreateFenFrequencyObject(child, fen, fenCounts[fen]));
+                    if (child.Children.Count > 0)
+                    {
+                        OrderChildrenNodes(child, fenCounts);
+                    }
+                }
+            }
+
+            lstFenFreq.Sort(CompareFenFrequency);
+            if (nd.Children.Count == lstFenFreq.Count)
+            {
+                for (int i = 0; i < lstFenFreq.Count; i++)
+                {
+                    nd.Children[i] = lstFenFreq[i].Node;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Compares 2 FenFrequency objects based
+        /// on the value of Occurences
+        /// </summary>
+        /// <param name="f1"></param>
+        /// <param name="f2"></param>
+        /// <returns></returns>
+        private static int CompareFenFrequency(FenFrequency f1, FenFrequency f2)
+        {
+            return f2.Occurences - f1.Occurences;
+        }
+
+        /// <summary>
+        /// Creates a FenFrequency object.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="fen"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        private static FenFrequency CreateFenFrequencyObject(TreeNode nd, string fen, int count)
+        {
+            return new FenFrequency(nd, fen, count);
+        }
+    }
+
+    /// <summary>
+    /// Structure to use when sorting nodes by frequency
+    /// </summary>
+    struct FenFrequency
+    {
+        public FenFrequency(TreeNode nd, string fen, int count)
+        {
+            Node = nd;
+            Fen = fen;
+            Occurences = count;
+        }
+
+        public TreeNode Node;
+        public string Fen;
+        public int Occurences;
     }
 }

@@ -1,8 +1,9 @@
-﻿using System;
+﻿using GameTree;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using ChessPosition;
 
 namespace ChessForge
 {
@@ -27,7 +28,7 @@ namespace ChessForge
         /// <param name="sortCrit"></param>
         /// <param name="direction"></param>
         public ArticleComparer(GameSortCriterion.SortItem sortCrit, GameSortCriterion.SortItem direction)
-        { 
+        {
             SortCriterion = sortCrit;
             SortDirection = direction;
         }
@@ -46,6 +47,10 @@ namespace ChessForge
             {
                 case GameSortCriterion.SortItem.ECO:
                     res = string.Compare(art1.Tree.Header.GetECO(out _), art2.Tree.Header.GetECO(out _));
+                    if (res == 0)
+                    {
+                        res = string.Compare(MainLineSignature(art1), MainLineSignature(art2));
+                    }
                     break;
                 case GameSortCriterion.SortItem.DATE:
                     res = string.Compare(art1.Tree.Header.GetDate(out _), art2.Tree.Header.GetDate(out _));
@@ -67,6 +72,44 @@ namespace ChessForge
             }
 
             return res;
+        }
+
+        /// <summary>
+        /// Creates a line's "signature" by concatenating move strings.
+        /// </summary>
+        /// <param name="art"></param>
+        /// <returns></returns>
+        private string MainLineSignature(Article art)
+        {
+            StringBuilder sb = new StringBuilder("");
+
+            List<TreeNode> lstMainLine = TreeUtils.GetMainLine(art.Tree);
+            foreach (TreeNode nd in lstMainLine)
+            {
+                sb.Append(MoveString(nd));
+            }
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// Builds text for a single move to use in the line signature.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        private string MoveString(TreeNode nd)
+        {
+            StringBuilder sb = new StringBuilder("");
+            if (nd != null)
+            {
+                sb.Append(nd.MoveNumber.ToString() + '.');
+                if (nd.ColorToMove == ChessPosition.PieceColor.White)
+                {
+                    sb.Append("..");
+                }
+                sb.Append(nd.LastMoveAlgebraicNotation ?? "");
+            }
+
+            return sb.ToString();
         }
     }
 }

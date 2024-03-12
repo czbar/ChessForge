@@ -74,6 +74,9 @@ namespace ChessForge
                             TreeNode insertedRoot = targetTree.GetNodeFromNodeId(firstInserted.NodeId);
                             AppState.MainWin.SetActiveLine(insertedRoot.LineId, insertedRoot.NodeId);
                             targetView.SelectNode(firstInserted.NodeId);
+
+                            string msg = Properties.Resources.FlMsgPastedMovesCount + ": " + insertedNewNodes.Count;
+                            AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(msg, System.Windows.Media.Brushes.Green, 14);
                         }
                         else
                         {

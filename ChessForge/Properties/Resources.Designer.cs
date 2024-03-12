@@ -2915,11 +2915,29 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Games have been sorted.
+        /// </summary>
+        public static string FlMsgGamesSorted {
+            get {
+                return ResourceManager.GetString("FlMsgGamesSorted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Games thumbnails have been set..
         /// </summary>
         public static string FlMsgGamesThumbnailsSet {
             get {
                 return ResourceManager.GetString("FlMsgGamesThumbnailsSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of Pasted New Moves.
+        /// </summary>
+        public static string FlMsgPastedMovesCount {
+            get {
+                return ResourceManager.GetString("FlMsgPastedMovesCount", resourceCulture);
             }
         }
         

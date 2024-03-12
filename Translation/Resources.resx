@@ -1485,6 +1485,12 @@
   <data name="FlMsgCopiedMoves" xml:space="preserve">
     <value>Moves Copied to Clipboard</value>
   </data>
+  <data name="FlMsgPastedMovesCount" xml:space="preserve">
+    <value>Number of Pasted New Moves</value>
+  </data>
+  <data name="FlMsgGamesSorted" xml:space="preserve">
+    <value>Games have been sorted</value>
+  </data>
   <data name="MsgNoDuplicatesFound" xml:space="preserve">
     <value>No duplicates found.</value>
   </data>

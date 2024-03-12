@@ -2122,6 +2122,14 @@ FlMsgCopiedTree=Drzewo skopiowane do schowka
 #english: FlMsgCopiedMoves=Moves Copied to Clipboard
 FlMsgCopiedMoves=Posunięcia skopiowane do schowka
 
+#description: Flash message: Number of moves pasted.
+#english: FlMsgPastedMovesCount=Number of Pasted New Moves
+FlMsgPastedMovesCount=Liczba nowych wklejonych posunięć
+
+#description: Flash message: Games sorted.
+#english: FlGamesSorted=Games have been sorted
+FlMsgGamesSorted=Partie zostały posortowane
+
 
 ##################################
 #

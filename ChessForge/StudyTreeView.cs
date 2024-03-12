@@ -2,7 +2,6 @@
 using GameTree;
 using System;
 using System.Collections.Generic;
-using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -10,8 +9,6 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Xml.Linq;
 
 namespace ChessForge
 {
@@ -888,7 +885,7 @@ namespace ChessForge
                             switch (menuItem.Name)
                             {
                                 case "UiMnciExpand":
-                                    menuItem.IsEnabled = nd.IsCollapsed;
+                                    menuItem.IsEnabled = !IsNodeExpanded(nd);
                                     break;
                                 case "UiMnciCollapse":
                                     menuItem.IsEnabled = !nd.IsCollapsed;
@@ -908,7 +905,7 @@ namespace ChessForge
                     }
                 }
             }
-            catch {}
+            catch { }
         }
 
         /// <summary>
@@ -929,6 +926,37 @@ namespace ChessForge
             }
 
             return res;
+        }
+
+        /// <summary>
+        /// Determines of the passed node and all descendants are expanded.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns>True if the node and all descendants are expanded. Otherwise false.</returns>
+        private bool IsNodeExpanded(TreeNode nd)
+        {
+            bool isExpanded = true;
+
+            if (nd != null)
+            {
+                if (nd.IsCollapsed)
+                {
+                    isExpanded = false;
+                }
+                else
+                {
+                    foreach (TreeNode child in nd.Children)
+                    {
+                        if (!IsNodeExpanded(child))
+                        {
+                            isExpanded = false;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return isExpanded;
         }
 
         /// <summary>
@@ -988,7 +1016,8 @@ namespace ChessForge
         {
             if (nd != null && nd.NodeId >= 0)
             {
-                nd.IsCollapsed = false;
+                // uncollapse the node and all descendants
+                ExpandNode(nd);
 
                 // make sure all above are not collapsed, as in some cases they may be
                 while (nd.Parent != null)
@@ -996,6 +1025,7 @@ namespace ChessForge
                     nd.IsCollapsed = false;
                     nd = nd.Parent;
                 }
+
 
                 BuildFlowDocumentForVariationTree();
                 TreeNode selNode = GetSelectedNode();
@@ -1007,6 +1037,21 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Marks the passed node and all its descendants as expanded.
+        /// </summary>
+        /// <param name="nd"></param>
+        private void ExpandNode(TreeNode nd)
+        {
+            if (nd != null)
+            {
+                nd.IsCollapsed = false;
+                foreach (TreeNode child in nd.Children)
+                {
+                    ExpandNode(child);
+                }
+            }
+        }
 
         /// <summary>
         /// Collapses the sector beginning atthe passed NodeId
