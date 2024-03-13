@@ -124,7 +124,7 @@ namespace ChessForge
                     _evalGameIndex = FindNextGameIndex(_evalGameIndex);
                     if (_evalGameIndex >= 0 && _plyCountToEvaluate > 0)
                     {
-                        _dlgProgress = new GamesEvalDialog(_plyCountToEvaluate, _estExecutionTime);
+                        _dlgProgress = new GamesEvalDialog();
                         GuiUtilities.PositionDialog(_dlgProgress, AppState.MainWin, 100);
                         _dlgProgress.UiPbProgress.Minimum = 0;
                         _dlgProgress.UiPbProgress.Maximum = 100;
