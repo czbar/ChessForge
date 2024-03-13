@@ -1140,6 +1140,9 @@
   <data name="SelectGamesToMoveToChapters" xml:space="preserve">
     <value>Move Games to the Suggested Chapters</value>
   </data>
+  <data name="MsgInvalidMoveRange" xml:space="preserve">
+    <value>Invalid Move Range</value>
+  </data>
   <data name="RestartGameAfter" xml:space="preserve">
     <value>Restart Game After </value>
   </data>

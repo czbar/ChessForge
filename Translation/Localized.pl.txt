@@ -1587,6 +1587,9 @@ SelectChaptersToMerge=Wybierz Rozdziały do Połączenia.
 #english: SelectGamesToMoveToChapters=Move Games to the Suggested Chapters
 SelectGamesToMoveToChapters=Przenieś do proponowanych rozdziałów
 
+#description: Message: invalid move range
+#english: MsgInvalidMoveRange=Invalid Move Range
+MsgInvalidMoveRange=Nieprawidłowy zakres ruchów
 
 #######################################
 #

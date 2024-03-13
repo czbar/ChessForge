@@ -53,6 +53,9 @@ namespace ChessForge
         // flag to block processing of CheckBox events
         private bool _doNotProcessCheckEvents = false;
 
+        // flags that the dialog is in the games evaluation mode
+        private bool _isGameEvalMode = false;
+
         /// <summary>
         /// The dialog for selecting Articles (games or exercises) from multiple chapters.
         /// </summary>
@@ -98,7 +101,7 @@ namespace ChessForge
 
             UiLblEvalTime.Visibility = Visibility.Collapsed;
             UiTbEngEvalTime.Visibility = Visibility.Collapsed;
-            
+
             UiLblMoveRange.Visibility = Visibility.Collapsed;
             UiLblDash.Visibility = Visibility.Collapsed;
 
@@ -152,6 +155,8 @@ namespace ChessForge
         /// </summary>
         public void SetupGuiForGamesEval()
         {
+            _isGameEvalMode = true;
+
             UiLblEvalTime.Visibility = Visibility.Visible;
             UiTbEngEvalTime.Visibility = Visibility.Visible;
             double dval = (double)Configuration.EngineEvaluationTime / 1000.0;
@@ -791,7 +796,29 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnOk_Click(object sender, RoutedEventArgs e)
         {
-            ExitOk();
+            if (_isGameEvalMode && !IsValidMoveRange())
+            {
+                MessageBox.Show(Properties.Resources.MsgInvalidMoveRange, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else
+            {
+                ExitOk();
+            }
+        }
+
+        /// <summary>
+        /// Checks if the entered move range is valid. 
+        /// </summary>
+        /// <returns></returns>
+        private bool IsValidMoveRange()
+        {
+            int ivalFrom;
+            int.TryParse(UiTbFromMove.Text, out ivalFrom);
+
+            int ivalTo;
+            int.TryParse(UiTbToMove.Text, out ivalTo);
+
+            return ivalFrom <= ivalTo;
         }
 
         /// <summary>

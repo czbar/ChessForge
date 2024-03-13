@@ -4094,6 +4094,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid Move Range.
+        /// </summary>
+        public static string MsgInvalidMoveRange {
+            get {
+                return ResourceManager.GetString("MsgInvalidMoveRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter valid Url or leave empty to delete link. .
         /// </summary>
         public static string MsgNeedValidUrlOrEmpty {
