@@ -359,6 +359,11 @@ namespace ChessForge
                 bool first = true;
                 foreach (LineSector sector in LineManager.LineSectors)
                 {
+                    if (sector.Nodes.Count == 0)
+                    {
+                        continue;
+                    }
+
                     int level = sector.BranchLevel;
                     if (IsEffectiveIndexLevel(level))
                     {
