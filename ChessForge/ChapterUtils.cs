@@ -803,6 +803,7 @@ namespace ChessForge
                     {
                         TreeUtils.TrimTree(ref tree, Configuration.AutogenTreeDepth, PieceColor.Black);
                         tree.ContentType = GameData.ContentType.STUDY_TREE;
+                        tree.BuildLines();
                         chapter.StudyTree.Tree = tree;
 
                         // if we are in the study tab, must set the new tree as active tree (does not happen automatically)
