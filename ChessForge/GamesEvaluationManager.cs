@@ -190,9 +190,6 @@ namespace ChessForge
 
                         if (e.IsLastMove || IsAboveMoveRangeEnd(e.MoveIndex))
                         {
-                            // reset the selected node id to 0
-                            AppState.ActiveVariationTree?.SetSelectedLineAndMove("1", 0);
-
                             _gamesEvaluated++;
                             _evalGameIndex = FindNextGameIndex(_evalGameIndex);
                             if (_evalGameIndex >= 0)
