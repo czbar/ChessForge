@@ -119,25 +119,32 @@ namespace ChessForge
             {
                 if (!_isEvaluationStarted)
                 {
-                    AppState.MainWin.UiTabModelGames.Focus();
-                    _isEvaluationStarted = true;
-                    _evalGameIndex = FindNextGameIndex(_evalGameIndex);
-                    if (_evalGameIndex >= 0 && _plyCountToEvaluate > 0)
+                    try
                     {
-                        _dlgProgress = new GamesEvalDialog();
-                        GuiUtilities.PositionDialog(_dlgProgress, AppState.MainWin, 100);
-                        _dlgProgress.UiPbProgress.Minimum = 0;
-                        _dlgProgress.UiPbProgress.Maximum = 100;
-                        SetGameNoLabel();
-                        KickoffSingleGameEval(_evalGameIndex);
-                        _dlgProgress.ShowDialog();
-                    }
-                    else
-                    {
-                        MessageBox.Show(Properties.Resources.MsgNothingSelectedForEvaluation, Properties.Resources.Information, MessageBoxButton.OK, MessageBoxImage.Information);
-                    }
+                        AppState.MainWin.UiTabModelGames.Focus();
+                        _isEvaluationStarted = true;
+                        _evalGameIndex = FindNextGameIndex(_evalGameIndex);
+                        if (_evalGameIndex >= 0 && _plyCountToEvaluate > 0)
+                        {
+                            _dlgProgress = new GamesEvalDialog();
+                            GuiUtilities.PositionDialog(_dlgProgress, AppState.MainWin, 100);
+                            _dlgProgress.UiPbProgress.Minimum = 0;
+                            _dlgProgress.UiPbProgress.Maximum = 100;
+                            SetGameNoLabel();
+                            KickoffSingleGameEval(_evalGameIndex);
+                            _dlgProgress.ShowDialog();
+                        }
+                        else
+                        {
+                            MessageBox.Show(Properties.Resources.MsgNothingSelectedForEvaluation, Properties.Resources.Information, MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
 
-                    _dlgProgress = null;
+                        _dlgProgress = null;
+
+                    }
+                    catch
+                    {
+                    }
 
                     _isEvaluationInProgress = false;
                     AppState.MainWin.Timers.Stop(AppTimers.TimerId.GAMES_EVALUATION);
@@ -165,6 +172,23 @@ namespace ChessForge
                 {
                 }
             }
+        }
+
+        /// <summary>
+        /// Checks if the passed move index (ply number) is outside the configured range.
+        /// </summary>
+        /// <param name="moveIndex"></param>
+        /// <returns></returns>
+        public static bool IsAboveMoveRangeEnd(int moveIndex)
+        {
+            bool result = false;
+
+            if (Configuration.EvalMoveRangeEnd > 0 && Configuration.EvalMoveRangeEnd * 2 <= moveIndex)
+            {
+                result = true;
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -333,23 +357,6 @@ namespace ChessForge
             }
             
             return firstNodeId;
-        }
-
-        /// <summary>
-        /// Checks if the passed move index (ply number) is outside the configured range.
-        /// </summary>
-        /// <param name="moveIndex"></param>
-        /// <returns></returns>
-        private static bool IsAboveMoveRangeEnd(int moveIndex)
-        {
-            bool result = false;
-
-            if (Configuration.EvalMoveRangeEnd > 0 && Configuration.EvalMoveRangeEnd * 2 <= moveIndex)
-            {
-                result = true;
-            }
-
-            return result;
         }
     }
 }

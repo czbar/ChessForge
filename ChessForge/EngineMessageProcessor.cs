@@ -437,7 +437,8 @@ namespace ChessForge
         /// <summary>
         /// Checks if we should continue with LINE evaluation.
         /// Returns true if the mode is LINE and the evaluated position
-        /// was not the last in the evaluated Line.
+        /// was not the last in the evaluated Line or the last configured
+        /// move if this is part of the multi-game evaluation.
         /// </summary>
         /// <returns></returns>
         private static bool ContinueLineEvaluation(int index, out MoveEvalEventArgs eventArgs)
@@ -447,6 +448,11 @@ namespace ChessForge
             if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
             {
                 bool islastPosition = EvaluationManager.IsLastPositionIndex();
+
+                if (GamesEvaluationManager.IsEvaluationInProgress && GamesEvaluationManager.IsAboveMoveRangeEnd(index))
+                {
+                    islastPosition = true;
+                }
 
                 // raise event
                 eventArgs = new MoveEvalEventArgs();
