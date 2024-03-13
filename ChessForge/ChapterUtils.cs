@@ -38,10 +38,6 @@ namespace ChessForge
                         {
                             RegenerateStudy(dlg.ApplyToAllChapters ? null : chapter);
                             AppState.IsDirty = true;
-                            if (!sortGames)
-                            {
-                                AppState.MainWin.SetupGuiForActiveStudyTree(true);
-                            }
                         }
 
                         if (sortGames)
@@ -55,10 +51,6 @@ namespace ChessForge
                                 SortGames(chapter, dlg.SortGamesBy, dlg.SortGamesDirection);
                             }
                             AppState.IsDirty = true;
-
-                            GuiUtilities.RefreshChaptersView(null);
-                            AppState.MainWin.UiTabChapters.Focus();
-                            PulseManager.ChaperIndexToBringIntoView = chapter.Index;
                         }
                         if (dlg.ThumbnailMove > 0)
                         {
@@ -72,6 +64,22 @@ namespace ChessForge
                             }
                             AppState.IsDirty = true;
                             AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgGamesThumbnailsSet, System.Windows.Media.Brushes.Green);
+                        }
+
+                        // go to the appropriate view
+                        if (dlg.RegenerateStudy)
+                        {
+                            AppState.MainWin.SetupGuiForActiveStudyTree(true);
+                            if (sortGames)
+                            {
+                                AppState.MainWin.ChaptersView.IsDirty = true;
+                            }
+                        }
+                        else if (sortGames)
+                        {
+                            GuiUtilities.RefreshChaptersView(null);
+                            AppState.MainWin.UiTabChapters.Focus();
+                            PulseManager.ChaperIndexToBringIntoView = chapter.Index;
                         }
                     }
                     catch (Exception ex)
@@ -575,7 +583,7 @@ namespace ChessForge
         public static void SortGames(Chapter chapter, GameSortCriterion.SortItem sortBy, GameSortCriterion.SortItem direction)
         {
             Mouse.SetCursor(Cursors.Wait);
-            
+
             try
             {
                 if (chapter != null)
@@ -805,7 +813,7 @@ namespace ChessForge
                         AppState.IsDirty = true;
                     }
                 }
-                catch(Exception ex) 
+                catch (Exception ex)
                 {
                     AppLog.Message("RegenerateChapterStudy()", ex);
                 }
