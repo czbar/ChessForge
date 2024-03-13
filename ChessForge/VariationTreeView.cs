@@ -367,7 +367,7 @@ namespace ChessForge
                     return;
                 }
 
-                if (string.IsNullOrEmpty(_mainVariationTree.RootNode.LineId) || _mainVariationTree.Nodes.Count > 0 && string.IsNullOrEmpty(_mainVariationTree.Nodes[1].LineId))
+                if (string.IsNullOrEmpty(_mainVariationTree.RootNode.LineId) || _mainVariationTree.Nodes.Count > 1 && string.IsNullOrEmpty(_mainVariationTree.Nodes[1].LineId))
                 {
                     _mainVariationTree.BuildLines();
                 }
