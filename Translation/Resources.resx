@@ -819,6 +819,9 @@
   <data name="Defaults" xml:space="preserve">
     <value>Defaults</value>
   </data>
+  <data name="Calculating" xml:space="preserve">
+    <value>Calculating...</value>
+  </data>
   <data name="TargetChapter" xml:space="preserve">
     <value>Target Chapter</value>
   </data>

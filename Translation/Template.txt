@@ -1055,6 +1055,16 @@ Defaults=
 
 #######################################
 #
+# Header: DIALOG Games Evaluation
+#
+
+#description: Calculating notification
+#english: Calculating=Calculating...
+Calculating=
+
+
+#######################################
+#
 # Header: DIALOG PostCopyMoveDialog
 #
 
