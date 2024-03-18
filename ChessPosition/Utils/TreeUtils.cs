@@ -132,6 +132,8 @@ namespace ChessPosition
                 List<int> parentIds = new List<int>();
                 Dictionary<int, List<int>> dictChildrenAtIndex = new Dictionary<int, List<int>>();
 
+                int copyIndex = -1;
+
                 // build a list of Nodes with dictionaries for NodeIds, parent and childre node ids
                 for (int i = 0; i < source.Nodes.Count; i++)
                 {
@@ -141,12 +143,13 @@ namespace ChessPosition
                         continue;
                     }
 
+                    copyIndex++;
                     TreeNode node = source.Nodes[i].CloneJustMe();
                     node.Children = new List<TreeNode>();
 
                     copy.Nodes.Add(node);
 
-                    dictNodeIdToIndex[node.NodeId] = i;
+                    dictNodeIdToIndex[node.NodeId] = copyIndex;
                     if (source.Nodes[i].Parent == null)
                     {
                         parentIds.Add(-1);
@@ -155,13 +158,13 @@ namespace ChessPosition
                     {
                         parentIds.Add(source.Nodes[i].Parent.NodeId);
                     }
-                    dictChildrenAtIndex[i] = new List<int>();
+                    dictChildrenAtIndex[copyIndex] = new List<int>();
                     foreach (TreeNode child in source.Nodes[i].Children)
                     {
                         // only register children if they are within the specified depth.
                         if (maxDepth == 0 || child.MoveNumber <= maxDepth)
                         {
-                            dictChildrenAtIndex[i].Add(child.NodeId);
+                            dictChildrenAtIndex[copyIndex].Add(child.NodeId);
                         }
                         else
                         {
