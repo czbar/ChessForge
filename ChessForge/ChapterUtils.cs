@@ -236,11 +236,11 @@ namespace ChessForge
                 }
                 else if (action == ArticlesAction.MOVE)
                 {
-                    if (contentType == GameData.ContentType.MODEL_GAME || contentType == GameData.ContentType.GENERIC)
+                    if (AppState.ActiveTab == TabViewType.MODEL_GAME && (contentType == GameData.ContentType.MODEL_GAME || contentType == GameData.ContentType.GENERIC))
                     {
                         UpdateModelGamesView(chapter);
                     }
-                    if (contentType == GameData.ContentType.EXERCISE || contentType == GameData.ContentType.GENERIC)
+                    if (AppState.ActiveTab == TabViewType.EXERCISE && (contentType == GameData.ContentType.EXERCISE || contentType == GameData.ContentType.GENERIC))
                     {
                         UpdateExercisesView(chapter);
                     }
