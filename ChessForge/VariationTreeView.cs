@@ -1874,8 +1874,8 @@ namespace ChessForge
                     para.Inlines.Add(r);
                 }
 
-                _dictNodeToRun.Add(nd.NodeId, r);
-                _dictRunToParagraph.Add(r, para);
+                _dictNodeToRun[nd.NodeId] = r;
+                _dictRunToParagraph[r] = para;
 
                 _lastAddedRun = r;
             }
@@ -2017,8 +2017,8 @@ namespace ChessForge
                         }
                         para.Inlines.InsertAfter(rNode, inl);
 
-                        _dictNodeToCommentRun.Add(nd.NodeId, inl);
-                        _dictCommentRunToParagraph.Add(inl, para);
+                        _dictNodeToCommentRun[nd.NodeId] = inl;
+                        _dictCommentRunToParagraph[inl] = para;
                     }
                     else
                     {
@@ -2050,9 +2050,8 @@ namespace ChessForge
 
             try
             {
+                string commentText = " " + (nd.CommentBeforeMove ?? "") + " ";
 
-                //string commentText = "[ " + nd.CommentBeforeMove + " ] ";
-                string commentText = " " + nd.CommentBeforeMove + " ";
                 Run run = new Run(commentText);
                 run.FontStyle = FontStyles.Normal;
                 run.Foreground = Brushes.Black;
@@ -2062,10 +2061,15 @@ namespace ChessForge
 
                 run.Name = _run_comment_before_move_ + nd.NodeId.ToString();
 
-                _dictNodeToCommentBeforeMoveRun.Add(nd.NodeId, run);
-                _dictCommentBeforeMoveRunToParagraph.Add(run, para);
+                _dictNodeToCommentBeforeMoveRun[nd.NodeId] = run;
+                _dictCommentBeforeMoveRunToParagraph[run] = para;
 
                 Run rNode = _dictNodeToRun[nd.NodeId];
+                if (RichTextBoxUtilities.IsFirstNonEmptyRunInPara(rNode, para))
+                {
+                    // if this is the first run in the para remove leading space to eliminate spurious indent.
+                    run.Text = run.Text.Substring(1);
+                }
                 para.Inlines.InsertBefore(rNode, run);
             }
             catch (Exception ex)
@@ -2105,8 +2109,8 @@ namespace ChessForge
                 Run rNode = _dictNodeToRun[nd.NodeId];
                 para.Inlines.InsertAfter(rNode, r);
 
-                _dictNodeToReferenceRun.Add(nd.NodeId, r);
-                _dictReferenceRunToParagraph.Add(r, para);
+                _dictNodeToReferenceRun[nd.NodeId] = r;
+                _dictReferenceRunToParagraph[r] = para;
             }
             catch (Exception ex)
             {
