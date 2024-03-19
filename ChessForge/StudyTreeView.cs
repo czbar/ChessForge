@@ -477,7 +477,7 @@ namespace ChessForge
                     continue;
                 }
 
-                if (sector.Nodes.Count == 0 || sector.Nodes.Count == 1 && sector.Nodes[0].NodeId == 0)
+                if (sector.Nodes.Count == 0 || sector.Nodes.Count == 1 && sector.Nodes[0].NodeId == 0 && string.IsNullOrEmpty(sector.Nodes[0].Comment))
                 {
                     continue;
                 }
