@@ -693,44 +693,59 @@ namespace ChessForge
         /// <param name="overwrite"></param>
         private static void SetThumbnailsInChapter(Chapter chapter, int moveNo, PieceColor color, bool overwrite)
         {
-            foreach (Article game in chapter.ModelGames)
+            try
             {
-                List<TreeNode> nodes = game.Tree.Nodes;
-
-                TreeNode thumbCandidate = null;
-                TreeNode thumbCurrent = null;
-
-                foreach (TreeNode node in nodes)
+                foreach (Article game in chapter.ModelGames)
                 {
-                    if (node.MoveNumber == moveNo && color != node.ColorToMove)
+                    // find current thumbnail
+                    TreeNode thumbCurrent = null;
+                    foreach (TreeNode node in game.Tree.Nodes)
                     {
-                        thumbCandidate = node;
-                    }
-                    if (node.IsThumbnail)
-                    {
-                        thumbCurrent = node;
-                    }
-                }
-
-                if (overwrite)
-                {
-                    if (thumbCandidate != null)
-                    {
-                        thumbCandidate.IsThumbnail = true;
-                        if (thumbCurrent != null)
+                        if (node.IsThumbnail)
                         {
-                            thumbCurrent.IsThumbnail = false;
+                            thumbCurrent = node;
+                            break;
+                        }
+                    }
+
+                    // walk the main line to find a candidate
+                    TreeNode thumbCandidate = game.Tree.RootNode;
+                    if (overwrite || thumbCurrent == null)
+                    {
+                        while (thumbCandidate.Children.Count > 0)
+                        {
+                            thumbCandidate = thumbCandidate.Children[0];
+                            if (thumbCandidate.MoveNumber == moveNo && color != thumbCandidate.ColorToMove)
+                            {
+                                break;
+                            }
+                        }
+                    }
+
+                    // if there is a candidate chack other condition before setting
+                    if (thumbCandidate.NodeId != 0)
+                    {
+                        if (overwrite)
+                        {
+                            thumbCandidate.IsThumbnail = true;
+                            if (thumbCurrent != null && thumbCurrent != thumbCandidate)
+                            {
+                                thumbCurrent.IsThumbnail = false;
+                            }
+                        }
+                        else
+                        {
+                            if (thumbCurrent == null)
+                            {
+                                thumbCandidate.IsThumbnail = true;
+                            }
                         }
                     }
                 }
-                else
-                {
-                    if (thumbCurrent == null && thumbCandidate != null)
-                    {
-                        thumbCandidate.IsThumbnail = true;
-                    }
-                }
             }
+            catch (Exception ex)
+            {
+                AppLog.Message("SetThumbnailsInChapter()", ex);            }
         }
 
         /// <summary>
