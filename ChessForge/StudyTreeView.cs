@@ -463,6 +463,7 @@ namespace ChessForge
             List<LineSector> doNotShow = new List<LineSector>();
 
             // TODO: redo so that we used the "firstPara" for VariationIndex.
+            // Be aware it already contains a Run for the root node!
             Document.Blocks.Remove(firstPara);
 
             int levelGroup = 0;
