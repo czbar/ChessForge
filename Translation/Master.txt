@@ -755,6 +755,18 @@ CmExpandThisOnly=Collapse All Else
 
 ###########################
 #
+# Header: VIEW Chapters
+#
+
+#Tool Tip: ScrollHome
+ToolTipScrollHome=Scroll to the top
+
+#Tool Tip: ScrollEnd
+ToolTipScrollEnd=Scroll to the bottom
+
+
+###########################
+#
 # Header: VIEW Engine Game
 #
 

@@ -771,6 +771,12 @@
   <data name="CmExpandThisOnly" xml:space="preserve">
     <value>Zwiń wszystkie inne</value>
   </data>
+  <data name="ToolTipScrollHome" xml:space="preserve">
+    <value>Przewiń do początku</value>
+  </data>
+  <data name="ToolTipScrollEnd" xml:space="preserve">
+    <value>Przewiń do końca</value>
+  </data>
   <data name="EgEngineConfiguration" xml:space="preserve">
     <value>Opcje Silnika</value>
   </data>

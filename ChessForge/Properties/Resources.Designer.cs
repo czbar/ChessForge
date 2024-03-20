@@ -6129,6 +6129,24 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Scroll to the bottom.
+        /// </summary>
+        public static string ToolTipScrollEnd {
+            get {
+                return ResourceManager.GetString("ToolTipScrollEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scroll to the top.
+        /// </summary>
+        public static string ToolTipScrollHome {
+            get {
+                return ResourceManager.GetString("ToolTipScrollHome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Determines some default settings.
         /// </summary>
         public static string TooltipSideToMove {

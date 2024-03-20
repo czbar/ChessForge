@@ -407,9 +407,9 @@
                                 </FlowDocument>
                             </RichTextBox>
                             <Image x:Name="UiImgChapterArrowDown" Grid.Row="1" Margin="0,30,30,0" Source="Resources/Images/ChapterDnArrow.png" HorizontalAlignment="Right" 
-                                   VerticalAlignment="Top" Width="32" Height="32" Opacity="0.8" Cursor="Hand" PreviewMouseDown="UiImgChapterArrowDown_PreviewMouseDown" />
+                                   VerticalAlignment="Top" Width="32" Height="32" Opacity="0.8" Cursor="Hand" ToolTip="{x:Static p:Resources.ToolTipScrollEnd}" PreviewMouseDown="UiImgChapterArrowDown_PreviewMouseDown" />
                             <Image x:Name="UiImgChapterArrowUp" Grid.Row="1" Margin="0,0,30,30" Source="Resources/Images/ChapterUpArrow.png" HorizontalAlignment="Right" 
-                                   VerticalAlignment="Bottom" Width="32" Height="32" Opacity="0.8" Cursor="Hand" PreviewMouseDown="UiImgChapterArrowUp_PreviewMouseDown" />
+                                   VerticalAlignment="Bottom" Width="32" Height="32" Opacity="0.8" Cursor="Hand" ToolTip="{x:Static p:Resources.ToolTipScrollHome}" PreviewMouseDown="UiImgChapterArrowUp_PreviewMouseDown" />
                             <Viewbox x:Name="UiVbChaptersFloatingBoard" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden" Margin="0,0" Height="160" Width="160"  >
                                 <Canvas x:Name="_cnvChaptersFloat" HorizontalAlignment="Left" Height="244" Margin="0,0,0,0" VerticalAlignment="Top" Width="244">
                                     <Canvas.Background>

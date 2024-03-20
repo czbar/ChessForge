@@ -973,6 +973,20 @@ CmExpandThisOnly=
 
 ###########################
 #
+# Header: VIEW Chapters
+#
+
+#description: Tool Tip: ScrollHome
+#english: ToolTipScrollHome=Scroll to the top
+ToolTipScrollHome=
+
+#description: Tool Tip: ScrollEnd
+#english: ToolTipScrollEnd=Scroll to the bottom
+ToolTipScrollEnd=
+
+
+###########################
+#
 # Header: VIEW Engine Game
 #
 
