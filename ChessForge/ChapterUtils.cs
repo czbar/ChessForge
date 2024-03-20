@@ -179,10 +179,34 @@ namespace ChessForge
 
                         if (AppState.ActiveTab != TabViewType.CHAPTERS)
                         {
-                            // ask the user whether to stay here or show the target chapter
-                            PostCopyMoveDialog dlg = new PostCopyMoveDialog(targetChapter, action, articlesToInsert.Count);
-                            GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
-                            if (dlg.ShowDialog() == true)
+                            bool gotoChaptersView = false;
+
+                            // check if we have a request "not to ask" in this session
+                            if (Configuration.PostCopyMoveNavigation == 0)
+                            {
+                                // no saved request so ask the user whether to "stay here" or show the target chapter
+                                PostCopyMoveDialog dlg = new PostCopyMoveDialog(targetChapter, action, articlesToInsert.Count);
+                                GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
+                                if (dlg.ShowDialog() == true)
+                                {
+                                    gotoChaptersView = true;
+                                }
+
+                                // persist the answer if requested
+                                if (dlg.UiCbDontAsk.IsChecked == true)
+                                {
+                                    Configuration.PostCopyMoveNavigation = (uint)(gotoChaptersView ? 1 : 2);
+                                }
+                            }
+                            else
+                            {
+                                if (Configuration.PostCopyMoveNavigation == 1)
+                                {
+                                    gotoChaptersView = true;
+                                }
+                            }
+
+                            if (gotoChaptersView)
                             {
                                 targetChapter.IsViewExpanded = true;
                                 // show chapter view with the target chapter in the view and expanded
