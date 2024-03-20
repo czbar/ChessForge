@@ -856,7 +856,8 @@ LblNumberOfItemsDeleted=Number of Items Deleted
 #Label: number of items acted upon
 LblNumberOfItemsActedOn=Number of Items Acted On
 
-
+#Checkbox: Do not ask again
+CbDoNotAskInSession=Don't ask again in this session
 
 
 #######################################

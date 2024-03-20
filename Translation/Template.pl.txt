@@ -1098,7 +1098,9 @@ LblNumberOfItemsDeleted=Liczba usuniętych elementów
 #english: LblNumberOfItemsActedOn=Number of Items Acted On
 LblNumberOfItemsActedOn=Liczba elementów
 
-
+#description: Checkbox: Do not ask again
+#english: CbDoNotAskInSession=Don't ask again in this session
+CbDoNotAskInSession=Nie pytaj ponownie w tej sesji
 
 
 #######################################

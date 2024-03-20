@@ -503,6 +503,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Don&apos;t ask again in this session.
+        /// </summary>
+        public static string CbDoNotAskInSession {
+            get {
+                return ResourceManager.GetString("CbDoNotAskInSession", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Double click in the Scoresheet for auto-replay..
         /// </summary>
         public static string cbDoubleClickAutoReplay {

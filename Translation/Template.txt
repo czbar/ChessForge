@@ -1098,7 +1098,9 @@ LblNumberOfItemsDeleted=
 #english: LblNumberOfItemsActedOn=Number of Items Acted On
 LblNumberOfItemsActedOn=
 
-
+#description: Checkbox: Do not ask again
+#english: CbDoNotAskInSession=Don't ask again in this session
+CbDoNotAskInSession=
 
 
 #######################################

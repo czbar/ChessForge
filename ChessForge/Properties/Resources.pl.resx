@@ -843,6 +843,9 @@
   <data name="LblNumberOfItemsActedOn" xml:space="preserve">
     <value>Liczba elementów</value>
   </data>
+  <data name="CbDoNotAskInSession" xml:space="preserve">
+    <value>Nie pytaj ponownie w tej sesji</value>
+  </data>
   <data name="ToolTipDecreaseIndexDepth" xml:space="preserve">
     <value>Zmniejsz poziom indeksowania</value>
   </data>

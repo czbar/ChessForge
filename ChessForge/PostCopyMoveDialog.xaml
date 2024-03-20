@@ -6,11 +6,12 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        Title="{x:Static p:Resources.LblNumberOfItemsActedOn}" Height="230" Width="350">
+        Title="{x:Static p:Resources.LblNumberOfItemsActedOn}" Height="250" Width="350">
     <Grid>
         <Label x:Name="UiLblTargetChapter" Content="{x:Static p:Resources.TargetChapter}" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top"/>
         <Label x:Name="UiLblTargetChapterTitle" Content="???" HorizontalContentAlignment="Left" HorizontalAlignment="Center" Margin="10,40,10,0" VerticalAlignment="Top"/>
-        <Button x:Name="UiBtnGoToTarget" IsDefault="True" Content="{x:Static p:Resources.LblGoToChaptersView}" HorizontalAlignment="Center" Margin="0,90,0,0" VerticalAlignment="Top" Height="24" Width="180" Click="UiBtnGoToTarget_Click"/>
-        <Button x:Name="UiBtnStayHere" IsCancel="True" Content="{x:Static p:Resources.LblStayHere}" HorizontalAlignment="Center" Margin="0,130,0,0" VerticalAlignment="Top" Height="24" Width="180" Click="UiBtnStayHere_Click"/>
+        <Button x:Name="UiBtnGoToTarget" IsDefault="True" Content="{x:Static p:Resources.LblGoToChaptersView}" HorizontalAlignment="Center" Margin="0,80,0,0" VerticalAlignment="Top" Height="24" Width="180" Click="UiBtnGoToTarget_Click"/>
+        <Button x:Name="UiBtnStayHere" IsCancel="True" Content="{x:Static p:Resources.LblStayHere}" HorizontalAlignment="Center" Margin="0,120,0,0" VerticalAlignment="Top" Height="24" Width="180" Click="UiBtnStayHere_Click"/>
+        <CheckBox x:Name="UiCbDontAsk" Content="{x:Static p:Resources.CbDoNotAskInSession}" HorizontalAlignment="Center" Margin="0,170,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>
