@@ -516,6 +516,21 @@ namespace ChessForge
             UiRtbChaptersView.ScrollToHome();
         }
 
+        /// <summary>
+        /// Chapters view's layout has been updated so we can check if it has a scrollbar
+        /// and show/hide the up/down arrows.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiRtbChaptersView_LayoutUpdated(object sender, EventArgs e)
+        {
+            bool showArrows = GuiUtilities.CheckVerticalScrollBarVisibility(UiRtbChaptersView);
+
+            UiImgChapterArrowUp.Visibility = showArrows ? Visibility.Visible : Visibility.Collapsed;
+            UiImgChapterArrowDown.Visibility = showArrows ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+
         //**************************************************************
         //
         //  TRAINING VIEW mouse events 
