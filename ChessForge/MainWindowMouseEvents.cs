@@ -496,6 +496,26 @@ namespace ChessForge
         }
 
 
+        /// <summary>
+        /// DownArrow clicked in the Chapters view
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiImgChapterArrowDown_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            UiRtbChaptersView.ScrollToEnd();
+        }
+
+        /// <summary>
+        /// UpArrow clicked in the Chapters view
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiImgChapterArrowUp_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            UiRtbChaptersView.ScrollToHome();
+        }
+
         //**************************************************************
         //
         //  TRAINING VIEW mouse events 
