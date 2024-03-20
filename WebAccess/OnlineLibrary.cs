@@ -25,35 +25,21 @@ namespace WebAccess
 
         /// <summary>
         /// Gets and deserializes the library content from ChessForge's web site.
+        /// First tries with the library name per the current culture, if fails
+        /// (and the current culture was not default) tries again with the deafult 
         /// </summary>
         /// <returns></returns>
         public static LibraryContent GetLibraryContent(out string error)
         {
-            error = string.Empty;
+            bool isDefault;
 
-            LibraryContent library = null;
-            try
-            {
-                string urlQuery = LIBRARY_URL + GetLibraryContentFileName();
-                var request = WebRequest.CreateHttp(urlQuery);
-                request.Method = "GET";
+            string urlQuery = LIBRARY_URL + GetLibraryContentFileName(out isDefault);
+            LibraryContent library = GetContent(urlQuery, out error);
 
-                using (var response = (HttpWebResponse)request.GetResponse())
-                {
-                    using (var responseStream = response.GetResponseStream())
-                    {
-                        using (var myStreamReader = new StreamReader(responseStream, Encoding.UTF8))
-                        {
-                            var txt = myStreamReader.ReadToEnd();
-                            library = ParseLibraryContent(txt);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
+            if (library == null && !isDefault)
             {
-                error = ex.Message;
-                AppLog.Message("GetLibraryContent()", ex);
+                urlQuery = LIBRARY_URL + GetLibraryContentFileName(out _, true);
+                library = GetContent(urlQuery, out error);
             }
 
             return library;
@@ -98,18 +84,66 @@ namespace WebAccess
         }
 
         /// <summary>
+        /// Returns content of the ChessForge library at the specified URL.
+        /// </summary>
+        /// <param name="urlQuery"></param>
+        /// <param name="error"></param>
+        /// <returns></returns>
+        private static LibraryContent GetContent(string urlQuery, out string error)
+        {
+            error = string.Empty;
+
+            LibraryContent library = null;
+
+            try
+            {
+                var request = WebRequest.CreateHttp(urlQuery);
+                request.Method = "GET";
+
+                using (var response = (HttpWebResponse)request.GetResponse())
+                {
+                    using (var responseStream = response.GetResponseStream())
+                    {
+                        using (var myStreamReader = new StreamReader(responseStream, Encoding.UTF8))
+                        {
+                            var txt = myStreamReader.ReadToEnd();
+                            library = ParseLibraryContent(txt);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                error = ex.Message;
+                AppLog.Message("GetContent()", ex);
+            }
+
+            return library;
+        }
+
+        /// <summary>
         /// Returns the name of the file with the list of the library content.
         /// </summary>
         /// <returns></returns>
-        private static string GetLibraryContentFileName()
+        private static string GetLibraryContentFileName(out bool isDefault, bool useDefault = false)
         {
-            if (Thread.CurrentThread.CurrentUICulture.Name.Contains("pl"))
+            if (useDefault)
             {
-                return LIBRARY_CONTENT_FILE_PL;
+                isDefault = true;
+                return LIBRARY_CONTENT_FILE;
             }
             else
             {
-                return LIBRARY_CONTENT_FILE;
+                if (Thread.CurrentThread.CurrentUICulture.Name.Contains("pl"))
+                {
+                    isDefault = false;
+                    return LIBRARY_CONTENT_FILE_PL;
+                }
+                else
+                {
+                    isDefault = true;
+                    return LIBRARY_CONTENT_FILE;
+                }
             }
         }
 
@@ -194,7 +228,7 @@ namespace WebAccess
                 if (index > 0)
                 {
                     typ = line.Substring(0, index).Trim().ToLower();
-                    value = line.Substring(index + 1);    
+                    value = line.Substring(index + 1);
                 }
             }
 
