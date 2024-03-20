@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using ChessPosition;
-using static System.Net.Mime.MediaTypeNames;
 using Image = System.Windows.Controls.Image;
 
 namespace ChessForge
@@ -173,7 +168,7 @@ namespace ChessForge
                 _angle = CalculateAngle(_startPoint, _endPoint);
                 _distance = GuiUtilities.CalculateDistance(_startPoint, _endPoint);
 
-                _scaleFactor = (_distance + 1 - (_triangle.Source.Height - 11)) / _stem.Source.Height;
+                _scaleFactor = (_distance + 1 - (_triangle.Source.Height + 12)) / _stem.Source.Height;
 
                 CreateTransforms();
 
@@ -220,6 +215,46 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Calculates the start of the stem component by moving it off center
+        /// in the direction of the arrow.
+        /// </summary>
+        /// <param name="pStart"></param>
+        /// <param name="pEnd"></param>
+        /// <returns></returns>
+        private Point CalculateStemStart(Point pStart, Point pEnd)
+        {
+            double OFFSET = 20;
+
+            double percentOfDistance = OFFSET / _distance;
+
+            Point pt = new Point();
+            pt.X = pStart.X + (pEnd.X - pStart.X) * percentOfDistance;
+            pt.Y = pStart.Y + (pEnd.Y - pStart.Y) * percentOfDistance;
+
+            return pt;
+        }
+
+        /// <summary>
+        /// Calculates the end of the triangle (arrow head) component by moving it off center
+        /// back in the direction of the arrow.
+        /// </summary>
+        /// <param name="pStart"></param>
+        /// <param name="pEnd"></param>
+        /// <returns></returns>
+        private Point CalculateArrowEnd(Point pStart, Point pEnd)
+        {
+            double OFFSET = 3;
+
+            double percentOfDistance = OFFSET / _distance;
+
+            Point pt = new Point();
+            pt.X = pEnd.X + (pStart.X - pEnd.X) * percentOfDistance;
+            pt.Y = pEnd.Y + (pStart.Y - pEnd.Y) * percentOfDistance;
+
+            return pt;
+        }
+
+        /// <summary>
         /// Draws all parts of the arrow.
         /// </summary>
         private void Draw()
@@ -239,8 +274,11 @@ namespace ChessForge
         {
             _chessboard.CanvasCtrl.Children.Remove(_triangle);
             _chessboard.CanvasCtrl.Children.Add(_triangle);
-            Canvas.SetLeft(_triangle, _endPoint.X - (_triangle.Source.Width / 2));
-            Canvas.SetTop(_triangle, _endPoint.Y + 0);
+
+            Point ptArrowTop = CalculateArrowEnd(_startPoint, _endPoint);
+            Canvas.SetLeft(_triangle, ptArrowTop.X - (_triangle.Source.Width / 2));
+            Canvas.SetTop(_triangle, ptArrowTop.Y + 0);
+
             _triangle.RenderTransformOrigin = new Point(0.5,0);
             _triangle.RenderTransform = _rotateTrans;
             Panel.SetZIndex(_triangle, Constants.ZIndex_BoardArrow);
@@ -253,8 +291,11 @@ namespace ChessForge
         {
             _chessboard.CanvasCtrl.Children.Remove(_stem);
             _chessboard.CanvasCtrl.Children.Add(_stem);
-            Canvas.SetLeft(_stem, _startPoint.X - (_stem.Source.Width / 2));
-            Canvas.SetTop(_stem, _startPoint.Y - (_stem.Source.Height));
+
+            Point ptStemBottom = CalculateStemStart(_startPoint, _endPoint);
+            Canvas.SetLeft(_stem, ptStemBottom.X - (_stem.Source.Width / 2));
+            Canvas.SetTop(_stem, ptStemBottom.Y - (_stem.Source.Height));
+
             _stem.RenderTransformOrigin = new Point(0.5, 1);
             _stem.RenderTransform = _transGroup;
             Panel.SetZIndex(_stem, Constants.ZIndex_BoardArrow);
@@ -267,8 +308,10 @@ namespace ChessForge
         {
             _chessboard.CanvasCtrl.Children.Remove(_circle);
             _chessboard.CanvasCtrl.Children.Add(_circle);
-            Canvas.SetLeft(_circle, _startPoint.X - (_circle.Source.Width / 2));
-            Canvas.SetTop(_circle, _startPoint.Y - (_circle.Source.Height / 2));
+
+            Point ptAdj = CalculateStemStart(_startPoint, _endPoint);
+            Canvas.SetLeft(_circle, ptAdj.X - (_circle.Source.Width / 2));
+            Canvas.SetTop(_circle, ptAdj.Y - (_circle.Source.Height / 2));
             _circle.RenderTransformOrigin = new Point(0.5, 0.5);
             _circle.RenderTransform = _rotateTrans;
             Panel.SetZIndex(_circle, Constants.ZIndex_BoardArrow);
