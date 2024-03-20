@@ -129,6 +129,12 @@ namespace ChessForge
         public static uint BlunderNoDetectThresh = 500;
 
         /// <summary>
+        /// Determines the default navigation ("stay here" or Chapters list) 
+        /// target after a Copy/Move action.
+        /// </summary>
+        public static uint PostCopyMoveNavigation = 0;
+
+        /// <summary>
         /// By how many pixels to adjust font size
         /// in the views.
         /// (in milliseconds)
