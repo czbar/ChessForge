@@ -712,6 +712,10 @@ DlgMergeErrors=Błędy przetwarzania zapisu
 #english: MsgNoMoveSelected=No move selected
 MsgNoMoveSelected=Nie wybrano żadnego posunięcia
 
+#description: Message about no move selected for evaluation
+#english: MsgNothingSelectedForEvaluation=No moves to evaluate in the specified scope. 
+MsgNothingSelectedForEvaluation=Brak posunięć do oceny w wybranym zakresie. 
+
 #description: Message about identical position not found
 #english: MsgNoIdenticalPositions=No identical positions found.
 MsgNoIdenticalPositions=Nie znaleziono identycznych pozycji.
@@ -969,6 +973,20 @@ CmExpandThisOnly=Zwiń wszystkie inne
 
 ###########################
 #
+# Header: VIEW Chapters
+#
+
+#description: Tool Tip: ScrollHome
+#english: ToolTipScrollHome=Scroll to the top
+ToolTipScrollHome=Przewiń do początku
+
+#description: Tool Tip: ScrollEnd
+#english: ToolTipScrollEnd=Scroll to the bottom
+ToolTipScrollEnd=Przewiń do końca
+
+
+###########################
+#
 # Header: VIEW Engine Game
 #
 
@@ -1051,6 +1069,16 @@ Defaults=Domyślne
 
 #######################################
 #
+# Header: DIALOG Games Evaluation
+#
+
+#description: Calculating notification
+#english: Calculating=Calculating...
+Calculating=Obliczanie...
+
+
+#######################################
+#
 # Header: DIALOG PostCopyMoveDialog
 #
 
@@ -1084,7 +1112,9 @@ LblNumberOfItemsDeleted=Liczba usuniętych elementów
 #english: LblNumberOfItemsActedOn=Number of Items Acted On
 LblNumberOfItemsActedOn=Liczba elementów
 
-
+#description: Checkbox: Do not ask again
+#english: CbDoNotAskInSession=Don't ask again in this session
+CbDoNotAskInSession=Nie pytaj ponownie w tej sesji
 
 
 #######################################
@@ -1573,6 +1603,9 @@ SelectChaptersToMerge=Wybierz Rozdziały do Połączenia.
 #english: SelectGamesToMoveToChapters=Move Games to the Suggested Chapters
 SelectGamesToMoveToChapters=Przenieś do proponowanych rozdziałów
 
+#description: Message: invalid move range
+#english: MsgInvalidMoveRange=Invalid Move Range
+MsgInvalidMoveRange=Nieprawidłowy zakres ruchów
 
 #######################################
 #

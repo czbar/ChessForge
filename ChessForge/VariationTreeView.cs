@@ -345,116 +345,123 @@ namespace ChessForge
         /// </summary>
         public void BuildFlowDocumentForVariationTree(int rootNodeId = 0, bool includeStem = true)
         {
-            GameData.ContentType contentType = GameData.ContentType.NONE;
-            if (_contentType == GameData.ContentType.STUDY_TREE)
+            try
             {
-                _mainVariationTree = WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree;
-            }
-            else
-            {
-                _mainVariationTree = _mainWin.ActiveVariationTree;
-                if (_mainVariationTree != null && _mainVariationTree.AssociatedPrimary != null)
+                GameData.ContentType contentType = GameData.ContentType.NONE;
+                if (_contentType == GameData.ContentType.STUDY_TREE)
                 {
-                    // ActiveVariationTree may return a secondary tree which we don't want so check for it
-                    _mainVariationTree = _mainVariationTree.AssociatedPrimary;
-                }
-            }
-
-            if (_mainVariationTree == null || _mainVariationTree.ContentType != this.ContentType)
-            {
-                return;
-            }
-
-            if (string.IsNullOrEmpty(_mainVariationTree.RootNode.LineId))
-            {
-                _mainVariationTree.BuildLines();
-            }
-
-            contentType = _mainVariationTree.Header.GetContentType(out _);
-
-            Clear(GameData.ContentType.GENERIC);
-
-            PreviousNextViewBars.BuildPreviousNextBar(contentType);
-
-            Document.Blocks.Add(BuildDummyPararaph());
-
-            Paragraph titlePara = BuildPageHeader(contentType);
-            if (titlePara != null)
-            {
-                Document.Blocks.Add(titlePara);
-            }
-
-            BuildExerciseParagraphs();
-
-            Paragraph preamblePara = BuildPreamble();
-            if (preamblePara != null)
-            {
-                Document.Blocks.Add(preamblePara);
-            }
-
-            Paragraph quizInfoPara = BuildQuizInfoPara();
-            if (quizInfoPara != null)
-            {
-                Document.Blocks.Add(quizInfoPara);
-            }
-
-            Paragraph movePromptPara = BuildYourMovePrompt();
-            if (movePromptPara != null)
-            {
-                Document.Blocks.Add(movePromptPara);
-            }
-
-            if (contentType != GameData.ContentType.EXERCISE || ShownVariationTree.ShowTreeLines)
-            {
-                // we will traverse back from each leaf to the nearest parent fork (or root of we run out)
-                // and note the distances in the Nodes so that we can use them when creating the document
-                // in the forward traversing
-                SetNodeDistances();
-
-                TreeNode root;
-                if (rootNodeId == 0)
-                {
-                    root = ShownVariationTree.Nodes[0];
+                    _mainVariationTree = WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree;
                 }
                 else
                 {
-                    root = ShownVariationTree.GetNodeFromNodeId(rootNodeId);
-                    if (includeStem)
+                    _mainVariationTree = _mainWin.ActiveVariationTree;
+                    if (_mainVariationTree != null && _mainVariationTree.AssociatedPrimary != null)
                     {
-                        Paragraph paraStem = BuildWorkbookStemLine(root, true);
-                        Document.Blocks.Add(paraStem);
+                        // ActiveVariationTree may return a secondary tree which we don't want so check for it
+                        _mainVariationTree = _mainVariationTree.AssociatedPrimary;
                     }
                 }
 
-                // start by creating a level 1 paragraph.
-                Paragraph para = CreateParagraph("0", true);
-                Document.Blocks.Add(para);
-
-                CreateRunForStartingNode(para, root);
-
-                // if we have a stem (e.g. this is Browse view in training, we need to request a number printed too
-                BuildTreeLineText(root, para, includeStem);
-
-                if (contentType == GameData.ContentType.MODEL_GAME || contentType == GameData.ContentType.EXERCISE)
+                if (_mainVariationTree == null || _mainVariationTree.ContentType != this.ContentType)
                 {
-                    Paragraph resultPara = BuildResultPara();
-                    if (resultPara != null)
+                    return;
+                }
+
+                if (string.IsNullOrEmpty(_mainVariationTree.RootNode.LineId) || _mainVariationTree.Nodes.Count > 1 && string.IsNullOrEmpty(_mainVariationTree.Nodes[1].LineId))
+                {
+                    _mainVariationTree.BuildLines();
+                }
+
+                contentType = _mainVariationTree.Header.GetContentType(out _);
+
+                Clear(GameData.ContentType.GENERIC);
+
+                PreviousNextViewBars.BuildPreviousNextBar(contentType);
+
+                Document.Blocks.Add(BuildDummyPararaph());
+
+                Paragraph titlePara = BuildPageHeader(contentType);
+                if (titlePara != null)
+                {
+                    Document.Blocks.Add(titlePara);
+                }
+
+                BuildExerciseParagraphs();
+
+                Paragraph preamblePara = BuildPreamble();
+                if (preamblePara != null)
+                {
+                    Document.Blocks.Add(preamblePara);
+                }
+
+                Paragraph quizInfoPara = BuildQuizInfoPara();
+                if (quizInfoPara != null)
+                {
+                    Document.Blocks.Add(quizInfoPara);
+                }
+
+                Paragraph movePromptPara = BuildYourMovePrompt();
+                if (movePromptPara != null)
+                {
+                    Document.Blocks.Add(movePromptPara);
+                }
+
+                if (contentType != GameData.ContentType.EXERCISE || ShownVariationTree.ShowTreeLines)
+                {
+                    // we will traverse back from each leaf to the nearest parent fork (or root of we run out)
+                    // and note the distances in the Nodes so that we can use them when creating the document
+                    // in the forward traversing
+                    SetNodeDistances();
+
+                    TreeNode root;
+                    if (rootNodeId == 0)
                     {
-                        Document.Blocks.Add(resultPara);
+                        root = ShownVariationTree.Nodes[0];
+                    }
+                    else
+                    {
+                        root = ShownVariationTree.GetNodeFromNodeId(rootNodeId);
+                        if (includeStem)
+                        {
+                            Paragraph paraStem = BuildWorkbookStemLine(root, true);
+                            Document.Blocks.Add(paraStem);
+                        }
+                    }
+
+                    // start by creating a level 1 paragraph.
+                    Paragraph para = CreateParagraph("0", true);
+                    Document.Blocks.Add(para);
+
+                    CreateRunForStartingNode(para, root);
+
+                    // if we have a stem (e.g. this is Browse view in training, we need to request a number printed too
+                    BuildTreeLineText(root, para, includeStem);
+
+                    if (contentType == GameData.ContentType.MODEL_GAME || contentType == GameData.ContentType.EXERCISE)
+                    {
+                        Paragraph resultPara = BuildResultPara();
+                        if (resultPara != null)
+                        {
+                            Document.Blocks.Add(resultPara);
+                        }
                     }
                 }
-            }
 
-            Paragraph guessFinished = BuildGuessingFinishedParagraph();
+                Paragraph guessFinished = BuildGuessingFinishedParagraph();
+                {
+                    if (guessFinished != null)
+                    {
+                        Document.Blocks.Add(guessFinished);
+                    }
+                }
+
+                // add dummy para so that the last row can be comfortable viewed
+                Document.Blocks.Add(BuildDummyPararaph());
+            }
+            catch (Exception ex)
             {
-                if (guessFinished != null)
-                {
-                    Document.Blocks.Add(guessFinished);
-                }
+                AppLog.Message("BuildFlowDocumentForVariationTree()", ex);
             }
-
-            // add dummy para so that the last row can be comfortable viewed
-            Document.Blocks.Add(BuildDummyPararaph());
         }
 
         virtual public Paragraph BuildGuessingFinishedParagraph()
@@ -1867,8 +1874,8 @@ namespace ChessForge
                     para.Inlines.Add(r);
                 }
 
-                _dictNodeToRun.Add(nd.NodeId, r);
-                _dictRunToParagraph.Add(r, para);
+                _dictNodeToRun[nd.NodeId] = r;
+                _dictRunToParagraph[r] = para;
 
                 _lastAddedRun = r;
             }
@@ -2010,8 +2017,8 @@ namespace ChessForge
                         }
                         para.Inlines.InsertAfter(rNode, inl);
 
-                        _dictNodeToCommentRun.Add(nd.NodeId, inl);
-                        _dictCommentRunToParagraph.Add(inl, para);
+                        _dictNodeToCommentRun[nd.NodeId] = inl;
+                        _dictCommentRunToParagraph[inl] = para;
                     }
                     else
                     {
@@ -2043,9 +2050,8 @@ namespace ChessForge
 
             try
             {
+                string commentText = " " + (nd.CommentBeforeMove ?? "") + " ";
 
-                //string commentText = "[ " + nd.CommentBeforeMove + " ] ";
-                string commentText = " " + nd.CommentBeforeMove + " ";
                 Run run = new Run(commentText);
                 run.FontStyle = FontStyles.Normal;
                 run.Foreground = Brushes.Black;
@@ -2055,10 +2061,15 @@ namespace ChessForge
 
                 run.Name = _run_comment_before_move_ + nd.NodeId.ToString();
 
-                _dictNodeToCommentBeforeMoveRun.Add(nd.NodeId, run);
-                _dictCommentBeforeMoveRunToParagraph.Add(run, para);
+                _dictNodeToCommentBeforeMoveRun[nd.NodeId] = run;
+                _dictCommentBeforeMoveRunToParagraph[run] = para;
 
                 Run rNode = _dictNodeToRun[nd.NodeId];
+                if (RichTextBoxUtilities.IsFirstNonEmptyRunInPara(rNode, para))
+                {
+                    // if this is the first run in the para remove leading space to eliminate spurious indent.
+                    run.Text = run.Text.Substring(1);
+                }
                 para.Inlines.InsertBefore(rNode, run);
             }
             catch (Exception ex)
@@ -2098,8 +2109,8 @@ namespace ChessForge
                 Run rNode = _dictNodeToRun[nd.NodeId];
                 para.Inlines.InsertAfter(rNode, r);
 
-                _dictNodeToReferenceRun.Add(nd.NodeId, r);
-                _dictReferenceRunToParagraph.Add(r, para);
+                _dictNodeToReferenceRun[nd.NodeId] = r;
+                _dictReferenceRunToParagraph[r] = para;
             }
             catch (Exception ex)
             {

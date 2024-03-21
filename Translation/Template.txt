@@ -712,6 +712,10 @@ DlgMergeErrors=
 #english: MsgNoMoveSelected=No move selected
 MsgNoMoveSelected=
 
+#description: Message about no move selected for evaluation
+#english: MsgNothingSelectedForEvaluation=No moves to evaluate in the specified scope. 
+MsgNothingSelectedForEvaluation=
+
 #description: Message about identical position not found
 #english: MsgNoIdenticalPositions=No identical positions found.
 MsgNoIdenticalPositions=
@@ -969,6 +973,20 @@ CmExpandThisOnly=
 
 ###########################
 #
+# Header: VIEW Chapters
+#
+
+#description: Tool Tip: ScrollHome
+#english: ToolTipScrollHome=Scroll to the top
+ToolTipScrollHome=
+
+#description: Tool Tip: ScrollEnd
+#english: ToolTipScrollEnd=Scroll to the bottom
+ToolTipScrollEnd=
+
+
+###########################
+#
 # Header: VIEW Engine Game
 #
 
@@ -1051,6 +1069,16 @@ Defaults=
 
 #######################################
 #
+# Header: DIALOG Games Evaluation
+#
+
+#description: Calculating notification
+#english: Calculating=Calculating...
+Calculating=
+
+
+#######################################
+#
 # Header: DIALOG PostCopyMoveDialog
 #
 
@@ -1084,7 +1112,9 @@ LblNumberOfItemsDeleted=
 #english: LblNumberOfItemsActedOn=Number of Items Acted On
 LblNumberOfItemsActedOn=
 
-
+#description: Checkbox: Do not ask again
+#english: CbDoNotAskInSession=Don't ask again in this session
+CbDoNotAskInSession=
 
 
 #######################################
@@ -1573,6 +1603,9 @@ SelectChaptersToMerge=
 #english: SelectGamesToMoveToChapters=Move Games to the Suggested Chapters
 SelectGamesToMoveToChapters=
 
+#description: Message: invalid move range
+#english: MsgInvalidMoveRange=Invalid Move Range
+MsgInvalidMoveRange=
 
 #######################################
 #

@@ -7,6 +7,7 @@ using System.Windows;
 using System.Text;
 using ChessPosition;
 using System.Windows.Input;
+using System.Windows.Shapes;
 
 namespace ChessForge
 {
@@ -137,7 +138,8 @@ namespace ChessForge
                             view.BuildFlowDocumentForVariationTree();
                         }
                     }
-                    AppState.MainWin.ActiveTreeView.SelectLineAndMove(item.Node.LineId, item.Node.NodeId);
+                    AppState.MainWin.SelectLineAndMoveInWorkbookViews(AppState.MainWin.ActiveTreeView, item.Node.LineId,
+                        AppState.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false), true);
                     break;
             }
         }

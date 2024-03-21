@@ -277,19 +277,20 @@ namespace ChessForge
                             Configuration.EngineEvaluationTime = (int)(dval * 1000);
                         }
 
-                        int ival;
-                        if (int.TryParse(dlg.UiTbFromMove.Text, out ival))
+                        int ivalFrom;
+                        if (int.TryParse(dlg.UiTbFromMove.Text, out ivalFrom))
                         {
-                            Configuration.EvalMoveRangeStart = ival;
+                            Configuration.EvalMoveRangeStart = ivalFrom;
                         }
                         else if (string.IsNullOrEmpty(dlg.UiTbFromMove.Text))
                         {
                             Configuration.EvalMoveRangeStart = 0;
                         }
 
-                        if (int.TryParse(dlg.UiTbToMove.Text, out ival))
+                        int ivalTo;
+                        if (int.TryParse(dlg.UiTbToMove.Text, out ivalTo))
                         {
-                            Configuration.EvalMoveRangeEnd = ival;
+                            Configuration.EvalMoveRangeEnd = ivalTo;
                         }
                         else if (string.IsNullOrEmpty(dlg.UiTbToMove.Text))
                         {

@@ -19,15 +19,14 @@ namespace ChessForge
         /// <summary>
         /// Initializes the dialog
         /// </summary>
-        /// <param name="plyCountToEvaluate"></param>
-        /// <param name="estEvaluationTime"></param>
-        public GamesEvalDialog(int plyCountToEvaluate, long estEvaluationTime)
+        public GamesEvalDialog()
         {
             InitializeComponent();
+            UiLblTimeRemaining.Content = Properties.Resources.Calculating;
         }
 
         /// <summary>
-        /// This will be called if there was a fatal error while evalating
+        /// This will be called if there was a fatal error while evaluating
         /// </summary>
         public void AbandonEvaluation()
         {

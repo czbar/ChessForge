@@ -603,6 +603,9 @@
   <data name="MsgNoMoveSelected" xml:space="preserve">
     <value>No move selected</value>
   </data>
+  <data name="MsgNothingSelectedForEvaluation" xml:space="preserve">
+    <value>No moves to evaluate in the specified scope. </value>
+  </data>
   <data name="MsgNoIdenticalPositions" xml:space="preserve">
     <value>No identical positions found.</value>
   </data>
@@ -768,6 +771,12 @@
   <data name="CmExpandThisOnly" xml:space="preserve">
     <value>Collapse All Else</value>
   </data>
+  <data name="ToolTipScrollHome" xml:space="preserve">
+    <value>Scroll to the top</value>
+  </data>
+  <data name="ToolTipScrollEnd" xml:space="preserve">
+    <value>Scroll to the bottom</value>
+  </data>
   <data name="EgEngineConfiguration" xml:space="preserve">
     <value>Engine Options</value>
   </data>
@@ -816,6 +825,9 @@
   <data name="Defaults" xml:space="preserve">
     <value>Defaults</value>
   </data>
+  <data name="Calculating" xml:space="preserve">
+    <value>Calculating...</value>
+  </data>
   <data name="TargetChapter" xml:space="preserve">
     <value>Target Chapter</value>
   </data>
@@ -836,6 +848,9 @@
   </data>
   <data name="LblNumberOfItemsActedOn" xml:space="preserve">
     <value>Number of Items Acted On</value>
+  </data>
+  <data name="CbDoNotAskInSession" xml:space="preserve">
+    <value>Don't ask again in this session</value>
   </data>
   <data name="ToolTipDecreaseIndexDepth" xml:space="preserve">
     <value>Decrease index depth</value>
@@ -1133,6 +1148,9 @@
   </data>
   <data name="SelectGamesToMoveToChapters" xml:space="preserve">
     <value>Move Games to the Suggested Chapters</value>
+  </data>
+  <data name="MsgInvalidMoveRange" xml:space="preserve">
+    <value>Invalid Move Range</value>
   </data>
   <data name="RestartGameAfter" xml:space="preserve">
     <value>Restart Game After </value>

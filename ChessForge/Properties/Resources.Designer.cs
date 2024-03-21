@@ -377,6 +377,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Calculating....
+        /// </summary>
+        public static string Calculating {
+            get {
+                return ResourceManager.GetString("Calculating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string Cancel {
@@ -490,6 +499,15 @@ namespace ChessForge.Properties {
         public static string cbClickToStop {
             get {
                 return ResourceManager.GetString("cbClickToStop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Don&apos;t ask again in this session.
+        /// </summary>
+        public static string CbDoNotAskInSession {
+            get {
+                return ResourceManager.GetString("CbDoNotAskInSession", resourceCulture);
             }
         }
         
@@ -4085,6 +4103,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid Move Range.
+        /// </summary>
+        public static string MsgInvalidMoveRange {
+            get {
+                return ResourceManager.GetString("MsgInvalidMoveRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter valid Url or leave empty to delete link. .
         /// </summary>
         public static string MsgNeedValidUrlOrEmpty {
@@ -4144,6 +4171,15 @@ namespace ChessForge.Properties {
         public static string MsgNoPositionsFound {
             get {
                 return ResourceManager.GetString("MsgNoPositionsFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No moves to evaluate in the specified scope. .
+        /// </summary>
+        public static string MsgNothingSelectedForEvaluation {
+            get {
+                return ResourceManager.GetString("MsgNothingSelectedForEvaluation", resourceCulture);
             }
         }
         
@@ -6089,6 +6125,24 @@ namespace ChessForge.Properties {
         public static string TooltipPositionUnclear {
             get {
                 return ResourceManager.GetString("TooltipPositionUnclear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scroll to the bottom.
+        /// </summary>
+        public static string ToolTipScrollEnd {
+            get {
+                return ResourceManager.GetString("ToolTipScrollEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scroll to the top.
+        /// </summary>
+        public static string ToolTipScrollHome {
+            get {
+                return ResourceManager.GetString("ToolTipScrollHome", resourceCulture);
             }
         }
         

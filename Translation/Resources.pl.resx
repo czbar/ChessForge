@@ -603,6 +603,9 @@
   <data name="MsgNoMoveSelected" xml:space="preserve">
     <value>Nie wybrano żadnego posunięcia</value>
   </data>
+  <data name="MsgNothingSelectedForEvaluation" xml:space="preserve">
+    <value>Brak posunięć do oceny w wybranym zakresie. </value>
+  </data>
   <data name="MsgNoIdenticalPositions" xml:space="preserve">
     <value>Nie znaleziono identycznych pozycji.</value>
   </data>
@@ -768,6 +771,12 @@
   <data name="CmExpandThisOnly" xml:space="preserve">
     <value>Zwiń wszystkie inne</value>
   </data>
+  <data name="ToolTipScrollHome" xml:space="preserve">
+    <value>Przewiń do początku</value>
+  </data>
+  <data name="ToolTipScrollEnd" xml:space="preserve">
+    <value>Przewiń do końca</value>
+  </data>
   <data name="EgEngineConfiguration" xml:space="preserve">
     <value>Opcje Silnika</value>
   </data>
@@ -816,6 +825,9 @@
   <data name="Defaults" xml:space="preserve">
     <value>Domyślne</value>
   </data>
+  <data name="Calculating" xml:space="preserve">
+    <value>Obliczanie...</value>
+  </data>
   <data name="TargetChapter" xml:space="preserve">
     <value>Docelowy Rozdział</value>
   </data>
@@ -836,6 +848,9 @@
   </data>
   <data name="LblNumberOfItemsActedOn" xml:space="preserve">
     <value>Liczba elementów</value>
+  </data>
+  <data name="CbDoNotAskInSession" xml:space="preserve">
+    <value>Nie pytaj ponownie w tej sesji</value>
   </data>
   <data name="ToolTipDecreaseIndexDepth" xml:space="preserve">
     <value>Zmniejsz poziom indeksowania</value>
@@ -1133,6 +1148,9 @@
   </data>
   <data name="SelectGamesToMoveToChapters" xml:space="preserve">
     <value>Przenieś do proponowanych rozdziałów</value>
+  </data>
+  <data name="MsgInvalidMoveRange" xml:space="preserve">
+    <value>Nieprawidłowy zakres ruchów</value>
   </data>
   <data name="RestartGameAfter" xml:space="preserve">
     <value>Cofnij Partię do</value>

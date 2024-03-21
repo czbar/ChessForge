@@ -359,6 +359,11 @@ namespace ChessForge
                 bool first = true;
                 foreach (LineSector sector in LineManager.LineSectors)
                 {
+                    if (sector.Nodes.Count == 0)
+                    {
+                        continue;
+                    }
+
                     int level = sector.BranchLevel;
                     if (IsEffectiveIndexLevel(level))
                     {
@@ -458,6 +463,7 @@ namespace ChessForge
             List<LineSector> doNotShow = new List<LineSector>();
 
             // TODO: redo so that we used the "firstPara" for VariationIndex.
+            // Be aware it already contains a Run for the root node!
             Document.Blocks.Remove(firstPara);
 
             int levelGroup = 0;
@@ -471,7 +477,7 @@ namespace ChessForge
                     continue;
                 }
 
-                if (sector.Nodes.Count == 0 || sector.Nodes.Count == 1 && sector.Nodes[0].NodeId == 0)
+                if (sector.Nodes.Count == 0 || sector.Nodes.Count == 1 && sector.Nodes[0].NodeId == 0 && string.IsNullOrEmpty(sector.Nodes[0].Comment))
                 {
                     continue;
                 }

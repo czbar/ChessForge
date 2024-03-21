@@ -496,6 +496,41 @@ namespace ChessForge
         }
 
 
+        /// <summary>
+        /// DownArrow clicked in the Chapters view
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiImgChapterArrowDown_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            UiRtbChaptersView.ScrollToEnd();
+        }
+
+        /// <summary>
+        /// UpArrow clicked in the Chapters view
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiImgChapterArrowUp_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            UiRtbChaptersView.ScrollToHome();
+        }
+
+        /// <summary>
+        /// Chapters view's layout has been updated so we can check if it has a scrollbar
+        /// and show/hide the up/down arrows.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiRtbChaptersView_LayoutUpdated(object sender, EventArgs e)
+        {
+            bool showArrows = GuiUtilities.CheckVerticalScrollBarVisibility(UiRtbChaptersView);
+
+            UiImgChapterArrowUp.Visibility = showArrows ? Visibility.Visible : Visibility.Collapsed;
+            UiImgChapterArrowDown.Visibility = showArrows ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+
         //**************************************************************
         //
         //  TRAINING VIEW mouse events 

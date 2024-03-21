@@ -605,6 +605,8 @@
     <Resource Include="Resources\Images\ChessBoardOrangeShadesIcon.png" />
     <Resource Include="Resources\Images\ChessBoardPaleBlueIcon.png" />
     <Resource Include="Resources\Images\ChessBoardLightGreenIcon.png" />
+    <Resource Include="Resources\Images\ChapterDnArrow.png" />
+    <Resource Include="Resources\Images\ChapterUpArrow.png" />
     <Content Include="Resources\Sounds\Confirmation.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

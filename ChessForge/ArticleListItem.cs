@@ -164,11 +164,11 @@ namespace ChessForge
                 string prefix = string.Empty;
                 if (_contentType == GameData.ContentType.MODEL_GAME)
                 {
-                    prefix = "    " + Properties.Resources.Game + ": ";
+                    prefix = "    " + Properties.Resources.Game + " " + (ArticleIndex + 1).ToString() + ": ";
                 }
                 else if (_contentType == GameData.ContentType.EXERCISE)
                 {
-                    prefix = "    " + Properties.Resources.Exercise + ": ";
+                    prefix = "    " + Properties.Resources.Exercise + " " + (ArticleIndex + 1).ToString() + ": ";
                 }
                 else if (_contentType == GameData.ContentType.STUDY_TREE)
                 {

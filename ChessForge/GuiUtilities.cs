@@ -52,6 +52,54 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Checks if the vertical scroll bar is visible in the Rich Text Box.
+        /// </summary>
+        /// <param name="richTextBox"></param>
+        /// <returns></returns>
+        public static bool CheckVerticalScrollBarVisibility(RichTextBox richTextBox)
+        {
+            bool visible = false;
+            
+            // get the ScrollViewer inside the RichTextBox
+            ScrollViewer scrollViewer = GetVisualChild<ScrollViewer>(richTextBox);
+
+            if (scrollViewer != null)
+            {
+                // Compare ActualHeight with ExtentHeight to determine scrollbar visibility
+                visible = scrollViewer.ExtentHeight > scrollViewer.ActualHeight;
+            }
+
+            return visible;
+        }
+
+        /// <summary>
+        /// Helper method to find a child of a specified type.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="parent"></param>
+        /// <returns></returns>
+        public static T GetVisualChild<T>(DependencyObject parent) where T : DependencyObject
+        {
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+            {
+                DependencyObject child = VisualTreeHelper.GetChild(parent, i);
+                if (child is T typedChild)
+                {
+                    return typedChild;
+                }
+                else
+                {
+                    T childOfChild = GetVisualChild<T>(child);
+                    if (childOfChild != null)
+                    {
+                        return childOfChild;
+                    }
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
         /// Identifies a List View item from the click coordinates. 
         /// </summary>
         /// <param name="listView"></param>

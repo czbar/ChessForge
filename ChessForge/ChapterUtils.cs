@@ -38,10 +38,6 @@ namespace ChessForge
                         {
                             RegenerateStudy(dlg.ApplyToAllChapters ? null : chapter);
                             AppState.IsDirty = true;
-                            if (!sortGames)
-                            {
-                                AppState.MainWin.SetupGuiForActiveStudyTree(true);
-                            }
                         }
 
                         if (sortGames)
@@ -55,10 +51,6 @@ namespace ChessForge
                                 SortGames(chapter, dlg.SortGamesBy, dlg.SortGamesDirection);
                             }
                             AppState.IsDirty = true;
-
-                            GuiUtilities.RefreshChaptersView(null);
-                            AppState.MainWin.UiTabChapters.Focus();
-                            PulseManager.ChaperIndexToBringIntoView = chapter.Index;
                         }
                         if (dlg.ThumbnailMove > 0)
                         {
@@ -72,6 +64,22 @@ namespace ChessForge
                             }
                             AppState.IsDirty = true;
                             AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgGamesThumbnailsSet, System.Windows.Media.Brushes.Green);
+                        }
+
+                        // go to the appropriate view
+                        if (dlg.RegenerateStudy)
+                        {
+                            AppState.MainWin.SetupGuiForActiveStudyTree(true);
+                            if (sortGames)
+                            {
+                                AppState.MainWin.ChaptersView.IsDirty = true;
+                            }
+                        }
+                        else if (sortGames)
+                        {
+                            GuiUtilities.RefreshChaptersView(null);
+                            AppState.MainWin.UiTabChapters.Focus();
+                            PulseManager.ChaperIndexToBringIntoView = chapter.Index;
                         }
                     }
                     catch (Exception ex)
@@ -171,10 +179,34 @@ namespace ChessForge
 
                         if (AppState.ActiveTab != TabViewType.CHAPTERS)
                         {
-                            // ask the user whether to stay here or show the target chapter
-                            PostCopyMoveDialog dlg = new PostCopyMoveDialog(targetChapter, action, articlesToInsert.Count);
-                            GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
-                            if (dlg.ShowDialog() == true)
+                            bool gotoChaptersView = false;
+
+                            // check if we have a request "not to ask" in this session
+                            if (Configuration.PostCopyMoveNavigation == 0)
+                            {
+                                // no saved request so ask the user whether to "stay here" or show the target chapter
+                                PostCopyMoveDialog dlg = new PostCopyMoveDialog(targetChapter, action, articlesToInsert.Count);
+                                GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
+                                if (dlg.ShowDialog() == true)
+                                {
+                                    gotoChaptersView = true;
+                                }
+
+                                // persist the answer if requested
+                                if (dlg.UiCbDontAsk.IsChecked == true)
+                                {
+                                    Configuration.PostCopyMoveNavigation = (uint)(gotoChaptersView ? 1 : 2);
+                                }
+                            }
+                            else
+                            {
+                                if (Configuration.PostCopyMoveNavigation == 1)
+                                {
+                                    gotoChaptersView = true;
+                                }
+                            }
+
+                            if (gotoChaptersView)
                             {
                                 targetChapter.IsViewExpanded = true;
                                 // show chapter view with the target chapter in the view and expanded
@@ -228,11 +260,11 @@ namespace ChessForge
                 }
                 else if (action == ArticlesAction.MOVE)
                 {
-                    if (contentType == GameData.ContentType.MODEL_GAME || contentType == GameData.ContentType.GENERIC)
+                    if (AppState.ActiveTab == TabViewType.MODEL_GAME && (contentType == GameData.ContentType.MODEL_GAME || contentType == GameData.ContentType.GENERIC))
                     {
                         UpdateModelGamesView(chapter);
                     }
-                    if (contentType == GameData.ContentType.EXERCISE || contentType == GameData.ContentType.GENERIC)
+                    if (AppState.ActiveTab == TabViewType.EXERCISE && (contentType == GameData.ContentType.EXERCISE || contentType == GameData.ContentType.GENERIC))
                     {
                         UpdateExercisesView(chapter);
                     }
@@ -575,7 +607,7 @@ namespace ChessForge
         public static void SortGames(Chapter chapter, GameSortCriterion.SortItem sortBy, GameSortCriterion.SortItem direction)
         {
             Mouse.SetCursor(Cursors.Wait);
-            
+
             try
             {
                 if (chapter != null)
@@ -685,44 +717,59 @@ namespace ChessForge
         /// <param name="overwrite"></param>
         private static void SetThumbnailsInChapter(Chapter chapter, int moveNo, PieceColor color, bool overwrite)
         {
-            foreach (Article game in chapter.ModelGames)
+            try
             {
-                List<TreeNode> nodes = game.Tree.Nodes;
-
-                TreeNode thumbCandidate = null;
-                TreeNode thumbCurrent = null;
-
-                foreach (TreeNode node in nodes)
+                foreach (Article game in chapter.ModelGames)
                 {
-                    if (node.MoveNumber == moveNo && color != node.ColorToMove)
+                    // find current thumbnail
+                    TreeNode thumbCurrent = null;
+                    foreach (TreeNode node in game.Tree.Nodes)
                     {
-                        thumbCandidate = node;
-                    }
-                    if (node.IsThumbnail)
-                    {
-                        thumbCurrent = node;
-                    }
-                }
-
-                if (overwrite)
-                {
-                    if (thumbCandidate != null)
-                    {
-                        thumbCandidate.IsThumbnail = true;
-                        if (thumbCurrent != null)
+                        if (node.IsThumbnail)
                         {
-                            thumbCurrent.IsThumbnail = false;
+                            thumbCurrent = node;
+                            break;
+                        }
+                    }
+
+                    // walk the main line to find a candidate
+                    TreeNode thumbCandidate = game.Tree.RootNode;
+                    if (overwrite || thumbCurrent == null)
+                    {
+                        while (thumbCandidate.Children.Count > 0)
+                        {
+                            thumbCandidate = thumbCandidate.Children[0];
+                            if (thumbCandidate.MoveNumber == moveNo && color != thumbCandidate.ColorToMove)
+                            {
+                                break;
+                            }
+                        }
+                    }
+
+                    // if there is a candidate chack other condition before setting
+                    if (thumbCandidate.NodeId != 0)
+                    {
+                        if (overwrite)
+                        {
+                            thumbCandidate.IsThumbnail = true;
+                            if (thumbCurrent != null && thumbCurrent != thumbCandidate)
+                            {
+                                thumbCurrent.IsThumbnail = false;
+                            }
+                        }
+                        else
+                        {
+                            if (thumbCurrent == null)
+                            {
+                                thumbCandidate.IsThumbnail = true;
+                            }
                         }
                     }
                 }
-                else
-                {
-                    if (thumbCurrent == null && thumbCandidate != null)
-                    {
-                        thumbCandidate.IsThumbnail = true;
-                    }
-                }
             }
+            catch (Exception ex)
+            {
+                AppLog.Message("SetThumbnailsInChapter()", ex);            }
         }
 
         /// <summary>
@@ -795,6 +842,7 @@ namespace ChessForge
                     {
                         TreeUtils.TrimTree(ref tree, Configuration.AutogenTreeDepth, PieceColor.Black);
                         tree.ContentType = GameData.ContentType.STUDY_TREE;
+                        tree.BuildLines();
                         chapter.StudyTree.Tree = tree;
 
                         // if we are in the study tab, must set the new tree as active tree (does not happen automatically)
@@ -805,7 +853,7 @@ namespace ChessForge
                         AppState.IsDirty = true;
                     }
                 }
-                catch(Exception ex) 
+                catch (Exception ex)
                 {
                     AppLog.Message("RegenerateChapterStudy()", ex);
                 }

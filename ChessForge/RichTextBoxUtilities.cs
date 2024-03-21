@@ -50,6 +50,31 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Checks if the passed Run is the first Run 
+        /// in the Paragraph.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        public static bool IsFirstNonEmptyRunInPara(Run run, Paragraph para)
+        {
+            bool res = true;
+
+            if (run != null && para != null)
+            {
+                foreach (Inline inl in para.Inlines)
+                {
+                    if (inl is Run r && !string.IsNullOrEmpty(r.Text))
+                    {
+                        res = (r == run);
+                        break;
+                    }
+                }
+            }
+
+            return res;
+        }
+
+        /// <summary>
         /// Makes a copy of a Run with selected properties.
         /// </summary>
         /// <param name="src"></param>

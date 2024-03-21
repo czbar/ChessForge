@@ -550,6 +550,9 @@ DlgMergeErrors=Merge Errors
 #Message about node not selected
 MsgNoMoveSelected=No move selected
 
+#Message about no move selected for evaluation
+MsgNothingSelectedForEvaluation=No moves to evaluate in the specified scope. 
+
 #Message about identical position not found
 MsgNoIdenticalPositions=No identical positions found.
 
@@ -752,6 +755,18 @@ CmExpandThisOnly=Collapse All Else
 
 ###########################
 #
+# Header: VIEW Chapters
+#
+
+#Tool Tip: ScrollHome
+ToolTipScrollHome=Scroll to the top
+
+#Tool Tip: ScrollEnd
+ToolTipScrollEnd=Scroll to the bottom
+
+
+###########################
+#
 # Header: VIEW Engine Game
 #
 
@@ -818,6 +833,15 @@ Defaults=Defaults
 
 #######################################
 #
+# Header: DIALOG Games Evaluation
+#
+
+#Calculating notification
+Calculating=Calculating...
+
+
+#######################################
+#
 # Header: DIALOG PostCopyMoveDialog
 #
 
@@ -844,7 +868,8 @@ LblNumberOfItemsDeleted=Number of Items Deleted
 #Label: number of items acted upon
 LblNumberOfItemsActedOn=Number of Items Acted On
 
-
+#Checkbox: Do not ask again
+CbDoNotAskInSession=Don't ask again in this session
 
 
 #######################################
@@ -1234,6 +1259,8 @@ SelectChaptersToMerge=Select Chapters to Merge
 #Select games to move to suggested chapters
 SelectGamesToMoveToChapters=Move Games to the Suggested Chapters
 
+#Message: invalid move range
+MsgInvalidMoveRange=Invalid Move Range
 
 #######################################
 #

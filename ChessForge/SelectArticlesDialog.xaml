@@ -21,11 +21,11 @@
         <TextBox x:Name="UiTbFromMove" Visibility="Collapsed" HorizontalAlignment="Left" Margin="658,44,0,0" HorizontalContentAlignment="Center" Text="" VerticalAlignment="Top" Width="30"/>
         <Label x:Name="UiLblDash" Visibility="Collapsed" Content="-" HorizontalAlignment="Left" Margin="693,38,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="UiTbToMove" Visibility="Collapsed" HorizontalAlignment="Left" Margin="712,44,0,0" HorizontalContentAlignment="Center" Text="" VerticalAlignment="Top" Width="30"/>
-        <ListView x:Name="UiLvGames" Grid.Row="1" ItemsSource="{Binding}" MouseDoubleClick="UiLvGames_MouseDoubleClick" MouseRightButtonUp="UiLvGames_MouseRightButtonUp" ContextMenuOpening="UiLvGames_ContextMenuOpening" >
+        <ListView x:Name="UiLvGames" Margin="10,0,10,0"  Grid.Row="1" ItemsSource="{Binding}" MouseDoubleClick="UiLvGames_MouseDoubleClick" MouseRightButtonUp="UiLvGames_MouseRightButtonUp" ContextMenuOpening="UiLvGames_ContextMenuOpening" >
             <ListView.ContextMenu>
                 <ContextMenu x:Name="UiCmGame">
-                    <MenuItem x:Name="UiMnPreviewGame" Header="PLACEHOLDER Preview Element" Click="UiMnPreviewGame_Click" />
-                    <MenuItem x:Name="UiMnOpenGame" Header="PLACEHOLDER Open Element View" Click="UiMnOpenGame_Click" />
+                    <MenuItem x:Name="UiMnPreviewGame" Header="" Click="UiMnPreviewGame_Click" />
+                    <MenuItem x:Name="UiMnOpenGame" Header="" Click="UiMnOpenGame_Click" />
                 </ContextMenu>
             </ListView.ContextMenu>
             <ListView.ItemContainerStyle>
@@ -54,17 +54,17 @@
                 <GridView>
                     <GridViewColumn CellTemplate="{StaticResource SelectionCell}"  Width="40"/>
                     <GridViewColumn Header="{x:Static p:Resources.Item}" DisplayMemberBinding="{Binding Path=GameTitleForList}" Width="640"/>
-                    <GridViewColumn Header="{x:Static p:Resources.Date}"  DisplayMemberBinding="{Binding Path=Date}" Width="90"/>
+                    <GridViewColumn Header="{x:Static p:Resources.Date}"  DisplayMemberBinding="{Binding Path=Date}" Width="80"/>
                 </GridView>
             </ListView.View>
         </ListView>
 
-        <CheckBox x:Name="UiCbSelectAll" IsChecked="False" Grid.Row="1" Content="" HorizontalAlignment="Left" Margin="10,3,0,0" VerticalAlignment="Top" Checked="UiCbSelectAll_Checked" Unchecked="UiCbSelectAll_Unchecked"/>
+        <CheckBox x:Name="UiCbSelectAll" IsChecked="False" Grid.Row="1" Content="" HorizontalAlignment="Left" Margin="20,3,0,0" VerticalAlignment="Top" Checked="UiCbSelectAll_Checked" Unchecked="UiCbSelectAll_Unchecked"/>
         <Button x:Name="UiBtnCopy" Content="{x:Static p:Resources.CopyArticles}" HorizontalAlignment="Left" Margin="20,30,0,0" Grid.Row="2" Width="110" Height="20" VerticalAlignment="Top" Click="UiBtnCopy_Click" />
         <Button x:Name="UiBtnMove" Content="{x:Static p:Resources.MoveArticles}" HorizontalAlignment="Left" Margin="160,30,0,0" Grid.Row="2" Width="110" Height="20" VerticalAlignment="Top" Click="UiBtnMove_Click" />
         <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Right" Margin="0,30,120,0" Grid.Row="2" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
         <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Right" Margin="0,30,20,0" Grid.Row="2" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
-        <Label x:Name="UiLblInstruct" Content="{x:Static p:Resources.SelectItems}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Width="766"/>
+        <Label x:Name="UiLblInstruct" Content="{x:Static p:Resources.SelectItems}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" />
         <CheckBox x:Name="UiCbAllChapters" Visibility="Visible" Content="{x:Static p:Resources.ShowAllChapters}" HorizontalAlignment="Left" Margin="59,33,0,0" Grid.Row="2" VerticalAlignment="Top" Checked="UiCbAllChapters_Checked" Unchecked="UiCbAllChapters_Unchecked"/>
 
     </Grid>
