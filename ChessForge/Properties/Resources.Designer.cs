@@ -143,7 +143,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Analysis Engine....
+        ///   Looks up a localized string similar to Analysis Engine.
         /// </summary>
         public static string AnalysisEngine {
             get {
@@ -170,7 +170,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Application Options....
+        ///   Looks up a localized string similar to Application Options.
         /// </summary>
         public static string ApplicationOptions {
             get {
@@ -197,7 +197,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Assign ECOs....
+        ///   Looks up a localized string similar to Assign ECOs.
         /// </summary>
         public static string AssignECO {
             get {
@@ -287,7 +287,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Blunder Detection....
+        ///   Looks up a localized string similar to Blunder Detection.
         /// </summary>
         public static string BlunderDetectionOptions {
             get {
@@ -836,7 +836,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chessboards....
+        ///   Looks up a localized string similar to Chessboards.
         /// </summary>
         public static string Chessboards {
             get {
@@ -2159,7 +2159,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Engine Options....
+        ///   Looks up a localized string similar to Engine Options.
         /// </summary>
         public static string EngineOptions {
             get {
@@ -2960,6 +2960,24 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All exercise solutions have been hidden..
+        /// </summary>
+        public static string FlMsgSolutionsHidden {
+            get {
+                return ResourceManager.GetString("FlMsgSolutionsHidden", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All exercise solutions have been expanded..
+        /// </summary>
+        public static string FlMsgSolutionsShown {
+            get {
+                return ResourceManager.GetString("FlMsgSolutionsShown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bold.
         /// </summary>
         public static string FontBold {
@@ -3280,6 +3298,15 @@ namespace ChessForge.Properties {
         public static string HideSolution {
             get {
                 return ResourceManager.GetString("HideSolution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide All Solutions in Chapter.
+        /// </summary>
+        public static string HideSolutionsInChapter {
+            get {
+                return ResourceManager.GetString("HideSolutionsInChapter", resourceCulture);
             }
         }
         
@@ -3761,7 +3788,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage Chapter....
+        ///   Looks up a localized string similar to Manage Chapter.
         /// </summary>
         public static string ManageChapter {
             get {
@@ -3797,7 +3824,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Merge Chapters....
+        ///   Looks up a localized string similar to Merge Chapters.
         /// </summary>
         public static string MergeChapters {
             get {
@@ -3860,7 +3887,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Evaluate Games in Workbook....
+        ///   Looks up a localized string similar to Evaluate Games in Workbook.
         /// </summary>
         public static string MnEvaluateGames {
             get {
@@ -5598,6 +5625,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show All Solutions in Chapter.
+        /// </summary>
+        public static string ShowSolutionsInChapter {
+            get {
+                return ResourceManager.GetString("ShowSolutionsInChapter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Side to Move.
         /// </summary>
         public static string SideToMove {
@@ -5760,7 +5796,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Split Chapter....
+        ///   Looks up a localized string similar to Split Chapter.
         /// </summary>
         public static string SplitChapterMenu {
             get {
@@ -6948,7 +6984,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Workbook Options....
+        ///   Looks up a localized string similar to Workbook Options.
         /// </summary>
         public static string WorkbookOptions {
             get {

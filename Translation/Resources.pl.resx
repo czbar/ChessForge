@@ -582,14 +582,20 @@
   <data name="ApplicationOptions" xml:space="preserve">
     <value>Opcje Aplikacji</value>
   </data>
+  <data name="WorkbookOptions" xml:space="preserve">
+    <value>Opcje Podręcznika</value>
+  </data>
   <data name="Chessboards" xml:space="preserve">
-    <value>Szachownice...</value>
+    <value>Szachownice</value>
   </data>
   <data name="EngineOptions" xml:space="preserve">
-    <value>Opcje Silnika...</value>
+    <value>Opcje Silnika</value>
   </data>
   <data name="BlunderDetectionOptions" xml:space="preserve">
-    <value>Detekcja Błędów...</value>
+    <value>Detekcja Błędów</value>
+  </data>
+  <data name="AnalysisEngine" xml:space="preserve">
+    <value>Wybór Silnika</value>
   </data>
   <data name="DlgTitleEngineOptions" xml:space="preserve">
     <value>Opcje Silnika</value>
@@ -615,17 +621,11 @@
   <data name="MsgTitlePositionSearch" xml:space="preserve">
     <value>Wyszukiwanie Pozycji</value>
   </data>
-  <data name="WorkbookOptions" xml:space="preserve">
-    <value>Opcje Podręcznika</value>
-  </data>
   <data name="DlgTitleWorkbookOptions" xml:space="preserve">
     <value>Opcje Podręcznika</value>
   </data>
   <data name="DlgEditMoveInIntro" xml:space="preserve">
     <value>Edycja Posunięcia</value>
-  </data>
-  <data name="AnalysisEngine" xml:space="preserve">
-    <value>Wybór Silnika</value>
   </data>
   <data name="IncreaseFontSize" xml:space="preserve">
     <value>Zwiększ Czcionkę</value>
@@ -652,10 +652,10 @@
     <value>Usuń komentarze...</value>
   </data>
   <data name="DeleteEngineEvals" xml:space="preserve">
-    <value>Usuń oceny silnika...</value>
+    <value>Usuń oceny silnika</value>
   </data>
   <data name="AssignECO" xml:space="preserve">
-    <value>Przypisz kody ECO...</value>
+    <value>Przypisz kody ECO</value>
   </data>
   <data name="FindGames" xml:space="preserve">
     <value>Znajdź partie...</value>
@@ -664,10 +664,10 @@
     <value>Połącz rozdziały</value>
   </data>
   <data name="ManageChapter" xml:space="preserve">
-    <value>Organizuj Rozdział...</value>
+    <value>Organizuj Rozdział</value>
   </data>
   <data name="SplitChapterMenu" xml:space="preserve">
-    <value>Podziel Rozdział...</value>
+    <value>Podziel Rozdział</value>
   </data>
   <data name="RemoveDuplicates" xml:space="preserve">
     <value>Usuń duplikaty...</value>
@@ -1367,6 +1367,18 @@
   </data>
   <data name="Exercise0of0" xml:space="preserve">
     <value>Ćwiczenie $0 z $1</value>
+  </data>
+  <data name="ShowSolutionsInChapter" xml:space="preserve">
+    <value>Pokaż Wszystkie Rozwiązania w Rozdziale</value>
+  </data>
+  <data name="HideSolutionsInChapter" xml:space="preserve">
+    <value>Ukryj Wszystkie Rozwiązania w Rozdziale</value>
+  </data>
+  <data name="FlMsgSolutionsShown" xml:space="preserve">
+    <value>Wszystkie rozwiązania zostały rozwinięte.</value>
+  </data>
+  <data name="FlMsgSolutionsHidden" xml:space="preserve">
+    <value>Wszystkie rozwiązania zostały zwinięte.</value>
   </data>
   <data name="Scoresheet" xml:space="preserve">
     <value>Zapis</value>

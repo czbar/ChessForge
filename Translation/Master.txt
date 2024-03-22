@@ -526,16 +526,23 @@ Views=Views
 FlipBoard=Flip Board
 
 #Opens the Application Options dialog
-ApplicationOptions=Application Options...
+ApplicationOptions=Application Options
+
+#Opens the Workbook Options dialog
+WorkbookOptions=Workbook Options
 
 #Chessboards
-Chessboards=Chessboards...
+Chessboards=Chessboards
 
 #Opens the Engine Options dialog
-EngineOptions=Engine Options...
+EngineOptions=Engine Options
 
 #Blunder detection options
-BlunderDetectionOptions=Blunder Detection...
+BlunderDetectionOptions=Blunder Detection
+
+#Opens a dialog allowing the user to select chess engine executable file
+AnalysisEngine=Analysis Engine
+
 
 #Engine Options dialog title
 DlgTitleEngineOptions=Engine Options
@@ -562,17 +569,11 @@ MsgEditPositionSearch=Positions not found. Edit search?
 #Message Box Title for Position Search
 MsgTitlePositionSearch=Position Search
 
-#Opens the Workbook Options dialog
-WorkbookOptions=Workbook Options...
-
 #Workbook Options dialog title
 DlgTitleWorkbookOptions=Workbook Options
 
 #Dialog for editing move text in the Intro view
 DlgEditMoveInIntro=Edit Move
-
-#Opens a dialog allowing the user to select chess engine executable file
-AnalysisEngine=Analysis Engine...
 
 #Increase font size
 IncreaseFontSize=Increase Font Size
@@ -599,7 +600,7 @@ RestoreFontDefaults=Restore Font Defaults
 Tools=Tools
 
 #Evaluate Games
-MnEvaluateGames=Evaluate Games in Workbook...
+MnEvaluateGames=Evaluate Games in Workbook
 
 #Strip all comments
 StripComments=Delete Comments...
@@ -608,19 +609,19 @@ StripComments=Delete Comments...
 DeleteEngineEvals=Delete Engine Evaluations...
 
 #Delete all engine evals
-AssignECO=Assign ECOs...
+AssignECO=Assign ECOs
 
 #Find Games
 FindGames=Find Games...
 
 #Allows the user to merge multiple chapters into one
-MergeChapters=Merge Chapters...
+MergeChapters=Merge Chapters
 
 #Manage Chapter
-ManageChapter=Manage Chapter...
+ManageChapter=Manage Chapter
 
 #Split Chapter
-SplitChapterMenu=Split Chapter...
+SplitChapterMenu=Split Chapter
 
 #Remove duplicates
 RemoveDuplicates=Remove Duplicates...
@@ -1519,6 +1520,18 @@ DeleteThisExercise=Delete This Exercise
 #Exercise counter
 #! Keep $N's as placeholders for numbers
 Exercise0of0=Exercise $0 of $1
+
+#Show all solutions in chapter
+ShowSolutionsInChapter=Show All Solutions in Chapter
+
+#Hide all solutions in chapter
+HideSolutionsInChapter=Hide All Solutions in Chapter
+
+#All exercise solutions have been shown
+FlMsgSolutionsShown=All exercise solutions have been expanded.
+
+#All exercise solutions have been hidden
+FlMsgSolutionsHidden=All exercise solutions have been hidden.
 
 
 #
