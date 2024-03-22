@@ -2045,6 +2045,66 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Shows all solutions in the current chapter.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnExerc_ShowSolutions_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                foreach (Article exc in chapter.Exercises)
+                {
+                    exc.Tree.ShowTreeLines = true;
+                }
+
+                if (_exerciseTreeView != null)
+                {
+                    _exerciseTreeView.ShowHideSolution(true);
+                }
+
+                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgSolutionsShown, System.Windows.Media.Brushes.Green);
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("UiMnExerc_ShowSolutions_Click()", ex);
+            }
+
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// Hides all solutions in the current chapter.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnExerc_HideSolutions_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                foreach (Article exc in chapter.Exercises)
+                {
+                    exc.Tree.ShowTreeLines = false;
+                }
+                
+                if (_exerciseTreeView != null)
+                {
+                    _exerciseTreeView.ShowHideSolution(false);
+                }
+
+                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgSolutionsHidden, System.Windows.Media.Brushes.Green);
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("UiMnExerc_ShowSolutions_Click()", ex);
+            }
+
+            e.Handled = true;
+        }
+
+        /// <summary>
         /// Edits a Model Game header.
         /// Invoked from Games View menu.
         /// </summary>
