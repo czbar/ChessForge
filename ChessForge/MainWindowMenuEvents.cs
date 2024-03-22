@@ -3225,6 +3225,26 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Invokes the Online Libraries dialog.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnOnlineLibraries_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                SelectLibraryDialog dlg = new SelectLibraryDialog();
+                GuiUtilities.PositionDialog(dlg, this, 100);
+                if (dlg.ShowDialog() == true)
+                {
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
         /// Invokes the dialog for configuring chessboard colors
         /// </summary>
         /// <param name="sender"></param>
