@@ -142,14 +142,51 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Obtains the content of the private libray, if configured.
+        /// If nor configured, opens the configuration dialog.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnOnlineLibraryPrivate_Click(object sender, RoutedEventArgs e)
+        {
+            // if not specified, ask the user to select/configure
+            if (string.IsNullOrEmpty(Configuration.LastPrivateLibrary))
+            {
+                // do we have anything configured
+                bool hasAny = Configuration.PrivateLibraries.Count > 0;
+                if (hasAny)
+                {
+                    // TODO: open dialog to choose the library
+                }
+                else
+                {
+                    // TODO: inform user that they have no libraries and ask whether to configure.
+                }
+            }
+            else
+            {
+                ShowLibraryContent(Configuration.LastPrivateLibrary);
+            }
+        }
+
+        /// <summary>
         /// Obtains the content of the online library.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void UiMnOnlineLibrary_Click(object sender, RoutedEventArgs e)
         {
+            ShowLibraryContent(Configuration.PUBLIC_LIBRARY_URL);
+        }
+
+        /// <summary>
+        /// Obtains and displays content of the online library.
+        /// </summary>
+        /// <param name="url"></param>
+        private void ShowLibraryContent(string url)
+        {
             string error;
-            WebAccess.LibraryContent library = ReadLibraryContentFile(out error);
+            WebAccess.LibraryContent library = ReadLibraryContentFile(url, true, out error);
             if (library == null)
             {
                 MessageBox.Show(Properties.Resources.ErrAccessOnlineLibrary + ": " + error, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
@@ -180,7 +217,7 @@ namespace ChessForge
                         Mouse.SetCursor(Cursors.Wait);
 
                         // download the workbook
-                        string bookText = WebAccess.OnlineLibrary.GetWorkbookText(dlg.SelectedBook.File, out error);
+                        string bookText = WebAccess.OnlineLibrary.GetWorkbookText(url, dlg.SelectedBook.File, out error);
                         if (!string.IsNullOrEmpty(error))
                         {
                             MessageBox.Show(Properties.Resources.ErrAccessOnlineLibrary + ": " + error, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
@@ -220,7 +257,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="error"></param>
         /// <returns></returns>
-        private WebAccess.LibraryContent ReadLibraryContentFile(out string error)
+        private WebAccess.LibraryContent ReadLibraryContentFile(string url, bool isPublic, out string error)
         {
             error = "";
             int allowedRedirections = 5;
@@ -229,7 +266,7 @@ namespace ChessForge
 
             for (int i = 0; i < allowedRedirections; i++)
             {
-                library = WebAccess.OnlineLibrary.GetLibraryContent(out error);
+                library = WebAccess.OnlineLibrary.GetLibraryContent(url, out error);
                 if (library == null || string.IsNullOrWhiteSpace(library.Redirect))
                 {
                     break;
@@ -2088,7 +2125,7 @@ namespace ChessForge
                 {
                     exc.Tree.ShowTreeLines = false;
                 }
-                
+
                 if (_exerciseTreeView != null)
                 {
                     _exerciseTreeView.ShowHideSolution(false);
