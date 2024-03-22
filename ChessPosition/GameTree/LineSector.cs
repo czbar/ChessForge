@@ -120,12 +120,12 @@ namespace GameTree
         /// <summary>
         /// NodeId code for open parenthesis
         /// </summary>
-        public readonly int OPEN_BRACKET = -100;
+        public static readonly int OPEN_BRACKET = -100;
 
         /// <summary>
         /// NodeId code for close parenthesis
         /// </summary>
-        public readonly int CLOSE_BRACKET = -101;
+        public static readonly int CLOSE_BRACKET = -101;
 
         /// <summary>
         /// Inserts a Node representing an open parenthesis
