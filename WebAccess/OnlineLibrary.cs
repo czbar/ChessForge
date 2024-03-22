@@ -14,9 +14,6 @@ namespace WebAccess
     /// </summary>
     public class OnlineLibrary
     {
-        // root URL for the library
-        private static string LIBRARY_URL = "https://chessforge.sourceforge.io/Library/";
-
         // name of the text content file at the root of the library
         private static string LIBRARY_CONTENT_FILE = "LibraryContent.txt";
 
@@ -29,16 +26,16 @@ namespace WebAccess
         /// (and the current culture was not default) tries again with the deafult 
         /// </summary>
         /// <returns></returns>
-        public static LibraryContent GetLibraryContent(out string error)
+        public static LibraryContent GetLibraryContent(string url, out string error)
         {
             bool isDefault;
 
-            string urlQuery = LIBRARY_URL + GetLibraryContentFileName(out isDefault);
+            string urlQuery = url + GetLibraryContentFileName(out isDefault);
             LibraryContent library = GetContent(urlQuery, out error);
 
             if (library == null && !isDefault)
             {
-                urlQuery = LIBRARY_URL + GetLibraryContentFileName(out _, true);
+                urlQuery = url + GetLibraryContentFileName(out _, true);
                 library = GetContent(urlQuery, out error);
             }
 
@@ -51,7 +48,7 @@ namespace WebAccess
         /// <param name="bookPath"></param>
         /// <param name="error"></param>
         /// <returns></returns>
-        public static string GetWorkbookText(string bookPath, out string error)
+        public static string GetWorkbookText(string libraryUrl, string bookPath, out string error)
         {
             error = string.Empty;
 
@@ -59,7 +56,7 @@ namespace WebAccess
 
             try
             {
-                string urlQuery = LIBRARY_URL + bookPath;
+                string urlQuery = libraryUrl + bookPath;
                 var request = WebRequest.CreateHttp(urlQuery);
                 request.Method = "GET";
 
