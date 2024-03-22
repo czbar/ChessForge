@@ -777,7 +777,7 @@ Tools=Narzędzia
 
 #description: Evaluate Games
 #english: MnEvaluateGames=Evaluate Games in Workbook
-MnEvaluateGames=Oceń partie z podręcznika...
+MnEvaluateGames=Oceń partie z podręcznika
 
 #description: Strip all comments
 #english: StripComments=Delete Comments...

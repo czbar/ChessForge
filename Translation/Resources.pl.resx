@@ -646,7 +646,7 @@
     <value>Narzędzia</value>
   </data>
   <data name="MnEvaluateGames" xml:space="preserve">
-    <value>Oceń partie z podręcznika...</value>
+    <value>Oceń partie z podręcznika</value>
   </data>
   <data name="StripComments" xml:space="preserve">
     <value>Usuń komentarze...</value>
