@@ -259,6 +259,9 @@
     <Compile Include="SelectDuplicatesDialog.xaml.cs">
       <DependentUpon>SelectDuplicatesDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SelectLibraryDialog.xaml.cs">
+      <DependentUpon>SelectLibraryDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SplitChapterDialog.xaml.cs">
       <DependentUpon>SplitChapterDialog.xaml</DependentUpon>
     </Compile>
@@ -480,6 +483,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SelectGamesDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SelectLibraryDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

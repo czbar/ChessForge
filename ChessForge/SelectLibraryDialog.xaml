@@ -1,0 +1,29 @@
+﻿<Window x:Class="ChessForge.SelectLibraryDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:p="clr-namespace:ChessForge.Properties"
+        xmlns:local="clr-namespace:ChessForge"
+        mc:Ignorable="d"
+        Title="{x:Static p:Resources.DlgOnlineLibraries}" Height="400" Width="500">
+    <Grid>
+        <GroupBox Header="Public" Margin="10,10" Height="65" VerticalAlignment="Top">
+            <Canvas>
+                <Label x:Name="UiLblPublicLibrary" Content="{x:Static p:Resources.ChessForgeLibrary}" Margin="30,6" HorizontalContentAlignment="Center" FontWeight="Bold" Background="LightGray" Width="300" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                <Button x:Name="UiBtnOpenPublicLibrary" Margin="370,10,0,0" Content="{x:Static p:Resources.Open}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" />
+            </Canvas>
+        </GroupBox>
+        <GroupBox Header="Private" Margin="10,85,10,10" VerticalAlignment="Top" Height="220">
+            <Canvas Margin="0,0,0,0">
+                <ListBox x:Name="UiLbLibraries" Canvas.Left="15" Canvas.Top="15" Width="337" Height="130"/>
+                <Button x:Name="UiBtnOpenPrivateLibrary" Content="{x:Static p:Resources.Open}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Canvas.Left="370" Canvas.Top="24" />
+                <Button x:Name="UiBtnAddLibrary" Margin="100,165" Content="{x:Static p:Resources.Add}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" />
+                <Button x:Name="UiBtnDeleteLibrary"  Margin="200,165" Content="{x:Static p:Resources.Delete}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" />
+            </Canvas>
+        </GroupBox>
+        <Button x:Name="UiBtnSaveAndExit" IsDefault="True" Margin="-240,0,0,20" Content="{x:Static p:Resources.SaveAndExit}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="100" />
+        <Button x:Name="UiBtnCancel" IsCancel="True" Margin="0,0,0,20" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="100" />
+        <Button x:Name="UiBtnHelp" Margin="240,0,0,20" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="100" />
+    </Grid>
+</Window>
