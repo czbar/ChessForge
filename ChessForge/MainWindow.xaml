@@ -85,6 +85,7 @@
                         <MenuItem x:Name="UiMnCloseWorkbook" Header="{x:Static p:Resources.CloseWorkbook}" Click="UiMnCloseWorkbook_Click" />
                         <Separator />
                         <MenuItem x:Name="UiMnOnlineLibrary" Header="{x:Static p:Resources.OnlineLibrary}"  Click="UiMnOnlineLibrary_Click" />
+                        <MenuItem x:Name="UiMnOnlineLibraryPrivate" Header="{x:Static p:Resources.OnlineLibraryPrivate}"  Click="UiMnOnlineLibraryPrivate_Click" />
                         <Separator />
                         <MenuItem x:Name="UiMnWorkbookSave" Header="{x:Static p:Resources.Save}" Click="UiMnWorkbookSave_Click" InputGestureText="Ctrl+S" />
                         <MenuItem x:Name="UiMnWorkbookSaveAs" Header="{x:Static p:Resources.SaveAs}" Click="UiMnWorkbookSaveAs_Click" />
