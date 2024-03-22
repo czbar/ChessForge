@@ -499,7 +499,10 @@
     <value>Zamknij Podręcznik</value>
   </data>
   <data name="OnlineLibrary" xml:space="preserve">
-    <value>Biblioteka w Sieci</value>
+    <value>Biblioteka w Sieci - Publiczna</value>
+  </data>
+  <data name="OnlineLibraryPrivate" xml:space="preserve">
+    <value>Biblioteka w Sieci - Prywatna</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Zapisz</value>
@@ -788,6 +791,27 @@
   </data>
   <data name="EgCentipawnAccuracy" xml:space="preserve">
     <value>maksymalne odchylenie od najlepszego ruchu wynosi</value>
+  </data>
+  <data name="DlgOnlineLibraries" xml:space="preserve">
+    <value>Biblioteki w Internecie</value>
+  </data>
+  <data name="Open" xml:space="preserve">
+    <value>Otwórz</value>
+  </data>
+  <data name="SaveAndExit" xml:space="preserve">
+    <value>Zapisz i Wyjdź</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Dodaj</value>
+  </data>
+  <data name="Public" xml:space="preserve">
+    <value>Publiczne</value>
+  </data>
+  <data name="Private" xml:space="preserve">
+    <value>Prywatne</value>
+  </data>
+  <data name="ChessForgeLibrary" xml:space="preserve">
+    <value>Biblioteka Chess Forge</value>
   </data>
   <data name="DlgTitleApplicationOptions" xml:space="preserve">
     <value>Opcje Aplikacji</value>

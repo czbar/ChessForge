@@ -499,7 +499,10 @@
     <value>Close Workbook</value>
   </data>
   <data name="OnlineLibrary" xml:space="preserve">
-    <value>Online Library</value>
+    <value>Online Library - Public</value>
+  </data>
+  <data name="OnlineLibraryPrivate" xml:space="preserve">
+    <value>Online Library - Private</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
@@ -788,6 +791,27 @@
   </data>
   <data name="EgCentipawnAccuracy" xml:space="preserve">
     <value>max allowed centipawn deviation from the best move is</value>
+  </data>
+  <data name="DlgOnlineLibraries" xml:space="preserve">
+    <value>Online Libraries</value>
+  </data>
+  <data name="Open" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="SaveAndExit" xml:space="preserve">
+    <value>Save &amp; Exit</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="Public" xml:space="preserve">
+    <value>Public</value>
+  </data>
+  <data name="Private" xml:space="preserve">
+    <value>Private</value>
+  </data>
+  <data name="ChessForgeLibrary" xml:space="preserve">
+    <value>Chess Forge Library</value>
   </data>
   <data name="DlgTitleApplicationOptions" xml:space="preserve">
     <value>Application Options</value>

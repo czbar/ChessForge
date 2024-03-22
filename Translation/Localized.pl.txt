@@ -552,9 +552,13 @@ OpenWorkbook=Otwórz Podręcznik
 #english: CloseWorkbook=Close Workbook
 CloseWorkbook=Zamknij Podręcznik
 
-#description: Online library
-#english: OnlineLibrary=Online Library
-OnlineLibrary=Biblioteka w Sieci
+#description: Public Online library
+#english: OnlineLibrary=Online Library - Public
+OnlineLibrary=Biblioteka w Sieci - Publiczna
+
+#description: Private Online library
+#english: OnlineLibraryPrivate=Online Library - Private
+OnlineLibraryPrivate=Biblioteka w Sieci - Prywatna
 
 #description: Save the currently open Workbook
 #english: Save=Save
@@ -3520,3 +3524,24 @@ IllegalCastling=Niedozwolona roszada.
 #description: Workbook info
 #english: AboutWorkbook=This PGN Workbook is optimized for viewing in Chess Forge https://sourceforge.net/projects/chessforge/ \nChess Forge is a Free and Open Source Windows application.
 AboutWorkbook=Ten podręcznik PGN najlepiej oglądać w programie Chess Forge https://sourceforge.net/projects/chessforge/ \nChess Forge to Wolne i Otwarte Oprogramowanie do systemu Windows.
+
+
+DlgOnlineLibraries=Biblioteki w Internecie
+
+#Open
+Open=Otwórz
+
+#Save and Exit
+SaveAndExit=Zapisz i Wyjdź
+
+#Add
+Add=Dodaj
+
+#Public
+Public=Publiczne
+
+#Private
+Private=Prywatne
+
+#Chess Forge Library
+ChessForgeLibrary=Biblioteka Chess Forge

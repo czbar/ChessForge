@@ -552,9 +552,13 @@ OpenWorkbook=Otwórz Podręcznik
 #english: CloseWorkbook=Close Workbook
 CloseWorkbook=Zamknij Podręcznik
 
-#description: Online library
-#english: OnlineLibrary=Online Library
-OnlineLibrary=Biblioteka w Sieci
+#description: Public Online library
+#english: OnlineLibrary=Online Library - Public
+OnlineLibrary=Biblioteka w Sieci - Publiczna
+
+#description: Private Online library
+#english: OnlineLibraryPrivate=Online Library - Private
+OnlineLibraryPrivate=Biblioteka w Sieci - Prywatna
 
 #description: Save the currently open Workbook
 #english: Save=Save
@@ -1006,6 +1010,39 @@ EgSelectionAccuracyLabel=Dokładność wyboru ruchów wynosi
 #description: Cenitpawn accuracy
 #english: EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
 EgCentipawnAccuracy=maksymalne odchylenie od najlepszego ruchu wynosi
+
+#######################################
+#
+# Header: DIALOG Select Libraries
+#
+
+#description: Dialog title: Online Libraries
+#english: DlgOnlineLibraries=Online Libraries
+DlgOnlineLibraries=Biblioteki w Internecie
+
+#description: Open
+#english: Open=Open
+Open=Otwórz
+
+#description: Save and Exit
+#english: SaveAndExit=Save & Exit
+SaveAndExit=Zapisz i Wyjdź
+
+#description: Add
+#english: Add=Add
+Add=Dodaj
+
+#description: Public
+#english: Public=Public
+Public=Publiczne
+
+#description: Private
+#english: Private=Private
+Private=Prywatne
+
+#description: Chess Forge Library
+#english: ChessForgeLibrary=Chess Forge Library
+ChessForgeLibrary=Biblioteka Chess Forge
 
 
 #######################################

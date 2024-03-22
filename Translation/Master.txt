@@ -425,8 +425,11 @@ OpenWorkbook=Open Workbook
 #Close an existing Workbook
 CloseWorkbook=Close Workbook
 
-#Online library
-OnlineLibrary=Online Library
+#Public Online library
+OnlineLibrary=Online Library - Public
+
+#Private Online library
+OnlineLibraryPrivate=Online Library - Private
 
 #Save the currently open Workbook
 Save=Save
@@ -782,6 +785,32 @@ EgSelectionAccuracyLabel=Move selection accuracy is
 
 #Cenitpawn accuracy
 EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
+
+#######################################
+#
+# Header: DIALOG Select Libraries
+#
+
+#Dialog title: Online Libraries
+DlgOnlineLibraries=Online Libraries
+
+#Open
+Open=Open
+
+#Save and Exit
+SaveAndExit=Save & Exit
+
+#Add
+Add=Add
+
+#Public
+Public=Public
+
+#Private
+Private=Private
+
+#Chess Forge Library
+ChessForgeLibrary=Chess Forge Library
 
 
 #######################################

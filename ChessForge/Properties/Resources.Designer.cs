@@ -89,6 +89,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string Add {
+            get {
+                return ResourceManager.GetString("Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All Chapters.
         /// </summary>
         public static string AllChapters {
@@ -881,6 +890,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chess Forge Library.
+        /// </summary>
+        public static string ChessForgeLibrary {
+            get {
+                return ResourceManager.GetString("ChessForgeLibrary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chess Forge Online Library.
         /// </summary>
         public static string ChessForgeOnlineLibrary {
@@ -1642,6 +1660,15 @@ namespace ChessForge.Properties {
         public static string DlgMergeErrors {
             get {
                 return ResourceManager.GetString("DlgMergeErrors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Online Libraries.
+        /// </summary>
+        public static string DlgOnlineLibraries {
+            get {
+                return ResourceManager.GetString("DlgOnlineLibraries", resourceCulture);
             }
         }
         
@@ -4545,7 +4572,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Online Library.
+        ///   Looks up a localized string similar to Online Library - Public.
         /// </summary>
         public static string OnlineLibrary {
             get {
@@ -4559,6 +4586,24 @@ namespace ChessForge.Properties {
         public static string OnlineLibraryInfo {
             get {
                 return ResourceManager.GetString("OnlineLibraryInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Online Library - Private.
+        /// </summary>
+        public static string OnlineLibraryPrivate {
+            get {
+                return ResourceManager.GetString("OnlineLibraryPrivate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open.
+        /// </summary>
+        public static string Open {
+            get {
+                return ResourceManager.GetString("Open", resourceCulture);
             }
         }
         
@@ -4914,6 +4959,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Private.
+        /// </summary>
+        public static string Private {
+            get {
+                return ResourceManager.GetString("Private", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Proceed?.
         /// </summary>
         public static string Proceed {
@@ -4955,6 +5009,15 @@ namespace ChessForge.Properties {
         public static string PromptSaveWorkbookLocally {
             get {
                 return ResourceManager.GetString("PromptSaveWorkbookLocally", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Public.
+        /// </summary>
+        public static string Public {
+            get {
+                return ResourceManager.GetString("Public", resourceCulture);
             }
         }
         
@@ -5171,6 +5234,15 @@ namespace ChessForge.Properties {
         public static string Save {
             get {
                 return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save &amp; Exit.
+        /// </summary>
+        public static string SaveAndExit {
+            get {
+                return ResourceManager.GetString("SaveAndExit", resourceCulture);
             }
         }
         
