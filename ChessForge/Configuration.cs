@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Windows;
 using static ChessForge.ChessBoards;
@@ -12,6 +13,28 @@ namespace ChessForge
 {
     public class Configuration
     {
+        //*********************************
+        //
+        //   ONLINE LIBRARIES
+        //
+        //*********************************
+
+
+        /// <summary>
+        /// hard coded root URL for the public library.
+        /// </summary>
+        public static string PUBLIC_LIBRARY_URL = "https://chessforge.sourceforge.io/Library/";
+
+        /// <summary>
+        /// Url to the currently configured private library.
+        /// </summary>
+        public static string LastPrivateLibrary;
+
+        /// <summary>
+        /// The list of configured private libraries.
+        /// </summary>
+        public static List<string> PrivateLibraries = new List<string>();
+
         //*********************************
         //
         //   SPECIAL/SYSTEM DATA
@@ -491,6 +514,8 @@ namespace ChessForge
         private const string CFG_LAST_IMPORT_DIRECTORY = "LastImportDirectory";
         private const string CFG_LAST_FILE = "LastFile";
         private const string CFG_RECENT_FILES = "RecentFiles";
+        private const string CFG_LAST_PRIVATE_LIBRARY = "LastPrivateLibrary";
+        private const string CFG_PRIVATE_LIBRARY = "PrivateLibrary";
         private const string CFG_MAIN_WINDOW_POS = "MainWindowPosition";
         private const string CFG_ENGINE_EXE = "EngineExe";
         private const string CFG_DO_NOT_SHOW_VERSION = "DoNotShowVersion";
@@ -677,6 +702,12 @@ namespace ChessForge
                 sb.Append(CFG_LAST_DIRECTORY + "=" + LastOpenDirectory.ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_IMPORT_DIRECTORY + "=" + LastImportDirectory.ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_FILE + "=" + LastWorkbookFile.ToString() + Environment.NewLine);
+                sb.Append(CFG_LAST_PRIVATE_LIBRARY + "=" + LastPrivateLibrary.ToString() + Environment.NewLine);
+
+                foreach (string privateLibrary in PrivateLibraries)
+                {
+                    sb.Append(CFG_PRIVATE_LIBRARY + "=" + privateLibrary + Environment.NewLine);
+                }
 
                 sb.Append(Environment.NewLine);
 
@@ -993,6 +1024,15 @@ namespace ChessForge
                             break;
                         case CFG_LAST_IMPORT_DIRECTORY:
                             LastImportDirectory = value;
+                            break;
+                        case CFG_LAST_PRIVATE_LIBRARY:
+                            LastPrivateLibrary = value;
+                            break;
+                        case CFG_PRIVATE_LIBRARY:
+                            if (!string.IsNullOrEmpty(value))
+                            {
+                                PrivateLibraries.Add(value);
+                            }
                             break;
                         case CFG_LAST_FILE:
                             LastWorkbookFile = value;
