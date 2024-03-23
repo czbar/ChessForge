@@ -152,16 +152,7 @@ namespace ChessForge
             // if not specified, ask the user to select/configure
             if (string.IsNullOrEmpty(Configuration.LastPrivateLibrary))
             {
-                // do we have anything configured
-                bool hasAny = Configuration.PrivateLibraries.Count > 0;
-                if (hasAny)
-                {
-                    // TODO: open dialog to choose the library
-                }
-                else
-                {
-                    // TODO: inform user that they have no libraries and ask whether to configure.
-                }
+                UiMnOnlineLibraries_Click(null, null);
             }
             else
             {
@@ -3235,8 +3226,9 @@ namespace ChessForge
             {
                 SelectLibraryDialog dlg = new SelectLibraryDialog();
                 GuiUtilities.PositionDialog(dlg, this, 100);
-                if (dlg.ShowDialog() == true)
+                if (dlg.ShowDialog() == true && !string.IsNullOrEmpty(dlg.LibraryToOpen))
                 {
+                    ShowLibraryContent(dlg.LibraryToOpen);
                 }
             }
             catch
