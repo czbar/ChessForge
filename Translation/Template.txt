@@ -552,9 +552,13 @@ OpenWorkbook=
 #english: CloseWorkbook=Close Workbook
 CloseWorkbook=
 
-#description: Online library
-#english: OnlineLibrary=Online Library
+#description: Public Online library
+#english: OnlineLibrary=Online Library - Public
 OnlineLibrary=
+
+#description: Private Online library
+#english: OnlineLibraryPrivate=Online Library - Private
+OnlineLibraryPrivate=
 
 #description: Save the currently open Workbook
 #english: Save=Save
@@ -680,20 +684,29 @@ Views=
 FlipBoard=
 
 #description: Opens the Application Options dialog
-#english: ApplicationOptions=Application Options...
+#english: ApplicationOptions=Application Options
 ApplicationOptions=
 
+#description: Opens the Workbook Options dialog
+#english: WorkbookOptions=Workbook Options
+WorkbookOptions=
+
 #description: Chessboards
-#english: Chessboards=Chessboards...
+#english: Chessboards=Chessboards
 Chessboards=
 
 #description: Opens the Engine Options dialog
-#english: EngineOptions=Engine Options...
+#english: EngineOptions=Engine Options
 EngineOptions=
 
 #description: Blunder detection options
-#english: BlunderDetectionOptions=Blunder Detection...
+#english: BlunderDetectionOptions=Blunder Detection
 BlunderDetectionOptions=
+
+#description: Opens a dialog allowing the user to select chess engine executable file
+#english: AnalysisEngine=Analysis Engine
+AnalysisEngine=
+
 
 #description: Engine Options dialog title
 #english: DlgTitleEngineOptions=Engine Options
@@ -728,10 +741,6 @@ MsgEditPositionSearch=
 #english: MsgTitlePositionSearch=Position Search
 MsgTitlePositionSearch=
 
-#description: Opens the Workbook Options dialog
-#english: WorkbookOptions=Workbook Options...
-WorkbookOptions=
-
 #description: Workbook Options dialog title
 #english: DlgTitleWorkbookOptions=Workbook Options
 DlgTitleWorkbookOptions=
@@ -739,10 +748,6 @@ DlgTitleWorkbookOptions=
 #description: Dialog for editing move text in the Intro view
 #english: DlgEditMoveInIntro=Edit Move
 DlgEditMoveInIntro=
-
-#description: Opens a dialog allowing the user to select chess engine executable file
-#english: AnalysisEngine=Analysis Engine...
-AnalysisEngine=
 
 #description: Increase font size
 #english: IncreaseFontSize=Increase Font Size
@@ -775,7 +780,7 @@ RestoreFontDefaults=
 Tools=
 
 #description: Evaluate Games
-#english: MnEvaluateGames=Evaluate Games in Workbook...
+#english: MnEvaluateGames=Evaluate Games in Workbook
 MnEvaluateGames=
 
 #description: Strip all comments
@@ -787,7 +792,7 @@ StripComments=
 DeleteEngineEvals=
 
 #description: Delete all engine evals
-#english: AssignECO=Assign ECOs...
+#english: AssignECO=Assign ECOs
 AssignECO=
 
 #description: Find Games
@@ -795,15 +800,15 @@ AssignECO=
 FindGames=
 
 #description: Allows the user to merge multiple chapters into one
-#english: MergeChapters=Merge Chapters...
+#english: MergeChapters=Merge Chapters
 MergeChapters=
 
 #description: Manage Chapter
-#english: ManageChapter=Manage Chapter...
+#english: ManageChapter=Manage Chapter
 ManageChapter=
 
 #description: Split Chapter
-#english: SplitChapterMenu=Split Chapter...
+#english: SplitChapterMenu=Split Chapter
 SplitChapterMenu=
 
 #description: Remove duplicates
@@ -1006,6 +1011,50 @@ EgSelectionAccuracyLabel=
 #english: EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
 EgCentipawnAccuracy=
 
+#######################################
+#
+# Header: DIALOG Select Libraries
+#
+
+#description: Libraries (short for the button)
+#english: Libraries=Libraries
+Libraries=
+
+#description: Dialog title: Online Libraries
+#english: DlgOnlineLibraries=Online Libraries
+DlgOnlineLibraries=
+
+#description: Open
+#english: Open=Open
+Open=
+
+#description: Save and Exit
+#english: SaveAndExit=Save & Exit
+SaveAndExit=
+
+#description: Add
+#english: Add=Add
+Add=
+
+#description: Public
+#english: Public=Public
+Public=
+
+#description: Private
+#english: Private=Private
+Private=
+
+#description: Chess Forge Library
+#english: ChessForgeLibrary=Chess Forge Library
+ChessForgeLibrary=
+
+#description: Title for the library editor
+#english: LibraryUrl=Enter Library URL
+LibraryUrl=
+
+#description: Message to save the changes
+#english: MsgSaveLibraryChanges=The list of libraries has been modified. Save changes?
+MsgSaveLibraryChanges=
 
 #######################################
 #
@@ -1936,6 +1985,22 @@ DeleteThisExercise=
 #! Keep $N's as placeholders for numbers
 #english: Exercise0of0=Exercise $0 of $1
 Exercise0of0=
+
+#description: Show all solutions in chapter
+#english: ShowSolutionsInChapter=Show All Solutions in Chapter
+ShowSolutionsInChapter=
+
+#description: Hide all solutions in chapter
+#english: HideSolutionsInChapter=Hide All Solutions in Chapter
+HideSolutionsInChapter=
+
+#description: All exercise solutions have been shown
+#english: FlMsgSolutionsShown=All exercise solutions have been expanded.
+FlMsgSolutionsShown=
+
+#description: All exercise solutions have been hidden
+#english: FlMsgSolutionsHidden=All exercise solutions have been hidden.
+FlMsgSolutionsHidden=
 
 
 #

@@ -142,14 +142,42 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Obtains the content of the private libray, if configured.
+        /// If nor configured, opens the configuration dialog.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnOnlineLibraryPrivate_Click(object sender, RoutedEventArgs e)
+        {
+            // if not specified, ask the user to select/configure
+            if (string.IsNullOrEmpty(Configuration.LastPrivateLibrary))
+            {
+                UiMnOnlineLibraries_Click(null, null);
+            }
+            else
+            {
+                ShowLibraryContent(Configuration.LastPrivateLibrary);
+            }
+        }
+
+        /// <summary>
         /// Obtains the content of the online library.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void UiMnOnlineLibrary_Click(object sender, RoutedEventArgs e)
         {
+            ShowLibraryContent(Configuration.PUBLIC_LIBRARY_URL);
+        }
+
+        /// <summary>
+        /// Obtains and displays content of the online library.
+        /// </summary>
+        /// <param name="url"></param>
+        private void ShowLibraryContent(string url)
+        {
             string error;
-            WebAccess.LibraryContent library = ReadLibraryContentFile(out error);
+            WebAccess.LibraryContent library = ReadLibraryContentFile(url, true, out error);
             if (library == null)
             {
                 MessageBox.Show(Properties.Resources.ErrAccessOnlineLibrary + ": " + error, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
@@ -180,7 +208,7 @@ namespace ChessForge
                         Mouse.SetCursor(Cursors.Wait);
 
                         // download the workbook
-                        string bookText = WebAccess.OnlineLibrary.GetWorkbookText(dlg.SelectedBook.File, out error);
+                        string bookText = WebAccess.OnlineLibrary.GetWorkbookText(url, dlg.SelectedBook.File, out error);
                         if (!string.IsNullOrEmpty(error))
                         {
                             MessageBox.Show(Properties.Resources.ErrAccessOnlineLibrary + ": " + error, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
@@ -212,6 +240,13 @@ namespace ChessForge
                         Mouse.SetCursor(Cursors.Arrow);
                     }
                 }
+                else
+                {
+                    if (dlg.ShowLibraries)
+                    {
+                        UiMnOnlineLibraries_Click(null, null);
+                    }
+                }
             }
         }
 
@@ -220,7 +255,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="error"></param>
         /// <returns></returns>
-        private WebAccess.LibraryContent ReadLibraryContentFile(out string error)
+        private WebAccess.LibraryContent ReadLibraryContentFile(string url, bool isPublic, out string error)
         {
             error = "";
             int allowedRedirections = 5;
@@ -229,7 +264,7 @@ namespace ChessForge
 
             for (int i = 0; i < allowedRedirections; i++)
             {
-                library = WebAccess.OnlineLibrary.GetLibraryContent(out error);
+                library = WebAccess.OnlineLibrary.GetLibraryContent(url, out error);
                 if (library == null || string.IsNullOrWhiteSpace(library.Redirect))
                 {
                     break;
@@ -2045,6 +2080,66 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Shows all solutions in the current chapter.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnExerc_ShowSolutions_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                foreach (Article exc in chapter.Exercises)
+                {
+                    exc.Tree.ShowTreeLines = true;
+                }
+
+                if (_exerciseTreeView != null)
+                {
+                    _exerciseTreeView.ShowHideSolution(true);
+                }
+
+                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgSolutionsShown, System.Windows.Media.Brushes.Green);
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("UiMnExerc_ShowSolutions_Click()", ex);
+            }
+
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// Hides all solutions in the current chapter.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnExerc_HideSolutions_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                foreach (Article exc in chapter.Exercises)
+                {
+                    exc.Tree.ShowTreeLines = false;
+                }
+
+                if (_exerciseTreeView != null)
+                {
+                    _exerciseTreeView.ShowHideSolution(false);
+                }
+
+                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgSolutionsHidden, System.Windows.Media.Brushes.Green);
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("UiMnExerc_ShowSolutions_Click()", ex);
+            }
+
+            e.Handled = true;
+        }
+
+        /// <summary>
         /// Edits a Model Game header.
         /// Invoked from Games View menu.
         /// </summary>
@@ -3125,6 +3220,27 @@ namespace ChessForge
         private void UiMnApplicationOptions_Click(object sender, RoutedEventArgs e)
         {
             ShowApplicationOptionsDialog();
+        }
+
+        /// <summary>
+        /// Invokes the Online Libraries dialog.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnOnlineLibraries_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                SelectLibraryDialog dlg = new SelectLibraryDialog();
+                GuiUtilities.PositionDialog(dlg, this, 100);
+                if (dlg.ShowDialog() == true && !string.IsNullOrEmpty(dlg.LibraryToOpen))
+                {
+                    ShowLibraryContent(dlg.LibraryToOpen);
+                }
+            }
+            catch
+            {
+            }
         }
 
         /// <summary>

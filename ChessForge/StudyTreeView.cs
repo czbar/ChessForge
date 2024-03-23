@@ -602,12 +602,12 @@ namespace ChessForge
                 }
 
                 TreeNode nd = sector.Nodes[i];
-                if (nd.NodeId == -100)
+                if (nd.NodeId == LineSector.OPEN_BRACKET)
                 {
-                    para.Inlines.Add(new Run("("));
+                    para.Inlines.Add(new Run("( "));
                     parenthesis = true;
                 }
-                else if (nd.NodeId == -101)
+                else if (nd.NodeId == LineSector.CLOSE_BRACKET)
                 {
                     para.Inlines.Add(new Run(") "));
                     parenthesis = true;

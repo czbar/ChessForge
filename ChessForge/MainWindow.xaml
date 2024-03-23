@@ -85,6 +85,7 @@
                         <MenuItem x:Name="UiMnCloseWorkbook" Header="{x:Static p:Resources.CloseWorkbook}" Click="UiMnCloseWorkbook_Click" />
                         <Separator />
                         <MenuItem x:Name="UiMnOnlineLibrary" Header="{x:Static p:Resources.OnlineLibrary}"  Click="UiMnOnlineLibrary_Click" />
+                        <MenuItem x:Name="UiMnOnlineLibraryPrivate" Header="{x:Static p:Resources.OnlineLibraryPrivate}"  Click="UiMnOnlineLibraryPrivate_Click" />
                         <Separator />
                         <MenuItem x:Name="UiMnWorkbookSave" Header="{x:Static p:Resources.Save}" Click="UiMnWorkbookSave_Click" InputGestureText="Ctrl+S" />
                         <MenuItem x:Name="UiMnWorkbookSaveAs" Header="{x:Static p:Resources.SaveAs}" Click="UiMnWorkbookSaveAs_Click" />
@@ -123,6 +124,7 @@
                         <MenuItem x:Name="UiMnWorkbookOptions" Header="{x:Static p:Resources.WorkbookOptions}" Click="UiMnWorkbookOptions_Click" />
                         <MenuItem Header="{x:Static p:Resources.BlunderDetectionOptions}" Click="UiMnBlunderDetectionOptions_Click" />
                         <MenuItem Header="{x:Static p:Resources.AnalysisEngine}" Click="UiMnSelectEngine_Click" />
+                        <MenuItem Header="{x:Static p:Resources.DlgOnlineLibraries}" Click="UiMnOnlineLibraries_Click" />
                         <Separator />
                         <MenuItem x:Name="UiMnIncreaseFontSize" Header="{x:Static p:Resources.IncreaseFontSize}" Click="UiBtnFontSizeUp_Click" >
                             <MenuItem.Icon>
@@ -744,6 +746,9 @@
                                     <Separator x:Name="UiMnExerc_Separator_1"/>
                                     <MenuItem x:Name="_mnExerc_DeleteThisExercise" Header="{x:Static p:Resources.DeleteThisExercise}" Click="UiMnExerc_DeleteExercise_Click" />
                                     <Separator x:Name="UiMnExerc_Separator_6"/>
+                                    <MenuItem x:Name="UiMnExerc_ShowAllSolutions" Header="{x:Static p:Resources.ShowSolutionsInChapter}" Click="UiMnExerc_ShowSolutions_Click" />
+                                    <MenuItem x:Name="UiMnExerc_HideAllSolutions" Header="{x:Static p:Resources.HideSolutionsInChapter}" Click="UiMnExerc_HideSolutions_Click" />
+                                    <Separator x:Name="UiMnExerc_Separator_8"/>
                                     <MenuItem x:Name="_mnExerc_StartTrainingFromHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere_Click" />
                                     <MenuItem x:Name="_mnExerc_MarkThumbnail" Header="{x:Static p:Resources.MarkAsThumbnail}" Click="UiMn_ExerciseMarkThumbnail_Click" InputGestureText="Ctrl+T" />
                                     <Separator x:Name="UiMnExerc_Separator_4"/>

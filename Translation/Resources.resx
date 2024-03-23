@@ -499,7 +499,10 @@
     <value>Close Workbook</value>
   </data>
   <data name="OnlineLibrary" xml:space="preserve">
-    <value>Online Library</value>
+    <value>Online Library - Public</value>
+  </data>
+  <data name="OnlineLibraryPrivate" xml:space="preserve">
+    <value>Online Library - Private</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
@@ -580,16 +583,22 @@
     <value>Flip Board</value>
   </data>
   <data name="ApplicationOptions" xml:space="preserve">
-    <value>Application Options...</value>
+    <value>Application Options</value>
+  </data>
+  <data name="WorkbookOptions" xml:space="preserve">
+    <value>Workbook Options</value>
   </data>
   <data name="Chessboards" xml:space="preserve">
-    <value>Chessboards...</value>
+    <value>Chessboards</value>
   </data>
   <data name="EngineOptions" xml:space="preserve">
-    <value>Engine Options...</value>
+    <value>Engine Options</value>
   </data>
   <data name="BlunderDetectionOptions" xml:space="preserve">
-    <value>Blunder Detection...</value>
+    <value>Blunder Detection</value>
+  </data>
+  <data name="AnalysisEngine" xml:space="preserve">
+    <value>Analysis Engine</value>
   </data>
   <data name="DlgTitleEngineOptions" xml:space="preserve">
     <value>Engine Options</value>
@@ -615,17 +624,11 @@
   <data name="MsgTitlePositionSearch" xml:space="preserve">
     <value>Position Search</value>
   </data>
-  <data name="WorkbookOptions" xml:space="preserve">
-    <value>Workbook Options...</value>
-  </data>
   <data name="DlgTitleWorkbookOptions" xml:space="preserve">
     <value>Workbook Options</value>
   </data>
   <data name="DlgEditMoveInIntro" xml:space="preserve">
     <value>Edit Move</value>
-  </data>
-  <data name="AnalysisEngine" xml:space="preserve">
-    <value>Analysis Engine...</value>
   </data>
   <data name="IncreaseFontSize" xml:space="preserve">
     <value>Increase Font Size</value>
@@ -646,7 +649,7 @@
     <value>Tools</value>
   </data>
   <data name="MnEvaluateGames" xml:space="preserve">
-    <value>Evaluate Games in Workbook...</value>
+    <value>Evaluate Games in Workbook</value>
   </data>
   <data name="StripComments" xml:space="preserve">
     <value>Delete Comments...</value>
@@ -655,19 +658,19 @@
     <value>Delete Engine Evaluations...</value>
   </data>
   <data name="AssignECO" xml:space="preserve">
-    <value>Assign ECOs...</value>
+    <value>Assign ECOs</value>
   </data>
   <data name="FindGames" xml:space="preserve">
     <value>Find Games...</value>
   </data>
   <data name="MergeChapters" xml:space="preserve">
-    <value>Merge Chapters...</value>
+    <value>Merge Chapters</value>
   </data>
   <data name="ManageChapter" xml:space="preserve">
-    <value>Manage Chapter...</value>
+    <value>Manage Chapter</value>
   </data>
   <data name="SplitChapterMenu" xml:space="preserve">
-    <value>Split Chapter...</value>
+    <value>Split Chapter</value>
   </data>
   <data name="RemoveDuplicates" xml:space="preserve">
     <value>Remove Duplicates...</value>
@@ -788,6 +791,36 @@
   </data>
   <data name="EgCentipawnAccuracy" xml:space="preserve">
     <value>max allowed centipawn deviation from the best move is</value>
+  </data>
+  <data name="Libraries" xml:space="preserve">
+    <value>Libraries</value>
+  </data>
+  <data name="DlgOnlineLibraries" xml:space="preserve">
+    <value>Online Libraries</value>
+  </data>
+  <data name="Open" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="SaveAndExit" xml:space="preserve">
+    <value>Save &amp; Exit</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="Public" xml:space="preserve">
+    <value>Public</value>
+  </data>
+  <data name="Private" xml:space="preserve">
+    <value>Private</value>
+  </data>
+  <data name="ChessForgeLibrary" xml:space="preserve">
+    <value>Chess Forge Library</value>
+  </data>
+  <data name="LibraryUrl" xml:space="preserve">
+    <value>Enter Library URL</value>
+  </data>
+  <data name="MsgSaveLibraryChanges" xml:space="preserve">
+    <value>The list of libraries has been modified. Save changes?</value>
   </data>
   <data name="DlgTitleApplicationOptions" xml:space="preserve">
     <value>Application Options</value>
@@ -1367,6 +1400,18 @@
   </data>
   <data name="Exercise0of0" xml:space="preserve">
     <value>Exercise $0 of $1</value>
+  </data>
+  <data name="ShowSolutionsInChapter" xml:space="preserve">
+    <value>Show All Solutions in Chapter</value>
+  </data>
+  <data name="HideSolutionsInChapter" xml:space="preserve">
+    <value>Hide All Solutions in Chapter</value>
+  </data>
+  <data name="FlMsgSolutionsShown" xml:space="preserve">
+    <value>All exercise solutions have been expanded.</value>
+  </data>
+  <data name="FlMsgSolutionsHidden" xml:space="preserve">
+    <value>All exercise solutions have been hidden.</value>
   </data>
   <data name="Scoresheet" xml:space="preserve">
     <value>Scoresheet</value>

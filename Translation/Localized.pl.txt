@@ -552,9 +552,13 @@ OpenWorkbook=Otwórz Podręcznik
 #english: CloseWorkbook=Close Workbook
 CloseWorkbook=Zamknij Podręcznik
 
-#description: Online library
-#english: OnlineLibrary=Online Library
-OnlineLibrary=Biblioteka w Sieci
+#description: Public Online library
+#english: OnlineLibrary=Online Library - Public
+OnlineLibrary=Biblioteka w Sieci - Publiczna
+
+#description: Private Online library
+#english: OnlineLibraryPrivate=Online Library - Private
+OnlineLibraryPrivate=Biblioteka w Sieci - Prywatna
 
 #description: Save the currently open Workbook
 #english: Save=Save
@@ -680,20 +684,29 @@ Views=Widoki
 FlipBoard=Odwróć Szachownicę
 
 #description: Opens the Application Options dialog
-#english: ApplicationOptions=Application Options...
+#english: ApplicationOptions=Application Options
 ApplicationOptions=Opcje Aplikacji
 
+#description: Opens the Workbook Options dialog
+#english: WorkbookOptions=Workbook Options
+WorkbookOptions=Opcje Podręcznika
+
 #description: Chessboards
-#english: Chessboards=Chessboards...
-Chessboards=Szachownice...
+#english: Chessboards=Chessboards
+Chessboards=Szachownice
 
 #description: Opens the Engine Options dialog
-#english: EngineOptions=Engine Options...
-EngineOptions=Opcje Silnika...
+#english: EngineOptions=Engine Options
+EngineOptions=Opcje Silnika
 
 #description: Blunder detection options
-#english: BlunderDetectionOptions=Blunder Detection...
-BlunderDetectionOptions=Detekcja Błędów...
+#english: BlunderDetectionOptions=Blunder Detection
+BlunderDetectionOptions=Detekcja Błędów
+
+#description: Opens a dialog allowing the user to select chess engine executable file
+#english: AnalysisEngine=Analysis Engine
+AnalysisEngine=Wybór Silnika
+
 
 #description: Engine Options dialog title
 #english: DlgTitleEngineOptions=Engine Options
@@ -728,10 +741,6 @@ MsgEditPositionSearch=Pozycki nie znaleziono. Wrócić do edycji?
 #english: MsgTitlePositionSearch=Position Search
 MsgTitlePositionSearch=Wyszukiwanie Pozycji
 
-#description: Opens the Workbook Options dialog
-#english: WorkbookOptions=Workbook Options...
-WorkbookOptions=Opcje Podręcznika
-
 #description: Workbook Options dialog title
 #english: DlgTitleWorkbookOptions=Workbook Options
 DlgTitleWorkbookOptions=Opcje Podręcznika
@@ -739,10 +748,6 @@ DlgTitleWorkbookOptions=Opcje Podręcznika
 #description: Dialog for editing move text in the Intro view
 #english: DlgEditMoveInIntro=Edit Move
 DlgEditMoveInIntro=Edycja Posunięcia
-
-#description: Opens a dialog allowing the user to select chess engine executable file
-#english: AnalysisEngine=Analysis Engine...
-AnalysisEngine=Wybór Silnika
 
 #description: Increase font size
 #english: IncreaseFontSize=Increase Font Size
@@ -775,8 +780,8 @@ RestoreFontDefaults=Przywróć Domyślne Wartości
 Tools=Narzędzia
 
 #description: Evaluate Games
-#english: MnEvaluateGames=Evaluate Games in Workbook...
-MnEvaluateGames=Oceń partie z podręcznika...
+#english: MnEvaluateGames=Evaluate Games in Workbook
+MnEvaluateGames=Oceń partie z podręcznika
 
 #description: Strip all comments
 #english: StripComments=Delete Comments...
@@ -784,27 +789,27 @@ StripComments=Usuń komentarze...
 
 #description: Delete all engine evals
 #english: DeleteEngineEvals=Delete Engine Evaluations...
-DeleteEngineEvals=Usuń oceny silnika...
+DeleteEngineEvals=Usuń oceny silnika
 
 #description: Delete all engine evals
-#english: AssignECO=Assign ECOs...
-AssignECO=Przypisz kody ECO...
+#english: AssignECO=Assign ECOs
+AssignECO=Przypisz kody ECO
 
 #description: Find Games
 #english: FindGames=Find Games...
 FindGames=Znajdź partie...
 
 #description: Allows the user to merge multiple chapters into one
-#english: MergeChapters=Merge Chapters...
+#english: MergeChapters=Merge Chapters
 MergeChapters=Połącz rozdziały
 
 #description: Manage Chapter
-#english: ManageChapter=Manage Chapter...
-ManageChapter=Organizuj Rozdział...
+#english: ManageChapter=Manage Chapter
+ManageChapter=Organizuj Rozdział
 
 #description: Split Chapter
-#english: SplitChapterMenu=Split Chapter...
-SplitChapterMenu=Podziel Rozdział...
+#english: SplitChapterMenu=Split Chapter
+SplitChapterMenu=Podziel Rozdział
 
 #description: Remove duplicates
 #english: RemoveDuplicates=Remove Duplicates...
@@ -1006,6 +1011,50 @@ EgSelectionAccuracyLabel=Dokładność wyboru ruchów wynosi
 #english: EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
 EgCentipawnAccuracy=maksymalne odchylenie od najlepszego ruchu wynosi
 
+#######################################
+#
+# Header: DIALOG Select Libraries
+#
+
+#description: Libraries (short for the button)
+#english: Libraries=Libraries
+Libraries=Biblioteki
+
+#description: Dialog title: Online Libraries
+#english: DlgOnlineLibraries=Online Libraries
+DlgOnlineLibraries=Biblioteki w Internecie
+
+#description: Open
+#english: Open=Open
+Open=Otwórz
+
+#description: Save and Exit
+#english: SaveAndExit=Save & Exit
+SaveAndExit=Zapisz i Wyjdź
+
+#description: Add
+#english: Add=Add
+Add=Dodaj
+
+#description: Public
+#english: Public=Public
+Public=Publiczne
+
+#description: Private
+#english: Private=Private
+Private=Prywatne
+
+#description: Chess Forge Library
+#english: ChessForgeLibrary=Chess Forge Library
+ChessForgeLibrary=Biblioteka Chess Forge
+
+#description: Title for the library editor
+#english: LibraryUrl=Enter Library URL
+LibraryUrl=Podaj URL Biblioteki
+
+#description: Message to save the changes
+#english: MsgSaveLibraryChanges=The list of libraries has been modified. Save changes?
+MsgSaveLibraryChanges=Lista bibliotek została zmodyfikowana. Zapisać zmiany?
 
 #######################################
 #
@@ -1936,6 +1985,22 @@ DeleteThisExercise=Usuń Ćwiczenie
 #! Keep $N's as placeholders for numbers
 #english: Exercise0of0=Exercise $0 of $1
 Exercise0of0=Ćwiczenie $0 z $1
+
+#description: Show all solutions in chapter
+#english: ShowSolutionsInChapter=Show All Solutions in Chapter
+ShowSolutionsInChapter=Pokaż Wszystkie Rozwiązania w Rozdziale
+
+#description: Hide all solutions in chapter
+#english: HideSolutionsInChapter=Hide All Solutions in Chapter
+HideSolutionsInChapter=Ukryj Wszystkie Rozwiązania w Rozdziale
+
+#description: All exercise solutions have been shown
+#english: FlMsgSolutionsShown=All exercise solutions have been expanded.
+FlMsgSolutionsShown=Wszystkie rozwiązania zostały rozwinięte.
+
+#description: All exercise solutions have been hidden
+#english: FlMsgSolutionsHidden=All exercise solutions have been hidden.
+FlMsgSolutionsHidden=Wszystkie rozwiązania zostały zwinięte.
 
 
 #

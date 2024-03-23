@@ -1287,6 +1287,14 @@ namespace ChessForge
                                 menuItem.IsEnabled = exerciseIndex >= 0;
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
+                            case "UiMnExerc_ShowAllSolutions":
+                                menuItem.IsEnabled = exerciseCount > 1 || exerciseCount== 1 && ActiveVariationTree?.ShowTreeLines == false;
+                                menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
+                                break;
+                            case "UiMnExerc_HideAllSolutions":
+                                menuItem.IsEnabled = exerciseCount > 1 || exerciseCount == 1 && ActiveVariationTree?.ShowTreeLines == true;
+                                menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
+                                break;
                             case "UiMnExercMarkBookmark":
                                 menuItem.IsEnabled = exerciseIndex >= 0 && selectedNodeId > 0 && isSolutionShown;
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
@@ -1331,6 +1339,7 @@ namespace ChessForge
                             case "UiMnExerc_Separator_5":
                             case "UiMnExerc_Separator_6":
                             case "UiMnExerc_Separator_7":
+                            case "UiMnExerc_Separator_8":
                                 separ.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                         }

@@ -1407,7 +1407,22 @@ namespace ChessForge
         {
             _contextMenuPrimed = true;
             _mainVariationTree.ShowTreeLines = !_mainVariationTree.ShowTreeLines;
-            if (_mainVariationTree.ShowTreeLines)
+
+            ShowHideSolution(_mainVariationTree.ShowTreeLines);
+
+            if (e != null)
+            {
+                e.Handled = true;
+            }
+        }
+
+        /// <summary>
+        /// Shows or hides the solution lines.
+        /// </summary>
+        /// <param name="showHide"></param>
+        public void ShowHideSolution(bool showHide)
+        {
+            if (showHide)
             {
                 _mainVariationTree.CurrentSolvingMode = VariationTree.SolvingMode.EDITING;
             }
@@ -1415,13 +1430,10 @@ namespace ChessForge
             {
                 _mainVariationTree.CurrentSolvingMode = VariationTree.SolvingMode.NONE;
             }
+
             AppState.ShowExplorers(AppState.AreExplorersOn, true);
             BuildFlowDocumentForVariationTree();
             _mainWin.BoardCommentBox.ShowTabHints();
-            if (e != null)
-            {
-                e.Handled = true;
-            }
         }
 
         /// <summary>
