@@ -1,9 +1,7 @@
 ﻿using ChessPosition;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -60,6 +58,9 @@ namespace ChessForge
         // separator to parse element names by
         private char NAME_SEPAR = '_';
 
+        // set on exit if user clicks the Libraries button
+        public bool ShowLibraries = false;
+
         /// <summary>
         /// Constructor. Builds the content of the Rich Text Box.
         /// </summary>
@@ -68,6 +69,8 @@ namespace ChessForge
         {
             InitializeComponent();
             _content = content;
+
+            UiBtnLibraries.Content = Properties.Resources.Libraries + "...";
 
             SetObjectIds();
             BuildTitleParagraph();
@@ -732,5 +735,18 @@ namespace ChessForge
         {
             System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Online-Library");
         }
+
+        /// <summary>
+        /// The user clicked the Libraries button so we exit with false
+        /// and set the ShowLibraries falg.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnLibraries_Click(object sender, RoutedEventArgs e)
+        {
+            ShowLibraries = true;
+            DialogResult = false;
+        }
+        
     }
 }

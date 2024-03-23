@@ -240,6 +240,13 @@ namespace ChessForge
                         Mouse.SetCursor(Cursors.Arrow);
                     }
                 }
+                else
+                {
+                    if (dlg.ShowLibraries)
+                    {
+                        UiMnOnlineLibraries_Click(null, null);
+                    }
+                }
             }
         }
 
