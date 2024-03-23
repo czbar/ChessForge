@@ -1016,6 +1016,10 @@ EgCentipawnAccuracy=maksymalne odchylenie od najlepszego ruchu wynosi
 # Header: DIALOG Select Libraries
 #
 
+#description: Libraries (short for the button)
+#english: Libraries=Libraries
+Libraries=Biblioteki
+
 #description: Dialog title: Online Libraries
 #english: DlgOnlineLibraries=Online Libraries
 DlgOnlineLibraries=Biblioteki w Internecie
@@ -1044,6 +1048,13 @@ Private=Prywatne
 #english: ChessForgeLibrary=Chess Forge Library
 ChessForgeLibrary=Biblioteka Chess Forge
 
+#description: Title for the library editor
+#english: LibraryUrl=Enter Library URL
+LibraryUrl=Podaj URL Biblioteki
+
+#description: Message to save the changes
+#english: MsgSaveLibraryChanges=The list of libraries has been modified. Save changes?
+MsgSaveLibraryChanges=Lista bibliotek została zmodyfikowana. Zapisać zmiany?
 
 #######################################
 #

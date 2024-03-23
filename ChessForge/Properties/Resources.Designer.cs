@@ -3761,11 +3761,29 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Libraries.
+        /// </summary>
+        public static string Libraries {
+            get {
+                return ResourceManager.GetString("Libraries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Library.
         /// </summary>
         public static string Library {
             get {
                 return ResourceManager.GetString("Library", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter Library URL.
+        /// </summary>
+        public static string LibraryUrl {
+            get {
+                return ResourceManager.GetString("LibraryUrl", resourceCulture);
             }
         }
         
@@ -4234,6 +4252,15 @@ namespace ChessForge.Properties {
         public static string MsgNothingSelectedForEvaluation {
             get {
                 return ResourceManager.GetString("MsgNothingSelectedForEvaluation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The list of libraries has been modified. Save changes?.
+        /// </summary>
+        public static string MsgSaveLibraryChanges {
+            get {
+                return ResourceManager.GetString("MsgSaveLibraryChanges", resourceCulture);
             }
         }
         

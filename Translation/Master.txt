@@ -791,6 +791,9 @@ EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
 # Header: DIALOG Select Libraries
 #
 
+#Libraries (short for the button)
+Libraries=Libraries
+
 #Dialog title: Online Libraries
 DlgOnlineLibraries=Online Libraries
 
@@ -812,6 +815,11 @@ Private=Private
 #Chess Forge Library
 ChessForgeLibrary=Chess Forge Library
 
+#Title for the library editor
+LibraryUrl=Enter Library URL
+
+#Message to save the changes
+MsgSaveLibraryChanges=The list of libraries has been modified. Save changes?
 
 #######################################
 #

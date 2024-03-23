@@ -1011,6 +1011,50 @@ EgSelectionAccuracyLabel=Dokładność wyboru ruchów wynosi
 #english: EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
 EgCentipawnAccuracy=maksymalne odchylenie od najlepszego ruchu wynosi
 
+#######################################
+#
+# Header: DIALOG Select Libraries
+#
+
+#description: Libraries (short for the button)
+#english: Libraries=Libraries
+Libraries=Biblioteki
+
+#description: Dialog title: Online Libraries
+#english: DlgOnlineLibraries=Online Libraries
+DlgOnlineLibraries=Biblioteki w Internecie
+
+#description: Open
+#english: Open=Open
+Open=Otwórz
+
+#description: Save and Exit
+#english: SaveAndExit=Save & Exit
+SaveAndExit=Zapisz i Wyjdź
+
+#description: Add
+#english: Add=Add
+Add=Dodaj
+
+#description: Public
+#english: Public=Public
+Public=Publiczne
+
+#description: Private
+#english: Private=Private
+Private=Prywatne
+
+#description: Chess Forge Library
+#english: ChessForgeLibrary=Chess Forge Library
+ChessForgeLibrary=Biblioteka Chess Forge
+
+#description: Title for the library editor
+#english: LibraryUrl=Enter Library URL
+LibraryUrl=Podaj URL Biblioteki
+
+#description: Message to save the changes
+#english: MsgSaveLibraryChanges=The list of libraries has been modified. Save changes?
+MsgSaveLibraryChanges=Lista bibliotek została zmodyfikowana. Zapisać zmiany?
 
 #######################################
 #
@@ -3524,24 +3568,3 @@ IllegalCastling=Niedozwolona roszada.
 #description: Workbook info
 #english: AboutWorkbook=This PGN Workbook is optimized for viewing in Chess Forge https://sourceforge.net/projects/chessforge/ \nChess Forge is a Free and Open Source Windows application.
 AboutWorkbook=Ten podręcznik PGN najlepiej oglądać w programie Chess Forge https://sourceforge.net/projects/chessforge/ \nChess Forge to Wolne i Otwarte Oprogramowanie do systemu Windows.
-
-
-DlgOnlineLibraries=Biblioteki w Internecie
-
-#Open
-Open=Otwórz
-
-#Save and Exit
-SaveAndExit=Zapisz i Wyjdź
-
-#Add
-Add=Dodaj
-
-#Public
-Public=Publiczne
-
-#Private
-Private=Prywatne
-
-#Chess Forge Library
-ChessForgeLibrary=Biblioteka Chess Forge

@@ -792,6 +792,9 @@
   <data name="EgCentipawnAccuracy" xml:space="preserve">
     <value>max allowed centipawn deviation from the best move is</value>
   </data>
+  <data name="Libraries" xml:space="preserve">
+    <value>Libraries</value>
+  </data>
   <data name="DlgOnlineLibraries" xml:space="preserve">
     <value>Online Libraries</value>
   </data>
@@ -812,6 +815,12 @@
   </data>
   <data name="ChessForgeLibrary" xml:space="preserve">
     <value>Chess Forge Library</value>
+  </data>
+  <data name="LibraryUrl" xml:space="preserve">
+    <value>Enter Library URL</value>
+  </data>
+  <data name="MsgSaveLibraryChanges" xml:space="preserve">
+    <value>The list of libraries has been modified. Save changes?</value>
   </data>
   <data name="DlgTitleApplicationOptions" xml:space="preserve">
     <value>Application Options</value>

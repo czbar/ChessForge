@@ -792,6 +792,9 @@
   <data name="EgCentipawnAccuracy" xml:space="preserve">
     <value>maksymalne odchylenie od najlepszego ruchu wynosi</value>
   </data>
+  <data name="Libraries" xml:space="preserve">
+    <value>Biblioteki</value>
+  </data>
   <data name="DlgOnlineLibraries" xml:space="preserve">
     <value>Biblioteki w Internecie</value>
   </data>
@@ -812,6 +815,12 @@
   </data>
   <data name="ChessForgeLibrary" xml:space="preserve">
     <value>Biblioteka Chess Forge</value>
+  </data>
+  <data name="LibraryUrl" xml:space="preserve">
+    <value>Podaj URL Biblioteki</value>
+  </data>
+  <data name="MsgSaveLibraryChanges" xml:space="preserve">
+    <value>Lista bibliotek została zmodyfikowana. Zapisać zmiany?</value>
   </data>
   <data name="DlgTitleApplicationOptions" xml:space="preserve">
     <value>Opcje Aplikacji</value>
