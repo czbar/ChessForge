@@ -28,15 +28,27 @@ namespace WebAccess
         /// <returns></returns>
         public static LibraryContent GetLibraryContent(string url, out string error)
         {
+            error = "";
+
             bool isDefault;
+            LibraryContent library = null;
 
-            string urlQuery = url + GetLibraryContentFileName(out isDefault);
-            LibraryContent library = GetContent(urlQuery, out error);
-
-            if (library == null && !isDefault)
+            // ensure url ends with a slash
+            if (!string.IsNullOrEmpty(url))
             {
-                urlQuery = url + GetLibraryContentFileName(out _, true);
+                if (!url.EndsWith("/"))
+                {
+                    url += "/";
+                }
+
+                string urlQuery = url + GetLibraryContentFileName(out isDefault);
                 library = GetContent(urlQuery, out error);
+
+                if (library == null && !isDefault)
+                {
+                    urlQuery = url + GetLibraryContentFileName(out _, true);
+                    library = GetContent(urlQuery, out error);
+                }
             }
 
             return library;
