@@ -123,6 +123,29 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Identifies a List Box item from the click coordinates. 
+        /// </summary>
+        /// <param name="listBox"></param>
+        /// <param name="point"></param>
+        /// <returns></returns>
+        public static ListBoxItem GetListBoxItemFromPoint(ListBox listBox, Point point)
+        {
+            HitTestResult result = VisualTreeHelper.HitTest(listBox, point);
+            if (result == null)
+            {
+                return null;
+            }
+
+            DependencyObject hitObject = result.VisualHit;
+            while (hitObject != null && !(hitObject is ListBoxItem))
+            {
+                hitObject = VisualTreeHelper.GetParent(hitObject);
+            }
+
+            return hitObject as ListBoxItem;
+        }
+
+        /// <summary>
         /// Opens a game preview dialog.
         /// </summary>
         /// <param name="article"></param>
