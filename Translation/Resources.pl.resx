@@ -792,6 +792,9 @@
   <data name="EgCentipawnAccuracy" xml:space="preserve">
     <value>maksymalne odchylenie od najlepszego ruchu wynosi</value>
   </data>
+  <data name="ReorderLines" xml:space="preserve">
+    <value>Kolejność Wariantów</value>
+  </data>
   <data name="Libraries" xml:space="preserve">
     <value>Biblioteki</value>
   </data>
