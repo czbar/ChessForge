@@ -517,6 +517,8 @@ namespace ChessForge
                 AppState.MainWin.ActiveTreeView.SelectLineAndMove(selectedLineId, selectedNodeId);
             }
 
+            AppState.MainWin.ActiveTreeView.BringSelectedRunIntoView();
+
             AppState.IsDirty = true;
 
             return true;
