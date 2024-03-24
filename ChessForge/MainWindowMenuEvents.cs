@@ -3003,6 +3003,37 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Invokes the dialog on the children of a Node to allow
+        /// the user to re-order lines.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnReorderLines_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                TreeNode nd = ActiveVariationTree.SelectedNode;
+                if (nd != null && nd.Parent != null)
+                {
+                    uint moveOffset = ActiveVariationTree.MoveNumberOffset;
+                    ReorderLinesDialog dlg = new ReorderLinesDialog(nd.Parent, moveOffset);
+                    {
+                        GuiUtilities.PositionDialog(dlg, this, 100);
+                        if (dlg.ShowDialog() == true)
+                        {
+                            AppState.IsDirty = true;
+                            ActiveVariationTree.BuildLines();
+                            ActiveTreeView.BuildFlowDocumentForVariationTree();
+                            SelectLineAndMoveInWorkbookViews(ActiveTreeView, nd.LineId, ActiveLine.GetSelectedPlyNodeIndex(false), false);
+                            PulseManager.BringSelectedRunIntoView();
+                        }
+                    }
+                }
+            }
+            catch { }
+        }
+
+        /// <summary>
         /// Creates a new Chapter from the currently selected line.
         /// </summary>
         /// <param name="sender"></param>
