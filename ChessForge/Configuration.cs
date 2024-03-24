@@ -28,7 +28,7 @@ namespace ChessForge
         /// <summary>
         /// Url to the currently configured private library.
         /// </summary>
-        public static string LastPrivateLibrary;
+        public static string LastPrivateLibrary = "";
 
         /// <summary>
         /// The list of configured private libraries.
@@ -699,10 +699,10 @@ namespace ChessForge
                 sb.Append(CFG_AUTOGEN_TREE_DEPTH + "=" + AutogenTreeDepth.ToString() + Environment.NewLine);
                 sb.Append(CFG_MOVE_SPEED + "=" + MoveSpeed.ToString() + Environment.NewLine);
                 sb.Append(CFG_DEFAULT_INDEX_DEPTH + "=" + DefaultIndexDepth.ToString() + Environment.NewLine);
-                sb.Append(CFG_LAST_DIRECTORY + "=" + LastOpenDirectory.ToString() + Environment.NewLine);
-                sb.Append(CFG_LAST_IMPORT_DIRECTORY + "=" + LastImportDirectory.ToString() + Environment.NewLine);
-                sb.Append(CFG_LAST_FILE + "=" + LastWorkbookFile.ToString() + Environment.NewLine);
-                sb.Append(CFG_LAST_PRIVATE_LIBRARY + "=" + LastPrivateLibrary.ToString() + Environment.NewLine);
+                sb.Append(CFG_LAST_DIRECTORY + "=" + (LastOpenDirectory ?? "").ToString() + Environment.NewLine);
+                sb.Append(CFG_LAST_IMPORT_DIRECTORY + "=" + (LastImportDirectory ?? "").ToString() + Environment.NewLine);
+                sb.Append(CFG_LAST_FILE + "=" + (LastWorkbookFile ?? "").ToString() + Environment.NewLine);
+                sb.Append(CFG_LAST_PRIVATE_LIBRARY + "=" + (LastPrivateLibrary ?? "").ToString() + Environment.NewLine);
 
                 foreach (string privateLibrary in PrivateLibraries)
                 {
