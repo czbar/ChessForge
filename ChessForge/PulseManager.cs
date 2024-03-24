@@ -19,6 +19,9 @@ namespace ChessForge
         // how many pulses before clearing the BringChapterIntoView request
         private static readonly int BRING_CHAPTER_INTO_VIEW_COUNT_DELAY = 8;
 
+        // how many pulses before clearing the BringMoveIntoView request
+        private static readonly int BRING_SELECTED_MOVE_INTO_VIEW_COUNT_DELAY = 2;
+
         // how many pulses before clearing the BringArticleIntoView request
         private static readonly int BRING_ARTICLE_INTO_VIEW_COUNT_DELAY = 4;
 
@@ -31,8 +34,14 @@ namespace ChessForge
         // counter monitoring delay on bring chapter into view
         private static int _bringChapterIntoViewCounter;
 
+        // counter monitoring delay on bring move into view
+        private static int _bringSelectedMoveIntoViewCounter;
+
         // counter monitoring delay on bring chapter into view
         private static int _bringArticleIntoViewCounter;
+
+        // whether counting until bringing the selected run into view
+        private static bool _bringSelectedRunIntoView = false;
 
         /// <summary>
         /// Index of the chapter to bring into view.
@@ -40,6 +49,14 @@ namespace ChessForge
         public static int ChaperIndexToBringIntoView
         {
             set => _chapterIndexToBringIntoView = value;
+        }
+
+        /// <summary>
+        /// Sets the flag for bringing the selected run into view.
+        /// </summary>
+        public static void BringSelectedRunIntoView()
+        {
+            _bringSelectedRunIntoView = true;
         }
 
         /// <summary>
@@ -62,7 +79,21 @@ namespace ChessForge
                     _chapterIndexToBringIntoView = -1;
                 }
             }
-            
+
+            if (_bringSelectedRunIntoView)
+            {
+                AppState.MainWin.Dispatcher.Invoke(() =>
+                {
+                    AppState.MainWin.BringSelectedRunIntoView();
+                });
+
+                if (_bringSelectedMoveIntoViewCounter++ > BRING_SELECTED_MOVE_INTO_VIEW_COUNT_DELAY)
+                {
+                    _bringSelectedMoveIntoViewCounter = 0;
+                    _bringSelectedRunIntoView = false;
+                }
+            }
+
             if (_articleToBringIntoView.ArticleIndex >= 0)
             {
                 AppState.MainWin.BringArticleIntoView(_articleToBringIntoView.ChapterIndex,
