@@ -16,7 +16,7 @@
         </GroupBox>
         <GroupBox Header="Private" Margin="10,85,10,10" VerticalAlignment="Top" Height="220">
             <Canvas Margin="0,0,0,0">
-                <ListBox x:Name="UiLbLibraries" Canvas.Left="15" Canvas.Top="15" Width="337" Height="130" MouseDoubleClick="UiLbLibraries_MouseDoubleClick"/>
+                <ListBox x:Name="UiLbLibraries" Canvas.Left="15" Canvas.Top="15" Width="337" Height="130" MouseDoubleClick="UiLbLibraries_MouseDoubleClick" SelectionChanged="UiLbLibraries_SelectionChanged"/>
                 <Button x:Name="UiBtnOpenPrivateLibrary" Content="{x:Static p:Resources.Open}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Canvas.Left="370" Canvas.Top="24" Click="UiBtnOpenPrivateLibrary_Click" />
                 <Button x:Name="UiBtnAddLibrary" Margin="100,165" Content="{x:Static p:Resources.Add}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Click="UiBtnAddLibrary_Click" />
                 <Button x:Name="UiBtnDeleteLibrary"  Margin="200,165" Content="{x:Static p:Resources.Delete}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Click="UiBtnDeleteLibrary_Click" />
