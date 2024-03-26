@@ -821,7 +821,7 @@ namespace ChessForge
             }
 
             // for some keys we do not want to bring the selected run into view
-            if (key != Key.LeftCtrl && key != Key.RightCtrl && key != Key.Next && key != Key.PageUp && key != Key.PageDown)
+            if (key != Key.LeftCtrl && key != Key.RightCtrl && key != Key.Next && key != Key.PageUp && key != Key.PageDown && key != Key.Home)
             {
                 _mainWin.BringSelectedRunIntoView();
             }
@@ -904,6 +904,7 @@ namespace ChessForge
                         break;
                     case Key.Home:
                         postKeyDownRow = -1;
+                        _mainWin.ActiveTreeView?.RichTextBoxControl.ScrollToHome();
                         break;
                     case Key.End:
                         GotoLastMove(out postKeyDownRow, out postKeyDownColumn);
