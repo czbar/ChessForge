@@ -423,7 +423,10 @@ namespace ChessForge
         private void VariationTreeView_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             int lastClickedNode = -1;
-            AppState.EnableTabViewMenuItems(WorkbookManager.ActiveTab, lastClickedNode, false);
+            if (e.ChangedButton == MouseButton.Right)
+            {
+                AppState.EnableTabViewMenuItems(WorkbookManager.ActiveTab, lastClickedNode, false);
+            }
         }
 
         /// <summary>
