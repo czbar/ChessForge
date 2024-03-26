@@ -111,7 +111,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Reorder-Lines");
+            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Working-with-Moves-and-Lines#reordering-lines");
         }
     }
 }
