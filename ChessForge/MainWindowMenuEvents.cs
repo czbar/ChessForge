@@ -156,7 +156,10 @@ namespace ChessForge
             }
             else
             {
-                ShowLibraryContent(Configuration.LastPrivateLibrary);
+                if (!ShowLibraryContent(Configuration.LastPrivateLibrary))
+                {
+                    UiMnOnlineLibraries_Click(null, null);
+                }
             }
         }
 
@@ -174,9 +177,11 @@ namespace ChessForge
         /// Obtains and displays content of the online library.
         /// </summary>
         /// <param name="url"></param>
-        private void ShowLibraryContent(string url)
+        private bool ShowLibraryContent(string url)
         {
+            bool result = false;
             string error;
+
             WebAccess.LibraryContent library = ReadLibraryContentFile(url, true, out error);
             if (library == null)
             {
@@ -184,6 +189,7 @@ namespace ChessForge
             }
             else
             {
+                result = true;
                 Point leftTop = Application.Current.MainWindow.PointToScreen(new Point(0, 0));
 
                 double offset = 50;
@@ -248,6 +254,8 @@ namespace ChessForge
                     }
                 }
             }
+
+            return result;
         }
 
         /// <summary>
