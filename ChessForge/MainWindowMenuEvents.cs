@@ -156,7 +156,10 @@ namespace ChessForge
             }
             else
             {
-                ShowLibraryContent(Configuration.LastPrivateLibrary);
+                if (!ShowLibraryContent(Configuration.LastPrivateLibrary))
+                {
+                    UiMnOnlineLibraries_Click(null, null);
+                }
             }
         }
 
@@ -174,9 +177,11 @@ namespace ChessForge
         /// Obtains and displays content of the online library.
         /// </summary>
         /// <param name="url"></param>
-        private void ShowLibraryContent(string url)
+        private bool ShowLibraryContent(string url)
         {
+            bool result = false;
             string error;
+
             WebAccess.LibraryContent library = ReadLibraryContentFile(url, true, out error);
             if (library == null)
             {
@@ -184,6 +189,7 @@ namespace ChessForge
             }
             else
             {
+                result = true;
                 Point leftTop = Application.Current.MainWindow.PointToScreen(new Point(0, 0));
 
                 double offset = 50;
@@ -248,6 +254,8 @@ namespace ChessForge
                     }
                 }
             }
+
+            return result;
         }
 
         /// <summary>
@@ -516,6 +524,8 @@ namespace ChessForge
             {
                 AppState.MainWin.ActiveTreeView.SelectLineAndMove(selectedLineId, selectedNodeId);
             }
+
+            AppState.MainWin.ActiveTreeView.BringSelectedRunIntoView();
 
             AppState.IsDirty = true;
 
@@ -2998,6 +3008,37 @@ namespace ChessForge
         private void UiMnPromoteLine_Click(object sender, RoutedEventArgs e)
         {
             ActiveTreeView.PromoteCurrentLine();
+        }
+
+        /// <summary>
+        /// Invokes the dialog on the children of a Node to allow
+        /// the user to re-order lines.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnReorderLines_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                TreeNode nd = ActiveVariationTree.SelectedNode;
+                if (nd != null && nd.Parent != null)
+                {
+                    uint moveOffset = ActiveVariationTree.MoveNumberOffset;
+                    ReorderLinesDialog dlg = new ReorderLinesDialog(nd.Parent, moveOffset);
+                    {
+                        GuiUtilities.PositionDialog(dlg, this, 100);
+                        if (dlg.ShowDialog() == true)
+                        {
+                            AppState.IsDirty = true;
+                            ActiveVariationTree.BuildLines();
+                            ActiveTreeView.BuildFlowDocumentForVariationTree();
+                            SelectLineAndMoveInWorkbookViews(ActiveTreeView, nd.LineId, ActiveLine.GetSelectedPlyNodeIndex(false), false);
+                            PulseManager.BringSelectedRunIntoView();
+                        }
+                    }
+                }
+            }
+            catch { }
         }
 
         /// <summary>

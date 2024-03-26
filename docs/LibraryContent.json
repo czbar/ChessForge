@@ -1,0 +1,122 @@
+{  
+    "redirect": null,
+    "messages": [
+    ],
+    "sections": [
+      {
+        "title": "Openings",
+        "description": "Workbooks examining theory and practice of various Openings.",
+        "subSections": [
+          {
+            "title": "General",
+            "description": "Openings analyzed for both sides.",
+            "books": [
+              {
+                "title": "The London System",
+                "description": "A comprehensive overview of the omnipresent London System.",
+                "file": "Openings/General/London System.pgn"
+              }
+            ]
+          },
+          {
+            "title": "White repertoire",
+            "description": "Openings analyzed from the White player's point of view",
+            "books": [
+              {
+                "title": "Budapest Gambit",
+                "description": "A couple of options to safely counter the Budapest Gambit.",
+                "file": "Openings/White/Budapest for White.pgn"
+              },
+              {
+                "title": "King's Indian - Karpov Variation",
+                "description": "A very popular and effective variation against King's Indian at all levels.",
+                "file": "Openings/White/King's Indian - Karpov variation for White.pgn"
+              }
+            ]
+          },
+          {
+            "title": "Black repertoire",
+            "description": "Openings analyzed from the Black player's point of view",
+            "books": [
+              {
+                "title": "Exchange French",
+                "description": "Breaking symmetry when facing the Exchange Variation in the French.",
+                "file": "Openings/Black/French Exchange for Black.pgn"
+              },
+              {
+                "title": "Stafford Gambit Traps",
+                "description": "Eric Rosen's entertaining treatise on the Stafford Gambit.  Adapted from Eric's lichess study.",
+                "file": "Openings/Black/Stafford Gambit for Black.pgn"
+              },
+              {
+                "title": "Ragozin Defense",
+                "description": "A solid addition to one's repertoire against 1.d4",
+                "file": "Openings/Black/Ragozin for Black.pgn"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Endgames and Exercises",
+        "description": "Collections of endgames and exercises.",
+        "subSections": [
+          {
+            "title": "Endgames",
+            "description": "",
+            "books": [
+              {
+                "title": "Endgames by NoseKnowsAll",
+                "description": "Great selection of endgames imported from a lichess study by NoseKnowsAll@lichess",
+                "file": "Endgames/Endgames by NoseKnowsAll.pgn"
+              },
+              {
+                "title": "Checkmate Patterns",
+                "description": "Basic checkmate patterns named and illustrated.",
+                "file": "Endgames/Checkmate Patterns.pgn"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Book Samples",
+        "description": "Book fragments adapted for Chess Forge.",
+        "subSections": [
+          {
+            "title": "",
+            "description": "",
+            "books": [
+              {
+                "title": "Chess Strategy Explained",
+                "description": "A small sample from the book by GM Bartek Macieja and IM Witalis Sapis.",
+                "file": "BookSamples/Chess Strategy Explained.pgn"
+              },
+              {
+                "title": "The Complete Chess Swindler",
+                "description": "A small example from the award winning book by GM. David Smerdon.",
+                "file": "BookSamples/The Complete Chess Swindler.pgn"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Tournaments",
+        "description": "Games from tournaments and matches.",
+        "subSections": [
+          {
+            "title": "",
+            "description": "",
+            "books": [
+              {
+                "title": "Men's World Championships",
+                "description": "All games from Men's World Championship Matches and Tournaments.",
+                "file": "Tournaments/Mens World Individual Championships.pgn"
+              },
+            ]
+          }
+        ]
+      }
+    ]
+}

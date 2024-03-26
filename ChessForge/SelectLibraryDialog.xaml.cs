@@ -34,6 +34,10 @@ namespace ChessForge
             foreach (string library in Configuration.PrivateLibraries)
             {
                 UiLbLibraries.Items.Add(library);
+                if (library == Configuration.LastPrivateLibrary)
+                {
+                    UiLbLibraries.SelectedItem = library;
+                }
             }
 
             EnableControls(false);
@@ -90,7 +94,7 @@ namespace ChessForge
         private bool ProceedOnOpen(bool isPrivate)
         {
             bool proceed = true;
-            
+
             if (_isModified)
             {
                 // ask the user whether to save chnages
@@ -112,6 +116,13 @@ namespace ChessForge
                 else
                 {
                     proceed = false;
+                }
+            }
+            else
+            {
+                if (isPrivate)
+                {
+                    Configuration.LastPrivateLibrary = UiLbLibraries.SelectedItem as string;
                 }
             }
 
@@ -268,6 +279,16 @@ namespace ChessForge
             {
                 EditItem(false);
             }
+        }
+
+        /// <summary>
+        /// Update states of the controls when the list selection changes.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiLbLibraries_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            EnableControls(false);
         }
     }
 }

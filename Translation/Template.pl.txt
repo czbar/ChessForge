@@ -1011,6 +1011,16 @@ EgSelectionAccuracyLabel=Dokładność wyboru ruchów wynosi
 #english: EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
 EgCentipawnAccuracy=maksymalne odchylenie od najlepszego ruchu wynosi
 
+
+#######################################
+#
+# Header: DIALOG Reorder Lines
+#
+
+#description: ReorderLines
+#english: ReorderLines=Reorder Lines
+ReorderLines=Kolejność Wariantów
+
 #######################################
 #
 # Header: DIALOG Select Libraries

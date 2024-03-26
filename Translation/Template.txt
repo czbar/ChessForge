@@ -1011,6 +1011,16 @@ EgSelectionAccuracyLabel=
 #english: EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
 EgCentipawnAccuracy=
 
+
+#######################################
+#
+# Header: DIALOG Reorder Lines
+#
+
+#description: ReorderLines
+#english: ReorderLines=Reorder Lines
+ReorderLines=
+
 #######################################
 #
 # Header: DIALOG Select Libraries

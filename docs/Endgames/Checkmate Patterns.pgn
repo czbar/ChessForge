@@ -1,0 +1,814 @@
+[ChessForgeWorkbook "Checkmate Patterns"]
+[WorkbookVersion "1.0"]
+[Guid "e31d3ebb-adb1-4ed5-9cf9-44c03d6db293"]
+[TrainingSide "White"]
+[StudyBoardOrientation "White"]
+[GameBoardOrientation "White"]
+[ExerciseBoardOrientation "White"]
+[White "CHESS FORGE"]
+[Black "WORKBOOK"]
+[Result "*"]
+
+*
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "Basic Patterns (source: Wikipedia)"]
+
+
+ *
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Exercise"]
+[FEN "3k4/8/3KQ3/8/8/8/8/8 w - - 1 1"]
+[Event "Queen Mate"]
+[Guid "266a0832-71f4-4a14-aff5-bf71a456c29f"]
+[Date ""]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in one move, where the king and queen force the opponent's king to the edge of the board"]
+
+
+1. Qd7# 1-0
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Exercise"]
+[FEN "3k4/8/3K4/8/8/8/8/R7 w - - 1 1"]
+[Event "Rook Mate (box mate)"]
+[Guid "40655c93-fa2e-433c-8a47-d5d3a97bb86c"]
+[Date ""]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in one move, where the king and rook force the opponent's king to the edge of the board"]
+
+
+1. Ra8# 1-0
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Exercise"]
+[FEN "7k/4B3/4B2K/8/8/8/8/8 w - - 1 1"]
+[Event "King and Two Bishops Mate"]
+[Guid "89b95722-62e6-41da-9113-2ad50941008b"]
+[Date ""]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in one move, where the king with two bishops force the opponent's king to the corner of the board to force mate"]
+
+
+1. Bf6# 1-0
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Exercise"]
+[FEN "3B3k/8/6KN/8/8/8/8/8 w - - 1 1"]
+[Event "Bishop and Knight Mate"]
+[Guid "6dcfa2f0-908d-48d8-8acb-43e999c6a624"]
+[Date "????.??.??"]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in one move, where the king with bishop and knight force the opponent's king to the corner of the board to force mate"]
+
+
+1. Bf6# 1-0
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Exercise"]
+[FEN "7k/8/5N1K/4N3/8/8/8/8 w - - 1 1"]
+[Event "King and Two Knights Mate"]
+[Guid "cb211f88-01ba-45c7-b4ef-b25522384139"]
+[Date ""]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in one move after Black king blundered and moved to the corner of the board"]
+
+
+1. Ng6# 1-0
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Exercise"]
+[FEN "8/7k/R7/1R6/8/8/8/7K w - - 1 1"]
+[Event "Ladder Mate (lawnmower mate)"]
+[Guid "08005b23-2110-4ba4-90b7-6d5359f35a65"]
+[Date ""]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in two moves, where two major pieces work together to push the enemy king to one side of the board"]
+
+
+1. Rb7+ Kg8 2. Ra8# 1-0
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Exercise"]
+[FEN "7k/7p/8/8/1BB5/8/8/7K w - - 1 1"]
+[Event "Double Bishop Mate"]
+[Guid "67ec3aa8-dfbc-4fbe-8a8e-281b46bbaf9c"]
+[Date "????.??.??"]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find Checkmate in one move, where two attacking bishops on parallel diagonals deliver checkmate to a king obstructed by a friendly piece"]
+
+
+1. Bc3# 1-0
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Exercise"]
+[FEN "1kn5/pp6/8/3NN3/8/8/8/7K w - - 1 1"]
+[Event "Double Knight Mate"]
+[Guid "4250b989-653f-475b-8a68-146e9fdcc1ab"]
+[Date ""]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in two moves, utilising the king being trapped behind friendly pawns and blocked by a friendly piece to the side, where the king is checked by a knight and forced into a position in which it can be checkmated by the other knight"]
+
+
+1. Nd7+ Ka8 2. Nc7# 1-0
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Exercise"]
+[FEN "8/8/4N1pk/8/8/1R6/8/5K2 w - - 0 1"]
+[Event "Anastasia's Mate"]
+[Guid "d4bac7f4-e461-4bb3-a6cf-113cdce145ef"]
+[Date ""]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in one move, where a knight and rook team up to trap the opposing king between the side of the board and a friendly piece"]
+
+
+1. Rh3# (1. Kf2)  1-0
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Exercise"]
+[FEN "6k1/6P1/5K2/8/8/8/8/7R w - - 1 1"]
+[Event "Anderssen's Mate"]
+[Guid "c9428c5b-d7f5-49bf-b6a3-60bd5405a495"]
+[Date "????.??.??"]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in one move, where a major piece supported by a diagonally attacking piece (pawn or bishop) checkmates the opposing king along the last rank"]
+
+
+1. Rh8# 1-0
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Exercise"]
+[FEN "7k/1R6/5N2/8/8/3K4/8/8 w - - 1 1"]
+[Event "Arabian Mate"]
+[Guid "a7c6ea2e-b2c4-4619-81d0-878bd9560933"]
+[Date ""]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in one move, where a knight and rook team up to trap the opposing king in a corner of the board"]
+
+
+1. Rh7# 1-0
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Exercise"]
+[FEN "6k1/5ppp/8/8/8/8/8/4R1K1 w - - 1 1"]
+[Event "Back Rank Mate"]
+[Guid "a36bedfa-52aa-4213-8825-2f3fc63dff04"]
+[Date ""]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in one move, where a major piece checkmates a king that is blocked in by its own pieces on the last rank"]
+
+
+1. Re8# 1-0
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Exercise"]
+[FEN "6k1/8/7Q/8/8/7B/8/7K w - - 1 1"]
+[Event "Balestra Mate"]
+[Guid "350dd9b0-3ef3-4cf5-a8cb-7ee01d04aabe"]
+[Date "????.??.??"]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in one move, where a queen is cutting off the king's escape both diagonally and vertically whilst the bishop delivers checkmate"]
+
+
+1. Be6# 1-0
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Exercise"]
+[FEN "5rk1/8/8/6N1/8/8/1B6/1B5K w - - 1 1"]
+[Event "Blackburn's Mate"]
+[Guid "0c863a63-cfa4-4ab3-bc72-7b070a2427ba"]
+[Date ""]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in one move utilising the king blocked by its own piece, where the knight confines the enemy king's sideways escape, while a bishop pair takes the remaining two diagonals off from the enemy king"]
+
+
+1. Bh7# 1-0
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Exercise"]
+[FEN "5rk1/2R1R1pp/8/8/8/8/8/7K w - - 1 1"]
+[Event "Blind Swine Mate"]
+[Guid "c6005165-e8ac-4bc7-93fb-bbf21c3f77a9"]
+[Date "????.??.??"]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in three moves utilising the rooks on the second last rank"]
+
+
+1. Rxg7+ Kh8 2. Rxh7+ Kg8 3. Rcg7# 1-0
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Exercise"]
+[FEN "7k/7p/3N4/8/8/8/8/6RK w - - 1 1"]
+[Event "Corner Mate"]
+[Guid "65aed7f6-69ea-4b45-8b67-fe2a675ea3f1"]
+[Date "????.??.??"]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in one move with minor piece, utilising the king's confinment to the corner by major piece and a friendly pawn blocking the final escape square"]
+
+
+1. Nf7# 1-0
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Exercise"]
+[FEN "5k2/8/6B1/8/8/1Q6/8/7K w - - 1 1"]
+[Event "Damiano's Bishop Mate"]
+[Guid "684e048f-16f8-4b19-878c-2a3b0e5d9901"]
+[Date "????.??.??"]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in one move with the queen supported by a bishop"]
+
+
+1. Qf7# 1-0
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Exercise"]
+[FEN "5qk1/6p1/6P1/8/8/7Q/8/6K1 w - - 1 1"]
+[Event "Damiano's Mate"]
+[Guid "c0bed212-ad98-48ca-ace4-b110d113fa3d"]
+[Date ""]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in one move with the queen utilising the king's confinment to the edge of the board and a friendly pieces blocking the final escape squares"]
+
+
+1. Qh7# 1-0
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Exercise"]
+[FEN "6bk/7p/8/8/5B2/8/8/2K5 w - - 1 1"]
+[Event "Diagonal Corridor Mate"]
+[Guid "f4a54c6b-e42a-4bb7-86fc-d80597d0424c"]
+[Date ""]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in one move utilising the diagonal and opponent's king position in a corner being blocked by fiendly pieces"]
+
+
+1. Be5# 1-0
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Exercise"]
+[FEN "8/8/8/6p1/5qk1/1Q6/6K1/8 w - - 1 1"]
+[Event "Dovetail Mate (Cozio's mate)"]
+[Guid "baebff7b-ee9b-4d0c-8644-fe70fc7a78d7"]
+[Date ""]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in one move with the queen utilising the king being cut off by two friendly pieces (neither is an unpinned knight)"]
+
+
+1. Qh3# 1-0
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Exercise"]
+[FEN "2rkr3/8/8/8/1Q6/8/8/6K1 w - - 1 1"]
+[Event "Epaulette Mate"]
+[Guid "2f9ada28-2a9d-4228-9e99-c0742f6d1c30"]
+[Date ""]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in one move, where two parallel retreat squares for a checked king are occupied by its own pieces"]
+
+
+1. Qd6# 1-0
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Exercise"]
+[FEN "7k/6p1/8/6Q1/2B5/8/8/7K w - - 1 1"]
+[Event "Greco's Mate"]
+[Guid "d05f4664-aa50-4ee6-b154-395ddb3b357d"]
+[Date ""]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in one move utilising the king's confinment with a friendly pawn, where a bishop is cutting off the king's escape whilst the major piece delivers checkmate"]
+
+
+1. Qh5# 1-0
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Exercise"]
+[FEN "R7/4kp2/5N2/4P3/8/8/8/7K w - - 1 1"]
+[Event "Hook Mate"]
+[Guid "d825095e-fc3d-4e6e-8213-abbfae26ed1f"]
+[Date "????.??.??"]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in one move involving the use of a rook, knight, and pawn along with one friendly pawn limiting the king's escape (the rook is protected by the knight, and the knight is protected by the pawn, while the pawn also attacks one of the king's escape squares)"]
+
+
+1. Re8# 1-0
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Exercise"]
+[FEN "2kr4/3p4/8/4B3/8/8/4B3/2K5 w - - 0 1"]
+[Event "Kieseritzky's Mate (sometimes known as Boden's mate)"]
+[Guid "e7628bc2-d774-4bf1-93c0-02b5b8e668c9"]
+[Date "????.??.??"]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find Checkmate in one move, where two attacking bishops on criss-crossing diagonals deliver checkmate to a king obstructed by friendly pieces"]
+
+
+1. Ba6# 1-0
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Exercise"]
+[FEN "8/8/7R/k7/2Q5/8/8/7K w - - 1 1"]
+[Event "Kill Box Mate"]
+[Guid "49985158-9883-40d5-8583-bd715223de42"]
+[Date ""]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in one move with a rook assisted by the queen, where the rook is adjacent to the king, while the queen supports the rook, being separated from it by one empty square on the same diagonal (this forms a 3 by 3 box shape, inside which the enemy king is trapped. The king could be anywhere on the board, but must have no escape squares due to being on the edge of the board or being blocked off by friendly or enemy pieces)"]
+
+
+1. Ra6# 1-0
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Exercise"]
+[FEN "3q1b2/4kB2/3p4/4N3/8/2N5/8/7K w - - 1 1"]
+[Event "Légal's mate"]
+[Guid "4be13c41-b3c3-4b1a-86ba-1bbae33518a6"]
+[Date "????.??.??"]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in one move utilising friendly pieces blocking the king, where 3 minor pieces coordinate to administer checkmate"]
+
+
+1. Nd5# 1-0
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Exercise"]
+[FEN "6k1/5p2/5PpQ/8/8/8/8/7K w - - 1 1"]
+[Event "Lolli's Mate"]
+[Guid "33bac5f9-d431-4d04-b1ec-1624674f0384"]
+[Date "????.??.??"]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in one move, where a pawn and queen infiltrate the opponent's fianchetto position"]
+
+
+1. Qg7# 1-0
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Exercise"]
+[FEN "Q7/5Bpk/7p/8/8/8/8/7K w - - 1 1"]
+[Event "Max Lange's Mate"]
+[Guid "4362e744-2aaa-484f-983c-972100920d33"]
+[Date "????.??.??"]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in one move, where a queen and bishop team up to trap the opposing king between the side of the board and friendly pieces"]
+
+
+1. Qg8# 1-0
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Exercise"]
+[FEN "6k1/5p2/8/8/8/8/1B6/6KR w - - 1 1"]
+[Event "Mayet's Mate"]
+[Guid "7a2b6c68-b897-4dd6-a2a3-62521dc8dd5a"]
+[Date ""]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in one move using a rook supported by a bishop"]
+
+
+1. Rh8# 1-0
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Exercise"]
+[FEN "7k/7p/8/8/7B/8/8/6RK w - - 1 1"]
+[Event "Morphy's Mate"]
+[Guid "977c091b-2473-4f9a-923a-401369e7fc3d"]
+[Date "????.??.??"]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in one move with a bishop, utilising the king's confinment to the corner by major piece and a friendly pawn blocking the final escape square"]
+
+
+1. Bf6# 1-0
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Exercise"]
+[FEN "4k3/5p2/8/6B1/8/8/8/3R3K w - - 1 1"]
+[Event "Opera Mate"]
+[Guid "d989a6d1-5372-4325-99ba-1f6021375fa2"]
+[Date ""]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in one move utilising the king's confinment to the corner by a friendly piece (other then a knight), by attacking an uncastled king on the back rank with a rook using a bishop to protect it"]
+
+
+1. Rd8# 1-0
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Exercise"]
+[FEN "8/8/8/7R/pkp5/1n6/PP6/7K w - - 1 1"]
+[Event "Pawn Mate (David and Goliath mate)"]
+[Guid "3c003842-c9ed-42b8-898d-c5bfb8e05736"]
+[Date ""]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in one move with a pawn utilising king's confinment by a friendly pawns"]
+
+
+1. a3# 1-0
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Exercise"]
+[FEN "5rk1/5pBp/8/8/8/8/8/6RK w - - 1 1"]
+[Event "Pillsbury's Mate"]
+[Guid "c4114d43-b4f6-4372-9434-899003ec2e27"]
+[Date ""]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in one move  by attacking the king with the rook while the bishop is cutting off the king"]
+
+
+1. Bf6# 1-0
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Exercise"]
+[FEN "1nb5/1pk5/2p5/8/7B/8/8/3R3K w - - 1 1"]
+[Event "Réti's Mate"]
+[Guid "1873ceb4-d4d8-4d30-b1b2-ff1bd274ee78"]
+[Date "????.??.??"]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in one move by trapping the enemy king with four of its own pieces that are situated on flight squares and attacking it with a bishop protected by a major piece"]
+
+
+1. Bd8# 1-0
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Exercise"]
+[FEN "6rk/6pp/8/4N3/8/8/8/7K w - - 1 1"]
+[Event "Smothered Mate"]
+[Guid "3a08e72c-3bdb-461c-b378-26c0d644b3ba"]
+[Date "????.??.??"]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in one move with a knight utilising the opponent's king being smothered (surrounded) by friendly pieces"]
+
+
+1. Nf7# 1-0
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Exercise"]
+[FEN "5rk1/5p1p/8/3N4/8/2B5/8/7K w - - 1 1"]
+[Event "Suffocation Mate"]
+[Guid "efcf3774-1799-4906-bbd9-7350580ad58c"]
+[Date ""]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in one move using the knight to attack the opponent's king and the bishop to confine the king's escape routes"]
+
+
+1. Ne7# 1-0
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Exercise"]
+[FEN "3r1r2/4k3/R7/3Q4/8/8/8/7K w - - 1 1"]
+[Event "Swallow's Tail Mate (guéridon mate)"]
+[Guid "7db7c096-cb29-4195-8ce4-a075660d39ba"]
+[Date ""]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in one move with a queen protected by another piece, utilising king's confinment by friendly pieces"]
+
+
+1. Qe6# 1-0
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Exercise"]
+[FEN "3R4/4kp2/8/8/8/8/7Q/7K w - - 1 1"]
+[Event "Triangle Mate"]
+[Guid "52dfd507-591e-411e-a915-e35fc8c97162"]
+[Date "????.??.??"]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in one move utilising king's confinment by the edge of the board or friendly pieces, with a queen supported by a rook on the same file two squares away (the queen, rook, and king together form a triangular shape)"]
+[Preamble ""]
+
+
+1. Qd6# 1-0
+
+[ChapterId "1"]
+[ChapterTitle "Basic Patterns (source: Wikipedia)"]
+[ContentType "Exercise"]
+[FEN "4k3/R7/4NK2/8/8/8/8/8 w - - 1 1"]
+[Event "Vuković's Mate"]
+[Guid "1dac10ab-c756-4410-89d3-51bd6a5782b6"]
+[Date ""]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in one move with a rook protected by a piece and a knight covering the remaining escape squares, utilising the king's position at the edge of the board"]
+
+
+1. Re7# 1-0
+
+
+
+[ChapterId "2"]
+[ChapterTitle "Complex Exercises using Basic Patterns"]
+[ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "Complex Exercises using Basic Patterns"]
+
+
+ *
+
+[ChapterId "2"]
+[ChapterTitle "Complex Exercises using Basic Patterns"]
+[ContentType "Exercise"]
+[FEN "3r1rk1/pp3ppp/3pn3/1qpN4/5PP1/P5PQ/1PP5/1K1R4 w - - 0 1"]
+[Event "Mate in 3 with Anastasia's Mate Pattern"]
+[Guid "089c1de2-9d53-4b6e-b08c-ace3f2070e21"]
+[Date ""]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in three moves, where a knight and rook team up to trap the opposing king between the side of the board and a friendly piece"]
+
+
+1. Ne7+ Kh8 2. Qxh7+ $1 {[%quiz 1]}  Kxh7 3. Rh1# 1-0
+
+[ChapterId "2"]
+[ChapterTitle "Complex Exercises using Basic Patterns"]
+[ContentType "Exercise"]
+[FEN "6R1/2p1qr1k/1p1p1r1p/p3p3/2P1P3/2P3Q1/PP3P2/2K3R1 w - - 0 1"]
+[Event "Mate in 2 with Damiano's Mate Pattern"]
+[Guid "4f047e39-98b9-4beb-bac3-ef27a006dd61"]
+[Date ""]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in two moves with the queen utilising the king's confinment to the edge of the board"]
+
+
+1. Rh8+ $1 {[%quiz 1]}  Kxh8 2. Qg8# 1-0
+
+[ChapterId "2"]
+[ChapterTitle "Complex Exercises using Basic Patterns"]
+[ContentType "Exercise"]
+[FEN "2kr2nr/pp1n1ppp/2p1p3/8/1P1P1B2/2N2Q1P/1PPKBPP1/7q w - - 0 1"]
+[Event "Mate in 2 with Boden's Mate Pattern"]
+[Guid "faaacbf2-f0e4-4b53-be1f-f721064e95ad"]
+[Date ""]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find Checkmate in two moves, where two attacking bishops on criss-crossing diagonals deliver checkmate to a king obstructed by friendly pieces"]
+
+
+1. Qxc6+ $1 {[%quiz 1]}  bxc6 2. Ba6# 1-0
+
+[ChapterId "2"]
+[ChapterTitle "Complex Exercises using Basic Patterns"]
+[ContentType "Exercise"]
+[FEN "5r2/p3Qnkp/1p3Np1/2p3P1/3q4/5P2/PP3R1r/4R1K1 w - - 0 1"]
+[Event "Mate in 3 with Hook Mate Pattern"]
+[Guid "b659effa-0e69-4251-8a10-43470bd635ab"]
+[Date ""]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in three moves involving the use of a rook, knight, and pawn along with friendly piees limiting the king's escape"]
+
+
+1. Qxf8+ $1 {[%eval +#2][%quiz 1]}  Kxf8 2. Re8+ Kg7 3. Rg8# 1-0
+
+[ChapterId "2"]
+[ChapterTitle "Complex Exercises using Basic Patterns"]
+[ContentType "Exercise"]
+[FEN "5r1k/6p1/p2p1rRp/2pPpq1Q/8/PPp1P3/5P1R/K7 w - - 0 1"]
+[Event "Mate in 2 with Ladder Mate Pattern"]
+[Guid "7e2767b8-602e-4edd-9969-fd049c49d703"]
+[Date ""]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in two moves by sacrificing major piece and utilising the enemy's king position on the edge of the board"]
+
+
+ {[%eval +#2]} 1. Qxh6+ $1 {[%eval +#2][%quiz 1]}  gxh6 {[%eval +#1]}  2. Rhxh6+ 
+{[%eval #]}  1-0
+
+[ChapterId "2"]
+[ChapterTitle "Complex Exercises using Basic Patterns"]
+[ContentType "Exercise"]
+[FEN "r1n3k1/pp2q2p/2ppr1pQ/4p3/8/2N4R/PPP3PP/5RK1 w - - 0 1"]
+[Event "Mate in 2 with Swallow's Tale Mate Pattern"]
+[Guid "3530a9e9-8db3-4b9b-b342-f4b7250372be"]
+[Date ""]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in two moves with a queen protected by another piece, utilising king's confinment by friendly pieces"]
+
+
+ {[%eval +#2]} 1. Rf8+ $1 {[%eval +#1][%quiz 1]}  Qxf8 2. Qxh7# 1-0
+
+[ChapterId "2"]
+[ChapterTitle "Complex Exercises using Basic Patterns"]
+[ContentType "Exercise"]
+[FEN "4rr1k/p4pb1/5R1p/1p2q3/3p4/3P2R1/PP1Q2BP/7K w - - 0 1"]
+[Event "Mate in 2 with Ladder Mate Pattern"]
+[Guid "abd97bac-809c-482b-9658-1d7ab52ff6e1"]
+[Date ""]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in two moves by sacrificing major piece and utilising the enemy's king position on the edge of the board"]
+
+
+ {[%eval +#2]} 1. Qxh6+ $1 {[%eval +#1][%quiz 1]}  Bxh6 2. Rxh6# 1-0
+
+[ChapterId "2"]
+[ChapterTitle "Complex Exercises using Basic Patterns"]
+[ContentType "Exercise"]
+[FEN "2kr1r2/pp1n3p/2p1bp2/8/5B2/8/PP2BP1P/2R1K1R1 w - - 0 1"]
+[Event "Mate in 2 with Boden's Mate Pattern"]
+[Guid "b489396e-a334-4733-a8be-92a2de0144c0"]
+[Date "????.??.??"]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find Checkmate in two moves, where two attacking bishops on criss-crossing diagonals deliver checkmate to a king obstructed by friendly pieces"]
+
+
+ {[%eval +#2]} 1. Rxc6+ $1 {[%eval +#1][%quiz 1]}  bxc6 2. Ba6# 1-0
+
+[ChapterId "2"]
+[ChapterTitle "Complex Exercises using Basic Patterns"]
+[ContentType "Exercise"]
+[FEN "1q1r1r2/1bb2pk1/pN1pp3/4n1p1/1PPQP3/1N2BPp1/P5P1/2RR1B1K b - - 0 1"]
+[Event "Mate in 6 with Anderssen's Mate"]
+[Guid "39746df0-b984-4720-94e3-c877714f9ead"]
+[Date "????.??.??"]
+[White ""]
+[Black ""]
+[Result "0-1"]
+[Preamble "Find checkmate in six moves, where a major piece supported by a diagonally attacking piece checkmates the opposing king along the last rank"]
+
+
+ {[%eval -#6]}  Rh8+ {[%eval -#5]}  2. Kg1 {[%eval -#5]}  Rh1+ $1 {[%eval 
+-#4][%quiz 1]}  3. Kxh1 {[%eval -#4]}  Rh8+ {[%eval -#3]}  4. Kg1 {[%eval -#3]}  
+Rh1+ {[%eval -#2]}  5. Kxh1 {[%eval -#2]}  Qh8+ {[%eval -#1]}  6. Kg1 {[%eval 
+-#1]}  Qh2# {[%eval #]}  0-1
+
+[ChapterId "2"]
+[ChapterTitle "Complex Exercises using Basic Patterns"]
+[ContentType "Exercise"]
+[FEN "1rb1nrk1/5p1p/p1q1p1p1/1pbp2N1/2P2P2/PP1BP3/1B4PP/1R1QK2R w - - 0 1"]
+[Event "Mate in 5 with Damiano's Bishop Mate and Légal's Mate Patterns"]
+[Guid "dac8ca7c-17c3-40b1-95ac-4389291328c1"]
+[Date ""]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in 5 moves utilising friendly pieces blocking the king and sacrificing major piece and then depending on the opponents reply, either:"]
+[Preamble "* delivering Damiano's Bishop Mate with the queen supported by a bishop"]
+[Preamble "* delivering Légal's mate by coordinating 3 minor pieces to administer the checkmate"]
+
+
+ {[%eval +#5]} 1. Qh5 $1 {[%eval +#4][%quiz 1]}  h6 {[%eval +#4]}  (1... gxh5 2. 
+Bxh7#) 2. Qxh6 {[%eval +#3]}  Nf6 {[%eval +#3]}  3. Bxf6 {[%eval +#2]}  Bb4+ 
+{[%eval +#2]}  4. axb4 {[%eval +#1]}  Re8 {[%eval +#1]}  5. Qg7# {[%eval #]}  1-0
+
+[ChapterId "2"]
+[ChapterTitle "Complex Exercises using Basic Patterns"]
+[ContentType "Exercise"]
+[FEN "r1bq1rk1/pp1pb1p1/2n1p3/4P1P1/3P4/2P5/P4PP1/R1BQK2R w - - 0 1"]
+[Event "Mate in 5 with Damiano's Mate Pattern"]
+[Guid "721c9621-16b2-497f-b4ae-f2b0ac8ae3ba"]
+[Date "????.??.??"]
+[White ""]
+[Black ""]
+[Result "1-0"]
+[Preamble "Find checkmate in five moves with the queen utilising the king's confinment to the edge of the board and a friendly pieces blocking the final escape squares"]
+
+
+ {[%eval +#5]} 1. Rh8+ $1 {[%eval +#4][%quiz 1]}  Kxh8 2. Qh5+ Kg8 3. g6 Rf5 4. 
+Qh7+ Kf8 5. Qh8# {[%cal Gf8f7,Gh8d8,Gg6f7][%csl Gf7,Gd8]}  1-0
+
+[ChapterId "2"]
+[ChapterTitle "Complex Exercises using Basic Patterns"]
+[ContentType "Exercise"]
+[FEN "6k1/1b5p/pp1pPqp1/2p1r3/8/8/PPQ2PPP/3R1RK1 b - - 0 1"]
+[Event "Mate in 5 with Morphy's Mate Pattern"]
+[Guid "bbff22d8-fa4f-4e7c-aa30-b86e89cba2e1"]
+[Date ""]
+[White ""]
+[Black ""]
+[Result "0-1"]
+[Preamble "Find checkmate in five moves with a bishop by sacrificing the queen and forcing the king's confinment to the corner by a rook and a friendly pawn blocking the final escape square"]
+
+
+ {[%eval -12.62]}  Qf3 $1 {[%eval -#4][%quiz 2]}  2. gxf3 {[%eval -#2]}  (2. 
+Qxg6+ {[%eval -#4]Delaying the check mate by a couple of moves.}  hxg6 {[%eval 
+-#3]}  3. Rd5 {[%eval -#3]}  Bxd5 {[%eval -#2]}  4. gxf3 {[%eval -#2]}  Rg5+ 
+{[%eval -#1]}  5. Kh1 {[%eval -#1]}  Bxf3# {[%eval #]} ) 2... Rg5+ {[%eval -#1]} 
+ 3. Kh1 {[%eval -#1]}  Bxf3# {[%eval #]}  0-1
+
+
+

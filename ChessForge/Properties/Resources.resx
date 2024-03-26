@@ -792,6 +792,9 @@
   <data name="EgCentipawnAccuracy" xml:space="preserve">
     <value>max allowed centipawn deviation from the best move is</value>
   </data>
+  <data name="ReorderLines" xml:space="preserve">
+    <value>Reorder Lines</value>
+  </data>
   <data name="Libraries" xml:space="preserve">
     <value>Libraries</value>
   </data>

@@ -1127,6 +1127,12 @@ namespace ChessForge
                             case "UiMnStPasteMoves":
                                 menuItem.IsEnabled = SystemClipboard.HasSerializedData();
                                 break;
+                            case "UiMnPromoteLine":
+                                menuItem.IsEnabled = tree.SelectedNode != null && !tree.SelectedNode.IsMainLine();
+                                break;
+                            case "UiMnReorderLines":
+                                menuItem.IsEnabled = tree.SelectedNode != null && tree.SelectedNode.Parent != null && tree.SelectedNode.Parent.Children.Count > 1;
+                                break;
                         }
                     }
                 }

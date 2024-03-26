@@ -5148,6 +5148,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reorder Lines.
+        /// </summary>
+        public static string ReorderLines {
+            get {
+                return ResourceManager.GetString("ReorderLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Replay.
         /// </summary>
         public static string Replay {

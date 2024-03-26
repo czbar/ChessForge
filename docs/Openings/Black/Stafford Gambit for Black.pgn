@@ -1,0 +1,608 @@
+[ChessForgeWorkbook "Stafford Gambit (from Eric Rosen's lichess study)"]
+[WorkbookVersion "1.0"]
+[Guid "2c88ee46-429c-417d-8c16-9f029a344939"]
+[TrainingSide "Black"]
+[StudyBoardOrientation "Black"]
+[GameBoardOrientation "Black"]
+[ExerciseBoardOrientation "None"]
+[White "CHESS FORGE"]
+[Black "WORKBOOK"]
+[Result "*"]
+{This PGN Workbook is optimized for viewing in Chess Forge https://sourceforge.net/projects/chessforge/ 
+Chess Forge is a Free and Open Source Windows application.}
+
+*
+
+[ChapterTitle "Oh no my queen!"]
+[Guid "2785afec-3301-47fc-818a-8f62c7000a24"]
+[ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "Oh no my queen!"]
+
+
+ {[%eval +0.23]} 1. e4 e5 2. Nf3 Nf6 3. Nxe5 Nc6 4. Nxc6 dxc6 5. d3 Bc5 6. Bg5 
+$2 {[%eval -3.30]}  Nxe4 $3 {[%thmb] Oh no! My queen! }  7. Bxd8 (7. dxe4 Bxf2+ 
+$1 {[%cal Gd8d1,Re1d1]}  8. Kxf2 (8. Ke2 Bg4+ $19) 8... Qxd1 $19)  (7. Qe2 Qxg5 
+8. Qxe4+ Kd8 $1 9. Be2 Qc1+ {[%eval -7.10] Yuuki_is_here - IM EricRosen, 0-1, -, https://lichess.org/f2yOCAVe } 
+) 7... Bxf2+ 8. Ke2 {[%eval -#1]}  Bg4# {[%eval #]}  *
+
+[Guid "2785afec-3301-47fc-818a-8f62c7000a24"]
+[ContentType "Intro"]
+[White "Chapter"]
+[Black "Introduction"]
+
+{Note: the content of this Workbook has been adapted from Eric Rosen's study on lichess https://lichess.org/study/whCVdUeM .  
+
+
+
+The Exercises in this Workbook are positions selected from those Studies. We have also added a few Model Games.
+
+
+
+ 1. e4  e5  2. ♘f3  ♞f6  3. ♘xe5  ♞c6 
+
+        ♜⨯♝♛♚♝⨯♜
+        ♟♟♟♟⨯♟♟♟
+        ⨯⨯♞⨯⨯♞⨯⨯
+        ⨯⨯⨯⨯♘⨯⨯⨯
+        ⨯⨯⨯⨯♙⨯⨯⨯
+        ⨯⨯⨯⨯⨯⨯⨯⨯
+        ♙♙♙♙⨯♙♙♙
+        ♖♘♗♕♔♗⨯♖
+
+  
+
+Now, over to Eric:
+
+
+
+The Stafford Gambit. An objectively dubious, but HIGHLY VENOMOUS opening.
+
+
+
+ 4. ♘xc6  dxc6 
+
+
+
+From this position, there are so many traps unsuspecting players can stumble into from the white side. Every chapter features a different trap with annotations. I explain the many traps in this video: https://youtu.be/nH_fiqlLp2U}
+
+{[%xaml PEZsb3dEb2N1bWVudCBQYWdlUGFkZGluZz0iNSwwLDUsMCIgQWxsb3dEcm9wPSJGYWxzZSIg
+eG1sbnM9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd2luZngvMjAwNi94YW1sL3ByZXNlbnRh
+dGlvbiIgeG1sbnM6eD0iaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93aW5meC8yMDA2L3hhbWwi
+PjxQYXJhZ3JhcGggTmFtZT0iUmNkZWFlMWE3MjcwOTRkNmE4NDZlMjg3NjcyZjA3Mzk2Ij48UnVuIEZv
+bnRTaXplPSIxNS41IiB4bWw6c3BhY2U9InByZXNlcnZlIiAvPjwvUGFyYWdyYXBoPjxQYXJhZ3JhcGgg
+TmFtZT0iUmI3ZDliMmY4ZjJkOTRiYTk5ZTU0MDY2NjY3NDgzMWUxIj48UnVuIEZvbnRXZWlnaHQ9IkJv
+bGQiIEZvbnRTaXplPSIxMy41Ij5Ob3RlOjwvUnVuPjxSdW4gRm9udFdlaWdodD0iTm9ybWFsIiBGb250
+U2l6ZT0iMTMuNSIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+IHRoZSBjb250ZW50IG9mIHRoaXMgV29ya2Jv
+b2sgaGFzIGJlZW4gYWRhcHRlZCBmcm9tIEVyaWMgUm9zZW4ncyBzdHVkeSBvbiBsaWNoZXNzIGh0dHBz
+Oi8vbGljaGVzcy5vcmcvc3R1ZHkvd2hDVmRVZU0gLiAgPC9SdW4+PC9QYXJhZ3JhcGg+PFBhcmFncmFw
+aCBOYW1lPSJSMDA2MGVkNmZhOGFkNDRhNDkxYTcyN2Y2N2YyYjQ1ZjAiPjxSdW4gRm9udFdlaWdodD0i
+Tm9ybWFsIiBGb250U2l6ZT0iMTMuNSIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgLz48L1BhcmFncmFwaD48
+UGFyYWdyYXBoIE5hbWU9IlI0ZWI3MDEwMGQ3Yjc0MmEzYjU4OGRlNjBjYTJjM2UyYyI+PFJ1biBGb250
+V2VpZ2h0PSJOb3JtYWwiIEZvbnRTaXplPSIxMy41Ij5UaGUgRXhlcmNpc2VzIGluIHRoaXMgV29ya2Jv
+b2sgYXJlIHBvc2l0aW9ucyBzZWxlY3RlZCBmcm9tIHRob3NlIFN0dWRpZXMuIFdlIGhhdmUgYWxzbyBh
+ZGRlZCBhIGZldyBNb2RlbCBHYW1lcy48L1J1bj48L1BhcmFncmFwaD48UGFyYWdyYXBoIE5hbWU9IlJj
+NWMxYjE3NGM0MzA0Mzk3YjM2YTI5ZGU2ZjI2MWIwNiI+PFJ1biBGb250V2VpZ2h0PSJOb3JtYWwiIEZv
+bnRTaXplPSIxMy41IiB4bWw6c3BhY2U9InByZXNlcnZlIiAvPjwvUGFyYWdyYXBoPjxQYXJhZ3JhcGgg
+TmFtZT0iUjA1M2FlOWRhNjM5MDQ5MTRhMGQ2Y2I0YTIzNTMyNDkyIj48UnVuIEZvbnRXZWlnaHQ9Ik5v
+cm1hbCIgRm9udFNpemU9IjEzLjUiIHhtbDpzcGFjZT0icHJlc2VydmUiIC8+PElubGluZVVJQ29udGFp
+bmVyIE5hbWU9InVpY19tb3ZlXzEiPjxUZXh0QmxvY2sgTmFtZT0idGJfbW92ZV8xIj48UnVuIEZvbnRX
+ZWlnaHQ9IkJvbGQiIEZvcmVncm91bmQ9IiNGRjAwMDBGRiIgTmFtZT0icnVuX21vdmVfMSIgeG1sOnNw
+YWNlPSJwcmVzZXJ2ZSI+IDEuIGU0IDwvUnVuPjwvVGV4dEJsb2NrPjwvSW5saW5lVUlDb250YWluZXI+
+PElubGluZVVJQ29udGFpbmVyIE5hbWU9InVpY19tb3ZlXzIiPjxUZXh0QmxvY2sgTmFtZT0idGJfbW92
+ZV8yIj48UnVuIEZvbnRXZWlnaHQ9IkJvbGQiIEZvcmVncm91bmQ9IiNGRjAwMDBGRiIgTmFtZT0icnVu
+X21vdmVfMiIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+IGU1IDwvUnVuPjwvVGV4dEJsb2NrPjwvSW5saW5l
+VUlDb250YWluZXI+PElubGluZVVJQ29udGFpbmVyIE5hbWU9InVpY19tb3ZlXzMiPjxUZXh0QmxvY2sg
+TmFtZT0idGJfbW92ZV8zIj48UnVuIEZvbnRXZWlnaHQ9IkJvbGQiIEZvcmVncm91bmQ9IiNGRjAwMDBG
+RiIgTmFtZT0icnVuX21vdmVfMyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+IDIuIOKZmGYzIDwvUnVuPjwv
+VGV4dEJsb2NrPjwvSW5saW5lVUlDb250YWluZXI+PElubGluZVVJQ29udGFpbmVyIE5hbWU9InVpY19t
+b3ZlXzQiPjxUZXh0QmxvY2sgTmFtZT0idGJfbW92ZV80Ij48UnVuIEZvbnRXZWlnaHQ9IkJvbGQiIEZv
+cmVncm91bmQ9IiNGRjAwMDBGRiIgTmFtZT0icnVuX21vdmVfNCIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+
+IOKZnmY2IDwvUnVuPjwvVGV4dEJsb2NrPjwvSW5saW5lVUlDb250YWluZXI+PElubGluZVVJQ29udGFp
+bmVyIE5hbWU9InVpY19tb3ZlXzUiPjxUZXh0QmxvY2sgTmFtZT0idGJfbW92ZV81Ij48UnVuIEZvbnRX
+ZWlnaHQ9IkJvbGQiIEZvcmVncm91bmQ9IiNGRjAwMDBGRiIgTmFtZT0icnVuX21vdmVfNSIgeG1sOnNw
+YWNlPSJwcmVzZXJ2ZSI+IDMuIOKZmHhlNSA8L1J1bj48L1RleHRCbG9jaz48L0lubGluZVVJQ29udGFp
+bmVyPjxJbmxpbmVVSUNvbnRhaW5lciBOYW1lPSJ1aWNfbW92ZV82Ij48VGV4dEJsb2NrIE5hbWU9InRi
+X21vdmVfNiI+PFJ1biBGb250V2VpZ2h0PSJCb2xkIiBGb3JlZ3JvdW5kPSIjRkYwMDAwRkYiIE5hbWU9
+InJ1bl9tb3ZlXzYiIHhtbDpzcGFjZT0icHJlc2VydmUiPiDimZ5jNiA8L1J1bj48L1RleHRCbG9jaz48
+L0lubGluZVVJQ29udGFpbmVyPjwvUGFyYWdyYXBoPjxQYXJhZ3JhcGggTWFyZ2luPSIyMCwyMCwwLDIw
+IiBOYW1lPSJwYXJhX2RpYWdfNyI+PElubGluZVVJQ29udGFpbmVyIE5hbWU9InVpY19tb3ZlXzciPjxW
+aWV3Ym94IFdpZHRoPSIyNzAiIEhlaWdodD0iMjUwIiBWaXNpYmlsaXR5PSJWaXNpYmxlIj48Q2FudmFz
+IEJhY2tncm91bmQ9IiNGRjAwMDAwMCIgV2lkdGg9IjI3MCIgSGVpZ2h0PSIyNTAiPjxJbWFnZSBTb3Vy
+Y2U9InBhY2s6Ly9hcHBsaWNhdGlvbjosLCwvUmVzb3VyY2VzL0ltYWdlcy9CbGFja1Jvb2tTbWFsbC5w
+bmciIENhbnZhcy5MZWZ0PSI1IiBDYW52YXMuVG9wPSI1IiBQYW5lbC5aSW5kZXg9IjUiIC8+PEltYWdl
+IFNvdXJjZT0icGFjazovL2FwcGxpY2F0aW9uOiwsLC9SZXNvdXJjZXMvSW1hZ2VzL0JsYWNrUGF3blNt
+YWxsLnBuZyIgQ2FudmFzLkxlZnQ9IjUiIENhbnZhcy5Ub3A9IjM1IiBQYW5lbC5aSW5kZXg9IjUiIC8+
+PEltYWdlIFNvdXJjZT0ie3g6TnVsbH0iIENhbnZhcy5MZWZ0PSI1IiBDYW52YXMuVG9wPSI2NSIgUGFu
+ZWwuWkluZGV4PSI1IiAvPjxJbWFnZSBTb3VyY2U9Int4Ok51bGx9IiBDYW52YXMuTGVmdD0iNSIgQ2Fu
+dmFzLlRvcD0iOTUiIFBhbmVsLlpJbmRleD0iNSIgLz48SW1hZ2UgU291cmNlPSJ7eDpOdWxsfSIgQ2Fu
+dmFzLkxlZnQ9IjUiIENhbnZhcy5Ub3A9IjEyNSIgUGFuZWwuWkluZGV4PSI1IiAvPjxJbWFnZSBTb3Vy
+Y2U9Int4Ok51bGx9IiBDYW52YXMuTGVmdD0iNSIgQ2FudmFzLlRvcD0iMTU1IiBQYW5lbC5aSW5kZXg9
+IjUiIC8+PEltYWdlIFNvdXJjZT0icGFjazovL2FwcGxpY2F0aW9uOiwsLC9SZXNvdXJjZXMvSW1hZ2Vz
+L1doaXRlUGF3blNtYWxsLnBuZyIgQ2FudmFzLkxlZnQ9IjUiIENhbnZhcy5Ub3A9IjE4NSIgUGFuZWwu
+WkluZGV4PSI1IiAvPjxJbWFnZSBTb3VyY2U9InBhY2s6Ly9hcHBsaWNhdGlvbjosLCwvUmVzb3VyY2Vz
+L0ltYWdlcy9XaGl0ZVJvb2tTbWFsbC5wbmciIENhbnZhcy5MZWZ0PSI1IiBDYW52YXMuVG9wPSIyMTUi
+IFBhbmVsLlpJbmRleD0iNSIgLz48SW1hZ2UgU291cmNlPSJ7eDpOdWxsfSIgQ2FudmFzLkxlZnQ9IjM1
+IiBDYW52YXMuVG9wPSI1IiBQYW5lbC5aSW5kZXg9IjUiIC8+PEltYWdlIFNvdXJjZT0icGFjazovL2Fw
+cGxpY2F0aW9uOiwsLC9SZXNvdXJjZXMvSW1hZ2VzL0JsYWNrUGF3blNtYWxsLnBuZyIgQ2FudmFzLkxl
+ZnQ9IjM1IiBDYW52YXMuVG9wPSIzNSIgUGFuZWwuWkluZGV4PSI1IiAvPjxJbWFnZSBTb3VyY2U9Int4
+Ok51bGx9IiBDYW52YXMuTGVmdD0iMzUiIENhbnZhcy5Ub3A9IjY1IiBQYW5lbC5aSW5kZXg9IjUiIC8+
+PEltYWdlIFNvdXJjZT0ie3g6TnVsbH0iIENhbnZhcy5MZWZ0PSIzNSIgQ2FudmFzLlRvcD0iOTUiIFBh
+bmVsLlpJbmRleD0iNSIgLz48SW1hZ2UgU291cmNlPSJ7eDpOdWxsfSIgQ2FudmFzLkxlZnQ9IjM1IiBD
+YW52YXMuVG9wPSIxMjUiIFBhbmVsLlpJbmRleD0iNSIgLz48SW1hZ2UgU291cmNlPSJ7eDpOdWxsfSIg
+Q2FudmFzLkxlZnQ9IjM1IiBDYW52YXMuVG9wPSIxNTUiIFBhbmVsLlpJbmRleD0iNSIgLz48SW1hZ2Ug
+U291cmNlPSJwYWNrOi8vYXBwbGljYXRpb246LCwsL1Jlc291cmNlcy9JbWFnZXMvV2hpdGVQYXduU21h
+bGwucG5nIiBDYW52YXMuTGVmdD0iMzUiIENhbnZhcy5Ub3A9IjE4NSIgUGFuZWwuWkluZGV4PSI1IiAv
+PjxJbWFnZSBTb3VyY2U9InBhY2s6Ly9hcHBsaWNhdGlvbjosLCwvUmVzb3VyY2VzL0ltYWdlcy9XaGl0
+ZUtuaWdodFNtYWxsLnBuZyIgQ2FudmFzLkxlZnQ9IjM1IiBDYW52YXMuVG9wPSIyMTUiIFBhbmVsLlpJ
+bmRleD0iNSIgLz48SW1hZ2UgU291cmNlPSJwYWNrOi8vYXBwbGljYXRpb246LCwsL1Jlc291cmNlcy9J
+bWFnZXMvQmxhY2tCaXNob3BTbWFsbC5wbmciIENhbnZhcy5MZWZ0PSI2NSIgQ2FudmFzLlRvcD0iNSIg
+UGFuZWwuWkluZGV4PSI1IiAvPjxJbWFnZSBTb3VyY2U9InBhY2s6Ly9hcHBsaWNhdGlvbjosLCwvUmVz
+b3VyY2VzL0ltYWdlcy9CbGFja1Bhd25TbWFsbC5wbmciIENhbnZhcy5MZWZ0PSI2NSIgQ2FudmFzLlRv
+cD0iMzUiIFBhbmVsLlpJbmRleD0iNSIgLz48SW1hZ2UgU291cmNlPSJwYWNrOi8vYXBwbGljYXRpb246
+LCwsL1Jlc291cmNlcy9JbWFnZXMvQmxhY2tLbmlnaHRTbWFsbC5wbmciIENhbnZhcy5MZWZ0PSI2NSIg
+Q2FudmFzLlRvcD0iNjUiIFBhbmVsLlpJbmRleD0iNSIgLz48SW1hZ2UgU291cmNlPSJ7eDpOdWxsfSIg
+Q2FudmFzLkxlZnQ9IjY1IiBDYW52YXMuVG9wPSI5NSIgUGFuZWwuWkluZGV4PSI1IiAvPjxJbWFnZSBT
+b3VyY2U9Int4Ok51bGx9IiBDYW52YXMuTGVmdD0iNjUiIENhbnZhcy5Ub3A9IjEyNSIgUGFuZWwuWklu
+ZGV4PSI1IiAvPjxJbWFnZSBTb3VyY2U9Int4Ok51bGx9IiBDYW52YXMuTGVmdD0iNjUiIENhbnZhcy5U
+b3A9IjE1NSIgUGFuZWwuWkluZGV4PSI1IiAvPjxJbWFnZSBTb3VyY2U9InBhY2s6Ly9hcHBsaWNhdGlv
+bjosLCwvUmVzb3VyY2VzL0ltYWdlcy9XaGl0ZVBhd25TbWFsbC5wbmciIENhbnZhcy5MZWZ0PSI2NSIg
+Q2FudmFzLlRvcD0iMTg1IiBQYW5lbC5aSW5kZXg9IjUiIC8+PEltYWdlIFNvdXJjZT0icGFjazovL2Fw
+cGxpY2F0aW9uOiwsLC9SZXNvdXJjZXMvSW1hZ2VzL1doaXRlQmlzaG9wU21hbGwucG5nIiBDYW52YXMu
+TGVmdD0iNjUiIENhbnZhcy5Ub3A9IjIxNSIgUGFuZWwuWkluZGV4PSI1IiAvPjxJbWFnZSBTb3VyY2U9
+InBhY2s6Ly9hcHBsaWNhdGlvbjosLCwvUmVzb3VyY2VzL0ltYWdlcy9CbGFja1F1ZWVuU21hbGwucG5n
+IiBDYW52YXMuTGVmdD0iOTUiIENhbnZhcy5Ub3A9IjUiIFBhbmVsLlpJbmRleD0iNSIgLz48SW1hZ2Ug
+U291cmNlPSJwYWNrOi8vYXBwbGljYXRpb246LCwsL1Jlc291cmNlcy9JbWFnZXMvQmxhY2tQYXduU21h
+bGwucG5nIiBDYW52YXMuTGVmdD0iOTUiIENhbnZhcy5Ub3A9IjM1IiBQYW5lbC5aSW5kZXg9IjUiIC8+
+PEltYWdlIFNvdXJjZT0ie3g6TnVsbH0iIENhbnZhcy5MZWZ0PSI5NSIgQ2FudmFzLlRvcD0iNjUiIFBh
+bmVsLlpJbmRleD0iNSIgLz48SW1hZ2UgU291cmNlPSJ7eDpOdWxsfSIgQ2FudmFzLkxlZnQ9Ijk1IiBD
+YW52YXMuVG9wPSI5NSIgUGFuZWwuWkluZGV4PSI1IiAvPjxJbWFnZSBTb3VyY2U9Int4Ok51bGx9IiBD
+YW52YXMuTGVmdD0iOTUiIENhbnZhcy5Ub3A9IjEyNSIgUGFuZWwuWkluZGV4PSI1IiAvPjxJbWFnZSBT
+b3VyY2U9Int4Ok51bGx9IiBDYW52YXMuTGVmdD0iOTUiIENhbnZhcy5Ub3A9IjE1NSIgUGFuZWwuWklu
+ZGV4PSI1IiAvPjxJbWFnZSBTb3VyY2U9InBhY2s6Ly9hcHBsaWNhdGlvbjosLCwvUmVzb3VyY2VzL0lt
+YWdlcy9XaGl0ZVBhd25TbWFsbC5wbmciIENhbnZhcy5MZWZ0PSI5NSIgQ2FudmFzLlRvcD0iMTg1IiBQ
+YW5lbC5aSW5kZXg9IjUiIC8+PEltYWdlIFNvdXJjZT0icGFjazovL2FwcGxpY2F0aW9uOiwsLC9SZXNv
+dXJjZXMvSW1hZ2VzL1doaXRlUXVlZW5TbWFsbC5wbmciIENhbnZhcy5MZWZ0PSI5NSIgQ2FudmFzLlRv
+cD0iMjE1IiBQYW5lbC5aSW5kZXg9IjUiIC8+PEltYWdlIFNvdXJjZT0icGFjazovL2FwcGxpY2F0aW9u
+OiwsLC9SZXNvdXJjZXMvSW1hZ2VzL0JsYWNrS2luZ1NtYWxsLnBuZyIgQ2FudmFzLkxlZnQ9IjEyNSIg
+Q2FudmFzLlRvcD0iNSIgUGFuZWwuWkluZGV4PSI1IiAvPjxJbWFnZSBTb3VyY2U9Int4Ok51bGx9IiBD
+YW52YXMuTGVmdD0iMTI1IiBDYW52YXMuVG9wPSIzNSIgUGFuZWwuWkluZGV4PSI1IiAvPjxJbWFnZSBT
+b3VyY2U9Int4Ok51bGx9IiBDYW52YXMuTGVmdD0iMTI1IiBDYW52YXMuVG9wPSI2NSIgUGFuZWwuWklu
+ZGV4PSI1IiAvPjxJbWFnZSBTb3VyY2U9InBhY2s6Ly9hcHBsaWNhdGlvbjosLCwvUmVzb3VyY2VzL0lt
+YWdlcy9XaGl0ZUtuaWdodFNtYWxsLnBuZyIgQ2FudmFzLkxlZnQ9IjEyNSIgQ2FudmFzLlRvcD0iOTUi
+IFBhbmVsLlpJbmRleD0iNSIgLz48SW1hZ2UgU291cmNlPSJwYWNrOi8vYXBwbGljYXRpb246LCwsL1Jl
+c291cmNlcy9JbWFnZXMvV2hpdGVQYXduU21hbGwucG5nIiBDYW52YXMuTGVmdD0iMTI1IiBDYW52YXMu
+VG9wPSIxMjUiIFBhbmVsLlpJbmRleD0iNSIgLz48SW1hZ2UgU291cmNlPSJ7eDpOdWxsfSIgQ2FudmFz
+LkxlZnQ9IjEyNSIgQ2FudmFzLlRvcD0iMTU1IiBQYW5lbC5aSW5kZXg9IjUiIC8+PEltYWdlIFNvdXJj
+ZT0ie3g6TnVsbH0iIENhbnZhcy5MZWZ0PSIxMjUiIENhbnZhcy5Ub3A9IjE4NSIgUGFuZWwuWkluZGV4
+PSI1IiAvPjxJbWFnZSBTb3VyY2U9InBhY2s6Ly9hcHBsaWNhdGlvbjosLCwvUmVzb3VyY2VzL0ltYWdl
+cy9XaGl0ZUtpbmdTbWFsbC5wbmciIENhbnZhcy5MZWZ0PSIxMjUiIENhbnZhcy5Ub3A9IjIxNSIgUGFu
+ZWwuWkluZGV4PSI1IiAvPjxJbWFnZSBTb3VyY2U9InBhY2s6Ly9hcHBsaWNhdGlvbjosLCwvUmVzb3Vy
+Y2VzL0ltYWdlcy9CbGFja0Jpc2hvcFNtYWxsLnBuZyIgQ2FudmFzLkxlZnQ9IjE1NSIgQ2FudmFzLlRv
+cD0iNSIgUGFuZWwuWkluZGV4PSI1IiAvPjxJbWFnZSBTb3VyY2U9InBhY2s6Ly9hcHBsaWNhdGlvbjos
+LCwvUmVzb3VyY2VzL0ltYWdlcy9CbGFja1Bhd25TbWFsbC5wbmciIENhbnZhcy5MZWZ0PSIxNTUiIENh
+bnZhcy5Ub3A9IjM1IiBQYW5lbC5aSW5kZXg9IjUiIC8+PEltYWdlIFNvdXJjZT0icGFjazovL2FwcGxp
+Y2F0aW9uOiwsLC9SZXNvdXJjZXMvSW1hZ2VzL0JsYWNrS25pZ2h0U21hbGwucG5nIiBDYW52YXMuTGVm
+dD0iMTU1IiBDYW52YXMuVG9wPSI2NSIgUGFuZWwuWkluZGV4PSI1IiAvPjxJbWFnZSBTb3VyY2U9Int4
+Ok51bGx9IiBDYW52YXMuTGVmdD0iMTU1IiBDYW52YXMuVG9wPSI5NSIgUGFuZWwuWkluZGV4PSI1IiAv
+PjxJbWFnZSBTb3VyY2U9Int4Ok51bGx9IiBDYW52YXMuTGVmdD0iMTU1IiBDYW52YXMuVG9wPSIxMjUi
+IFBhbmVsLlpJbmRleD0iNSIgLz48SW1hZ2UgU291cmNlPSJ7eDpOdWxsfSIgQ2FudmFzLkxlZnQ9IjE1
+NSIgQ2FudmFzLlRvcD0iMTU1IiBQYW5lbC5aSW5kZXg9IjUiIC8+PEltYWdlIFNvdXJjZT0icGFjazov
+L2FwcGxpY2F0aW9uOiwsLC9SZXNvdXJjZXMvSW1hZ2VzL1doaXRlUGF3blNtYWxsLnBuZyIgQ2FudmFz
+LkxlZnQ9IjE1NSIgQ2FudmFzLlRvcD0iMTg1IiBQYW5lbC5aSW5kZXg9IjUiIC8+PEltYWdlIFNvdXJj
+ZT0icGFjazovL2FwcGxpY2F0aW9uOiwsLC9SZXNvdXJjZXMvSW1hZ2VzL1doaXRlQmlzaG9wU21hbGwu
+cG5nIiBDYW52YXMuTGVmdD0iMTU1IiBDYW52YXMuVG9wPSIyMTUiIFBhbmVsLlpJbmRleD0iNSIgLz48
+SW1hZ2UgU291cmNlPSJ7eDpOdWxsfSIgQ2FudmFzLkxlZnQ9IjE4NSIgQ2FudmFzLlRvcD0iNSIgUGFu
+ZWwuWkluZGV4PSI1IiAvPjxJbWFnZSBTb3VyY2U9InBhY2s6Ly9hcHBsaWNhdGlvbjosLCwvUmVzb3Vy
+Y2VzL0ltYWdlcy9CbGFja1Bhd25TbWFsbC5wbmciIENhbnZhcy5MZWZ0PSIxODUiIENhbnZhcy5Ub3A9
+IjM1IiBQYW5lbC5aSW5kZXg9IjUiIC8+PEltYWdlIFNvdXJjZT0ie3g6TnVsbH0iIENhbnZhcy5MZWZ0
+PSIxODUiIENhbnZhcy5Ub3A9IjY1IiBQYW5lbC5aSW5kZXg9IjUiIC8+PEltYWdlIFNvdXJjZT0ie3g6
+TnVsbH0iIENhbnZhcy5MZWZ0PSIxODUiIENhbnZhcy5Ub3A9Ijk1IiBQYW5lbC5aSW5kZXg9IjUiIC8+
+PEltYWdlIFNvdXJjZT0ie3g6TnVsbH0iIENhbnZhcy5MZWZ0PSIxODUiIENhbnZhcy5Ub3A9IjEyNSIg
+UGFuZWwuWkluZGV4PSI1IiAvPjxJbWFnZSBTb3VyY2U9Int4Ok51bGx9IiBDYW52YXMuTGVmdD0iMTg1
+IiBDYW52YXMuVG9wPSIxNTUiIFBhbmVsLlpJbmRleD0iNSIgLz48SW1hZ2UgU291cmNlPSJwYWNrOi8v
+YXBwbGljYXRpb246LCwsL1Jlc291cmNlcy9JbWFnZXMvV2hpdGVQYXduU21hbGwucG5nIiBDYW52YXMu
+TGVmdD0iMTg1IiBDYW52YXMuVG9wPSIxODUiIFBhbmVsLlpJbmRleD0iNSIgLz48SW1hZ2UgU291cmNl
+PSJ7eDpOdWxsfSIgQ2FudmFzLkxlZnQ9IjE4NSIgQ2FudmFzLlRvcD0iMjE1IiBQYW5lbC5aSW5kZXg9
+IjUiIC8+PEltYWdlIFNvdXJjZT0icGFjazovL2FwcGxpY2F0aW9uOiwsLC9SZXNvdXJjZXMvSW1hZ2Vz
+L0JsYWNrUm9va1NtYWxsLnBuZyIgQ2FudmFzLkxlZnQ9IjIxNSIgQ2FudmFzLlRvcD0iNSIgUGFuZWwu
+WkluZGV4PSI1IiAvPjxJbWFnZSBTb3VyY2U9InBhY2s6Ly9hcHBsaWNhdGlvbjosLCwvUmVzb3VyY2Vz
+L0ltYWdlcy9CbGFja1Bhd25TbWFsbC5wbmciIENhbnZhcy5MZWZ0PSIyMTUiIENhbnZhcy5Ub3A9IjM1
+IiBQYW5lbC5aSW5kZXg9IjUiIC8+PEltYWdlIFNvdXJjZT0ie3g6TnVsbH0iIENhbnZhcy5MZWZ0PSIy
+MTUiIENhbnZhcy5Ub3A9IjY1IiBQYW5lbC5aSW5kZXg9IjUiIC8+PEltYWdlIFNvdXJjZT0ie3g6TnVs
+bH0iIENhbnZhcy5MZWZ0PSIyMTUiIENhbnZhcy5Ub3A9Ijk1IiBQYW5lbC5aSW5kZXg9IjUiIC8+PElt
+YWdlIFNvdXJjZT0ie3g6TnVsbH0iIENhbnZhcy5MZWZ0PSIyMTUiIENhbnZhcy5Ub3A9IjEyNSIgUGFu
+ZWwuWkluZGV4PSI1IiAvPjxJbWFnZSBTb3VyY2U9Int4Ok51bGx9IiBDYW52YXMuTGVmdD0iMjE1IiBD
+YW52YXMuVG9wPSIxNTUiIFBhbmVsLlpJbmRleD0iNSIgLz48SW1hZ2UgU291cmNlPSJwYWNrOi8vYXBw
+bGljYXRpb246LCwsL1Jlc291cmNlcy9JbWFnZXMvV2hpdGVQYXduU21hbGwucG5nIiBDYW52YXMuTGVm
+dD0iMjE1IiBDYW52YXMuVG9wPSIxODUiIFBhbmVsLlpJbmRleD0iNSIgLz48SW1hZ2UgU291cmNlPSJw
+YWNrOi8vYXBwbGljYXRpb246LCwsL1Jlc291cmNlcy9JbWFnZXMvV2hpdGVSb29rU21hbGwucG5nIiBD
+YW52YXMuTGVmdD0iMjE1IiBDYW52YXMuVG9wPSIyMTUiIFBhbmVsLlpJbmRleD0iNSIgLz48SW1hZ2Ug
+U291cmNlPSJwYWNrOi8vYXBwbGljYXRpb246LCwsL1Jlc291cmNlcy9JbWFnZXMvQ2hlc3NCb2FyZEdy
+ZXlTbWFsbC5wbmciIE1hcmdpbj0iNSw1LDUsNSIgLz48Q2FudmFzIEJhY2tncm91bmQ9IiNGRkZGRkZG
+RiIgV2lkdGg9IjIxIiBIZWlnaHQ9IjI1MiIgQ2FudmFzLkxlZnQ9IjI1MCIgQ2FudmFzLlRvcD0iLTEi
+PjxJbWFnZSBTb3VyY2U9InBhY2s6Ly9hcHBsaWNhdGlvbjosLCwvUmVzb3VyY2VzL0ltYWdlcy9mbGlw
+X2JvYXJkLnBuZyIgTmFtZT0iZmxpcF9pbWdfNyIgV2lkdGg9IjE2IiBIZWlnaHQ9IjE2IiBDYW52YXMu
+TGVmdD0iNCIgQ2FudmFzLlRvcD0iMTE3IiAvPjwvQ2FudmFzPjxDaGVja0JveCBJc0NoZWNrZWQ9IkZh
+bHNlIiBWaXNpYmlsaXR5PSJDb2xsYXBzZWQiIENhbnZhcy5MZWZ0PSIxMDAiIENhbnZhcy5Ub3A9IjEw
+MCIgLz48L0NhbnZhcz48L1ZpZXdib3g+PC9JbmxpbmVVSUNvbnRhaW5lcj48L1BhcmFncmFwaD48UGFy
+YWdyYXBoIE5hbWU9IlI2NjBmYjQ4OTkxMjM0ZmQ5OTVjMjkxODY2ZDhiNmQ5ZSI+Tm93LCBvdmVyIHRv
+IEVyaWM6PC9QYXJhZ3JhcGg+PFBhcmFncmFwaCBOYW1lPSJSNDMyODQyZGViYTIyNDFlODhkYzU2NThh
+NTNiNjdlOTUiIHhtbDpzcGFjZT0icHJlc2VydmUiIC8+PFBhcmFncmFwaCBOYW1lPSJSMzUzYWU3Zjk1
+MjFmNGRkMzkzOTRmZTZkMjM3ZWI4MzIiPjxSdW4gRm9udFdlaWdodD0iTm9ybWFsIiBGb250U2l6ZT0i
+MTQiPlRoZSBTdGFmZm9yZCBHYW1iaXQuIEFuIG9iamVjdGl2ZWx5IGR1YmlvdXMsIGJ1dCBISUdITFkg
+VkVOT01PVVMgb3BlbmluZy48L1J1bj48L1BhcmFncmFwaD48UGFyYWdyYXBoIE5hbWU9IlI2MDA1NmY5
+NjgyZWM0ZWQzODFlMDU2YmFhZDZjYzdmOCIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgLz48UGFyYWdyYXBo
+IE5hbWU9IlI1YWMyN2FiMDU3Nzk0MDcyODk3MzQyMzk5NDRlMmVhNCI+PElubGluZVVJQ29udGFpbmVy
+IE5hbWU9InVpY19tb3ZlXzgiPjxUZXh0QmxvY2sgTmFtZT0idGJfbW92ZV84Ij48UnVuIEZvbnRXZWln
+aHQ9IkJvbGQiIEZvcmVncm91bmQ9IiNGRjAwMDBGRiIgTmFtZT0icnVuX21vdmVfOCIgeG1sOnNwYWNl
+PSJwcmVzZXJ2ZSI+IDQuIOKZmHhjNiA8L1J1bj48L1RleHRCbG9jaz48L0lubGluZVVJQ29udGFpbmVy
+PjxJbmxpbmVVSUNvbnRhaW5lciBOYW1lPSJ1aWNfbW92ZV85Ij48VGV4dEJsb2NrIE5hbWU9InRiX21v
+dmVfOSI+PFJ1biBGb250V2VpZ2h0PSJCb2xkIiBGb3JlZ3JvdW5kPSIjRkYwMDAwRkYiIE5hbWU9InJ1
+bl9tb3ZlXzkiIHhtbDpzcGFjZT0icHJlc2VydmUiPiBkeGM2IDwvUnVuPjwvVGV4dEJsb2NrPjwvSW5s
+aW5lVUlDb250YWluZXI+PC9QYXJhZ3JhcGg+PFBhcmFncmFwaCBOYW1lPSJSMDUxZjBmZWU1ZjQ5NGE0
+ZGExNDIwMjVkZWExNjg2YmYiIHhtbDpzcGFjZT0icHJlc2VydmUiIC8+PFBhcmFncmFwaCBOYW1lPSJS
+MTAzODRjNDE2YTc2NDU2YmFkZTk4ZTA5N2ZlNTJiN2UiPjxSdW4gRm9udFdlaWdodD0iTm9ybWFsIiBG
+b250U2l6ZT0iMTQiPkZyb20gdGhpcyBwb3NpdGlvbiwgdGhlcmUgYXJlIHNvIG1hbnkgdHJhcHMgdW5z
+dXNwZWN0aW5nIHBsYXllcnMgY2FuIHN0dW1ibGUgaW50byBmcm9tIHRoZSB3aGl0ZSBzaWRlLiBFdmVy
+eSBjaGFwdGVyIGZlYXR1cmVzIGEgZGlmZmVyZW50IHRyYXAgd2l0aCBhbm5vdGF0aW9ucy4gSSBleHBs
+YWluIHRoZSBtYW55IHRyYXBzIGluIHRoaXMgdmlkZW86IGh0dHBzOi8veW91dHUuYmUvbkhfZmlxbExw
+MlU8L1J1bj48L1BhcmFncmFwaD48L0Zsb3dEb2N1bWVudD4= node_id=0 text= fen=cm5icWtibnI
+vcHBwcHBwcHAvOC84LzgvOC9QUFBQUFBQUC9STkJRS0JOUiB3IEtRa3EgLSAwIDE= node_id=1 text
+=MS4gZTQ= fen=cm5icWtibnIvcHBwcHBwcHAvOC84LzRQMy84L1BQUFAxUFBQL1JOQlFLQk5SIGIgS1
+FrcSAtIDAgMA== node_id=2 text=ZTU= fen=cm5icWtibnIvcHBwcDFwcHAvOC80cDMvNFAzLzgvU
+FBQUDFQUFAvUk5CUUtCTlIgdyBLUWtxIC0gMCAx node_id=3 text=Mi4g4pmYZjM= fen=cm5icWti
+bnIvcHBwcDFwcHAvOC80cDMvNFAzLzVOMi9QUFBQMVBQUC9STkJRS0IxUiBiIEtRa3EgLSAwIDA= nod
+e_id=4 text=4pmeZjY= fen=cm5icWtiMXIvcHBwcDFwcHAvNW4yLzRwMy80UDMvNU4yL1BQUFAxUFB
+QL1JOQlFLQjFSIHcgS1FrcSAtIDAgMQ== node_id=5 text=My4g4pmYeGU1 fen=cm5icWtiMXIvcH
+BwcDFwcHAvNW4yLzROMy80UDMvOC9QUFBQMVBQUC9STkJRS0IxUiBiIEtRa3EgLSAwIDA= node_id=6
+ text=4pmeYzY= fen=cjFicWtiMXIvcHBwcDFwcHAvMm4ybjIvNE4zLzRQMy84L1BQUFAxUFBQL1JOQ
+lFLQjFSIHcgS1FrcSAtIDAgMQ== node_id=7 text= fen=cjFicWtiMXIvcHBwcDFwcHAvMm4ybjIv
+NE4zLzRQMy84L1BQUFAxUFBQL1JOQlFLQjFSIHcgS1FrcSAtIDEgMQ== node_id=8 text=NC4g4pmY
+eGM2 fen=cjFicWtiMXIvcHBwcDFwcHAvMk4ybjIvOC80UDMvOC9QUFBQMVBQUC9STkJRS0IxUiBiIEt
+Ra3EgLSAxIDA= node_id=9 text=ZHhjNg== fen=cjFicWtiMXIvcHBwMnBwcC8ycDJuMi84LzRQMy
+84L1BQUFAxUFBQL1JOQlFLQjFSIHcgS1FrcSAtIDEgMQ== ]}
+ *
+
+[ContentType "Exercise"]
+[FEN "r1bqk2r/ppp2ppp/2p2n2/2b3B1/4P3/3P4/PPP2PPP/RN1QKB1R b KQkq - 1 1"]
+[Event "Study Tree after 6.Bg5?"]
+[Guid "fa61e7f9-93dc-4385-a910-2c1784fd34ec"]
+[Date ""]
+[White ""]
+[Black ""]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "*"]
+
+
+ Nxe4 $3 { Oh no! My queen! }  2. Bxd8 (2. dxe4 Bxf2+ $1 {[%cal Gd8d1,Re1d1]}  
+3. Kxf2 (3. Ke2 Bg4+ $19) 3... Qxd1 $19)  (2. Qe2 Qxg5 3. Qxe4+ Kd8 $1 4. Be2 
+Qc1+ { Yuuki_is_here - IM EricRosen, 0-1, -, https://lichess.org/f2yOCAVe } ) 
+2... Bxf2+ 3. Ke2 Bg4# *
+
+
+
+[ChapterTitle "Oh no my knight!"]
+[Guid "58d931c6-5843-440a-b472-aa5119734b3f"]
+[ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "Oh no my knight!"]
+
+
+ {[%eval +0.25]} 1. e4 e5 2. Nf3 Nf6 3. Nxe5 Nc6 4. Nxc6 dxc6 5. e5 Ne4 {[%eval +1.83]}  
+6. d3 $2 {[%cal Gd2d3][%csl Gd3] Natural move, but a huge mistake! }  (6. d4 {[%csl Gd4]}  
+Qh4 {[%eval +1.75]}  7. g3 {[%eval -2.09]}  Nxg3 {[%eval -2.16]}  8. fxg3 {[%eval -2.49]}  
+Qe4+ $19 {[%eval -2.44][%cal Ge4h1,Ge4e1]} ) 6... Bc5 $3 $19 {[%thmb][%csl Rf2]} 
+ 7. dxe4 { oh no my knight! }  (7. Be3 Bxe3 8. fxe3 Qh4+ 9. g3 (9. Ke2 Qf2#) 
+9... Nxg3 10. hxg3 Qxh1 $19) 7... Bxf2+ 8. Kxf2 (8. Ke2 Bg4+ $19) 8... Qxd1 $19 { Oh no! White's queen 😋 } 
+ *
+
+[ContentType "Exercise"]
+[FEN "r1bqkb1r/ppp2ppp/2p5/4P3/4n3/3P4/PPP2PPP/RNBQKB1R b KQkq - 0 1"]
+[Event "Study Tree after 6.d3?"]
+[Guid "7a2138c7-b355-464b-8f0d-a12b911f8549"]
+[Date ""]
+[White ""]
+[Black ""]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "*"]
+
+
+ {[%csl Gd4] Natural move, but a huge mistake! }  Bc5 $3 $19 {[%csl Rf2]}  2. 
+dxe4 { oh no my knight! }  (2. Be3 Bxe3 3. fxe3 Qh4+ 4. g3 (4. Ke2 Qf2#) 4... 
+Nxg3 5. hxg3 Qxh1 $19) 2... Bxf2+ 3. Kxf2 (3. Ke2 Bg4+ $19) 3... Qxd1 $19 { Oh no! White's queen 😋 } 
+ *
+
+[ContentType "Exercise"]
+[FEN "r1bqkb1r/ppp2ppp/2p5/4P3/3Pn3/8/PPP2PPP/RNBQKB1R b KQkq - 0 1"]
+[Event "Study Tree after 6.d4"]
+[Guid "021cf9cb-0137-4670-a3eb-9c61f50cc2a9"]
+[Date ""]
+[White ""]
+[Black ""]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "*"]
+
+
+ {[%eval +2.04][%csl Gd4]}  Qh4 2. g3 Nxg3 3. fxg3 Qe4+ $19 {[%cal Ge4h1,Ge4e1]} 
+ *
+
+
+
+[ChapterTitle "Take my knight, but I'll take your rook..."]
+[Guid "f4d4ae33-250a-423c-89df-381929424fe7"]
+[ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "Take my knight, but I'll take your rook..."]
+
+
+ {[%eval +0.27]} 1. e4 {[%eval +0.26]}  e5 {[%eval +0.34]}  2. Nf3 {[%eval +0.39]}  
+Nf6 {[%eval +0.58]}  3. Nxe5 {[%eval +0.42]}  Nc6 {[%eval +1.49]}  4. Nxc6 {[%eval +1.42]}  
+dxc6 {[%eval +1.69]}  5. e5 {[%eval +0.79]}  Ne4 {[%eval +1.80]}  6. d4 {[%eval +1.69]}  
+Qh4 {[%thmb][%eval +1.68]}  7. g3 $2 {[%eval -2.12]}  Nxg3 {[%eval -2.16][%cal Gh4h1]}  
+8. fxg3 {[%eval -2.16]}  Qe4+ $19 {[%eval -2.03][%cal Ge4h1,Ge4e1]}  *
+
+[ContentType "Exercise"]
+[FEN "r1b1kb1r/ppp2ppp/2p5/4P3/3Pn2q/6P1/PPP2P1P/RNBQKB1R b KQkq - 0 1"]
+[Event "Study Tree after 7.g3?"]
+[Guid "17cfd61d-445a-47b9-a8a8-ee0af1166ea6"]
+[Date "????.??.??"]
+[White ""]
+[Black ""]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "*"]
+
+
+ Nxg3 {[%cal Gh4h1]}  2. fxg3 Qe4+ $19 {[%cal Ge4h1,Ge4e1]}  *
+
+
+
+[ChapterTitle "Most common trap"]
+[Guid "91be3466-074e-4d47-b77a-c18e4e5f7cc4"]
+[ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "Most common trap"]
+
+
+ {[%eval +0.27]} 1. e4 e5 2. Nf3 Nf6 3. Nxe5 Nc6 4. Nxc6 dxc6 5. Nc3 {[%eval +1.54]}  
+(5. d3 Bc5 6. Nc3 $2 {transposes} ) 5... Bc5 {[%eval +1.52]}  6. d3 $2 {[%eval -1.09]}  
+Ng4 $1 {[%thmb][%eval -0.79]Winning back material and guaranteeing black a better position}  
+7. Be3 {[%eval -1.04]}  Nxe3 {[%eval -1.10]}  8. fxe3 {[%eval -1.00]}  Bxe3 $17 {[%eval -0.85][%cal Ge3g1,Ge3c1]with the only dark-squared bishop on the board piercing through white's position (and preventing castling), black has a very comfortable advantage} 
+ *
+
+[ContentType "Exercise"]
+[FEN "r1bqk2r/ppp2ppp/2p2n2/2b5/4P3/2NP4/PPP2PPP/R1BQKB1R b KQkq - 0 1"]
+[Event "Study Tree after 6.d3?"]
+[Guid "dc5f439b-d3ef-4b50-94f3-6a83929b0ab4"]
+[Date "????.??.??"]
+[White ""]
+[Black ""]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "*"]
+
+
+ Ng4 $1 { Winning back material and guaranteeing black a better position }  2. 
+Be3 Nxe3 3. fxe3 Bxe3 $17 {[%cal Ge3g1,Ge3c1] with the only dark-squared bishop on the board piercing through white's position (and preventing castling), black has a very comfortable advantage } 
+ *
+
+
+
+[ChapterTitle "Punishing Natural Development"]
+[Guid "0c2629a9-0e71-4d30-b6e3-2b9a4d11912d"]
+[ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "Punishing Natural Development"]
+
+
+ {[%eval +0.29]} 1. e4 e5 2. Nf3 Nf6 3. Nxe5 Nc6 4. Nxc6 dxc6 5. Nc3 {[%eval +1.49]}  
+Bc5 {[%eval +1.51]}  6. Bc4 $2 {[%eval -0.61] Yet again, a natural developing move from white is a costly blunder! }  
+Ng4 $1 {[%thmb][%eval -0.64]}  7. O-O {[%eval -3.13]}  (7. Qf3 {[%cal Gf3f7]}  
+Ne5 $1 {[%cal Ge5f3,Ge5c4,Ge5f7] multipurpose! }  8. Qe2 Qh4 $17 {[%cal Gc8g4,Gh4e1][%csl Rf2]}  
+9. d3 (9. g3 Qh3 $19 {[%cal Gc8g4,Ge5f3,Ge5c4,Gh3g2][%csl Rf3,Re2,Rc4]} ) 9... 
+Bg4 10. Qf1 Nxc4 11. dxc4 O-O-O $19) 7... Qh4 {[%eval -3.02]}  8. h3 {[%eval -3.23]}  
+Nxf2 {[%eval -3.04]}  9. Qf3 {[%eval -#7]}  Nxh3+ {[%eval -#6][%cal Gh3g1,Gc5g1] At this point you should retrieve some tissues to wipe away white's tears }  
+10. Kh1 Nf2+ 11. Kg1 Qh1# *
+
+[ContentType "Exercise"]
+[FEN "r1bqk2r/ppp2ppp/2p5/2b5/2B1P1n1/2N2Q2/PPPP1PPP/R1B1K2R b KQkq - 1 1"]
+[Event "Study Tree after 7.Qf3"]
+[Guid "5e7308c0-dae1-4160-8de9-5f8455f36e25"]
+[Date "????.??.??"]
+[White ""]
+[Black ""]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "*"]
+
+
+ {[%cal Gf3f7]}  Ne5 $1 {[%cal Ge5f3,Ge5c4,Ge5f7] multipurpose! }  2. Qe2 Qh4 
+$17 {[%cal Gc8g4,Gh4e1][%csl Rf2]}  3. d3 (3. g3 Qh3 $19 {[%cal Gc8g4,Ge5f3,Ge5c4,Gh3g2][%csl Rf3,Re2,Rc4]} 
+) 3... Bg4 4. Qf1 Nxc4 5. dxc4 O-O-O $19 *
+
+[ContentType "Exercise"]
+[FEN "r1b1k2r/ppp2ppp/2p5/2b5/2B1P1nq/2N4P/PPPP1PP1/R1BQ1RK1 b kq - 0 1"]
+[Event "Study Tree after 8.h3"]
+[Guid "bf3cef7c-62d4-4df6-80a6-b2b892620339"]
+[Date "????.??.??"]
+[White ""]
+[Black ""]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "*"]
+
+
+ Nxf2 2. Qf3 Nxh3+ {[%cal Gh3g1,Gc5g1] At this point you should retrieve some tissues to wipe away white's tears }  
+3. Kh1 Nf2+ 4. Kg1 Qh1# *
+
+
+
+[ChapterTitle "My Favorite Trap (Sometimes works against GM's!)"]
+[Guid "f81aba1b-1fa5-4aef-bc71-d5512097d0f9"]
+[ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "My Favorite Trap (Sometimes works against GM's!)"]
+
+
+ {[%eval +0.32]} 1. e4 {[%eval +0.33]}  e5 {[%eval +0.34]}  2. Nf3 {[%eval +0.30]}  
+Nf6 {[%eval +0.55]}  3. Nxe5 {[%eval +0.57]}  Nc6 {[%eval +1.45]}  4. Nxc6 {[%eval +1.46]}  
+dxc6 {[%eval +1.86]}  5. Nc3 {[%eval +1.49]}  Bc5 {[%eval +1.61]}  6. Be2 {[%eval +0.05]}  
+h5 {[%eval +0.93]}  7. h3 {[%eval -0.65] After a couple safe moves from white (Be2 and h3) it looks like white will complete the opening without any harm... right? }  
+(7. d3 $1 {[%eval +0.84]}  Ng4 {[%eval +0.97]}  8. Bxg4 {[%eval +0.95]}  hxg4 {[%eval +0.82]}  
+9. Qe2 {[%eval +0.82]}  Be6 {[%eval +0.88]}  10. Be3 {[%eval +0.82]}  Bb4 {[%eval +0.96]}  
+11. Qd2 $14 {[%eval +0.81]} ) 7... Qd4 $3 {[%thmb][%eval -0.62] WRONG. From this moment on, white is in big danger... }  
+8. O-O {[%eval -1.90]}  Ng4 $3 {[%eval -1.78]}  9. hxg4 {[%eval -3.21]}  hxg4 {[%eval -3.20][%cal Gd4e5,Ge5h2] black is already threatening forced checkmate }  
+10. g3 {[%eval -3.34] the only attempt at survival }  (10. d3 { gets mated by force }  
+Qe5 11. g3 Qxg3#)  (10. Bxg4 Qe5 11. Bh3 Bxh3 $19) 10... Qe5 {[%eval -3.27]}  
+11. Kg2 {[%eval -3.31]}  Bxf2 $3 {[%eval -3.12] The crushing blow. If not for this move, white would survive }  
+12. Kxf2 {[%eval -3.23]}  (12. Rxf2 Qh5 {[%cal Gh5h3]}  13. Rf4 Qh2+ 14. Kf1 
+Qxg3 $19 {[%cal Gh8h1]} ) 12... Rh2+ {[%eval -2.96]}  13. Ke3 {[%eval -2.85]}  
+Qxg3+ {[%eval -3.11]}  14. Kd4 {[%eval -3.57]}  Be6 $19 {[%eval -5.08][%cal Gg3c3,Gh2e2,Rg1d4,Ge8c8,Ga8d8,Gd8d4][%csl Gc8,Gd8] With this simple developing move, black prepares to 0-0-0 continuing initiative. Feel free to analyze further with the engine, but white is totally busted } 
+ *
+
+[ContentType "Model Game"]
+[Event "Third Sat 146 Mix 2020"]
+[ECO ""]
+[Guid "d7847b11-5271-4907-b645-607fb4fb9b45"]
+[Date "2020.11.21"]
+[White "Van Dael, Siem"]
+[Black "Radeva, Viktoria"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "0-1"]
+
+
+1. e4 e5 2. Nf3 Nf6 3. Nxe5 Nc6 4. Nxc6 dxc6 5. Nc3 Bc5 6. Be2 h5 7. h3 Qd4 8. 
+O-O Ng4 9. hxg4 hxg4 10. g3 Qe5 11. Kg2 Bxf2 12. Rxf2 Qh5 0-1
+
+[ContentType "Model Game"]
+[Event "Titled Tuesday Blitz September 27 Late 2022"]
+[ECO ""]
+[Guid "1b989252-b162-481e-8356-ab9caf15cd64"]
+[Date "2022.09.27"]
+[White "Gabrielian, Artur"]
+[Black "Caruana, Fabiano"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "0-1"]
+
+
+1. e4 e5 2. Nf3 Nf6 3. Nxe5 Nc6 4. Nxc6 dxc6 5. Nc3 Bc5 6. Be2 h5 7. d3 Ng4 {[%eval +1.22]}  
+8. Bxg4 hxg4 9. Bf4 Be6 {[%eval +1.13]}  10. Qd2 Qe7 11. O-O-O O-O-O {[%eval +0.69]}  
+12. Kb1 b6 13. Bg3 Kb7 {[%eval +0.61]}  14. Rhe1 a5 15. Ne2 a4 16. Nf4 Bc8 17. 
+a3 Rhe8 18. c3 b5 {[%eval +0.72]}  19. d4 Bb6 20. Nd3 {[%eval +0.26]}  Be6 {[%eval +0.38]}  
+21. Qf4 {[%eval -0.02]}  g5 {[%eval +0.49]}  22. Qd2 {[%eval -0.66]}  f6 {[%eval -0.20]}  
+23. f3 {[%eval -0.37]}  gxf3 {[%eval -0.06]}  24. gxf3 {[%eval -0.50]}  Bb3 {[%eval -0.47]}  
+25. Rc1 {[%eval -0.54]}  Bf7 {[%eval 0.00]}  26. Nb4 {[%eval -0.20]}  Qe6 {[%eval 0.00]}  
+27. d5 {[%eval -1.12]}  cxd5 {[%eval -0.75]}  28. exd5 {[%eval -1.15]}  Qf5+ {[%eval -1.03]}  
+29. Ka1 {[%eval -1.04]}  Rxe1 {[%eval -1.02]}  30. Rxe1 {[%eval -1.64]}  Bxd5 {[%eval -0.32]}  
+31. Rd1 {[%eval -0.47]}  c6 {[%eval -0.39]}  32. Qe2 {[%eval -3.06]}  Be6 {[%eval -1.44]}  
+33. Rxd8 {[%eval -1.30]}  Bxd8 {[%eval -1.09]}  34. Qd2 {[%eval -5.46]}  Qxf3 {[%eval -5.29]}  
+35. b3 Bb6 36. Kb2 axb3 37. Nd3 Qe3 38. Qd1 Bg4 39. Qxg4 Qxd3 40. Kxb3 Qb1# 0-1
+
+[ContentType "Exercise"]
+[FEN "r1b1k2r/ppp2pp1/2p2n2/2b4p/3qP3/2N4P/PPPPBPP1/R1BQ1RK1 b kq - 1 1"]
+[Event "Study Tree after 8.O-O"]
+[Guid "6db07a41-7034-4f93-bf9c-308579d4e072"]
+[Date "????.??.??"]
+[White ""]
+[Black ""]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "*"]
+
+
+ Ng4 $3 2. hxg4 hxg4 {[%cal Gd4e5,Ge5h2] black is already threatening forced checkmate }  
+3. g3 { the only attempt at survival }  (3. d3 { gets mated by force }  Qe5 4. 
+g3 Qxg3#)  (3. Bxg4 Qe5 4. Bh3 Bxh3 $19) 3... Qe5 4. Kg2 Bxf2 $3 { The crushing blow. If not for this move, white would survive }  
+5. Kxf2 (5. Rxf2 Qh5 {[%cal Gh5h3]}  6. Rf4 Qh2+ 7. Kf1 Qxg3 $19 {[%cal Gh8h1]} 
+) 5... Rh2+ 6. Ke3 Qxg3+ 7. Kd4 Be6 $19 {[%cal Gg3c3,Gh2e2,Rg1d4,Ge8c8,Ga8d8,Gd8d4][%csl Gc8,Gd8] With this simple developing move, black prepares to 0-0-0 continuing initiative. Feel free to analyze further with the engine, but white is totally busted } 
+ *
+
+
+
+[ChapterTitle "Drag white's king to e4 (before move 10!)"]
+[Guid "f393ced4-0e9e-4a17-a797-268b08486065"]
+[ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "Drag white's king to e4 (before move 10!)"]
+
+
+ {[%eval +0.32]} 1. e4 e5 2. Nf3 Nf6 3. Nxe5 Nc6 4. Nxc6 dxc6 5. d3 {[%eval +1.57]}  
+Bc5 {[%eval +1.70]}  6. h3 {[%eval +1.29]}  Bxf2+ {[%eval +1.97]}  7. Kxf2 {[%eval +2.00]}  
+Nxe4+ {[%eval +2.14]}  8. Ke3 {[%eval +1.77]}  (8. Kg1 Qd4+ { Forcing a draw by repetition }  
+9. Kh2 Qe5+ 10. Kg1 Qd4+) 8... O-O {[%eval +1.65]}  9. Kxe4 {[%eval 0.00] Stockfish evaluates this hilarious position at 0.00, despite black being down 2 minor pieces. More analysis required! } 
+ *
+
+
+
+[ChapterTitle "Everyone falls for this trap"]
+[Guid "5aece04d-7a1e-431d-a2df-9bb1831de6e6"]
+[ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "Everyone falls for this trap"]
+
+
+ {[%eval #] https://www.youtube.com/watch?v=16Q6Po-s6Gs } 1. e4 e5 2. Nf3 Nf6 3. 
+Nxe5 Nc6 4. Nxc6 dxc6 5. d3 Bc5 {[%eval +1.71]}  6. Be2 {[%eval +1.63]}  h5 {[%eval +2.21]}  
+7. O-O {[%eval +0.49]}  Ng4 {[%eval +0.87]}  8. h3 {[%eval +0.19]}  Qd6 {[%eval -0.01]}  
+9. hxg4 {[%eval -#5]}  (9. g3 Qxg3+ {[%cal Gc5g1]}  10. Kh1 Qh2#)  (9. e5 $1 { The only move that keeps white alive }  
+Nxe5 { The position is approximately balanced, but arguably preferable for black with more active development } 
+)  (9. Bxg4 {[%eval -3.60]}  hxg4 $19 {[%eval -3.55][%cal Gg4h3,Gc5g1,Gd6h2,Gc8h3,Gh8h1] White's in trouble because there are so many arrows } 
+) 9... hxg4 $19 {[%eval -#4][%cal Gd6h2] White can't stop mate. If you don't be believe me, just ask Lord Stockfish } 
+ *
+
+[ContentType "Exercise"]
+[FEN "r1bqk2r/ppp2pp1/2p5/2b4p/4P1n1/3P3P/PPP1BPP1/RNBQ1RK1 b kq - 0 1"]
+[Event "Study Tree after 8.h3"]
+[Guid "26b039b2-3bd3-47e7-8618-dc2240fa206a"]
+[Date "????.??.??"]
+[White ""]
+[Black ""]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "*"]
+
+
+ Qd6 2. hxg4 (2. g3 Qxg3+ {[%cal Gc5g1]}  3. Kh1 Qh2#)  (2. e5 $1 { The only move that keeps white alive }  
+Nxe5 { The position is approximately balanced, but arguably preferable for black with more active development } 
+)  (2. Bxg4 hxg4 $19 {[%cal Gg4h3,Gc5g1,Gd6h2,Gc8h3,Gh8h1] White's in trouble because there are so many arrows } 
+) 2... hxg4 $19 {[%cal Gd6h2] White can't stop mate. If you don't be believe me, just ask Lord Stockfish } 
+ *
+
+
+
+[ChapterTitle "Miscellaneous Lines"]
+[Guid "ff070766-e591-4c97-8c46-e55140e44648"]
+[ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "Miscellaneous Lines"]
+
+
+ {[%eval +0.42]} 1. e4 e5 2. Nf3 Nf6 3. Nxe5 Nc6 4. Nxc6 dxc6 5. d3 Bc5 {[%eval +1.70]}  
+6. Be3 {[%eval +0.62]}  Bxe3 {[%eval +0.63]}  7. fxe3 {[%eval +0.53]}  Ng4 {[%eval +0.86]}  
+8. Qf3 {[%eval +0.88]}  Qg5 {[%eval +1.25][%cal Ge1d2,Gf3f4][%csl Gd2,Gf4]}  9. 
+Qf4 {[%eval +1.05]}  Qc5 {[%eval +1.40]}  10. Kd2 {[%eval +1.41]}  *
+
+[ContentType "Model Game"]
+[Event "Titled Tuesday Blitz September 28 2021"]
+[ECO ""]
+[Guid "87aa5a2f-cb34-4ce8-823e-ca9bd76da505"]
+[Date "2021.09.28"]
+[White "Vladimir Demin"]
+[Black "Eric S Rosen"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "0-1"]
+
+
+1. e4 e5 2. Nf3 Nf6 3. Nxe5 Nc6 4. Nxc6 dxc6 5. Bc4 {[%eval +0.33]}  Bc5 {[%eval +1.10]}  
+6. O-O {[%eval +0.27]}  Ng4 {[%eval +0.64]}  7. Qf3 {[%eval 0.00]}  Ne5 {[%eval 0.00]}  
+8. Qe2 {[%eval -7.92]}  Bg4 9. Bxf7+ Kxf7 10. Qe1 Nf3+ 11. gxf3 Bxf3 12. d4 Qh4 0-1
+
+
+

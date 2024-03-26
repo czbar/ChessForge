@@ -555,6 +555,8 @@
                                     <MenuItem x:Name="_mnStudyTree_MarkThumbnail" Header="{x:Static p:Resources.MarkAsThumbnail}" Click="UiMn_MarkThumbnail_Click" InputGestureText="Ctrl+T" />
                                     <Separator />
                                     <MenuItem x:Name="UiMnPromoteLine" Header="{x:Static p:Resources.PromoteLine}" Click="UiMnPromoteLine_Click" />
+                                    <MenuItem x:Name="UiMnReorderLines" Header="{x:Static p:Resources.ReorderLines}" Click="UiMnReorderLines_Click" />
+                                    <Separator />
                                     <MenuItem x:Name="UiMnDeleteMovesFromHere" Header="{x:Static p:Resources.DeleteMovesFromHere}" Click="UiMnDeleteMovesFromHere_Click" />
                                     <MenuItem x:Name="UiMnCreateChapterFromLine" Header="{x:Static p:Resources.CreateNewChapterFromLine}" Click="UiMnCreateChapterFromLine_Click" />
                                     <Separator />
@@ -647,6 +649,8 @@
                                     <MenuItem x:Name="_mnGame_MarkThumbnail" Header="{x:Static p:Resources.MarkAsThumbnail}" Click="UiMn_MarkThumbnail_Click" InputGestureText="Ctrl+T" />
                                     <Separator />
                                     <MenuItem x:Name="_mnGame_PromoteLine" Header="{x:Static p:Resources.PromoteLine}" Click="UiMnGame_PromoteLine_Click" />
+                                    <MenuItem x:Name="UiMnGameReorderLines" Header="{x:Static p:Resources.ReorderLines}" Click="UiMnReorderLines_Click" />
+                                    <Separator />
                                     <MenuItem x:Name="_mnGame_DeleteMovesFromHere" Header="{x:Static p:Resources.DeleteMovesFromHere}" Click="UiMnGame_DeleteMovesFromHere_Click" />
                                     <Separator />
                                     <MenuItem x:Name="UiMnGameCopyMoves" Header="{x:Static p:Resources.CopyMoves}"  InputGestureText="Ctrl+C" Click="UiMnCopyMoves_Click" />
@@ -753,6 +757,8 @@
                                     <MenuItem x:Name="_mnExerc_MarkThumbnail" Header="{x:Static p:Resources.MarkAsThumbnail}" Click="UiMn_ExerciseMarkThumbnail_Click" InputGestureText="Ctrl+T" />
                                     <Separator x:Name="UiMnExerc_Separator_4"/>
                                     <MenuItem x:Name="_mnExerc_PromoteLine" Header="{x:Static p:Resources.PromoteLine}" Click="UiMnExerc_PromoteLine_Click" />
+                                    <MenuItem x:Name="UiMnExerc_ReorderLines" Header="{x:Static p:Resources.ReorderLines}" Click="UiMnReorderLines_Click" />
+                                    <Separator />
                                     <MenuItem x:Name="_mnExerc_DeleteMovesFromHere" Header="{x:Static p:Resources.DeleteMovesFromHere}" Click="UiMnExerc_DeleteMovesFromHere_Click" />
                                     <Separator x:Name="UiMnExerc_Separator_2"/>
                                     <MenuItem x:Name="UiMnExercCopyMoves" Header="{x:Static p:Resources.CopyMoves}"  InputGestureText="Ctrl+C" Click="UiMnCopyMoves_Click" />
