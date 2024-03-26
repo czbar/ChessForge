@@ -1,0 +1,119 @@
+Redirect:
+Message:
+
+      
+Bookcase:Tournaments
+Description: Games from tournaments and matches.
+
+    Shelf:World Championship 
+    Description: Games from World Championship Matches.
+    
+	  Book:Men's World Championships
+      Description: All games from Men's World Championship Matches and Tournaments.
+      File:Tournaments/Mens World Individual Championships.pgn
+
+	  Book:World Rapid Championship 2023 (Men)
+      Description: World Rapid Championship (Men), Samarkand, December 2023.
+      File:Tournaments/World Rapid Chess Championship Men 2023.pgn
+
+	  Book:World Rapid Championship 2023 (Women)
+      Description: World Rapid Championship (Women), Samarkand, December 2023.
+      File:Tournaments/World Rapid Chess Championship Women 2023.pgn
+
+Bookcase:Strategy Morsels
+Description:Small studies of specific strategic questions.
+
+    Shelf:
+    Description: 
+    
+	  Book:Black King into the Line of Fire
+      Description: Black king hides in open view (semi-open b-file) on the queenside.
+      File: Strategy/Strategy Ke8-d8-c7.pgn
+
+Bookcase:Openings
+Description:Workbooks examining theory and practice of various Openings.
+    
+	Shelf:General
+    Description: Openings analyzed for both sides.
+	
+      Book:The London System
+      Description: A comprehensive overview of the omnipresent London System.
+      File: Openings/General/London System.pgn
+    
+	Shelf:White repertoire
+    Description: Openings analyzed from the White player's point of view.
+      
+	  Book:Budapest Gambit
+      Description: A few of options to safely counter the Budapest Gambit.
+      File: Openings/White/Budapest for White.pgn
+      
+	  Book:King's Indian - Karpov Variation
+      Description:A very popular and effective variation against King's Indian at all levels.
+      File: Openings/White/King's Indian - Karpov variation for White.pgn
+    
+	  Book:Smith-Morra Gambit
+      Description: A popular anti-Sicilian weapon.
+      File: Openings/White/Smith Morra Gambit.pgn
+          
+	  Book:Evans Gambit
+      Description: A concise presentation of one of the most famous, classical gambits.
+      File: Openings/White/Evans Gambit Starter Kit.pgn
+      
+	Shelf:Black repertoire
+    Description: Openings analyzed from the Black player's point of view.
+    
+	  Book:Classical Sicilian 2...d6, 5...Nc6
+      Description: The classical, always popular at the highest level system in the Sicilian Defense.
+      File: Openings/Black/Classical Sicilian for Black.pgn
+    
+	  Book:Exchange French
+      Description: Breaking symmetry when facing the Exchange Variation in the French.
+      File: Openings/Black/French Exchange for Black.pgn
+      
+	  Book:Stafford Gambit Traps
+      Description: Eric Rosen's entertaining treatise on the Stafford Gambit.  Adapted from Eric's lichess study.
+      File: Openings/Black/Stafford Gambit for Black.pgn
+	  
+      Book:Ragozin Defense
+      Description: A solid addition to one's repertoire against 1.d4.
+      File: Openings/Black/Ragozin for Black.pgn
+
+	Shelf:Unorthodox Openings
+    Description: Short booklets on rare, unorthodox openings. 
+    
+	  Book:The Elephant Gambit
+      Description: These days extict in masters' practice but a 1.e4 player must know it.
+      File: Openings/Unorthodox/Elephant Gambit.pgn
+
+	  Book:The Nakhmanson Gambit
+      Description: An aggressive knight sacrifice in the Italian Game.
+      File: Openings/Unorthodox/Nakhmanson Gambit.pgn
+
+
+Bookcase: Endgames and Exercises
+Description: Collections of endgames and exercises.
+
+    Shelf:Endgames
+    Description: 
+    
+	  Book:Endgames by NoseKnowsAll
+      Description: Great selection of endgames imported from a lichess study by NoseKnowsAll@lichess.
+      File: Endgames/Endgames by NoseKnowsAll.pgn
+
+      Book:Checkmate Patterns
+      Description: Basic checkmate patterns named and illustrated.
+      File: Endgames/Checkmate Patterns.pgn
+        
+Bookcase: Book Samples
+Description: Book fragments adapted for Chess Forge.
+
+    Shelf:
+    Description: 
+    
+	  Book:Chess Strategy Explained
+      Description: A small sample from the book by GM Bartek Macieja and IM Witalis Sapis.
+      File: BookSamples/Chess Strategy Explained.pgn
+      
+	  Book:The Complete Chess Swindler
+      Description: A small example from the award winning book by GM. David Smerdon.
+      File: BookSamples/The Complete Chess Swindler.pgn

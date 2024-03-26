@@ -1,0 +1,1742 @@
+[ChessForgeWorkbook "Smith-Morra Gambit"]
+[WorkbookVersion "1.2"]
+[Guid "4305aca6-ddd6-40b6-93a4-0832ca11b02d"]
+[TrainingSide "White"]
+[StudyBoardOrientation "White"]
+[GameBoardOrientation "White"]
+[ExerciseBoardOrientation "None"]
+[White "CHESS FORGE"]
+[Black "WORKBOOK"]
+[Result "*"]
+{This PGN Workbook is optimized for viewing in Chess Forge https://sourceforge.net/projects/chessforge/ 
+Chess Forge is a Free and Open Source Windows application.}
+
+*
+
+[ChapterTitle "Introduction"]
+[Guid "af11501c-d428-4082-aa38-d971fb259f8a"]
+[ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "Introduction"]
+
+
+ {[%eval +0.27]} 1. e4 c5 2. d4 cxd4 3. c3 {Go to the Intro tab to view the introduction or click the Chapter arrow above to move to the next chapter.} 
+ *
+
+[Guid "af11501c-d428-4082-aa38-d971fb259f8a"]
+[ContentType "Intro"]
+[White "Chapter"]
+[Black "Introduction"]
+
+{The Smith-Morra Gambit is used to counter the Sicilian Defense ( 1. e4  c5 ). White immediately attacks the center with  2. d4 and after 2... cxd4 follows with a pawn sacrifice 3. c3 aiming for a lead in development, active play on the semi-open c- and d-files and for the initiative.
+
+
+
+If the gambit is accepted  3... dxc3  4. ♘xc3 the position is relatively straighforward to play for White, while Black has to know precisely how to navigate numerous complex variations. 
+
+        ♜♞♝♛♚♝♞♜
+        ♟♟⨯♟♟♟♟♟
+        ⨯⨯⨯⨯⨯⨯⨯⨯
+        ⨯⨯⨯⨯⨯⨯⨯⨯
+        ⨯⨯⨯⨯♙⨯⨯⨯
+        ⨯⨯♘⨯⨯⨯⨯⨯
+        ♙♙⨯⨯⨯♙♙♙
+        ♖⨯♗♕♔♗♘♖
+
+  
+
+Typically, White applies the same scheme to deploy their pieces:  ♘f3 , ♗c4 , 0-0 , ♕e2 , ♖d1 then chooses where to place the dark-squared bishop ♗f4 or ♗g5 .
+
+
+
+Finally, the queen's rook goes to the c-file  7. ♖c1 
+
+
+
+Once White finishes development, they are ready for a push in the center or for a break through sacrifice.
+
+
+
+Black has to be careful not to get into trouble early on and needs to develop cautiously. A good plan is to create a solid wall of pawns  d6 , e6 and a6 before developing the minor pieces and castling kingside.}
+
+{[%xaml PEZsb3dEb2N1bWVudCBQYWdlUGFkZGluZz0iNSwwLDUsMCIgQWxsb3dEcm9wPSJGYWxzZSIg
+eG1sbnM9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd2luZngvMjAwNi94YW1sL3ByZXNlbnRh
+dGlvbiIgeG1sbnM6eD0iaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93aW5meC8yMDA2L3hhbWwi
+PjxQYXJhZ3JhcGggTmFtZT0iUjQ4NjRmNTk3ZmE4MzQzNmJiYzYwM2QzZmQxYmJjZWE5Ij5UaGUgU21p
+dGgtTW9ycmEgR2FtYml0IGlzIHVzZWQgdG8gY291bnRlciB0aGUgU2ljaWxpYW4gRGVmZW5zZSA8UnVu
+IHhtbDpsYW5nPSJwbC1wbCI+KDwvUnVuPjxJbmxpbmVVSUNvbnRhaW5lciBOYW1lPSJ1aWNfbW92ZV8x
+MDQiPjxUZXh0QmxvY2sgTmFtZT0idGJfbW92ZV8xMDQiPjxSdW4gRm9udFdlaWdodD0iQm9sZCIgRm9y
+ZWdyb3VuZD0iI0ZGMDAwMEZGIiBOYW1lPSJydW5fbW92ZV8xMDQiIHhtbDpzcGFjZT0icHJlc2VydmUi
+PiAxLiBlNCA8L1J1bj48L1RleHRCbG9jaz48L0lubGluZVVJQ29udGFpbmVyPjxJbmxpbmVVSUNvbnRh
+aW5lciBOYW1lPSJ1aWNfbW92ZV8xMDUiPjxUZXh0QmxvY2sgTmFtZT0idGJfbW92ZV8xMDUiPjxSdW4g
+Rm9udFdlaWdodD0iQm9sZCIgRm9yZWdyb3VuZD0iI0ZGMDAwMEZGIiBOYW1lPSJydW5fbW92ZV8xMDUi
+IHhtbDpzcGFjZT0icHJlc2VydmUiPiBjNSA8L1J1bj48L1RleHRCbG9jaz48L0lubGluZVVJQ29udGFp
+bmVyPik8UnVuPi48L1J1bj48UnVuIHhtbDpsYW5nPSJwbC1wbCIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+
+IDwvUnVuPldoaXRlIGltbWVkaWF0ZWx5IGF0dGFja3MgdGhlIGNlbnRlciB3aXRoPFJ1biB4bWw6bGFu
+Zz0icGwtcGwiIHhtbDpzcGFjZT0icHJlc2VydmUiPiA8L1J1bj48SW5saW5lVUlDb250YWluZXIgTmFt
+ZT0idWljX21vdmVfMTA2Ij48VGV4dEJsb2NrIE5hbWU9InRiX21vdmVfMTA2Ij48UnVuIEZvbnRXZWln
+aHQ9IkJvbGQiIEZvcmVncm91bmQ9IiNGRjAwMDBGRiIgTmFtZT0icnVuX21vdmVfMTA2IiB4bWw6c3Bh
+Y2U9InByZXNlcnZlIj4gMi4gZDQgPC9SdW4+PC9UZXh0QmxvY2s+PC9JbmxpbmVVSUNvbnRhaW5lcj5h
+bmQgPFJ1biB4bWw6bGFuZz0icGwtcGwiPmFmdGVyPC9SdW4+PElubGluZVVJQ29udGFpbmVyIE5hbWU9
+InVpY19tb3ZlXzEwNyI+PFRleHRCbG9jayBOYW1lPSJ0Yl9tb3ZlXzEwNyI+PFJ1biBGb250V2VpZ2h0
+PSJCb2xkIiBGb3JlZ3JvdW5kPSIjRkYwMDAwRkYiIE5hbWU9InJ1bl9tb3ZlXzEwNyIgeG1sOnNwYWNl
+PSJwcmVzZXJ2ZSI+IDIuLi4gY3hkNCA8L1J1bj48L1RleHRCbG9jaz48L0lubGluZVVJQ29udGFpbmVy
+PmZvbGxvd3Mgd2l0aCBhIHBhd24gc2FjcmlmaWNlPElubGluZVVJQ29udGFpbmVyIE5hbWU9InVpY19t
+b3ZlXzExNCI+PFRleHRCbG9jayBOYW1lPSJ0Yl9tb3ZlXzExNCI+PFJ1biBGb250V2VpZ2h0PSJCb2xk
+IiBGb3JlZ3JvdW5kPSIjRkYwMDAwRkYiIE5hbWU9InJ1bl9tb3ZlXzExNCIgeG1sOnNwYWNlPSJwcmVz
+ZXJ2ZSI+IDMuIGMzIDwvUnVuPjwvVGV4dEJsb2NrPjwvSW5saW5lVUlDb250YWluZXI+YWltaW5nIGZv
+ciBhIGxlYWQgaW4gZGV2ZWxvcG1lbnQsIGFjdGl2ZSBwbGF5IG9uIHRoZSBzZW1pLW9wZW4gYy0gYW5k
+IGQtZmlsZXMgYW5kIGZvciB0aGUgaW5pdGlhdGl2ZS48L1BhcmFncmFwaD48UGFyYWdyYXBoIE5hbWU9
+IlJkMDJjMjAwZGE4ZTQ0NDVlYmRhNWM1NGRjMmRkNzNjZSI+PFJ1biB4bWw6bGFuZz0icGwtcGwiIHht
+bDpzcGFjZT0icHJlc2VydmUiIC8+PC9QYXJhZ3JhcGg+PFBhcmFncmFwaCBOYW1lPSJSM2FiN2VhYzg5
+NjYzNDA2MTk3NDEwNDUxZDEzN2ZlOGIiPklmPFJ1biB4bWw6bGFuZz0icGwtcGwiIHhtbDpzcGFjZT0i
+cHJlc2VydmUiPiB0aGUgZ2FtYml0IGlzIGFjY2VwdGVkIDwvUnVuPjxJbmxpbmVVSUNvbnRhaW5lciBO
+YW1lPSJ1aWNfbW92ZV8xMTUiPjxUZXh0QmxvY2sgTmFtZT0idGJfbW92ZV8xMTUiPjxSdW4gRm9udFdl
+aWdodD0iQm9sZCIgRm9yZWdyb3VuZD0iI0ZGMDAwMEZGIiBOYW1lPSJydW5fbW92ZV8xMTUiIHhtbDpz
+cGFjZT0icHJlc2VydmUiPiAzLi4uIGR4YzMgPC9SdW4+PC9UZXh0QmxvY2s+PC9JbmxpbmVVSUNvbnRh
+aW5lcj48SW5saW5lVUlDb250YWluZXIgTmFtZT0idWljX21vdmVfMTI4Ij48VGV4dEJsb2NrIE5hbWU9
+InRiX21vdmVfMTI4Ij48UnVuIEZvbnRXZWlnaHQ9IkJvbGQiIEZvbnRTaXplPSIxNCIgRm9yZWdyb3Vu
+ZD0iI0ZGMDAwMEZGIiBOYW1lPSJydW5fbW92ZV8xMjgiIHhtbDpzcGFjZT0icHJlc2VydmUiPiA0LiDi
+mZh4YzMgPC9SdW4+PC9UZXh0QmxvY2s+PC9JbmxpbmVVSUNvbnRhaW5lcj48UnVuIHhtbDpsYW5nPSJw
+bC1wbCIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+dGhlIHBvc2l0aW9uIDwvUnVuPjxSdW4geG1sOmxhbmc9
+ImVuLWF1IiB4bWw6c3BhY2U9InByZXNlcnZlIj5pcyByZWxhdGl2ZWx5IDwvUnVuPnN0cmFpZ2hmb3J3
+YXJkPFJ1biB4bWw6bGFuZz0iZW4tYXUiIHhtbDpzcGFjZT0icHJlc2VydmUiPiB0byBwbGF5IGZvciBX
+aGl0ZTwvUnVuPiw8UnVuIHhtbDpsYW5nPSJwbC1wbCIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+IHdoaWxl
+IEJsYWNrIGhhcyB0byBrbm93IDwvUnVuPjxSdW4geG1sOnNwYWNlPSJwcmVzZXJ2ZSI+cHJlY2lzZWx5
+IDwvUnVuPjxSdW4geG1sOmxhbmc9InBsLXBsIiB4bWw6c3BhY2U9InByZXNlcnZlIj5ob3cgdG8gbmF2
+aWdhdGUgPC9SdW4+bnVtZXJvdXMgY29tcGxleCB2YXJpYXRpb25zPFJ1biB4bWw6bGFuZz0icGwtcGwi
+IHhtbDpzcGFjZT0icHJlc2VydmUiPi4gPC9SdW4+PC9QYXJhZ3JhcGg+PFBhcmFncmFwaCBNYXJnaW49
+IjIwLDIwLDAsMjAiIE5hbWU9InBhcmFfZGlhZ18xMTciPjxJbmxpbmVVSUNvbnRhaW5lciBOYW1lPSJ1
+aWNfbW92ZV8xMTciPjxWaWV3Ym94IE5hbWU9InZib3hfbW92ZV8xMTciIFdpZHRoPSIyNzAiIEhlaWdo
+dD0iMjUwIiBWaXNpYmlsaXR5PSJWaXNpYmxlIj48Q2FudmFzIEJhY2tncm91bmQ9IiNGRjAwMDAwMCIg
+V2lkdGg9IjI3MCIgSGVpZ2h0PSIyNTAiPjxJbWFnZSBTb3VyY2U9InBhY2s6Ly9hcHBsaWNhdGlvbjos
+LCwvUmVzb3VyY2VzL0ltYWdlcy9CbGFja1Jvb2tTbWFsbC5wbmciIENhbnZhcy5MZWZ0PSI1IiBDYW52
+YXMuVG9wPSI1IiBQYW5lbC5aSW5kZXg9IjUiIC8+PEltYWdlIFNvdXJjZT0icGFjazovL2FwcGxpY2F0
+aW9uOiwsLC9SZXNvdXJjZXMvSW1hZ2VzL0JsYWNrUGF3blNtYWxsLnBuZyIgQ2FudmFzLkxlZnQ9IjUi
+IENhbnZhcy5Ub3A9IjM1IiBQYW5lbC5aSW5kZXg9IjUiIC8+PEltYWdlIFNvdXJjZT0ie3g6TnVsbH0i
+IENhbnZhcy5MZWZ0PSI1IiBDYW52YXMuVG9wPSI2NSIgUGFuZWwuWkluZGV4PSI1IiAvPjxJbWFnZSBT
+b3VyY2U9Int4Ok51bGx9IiBDYW52YXMuTGVmdD0iNSIgQ2FudmFzLlRvcD0iOTUiIFBhbmVsLlpJbmRl
+eD0iNSIgLz48SW1hZ2UgU291cmNlPSJ7eDpOdWxsfSIgQ2FudmFzLkxlZnQ9IjUiIENhbnZhcy5Ub3A9
+IjEyNSIgUGFuZWwuWkluZGV4PSI1IiAvPjxJbWFnZSBTb3VyY2U9Int4Ok51bGx9IiBDYW52YXMuTGVm
+dD0iNSIgQ2FudmFzLlRvcD0iMTU1IiBQYW5lbC5aSW5kZXg9IjUiIC8+PEltYWdlIFNvdXJjZT0icGFj
+azovL2FwcGxpY2F0aW9uOiwsLC9SZXNvdXJjZXMvSW1hZ2VzL1doaXRlUGF3blNtYWxsLnBuZyIgQ2Fu
+dmFzLkxlZnQ9IjUiIENhbnZhcy5Ub3A9IjE4NSIgUGFuZWwuWkluZGV4PSI1IiAvPjxJbWFnZSBTb3Vy
+Y2U9InBhY2s6Ly9hcHBsaWNhdGlvbjosLCwvUmVzb3VyY2VzL0ltYWdlcy9XaGl0ZVJvb2tTbWFsbC5w
+bmciIENhbnZhcy5MZWZ0PSI1IiBDYW52YXMuVG9wPSIyMTUiIFBhbmVsLlpJbmRleD0iNSIgLz48SW1h
+Z2UgU291cmNlPSJwYWNrOi8vYXBwbGljYXRpb246LCwsL1Jlc291cmNlcy9JbWFnZXMvQmxhY2tLbmln
+aHRTbWFsbC5wbmciIENhbnZhcy5MZWZ0PSIzNSIgQ2FudmFzLlRvcD0iNSIgUGFuZWwuWkluZGV4PSI1
+IiAvPjxJbWFnZSBTb3VyY2U9InBhY2s6Ly9hcHBsaWNhdGlvbjosLCwvUmVzb3VyY2VzL0ltYWdlcy9C
+bGFja1Bhd25TbWFsbC5wbmciIENhbnZhcy5MZWZ0PSIzNSIgQ2FudmFzLlRvcD0iMzUiIFBhbmVsLlpJ
+bmRleD0iNSIgLz48SW1hZ2UgU291cmNlPSJ7eDpOdWxsfSIgQ2FudmFzLkxlZnQ9IjM1IiBDYW52YXMu
+VG9wPSI2NSIgUGFuZWwuWkluZGV4PSI1IiAvPjxJbWFnZSBTb3VyY2U9Int4Ok51bGx9IiBDYW52YXMu
+TGVmdD0iMzUiIENhbnZhcy5Ub3A9Ijk1IiBQYW5lbC5aSW5kZXg9IjUiIC8+PEltYWdlIFNvdXJjZT0i
+e3g6TnVsbH0iIENhbnZhcy5MZWZ0PSIzNSIgQ2FudmFzLlRvcD0iMTI1IiBQYW5lbC5aSW5kZXg9IjUi
+IC8+PEltYWdlIFNvdXJjZT0ie3g6TnVsbH0iIENhbnZhcy5MZWZ0PSIzNSIgQ2FudmFzLlRvcD0iMTU1
+IiBQYW5lbC5aSW5kZXg9IjUiIC8+PEltYWdlIFNvdXJjZT0icGFjazovL2FwcGxpY2F0aW9uOiwsLC9S
+ZXNvdXJjZXMvSW1hZ2VzL1doaXRlUGF3blNtYWxsLnBuZyIgQ2FudmFzLkxlZnQ9IjM1IiBDYW52YXMu
+VG9wPSIxODUiIFBhbmVsLlpJbmRleD0iNSIgLz48SW1hZ2UgU291cmNlPSJ7eDpOdWxsfSIgQ2FudmFz
+LkxlZnQ9IjM1IiBDYW52YXMuVG9wPSIyMTUiIFBhbmVsLlpJbmRleD0iNSIgLz48SW1hZ2UgU291cmNl
+PSJwYWNrOi8vYXBwbGljYXRpb246LCwsL1Jlc291cmNlcy9JbWFnZXMvQmxhY2tCaXNob3BTbWFsbC5w
+bmciIENhbnZhcy5MZWZ0PSI2NSIgQ2FudmFzLlRvcD0iNSIgUGFuZWwuWkluZGV4PSI1IiAvPjxJbWFn
+ZSBTb3VyY2U9Int4Ok51bGx9IiBDYW52YXMuTGVmdD0iNjUiIENhbnZhcy5Ub3A9IjM1IiBQYW5lbC5a
+SW5kZXg9IjUiIC8+PEltYWdlIFNvdXJjZT0ie3g6TnVsbH0iIENhbnZhcy5MZWZ0PSI2NSIgQ2FudmFz
+LlRvcD0iNjUiIFBhbmVsLlpJbmRleD0iNSIgLz48SW1hZ2UgU291cmNlPSJ7eDpOdWxsfSIgQ2FudmFz
+LkxlZnQ9IjY1IiBDYW52YXMuVG9wPSI5NSIgUGFuZWwuWkluZGV4PSI1IiAvPjxJbWFnZSBTb3VyY2U9
+Int4Ok51bGx9IiBDYW52YXMuTGVmdD0iNjUiIENhbnZhcy5Ub3A9IjEyNSIgUGFuZWwuWkluZGV4PSI1
+IiAvPjxJbWFnZSBTb3VyY2U9InBhY2s6Ly9hcHBsaWNhdGlvbjosLCwvUmVzb3VyY2VzL0ltYWdlcy9X
+aGl0ZUtuaWdodFNtYWxsLnBuZyIgQ2FudmFzLkxlZnQ9IjY1IiBDYW52YXMuVG9wPSIxNTUiIFBhbmVs
+LlpJbmRleD0iNSIgLz48SW1hZ2UgU291cmNlPSJ7eDpOdWxsfSIgQ2FudmFzLkxlZnQ9IjY1IiBDYW52
+YXMuVG9wPSIxODUiIFBhbmVsLlpJbmRleD0iNSIgLz48SW1hZ2UgU291cmNlPSJwYWNrOi8vYXBwbGlj
+YXRpb246LCwsL1Jlc291cmNlcy9JbWFnZXMvV2hpdGVCaXNob3BTbWFsbC5wbmciIENhbnZhcy5MZWZ0
+PSI2NSIgQ2FudmFzLlRvcD0iMjE1IiBQYW5lbC5aSW5kZXg9IjUiIC8+PEltYWdlIFNvdXJjZT0icGFj
+azovL2FwcGxpY2F0aW9uOiwsLC9SZXNvdXJjZXMvSW1hZ2VzL0JsYWNrUXVlZW5TbWFsbC5wbmciIENh
+bnZhcy5MZWZ0PSI5NSIgQ2FudmFzLlRvcD0iNSIgUGFuZWwuWkluZGV4PSI1IiAvPjxJbWFnZSBTb3Vy
+Y2U9InBhY2s6Ly9hcHBsaWNhdGlvbjosLCwvUmVzb3VyY2VzL0ltYWdlcy9CbGFja1Bhd25TbWFsbC5w
+bmciIENhbnZhcy5MZWZ0PSI5NSIgQ2FudmFzLlRvcD0iMzUiIFBhbmVsLlpJbmRleD0iNSIgLz48SW1h
+Z2UgU291cmNlPSJ7eDpOdWxsfSIgQ2FudmFzLkxlZnQ9Ijk1IiBDYW52YXMuVG9wPSI2NSIgUGFuZWwu
+WkluZGV4PSI1IiAvPjxJbWFnZSBTb3VyY2U9Int4Ok51bGx9IiBDYW52YXMuTGVmdD0iOTUiIENhbnZh
+cy5Ub3A9Ijk1IiBQYW5lbC5aSW5kZXg9IjUiIC8+PEltYWdlIFNvdXJjZT0ie3g6TnVsbH0iIENhbnZh
+cy5MZWZ0PSI5NSIgQ2FudmFzLlRvcD0iMTI1IiBQYW5lbC5aSW5kZXg9IjUiIC8+PEltYWdlIFNvdXJj
+ZT0ie3g6TnVsbH0iIENhbnZhcy5MZWZ0PSI5NSIgQ2FudmFzLlRvcD0iMTU1IiBQYW5lbC5aSW5kZXg9
+IjUiIC8+PEltYWdlIFNvdXJjZT0ie3g6TnVsbH0iIENhbnZhcy5MZWZ0PSI5NSIgQ2FudmFzLlRvcD0i
+MTg1IiBQYW5lbC5aSW5kZXg9IjUiIC8+PEltYWdlIFNvdXJjZT0icGFjazovL2FwcGxpY2F0aW9uOiws
+LC9SZXNvdXJjZXMvSW1hZ2VzL1doaXRlUXVlZW5TbWFsbC5wbmciIENhbnZhcy5MZWZ0PSI5NSIgQ2Fu
+dmFzLlRvcD0iMjE1IiBQYW5lbC5aSW5kZXg9IjUiIC8+PEltYWdlIFNvdXJjZT0icGFjazovL2FwcGxp
+Y2F0aW9uOiwsLC9SZXNvdXJjZXMvSW1hZ2VzL0JsYWNrS2luZ1NtYWxsLnBuZyIgQ2FudmFzLkxlZnQ9
+IjEyNSIgQ2FudmFzLlRvcD0iNSIgUGFuZWwuWkluZGV4PSI1IiAvPjxJbWFnZSBTb3VyY2U9InBhY2s6
+Ly9hcHBsaWNhdGlvbjosLCwvUmVzb3VyY2VzL0ltYWdlcy9CbGFja1Bhd25TbWFsbC5wbmciIENhbnZh
+cy5MZWZ0PSIxMjUiIENhbnZhcy5Ub3A9IjM1IiBQYW5lbC5aSW5kZXg9IjUiIC8+PEltYWdlIFNvdXJj
+ZT0ie3g6TnVsbH0iIENhbnZhcy5MZWZ0PSIxMjUiIENhbnZhcy5Ub3A9IjY1IiBQYW5lbC5aSW5kZXg9
+IjUiIC8+PEltYWdlIFNvdXJjZT0ie3g6TnVsbH0iIENhbnZhcy5MZWZ0PSIxMjUiIENhbnZhcy5Ub3A9
+Ijk1IiBQYW5lbC5aSW5kZXg9IjUiIC8+PEltYWdlIFNvdXJjZT0icGFjazovL2FwcGxpY2F0aW9uOiws
+LC9SZXNvdXJjZXMvSW1hZ2VzL1doaXRlUGF3blNtYWxsLnBuZyIgQ2FudmFzLkxlZnQ9IjEyNSIgQ2Fu
+dmFzLlRvcD0iMTI1IiBQYW5lbC5aSW5kZXg9IjUiIC8+PEltYWdlIFNvdXJjZT0ie3g6TnVsbH0iIENh
+bnZhcy5MZWZ0PSIxMjUiIENhbnZhcy5Ub3A9IjE1NSIgUGFuZWwuWkluZGV4PSI1IiAvPjxJbWFnZSBT
+b3VyY2U9Int4Ok51bGx9IiBDYW52YXMuTGVmdD0iMTI1IiBDYW52YXMuVG9wPSIxODUiIFBhbmVsLlpJ
+bmRleD0iNSIgLz48SW1hZ2UgU291cmNlPSJwYWNrOi8vYXBwbGljYXRpb246LCwsL1Jlc291cmNlcy9J
+bWFnZXMvV2hpdGVLaW5nU21hbGwucG5nIiBDYW52YXMuTGVmdD0iMTI1IiBDYW52YXMuVG9wPSIyMTUi
+IFBhbmVsLlpJbmRleD0iNSIgLz48SW1hZ2UgU291cmNlPSJwYWNrOi8vYXBwbGljYXRpb246LCwsL1Jl
+c291cmNlcy9JbWFnZXMvQmxhY2tCaXNob3BTbWFsbC5wbmciIENhbnZhcy5MZWZ0PSIxNTUiIENhbnZh
+cy5Ub3A9IjUiIFBhbmVsLlpJbmRleD0iNSIgLz48SW1hZ2UgU291cmNlPSJwYWNrOi8vYXBwbGljYXRp
+b246LCwsL1Jlc291cmNlcy9JbWFnZXMvQmxhY2tQYXduU21hbGwucG5nIiBDYW52YXMuTGVmdD0iMTU1
+IiBDYW52YXMuVG9wPSIzNSIgUGFuZWwuWkluZGV4PSI1IiAvPjxJbWFnZSBTb3VyY2U9Int4Ok51bGx9
+IiBDYW52YXMuTGVmdD0iMTU1IiBDYW52YXMuVG9wPSI2NSIgUGFuZWwuWkluZGV4PSI1IiAvPjxJbWFn
+ZSBTb3VyY2U9Int4Ok51bGx9IiBDYW52YXMuTGVmdD0iMTU1IiBDYW52YXMuVG9wPSI5NSIgUGFuZWwu
+WkluZGV4PSI1IiAvPjxJbWFnZSBTb3VyY2U9Int4Ok51bGx9IiBDYW52YXMuTGVmdD0iMTU1IiBDYW52
+YXMuVG9wPSIxMjUiIFBhbmVsLlpJbmRleD0iNSIgLz48SW1hZ2UgU291cmNlPSJ7eDpOdWxsfSIgQ2Fu
+dmFzLkxlZnQ9IjE1NSIgQ2FudmFzLlRvcD0iMTU1IiBQYW5lbC5aSW5kZXg9IjUiIC8+PEltYWdlIFNv
+dXJjZT0icGFjazovL2FwcGxpY2F0aW9uOiwsLC9SZXNvdXJjZXMvSW1hZ2VzL1doaXRlUGF3blNtYWxs
+LnBuZyIgQ2FudmFzLkxlZnQ9IjE1NSIgQ2FudmFzLlRvcD0iMTg1IiBQYW5lbC5aSW5kZXg9IjUiIC8+
+PEltYWdlIFNvdXJjZT0icGFjazovL2FwcGxpY2F0aW9uOiwsLC9SZXNvdXJjZXMvSW1hZ2VzL1doaXRl
+QmlzaG9wU21hbGwucG5nIiBDYW52YXMuTGVmdD0iMTU1IiBDYW52YXMuVG9wPSIyMTUiIFBhbmVsLlpJ
+bmRleD0iNSIgLz48SW1hZ2UgU291cmNlPSJwYWNrOi8vYXBwbGljYXRpb246LCwsL1Jlc291cmNlcy9J
+bWFnZXMvQmxhY2tLbmlnaHRTbWFsbC5wbmciIENhbnZhcy5MZWZ0PSIxODUiIENhbnZhcy5Ub3A9IjUi
+IFBhbmVsLlpJbmRleD0iNSIgLz48SW1hZ2UgU291cmNlPSJwYWNrOi8vYXBwbGljYXRpb246LCwsL1Jl
+c291cmNlcy9JbWFnZXMvQmxhY2tQYXduU21hbGwucG5nIiBDYW52YXMuTGVmdD0iMTg1IiBDYW52YXMu
+VG9wPSIzNSIgUGFuZWwuWkluZGV4PSI1IiAvPjxJbWFnZSBTb3VyY2U9Int4Ok51bGx9IiBDYW52YXMu
+TGVmdD0iMTg1IiBDYW52YXMuVG9wPSI2NSIgUGFuZWwuWkluZGV4PSI1IiAvPjxJbWFnZSBTb3VyY2U9
+Int4Ok51bGx9IiBDYW52YXMuTGVmdD0iMTg1IiBDYW52YXMuVG9wPSI5NSIgUGFuZWwuWkluZGV4PSI1
+IiAvPjxJbWFnZSBTb3VyY2U9Int4Ok51bGx9IiBDYW52YXMuTGVmdD0iMTg1IiBDYW52YXMuVG9wPSIx
+MjUiIFBhbmVsLlpJbmRleD0iNSIgLz48SW1hZ2UgU291cmNlPSJ7eDpOdWxsfSIgQ2FudmFzLkxlZnQ9
+IjE4NSIgQ2FudmFzLlRvcD0iMTU1IiBQYW5lbC5aSW5kZXg9IjUiIC8+PEltYWdlIFNvdXJjZT0icGFj
+azovL2FwcGxpY2F0aW9uOiwsLC9SZXNvdXJjZXMvSW1hZ2VzL1doaXRlUGF3blNtYWxsLnBuZyIgQ2Fu
+dmFzLkxlZnQ9IjE4NSIgQ2FudmFzLlRvcD0iMTg1IiBQYW5lbC5aSW5kZXg9IjUiIC8+PEltYWdlIFNv
+dXJjZT0icGFjazovL2FwcGxpY2F0aW9uOiwsLC9SZXNvdXJjZXMvSW1hZ2VzL1doaXRlS25pZ2h0U21h
+bGwucG5nIiBDYW52YXMuTGVmdD0iMTg1IiBDYW52YXMuVG9wPSIyMTUiIFBhbmVsLlpJbmRleD0iNSIg
+Lz48SW1hZ2UgU291cmNlPSJwYWNrOi8vYXBwbGljYXRpb246LCwsL1Jlc291cmNlcy9JbWFnZXMvQmxh
+Y2tSb29rU21hbGwucG5nIiBDYW52YXMuTGVmdD0iMjE1IiBDYW52YXMuVG9wPSI1IiBQYW5lbC5aSW5k
+ZXg9IjUiIC8+PEltYWdlIFNvdXJjZT0icGFjazovL2FwcGxpY2F0aW9uOiwsLC9SZXNvdXJjZXMvSW1h
+Z2VzL0JsYWNrUGF3blNtYWxsLnBuZyIgQ2FudmFzLkxlZnQ9IjIxNSIgQ2FudmFzLlRvcD0iMzUiIFBh
+bmVsLlpJbmRleD0iNSIgLz48SW1hZ2UgU291cmNlPSJ7eDpOdWxsfSIgQ2FudmFzLkxlZnQ9IjIxNSIg
+Q2FudmFzLlRvcD0iNjUiIFBhbmVsLlpJbmRleD0iNSIgLz48SW1hZ2UgU291cmNlPSJ7eDpOdWxsfSIg
+Q2FudmFzLkxlZnQ9IjIxNSIgQ2FudmFzLlRvcD0iOTUiIFBhbmVsLlpJbmRleD0iNSIgLz48SW1hZ2Ug
+U291cmNlPSJ7eDpOdWxsfSIgQ2FudmFzLkxlZnQ9IjIxNSIgQ2FudmFzLlRvcD0iMTI1IiBQYW5lbC5a
+SW5kZXg9IjUiIC8+PEltYWdlIFNvdXJjZT0ie3g6TnVsbH0iIENhbnZhcy5MZWZ0PSIyMTUiIENhbnZh
+cy5Ub3A9IjE1NSIgUGFuZWwuWkluZGV4PSI1IiAvPjxJbWFnZSBTb3VyY2U9InBhY2s6Ly9hcHBsaWNh
+dGlvbjosLCwvUmVzb3VyY2VzL0ltYWdlcy9XaGl0ZVBhd25TbWFsbC5wbmciIENhbnZhcy5MZWZ0PSIy
+MTUiIENhbnZhcy5Ub3A9IjE4NSIgUGFuZWwuWkluZGV4PSI1IiAvPjxJbWFnZSBTb3VyY2U9InBhY2s6
+Ly9hcHBsaWNhdGlvbjosLCwvUmVzb3VyY2VzL0ltYWdlcy9XaGl0ZVJvb2tTbWFsbC5wbmciIENhbnZh
+cy5MZWZ0PSIyMTUiIENhbnZhcy5Ub3A9IjIxNSIgUGFuZWwuWkluZGV4PSI1IiAvPjxJbWFnZSBTb3Vy
+Y2U9InBhY2s6Ly9hcHBsaWNhdGlvbjosLCwvUmVzb3VyY2VzL0ltYWdlcy9DaGVzc0JvYXJkR3JleVNt
+YWxsLnBuZyIgTWFyZ2luPSI1LDUsNSw1IiAvPjxDYW52YXMgQmFja2dyb3VuZD0iI0ZGRkZGRkZGIiBX
+aWR0aD0iMjEiIEhlaWdodD0iMjUyIiBDYW52YXMuTGVmdD0iMjUwIiBDYW52YXMuVG9wPSItMSI+PElt
+YWdlIFNvdXJjZT0icGFjazovL2FwcGxpY2F0aW9uOiwsLC9SZXNvdXJjZXMvSW1hZ2VzL2ZsaXBfYm9h
+cmQucG5nIiBOYW1lPSJmbGlwX2ltZ18xMTciIFdpZHRoPSIxNiIgSGVpZ2h0PSIxNiIgQ2FudmFzLkxl
+ZnQ9IjQiIENhbnZhcy5Ub3A9IjExNyIgLz48L0NhbnZhcz48Q2hlY2tCb3ggSXNDaGVja2VkPSJGYWxz
+ZSIgVmlzaWJpbGl0eT0iQ29sbGFwc2VkIiBDYW52YXMuTGVmdD0iMTAwIiBDYW52YXMuVG9wPSIxMDAi
+IC8+PC9DYW52YXM+PC9WaWV3Ym94PjwvSW5saW5lVUlDb250YWluZXI+PC9QYXJhZ3JhcGg+PFBhcmFn
+cmFwaCBNYXJnaW49IjAsMCwwLDAiIE5hbWU9IlJjNWMwNmNiZmY1YzM0NWFhYjIwMGE3NTNjZGY0OWY5
+ZCI+PFJ1biB4bWw6bGFuZz0icGwtcGwiIHhtbDpzcGFjZT0icHJlc2VydmUiIC8+PFJ1biBGb250V2Vp
+Z2h0PSJOb3JtYWwiIEZvbnRTaXplPSIxNCI+VHlwaWNhbGx5LDwvUnVuPjxSdW4gRm9udFdlaWdodD0i
+Tm9ybWFsIiBGb250U2l6ZT0iMTQiIHhtbDpzcGFjZT0icHJlc2VydmUiPiA8L1J1bj48UnVuIEZvbnRT
+aXplPSIxNCIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgLz48UnVuIEZvbnRXZWlnaHQ9Ik5vcm1hbCIgRm9u
+dFNpemU9IjE0Ij5XaGl0ZTwvUnVuPjxSdW4gRm9udFdlaWdodD0iTm9ybWFsIiBGb250U2l6ZT0iMTQi
+IHhtbDpzcGFjZT0icHJlc2VydmUiPiBhcHBsaWVzIHRoZSBzYW1lIHNjaGVtZSB0byBkZXBsb3kgdGhl
+aXIgcGllY2VzPC9SdW4+PFJ1biBGb250V2VpZ2h0PSJOb3JtYWwiIEZvbnRTaXplPSIxNCIgeG1sOnNw
+YWNlPSJwcmVzZXJ2ZSI+OiA8L1J1bj48SW5saW5lVUlDb250YWluZXIgTmFtZT0idWljX21vdmVfNjEi
+PjxUZXh0QmxvY2sgTmFtZT0idGJfbW92ZV82MSI+PFJ1biBGb250V2VpZ2h0PSJCb2xkIiBGb250U2l6
+ZT0iMTQiIEZvcmVncm91bmQ9IiNGRjAwMDBGRiIgTmFtZT0icnVuX21vdmVfNjEiIHhtbDpzcGFjZT0i
+cHJlc2VydmUiPiDimZhmMyA8L1J1bj48L1RleHRCbG9jaz48L0lubGluZVVJQ29udGFpbmVyPjxSdW4g
+eG1sOmxhbmc9InBsLXBsIj4sPC9SdW4+PElubGluZVVJQ29udGFpbmVyIE5hbWU9InVpY19tb3ZlXzEx
+OCI+PFRleHRCbG9jayBOYW1lPSJ0Yl9tb3ZlXzExOCI+PFJ1biBGb250V2VpZ2h0PSJCb2xkIiBGb250
+U2l6ZT0iMTQiIEZvcmVncm91bmQ9IiNGRjAwMDBGRiIgTmFtZT0icnVuX21vdmVfMTE4IiB4bWw6c3Bh
+Y2U9InByZXNlcnZlIj4g4pmXYzQgPC9SdW4+PC9UZXh0QmxvY2s+PC9JbmxpbmVVSUNvbnRhaW5lcj48
+UnVuIHhtbDpsYW5nPSJwbC1wbCI+LDwvUnVuPjxJbmxpbmVVSUNvbnRhaW5lciBOYW1lPSJ1aWNfbW92
+ZV83MiI+PFRleHRCbG9jayBOYW1lPSJ0Yl9tb3ZlXzcyIj48UnVuIEZvbnRXZWlnaHQ9IkJvbGQiIEZv
+bnRTaXplPSIxNCIgRm9yZWdyb3VuZD0iI0ZGMDAwMEZGIiBOYW1lPSJydW5fbW92ZV83MiIgeG1sOnNw
+YWNlPSJwcmVzZXJ2ZSI+IDAtMCA8L1J1bj48L1RleHRCbG9jaz48L0lubGluZVVJQ29udGFpbmVyPjxS
+dW4geG1sOmxhbmc9InBsLXBsIj4sPC9SdW4+PElubGluZVVJQ29udGFpbmVyIE5hbWU9InVpY19tb3Zl
+XzczIj48VGV4dEJsb2NrIE5hbWU9InRiX21vdmVfNzMiPjxSdW4gRm9udFdlaWdodD0iQm9sZCIgRm9u
+dFNpemU9IjE0IiBGb3JlZ3JvdW5kPSIjRkYwMDAwRkYiIE5hbWU9InJ1bl9tb3ZlXzczIiB4bWw6c3Bh
+Y2U9InByZXNlcnZlIj4g4pmVZTIgPC9SdW4+PC9UZXh0QmxvY2s+PC9JbmxpbmVVSUNvbnRhaW5lcj48
+UnVuIHhtbDpsYW5nPSJwbC1wbCI+LDwvUnVuPjxJbmxpbmVVSUNvbnRhaW5lciBOYW1lPSJ1aWNfbW92
+ZV83NCI+PFRleHRCbG9jayBOYW1lPSJ0Yl9tb3ZlXzc0Ij48UnVuIEZvbnRXZWlnaHQ9IkJvbGQiIEZv
+bnRTaXplPSIxNCIgRm9yZWdyb3VuZD0iI0ZGMDAwMEZGIiBOYW1lPSJydW5fbW92ZV83NCIgeG1sOnNw
+YWNlPSJwcmVzZXJ2ZSI+IOKZlmQxIDwvUnVuPjwvVGV4dEJsb2NrPjwvSW5saW5lVUlDb250YWluZXI+
+PFJ1biB4bWw6bGFuZz0icGwtcGwiPnQ8L1J1bj48UnVuIHhtbDpsYW5nPSJlbi1hdSIgeG1sOnNwYWNl
+PSJwcmVzZXJ2ZSI+aGVuIDwvUnVuPmNob29zZXMgd2hlcmUgdG8gcGxhY2U8UnVuIHhtbDpsYW5nPSJl
+bi1hdSIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+IDwvUnVuPnRoZSA8UnVuIHhtbDpsYW5nPSJlbi1hdSI+
+ZGFyazwvUnVuPi08UnVuIHhtbDpsYW5nPSJlbi1hdSI+c3F1YXJlZCBiaXNob3A8L1J1bj48SW5saW5l
+VUlDb250YWluZXIgTmFtZT0idWljX21vdmVfNzYiPjxUZXh0QmxvY2sgTmFtZT0idGJfbW92ZV83NiI+
+PFJ1biBGb250V2VpZ2h0PSJCb2xkIiBGb250U2l6ZT0iMTQiIEZvcmVncm91bmQ9IiNGRjAwMDBGRiIg
+TmFtZT0icnVuX21vdmVfNzYiIHhtbDpzcGFjZT0icHJlc2VydmUiPiDimZdmNCA8L1J1bj48L1RleHRC
+bG9jaz48L0lubGluZVVJQ29udGFpbmVyPm9yPElubGluZVVJQ29udGFpbmVyIE5hbWU9InVpY19tb3Zl
+Xzc3Ij48VGV4dEJsb2NrIE5hbWU9InRiX21vdmVfNzciPjxSdW4gRm9udFdlaWdodD0iQm9sZCIgRm9u
+dFNpemU9IjE0IiBGb3JlZ3JvdW5kPSIjRkYwMDAwRkYiIE5hbWU9InJ1bl9tb3ZlXzc3IiB4bWw6c3Bh
+Y2U9InByZXNlcnZlIj4g4pmXZzUgPC9SdW4+PC9UZXh0QmxvY2s+PC9JbmxpbmVVSUNvbnRhaW5lcj4u
+PC9QYXJhZ3JhcGg+PFBhcmFncmFwaCBOYW1lPSJSOWNkZWFjZWFjMWZkNDk1MTkzMTY3NzgxYmI0MTQ0
+NzkiIC8+PFBhcmFncmFwaCBOYW1lPSJSYWJmY2EwZmVlYzQ1NDkwZDgwZGIzZmEwNjhkZTRhYTciPkZp
+bmFsbHksIDxSdW4geG1sOmxhbmc9ImVuLWF1IiB4bWw6c3BhY2U9InByZXNlcnZlIj50aGUgPC9SdW4+
+cXVlZW4nczxSdW4geG1sOmxhbmc9ImVuLWF1IiB4bWw6c3BhY2U9InByZXNlcnZlIj4gcm9vayA8L1J1
+bj5nb2VzIHRvPFJ1biB4bWw6bGFuZz0iZW4tYXUiIHhtbDpzcGFjZT0icHJlc2VydmUiPiA8L1J1bj50
+aGUgPFJ1biB4bWw6bGFuZz0iZW4tYXUiPmM8L1J1bj48UnVuIHhtbDpsYW5nPSJwbC1wbCI+LTwvUnVu
+PjxSdW4geG1sOmxhbmc9ImVuLWF1Ij5maWxlPC9SdW4+PFJ1biB4bWw6bGFuZz0icGwtcGwiIHhtbDpz
+cGFjZT0icHJlc2VydmUiPiA8L1J1bj48SW5saW5lVUlDb250YWluZXIgTmFtZT0idWljX21vdmVfNzgi
+PjxUZXh0QmxvY2sgTmFtZT0idGJfbW92ZV83OCI+PFJ1biBGb250V2VpZ2h0PSJCb2xkIiBGb250U2l6
+ZT0iMTQiIEZvcmVncm91bmQ9IiNGRjAwMDBGRiIgTmFtZT0icnVuX21vdmVfNzgiIHhtbDpzcGFjZT0i
+cHJlc2VydmUiPiA3LiDimZZjMSA8L1J1bj48L1RleHRCbG9jaz48L0lubGluZVVJQ29udGFpbmVyPjwv
+UGFyYWdyYXBoPjxQYXJhZ3JhcGggTmFtZT0iUjgzNGNhMjBjNmM2MjRlYjY5ZjU5ZjAwNmZhMDNhNTc1
+IiAvPjxQYXJhZ3JhcGggTmFtZT0iUjk5MThlNDgzMDlmZTQyNjk5ZmRhY2MyZjNkZmQwNDdhIj48UnVu
+IHhtbDpsYW5nPSJlbi1hdSIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+T25jZSBXaGl0ZSBmaW5pc2hlcyBk
+ZXZlbG9wbWVudCwgdGhleSBhcmUgcmVhZHkgZm9yIDwvUnVuPjxSdW4geG1sOmxhbmc9InBsLXBsIiB4
+bWw6c3BhY2U9InByZXNlcnZlIj5hIDwvUnVuPjxSdW4geG1sOmxhbmc9ImVuLWF1IiB4bWw6c3BhY2U9
+InByZXNlcnZlIj5wdXNoIGluIHRoZSBjZW50ZXIgb3IgPC9SdW4+Zm9yIGEgPFJ1biB4bWw6bGFuZz0i
+ZW4tYXUiPmJyZWFrIHRocm91Z2g8L1J1bj4gc2FjcmlmaWNlPFJ1biB4bWw6bGFuZz0iZW4tYXUiPi48
+L1J1bj48L1BhcmFncmFwaD48UGFyYWdyYXBoIE5hbWU9IlJmN2NhNGIyNjU5NjA0ZmZkOTRlY2JlZmMy
+OWQ2YzFiZiI+PFJ1biB4bWw6bGFuZz0iZW4tYXUiIHhtbDpzcGFjZT0icHJlc2VydmUiIC8+PC9QYXJh
+Z3JhcGg+PFBhcmFncmFwaCBOYW1lPSJSNWY2NDdlYjkyNjYyNDRjMGFmYzVkMWMwMTFkMDc0MmMiPjxS
+dW4geG1sOmxhbmc9ImVuLWF1IiB4bWw6c3BhY2U9InByZXNlcnZlIj5CbGFjayA8L1J1bj5oYXMgdG8g
+YmUgY2FyZWZ1bCBub3QgdG8gZ2V0IGludG8gdHJvdWJsZSBlYXJseSBvbiBhbmQgbmVlZHMgPFJ1biB4
+bWw6bGFuZz0iZW4tYXUiIHhtbDpzcGFjZT0icHJlc2VydmUiPnRvIGRldmVsb3AgPC9SdW4+Y2F1dGlv
+dXNseTxSdW4geG1sOmxhbmc9ImVuLWF1IiB4bWw6c3BhY2U9InByZXNlcnZlIj4uIDwvUnVuPjxSdW4g
+eG1sOmxhbmc9InBsLXBsIj5BPC9SdW4+PFJ1biB4bWw6bGFuZz0iZW4tYXUiIHhtbDpzcGFjZT0icHJl
+c2VydmUiPiBnb29kIDwvUnVuPnBsYW48UnVuIHhtbDpsYW5nPSJlbi1hdSIgeG1sOnNwYWNlPSJwcmVz
+ZXJ2ZSI+IDwvUnVuPjxSdW4geG1sOmxhbmc9InBsLXBsIiB4bWw6c3BhY2U9InByZXNlcnZlIj5pcyA8
+L1J1bj48UnVuIHhtbDpsYW5nPSJlbi1hdSIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+dG8gY3JlYXRlIGEg
+c29saWQgd2FsbCBvZiBwYXducyA8L1J1bj48SW5saW5lVUlDb250YWluZXIgTmFtZT0idWljX21vdmVf
+MTE5Ij48VGV4dEJsb2NrIE5hbWU9InRiX21vdmVfMTE5Ij48UnVuIEZvbnRXZWlnaHQ9IkJvbGQiIEZv
+cmVncm91bmQ9IiNGRjAwMDBGRiIgTmFtZT0icnVuX21vdmVfMTE5IiB4bWw6c3BhY2U9InByZXNlcnZl
+Ij4gZDYgPC9SdW4+PC9UZXh0QmxvY2s+PC9JbmxpbmVVSUNvbnRhaW5lcj48UnVuIHhtbDpsYW5nPSJw
+bC1wbCI+LDwvUnVuPjxJbmxpbmVVSUNvbnRhaW5lciBOYW1lPSJ1aWNfbW92ZV8xMjAiPjxUZXh0Qmxv
+Y2sgTmFtZT0idGJfbW92ZV8xMjAiPjxSdW4gRm9udFdlaWdodD0iQm9sZCIgRm9yZWdyb3VuZD0iI0ZG
+MDAwMEZGIiBOYW1lPSJydW5fbW92ZV8xMjAiIHhtbDpzcGFjZT0icHJlc2VydmUiPiBlNiA8L1J1bj48
+L1RleHRCbG9jaz48L0lubGluZVVJQ29udGFpbmVyPjxSdW4geG1sOmxhbmc9InBsLXBsIj5hbmQ8L1J1
+bj48SW5saW5lVUlDb250YWluZXIgTmFtZT0idWljX21vdmVfMTIzIj48VGV4dEJsb2NrIE5hbWU9InRi
+X21vdmVfMTIzIj48UnVuIEZvbnRXZWlnaHQ9IkJvbGQiIEZvcmVncm91bmQ9IiNGRjAwMDBGRiIgTmFt
+ZT0icnVuX21vdmVfMTIzIiB4bWw6c3BhY2U9InByZXNlcnZlIj4gYTYgPC9SdW4+PC9UZXh0QmxvY2s+
+PC9JbmxpbmVVSUNvbnRhaW5lcj48UnVuIHhtbDpzcGFjZT0icHJlc2VydmUiPmJlZm9yZSBkZXZlbG9w
+aW5nIHRoZSBtaW5vciBwaWVjZXMgYW5kIGNhc3RsaW5nIDwvUnVuPjxSdW4geG1sOmxhbmc9ImVuLWF1
+Ij5rPC9SdW4+aW5nc2lkZS48L1BhcmFncmFwaD48L0Zsb3dEb2N1bWVudD4= node_id=0 text= fen
+=cm5icWtibnIvcHBwcHBwcHAvOC84LzgvOC9QUFBQUFBQUC9STkJRS0JOUiB3IEtRa3EgLSAwIDE= no
+de_id=61 text=4pmYZjM= fen=cm5icWtibnIvcHAxcHBwcHAvOC84LzRQMy8yTjJOMi9QUDNQUFAvU
+jFCUUtCMVIgYiBLUWtxIC0gMSAw csl=Re5,Rg5 node_id=72 text=MC0w fen=cm5icWtibnIvcHA
+xcHBwcHAvOC84LzJCMVAzLzJOMk4yL1BQM1BQUC9SMUJRMVJLMSBiIGtxIC0gMSAw node_id=73 tex
+t=4pmVZTI= fen=cm5icWtibnIvcHAxcHBwcHAvOC84LzJCMVAzLzJOMk4yL1BQMlFQUFAvUjFCMlJLM
+SBiIGtxIC0gMSAw node_id=74 text=4pmWZDE= fen=cm5icWtibnIvcHAxcHBwcHAvOC84LzJCMVA
+zLzJOMk4yL1BQMlFQUFAvUjFCUjJLMSBiIGtxIC0gMSAw cal=Rd2d7 node_id=76 text=4pmXZjQ=
+ fen=cm5icWtibnIvcHAxcHBwcHAvOC84LzJCMVBCMi8yTjJOMi9QUDJRUFBQL1IyUjJLMSBiIGtxIC0
+gMSAw csl=Re5 node_id=77 text=4pmXZzU= fen=cm5icWtibnIvcHAxcHBwcHAvOC82QjEvMkIxU
+DMvMk4yTjIvUFAyUVBQUC9SMlIySzEgYiBrcSAtIDEgMA== node_id=78 text=Ny4g4pmWYzE= fen
+=cm5icWtibnIvcHAxcHBwcHAvOC82QjEvMkIxUDMvMk4yTjIvUFAyUVBQUC8yUlIySzEgYiBrcSAtIDE
+gMA== cal=Rc2c7 node_id=104 text=MS4gZTQ= fen=cm5icWtibnIvcHBwcHBwcHAvOC84LzRQMy
+84L1BQUFAxUFBQL1JOQlFLQk5SIGIgS1FrcSAtIDAgMA== node_id=105 text=YzU= fen=cm5icWt
+ibnIvcHAxcHBwcHAvOC8ycDUvNFAzLzgvUFBQUDFQUFAvUk5CUUtCTlIgdyBLUWtxIC0gMCAxMQ== no
+de_id=106 text=Mi4gZDQ= fen=cm5icWtibnIvcHAxcHBwcHAvOC8ycDUvM1BQMy84L1BQUDJQUFAv
+Uk5CUUtCTlIgYiBLUWtxIC0gMCAw node_id=107 text=Mi4uLiBjeGQ0 fen=cm5icWtibnIvcHAxc
+HBwcHAvOC84LzNwUDMvOC9QUFAyUFBQL1JOQlFLQk5SIHcgS1FrcSAtIDAgMTE= node_id=114 text
+=My4gYzM= fen=cm5icWtibnIvcHAxcHBwcHAvOC84LzNwUDMvMlA1L1BQM1BQUC9STkJRS0JOUiBiIE
+tRa3EgLSAwIDA= node_id=115 text=My4uLiBkeGMz fen=cm5icWtibnIvcHAxcHBwcHAvOC84LzR
+QMy8ycDUvUFAzUFBQL1JOQlFLQk5SIHcgS1FrcSAtIDAgMTE= node_id=117 text= fen=cm5icWti
+bnIvcHAxcHBwcHAvOC84LzRQMy8yTjUvUFAzUFBQL1IxQlFLQk5SIGIgS1FrcSAtIDEgMA== node_id
+=118 text=4pmXYzQ= fen=cm5icWtibnIvcHAxcHBwcHAvOC84LzJCMVAzLzJOMk4yL1BQM1BQUC9SM
+UJRSzJSIGIgS1FrcSAtIDEgMA== csl=Rd5,Rf7 node_id=119 text=ZDY= fen=cm5icWtibnIvcH
+AycHBwcC8zcDQvOC80UDMvMk41L1BQM1BQUC9SMUJRS0JOUiB3IEtRa3EgLSAxIDEx node_id=120 t
+ext=ZTY= fen=cm5icWtibnIvcHAzcHBwLzNwcDMvOC80UDMvMk41L1BQM1BQUC9SMUJRS0JOUiB3IEt
+Ra3EgLSAxIDEx node_id=123 text=YTY= fen=cm5icWtibnIvMXAzcHBwL3AycHAzLzgvNFAzLzJO
+NS9QUDNQUFAvUjFCUUtCTlIgdyBLUWtxIC0gMSAxMQ== node_id=128 text=NC4g4pmYeGMz fen=c
+m5icWtibnIvcHAxcHBwcHAvOC84LzRQMy8yTjUvUFAzUFBQL1IxQlFLQk5SIGIgS1FrcSAtIDAgMTA= 
+]}
+ *
+
+
+
+[ChapterTitle "Black plays ♛c7 (the Siberian Trap)"]
+[Guid "9b5eb53d-aabc-4bd3-b5c6-d8a540ac1b03"]
+[ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "Black plays ♛c7 (the Siberian Trap)"]
+
+
+1. e4 c5 2. d4 cxd4 3. c3 dxc3 4. Nxc3 {[%eval -0.27]}  Nc6 {[%eval -0.28]}  5. 
+Nf3 {[%eval -0.28]}  e6 {[%eval -0.23]}  6. Bc4 {[%eval -0.30]}  a6 {[%eval -0.19]}  
+(6... Qc7 7. O-O Nf6 {[%ref f0dbb400-1364-47fa-b489-6d823d73377f|]}  8. Nb5 (8. 
+Qe2 Ng4 9. h3 $4 {falls into the Siberian Trap}  Nd4 $1 {[%bkm][%csl Rf3,Re2]}  
+10. Nxd4 (10. Qd3 Nxf3+ 11. Qxf3 Qh2#) 10... Qh2#) 8... Qb8 9. e5 Nxe5 (9... a6 
+10. exf6 axb5 11. fxg7 Bxg7 12. Bxb5 $14)  (9... Ng4 10. Bf4 Ngxe5 (10... f6 11. 
+Re1 Bc5 12. Nd6+ Bxd6 (12... Kf8 13. Bg3 $18) 13. exd6 O-O 14. h3 Nge5 15. Nxe5 
+fxe5 16. Bxe5 Nxe5 17. Rxe5 $16)  (10... a6 11. Nd6+ Bxd6 12. exd6 {pawn d6 is a real thorn in Black's position}  
+b5 13. Bd5 exd5 14. Re1+ Kf8 15. Ng5 {[%cal Yd1g4,Yd1d5]}  Nf6 16. Re7 $3 {[%cal Ye7f7]}  
+Nxe7 (16... Qb6 17. Qe2 {[%cal Ye7f7,Ya1e1]} ) 17. dxe7+ {[%cal Yf4b8]}  Kxe7 
+18. Bxb8 $18) 11. Nxe5 Nxe5 12. Bxe6 fxe6 (12... dxe6 13. Rc1 {[%cal Yb5c7,Yf4e5]} 
+) 13. Qh5+ g6 14. Qxe5 Qxe5 15. Bxe5 Rg8 16. Nc7+ $18) 10. Nxe5 Qxe5 11. Re1 Qb8 
+(11... Qc5 12. Bf1 {[%cal Yc1e3,Ya1c1]}  Nd5 13. Bg5 b6 $2 (13... f6 14. Rc1 $18 
+{[%cal Yd2d5][%csl Rd5,Rc5]} ) 14. Qxd5 Qxd5 15. Nc7#) 12. Qd4 $16) 7. O-O Qc7 {[%thmb]}  
+(7... d6 8. Qe2 Qc7 9. Rd1 Nf6 10. Bf4 Be7 11. Rac1 {White is fully developed and ready for a push in the center} 
+) 8. Qe2 d6 9. Bf4 Nf6 10. Rfd1 Be7 11. Rac1 O-O {[%bkm][%ref a74d8225-f77d-4d34-883d-1ac65414676e]}  
+12. Bb3 Rd8 (12... Qb8 13. e5 dxe5 (13... Nh5 14. Bg5 dxe5 15. Bxe7 Nxe7 16. 
+Nxe5 Nf6 {[%cal Yc3a4,Ya4b6,Ya4c5,Ge5g4]}  17. Ng4 Nxg4 18. Qxg4 Nf5 (18... Ng6 
+19. h4 $11 {[%cal Gc1c8,Yh4h5,Gc3e4]} ) 19. Ne4 b5 20. Nf6+ Kh8 21. Qb4 {[%cal Yb4f8]}  
+Bb7 22. Nd7 {[%csl Rb8,Rf8]} ) 14. Nxe5 Nxe5 15. Bxe5 Qa7 16. Ne4 Nd7 (16... 
+Nxe4 17. Qxe4 b5 18. Rc7 $18)  (16... Ne8 17. Qh5 b5 18. Rd3 Qb7 (18... g6 19. 
+Qxh7+ Kxh7 20. Rh3+ Kg8 21. Rh8#) 19. Rh3 Qxe4 (19... h6 20. Bxg7 Nxg7 21. Qxh6 
+f6 22. Qh7+ Kf7 23. Rg3 Rg8 24. Qg6+ Kf8 25. Nxf6 {[%cal Yf6h7,Yf6g8]}  Bxf6 26. 
+Qxf6+ Qf7 27. Qd8+ Qe8 28. Rf3+ Nf5 29. Qf6+ Qf7 30. Qxf7+ Kxf7 31. Rxf5+ Ke7 
+32. Rfc5 {[%cal Yg2g3,Yh2h4]}  Bd7 33. Rc7 Rad8 34. Rd1 Rg5 35. g3 Re5 36. h4 
+Re2 37. Bc2 Ke8 38. Bg6+ Ke7 39. h5 Rxb2 40. h6 Rxa2 41. h7 Ra4 42. Rdxd7+ Rxd7 
+43. Rxd7+ Kxd7 44. h8=Q $18) 20. Bc2 $18 {[%csl Rh7]} ) 17. Rxd7 Bxd7 18. Rc7 
+Rad8 19. Qg4 {[%cal Yg4g7]}  g6 (19... f6 $2 20. Rxd7 Rxd7 21. Qxe6+ Kh8 22. 
+Qxd7 Bc5 23. Bd6 Bxd6 24. Nxd6 Qc5 25. h4 Qc1+ 26. Kh2 Qxb2 27. Nf7+ Kg8 28. Qe6 
+$18) 20. Nf6+ Bxf6 21. Bxf6 Qb6 22. Qg5 Qxc7 23. Qh6 $18) 13. Nd5 exd5 14. exd5 {[%csl Rc6]}  
+Nxd5 15. Bxd5 {[%cal Rc1c8,Rd1d8]}  Bg4 16. h3 Bh5 17. g4 Bg6 18. Nd4 Nxd4 19. 
+Rxd4 Qd7 20. Rdc4 {[%cal Yc4c7]}  Rac8 21. Rxc8 Rxc8 22. Rxc8+ Qxc8 23. Qxe7 $18 *
+
+[ContentType "Model Game"]
+[Event "FRA-chT Top 12"]
+[Round ""]
+[ECO ""]
+[Guid "f0dbb400-1364-47fa-b489-6d823d73377f"]
+[Date "2012.06.10"]
+[White "Battaglini, Gabriel"]
+[Black "Marzolo, Cyril"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+1. e4 {[%eval +0.17]}  c5 {[%eval +0.40]}  2. d4 {[%eval +0.19]}  cxd4 {[%eval +0.24]}  
+3. c3 {[%eval -0.21]}  dxc3 {[%eval -0.22]}  4. Nxc3 {[%eval -0.28]}  Nc6 {[%eval -0.25]}  
+5. Nf3 {[%eval -0.28]}  e6 {[%eval -0.21]}  6. Bc4 {[%eval -0.21]}  Qc7 {[%eval +0.58]}  
+7. O-O {[%eval +0.58]}  Nf6 {[%eval +0.52]}  8. Bg5 {[%eval -0.29]}  a6 {[%eval +0.28]}  
+9. Bb3 {[%eval +0.02]}  Bd6 {[%eval +0.55]}  10. Rc1 {[%eval +0.39]}  Ng4 {[%eval +0.63]}  
+11. h3 {[%eval +0.36]}  h6 {[%eval +0.32]}  12. Bd2 {[%eval +0.25]}  Nf6 {[%eval +1.47]}  
+13. Re1 {[%eval +1.46]}  Qb8 {[%eval +1.34]}  14. Qe2 {[%eval +1.39]}  Nh7 {[%eval +1.74]}  
+15. Nd5 {[%eval +1.58]}  b5 {[%eval +2.17]}  16. e5 {[%eval +2.42]}  Bf8 {[%eval +2.52]}  
+17. Qe4 {[%eval +2.14]}  a5 {[%eval +2.34]}  18. Nd4 {[%eval +1.62]}  a4 {[%eval +3.96][%assm 1]}  
+19. Nxc6 {[%eval +4.74]}  dxc6 {[%eval +5.07]}  20. Rxc6 {[%eval +5.10]}  Bd7 {[%eval +7.64]}  
+21. Nc7+ {[%eval +8.33]}  Kd8 {[%eval +8.61]}  22. Rb6 {[%eval +6.05]}  1-0
+
+[ContentType "Model Game"]
+[Event "Yanchep"]
+[Round ""]
+[ECO ""]
+[Guid "58fc0f3e-e02f-40fb-bb79-04a3164b5e80"]
+[Date "1992.??.??"]
+[White "W Byrne"]
+[Black "Robert Rozycki"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "0-1"]
+
+
+1. e4 {[%eval +0.19]}  c5 {[%eval +0.34]}  2. d4 {[%eval +0.13]}  cxd4 {[%eval +0.16]}  
+3. c3 {[%eval -0.32]}  dxc3 {[%eval -0.20]}  4. Nxc3 {[%eval -0.35]}  Nc6 {[%eval -0.22]}  
+5. Nf3 {[%eval -0.29]}  e6 {[%eval -0.23]}  6. Bc4 {[%eval -0.27]}  Qc7 {[%eval +0.56]}  
+7. O-O {[%eval +0.60]}  Nf6 {[%eval +0.60]}  8. Qe2 {[%eval +0.13]}  Ng4 {[%eval +0.31]}  
+9. h3 {[%eval -3.47][%assm 1]}  Nd4 {[%thmb][%eval -3.42]}  10. hxg4 {[%eval -3.26]}  
+Nxe2+ {[%eval -3.34]}  0-1
+
+[ContentType "Model Game"]
+[Event "Buenos Aires"]
+[Round ""]
+[ECO ""]
+[Guid "d98eb9f5-b1b6-48bf-ab05-b4f6ca3185ed"]
+[Date "1960.??.??"]
+[White "Fischer,Robert James"]
+[Black "Kortchnoi,Viktor"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1/2"]
+
+
+1. e4 {[%eval +0.26]}  c5 {[%eval +0.30]}  2. d4 {[%eval +0.15]}  cxd4 {[%eval +0.21]}  
+3. c3 {[%eval -0.27]}  dxc3 {[%eval -0.27]}  4. Nxc3 {[%eval -0.28]}  Nc6 {[%eval -0.21]}  
+5. Nf3 {[%eval -0.27]}  d6 {[%eval -0.19]}  6. Bc4 {[%eval -0.22]}  e6 {[%eval -0.22]}  
+7. O-O {[%eval -0.22]}  Nf6 {[%eval -0.06]}  8. Qe2 {[%eval -0.06]}  Be7 {[%eval 0.00]}  
+9. Rd1 {[%eval -0.06]}  Qc7 {[%eval +0.63]}  10. Bg5 {[%eval -0.37]}  a6 {[%eval -0.33]}  
+11. Rac1 {[%eval -0.35]}  O-O {[%eval -0.32]}  12. Bb3 {[%eval -0.33]}  h6 {[%eval -0.39]}  
+13. Bf4 {[%bkm][%eval -0.38]}  e5 {[%eval 0.00]}  14. Be3 {[%eval 0.00]Forcing Black to weaken the d6 and d5 squares. The position is equal.}  
+Qd8 {[%eval 0.00]}  15. Nd5 {[%eval -0.14]}  Nxd5 {[%eval -0.19]}  16. Bxd5 {[%eval -0.14]}  
+Bd7 {[%eval -0.06]}  17. Nd2 {[%eval -0.17]}  Nb4 {[%eval -0.10]}  18. Bb3 {[%eval -0.08]}  
+(18. Bxb7 Rb8 19. Bxa6 Nxa2 20. Ra1 Rxb2 21. Qd3 d5 22. exd5 Nb4 23. Qa3 Rxd2 
+24. Bxd2 Nc2 25. Qg3 $11) 18... Bg5 {[%eval +0.10]}  19. Bxg5 {[%eval 0.00]}  
+Qxg5 {[%eval +0.26]}  20. Nf3 {[%eval +0.14]}  Bg4 $1 {[%eval +0.26]}  21. Rc7 
+$1 {[%eval +0.38]}  Qd8 {[%eval +0.44]}  22. Rxb7 {[%eval +0.22]}  Rb8 {[%eval +0.23]}  
+23. Rxb8 {[%eval +0.19]}  Qxb8 {[%eval +0.22]}  24. h3 {[%eval +0.11]}  Bxf3 {[%eval +0.17]}  
+25. Qxf3 {[%eval +0.04]}  Nc6 {[%eval +0.15]}  26. Qd3 {[%eval +0.03]}  Nd4 {[%eval +0.01]}  
+27. Bc4 {[%eval 0.00]}  a5 {[%eval +0.07]}  28. b3 {[%eval +0.14]}  Qb4 {[%eval +0.25]}  
+29. f4 {[%eval +0.11]}  Kh7 {[%eval +0.47]}  1/2
+
+[ContentType "Model Game"]
+[Event ""]
+[Round ""]
+[ECO ""]
+[Guid "a74d8225-f77d-4d34-883d-1ac65414676e"]
+[Date "1983.??.??"]
+[White "Herba,Krzysztof"]
+[Black "Kiedrowicz"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+1. e4 {[%eval +0.26]}  c5 {[%eval +0.39]}  2. d4 {[%eval +0.16]}  cxd4 {[%eval +0.14]}  
+3. c3 {[%eval -0.23]}  dxc3 {[%eval -0.32]}  4. Nxc3 {[%eval -0.31]}  Nc6 {[%eval -0.28]}  
+5. Nf3 {[%eval -0.24]}  d6 {[%eval -0.18]}  6. Bc4 {[%eval -0.19]}  e6 {[%eval -0.15]}  
+7. Qe2 {[%eval -0.22]}  a6 {[%eval -0.16]}  8. O-O {[%eval -0.19]}  Be7 {[%eval -0.12]}  
+9. Rd1 {[%eval -0.17]}  Qc7 {[%eval 0.00]}  10. Bf4 {[%eval +0.10]}  Nf6 {[%eval +0.10]}  
+11. Rac1 {[%eval +0.07]}  O-O {[%eval +0.09]}  12. b4 {[%eval -0.43]}  Nd7 {[%eval +0.11]}  
+(12... Ne5 13. Bb3 Qb8 14. Nd4 Bd7 15. Bg3 Rc8 16. f4 Nc6 17. e5 Nxd4 18. Rxd4 
+Nd5 19. Bxd5 exd5 20. Rdd1 Bf8 21. Nxd5 Rxc1 22. Rxc1 Qd8 23. Rd1 Rc8 $15) 13. 
+Bb3 {[%eval +0.04]}  Qb8 {[%eval +0.10]}  14. b5 {[%eval +0.08]}  Nce5 {[%eval +0.09]}  
+15. Nd4 {[%eval -0.60]White loses its edge}  (15. Nxe5 dxe5 16. Be3 Ba3 17. Rc2 
+b6 18. Na4 axb5 19. Qxb5 Ra5 20. Qc6 b5 21. Nb6 Nxb6 22. Qxb6 Qxb6 23. Bxb6 Ra6 
+24. Bc5 Bxc5 25. Rxc5 $15) 15... Nc5 {[%eval -0.50]}  16. Nf5 $2 {[%eval -1.54]} 
+ exf5 {[%eval -1.39]}  17. Nd5 {[%eval -1.52]}  Bd8 {[%eval -1.69]}  18. Rxc5 {[%eval -1.87]}  
+dxc5 {[%eval -1.63]}  19. exf5 {[%eval -1.48]}  Re8 {[%eval -0.28]}  (19... Bd7 
+$1 {[%bkm]}  20. Bxe5 Re8 21. f4 Bxb5 22. Qg4 $2 Rxe5 $1 23. fxe5 Qxe5 $19)  
+(19... Bf6 20. Nxf6+ gxf6 21. Qh5 c4 22. Bg5 Nf3+ 23. gxf3 Qe5 24. Rd5 Qa1+ 
+(24... Qxd5 25. Bc2 Qd8 26. Qh6 axb5 27. Bxf6 Qxf6 28. Qxf6 Ra6 29. Qe5 f6 30. 
+Qxb5 Rc6 31. Be4 Rc7 32. Qb6 $16) 25. Rd1 Qe5 26. Rd5 $11) 20. Ne7+ {[%eval -0.33]}  
+Bxe7 {[%eval -0.12]}  21. Bxe5 {[%eval -0.07]}  Qa7 $4 {[%eval +6.04][%assm 1]}  
+(21... Bd6 $1 22. Bxf7+ $1 Kxf7 23. Qh5+ Kf8 24. Rxd6 Bxf5 (24... Rxe5 25. Rd8+ 
+Ke7 26. Qe8+ Kf6 27. Qf8+ Kg5 28. Qxg7+ Kf4 29. Qh6+ Kxf5 30. Qxh7+ Kf4 31. g3+ 
+Kf3 32. Qd3+ Kg4 33. Rg8+ Kh3 34. Qf1#) 25. Qxf5+ Kg8 26. f4 $11) 22. Bxf7+ {[%eval +6.70]}  
+Kh8 {[%eval +8.21]}  (22... Kxf7 23. Qh5+ Kf8 24. Qxh7 Bf6 25. Bxf6 gxf6 26. 
+Qh6+ Kf7 27. Qg6+ Kf8 28. Qxf6+ Kg8 29. Qg6+ Kf8 30. b6 Qb8 31. f6 $18) 23. Bxe8 
+{[%eval +12.06]}  Bxf5 {[%eval +#9]}  (23... Bf6 {prolongs the fight}  24. Qh5 
+Bxf5 25. Qf7) 24. Bd7 {[%eval +6.42]prolongs the fight}  (24. Bxg7+ $1 Kxg7 25. 
+Qxe7+ Kh6 26. h4 Bg6 27. Rd7 c4 28. Qg5#) 24... Bxd7 {[%eval +34.22]}  25. Bxg7+ 
+{[%eval +#8]}  Kg8 {[%eval +#8]}  26. Qxe7 {[%eval +7.94]}  (26. Rxd7 $1 Qb6 27. 
+Qc4+ Kxg7 28. Rxe7+ Kh6 29. Qf4+ Kg6 30. Qf7+ Kh6 31. Qxh7+ Kg5 32. h4+ Kf4 33. 
+Re4#) 26... Bf5 {[%eval +#3]}  27. Rd8+ {[%eval +5.98]forcibly winning the black queen, however there was a mate in 3.}  
+(27. Rd7 $1 {A sacrifice to block the 7th rank and preventing the black queen from coming to the rescue.}  
+Bxd7 28. Bh6 axb5 29. Qg7#) 27... Rxd8 {[%eval +5.99]}  28. Qxd8+ {[%eval 
++6.09]}  Kxg7 {[%eval +6.07]}  29. b6 {[%eval +6.09]}  1-0
+
+[ContentType "Model Game"]
+[Event ""]
+[Round ""]
+[ECO ""]
+[Guid "b1dfd1b8-d17c-4f9f-be7f-0c4a62e2fe84"]
+[Date "1965.??.??"]
+[White "Sztejn,Emanuel"]
+[Black "Myslowski,Karol"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+1. e4 {[%eval +0.31]}  c5 {[%eval +0.41]}  2. d4 {[%eval +0.16]}  cxd4 {[%eval +0.16]}  
+3. c3 {[%eval -0.30]}  dxc3 {[%eval -0.25]}  4. Nxc3 {[%eval -0.32]}  Nf6 {[%eval +0.64]}  
+5. Nf3 {[%eval 0.00]}  Nc6 {[%eval +0.07]}  6. Bc4 {[%eval -0.03]}  e6 {[%eval -0.08]}  
+7. O-O {[%eval -0.15]}  d6 {[%eval -0.06]}  8. Qe2 {[%eval -0.08]}  a6 {[%eval 0.00]}  
+9. Rd1 {[%eval 0.00]}  Qc7 {[%eval +0.08]}  10. Bf4 {[%eval +0.09]}  e5 $2 {[%eval +0.90]}  
+(10... Be7 $14 11. Rac1 O-O 12. Bb3 Rd8 13. Nd5 exd5 14. exd5 Nxd5 15. Bxd5 Bg4 
+16. h3 Bh5 17. g4 Bg6 18. Nd4 Nxd4 19. Rxd4 Qd7 20. Rdc4 $14 {[%cal Yc4c7]}  
+Rac8 $2 21. Rxc8 Rxc8 22. Rxc8+ Qxc8 23. Qxe7 $18) 11. Nd5 {[%eval +0.81]}  Nxd5 
+{[%eval +2.00]}  (11... Qd8 12. Be3 Nxd5 13. Bxd5 Be7 14. Bxc6+ bxc6 15. Nxe5 
+Qc7 16. Nc4 Be6 17. Nb6 Rb8 18. Qxa6 $18) 12. exd5 {[%eval +1.71]}  b5 {[%eval +1.50]}  
+13. Bb3 {[%eval +1.43]}  (13. dxc6 bxc4 14. Nxe5 dxe5 15. Bxe5 Qe7 16. c7 Be6 
+17. Rd2 Rc8 18. Rad1 Rxc7 19. Bd6 Qxd6 20. Rxd6 Bxd6 21. Rxd6 O-O 22. Qd2 $16) 
+13... Na5 $2 {[%eval +4.03][%assm 1]}  (13... Be7 14. Rac1 exf4 15. Re1 Kf8 16. 
+dxc6 Bg4 17. h3 Bxf3 18. Qxf3 Bf6 19. Qxf4 Be5 20. Qb4 a5 21. Qxb5 Rb8 22. Rxe5 
+Rxb5 23. Rxb5 {[%cal Yb5b7]}  g6 24. Rb7 Qe7 (24... Qc8 25. Rxf7+ $18 {checkmate in 9 moves} 
+) 25. Bd5 Qf6 26. Rxf7+ Qxf7 27. c7 Qxc7 28. Rxc7 $18) 14. Nxe5 $1 {[%eval +3.96]}  
+Nxb3 {[%eval +4.79]}  15. Nc6+ {[%eval +4.94]}  Be7 {[%eval +4.78]}  16. axb3 {[%eval +4.82]}  
+Bb7 {[%eval +4.89]}  17. Rac1 {[%eval +5.12]}  Kf8 {[%eval +5.78]}  18. Qxe7+ {[%eval +5.84]} 
+ 1-0
+
+[ContentType "Exercise"]
+[FEN "r1b1kb1r/ppqp1ppp/2n1p3/8/2B1P1n1/2N2N1P/PP2QPP1/R1B2RK1 b kq - 0 1"]
+[Event ""]
+[Round ""]
+[ECO ""]
+[Guid "R7b89fce83ce44303a561050da6a8476f"]
+[Date ""]
+[White "Black plays Qc7 (Siberian Trap)"]
+[Black "Study position after 9.h3?"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "*"]
+
+
+ {[%bkm]falls into the Siberian Trap}  Nd4 $1 {[%csl Rf3,Re2]}  2. Nxd4 (2. Qd3 
+Nxf3+ 3. Qxf3 Qh2#) 2... Qh2# *
+
+
+
+[ChapterTitle "Black plays ♞ge7"]
+[Guid "6facc984-2534-42d1-8d34-001cf29de568"]
+[ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "Black plays ♞ge7"]
+
+
+1. e4 c5 2. d4 cxd4 3. c3 dxc3 4. Nxc3 {[%cal Yg1f3,Yf1c4,Ye1g1,Yh1f1,Gd1e2,Gc1e3,Gc1f4,Gc1g5,Ga1c1,Gh1d1][%csl Rd5,Rf7]}  
+Nc6 5. Nf3 e6 6. Bc4 a6 7. O-O Nge7 {[%thmb]}  (7... b5 8. Bd3 Nge7 9. Be3 Ng6 
+10. a4 b4 11. Nd5 {[%cal Ga4a5,Gd1a4,Ye3b6]}  Rb8 12. a5 {[%bkm]}  Nxa5 (12... 
+exd5 13. exd5 Nce5 14. Bxg6 Nxg6 15. d6 $18 Qf6 16. Re1 Be7 17. Bg5 Qf5 18. dxe7 
+d5 19. Rc1 f6 20. Rc7 fxg5 21. Nd4 Qg4 22. f3 Qh4 23. Ne6 Bxe6 24. Rxe6 Rb5 25. 
+Qc2 Qd4+ 26. Kh1 Ne5 27. Rxe5 Qxe5 28. Qc6+ Kf7 29. e8=Q#) 13. Re1) 8. Bg5 {[%ref 081d134a-9ad5-4f19-ad22-f687c53c01ca]}  
+h6 (8... f6 {[%ref 1a37fc04-f2b0-4bbd-9ced-7096d73c4d5b]}  9. Be3 g6 (9... b5 
+10. Bb3 Bb7 (10... Ng6 11. Nd5 exd5 (11... Rb8 12. Rc1 exd5 13. exd5 Nce5 14. d6 
+Bb7 15. Nxe5 Nxe5 (15... fxe5 16. f4 Qh4 17. fxe5 Bxg2 18. Bf7+ Kd8 19. Qd2 {[%cal Ye3g5,Yd2a5]} 
+) ) 12. exd5 Nce5 13. d6 Bb7 14. Nxe5 fxe5 (14... Nxe5 15. Re1 Qb8 16. Bc5 Kd8 
+17. Qd4 Kc8 18. Rac1 Bc6 19. f4 Kb7 20. fxe5 fxe5 21. Rxe5 g6 22. Bd5 Bg7 23. 
+Bxc6+ dxc6 (23... Kc8 24. Bxd7+ Kxd7 25. Re7+ Kd8 26. Qxg7 $18) 24. Re7+ Kc8 25. 
+Qg4+ Kd8 26. Qd7#) 15. f4 exf4 (15... Qf6 16. fxe5 Qxe5 17. Bg5 {[%cal Gb3f7]}  
+Qxg5 (17... Be7 18. Bf7+ Kd8 19. dxe7+ Nxe7 20. Qd2 Kc8 21. Rac1+ Nc6 22. Rfd1 
+Qf5 23. Bf4 Qxf7 24. Qd6 Kd8 25. Rxc6 Bxc6 26. Qxc6 {[%cal Yf4g5,Yc6a8]} ) 18. 
+Qe1+ Qe5 19. Bf7+ Kd8 20. Qa5+ Kc8 21. Qc7#) 16. Re1 fxe3 17. Rxe3+ Be7 18. Qd4 {[%cal Yd4g7,Ya1e1]}  
+Qc8 19. Rae1 Qc6 20. Rf3 Kd8 21. dxe7+ Nxe7 22. Rxe7 Kxe7 (22... Rc8 23. Rxg7 
+Rc7 24. Rxd7+ Rxd7 25. Qxh8+ Kc7 26. Rc3 $18) 23. Qxg7+ Kd6 (23... Kd8 24. Qxh8+ 
+Kc7 25. Qe5+ Qd6 26. Qxd6+ Kxd6 27. Rd3+ $14) 24. Rf6+ Kc7 25. Rxc6+ Bxc6 26. 
+Bf7 $14) 11. a3 Ng6 12. Qe2 Be7 13. Rfd1 $14 {with a typical Smith Morra compensation} 
+)  (9... Ng6 10. Bb3 Be7 11. Nd5 {[%cal Yd5e7,Ye3b6]}  exd5 12. exd5 Na5 13. d6 
+Bxd6 (13... Bf8 14. Re1 $18) 14. Qxd6 Qe7 15. Qd5 Nxb3 16. Qxb3 $14 {with White's compensation and Black's weak dark squares} 
+) )  (8... Qc7 9. Nd5 exd5 10. exd5 Ne5 11. d6 Nxf3+ (11... Qxc4) 12. Qxf3 Qxc4 
+13. Rfe1 f6 14. Rac1 Qb4 15. dxe7 Bxe7 16. Bf4 Kf7 17. Qd5+ Kf8 18. Rxe7 Kxe7 
+19. Bd2 Qg4 20. Re1+ Kf8 21. h3 Qh4 22. Qd6+ Kf7 23. Re7+ Kg6 24. Qd3+ f5 (24... 
+Kh5 25. Qf5+ g5 26. Rxh7+ Rxh7 27. Qxh7#) 25. Qd6+ Kh5 (25... Qf6 26. Qg3+ Kh5 
+27. Rxg7 Qxg7 28. Qxg7 h6 29. Qf7+ Kh4 30. g3+ Kxh3 31. Qh5#) ) 9. Be3 Ng6 (9... 
+b5 10. Bb3 Bb7 (10... Na5) 11. Re1 Na5 12. Ne5 d6 (12... Qc7 13. Bf4 d6 14. Nxf7 
+Kxf7 15. Qh5+ g6 16. Qf3 {[%cal Yf4d6]}  Kg7 17. Bxe6 Kh7 18. Rad1 Ng8 19. Qh3 
+$16 {with White's initiative} )  (12... Nxb3 13. Bb6 Qc8 (13... Qxb6 14. Qxd7#) 
+14. Qf3 Nf5 15. Qh5 g6 16. Nxg6 Ng7 (16... fxg6 17. Qxg6+ Ke7 18. exf5 Nxa1 19. 
+Ba5 Nc2 20. f6+ Kd6 21. Rd1+ Bd5 22. Qxc2 {[%cal Yc3e4]}  Kc6 23. Nxd5+ Kb7 24. 
+Nc7 Ra7 25. Qd2 d5 26. Qd4 Kb8 27. Rc1 Qd7 28. Bb6 Rxc7 29. Rxc7 Qxc7 30. Bxc7+ 
+Kxc7 31. Qa7+ Kd6 32. Qxa6+ Ke5 33. Qxb5 Kxf6 34. a4 $18) 17. Qg4 h5 (17... Nxa1 
+18. Nxh8 d6 (18... Nc2 19. Qf3 f5 (19... Nf5 20. Qh5 Nd6 21. Rd1 Bg7 22. Bc5 
+Bxh8 23. Bxd6 Qc6 24. Qh4 Qxd6 25. Rxd6 $18) ) 19. Qf3 Qd7 20. Rxa1 $13)  (17... 
+fxg6 18. Qxg6+ Ke7 19. e5 Nh5 (19... Nxa1 20. Qf6+ Ke8 21. Qg6+ Ke7 $11) 20. 
+axb3 (20. Qxh5 $2 Rg8 $1 $17) 20... Qc6 21. Ba5 Qxg2+ 22. Qxg2 Bxg2 23. Kxg2 
+$14) 18. Qg5 Nxa1 19. Nxh8 $13) 13. Nxf7 Kxf7 14. Qf3+ Kg8 15. Bxe6+ Kh7 16. 
+Rad1 $11 {with White's initiative} ) 10. Bb3 Be7 (10... b5 11. Nd5 {[%cal 
+Ye3b6]}  Rb8 12. Rc1 {Black does not have good development or waiting moves}  
+Be7 13. Nxe7 Qxe7 14. Bc5 Qd8 15. Bd6 $16) 11. Na4 {[%cal Ye3b6]}  O-O 12. Nb6 
+Rb8 13. Rc1 d6 14. h3 Bd7 15. Qd2 $11 {White's Nb6 blocks Black's development and black d6 pawn is weak} 
+ *
+
+[ContentType "Model Game"]
+[Event "US op 112th"]
+[Round ""]
+[ECO ""]
+[Guid "1a37fc04-f2b0-4bbd-9ced-7096d73c4d5b"]
+[Date "2011.08.03"]
+[White "Esserman, Mark"]
+[Black "Van Wely, Loek"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+1. e4 {[%eval +0.30]}  c5 {[%eval +0.36]}  2. d4 {[%eval +0.18]}  cxd4 {[%eval +0.19]}  
+3. c3 {[%eval -0.32]}  dxc3 {[%eval -0.36]}  4. Nxc3 {[%eval -0.34]}  Nc6 {[%eval -0.27]}  
+5. Nf3 {[%eval -0.25]}  e6 {[%eval -0.27]}  6. Bc4 {[%eval -0.32]}  a6 {[%eval -0.26]}  
+7. O-O {[%eval -0.26]}  Nge7 {[%eval -0.08]}  8. Bg5 {[%eval -0.25]}  f6 {[%eval -0.17]}  
+9. Be3 {[%eval -0.24]}  Ng6 {[%eval +0.30]}  10. Bb3 {[%eval +0.42]}  b5 {[%eval +0.85]}  
+11. Nd5 {[%eval +0.78]}  exd5 {[%eval +1.87]}  12. exd5 {[%eval +1.65]}  Nce5 {[%eval +2.38]}  
+13. d6 {[%eval +1.72]}  Bb7 {[%eval +2.08]}  14. Nxe5 {[%eval +0.64]}  fxe5 {[%eval 0.00]}  
+15. f4 {[%eval 0.00]}  Qf6 {[%eval +4.22][%assm 1]}  16. fxe5 {[%eval +4.38]}  
+Qxe5 {[%eval +4.72]}  17. Bg5 {[%eval +4.72]}  Be7 {[%eval +5.23]}  (17... Qxg5 
+18. Qe1+ Be7 19. Bf7+ Kf8 20. Bxg6+ Kg8 21. Bf7+ Kf8 22. dxe7+ Qxe7 23. Bh5+ Qf6 
+24. Qb4+ Kg8 25. Rxf6 gxf6 26. Qg4+ Kf8 27. Qxd7 $18) 18. Bf7+ {[%eval +5.41]}  
+Kd8 {[%eval +5.43]}  19. dxe7+ {[%eval +5.64]}  Nxe7 {[%eval +5.78]}  20. Qd2 {[%eval +5.85]}  
+Kc8 {[%eval +5.85]}  21. Rac1+ {[%eval +6.00]}  Nc6 {[%eval +6.32]}  22. Rfd1 {[%eval +5.50]}  
+Qf5 {[%eval +6.29]}  23. Bf4 {[%eval +5.86]}  Qxf7 {[%eval +5.77]}  24. Qd6 {[%eval +6.01]}  
+Kd8 {[%eval +7.56]}  25. Rxc6 {[%eval +8.01]}  Bxc6 {[%eval +8.02]}  26. Qxc6 {[%eval +8.17]} 
+ 1-0
+
+[ContentType "Model Game"]
+[Event "MT-Vinagre/G (BRA)"]
+[Round ""]
+[ECO ""]
+[Guid "081d134a-9ad5-4f19-ad22-f687c53c01ca"]
+[Date "2007.04.30"]
+[White "Ohtake, Sakae"]
+[Black "Winkler, Dr. Thorsten"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+1. e4 {[%eval +0.23]}  c5 {[%eval +0.36]}  2. d4 {[%eval +0.17]}  cxd4 {[%eval +0.09]}  
+3. c3 {[%eval -0.32]}  dxc3 {[%eval -0.32]}  4. Nxc3 {[%eval -0.33]}  e6 {[%eval -0.29]}  
+5. Nf3 {[%eval -0.32]}  a6 {[%eval -0.10]}  6. Bc4 {[%eval -0.46]}  Nc6 {[%eval -0.28]}  
+7. O-O {[%eval -0.26]}  Nge7 {[%eval -0.08]}  8. Bg5 {[%eval -0.30]}  h6 {[%eval -0.20]}  
+9. Be3 {[%eval -0.24]}  Ng6 {[%eval -0.02]}  10. Nd4 {[%eval 0.00]}  Qc7 {[%eval +0.77]}  
+11. Bb3 {[%eval +0.56]}  Bd6 {[%eval +0.54]}  12. g3 {[%eval +0.56]}  Bb4 {[%eval +1.02]}  
+13. Rc1 {[%eval +0.97]}  O-O {[%eval +1.21]}  14. f4 {[%eval +0.98]}  Be7 {[%eval +1.68]}  
+15. Na4 {[%eval +0.80]}  Rb8 {[%eval +0.89]}  16. Qg4 {[%eval +0.44]}  d5 {[%eval +0.47]}  
+17. f5 {[%eval +0.40]}  Nge5 {[%eval +0.81]}  18. Qh5 {[%eval +0.30]}  Nc4 {[%eval +1.63]}  
+19. Bxc4 {[%eval +1.58]}  dxc4 {[%eval +1.62]}  20. f6 {[%eval +1.44]}  Bxf6 {[%eval +1.46]}  
+21. Rxf6 {[%eval +1.46]}  Qe5 {[%eval +2.62]}  (21... gxf6 22. Nxc6 bxc6 23. 
+Qg4+ Kh7 24. Qh4 Rh8 25. Qxh6+ Kg8 26. Qxf6 e5 27. Rd1 Bh3 28. Bb6 Qb7 29. g4 
+Re8 30. Qg5+ Kh7 31. Qf5+ Kg7 32. Rd7 Qxd7 33. Qxd7 $18) 22. Qxe5 {[%eval 
++2.71]}  Nxe5 {[%eval +2.71]}  23. Rff1 {[%eval +2.72]}  Ng4 {[%eval +2.56]}  
+24. Bd2 {[%eval +2.78]}  e5 {[%eval +3.02]}  25. Nf5 {[%eval +2.99]}  Bxf5 {[%eval +3.10]}  
+26. Rxf5 {[%eval +3.06]}  Rfd8 {[%eval +3.01]}  27. Ba5 {[%eval +3.13]}  Rd3 {[%eval +3.37]}  
+28. Nb6 {[%eval +3.43]}  Rbd8 {[%eval +3.39]}  29. Rff1 {[%eval +2.84]}  R8d4 {[%eval +3.35]}  
+30. Rxc4 {[%eval +3.44]}  Rxc4 {[%eval +3.61]}  31. Nxc4 {[%eval +3.65]}  Rd4 {[%eval +3.84]}  
+32. Nd2 {[%eval +3.59]}  Ra4 {[%eval +4.05]}  33. Bc3 {[%eval +3.87]}  Rxa2 {[%eval +3.98]}  
+34. h3 {[%eval +4.01]}  Nf6 {[%eval +3.64]}  35. Bxe5 {[%eval +3.65]}  Nd7 {[%eval +3.46]}  
+36. Bc3 {[%eval +3.37]}  Nc5 {[%eval +3.51]}  37. Rb1 {[%eval +3.51]}  Ra4 {[%eval +3.67]}  
+38. e5 {[%eval +3.45]}  b5 {[%eval +3.65]}  39. Kf2 {[%eval +3.60]}  Ne6 {[%eval +3.87]}  
+40. Ke3 {[%eval +3.85]}  Kh7 {[%eval +4.04]}  41. Nf3 {[%eval +3.99]}  Nf8 {[%eval +4.48]}  
+42. Nd4 {[%eval +4.23]}  h5 {[%eval +4.30]}  43. Rf1 {[%eval +4.33]}  Kg8 {[%eval +4.52]}  
+44. Rf5 {[%eval +4.07]}  g6 {[%eval +4.38]}  45. Rf6 {[%eval +4.23]}  b4 {[%eval +4.21]}  
+46. b3 {[%eval +4.35]}  Ra5 {[%eval +4.26]}  47. Bxb4 {[%eval +4.36]}  Rxe5+ {[%eval +4.46]}  
+48. Kf4 {[%eval +4.43]}  Rd5 {[%eval +4.55]}  49. Rd6 {[%eval +4.50]}  Rxd6 {[%eval +4.57]}  
+50. Bxd6 {[%eval +4.50]}  Nd7 {[%eval +4.55]}  51. Nc6 {[%eval +4.39]}  f6 {[%eval +4.59]}  
+52. Nb8 {[%eval +4.81]}  1-0
+
+[ContentType "Exercise"]
+[FEN "r2qkb1r/1b1p2pp/p2P1p2/1p2n3/8/1B2B3/PP3PPP/R2Q1RK1 w kq - 0 2"]
+[Event ""]
+[Round ""]
+[ECO ""]
+[Guid "Rb0a86b0aaabe4b1da19e2cb90e6acf1e"]
+[Date "????.??.??"]
+[White "Black plays Nge7"]
+[Black "Study position after 14...Nxe5"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "*"]
+
+
+ {[%bkm]} 1. Re1 Qb8 2. Bc5 Kd8 3. Qd4 Kc8 4. Rac1 Bc6 5. f4 Kb7 6. fxe5 fxe5 7. 
+Rxe5 g6 8. Bd5 Bg7 9. Bxc6+ dxc6 (9... Kc8 10. Bxd7+ Kxd7 11. Re7+ Kd8 12. Qxg7 
+$18) 10. Re7+ Kc8 11. Qg4+ Kd8 12. Qd7# *
+
+
+
+[ChapterTitle "Black plays g6"]
+[Guid "0f6ef6f6-1727-44fa-916b-25c4c6ab5d2f"]
+[ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "Black plays g6"]
+
+
+1. e4 c5 2. d4 cxd4 3. c3 dxc3 4. Nxc3 {[%cal Yg1f3,Yf1c4,Ye1g1,Yh1f1,Gd1e2,Gc1e3,Gc1f4,Gc1g5,Ga1c1,Gh1d1][%csl Rd5,Rf7]}  
+Nc6 5. Nf3 g6 {[%thmb]}  6. Bc4 Bg7 7. e5 Nh6 (7... Nxe5 8. Nxe5 Bxe5 9. Bxf7+ 
+Kxf7 10. Qd5+ Kg7 (10... Kf6 11. Ne4+ Kf5 12. g4+ Kxg4 13. Rg1+ Kh4 14. Bg5+ Kh3 
+15. Nd2 a6 16. Qg2#) 11. Qxe5+ Nf6 12. O-O $14 {[%ref 29ff37cd-ec52-4d40-ba31-74685e192c86]} 
+)  (7... Bxe5 8. Bxf7+ Kxf7 9. Nxe5+ Nxe5 10. Qd5+ $14) 8. O-O O-O 9. Bf4 Nf5 {[%bkm]}  
+(9... d6 10. exd6 exd6 11. Bxd6 $14) 10. g4 Nh6 11. h3 {[%cal Yd1d2,Rd2h6][%csl Rh6]}  
+d6 12. exd6 exd6 13. Qd2 Nxg4 14. hxg4 Bxg4 15. Nh2 $16 *
+
+[ContentType "Model Game"]
+[Event "Makarska"]
+[Round ""]
+[ECO ""]
+[Guid "29ff37cd-ec52-4d40-ba31-74685e192c86"]
+[Date "1995.??.??"]
+[White "Zelic, Mladen"]
+[Black "Cebalo, Miso"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+1. e4 {[%eval +0.28]}  c5 {[%eval +0.35]}  2. d4 {[%eval +0.09]}  cxd4 {[%eval +0.15]}  
+3. c3 {[%eval -0.32]}  dxc3 {[%eval -0.28]}  4. Nxc3 {[%eval -0.31]}  Nc6 {[%eval -0.27]}  
+5. Nf3 {[%eval -0.24]}  g6 {[%eval +0.12]}  6. e5 {[%eval +0.12]}  Bg7 {[%eval +0.12]}  
+7. Bc4 {[%eval +0.27]}  Nxe5 {[%eval +0.30]}  8. Nxe5 {[%eval +0.22]}  Bxe5 {[%eval +0.19]}  
+9. Bxf7+ {[%eval +0.14]}  Kxf7 {[%eval +0.14]}  10. Qd5+ {[%eval +0.30]}  Kg7 {[%eval +0.32]}  
+11. Qxe5+ {[%eval +0.21]}  Nf6 {[%eval +0.31]}  12. O-O {[%eval +0.29]}  d6 {[%eval +0.31]}  
+13. Qd4 {[%eval +0.24]}  Rf8 {[%eval +0.45]}  14. Re1 {[%eval +0.61]}  Bd7 {[%eval +0.64]}  
+15. Bg5 {[%eval +0.63]}  Bc6 {[%eval +0.64]}  16. Re6 {[%eval +0.65]}  h6 {[%eval +0.50]}  
+17. Bxf6+ {[%eval +0.41]}  exf6 {[%eval +0.46]}  18. Rae1 {[%eval +0.48]}  d5 {[%eval +1.57]}  
+19. Ne2 {[%eval +1.76]}  Qd7 {[%eval +1.97]}  20. Nf4 {[%eval +1.59]}  Rae8 {[%eval +1.53]}  
+21. h4 {[%eval +1.75]}  g5 {[%eval +2.78]}  22. hxg5 {[%eval +2.54]}  hxg5 {[%eval +2.37]}  
+23. Nh5+ {[%eval +2.45]}  Kg6 {[%eval +11.21][%assm 1]}  24. Qd3+ {[%eval +#14]} 
+ Kxh5 {[%eval +#5]}  25. R1e3 {[%eval +#4]}  d4 {[%eval +#3]}  26. Rh3+ {[%eval +#2]}  
+Kg4 {[%eval +#2]}  27. f3+ {[%eval +#1]}  1-0
+
+[ContentType "Model Game"]
+[Event "CL/2012/A"]
+[Round ""]
+[ECO ""]
+[Guid "9b5bc9f0-a97f-4c83-8458-f3285a41a3e0"]
+[Date "2012.10.15"]
+[White "Daus, Peter"]
+[Black "Simon, Ralf-Axel"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+1. e4 {[%eval +0.34]}  c5 {[%eval +0.38]}  2. d4 {[%eval +0.13]}  cxd4 {[%eval +0.14]}  
+3. c3 {[%eval -0.28]}  dxc3 {[%eval -0.20]}  4. Nxc3 {[%eval -0.20]}  Nc6 {[%eval -0.21]}  
+5. Nf3 {[%eval -0.33]}  g6 {[%eval +0.16]}  6. Bc4 {[%eval +0.14]}  Bg7 {[%eval +0.14]}  
+7. e5 {[%eval +0.09]}  Nxe5 {[%eval +0.30]}  8. Nxe5 {[%eval +0.30]}  Bxe5 {[%eval +0.32]}  
+9. Bxf7+ {[%eval +0.30]}  Kxf7 {[%eval +0.36]}  10. Qd5+ {[%eval +0.35]}  Kg7 {[%eval +0.31]}  
+11. Qxe5+ {[%eval +0.36]}  Nf6 {[%eval +0.35]}  12. O-O {[%eval +0.29]}  d6 {[%eval +0.35]}  
+13. Qe2 {[%eval +0.29]}  Bd7 {[%eval +0.28]}  14. Bg5 {[%eval +0.13]}  Bc6 {[%eval +0.35]}  
+15. Rfe1 {[%eval +0.34]}  Re8 {[%eval +0.26]}  16. Qd2 {[%eval +0.25]}  Qd7 {[%eval +0.30]}  
+17. Rad1 {[%eval +0.22]}  Rad8 {[%eval +0.32]}  18. h3 {[%eval +0.35]}  a6 {[%eval +0.35]}  
+19. f3 {[%eval +0.21]}  Qf5 {[%eval +0.44]}  20. b4 {[%eval +0.45]}  Rc8 {[%eval +0.49]}  
+21. a4 {[%eval +0.50]}  Qd7 {[%eval +0.61]}  22. Re3 {[%eval +0.21]}  Bxa4 {[%eval +0.59]}  
+23. Nxa4 {[%eval +0.11]}  Qxa4 {[%eval +0.17]}  24. Rde1 {[%eval +0.11]}  Qd7 {[%eval +0.25]}  
+25. Qd4 {[%eval +0.23]}  Kg8 {[%eval +0.16]}  26. Re6 {[%eval +0.23]}  d5 {[%eval +0.24]}  
+27. Qe5 {[%eval +0.22]}  Nh5 {[%eval +0.25]}  28. Rxe7 {[%eval +0.17]}  Rxe7 {[%eval +0.20]}  
+29. Qxe7 {[%eval +0.19]}  Qxe7 {[%eval +0.13]}  30. Rxe7 {[%eval +0.16]}  b5 {[%eval +0.35]}  
+31. g4 {[%eval +0.48]}  Ng7 {[%eval +0.49]}  32. Bf6 {[%eval +0.58]}  Ne8 {[%eval +0.40]}  
+33. Bd4 {[%eval +0.21]}  Rc4 {[%eval +0.31]}  34. Be5 {[%eval +0.31]}  Kf8 {[%eval +0.43]}  
+35. Rxh7 {[%eval +0.32]}  Rxb4 {[%eval +0.27]}  36. Ra7 {[%eval +0.22]}  Ra4 {[%eval +0.61]}  
+37. h4 {[%eval +0.67]}  d4 {[%eval +0.59]}  38. Kf2 {[%eval +0.72]}  Ra2+ {[%eval +0.56]}  
+39. Kg3 {[%eval +0.50]}  d3 {[%eval +0.51]}  40. Rd7 {[%eval +0.57]}  Re2 {[%eval +0.61]}  
+41. Bc3 {[%eval +0.53]}  Rc2 {[%eval +0.64]}  42. Rxd3 {[%eval +0.64]}  Kf7 {[%eval +0.70]}  
+43. Be5 {[%eval +0.57]}  Rc6 {[%eval +0.56]}  44. f4 {[%eval +0.44]}  Nf6 {[%eval +0.49]}  
+45. Rd8 {[%eval +0.54]}  Ke7 {[%eval +0.74]}  46. Ra8 {[%eval +0.69]}  Ne4+ {[%eval +1.03]}  
+47. Kf3 {[%eval +0.83]}  Nd2+ {[%eval +0.84]}  48. Ke2 {[%eval +0.79]}  Nc4 {[%eval +0.74]}  
+49. Bd4 {[%eval +0.94]}  Kf7 {[%eval +1.22]}  50. Ra7+ {[%eval +1.37]}  Ke8 {[%eval +1.53]}  
+51. g5 {[%eval +1.50]}  Re6+ {[%eval +1.57]}  52. Kf3 {[%eval +1.47]}  Nd6 {[%eval +2.13]}  
+53. Rxa6 {[%eval +1.89]}  Kf7 {[%eval +1.99]}  54. Bf2 {[%eval +2.04]}  Nf5 {[%eval +2.07]}  
+55. Ra5 {[%eval +2.02]}  Rc6 {[%eval +2.44]}  56. Rxb5 {[%eval +2.49]}  Ng7 {[%eval +2.91]}  
+57. Bc5 {[%eval +3.03]}  Ne6 {[%eval +3.19]}  58. Rb7+ {[%eval +3.40]}  Kg8 {[%eval +3.30]}  
+59. Rb8+ {[%eval +3.37]}  Kf7 {[%eval +3.37]}  60. Bb4 {[%eval +3.08]}  Rc4 {[%eval +3.57]}  
+61. Rb7+ {[%eval +3.63]}  Kg8 {[%eval +3.78]}  62. Bd6 {[%eval +3.73]}  Nd4+ {[%eval +3.76]}  
+63. Kg4 {[%eval +3.73]}  Rc1 {[%eval +3.73]}  64. Be5 {[%eval +3.90]}  Rg1+ {[%eval +3.98]}  
+65. Kh3 {[%eval +4.09]}  Nf5 {[%eval +3.79]}  66. Rb6 {[%eval +4.08]}  Ne7 {[%eval +3.99]}  
+67. Bd4 {[%eval +4.13]}  Rc1 {[%eval +4.10]}  68. Kg4 {[%eval +4.11]}  Rc4 {[%eval +4.49]}  
+69. Rd6 {[%eval +4.43]}  Kf8 {[%eval +4.64]}  70. h5 {[%eval +4.72]}  gxh5+ {[%eval +4.75]}  
+71. Kxh5 {[%eval +4.70]}  Nf5 {[%eval +6.12]}  72. Rf6+ {[%eval +7.31]}  Kg8 {[%eval +7.31]}  
+73. Rxf5 {[%eval +7.36]}  1-0
+
+[ContentType "Model Game"]
+[Event "Bundesliga 8889"]
+[Round ""]
+[ECO ""]
+[Guid "eb42bad8-0885-4666-b0e7-aa68de010f2d"]
+[Date "1989.??.??"]
+[White "Junge, Ralf"]
+[Black "Glienke, Manfred"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+1. e4 {[%eval +0.32]}  c5 {[%eval +0.43]}  2. d4 {[%eval +0.12]}  cxd4 {[%eval +0.16]}  
+3. c3 {[%eval -0.28]}  dxc3 {[%eval -0.26]}  4. Nxc3 {[%eval -0.25]}  Nc6 {[%eval -0.25]}  
+5. Nf3 {[%eval -0.27]}  g6 {[%eval +0.13]}  6. Bc4 {[%eval +0.11]}  Bg7 {[%eval +0.08]}  
+7. e5 {[%eval +0.16]}  Nh6 {[%eval +0.21]}  8. Bf4 {[%eval -0.01]}  O-O {[%eval +0.17]}  
+9. O-O {[%eval +0.19]}  Kh8 {[%eval +0.84]}  10. Re1 {[%eval +0.81]}  b6 {[%eval +1.38]}  
+11. Qd2 {[%eval +1.35]}  Ng8 {[%eval +1.30]}  12. Ng5 {[%eval +0.54]}  Nh6 {[%eval +1.44]}  
+13. Rad1 {[%eval +1.63]}  d6 {[%eval +3.28]}  14. exd6 {[%eval +3.08]}  e5 {[%eval +3.24]}  
+15. Be3 {[%eval +1.90]}  Nd4 {[%eval +2.51]}  16. Nb5 {[%eval +1.62]}  Nxb5 {[%eval +2.08]}  
+17. Bxb5 {[%eval +2.17]}  Bd7 {[%eval +2.01]}  18. Ne6 {[%eval +2.09]}  Bxe6 {[%eval +1.99]}  
+19. Bxh6 {[%eval +1.96]}  Qf6 {[%eval +5.00][%assm 1]}  20. Bg5 {[%eval +5.05]}  
+Qf5 {[%eval +4.88]}  21. Be7 {[%eval +3.55]}  Bd7 {[%eval +4.87]}  22. Bxf8 {[%eval +4.87]}  
+Rxf8 {[%eval +5.00]}  23. Bxd7 {[%eval +4.80]}  Qxd7 {[%eval +4.89]}  24. Rc1 {[%eval +4.79]}  
+Rd8 {[%eval +5.07]}  25. Rc7 {[%eval +4.73]}  Qe6 {[%eval +4.92]}  26. Rxa7 {[%eval +4.12]}  
+Bf8 {[%eval +4.19]}  27. d7 {[%eval +4.34]}  Bc5 {[%eval +4.23]}  28. Qg5 {[%eval +3.67]}  
+f6 {[%eval +3.78]}  29. Qd2 {[%eval +3.88]}  Qc6 {[%eval +5.24]}  30. b4 {[%eval +5.23]}  
+Bd4 {[%eval +5.60]}  31. Rc1 {[%eval +5.55]}  Qe6 {[%eval +5.57]}  32. Qc2 {[%eval +5.50]}  
+Kg7 {[%eval +6.43]}  33. Qc7 {[%eval +6.32]}  Qe7 {[%eval +6.37]}  34. Rb7 {[%eval +4.50]}  
+f5 {[%eval +5.57]}  35. Rb8 {[%eval +5.14]}  Rxd7 {[%eval +5.43]}  36. Qc8 {[%eval 0.00][%assm 1]}  
+e4 {[%eval +1.39]}  37. Re1 {[%eval +0.52]}  Rc7 {[%eval +5.33][%assm 1]}  38. 
+Qh8+ {[%eval +5.46]}  Kh6 {[%eval +5.41]}  39. Qxd4 {[%eval +5.59]}  1-0
+
+
+
+[ChapterTitle "Black plays ♝g4"]
+[Guid "c3290fc5-b516-44fa-824f-1eaece2f7ec3"]
+[ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "Black plays ♝g4"]
+
+
+1. e4 c5 2. d4 cxd4 3. c3 dxc3 4. Nxc3 {[%cal Yg1f3,Yf1c4,Ye1g1,Yh1f1,Gd1e2,Gc1e3,Gc1f4,Gc1g5,Ga1c1,Gh1d1][%csl Rd5,Rf7]}  
+Nc6 5. Nf3 d6 6. Bc4 a6 7. O-O Nf6 8. Bf4 Bg4 {[%thmb]}  9. h3 {[%ref 66544655-3746-42ed-8616-6561bd14d8c0]}  
+Bh5 (9... Bxf3 10. Qxf3 e6 11. Rfd1 Qc7 (11... Qb8 12. Be2 {[%cal Yf3g3][%csl Rd6,Rh5]} 
+) 12. Rac1 Be7 13. Bb3 O-O (13... Qb8 14. Na4 {[%csl Rb6]}  Nd7 15. Qg3 $14 {[%csl Rd6,Rg7]} 
+) 14. Nd5 $1 exd5 (14... Qa5 15. Nxe7+ Nxe7 16. Bxd6 $18) 15. exd5 Rac8 16. dxc6 
+bxc6 $14 {White has compensation due to the bishop pair and the open c- and d- files} 
+) 10. g4 Bg6 {[%bkm]}  11. e5 dxe5 12. Nxe5 Nxe5 13. Bxe5 Qxd1 (13... e6 14. Qf3 
+Nd7 15. Rad1 $14) 14. Rfxd1 e6 15. Bf1 $14 {[%cal Yf1g2]With compensation and pressure on the queenside pawns} 
+ *
+
+[ContentType "Model Game"]
+[Event "TCh-SWE Elitserien 2013-14"]
+[Round ""]
+[ECO ""]
+[Guid "75787ed6-7842-4719-895c-5775d892d04e"]
+[Date "2014.02.01"]
+[White "Berg, E."]
+[Black "Andersson, Fred2"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+1. e4 {[%eval +0.29]}  c5 {[%eval +0.40]}  2. d4 {[%eval +0.17]}  cxd4 {[%eval +0.17]}  
+3. c3 {[%eval -0.24]}  dxc3 {[%eval -0.24]}  4. Nxc3 {[%eval -0.34]}  Nc6 {[%eval -0.23]}  
+5. Nf3 {[%eval -0.25]}  d6 {[%eval -0.14]}  6. Bc4 {[%eval -0.21]}  a6 {[%eval -0.16]}  
+7. O-O {[%eval -0.21]}  Nf6 {[%eval -0.16]}  8. Bf4 {[%eval -0.17]}  Bg4 {[%eval -0.01]}  
+9. h3 {[%eval -0.03]}  Bh5 {[%eval +0.50]}  10. Qb3 {[%eval -0.04]}  e6 {[%eval +0.62]}  
+11. Qxb7 {[%eval +0.67]}  Na5 {[%eval +0.70]}  12. Qb4 {[%eval +0.62]}  Bxf3 {[%eval +0.65]}  
+13. gxf3 {[%eval +0.65]}  Nxc4 {[%eval +0.74]}  14. Qxc4 {[%eval +0.59]}  Qc8 {[%eval +1.06]}  
+15. Qxc8+ {[%eval +0.79]}  Rxc8 {[%eval +0.84]}  16. Rfd1 {[%eval +0.32]}  Rc6 {[%eval +0.31]}  
+17. Rac1 {[%eval +0.18]}  Be7 {[%eval +0.27]}  18. Na4 {[%eval +0.13]}  Rxc1 {[%eval +0.95]}  
+19. Rxc1 {[%eval +0.91]}  O-O {[%eval +1.05]}  20. Rc6 {[%eval +0.59]}  e5 {[%eval +1.83]}  
+21. Bg5 {[%eval +1.69]}  Ra8 {[%eval +2.71]}  22. Nb6 {[%eval +2.82]}  Rb8 {[%eval +2.85]}  
+23. Bxf6 {[%eval +2.84]}  Bxf6 {[%eval +2.59]}  24. b4 {[%eval +2.15]}  Bd8 {[%eval +1.86]}  
+25. Nd5 {[%eval +1.82]}  a5 {[%eval +1.93]}  26. b5 {[%eval +2.07]}  Kf8 {[%eval +2.73]}  
+27. a4 {[%eval +2.92]}  Ke8 {[%eval +3.00]}  28. Rxd6 {[%eval +3.02]}  Rc8 {[%eval +3.14]}  
+29. Rc6 {[%eval +2.30]}  Rxc6 {[%eval +3.61]}  30. bxc6 {[%eval +4.12]}  Bh4 {[%eval +4.08]}  
+31. f4 {[%eval +2.81]}  exf4 {[%eval +3.28]}  32. Nxf4 {[%eval +3.28]}  Ke7 {[%eval +3.37]}  
+33. e5 {[%eval +3.57]}  g6 {[%eval +3.77]}  34. Kg2 {[%eval +3.98]}  Bg5 {[%eval +4.67]}  
+35. Nd5+ {[%eval +4.57]}  Ke6 {[%eval +4.97]}  36. Kf3 {[%eval +4.76]}  Bh4 {[%eval +5.05]}  
+37. Ke3 {[%eval +5.02]}  h5 {[%eval +5.39]}  38. f4 {[%eval +5.51]}  Be1 {[%eval +6.24]}  
+39. Nf6 {[%eval +34.30]}  1-0
+
+[ContentType "Model Game"]
+[Event "Online Olym Div3 B"]
+[Round ""]
+[ECO ""]
+[Guid "66544655-3746-42ed-8616-6561bd14d8c0"]
+[Date "2020.08.07"]
+[White "Greet, Andrew"]
+[Black "Thilakarathne, GM Harshana"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+1. e4 {[%eval +0.32]}  c5 {[%eval +0.38]}  2. d4 {[%eval +0.14]}  cxd4 {[%eval +0.13]}  
+3. c3 {[%eval -0.29]}  dxc3 {[%eval -0.29]}  4. Nxc3 {[%eval -0.28]}  Nc6 {[%eval -0.31]}  
+5. Nf3 {[%eval -0.28]}  d6 {[%eval -0.16]}  6. Bc4 {[%eval -0.22]}  a6 {[%eval -0.22]}  
+7. O-O {[%eval -0.25]}  Nf6 {[%eval -0.17]}  8. Bf4 {[%eval -0.17]}  Bg4 {[%eval -0.12]}  
+9. h3 {[%eval -0.13]}  Bxf3 {[%eval -0.12]}  10. Qxf3 {[%eval -0.12]}  e6 {[%eval -0.11]}  
+11. Rfd1 {[%eval -0.11]}  Qb8 {[%eval +0.19]}  12. Be2 {[%eval +0.13]}  Be7 {[%eval +0.21]}  
+13. Qg3 {[%eval +0.19]}  Ne5 {[%eval +0.61]}  14. Bxe5 {[%eval +0.46]}  dxe5 {[%eval +0.50]}  
+15. Qxg7 {[%eval +0.42]}  Rg8 {[%eval +0.31]}  16. Qh6 {[%eval +0.28]}  Rg6 {[%eval +0.45]}  
+17. Qd2 {[%eval +0.39]}  b5 {[%eval +0.50]}  18. Bf3 {[%eval +0.56]}  Kf8 {[%eval +0.64]}  
+19. a4 {[%eval +0.36]}  b4 {[%eval +0.95]}  20. Ne2 {[%eval +0.81]}  Kg8 {[%eval +1.23]}  
+21. Rac1 {[%eval +1.04]}  Kh8 {[%eval +1.09]}  22. Rc6 {[%eval +0.98]}  Rg8 {[%eval +1.06]}  
+23. Rdc1 {[%eval +1.01]}  Ra7 {[%eval +0.98]}  24. Ng3 {[%eval +1.01]}  a5 {[%eval +1.09]}  
+25. Qh6 {[%eval +0.60]}  Qf8 {[%eval +0.93]}  26. Qe3 {[%eval +0.99]}  Rd7 {[%eval +0.92]}  
+27. Qb6 {[%eval +0.94]}  Qd8 {[%eval +1.12]}  28. Qb5 {[%eval +0.78]}  Rd2 {[%eval +0.96]}  
+29. Qxe5 {[%eval +0.95]}  Qd4 {[%eval +1.32]}  30. Qxd4 {[%eval +1.26]}  Rxd4 {[%eval +1.31]}  
+31. Rc7 {[%eval +0.99]}  Re8 {[%eval +2.07]}  32. e5 {[%eval +2.02]}  Ng8 {[%eval +2.42]}  
+33. Nh5 {[%eval +1.30]}  Red8 {[%eval +1.94]}  34. Ra7 {[%eval +1.92]}  Rd2 {[%eval +2.35]}  
+35. Rcc7 {[%eval +2.21]}  Re8 {[%eval +2.38]}  36. Bc6 {[%eval +1.94]}  Red8 {[%eval +3.14]}  
+37. Rxe7 {[%eval +3.17]}  Nxe7 {[%eval +3.57]}  38. Rxe7 {[%eval +3.36]}  Kg8 {[%eval +3.85]}  
+39. Nf6+ {[%eval +3.98]}  Kf8 {[%eval +4.13]}  40. Rb7 {[%eval +4.19]}  Rc2 {[%eval +4.39]}  
+41. Bf3 {[%eval +4.47]}  Rxb2 {[%eval +#8][%assm 1]}  42. Bh5 {[%eval +#7]}  Kg7 
+{[%eval +#7]}  43. Rxf7+ {[%eval +#6]}  Kh6 {[%eval +#6]}  44. h4 {[%eval +#5]}  
+Rh8 {[%eval +#4]}  45. g4 {[%eval +#3]}  Rb1+ {[%eval +#3]}  46. Kg2 {[%eval +#2]} 
+ 1-0
+
+[ContentType "Model Game"]
+[Event ""]
+[Round ""]
+[ECO ""]
+[Guid "900a249a-976a-49b1-ab9e-d8deaeeee1cc"]
+[Date "1953.??.??"]
+[White "Matulovic"]
+[Black "Sokolov,A"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+1. e4 {[%eval +0.25]}  c5 {[%eval +0.42]}  2. d4 {[%eval +0.12]}  cxd4 {[%eval +0.10]}  
+3. c3 {[%eval -0.27]}  dxc3 {[%eval -0.25]}  4. Nxc3 {[%eval -0.25]}  d6 {[%eval -0.15]}  
+5. Bc4 {[%eval -0.22]}  Nc6 {[%eval -0.17]}  (5... Nf6 6. e5 dxe5 $4 7. Bxf7+ 
+$18) 6. Nf3 {[%eval -0.23]}  a6 {[%eval -0.24]}  7. O-O {[%eval -0.20]}  Nf6 {[%eval -0.21]}  
+8. Qe2 {[%eval -0.46]slightly better options were Be3 or Bf4}  Bg4 {[%eval -0.50]}  
+9. Rd1 {[%eval -0.67]}  (9. h3 Nd4 $4 10. Bxf7+ $1 Kd7 (10... Kxf7 11. Qc4+ Be6 
+12. Qxd4 $18) 11. Qc4 Nxf3+ 12. gxf3 Bxh3 13. e5 e6 (13... Bxf1 14. e6#) 14. Rd1 
+Ke7 15. Bh5 Nxh5 16. Qh4+ Kd7 17. Bg5 Qe8 18. Qa4+ Kc7 19. Nd5+ exd5 20. Rac1+ 
+Qc6 21. Rxc6+ $18) 9... Qc8 {[%eval -0.12]}  (9... Ne5 $4 10. Nxe5 dxe5 (10... 
+Bxe2 11. Bxf7#) 11. Rxd8+ Rxd8 12. f3 $18) 10. Bf4 {[%eval -0.17]}  g5 {[%eval +0.52]loses the edge}  
+(10... e6 11. Bxd6 (11. Bb3 Qb8 12. Rac1 Be7 13. h3 Bxf3 14. Qxf3 $15) 11... 
+Bxd6 12. Rxd6 Ne5 13. Bb3) 11. Bg3 {[%eval -0.20]}  (11. Bxg5 Bxf3 12. Qxf3 Ne5 
+13. Qf4 Qxc4 14. Bxf6 exf6 15. Nd5 Bg7 16. Rac1 Qe2 17. Rd2 Qh5 18. Nc7+ Ke7 19. 
+Nxa8 Rxa8 20. Rc7+ Kf8 21. Rxd6 $11) 11... h5 {[%eval +0.34]}  (11... Nh5) 12. 
+h3 {[%eval -0.52]}  h4 $2 {[%eval +0.98]}  (12... Bxf3 $1 13. Qxf3 g4 14. hxg4 
+hxg4 15. Qe3 $17 (15. Qd3 Nb4 $17) ) 13. Bxd6 $1 {[%eval +1.03]}  Bh5 $2 {[%eval +3.33][%assm 1]}  
+(13... exd6 $1 14. hxg4 (14. Nd5 $2 Nxd5 15. exd5+ Ne5 $19) 14... Qxg4 15. Nd5 
+Nxd5 16. Rxd5 f6 $16)  (13... Bxf3 14. Qxf3 g4 15. hxg4 Qxg4 16. Qxg4 Nxg4 17. 
+Nd5 exd6 18. Nc7+ Ke7 19. Nxa8 Bg7 20. Nc7 $18) 14. e5 $1 {[%eval +2.71]}  (14. 
+Nd5 $1 Nxd5 15. exd5 Bxf3 16. Qxf3 Na5 17. Bd3 exd6 18. Re1+ Kd8 19. Qxf7 Qd7 
+20. Qf6+ $18 {[%cal Yf6h8]} ) 14... g4 {[%eval +3.10]}  (14... Bxf3 15. Qxf3 g4 
+16. hxg4 Qxg4 17. exf6 Qxf3 18. gxf3 exd6 19. Re1+ Kd7 20. Bxf7 Ne5 21. Bd5 Re8 
+22. Rad1 Rh6 23. f4 Ng4 24. Rxe8 Kxe8 25. Re1+ Kd8 26. f7 Nf6 27. Re6 Kd7 28. f5 
+h3 29. Bxb7 $18) 15. Ng5 {[%eval +3.03]}  exd6 {[%eval +4.05]}  16. exf6+ {[%eval +2.81]}  
+(16. exd6+ $1 Be7 (16... Kd8 17. Bxf7 Qf5 18. Qe3 Bxf7 19. Nxf7+ Kc8 20. hxg4 
+Qxg4 (20... Nxg4 21. Qe8+ Nd8 22. Qxd8#) 21. Nxh8 $18) 17. dxe7 Nxe7 18. Re1 Qc5 
+19. Na4 Qb4 20. a3 Qd6 21. Rad1 Qc7 22. Rc1 Qd6 23. Nb6 gxh3 (23... Rd8 24. 
+Bxf7+ Kf8 (24... Bxf7 25. Nc8 Rxc8 26. Rxc8+ Kd7 27. Rxh8 $18) 25. Rcd1 Qc7 26. 
+Rxd8+ Qxd8 27. Ne6+ Kxf7 28. Nxd8+ $18 {forcing checkmate in 14 moves} ) 24. 
+Bxf7+ Bxf7 25. Nxa8 h2+ 26. Kh1 Kf8 27. Nc7 $18) 16... Ne5 {[%eval +2.71]}  17. 
+Rd5 {[%eval +2.94]}  Qf5 {[%eval +2.95]}  (17... Qxc4 18. Rxe5+ dxe5 19. Qxc4 
+$18) 18. Bb5+ {[%eval +3.11]}  Kd8 {[%eval +3.52]}  (18... axb5 19. Qxb5+ Kd8 
+(19... Qd7 20. Rxe5+ dxe5 21. Qxe5+ Kd8 22. Rd1 $18) 20. Qb6+ Kc8 21. Nb5 Qc2 
+22. Rxd6 Bxd6 23. Nxd6+ Kd7 24. Nge4 Rhc8 25. Qxb7+ Ke6 26. Re1 Qc7 27. Qb3+ Kd7 
+28. Qb5+ Nc6 29. Qxh5 {[%cal Yh5f7]}  Nd8 30. Qf5+ Ne6 31. Nxf7 $18) 19. Qe3 {[%eval +3.62]}  
+axb5 {[%eval +4.34]}  20. Qb6+ {[%eval +3.40]}  Kc8 {[%eval +2.86]}  21. Nxb5 {[%eval +2.85]}  
+Qd7 {[%eval +5.87][%assm 1]}  (21... Qc2 22. Rxd6 Bxd6 23. Nxd6+ Kd7 24. Nge4 
+Nc6 25. Nxb7 Ke6 26. Qe3 Bg6 27. Nbc5+ Ke5 28. Nd7+ Ke6 29. Nec5+ Kd5 30. Rc1 
+Rae8 31. Qg5+ Re5 32. Nxe5 Rh5 33. Qf4 Rxe5 34. Rxc2 $18) 22. Rxe5 {[%eval +5.75]}  
+dxe5 {[%eval +6.22]}  23. Rc1+ {[%eval +6.32]}  Kb8 {[%eval +#10]}  24. Rc7 {[%eval +#9]}  
+Qd1+ {[%eval +#9]}  25. Kh2 {[%eval +#8]}  g3+ {[%eval +#8]}  26. fxg3 {[%eval +#7]}  
+hxg3+ {[%eval +#7]}  27. Kxg3 {[%eval +#6]}  Qd3+ {[%eval +#4]}  28. Kh2 {[%eval +#3]}  
+Bf3 {[%eval +#2]}  29. Rc8+ {[%eval +#1]}  1-0
+
+
+
+[ChapterTitle "Black plays ♝b4"]
+[Guid "fd9f2992-0bbb-4b10-882d-1cc5fbb2848c"]
+[ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "Black plays ♝b4"]
+
+
+1. e4 c5 2. d4 cxd4 3. c3 dxc3 4. Nxc3 Nc6 5. Nf3 e6 6. Bc4 Bb4 {[%thmb]}  7. 
+O-O Bxc3 {[%ref 457c9b33-a0eb-4805-916a-7dac99573b23]}  8. bxc3 Nge7 {[%bkm]}  
+9. Ba3 O-O (9... d5 10. exd5 exd5 11. Bd3 O-O 12. Re1 Re8 13. Ng5 g6 14. Qf3 Nf5 
+15. Rxe8+ Qxe8 16. Qxd5 $14) 10. Qd6 Ng6 11. Qg3 Re8 12. Rfd1 {[%cal Ya3d6]}  
+Qa5 13. Bd6 Qxc3 14. Rac1 Qf6 15. h4 h5 16. Ng5 Nf8 17. Rc3 {[%cal Yc3f3]}  Nh7 
+18. e5 Qh6 19. Rf3 Nxg5 20. hxg5 Qh7 21. Bd3 g6 22. Be4 $18 *
+
+[ContentType "Model Game"]
+[Event "IBM-B"]
+[Round ""]
+[ECO ""]
+[Guid "457c9b33-a0eb-4805-916a-7dac99573b23"]
+[Date "1980.??.??"]
+[White "Van Wijgerden, Cor"]
+[Black "Panno, Oscar"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1/2-1/2"]
+
+
+1. e4 {[%eval +0.29]}  c5 {[%eval +0.37]}  2. d4 {[%eval +0.07]}  cxd4 {[%eval +0.14]}  
+3. c3 {[%eval -0.24]}  dxc3 {[%eval -0.27]}  4. Nxc3 {[%eval -0.24]}  Nc6 {[%eval -0.29]}  
+5. Nf3 {[%eval -0.34]}  e6 {[%eval -0.30]}  6. Bc4 {[%eval -0.33]}  Bb4 {[%eval -0.29]}  
+7. O-O {[%eval -0.28]}  Bxc3 {[%eval +0.47]}  8. bxc3 {[%eval +0.40]}  Nge7 {[%eval +0.64]}  
+9. Ba3 {[%eval +0.33]}  d5 {[%eval +0.65]}  10. exd5 {[%eval +0.77]}  exd5 {[%eval +0.71]}  
+11. Bd3 {[%eval +0.63]}  h6 {[%eval +0.70]}  12. Re1 {[%eval +0.73]}  O-O {[%eval +1.30]}  
+13. Nd4 {[%eval +1.49]}  Re8 {[%eval +1.41]}  14. Nb5 {[%eval +1.22]}  Qa5 {[%eval +1.53]}  
+15. Bd6 {[%eval +1.49]}  Be6 {[%eval +1.79]}  16. Nc7 {[%eval +1.83]}  Qxc3 {[%eval +2.33]}  
+17. Nxa8 {[%eval +1.39]}  Rxa8 {[%eval +1.58]}  18. Rb1 {[%eval +1.27]}  b6 {[%eval +1.59]}  
+19. Re3 {[%eval +1.33]}  Qf6 {[%eval +1.69]}  20. Rc1 {[%eval +0.79]}  Rd8 {[%eval +0.98]}  
+21. Ba3 {[%eval +0.44]}  d4 {[%eval +0.48]}  22. Rf3 {[%eval +0.29]}  Qe5 {[%eval +0.39]}  
+23. Qd2 {[%eval +0.46]}  Rd7 {[%eval +0.85]}  24. Bb1 {[%eval 0.00]}  Qd5 {[%eval +0.56]}  
+25. Rg3 {[%eval +0.17]}  Kh8 {[%eval +0.35]}  26. Re1 {[%eval -0.07]}  Nf5 {[%eval +3.20][%assm 1]}  
+27. Be4 {[%eval +1.45]}  Qa5 {[%eval +1.52]}  28. Rd3 {[%eval +1.40]}  Qxd2 {[%eval +1.35]}  
+29. Rxd2 {[%eval +1.59]}  Na5 {[%eval +1.58]}  30. Rc2 {[%eval +0.28]}  g6 {[%eval +1.34]}  
+31. Bd3 {[%eval +1.22]}  Kg7 {[%eval +1.46]}  32. Rec1 {[%eval +1.18]}  Kf6 {[%eval +1.24]}  
+33. Bb4 {[%eval +1.16]}  Rd5 {[%eval +2.04]}  34. Rc7 {[%eval +1.91]}  Nd6 {[%eval +2.09]}  
+35. Rxa7 {[%eval +1.96]}  Nb5 {[%eval +2.63]}  36. Be7+ {[%eval +2.09]}  Kg7 {[%eval +2.35]}  
+37. Ra8 {[%eval +1.07]}  Nc3 {[%eval +1.15]}  38. Rd8 {[%eval +0.98]}  Nxa2 {[%eval +1.66]}  
+39. Rb1 {[%eval +0.71]}  Nb3 {[%eval +0.74]}  40. Rxb3 {[%eval 0.00]}  Rxd8 {[%eval +0.01]}  
+41. Bxd8 {[%eval 0.00]}  Bxb3 {[%eval 0.00]}  42. Bxb6 {[%eval 0.00]}  1/2-1/2
+
+[ContentType "Model Game"]
+[Event "Warsaw Students Championship, 60 min per game"]
+[Round ""]
+[ECO ""]
+[Guid "31779be0-a3da-41ac-be06-0e43af16106e"]
+[Date "1974.11.27"]
+[White "Gajewski, Pawel"]
+[Black "Lissowski, Tomasz"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+[Preamble "While both sides have erred and Black was practically lost after  just 10 moves, analysis of this game illustrates a whole range of interesting sacrifices (Nb5, Bb5, Nd5, Be6, Be5 and even Bf6) at White's disposal."]
+
+
+1. e4 {[%eval +0.29]}  c5 {[%eval +0.39]}  2. Nf3 {[%eval +0.34]}  e6 {[%eval +0.42]}  
+3. d4 {[%eval +0.33]}  cxd4 {[%eval +0.40]}  4. c3 {[%eval -0.30]}  dxc3 {[%eval -0.32]}  
+5. Nxc3 {[%eval -0.33]}  Bb4 {[%eval 0.00]}  6. Bc4 $15 {[%eval -0.32]}  (6. Qd4 
+{was better}  Bf8 7. Bf4 Nc6 8. Qe3 $11) 6... Nc6 {[%eval -0.33]}  7. O-O {[%eval -0.29]}  
+a6 $11 {[%eval +0.02]}  (7... Nge7 {was stronger}  8. Nb5 d5 9. exd5 exd5 10. 
+Bxd5 Nxd5 11. Qxd5 O-O 12. Qxd8 Rxd8 13. Be3 a6 14. Nc7 Rb8 15. Rac1 Ba5 16. 
+Nxa6 bxa6 17. Rxc6 Rxb2 18. a3 Rb3 $15) 8. Qe2 {[%eval -0.15]}  Qc7 {[%eval 0.00]}  
+9. Rd1 {[%eval +0.03]}  d6 $2 {[%eval +0.95]allows White to gain an edge}  (9... 
+b5 {was better}  10. Bb3 Nge7 $11) 10. Bf4 {[%eval +1.07]}  Ne5 $2 {[%eval +2.40]a losing move}  
+(10... Nf6 {was stronger}  11. a3 Bc5 12. b4 Nh5 13. bxc5 Nxf4 14. Qe3 dxc5 15. 
+Nd5 Nxd5 16. exd5 Nd4 17. Nxd4 cxd4 18. Qxd4 e5 19. Re1 O-O 20. Rxe5 Qd6 $14) 
+11. Nxe5 {[%eval +2.66]}  dxe5 {[%eval +3.20]}  12. Bg5 $2 {[%eval +0.63][%assm 1]}  
+(12. Bb5+ $1 {[%bkm]This interesting sacrifice was winning.}  Kf8 (12... axb5 
+13. Nxb5 Qa5 14. Bxe5 f6 15. Bc7 Qa6 16. Bd6 Bxd6 17. Rxd6 Qa5 18. Qh5+ Ke7 19. 
+Rc1 e5 20. Rc7+ Qxc7 21. Nxc7 Kxd6 22. Nxa8 $18) 13. Bxe5 Qxe5 14. Rd8+ Ke7 15. 
+Re8+ Kf6 16. Nd5+ Kg6 17. Qg4+ Kh6 18. Qh4+ Qh5 19. Qxh5+ Kxh5 20. Be2+ Kh6 21. 
+Nxb4 $18) 12... Ne7 {[%eval +0.82]}  13. Rac1 {[%eval +0.53]}  (13. Nb5 {Another interesting sacrifice leading to an equal position according to Stockfish, however White's position seems easier to play due to a better pawn structure and a queen with 2 pawns against the Black's rook and 2 bishops}  
+axb5 14. Bxb5+ Nc6 15. Rd8+ Qxd8 16. Bxd8 Kxd8 17. Bxc6 bxc6 18. Qh5 Bd6 (18... 
+f6 19. Qf7 Bd7 20. Rd1 Ra7 21. Qxg7 Rf8 22. Qxh7 Bc5 23. h4 $14) 19. Qxf7 Bd7 
+20. Qxg7 Kc7 $11)  (13. Bb5+ {Yet another sacrifice that leads to an equal position according to Stockfish but appears easier to play for White. Black has to defend very carefuly.}  
+axb5 14. Nxb5 Qb8 15. Qc4 f6 (15... Ba5 16. b4 Bb6 17. Nd6+ Kf8 18. Qb5 $18 {[%cal Yb5e8]} 
+) 16. Qxb4 fxg5 17. Nd6+ Kf8 18. Qc3 Ng6 19. Rac1 Ke7 20. Qc7+ Qxc7 21. Rxc7+ 
+Bd7 22. Nf7 Kxf7 23. Rdxd7+ Ke8 24. Rxg7 b5 25. f3 b4 26. Rb7 Kd8 27. Rxb4 Re8 
+28. Rbb7 Re7 29. Rg8+ Re8 30. Rgg7 $11) 13... Nc6 {[%eval +1.00]}  14. a3 {[%eval -0.09]}  
+(14. Nd5 {This sacrifice leads to a slight advantage for White. Again, Black has to defend carefuly.}  
+exd5 15. exd5 O-O (15... Nd4 16. Rxd4 O-O 17. Rh4 $16) 16. dxc6 bxc6 17. Bd5 Bb7 
+$14 18. Bf6 {temporary sacrifice to exchange bishops while worsening Black's pawn structure}  
+gxf6 19. Qg4+ Kh8 20. Qxb4 $14) 14... Be7 {[%eval -0.24]}  15. Be3 {[%eval -0.22]}  
+O-O {[%eval +0.13]}  16. b4 {[%eval -0.78]losing the advangae}  (16. Na4 {[%cal Ya4b6,Ye3b6]was better}  
+Nd4 17. Bxd4 exd4 18. Bxe6 Qa5 19. Bb3 Be6 20. Bxe6 fxe6 21. Rxd4 Bf6 22. Rb4 
+$14) 16... Qb8 $6 {[%eval -0.18]}  (16... Nd4 {was stronger}  17. Bxd4 exd4 18. 
+Rxd4 Bf6 19. Rdd1 Bxc3 20. Rxc3 b5 21. Bd5 Qxc3 22. Bxa8 Qxa3 $15) 17. Bb6 {[%eval -0.51]}  
+Nd4 {[%eval -0.58]}  18. Bxd4 $1 {[%eval -0.96]The best move, giving back the pawn for the pair of bishops and a slight edge in the endgame}  
+exd4 {[%eval -1.01]}  19. Rxd4 {[%eval -1.10]}  Bf6 {[%eval -1.04]}  20. Rd3 {[%eval -1.03]}  
+b5 {[%eval -0.99]}  21. Bb3 {[%eval -1.05]}  Bb7 {[%eval -1.00]}  22. Qg4 $2 {[%eval -1.95]}  
+Qe5 {[%eval -0.60]giving away some of the advantage}  (22... Rd8 $1 {was stronger}  
+23. Rxd8+ Qxd8 24. Rd1 Qc7 $17 25. Ne2 Qe5 26. Ng3 Qb2 27. Nh5 Bd4 {[%cal 
+Yb2f2]}  28. Bc2 g6 29. h3 Rc8 $19) 23. f4 {[%eval -0.66]}  Qb8 {[%eval 0.00]}  
+24. e5 {[%eval -0.16]}  Qa7+ {[%eval +0.38]}  (24... Be7 {was better}  25. Rcd1 
+Qa7+ 26. Kf1 Rad8 $15) 25. Kh1 {[%eval +0.36]}  Be7 {[%eval +0.28]}  26. Bc2 $2 
+$17 {[%eval -1.27]turning over the advantage to Black }  (26. f5 {was better}  
+exf5 (26... Qf2 27. f6 Bxf6 28. exf6 Qxf6 $18) 27. Qxf5 Bc8 28. Qf4 Be6 29. Nd5 
+Rac8 30. Rcd1 Kh8 31. Nxe7 Qxe7 32. Bxe6 fxe6 33. Qd4 $11) 26... Rfd8 {[%eval -0.69]}  
+27. Rh3 {[%eval -1.50]}  g6 $17 {[%eval -1.62]The remaining moves not available. Black has eventually lost on time} 
+ 1-0
+
+[ContentType "Exercise"]
+[FEN "r1b1k1nr/1pq2ppp/p3p3/4p3/1bB1PB2/2N5/PP2QPPP/R2R2K1 w kq - 0 2"]
+[Event "Warsaw Students Championship, 60 min per game"]
+[Round ""]
+[ECO ""]
+[Guid "d488fe7b-da55-471e-b9ad-8d5b0bb6bb31"]
+[Date "1974.11.27"]
+[White "Gajewski, Pawel"]
+[Black "Lissowski, Tomasz"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+1. Bb5+ $1 {[%quiz 2]}  Kf8 (1... axb5 2. Nxb5 Qa5 3. Bxe5 f6 4. Bc7 {[%quiz 1]} 
+ Qa6 5. Bd6 {[%quiz 1]}  Bxd6 6. Rxd6 Qa5 7. Qh5+ {[%quiz 1]}  Ke7 8. Rc1 {[%quiz 1]}  
+e5 9. Rc7+ Qxc7 10. Nxc7 Kxd6 11. Nxa8 $18) 2. Bxe5 Qxe5 {[%quiz 1]}  3. Rd8+ 
+Ke7 4. Re8+ Kf6 5. Nd5+ {[%quiz 2]}  Kg6 6. Qg4+ Kh6 7. Qh4+ {[%quiz 1]}  Qh5 8. 
+Qxh5+ Kxh5 9. Be2+ Kh6 10. Nxb4 $18 1-0
+
+
+
+[ChapterTitle "Black plays ♞h5"]
+[Guid "e33cefc9-6732-433c-ac31-fc9d355fda53"]
+[ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "Black plays ♞h5"]
+
+
+1. e4 c5 2. d4 cxd4 3. c3 dxc3 4. Nxc3 {[%cal Yg1f3,Yf1c4,Ye1g1,Yh1f1,Gd1e2,Gc1e3,Gc1f4,Gc1g5,Ga1c1,Gh1d1][%csl Rd5,Rf7]}  
+Nc6 5. Nf3 e6 6. Bc4 d6 7. O-O a6 8. Qe2 Nf6 9. Rd1 Be7 10. Bf4 {[%cal Ye4e5]}  
+Nh5 {[%thmb]to force the bishop off the useful c7-g3 diagonal}  11. Be3 Bd7 {[%bkm]}  
+(11... Qa5 12. Nd5 {[%cal Ye3b6,Bd5c7]}  exd5 13. Rxd5 b5 14. Rxh5 Bg4 15. Rd5 
+O-O 16. Bb3 Ne5 17. Kh1 {after the exchange on f3, White opens the g-file for an attack on the black king} 
+)  (11... b5 12. Bxb5 axb5 13. Qxb5 {[%csl Rc6,Rh5]}  O-O 14. Qxc6 $16)  (11... 
+O-O 12. e5 {[%csl Rd6]}  d5 13. Bb3 $14 {[%cal Yg2g4][%csl Rf6]} ) 12. Nd4 {[%cal Ye2h5]}  
+Nf6 (12... g6 13. Nxc6 Bxc6 14. Bh6 Bg5 (14... Bf8 15. Qe3 Bxh6 16. Qxh6 Qe7 17. 
+Rd4 Qf8 18. Qe3 Qe7 19. Rad1 Rd8 20. a4 O-O 21. b4 Nf6 22. b5 e5 23. R4d3 axb5 
+24. axb5 Bd7 (24... Be8 25. Qb6 Rc8 26. Bd5 Nxd5 27. Nxd5 Qd8 28. Qxd8 Rxd8 29. 
+Nc7 Rc8 30. b6 Bc6 31. f3 f5 32. exf5 Rxf5 33. Rxd6 $14) 25. Rxd6)  (14... Qa5 
+15. Bd5 Bxd5 (15... exd5 16. exd5 Bb5 17. Qe3 Kd7 (17... Rg8 18. Re1 Qc7 19. 
+Rac1 Qd8 20. a4 Bd7 21. Re2 $18 {[%cal Yc1e1]} )  (17... Rc8 18. Re1 Qd8 19. a4 
+Bd7 20. Re2 $16 {[%cal Ya1e1]} ) 18. Rac1 Rhe8 (18... Rac8 19. Qh3+ Kd8 20. Nxb5 
+{[%cal Rc1c8,Rh3c8][%csl Rc8]} ) 19. b4 Qxb4 20. Nxb5 Qxb5 21. Rb1 $18 {[%cal Rb1b7][%csl Rb7]} 
+) 16. exd5 e5 17. Rac1 $13) 15. Bxg5 Qxg5 16. Rxd6 $11) 13. Nxc6 bxc6 (13... 
+Bxc6 14. e5 Nd7 15. exd6 Bf6 16. Bd5 Rc8 17. Bxc6 Rxc6 18. Ne4 O-O 19. Rac1 Rxc1 
+20. Rxc1 Qa5 21. b3 Qd5 22. Qc4 Qxc4 23. Nxf6+ Nxf6 24. bxc4 Rd8 25. c5 Nd7 26. 
+Rb1 Rb8 27. f4 $16) 14. Bxa6 *
+
+
+
+[ChapterTitle "Black plays ♜a7-d7"]
+[Guid "557a0406-017c-4284-86d1-f470626442c8"]
+[ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "Black plays ♜a7-d7"]
+
+
+ {[%eval +0.32]} 1. e4 c5 2. d4 cxd4 3. c3 dxc3 4. Nxc3 {[%cal Yg1f3,Yf1c4,Ye1g1,Yh1f1,Gd1e2,Gc1e3,Gc1f4,Gc1g5,Ga1c1,Gh1d1][%csl Rd5,Rf7]}  
+d6 5. Nf3 e6 6. Bc4 a6 7. O-O b5 8. Bb3 Ra7 {[%thmb]White can play a natural game winning tempi by attacking Black's pieces}  
+9. Be3 Rd7 {[%ref cc1be6b7-b050-484e-8607-f23c8fe6e4ce|b8b5f8ce-4907-4c92-b8d5-3cadeff28183]}  
+10. Nd4 {[%cal Yf2f4,Yf4f5]}  Bb7 (10... Nf6 11. Bxe6 fxe6 12. Nxe6 Qe7 13. Ng5 
+h6 (13... Bb7 14. Re1 h6 15. Nd5 Bxd5 16. exd5 hxg5 17. Bxg5 Kf7 18. Rxe7+ Rxe7 
+19. Rc1 Nbd7 20. Rc7 Nb6 21. Rxe7+ Bxe7 22. Qf3 Nxd5 23. g4 Ke8 24. Bxf6 Nxf6 
+25. Qa8+ Bd8 26. Qxa6 Nd7 27. Qxd6 Bf6 28. Kg2 Bxb2 29. f4 Rf8 30. Qb4 Bf6 31. 
+Qxb5 Be7 32. Qc4 Kd8 33. a4 Bd6 34. f5 Re8 35. a5 Re3 36. a6 Ra3 37. g5 Ne5 38. 
+Qg8+ Kc7 39. g6 Nd7 40. f6 Nxf6 (40... gxf6 41. Qc4+ Bc5 42. g7 Ra1 43. g8=Q 
+Rg1+ 44. Kh3 Rxg8 45. Qxg8 $18) ) 14. Nd5 Nxd5 15. Qh5+ Kd8 16. exd5 $18 {[%cal Yg5e6,Ye3b6]} 
+) 11. f4 {[%bkm]}  Nf6 (11... Nc6 12. Nxe6 fxe6 13. Bxe6 Re7 14. f5 $18 {[%cal Ye3g5,Yc3d5]} 
+) 12. Bxe6 fxe6 13. Nxe6 Qe7 14. f5 $18 {Black cannot easily develop and is under attack in the centre}  
+Nc6 15. a4 b4 16. Nd5 {[%cal Ye3g5]}  Nxd5 17. exd5 Ne5 18. Bg5 Qf7 19. f6 Qg6 
+20. Rc1 a5 21. f7+ Rxf7 (21... Nxf7 22. Nc7+ Rxc7 23. Rxc7 Qxg5 24. Qe2+ Be7 25. 
+Qb5+ Kf8 26. Qxb7 $18) 22. Rxf7 Qxf7 23. Rc7 *
+
+[ContentType "Model Game"]
+[Event "Oberliga NRW 9091 I"]
+[Round ""]
+[ECO ""]
+[Guid "cc1be6b7-b050-484e-8607-f23c8fe6e4ce"]
+[Date "1991.??.??"]
+[White "Freckmann, Mark"]
+[Black "Bokelbrink, Uwe"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+1. e4 {[%eval +0.32]}  c5 {[%eval +0.31]}  2. d4 {[%eval +0.20]}  cxd4 {[%eval +0.20]}  
+3. c3 {[%eval -0.30]}  dxc3 {[%eval -0.29]}  4. Nxc3 {[%eval -0.33]}  d6 {[%eval -0.22]}  
+5. Bc4 {[%eval -0.27]}  e6 {[%eval -0.25]}  6. Nf3 {[%eval -0.22]}  a6 {[%eval -0.16]}  
+7. O-O {[%eval -0.20]}  b5 {[%eval -0.17]}  8. Bb3 {[%eval -0.18]}  Ra7 {[%eval +1.16]}  
+9. Be3 {[%eval +1.22]}  Rd7 {[%eval +1.62]}  10. Nd4 {[%eval +1.42]}  Bb7 {[%eval +1.67]}  
+11. Rc1 {[%eval +0.89]}  Nf6 {[%eval +1.14]}  12. f3 {[%eval +1.11]}  e5 {[%eval +0.91]}  
+13. Nf5 {[%eval +0.87]}  h6 {[%bkm][%eval +1.92]}  14. Bf2 {[%eval +0.73]}  d5 {[%eval +2.35]}  
+15. Nxd5 {[%eval +2.08]}  Nxd5 {[%eval +3.26]}  16. exd5 {[%eval +3.38]}  Bxd5 {[%eval +3.71]}  
+17. Qe2 {[%eval +4.08]}  Bxb3 {[%eval +3.99]}  18. axb3 {[%eval +4.10]}  f6 {[%eval +4.15]}  
+19. f4 {[%eval +4.13]}  g6 {[%eval +5.50]}  20. fxe5 {[%eval +5.69]}  Rd2 {[%eval +5.87]}  
+21. Qg4 {[%eval +6.28]}  Kf7 {[%eval +#8]}  (21... gxf5 22. Qg6+ Kd7 23. e6+ Ke7 
+24. Qf7+ Kd6 25. Bg3+ f4 26. Bxf4+ Kd5 27. e7+ Ke4 28. Qe6+ Kd4 29. Qe3+ Kd5 30. 
+Rc5#) 22. e6+ {[%eval +#7]}  Kxe6 {[%eval +#7]}  23. Nxh6+ {[%eval +#6]}  f5 {[%eval +#6]}  
+24. Qxg6+ {[%eval +#5]}  Qf6 {[%eval +#5]}  25. Rfe1+ {[%eval +#4]}  1-0
+
+[ContentType "Model Game"]
+[Event "BL2-Ost 9596"]
+[Round ""]
+[ECO ""]
+[Guid "b8b5f8ce-4907-4c92-b8d5-3cadeff28183"]
+[Date "1995.??.??"]
+[White "Weitzer, Steffen"]
+[Black "Lorenz, Gerd"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+1. e4 {[%eval +0.22]}  c5 {[%eval +0.32]}  2. Nf3 {[%eval +0.37]}  a6 {[%eval +0.52]}  
+3. d4 {[%eval +0.34]}  cxd4 {[%eval +0.33]}  4. c3 {[%eval -0.10]}  dxc3 {[%eval -0.18]}  
+5. Nxc3 {[%eval -0.14]}  d6 {[%eval -0.02]}  6. Bc4 {[%eval -0.19]}  e6 {[%eval -0.18]}  
+7. O-O {[%eval -0.24]}  b5 {[%eval -0.03]}  8. Bb3 {[%eval -0.07]}  Ra7 {[%eval +1.15]}  
+9. Be3 {[%eval +1.25]}  Rd7 {[%eval +1.67]}  10. Nd4 {[%eval +1.09]}  Nf6 {[%eval +1.15]}  
+11. f4 {[%eval +0.89]}  Bb7 {[%eval +1.50]}  12. f5 {[%eval +1.53]}  e5 {[%eval +1.30]}  
+13. Ne6 {[%eval +1.02]}  fxe6 {[%eval +1.06]}  14. fxe6 {[%eval +1.17]}  Rc7 {[%eval +1.44]}  
+15. Bb6 {[%eval +1.29]}  Be7 {[%eval +1.41]}  16. Nd5 {[%eval +0.13]}  Bxd5 {[%eval +0.14]}  
+17. exd5 {[%eval -0.21]}  O-O {[%eval -0.01]}  18. Qe2 {[%eval -0.84]}  Qc8 {[%eval -0.42]}  
+19. Bxc7 {[%eval -0.99]}  Qxc7 {[%eval -1.17]}  20. Rac1 {[%eval -1.05]}  Qb7 {[%eval -0.24]}  
+21. Rf3 {[%eval -2.20]}  a5 {[%eval -2.05]}  22. a3 {[%eval -2.33]}  Na6 {[%eval -2.29]}  
+23. Rcf1 {[%eval -3.15]}  Nc5 {[%eval -2.93]}  24. Ba2 {[%eval -3.12]}  b4 {[%eval -2.75]}  
+25. Bc4 {[%eval -2.60]}  e4 {[%eval -2.07]}  26. Rf5 {[%eval -2.14]}  Na4 {[%eval -2.13]}  
+27. Bb3 {[%eval -2.27]}  Nc5 {[%eval -2.20]}  28. Bc4 {[%eval -2.32]}  Na4 {[%eval -2.37]}  
+29. Bb3 {[%eval -2.33]}  Nb6 {[%eval -1.60]}  30. axb4 {[%eval -2.21]}  axb4 {[%eval -0.30]}  
+31. Qb5 {[%eval -1.52]}  Qa7 {[%eval -1.38]}  32. Kh1 {[%eval -1.71]}  Rb8 {[%eval -0.07]}  
+33. Qe2 {[%eval 0.00]}  Na8 {[%eval +0.95]}  34. g4 {[%eval +0.69]}  h6 {[%eval +0.83]}  
+35. h4 {[%eval +0.47]}  Rf8 {[%eval +2.50][%assm 1]}  36. g5 {[%eval +3.21]}  
+Nh7 {[%eval +3.94]}  37. Qxe4 {[%eval +4.85]}  hxg5 {[%eval +5.24]}  38. Rxf8+ {[%eval +3.71]}  
+Nxf8 {[%eval +3.78]}  39. Qf5 {[%eval +3.81]}  Qd4 {[%eval +4.89]}  40. Qf7+ {[%eval +8.71]}  
+Kh8 {[%eval +8.75]}  41. Qh5+ {[%eval +35.34]}  Kg8 {[%eval +38.82]}  42. Rxf8+ {[%eval +39.07]}  
+Bxf8 {[%eval +39.86]}  43. Qf7+ {[%eval +#28]}  Kh8 {[%eval +#25]}  44. Qxf8+ {[%eval +#23]}  
+Kh7 {[%eval +#26]}  45. Bc2+ {[%eval +#21]}  g6 {[%eval +#21]}  46. Qf7+ {[%eval +#20]}  
+Kh8 {[%eval +#3]}  47. Qe8+ {[%eval +#2]}  1-0
+
+
+
+[ChapterTitle "Black plays e5"]
+[Guid "R394b7a3a11ee4391bd9a42d56343b4ad"]
+[ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "Black plays e5"]
+
+
+ {[%eval +0.36]} 1. e4 {[%eval +0.17]}  c5 {[%eval +0.42]}  2. d4 {[%eval 
++0.19]}  cxd4 {[%eval +0.18]}  3. c3 {[%eval -0.29]}  dxc3 {[%eval -0.23]}  4. 
+Nxc3 {[%eval -0.29]}  d6 {[%eval -0.18]}  5. Bc4 {[%eval -0.18]}  e6 {[%eval -0.18]}  
+6. Nf3 {[%eval -0.18]}  Nc6 {[%eval -0.19]}  7. O-O {[%eval -0.21]}  Be7 {[%eval -0.22]}  
+8. Qe2 {[%eval -0.21]}  Nf6 {[%eval -0.03]}  (8... Bd7 {[%eval -0.13]}  9. Rd1 {[%eval -0.12]}  
+Qb8 {[%eval +0.39]}  10. Bf4 {[%eval +0.32]}  Ne5 {[%eval +1.66]}  11. Bb5 $14 {[%eval +0.93]} 
+) 9. Rd1 {[%eval 0.00]}  e5 {[%eval +0.10]}  (9... Bd7 {[%eval 0.00]}  10. Nb5 {[%eval -0.05][%csl Rd6]}  
+Qb8 {[%eval -0.08]}  11. Bf4 {[%eval -0.02]}  Ne5 {[%eval -0.03]}  (11... e5 {[%eval +0.56]}  
+12. Bg5 {[%eval +0.56]}  O-O {[%eval +0.62]}  (12... a6 {[%eval +0.63]}  13. 
+Bxf6 {[%eval +0.67]}  axb5 {[%eval +0.69]}  14. Bxe7 {[%eval +0.64]}  Kxe7 {[%eval +0.58]}  
+15. Bxb5 $14 {[%eval +0.62]} ) 13. Bxf6 {[%eval +0.56]}  Bxf6 {[%eval +0.54]}  
+14. Nxd6 $14 {[%eval +0.57]} ) 12. Nxd6+ {[%eval -0.02]}  Bxd6 {[%eval -0.05]}  
+13. Rxd6 {[%eval -0.03]}  Qxd6 {[%eval 0.00]}  14. Nxe5 {[%eval -0.05]}  Qe7 {[%eval -0.05]}  
+15. Rd1 {[%eval -0.06]}  O-O {[%eval -0.06]}  16. Nxd7 {[%eval -0.06]}  Nxd7 {[%eval -0.04]}  
+17. Bd6 {[%eval -0.10]}  Qg5 {[%eval 0.00]}  18. f4 {[%eval -0.06]}  Qa5 {[%eval -0.04]}  
+19. Bxf8 {[%eval -0.06]}  Nxf8 {[%eval 0.00]}  20. Qd2 {[%eval -0.02]}  Qb6+ {[%eval 0.00]}  
+21. Kh1 $11 {[%eval -0.07]} ) 10. h3 {[%eval -0.08]to prevent Bg4}  O-O {[%eval -0.06]}  
+11. Be3 {[%eval -0.11]}  (11. b3 a6 12. Ba3 Qa5 13. Qb2 Nb4 14. Rac1 (14. Nd5 
+Nbxd5 15. Bxd5 Re8 $15) 14... b5 15. Bxb4 Qxb4 16. Nd5 Nxd5 17. Bxd5 Ra7 18. a3 
+Qa5 19. b4 Qd8 $11)  (11. Bg5 Be6 12. Bxf6 Bxf6 13. Nb5 Bxc4 14. Qxc4 Be7 15. 
+Rd2 a6 16. Nc3 Rc8 17. Nd5 Bg5 18. Rdd1 Nd4 19. Qd3 Nxf3+ 20. Qxf3 Rc2) 11... 
+Be6 {[%eval -0.08]}  12. Bxe6 {[%eval -0.35]}  fxe6 {[%eval -0.36]}  13. Rac1 {[%eval -0.50]}  
+Rc8 {[%eval -0.05]}  14. b4 {[%eval -0.05]}  a6 {[%eval 0.00]}  (14... Nxb4 {[%eval -0.12]}  
+15. Nxe5 {[%eval -0.11]}  (15. Qb5 d5 16. Nxe5 a6 17. Qe2 Qe8 18. exd5 Nbxd5 19. 
+Nxd5 Nxd5 20. Rxc8 Qxc8) 15... Qa5 {[%eval -0.09]}  16. Nf3 {[%eval -0.07]}  Qa6 
+{[%eval -0.07]}  17. Qxa6 {[%eval -0.12]}  Nxa6 {[%eval -0.12]}  18. Bxa7 $11 {[%eval -0.03]} 
+) 15. b5 {[%eval -0.01]}  axb5 {[%eval 0.00]}  16. Qxb5 {[%eval 0.00]}  Qd7 {[%eval 0.00]}  
+17. Na4 {[%eval -0.01]}  Nd4 {[%eval 0.00]}  18. Nxd4 {[%eval 0.00]}  exd4 {[%eval 0.00]}  
+19. Qxd7 {[%eval 0.00]}  Nxd7 {[%eval +0.02]}  20. Bxd4 {[%eval -0.05]}  Rxc1 {[%eval 0.00]}  
+21. Rxc1 $11 {[%eval 0.00]}  *
+
+[ContentType "Model Game"]
+[Event ""]
+[Round ""]
+[ECO ""]
+[Guid "11749bd5-356a-46ea-8cd9-773c2c9d8366"]
+[Date "1971.??.??"]
+[White "Pokojowczyk,Jerzy"]
+[Black "Gligoric,Svetozar"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1/2"]
+
+
+ {[%eval +0.31]} 1. e4 {[%eval +0.22]}  c5 {[%eval +0.34]}  2. d4 {[%eval 
++0.17]}  cxd4 {[%eval +0.11]}  3. c3 {[%eval -0.30]}  dxc3 {[%eval -0.28]}  4. 
+Nxc3 {[%eval -0.28]}  d6 {[%eval -0.19]}  5. Bc4 {[%eval -0.23]}  e6 {[%eval -0.17]}  
+6. Nf3 {[%eval -0.16]}  Nc6 {[%eval -0.23]}  7. O-O {[%eval -0.20]}  Be7 {[%eval -0.23]}  
+8. Qe2 {[%eval -0.23]}  Nf6 {[%eval -0.06]}  (8... Bd7 9. Rd1 Qb8 10. Bf4 Ne5 
+11. Bb5) 9. Rd1 {[%eval -0.01]}  e5 {[%eval +0.11]}  10. h3 {[%eval -0.19]to prevent Bg4}  
+O-O {[%eval -0.21]}  11. Be3 {[%eval -0.29]}  (11. b3 a6 12. Ba3 Qa5 13. Qb2 Nb4 
+14. Rac1 (14. Nd5 Nbxd5 15. Bxd5 Re8 $15) 14... b5 15. Bxb4 Qxb4 16. Nd5 Nxd5 
+17. Bxd5 Ra7 18. a3 Qa5 19. b4 Qd8 $11)  (11. Bg5 Be6 12. Bxf6 Bxf6 13. Nb5 Bxc4 
+14. Qxc4 Be7 15. Rd2 a6 16. Nc3 Rc8 17. Nd5 Bg5 18. Rdd1 Nd4 19. Qd3 Nxf3+ 20. 
+Qxf3 Rc2 21. Qb3 Qc8 22. Nc3 Rd2 23. Rxd2 Bxd2 24. Nd5 Bg5 25. Rd1 $15) 11... 
+Be6 {[%eval -0.20]}  12. Bxe6 {[%eval -0.47]}  fxe6 {[%eval -0.34]}  13. Rac1 {[%eval -0.49]}  
+Rc8 {[%eval -0.26]}  14. b4 {[%eval -0.17]}  a6 {[%eval 0.00]}  (14... Nxb4 15. 
+Nxe5 (15. Qb5 d5 16. Nxe5 a6 17. Qe2 Qe8 18. exd5 Nbxd5 19. Nxd5 Nxd5 20. Rxc8 
+Qxc8 21. Rc1 Qd8 22. Bd2) 15... Qa5 16. Nf3 Qa6 17. Qxa6 Nxa6 18. Bxa7 $11) 15. 
+b5 {[%eval -0.03]}  axb5 {[%eval 0.00]}  16. Qxb5 {[%eval 0.00]}  Qd7 {[%eval -0.03]}  
+17. Na4 {[%eval -0.04]}  Nd4 {[%eval 0.00]}  18. Nxd4 {[%eval -0.10]}  exd4 {[%eval -0.08]}  
+19. Qxd7 {[%eval -0.05]}  Nxd7 {[%eval 0.00]}  20. Bxd4 {[%eval -0.03]}  Rxc1 {[%eval -0.01]}  
+21. Rxc1 {[%eval -0.07]}  Ra8 $1 {[%eval -0.03]}  22. Nb6 {[%eval -0.13]}  Nxb6 {[%eval -0.09]}  
+23. Bxb6 {[%eval -0.16]}  Rxa2 {[%eval -0.08]}  24. Rc7 {[%eval -0.24]}  Kf7 {[%eval 0.00]}  
+(24... Bf6 25. Rxb7 Rb2 26. Rb8+ Kf7 27. Bc7 Rd2 $11) 25. e5 {[%eval 0.00]}  Ke8 
+{[%eval 0.00]}  (25... dxe5 26. Bc5 $19) 26. Rc8+ {[%eval 0.00]}  Kf7 {[%eval 0.00]}  
+27. Rc7 {[%eval 0.00]}  1/2
+
+[ContentType "Model Game"]
+[Event "Turniej Kadry"]
+[Round ""]
+[ECO ""]
+[Guid "a07ed1a9-8d74-490b-8bd0-3fced0083a46"]
+[Date "1975.06.??"]
+[White "Bielczyk,Jacek"]
+[Black "Schinzel,Wladyslaw"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "0-1"]
+
+
+ {[%eval +0.28]} 1. d4 {[%eval +0.32]}  c5 {[%eval +0.62]}  2. e4 {[%eval 
++0.11]}  cxd4 {[%eval +0.11]}  3. c3 {[%eval -0.27]}  dxc3 {[%eval -0.26]}  4. 
+Nxc3 {[%eval -0.28]}  d6 {[%eval -0.17]}  5. Bc4 {[%eval -0.19]}  e6 {[%eval -0.22]}  
+6. Nf3 {[%eval -0.14]}  Be7 {[%eval -0.12]}  7. Qe2 {[%eval -0.12]}  Nc6 {[%eval -0.12]}  
+8. O-O {[%eval -0.19]}  Nf6 {[%eval -0.01]}  9. Rd1 {[%eval 0.00]}  Bd7 {[%eval 0.00]}  
+10. h3 {[%eval -0.51]this is not active enough and loses the opening advanatge}  
+O-O {[%eval -0.25]}  11. Bf4 {[%eval -0.23]}  e5 {[%eval -0.27]}  12. Be3 {[%eval -0.23]}  
+Qb8 {[%eval +0.14]}  (12... Be6 13. Rac1 Rc8 14. Bxe6 fxe6 $15) 13. Rac1 {[%eval +0.14]}  
+Rd8 {[%bkm][%eval +0.68]}  14. Bxf7+ {[%eval -0.22]}  (14. a3 h6 15. b4 Be6 16. 
+Bxe6 fxe6 17. Qa2 Kf7 18. g4 $14) 14... Kxf7 {[%eval -0.03]}  15. Qc4+ {[%eval 0.00]}  
+d5 {[%eval +0.96]}  (15... Kf8 16. Ng5 d5 17. Nxd5 Nxd5 18. Qxd5 Bxg5 19. Bxg5 
+Be8 20. Qc5+ Kg8 21. Bxd8 Nxd8 22. Qe7 Nc6 23. Qe6+ Bf7 $15) 16. ed5 {[%eval -0.80]loses an edge}  
+(16. Nxd5 b5 17. Ng5+ Kf8 18. Qe2 Nxd5 19. exd5 Nd4 20. Bxd4 Bxg5 21. Bxe5 Qb6 
+22. d6 Bxc1 23. Rxc1 Rac8 24. Qf3+ Ke8 (24... Kg8 25. Qd5+ Kh8 26. Rc7 Qa5 27. 
+Bc3 Qa4 28. Qe5 Rg8 29. Rxd7 $18) 25. Rd1 Be6 26. Qh5+ Kd7 27. Qg5 Kc6 28. Qe7 
+Re8 29. Qxg7 Rg8 30. Qxh7 Qc5 31. Bf4 Bf5 32. Qf7 Bc2 33. Rc1 Rgf8 34. d7 Rcd8 
+35. Qe6+ Kb7 36. Bg3 Qf5 37. Qe2 Be4 38. Rc7+ Ka8 39. Qd2 $13) 16... Na5 {[%eval +0.36]}  
+17. Qh4 {[%eval +0.15]}  b5 $2 {[%eval +1.94]}  (17... h6 {this would have maintained equality}  
+18. d6 Bxd6 19. Nd5 Bc6 20. Nxf6 Bxf3 21. gxf3 gxf6 22. b4 Nc6 23. Qh5+ Ke7 24. 
+b5 Nd4 25. Bxd4 Rg8+ 26. Kf1 exd4 27. Re1+ Kf8 28. Qxh6+ Kf7 29. Qh5+ Rg6 30. 
+Re4 Kg7 31. Rg4 Rxg4 32. Qxg4+ Kf7 33. Qh5+ Kg7 34. Qg4+ $11) 18. Ng5+ $2 {[%eval -0.67][%assm 1]}  
+(18. d6 Bxd6 19. Nd5 Bf5 20. Bg5 Nxd5 21. Bxd8 Qxd8 22. Rxd5 Nb7 23. Qh5+ Bg6 
+24. Nxe5+ Kg8 25. Qd1 $16) 18... Kg8 {[%eval -0.81]}  19. d6 {[%eval -1.08]}  
+Bxd6 {[%eval -0.81]}  20. Nce4 {[%eval -1.19]}  Bf5 $1 {[%eval -1.32]}  21. 
+Nxf6+ {[%eval -1.56]}  gxf6 {[%eval -1.57]}  22. Ne6 {[%eval -2.91]}  (22. Nxh7 {would have prolonged the game but wouldn't have saved it}  
+Bxh7 23. Qxf6 Bf8 24. Qe6+ Kh8 25. Bg5 Rxd1+ 26. Rxd1 Bg7 27. Rd8+ Qxd8 28. Bxd8 
+Rxd8 29. b3 $19) 22... Bxe6 {[%eval -2.84]}  23. Qxf6 {[%eval -3.01]}  Bf7 {[%eval -3.11]}  
+24. Bg5 {[%eval -3.81]}  Nc4 {[%eval -3.22]}  25. b3 {[%eval -3.19]}  Ba3 {[%eval -3.12]}  
+26. Bh6 {[%eval -3.44]}  Bf8 {[%eval -3.39]}  27. Bxf8 {[%eval -3.55]}  Rxd1+ {[%eval -3.52]}  
+28. Rxd1 {[%eval -3.78]}  Qxf8 {[%eval -3.81]}  29. bxc4 {[%eval -3.75]}  Bxc4 {[%eval -2.97]}  
+30. Qxe5 {[%eval -3.20]}  Qg7 {[%eval -2.42]}  0-1
+
+
+
+[ChapterTitle "Black plays passively (e6, d6, ♝e7, 0-0)"]
+[Guid "Rc5167318d40644639422df5d01ada264"]
+[ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "Black plays passively (e6, d6, ♝e7, 0-0)"]
+
+
+ {[%eval +0.29]} 1. e4 {[%eval +0.21]}  c5 {[%eval +0.37]}  2. d4 {[%eval 
++0.16]}  cxd4 {[%eval +0.16]}  3. c3 {[%eval -0.27]}  dxc3 {[%eval -0.28]}  4. 
+Nxc3 {[%eval -0.24]}  Nc6 {[%eval -0.25]}  5. Nf3 {[%eval -0.23]}  e6 {[%eval -0.30]}  
+6. Bc4 {[%eval -0.28]}  Be7 {[%eval -0.10]}  7. O-O {[%eval -0.16]}  d6 {[%eval -0.12]}  
+8. Qe2 {[%eval -0.13]}  Nf6 {[%eval 0.00]}  9. Rd1 {[%eval -0.04]}  O-O?! {[%eval +0.89]}  
+10. e5 $1 {[%eval +0.72]}  Ne8 {[%eval +0.79]}  11. exd6 {[%eval +0.68]}  Bxd6 {[%eval +0.73]}  
+12. Nb5 {[%eval +0.73]}  Qe7 {[%eval +0.75]}  13. Bg5 {[%eval +0.72]forcing Black to weaken their king's pawn cover}  
+f6 {[%eval +0.64]}  14. Be3 {[%eval +0.64]}  a6 {[%eval +1.13]}  15. Nxd6 {[%eval +1.02]}  
+Nxd6 $15 {[%eval +1.01]}  16. Bc5 {[%eval +1.16]}  Rd8 {[%eval +1.13]}  17. Bb3 {[%eval +1.26]}  
+Qc7 {[%eval +1.09]}  18. Nd4 {[%eval +1.30]}  Nxd4 {[%eval +1.24]}  19. Bxd4 {[%eval +1.32]}  
+b5 {[%eval +1.41]}  (19... Qe7 {[%eval +4.21]}  20. Bb6 {[%eval +4.49]}  Rf8 {[%eval +5.17]}  
+21. Rac1 {[%eval +5.17]}  Kh8 {[%eval +5.25]}  22. Rc7 {[%eval +5.26]}  Bd7 {[%eval +5.36]}  
+23. Qd3 $18 {[%eval +5.23]} )  (19... Bd7 {[%eval +1.64]}  20. Rac1 {[%eval +1.70]}  
+Bc6 {[%eval +1.75]}  21. Qxe6+ $16 {[%eval +1.76]} ) 20. Qf3 {[%eval +1.22]}  
+Bb7 {[%eval +1.32]}  21. Bxe6+ {[%eval +1.25]}  Kh8 {[%eval +1.25]}  22. Qf4 {[%eval +1.33]}  
+Qc6 {[%eval +1.49]}  23. f3 {[%eval +1.39]}  Nc4 {[%eval +1.35]}  24. Qxf6 {[%eval +1.04]}  
+Rxd4 {[%eval +1.03]}  25. Qxd4 $16 {[%eval +1.09]}  *
+
+[ContentType "Model Game"]
+[Event "Memorial Przepiorki C"]
+[Round ""]
+[ECO ""]
+[Guid "393fb093-955d-4071-98e2-77d00e88c373"]
+[Date "2019.12.30"]
+[White "Brzoski,Krzysztof"]
+[Black "Jaskulski,Jan"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1/2"]
+
+
+ {[%eval +0.30]} 1. e4 {[%eval +0.29]}  c5 {[%eval +0.38]}  2. d4 {[%eval 
++0.09]}  cxd4 {[%eval +0.13]}  3. c3 {[%eval -0.21]}  dxc3 {[%eval -0.21]}  4. 
+Nxc3 {[%eval -0.26]}  Nc6 {[%eval -0.28]}  5. Nf3 {[%eval -0.31]}  e6 {[%eval -0.23]}  
+6. Bc4 {[%eval -0.30]}  Be7 {[%eval -0.16]}  7. O-O {[%eval -0.17]}  d6 {[%eval -0.14]}  
+8. Qe2 {[%eval -0.17]}  Nf6 {[%eval 0.00]}  9. Rd1 {[%eval -0.06]}  O-O?! {[%eval +0.74]}  
+10. e5 $1 {[%eval +0.73]}  Ne8 {[%eval +0.74]}  11. exd6 {[%eval +0.79]}  Bxd6 {[%eval +0.67]}  
+12. Nb5 {[%eval +0.78]}  Qe7 {[%eval +0.72]}  13. Nxd6 {[%eval 0.00]}  (13. Bg5 {forcing Black to weaken their King's pawn cover}  
+f6 14. Be3 a6 15. Nxd6 Nxd6 $15) 13... Nxd6 {[%eval +0.07]}  14. Bb3 {[%eval 0.00]}  
+Nf5 {[%eval +0.09]}  15. Bg5 {[%eval -0.60]}  (15. Bf4 e5 16. Bxe5 Re8 17. Qe4 
+Nxe5 18. Qxe5 Qxe5 19. Nxe5 Be6 $11) 15... Qb4 {[%eval +0.38]giving away an 
+edge}  16. Rac1 {[%eval +0.03]}  Ncd4 {[%eval +0.13]}  17. Nxd4 {[%eval +0.40]}  
+Nxd4 {[%eval +0.02]}  18. Qe4 {[%eval 0.00]}  e5 {[%eval +0.01]}  19. Qxe5 {[%eval +0.01]}  
+Nxb3 {[%eval 0.00]}  20. Be7 {[%eval +0.02]}  Qg4 {[%eval +0.01]}  21. Bxf8 {[%eval -0.84]}  
+Nxc1 {[%eval -1.16]}  22. Rd8 {[%eval -1.33]}  Bd7 {[%eval -0.36]}  23. f3 {[%eval -1.32]}  
+Rxd8 {[%eval -1.36]}  24. fxg4 {[%eval -1.53]}  Rxf8 {[%eval -1.39]}  25. Qd5 {[%eval -1.80]}  
+Be6 {[%eval -1.60]}  26. Qxb7 {[%eval -1.67]}  Nd3 {[%eval -0.24]}  (26... Nxa2 
+27. g5 a5 28. Qa6 Nb4 29. Qxa5 $17) 27. b3 {[%eval -0.85]}  Rc8 {[%eval -1.10]}  
+28. h3 {[%eval -1.07]}  g6 {[%eval 0.00]}  29. Qxa7 {[%eval -0.04]}  Rc1+ {[%eval +0.07]}  
+30. Kh2 {[%eval +0.07]}  Rc2 {[%eval +0.06]}  31. Qb8+ {[%eval -0.03]}  Kg7 {[%eval +0.61]}  
+32. Qd6 {[%eval +0.58]}  Nc1 {[%eval +0.65]}  33. b4 {[%eval +0.46]}  Nxa2 {[%eval +0.36]}  
+34. b5 {[%eval +0.33]}  Nc3 {[%eval +3.95][%assm 1]}  35. b6 $2 {[%eval 0.00][%assm 1]}  
+Bd5 {[%eval 0.00][%cal Yc2g2]}  36. Qe5+ {[%eval 0.00]}  Kg8 {[%eval 0.00]}  37. 
+h4 $4 {[%eval -2.81][%assm 1]}  (37. Qg3 Ne4 38. Qb8+ Kg7 39. g5 Nd6 40. Qxd6 
+Rxg2+ 41. Kh1 Rxg5+ 42. Kh2 Rg2+ $11) 37... Rxg2+ {[%eval -2.96]}  38. Kh3 {[%eval -2.96]}  
+Rf2 $4 {[%eval 0.00][%assm 1]}  (38... h5 39. gxh5 Ne2 40. Qe8+ Kh7 41. hxg6+ 
+Kxg6 42. h5+ Kh7 43. Qxf7+ Bxf7 44. Kxg2 Bd5+ 45. Kf2 Nc3 46. Ke3 Na4 47. Kd4 
+Bg2 48. Kc4 Nxb6+ $19) 39. Qe8+ {[%eval 0.00]}  Kg7 {[%eval +0.01]}  40. Qe5+ {[%eval 0.00]} 
+ 1/2
+
+
+
+[ChapterTitle "Black plays ♞f6 too early (before e6 with d6)"]
+[Guid "769a519b-6327-453f-b4aa-654b775186fc"]
+[ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "Black plays ♞f6 too early (before e6 with d6)"]
+
+
+ {[%eval +0.32]} 1. e4 c5 2. d4 cxd4 3. c3 dxc3 4. Nxc3 Nc6 5. Nf3 d6 6. Bc4 Nf6 
+$2 {[%thmb]}  7. e5 {[%bkm]}  Ng4 (7... Nxe5 8. Nxe5 dxe5 9. Bxf7+ Kxf7 10. Qxd8 
+$18)  (7... dxe5 {[%ref 86262493-94b6-4285-b219-8a71c848bcf1]}  8. Qxd8+ Kxd8 
+(8... Nxd8 9. Nb5 $16 {[%cal Gb5c7,Gf3e5]}  Ne6 (9... Kd7 10. Nxe5+ Ke8 11. 
+Nc7#)  (9... Rb8 10. Nxe5 e6 11. Nc7+ Ke7 12. Be3 {[%cal Ye3a7,Ye3c5]}  Kd6 13. 
+Bf4 Kxc7 14. Nxf7+ Kb6 15. Nxh8 Ra8 16. O-O Bd7 17. Rac1 Rc8 18. Be2 Rxc1 19. 
+Rxc1 Nd5 20. Bg5 Nc6 21. Nf7 $18) 10. Bxe6 Bxe6 11. Nc7+ Kd8 12. Nxa8 $18) 9. 
+Ng5 $16) 8. e6 fxe6 9. Ng5 {[%cal Gg5e6,Gd1g4]}  Nge5 10. Bxe6 Bxe6 11. Nxe6 Qd7 
+12. Nd5 Rc8 13. Ndf4 Nf7 14. O-O g5 15. Nxf8 Rxf8 16. Nd5 $14 *
+
+[ContentType "Model Game"]
+[Event "BLR-ch"]
+[Round ""]
+[ECO ""]
+[Guid "86262493-94b6-4285-b219-8a71c848bcf1"]
+[Date "2011.01.23"]
+[White "Zhigalko, Sergei"]
+[Black "Tihonov, Jurij"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+ {[%eval +0.35]} 1. e4 {[%eval +0.33]}  c5 {[%eval +0.34]}  2. d4 {[%eval 
++0.10]}  cxd4 {[%eval +0.06]}  3. c3 {[%eval -0.23]}  dxc3 {[%eval -0.22]}  4. 
+Nxc3 {[%eval -0.26]}  d6 {[%eval -0.16]}  5. Bc4 {[%eval -0.20]}  Nc6 {[%eval -0.20]}  
+6. Nf3 {[%eval -0.20]}  Nf6 {[%eval +0.32]}  7. e5 {[%eval +0.23]}  dxe5 {[%eval +0.83]}  
+8. Qxd8+ {[%eval +0.69]}  Kxd8 {[%eval +0.82]}  9. Ng5 {[%eval +0.88]}  Na5 {[%eval +0.93]}  
+10. Bxf7 {[%eval +0.42]}  e6 {[%eval +0.25]}  11. Bg6 {[%eval +0.15]}  Ke7 {[%eval +0.20]}  
+12. Bd3 {[%eval +0.12]}  Nc6 {[%eval +0.16]}  13. O-O {[%eval +0.14]}  h6 {[%eval +0.16]}  
+14. Nf3 {[%eval +0.17]}  g5 {[%eval +0.66]}  15. Re1 {[%eval +0.17]}  Bg7 {[%eval +0.26]}  
+16. Bb5 {[%eval +0.18]}  Bd7 {[%eval +0.24]}  17. Bxc6 {[%eval +0.21]}  Bxc6 {[%eval +0.18]}  
+18. Nxe5 {[%eval +0.18]}  Rhc8 {[%eval +0.21]}  19. Be3 {[%eval -0.03]}  Nd7 {[%eval 0.00]}  
+20. Bd4 {[%eval 0.00]}  Nxe5 {[%eval +0.02]}  21. Bxe5 {[%eval 0.00]}  Bxe5 {[%eval +0.03]}  
+22. Rxe5 {[%eval +0.04]}  Rf8 {[%eval +0.12]}  23. Rae1 {[%eval +0.09]}  Rf6 {[%eval +0.14]}  
+24. f3 {[%eval +0.03]}  Rg8 {[%eval +0.13]}  25. h3 {[%eval +0.08]}  Rd8 {[%eval +0.11]}  
+26. R1e2 {[%eval +0.11]}  Rd6 {[%eval +0.14]}  27. h4 {[%eval 0.00]}  gxh4 {[%eval 0.00]}  
+28. Kh2 {[%eval 0.00]}  Kf7 {[%eval +0.19]}  29. Rh5 {[%eval +0.05]}  Rd4 {[%eval +0.08]}  
+30. Kh3 {[%eval +0.04]}  a6 {[%eval +0.07]}  31. Rxh4 {[%eval 0.00]}  Rxh4+ {[%eval -0.03]}  
+32. Kxh4 {[%eval -0.03]}  Rf4+ {[%eval 0.00]}  33. Kg3 {[%eval 0.00]}  Rd4 {[%eval 0.00]}  
+34. Kf2 {[%eval 0.00]}  b5 {[%eval +0.03]}  35. Ke3 {[%eval 0.00]}  e5 {[%eval 0.00]}  
+36. Rc2 {[%eval 0.00]}  Ke6 {[%eval +0.13]}  37. Rc1 {[%eval +0.08]}  Rh4 {[%eval +0.16]}  
+38. a3 {[%eval 0.00]}  a5 {[%eval +0.04]}  39. Ne2 {[%eval +0.02]}  Kd7 {[%eval +0.06]}  
+40. Ng3 {[%eval 0.00]}  b4 {[%eval +0.36]}  41. Nf5 {[%eval +0.46]}  Rh2 {[%eval +0.52]}  
+42. Kf2 {[%eval +0.57]}  e4 {[%eval +0.94]}  43. f4 {[%eval +0.85]}  bxa3 {[%eval +0.89]}  
+44. bxa3 {[%eval +0.90]}  Rh5 {[%eval +0.98]}  45. Ne3 {[%eval +0.95]}  Rb5 {[%eval +0.83]}  
+46. f5 {[%eval +1.00]}  Rb3 {[%eval +1.17]}  47. Rh1 {[%eval +0.93]}  Rxa3 {[%eval +1.30]}  
+48. Rxh6 {[%eval +1.20]}  a4 {[%eval +1.41]}  49. Rh7+ {[%eval +0.97]}  Ke8 {[%eval +0.53]}  
+50. g4 {[%eval +0.41]}  Bd7 {[%eval +0.40]}  51. Rh8+ {[%eval +0.39]}  Ke7 {[%eval +3.35][%assm 1]}  
+52. g5 {[%eval +3.53]}  Rd3 {[%eval +3.67]}  53. g6 {[%eval +1.84]}  Kf6 {[%eval +5.93][%assm 1]}  
+54. Rf8+ {[%eval +6.42]}  Kg7 {[%eval +34.45]}  55. Rf7+ {[%eval +#15]}  Kg8 {[%eval +#6]}  
+56. Ng4 {[%eval +#5]}  1-0
+
+[ContentType "Model Game"]
+[Event ""]
+[Round ""]
+[ECO ""]
+[Guid "4b7bf1dd-9cbb-42ba-8f51-b0beb288cd30"]
+[Date "1967.??.??"]
+[White "Kristiansson,I"]
+[Black "Roberts"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+1. e4 {[%eval +0.25]}  c5 {[%eval +0.39]}  2. d4 {[%eval +0.12]}  cxd4 {[%eval +0.14]}  
+3. c3 {[%eval -0.24]}  dxc3 {[%eval -0.32]}  4. Nxc3 {[%eval -0.26]}  Nc6 {[%eval -0.21]}  
+5. Nf3 {[%eval -0.20]}  d6 {[%eval -0.20]}  6. Bc4 {[%eval -0.20]}  Nf6 $2 {[%eval +0.23]allows White to play e5}  
+7. e5 {[%eval +0.18]}  dxe5 {[%eval +0.67]}  (7... Nxe5 8. Nxe5 dxe5 9. Bxf7+ 
+$18) 8. Qxd8+ {[%eval +0.75]}  Nxd8 {[%eval +0.83]}  (8... Kxd8 9. Ng5 Na5 $1 
+(9... Kc7 10. Nxf7 Rg8 11. Nb5+ Kb6 (11... Kb8 12. Nxe5 Nxe5 13. Bf4 $18) 12. 
+Be3+ Ka5 13. a3 Nd5 14. b4+ Ka4 15. Bxd5 Kxb5 16. Nxe5 Nxe5 17. Bxg8 $18) 10. 
+Nxf7+ Ke8 11. Nxe5 Nxc4 12. Nxc4 Bf5 13. Be3 $11) 9. Nb5 {[%eval +0.78]}  Rb8 {[%eval +0.72]}  
+10. Nxe5 {[%eval +0.51]}  e6 {[%eval +0.64]}  11. Nc7+ {[%eval +0.50]}  Ke7 {[%eval +0.59]}  
+12. Be3 {[%eval +0.34][%cal Ye3c5,Ye3a7]}  Nc6 {[%eval +0.38]}  (12... Kd6 13. 
+Bf4 Kxc7 14. Nxf7+ Kb6 15. Nxd8 $2 {loses some advantage}  (15. Nxh8 Ra8 16. O-O 
+Bd7 17. Rac1 Rc8 18. Be2 Rxc1 19. Rxc1 Nd5 20. Bg5 Nc6 21. Nf7 $18) 15... Ra8 
+16. O-O Nd5 17. Nf7 Rg8 18. Be5) 13. O-O-O {[%eval +0.32]}  Nd7 $2 {[%bkm][%eval +1.13]}  
+(13... Ne4 14. Nxc6+ bxc6 15. f3 Rb7 16. fxe4 Rxc7 17. Rd3 Ke8 18. Rhd1 Be7 $14) 
+14. Nxf7 $1 {[%eval +1.26]}  Kxf7 {[%eval +1.42]}  15. Bxe6+ {[%eval +1.26]}  
+Kg6 {[%eval +1.25]}  16. Bxd7 {[%eval +1.31]}  Bxd7 {[%eval +1.35]}  17. Rxd7 {[%eval +1.35]}  
+Ne5 {[%eval +2.30]}  18. Rd5 {[%eval +2.21]}  Rc8 {[%eval +3.15]}  19. Rxe5 {[%eval +3.41]}  
+Rxc7+ {[%eval +3.58]}  20. Kb1 {[%eval +3.49]}  a6 {[%eval +3.58]}  21. Rd1 {[%eval +3.84]}  
+Kf7 {[%eval +4.44]}  22. Bb6 {[%eval +4.22]}  Re7 {[%eval +4.22]}  23. Rf5+ {[%eval +3.68]}  
+Ke6 {[%eval +5.32]}  24. Rxf8 {[%eval +4.08]}  Rxf8 {[%eval +4.06]}  25. Re1+ {[%eval +4.30]}  
+Kd7 {[%eval +4.35]}  26. Rxe7+ {[%eval +4.36]}  Kxe7 {[%eval +4.39]}  27. Bc5+ {[%eval +4.39]}  
+Ke8 {[%eval +4.40]}  28. Bxf8 {[%eval +4.42]}  Kxf8 {[%eval +4.40]}  29. Kc2 {[%eval +4.44]} 
+ 1-0
+
+
+
+[ChapterTitle "Gambit Declined"]
+[Guid "069cc3e6-01a3-421e-abd3-f1f5f1a033e4"]
+[ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "Gambit Declined"]
+
+
+ {[%eval +0.34]} 1. e4 c5 2. d4 cxd4 3. c3 Nf6 (3... d3 {[%eval +0.64]}  4. Bxd3 
+Nc6 5. c4 {[%ref 7b6a364a-d160-40ba-9a2f-aa464a45f93e]creating the Maroczy Bind} 
+ (5. f4 e5 6. Nf3 d6 7. O-O a6 8. Kh1 Be7 9. a3 Bd7 10. c4 exf4 11. Bxf4 Bg4 12. 
+Nc3 Nf6 13. Qc2 O-O 14. Rad1 Rc8 15. Be2 Nh5 16. Be3 h6 17. c5 Bxf3 18. Bxf3 g6 
+19. Bxh5 Bg5 20. Rxd6 gxh5) 5... g6 6. Nf3 Bg7 7. O-O d6 {[%cal Yc8g4]planing Bg4 to exchange Black's worst piece}  
+8. h3 Nf6 9. Nc3 O-O 10. Be3 $14)  (3... d5 {[%eval +0.31]}  4. exd5 Qxd5 5. 
+cxd4 e5 (5... Nc6 6. Nf3 e5 7. Nc3 Bb4 8. Bd2 Bxc3 9. Bxc3 exd4 (9... e4 10. Ne5 
+{[%cal Yf1c4,Yc4f7][%csl Rf7]}  Nxe5 11. dxe5 Ne7 12. Qe2 {[%cal Ya1d1]}  O-O 
+13. Rd1 Qc6 (13... Qxa2 14. Bb4 Qe6 15. Qxe4 Re8 16. Bb5 Nc6 17. O-O $14 {With White's powerful bishop pair} 
+) 14. Rd6 Qa4 15. b3 Qa3 {[%cal Ya3c1]}  16. Qd2 $14 {[%cal Yc3b4]} ) 10. Nxd4 
+Nf6 11. Qe2+ $14 {[%cal Ye1c1,Ya1d1]advantage of Bishop pair} ) 6. Nf3 {[%ref 4c769ba9-ddb7-417f-bc0e-b76bfee45eee]}  
+exd4 7. Qxd4 Nf6 8. Nc3 Qxd4 9. Nxd4 Bb4 10. Nb5 $14 {[%csl Rc7]} )  (3... e5 4. 
+Nf3 Nc6 5. Bc4 {[%ref e51d2c19-3df4-4338-afcd-575b11d42381]}  Nf6 6. Ng5 {[%csl Rf7]}  
+d5 7. exd5 Na5 8. Bb5+ Bd7 9. Qe2 {[%csl Re5]}  Bd6 10. b4 h6 11. Nf3 O-O 12. 
+bxa5 Bg4 13. h3 Bh5 14. g4 Bg6 15. cxd4 exd4 16. O-O Rc8 17. Ba3 Bxa3 (17... Rc2 
+18. Qd1 Bxa3 19. Nxa3 Rc3 20. Nb1 Rc5 21. a4 a6 22. Bd3 Nxd5 23. Bxg6 fxg6 24. 
+Nxd4 Nf4 25. Qb3+ Qd5 26. Kh2 $16) 18. Nxa3 a6 19. Bc4 Qxa5 20. Nb1 Rfe8 21. Qd2 
+Qc5 22. Bb3 d3 23. Qb2 Nxd5 24. Bxd5 Qxd5 25. Nbd2 Rc2 26. Qb4 $16)  (3... d6 4. 
+cxd4 Nf6 5. Nc3 g6 {[%ref 2082ffd5-b78a-4fe6-95d0-f3c25275e0a0]}  6. h3 Bg7 7. 
+Nf3 O-O 8. Bd3 $14) 4. e5 Nd5 5. Qxd4 e6 6. Nf3 {[%ref e4fa2a11-bc5f-4fda-9882-86b5bd94938b]}  
+Nc6 7. Qe4 f5 (7... d6 8. Bb5 Bd7 9. c4 Nc7 (9... Nb6 10. exd6 Bxd6 11. O-O a6 
+12. Rd1 axb5 13. Rxd6 bxc4 14. Nc3 $14 {With White's initiative}  Qe7 15. Bf4 
+O-O 16. Rad1 Rfd8 17. Ng5 {[%csl Rh7]}  f5 18. Qe3 Nd5 19. Nxd5 exd5 20. R1xd5 
+Qxe3) 10. exd6 Bxd6 11. O-O a6 12. Ba4 $14 {[%cal Yf1d1]} ) 8. Qe2 Qc7 9. g3 b5 
+10. Bg2 a5 11. O-O Be7 (11... Ba6 12. Nh4 {[%cal Ye2h5,Gg2d5,Gh4f5]}  b4 13. c4 
+g6 14. Nd2 $14) 12. Bg5 {Black's dark square weaknesses will be easier to attack when we exchange their dark-squared bishop}  
+Ba6 13. Bxe7 Ncxe7 14. Re1 $11 *
+
+[ContentType "Model Game"]
+[Event "Wch Blitz 5th"]
+[Round ""]
+[ECO ""]
+[Guid "e4fa2a11-bc5f-4fda-9882-86b5bd94938b"]
+[Date "2009.11.18"]
+[White "Mamedyarov, Shakhriyar"]
+[Black "Polgar, Judit"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+1. e4 {[%eval +0.28]}  c5 {[%eval +0.38]}  2. c3 {[%eval +0.12]}  Nf6 {[%eval +0.20]}  
+3. e5 {[%eval +0.12]}  Nd5 {[%eval +0.22]}  4. d4 {[%eval +0.12]}  e6 {[%eval +0.54]}  
+5. Nf3 {[%eval +0.36]}  cxd4 {[%eval +0.37]}  6. Qxd4 {[%eval -0.18]}  Nc6 {[%eval -0.21]}  
+7. Qe4 {[%eval -0.29]}  d6 {[%eval +0.19]}  8. Bb5 {[%eval -0.09]}  Bd7 {[%eval -0.08]}  
+9. c4 {[%eval 0.00]}  Nc7 {[%eval +0.16]}  10. exd6 {[%eval +0.15]}  Bxd6 {[%eval +0.26]}  
+11. O-O {[%eval +0.18]}  Nxb5 {[%eval +0.48]}  12. cxb5 {[%eval +0.55]}  Ne7 {[%eval +0.49]}  
+13. Nc3 {[%eval +0.41]}  Qb8 {[%bkm][%eval +2.44][%assm 1]}  14. Rd1 {[%eval +2.96]}  
+Bc7 {[%eval +4.96]}  15. Qd4 {[%eval +4.86]}  Qc8 {[%eval +6.33]}  16. Qxg7 {[%eval +6.37]}  
+Rg8 {[%eval +6.74]}  17. Qxh7 {[%eval +7.10]}  e5 {[%eval +9.32]}  18. Ne4 {[%eval +10.43]}  
+Rg6 {[%eval +10.80]}  19. Nh4 {[%eval +12.17]}  Bf5 {[%eval +#9]}  20. Nxg6 {[%eval +#8]}  
+Nxg6 {[%eval +#8]}  21. Qg8+ {[%eval +#7]}  Nf8 {[%eval +#7]}  22. Bh6 {[%eval +#6]}  
+Ke7 {[%eval +#4]}  23. Qg5+ {[%eval +#3]}  1-0
+
+[ContentType "Model Game"]
+[Event "Gothenburg Manhem-A"]
+[Round ""]
+[ECO ""]
+[Guid "7b6a364a-d160-40ba-9a2f-aa464a45f93e"]
+[Date "2013.08.11"]
+[White "Berg, Emanuel"]
+[Black "Blomqvist, Erik"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+1. e4 {[%eval +0.25]}  c5 {[%eval +0.35]}  2. d4 {[%eval +0.08]}  cxd4 {[%eval +0.10]}  
+3. c3 {[%eval -0.18]}  d3 {[%eval +0.67]}  4. Bxd3 {[%eval +0.62]}  Nc6 {[%eval +0.61]}  
+5. c4 {[%eval +0.60]}  g6 {[%eval +0.92]}  6. Nf3 {[%eval +0.46]}  Bg7 {[%eval +0.42]}  
+7. O-O {[%eval +0.45]}  d6 {[%eval +0.47]}  8. h3 {[%eval +0.49]}  Nf6 {[%eval +0.48]}  
+9. Nc3 {[%eval +0.40]}  Nd7 {[%eval +0.45]}  10. Nd5 {[%eval +0.07]}  O-O {[%eval +0.29]}  
+11. Rb1 {[%eval +0.21]}  e6 {[%eval +0.30]}  12. Ne3 {[%eval -0.28]}  a5 {[%eval -0.26]}  
+13. Bc2 {[%eval -0.28]}  Nc5 {[%eval -0.24]}  14. a3 {[%eval -0.27]}  f5 {[%eval +0.50]}  
+15. exf5 {[%eval +0.46]}  gxf5 {[%eval +0.54]}  16. b4 {[%eval +0.52]}  axb4 {[%eval +0.58]}  
+17. axb4 {[%eval +0.62]}  Ne4 {[%eval +0.67]}  18. Bxe4 {[%eval -0.23]}  fxe4 {[%eval -0.25]}  
+19. Nh2 {[%eval -0.57]}  d5 {[%eval +0.07]}  20. cxd5 {[%eval +0.04]}  exd5 {[%eval +0.08]}  
+21. b5 {[%eval -0.82]}  Ne7 {[%eval -0.82]}  22. Bb2 {[%eval -0.96]}  d4 {[%eval -0.78]}  
+23. Qb3+ {[%eval -0.85]}  Kh8 {[%eval +0.29]}  24. Rbd1 {[%eval +0.18]}  Qd6 {[%bkm][%eval +2.05]}  
+25. Rxd4 {[%eval +2.25]}  Bxd4 {[%eval +2.31]}  26. Rd1 {[%eval +2.18]}  Qe6 {[%eval +2.39]}  
+27. Bxd4+ {[%eval +2.59]}  Kg8 {[%eval +2.62]}  28. Nhg4 {[%eval +0.73]}  h5 {[%eval +0.87]}  
+29. Qxe6+ {[%eval +0.88]}  Bxe6 {[%eval +1.20]}  30. Nf6+ {[%eval +0.89]}  Kf7 {[%eval +1.19]}  
+31. Nxe4 {[%eval +1.08]}  Bb3 {[%eval +1.06]}  32. Rd3 {[%eval 0.00]}  Ba4 {[%eval +2.48][%assm 1]}  
+33. Nd6+ {[%eval +1.81]}  Ke6 {[%eval +2.30]}  34. Nxb7 {[%eval +0.64]}  Bxb5 {[%eval +0.61]}  
+35. Nc5+ {[%eval +0.44]}  Kf7 {[%eval +0.48]}  36. Rb3 {[%eval +0.38]}  Bc6 {[%eval +0.96]}  
+37. Nc4 {[%eval +0.64]}  Bd5 {[%eval +4.22][%assm 1]}  38. Nd6+ {[%eval +4.85]}  
+Kg6 {[%eval +4.71]}  39. Rg3+ {[%eval +5.02]}  Kh6 {[%eval +5.13]}  40. Bg7+ {[%eval +5.09]}  
+Kh7 {[%eval +5.20]}  41. Nd7 {[%eval +5.19]}  Rf4 {[%eval +5.26]}  42. Be5 {[%eval +4.25]} 
+ 1-0
+
+[ContentType "Model Game"]
+[Event "ITA-chT"]
+[Round ""]
+[ECO ""]
+[Guid "4c769ba9-ddb7-417f-bc0e-b76bfee45eee"]
+[Date "1995.??.??"]
+[White "Manca, Federico"]
+[Black "Ortega, Lexy"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+1. e4 {[%eval +0.33]}  c5 {[%eval +0.41]}  2. c3 {[%eval +0.18]}  d5 {[%eval +0.25]}  
+3. exd5 {[%eval +0.27]}  Qxd5 {[%eval +0.28]}  4. d4 {[%eval +0.27]}  e5 {[%eval +0.65]}  
+5. Nf3 {[%eval +0.29]}  cxd4 {[%eval +0.34]}  6. cxd4 {[%eval +0.32]}  Nc6 {[%eval +0.32]}  
+7. Nc3 {[%eval +0.34]}  Bb4 {[%eval +0.35]}  8. Bd2 {[%eval +0.36]}  Bxc3 {[%eval +0.39]}  
+9. Bxc3 {[%eval +0.31]}  e4 {[%eval +0.38]}  10. Ne5 {[%eval +0.30]}  Nxe5 {[%eval +0.31]}  
+11. dxe5 {[%eval +0.32]}  Ne7 {[%eval +0.35]}  12. Qe2 {[%eval +0.36]}  Nf5 {[%bkm][%eval +1.87]}  
+13. Qb5+ {[%eval +0.99]}  Qxb5 {[%eval +1.13]}  14. Bxb5+ {[%eval +0.99]}  Bd7 {[%eval +0.99]}  
+15. Bxd7+ {[%eval +1.00]}  Kxd7 {[%eval +1.18]}  16. O-O-O+ {[%eval +1.15]}  Ke6 
+{[%eval +1.20]}  17. g4 {[%eval +1.14]}  Nh4 {[%eval +1.13]}  18. Rhe1 {[%eval +0.98]}  
+Rad8 {[%eval +0.70]}  19. Rxe4 {[%eval +0.95]}  Rxd1+ {[%eval +0.76]}  20. Kxd1 {[%eval +0.74]}  
+h5 {[%eval +0.79]}  21. h3 {[%eval +0.86]}  Nf3 {[%eval +0.88]}  22. Re3 {[%eval +0.67]}  
+hxg4 {[%eval +0.57]}  23. hxg4 {[%eval +0.62]}  Rd8+ {[%eval +0.65]}  24. Ke2 {[%eval +0.70]}  
+Nd4+ {[%eval +0.62]}  25. Kf1 {[%eval +0.68]}  Nb5 {[%eval +0.84]}  26. f4 {[%eval +0.86]}  
+g6 {[%eval +0.94]}  27. Ke2 {[%eval +0.59]}  Nxc3+ {[%eval +1.00]}  28. bxc3 {[%eval +0.21]}  
+Rh8 {[%eval +0.16]}  29. Kf3 {[%eval +0.15]}  Rc8 {[%eval +0.20]}  30. Kg3 {[%eval +0.17]}  
+Rc4 {[%eval +0.15]}  31. Rf3 {[%eval +0.07]}  Ra4 {[%eval +0.10]}  32. Rf2 {[%eval +0.08]}  
+Rc4 {[%eval +0.14]}  33. Kh4 {[%eval +0.09]}  Rxc3 {[%eval +0.32]}  34. Kg5 {[%eval +0.21]}  
+b5 {[%eval +0.24]}  35. Rd2 {[%eval +0.10]}  Rc6 {[%eval +1.59]}  36. Rd8 {[%eval +1.59]}  
+Ke7 {[%eval +3.63][%assm 1]}  37. Rb8 {[%eval +3.68]}  a6 {[%eval +4.28]}  38. 
+Rb7+ {[%eval +3.65]}  Kf8 {[%eval +4.67]}  39. Kh6 {[%eval +2.59][%assm 1]}  Rc2 
+{[%eval +4.24]}  40. Rb8+ {[%eval +4.39]}  Ke7 {[%eval +4.45]}  41. Kg7 {[%eval +4.61]}  
+Rxa2 {[%eval +4.64]}  42. Rb7+ {[%eval +4.82]}  Ke6 {[%eval +4.59]}  43. Rxf7 {[%eval +4.24]}  
+g5 {[%eval +5.09]}  44. Rf6+ {[%eval +5.67]}  Kd5 {[%eval +5.94]}  45. e6 {[%eval +6.27]}  
+Re2 {[%eval +6.37]}  46. f5 {[%eval +5.60]}  b4 {[%eval +5.93]}  47. Kf8 {[%eval +6.01]}  
+b3 {[%eval +6.42]}  48. e7 {[%eval +6.43]}  Kc5 {[%eval +6.29]}  49. Re6 {[%eval +6.43]}  
+Rxe6 {[%eval +6.99]}  50. fxe6 {[%eval +9.19]}  b2 {[%eval +10.87]}  51. e8=Q {[%eval +11.71]}  
+b1=Q {[%eval +33.36]}  52. e7 {[%eval +34.70]}  Qb4 {[%eval +35.92]}  53. Qf7 {[%eval +35.21]} 
+ 1-0
+
+[ContentType "Model Game"]
+[Event "ch-IRI SF 2017"]
+[Round ""]
+[ECO ""]
+[Guid "e51d2c19-3df4-4338-afcd-575b11d42381"]
+[Date "2017.11.06"]
+[White "Mosadeghpour, Masoud"]
+[Black "Javanbakht, N."]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+1. e4 {[%eval +0.27]}  c5 {[%eval +0.35]}  2. Nf3 {[%eval +0.29]}  Nc6 {[%eval +0.34]}  
+3. d4 {[%eval +0.32]}  cxd4 {[%eval +0.39]}  4. c3 {[%eval -0.25]}  e5 {[%eval +0.19]}  
+5. Bc4 {[%eval -0.07]}  Be7 {[%eval +0.75]}  6. Qb3 {[%eval +0.07]}  Na5 {[%eval +0.19]}  
+7. Bxf7+ {[%eval 0.00]}  Kf8 {[%eval -0.05]}  8. Qb5 {[%eval -0.05]}  a6 {[%eval -0.02]}  
+(8... Kxf7 9. Nxe5+ Ke8 10. Qd5 Qb6 11. Qf7+ Kd8 12. Qxg7 Qf6 13. Qxh8 Qxh8 14. 
+Nf7+ Ke8 15. Nxh8 $16) 9. Qxe5 {[%eval 0.00]}  d6 {[%eval 0.00]}  10. Qf4 {[%eval -0.05]}  
+g5 {[%eval +0.06]}  11. Nxg5 {[%eval +0.10]}  Bxg5 {[%eval -0.05]}  12. Qxg5 {[%eval -0.01]}  
+Qxg5 {[%eval 0.00]}  13. Bxg5 {[%eval -0.07]}  Kxf7 {[%eval -0.07]}  14. cxd4 {[%eval -0.02]}  
+Nf6 {[%eval +0.29]}  15. Bxf6 {[%eval -0.25]}  Kxf6 {[%eval -0.14]}  16. Nc3 {[%eval -0.14]}  
+Rg8 {[%eval +1.15]}  17. Nd5+ {[%eval +0.95]}  Kf7 {[%eval +0.98]}  18. Nb6 {[%eval +0.89]}  
+Rb8 {[%eval +0.98]}  19. Rc1 {[%eval +1.02]}  Nc6 {[%eval +0.94]}  20. d5 {[%eval +0.88]}  
+Ne5 {[%eval +1.91]}  21. Rc7+ {[%eval +1.80]}  Kf6 {[%eval +1.93]}  22. Ke2 {[%eval +1.51]}  
+Bg4+ {[%eval +1.83]}  23. Ke3 {[%eval +1.83]}  Bh5 {[%eval +2.41]}  24. f4 {[%eval +2.39]}  
+Ng4+ {[%eval +2.78]}  25. Kd4 {[%eval +2.79]}  Rbe8 {[%eval +2.99]}  26. Nd7+ {[%eval +2.27]}  
+Kg6 {[%eval +2.58]}  27. h3 {[%eval +2.29]}  Rg7 {[%eval +5.10][%assm 1]}  28. 
+hxg4 {[%eval +5.05]}  Bxg4 {[%eval +5.07]}  29. f5+ {[%eval +5.02]}  Kg5 {[%eval +5.18]}  
+30. Nf6 {[%eval +5.30]}  Rxc7 {[%eval +5.30]}  31. Nxe8 {[%eval +5.35]}  Rd7 {[%eval +5.34]}  
+32. f6 {[%eval +5.14]}  Kg6 {[%eval +5.53]}  33. e5 {[%eval +5.60]}  dxe5+ {[%eval +5.57]}  
+34. Kxe5 {[%eval +5.63]}  Rf7 {[%eval +5.87]}  35. Nd6 {[%eval +5.42]}  Rf8 {[%eval +5.76]}  
+(35... Rxf6 36. Rh6+ Kxh6 37. Kxf6 Bd7 38. Nxb7 Kh5 39. Nc5 Bb5 40. b4 Bf1 41. 
+d6 $18) 36. f7 {[%eval +6.04]}  h5 {[%eval +6.22]}  37. Rf1 {[%eval +6.33]}  b5 {[%eval +7.20]}  
+38. Rf6+ {[%eval +7.27]}  Kg7 {[%eval +7.66]}  39. Ne8+ {[%eval +8.18]}  Kh7 {[%eval +8.16]}  
+40. Kd6 {[%eval +8.13]}  1-0
+
+[ContentType "Model Game"]
+[Event "Dos Hermanas Internet f 4th"]
+[Round ""]
+[ECO ""]
+[Guid "2082ffd5-b78a-4fe6-95d0-f3c25275e0a0"]
+[Date "2003.03.21"]
+[White "Grischuk, Alexander"]
+[Black "Mamedov, Rauf"]
+[WhiteElo ""]
+[BlackElo ""]
+[Result "1-0"]
+
+
+1. e4 {[%eval +0.28]}  c5 {[%eval +0.36]}  2. c3 {[%eval +0.15]}  d6 {[%eval +0.65]}  
+3. d4 {[%eval +0.64]}  cxd4 {[%eval +0.93]}  4. cxd4 {[%eval +0.74]}  Nf6 {[%eval +0.78]}  
+5. Nc3 {[%eval +0.77]}  g6 {[%eval +0.77]}  6. Nf3 {[%eval +0.74]}  Bg7 {[%eval +0.78]}  
+7. h3 {[%eval +0.66]}  O-O {[%eval +0.70]}  8. Bd3 {[%eval +0.57]}  Nc6 {[%eval +0.90]}  
+9. O-O {[%eval +0.69]}  e5 {[%eval +0.64]}  10. Be3 {[%eval +0.20]}  exd4 {[%eval +0.11]}  
+11. Nxd4 {[%eval +0.15]}  Ng4 {[%eval +1.25]}  12. hxg4 {[%eval +1.06]}  Nxd4 {[%eval +1.11]}  
+13. Be2 {[%eval +0.33]}  Nxe2+ {[%eval +0.38]}  14. Qxe2 {[%eval +0.33]}  Qh4 {[%eval +0.31]}  
+15. g5 {[%eval +0.24]}  Re8 {[%eval +0.41]}  16. Rfd1 {[%eval -0.71]}  Be5 {[%eval -1.18]}  
+17. f3 {[%eval -0.93]}  Qh2+ {[%eval -1.01]}  18. Kf1 {[%eval -1.04]}  Qh1+ {[%eval -0.99]}  
+19. Kf2 {[%eval -1.00]}  Qh4+ {[%eval -0.90]}  20. Kg1 {[%eval -0.91]}  Be6 {[%eval -0.71]}  
+21. Nd5 {[%eval -1.30]}  Qh2+ {[%eval -1.15]}  22. Kf1 {[%eval -1.05]}  Rac8 {[%eval -0.45]}  
+23. Qf2 {[%eval -1.21]}  Bxd5 {[%eval -1.10]}  24. Rxd5 {[%eval -1.16]}  Bg3 {[%eval -1.02]}  
+25. Qe2 {[%eval -3.05][%assm 1]}  Rc6 {[%eval -2.78]}  26. Rad1 {[%eval -2.99]}  
+Rec8 {[%eval -3.15]}  27. R5d3 {[%eval -5.48][%assm 1]}  b6 {[%eval -2.97][%assm 1]}  
+28. a3 {[%eval -5.57][%assm 1]}  Qh1+ {[%eval -5.78]}  29. Bg1 {[%eval -5.77]}  
+Rc2 {[%eval -5.66]}  30. R3d2 {[%eval -5.66]}  R2c5 {[%eval -3.46][%assm 1]}  
+31. Qe3 {[%eval -3.53]}  Rc2 {[%eval -1.27][%assm 1]}  32. Qe2 {[%eval -5.66][%assm 1]}  
+R2c6 {[%eval -3.39][%assm 1]}  33. Qe3 {[%eval -3.40]}  Qh4 {[%eval -1.47]}  34. 
+Bf2 {[%eval -1.43]}  Bxf2 {[%eval -1.40]}  35. Qxf2 {[%eval -1.51]}  Qxg5 {[%eval -1.47]}  
+36. Qd4 {[%eval -2.03]}  Qh4 {[%eval -0.96]}  37. Qf2 {[%eval -1.35]}  Qg5 {[%eval -1.33]}  
+38. Qd4 {[%eval -1.93]}  Qe7 {[%eval -0.73]}  39. Kg1 {[%eval -1.25]}  h5 {[%eval -1.05]}  
+40. b4 {[%eval -1.32]}  Rc3 {[%eval -0.66]}  41. Qxd6 {[%eval -0.64]}  Qxd6 {[%eval -0.67]}  
+42. Rxd6 {[%eval -0.76]}  Rxa3 {[%eval -0.75]}  43. R1d2 {[%eval -0.72]}  Ra4 {[%eval 0.00]}  
+44. R6d4 {[%eval -0.57]}  Rc1+ {[%eval -0.64]}  45. Kh2 {[%eval -0.62]}  Rb1 {[%eval 0.00]}  
+46. Rc2 {[%eval 0.00]}  Rbxb4 {[%eval 0.00]}  47. Rd8+ {[%eval 0.00]}  Kg7 {[%eval 0.00]}  
+48. Rc7 {[%eval 0.00]}  Rc4 {[%eval +0.07]}  49. Rb7 {[%eval 0.00]}  Rc6 {[%eval +0.07]}  
+50. Rdd7 {[%eval 0.00]}  Rf6 {[%eval +0.19]}  51. e5 {[%eval +0.17]}  Re6 {[%eval +2.67][%assm 1]}  
+52. Rxf7+ {[%eval +2.99]}  Kh6 {[%eval +4.54]}  53. f4 {[%eval +4.60]}  g5 {[%eval +37.18][%assm 1]}  
+54. f5 {[%eval +#12]}  1-0
+
+
+
