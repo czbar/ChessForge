@@ -811,8 +811,7 @@ namespace ChessForge
                 if (_dictNodeToRun.ContainsKey(nodeId))
                 {
                     Run target = _dictNodeToRun[nodeId];
-                    // we don't want any handling of letf/right button so fake it to Middle
-                    SelectRun(target, 1, MouseButton.Middle);
+                    SelectRun(target, 1, e.ChangedButton);
                     BringSelectedRunIntoView();
                 }
             }
