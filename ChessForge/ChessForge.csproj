@@ -131,6 +131,9 @@
     <Compile Include="CommentBeforeMoveDialog.xaml.cs">
       <DependentUpon>CommentBeforeMoveDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ConfirmUndoDialog.xaml.cs">
+      <DependentUpon>ConfirmUndoDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ContentTypeListItem.cs" />
     <Compile Include="CopyPasteMoves.cs" />
     <Compile Include="CustomCommands.cs" />
@@ -385,6 +388,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CommentBeforeMoveDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ConfirmUndoDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
