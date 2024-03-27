@@ -270,6 +270,10 @@ namespace GameTree
                 {
                     nd.Comment = string.Empty;
                 }
+                if (!string.IsNullOrEmpty(nd.CommentBeforeMove))
+                {
+                    nd.CommentBeforeMove = string.Empty;
+                }
                 if (!string.IsNullOrEmpty(nd.Nags))
                 {
                     nd.Nags = string.Empty;
@@ -1459,6 +1463,53 @@ namespace GameTree
                 nd.Parent.Children.Remove(nd);
                 nd.Parent.Children.Insert(origIndex, nd);
             }
+        }
+
+        /// <summary>
+        /// Undoes reordering of the lines.
+        /// </summary>
+        /// <param name="oParent"></param>
+        /// <param name="oChildren"></param>
+        public void UndoReorderLines(object oParent, object oChildren)
+        {
+            try
+            {
+                if (oParent is TreeNode oldParent && oChildren is List<TreeNode> oldChildren)
+                {
+                    // there may have been operations in the meantime so we need to check that the tree
+                    // is in the same state as before the operation so get the nodes by NodeId 
+                    TreeNode newParent = GetNodeFromNodeId(oldParent.NodeId);
+
+                    // Be careful here, as more often than not the old/new parents/children will be the same objects!
+
+                    // extra checks
+                    if (newParent.LastMoveAlgebraicNotation == oldParent.LastMoveAlgebraicNotation
+                        && newParent.MoveNumber == oldParent.MoveNumber
+                        && newParent.Children.Count == oldParent.Children.Count)
+                    {
+                        bool proceed = true;
+                        // get old node ids and compare to the current ones
+                        foreach (TreeNode child in oldChildren)
+                        {
+                            if (newParent.Children.FirstOrDefault(x => x.NodeId == child.NodeId) == null)
+                            {
+                                proceed = false;
+                                break;
+                            }
+                        }
+
+                        if (proceed)
+                        {
+                            for (int i = 0; i < oldChildren.Count; i++)
+                            {
+                                TreeNode newChild = GetNodeFromNodeId(oldChildren[i].NodeId);
+                                newParent.Children[i] = newChild;
+                            }
+                        }
+                    }
+                }
+            }
+            catch { }
         }
 
         /// <summary>

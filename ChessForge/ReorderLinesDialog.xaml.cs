@@ -22,6 +22,9 @@ namespace ChessForge
         // maps move text to TreeNode
         private Dictionary<string, TreeNode> _dictMoveToNode = new Dictionary<string, TreeNode>();
 
+        // set upon exit if the order was indeed changed.
+        public bool HasChanged = false;
+
         /// <summary>
         /// Creates the dialog and populates the list of moves. 
         /// </summary>
@@ -47,14 +50,22 @@ namespace ChessForge
         /// <summary>
         /// Reorders the children on OK exit.
         /// </summary>
-        private void ReorderChildren()
+        private bool ReorderChildren()
         {
+            bool changed = false;
+
             for (int i = 0; i < UiLbLines.Items.Count; i++) 
             {
                 object item = UiLbLines.Items[i];
                 string itemText = item.ToString();
+                if (!changed && _node.Children[i] != _dictMoveToNode[itemText])
+                {
+                    changed = true;
+                }
                 _node.Children[i] = _dictMoveToNode[itemText];
             }
+
+            return changed;
         }
 
         /// <summary>
@@ -65,7 +76,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnOk_Click(object sender, RoutedEventArgs e)
         {
-            ReorderChildren();
+            HasChanged = ReorderChildren();
             DialogResult = true;
         }
 

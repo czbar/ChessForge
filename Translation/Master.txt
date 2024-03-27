@@ -2744,6 +2744,102 @@ TooltipDubiousMove=Dubious move
 
 ##################################
 #
+# Header: OPERATIONS
+#
+
+
+#Confirm Undo dialog title
+DlgConfirmUndo=Confirm
+
+#Operation Details
+OperationDetails=Details 
+
+#Operation
+OpUnknown=Unknown Operation
+
+#Operation
+OpDeleteChapter=Delete Chapter
+
+#Operation
+OpDeleteChapters=Delete Chapters
+
+#Operation
+OpMergeChapters=Merge Chapters
+
+#Operation
+OpSplitChapter=Split Chapter
+
+#Operation
+OpCreateChapter=Create Chapter
+
+#Operation
+OpRenameChapter=Rename Chapter
+
+#Operation
+OpCreateArticle=Create 
+
+#Operation
+OpCreateGame=Create Game
+
+#Operation
+OpCreateExercise=Create Exercise
+
+#Operation
+OpDeleteGame=Delete Game
+
+#Operation
+OpDeleteGames=Delete Games
+
+#Operation
+OpDeleteExercise=Delete Exercise
+
+#Operation
+OpDeleteExercises=Delete Exercises
+
+#Operation
+OpDeleteArticles=Delete Games/Exercises
+
+#Operation
+OpEditGameHeader=Edit Game Header 
+
+#Operation
+OpEditExerciseHeader=Edit Exercise Header
+
+#Operation
+OpMoveArticlesMultiChapter=Move Games/Exercises
+
+#Operation
+OpMoveArticles=Move Games/Exercises
+
+#Operation
+OpCopyArticles=Copy Games/Exercises
+
+#Operation
+OpMoveGames=Move Games
+
+#Operation
+OpCopyGames=Copy Games
+
+#Operation
+OpMoveExercises=Move Exercises
+
+#Operation
+OpCopyExercises=Copy Exercises
+
+#Operation
+OpDeleteComments=Delete Comments
+
+#Operation
+OpDeleteEngineEvals=Delete Engine Evaluations
+
+#Operation
+OpAssignECOs=Assign ECO Codes
+
+
+
+
+##################################
+#
 # Header: Library exceptions
 #
 

@@ -1628,6 +1628,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Confirm.
+        /// </summary>
+        public static string DlgConfirmUndo {
+            get {
+                return ResourceManager.GetString("DlgConfirmUndo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit Move.
         /// </summary>
         public static string DlgEditMoveInIntro {
@@ -4626,6 +4635,177 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Assign ECO Codes.
+        /// </summary>
+        public static string OpAssignECOs {
+            get {
+                return ResourceManager.GetString("OpAssignECOs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy Games/Exercises.
+        /// </summary>
+        public static string OpCopyArticles {
+            get {
+                return ResourceManager.GetString("OpCopyArticles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy Exercises.
+        /// </summary>
+        public static string OpCopyExercises {
+            get {
+                return ResourceManager.GetString("OpCopyExercises", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy Games.
+        /// </summary>
+        public static string OpCopyGames {
+            get {
+                return ResourceManager.GetString("OpCopyGames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create .
+        /// </summary>
+        public static string OpCreateArticle {
+            get {
+                return ResourceManager.GetString("OpCreateArticle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create Chapter.
+        /// </summary>
+        public static string OpCreateChapter {
+            get {
+                return ResourceManager.GetString("OpCreateChapter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create Exercise.
+        /// </summary>
+        public static string OpCreateExercise {
+            get {
+                return ResourceManager.GetString("OpCreateExercise", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create Game.
+        /// </summary>
+        public static string OpCreateGame {
+            get {
+                return ResourceManager.GetString("OpCreateGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Games/Exercises.
+        /// </summary>
+        public static string OpDeleteArticles {
+            get {
+                return ResourceManager.GetString("OpDeleteArticles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Chapter.
+        /// </summary>
+        public static string OpDeleteChapter {
+            get {
+                return ResourceManager.GetString("OpDeleteChapter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Chapters.
+        /// </summary>
+        public static string OpDeleteChapters {
+            get {
+                return ResourceManager.GetString("OpDeleteChapters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Comments.
+        /// </summary>
+        public static string OpDeleteComments {
+            get {
+                return ResourceManager.GetString("OpDeleteComments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Engine Evaluations.
+        /// </summary>
+        public static string OpDeleteEngineEvals {
+            get {
+                return ResourceManager.GetString("OpDeleteEngineEvals", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Exercise.
+        /// </summary>
+        public static string OpDeleteExercise {
+            get {
+                return ResourceManager.GetString("OpDeleteExercise", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Exercises.
+        /// </summary>
+        public static string OpDeleteExercises {
+            get {
+                return ResourceManager.GetString("OpDeleteExercises", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Game.
+        /// </summary>
+        public static string OpDeleteGame {
+            get {
+                return ResourceManager.GetString("OpDeleteGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Games.
+        /// </summary>
+        public static string OpDeleteGames {
+            get {
+                return ResourceManager.GetString("OpDeleteGames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Exercise Header.
+        /// </summary>
+        public static string OpEditExerciseHeader {
+            get {
+                return ResourceManager.GetString("OpEditExerciseHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Game Header .
+        /// </summary>
+        public static string OpEditGameHeader {
+            get {
+                return ResourceManager.GetString("OpEditGameHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open.
         /// </summary>
         public static string Open {
@@ -4698,11 +4878,92 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Details .
+        /// </summary>
+        public static string OperationDetails {
+            get {
+                return ResourceManager.GetString("OperationDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Apply to the following:.
         /// </summary>
         public static string OperationScope {
             get {
                 return ResourceManager.GetString("OperationScope", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Merge Chapters.
+        /// </summary>
+        public static string OpMergeChapters {
+            get {
+                return ResourceManager.GetString("OpMergeChapters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move Games/Exercises.
+        /// </summary>
+        public static string OpMoveArticles {
+            get {
+                return ResourceManager.GetString("OpMoveArticles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move Games/Exercises.
+        /// </summary>
+        public static string OpMoveArticlesMultiChapter {
+            get {
+                return ResourceManager.GetString("OpMoveArticlesMultiChapter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move Exercises.
+        /// </summary>
+        public static string OpMoveExercises {
+            get {
+                return ResourceManager.GetString("OpMoveExercises", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move Games.
+        /// </summary>
+        public static string OpMoveGames {
+            get {
+                return ResourceManager.GetString("OpMoveGames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rename Chapter.
+        /// </summary>
+        public static string OpRenameChapter {
+            get {
+                return ResourceManager.GetString("OpRenameChapter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Split Chapter.
+        /// </summary>
+        public static string OpSplitChapter {
+            get {
+                return ResourceManager.GetString("OpSplitChapter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown Operation.
+        /// </summary>
+        public static string OpUnknown {
+            get {
+                return ResourceManager.GetString("OpUnknown", resourceCulture);
             }
         }
         

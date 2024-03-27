@@ -2454,6 +2454,93 @@
   <data name="TooltipDubiousMove" xml:space="preserve">
     <value>Wątpliwe posunięcie</value>
   </data>
+  <data name="DlgConfirmUndo" xml:space="preserve">
+    <value>Potwierdź</value>
+  </data>
+  <data name="OperationDetails" xml:space="preserve">
+    <value>Szczegóły</value>
+  </data>
+  <data name="OpUnknown" xml:space="preserve">
+    <value>Akcja Nierozpoznana</value>
+  </data>
+  <data name="OpDeleteChapter" xml:space="preserve">
+    <value>Usuń Rozdział</value>
+  </data>
+  <data name="OpDeleteChapters" xml:space="preserve">
+    <value>Usuń Rozdziały</value>
+  </data>
+  <data name="OpMergeChapters" xml:space="preserve">
+    <value>Połącz Rozdziały</value>
+  </data>
+  <data name="OpSplitChapter" xml:space="preserve">
+    <value>Podziel Rozdział</value>
+  </data>
+  <data name="OpCreateChapter" xml:space="preserve">
+    <value>Utwórz Rozdział</value>
+  </data>
+  <data name="OpRenameChapter" xml:space="preserve">
+    <value>Zmień Nazwę Rozdziału</value>
+  </data>
+  <data name="OpCreateArticle" xml:space="preserve">
+    <value>Utwórz Partię/Ćwiczenie</value>
+  </data>
+  <data name="OpCreateGame" xml:space="preserve">
+    <value>Utwórz Partię</value>
+  </data>
+  <data name="OpCreateExercise" xml:space="preserve">
+    <value>Utwórz Ćwiczenie</value>
+  </data>
+  <data name="OpDeleteGame" xml:space="preserve">
+    <value>Usuń Partię</value>
+  </data>
+  <data name="OpDeleteGames" xml:space="preserve">
+    <value>Usuń Partie</value>
+  </data>
+  <data name="OpDeleteExercise" xml:space="preserve">
+    <value>Usuń Ćwiczenie</value>
+  </data>
+  <data name="OpDeleteExercises" xml:space="preserve">
+    <value>Usuń Ćwiczenia</value>
+  </data>
+  <data name="OpDeleteArticles" xml:space="preserve">
+    <value>Usuń Partie/Ćwiczenia</value>
+  </data>
+  <data name="OpEditGameHeader" xml:space="preserve">
+    <value>Zmień Nagłówek Partii </value>
+  </data>
+  <data name="OpEditExerciseHeader" xml:space="preserve">
+    <value>Zmień Nagłówek Ćwiczenia</value>
+  </data>
+  <data name="OpMoveArticlesMultiChapter" xml:space="preserve">
+    <value>Przesuń Partie/Ćwiczenia</value>
+  </data>
+  <data name="OpMoveArticles" xml:space="preserve">
+    <value>Move Przesuń Partie/Ćwiczenia</value>
+  </data>
+  <data name="OpCopyArticles" xml:space="preserve">
+    <value>Kopiuj Partie/Ćwiczenia</value>
+  </data>
+  <data name="OpMoveGames" xml:space="preserve">
+    <value>Przesuń Partie</value>
+  </data>
+  <data name="OpCopyGames" xml:space="preserve">
+    <value>Kopiuj Partie</value>
+  </data>
+  <data name="OpMoveExercises" xml:space="preserve">
+    <value>Przesuń Ćwiczenia</value>
+  </data>
+  <data name="OpCopyExercises" xml:space="preserve">
+    <value>Kopiuj Ćwiczenia</value>
+  </data>
+  <data name="OpDeleteComments" xml:space="preserve">
+    <value>Usuń Komentarze</value>
+  </data>
+  <data name="OpDeleteEngineEvals" xml:space="preserve">
+    <value>Usuń Oceny Silnika</value>
+  </data>
+  <data name="OpAssignECOs" xml:space="preserve">
+    <value>Przypisz Kody ECO</value>
+  </data>
   <data name="PgnMissingMoveAfter" xml:space="preserve">
     <value>Brakuje ruchu po</value>
   </data>

@@ -3523,6 +3523,131 @@ TooltipDubiousMove=Wątpliwe posunięcie
 
 ##################################
 #
+# Header: OPERATIONS
+#
+
+
+#description: Confirm Undo dialog title
+#english: DlgConfirmUndo=Confirm
+DlgConfirmUndo=Potwierdź
+
+#description: Operation Details
+#english: OperationDetails=Details 
+OperationDetails=Szczegóły
+
+#description: Operation
+#english: OpUnknown=Unknown Operation
+OpUnknown=Akcja Nierozpoznana
+
+#description: Operation
+#english: OpDeleteChapter=Delete Chapter
+OpDeleteChapter=Usuń Rozdział
+
+#description: Operation
+#english: OpDeleteChapters=Delete Chapters
+OpDeleteChapters=Usuń Rozdziały
+
+#description: Operation
+#english: OpMergeChapters=Merge Chapters
+OpMergeChapters=Połącz Rozdziały
+
+#description: Operation
+#english: OpSplitChapter=Split Chapter
+OpSplitChapter=Podziel Rozdział
+
+#description: Operation
+#english: OpCreateChapter=Create Chapter
+OpCreateChapter=Utwórz Rozdział
+
+#description: Operation
+#english: OpRenameChapter=Rename Chapter
+OpRenameChapter=Zmień Nazwę Rozdziału
+
+#description: Operation
+#english: OpCreateArticle=Create 
+OpCreateArticle=Utwórz Partię/Ćwiczenie
+
+#description: Operation
+#english: OpCreateGame=Create Game
+OpCreateGame=Utwórz Partię
+
+#description: Operation
+#english: OpCreateExercise=Create Exercise
+OpCreateExercise=Utwórz Ćwiczenie
+
+#description: Operation
+#english: OpDeleteGame=Delete Game
+OpDeleteGame=Usuń Partię
+
+#description: Operation
+#english: OpDeleteGames=Delete Games
+OpDeleteGames=Usuń Partie
+
+#description: Operation
+#english: OpDeleteExercise=Delete Exercise
+OpDeleteExercise=Usuń Ćwiczenie
+
+#description: Operation
+#english: OpDeleteExercises=Delete Exercises
+OpDeleteExercises=Usuń Ćwiczenia
+
+#description: Operation
+#english: OpDeleteArticles=Delete Games/Exercises
+OpDeleteArticles=Usuń Partie/Ćwiczenia
+
+#description: Operation
+#english: OpEditGameHeader=Edit Game Header 
+OpEditGameHeader=Zmień Nagłówek Partii 
+
+#description: Operation
+#english: OpEditExerciseHeader=Edit Exercise Header
+OpEditExerciseHeader=Zmień Nagłówek Ćwiczenia
+
+#description: Operation
+#english: OpMoveArticlesMultiChapter=Move Games/Exercises
+OpMoveArticlesMultiChapter=Przesuń Partie/Ćwiczenia
+
+#description: Operation
+#english: OpMoveArticles=Move Games/Exercises
+OpMoveArticles=Move Przesuń Partie/Ćwiczenia
+
+#description: Operation
+#english: OpCopyArticles=Copy Games/Exercises
+OpCopyArticles=Kopiuj Partie/Ćwiczenia
+
+#description: Operation
+#english: OpMoveGames=Move Games
+OpMoveGames=Przesuń Partie
+
+#description: Operation
+#english: OpCopyGames=Copy Games
+OpCopyGames=Kopiuj Partie
+
+#description: Operation
+#english: OpMoveExercises=Move Exercises
+OpMoveExercises=Przesuń Ćwiczenia
+
+#description: Operation
+#english: OpCopyExercises=Copy Exercises
+OpCopyExercises=Kopiuj Ćwiczenia
+
+#description: Operation
+#english: OpDeleteComments=Delete Comments
+OpDeleteComments=Usuń Komentarze
+
+#description: Operation
+#english: OpDeleteEngineEvals=Delete Engine Evaluations
+OpDeleteEngineEvals=Usuń Oceny Silnika
+
+#description: Operation
+#english: OpAssignECOs=Assign ECO Codes
+OpAssignECOs=Przypisz Kody ECO
+
+
+
+
+##################################
+#
 # Header: Library exceptions
 #
 

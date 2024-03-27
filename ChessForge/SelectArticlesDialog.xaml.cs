@@ -818,7 +818,7 @@ namespace ChessForge
             int ivalTo;
             int.TryParse(UiTbToMove.Text, out ivalTo);
 
-            return ivalFrom <= ivalTo;
+            return ivalFrom <= ivalTo || ivalTo == 0;
         }
 
         /// <summary>

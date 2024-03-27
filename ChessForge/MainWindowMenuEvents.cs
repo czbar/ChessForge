@@ -539,69 +539,80 @@ namespace ChessForge
         {
             try
             {
-                WorkbookManager.SessionWorkbook.OpsManager.Undo(out WorkbookOperationType opType, out int selectedChapterIndex, out int selectedArticleIndex);
-                switch (opType)
+                WorkbookOperation op = WorkbookManager.SessionWorkbook.OpsManager.Peek();
+                if (op != null)
                 {
-                    case WorkbookOperationType.RENAME_CHAPTER:
-                        AppState.MainWin.ActiveTreeView?.BuildFlowDocumentForVariationTree();
-                        _chaptersView.BuildFlowDocumentForChaptersView();
-                        break;
-                    case WorkbookOperationType.DELETE_CHAPTER:
-                    case WorkbookOperationType.CREATE_CHAPTER:
-                        _chaptersView.BuildFlowDocumentForChaptersView();
-                        if (AppState.ActiveTab != TabViewType.CHAPTERS)
+                    ConfirmUndoDialog dlg = new ConfirmUndoDialog(op);
+                    GuiUtilities.PositionDialog(dlg, this, 100);
+                    if (dlg.ShowDialog() == true)
+                    {
+                        if (WorkbookManager.SessionWorkbook.OpsManager.Undo(out WorkbookOperationType opType, out int selectedChapterIndex, out int selectedArticleIndex))
                         {
-                            UiTabChapters.Focus();
+                            switch (opType)
+                            {
+                                case WorkbookOperationType.RENAME_CHAPTER:
+                                    AppState.MainWin.ActiveTreeView?.BuildFlowDocumentForVariationTree();
+                                    _chaptersView.BuildFlowDocumentForChaptersView();
+                                    break;
+                                case WorkbookOperationType.DELETE_CHAPTER:
+                                case WorkbookOperationType.CREATE_CHAPTER:
+                                    _chaptersView.BuildFlowDocumentForChaptersView();
+                                    if (AppState.ActiveTab != TabViewType.CHAPTERS)
+                                    {
+                                        UiTabChapters.Focus();
+                                    }
+                                    AppState.DoEvents();
+                                    _chaptersView.BringChapterIntoViewByIndex(selectedChapterIndex);
+                                    break;
+                                case WorkbookOperationType.CREATE_ARTICLE:
+                                    if (AppState.ActiveTab == TabViewType.CHAPTERS)
+                                    {
+                                        _chaptersView.BuildFlowDocumentForChaptersView();
+                                    }
+                                    else
+                                    {
+                                        _chaptersView.IsDirty = true;
+                                        SelectModelGame(selectedArticleIndex, true);
+                                    }
+                                    break;
+                                case WorkbookOperationType.DELETE_MODEL_GAME:
+                                case WorkbookOperationType.DELETE_MODEL_GAMES:
+                                case WorkbookOperationType.DELETE_ARTICLES:
+                                case WorkbookOperationType.DELETE_CHAPTERS:
+                                case WorkbookOperationType.MERGE_CHAPTERS:
+                                case WorkbookOperationType.SPLIT_CHAPTER:
+                                    AppState.MainWin.ChaptersView.IsDirty = true;
+                                    GuiUtilities.RefreshChaptersView(null);
+                                    AppState.MainWin.UiTabChapters.Focus();
+                                    break;
+                                case WorkbookOperationType.DELETE_EXERCISE:
+                                case WorkbookOperationType.DELETE_EXERCISES:
+                                    _chaptersView.BuildFlowDocumentForChaptersView();
+                                    SelectExercise(selectedArticleIndex, AppState.ActiveTab != TabViewType.CHAPTERS);
+                                    break;
+                                case WorkbookOperationType.COPY_ARTICLES:
+                                case WorkbookOperationType.MOVE_ARTICLES:
+                                case WorkbookOperationType.MOVE_ARTICLES_MULTI_CHAPTER:
+                                    _chaptersView.IsDirty = true;
+                                    UiTabChapters.Focus();
+                                    break;
+                                case WorkbookOperationType.DELETE_COMMENTS:
+                                    AppState.MainWin.ActiveTreeView?.BuildFlowDocumentForVariationTree();
+                                    break;
+                                case WorkbookOperationType.DELETE_ENGINE_EVALS:
+                                    ActiveLine.RefreshNodeList();
+                                    break;
+                            }
+
+                            AppState.IsDirty = true;
                         }
-                        AppState.DoEvents();
-                        _chaptersView.BringChapterIntoViewByIndex(selectedChapterIndex);
-                        break;
-                    case WorkbookOperationType.CREATE_ARTICLE:
-                        if (AppState.ActiveTab == TabViewType.CHAPTERS)
-                        {
-                            _chaptersView.BuildFlowDocumentForChaptersView();
-                        }
-                        else
-                        {
-                            _chaptersView.IsDirty = true;
-                            SelectModelGame(selectedArticleIndex, true);
-                        }
-                        break;
-                    case WorkbookOperationType.DELETE_MODEL_GAME:
-                    case WorkbookOperationType.DELETE_MODEL_GAMES:
-                    case WorkbookOperationType.DELETE_ARTICLES:
-                    case WorkbookOperationType.DELETE_CHAPTERS:
-                    case WorkbookOperationType.MERGE_CHAPTERS:
-                    case WorkbookOperationType.SPLIT_CHAPTER:
-                        AppState.MainWin.ChaptersView.IsDirty = true;
-                        GuiUtilities.RefreshChaptersView(null);
-                        AppState.MainWin.UiTabChapters.Focus();
-                        break;
-                    case WorkbookOperationType.DELETE_EXERCISE:
-                    case WorkbookOperationType.DELETE_EXERCISES:
-                        _chaptersView.BuildFlowDocumentForChaptersView();
-                        SelectExercise(selectedArticleIndex, AppState.ActiveTab != TabViewType.CHAPTERS);
-                        break;
-                    case WorkbookOperationType.COPY_ARTICLES:
-                    case WorkbookOperationType.MOVE_ARTICLES:
-                    case WorkbookOperationType.MOVE_ARTICLES_MULTI_CHAPTER:
-                        _chaptersView.IsDirty = true;
-                        UiTabChapters.Focus();
-                        break;
-                    case WorkbookOperationType.DELETE_COMMENTS:
-                        AppState.MainWin.ActiveTreeView?.BuildFlowDocumentForVariationTree();
-                        break;
-                    case WorkbookOperationType.DELETE_ENGINE_EVALS:
-                        ActiveLine.RefreshNodeList();
-                        break;
+                    }
                 }
             }
             catch (Exception ex)
             {
                 AppLog.Message("UndoWorkbookOperation()", ex);
             }
-
-            AppState.IsDirty = true;
         }
 
         /// <summary>
@@ -3023,13 +3034,26 @@ namespace ChessForge
                 TreeNode nd = ActiveVariationTree.SelectedNode;
                 if (nd != null && nd.Parent != null)
                 {
+                    // create the operation before reordering but only push on the stack if performed
+                    List<TreeNode> lstChildrenOrder = new List<TreeNode>();
+                    foreach (TreeNode child in nd.Parent.Children)
+                    {
+                        lstChildrenOrder.Add(child);
+                    }
+
+                    EditOperation op = new EditOperation(EditOperation.EditType.REORDER_LINES, nd.Parent, lstChildrenOrder);
+
                     uint moveOffset = ActiveVariationTree.MoveNumberOffset;
                     ReorderLinesDialog dlg = new ReorderLinesDialog(nd.Parent, moveOffset);
                     {
                         GuiUtilities.PositionDialog(dlg, this, 100);
-                        if (dlg.ShowDialog() == true)
+                        if (dlg.ShowDialog() == true && dlg.HasChanged)
                         {
                             AppState.IsDirty = true;
+
+                            // push operation on the undo stack 
+                            ActiveVariationTree.OpsManager.PushOperation(op);
+
                             ActiveVariationTree.BuildLines();
                             ActiveTreeView.BuildFlowDocumentForVariationTree();
                             SelectLineAndMoveInWorkbookViews(ActiveTreeView, nd.LineId, ActiveLine.GetSelectedPlyNodeIndex(false), false);

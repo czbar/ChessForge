@@ -54,23 +54,41 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns the operation at the top of the stack.
+        /// </summary>
+        /// <returns></returns>
+        public WorkbookOperation Peek()
+        {
+            if (_operations.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                return _operations.Peek() as WorkbookOperation;
+            }
+        }
+
+        /// <summary>
         /// Performs the undo of the Operation in the queue.
         /// </summary>
-        public void Undo(out WorkbookOperationType tp, out int selectedChapterIndex, out int selectedArticleIndex)
+        public bool Undo(out WorkbookOperationType tp, out int selectedChapterIndex, out int selectedArticleIndex)
         {
+            bool done = false;
+
             tp = WorkbookOperationType.NONE;
             selectedChapterIndex = -1;
             selectedArticleIndex = -1;
             if (_operations.Count == 0)
             {
-                return;
+                return false;
             }
 
             try
             {
                 WorkbookOperation op = _operations.Pop() as WorkbookOperation;
+                done = true;
                 tp = op.OpType;
-
                 switch (tp)
                 {
                     case WorkbookOperationType.RENAME_CHAPTER:
@@ -173,6 +191,8 @@ namespace ChessForge
             catch
             {
             }
+
+            return done;
         }
 
     }
