@@ -3034,13 +3034,26 @@ namespace ChessForge
                 TreeNode nd = ActiveVariationTree.SelectedNode;
                 if (nd != null && nd.Parent != null)
                 {
+                    // create the operation before reordering but only push on the stack if performed
+                    List<TreeNode> lstChildrenOrder = new List<TreeNode>();
+                    foreach (TreeNode child in nd.Parent.Children)
+                    {
+                        lstChildrenOrder.Add(child);
+                    }
+
+                    EditOperation op = new EditOperation(EditOperation.EditType.REORDER_LINES, nd.Parent, lstChildrenOrder);
+
                     uint moveOffset = ActiveVariationTree.MoveNumberOffset;
                     ReorderLinesDialog dlg = new ReorderLinesDialog(nd.Parent, moveOffset);
                     {
                         GuiUtilities.PositionDialog(dlg, this, 100);
-                        if (dlg.ShowDialog() == true)
+                        if (dlg.ShowDialog() == true && dlg.HasChanged)
                         {
                             AppState.IsDirty = true;
+
+                            // push operation on the undo stack 
+                            ActiveVariationTree.OpsManager.PushOperation(op);
+
                             ActiveVariationTree.BuildLines();
                             ActiveTreeView.BuildFlowDocumentForVariationTree();
                             SelectLineAndMoveInWorkbookViews(ActiveTreeView, nd.LineId, ActiveLine.GetSelectedPlyNodeIndex(false), false);
