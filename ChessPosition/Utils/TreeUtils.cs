@@ -594,6 +594,7 @@ namespace ChessPosition
                 if (nd != null)
                 {
                     nd.Comment = attrs.Comment;
+                    nd.CommentBeforeMove = attrs.CommentBeforeMove;
                     nd.Nags = attrs.Nags;
                 }
             }
@@ -805,9 +806,9 @@ namespace ChessPosition
 
             foreach (TreeNode nd in tree.Nodes)
             {
-                if (!string.IsNullOrEmpty(nd.Comment) || !string.IsNullOrEmpty(nd.Nags))
+                if (!string.IsNullOrEmpty(nd.Comment) || !string.IsNullOrEmpty(nd.CommentBeforeMove) || !string.IsNullOrEmpty(nd.Nags))
                 {
-                    lst.Add(new MoveAttributes(nd.NodeId, nd.Comment, nd.Nags));
+                    lst.Add(new MoveAttributes(nd.NodeId, nd.Comment, nd.CommentBeforeMove, nd.Nags));
                 }
             }
 

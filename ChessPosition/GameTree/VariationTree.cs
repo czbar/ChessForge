@@ -270,6 +270,10 @@ namespace GameTree
                 {
                     nd.Comment = string.Empty;
                 }
+                if (!string.IsNullOrEmpty(nd.CommentBeforeMove))
+                {
+                    nd.CommentBeforeMove = string.Empty;
+                }
                 if (!string.IsNullOrEmpty(nd.Nags))
                 {
                     nd.Nags = string.Empty;

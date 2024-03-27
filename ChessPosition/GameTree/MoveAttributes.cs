@@ -25,10 +25,11 @@ namespace GameTree
         /// <param name="nodeId"></param>
         /// <param name="comment"></param>
         /// <param name="nags"></param>
-        public MoveAttributes(int nodeId, string comment, string nags) 
+        public MoveAttributes(int nodeId, string comment, string commentBeforeMove, string nags) 
         { 
             NodeId = nodeId;
             Comment = comment;
+            CommentBeforeMove = commentBeforeMove;
             Nags = nags;
         }
 
@@ -54,7 +55,12 @@ namespace GameTree
         /// Comment.
         /// </summary>
         public string Comment;
-        
+
+        /// <summary>
+        /// Comment before move 
+        /// </summary>
+        public string CommentBeforeMove;
+
         /// <summary>
         /// Nags string.
         /// </summary>
