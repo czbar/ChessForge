@@ -17,6 +17,7 @@ namespace GameTree
             NONE,
             DELETE_LINE,
             PROMOTE_LINE,
+            REORDER_LINES,
             ADD_MOVE,
             UPDATE_ANNOTATION,
             UPDATE_COMMENT_BEFORE_MOVE,
@@ -136,6 +137,10 @@ namespace GameTree
 
         /// <summary>
         /// Constructor for "other" operations.
+        /// 
+        /// REORDER_LINES: data_1 is the parent node, data_2 is the list of children
+        ///     in the original order List<TreeNde> 
+        ///     
         /// </summary>
         public EditOperation(EditType tp, object data_1, object data_2) : base()
         {
