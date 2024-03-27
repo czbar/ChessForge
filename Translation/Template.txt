@@ -3523,6 +3523,131 @@ TooltipDubiousMove=
 
 ##################################
 #
+# Header: OPERATIONS
+#
+
+
+#description: Confirm Undo dialog title
+#english: DlgConfirmUndo=Confirm
+DlgConfirmUndo=
+
+#description: Operation Details
+#english: OperationDetails=Details 
+OperationDetails=
+
+#description: Operation
+#english: OpUnknown=Unknown Operation
+OpUnknown=
+
+#description: Operation
+#english: OpDeleteChapter=Delete Chapter
+OpDeleteChapter=
+
+#description: Operation
+#english: OpDeleteChapters=Delete Chapters
+OpDeleteChapters=
+
+#description: Operation
+#english: OpMergeChapters=Merge Chapters
+OpMergeChapters=
+
+#description: Operation
+#english: OpSplitChapter=Split Chapter
+OpSplitChapter=
+
+#description: Operation
+#english: OpCreateChapter=Create Chapter
+OpCreateChapter=
+
+#description: Operation
+#english: OpRenameChapter=Rename Chapter
+OpRenameChapter=
+
+#description: Operation
+#english: OpCreateArticle=Create 
+OpCreateArticle=
+
+#description: Operation
+#english: OpCreateGame=Create Game
+OpCreateGame=
+
+#description: Operation
+#english: OpCreateExercise=Create Exercise
+OpCreateExercise=
+
+#description: Operation
+#english: OpDeleteGame=Delete Game
+OpDeleteGame=
+
+#description: Operation
+#english: OpDeleteGames=Delete Games
+OpDeleteGames=
+
+#description: Operation
+#english: OpDeleteExercise=Delete Exercise
+OpDeleteExercise=
+
+#description: Operation
+#english: OpDeleteExercises=Delete Exercises
+OpDeleteExercises=
+
+#description: Operation
+#english: OpDeleteArticles=Delete Games/Exercises
+OpDeleteArticles=
+
+#description: Operation
+#english: OpEditGameHeader=Edit Game Header 
+OpEditGameHeader=
+
+#description: Operation
+#english: OpEditExerciseHeader=Edit Exercise Header
+OpEditExerciseHeader=
+
+#description: Operation
+#english: OpMoveArticlesMultiChapter=Move Games/Exercises
+OpMoveArticlesMultiChapter=
+
+#description: Operation
+#english: OpMoveArticles=Move Games/Exercises
+OpMoveArticles=
+
+#description: Operation
+#english: OpCopyArticles=Copy Games/Exercises
+OpCopyArticles=
+
+#description: Operation
+#english: OpMoveGames=Move Games
+OpMoveGames=
+
+#description: Operation
+#english: OpCopyGames=Copy Games
+OpCopyGames=
+
+#description: Operation
+#english: OpMoveExercises=Move Exercises
+OpMoveExercises=
+
+#description: Operation
+#english: OpCopyExercises=Copy Exercises
+OpCopyExercises=
+
+#description: Operation
+#english: OpDeleteComments=Delete Comments
+OpDeleteComments=
+
+#description: Operation
+#english: OpDeleteEngineEvals=Delete Engine Evaluations
+OpDeleteEngineEvals=
+
+#description: Operation
+#english: OpAssignECOs=Assign ECO Codes
+OpAssignECOs=
+
+
+
+
+##################################
+#
 # Header: Library exceptions
 #
 

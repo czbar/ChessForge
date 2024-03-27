@@ -2455,6 +2455,93 @@
   <data name="TooltipDubiousMove" xml:space="preserve">
     <value>Dubious move</value>
   </data>
+  <data name="DlgConfirmUndo" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="OperationDetails" xml:space="preserve">
+    <value>Details </value>
+  </data>
+  <data name="OpUnknown" xml:space="preserve">
+    <value>Unknown Operation</value>
+  </data>
+  <data name="OpDeleteChapter" xml:space="preserve">
+    <value>Delete Chapter</value>
+  </data>
+  <data name="OpDeleteChapters" xml:space="preserve">
+    <value>Delete Chapters</value>
+  </data>
+  <data name="OpMergeChapters" xml:space="preserve">
+    <value>Merge Chapters</value>
+  </data>
+  <data name="OpSplitChapter" xml:space="preserve">
+    <value>Split Chapter</value>
+  </data>
+  <data name="OpCreateChapter" xml:space="preserve">
+    <value>Create Chapter</value>
+  </data>
+  <data name="OpRenameChapter" xml:space="preserve">
+    <value>Rename Chapter</value>
+  </data>
+  <data name="OpCreateArticle" xml:space="preserve">
+    <value>Create </value>
+  </data>
+  <data name="OpCreateGame" xml:space="preserve">
+    <value>Create Game</value>
+  </data>
+  <data name="OpCreateExercise" xml:space="preserve">
+    <value>Create Exercise</value>
+  </data>
+  <data name="OpDeleteGame" xml:space="preserve">
+    <value>Delete Game</value>
+  </data>
+  <data name="OpDeleteGames" xml:space="preserve">
+    <value>Delete Games</value>
+  </data>
+  <data name="OpDeleteExercise" xml:space="preserve">
+    <value>Delete Exercise</value>
+  </data>
+  <data name="OpDeleteExercises" xml:space="preserve">
+    <value>Delete Exercises</value>
+  </data>
+  <data name="OpDeleteArticles" xml:space="preserve">
+    <value>Delete Games/Exercises</value>
+  </data>
+  <data name="OpEditGameHeader" xml:space="preserve">
+    <value>Edit Game Header </value>
+  </data>
+  <data name="OpEditExerciseHeader" xml:space="preserve">
+    <value>Edit Exercise Header</value>
+  </data>
+  <data name="OpMoveArticlesMultiChapter" xml:space="preserve">
+    <value>Move Games/Exercises</value>
+  </data>
+  <data name="OpMoveArticles" xml:space="preserve">
+    <value>Move Games/Exercises</value>
+  </data>
+  <data name="OpCopyArticles" xml:space="preserve">
+    <value>Copy Games/Exercises</value>
+  </data>
+  <data name="OpMoveGames" xml:space="preserve">
+    <value>Move Games</value>
+  </data>
+  <data name="OpCopyGames" xml:space="preserve">
+    <value>Copy Games</value>
+  </data>
+  <data name="OpMoveExercises" xml:space="preserve">
+    <value>Move Exercises</value>
+  </data>
+  <data name="OpCopyExercises" xml:space="preserve">
+    <value>Copy Exercises</value>
+  </data>
+  <data name="OpDeleteComments" xml:space="preserve">
+    <value>Delete Comments</value>
+  </data>
+  <data name="OpDeleteEngineEvals" xml:space="preserve">
+    <value>Delete Engine Evaluations</value>
+  </data>
+  <data name="OpAssignECOs" xml:space="preserve">
+    <value>Assign ECO Codes</value>
+  </data>
   <data name="PgnMissingMoveAfter" xml:space="preserve">
     <value>Missing move after</value>
   </data>
