@@ -235,6 +235,7 @@
     <Compile Include="OperationScopeDialog.xaml.cs">
       <DependentUpon>OperationScopeDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PgnArticleUtils.cs" />
     <Compile Include="PlayerStats.cs" />
     <Compile Include="PositionBoardDragEvents.cs" />
     <Compile Include="PostCopyMoveDialog.xaml.cs">
