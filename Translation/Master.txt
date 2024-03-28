@@ -140,6 +140,9 @@ Bookmarks=Bookmarks
 #Copy
 Copy=Copy
 
+#Paste
+Paste=Paste
+
 #Move item
 MoveItem=Move
 
@@ -571,6 +574,9 @@ MsgEditPositionSearch=Positions not found. Edit search?
 
 #Message Box Title for Position Search
 MsgTitlePositionSearch=Position Search
+
+#Message: Clipboard contains PGN text
+MsgClipboardContainsPgn=Clipboard contains PGN text
 
 #Workbook Options dialog title
 DlgTitleWorkbookOptions=Workbook Options

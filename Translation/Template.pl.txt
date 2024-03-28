@@ -181,6 +181,10 @@ Bookmarks=Zakładki
 #english: Copy=Copy
 Copy=Kopiuj
 
+#description: Paste
+#english: Paste=Paste
+Paste=Wkleić
+
 #description: Move item
 #english: MoveItem=Move
 MoveItem=Przenieś
@@ -740,6 +744,10 @@ MsgEditPositionSearch=Pozycki nie znaleziono. Wrócić do edycji?
 #description: Message Box Title for Position Search
 #english: MsgTitlePositionSearch=Position Search
 MsgTitlePositionSearch=Wyszukiwanie Pozycji
+
+#description: Message: Clipboard contains PGN text
+#english: MsgClipboardContainsPgn=Clipboard contains PGN text
+MsgClipboardContainsPgn=Schowek zawiera tekst PGN
 
 #description: Workbook Options dialog title
 #english: DlgTitleWorkbookOptions=Workbook Options

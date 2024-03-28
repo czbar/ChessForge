@@ -4139,6 +4139,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clipboard contains PGN text.
+        /// </summary>
+        public static string MsgClipboardContainsPgn {
+            get {
+                return ResourceManager.GetString("MsgClipboardContainsPgn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete all evaluations in this view?.
         /// </summary>
         public static string MsgConfirmDeleteEngineEvals {
@@ -5000,6 +5009,15 @@ namespace ChessForge.Properties {
         public static string Page0of0 {
             get {
                 return ResourceManager.GetString("Page0of0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paste.
+        /// </summary>
+        public static string Paste {
+            get {
+                return ResourceManager.GetString("Paste", resourceCulture);
             }
         }
         

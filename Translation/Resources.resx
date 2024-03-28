@@ -240,6 +240,9 @@
   <data name="Copy" xml:space="preserve">
     <value>Copy</value>
   </data>
+  <data name="Paste" xml:space="preserve">
+    <value>Paste</value>
+  </data>
   <data name="MoveItem" xml:space="preserve">
     <value>Move</value>
   </data>
@@ -623,6 +626,9 @@
   </data>
   <data name="MsgTitlePositionSearch" xml:space="preserve">
     <value>Position Search</value>
+  </data>
+  <data name="MsgClipboardContainsPgn" xml:space="preserve">
+    <value>Clipboard contains PGN text</value>
   </data>
   <data name="DlgTitleWorkbookOptions" xml:space="preserve">
     <value>Workbook Options</value>
