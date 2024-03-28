@@ -2,6 +2,7 @@
 using GameTree;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows;
 
@@ -30,10 +31,20 @@ namespace ChessForge
                 {
                     // do we have plain text?
                     string clipText = Clipboard.GetText();
-                    if (!string.IsNullOrEmpty(clipText) && AppState.MainWin.ActiveTreeView != null)
+                    if (!string.IsNullOrEmpty(clipText))
                     {
-                        TreeNode startNode = AppState.MainWin.ActiveTreeView.GetSelectedNode();
-                        lstNodes = BuildNodeListFromText(startNode, clipText);
+                        PieceColor sideToMove = ColorToMoveFromAlgNotation(clipText);
+                        if (AppState.MainWin.ActiveTreeView != null)
+                        {
+                            TreeNode startNode = AppState.MainWin.ActiveTreeView.GetSelectedNode();
+                            lstNodes = BuildNodeListFromText(startNode, clipText, sideToMove);
+                        }
+
+                        if (sideToMove == PieceColor.None && (lstNodes == null || lstNodes.Count == 0) && AppState.ActiveChapter != null)
+                        {
+                            // perhaps a PGN content is in the clipboard
+                            PgnArticleUtils.PasteArticlesFromPgn(clipText);
+                        }
                     }
                 }
 
@@ -113,10 +124,9 @@ namespace ChessForge
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>
-        public static List<TreeNode> BuildNodeListFromText(TreeNode startPos, string clipText)
+        public static List<TreeNode> BuildNodeListFromText(TreeNode startPos, string clipText, PieceColor sideToMove)
         {
-            List<TreeNode> lstNodes  = new List<TreeNode>();
-            PieceColor sideToMove = ColorToMoveFromAlgNotation(clipText);
+            List<TreeNode> lstNodes = new List<TreeNode>();
             VariationTree tree = new VariationTree(GameData.ContentType.GENERIC);
             if (sideToMove != PieceColor.None && AppState.MainWin.ActiveTreeView != null)
             {
