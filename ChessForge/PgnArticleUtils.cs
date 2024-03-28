@@ -2,6 +2,9 @@
 using GameTree;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Text;
+using System.Windows;
 
 namespace ChessForge
 {
@@ -83,6 +86,85 @@ namespace ChessForge
             }
 
             return index;
+        }
+
+        /// <summary>
+        /// Parses the passed PGN text and identifies games and exercises in it.
+        /// </summary>
+        /// <param name="text"></param>
+        public static void PasteArticlesFromPgn(string text)
+        {
+            ObservableCollection<GameData> games = new ObservableCollection<GameData>();
+            WorkbookManager.ReadPgnFile(text, ref games, GameData.ContentType.GENERIC, GameData.ContentType.NONE);
+            if (games.Count > 0)
+            {
+                int gameCount = 0;
+                int exerciseCount = 0;
+
+                foreach (GameData game in games)
+                {
+                    GameData.ContentType contentType = game.Header.DetermineContentType();
+                    if (contentType == GameData.ContentType.MODEL_GAME || contentType == GameData.ContentType.GENERIC)
+                    {
+                        gameCount++;
+                    }
+                    else if (contentType == GameData.ContentType.EXERCISE)
+                    {
+                        exerciseCount++;
+                    }
+                }
+
+                if (gameCount > 0 || exerciseCount > 0)
+                {
+                    InsertArticlesIntoChapter(games, gameCount, exerciseCount);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Inserts articles in the workbook, having asked the user.
+        /// </summary>
+        /// <param name="games"></param>
+        /// <param name="gameCount"></param>
+        /// <param name="exerciseCount"></param>
+        private static void InsertArticlesIntoChapter(ObservableCollection<GameData> games, int gameCount, int exerciseCount)
+        {
+            StringBuilder sb = new StringBuilder(Properties.Resources.MsgClipboardContainsPgn + " (");
+            if (gameCount > 0)
+            {
+                sb.Append(Properties.Resources.GameCount + ": " + gameCount.ToString());
+                if (exerciseCount > 0)
+                {
+                    sb.Append(", ");
+                }
+            }
+
+            if (exerciseCount > 0)
+            {
+                sb.Append(Properties.Resources.ExerciseCount + ": " + exerciseCount.ToString());
+            }
+
+            sb.Append("). " + Properties.Resources.Paste + "?");
+
+            if (MessageBox.Show(sb.ToString(), Properties.Resources.ClipboardOperation, MessageBoxButton.YesNoCancel, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                int firstAddedIndex = -1;
+                GameData.ContentType firstAddedType = GameData.ContentType.NONE;
+                foreach (GameData game in games)
+                {
+                    int index = PgnArticleUtils.AddArticle(AppState.ActiveChapter, game, game.GetContentType(true), out _);
+                    if (firstAddedType == GameData.ContentType.NONE)
+                    {
+                        firstAddedType = game.GetContentType(false);
+                    }
+                    if (firstAddedIndex < 0)
+                    {
+                        firstAddedIndex = index;
+                    }
+                }
+                AppState.IsDirty = true;
+                AppState.MainWin.SelectArticle(AppState.ActiveChapter.Index, firstAddedType, firstAddedIndex);
+            }
         }
     }
 }
