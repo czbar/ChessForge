@@ -92,33 +92,70 @@ namespace ChessForge
         /// Parses the passed PGN text and identifies games and exercises in it.
         /// </summary>
         /// <param name="text"></param>
-        public static void PasteArticlesFromPgn(string text)
+        public static int PasteArticlesFromPgn(string text, out bool addedChapters, out bool cancelled)
         {
+            addedChapters = false;
+            cancelled = false;
+
+            int articleCount = 0;
+
             ObservableCollection<GameData> games = new ObservableCollection<GameData>();
             WorkbookManager.ReadPgnFile(text, ref games, GameData.ContentType.GENERIC, GameData.ContentType.NONE);
             if (games.Count > 0)
             {
+                int studyCount = 0;
+                int introCount = 0;
                 int gameCount = 0;
                 int exerciseCount = 0;
+                int addedChapterCount = 0;
+
+                bool first = true;
 
                 foreach (GameData game in games)
                 {
                     GameData.ContentType contentType = game.Header.DetermineContentType();
                     if (contentType == GameData.ContentType.MODEL_GAME || contentType == GameData.ContentType.GENERIC)
                     {
-                        gameCount++;
+                        // make sure to skip ChessForge workbook header
+                        if (!first || game.GetWorkbookTitle() != null)
+                        {
+                            game.Header.SetContentType(GameData.ContentType.MODEL_GAME);
+                            gameCount++;
+                        }
                     }
                     else if (contentType == GameData.ContentType.EXERCISE)
                     {
                         exerciseCount++;
                     }
+                    else if (contentType == GameData.ContentType.STUDY_TREE)
+                    {
+                        addedChapterCount++;
+                        studyCount++;
+                        addedChapters = true;
+                    }
+                    else if (contentType == GameData.ContentType.INTRO)
+                    {
+                        if (studyCount == 0)
+                        {
+                            addedChapterCount++;
+                        }
+                        introCount++;
+                        addedChapters = true;
+                    }
+
+                    first = false;
                 }
 
-                if (gameCount > 0 || exerciseCount > 0)
+                if (gameCount > 0 || exerciseCount > 0 || addedChapterCount > 0)
                 {
-                    InsertArticlesIntoChapter(games, gameCount, exerciseCount);
+                    bool done = InsertArticlesIntoChapter(games, addedChapterCount, gameCount, exerciseCount);
+                    cancelled = !done;
                 }
+
+                articleCount = addedChapterCount + gameCount + exerciseCount;
             }
+
+            return articleCount;
         }
 
         /// <summary>
@@ -127,44 +164,87 @@ namespace ChessForge
         /// <param name="games"></param>
         /// <param name="gameCount"></param>
         /// <param name="exerciseCount"></param>
-        private static void InsertArticlesIntoChapter(ObservableCollection<GameData> games, int gameCount, int exerciseCount)
+        private static bool InsertArticlesIntoChapter(ObservableCollection<GameData> games, int addedChapterCount, int gameCount, int exerciseCount)
         {
-            StringBuilder sb = new StringBuilder(Properties.Resources.MsgClipboardContainsPgn + " (");
+            bool done = false;
+
+            StringBuilder sb = new StringBuilder(Properties.Resources.MsgClipboardContainsPgn + ":\n\n");
+            if (addedChapterCount > 0)
+            {
+                sb.Append("    " + Properties.Resources.ChapterCount + " = " + addedChapterCount.ToString() + '\n');
+            }
+
             if (gameCount > 0)
             {
-                sb.Append(Properties.Resources.GameCount + ": " + gameCount.ToString());
-                if (exerciseCount > 0)
-                {
-                    sb.Append(", ");
-                }
+                sb.Append("    " + Properties.Resources.GameCount + " = " + gameCount.ToString() + '\n');
             }
 
             if (exerciseCount > 0)
             {
-                sb.Append(Properties.Resources.ExerciseCount + ": " + exerciseCount.ToString());
+                sb.Append("    " + Properties.Resources.ExerciseCount + " = " + exerciseCount.ToString() + '\n');
             }
 
-            sb.Append("). " + Properties.Resources.Paste + "?");
+            sb.Append('\n' + Properties.Resources.ProceedAndPaste + "?");
 
             if (MessageBox.Show(sb.ToString(), Properties.Resources.ClipboardOperation, MessageBoxButton.YesNoCancel, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
+                Chapter currChapter = AppState.ActiveChapter;
                 int firstAddedIndex = -1;
                 GameData.ContentType firstAddedType = GameData.ContentType.NONE;
+
+                bool hasStudyBeforeIntro = false;
+
                 foreach (GameData game in games)
                 {
-                    int index = PgnArticleUtils.AddArticle(AppState.ActiveChapter, game, game.GetContentType(true), out _);
-                    if (firstAddedType == GameData.ContentType.NONE)
+                    int index = -1;
+
+                    GameData.ContentType currContentType = game.GetContentType(false);
+
+                    if (currContentType == GameData.ContentType.STUDY_TREE)
                     {
-                        firstAddedType = game.GetContentType(false);
+                        currChapter = AppState.Workbook.CreateNewChapter();
+                        currChapter.SetTitle(game.Header.GetChapterTitle());
+                        AddArticle(currChapter, game, GameData.ContentType.STUDY_TREE, out _);
+                        if (firstAddedType == GameData.ContentType.NONE)
+                        {
+                            firstAddedType = GameData.ContentType.STUDY_TREE;
+                        }
+                        hasStudyBeforeIntro = true;
                     }
-                    if (firstAddedIndex < 0)
+                    else if (currContentType == GameData.ContentType.INTRO)
                     {
-                        firstAddedIndex = index;
+                        if (!hasStudyBeforeIntro)
+                        {
+                            currChapter = AppState.Workbook.CreateNewChapter();
+                            if (firstAddedType == GameData.ContentType.NONE)
+                            {
+                                firstAddedType = GameData.ContentType.INTRO;
+                            }
+                        }
+
+                        AddArticle(currChapter, game, GameData.ContentType.INTRO, out _);
+                        hasStudyBeforeIntro = false;
+                    }
+                    else
+                    {
+                        index = AddArticle(currChapter, game, game.GetContentType(true), out _);
+                        if (firstAddedType == GameData.ContentType.NONE)
+                        {
+                            firstAddedType = game.GetContentType(false);
+                        }
+                        if (firstAddedIndex < 0)
+                        {
+                            firstAddedIndex = index;
+                        }
                     }
                 }
                 AppState.IsDirty = true;
-                AppState.MainWin.SelectArticle(AppState.ActiveChapter.Index, firstAddedType, firstAddedIndex);
+                AppState.MainWin.SelectArticle(currChapter.Index, firstAddedType, firstAddedIndex);
+
+                done = true;
             }
+
+            return done;
         }
     }
 }
