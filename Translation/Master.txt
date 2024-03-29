@@ -146,6 +146,9 @@ Copy=Copy
 #Paste
 Paste=Paste
 
+#Paste fromClipboard
+PasteFromClipboard=Paste from Clipboard
+
 #Move item
 MoveItem=Move
 

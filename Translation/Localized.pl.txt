@@ -189,6 +189,10 @@ Copy=Kopiuj
 #english: Paste=Paste
 Paste=Wkleić
 
+#description: Paste fromClipboard
+#english: PasteFromClipboard=Paste from Clipboard
+PasteFromClipboard=Wklej Zawartość Schowka 
+
 #description: Move item
 #english: MoveItem=Move
 MoveItem=Przenieś

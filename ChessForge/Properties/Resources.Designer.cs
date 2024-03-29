@@ -5031,6 +5031,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Paste from Clipboard.
+        /// </summary>
+        public static string PasteFromClipboard {
+            get {
+                return ResourceManager.GetString("PasteFromClipboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Paste Moves.
         /// </summary>
         public static string PasteMoves {

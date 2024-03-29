@@ -246,6 +246,9 @@
   <data name="Paste" xml:space="preserve">
     <value>Paste</value>
   </data>
+  <data name="PasteFromClipboard" xml:space="preserve">
+    <value>Paste from Clipboard</value>
+  </data>
   <data name="MoveItem" xml:space="preserve">
     <value>Move</value>
   </data>

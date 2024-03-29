@@ -189,6 +189,10 @@ Copy=
 #english: Paste=Paste
 Paste=
 
+#description: Paste fromClipboard
+#english: PasteFromClipboard=Paste from Clipboard
+PasteFromClipboard=
+
 #description: Move item
 #english: MoveItem=Move
 MoveItem=
