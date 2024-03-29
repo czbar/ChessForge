@@ -786,6 +786,7 @@ namespace ChessForge
                 MainWin.UiRtbStudyTreeView.IsEnabled = true;
 
                 MainWin.UiMnAnnotations.IsEnabled = false;
+                MainWin.UiMnPaste.IsEnabled = false;
                 MainWin.UiMnCommentBeforeMove.IsEnabled = false;
                 MainWin.UiMnMergeChapters.IsEnabled = false;
 
@@ -1125,7 +1126,7 @@ namespace ChessForge
                                 menuItem.IsEnabled = view != null && view.HasMovesSelectedForCopy;
                                 break;
                             case "UiMnStPasteMoves":
-                                menuItem.IsEnabled = SystemClipboard.HasSerializedData();
+                                menuItem.IsEnabled = SystemClipboard.HasSerializedData() || !string.IsNullOrEmpty(Clipboard.GetText());
                                 break;
                             case "UiMnPromoteLine":
                                 menuItem.IsEnabled = tree.SelectedNode != null && !tree.SelectedNode.IsMainLine();
@@ -1208,7 +1209,7 @@ namespace ChessForge
                                 menuItem.IsEnabled = view != null && view.HasMovesSelectedForCopy;
                                 break;
                             case "UiMnGamePasteMoves":
-                                menuItem.IsEnabled = SystemClipboard.HasSerializedData();
+                                menuItem.IsEnabled = SystemClipboard.HasSerializedData() || !string.IsNullOrEmpty(Clipboard.GetText());
                                 break;
                         }
                     }
@@ -1319,7 +1320,7 @@ namespace ChessForge
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "UiMnExercPasteMoves":
-                                menuItem.IsEnabled = SystemClipboard.HasSerializedData() && isSolutionShown;
+                                menuItem.IsEnabled = SystemClipboard.HasSerializedData() || !string.IsNullOrEmpty(Clipboard.GetText());
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "UiMnExerc_ImportExercises":
@@ -1570,6 +1571,7 @@ namespace ChessForge
                 MainWin.UiMnSplitChapter.IsEnabled = AppState.ActiveChapter != null;
 
                 _mainWin.UiMnAnnotations.IsEnabled = IsTreeViewTabActive();
+                MainWin.UiMnPaste.IsEnabled = !string.IsNullOrEmpty(Clipboard.GetText());
                 _mainWin.UiMnCommentBeforeMove.IsEnabled = IsTreeViewTabActive();
                 _mainWin.UiMnMergeChapters.IsEnabled = WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.GetChapterCount() > 1;
 
@@ -1624,6 +1626,7 @@ namespace ChessForge
             _mainWin.Dispatcher.Invoke(() =>
             {
                 MainWin.UiMnAnnotations.IsEnabled = false;
+                MainWin.UiMnPaste.IsEnabled = false;
                 MainWin.UiMnCommentBeforeMove.IsEnabled = false;
                 MainWin.UiMnMergeChapters.IsEnabled = false;
 
