@@ -109,6 +109,8 @@
                         <MenuItem x:Name="UiMnAnnotations" Header="{x:Static p:Resources.Annotations}" Click="UiMnAnnotationsDialog_Click" />
                         <MenuItem x:Name="UiMnCommentBeforeMove" Header="{x:Static p:Resources.CommentBeforeMove}" Click="UiMnCommentBeforeMoveDialog_Click" />
                         <Separator />
+                        <MenuItem x:Name="UiMnPaste" Header="{x:Static p:Resources.PasteFromClipboard}" Click="UiMnPaste_Click" InputGestureText="Ctrl+V" />
+                        <Separator />
                         <MenuItem x:Name="UiMnUndo" Header="{x:Static p:Resources.Undo}" Click="UiMnUndo_Click" InputGestureText="Ctrl+Z" />
                     </MenuItem>
                     <MenuItem Header="{x:Static p:Resources.View}" Margin="0,0,0,0">

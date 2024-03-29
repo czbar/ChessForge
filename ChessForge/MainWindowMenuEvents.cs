@@ -428,6 +428,17 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Paste content of clipboard into the view or workbook
+        /// if possible.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnPaste_Click(object sender, RoutedEventArgs e)
+        {
+            CopyPasteMoves.PasteMoveList();
+        }
+
+        /// <summary>
         /// The user requested Undo. 
         /// If the active view is Chapters then this is a workbook/chapter operation that needs undoing.
         /// If we are in Study, Game or Exercise view, it could be a tree operation
