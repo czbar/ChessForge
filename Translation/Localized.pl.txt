@@ -157,6 +157,10 @@ Day=Dzień
 #english: Count=Count
 Count=Ilość
 
+#description: Chapter count
+#english: ChapterCount=Number of Chapters 
+ChapterCount=Liczba rozdziałów 
+
 #description: Game count
 #english: GameCount=Number of Games 
 GameCount=Liczba partii 
@@ -746,8 +750,8 @@ MsgEditPositionSearch=Pozycki nie znaleziono. Wrócić do edycji?
 MsgTitlePositionSearch=Wyszukiwanie Pozycji
 
 #description: Message: Clipboard contains PGN text
-#english: MsgClipboardContainsPgn=Clipboard contains PGN text
-MsgClipboardContainsPgn=Schowek zawiera tekst PGN
+#english: MsgClipboardContainsPgn=Clipboard's content
+MsgClipboardContainsPgn=Zawartość schowka
 
 #description: Workbook Options dialog title
 #english: DlgTitleWorkbookOptions=Workbook Options
@@ -1897,6 +1901,10 @@ CutMoves=Wytnij ruchy
 #description: Paste selected moves
 #english: PasteMoves=Paste Moves
 PasteMoves=Wklej ruchy
+
+#description: Proceed and paste prompt
+#english: ProceedAndPaste=Proceed and Paste
+ProceedAndPaste=Kontynuować i wkleić
 
 #description: Copy Highlighted line
 #english: CopyHighlightedLine=Copy Highlighted Line

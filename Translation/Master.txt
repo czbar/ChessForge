@@ -122,6 +122,9 @@ Day=Day
 #Count
 Count=Count
 
+#Chapter count
+ChapterCount=Number of Chapters 
+
 #Game count
 GameCount=Number of Games 
 
@@ -576,7 +579,7 @@ MsgEditPositionSearch=Positions not found. Edit search?
 MsgTitlePositionSearch=Position Search
 
 #Message: Clipboard contains PGN text
-MsgClipboardContainsPgn=Clipboard contains PGN text
+MsgClipboardContainsPgn=Clipboard's content
 
 #Workbook Options dialog title
 DlgTitleWorkbookOptions=Workbook Options
@@ -1487,6 +1490,9 @@ CutMoves=Cut Moves
 
 #Paste selected moves
 PasteMoves=Paste Moves
+
+#Proceed and paste prompt
+ProceedAndPaste=Proceed and Paste
 
 #Copy Highlighted line
 CopyHighlightedLine=Copy Highlighted Line

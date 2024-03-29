@@ -222,6 +222,9 @@
   <data name="Count" xml:space="preserve">
     <value>Count</value>
   </data>
+  <data name="ChapterCount" xml:space="preserve">
+    <value>Number of Chapters </value>
+  </data>
   <data name="GameCount" xml:space="preserve">
     <value>Number of Games </value>
   </data>
@@ -628,7 +631,7 @@
     <value>Position Search</value>
   </data>
   <data name="MsgClipboardContainsPgn" xml:space="preserve">
-    <value>Clipboard contains PGN text</value>
+    <value>Clipboard's content</value>
   </data>
   <data name="DlgTitleWorkbookOptions" xml:space="preserve">
     <value>Workbook Options</value>
@@ -1346,6 +1349,9 @@
   </data>
   <data name="PasteMoves" xml:space="preserve">
     <value>Paste Moves</value>
+  </data>
+  <data name="ProceedAndPaste" xml:space="preserve">
+    <value>Proceed and Paste</value>
   </data>
   <data name="CopyHighlightedLine" xml:space="preserve">
     <value>Copy Highlighted Line</value>

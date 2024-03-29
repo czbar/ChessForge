@@ -782,6 +782,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Number of Chapters .
+        /// </summary>
+        public static string ChapterCount {
+            get {
+                return ResourceManager.GetString("ChapterCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chapters.
         /// </summary>
         public static string Chapters {
@@ -4139,7 +4148,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clipboard contains PGN text.
+        ///   Looks up a localized string similar to Clipboard&apos;s content.
         /// </summary>
         public static string MsgClipboardContainsPgn {
             get {
@@ -5279,6 +5288,15 @@ namespace ChessForge.Properties {
         public static string Proceed {
             get {
                 return ResourceManager.GetString("Proceed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Proceed and Paste.
+        /// </summary>
+        public static string ProceedAndPaste {
+            get {
+                return ResourceManager.GetString("ProceedAndPaste", resourceCulture);
             }
         }
         
