@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows;
+using System.Windows.Input;
 
 namespace ChessForge
 {
@@ -188,62 +189,69 @@ namespace ChessForge
 
             if (MessageBox.Show(sb.ToString(), Properties.Resources.ClipboardOperation, MessageBoxButton.YesNoCancel, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                Chapter currChapter = AppState.ActiveChapter;
-                int firstAddedIndex = -1;
-                GameData.ContentType firstAddedType = GameData.ContentType.NONE;
-
-                bool hasStudyBeforeIntro = false;
-
-                foreach (GameData game in games)
+                try
                 {
-                    int index = -1;
+                    Mouse.SetCursor(Cursors.Wait);
+                    Chapter currChapter = AppState.ActiveChapter;
+                    int firstAddedIndex = -1;
+                    GameData.ContentType firstAddedType = GameData.ContentType.NONE;
 
-                    GameData.ContentType currContentType = game.GetContentType(false);
+                    bool hasStudyBeforeIntro = false;
 
-                    if (currContentType == GameData.ContentType.STUDY_TREE)
+                    foreach (GameData game in games)
                     {
-                        currChapter = AppState.Workbook.CreateNewChapter();
-                        currChapter.SetTitle(game.Header.GetChapterTitle());
-                        AddArticle(currChapter, game, GameData.ContentType.STUDY_TREE, out _);
-                        if (firstAddedType == GameData.ContentType.NONE)
-                        {
-                            firstAddedType = GameData.ContentType.STUDY_TREE;
-                        }
-                        hasStudyBeforeIntro = true;
-                    }
-                    else if (currContentType == GameData.ContentType.INTRO)
-                    {
-                        if (!hasStudyBeforeIntro)
+                        int index = -1;
+
+                        GameData.ContentType currContentType = game.GetContentType(false);
+
+                        if (currContentType == GameData.ContentType.STUDY_TREE)
                         {
                             currChapter = AppState.Workbook.CreateNewChapter();
+                            currChapter.SetTitle(game.Header.GetChapterTitle());
+                            AddArticle(currChapter, game, GameData.ContentType.STUDY_TREE, out _);
                             if (firstAddedType == GameData.ContentType.NONE)
                             {
-                                firstAddedType = GameData.ContentType.INTRO;
+                                firstAddedType = GameData.ContentType.STUDY_TREE;
+                            }
+                            hasStudyBeforeIntro = true;
+                        }
+                        else if (currContentType == GameData.ContentType.INTRO)
+                        {
+                            if (!hasStudyBeforeIntro)
+                            {
+                                currChapter = AppState.Workbook.CreateNewChapter();
+                                if (firstAddedType == GameData.ContentType.NONE)
+                                {
+                                    firstAddedType = GameData.ContentType.INTRO;
+                                }
+                            }
+
+                            AddArticle(currChapter, game, GameData.ContentType.INTRO, out _);
+                            hasStudyBeforeIntro = false;
+                        }
+                        else
+                        {
+                            index = AddArticle(currChapter, game, game.GetContentType(true), out _);
+                            if (firstAddedType == GameData.ContentType.NONE)
+                            {
+                                firstAddedType = game.GetContentType(false);
+                            }
+                            if (firstAddedIndex < 0)
+                            {
+                                firstAddedIndex = index;
                             }
                         }
-
-                        AddArticle(currChapter, game, GameData.ContentType.INTRO, out _);
-                        hasStudyBeforeIntro = false;
                     }
-                    else
-                    {
-                        index = AddArticle(currChapter, game, game.GetContentType(true), out _);
-                        if (firstAddedType == GameData.ContentType.NONE)
-                        {
-                            firstAddedType = game.GetContentType(false);
-                        }
-                        if (firstAddedIndex < 0)
-                        {
-                            firstAddedIndex = index;
-                        }
-                    }
+                    AppState.IsDirty = true;
+                    AppState.MainWin.SelectArticle(currChapter.Index, firstAddedType, firstAddedIndex);
                 }
-                AppState.IsDirty = true;
-                AppState.MainWin.SelectArticle(currChapter.Index, firstAddedType, firstAddedIndex);
+                catch { }
 
+                Mouse.SetCursor(Cursors.Arrow);
                 done = true;
             }
 
+            Mouse.SetCursor(Cursors.Arrow);
             return done;
         }
     }
