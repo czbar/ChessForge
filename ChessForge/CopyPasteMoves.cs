@@ -33,18 +33,7 @@ namespace ChessForge
                     string clipText = Clipboard.GetText();
                     if (!string.IsNullOrEmpty(clipText))
                     {
-                        PieceColor sideToMove = ColorToMoveFromAlgNotation(clipText);
-                        if (AppState.MainWin.ActiveTreeView != null)
-                        {
-                            TreeNode startNode = AppState.MainWin.ActiveTreeView.GetSelectedNode();
-                            lstNodes = BuildNodeListFromText(startNode, clipText, sideToMove);
-                        }
-
-                        if (sideToMove == PieceColor.None && (lstNodes == null || lstNodes.Count == 0) && AppState.ActiveChapter != null)
-                        {
-                            // perhaps a PGN content is in the clipboard
-                            PgnArticleUtils.PasteArticlesFromPgn(clipText);
-                        }
+                        lstNodes = ProcessClipboardText(clipText);
                     }
                 }
 
@@ -119,12 +108,67 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Processes the clipoards text looking for a list of moves
+        /// in algebraic notation or a PGN content.
+        /// </summary>
+        /// <param name="clipText"></param>
+        /// <returns></returns>
+        private static List<TreeNode> ProcessClipboardText(string clipText)
+        {
+            List<TreeNode> lstNodes = null;
+
+            PieceColor sideToMove = ColorToMoveFromAlgNotation(clipText);
+
+            // if sideToMove is not NONE it means that the first token may be a move and this is not PGN.
+            if (sideToMove != PieceColor.None)
+            {
+                lstNodes = ProcessPlainTextFromClipboard(clipText, sideToMove);
+                if (AppState.MainWin.ActiveTreeView != null)
+                {
+                    TreeNode startNode = AppState.MainWin.ActiveTreeView.GetSelectedNode();
+                    lstNodes = BuildNodeListFromText(startNode, clipText, sideToMove);
+                }
+            }
+            else
+            {
+                // this could be PGN
+                if (AppState.ActiveChapter != null)
+                {
+                    lstNodes = null;
+                    ProcessPgnFromClipboard(clipText);
+                }
+            }
+
+            return lstNodes;
+        }
+
+        /// <summary>
+        /// Processed the passed string assuming it is an algebraic notations
+        /// of moves.
+        /// </summary>
+        /// <param name="clipText"></param>
+        /// <param name="sideToMove"></param>
+        /// <returns></returns>
+        private static List<TreeNode> ProcessPlainTextFromClipboard(string clipText, PieceColor sideToMove)
+        {
+            List<TreeNode> lstNodes = null;
+
+            if (AppState.MainWin.ActiveTreeView != null)
+            {
+                TreeNode startNode = AppState.MainWin.ActiveTreeView.GetSelectedNode();
+                lstNodes = BuildNodeListFromText(startNode, clipText, sideToMove);
+            }
+
+            return lstNodes;
+        }
+
+        /// <summary>
         /// Builds a list of Nodes given text (e.g. from the clipboard)
         /// and a starting position.
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>
-        public static List<TreeNode> BuildNodeListFromText(TreeNode startPos, string clipText, PieceColor sideToMove)
+        private static List<TreeNode> BuildNodeListFromText(TreeNode startPos, string clipText, PieceColor sideToMove)
         {
             List<TreeNode> lstNodes = new List<TreeNode>();
             VariationTree tree = new VariationTree(GameData.ContentType.GENERIC);
@@ -170,7 +214,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="move"></param>
         /// <returns></returns>
-        public static PieceColor ColorToMoveFromAlgNotation(string text)
+        private static PieceColor ColorToMoveFromAlgNotation(string text)
         {
             PieceColor pieceColor = PieceColor.None;
 
@@ -191,5 +235,49 @@ namespace ChessForge
 
             return pieceColor;
         }
+
+        /// <summary>
+        /// Process PGN from the clipboard if found.
+        /// </summary>
+        /// <param name="clipText"></param>
+        private static void ProcessPgnFromClipboard(string clipText)
+        {
+            bool addedChapters;
+            bool cancelled;
+
+            // if this is a legitimate PGN, try to process it 
+            int articleCount = PgnArticleUtils.PasteArticlesFromPgn(clipText, out addedChapters, out cancelled);
+            if (articleCount == 0)
+            {
+                AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.InvalidPgn, System.Windows.Media.Brushes.Red, 14);
+            }
+            else
+            {
+                // there was some valid content added but check if the user cancelled the proceedings
+                if (!cancelled)
+                {
+                    AppState.MainWin.ChaptersView.IsDirty = true;
+                    if (addedChapters)
+                    {
+                        GuiUtilities.RefreshChaptersView(null);
+                        AppState.MainWin.UiTabChapters.Focus();
+                        PulseManager.ChaperIndexToBringIntoView = AppState.Workbook.Chapters.Count - 1;
+                    }
+                    else
+                    {
+                        if (AppState.ActiveTab == TabViewType.CHAPTERS)
+                        {
+                            GuiUtilities.RefreshChaptersView(AppState.ActiveChapter);
+                        }
+                        else
+                        {
+                            AppState.MainWin.ChaptersView.IsDirty = true;
+                        }
+                    }
+                }
+            }
+        }
+
+
     }
 }
