@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+    <header>
+    </header>
+
+    <div class="subheader">
+        <p>Use the form below to contact us, send your feedback, comments or questions. If you leave your email address, we will respond.</p>
+        </div>
+
+    <main>
+
+        <section class="content">
+            <div class="form-container">                
+                <form name="gform" id="gform" enctype="text/plain" action="https://docs.google.com/forms/d/e/1FAIpQLSfnvkHks3_ONpuA5GACIEZQG2iDSmYxY6V_WmSBFMJV8BmedA/formResponse?" target="hidden_iframe" onsubmit="submitted=true;">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-input" name="entry.1367477304" id="entry.1367477304"  placeholder="Enter your name or nickname">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="text" class="form-input" name="entry.866388901" id="entry.866388901" placeholder="Optionally, enter your email address if you would like us to respond">
+                    <label for="message" class="form-label">Message</label>
+                    <textarea rows="5" class="form-input" name="entry.2018161921" id="entry.2018161921" placeholder="Enter your comments here"  required></textarea>
+                    <input type="submit" class="form-submit" value="Submit">
+                  
+                  <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted) {}"></iframe>
+            </div>
+
+        </section>
+        <aside class="sidebar">
+        </aside>
+
+        <script src="assets/jquery.min.js"></script>
+        <script type="text/javascript">var submitted=false;</script>
+        <script type="text/javascript">
+        $('#gform').on('submit', function(e) {
+          $('#gform *').fadeOut(2000);
+          $('#gform').prepend('Your submission has been processed...');
+          });
+        </script>    
+        
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Mindrose Pty Ltd</p>
+    </footer>
+    <script src="include.js"></script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  line-height: 1.4em; /* Adjust the value as needed */
+}
+
+code {
+  font-size: 1.2em;
+  background-color: lightgray;
+}
+
+
+ul {
+  line-height: 1.6; /* Adjust the line height as needed */
+  margin-bottom: 15px; /* Adjust the spacing between lists */
+}
+
+li {
+  margin-bottom: 5px; /* Adjust the spacing between list items */
+}
+
+header {
+  background-color: #033;
+  color: #fff;
+  padding-bottom: 10px;
+}
+
+header p {
+  font-size: 3em;
+  position: relative;
+  top: 0px;
+  left: 60px;
+  font-weight: bold;
+  }
+
+header img {
+	float: left;
+	width: 128px;
+	height: 128px;
+	padding: 15px;
+	padding-left: 45px;
+	left: 100px;
+  }
+
+.subheader {
+	font-family: 'Open Sans', Arial, sans-serif;
+	background-color: #099;
+	color: white;
+	padding: 10px;
+	padding-left:10%;
+	padding-right:20%;
+  }
+
+.subheader a {
+	font-family: 'Open Sans', Arial, sans-serif;
+	color: white;
+  }
+
+   
+  nav {
+  display: flex;
+  justify-content: space-evenly;
+  background-color: #099;
+}
+
+nav a {
+  color: #fff;
+  padding: 10px;
+  text-decoration: none;
+}
+
+nav a.active {
+  font-weight: bold;
+}
+
+main {
+  display: flex;
+}
+
+.content {
+  flex: 3;
+  padding: 20px;
+}
+
+.sidebar {
+  flex: 1;
+  padding: 20px;
+  border-left: 1px solid #ddd;
+}
+
+img {
+  max-width: 100%;
+  text-align: center;
+}
+
+.marginimage {
+  margin-left: 5%;
+  display: block;
+}
+
+h1 {	
+  margin-bottom: 0px;
+  padding:0px;
+}
+
+h2 {
+  margin-bottom: 10px;
+}
+
+.release {
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+}
+
+.release a {
+  display: block;
+  text-align: center;
+  background-color: #033;
+  color: #fff;
+  padding: 10px;
+  margin-left: 10%;
+  margin-right: 60%;
+  margin-top: 10px;
+}
+
+footer {
+  text-align: center;
+  padding: 10px;
+  background-color: #f1f1f1;
+}
+
+/* Style for the form container */
+.form-container {
+  background-color: lightgray;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 600px;
+  margin-left: 5%;
+}
+
+/* Style for the form inputs */
+.form-input {
+  width: calc(100% - 40px);
+  padding: 10px;
+  margin: 5px 20px; /* Adjusted margin to accommodate labels above */
+  border: none;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+/* Style for the form labels */
+.form-label {
+  display: block;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-family: Arial, sans-serif;
+}
+
+/* Style for the submit button */
+.form-submit {
+  width: calc(100% - 40px); /* Adjusting for total horizontal padding */
+  padding: 10px;
+  margin: 10px 20px; /* Equal margins on left and right */
+  margin-top: 30px;
+  background-color: #099; /* You can change this color as needed */
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  box-sizing: border-box; /* Ensuring padding and border are included in width calculation */
+}
+
+/* Style for the submit button on hover */
+.form-submit:hover {
+  background-color: #033; /* You can change this color as needed */
+}
