@@ -5,7 +5,8 @@ body {
 }
 
 p {
-  line-height: 1.4em; /* Adjust the value as needed */
+  line-height: 1.4em;
+  /* Adjust the value as needed */
 }
 
 code {
@@ -15,12 +16,15 @@ code {
 
 
 ul {
-  line-height: 1.6; /* Adjust the line height as needed */
-  margin-bottom: 15px; /* Adjust the spacing between lists */
+  line-height: 1.6;
+  /* Adjust the line height as needed */
+  margin-bottom: 15px;
+  /* Adjust the spacing between lists */
 }
 
 li {
-  margin-bottom: 5px; /* Adjust the spacing between list items */
+  margin-bottom: 5px;
+  /* Adjust the spacing between list items */
 }
 
 header {
@@ -35,33 +39,33 @@ header p {
   top: 0px;
   left: 60px;
   font-weight: bold;
-  }
+}
 
 header img {
-	float: left;
-	width: 128px;
-	height: 128px;
-	padding: 15px;
-	padding-left: 45px;
-	left: 100px;
-  }
+  float: left;
+  width: 128px;
+  height: 128px;
+  padding: 15px;
+  padding-left: 45px;
+  left: 100px;
+}
 
 .subheader {
-	font-family: 'Open Sans', Arial, sans-serif;
-	background-color: #099;
-	color: white;
-	padding: 10px;
-	padding-left:10%;
-	padding-right:20%;
-  }
+  font-family: 'Open Sans', Arial, sans-serif;
+  background-color: #099;
+  color: white;
+  padding: 10px;
+  padding-left: 10%;
+  padding-right: 20%;
+}
 
 .subheader a {
-	font-family: 'Open Sans', Arial, sans-serif;
-	color: white;
-  }
+  font-family: 'Open Sans', Arial, sans-serif;
+  color: white;
+}
 
-   
-  nav {
+
+nav {
   display: flex;
   justify-content: space-evenly;
   background-color: #099;
@@ -102,9 +106,9 @@ img {
   display: block;
 }
 
-h1 {	
+h1 {
   margin-bottom: 0px;
-  padding:0px;
+  padding: 0px;
 }
 
 h2 {
@@ -147,7 +151,8 @@ footer {
 .form-input {
   width: calc(100% - 40px);
   padding: 10px;
-  margin: 5px 20px; /* Adjusted margin to accommodate labels above */
+  margin: 5px 20px;
+  /* Adjusted margin to accommodate labels above */
   border: none;
   border-radius: 5px;
   box-sizing: border-box;
@@ -164,19 +169,24 @@ footer {
 
 /* Style for the submit button */
 .form-submit {
-  width: calc(100% - 40px); /* Adjusting for total horizontal padding */
+  width: calc(100% - 40px);
+  /* Adjusting for total horizontal padding */
   padding: 10px;
-  margin: 10px 20px; /* Equal margins on left and right */
+  margin: 10px 20px;
+  /* Equal margins on left and right */
   margin-top: 30px;
-  background-color: #099; /* You can change this color as needed */
+  background-color: #099;
+  /* You can change this color as needed */
   border: none;
   border-radius: 5px;
   color: white;
   cursor: pointer;
-  box-sizing: border-box; /* Ensuring padding and border are included in width calculation */
+  box-sizing: border-box;
+  /* Ensuring padding and border are included in width calculation */
 }
 
 /* Style for the submit button on hover */
 .form-submit:hover {
-  background-color: #033; /* You can change this color as needed */
+  background-color: #033;
+  /* You can change this color as needed */
 }

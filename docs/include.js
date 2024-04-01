@@ -10,8 +10,11 @@ document.addEventListener("DOMContentLoaded", function () {
             const navLinks = navDoc.querySelectorAll('.nav-link'); // select all links with class "nav-link"
 
             // get the current page filename
-            const currentPage = window.location.pathname.split('/').pop();
-            
+            currentPage = window.location.pathname.split('/').pop();
+            if (currentPage == "") {
+                currentPage = "index.html";
+            }
+
             // add 'active' class to the link for the current page  
             navLinks.forEach(link => {
                 if (link.href.endsWith(currentPage)) {
