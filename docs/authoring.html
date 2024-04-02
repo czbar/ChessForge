@@ -2,6 +2,11 @@
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess Forge</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -9,7 +14,7 @@
     </header>
 
     <div class="subheader">
-        <p>Chess Forge offers rich editing tools for creating workbooks. Those workbooks are text files in the PGN
+        <p>Chess Forge offers rich editing tools for creating workbooks. These workbooks are text files in the PGN
             format and can be easily shared.</p>
         <p>One typical scenario is for a coach to author a workbook and share it with their pupils. Apart from all the
             usual ways of sharing files via email
@@ -25,13 +30,13 @@
         <section class="content">
             <h2>Workbooks</h2>
             <article class="release">
-                <p>Chess Forge organizes its content as the, so called, workbooks. Physically, workbooks are just text
+                <p>Chess Forge organizes its content into what are known as workbooks. Physically, workbooks are simply text
                     files in the PGN format with some
                     Chess Forge specific extensions.</p>
-                <p> Those extensions, include extra tags identifying the file as a ChessForge workbook, extra headers
+                <p> These extensions, include extra tags identifying the file as a ChessForge workbook, extra headers
                     identifying PGN "game" types as Studies, Games or Exercises in the Chess Forge's context etc.
                 </p>
-                <p>Each workbook contains one or more chaters and within chapters:
+                <p>Each workbook contains one or more chapters, and within each chapter:
                 <ul>
                     <li>An optional Intro</li>
                     <li>A Study</li>
@@ -39,15 +44,15 @@
                     <li>Any number of Exercises</li>
                 </ul>
                 </p>
-                <p>You can create a new workbook from scratch or start by importing a PGN file. Then you can edit it
-                    using Chess Forge's unique capabilities.</p>
+                <p>You can create a new workbook from scratch or start by importing a PGN file, then utilize Chess Forge's 
+                    unique capabilities to edit it.</p>
             </article>
             </article>
 
             <article class="release">
                 <h2>General Editing</h2>
                 <p>This section applies to Studies, Games and Exercises i.e. views that display a variation tree.</p>
-                <p>In each such view, there is always one selected move/position indicated by the highlighting
+                <p>In each of these views, one move or position is always selected, indicated by highlighting
                     and reflected on the main chessboard.
                 </p>
                 <p>If there is no highlighted move/position, it means that the starting position has been selected. In
@@ -111,32 +116,27 @@
                 </p>
                 <p>Press CTRL-V. If the move sequence can be legally inserted at the selected move, it will be pasted.
                     Note that, in the example shown here, you could have selected 3.Bb5 as well.
-                    Chess Forge checks if the moves can be pasted at the selected location or at the next ply
+                    Chess Forge checks if the moves can be pasted at the selected location or at the next move
                     (it will match the side on the move in the target position and in the selection being pasted).
                 </p>
-                <p>If we used the Copy/Paste Tree option, the end result will be as shown as in the image below.</p>
+                <p>If we used the Copy/Paste Tree option, the end result will be as shown in the image below.</p>
                 <p class="marginimage">
                     <img src="images/PostPasteMoves.jpg" alt="Post-Paste Moves" />
                 </p>
                 <p>Note that the actual move numbering does not matter. You can try pasting the moves anywhere.
                     If the moves cannot be legally inserted in the specified place, Chess Forge will abort the action
-                    and flash a warning message in the Hints box
-                    under the main chessboard.
+                    and briefly display a warning message in the Hints box under the main chessboard.
                 </p>
             </article>
 
             <article class="release">
                 <h2>Copy/Paste PGN Games</h2>
                 <p>
-                    You can place a PGN game or even multiple games in the system cliboard and press CTRL-V when in
-                    ChessForge.
-                    If the program recognizes the content of the clipboard as valid PGN it will offer to add it to the
-                    current chapter.
-                </p>
-                <p>If the program recognizes the content as copied from a Chess Forge's PGN and it recognizes the
-                    special Chapter or Intro tags
-                    it will offer to add those chapters into the current workbook.
-                </p>
+                    You can copy one or more PGN games to your clipboard and then paste them (Ctrl+V) into Chess Forge. 
+                    The program will intelligently analyze the clipboard content. 
+                    If it's valid PGN, Chess Forge will offer to import the game(s) into your current chapter. 
+                    Even more, if the PGN data originates from Chess Forge and includes specific Chapter or Intro tags, 
+                    the program will offer to incorporate those entire chapters into your current workbook.                </p>
             </article>
 
             <article class="release">

@@ -26,13 +26,6 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .catch(error => console.error('Error fetching header:', error));
 
-    fetch("head.html")
-        .then(response => response.text())
-        .then(data => {
-            document.querySelector("head").innerHTML = data;
-        })
-        .catch(error => console.error('Error fetching head:', error));
-
     fetch("sidebar.html")
         .then(response => response.text())
         .then(data => {
