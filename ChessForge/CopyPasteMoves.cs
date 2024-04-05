@@ -22,7 +22,7 @@ namespace ChessForge
             {
                 List<TreeNode> lstNodes = null;
 
-                IDataObject dataObject = Clipboard.GetDataObject();
+                IDataObject dataObject = SystemClipboard.GetDataObject();
                 if (dataObject != null && dataObject.GetDataPresent(DataFormats.Serializable))
                 {
                     lstNodes = dataObject.GetData(DataFormats.Serializable) as List<TreeNode>;
@@ -30,7 +30,7 @@ namespace ChessForge
                 else
                 {
                     // do we have plain text?
-                    string clipText = Clipboard.GetText();
+                    string clipText = SystemClipboard.GetText();
                     if (!string.IsNullOrEmpty(clipText))
                     {
                         lstNodes = ProcessClipboardText(clipText);
