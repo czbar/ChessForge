@@ -96,6 +96,20 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Places an IDataObject in the clipboard.
+        /// Direct call Clipboard.SetDataObject() can throw an exception.
+        /// </summary>
+        /// <returns></returns>
+        public static void SetDataObject(IDataObject dataObject)
+        {
+            try
+            {
+                Clipboard.SetDataObject(dataObject);
+            }
+            catch { }
+        }
+
+        /// <summary>
         /// Saves a node list in the clipboard.
         /// </summary>
         /// <param name="lst"></param>
