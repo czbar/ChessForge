@@ -223,6 +223,7 @@
       <DependentUpon>ManageChapterDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="ManualReviewState.cs" />
+    <Compile Include="MouseClickMonitor.cs" />
     <Compile Include="MoveAnimator.cs" />
     <Compile Include="MoveAssessment.cs" />
     <Compile Include="MoveCandidates.cs" />
