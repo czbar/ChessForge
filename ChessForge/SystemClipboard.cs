@@ -6,7 +6,8 @@ using System.Windows;
 namespace ChessForge
 {
     /// <summary>
-    /// Manages interactions with the system clipborad
+    /// Manages interactions with the system clipboard.
+    /// Due to some issues with interop, calls to the clipboard can throw an exception.
     /// </summary>
     public class SystemClipboard
     {
@@ -61,7 +62,9 @@ namespace ChessForge
 
         /// <summary>
         /// Gets text from the clipboard.
+        /// Direct call Clipboard.GetText() can throw an exception.
         /// </summary>
+        /// <returns></returns>
         public static string GetText()
         {
             string txt = "";
@@ -72,6 +75,24 @@ namespace ChessForge
             catch { };
 
             return txt;
+        }
+
+        /// <summary>
+        /// Gets IDataObject from the clipboard.
+        /// Direct call Clipboard.GetDataObject() can throw an exception.
+        /// </summary>
+        /// <returns></returns>
+        public static IDataObject GetDataObject()
+        {
+            IDataObject dataObject = null;
+
+            try
+            {
+                dataObject = Clipboard.GetDataObject();
+            }
+            catch { }
+
+            return dataObject;
         }
 
         /// <summary>
