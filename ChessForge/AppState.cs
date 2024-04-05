@@ -1126,7 +1126,7 @@ namespace ChessForge
                                 menuItem.IsEnabled = view != null && view.HasMovesSelectedForCopy;
                                 break;
                             case "UiMnStPasteMoves":
-                                menuItem.IsEnabled = SystemClipboard.HasSerializedData() || !string.IsNullOrEmpty(Clipboard.GetText());
+                                menuItem.IsEnabled = SystemClipboard.HasSerializedData() || !string.IsNullOrEmpty(SystemClipboard.GetText());
                                 break;
                             case "UiMnPromoteLine":
                                 menuItem.IsEnabled = tree.SelectedNode != null && !tree.SelectedNode.IsMainLine();
@@ -1209,7 +1209,7 @@ namespace ChessForge
                                 menuItem.IsEnabled = view != null && view.HasMovesSelectedForCopy;
                                 break;
                             case "UiMnGamePasteMoves":
-                                menuItem.IsEnabled = SystemClipboard.HasSerializedData() || !string.IsNullOrEmpty(Clipboard.GetText());
+                                menuItem.IsEnabled = SystemClipboard.HasSerializedData() || !string.IsNullOrEmpty(SystemClipboard.GetText());
                                 break;
                         }
                     }
@@ -1320,7 +1320,7 @@ namespace ChessForge
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "UiMnExercPasteMoves":
-                                menuItem.IsEnabled = SystemClipboard.HasSerializedData() || !string.IsNullOrEmpty(Clipboard.GetText());
+                                menuItem.IsEnabled = SystemClipboard.HasSerializedData() || !string.IsNullOrEmpty(SystemClipboard.GetText());
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "UiMnExerc_ImportExercises":
@@ -1546,39 +1546,47 @@ namespace ChessForge
         {
             _mainWin.Dispatcher.Invoke(() =>
             {
-                GuiConfiguration.ConfigureAppBarFontButtons();
+                try
+                {
+                    GuiConfiguration.ConfigureAppBarFontButtons();
 
-                _mainWin.UiMnStartTraining.IsEnabled = true;
-                _mainWin.UiMnRestartTraining.IsEnabled = false;
-                _mainWin.UiMnExitTraining.IsEnabled = false;
+                    MainWin.UiMnStartTraining.IsEnabled = true;
+                    MainWin.UiMnRestartTraining.IsEnabled = false;
+                    MainWin.UiMnExitTraining.IsEnabled = false;
 
-                bool engGameEnabled = ActiveVariationTree != null
-                    && (ActiveTab == TabViewType.STUDY || ActiveTab == TabViewType.MODEL_GAME);
-                _mainWin.UiMnMainPlayEngine.Visibility = Visibility.Visible;
-                _mainWin.UiMnMainPlayEngine.IsEnabled = engGameEnabled;
+                    bool engGameEnabled = ActiveVariationTree != null
+                        && (ActiveTab == TabViewType.STUDY || ActiveTab == TabViewType.MODEL_GAME);
+                    MainWin.UiMnMainPlayEngine.Visibility = Visibility.Visible;
+                    MainWin.UiMnMainPlayEngine.IsEnabled = engGameEnabled;
 
-                _mainWin.UiMnciPlayEngine.IsEnabled = true;
+                    MainWin.UiMnciPlayEngine.IsEnabled = true;
 
-                _mainWin.UiMnEvaluateGames.IsEnabled = AppState.Workbook != null && Workbook.HasAnyModelGames;
-                _mainWin.UiMnFindGames.IsEnabled = AppState.Workbook != null && Workbook.IsReady;
-                _mainWin.UiMnImportGames.IsEnabled = AppState.Workbook != null && Workbook.IsReady;
-                _mainWin.UiMnDeleteComments.IsEnabled = WorkbookManager.SessionWorkbook != null;
-                _mainWin.UiMnDeleteEngineEvals.IsEnabled = WorkbookManager.SessionWorkbook != null;
-                _mainWin.UiMnAssignECO.IsEnabled = WorkbookManager.SessionWorkbook != null;
-                _mainWin.UiMnCopyArticles.IsEnabled = WorkbookManager.SessionWorkbook != null;
-                _mainWin.UiMnMoveArticles.IsEnabled = WorkbookManager.SessionWorkbook != null;
-                MainWin.UiMnManageChapter.IsEnabled = AppState.ActiveChapter != null;
-                MainWin.UiMnSplitChapter.IsEnabled = AppState.ActiveChapter != null;
+                    MainWin.UiMnEvaluateGames.IsEnabled = AppState.Workbook != null && Workbook.HasAnyModelGames;
+                    MainWin.UiMnFindGames.IsEnabled = AppState.Workbook != null && Workbook.IsReady;
+                    MainWin.UiMnImportGames.IsEnabled = AppState.Workbook != null && Workbook.IsReady;
+                    MainWin.UiMnDeleteComments.IsEnabled = WorkbookManager.SessionWorkbook != null;
+                    MainWin.UiMnDeleteEngineEvals.IsEnabled = WorkbookManager.SessionWorkbook != null;
+                    MainWin.UiMnAssignECO.IsEnabled = WorkbookManager.SessionWorkbook != null;
+                    MainWin.UiMnCopyArticles.IsEnabled = WorkbookManager.SessionWorkbook != null;
+                    MainWin.UiMnMoveArticles.IsEnabled = WorkbookManager.SessionWorkbook != null;
 
-                _mainWin.UiMnAnnotations.IsEnabled = IsTreeViewTabActive();
-                MainWin.UiMnPaste.IsEnabled = !string.IsNullOrEmpty(Clipboard.GetText());
-                _mainWin.UiMnCommentBeforeMove.IsEnabled = IsTreeViewTabActive();
-                _mainWin.UiMnMergeChapters.IsEnabled = WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.GetChapterCount() > 1;
+                    MainWin.UiMnManageChapter.IsEnabled = AppState.ActiveChapter != null;
+                    MainWin.UiMnSplitChapter.IsEnabled = AppState.ActiveChapter != null;
 
-                MainWin.UiMnMainDeleteGames.IsEnabled = WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.HasAnyModelGames;
-                MainWin.UiMnMainDeleteExercises.IsEnabled = WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.HasAnyExercises;
-                MainWin.UiMnRemoveDuplicates.IsEnabled = WorkbookManager.SessionWorkbook != null &&
-                        (WorkbookManager.SessionWorkbook.HasAnyModelGames || WorkbookManager.SessionWorkbook.HasAnyExercises);
+                    MainWin.UiMnAnnotations.IsEnabled = IsTreeViewTabActive();
+                    MainWin.UiMnPaste.IsEnabled = !string.IsNullOrEmpty(SystemClipboard.GetText());
+                    MainWin.UiMnCommentBeforeMove.IsEnabled = IsTreeViewTabActive();
+                    MainWin.UiMnMergeChapters.IsEnabled = WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.GetChapterCount() > 1;
+
+                    MainWin.UiMnMainDeleteGames.IsEnabled = WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.HasAnyModelGames;
+                    MainWin.UiMnMainDeleteExercises.IsEnabled = WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.HasAnyExercises;
+                    MainWin.UiMnRemoveDuplicates.IsEnabled = WorkbookManager.SessionWorkbook != null &&
+                            (WorkbookManager.SessionWorkbook.HasAnyModelGames || WorkbookManager.SessionWorkbook.HasAnyExercises);
+                }
+                catch(Exception ex)
+                {
+                    AppLog.Message("ConfigureMenusForManualReview()", ex);
+                }
             });
         }
 
