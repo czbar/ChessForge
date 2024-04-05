@@ -1888,7 +1888,7 @@ BookmarkAllOptionsHere=Utwórz zakładki dla wszystkich opcji
 
 #description: Mark the current position as a thumbnail
 #english: MarkAsThumbnail=Mark as Thumbnail
-MarkAsThumbnail=Zaznacz jako Wizytówkę Rozdziału
+MarkAsThumbnail=Zaznacz jako Wizytówkę
 
 #description: ChapterThumbnail
 #english: ChapterThumbnail=Thumbnail for Chapters View
