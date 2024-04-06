@@ -955,8 +955,12 @@ namespace ChessForge
             {
                 if (WorkbookManager.SessionWorkbook.ActiveChapterIndex > 0)
                 {
-                    int targetChapterIndex = WorkbookManager.SessionWorkbook.ActiveChapterIndex - 1;
-                    WorkbookLocationNavigator.GotoArticle(targetChapterIndex, AppState.ActiveTab);
+                    if (!MouseClickMonitor.IsSeriesInProgress(MouseClickAction.PREVIOUS_CHAPTER))
+                    {
+                        int targetChapterIndex = WorkbookManager.SessionWorkbook.ActiveChapterIndex - 1;
+                        WorkbookLocationNavigator.GotoArticle(targetChapterIndex, AppState.ActiveTab);
+                    }
+                    MouseClickMonitor.RegisterClick(MouseClickAction.PREVIOUS_CHAPTER);
                 }
             }
             catch
@@ -981,8 +985,12 @@ namespace ChessForge
                 if (WorkbookManager.SessionWorkbook.ActiveChapterIndex >= 0
                     && WorkbookManager.SessionWorkbook.ActiveChapterIndex < WorkbookManager.SessionWorkbook.Chapters.Count - 1)
                 {
-                    int targetChapterIndex = WorkbookManager.SessionWorkbook.ActiveChapterIndex + 1;
-                    WorkbookLocationNavigator.GotoArticle(targetChapterIndex, AppState.ActiveTab);
+                    if (!MouseClickMonitor.IsSeriesInProgress(MouseClickAction.NEXT_CHAPTER))
+                    {
+                        int targetChapterIndex = WorkbookManager.SessionWorkbook.ActiveChapterIndex + 1;
+                        WorkbookLocationNavigator.GotoArticle(targetChapterIndex, AppState.ActiveTab);
+                    }
+                    MouseClickMonitor.RegisterClick(MouseClickAction.NEXT_CHAPTER);
                 }
             }
             catch
