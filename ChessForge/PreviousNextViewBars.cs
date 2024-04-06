@@ -27,10 +27,12 @@ namespace ChessForge
                     case GameData.ContentType.INTRO:
                         break;
                     case GameData.ContentType.MODEL_GAME:
-                        SetModelGameCounterControls();
+                        int gameIndex = AppState.ActiveChapter.ActiveModelGameIndex;
+                        SetModelGameCounterControls(gameIndex);
                         break;
                     case GameData.ContentType.EXERCISE:
-                        SetExerciseCounterControls();
+                        int exerciseIndex = WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex;
+                        SetExerciseCounterControls(exerciseIndex);
                         break;
                 }
                 if (WorkbookManager.SessionWorkbook != null)
@@ -76,17 +78,15 @@ namespace ChessForge
         /// <summary>
         /// Builds the Previous/Next bar for Model Games view.
         /// </summary>
-        private static void SetModelGameCounterControls()
+        public static void SetModelGameCounterControls(int gameIndex)
         {
             MainWindow mainWin = AppState.MainWin;
 
             int gameCount = 0;
-            int gameIndex = -1;
 
             if (WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.ActiveChapter != null)
             {
                 gameCount = WorkbookManager.SessionWorkbook.ActiveChapter.GetModelGameCount();
-                gameIndex = WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex;
             }
 
             SetupElements(mainWin.UiGamesLblChapterTitle,
@@ -101,17 +101,15 @@ namespace ChessForge
         /// <summary>
         /// Builds the Previous/Next bar for the Exercises view.
         /// </summary>
-        private static void SetExerciseCounterControls()
+        public static void SetExerciseCounterControls(int exerciseIndex)
         {
             MainWindow mainWin = AppState.MainWin;
 
             int exerciseCount = 0;
-            int exerciseIndex = -1;
 
             if (WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.ActiveChapter != null)
             {
                 exerciseCount = WorkbookManager.SessionWorkbook.ActiveChapter.GetExerciseCount();
-                exerciseIndex = WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex;
             }
 
             SetupElements(mainWin.UiExerciseLblChapterTitle,
