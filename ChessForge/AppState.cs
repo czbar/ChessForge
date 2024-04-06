@@ -74,6 +74,33 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns content type corresponding to the ActiveTab.
+        /// </summary>
+        /// <returns></returns>
+        public static GameData.ContentType GetContentTypeForActiveTab()
+        {
+            GameData.ContentType contentType = GameData.ContentType.UNKNOWN;
+
+            switch (ActiveTab)
+            {
+                case TabViewType.INTRO:
+                    contentType = GameData.ContentType.INTRO;
+                    break;
+                case TabViewType.STUDY:
+                    contentType = GameData.ContentType.STUDY_TREE;
+                    break;
+                case TabViewType.MODEL_GAME:
+                    contentType = GameData.ContentType.MODEL_GAME;
+                    break;
+                case TabViewType.EXERCISE:
+                    contentType = GameData.ContentType.EXERCISE;
+                    break;
+            }
+
+            return contentType;
+        }
+
+        /// <summary>
         /// Returns the current Workbook object
         /// </summary>
         public static Workbook Workbook
