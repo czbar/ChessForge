@@ -156,10 +156,13 @@ namespace ChessForge
             {
                 Chapter activeChapter = AppState.ActiveChapter;
                 int activeChapterIndex = activeChapter.Index;
-                int activeGame = activeChapter.ActiveModelGameIndex;
-                int activeExercise = activeChapter.ActiveExerciseIndex;
+                int activeGameIndex = activeChapter.ActiveModelGameIndex;
+                int activeExerciseIndex = activeChapter.ActiveExerciseIndex;
 
                 int chapterIndex = -1;
+                int gameIndex = -1;
+                int exerciseIndex = -1;
+
                 GameData.ContentType contentType = AppState.GetContentTypeForActiveTab();
 
                 AppState.MainWin.Dispatcher.Invoke(() =>
@@ -179,12 +182,28 @@ namespace ChessForge
                             PreviousNextViewBars.SetChapterCounterControls(contentType, chapterIndex);
                             break;
                         case MouseClickAction.NEXT_GAME:
+                            AppState.MainWin.ClearViewForQuickSkip(contentType);
+                            gameIndex = _clickCount + activeGameIndex;
+                            endSeries = _clickCount + activeGameIndex >= activeChapter.GetModelGameCount() - 1;
+                            PreviousNextViewBars.SetModelGameCounterControls(gameIndex);
                             break;
                         case MouseClickAction.PREVIOUS_GAME:
+                            AppState.MainWin.ClearViewForQuickSkip(contentType);
+                            gameIndex = activeGameIndex - _clickCount;
+                            endSeries = activeGameIndex - _clickCount <= 0;
+                            PreviousNextViewBars.SetModelGameCounterControls(gameIndex);
                             break;
                         case MouseClickAction.NEXT_EXERCISE:
+                            AppState.MainWin.ClearViewForQuickSkip(contentType);
+                            exerciseIndex = _clickCount + activeExerciseIndex;
+                            endSeries = _clickCount + activeExerciseIndex >= activeChapter.GetExerciseCount() - 1;
+                            PreviousNextViewBars.SetExerciseCounterControls(exerciseIndex);
                             break;
                         case MouseClickAction.PREVIOUS_EXERCISE:
+                            AppState.MainWin.ClearViewForQuickSkip(contentType);
+                            exerciseIndex = activeExerciseIndex - _clickCount;
+                            endSeries = activeExerciseIndex - _clickCount <= 0;
+                            PreviousNextViewBars.SetExerciseCounterControls(exerciseIndex);
                             break;
                     }
                 });
@@ -215,12 +234,24 @@ namespace ChessForge
                                                               AppState.ActiveTab);
                         break;
                     case MouseClickAction.NEXT_GAME:
+                        AppState.MainWin.SelectModelGame(
+                            Math.Min(_clickCount + AppState.ActiveChapter.ActiveModelGameIndex, AppState.ActiveChapter.GetModelGameCount() - 1), 
+                            true);
                         break;
                     case MouseClickAction.PREVIOUS_GAME:
+                        AppState.MainWin.SelectModelGame(
+                            Math.Max(AppState.ActiveChapter.ActiveModelGameIndex - _clickCount, 0),
+                            true);
                         break;
                     case MouseClickAction.NEXT_EXERCISE:
+                        AppState.MainWin.SelectExercise(
+                            Math.Min(_clickCount + AppState.ActiveChapter.ActiveExerciseIndex, AppState.ActiveChapter.GetExerciseCount() - 1),
+                            true);
                         break;
                     case MouseClickAction.PREVIOUS_EXERCISE:
+                        AppState.MainWin.SelectExercise(
+                            Math.Max(AppState.ActiveChapter.ActiveExerciseIndex - _clickCount, 0),
+                            true);
                         break;
                 }
             });
