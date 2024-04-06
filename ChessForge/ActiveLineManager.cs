@@ -657,6 +657,12 @@ namespace ChessForge
                                     _mainWin.UiMnFindPositions_Click(null, null);
                                     e.Handled = true;
                                     break;
+                                default:
+                                    if (HandleKeyDown(e.Key))
+                                    {
+                                        e.Handled = true;
+                                    }
+                                    break;
                             }
                         }
                         catch { }
