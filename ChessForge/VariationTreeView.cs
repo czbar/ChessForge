@@ -1034,13 +1034,6 @@ namespace ChessForge
         public void ClearForQuickSkip()
         {
             Clear(GameData.ContentType.GENERIC);
-
-            Paragraph para = new Paragraph();
-            para.Margin = new Thickness(50, 50, 0, 0);
-            Run run = new Run("\nSkipping views...");
-            para.Inlines.Add(run);
-
-            Document.Blocks.Add(para);
         }
 
         /// <summary>
