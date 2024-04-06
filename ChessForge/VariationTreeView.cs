@@ -822,7 +822,10 @@ namespace ChessForge
         /// </summary>
         public void BringSelectedRunIntoView()
         {
-            _selectedRun?.BringIntoView();
+            if (TextUtils.GetIdFromPrefixedString(_selectedRun.Name) != 0)
+            {
+                _selectedRun?.BringIntoView();
+            }
         }
 
         /// <summary>
@@ -981,7 +984,10 @@ namespace ChessForge
                         _selectedRun.Background = _brushSelectedMoveBkg;
                         _selectedRun.Foreground = _brushSelectedMoveFore;
 
-                        _selectedRun.BringIntoView();
+                        if (nodeId != 0)
+                        {
+                            _selectedRun.BringIntoView();
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -1020,6 +1026,21 @@ namespace ChessForge
             {
                 AppLog.Message("Clear Blocks", ex);
             }
+        }
+
+        /// <summary>
+        /// Clears the document and displays the "quick skip messgae".
+        /// </summary>
+        public void ClearForQuickSkip()
+        {
+            Clear(GameData.ContentType.GENERIC);
+
+            Paragraph para = new Paragraph();
+            para.Margin = new Thickness(50, 50, 0, 0);
+            Run run = new Run("\nSkipping views...");
+            para.Inlines.Add(run);
+
+            Document.Blocks.Add(para);
         }
 
         /// <summary>
