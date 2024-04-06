@@ -1,4 +1,5 @@
 ﻿using ChessPosition;
+using GameTree;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -102,6 +103,15 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Checks if a series of the given type is in progress.
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsSeriesInProgress(MouseClickAction action)
+        {
+            return action != MouseClickAction.NONE && action == _lastClickAction;
+        }
+
+        /// <summary>
         /// Start a new series by resetting the variables
         /// and starting the timer.
         /// </summary>
@@ -121,8 +131,12 @@ namespace ChessForge
         /// </summary>
         private static void EndCurrentSeries()
         {
-            AppState.MainWin.Timers.Stop(AppTimers.TimerId.MOUSE_CLICK_MONITOR);
-            EndSeriesAction();
+            try
+            {
+                AppState.MainWin.Timers.Stop(AppTimers.TimerId.MOUSE_CLICK_MONITOR);
+                EndSeriesAction();
+            }
+            catch { }
 
             _clickCount = 0;
             _lastClickAction = MouseClickAction.NONE;
@@ -145,23 +159,35 @@ namespace ChessForge
                 int activeGame = activeChapter.ActiveModelGameIndex;
                 int activeExercise = activeChapter.ActiveExerciseIndex;
 
-                switch (_lastClickAction)
+                int chapterIndex = -1;
+                GameData.ContentType contentType = AppState.GetContentTypeForActiveTab();
+
+                AppState.MainWin.Dispatcher.Invoke(() =>
                 {
-                    case MouseClickAction.NEXT_CHAPTER:
-                        endSeries = _clickCount + activeChapterIndex >= AppState.Workbook.Chapters.Count - 1;
-                        break;
-                    case MouseClickAction.PREVIOUS_CHAPTER:
-                        endSeries = activeChapterIndex - _clickCount <= 0;
-                        break;
-                    case MouseClickAction.NEXT_GAME:
-                        break;
-                    case MouseClickAction.PREVIOUS_GAME:
-                        break;
-                    case MouseClickAction.NEXT_EXERCISE:
-                        break;
-                    case MouseClickAction.PREVIOUS_EXERCISE:
-                        break;
-                }
+                    switch (_lastClickAction)
+                    {
+                        case MouseClickAction.NEXT_CHAPTER:
+                            AppState.MainWin.ClearViewForQuickSkip(contentType);
+                            chapterIndex = _clickCount + activeChapterIndex;
+                            endSeries = _clickCount + activeChapterIndex >= AppState.Workbook.Chapters.Count - 1;
+                            PreviousNextViewBars.SetChapterCounterControls(contentType, chapterIndex);
+                            break;
+                        case MouseClickAction.PREVIOUS_CHAPTER:
+                            AppState.MainWin.ClearViewForQuickSkip(contentType);
+                            chapterIndex = activeChapterIndex - _clickCount;
+                            endSeries = activeChapterIndex - _clickCount <= 0;
+                            PreviousNextViewBars.SetChapterCounterControls(contentType, chapterIndex);
+                            break;
+                        case MouseClickAction.NEXT_GAME:
+                            break;
+                        case MouseClickAction.PREVIOUS_GAME:
+                            break;
+                        case MouseClickAction.NEXT_EXERCISE:
+                            break;
+                        case MouseClickAction.PREVIOUS_EXERCISE:
+                            break;
+                    }
+                });
             }
             catch { }
 
@@ -176,25 +202,28 @@ namespace ChessForge
         /// </summary>
         private static void EndSeriesAction()
         {
-            switch (_lastClickAction)
+            AppState.MainWin.Dispatcher.Invoke(() =>
             {
-                case MouseClickAction.NEXT_CHAPTER:
-                    WorkbookLocationNavigator.GotoArticle(Math.Min(_clickCount + AppState.ActiveChapter.Index, AppState.Workbook.Chapters.Count - 1),
-                                                          AppState.ActiveTab);
-                    break;
-                case MouseClickAction.PREVIOUS_CHAPTER:
-                    WorkbookLocationNavigator.GotoArticle(Math.Max(AppState.ActiveChapter.Index - _clickCount, 0),
-                                                          AppState.ActiveTab);
-                    break;
-                case MouseClickAction.NEXT_GAME:
-                    break;
-                case MouseClickAction.PREVIOUS_GAME:
-                    break;
-                case MouseClickAction.NEXT_EXERCISE:
-                    break;
-                case MouseClickAction.PREVIOUS_EXERCISE:
-                    break;
-            }
+                switch (_lastClickAction)
+                {
+                    case MouseClickAction.NEXT_CHAPTER:
+                        WorkbookLocationNavigator.GotoArticle(Math.Min(_clickCount + AppState.ActiveChapter.Index, AppState.Workbook.Chapters.Count - 1),
+                                                              AppState.ActiveTab);
+                        break;
+                    case MouseClickAction.PREVIOUS_CHAPTER:
+                        WorkbookLocationNavigator.GotoArticle(Math.Max(AppState.ActiveChapter.Index - _clickCount, 0),
+                                                              AppState.ActiveTab);
+                        break;
+                    case MouseClickAction.NEXT_GAME:
+                        break;
+                    case MouseClickAction.PREVIOUS_GAME:
+                        break;
+                    case MouseClickAction.NEXT_EXERCISE:
+                        break;
+                    case MouseClickAction.PREVIOUS_EXERCISE:
+                        break;
+                }
+            });
         }
     }
 }
