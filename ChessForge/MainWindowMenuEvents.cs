@@ -428,6 +428,17 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Paste content of clipboard into the view or workbook
+        /// if possible.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnPaste_Click(object sender, RoutedEventArgs e)
+        {
+            CopyPasteMoves.PasteMoveList();
+        }
+
+        /// <summary>
         /// The user requested Undo. 
         /// If the active view is Chapters then this is a workbook/chapter operation that needs undoing.
         /// If we are in Study, Game or Exercise view, it could be a tree operation
@@ -1357,7 +1368,7 @@ namespace ChessForge
                 {
                     if (gd.GetContentType(false) == GameData.ContentType.EXERCISE)
                     {
-                        if (chapter.AddArticle(gd, GameData.ContentType.EXERCISE, out error, GameData.ContentType.EXERCISE) >= 0)
+                        if (PgnArticleUtils.AddArticle(chapter, gd, GameData.ContentType.EXERCISE, out error, GameData.ContentType.EXERCISE) >= 0)
                         {
                             copiedCount++;
                             copiedExercises++;
@@ -1366,7 +1377,7 @@ namespace ChessForge
                     }
                     else if (copyGames && (gd.GetContentType(false) == GameData.ContentType.GENERIC || gd.GetContentType(false) == GameData.ContentType.MODEL_GAME))
                     {
-                        if (chapter.AddArticle(gd, GameData.ContentType.MODEL_GAME, out error, GameData.ContentType.MODEL_GAME) >= 0)
+                        if (PgnArticleUtils.AddArticle(chapter, gd, GameData.ContentType.MODEL_GAME, out error, GameData.ContentType.MODEL_GAME) >= 0)
                         {
                             copiedCount++;
                         }
@@ -1754,7 +1765,7 @@ namespace ChessForge
                                     {
                                         try
                                         {
-                                            int index = chapter.AddArticle(games[i], contentType, out string error, targetcontentType);
+                                            int index = PgnArticleUtils.AddArticle(chapter, games[i], contentType, out string error, targetcontentType);
                                             if (index < 0)
                                             {
                                                 if (string.IsNullOrEmpty(error))

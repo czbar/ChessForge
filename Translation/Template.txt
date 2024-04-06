@@ -157,6 +157,10 @@ Day=
 #english: Count=Count
 Count=
 
+#description: Chapter count
+#english: ChapterCount=Number of Chapters 
+ChapterCount=
+
 #description: Game count
 #english: GameCount=Number of Games 
 GameCount=
@@ -180,6 +184,14 @@ Bookmarks=
 #description: Copy
 #english: Copy=Copy
 Copy=
+
+#description: Paste
+#english: Paste=Paste
+Paste=
+
+#description: Paste fromClipboard
+#english: PasteFromClipboard=Paste from Clipboard
+PasteFromClipboard=
 
 #description: Move item
 #english: MoveItem=Move
@@ -740,6 +752,10 @@ MsgEditPositionSearch=
 #description: Message Box Title for Position Search
 #english: MsgTitlePositionSearch=Position Search
 MsgTitlePositionSearch=
+
+#description: Message: Clipboard contains PGN text
+#english: MsgClipboardContainsPgn=Clipboard's content
+MsgClipboardContainsPgn=
 
 #description: Workbook Options dialog title
 #english: DlgTitleWorkbookOptions=Workbook Options
@@ -1889,6 +1905,10 @@ CutMoves=
 #description: Paste selected moves
 #english: PasteMoves=Paste Moves
 PasteMoves=
+
+#description: Proceed and paste prompt
+#english: ProceedAndPaste=Proceed and Paste
+ProceedAndPaste=
 
 #description: Copy Highlighted line
 #english: CopyHighlightedLine=Copy Highlighted Line

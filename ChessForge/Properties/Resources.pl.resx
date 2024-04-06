@@ -222,6 +222,9 @@
   <data name="Count" xml:space="preserve">
     <value>Ilość</value>
   </data>
+  <data name="ChapterCount" xml:space="preserve">
+    <value>Liczba rozdziałów </value>
+  </data>
   <data name="GameCount" xml:space="preserve">
     <value>Liczba partii </value>
   </data>
@@ -239,6 +242,12 @@
   </data>
   <data name="Copy" xml:space="preserve">
     <value>Kopiuj</value>
+  </data>
+  <data name="Paste" xml:space="preserve">
+    <value>Wkleić</value>
+  </data>
+  <data name="PasteFromClipboard" xml:space="preserve">
+    <value>Wklej Zawartość Schowka </value>
   </data>
   <data name="MoveItem" xml:space="preserve">
     <value>Przenieś</value>
@@ -623,6 +632,9 @@
   </data>
   <data name="MsgTitlePositionSearch" xml:space="preserve">
     <value>Wyszukiwanie Pozycji</value>
+  </data>
+  <data name="MsgClipboardContainsPgn" xml:space="preserve">
+    <value>Zawartość schowka</value>
   </data>
   <data name="DlgTitleWorkbookOptions" xml:space="preserve">
     <value>Opcje Podręcznika</value>
@@ -1327,7 +1339,7 @@
     <value>Utwórz zakładki dla wszystkich opcji</value>
   </data>
   <data name="MarkAsThumbnail" xml:space="preserve">
-    <value>Zaznacz jako Wizytówkę Rozdziału</value>
+    <value>Zaznacz jako Wizytówkę</value>
   </data>
   <data name="ChapterThumbnail" xml:space="preserve">
     <value>Wizytówka Rozdziału</value>
@@ -1340,6 +1352,9 @@
   </data>
   <data name="PasteMoves" xml:space="preserve">
     <value>Wklej ruchy</value>
+  </data>
+  <data name="ProceedAndPaste" xml:space="preserve">
+    <value>Kontynuować i wkleić</value>
   </data>
   <data name="CopyHighlightedLine" xml:space="preserve">
     <value>Skopiuj podświetlony wariant</value>

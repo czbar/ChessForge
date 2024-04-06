@@ -955,8 +955,12 @@ namespace ChessForge
             {
                 if (WorkbookManager.SessionWorkbook.ActiveChapterIndex > 0)
                 {
-                    int targetChapterIndex = WorkbookManager.SessionWorkbook.ActiveChapterIndex - 1;
-                    WorkbookLocationNavigator.GotoArticle(targetChapterIndex, AppState.ActiveTab);
+                    if (!MouseClickMonitor.IsSeriesInProgress(MouseClickAction.PREVIOUS_CHAPTER))
+                    {
+                        int targetChapterIndex = WorkbookManager.SessionWorkbook.ActiveChapterIndex - 1;
+                        WorkbookLocationNavigator.GotoArticle(targetChapterIndex, AppState.ActiveTab);
+                    }
+                    MouseClickMonitor.RegisterClick(MouseClickAction.PREVIOUS_CHAPTER);
                 }
             }
             catch
@@ -981,8 +985,12 @@ namespace ChessForge
                 if (WorkbookManager.SessionWorkbook.ActiveChapterIndex >= 0
                     && WorkbookManager.SessionWorkbook.ActiveChapterIndex < WorkbookManager.SessionWorkbook.Chapters.Count - 1)
                 {
-                    int targetChapterIndex = WorkbookManager.SessionWorkbook.ActiveChapterIndex + 1;
-                    WorkbookLocationNavigator.GotoArticle(targetChapterIndex, AppState.ActiveTab);
+                    if (!MouseClickMonitor.IsSeriesInProgress(MouseClickAction.NEXT_CHAPTER))
+                    {
+                        int targetChapterIndex = WorkbookManager.SessionWorkbook.ActiveChapterIndex + 1;
+                        WorkbookLocationNavigator.GotoArticle(targetChapterIndex, AppState.ActiveTab);
+                    }
+                    MouseClickMonitor.RegisterClick(MouseClickAction.NEXT_CHAPTER);
                 }
             }
             catch
@@ -1002,7 +1010,11 @@ namespace ChessForge
             {
                 if (WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex > 0)
                 {
-                    SelectModelGame(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex - 1, true);
+                    if (!MouseClickMonitor.IsSeriesInProgress(MouseClickAction.PREVIOUS_GAME))
+                    {
+                        SelectModelGame(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex - 1, true);
+                    }
+                    MouseClickMonitor.RegisterClick(MouseClickAction.PREVIOUS_GAME);
                 }
             }
             catch
@@ -1022,7 +1034,11 @@ namespace ChessForge
             {
                 if (WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex < WorkbookManager.SessionWorkbook.ActiveChapter.GetModelGameCount() - 1)
                 {
-                    SelectModelGame(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex + 1, true);
+                    if (!MouseClickMonitor.IsSeriesInProgress(MouseClickAction.NEXT_GAME))
+                    {
+                        SelectModelGame(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex + 1, true);
+                    }
+                    MouseClickMonitor.RegisterClick(MouseClickAction.NEXT_GAME);
                 }
             }
             catch
@@ -1032,7 +1048,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// In the Exercises view, the user requested the next game
+        /// In the Exercises view, the user requested the previous exercise
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1042,7 +1058,11 @@ namespace ChessForge
             {
                 if (WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex > 0)
                 {
-                    SelectExercise(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex - 1, true);
+                    if (!MouseClickMonitor.IsSeriesInProgress(MouseClickAction.PREVIOUS_EXERCISE))
+                    {
+                        SelectExercise(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex - 1, true);
+                    }
+                    MouseClickMonitor.RegisterClick(MouseClickAction.PREVIOUS_EXERCISE);
                 }
             }
             catch
@@ -1052,7 +1072,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// In the Exercises view, the user requested the previous game
+        /// In the Exercises view, the user requested the next exercise
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1062,7 +1082,11 @@ namespace ChessForge
             {
                 if (WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex < WorkbookManager.SessionWorkbook.ActiveChapter.GetExerciseCount() - 1)
                 {
-                    SelectExercise(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex + 1, true);
+                    if (!MouseClickMonitor.IsSeriesInProgress(MouseClickAction.NEXT_EXERCISE))
+                    {
+                        SelectExercise(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex + 1, true);
+                    }
+                    MouseClickMonitor.RegisterClick(MouseClickAction.NEXT_EXERCISE);
                 }
             }
             catch

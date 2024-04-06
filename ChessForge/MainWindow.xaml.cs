@@ -160,6 +160,31 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Clears the view corresponding to the passed ContentType
+        /// and displays the "quick skip" message.
+        /// NOTE: in the current design can't use the same technique for 
+        /// the Intro view as it would persist the message!
+        /// TODO: consider showing some modeless Window.
+        /// (maybe actually for all of this?)
+        /// </summary>
+        /// <param name="contentType"></param>
+        public void ClearViewForQuickSkip(GameData.ContentType contentType)
+        {
+            switch (contentType)
+            {
+                case GameData.ContentType.STUDY_TREE:
+                    _studyTreeView.ClearForQuickSkip();
+                    break;
+                case GameData.ContentType.MODEL_GAME:
+                    _modelGameTreeView.ClearForQuickSkip();
+                    break;
+                case GameData.ContentType.EXERCISE:
+                    _exerciseTreeView.ClearForQuickSkip();
+                    break;
+            }
+        }
+
+        /// <summary>
         /// Sets the selections in the ActiveTreeView as they were stored last.
         /// </summary>
         public void RestoreSelectedLineAndMoveInActiveView()

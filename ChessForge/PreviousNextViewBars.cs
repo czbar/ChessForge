@@ -1,10 +1,6 @@
 ﻿using GameTree;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -31,13 +27,22 @@ namespace ChessForge
                     case GameData.ContentType.INTRO:
                         break;
                     case GameData.ContentType.MODEL_GAME:
-                        SetModelGameCounterControls();
+                        int gameIndex = AppState.ActiveChapter.ActiveModelGameIndex;
+                        SetModelGameCounterControls(gameIndex);
                         break;
                     case GameData.ContentType.EXERCISE:
-                        SetExerciseCounterControls();
+                        int exerciseIndex = WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex;
+                        SetExerciseCounterControls(exerciseIndex);
                         break;
                 }
-                SetChapterCounterControls(contentType);
+                if (WorkbookManager.SessionWorkbook != null)
+                {
+                    int chapterIndex = WorkbookManager.SessionWorkbook.ActiveChapterIndex;
+                    if (chapterIndex >= 0)
+                    {
+                        SetChapterCounterControls(contentType, chapterIndex);
+                    }
+                }
             }
             catch
             {
@@ -49,17 +54,13 @@ namespace ChessForge
         /// Sets the chapter counter controls
         /// </summary>
         /// <param name="contentType"></param>
-        private static void SetChapterCounterControls(GameData.ContentType contentType)
+        public static void SetChapterCounterControls(GameData.ContentType contentType, int chapterIndex)
         {
-            MainWindow mainWin = AppState.MainWin;
-
             int chapterCount = 0;
-            int chapterIndex = -1;
 
             if (WorkbookManager.SessionWorkbook != null)
             {
                 chapterCount = WorkbookManager.SessionWorkbook.GetChapterCount();
-                chapterIndex = WorkbookManager.SessionWorkbook.ActiveChapterIndex;
             }
 
             if (GetChapterCounterControls(contentType, out Label lblTitle, out Image imgLeftArrow, out Image imgRightArrow, out Label lblCounter))
@@ -77,17 +78,15 @@ namespace ChessForge
         /// <summary>
         /// Builds the Previous/Next bar for Model Games view.
         /// </summary>
-        private static void SetModelGameCounterControls()
+        public static void SetModelGameCounterControls(int gameIndex)
         {
             MainWindow mainWin = AppState.MainWin;
 
             int gameCount = 0;
-            int gameIndex = -1;
 
             if (WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.ActiveChapter != null)
             {
                 gameCount = WorkbookManager.SessionWorkbook.ActiveChapter.GetModelGameCount();
-                gameIndex = WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex;
             }
 
             SetupElements(mainWin.UiGamesLblChapterTitle,
@@ -102,17 +101,15 @@ namespace ChessForge
         /// <summary>
         /// Builds the Previous/Next bar for the Exercises view.
         /// </summary>
-        private static void SetExerciseCounterControls()
+        public static void SetExerciseCounterControls(int exerciseIndex)
         {
             MainWindow mainWin = AppState.MainWin;
 
             int exerciseCount = 0;
-            int exerciseIndex = -1;
 
             if (WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.ActiveChapter != null)
             {
                 exerciseCount = WorkbookManager.SessionWorkbook.ActiveChapter.GetExerciseCount();
-                exerciseIndex = WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex;
             }
 
             SetupElements(mainWin.UiExerciseLblChapterTitle,

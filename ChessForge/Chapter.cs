@@ -883,6 +883,7 @@ namespace ChessForge
             return index;
         }
 
+#if false
         /// <summary>
         /// Adds a new game to this chapter.
         /// The caller must handle errors if returned index is -1.
@@ -960,5 +961,7 @@ namespace ChessForge
 
             return index;
         }
+
+#endif
     }
 }

@@ -51,8 +51,8 @@ namespace ChessForge
                 // call _rtb.Cut() to conveniently remove the current selection
                 _rtb.Cut();
 
-                // .Cut put some stuff into the clipboard which we will overwrite now
-                Clipboard.SetDataObject(dataObject);
+                // Cut put some stuff into the clipboard which we will overwrite now
+                SystemClipboard.SetDataObject(dataObject);
             }
             catch { }
         }
@@ -72,7 +72,7 @@ namespace ChessForge
                 IDataObject dataObject = new DataObject();
                 dataObject.SetData(DataFormats.UnicodeText, plainText);
                 dataObject.SetData(DataFormats.Serializable, IntroViewClipboard.Elements);
-                Clipboard.SetDataObject(dataObject);
+                SystemClipboard.SetDataObject(dataObject);
             }
             catch { }
         }
@@ -90,7 +90,7 @@ namespace ChessForge
         {
             try
             {
-                IDataObject dataObject = Clipboard.GetDataObject();
+                IDataObject dataObject = SystemClipboard.GetDataObject();
                 if (dataObject != null)
                 {
                     if (dataObject.GetDataPresent(DataFormats.Serializable))

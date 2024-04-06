@@ -782,6 +782,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Number of Chapters .
+        /// </summary>
+        public static string ChapterCount {
+            get {
+                return ResourceManager.GetString("ChapterCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chapters.
         /// </summary>
         public static string Chapters {
@@ -4139,6 +4148,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clipboard&apos;s content.
+        /// </summary>
+        public static string MsgClipboardContainsPgn {
+            get {
+                return ResourceManager.GetString("MsgClipboardContainsPgn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete all evaluations in this view?.
         /// </summary>
         public static string MsgConfirmDeleteEngineEvals {
@@ -5004,6 +5022,24 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Paste.
+        /// </summary>
+        public static string Paste {
+            get {
+                return ResourceManager.GetString("Paste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paste from Clipboard.
+        /// </summary>
+        public static string PasteFromClipboard {
+            get {
+                return ResourceManager.GetString("PasteFromClipboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Paste Moves.
         /// </summary>
         public static string PasteMoves {
@@ -5261,6 +5297,15 @@ namespace ChessForge.Properties {
         public static string Proceed {
             get {
                 return ResourceManager.GetString("Proceed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Proceed and Paste.
+        /// </summary>
+        public static string ProceedAndPaste {
+            get {
+                return ResourceManager.GetString("ProceedAndPaste", resourceCulture);
             }
         }
         

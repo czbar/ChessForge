@@ -31,6 +31,7 @@ namespace ChessForge
             REQUEST_WORKBOOK_MOVE,
             SOLVING_GUESS_MOVE_MADE,
             SHOW_TRAINING_PROGRESS_POPUP_MENU,
+            MOUSE_CLICK_MONITOR,
             FLASH_ANNOUNCEMENT,
             APP_START,
         };
@@ -86,6 +87,11 @@ namespace ChessForge
         /// Checks if a workbook-based response has been requested.
         /// </summary>
         private Timer _requestWorkbookMove;
+
+        /// <summary>
+        /// Monitors mouse click series.
+        /// </summary>
+        private Timer _mouseClickMontitor;
 
         /// <summary>
         /// When elapsed, it invokes the Training Move context menu.
@@ -164,6 +170,10 @@ namespace ChessForge
             _requestWorkbookMove = new Timer();
             InitRequestWorkbookMove();
             _dictTimers.Add(TimerId.REQUEST_WORKBOOK_MOVE, _requestWorkbookMove);
+
+            _mouseClickMontitor = new Timer();
+            InitMouseClickMonitor();
+            _dictTimers.Add(TimerId.MOUSE_CLICK_MONITOR, _mouseClickMontitor);
 
             _showTrainingProgressPopupMenu = new Timer();
             InitShowTrainingProgressPopupMenu();
@@ -369,6 +379,13 @@ namespace ChessForge
             _requestWorkbookMove.Elapsed += new ElapsedEventHandler(_mainWin.InvokeRequestWorkbookResponse);
             _requestWorkbookMove.Interval = 300;
             _requestWorkbookMove.Enabled = false;
+        }
+
+        private void InitMouseClickMonitor()
+        {
+            _mouseClickMontitor.Elapsed += new ElapsedEventHandler(MouseClickMonitor.CheckClickSeriesStatus);
+            _mouseClickMontitor.Interval = 200;
+            _mouseClickMontitor.Enabled = false;
         }
 
         private void InitShowTrainingProgressPopupMenu()

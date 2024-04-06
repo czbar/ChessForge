@@ -157,6 +157,10 @@ Day=Dzień
 #english: Count=Count
 Count=Ilość
 
+#description: Chapter count
+#english: ChapterCount=Number of Chapters 
+ChapterCount=Liczba rozdziałów 
+
 #description: Game count
 #english: GameCount=Number of Games 
 GameCount=Liczba partii 
@@ -180,6 +184,14 @@ Bookmarks=Zakładki
 #description: Copy
 #english: Copy=Copy
 Copy=Kopiuj
+
+#description: Paste
+#english: Paste=Paste
+Paste=Wkleić
+
+#description: Paste fromClipboard
+#english: PasteFromClipboard=Paste from Clipboard
+PasteFromClipboard=Wklej Zawartość Schowka 
 
 #description: Move item
 #english: MoveItem=Move
@@ -740,6 +752,10 @@ MsgEditPositionSearch=Pozycki nie znaleziono. Wrócić do edycji?
 #description: Message Box Title for Position Search
 #english: MsgTitlePositionSearch=Position Search
 MsgTitlePositionSearch=Wyszukiwanie Pozycji
+
+#description: Message: Clipboard contains PGN text
+#english: MsgClipboardContainsPgn=Clipboard's content
+MsgClipboardContainsPgn=Zawartość schowka
 
 #description: Workbook Options dialog title
 #english: DlgTitleWorkbookOptions=Workbook Options
@@ -1872,7 +1888,7 @@ BookmarkAllOptionsHere=Utwórz zakładki dla wszystkich opcji
 
 #description: Mark the current position as a thumbnail
 #english: MarkAsThumbnail=Mark as Thumbnail
-MarkAsThumbnail=Zaznacz jako Wizytówkę Rozdziału
+MarkAsThumbnail=Zaznacz jako Wizytówkę
 
 #description: ChapterThumbnail
 #english: ChapterThumbnail=Thumbnail for Chapters View
@@ -1889,6 +1905,10 @@ CutMoves=Wytnij ruchy
 #description: Paste selected moves
 #english: PasteMoves=Paste Moves
 PasteMoves=Wklej ruchy
+
+#description: Proceed and paste prompt
+#english: ProceedAndPaste=Proceed and Paste
+ProceedAndPaste=Kontynuować i wkleić
 
 #description: Copy Highlighted line
 #english: CopyHighlightedLine=Copy Highlighted Line

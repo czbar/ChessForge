@@ -1,220 +1,209 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chess Forge</title>
+    <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
-    <style>
+    <link rel="stylesheet" href="style.css">
+</head>
 
-      .header {
-	    font-family: 'Open Sans', Arial, sans-serif;
-        background-color: #033;
-        color: white;
-        padding: 15px;
-        text-align: left;
-		height: 180px
-      }
-	  
-	  .header h1 {
-	  font-size: 3em;
-      position: relative;
-      top: 0px;
-      left: 10px;
-      }
-	  
-	  .header p {
-	  font-size: 3em;
-      position: relative;
-      top: 0px;
-      left: 60px;
-	  font-weight: bold;
-      }
-	  
-	  .header img {
-        float: left;
-        width: 128px;
-        height: 128px;
-        padding: 25px;
-        left: 100px;
-      }
-	  
-      .section_header {
-	    font-family: 'Open Sans', Arial, sans-serif;
-        background-color: #033;
-        color: white;
-        padding: 15px;
-        text-align: left;
-		height: 110px
-      }
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="authoring.html" class="nav-link">Authoring</a>
+            <a href="training.html" class="nav-link">Training</a>
+            <a href="feedback.html" class="nav-link">Contact</a>
+        </nav>
+        <img src="images/icon_green_flipped.png" alt="Chess Forge icon" />
+        <p> Chess Forge for Windows</p>
+    </header>
 
-	  .section_header p {
-	  font-size: 2em;
-      position: relative;
-      top: 0px;
-      left: 240px;
-	  font-weight: bold;
-      }
-	  
-	  .section_header  img {
-        float: left;
-        width: 80px;
-        height: 80px;
-		padding: 30px
-        left: 100px;
-      }
-	  
-      .subheader {
-	    font-family: 'Open Sans', Arial, sans-serif;
-        background-color: #099;
-        color: white;
-        padding: 10px;
-		padding-left:5%
-      }
-
-	  .subheader a {
-	    font-family: 'Open Sans', Arial, sans-serif;
-        color: white;
-	  }
-
-      .intro {
-	    font-family: 'Open Sans', Arial, sans-serif;
-        background-color: #033;
-        color: white;
-        padding: 15px;
-		padding-left:5%
-      }
-      .container {
-        display: flex;
-      }
-      .sidebar {
-	    font-family: 'Open Sans', Arial, sans-serif;
-        background-color: #eef8ff;
-        padding: 20px;
-        width: 15%;
-		text-align: center;
-      }
-      .main-content {
-	    font-family: 'Open Sans', Arial, sans-serif;
-        flex: 1;
-        display: flex;
-        flex-wrap:wrap;
-      }
-      .card {
-	    font-family: 'Open Sans', Arial, sans-serif;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-        padding: 16px;
-        text-align: center;
-        background-color: #eefff8;
-        flex-basis: 30%;
-        margin: 10px;
-      }
-	  p {
-	    font-family: 'Open Sans', Arial, sans-serif;
-	  }
-    </style>
-  </head>
-  <body>
-    <div class="header">
-      <img src="images/icon_green_flipped.png" />
-	  <p> Chess Forge for Windows</p> 
-    </div>
     <div class="subheader">
-	        <p><b>Chess Forge</b> is a Free and Open Source <a href="https://en.wikipedia.org/wiki/Free_and_open-source_software" target="_blank">(FOSS)</a> Windows desktop application facilitating chess training. </p> 
-	<ul>
-		<li> <a href="https://sourceforge.net/projects/chessforge/">Download Chess Forge</a></li>
-		<li> <a href="https://github.com/czbar/ChessForge/wiki/User's-Manual"> User&apos;s Manual</a> </li>
-		<li> <a href="https://github.com/czbar/ChessForge/wiki/Frequently-Asked-Questions">FAQ</a> </li>
-	</ul>
+        <p><b>Chess Forge</b> is a Free and Open Source (<a
+                href="https://en.wikipedia.org/wiki/Free_and_open-source_software" target="_blank">FOSS</a>)
+            Windows desktop application facilitating chess studies and training. </p>
+
+        <p>It can be used to build opening repertoires, study endgames, middle game strategy, and tactics.
+            For training, it offers the unique Training Mode, plus two distinct solving modes for exercices.</p>
+
+        <p><b>Chess Forge</b> utilizes lichess.org's public API to bring you the Opening Explorer and Endgame
+            Tablebases.
+            This includes the list of Top Games for the current position from lichess's master database.
+            The games can be conveniently previewed before optional import. </p>
     </div>
-	<div class="section_header">
-		<p> Curated Workbook Collection  </p>
-	    
-	</div>
-    <div class="subheader">
-        <p>This page contains a curated collection of Chess Forge workbooks.</p>
-        <p>Some of them have been created specifically for Chess Forge while others have been adapted from books or <a href="https://lichess.org/study"  target="_blank"> lichess studies  </a>.  All are included here with authors' permissions.</p>
-		<p>Simply download a workbook and open in Chess Forge. Note that Chess Forge workbooks are PGN files and can be opened in any PGN file viewer. However, those viewers will not take advantage
-		   of Chess Forge's PGN extensions and features.</p>
-    </div>
-    <div class="container">
-      <div class="sidebar">
-        <h2>Openings</h2>
-      </div>
-      <div class="main-content">
-        <div class="card">
-          <h3>Stafford Gambit Traps</h3>
-          <p>Adapted from the <a href="https://lichess.org/study/whCVdUeM"> lichess study </a></p>
-          <p>created by <a href="https://lichess.org/@/ericrosen"   target="_blank"> IM Eric Rosen</a> </p>
-          <p><a href="pgn/Stafford Gambit Traps.pgn"> Download Workbook</a></p>
-        </div>
-        <div class="card">
-          <h3>Classical Sicilian for Black</h3>
-          <p>by Chess Forge</p>
-          <p><a href="pgn/Classical Sicilian for Black.pgn"> Download Workbook</a></p>
-		</div>
-        <div class="card">
-          <h3>Budapest Gambit for White</h3>
-          <p>by Chess Forge</p>
-          <p><a href="pgn/Budapest for White.pgn"> Download Workbook</a></p>
-		</div>
-        <div class="card">
-          <h3>French Defense for Black</h3>
-          <p>by Chess Forge</p>
-          <p><a href="pgn/French for Black.pgn"> Download Workbook</a></p>
-		</div>
-        <div class="card">
-          <h3>Tarrasch Defense for Black</h3>
-          <p>by Chess Forge</p>
-          <p><a href="pgn/Tarrasch for Black.pgn"> Download Workbook</a></p>
-		</div>
-      </div>
-    </div>
-          <p></p>
-    <div class="container">
-      <div class="sidebar">
-        <h2>Endgames</h2>
-      </div>
-      <div class="main-content">
-        <div class="card">
-          <h3>Endgames by NoseKnowsAll</h3>
-          <p> Adapted from <a href="https://lichess.org/study/staff-picks"  target="_blank"> multiple lichess studies</a></p>
-          <p>created by <a href="https://lichess.org/@/NoseKnowsAll"  target="_blank"> NoseKnowsAll </a></p>
-          <p><a href="pgn/Endgames by NoseKnowsAll.pgn"> Download Workbook</a></p>
-        </div>
-      </div>
-    </div>
-          <p></p>
-    <div class="container">
-      <div class="sidebar">
-        <h2>Strategy and Tactics</h2>
-      </div>
-      <div class="main-content">
-        <div class="card">
-          <h3>Chess Strategy Explained (sample)</h3>
-          <p> Adapted from <a href="https://books.google.com.au/books/about/Chess_Strategy_Explained.html?id=TdyDzgEACAAJ&redir_esc=y"  target="_blank"> a book of the same title</a></p>
-          <p>by GM Bartlomiej Macieja and IM Witalis Sapis</a></p>
-          <p><a href="pgn/Chess Strategy Explained.pgn"> Download Workbook</a></p>
-        </div>
-        <div class="card">
-          <h3>The Complete Chess Swindler (sample)</h3>
-          <p> Adapted from <a href="https://www.newinchess.com/the-complete-chess-swindler" target="_blank"> a book of the same title</a></p>
-          <p>by GM David Smerdon</a></p>
-          <p><a href="pgn/The Complete Chess Swindler.pgn"> Download Workbook</a></p>
-        </div>
-      </div>
-    </div>
-          <p></p>
-    <div class="container">
-      <div class="sidebar">
-        <h2>Other Material</h2>
-      </div>
-      <div class="main-content">
-        <div class="card">
-          <h3>Checkmate Patterns</h3>
-          <p>by Chess Forge</a></p>
-          <p><a href="pgn/Checkmate Patterns.pgn"> Download Workbook</a></p>
-        </div>
-      </div>
-    </div>
-  </body>
+
+    <main>
+
+        <section class="content">
+            <h1>Getting Started</h1>
+            <article class="release">
+                <p>Chess Forge can be installed on a Windows PC or used as a portable application.</p>
+                <p>The simplest way to install the program is to navigate to the download page (click the link below),
+                    download the installer, and run it on your PC.
+                </p>
+                <a href="https://sourceforge.net/projects/chessforge/">Download Page</a>
+
+                <p>
+                    Note that currently the installer is not digitally signed, so the browser and/or the Windows system
+                    will likely issue a few warnings. </p>
+
+                <p>For detailed information and the instructions on using Chess Forge as a portable application, see the
+                    Installation Guide (click the link below).</p>
+
+                <a href="https://github.com/czbar/ChessForge/wiki/Installation" target="_blank">Installation Guide</a>
+
+                <p>Run the installed program.</p>
+            </article>
+
+            <article class="release">
+                <h2>Open a Workbook</h2>
+                <p>You can open a workbook from either the local disk or from the ChessForge online library. </p>
+                <h3>From a local file</h3>
+                <p>Select <code>File->Open</code> from the main menu and choose a workbook.
+                    There are a few samples distributed with the installation and you can find them in the
+                    <code>Documents/{user_name}/Chess Forge</code> folder.
+                </p>
+                <p class="marginimage" padding="200">
+                    <img src="images/FileOpen.jpg" alt="File->Open menu item" />
+                </p>
+                <h3>From the online library </h3>
+                Alternatively, if your PC is online, select <code>File->Online Library - Public</code> from the main
+                menu to open Chess Forge's Public Library.
+                Click on any book in the library to view it. </p>
+                <p class="marginimage" padding="200">
+                    <img src="images/OnlineLibraryGlimpse.jpg" alt=" Online Library" />
+                </p>
+            </article>
+
+            <article class="release">
+                <h2>Main Window</h2>
+                <p>When you open a given workbook for the first time, it will initially show the chapters view.</p>
+                <p class="marginimage" padding="200">
+                    <img src="images/ChaptersViewGlimpse.jpg" alt="Chapters View" />
+                </p>
+                <p>Click on <code>Study</code> or double click the chapter's title to open the Study view. The image
+                    below identifies the various elements of the window.</p>
+                <p padding="200">
+                    <img src="images/MainWindow.jpg" alt="Main Window" />
+                </p>
+                <p>If the engine is turned on, the box below the Main Chessboard will display the engine lines instead
+                    of
+                    user hints.</p>
+                <p padding="200">
+                    <img src="images/EngineLines.jpg" alt="Engine Lines" />
+                </p>
+            </article>
+
+            <article class=" release">
+                <h2>Self-Indexing Study View</h2>
+                <p>The Study is shown as a uniquely designed, self-indexing view which includes a Variation Index
+                    displayed under the chapter's title.</p>
+                <p>The full variation tree is displayed under the Index and is organized into sections/paragraphs
+                    corresponding to the index table. This mimicks the experience of reading a chess book.
+                </p>
+                <p>
+                    <img src="images/VariationIndex.jpg" alt="Variation Index" />
+                </p>
+                <p>Note that as a result, there will typically be no single "main line" in the view.
+                    Each "section" has its own "main line".
+                </p>
+                <p>The index adjusts itself as you edit variations.</p>
+                <p>The depth of the index can be instantly increased or decreased by clicking the arrows next to the
+                    Index's header.
+                    If you decrease the depth to 0, the Index will disappear altogether. You can bring it back by
+                    clicking
+                    the chapter's title.
+                </p>
+                <p>The depth setting will be remembered for each study between sessions.</p>
+                <p><i>Coming in version 1.8:</i> Each indexed variation can be collapsed or expanded for more
+                    convenient/focused viewing.
+                    The collapsed/expand state is not remembered between sessions. The view always re-opens with all
+                    lines expanded.</p>
+            </article>
+
+            <article class=" release">
+                <h2>Games View</h2>
+                <p>The Games view is designed for showing a single game at a time.
+                    Therefore, unlike the Study view, it does not have the Variation Index and has a single main line.
+                    That main line is, of course, the text of the game (i.e. the actual moves as opposed to any comments
+                    that may have been added to the game)
+                    and is shown in a bolded font.
+                </p>
+                <p>
+                    <img src="images/GamesView.jpg" alt="Games View" />
+                </p>
+            </article>
+
+            <article class=" release">
+                <h2>Exercises View</h2>
+                <p>In Chess Forge terminology, an exercise is a game fragment starting at any position.
+                    It can be a tactical problem, an endgame study, or any other kind of analysis.
+                    The Exercise view differs significantly from the other views.</p>
+                <p>
+                    <img src="images/ExercisesView.jpg" alt="Exercises View" />
+                </p>
+                <p>It lacks the Scoresheet on the right hand side and when opened for the first time in a session the
+                    variation tree (a.k.a. Solution) is hidden.
+                    You need to click the <i>Show Solution</i> header to open it.</p>
+                <p>The starting position is shown on a small diagram below the headers and there are prominent buttons
+                    allowing the user to enter one of the two solving modes. </p>
+            </article>
+
+            <article class=" release">
+                <h2>Training View</h2>
+                <p>Please refer to the Training page.</p>
+                <p><a href="training.html"> Training</a></p>
+            </article>
+
+            <article class=" release">
+                <h2>Key Features</h2>
+                <ul>
+                    <li>Peruse, study, and evaluate with engines chess content from Chess Forge's workbooks and/or plain
+                        PGN files.</li>
+                    <li>Study and train against downloaded, coach-supplied, or self-created PGN Workbooks.</li>
+                    <li>Author own workbooks for different stages of the game or automatically create them from PGN
+                        files.</li>
+                    <li>Browse and edit variations in the special self-indexing Study View (see above).</li>
+                    <li>View, evaluate, and edit model games with the help of the engine and Opening Explorer.</li>
+                    <li>In any position, use the Opening Explorer to preview/import Top Games from lichess.org.</li>
+                    <li>View, edit, or solve exercises and endgames. Choose from two solving modes: guessing the main
+                        line or submitting an analysis</li>
+                    <li>Analyze endgames with tablebases.</li>
+                    <li>Download any user's games from lichess.org or chess.com into the currently open or a new
+                        workbook.</li>
+                    <li>Organize downloaded games of a player into repertoire, white/black, chapters and trees.</li>
+                    <li>Test your knowledge against the content of the Workbook. Start a game against the engine from
+                        any position.</li>
+                    <li>Restart / roll-back your training or your engine game at any point.</li>
+                </ul>
+                <p> Note: some features (e.g the Opening Explorer, Online Library, lichess downloads) are only available
+                    if your PC is online. </p>
+            </article>
+
+        </section>
+
+        <aside class="sidebar">
+            <h3>Resources on GitHub</h3>
+            <ul>
+                <li><a href="https://github.com/czbar/ChessForge/wiki/Installation" target="_blank">Installation
+                        Guide</a></li>
+                <li><a href="https://github.com/czbar/ChessForge/wiki/User's-Manual" target="_blank">User's Manual</a>
+                </li>
+                <li><a href="https://github.com/czbar/ChessForge/wiki/Frequently-Asked-Questions"
+                        target="_blank">FAQ</a></li>
+            </ul>
+        </aside>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Mindrose Pty Ltd</p>
+    </footer>
+    <script src="include.js"></script>
+</body>
+
 </html>

@@ -88,7 +88,6 @@
     <Compile Include="AnnotationsDialog.xaml.cs">
       <DependentUpon>AnnotationsDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ArticleBrowseBooster.cs" />
     <Compile Include="ArticleComparer.cs" />
     <Compile Include="ArticleListBuilder.cs" />
     <Compile Include="ArticleListItem.cs" />
@@ -223,6 +222,7 @@
       <DependentUpon>ManageChapterDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="ManualReviewState.cs" />
+    <Compile Include="MouseClickMonitor.cs" />
     <Compile Include="MoveAnimator.cs" />
     <Compile Include="MoveAssessment.cs" />
     <Compile Include="MoveCandidates.cs" />
@@ -235,6 +235,7 @@
     <Compile Include="OperationScopeDialog.xaml.cs">
       <DependentUpon>OperationScopeDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PgnArticleUtils.cs" />
     <Compile Include="PlayerStats.cs" />
     <Compile Include="PositionBoardDragEvents.cs" />
     <Compile Include="PostCopyMoveDialog.xaml.cs">

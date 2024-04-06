@@ -726,6 +726,7 @@ namespace ChessForge
             return success;
         }
 
+#if false
         /// <summary>
         /// Walks the list of games and exercises, creating a new chapter
         /// for every encountered game if multiChapter is true.
@@ -802,6 +803,7 @@ namespace ChessForge
                 ShowPgnProcessingErrors(Properties.Resources.DlgParseErrors, ref sbErrors);
             }
         }
+#endif
 
         /// <summary>
         /// Processes the list games in the background.
@@ -816,6 +818,7 @@ namespace ChessForge
             workbook.GamesManager.Execute(rawPgnArticles, outArticles);
         }
 
+#if false
         /// <summary>
         /// Processes all games in the file creating chapters as required.
         /// </summary>
@@ -874,6 +877,7 @@ namespace ChessForge
                 ShowPgnProcessingErrors(Properties.Resources.DlgMergeErrors, ref sbErrors);
             }
         }
+#endif
 
         /// <summary>
         /// Merges the selected games from the passed list into a single Variation Tree.
