@@ -149,7 +149,7 @@ namespace ChessForge
 
                 if (gameCount > 0 || exerciseCount > 0 || addedChapterCount > 0)
                 {
-                    bool done = InsertArticlesIntoChapter(games, addedChapterCount, gameCount, exerciseCount);
+                    bool done = InsertArticlesIntoWorkbook(games, addedChapterCount, gameCount, exerciseCount);
                     cancelled = !done;
                 }
 
@@ -165,7 +165,7 @@ namespace ChessForge
         /// <param name="games"></param>
         /// <param name="gameCount"></param>
         /// <param name="exerciseCount"></param>
-        private static bool InsertArticlesIntoChapter(ObservableCollection<GameData> games, int addedChapterCount, int gameCount, int exerciseCount)
+        private static bool InsertArticlesIntoWorkbook(ObservableCollection<GameData> games, int addedChapterCount, int gameCount, int exerciseCount)
         {
             bool done = false;
 
@@ -192,87 +192,7 @@ namespace ChessForge
                 try
                 {
                     Mouse.SetCursor(Cursors.Wait);
-                    Chapter currChapter = AppState.ActiveChapter;
-                    int firstAddedIndex = -1;
-                    GameData.ContentType firstAddedType = GameData.ContentType.NONE;
-
-                    bool hasStudyBeforeIntro = false;
-
-                    List<ArticleListItem> undoArticleList = new List<ArticleListItem>();
-
-                    foreach (GameData game in games)
-                    {
-                        ArticleListItem undoItem = null;
-
-                        int index = -1;
-
-                        GameData.ContentType currContentType = game.GetContentType(false);
-
-                        if (currContentType == GameData.ContentType.STUDY_TREE)
-                        {
-                            currChapter = AppState.Workbook.CreateNewChapter();
-                            currChapter.SetTitle(game.Header.GetChapterTitle());
-                            
-                            undoItem = new ArticleListItem(currChapter);
-                            undoArticleList.Add(undoItem);
-
-                            AddArticle(currChapter, game, GameData.ContentType.STUDY_TREE, out _);
-                            if (firstAddedType == GameData.ContentType.NONE)
-                            {
-                                firstAddedType = GameData.ContentType.STUDY_TREE;
-                            }
-
-                            undoItem = new ArticleListItem(currChapter, currChapter.Index, currChapter.StudyTree, -1);
-                            undoArticleList.Add(undoItem);
-
-                            hasStudyBeforeIntro = true;
-                        }
-                        else if (currContentType == GameData.ContentType.INTRO)
-                        {
-                            if (!hasStudyBeforeIntro)
-                            {
-                                currChapter = AppState.Workbook.CreateNewChapter();
-                                if (firstAddedType == GameData.ContentType.NONE)
-                                {
-                                    firstAddedType = GameData.ContentType.INTRO;
-                                }
-                            }
-
-                            undoItem = new ArticleListItem(currChapter);
-                            undoArticleList.Add(undoItem);
-
-                            AddArticle(currChapter, game, GameData.ContentType.INTRO, out _);
-                            hasStudyBeforeIntro = false;
-
-                            undoItem = new ArticleListItem(currChapter, currChapter.Index, currChapter.Intro, -1);
-                            undoArticleList.Add(undoItem);
-
-                        }
-                        else
-                        {
-                            GameData.ContentType contentType = game.GetContentType(true);
-                            if (game.GetWorkbookTitle() == null)
-                            {
-                                index = AddArticle(currChapter, game, contentType, out _);
-                                if (firstAddedType == GameData.ContentType.NONE)
-                                {
-                                    firstAddedType = game.GetContentType(false);
-                                }
-                                if (firstAddedIndex < 0)
-                                {
-                                    firstAddedIndex = index;
-                                }
-
-                                undoItem = new ArticleListItem(currChapter, currChapter.Index, currChapter.GetArticleAtIndex(contentType, index), index);
-                                undoArticleList.Add(undoItem);
-                            }
-                        }
-                    }
-                    AppState.IsDirty = true;
-                    AppState.MainWin.SelectArticle(currChapter.Index, firstAddedType, firstAddedIndex);
-
-                    WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.INSERT_ARTICLES, (object)undoArticleList);
-                    WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
+                    WorkbookManager.InsertArticles(games);
                 }
                 catch { }
 

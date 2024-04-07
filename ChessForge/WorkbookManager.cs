@@ -199,79 +199,177 @@ namespace ChessForge
         {
             games.Clear();
 
-            // read line by line, fishing for lines with PGN headers i.e. beginning with "[" followed by a keyword.
-            // Note we may accidentally hit a comment formatted that way, so make sure that the last char on the line is "]".
-            GameData gm = new GameData();
-            gm.FirstLineInFile = 1;
-
-            // TODO: need something more elegant here, perhpas another parameter
-            bool isFile = !path.Contains("\n");
-
-            using (TextReader sr = isFile ? (new StreamReader(path) as TextReader) : (new StringReader(path) as TextReader))
+            try
             {
-                StringBuilder gameText = new StringBuilder();
-                int lineNo = 0;
-                bool headerLine = true;
+                Mouse.SetCursor(Cursors.Wait);
+                // read line by line, fishing for lines with PGN headers i.e. beginning with "[" followed by a keyword.
+                // Note we may accidentally hit a comment formatted that way, so make sure that the last char on the line is "]".
+                GameData gm = new GameData();
+                gm.FirstLineInFile = 1;
 
-                while (sr.Peek() >= 0)
+                // TODO: need something more elegant here, perhpas another parameter
+                bool isFile = !path.Contains("\n");
+
+                using (TextReader sr = isFile ? (new StreamReader(path) as TextReader) : (new StringReader(path) as TextReader))
                 {
-                    string line = sr.ReadLine();
+                    StringBuilder gameText = new StringBuilder();
+                    int lineNo = 0;
+                    bool headerLine = true;
 
-                    // TODO: switch to using PgnMultiGameParser.ParsePgnMultiGameText
-                    lineNo++;
-                    headerLine = true;
-
-                    string header = PgnHeaders.ParsePgnHeaderLine(line, out string val);
-                    if (header != null)
+                    while (sr.Peek() >= 0)
                     {
-                        // ignore headers with no name
-                        if (header.Length > 0)
+                        string line = sr.ReadLine();
+
+                        // TODO: switch to using PgnMultiGameParser.ParsePgnMultiGameText
+                        lineNo++;
+                        headerLine = true;
+
+                        string header = PgnHeaders.ParsePgnHeaderLine(line, out string val);
+                        if (header != null)
                         {
-                            gm.Header.SetHeaderValue(header, val);
+                            // ignore headers with no name
+                            if (header.Length > 0)
+                            {
+                                gm.Header.SetHeaderValue(header, val);
+                            }
+                        }
+                        else
+                        {
+                            headerLine = false;
+                            // if no header then this is the end of the header lines
+                            // if we do have any header data we add a new game to the list
+                            if (gm.HasAnyHeader())
+                            {
+                                gm.Header.DetermineContentType();
+                                games.Add(gm);
+                                gm = new GameData();
+                            }
+                        }
+
+                        // If this was the first header line, the gameText variable
+                        // holds the complete text of the previous game
+                        if (headerLine == true && gm.FirstLineInFile == 0)
+                        {
+                            gm.FirstLineInFile = lineNo - 1;
+                            // add game text to the previous game object 
+                            games[games.Count - 1].GameText = gameText.ToString();
+                            gameText.Clear();
+                        }
+
+                        if (!headerLine)
+                        {
+                            gameText.AppendLine(line);
                         }
                     }
-                    else
-                    {
-                        headerLine = false;
-                        // if no header then this is the end of the header lines
-                        // if we do have any header data we add a new game to the list
-                        if (gm.HasAnyHeader())
-                        {
-                            gm.Header.DetermineContentType();
-                            games.Add(gm);
-                            gm = new GameData();
-                        }
-                    }
 
-                    // If this was the first header line, the gameText variable
-                    // holds the complete text of the previous game
-                    if (headerLine == true && gm.FirstLineInFile == 0)
+                    if (games.Count > 0)
                     {
-                        gm.FirstLineInFile = lineNo - 1;
-                        // add game text to the previous game object 
+                        // add game text to the last object
                         games[games.Count - 1].GameText = gameText.ToString();
-                        gameText.Clear();
-                    }
-
-                    if (!headerLine)
-                    {
-                        gameText.AppendLine(line);
                     }
                 }
 
-                if (games.Count > 0)
+                if (contentType != GameData.ContentType.GENERIC || targetContentType != GameData.ContentType.NONE)
                 {
-                    // add game text to the last object
-                    games[games.Count - 1].GameText = gameText.ToString();
+                    RemoveGamesOfWrongType(ref games, contentType, targetContentType);
                 }
             }
-
-            if (contentType != GameData.ContentType.GENERIC || targetContentType != GameData.ContentType.NONE)
+            catch (Exception ex)
             {
-                RemoveGamesOfWrongType(ref games, contentType, targetContentType);
+                AppLog.Message("ReadPgnFile()", ex);
             }
 
+            Mouse.SetCursor(Cursors.Wait);
             return games.Count;
+        }
+
+        /// <summary>
+        /// Inserts articles from the passed list into the current Workbook. 
+        /// </summary>
+        /// <param name="games"></param>
+        public static void InsertArticles(ObservableCollection<GameData> games)
+        {
+            Chapter currChapter = AppState.ActiveChapter;
+            int firstAddedIndex = -1;
+            GameData.ContentType firstAddedType = GameData.ContentType.NONE;
+
+            bool hasStudyBeforeIntro = false;
+
+            List<ArticleListItem> undoArticleList = new List<ArticleListItem>();
+
+            foreach (GameData game in games)
+            {
+                ArticleListItem undoItem = null;
+
+                int index = -1;
+
+                GameData.ContentType currContentType = game.GetContentType(false);
+
+                if (currContentType == GameData.ContentType.STUDY_TREE)
+                {
+                    currChapter = AppState.Workbook.CreateNewChapter();
+                    currChapter.SetTitle(game.Header.GetChapterTitle());
+
+                    undoItem = new ArticleListItem(currChapter);
+                    undoArticleList.Add(undoItem);
+
+                    PgnArticleUtils.AddArticle(currChapter, game, GameData.ContentType.STUDY_TREE, out _);
+                    if (firstAddedType == GameData.ContentType.NONE)
+                    {
+                        firstAddedType = GameData.ContentType.STUDY_TREE;
+                    }
+
+                    undoItem = new ArticleListItem(currChapter, currChapter.Index, currChapter.StudyTree, -1);
+                    undoArticleList.Add(undoItem);
+
+                    hasStudyBeforeIntro = true;
+                }
+                else if (currContentType == GameData.ContentType.INTRO)
+                {
+                    if (!hasStudyBeforeIntro)
+                    {
+                        currChapter = AppState.Workbook.CreateNewChapter();
+                        if (firstAddedType == GameData.ContentType.NONE)
+                        {
+                            firstAddedType = GameData.ContentType.INTRO;
+                        }
+                    }
+
+                    undoItem = new ArticleListItem(currChapter);
+                    undoArticleList.Add(undoItem);
+
+                    PgnArticleUtils.AddArticle(currChapter, game, GameData.ContentType.INTRO, out _);
+                    hasStudyBeforeIntro = false;
+
+                    undoItem = new ArticleListItem(currChapter, currChapter.Index, currChapter.Intro, -1);
+                    undoArticleList.Add(undoItem);
+
+                }
+                else
+                {
+                    GameData.ContentType contentType = game.GetContentType(true);
+                    if (game.GetWorkbookTitle() == null)
+                    {
+                        index = PgnArticleUtils.AddArticle(currChapter, game, contentType, out _);
+                        if (firstAddedType == GameData.ContentType.NONE)
+                        {
+                            firstAddedType = game.GetContentType(false);
+                        }
+                        if (firstAddedIndex < 0)
+                        {
+                            firstAddedIndex = index;
+                        }
+
+                        undoItem = new ArticleListItem(currChapter, currChapter.Index, currChapter.GetArticleAtIndex(contentType, index), index);
+                        undoArticleList.Add(undoItem);
+                    }
+                }
+            }
+            AppState.IsDirty = true;
+            AppState.MainWin.SelectArticle(currChapter.Index, firstAddedType, firstAddedIndex);
+
+            WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.INSERT_ARTICLES, (object)undoArticleList);
+            WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
         }
 
         /// <summary>
@@ -391,7 +489,7 @@ namespace ChessForge
                                 break;
                             case "UiMnChptCreateIntro":
                                 menuItem.IsEnabled = isEnabled;
-                                if (index >=0 && index <= SessionWorkbook.Chapters.Count
+                                if (index >= 0 && index <= SessionWorkbook.Chapters.Count
                                     && !SessionWorkbook.Chapters[index].ShowIntro)
                                 {
                                     menuItem.Visibility = isChaptersMenu ? Visibility.Visible : Visibility.Collapsed;
