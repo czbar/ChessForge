@@ -198,8 +198,12 @@ namespace ChessForge
 
                     bool hasStudyBeforeIntro = false;
 
+                    List<ArticleListItem> undoArticleList = new List<ArticleListItem>();
+
                     foreach (GameData game in games)
                     {
+                        ArticleListItem undoItem = null;
+
                         int index = -1;
 
                         GameData.ContentType currContentType = game.GetContentType(false);
@@ -208,11 +212,19 @@ namespace ChessForge
                         {
                             currChapter = AppState.Workbook.CreateNewChapter();
                             currChapter.SetTitle(game.Header.GetChapterTitle());
+                            
+                            undoItem = new ArticleListItem(currChapter);
+                            undoArticleList.Add(undoItem);
+
                             AddArticle(currChapter, game, GameData.ContentType.STUDY_TREE, out _);
                             if (firstAddedType == GameData.ContentType.NONE)
                             {
                                 firstAddedType = GameData.ContentType.STUDY_TREE;
                             }
+
+                            undoItem = new ArticleListItem(currChapter, currChapter.Index, currChapter.StudyTree, -1);
+                            undoArticleList.Add(undoItem);
+
                             hasStudyBeforeIntro = true;
                         }
                         else if (currContentType == GameData.ContentType.INTRO)
@@ -226,24 +238,41 @@ namespace ChessForge
                                 }
                             }
 
+                            undoItem = new ArticleListItem(currChapter);
+                            undoArticleList.Add(undoItem);
+
                             AddArticle(currChapter, game, GameData.ContentType.INTRO, out _);
                             hasStudyBeforeIntro = false;
+
+                            undoItem = new ArticleListItem(currChapter, currChapter.Index, currChapter.Intro, -1);
+                            undoArticleList.Add(undoItem);
+
                         }
                         else
                         {
-                            index = AddArticle(currChapter, game, game.GetContentType(true), out _);
-                            if (firstAddedType == GameData.ContentType.NONE)
+                            GameData.ContentType contentType = game.GetContentType(true);
+                            if (game.GetWorkbookTitle() == null)
                             {
-                                firstAddedType = game.GetContentType(false);
-                            }
-                            if (firstAddedIndex < 0)
-                            {
-                                firstAddedIndex = index;
+                                index = AddArticle(currChapter, game, contentType, out _);
+                                if (firstAddedType == GameData.ContentType.NONE)
+                                {
+                                    firstAddedType = game.GetContentType(false);
+                                }
+                                if (firstAddedIndex < 0)
+                                {
+                                    firstAddedIndex = index;
+                                }
+
+                                undoItem = new ArticleListItem(currChapter, currChapter.Index, currChapter.GetArticleAtIndex(contentType, index), index);
+                                undoArticleList.Add(undoItem);
                             }
                         }
                     }
                     AppState.IsDirty = true;
                     AppState.MainWin.SelectArticle(currChapter.Index, firstAddedType, firstAddedIndex);
+
+                    WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.INSERT_ARTICLES, (object)undoArticleList);
+                    WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
                 }
                 catch { }
 
