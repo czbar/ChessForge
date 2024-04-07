@@ -542,6 +542,33 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Undoes the import of chapters(s).
+        /// </summary>
+        /// <param name="targetChapter"></param>
+        /// <param name="lst"></param>
+        public static void UndoImportChapters(object lst)
+        {
+            List<ArticleListItem> articles = lst as List<ArticleListItem>;
+
+            try
+            {
+                foreach(ArticleListItem item in articles)
+                {
+                    if (item.Chapter != null)
+                    {
+                        AppState.Workbook.DeleteChapter(item.Chapter);
+                    }
+                }
+
+                GuiUtilities.RefreshChaptersView(null);
+                AppState.MainWin.UiTabChapters.Focus();
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
         /// Undoes the move articles operation.
         /// </summary>
         /// <param name="targetChapter"></param>
