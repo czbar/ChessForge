@@ -602,6 +602,7 @@ namespace ChessForge
                                     SelectExercise(selectedArticleIndex, AppState.ActiveTab != TabViewType.CHAPTERS);
                                     break;
                                 case WorkbookOperationType.COPY_ARTICLES:
+                                case WorkbookOperationType.INSERT_ARTICLES:
                                 case WorkbookOperationType.MOVE_ARTICLES:
                                 case WorkbookOperationType.MOVE_ARTICLES_MULTI_CHAPTER:
                                     _chaptersView.IsDirty = true;
