@@ -3636,6 +3636,10 @@ OpMoveArticles=
 OpCopyArticles=
 
 #description: Operation
+#english: OpInsertArticles=Insert Chapters/Games/Exercises
+OpInsertArticles=
+
+#description: Operation
 #english: OpMoveGames=Move Games
 OpMoveGames=
 

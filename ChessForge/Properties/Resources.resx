@@ -2536,6 +2536,9 @@
   <data name="OpCopyArticles" xml:space="preserve">
     <value>Copy Games/Exercises</value>
   </data>
+  <data name="OpInsertArticles" xml:space="preserve">
+    <value>Insert Chapters/Games/Exercises</value>
+  </data>
   <data name="OpMoveGames" xml:space="preserve">
     <value>Move Games</value>
   </data>

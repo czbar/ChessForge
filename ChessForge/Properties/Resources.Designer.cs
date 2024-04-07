@@ -4914,6 +4914,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Insert Chapters/Games/Exercises.
+        /// </summary>
+        public static string OpInsertArticles {
+            get {
+                return ResourceManager.GetString("OpInsertArticles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Merge Chapters.
         /// </summary>
         public static string OpMergeChapters {
