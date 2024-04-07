@@ -2539,6 +2539,9 @@
   <data name="OpInsertArticles" xml:space="preserve">
     <value>Insert Chapters/Games/Exercises</value>
   </data>
+  <data name="OpImportChapters" xml:space="preserve">
+    <value>Import Chapters</value>
+  </data>
   <data name="OpMoveGames" xml:space="preserve">
     <value>Move Games</value>
   </data>

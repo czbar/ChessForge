@@ -2833,6 +2833,9 @@ OpCopyArticles=Copy Games/Exercises
 OpInsertArticles=Insert Chapters/Games/Exercises
 
 #Operation
+OpImportChapters=Import Chapters
+
+#Operation
 OpMoveGames=Move Games
 
 #Operation

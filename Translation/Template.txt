@@ -3640,6 +3640,10 @@ OpCopyArticles=
 OpInsertArticles=
 
 #description: Operation
+#english: OpImportChapters=Import Chapters
+OpImportChapters=
+
+#description: Operation
 #english: OpMoveGames=Move Games
 OpMoveGames=
 

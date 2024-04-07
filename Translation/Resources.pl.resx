@@ -2538,6 +2538,9 @@
   <data name="OpInsertArticles" xml:space="preserve">
     <value>Wstaw Rozdziały/Partie/Ćwiczenia</value>
   </data>
+  <data name="OpImportChapters" xml:space="preserve">
+    <value>Importuj Rozdziały</value>
+  </data>
   <data name="OpMoveGames" xml:space="preserve">
     <value>Przesuń Partie</value>
   </data>
