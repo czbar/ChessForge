@@ -19,6 +19,7 @@ namespace ChessForge
         MERGE_CHAPTERS,
         SPLIT_CHAPTER,
         CREATE_CHAPTER,
+        IMPORT_CHAPTERS,
         RENAME_CHAPTER,
         CREATE_ARTICLE,
         DELETE_MODEL_GAME,

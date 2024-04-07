@@ -174,6 +174,9 @@ namespace ChessForge
                     case WorkbookOperationType.INSERT_ARTICLES:
                         ChapterUtils.UndoInsertArticles(op.Chapter, op.OpData_1);
                         break;
+                    case WorkbookOperationType.IMPORT_CHAPTERS:
+                        ChapterUtils.UndoImportChapters(op.OpData_1);
+                        break;
                     case WorkbookOperationType.MOVE_ARTICLES:
                         ChapterUtils.UndoMoveArticles(op.Chapter, op.OpData_1);
                         break;

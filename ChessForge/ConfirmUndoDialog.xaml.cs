@@ -95,6 +95,7 @@ namespace ChessForge
                 {
                     case WorkbookOperationType.COPY_ARTICLES:
                     case WorkbookOperationType.INSERT_ARTICLES:
+                    case WorkbookOperationType.IMPORT_CHAPTERS:
                     case WorkbookOperationType.DELETE_MODEL_GAMES:
                     case WorkbookOperationType.MOVE_ARTICLES_MULTI_CHAPTER:
                     case WorkbookOperationType.MOVE_ARTICLES:
@@ -183,6 +184,7 @@ namespace ChessForge
             _dictOpTypeToTitle[WorkbookOperationType.MOVE_ARTICLES] = Properties.Resources.OpMoveArticles;
             _dictOpTypeToTitle[WorkbookOperationType.COPY_ARTICLES] = Properties.Resources.OpCopyArticles;
             _dictOpTypeToTitle[WorkbookOperationType.INSERT_ARTICLES] = Properties.Resources.OpInsertArticles;
+            _dictOpTypeToTitle[WorkbookOperationType.IMPORT_CHAPTERS] = Properties.Resources.OpImportChapters;
             _dictOpTypeToTitle[WorkbookOperationType.DELETE_COMMENTS] = Properties.Resources.OpDeleteComments;
             _dictOpTypeToTitle[WorkbookOperationType.DELETE_ENGINE_EVALS] = Properties.Resources.OpDeleteEngineEvals;
         }
