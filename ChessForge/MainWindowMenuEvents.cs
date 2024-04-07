@@ -1753,6 +1753,9 @@ namespace ChessForge
                     int errorCount = 0;
                     StringBuilder sbErrors = new StringBuilder();
 
+                    ArticleListItem undoItem;
+                    List<ArticleListItem> undoArticleList = new List<ArticleListItem>();
+
                     if (gameCount > 0)
                     {
                         if (ShowSelectGamesDialog(contentType, ref games))
@@ -1760,6 +1763,7 @@ namespace ChessForge
                             Mouse.SetCursor(Cursors.Wait);
                             try
                             {
+
                                 for (int i = 0; i < games.Count; i++)
                                 {
                                     if (games[i].IsSelected)
@@ -1774,10 +1778,20 @@ namespace ChessForge
                                                     skippedDueToType++;
                                                 }
                                             }
-                                            else if (firstImportedGameIndex < 0)
+                                            else 
                                             {
-                                                firstImportedGameIndex = index;
+                                                undoItem = new ArticleListItem(chapter, chapter.Index, chapter.GetArticleAtIndex(targetcontentType, index), index);
+                                                if (undoItem.Article != null)
+                                                {
+                                                    undoArticleList.Add(undoItem);
+                                                }
+
+                                                if (firstImportedGameIndex < 0)
+                                                {
+                                                    firstImportedGameIndex = index;
+                                                }
                                             }
+
                                             AppState.IsDirty = true;
                                             if (!string.IsNullOrEmpty(error))
                                             {
@@ -1796,6 +1810,11 @@ namespace ChessForge
                             }
                             catch { }
 
+                            if (undoArticleList.Count > 0)
+                            {
+                                WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.INSERT_ARTICLES, (object)undoArticleList);
+                                WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
+                            }
                             Mouse.SetCursor(Cursors.Arrow);
                         }
                         else
