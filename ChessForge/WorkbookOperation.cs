@@ -31,6 +31,7 @@ namespace ChessForge
         MOVE_ARTICLES_MULTI_CHAPTER,
         MOVE_ARTICLES,
         COPY_ARTICLES,
+        INSERT_ARTICLES,
         DELETE_COMMENTS,
         DELETE_ENGINE_EVALS,
         ASSIGN_ECO,
