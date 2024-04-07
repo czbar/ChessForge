@@ -238,6 +238,40 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns an article of the requested type
+        /// at the requested index.
+        /// </summary>
+        /// <param name="contentType"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public Article GetArticleAtIndex(GameData.ContentType contentType, int index)
+        {
+            Article article = null;
+
+            try
+            {
+                switch (contentType)
+                {
+                    case GameData.ContentType.STUDY_TREE:
+                        article = StudyTree;
+                        break;
+                    case GameData.ContentType.INTRO:
+                        article = Intro;
+                        break;
+                    case GameData.ContentType.MODEL_GAME:
+                        article = GetModelGameAtIndex(index);
+                        break;
+                    case GameData.ContentType.EXERCISE:
+                        article = GetExerciseAtIndex(index);
+                        break;
+                }
+            }
+            catch { }
+
+            return article;
+        }
+
+        /// <summary>
         /// Returns a Model Game stored at a given index.
         /// Null if invalid index.
         /// </summary>
