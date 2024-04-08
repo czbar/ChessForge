@@ -771,6 +771,14 @@ CmExpandThisOnly=Collapse All Else
 
 ###########################
 #
+# Header: Evaluation Chart
+#
+
+#Evaluation
+EvaluationChart=Evaluation Chart
+
+###########################
+#
 # Header: VIEW Chapters
 #
 

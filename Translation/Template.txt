@@ -994,6 +994,15 @@ CmExpandThisOnly=
 
 ###########################
 #
+# Header: Evaluation Chart
+#
+
+#description: Evaluation
+#english: EvaluationChart=Evaluation Chart
+EvaluationChart=
+
+###########################
+#
 # Header: VIEW Chapters
 #
 

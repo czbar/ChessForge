@@ -2573,6 +2573,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Evaluation Chart.
+        /// </summary>
+        public static string EvaluationChart {
+            get {
+                return ResourceManager.GetString("EvaluationChart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Evaluation Error.
         /// </summary>
         public static string EvaluationError {

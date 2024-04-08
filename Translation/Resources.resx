@@ -786,6 +786,9 @@
   <data name="CmExpandThisOnly" xml:space="preserve">
     <value>Collapse All Else</value>
   </data>
+  <data name="EvaluationChart" xml:space="preserve">
+    <value>Evaluation Chart</value>
+  </data>
   <data name="ToolTipScrollHome" xml:space="preserve">
     <value>Scroll to the top</value>
   </data>

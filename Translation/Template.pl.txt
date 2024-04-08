@@ -994,6 +994,15 @@ CmExpandThisOnly=Zwiń wszystkie inne
 
 ###########################
 #
+# Header: Evaluation Chart
+#
+
+#description: Evaluation
+#english: EvaluationChart=Evaluation Chart
+EvaluationChart=Wykres Ocen Silnika
+
+###########################
+#
 # Header: VIEW Chapters
 #
 

@@ -786,6 +786,9 @@
   <data name="CmExpandThisOnly" xml:space="preserve">
     <value>Zwiń wszystkie inne</value>
   </data>
+  <data name="EvaluationChart" xml:space="preserve">
+    <value>Wykres Ocen Silnika</value>
+  </data>
   <data name="ToolTipScrollHome" xml:space="preserve">
     <value>Przewiń do początku</value>
   </data>
