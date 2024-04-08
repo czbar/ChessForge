@@ -1,0 +1,30 @@
+﻿<Window x:Class="ChessForge.EvaluationChartDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:p="clr-namespace:ChessForge.Properties"
+        xmlns:local="clr-namespace:ChessForge"
+        mc:Ignorable="d"
+        Title="{x:Static p:Resources.EvaluationChart}" Height="280" Width="800"
+        ResizeMode="NoResize">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+
+        <Canvas x:Name="UiCnvWhite" Grid.Row="0" Background="LightGray" ClipToBounds="True" Grid.ColumnSpan="2">
+        </Canvas>
+        
+        <Line x:Name="UiMidLine" Stroke="Black" StrokeThickness="1" X1="0" X2="800" Y1="100" Y2="100" Grid.ColumnSpan="2"></Line>
+
+        <Canvas x:Name="UiCnvBlack" Grid.Row="1" Background="LightGray" ClipToBounds="True" Grid.ColumnSpan="2">
+
+        </Canvas>
+
+        <Button x:Name="UiBtnClose" IsCancel="True" Content="{x:Static p:Resources.Close}" Width="80" Height="20" HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+    </Grid>
+</Window>
