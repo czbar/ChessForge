@@ -602,6 +602,8 @@ namespace ChessForge
                                     SelectExercise(selectedArticleIndex, AppState.ActiveTab != TabViewType.CHAPTERS);
                                     break;
                                 case WorkbookOperationType.COPY_ARTICLES:
+                                case WorkbookOperationType.INSERT_ARTICLES:
+                                case WorkbookOperationType.IMPORT_CHAPTERS:
                                 case WorkbookOperationType.MOVE_ARTICLES:
                                 case WorkbookOperationType.MOVE_ARTICLES_MULTI_CHAPTER:
                                     _chaptersView.IsDirty = true;
@@ -1269,17 +1271,27 @@ namespace ChessForge
                     dlg.ShowDialog();
                     if (dlg.ExitOK)
                     {
+                        List<ArticleListItem> undoArticleList = new List<ArticleListItem>();
+
                         foreach (SelectedChapter ch in dlg.ChapterList)
                         {
                             if (ch.IsSelected)
                             {
                                 WorkbookManager.SessionWorkbook.Chapters.Add(ch.Chapter);
+                                undoArticleList.Add(new ArticleListItem(ch.Chapter));
+
                                 if (_chaptersView != null)
                                 {
                                     _chaptersView.BuildFlowDocumentForChaptersView();
                                     PulseManager.ChaperIndexToBringIntoView = WorkbookManager.SessionWorkbook.GetChapterCount() - 1;
                                 }
                                 AppState.IsDirty = true;
+
+                                if (undoArticleList.Count > 0)
+                                {
+                                    WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.IMPORT_CHAPTERS, (object)undoArticleList);
+                                    WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
+                                }
                             }
                         }
                     }
@@ -1316,6 +1328,8 @@ namespace ChessForge
                 Chapter previousActiveChapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                 Chapter chapter = WorkbookManager.SessionWorkbook.CreateNewChapter();
 
+                List<ArticleListItem> undoArticleList = new List<ArticleListItem>();
+
                 if (gamesCount > 0)
                 {
                     if (SelectArticlesFromPgnFile(ref games, SelectGamesDialog.Mode.IMPORT_INTO_NEW_CHAPTER))
@@ -1324,11 +1338,18 @@ namespace ChessForge
                         chapter.StudyTree.Tree.ContentType = GameData.ContentType.STUDY_TREE;
 
                         CopySelectedItemsToChapter(chapter, true, out string error, games, out _);
+                        
+                        undoArticleList.Add(new ArticleListItem(chapter));
 
                         _chaptersView.BuildFlowDocumentForChaptersView();
                         SelectChapterByIndex(chapter.Index, false);
-                        AppState.DoEvents();
                         _chaptersView.BringChapterIntoView(chapter.Index);
+
+                        if (undoArticleList.Count > 0)
+                        {
+                            WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.IMPORT_CHAPTERS, (object)undoArticleList);
+                            WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
+                        }
                     }
                     AppState.IsDirty = true;
                 }
@@ -1752,6 +1773,9 @@ namespace ChessForge
                     int errorCount = 0;
                     StringBuilder sbErrors = new StringBuilder();
 
+                    ArticleListItem undoItem;
+                    List<ArticleListItem> undoArticleList = new List<ArticleListItem>();
+
                     if (gameCount > 0)
                     {
                         if (ShowSelectGamesDialog(contentType, ref games))
@@ -1759,6 +1783,7 @@ namespace ChessForge
                             Mouse.SetCursor(Cursors.Wait);
                             try
                             {
+
                                 for (int i = 0; i < games.Count; i++)
                                 {
                                     if (games[i].IsSelected)
@@ -1773,10 +1798,20 @@ namespace ChessForge
                                                     skippedDueToType++;
                                                 }
                                             }
-                                            else if (firstImportedGameIndex < 0)
+                                            else 
                                             {
-                                                firstImportedGameIndex = index;
+                                                undoItem = new ArticleListItem(chapter, chapter.Index, chapter.GetArticleAtIndex(targetcontentType, index), index);
+                                                if (undoItem.Article != null)
+                                                {
+                                                    undoArticleList.Add(undoItem);
+                                                }
+
+                                                if (firstImportedGameIndex < 0)
+                                                {
+                                                    firstImportedGameIndex = index;
+                                                }
                                             }
+
                                             AppState.IsDirty = true;
                                             if (!string.IsNullOrEmpty(error))
                                             {
@@ -1795,6 +1830,11 @@ namespace ChessForge
                             }
                             catch { }
 
+                            if (undoArticleList.Count > 0)
+                            {
+                                WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.INSERT_ARTICLES, (object)undoArticleList);
+                                WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
+                            }
                             Mouse.SetCursor(Cursors.Arrow);
                         }
                         else

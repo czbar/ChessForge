@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Windows.Input;
 
 namespace ChessForge
 {
@@ -72,7 +73,7 @@ namespace ChessForge
                 _clickCount++;
                 // perform any action if necessary
                 PostClickAction();
-                // update the last clcik time
+                // update the last click time
                 _lastClickTime = DateTime.Now.Ticks;
             }
             else
@@ -99,6 +100,16 @@ namespace ChessForge
             {
                 // we haven't had a recent click so end the series
                 EndCurrentSeries();
+            }
+            else
+            {
+                AppState.MainWin.Dispatcher.Invoke(() =>
+                {
+                    if (Mouse.LeftButton == MouseButtonState.Pressed)
+                    {
+                        RegisterClick(_lastClickAction);
+                    }
+                });
             }
         }
 

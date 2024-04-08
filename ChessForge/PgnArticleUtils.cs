@@ -149,7 +149,7 @@ namespace ChessForge
 
                 if (gameCount > 0 || exerciseCount > 0 || addedChapterCount > 0)
                 {
-                    bool done = InsertArticlesIntoChapter(games, addedChapterCount, gameCount, exerciseCount);
+                    bool done = InsertArticlesIntoWorkbook(games, addedChapterCount, gameCount, exerciseCount);
                     cancelled = !done;
                 }
 
@@ -165,7 +165,7 @@ namespace ChessForge
         /// <param name="games"></param>
         /// <param name="gameCount"></param>
         /// <param name="exerciseCount"></param>
-        private static bool InsertArticlesIntoChapter(ObservableCollection<GameData> games, int addedChapterCount, int gameCount, int exerciseCount)
+        private static bool InsertArticlesIntoWorkbook(ObservableCollection<GameData> games, int addedChapterCount, int gameCount, int exerciseCount)
         {
             bool done = false;
 
@@ -192,58 +192,7 @@ namespace ChessForge
                 try
                 {
                     Mouse.SetCursor(Cursors.Wait);
-                    Chapter currChapter = AppState.ActiveChapter;
-                    int firstAddedIndex = -1;
-                    GameData.ContentType firstAddedType = GameData.ContentType.NONE;
-
-                    bool hasStudyBeforeIntro = false;
-
-                    foreach (GameData game in games)
-                    {
-                        int index = -1;
-
-                        GameData.ContentType currContentType = game.GetContentType(false);
-
-                        if (currContentType == GameData.ContentType.STUDY_TREE)
-                        {
-                            currChapter = AppState.Workbook.CreateNewChapter();
-                            currChapter.SetTitle(game.Header.GetChapterTitle());
-                            AddArticle(currChapter, game, GameData.ContentType.STUDY_TREE, out _);
-                            if (firstAddedType == GameData.ContentType.NONE)
-                            {
-                                firstAddedType = GameData.ContentType.STUDY_TREE;
-                            }
-                            hasStudyBeforeIntro = true;
-                        }
-                        else if (currContentType == GameData.ContentType.INTRO)
-                        {
-                            if (!hasStudyBeforeIntro)
-                            {
-                                currChapter = AppState.Workbook.CreateNewChapter();
-                                if (firstAddedType == GameData.ContentType.NONE)
-                                {
-                                    firstAddedType = GameData.ContentType.INTRO;
-                                }
-                            }
-
-                            AddArticle(currChapter, game, GameData.ContentType.INTRO, out _);
-                            hasStudyBeforeIntro = false;
-                        }
-                        else
-                        {
-                            index = AddArticle(currChapter, game, game.GetContentType(true), out _);
-                            if (firstAddedType == GameData.ContentType.NONE)
-                            {
-                                firstAddedType = game.GetContentType(false);
-                            }
-                            if (firstAddedIndex < 0)
-                            {
-                                firstAddedIndex = index;
-                            }
-                        }
-                    }
-                    AppState.IsDirty = true;
-                    AppState.MainWin.SelectArticle(currChapter.Index, firstAddedType, firstAddedIndex);
+                    WorkbookManager.InsertArticles(games);
                 }
                 catch { }
 

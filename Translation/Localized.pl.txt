@@ -3636,6 +3636,14 @@ OpMoveArticles=Move Przesuń Partie/Ćwiczenia
 OpCopyArticles=Kopiuj Partie/Ćwiczenia
 
 #description: Operation
+#english: OpInsertArticles=Insert Chapters/Games/Exercises
+OpInsertArticles=Wstaw Rozdziały/Partie/Ćwiczenia
+
+#description: Operation
+#english: OpImportChapters=Import Chapters
+OpImportChapters=Importuj Rozdziały
+
+#description: Operation
 #english: OpMoveGames=Move Games
 OpMoveGames=Przesuń Partie
 

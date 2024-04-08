@@ -504,6 +504,71 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Undoes the insert articles operation.
+        /// The list of articles can come from import or pasting.
+        /// Some of the articles may represent a Chapters.
+        /// When removing the articles we need to make our way from
+        /// the end of the list to the front so we delete chapter content
+        /// before deleting the chapter itself.
+        /// </summary>
+        /// <param name="targetChapter"></param>
+        /// <param name="lst"></param>
+        public static void UndoInsertArticles(Chapter targetChapter, object lst)
+        {
+            List<ArticleListItem> articles = lst as List<ArticleListItem>;
+
+            try
+            {
+                for (int i = articles.Count - 1; i >= 0; i--)
+                {
+                    ArticleListItem item = articles[i];
+                    if (item.Article == null)
+                    {
+                        // this is a chapter
+                        AppState.Workbook.DeleteChapter(item.Chapter);
+                    }
+                    else
+                    {
+                        item.Chapter.DeleteArticle(item.Article);
+                    }
+                }
+
+                GuiUtilities.RefreshChaptersView(null);
+                AppState.MainWin.UiTabChapters.Focus();
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// Undoes the import of chapters(s).
+        /// </summary>
+        /// <param name="targetChapter"></param>
+        /// <param name="lst"></param>
+        public static void UndoImportChapters(object lst)
+        {
+            List<ArticleListItem> articles = lst as List<ArticleListItem>;
+
+            try
+            {
+                foreach(ArticleListItem item in articles)
+                {
+                    if (item.Chapter != null)
+                    {
+                        AppState.Workbook.DeleteChapter(item.Chapter);
+                    }
+                }
+
+                GuiUtilities.RefreshChaptersView(null);
+                AppState.MainWin.UiTabChapters.Focus();
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
         /// Undoes the move articles operation.
         /// </summary>
         /// <param name="targetChapter"></param>
