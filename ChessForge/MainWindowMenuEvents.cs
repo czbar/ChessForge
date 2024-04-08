@@ -819,6 +819,26 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Show the evaluation chart.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void UiMnEvaluationChart_Click(object sender, RoutedEventArgs e)
+        {
+            EvaluationChartDialog dlg = new EvaluationChartDialog(ActiveLine.GetNodeList());
+            GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
+
+            dlg.ShowDialog();
+        }
+
+
+        //**********************
+        //
+        //  FIND POSITIONS
+        // 
+        //**********************
+
+        /// <summary>
         /// Finds the list of positions identical to the currently selected node.
         /// </summary>
         /// <param name="sender"></param>

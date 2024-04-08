@@ -897,6 +897,7 @@ namespace ChessForge
             _mainWin.Dispatcher.Invoke(() =>
             {
                 _mainWin.UiMnciEvalLine.IsEnabled = true;
+                _mainWin.UiMnciEvaluationChart.IsEnabled = true;
                 _mainWin.UiMnciEvalPos.IsEnabled = true;
                 _mainWin.UiPbEngineThinking.Visibility = Visibility.Hidden;
             });
@@ -1675,6 +1676,7 @@ namespace ChessForge
 
                 _mainWin.UiMncMainBoardSepar_1.Visibility = Visibility.Visible;
                 _mainWin.UiMncMainBoardSepar_1a.Visibility = Visibility.Visible;
+                _mainWin.UiMncMainBoardSepar_1b.Visibility = Visibility.Visible;
                 _mainWin.UiMncMainBoardSepar_2.Visibility = Visibility.Visible;
                 _mainWin.UiMncMainBoardSepar_3.Visibility = Visibility.Visible;
                 _mainWin.UiMncMainBoardSepar_4.Visibility = Visibility.Visible;
@@ -1696,6 +1698,7 @@ namespace ChessForge
 
                         _mainWin.UiMnciEvalPos.Visibility = Visibility.Visible;
                         _mainWin.UiMnciEvalLine.Visibility = Visibility.Visible;
+                        _mainWin.UiMnciEvaluationChart.Visibility = Visibility.Visible;
 
                         _mainWin.UiMncMainBoardSepar_2.Visibility = Visibility.Visible;
 
@@ -1719,6 +1722,7 @@ namespace ChessForge
 
                         _mainWin.UiMnciEvalPos.Visibility = Visibility.Collapsed;
                         _mainWin.UiMnciEvalLine.Visibility = Visibility.Collapsed;
+                        _mainWin.UiMnciEvaluationChart.Visibility = Visibility.Collapsed;
 
                         _mainWin.UiMncMainBoardSepar_2.Visibility = Visibility.Collapsed;
 
@@ -1755,6 +1759,7 @@ namespace ChessForge
 
                         _mainWin.UiMncMainBoardSepar_1.Visibility = Visibility.Collapsed;
                         _mainWin.UiMncMainBoardSepar_1a.Visibility = Visibility.Collapsed;
+                        _mainWin.UiMncMainBoardSepar_1b.Visibility = Visibility.Collapsed;
                         _mainWin.UiMncMainBoardSepar_2.Visibility = Visibility.Collapsed;
                         _mainWin.UiMncMainBoardSepar_3.Visibility = Visibility.Collapsed;
                         _mainWin.UiMncMainBoardSepar_4.Visibility = Visibility.Collapsed;
@@ -1767,6 +1772,7 @@ namespace ChessForge
 
                         _mainWin.UiMnciEvalPos.Visibility = Visibility.Collapsed;
                         _mainWin.UiMnciEvalLine.Visibility = Visibility.Collapsed;
+                        _mainWin.UiMnciEvaluationChart.Visibility = Visibility.Collapsed;
 
                         _mainWin.UiMncMainBoardSepar_2.Visibility = Visibility.Collapsed;
 
@@ -1841,6 +1847,7 @@ namespace ChessForge
 
                          _mainWin.UiMnciEvalLine.IsEnabled = true;
                          _mainWin.UiMnciEvalPos.IsEnabled = false;
+                         _mainWin.UiMnciEvaluationChart.IsEnabled = true;
 
                          _mainWin.UiPbEngineThinking.Visibility = Visibility.Collapsed;
                      }
@@ -1851,6 +1858,7 @@ namespace ChessForge
 
                          _mainWin.UiMnciEvalLine.IsEnabled = false;
                          _mainWin.UiMnciEvalPos.IsEnabled = false;
+                         _mainWin.UiMnciEvaluationChart.IsEnabled = false;
 
                          _mainWin.UiPbEngineThinking.Visibility = Visibility.Visible;
                      }
@@ -1864,11 +1872,13 @@ namespace ChessForge
                      {
                          _mainWin.UiMnciEvalLine.IsEnabled = false;
                          _mainWin.UiMnciEvalPos.IsEnabled = false;
+                         _mainWin.UiMnciEvaluationChart.IsEnabled = false;
                      }
                      else
                      {
                          _mainWin.UiMnciEvalLine.IsEnabled = true;
                          _mainWin.UiMnciEvalPos.IsEnabled = true;
+                         _mainWin.UiMnciEvaluationChart.IsEnabled = true;
                      }
 
                      _mainWin.UiPbEngineThinking.Visibility = Visibility.Hidden;
@@ -1917,6 +1927,7 @@ namespace ChessForge
             {
                 _mainWin.UiMnciEvalLine.IsEnabled = false;
                 _mainWin.UiMnciEvalPos.IsEnabled = false;
+                _mainWin.UiMnciEvaluationChart.IsEnabled = false;
 
                 _mainWin.UiPbEngineThinking.Minimum = 0;
                 int moveTime = CurrentLearningMode == LearningMode.Mode.ENGINE_GAME ?

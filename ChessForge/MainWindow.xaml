@@ -243,6 +243,8 @@
                                 <Separator x:Name="UiMncMainBoardSepar_1a" />
                                 <MenuItem x:Name="UiMnciEvalPos" Header="{x:Static p:Resources.EvaluatePosition}" Click="UiMnEvaluatePosition_Click" />
                                 <MenuItem x:Name="UiMnciEvalLine" Header="{x:Static p:Resources.EvaluateLine}" Click="UiMnEvaluateLine_Click" />
+                                <MenuItem x:Name="UiMnciEvaluationChart" Header="{x:Static p:Resources.EvaluationChart}" Click="UiMnEvaluationChart_Click" />
+                                <Separator x:Name="UiMncMainBoardSepar_1b" />
                                 <MenuItem x:Name="UiMnciFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}" Click="UiMnFindIdenticalPosition_Click" InputGestureText="F3"/>
                                 <MenuItem x:Name="UiMnciFindPositions" Header="{x:Static p:Resources.SearchByFen}"  Click="UiMnFindPositions_Click" InputGestureText="Shift+F3" />
                                 <Separator x:Name="UiMncMainBoardSepar_2" />
