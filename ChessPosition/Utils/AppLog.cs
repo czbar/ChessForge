@@ -12,6 +12,16 @@ using System.Threading;
 namespace ChessForge
 {
     /// <summary>
+    /// LogLevel enums
+    /// </summary>
+    public enum LogLevel
+    {
+        BASIC  = 0,
+        ERROR  = 1,
+        DETAIL = 2,
+    }
+
+    /// <summary>
     /// Logging class to be used in debug mode.
     /// </summary>
     public class AppLog
@@ -72,6 +82,16 @@ namespace ChessForge
                 string timeStamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "  ";
                 Log.Add(timeStamp + msg);
             }
+        }
+
+        /// <summary>
+        /// Overload using LogLevel.
+        /// </summary>
+        /// <param name="level"></param>
+        /// <param name="msg"></param>
+        public static void Message(LogLevel level, string msg)
+        {
+            Message((int)level, msg);
         }
 
         /// <summary>
