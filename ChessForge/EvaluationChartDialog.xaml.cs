@@ -156,6 +156,7 @@ namespace ChessForge
             marker.Fill = Brushes.Yellow;
 
             cnv.Children.Add(marker);
+            marker.Visibility = Visibility.Collapsed;
             Canvas.SetZIndex(marker, 2);
         }
 
@@ -419,16 +420,20 @@ namespace ChessForge
             {
                 Point p = GetPointForMove(nd).Value;
 
+                bool isValuePositive;
+
                 Ellipse marker;
                 Ellipse otherMarker;
                 if (p.Y >= 0)
                 {
+                    isValuePositive = true;
                     marker = _whiteMarker;
                     otherMarker = _blackMarker;
                     p.Y = 100 - p.Y;
                 }
                 else
                 {
+                    isValuePositive = false;
                     p.Y = -p.Y;
                     marker = _blackMarker;
                     otherMarker = _whiteMarker;
@@ -439,6 +444,16 @@ namespace ChessForge
 
                 marker.Visibility = Visibility.Visible;
                 otherMarker.Visibility = Visibility.Collapsed;
+
+                if (!isValuePositive && p.Y < 0)
+                {
+                    Point pOther = new Point();
+                    pOther.X = p.X;
+                    pOther.Y = 100 + p.Y;
+                    otherMarker.Visibility = Visibility.Visible;
+                    Canvas.SetLeft(otherMarker, pOther.X);
+                    Canvas.SetTop(otherMarker, pOther.Y);
+                }
 
                 Canvas.SetLeft(marker, p.X);
                 Canvas.SetTop(marker, p.Y);
@@ -566,7 +581,7 @@ namespace ChessForge
         private TreeNode GetNodeFromPosition(Point pos)
         {
             double fraction = pos.X / _maxX;
-            int plyIndex = (int)Math.Round(fraction * _plyCount) + 1;
+            int plyIndex = (int)Math.Round(fraction * (_plyCount - 1)) + 1;
 
             if (plyIndex < 1)
             {
