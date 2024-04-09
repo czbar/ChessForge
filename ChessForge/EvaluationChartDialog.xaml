@@ -6,7 +6,7 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        Title="{x:Static p:Resources.EvaluationChart}" Height="280" Width="800"
+        Title="{x:Static p:Resources.EvaluationChart}" Height="280" Width="820"
         ResizeMode="NoResize">
 
     <Grid MouseMove="Grid_MouseMove">
@@ -16,12 +16,12 @@
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
 
-        <Canvas x:Name="UiCnvWhite" Grid.Row="0" Background="Black" ClipToBounds="True" Grid.ColumnSpan="2">
+        <Canvas x:Name="UiCnvWhite" Grid.Row="0" Background="Black" ClipToBounds="True" Grid.ColumnSpan="2" Height="100" Width="800" HorizontalAlignment="Center">
         </Canvas>
         
         <Line x:Name="UiMidLine" Stroke="Gray" StrokeThickness="3" X1="0" X2="800" Y1="100" Y2="100" Grid.ColumnSpan="2"></Line>
 
-        <Canvas x:Name="UiCnvBlack" Grid.Row="1" Background="LightGray" ClipToBounds="True" Grid.ColumnSpan="2">
+        <Canvas x:Name="UiCnvBlack" Grid.Row="1" Background="LightGray" ClipToBounds="True" Grid.ColumnSpan="2" Height="100" Width="800" HorizontalAlignment="Center">
 
         </Canvas>
 
