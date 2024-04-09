@@ -16,6 +16,15 @@ namespace ChessForge
     /// </summary>
     public partial class EvaluationChartDialog : Window
     {
+        // width of the 2 canvases
+        private double CANVAS_WIDTH = 800;
+
+        // height of the 2 canvases
+        private double CANVAS_HEIGHT = 100;
+
+        // diameter of the marker
+        private int MARKER_SIZE = 8;
+
         // length of the X-axis in either canvas
         private double _maxX;
 
@@ -49,9 +58,6 @@ namespace ChessForge
         // ply marker in the black (bottom) half  
         private Ellipse _blackMarker = new Ellipse();
 
-        // diameter of the marker
-        private int MARKER_SIZE = 8;
-
         /// <summary>
         /// Creates the dialog and calculates the limits.
         /// </summary>
@@ -61,13 +67,19 @@ namespace ChessForge
             InitializeComponent();
             _nodeList = NodeList;
 
+            UiCnvWhite.Width = CANVAS_WIDTH;
+            UiCnvWhite.Height = CANVAS_HEIGHT; ;
+
+            UiCnvBlack.Width = CANVAS_WIDTH;
+            UiCnvBlack.Height = CANVAS_HEIGHT; ;
+
             // we do not include node 0
             _plyCount = _nodeList.Count - 1;
 
             // get the maxX and maxY based on the size of the canvases (mins are 0)
             // TODO: how to get these from the Canvas?
-            _maxX = 800;
-            _maxY = 100;
+            _maxX = CANVAS_WIDTH;
+            _maxY = CANVAS_HEIGHT;
 
             ConfigureVerticalLine();
             ConfigureEvaluationLabels();
@@ -102,7 +114,7 @@ namespace ChessForge
             line.X1 = -1;
             line.X2 = -1;
             line.Y1 = 0;
-            line.Y2 = 100;
+            line.Y2 = CANVAS_HEIGHT;
             line.Stroke = Brushes.White;
 
             cnv.Children.Add(line);
@@ -264,7 +276,7 @@ namespace ChessForge
             Point? p = GetPointForMove(nd);
             if (p.HasValue)
             {
-                segWhite = new LineSegment(new Point(p.Value.X, 100 - p.Value.Y), true);
+                segWhite = new LineSegment(new Point(p.Value.X, CANVAS_HEIGHT - p.Value.Y), true);
                 segBlack = new LineSegment(new Point(p.Value.X, -p.Value.Y), true);
             }
             else
@@ -285,7 +297,7 @@ namespace ChessForge
             Point? p = GetPointForMove(nd);
             if (p.HasValue)
             {
-                segWhite = new LineSegment(new Point(p.Value.X, 100), false);
+                segWhite = new LineSegment(new Point(p.Value.X, CANVAS_HEIGHT), false);
                 segBlack = new LineSegment(new Point(p.Value.X, 0), false);
             }
             else
@@ -306,7 +318,7 @@ namespace ChessForge
             Point? p = GetPointForMove(nd);
             if (p.HasValue)
             {
-                segWhite = new LineSegment(new Point(p.Value.X, 100 - p.Value.Y), false);
+                segWhite = new LineSegment(new Point(p.Value.X, CANVAS_HEIGHT - p.Value.Y), false);
                 segBlack = new LineSegment(new Point(p.Value.X, -p.Value.Y), false);
             }
             else
@@ -429,7 +441,7 @@ namespace ChessForge
                     isValuePositive = true;
                     marker = _whiteMarker;
                     otherMarker = _blackMarker;
-                    p.Y = 100 - p.Y;
+                    p.Y = CANVAS_HEIGHT - p.Y;
                 }
                 else
                 {
@@ -449,7 +461,7 @@ namespace ChessForge
                 {
                     Point pOther = new Point();
                     pOther.X = p.X;
-                    pOther.Y = 100 + p.Y;
+                    pOther.Y = CANVAS_HEIGHT + p.Y;
                     otherMarker.Visibility = Visibility.Visible;
                     Canvas.SetLeft(otherMarker, pOther.X);
                     Canvas.SetTop(otherMarker, pOther.Y);
@@ -639,5 +651,29 @@ namespace ChessForge
             RepositionVerticalLines(posCnvWhite.X);
         }
 
+        /// <summary>
+        /// If clicked inside either canvas select the nearest move in the current view.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Grid_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var posCnvWhite = e.GetPosition(UiCnvWhite);
+
+            TreeNode node = GetNodeFromPosition(posCnvWhite);
+            if (node != null)
+            {
+                AppState.MainWin.SetActiveLine(node.LineId, node.NodeId);
+                if (AppState.MainWin.ActiveTreeView is StudyTreeView view)
+                {
+                    if (view.UncollapseMove(node))
+                    {
+                        view.BuildFlowDocumentForVariationTree();
+                    }
+                }
+                AppState.MainWin.SelectLineAndMoveInWorkbookViews(AppState.MainWin.ActiveTreeView, node.LineId,
+                    AppState.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false), true);
+            }
+        }
     }
 }

@@ -9,7 +9,7 @@
         Title="{x:Static p:Resources.EvaluationChart}" Height="280" Width="820"
         ResizeMode="NoResize">
 
-    <Grid MouseMove="Grid_MouseMove">
+    <Grid MouseMove="Grid_MouseMove" PreviewMouseDown="Grid_PreviewMouseDown">
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
             <RowDefinition Height="100"/>
