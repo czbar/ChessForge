@@ -789,6 +789,9 @@
   <data name="EvaluationChart" xml:space="preserve">
     <value>Evaluation Chart</value>
   </data>
+  <data name="Scale" xml:space="preserve">
+    <value>Scale</value>
+  </data>
   <data name="ToolTipScrollHome" xml:space="preserve">
     <value>Scroll to the top</value>
   </data>

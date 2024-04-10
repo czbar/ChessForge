@@ -1001,6 +1001,11 @@ CmExpandThisOnly=
 #english: EvaluationChart=Evaluation Chart
 EvaluationChart=
 
+#description: Scale
+#english: Scale=Scale
+Scale=
+
+
 ###########################
 #
 # Header: VIEW Chapters

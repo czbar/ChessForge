@@ -1001,6 +1001,11 @@ CmExpandThisOnly=Zwiń wszystkie inne
 #english: EvaluationChart=Evaluation Chart
 EvaluationChart=Wykres Ocen Silnika
 
+#description: Scale
+#english: Scale=Scale
+Scale=Skala
+
+
 ###########################
 #
 # Header: VIEW Chapters

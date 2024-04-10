@@ -789,6 +789,9 @@
   <data name="EvaluationChart" xml:space="preserve">
     <value>Wykres Ocen Silnika</value>
   </data>
+  <data name="Scale" xml:space="preserve">
+    <value>Skala</value>
+  </data>
   <data name="ToolTipScrollHome" xml:space="preserve">
     <value>Przewiń do początku</value>
   </data>
