@@ -119,6 +119,14 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Overloaded method to render the chart with the current active line.
+        /// </summary>
+        public void Update()
+        {
+            Update(AppState.MainWin.ActiveLine.GetNodeList());
+        }
+
+        /// <summary>
         /// Checks if the list differs from the one that we are showing now.
         /// If the same but marked as dirty refresh too.
         /// Displays the updated chart.
@@ -126,31 +134,72 @@ namespace ChessForge
         /// <param name="nodeList"></param>
         public void Update(ObservableCollection<TreeNode> nodeList)
         {
-            try
+            if (CanShowChart(false))
             {
-                if (!IsDirty && nodeList.Count == _nodeList.Count)
+                try
                 {
-                    int count = nodeList.Count;
-                    if (count == 0 || nodeList[count - 1] == _nodeList[count - 1])
+                    if (!IsDirty && nodeList.Count == _nodeList.Count)
                     {
-                        return;
+                        int count = nodeList.Count;
+                        if (count == 0 || nodeList[count - 1] == _nodeList[count - 1])
+                        {
+                            return;
+                        }
                     }
+
+                    _nodeList = nodeList;
+
+                    // we do not include node 0
+                    _plyCount = _nodeList.Count - 1;
+
+                    GeneratePathSet();
+                    SetScaleLabelText();
+                    AppState.MainWin.UiEvalChart.Visibility = Visibility.Visible;
+
+                    SelectMove(AppState.ActiveLine.GetSelectedTreeNode());
+
+                    IsDirty = false;
                 }
-
-                _nodeList = nodeList;
-
-                // we do not include node 0
-                _plyCount = _nodeList.Count - 1;
-
-                GeneratePathSet();
-                SetScaleLabelText();
-
-                IsDirty = false;
+                catch (Exception ex)
+                {
+                    AppLog.Message("EvaluationChart:Update()", ex);
+                }
             }
-            catch (Exception ex)
+            else
             {
-                AppLog.Message("EvaluationChart:Update()", ex);
+                AppState.MainWin.UiEvalChart.Visibility = Visibility.Hidden;
             }
+        }
+
+        /// <summary>
+        /// Repositions floating elements to the requested move.
+        /// </summary>
+        /// <param name="nd"></param>
+        public void SelectMove(TreeNode nd)
+        {
+            if (nd == null || nd.NodeId == 0)
+            {
+                if (_nodeList.Count > 1)
+                {
+                    nd = _nodeList[_nodeList.Count - 1];
+                }
+            }
+
+            Point? p = GetPointForMove(nd);
+            if (p != null)
+            {
+                Point pt = p.Value;
+                RepositionFloatingElements(pt, null);
+            }
+        }
+
+        /// <summary>
+        /// Reports if the chart can be shown
+        /// </summary>
+        /// <returns></returns>
+        public bool ReportIfCanShow()
+        {
+            return CanShowChart(true);
         }
 
         //*****************************************************
@@ -646,6 +695,78 @@ namespace ChessForge
         //*****************************************************
 
         /// <summary>
+        /// Checks it chart can be currently shown.
+        /// If it can't and showReason == true, a flash announcement
+        /// with the reason will be displayed.
+        /// </summary>
+        /// <returns></returns>
+        private bool CanShowChart(bool showReason)
+        {
+            bool res = true;
+
+            if (AppState.ActiveTab != TabViewType.STUDY && AppState.ActiveTab != TabViewType.MODEL_GAME)
+            {
+                // report wrong tab
+                if (showReason)
+                {
+                    AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.ChartErrorWrongTab, Brushes.Red);
+                }
+                res = false;
+            }
+            else if (EvaluationManager.IsRunning)
+            {
+                // report evaluation in progress
+                if (showReason)
+                {
+                    AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.ChartErrorEvalInProgress, Brushes.Red);
+                }
+                res = false;
+            }
+            else if (!HasMovesWithEval(AppState.ActiveLine.GetNodeList(), 2))
+            {
+                // insufficient moves with evaluations
+                if (showReason)
+                {
+                    AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.ChartErrorInsufficientEvals, Brushes.Red);
+                }
+                res = false;
+            }
+
+            return res;
+        }
+
+        /// <summary>
+        /// Checks if the passed line has the required minimum of moves
+        /// with evaluations.
+        /// </summary>
+        /// <param name="line"></param>
+        /// <param name="minMoves"></param>
+        /// <returns></returns>
+        private bool HasMovesWithEval(ObservableCollection<TreeNode> line, int minMoves)
+        {
+            bool res = false;
+
+            if (line != null)
+            {
+                int count = 0;
+                foreach (TreeNode node in line)
+                {
+                    if (node.NodeId != 0 && !string.IsNullOrWhiteSpace(node.EngineEvaluation))
+                    {
+                        count++;
+                        if (count >= minMoves)
+                        {
+                            res = true;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return res;
+        }
+
+        /// <summary>
         /// Parses the evaluation string which can be:
         /// A: empty
         /// B: representation of a double value
@@ -773,6 +894,26 @@ namespace ChessForge
             UiBtnScale.Content = Properties.Resources.Scale + ": " + _evalScale.ToString("F1");
         }
 
+        /// <summary>
+        /// Repositions all floating elements to the requested positions.
+        /// </summary>
+        /// <param name="cnvWhite"></param>
+        /// <param name="cnvBlack"></param>
+        private void RepositionFloatingElements(Point cnvWhite, Point? cnvBlack)
+        {
+            if (cnvBlack != null)
+            {
+                RepositionEvaluationLabels(cnvWhite, cnvBlack.Value);
+            }
+            else
+            {
+                RepositionEvaluationLabels(cnvWhite, new Point(cnvWhite.X, 50));
+            }
+
+            RepositionMarkers(cnvWhite);
+            RepositionVerticalLines(cnvWhite.X);
+        }
+
         //*****************************************************
         //
         //  EVENT HANDLERS
@@ -795,9 +936,10 @@ namespace ChessForge
                 var posCnvWhite = e.GetPosition(UiCnvWhite);
                 var posCnvBlack = e.GetPosition(UiCnvBlack);
 
-                RepositionEvaluationLabels(posCnvWhite, posCnvBlack);
-                RepositionMarkers(posCnvWhite);
-                RepositionVerticalLines(posCnvWhite.X);
+                RepositionFloatingElements(posCnvWhite, posCnvBlack);
+                //RepositionEvaluationLabels(posCnvWhite, posCnvBlack);
+                //RepositionMarkers(posCnvWhite);
+                //RepositionVerticalLines(posCnvWhite.X);
             }
         }
 
