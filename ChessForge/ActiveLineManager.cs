@@ -148,6 +148,11 @@ namespace ChessForge
             }
             _selectedRow = -1;
             _selectedColumn = -1;
+
+            if (AppState.MainWin.UiEvalChart.Visibility == System.Windows.Visibility.Visible)
+            {
+                AppState.MainWin.UiEvalChart.Update(line);
+            }
         }
 
         /// <summary>
