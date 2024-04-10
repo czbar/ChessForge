@@ -726,6 +726,12 @@
   <data name="TurnEngineOn" xml:space="preserve">
     <value>Turn the Engine On</value>
   </data>
+  <data name="HideEvaluationChart" xml:space="preserve">
+    <value>Hide Evaluation Chart</value>
+  </data>
+  <data name="ShowEvaluationChart" xml:space="preserve">
+    <value>Show Evaluation Chart</value>
+  </data>
   <data name="TopGames" xml:space="preserve">
     <value>Top Games</value>
   </data>
@@ -788,6 +794,9 @@
   </data>
   <data name="EvaluationChart" xml:space="preserve">
     <value>Evaluation Chart</value>
+  </data>
+  <data name="Chart" xml:space="preserve">
+    <value>Chart</value>
   </data>
   <data name="Scale" xml:space="preserve">
     <value>Scale</value>

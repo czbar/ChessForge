@@ -827,6 +827,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chart.
+        /// </summary>
+        public static string Chart {
+            get {
+                return ResourceManager.GetString("Chart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to check.
         /// </summary>
         public static string Check {
@@ -3343,6 +3352,15 @@ namespace ChessForge.Properties {
         public static string Help {
             get {
                 return ResourceManager.GetString("Help", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide Evaluation Chart.
+        /// </summary>
+        public static string HideEvaluationChart {
+            get {
+                return ResourceManager.GetString("HideEvaluationChart", resourceCulture);
             }
         }
         
@@ -6035,6 +6053,15 @@ namespace ChessForge.Properties {
         public static string ShowAllChapters {
             get {
                 return ResourceManager.GetString("ShowAllChapters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Evaluation Chart.
+        /// </summary>
+        public static string ShowEvaluationChart {
+            get {
+                return ResourceManager.GetString("ShowEvaluationChart", resourceCulture);
             }
         }
         

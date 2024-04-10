@@ -726,6 +726,12 @@
   <data name="TurnEngineOn" xml:space="preserve">
     <value>Włącz silnik</value>
   </data>
+  <data name="HideEvaluationChart" xml:space="preserve">
+    <value>Pokaż wykres ocen silnika</value>
+  </data>
+  <data name="ShowEvaluationChart" xml:space="preserve">
+    <value>Ukryj wykres ocen silnika</value>
+  </data>
   <data name="TopGames" xml:space="preserve">
     <value>Partie Mistrzowskie</value>
   </data>
@@ -788,6 +794,9 @@
   </data>
   <data name="EvaluationChart" xml:space="preserve">
     <value>Wykres Ocen Silnika</value>
+  </data>
+  <data name="Chart" xml:space="preserve">
+    <value>Wykres</value>
   </data>
   <data name="Scale" xml:space="preserve">
     <value>Skala</value>

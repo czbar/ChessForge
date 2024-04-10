@@ -899,6 +899,15 @@ TurnEngineOff=
 #english: TurnEngineOn=Turn the Engine On
 TurnEngineOn=
 
+#description: Tool tip for hiding Eval Chart
+#english: HideEvaluationChart=Hide Evaluation Chart
+HideEvaluationChart=
+
+#description: Tool tip for showing evaluation chart
+#english: ShowEvaluationChart=Show Evaluation Chart
+ShowEvaluationChart=
+
+
 #description: Top Games box title
 #english: TopGames=Top Games
 TopGames=
@@ -1000,6 +1009,10 @@ CmExpandThisOnly=
 #description: Evaluation
 #english: EvaluationChart=Evaluation Chart
 EvaluationChart=
+
+#description: Chart
+#english: Chart=Chart
+Chart=
 
 #description: Scale
 #english: Scale=Scale

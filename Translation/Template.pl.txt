@@ -899,6 +899,15 @@ TurnEngineOff=Wyłącz silnik
 #english: TurnEngineOn=Turn the Engine On
 TurnEngineOn=Włącz silnik
 
+#description: Tool tip for hiding Eval Chart
+#english: HideEvaluationChart=Hide Evaluation Chart
+HideEvaluationChart=Pokaż wykres ocen silnika
+
+#description: Tool tip for showing evaluation chart
+#english: ShowEvaluationChart=Show Evaluation Chart
+ShowEvaluationChart=Ukryj wykres ocen silnika
+
+
 #description: Top Games box title
 #english: TopGames=Top Games
 TopGames=Partie Mistrzowskie
@@ -1000,6 +1009,10 @@ CmExpandThisOnly=Zwiń wszystkie inne
 #description: Evaluation
 #english: EvaluationChart=Evaluation Chart
 EvaluationChart=Wykres Ocen Silnika
+
+#description: Chart
+#english: Chart=Chart
+Chart=Wykres
 
 #description: Scale
 #english: Scale=Scale

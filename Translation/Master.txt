@@ -696,6 +696,13 @@ TurnEngineOff=Turn the Engine Off
 #Tool tip for turning AutoSave on
 TurnEngineOn=Turn the Engine On
 
+#Tool tip for hiding Eval Chart
+HideEvaluationChart=Hide Evaluation Chart
+
+#Tool tip for showing evaluation chart
+ShowEvaluationChart=Show Evaluation Chart
+
+
 #Top Games box title
 TopGames=Top Games
 
@@ -776,6 +783,9 @@ CmExpandThisOnly=Collapse All Else
 
 #Evaluation
 EvaluationChart=Evaluation Chart
+
+#Chart
+Chart=Chart
 
 #Scale
 Scale=Scale
