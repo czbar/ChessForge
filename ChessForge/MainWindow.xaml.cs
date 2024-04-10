@@ -2059,6 +2059,12 @@ namespace ChessForge
                 if (selectedNodeId >= 0)
                 {
                     TreeNode nd = ActiveLine.GetNodeFromId(selectedNodeId);
+
+                    if (AppState.MainWin.UiEvalChart.Visibility == System.Windows.Visibility.Visible)
+                    {
+                        AppState.MainWin.UiEvalChart.SelectMove(nd);
+                    }
+
                     if (selectedNodeId > 0)
                     {
                         ActiveLine.SelectPly((int)nd.Parent.MoveNumber, nd.Parent.ColorToMove);
