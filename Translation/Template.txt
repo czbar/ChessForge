@@ -1018,6 +1018,18 @@ Chart=
 #english: Scale=Scale
 Scale=
 
+#description: Chart not available in the current tab
+#english: ChartErrorWrongTab=Chart not available in this tab
+ChartErrorWrongTab=
+
+#description: Chart not available while evaluation in progress
+#english: ChartErrorEvalInProgress=Chart not available while evaluation in progress
+ChartErrorEvalInProgress=
+
+#description: Insufficient number of evals to show chart
+#english: ChartErrorInsufficientEvals=Insufficient number of evaluated moves
+ChartErrorInsufficientEvals=
+
 
 ###########################
 #

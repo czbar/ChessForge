@@ -836,6 +836,33 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chart not available while evaluation in progress.
+        /// </summary>
+        public static string ChartErrorEvalInProgress {
+            get {
+                return ResourceManager.GetString("ChartErrorEvalInProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insufficient number of evaluated moves.
+        /// </summary>
+        public static string ChartErrorInsufficientEvals {
+            get {
+                return ResourceManager.GetString("ChartErrorInsufficientEvals", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chart not available in this tab.
+        /// </summary>
+        public static string ChartErrorWrongTab {
+            get {
+                return ResourceManager.GetString("ChartErrorWrongTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to check.
         /// </summary>
         public static string Check {

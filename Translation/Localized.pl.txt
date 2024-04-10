@@ -3758,3 +3758,12 @@ IllegalCastling=Niedozwolona roszada.
 #description: Workbook info
 #english: AboutWorkbook=This PGN Workbook is optimized for viewing in Chess Forge https://sourceforge.net/projects/chessforge/ \nChess Forge is a Free and Open Source Windows application.
 AboutWorkbook=Ten podręcznik PGN najlepiej oglądać w programie Chess Forge https://sourceforge.net/projects/chessforge/ \nChess Forge to Wolne i Otwarte Oprogramowanie do systemu Windows.
+
+
+ChartErrorWrongTab=Wykres nie jest dostępny w tej zakładce
+
+#Chart not available while evaluation in progress
+ChartErrorEvalInProgress=Wykres nie jest dostępny gdy pracuje silnik
+
+#Insufficient number of evals to show chart
+ChartErrorInsufficientEvals=Niewystarczająca liczba ruchów z oceną

@@ -801,6 +801,15 @@
   <data name="Scale" xml:space="preserve">
     <value>Skala</value>
   </data>
+  <data name="ChartErrorWrongTab" xml:space="preserve">
+    <value>Wykres nie jest dostępny w tej zakładce</value>
+  </data>
+  <data name="ChartErrorEvalInProgress" xml:space="preserve">
+    <value>Wykres nie jest dostępny gdy pracuje silnik</value>
+  </data>
+  <data name="ChartErrorInsufficientEvals" xml:space="preserve">
+    <value>Niewystarczająca liczba ruchów z oceną</value>
+  </data>
   <data name="ToolTipScrollHome" xml:space="preserve">
     <value>Przewiń do początku</value>
   </data>

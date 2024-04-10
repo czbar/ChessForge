@@ -1018,6 +1018,18 @@ Chart=Wykres
 #english: Scale=Scale
 Scale=Skala
 
+#description: Chart not available in the current tab
+#english: ChartErrorWrongTab=Chart not available in this tab
+ChartErrorWrongTab=Wykres nie jest dostępny w tej zakładce
+
+#description: Chart not available while evaluation in progress
+#english: ChartErrorEvalInProgress=Chart not available while evaluation in progress
+ChartErrorEvalInProgress=Wykres nie jest dostępny gdy pracuje silnik
+
+#description: Insufficient number of evals to show chart
+#english: ChartErrorInsufficientEvals=Insufficient number of evaluated moves
+ChartErrorInsufficientEvals=Niewystarczająca liczba ruchów z oceną
+
 
 ###########################
 #

@@ -790,6 +790,15 @@ Chart=Chart
 #Scale
 Scale=Scale
 
+#Chart not available in the current tab
+ChartErrorWrongTab=Chart not available in this tab
+
+#Chart not available while evaluation in progress
+ChartErrorEvalInProgress=Chart not available while evaluation in progress
+
+#Insufficient number of evals to show chart
+ChartErrorInsufficientEvals=Insufficient number of evaluated moves
+
 
 ###########################
 #

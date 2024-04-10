@@ -801,6 +801,15 @@
   <data name="Scale" xml:space="preserve">
     <value>Scale</value>
   </data>
+  <data name="ChartErrorWrongTab" xml:space="preserve">
+    <value>Chart not available in this tab</value>
+  </data>
+  <data name="ChartErrorEvalInProgress" xml:space="preserve">
+    <value>Chart not available while evaluation in progress</value>
+  </data>
+  <data name="ChartErrorInsufficientEvals" xml:space="preserve">
+    <value>Insufficient number of evaluated moves</value>
+  </data>
   <data name="ToolTipScrollHome" xml:space="preserve">
     <value>Scroll to the top</value>
   </data>
