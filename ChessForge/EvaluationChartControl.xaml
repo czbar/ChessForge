@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="ChessForge.EvaluationChartControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ChessForge"
+             mc:Ignorable="d" 
+             d:DesignHeight="150" d:DesignWidth="672"
+             Visibility="Visible">
+    <Grid MouseMove="Grid_MouseMove" PreviewMouseDown="Grid_PreviewMouseDown">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="74"/>
+            <RowDefinition Height="74"/>
+        </Grid.RowDefinitions>
+
+        <Canvas x:Name="UiCnvWhite" Grid.Row="0" Background="LightGreen" ClipToBounds="True" Grid.ColumnSpan="2" 
+                Height="74" Width="670" 
+                HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Label x:Name="UiBtnScale" Content="" Canvas.Left="268" Canvas.Top="5" Panel.ZIndex="4"
+                    Height="18" Padding="0" VerticalContentAlignment="Center" HorizontalAlignment="Right"
+                    FontSize="11"
+                    Foreground="DarkGreen" Background="Transparent" BorderThickness="0" />
+            <Button x:Name="UiBtnPlus" Content="+" Canvas.Left="317" Canvas.Top="4" Panel.ZIndex="4"
+                    Width="16" Height="18" Padding="0" VerticalContentAlignment="Center" 
+                    FontSize="14" FontWeight="Bold" Foreground="DarkGreen"
+                    BorderThickness="0" Background="Transparent" Click="UiBtnPlus_Click" />
+            <Button x:Name="UiBtnMinus" Content="-" Canvas.Left="333" Canvas.Top="4" Panel.ZIndex="4"
+                    Width="16" Height="18" Padding="0" VerticalContentAlignment="Center"
+                    FontSize="14" FontWeight="Bold" Foreground="DarkGreen"
+                    BorderThickness="0" Background="Transparent" Click="UiBtnMinus_Click" />
+        </Canvas>
+        <Line x:Name="UiMidLine" Stroke="Gray" 
+              StrokeThickness="3" X1="0" X2="670" Y1="75" Y2="75">
+        </Line>
+        <Canvas x:Name="UiCnvBlack" Grid.Row="1" Background="Green" ClipToBounds="True" Grid.ColumnSpan="2" 
+                Height="74" Width="670" 
+                HorizontalAlignment="Left" VerticalAlignment="Top">
+        </Canvas>
+    </Grid>
+
+</UserControl>

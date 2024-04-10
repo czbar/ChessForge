@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
+        xmlns:uc="clr-namespace:ChessForge"
         mc:Ignorable="d"
         Title="Chess Forge" Height="900" Width="1676" Loaded="Window_Loaded" MouseDown="OnMouseDown" MouseUp="OnMouseUp" MouseMove="OnMouseMove" Closing="ChessForgeMain_Closing" 
         PreviewKeyDown="MainWindow_PreviewKeyDown"
@@ -21,7 +22,7 @@
             <Separator />
             <MenuItem x:Name="UiMnciExpandThisOne" Header="{x:Static p:Resources.CmExpandThisOnly}" Click="UiMnciExpandThisOne_Click"/>
         </ContextMenu>
-        
+
         <Style  x:Key="RoundedBorder" TargetType="Label">
             <Setter Property="Template">
                 <Setter.Value>
@@ -1113,7 +1114,16 @@
                         <DataGridTextColumn Header="{x:Static p:Resources.EvaluationShort}" Width="50" Binding="{Binding BlackEval}"  CellStyle="{StaticResource DisableSelection}" CanUserReorder="False"/>
                     </DataGrid.Columns>
                 </DataGrid>
-                <RichTextBox x:Name="UiRtbBoardComment"  ContextMenu="{x:Null}" IsUndoEnabled="False" Panel.ZIndex="0" HorizontalAlignment="Left" Height="150" Margin="4,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="672" BorderThickness="1" IsReadOnly="True">
+                <uc:EvaluationChartControl x:Name="UiEvalChart" Panel.ZIndex="1"  
+                                           Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                           Width="672" Height="150" Margin="4,10,0,0" 
+                                           BorderThickness="1" BorderBrush="Black"
+                                           Visibility="Hidden">
+                </uc:EvaluationChartControl>
+                <RichTextBox x:Name="UiRtbBoardComment"  ContextMenu="{x:Null}" IsUndoEnabled="False" Panel.ZIndex="0" 
+                             Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                             Width="672" Height="150" Margin="4,10,0,0"
+                             BorderThickness="1" BorderBrush="Black" IsReadOnly="True">
                     <RichTextBox.Resources>
                         <Style TargetType="{x:Type Paragraph}">
                             <Setter Property="Margin" Value="0" />
