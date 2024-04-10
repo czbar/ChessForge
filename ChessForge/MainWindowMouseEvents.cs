@@ -769,9 +769,51 @@ namespace ChessForge
 
         //**************************************************************
         //
-        //  EVALUATION TOGGLE mouse events 
+        //  FUNCTION TOGGLE mouse events 
         // 
         //**************************************************************
+
+        /// <summary>
+        /// Hides the Evaluation Chart.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void EvaluationChartToggleOn(object sender, MouseButtonEventArgs e)
+        {
+            Configuration.ShowEvaluationChart = false;
+            UiImgChartOff.Visibility = Visibility.Visible;
+            UiImgChartOn.Visibility = Visibility.Collapsed;
+
+            UiEvalChart.Visibility = Visibility.Collapsed;
+            if (e != null)
+            {
+                e.Handled = true;
+            }
+        }
+
+        /// <summary>
+        /// Shows the Evaluation Chart.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EvaluationChartToggleOff(object sender, MouseButtonEventArgs e)
+        {
+            Configuration.ShowEvaluationChart = true;
+            UiImgChartOff.Visibility = Visibility.Collapsed;
+            UiImgChartOn.Visibility = Visibility.Visible;
+
+            UiEvalChart.IsDirty = true;
+
+            if (UiEvalChart.ReportIfCanShow())
+            {
+                UiEvalChart.Update();
+            }
+
+            if (e != null)
+            {
+                e.Handled = true;
+            }
+        }
 
 
         /// <summary>
