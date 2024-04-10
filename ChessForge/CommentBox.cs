@@ -167,6 +167,7 @@ namespace ChessForge
             {
                 if (!_flashAnnouncementShown)
                 {
+                    Panel.SetZIndex(_mainWin.UiRtbBoardComment, 10);
                     _flashAnnouncementShown = true;
                     _engineLinesVisible = _mainWin.UiTbEngineLines.Visibility == Visibility.Visible;
 
@@ -204,6 +205,7 @@ namespace ChessForge
             {
                 MoveDocument(ref _docOnHold, ref Document);
                 _mainWin.Timers.Stop(AppTimers.TimerId.FLASH_ANNOUNCEMENT);
+                Panel.SetZIndex(_mainWin.UiRtbBoardComment, 0);
 
                 if (_engineLinesVisible)
                 {
