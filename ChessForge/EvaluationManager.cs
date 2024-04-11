@@ -163,6 +163,8 @@ namespace ChessForge
         /// <param name="lineSource"></param>
         public static void ChangeCurrentMode(Mode mode, LineSource lineSource = LineSource.NONE)
         {
+            Mode previousMode = _currentMode;
+
             _currentMode = mode;
             switch (_currentMode)
             {
@@ -171,6 +173,9 @@ namespace ChessForge
                     AppState.MainWin.Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
                     EngineMessageProcessor.StopEngineEvaluation();
                     AppState.SwapCommentBoxForEngineLines(TrainingSession.IsContinuousEvaluation);
+
+                    AppState.MainWin.UiEvalChart.IsDirty = true;
+                    AppState.MainWin.UiEvalChart.Update();
                     break;
                 case Mode.CONTINUOUS:
                     AppState.MainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
@@ -198,7 +203,7 @@ namespace ChessForge
                     break;
             }
 
-            AppLog.Message(2, "EvaluationManager:ChangeCurrentMode() to " + mode.ToString());
+            AppLog.Message(LogLevel.DETAIL, "EvaluationManager:ChangeCurrentMode() to " + mode.ToString());
             AppState.SetupGuiForCurrentStates();
         }
 
