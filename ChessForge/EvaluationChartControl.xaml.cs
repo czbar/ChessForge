@@ -80,10 +80,6 @@ namespace ChessForge
         // ply marker in the black (bottom) half  
         private Ellipse _blackMarker = new Ellipse();
 
-        Path _whitePath = new Path();
-        Path _blackPath = new Path();
-
-
         /// <summary>
         /// Creates the dialog and calculates the limits.
         /// </summary>
@@ -104,9 +100,6 @@ namespace ChessForge
             // TODO: how to get these from the Canvas?
             _maxX = CANVAS_WIDTH;
             _maxY = CANVAS_HEIGHT;
-
-            UiCnvWhite.Children.Add(_whitePath);
-            UiCnvBlack.Children.Add(_blackPath);
 
             ConfigureZoomButtons();
             ConfigureTitleLabel();
@@ -134,41 +127,45 @@ namespace ChessForge
         /// <param name="nodeList"></param>
         public void Update(ObservableCollection<TreeNode> nodeList)
         {
-            if (CanShowChart(false))
+            AppState.MainWin.Dispatcher.Invoke(() =>
             {
-                try
+                if (CanShowChart(false))
                 {
-                    if (!IsDirty && nodeList.Count == _nodeList.Count)
+                    try
                     {
-                        int count = nodeList.Count;
-                        if (count == 0 || nodeList[count - 1] == _nodeList[count - 1])
+                        if (!IsDirty && nodeList.Count == _nodeList.Count)
                         {
-                            return;
+                            int count = nodeList.Count;
+                            if (count == 0 || nodeList[count - 1] == _nodeList[count - 1])
+                            {
+                                return;
+                            }
                         }
+
+                        _nodeList = nodeList;
+
+                        // we do not include node 0
+                        _plyCount = _nodeList.Count - 1;
+
+                        GeneratePathSet();
+                        SetScaleLabelText();
+                        AppState.MainWin.UiEvalChart.Visibility = Visibility.Visible;
+
+                        SelectMove(AppState.ActiveLine.GetSelectedTreeNode());
+
+                        IsDirty = false;
                     }
-
-                    _nodeList = nodeList;
-
-                    // we do not include node 0
-                    _plyCount = _nodeList.Count - 1;
-
-                    GeneratePathSet();
-                    SetScaleLabelText();
+                    catch (Exception ex)
+                    {
+                        AppLog.Message("EvaluationChart:Update()", ex);
+                    }
                     AppState.MainWin.UiEvalChart.Visibility = Visibility.Visible;
-
-                    SelectMove(AppState.ActiveLine.GetSelectedTreeNode());
-
-                    IsDirty = false;
                 }
-                catch (Exception ex)
+                else
                 {
-                    AppLog.Message("EvaluationChart:Update()", ex);
+                    AppState.MainWin.UiEvalChart.Visibility = Visibility.Hidden;
                 }
-            }
-            else
-            {
-                AppState.MainWin.UiEvalChart.Visibility = Visibility.Hidden;
-            }
+            });
         }
 
         /// <summary>
@@ -177,7 +174,7 @@ namespace ChessForge
         /// <param name="nd"></param>
         public void SelectMove(TreeNode nd)
         {
-            if (nd == null || nd.NodeId == 0)
+            if (nd == null)
             {
                 if (_nodeList.Count > 1)
                 {
@@ -189,7 +186,7 @@ namespace ChessForge
             if (p != null)
             {
                 Point pt = p.Value;
-                RepositionFloatingElements(pt, null);
+                RepositionFloatingElements(pt, null, nd);
             }
         }
 
@@ -200,6 +197,54 @@ namespace ChessForge
         public bool ReportIfCanShow()
         {
             return CanShowChart(true);
+        }
+
+        /// <summary>
+        /// Checks it chart can be currently shown.
+        /// If it can't and showReason == true, a flash announcement
+        /// with the reason will be displayed.
+        /// </summary>
+        /// <returns></returns>
+        public bool CanShowChart(bool showReason)
+        {
+            bool res = true;
+
+            if (Configuration.ShowEvaluationChart)
+            {
+                if (AppState.ActiveTab != TabViewType.STUDY && AppState.ActiveTab != TabViewType.MODEL_GAME)
+                {
+                    // report wrong tab
+                    if (showReason)
+                    {
+                        AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.ChartErrorWrongTab, Brushes.Red);
+                    }
+                    res = false;
+                }
+                else if (EvaluationManager.IsRunning)
+                {
+                    // report evaluation in progress
+                    if (showReason)
+                    {
+                        AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.ChartErrorEvalInProgress, Brushes.Red);
+                    }
+                    res = false;
+                }
+                else if (!HasMovesWithEval(AppState.ActiveLine.GetNodeList(), 2))
+                {
+                    // insufficient moves with evaluations
+                    if (showReason)
+                    {
+                        AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.ChartErrorInsufficientEvals, Brushes.Red);
+                    }
+                    res = false;
+                }
+            }
+            else
+            {
+                res = false;
+            }
+
+            return res;
         }
 
         //*****************************************************
@@ -337,7 +382,6 @@ namespace ChessForge
             Canvas.SetZIndex(marker, 2);
         }
 
-
         //*****************************************************
         //
         //  CREATE PATHS
@@ -349,6 +393,10 @@ namespace ChessForge
         /// </summary>
         private void GeneratePathSet()
         {
+            // clear previous paths
+            RemovePathsFromCanvas(UiCnvWhite);
+            RemovePathsFromCanvas(UiCnvBlack);
+
             int index = 1;
             while (true)
             {
@@ -416,11 +464,13 @@ namespace ChessForge
             {
                 Point? p = GetPointForMove(firstNode);
 
-                _whitePath.Fill = Brushes.LightGray;
-                InsertPathInCanvas(UiCnvWhite, _whitePath, whitePathData, new Point(p.Value.X, _maxY));
+                Path whitePath = new Path();
+                whitePath.Fill = Brushes.LightGray;
+                InsertPathInCanvas(UiCnvWhite, whitePath, whitePathData, new Point(p.Value.X, _maxY));
 
-                _blackPath.Fill = Brushes.DarkGray;
-                InsertPathInCanvas(UiCnvBlack, _blackPath, blackPathData, new Point(p.Value.X, 0));
+                Path blackPath = new Path();
+                blackPath.Fill = Brushes.DarkGray;
+                InsertPathInCanvas(UiCnvBlack, blackPath, blackPathData, new Point(p.Value.X, 0));
             }
 
             return lastProcessed;
@@ -529,7 +579,7 @@ namespace ChessForge
             path.StrokeThickness = 1;
             path.Stroke = Brushes.Black;
 
-            //cnv.Children.Add(path);
+            cnv.Children.Add(path);
         }
 
 
@@ -546,17 +596,17 @@ namespace ChessForge
         /// </summary>
         /// <param name="posCnvWhite"></param>
         /// <param name="posCnvBlack"></param>
-        private void RepositionEvaluationLabels(Point posCnvWhite, Point posCnvBlack)
+        private void RepositionEvaluationLabels(Point posCnvWhite, Point posCnvBlack, TreeNode nd)
         {
             if (0 <= posCnvWhite.X && posCnvWhite.X < _maxX && posCnvWhite.Y >= 0 && posCnvWhite.Y < _maxY)
             {
-                PlaceLabel(_lblWhiteEval, posCnvWhite);
+                PlaceLabel(_lblWhiteEval, posCnvWhite, nd);
                 _lblBlackEval.Visibility = Visibility.Collapsed;
                 _blackMarker.Visibility = Visibility.Collapsed;
             }
             else if (0 <= posCnvBlack.X && posCnvBlack.X < _maxX && posCnvBlack.Y >= 0 && posCnvBlack.Y < _maxY)
             {
-                PlaceLabel(_lblBlackEval, posCnvBlack);
+                PlaceLabel(_lblBlackEval, posCnvBlack, nd);
                 _lblWhiteEval.Visibility = Visibility.Collapsed;
                 _whiteMarker.Visibility = Visibility.Collapsed;
             }
@@ -576,11 +626,10 @@ namespace ChessForge
         /// determines which marker (or both) is visible and places it.
         /// </summary>
         /// <param name="xPos"></param>
-        private void RepositionMarkers(Point xPos)
+        private void RepositionMarkers(Point xPos, TreeNode nd)
         {
-            TreeNode nd = GetNodeFromPosition(xPos);
             PlaceMarker(nd);
-            if (nd != null)
+            if (nd != null && nd.NodeId != 0)
             {
                 _lblMove.Content = MoveUtils.BuildSingleMoveText(nd, true, false, 0);
                 if (!string.IsNullOrEmpty(nd.EngineEvaluation))
@@ -599,7 +648,6 @@ namespace ChessForge
             }
         }
 
-
         /// <summary>
         /// Places one of the markers (or both if necessary),
         /// and sets the visibility.
@@ -607,48 +655,56 @@ namespace ChessForge
         /// <param name="nd"></param>
         private void PlaceMarker(TreeNode nd)
         {
-            Point? pt = GetPointForMove(nd);
-            if (pt.HasValue)
+            if (nd == null || string.IsNullOrEmpty(nd.EngineEvaluation) || nd.NodeId == 0)
             {
-                Point p = GetPointForMove(nd).Value;
-
-                bool isValuePositive;
-
-                Ellipse marker;
-                Ellipse otherMarker;
-                if (p.Y >= 0)
+                _whiteMarker.Visibility = Visibility.Collapsed;
+                _blackMarker.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                Point? pt = GetPointForMove(nd);
+                if (pt.HasValue)
                 {
-                    isValuePositive = true;
-                    marker = _whiteMarker;
-                    otherMarker = _blackMarker;
-                    p.Y = CANVAS_HEIGHT - p.Y;
+                    Point p = GetPointForMove(nd).Value;
+
+                    bool isValuePositive;
+
+                    Ellipse marker;
+                    Ellipse otherMarker;
+                    if (p.Y >= 0)
+                    {
+                        isValuePositive = true;
+                        marker = _whiteMarker;
+                        otherMarker = _blackMarker;
+                        p.Y = CANVAS_HEIGHT - p.Y;
+                    }
+                    else
+                    {
+                        isValuePositive = false;
+                        p.Y = -p.Y;
+                        marker = _blackMarker;
+                        otherMarker = _whiteMarker;
+                    }
+
+                    p.Y = p.Y - MARKER_SIZE;
+                    p.X = p.X - (MARKER_SIZE / 2);
+
+                    marker.Visibility = Visibility.Visible;
+                    otherMarker.Visibility = Visibility.Collapsed;
+
+                    if (!isValuePositive && p.Y < 0)
+                    {
+                        Point pOther = new Point();
+                        pOther.X = p.X;
+                        pOther.Y = CANVAS_HEIGHT + p.Y;
+                        otherMarker.Visibility = Visibility.Visible;
+                        Canvas.SetLeft(otherMarker, pOther.X);
+                        Canvas.SetTop(otherMarker, pOther.Y);
+                    }
+
+                    Canvas.SetLeft(marker, p.X);
+                    Canvas.SetTop(marker, p.Y);
                 }
-                else
-                {
-                    isValuePositive = false;
-                    p.Y = -p.Y;
-                    marker = _blackMarker;
-                    otherMarker = _whiteMarker;
-                }
-
-                p.Y = p.Y - MARKER_SIZE;
-                p.X = p.X - (MARKER_SIZE / 2);
-
-                marker.Visibility = Visibility.Visible;
-                otherMarker.Visibility = Visibility.Collapsed;
-
-                if (!isValuePositive && p.Y < 0)
-                {
-                    Point pOther = new Point();
-                    pOther.X = p.X;
-                    pOther.Y = CANVAS_HEIGHT + p.Y;
-                    otherMarker.Visibility = Visibility.Visible;
-                    Canvas.SetLeft(otherMarker, pOther.X);
-                    Canvas.SetTop(otherMarker, pOther.Y);
-                }
-
-                Canvas.SetLeft(marker, p.X);
-                Canvas.SetTop(marker, p.Y);
             }
         }
 
@@ -667,16 +723,14 @@ namespace ChessForge
         /// </summary>
         /// <param name="lbl"></param>
         /// <param name="pos"></param>
-        private void PlaceLabel(Label lbl, Point pos)
+        private void PlaceLabel(Label lbl, Point pos, TreeNode nd)
         {
             Point posLabel = AdjustLabelPosition(pos);
 
             Canvas.SetLeft(lbl, posLabel.X);
             Canvas.SetTop(lbl, posLabel.Y);
 
-            TreeNode nd = GetNodeFromPosition(pos);
-
-            if (nd != null && !string.IsNullOrEmpty(nd.EngineEvaluation))
+            if (nd != null && !string.IsNullOrEmpty(nd.EngineEvaluation) && nd.NodeId != 0)
             {
                 lbl.Visibility = Visibility.Visible;
                 lbl.Content = nd.EngineEvaluation;
@@ -695,44 +749,23 @@ namespace ChessForge
         //*****************************************************
 
         /// <summary>
-        /// Checks it chart can be currently shown.
-        /// If it can't and showReason == true, a flash announcement
-        /// with the reason will be displayed.
+        /// Removes paths from the canvas so that new ones can be inserted.
         /// </summary>
-        /// <returns></returns>
-        private bool CanShowChart(bool showReason)
+        /// <param name="cnv"></param>
+        private void RemovePathsFromCanvas(Canvas cnv)
         {
-            bool res = true;
-
-            if (AppState.ActiveTab != TabViewType.STUDY && AppState.ActiveTab != TabViewType.MODEL_GAME)
+            List<UIElement> pathsToRemove = new List<UIElement>();
+            foreach (UIElement child in cnv.Children)
             {
-                // report wrong tab
-                if (showReason)
+                if (child is Path)
                 {
-                    AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.ChartErrorWrongTab, Brushes.Red);
+                    pathsToRemove.Add(child);
                 }
-                res = false;
             }
-            else if (EvaluationManager.IsRunning)
+            foreach (var child in pathsToRemove)
             {
-                // report evaluation in progress
-                if (showReason)
-                {
-                    AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.ChartErrorEvalInProgress, Brushes.Red);
-                }
-                res = false;
+                cnv.Children.Remove(child);
             }
-            else if (!HasMovesWithEval(AppState.ActiveLine.GetNodeList(), 2))
-            {
-                // insufficient moves with evaluations
-                if (showReason)
-                {
-                    AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.ChartErrorInsufficientEvals, Brushes.Red);
-                }
-                res = false;
-            }
-
-            return res;
         }
 
         /// <summary>
@@ -774,7 +807,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="eval"></param>
         /// <returns></returns>
-        private double? ParseEval(string eval)
+        private double? ParseEval(string eval, PieceColor color)
         {
             bool parsed = true;
 
@@ -782,13 +815,24 @@ namespace ChessForge
 
             if (!string.IsNullOrEmpty(eval))
             {
-                if (eval.StartsWith("#+") || eval.StartsWith("+#"))
+                if (eval.StartsWith("#"))
                 {
-                    dVal = _evalScale + 0.1;
+                    if (color == PieceColor.White)
+                    {
+                        dVal = -(_evalScale + 6);
+                    }
+                    else
+                    {
+                        dVal = _evalScale + 6;
+                    }
+                }
+                else if (eval.StartsWith("#+") || eval.StartsWith("+#"))
+                {
+                    dVal = _evalScale + 5;
                 }
                 else if (eval.StartsWith("-#") || eval.StartsWith("#-"))
                 {
-                    dVal = -(_evalScale + 0.1);
+                    dVal = -(_evalScale + 5);
                 }
                 else
                 {
@@ -809,28 +853,28 @@ namespace ChessForge
         {
             Point? p = null;
 
-            if (node != null && !string.IsNullOrWhiteSpace(node.EngineEvaluation))
+            if (node != null)
             {
-                double? dVal = ParseEval(node.EngineEvaluation);
-                if (dVal.HasValue)
+                double numerator = (node.MoveNumber - 1) * 2;
+                if (node.ColorToMove == ChessPosition.PieceColor.White)
                 {
-                    double numerator = (node.MoveNumber - 1) * 2;
-                    if (node.ColorToMove == ChessPosition.PieceColor.White)
-                    {
-                        numerator += 1.0;
-                    }
-
-                    double pixelsPerPly = _maxX;
-                    if (_plyCount > 1)
-                    {
-                        pixelsPerPly = _maxX / ((double)_plyCount - 1);
-                    }
-
-                    double x = pixelsPerPly * numerator;
-                    double y = (dVal.Value / _evalScale) * _maxY;
-
-                    p = new Point(x, y);
+                    numerator += 1.0;
                 }
+
+                double pixelsPerPly = _maxX;
+                if (_plyCount > 1)
+                {
+                    pixelsPerPly = _maxX / ((double)_plyCount - 1);
+                }
+
+                double x = pixelsPerPly * numerator;
+
+                double? dVal = ParseEval(node.EngineEvaluation, node.ColorToMove);
+                // null will be returned if we fail to parse but we have to set it to something or the chart may look weird.
+                double eval = dVal.HasValue ? dVal.Value : 0;
+                double y = (eval / _evalScale) * _maxY;
+
+                p = new Point(x, y);
             }
 
             return p;
@@ -899,18 +943,18 @@ namespace ChessForge
         /// </summary>
         /// <param name="cnvWhite"></param>
         /// <param name="cnvBlack"></param>
-        private void RepositionFloatingElements(Point cnvWhite, Point? cnvBlack)
+        private void RepositionFloatingElements(Point cnvWhite, Point? cnvBlack, TreeNode nd)
         {
             if (cnvBlack != null)
             {
-                RepositionEvaluationLabels(cnvWhite, cnvBlack.Value);
+                RepositionEvaluationLabels(cnvWhite, cnvBlack.Value, nd);
             }
             else
             {
-                RepositionEvaluationLabels(cnvWhite, new Point(cnvWhite.X, 50));
+                RepositionEvaluationLabels(cnvWhite, new Point(cnvWhite.X, 50), nd);
             }
 
-            RepositionMarkers(cnvWhite);
+            RepositionMarkers(cnvWhite, nd);
             RepositionVerticalLines(cnvWhite.X);
         }
 
@@ -936,10 +980,11 @@ namespace ChessForge
                 var posCnvWhite = e.GetPosition(UiCnvWhite);
                 var posCnvBlack = e.GetPosition(UiCnvBlack);
 
-                RepositionFloatingElements(posCnvWhite, posCnvBlack);
-                //RepositionEvaluationLabels(posCnvWhite, posCnvBlack);
-                //RepositionMarkers(posCnvWhite);
-                //RepositionVerticalLines(posCnvWhite.X);
+                TreeNode nd = GetNodeFromPosition(posCnvWhite);
+                if (nd != null)
+                {
+                    RepositionFloatingElements(posCnvWhite, posCnvBlack, nd);
+                }
             }
         }
 
