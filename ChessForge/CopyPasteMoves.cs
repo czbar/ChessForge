@@ -41,6 +41,9 @@ namespace ChessForge
                 {
                     PasteVariation(lstNodes);
                     AppState.IsDirty = true;
+
+                    AppState.MainWin.UiEvalChart.IsDirty = true;
+                    AppState.MainWin.UiEvalChart.Update();
                 }
             }
             catch (Exception ex)
