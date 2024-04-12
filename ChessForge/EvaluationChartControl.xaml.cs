@@ -523,6 +523,7 @@ namespace ChessForge
             {
                 if (singleNode)
                 {
+                    // vertical up/down line
                     Point whitePoint = new Point(p.Value.X - _halfPixelsPerPly, CANVAS_HEIGHT - p.Value.Y);
                     whitePath.Add(new LineSegment(whitePoint, false));
                     whiteLine.Points.Add(whitePoint);
@@ -531,7 +532,6 @@ namespace ChessForge
                     blackPath.Add(new LineSegment(blackPoint, false));
                     blackLine.Points.Add(blackPoint);
 
-                    // up line
                     whitePoint = new Point(p.Value.X, CANVAS_HEIGHT - p.Value.Y);
                     whitePath.Add(new LineSegment(whitePoint, false));
                     whiteLine.Points.Add(whitePoint);
@@ -595,7 +595,9 @@ namespace ChessForge
                     blackPath.Add(new LineSegment(blackPoint, false));
                     blackLine.Points.Add(blackPoint);
 
-                    // vertical down line
+                    // vertical up/down line
+                    whitePoint = new Point(p.Value.X + _halfPixelsPerPly, CANVAS_HEIGHT);
+                    blackPoint = new Point(p.Value.X + _halfPixelsPerPly, 0);
                     whitePath.Add(new LineSegment(whitePoint, false));
                     blackPath.Add(new LineSegment(blackPoint, false));
                 }
