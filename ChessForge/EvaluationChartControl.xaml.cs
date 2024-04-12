@@ -3,10 +3,8 @@ using GameTree;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -50,14 +48,20 @@ namespace ChessForge
         // total number of plies in the represented line.
         private int _plyCount;
 
+        // number of pixels per ply in the chart view
+        private double _pixelsPerPly;
+
+        // half of the pixels per ply value (to save code as it is used in multiple places)
+        private double _halfPixelsPerPly;
+
         // list of nodes passed by the caller
         private ObservableCollection<TreeNode> _nodeList;
 
         // part of the vertical line in the white (top) half 
-        private Line _whiteLine = new Line();
+        private Line _whiteMovingLine = new Line();
 
         // part of the vertical line in the black (bottom) half 
-        private Line _blackLine = new Line();
+        private Line _blackMovingLine = new Line();
 
         // fixed label with the "Evaluation Chart" text
         private Label _lblTitle = new Label();
@@ -146,6 +150,16 @@ namespace ChessForge
 
                         // we do not include node 0
                         _plyCount = _nodeList.Count - 1;
+
+                        if (_plyCount > 1)
+                        {
+                            _pixelsPerPly = _maxX / ((double)_plyCount - 1);
+                        }
+                        else
+                        {
+                            _pixelsPerPly = _maxX;
+                        }
+                        _halfPixelsPerPly = _pixelsPerPly / 2;
 
                         GeneratePathSet();
                         SetScaleLabelText();
@@ -309,8 +323,8 @@ namespace ChessForge
         /// </summary>
         private void ConfigureVerticalLine()
         {
-            ConfigureVerticalHalfLine(UiCnvWhite, _whiteLine);
-            ConfigureVerticalHalfLine(UiCnvBlack, _blackLine);
+            ConfigureVerticalHalfLine(UiCnvWhite, _whiteMovingLine);
+            ConfigureVerticalHalfLine(UiCnvBlack, _blackMovingLine);
         }
 
         /// <summary>
@@ -417,9 +431,18 @@ namespace ChessForge
             List<PathSegment> whitePathData = new List<PathSegment>();
             List<PathSegment> blackPathData = new List<PathSegment>();
 
+            Polyline whiteLine = new Polyline();
+            whiteLine.Stroke = Brushes.Black;
+
+            Polyline blackLine = new Polyline();
+            blackLine.Stroke = Brushes.Black;
+
+
             int lastProcessed = 0;
 
             TreeNode firstNode = null;
+            bool singleNode = false;
+
             for (int i = startIndex; i < _nodeList.Count; i++)
             {
                 lastProcessed = i;
@@ -433,47 +456,96 @@ namespace ChessForge
                     }
 
                     firstNode = nd;
-                    BuildOpeningSegments(nd, out LineSegment segOpenWhite, out LineSegment segOpenBlack);
-                    if (segOpenWhite != null)
-                    {
-                        whitePathData.Add(segOpenWhite);
-                        blackPathData.Add(segOpenBlack);
-                    }
+
+                    singleNode = IsSingleNode(i);
+                    BuildOpeningSegments(nd, singleNode, whitePathData, blackPathData, whiteLine, blackLine);
                 }
-                BuildLineSegments(nd, out LineSegment segWhite, out LineSegment segBlack);
-                if (segWhite != null)
-                {
-                    whitePathData.Add(segWhite);
-                    blackPathData.Add(segBlack);
-                }
+                BuildLineSegments(nd, whitePathData, blackPathData, whiteLine, blackLine);
 
                 bool close = (i == _nodeList.Count - 1) || string.IsNullOrWhiteSpace(_nodeList[i + 1].EngineEvaluation);
                 if (close)
                 {
-                    BuildClosingSegments(nd, out LineSegment segCloseWhite, out LineSegment segCloseBlack);
-                    if (segWhite != null)
-                    {
-                        whitePathData.Add(segCloseWhite);
-                        blackPathData.Add(segCloseBlack);
-                    }
+                    BuildClosingSegments(nd, singleNode, whitePathData, blackPathData, whiteLine, blackLine);
                     break;
                 }
             }
 
             if (firstNode != null)
             {
-                Point? p = GetPointForMove(firstNode);
-
-                Path whitePath = new Path();
-                whitePath.Fill = Brushes.LightGray;
-                InsertPathInCanvas(UiCnvWhite, whitePath, whitePathData, new Point(p.Value.X, _maxY));
-
-                Path blackPath = new Path();
-                blackPath.Fill = Brushes.DarkGray;
-                InsertPathInCanvas(UiCnvBlack, blackPath, blackPathData, new Point(p.Value.X, 0));
+                InsertPathsInCanvases(firstNode, singleNode, whitePathData, blackPathData);
+                InsertLinesInCanvases(whiteLine, blackLine);
             }
 
             return lastProcessed;
+        }
+
+        /// <summary>
+        /// Inserts the passed Paths into the canvases.
+        /// </summary>
+        /// <param name="firstNode"></param>
+        /// <param name="singleNode"></param>
+        /// <param name="whitePathData"></param>
+        /// <param name="blackPathData"></param>
+        private void InsertPathsInCanvases(TreeNode firstNode, bool singleNode, List<PathSegment> whitePathData, List<PathSegment> blackPathData)
+        {
+            Point? p = GetPointForMove(firstNode);
+
+            Path whitePath = new Path();
+            whitePath.Fill = Brushes.LightGray;
+            InsertPathInCanvas(UiCnvWhite, whitePath, whitePathData, singleNode, new Point(p.Value.X, _maxY));
+
+            Path blackPath = new Path();
+            blackPath.Fill = Brushes.DarkGray;
+            InsertPathInCanvas(UiCnvBlack, blackPath, blackPathData, singleNode, new Point(p.Value.X, 0));
+        }
+
+        /// <summary>
+        /// Inserts the passed Lines into the canvases.
+        /// </summary>
+        /// <param name="whiteLine"></param>
+        /// <param name="blackLine"></param>
+        private void InsertLinesInCanvases(Polyline whiteLine, Polyline blackLine)
+        {
+            UiCnvWhite.Children.Add(whiteLine);
+            UiCnvBlack.Children.Add(blackLine);
+        }
+
+        /// <summary>
+        /// Builds line segments the go vertically down if this is the last node or the next node has no evaluation.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="segWhite"></param>
+        /// <param name="segBlack"></param>
+        private void BuildOpeningSegments(TreeNode nd, bool singleNode, List<PathSegment> whitePath, List<PathSegment> blackPath, Polyline whiteLine, Polyline blackLine)
+        {
+            Point? p = GetPointForMove(nd);
+            if (p.HasValue)
+            {
+                if (singleNode)
+                {
+                    Point whitePoint = new Point(p.Value.X - _halfPixelsPerPly, CANVAS_HEIGHT - p.Value.Y);
+                    whitePath.Add(new LineSegment(whitePoint, false));
+                    whiteLine.Points.Add(whitePoint);
+
+                    Point blackPoint = new Point(p.Value.X - _halfPixelsPerPly, -p.Value.Y);
+                    blackPath.Add(new LineSegment(blackPoint, false));
+                    blackLine.Points.Add(blackPoint);
+
+                    // up line
+                    whitePoint = new Point(p.Value.X, CANVAS_HEIGHT - p.Value.Y);
+                    whitePath.Add(new LineSegment(whitePoint, false));
+                    whiteLine.Points.Add(whitePoint);
+
+                    blackPoint = new Point(p.Value.X, -p.Value.Y);
+                    blackPath.Add(new LineSegment(blackPoint, false));
+                    blackLine.Points.Add(blackPoint);
+                }
+                else
+                {
+                    whitePath.Add(new LineSegment(new Point(p.Value.X, CANVAS_HEIGHT - p.Value.Y), false));
+                    blackPath.Add(new LineSegment(new Point(p.Value.X, -p.Value.Y), false));
+                }
+            }
         }
 
         /// <summary>
@@ -484,18 +556,19 @@ namespace ChessForge
         /// <param name="nd"></param>
         /// <param name="segWhite"></param>
         /// <param name="segBlack"></param>
-        private void BuildLineSegments(TreeNode nd, out LineSegment segWhite, out LineSegment segBlack)
+        private void BuildLineSegments(TreeNode nd, List<PathSegment> whitePath, List<PathSegment> blackPath, Polyline whiteLine, Polyline blackLine)
         {
             Point? p = GetPointForMove(nd);
             if (p.HasValue)
             {
-                segWhite = new LineSegment(new Point(p.Value.X, CANVAS_HEIGHT - p.Value.Y), true);
-                segBlack = new LineSegment(new Point(p.Value.X, -p.Value.Y), true);
-            }
-            else
-            {
-                segWhite = null;
-                segBlack = null;
+                Point whitePoint = new Point(p.Value.X, CANVAS_HEIGHT - p.Value.Y);
+                whitePath.Add(new LineSegment(whitePoint, true));
+
+                Point blackPoint = new Point(p.Value.X, -p.Value.Y);
+                blackPath.Add(new LineSegment(blackPoint, true));
+
+                whiteLine.Points.Add(whitePoint);
+                blackLine.Points.Add(blackPoint);
             }
         }
 
@@ -505,39 +578,32 @@ namespace ChessForge
         /// <param name="nd"></param>
         /// <param name="segWhite"></param>
         /// <param name="segBlack"></param>
-        private void BuildClosingSegments(TreeNode nd, out LineSegment segWhite, out LineSegment segBlack)
+        private void BuildClosingSegments(TreeNode nd, bool singleNode, List<PathSegment> whitePath, List<PathSegment> blackPath, Polyline whiteLine, Polyline blackLine)
         {
             Point? p = GetPointForMove(nd);
-            if (p.HasValue)
-            {
-                segWhite = new LineSegment(new Point(p.Value.X, CANVAS_HEIGHT), false);
-                segBlack = new LineSegment(new Point(p.Value.X, 0), false);
-            }
-            else
-            {
-                segWhite = null;
-                segBlack = null;
-            }
-        }
 
-        /// <summary>
-        /// Builds line segments the go vertically down if this is the last node or the next node has no evaluation.
-        /// </summary>
-        /// <param name="nd"></param>
-        /// <param name="segWhite"></param>
-        /// <param name="segBlack"></param>
-        private void BuildOpeningSegments(TreeNode nd, out LineSegment segWhite, out LineSegment segBlack)
-        {
-            Point? p = GetPointForMove(nd);
             if (p.HasValue)
             {
-                segWhite = new LineSegment(new Point(p.Value.X, CANVAS_HEIGHT - p.Value.Y), false);
-                segBlack = new LineSegment(new Point(p.Value.X, -p.Value.Y), false);
-            }
-            else
-            {
-                segWhite = null;
-                segBlack = null;
+                if (singleNode)
+                {
+                    // extension for a single node
+                    Point whitePoint = new Point(p.Value.X + _halfPixelsPerPly, CANVAS_HEIGHT - p.Value.Y);
+                    whitePath.Add(new LineSegment(whitePoint, false));
+                    whiteLine.Points.Add(whitePoint);
+
+                    Point blackPoint = new Point(p.Value.X + _halfPixelsPerPly, -p.Value.Y);
+                    blackPath.Add(new LineSegment(blackPoint, false));
+                    blackLine.Points.Add(blackPoint);
+
+                    // vertical down line
+                    whitePath.Add(new LineSegment(whitePoint, false));
+                    blackPath.Add(new LineSegment(blackPoint, false));
+                }
+                else
+                {
+                    whitePath.Add(new LineSegment(new Point(p.Value.X, CANVAS_HEIGHT), false));
+                    blackPath.Add(new LineSegment(new Point(p.Value.X, 0), false));
+                }
             }
         }
 
@@ -570,14 +636,19 @@ namespace ChessForge
         /// <param name="path"></param>
         /// <param name="pathData"></param>
         /// <param name="startPoint"></param>
-        private void InsertPathInCanvas(Canvas cnv, Path path, List<PathSegment> pathData, Point startPoint)
+        private void InsertPathInCanvas(Canvas cnv, Path path, List<PathSegment> pathData, bool singleNode, Point startPoint)
         {
             PathGeometry geometry = new PathGeometry();
             PathFigure figure = new PathFigure();
 
+            if (singleNode)
+            {
+                startPoint = new Point(startPoint.X - _halfPixelsPerPly, startPoint.Y);
+            }
+
+            path.StrokeThickness = 0;
+            //path.Stroke = Brushes.Black;
             path.Data = GeneratePathGeometry(geometry, figure, startPoint, pathData);
-            path.StrokeThickness = 1;
-            path.Stroke = Brushes.Black;
 
             cnv.Children.Add(path);
         }
@@ -714,8 +785,8 @@ namespace ChessForge
         /// <param name="xCoord"></param>
         private void RepositionVerticalLines(double xCoord)
         {
-            Canvas.SetLeft(_whiteLine, xCoord);
-            Canvas.SetLeft(_blackLine, xCoord);
+            Canvas.SetLeft(_whiteMovingLine, xCoord);
+            Canvas.SetLeft(_blackMovingLine, xCoord);
         }
 
         /// <summary>
@@ -749,6 +820,27 @@ namespace ChessForge
         //*****************************************************
 
         /// <summary>
+        /// Determines if this is an evaluation "island" 
+        /// i.e. the move before and after has no evaluation
+        /// or there is no move.
+        /// </summary>
+        /// <param name="i"></param>
+        /// <returns></returns>
+        private bool IsSingleNode(int i)
+        {
+            bool res = false;
+
+            // is first node or previous node's is null AND is the last node or next mode's eval is null
+            if ((i == 1 || string.IsNullOrEmpty(_nodeList[i - 1].EngineEvaluation))
+                && (i == _nodeList.Count - 1 || string.IsNullOrEmpty(_nodeList[i + 1].EngineEvaluation)))
+            {
+                res = true;
+            }
+
+            return res;
+        }
+
+        /// <summary>
         /// Removes paths from the canvas so that new ones can be inserted.
         /// </summary>
         /// <param name="cnv"></param>
@@ -757,7 +849,7 @@ namespace ChessForge
             List<UIElement> pathsToRemove = new List<UIElement>();
             foreach (UIElement child in cnv.Children)
             {
-                if (child is Path)
+                if (child is Path || child is Polyline)
                 {
                     pathsToRemove.Add(child);
                 }
@@ -861,13 +953,7 @@ namespace ChessForge
                     numerator += 1.0;
                 }
 
-                double pixelsPerPly = _maxX;
-                if (_plyCount > 1)
-                {
-                    pixelsPerPly = _maxX / ((double)_plyCount - 1);
-                }
-
-                double x = pixelsPerPly * numerator;
+                double x = _pixelsPerPly * numerator;
 
                 double? dVal = ParseEval(node.EngineEvaluation, node.ColorToMove);
                 // null will be returned if we fail to parse but we have to set it to something or the chart may look weird.
