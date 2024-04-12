@@ -1985,6 +1985,10 @@ namespace ChessForge
                     }
                     if (AppState.MainWin.UiEvalChart.Visibility == System.Windows.Visibility.Visible)
                     {
+                        if (AppState.MainWin.UiEvalChart.IsDirty)
+                        {
+                            AppState.MainWin.UiEvalChart.Update();
+                        }
                         AppState.MainWin.UiEvalChart.SelectMove(nd);
                     }
                     if (queryExplorer)// && !GamesEvaluationManager.IsEvaluationInProgress)
