@@ -338,6 +338,7 @@ namespace ChessForge
                             AppState.MainWin.AddNewNodeToVariationTreeView(nd);
                         }
 #endif
+                        AppState.MainWin.UiEvalChart.IsDirty = true;
                         AppState.MainWin.SelectLineAndMoveInWorkbookViews(AppState.MainWin.ActiveTreeView, AppState.MainWin.ActiveLine.GetLineId(), AppState.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false), true);
                     }
                     else
