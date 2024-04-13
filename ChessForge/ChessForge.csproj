@@ -165,9 +165,6 @@
     <Compile Include="EvaluationChartControl.xaml.cs">
       <DependentUpon>EvaluationChartControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EvaluationChartDialog.xaml.cs">
-      <DependentUpon>EvaluationChartDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="EvaluationLine.cs" />
     <Compile Include="EvaluationTrainingLine.cs" />
     <Compile Include="ExerciseTreeView.cs" />
@@ -423,10 +420,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EvaluationChartControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="EvaluationChartDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
