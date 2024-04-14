@@ -3,6 +3,7 @@ using GameTree;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -84,6 +85,14 @@ namespace ChessForge
         // ply marker in the black (bottom) half  
         private Ellipse _blackMarker = new Ellipse();
 
+        // zIndex for the GUI elements
+        private int _zIndexMidLine = 1;
+        private int _zIndexVertLine = 0;
+        private int _zIndexMarker = 2;
+        private int _zIndexEvalLabel = 3;
+        private int _zIndexMoveLabel = 4;
+        private int _zFixedPosEvalLabel = 4;
+
         /// <summary>
         /// Creates the dialog and calculates the limits.
         /// </summary>
@@ -99,6 +108,16 @@ namespace ChessForge
             UiCnvBlack.Height = CANVAS_HEIGHT;
             UiCnvBlack.Background = ChessForgeColors.TABLE_HIGHLIGHT_GREEN;
 
+            Line UiMidLine = new Line();
+            UiMidLine.Stroke = Brushes.DarkGreen;
+            UiMidLine.StrokeThickness = 1;
+            UiMidLine.X1 = 0;
+            UiMidLine.X1 = CANVAS_WIDTH;
+            UiMidLine.Y1 = CANVAS_HEIGHT;
+            UiMidLine.Y2 = CANVAS_HEIGHT;
+
+            UiCnvWhite.Children.Add(UiMidLine);
+            Canvas.SetZIndex(UiMidLine, _zIndexMidLine);
 
             // get the maxX and maxY based on the size of the canvases (mins are 0)
             // TODO: how to get these from the Canvas?
@@ -303,6 +322,8 @@ namespace ChessForge
             UiCnvWhite.Children.Add(_lblMove);
             Canvas.SetRight(_lblMove, 5);
             Canvas.SetTop(_lblMove, 0);
+
+            Canvas.SetZIndex(_lblMove, _zIndexMoveLabel);
         }
 
         /// <summary>
@@ -316,6 +337,8 @@ namespace ChessForge
             UiCnvWhite.Children.Add(_lblFixedPosEval);
             Canvas.SetRight(_lblFixedPosEval, 5);
             Canvas.SetTop(_lblFixedPosEval, 18);
+
+            Canvas.SetZIndex(_lblFixedPosEval, _zFixedPosEvalLabel);
         }
 
         /// <summary>
@@ -343,7 +366,7 @@ namespace ChessForge
 
             cnv.Children.Add(line);
 
-            Canvas.SetZIndex(line, 1);
+            Canvas.SetZIndex(line, _zIndexVertLine);
             Canvas.SetLeft(line, -1);
             Canvas.SetTop(line, 0);
         }
@@ -368,7 +391,7 @@ namespace ChessForge
             lbl.Background = Brushes.White;
             lbl.Visibility = Visibility.Collapsed;
             cnv.Children.Add(lbl);
-            Canvas.SetZIndex(lbl, 3);
+            Canvas.SetZIndex(lbl, _zIndexEvalLabel);
         }
 
         /// <summary>
@@ -393,7 +416,7 @@ namespace ChessForge
 
             cnv.Children.Add(marker);
             marker.Visibility = Visibility.Collapsed;
-            Canvas.SetZIndex(marker, 2);
+            Canvas.SetZIndex(marker, _zIndexMarker);
         }
 
         //*****************************************************
@@ -415,7 +438,7 @@ namespace ChessForge
             while (true)
             {
                 index = GenerateWhiteBlackPaths(index) + 1;
-                if (index >= _nodeList.Count - 1)
+                if (index > _nodeList.Count - 1)
                 {
                     break;
                 }
@@ -1088,7 +1111,8 @@ namespace ChessForge
             TreeNode node = GetNodeFromPosition(posCnvWhite);
             if (node != null)
             {
-                AppState.MainWin.SetActiveLine(node.LineId, node.NodeId);
+                string lineId = _nodeList.Last().LineId;
+                AppState.MainWin.SetActiveLine(lineId, node.NodeId);
                 if (AppState.MainWin.ActiveTreeView is StudyTreeView view)
                 {
                     if (view.UncollapseMove(node))
@@ -1096,7 +1120,8 @@ namespace ChessForge
                         view.BuildFlowDocumentForVariationTree();
                     }
                 }
-                AppState.MainWin.SelectLineAndMoveInWorkbookViews(AppState.MainWin.ActiveTreeView, node.LineId,
+
+                AppState.MainWin.SelectLineAndMoveInWorkbookViews(AppState.MainWin.ActiveTreeView, lineId,
                     AppState.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false), true);
             }
         }
