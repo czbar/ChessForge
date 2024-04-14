@@ -997,7 +997,7 @@ namespace ChessForge
             {
                 if (WorkbookManager.SessionWorkbook.ActiveChapterIndex > 0)
                 {
-                    if (!MouseClickMonitor.IsSeriesInProgress(MouseClickAction.PREVIOUS_CHAPTER))
+                    if (!MouseClickMonitor.IsSeriesInProgress(MouseClickAction.PREVIOUS_CHAPTER) && !Keyboard.IsKeyDown(Key.LeftShift))
                     {
                         int targetChapterIndex = WorkbookManager.SessionWorkbook.ActiveChapterIndex - 1;
                         WorkbookLocationNavigator.GotoArticle(targetChapterIndex, AppState.ActiveTab);
@@ -1027,7 +1027,7 @@ namespace ChessForge
                 if (WorkbookManager.SessionWorkbook.ActiveChapterIndex >= 0
                     && WorkbookManager.SessionWorkbook.ActiveChapterIndex < WorkbookManager.SessionWorkbook.Chapters.Count - 1)
                 {
-                    if (!MouseClickMonitor.IsSeriesInProgress(MouseClickAction.NEXT_CHAPTER))
+                    if (!MouseClickMonitor.IsSeriesInProgress(MouseClickAction.NEXT_CHAPTER) && !Keyboard.IsKeyDown(Key.LeftShift))
                     {
                         int targetChapterIndex = WorkbookManager.SessionWorkbook.ActiveChapterIndex + 1;
                         WorkbookLocationNavigator.GotoArticle(targetChapterIndex, AppState.ActiveTab);
@@ -1052,7 +1052,7 @@ namespace ChessForge
             {
                 if (WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex > 0)
                 {
-                    if (!MouseClickMonitor.IsSeriesInProgress(MouseClickAction.PREVIOUS_GAME))
+                    if (!MouseClickMonitor.IsSeriesInProgress(MouseClickAction.PREVIOUS_GAME) && !Keyboard.IsKeyDown(Key.LeftShift))
                     {
                         SelectModelGame(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex - 1, true);
                     }
@@ -1076,7 +1076,7 @@ namespace ChessForge
             {
                 if (WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex < WorkbookManager.SessionWorkbook.ActiveChapter.GetModelGameCount() - 1)
                 {
-                    if (!MouseClickMonitor.IsSeriesInProgress(MouseClickAction.NEXT_GAME))
+                    if (!MouseClickMonitor.IsSeriesInProgress(MouseClickAction.NEXT_GAME) && !Keyboard.IsKeyDown(Key.LeftShift))
                     {
                         SelectModelGame(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex + 1, true);
                     }
@@ -1100,7 +1100,7 @@ namespace ChessForge
             {
                 if (WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex > 0)
                 {
-                    if (!MouseClickMonitor.IsSeriesInProgress(MouseClickAction.PREVIOUS_EXERCISE))
+                    if (!MouseClickMonitor.IsSeriesInProgress(MouseClickAction.PREVIOUS_EXERCISE) && !Keyboard.IsKeyDown(Key.LeftShift))
                     {
                         SelectExercise(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex - 1, true);
                     }
@@ -1124,7 +1124,7 @@ namespace ChessForge
             {
                 if (WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex < WorkbookManager.SessionWorkbook.ActiveChapter.GetExerciseCount() - 1)
                 {
-                    if (!MouseClickMonitor.IsSeriesInProgress(MouseClickAction.NEXT_EXERCISE))
+                    if (!MouseClickMonitor.IsSeriesInProgress(MouseClickAction.NEXT_EXERCISE) && !Keyboard.IsKeyDown(Key.LeftShift))
                     {
                         SelectExercise(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex + 1, true);
                     }
