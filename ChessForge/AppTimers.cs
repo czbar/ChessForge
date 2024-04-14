@@ -383,7 +383,7 @@ namespace ChessForge
 
         private void InitMouseClickMonitor()
         {
-            _mouseClickMontitor.Elapsed += new ElapsedEventHandler(MouseClickMonitor.CheckClickSeriesStatus);
+            _mouseClickMontitor.Elapsed += new ElapsedEventHandler(MouseClickMonitor.TimerClickSeriesStatus);
             _mouseClickMontitor.Interval = 200;
             _mouseClickMontitor.Enabled = false;
         }
