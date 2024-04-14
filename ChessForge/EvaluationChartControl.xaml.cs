@@ -87,7 +87,7 @@ namespace ChessForge
 
         // zIndex for the GUI elements
         private int _zIndexMidLine = 1;
-        private int _zIndexVertLine = 0;
+        private int _zIndexVertLine = 1;
         private int _zIndexMarker = 2;
         private int _zIndexEvalLabel = 3;
         private int _zIndexMoveLabel = 4;
@@ -102,11 +102,11 @@ namespace ChessForge
             InitializeComponent();
             UiCnvWhite.Width = CANVAS_WIDTH;
             UiCnvWhite.Height = CANVAS_HEIGHT; ;
-            UiCnvWhite.Background = ChessForgeColors.TABLE_HEADER_GREEN;
+            UiCnvWhite.Background = ChessForgeColors.TABLE_HIGHLIGHT_GREEN;
 
             UiCnvBlack.Width = CANVAS_WIDTH;
             UiCnvBlack.Height = CANVAS_HEIGHT;
-            UiCnvBlack.Background = ChessForgeColors.TABLE_HIGHLIGHT_GREEN;
+            UiCnvBlack.Background = ChessForgeColors.TABLE_HEADER_GREEN;
 
             Line UiMidLine = new Line();
             UiMidLine.Stroke = Brushes.DarkGreen;
@@ -362,7 +362,7 @@ namespace ChessForge
             line.X2 = -1;
             line.Y1 = 0;
             line.Y2 = CANVAS_HEIGHT;
-            line.Stroke = Brushes.White;
+            line.Stroke = Brushes.Ivory;
 
             cnv.Children.Add(line);
 
@@ -388,7 +388,7 @@ namespace ChessForge
         private void ConfigureEvaluationLabel(Canvas cnv, Label lbl)
         {
             lbl.Foreground = Brushes.Black;
-            lbl.Background = Brushes.White;
+            lbl.Background = Brushes.Ivory;
             lbl.Visibility = Visibility.Collapsed;
             cnv.Children.Add(lbl);
             Canvas.SetZIndex(lbl, _zIndexEvalLabel);
@@ -514,7 +514,7 @@ namespace ChessForge
             Point? p = GetPointForMove(firstNode);
 
             Path whitePath = new Path();
-            whitePath.Fill = Brushes.LightGray;
+            whitePath.Fill = Brushes.White;
             InsertPathInCanvas(UiCnvWhite, whitePath, whitePathData, singleNode, new Point(p.Value.X, _maxY));
 
             Path blackPath = new Path();
