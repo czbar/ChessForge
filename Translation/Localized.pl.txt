@@ -1018,6 +1018,18 @@ Chart=Wykres
 #english: Scale=Scale
 Scale=Skala
 
+#description: Chart not available in the current tab
+#english: ChartErrorWrongTab=Chart not available in this tab
+ChartErrorWrongTab=Wykres nie jest dostępny w tej zakładce
+
+#description: Chart not available while evaluation in progress
+#english: ChartErrorEvalInProgress=Chart not available while evaluation in progress
+ChartErrorEvalInProgress=Wykres nie jest dostępny gdy pracuje silnik
+
+#description: Insufficient number of evals to show chart
+#english: ChartErrorInsufficientEvals=Insufficient number of evaluated moves
+ChartErrorInsufficientEvals=Niewystarczająca liczba ruchów z oceną
+
 
 ###########################
 #
@@ -2285,6 +2297,9 @@ FlMsgPastedMovesCount=Liczba nowych wklejonych posunięć
 #english: FlMsgGamesSorted=Games have been sorted
 FlMsgGamesSorted=Partie zostały posortowane
 
+#description: Flash message: Use shift to skip faster.
+#english: FlMsgShiftToSkipFast=Hold SHIFT + Left Button to skip fast 
+FlMsgShiftToSkipFast=Wciśnij SHIFT i lewy klawisz aby szybko przeskakiwać
 
 ##################################
 #
@@ -3758,12 +3773,3 @@ IllegalCastling=Niedozwolona roszada.
 #description: Workbook info
 #english: AboutWorkbook=This PGN Workbook is optimized for viewing in Chess Forge https://sourceforge.net/projects/chessforge/ \nChess Forge is a Free and Open Source Windows application.
 AboutWorkbook=Ten podręcznik PGN najlepiej oglądać w programie Chess Forge https://sourceforge.net/projects/chessforge/ \nChess Forge to Wolne i Otwarte Oprogramowanie do systemu Windows.
-
-
-ChartErrorWrongTab=Wykres nie jest dostępny w tej zakładce
-
-#Chart not available while evaluation in progress
-ChartErrorEvalInProgress=Wykres nie jest dostępny gdy pracuje silnik
-
-#Insufficient number of evals to show chart
-ChartErrorInsufficientEvals=Niewystarczająca liczba ruchów z oceną

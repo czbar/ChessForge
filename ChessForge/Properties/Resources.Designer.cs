@@ -3050,6 +3050,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hold SHIFT + Left Button to skip fast .
+        /// </summary>
+        public static string FlMsgShiftToSkipFast {
+            get {
+                return ResourceManager.GetString("FlMsgShiftToSkipFast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All exercise solutions have been hidden..
         /// </summary>
         public static string FlMsgSolutionsHidden {

@@ -2297,6 +2297,9 @@ FlMsgPastedMovesCount=
 #english: FlMsgGamesSorted=Games have been sorted
 FlMsgGamesSorted=
 
+#description: Flash message: Use shift to skip faster.
+#english: FlMsgShiftToSkipFast=Hold SHIFT + Left Button to skip fast 
+FlMsgShiftToSkipFast=
 
 ##################################
 #

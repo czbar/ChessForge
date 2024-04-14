@@ -1596,6 +1596,9 @@
   <data name="FlMsgGamesSorted" xml:space="preserve">
     <value>Partie zostały posortowane</value>
   </data>
+  <data name="FlMsgShiftToSkipFast" xml:space="preserve">
+    <value>Wciśnij SHIFT i lewy klawisz aby szybko przeskakiwać</value>
+  </data>
   <data name="MsgNoDuplicatesFound" xml:space="preserve">
     <value>Nie znaleziono duplikatów.</value>
   </data>

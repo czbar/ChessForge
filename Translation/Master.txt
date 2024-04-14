@@ -1804,6 +1804,8 @@ FlMsgPastedMovesCount=Number of Pasted New Moves
 #Flash message: Games sorted.
 FlMsgGamesSorted=Games have been sorted
 
+#Flash message: Use shift to skip faster.
+FlMsgShiftToSkipFast=Hold SHIFT + Left Button to skip fast 
 
 ##################################
 #
