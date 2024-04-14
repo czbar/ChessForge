@@ -77,11 +77,19 @@ namespace ChessForge
                 seriesInProgress = true;
                 // the current series continues,
                 // make larger jumps if we have been at it for a while
-                if (_clickCount >= 10)
+                if (_clickCount >= 16)
+                {
+                    _clickCount += 100;
+                }
+                else if (_clickCount >= 12)
+                {
+                    _clickCount += 50;
+                }
+                else if (_clickCount >= 8)
                 {
                     _clickCount += 10;
                 }
-                else if (_clickCount >= 5)
+                else if (_clickCount >= 4)
                 {
                     _clickCount += 5;
                 }
@@ -110,7 +118,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="source"></param>
         /// <param name="e"></param>
-        public static void CheckClickSeriesStatus(object source, ElapsedEventArgs e)
+        public static void TimerClickSeriesStatus(object source, ElapsedEventArgs e)
         {
             // we may be receiving timer events after the series has already finished
             if (!_seriesRunning)
@@ -139,7 +147,15 @@ namespace ChessForge
                         if (Mouse.LeftButton == MouseButtonState.Pressed)
                         {
                             AppLog.Message(LogLevel.DETAIL, "Click Series: Mouse button still depressed.");
-                            RegisterClick(_lastClickAction);
+                            if (Keyboard.IsKeyDown(Key.LeftShift))
+                            {
+                                RegisterClick(_lastClickAction);
+                            }
+                            else
+                            {
+                                AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgShiftToSkipFast, System.Windows.Media.Brushes.Green);
+                                EndCurrentSeries();
+                            }
                         }
                     }
                 }
@@ -163,6 +179,10 @@ namespace ChessForge
         private static void StartNewSeries(MouseClickAction action)
         {
             _clickCount = 0;
+            if (Keyboard.IsKeyDown(Key.LeftShift))
+            {
+                _clickCount = 1;
+            }
             _lastClickAction = action;
             _lastClickTime = DateTime.Now.Ticks;
             _timerEventCount = 0;
