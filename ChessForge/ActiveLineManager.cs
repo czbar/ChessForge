@@ -564,7 +564,7 @@ namespace ChessForge
         public void PreviewKeyDown(object sender, KeyEventArgs e)
         {
             // TAB is not needed anywhere and is causing unnecessary selection in DataGrid so disable it
-            if (e.Key == Key.Tab)
+            if (e.Key == Key.Tab && AppState.ActiveTab != TabViewType.INTRO)
             {
                 e.Handled = true;
                 return;
