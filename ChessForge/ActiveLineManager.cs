@@ -563,6 +563,13 @@ namespace ChessForge
         /// <param name="e"></param>
         public void PreviewKeyDown(object sender, KeyEventArgs e)
         {
+            // TAB is not needed anywhere and is causing unnecessary selection in DataGrid so disable it
+            if (e.Key == Key.Tab)
+            {
+                e.Handled = true;
+                return;
+            }
+
             if ((Keyboard.Modifiers & (ModifierKeys.Control | ModifierKeys.Shift)) == 0)
             {
                 switch (e.Key)
