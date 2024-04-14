@@ -29,9 +29,6 @@
                     FontSize="14" FontWeight="Bold" Foreground="DarkGreen"
                     BorderThickness="0" Background="Transparent" Click="UiBtnMinus_Click" />
         </Canvas>
-        <Line x:Name="UiMidLine" Stroke="White" 
-              StrokeThickness="3" X1="0" X2="670" Y1="75" Y2="75">
-        </Line>
         <Canvas x:Name="UiCnvBlack" Grid.Row="1" Background="Green" ClipToBounds="True" Grid.ColumnSpan="2" 
                 Height="74" Width="670" 
                 HorizontalAlignment="Left" VerticalAlignment="Top">
