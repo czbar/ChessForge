@@ -203,7 +203,11 @@ namespace ChessForge
             try
             {
                 AppState.MainWin.Timers.Stop(AppTimers.TimerId.MOUSE_CLICK_MONITOR);
-                EndSeriesAction();
+                // if _clickCount is 0, means it was not real series and the view was renfered
+                if (_clickCount != 0)
+                {
+                    EndSeriesAction();
+                }
             }
             catch { }
 
