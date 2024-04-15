@@ -68,6 +68,20 @@ namespace ChessForge
             return true;
         }
 
+        /// <summary>
+        /// Promotes the currently selected line.
+        /// </summary>
+        public void PromoteLine()
+        {
+            TreeNode nd = ActiveTreeView.GetSelectedNode();
+            if (nd != null)
+            {
+                // must set the LastClickedNode as this is what the Promote method takes as the "current" line.
+                ActiveTreeView.LastClickedNodeId = nd.NodeId;
+                UiMnPromoteLine_Click(null, null);
+            }
+        }
+
         //**********************
         //
         //  FILE OPERATIONS

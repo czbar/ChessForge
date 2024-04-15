@@ -590,6 +590,9 @@ namespace ChessForge
                         _mainWin.ActiveTreeView?.RichTextBoxControl.PageDown();
                         e.Handled = true;
                         break;
+                    case Key.P:
+                        _mainWin.PromoteLine();
+                        break;
                     default:
                         if (HandleKeyDown(e.Key))
                         {
