@@ -177,10 +177,11 @@ namespace ChessForge
                     AppState.MainWin.BoardCommentBox.ReportIdenticalPositionFound(nd);
                 }
             }
-            AppState.MainWin.ColorMoveSquares(nd.LastMoveEngineNotation);
+
             if (nd != null)
             {
                 AppState.MainWin.MainChessBoard.DisplayPosition(nd, true);
+                AppState.MainWin.ColorMoveSquares(nd.LastMoveEngineNotation);
             }
 
             if (!TrainingSession.IsTrainingInProgress && AppState.MainWin.EngineGameView != null)
