@@ -2301,6 +2301,28 @@ FlMsgGamesSorted=Partie zostały posortowane
 #english: FlMsgShiftToSkipFast=Hold SHIFT + Left Button to skip fast 
 FlMsgShiftToSkipFast=Wciśnij SHIFT i lewy klawisz aby szybko przeskakiwać
 
+#description: Flash message: Items removed.
+#english: FlMsgItemsRemoved=Items Removed 
+FlMsgItemsRemoved=Usunięto wybrane pozycje 
+
+#description: Flash message: Games Imported
+#english: FlMsgGamesImported=Games Imported 
+FlMsgGamesImported=Partie zostały zaimportowane 
+
+#description: Flash message: Exercises Imported
+#english: FlMsgExercisesImported=Exercises Imported 
+FlMsgExercisesImported=Ćwiczenia zostały zaimportowane 
+
+#description: Flash message: Chapter Imported
+#english: FlMsgChapterImported=Items Imported into New Chapter
+FlMsgChapterImported=Pozycje zaimportowane do nowego rozdziału
+
+#description: Flash message: Chapters Imported
+#english: FlMsgChaptersImported=Chapters Imported
+FlMsgChaptersImported=Rozdziały zostały zaimportowane
+
+
+
 ##################################
 #
 # Header: MESSAGES

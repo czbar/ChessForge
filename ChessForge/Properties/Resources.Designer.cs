@@ -2978,6 +2978,24 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Items Imported into New Chapter.
+        /// </summary>
+        public static string FlMsgChapterImported {
+            get {
+                return ResourceManager.GetString("FlMsgChapterImported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chapters Imported.
+        /// </summary>
+        public static string FlMsgChaptersImported {
+            get {
+                return ResourceManager.GetString("FlMsgChaptersImported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to FEN Copied to Clipboard.
         /// </summary>
         public static string FlMsgCopiedFEN {
@@ -3014,11 +3032,29 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exercises Imported .
+        /// </summary>
+        public static string FlMsgExercisesImported {
+            get {
+                return ResourceManager.GetString("FlMsgExercisesImported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Game Imported Successfully..
         /// </summary>
         public static string FlMsgGameImportSuccess {
             get {
                 return ResourceManager.GetString("FlMsgGameImportSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Games Imported .
+        /// </summary>
+        public static string FlMsgGamesImported {
+            get {
+                return ResourceManager.GetString("FlMsgGamesImported", resourceCulture);
             }
         }
         
@@ -3037,6 +3073,15 @@ namespace ChessForge.Properties {
         public static string FlMsgGamesThumbnailsSet {
             get {
                 return ResourceManager.GetString("FlMsgGamesThumbnailsSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Items Removed .
+        /// </summary>
+        public static string FlMsgItemsRemoved {
+            get {
+                return ResourceManager.GetString("FlMsgItemsRemoved", resourceCulture);
             }
         }
         

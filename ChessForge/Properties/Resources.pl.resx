@@ -1599,6 +1599,21 @@
   <data name="FlMsgShiftToSkipFast" xml:space="preserve">
     <value>Wciśnij SHIFT i lewy klawisz aby szybko przeskakiwać</value>
   </data>
+  <data name="FlMsgItemsRemoved" xml:space="preserve">
+    <value>Usunięto wybrane pozycje </value>
+  </data>
+  <data name="FlMsgGamesImported" xml:space="preserve">
+    <value>Partie zostały zaimportowane </value>
+  </data>
+  <data name="FlMsgExercisesImported" xml:space="preserve">
+    <value>Ćwiczenia zostały zaimportowane </value>
+  </data>
+  <data name="FlMsgChapterImported" xml:space="preserve">
+    <value>Pozycje zaimportowane do nowego rozdziału</value>
+  </data>
+  <data name="FlMsgChaptersImported" xml:space="preserve">
+    <value>Rozdziały zostały zaimportowane</value>
+  </data>
   <data name="MsgNoDuplicatesFound" xml:space="preserve">
     <value>Nie znaleziono duplikatów.</value>
   </data>

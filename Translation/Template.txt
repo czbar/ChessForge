@@ -2301,6 +2301,28 @@ FlMsgGamesSorted=
 #english: FlMsgShiftToSkipFast=Hold SHIFT + Left Button to skip fast 
 FlMsgShiftToSkipFast=
 
+#description: Flash message: Items removed.
+#english: FlMsgItemsRemoved=Items Removed 
+FlMsgItemsRemoved=
+
+#description: Flash message: Games Imported
+#english: FlMsgGamesImported=Games Imported 
+FlMsgGamesImported=
+
+#description: Flash message: Exercises Imported
+#english: FlMsgExercisesImported=Exercises Imported 
+FlMsgExercisesImported=
+
+#description: Flash message: Chapter Imported
+#english: FlMsgChapterImported=Items Imported into New Chapter
+FlMsgChapterImported=
+
+#description: Flash message: Chapters Imported
+#english: FlMsgChaptersImported=Chapters Imported
+FlMsgChaptersImported=
+
+
+
 ##################################
 #
 # Header: MESSAGES

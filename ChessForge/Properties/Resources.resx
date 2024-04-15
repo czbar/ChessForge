@@ -1599,6 +1599,21 @@
   <data name="FlMsgShiftToSkipFast" xml:space="preserve">
     <value>Hold SHIFT + Left Button to skip fast </value>
   </data>
+  <data name="FlMsgItemsRemoved" xml:space="preserve">
+    <value>Items Removed </value>
+  </data>
+  <data name="FlMsgGamesImported" xml:space="preserve">
+    <value>Games Imported </value>
+  </data>
+  <data name="FlMsgExercisesImported" xml:space="preserve">
+    <value>Exercises Imported </value>
+  </data>
+  <data name="FlMsgChapterImported" xml:space="preserve">
+    <value>Items Imported into New Chapter</value>
+  </data>
+  <data name="FlMsgChaptersImported" xml:space="preserve">
+    <value>Chapters Imported</value>
+  </data>
   <data name="MsgNoDuplicatesFound" xml:space="preserve">
     <value>No duplicates found.</value>
   </data>

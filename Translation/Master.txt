@@ -1807,6 +1807,23 @@ FlMsgGamesSorted=Games have been sorted
 #Flash message: Use shift to skip faster.
 FlMsgShiftToSkipFast=Hold SHIFT + Left Button to skip fast 
 
+#Flash message: Items removed.
+FlMsgItemsRemoved=Items Removed 
+
+#Flash message: Games Imported
+FlMsgGamesImported=Games Imported 
+
+#Flash message: Exercises Imported
+FlMsgExercisesImported=Exercises Imported 
+
+#Flash message: Chapter Imported
+FlMsgChapterImported=Items Imported into New Chapter
+
+#Flash message: Chapters Imported
+FlMsgChaptersImported=Chapters Imported
+
+
+
 ##################################
 #
 # Header: MESSAGES
