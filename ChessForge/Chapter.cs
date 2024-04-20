@@ -408,6 +408,16 @@ namespace ChessForge
             {
                 if (_variationIndexDepth == null)
                 {
+                    // if the last set depth is null, check if we have a value from the PGN header
+                    string sDepth = StudyTree.Tree.Header.GetIndexDepth(out _);
+                    if (!string.IsNullOrEmpty(sDepth) && int.TryParse(sDepth, out int depth))
+                    {
+                        _variationIndexDepth = depth;
+                    }
+                }
+
+                if (_variationIndexDepth == null)
+                {
                     _variationIndexDepth = Configuration.DefaultIndexDepth;
                 }
                 else if (_variationIndexDepth < -1)
