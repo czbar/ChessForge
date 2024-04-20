@@ -1776,7 +1776,7 @@ OpenSelectedChapter=Otwórz Wybrany Rozdział
 RenameSelectedChapter=Zmień Nazwę Rozdziału
 
 #description: Create Intro 
-#english: CreateIntro=Create Intro for This Chapter
+#english: CreateIntro=Create Intro for this Chapter
 CreateIntro=Utwórz Wstęp do Rozdziału
 
 #description: Open the selected game

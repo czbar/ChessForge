@@ -1776,7 +1776,7 @@ OpenSelectedChapter=
 RenameSelectedChapter=
 
 #description: Create Intro 
-#english: CreateIntro=Create Intro for This Chapter
+#english: CreateIntro=Create Intro for this Chapter
 CreateIntro=
 
 #description: Open the selected game

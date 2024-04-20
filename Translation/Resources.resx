@@ -1258,7 +1258,7 @@
     <value>Rename Selected Chapter</value>
   </data>
   <data name="CreateIntro" xml:space="preserve">
-    <value>Create Intro for This Chapter</value>
+    <value>Create Intro for this Chapter</value>
   </data>
   <data name="OpenSelectedGame" xml:space="preserve">
     <value>Open Selected Game</value>

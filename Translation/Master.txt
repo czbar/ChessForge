@@ -1396,7 +1396,7 @@ OpenSelectedChapter=Open Selected Chapter
 RenameSelectedChapter=Rename Selected Chapter
 
 #Create Intro 
-CreateIntro=Create Intro for This Chapter
+CreateIntro=Create Intro for this Chapter
 
 #Open the selected game
 OpenSelectedGame=Open Selected Game
