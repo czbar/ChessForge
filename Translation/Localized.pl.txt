@@ -899,6 +899,15 @@ TurnEngineOff=Wyłącz silnik
 #english: TurnEngineOn=Turn the Engine On
 TurnEngineOn=Włącz silnik
 
+#description: Tool tip for hiding Eval Chart
+#english: HideEvaluationChart=Hide Evaluation Chart
+HideEvaluationChart=Pokaż wykres ocen silnika
+
+#description: Tool tip for showing evaluation chart
+#english: ShowEvaluationChart=Show Evaluation Chart
+ShowEvaluationChart=Ukryj wykres ocen silnika
+
+
 #description: Top Games box title
 #english: TopGames=Top Games
 TopGames=Partie Mistrzowskie
@@ -990,6 +999,36 @@ CmCollapseAll=Zwiń wszystko
 #description: Context Menu Item: Expand only this one
 #english: CmExpandThisOnly=Collapse All Else
 CmExpandThisOnly=Zwiń wszystkie inne
+
+
+###########################
+#
+# Header: Evaluation Chart
+#
+
+#description: Evaluation
+#english: EvaluationChart=Evaluation Chart
+EvaluationChart=Wykres Ocen Silnika
+
+#description: Chart
+#english: Chart=Chart
+Chart=Wykres
+
+#description: Scale
+#english: Scale=Scale
+Scale=Skala
+
+#description: Chart not available in the current tab
+#english: ChartErrorWrongTab=Chart not available in this tab
+ChartErrorWrongTab=Wykres nie jest dostępny w tej zakładce
+
+#description: Chart not available while evaluation in progress
+#english: ChartErrorEvalInProgress=Chart not available while evaluation in progress
+ChartErrorEvalInProgress=Wykres nie jest dostępny gdy pracuje silnik
+
+#description: Insufficient number of evals to show chart
+#english: ChartErrorInsufficientEvals=Insufficient number of evaluated moves
+ChartErrorInsufficientEvals=Niewystarczająca liczba ruchów z oceną
 
 
 ###########################
@@ -2257,6 +2296,31 @@ FlMsgPastedMovesCount=Liczba nowych wklejonych posunięć
 #description: Flash message: Games sorted.
 #english: FlMsgGamesSorted=Games have been sorted
 FlMsgGamesSorted=Partie zostały posortowane
+
+#description: Flash message: Use shift to skip faster.
+#english: FlMsgShiftToSkipFast=Hold SHIFT + Left Button to skip fast 
+FlMsgShiftToSkipFast=Wciśnij SHIFT i lewy klawisz aby szybko przeskakiwać
+
+#description: Flash message: Items removed.
+#english: FlMsgItemsRemoved=Items Removed 
+FlMsgItemsRemoved=Usunięto wybrane pozycje 
+
+#description: Flash message: Games Imported
+#english: FlMsgGamesImported=Games Imported 
+FlMsgGamesImported=Partie zostały zaimportowane 
+
+#description: Flash message: Exercises Imported
+#english: FlMsgExercisesImported=Exercises Imported 
+FlMsgExercisesImported=Ćwiczenia zostały zaimportowane 
+
+#description: Flash message: Chapter Imported
+#english: FlMsgChapterImported=Items Imported into New Chapter
+FlMsgChapterImported=Pozycje zaimportowane do nowego rozdziału
+
+#description: Flash message: Chapters Imported
+#english: FlMsgChaptersImported=Chapters Imported
+FlMsgChaptersImported=Rozdziały zostały zaimportowane
+
 
 
 ##################################

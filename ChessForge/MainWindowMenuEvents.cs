@@ -12,6 +12,7 @@ using System.Windows.Input;
 using ChessPosition.GameTree;
 using System.Windows.Documents;
 using System.Linq;
+using static ChessForge.SoundPlayer;
 
 namespace ChessForge
 {
@@ -65,6 +66,20 @@ namespace ChessForge
             SetActiveLine(startLineId, startingNode);
 
             return true;
+        }
+
+        /// <summary>
+        /// Promotes the currently selected line.
+        /// </summary>
+        public void PromoteLine()
+        {
+            TreeNode nd = ActiveTreeView.GetSelectedNode();
+            if (nd != null)
+            {
+                // must set the LastClickedNode as this is what the Promote method takes as the "current" line.
+                ActiveTreeView.LastClickedNodeId = nd.NodeId;
+                UiMnPromoteLine_Click(null, null);
+            }
         }
 
         //**********************
@@ -499,6 +514,9 @@ namespace ChessForge
 
             AppState.ActiveVariationTree.OpsManager.Undo(out EditOperation.EditType opType, out string selectedLineId, out int selectedNodeId);
             TreeNode selectedNode = AppState.ActiveVariationTree.GetNodeFromNodeId(selectedNodeId);
+            
+            UiEvalChart.IsDirty = true;
+            UiEvalChart.Update();
 
             if (selectedNode == null)
             {
@@ -817,6 +835,12 @@ namespace ChessForge
                 MessageBox.Show(Properties.Resources.EngineNotAvailable, Properties.Resources.EvaluationError, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+
+        //**********************
+        //
+        //  FIND POSITIONS
+        // 
+        //**********************
 
         /// <summary>
         /// Finds the list of positions identical to the currently selected node.
@@ -1273,12 +1297,16 @@ namespace ChessForge
                     {
                         List<ArticleListItem> undoArticleList = new List<ArticleListItem>();
 
+                        int importedChapters = 0;
+
                         foreach (SelectedChapter ch in dlg.ChapterList)
                         {
                             if (ch.IsSelected)
                             {
                                 WorkbookManager.SessionWorkbook.Chapters.Add(ch.Chapter);
                                 undoArticleList.Add(new ArticleListItem(ch.Chapter));
+
+                                importedChapters++;
 
                                 if (_chaptersView != null)
                                 {
@@ -1294,11 +1322,20 @@ namespace ChessForge
                                 }
                             }
                         }
+
+                        if (importedChapters > 0)
+                        {
+                            AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(
+                                Properties.Resources.FlMsgChaptersImported + " (" + importedChapters.ToString() + ")", System.Windows.Media.Brushes.Green);
+                        }
+
                     }
                 }
                 else
                 {
                     CreateChapterFromNewGames(gamesCount, ref games, fileName);
+                    AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(
+                        Properties.Resources.FlMsgChapterImported, System.Windows.Media.Brushes.Green);
                 }
             }
         }
@@ -1722,7 +1759,12 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnImportModelGames_Click(object sender, RoutedEventArgs e)
         {
-            ImportGamesFromPgn(GameData.ContentType.GENERIC, GameData.ContentType.MODEL_GAME);
+            int count = ImportGamesFromPgn(GameData.ContentType.GENERIC, GameData.ContentType.MODEL_GAME);
+            if (count > 0)
+            {
+                AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(
+                    Properties.Resources.FlMsgGamesImported + " (" + count.ToString() + ")", System.Windows.Media.Brushes.Green);
+            }
         }
 
         /// <summary>
@@ -1742,7 +1784,13 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnImportExercises_Click(object sender, RoutedEventArgs e)
         {
-            ImportGamesFromPgn(GameData.ContentType.EXERCISE, GameData.ContentType.EXERCISE);
+            int count = ImportGamesFromPgn(GameData.ContentType.EXERCISE, GameData.ContentType.EXERCISE);
+
+            if (count > 0)
+            {
+                AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(
+                    Properties.Resources.FlMsgExercisesImported + " (" + count.ToString() + ")", System.Windows.Media.Brushes.Green);
+            }
         }
 
         /// <summary>
@@ -1751,7 +1799,8 @@ namespace ChessForge
         /// <param name="contentType"></param>
         private int ImportGamesFromPgn(GameData.ContentType contentType, GameData.ContentType targetcontentType)
         {
-            int gameCount = 0;
+            int gameCount;
+            int importedGames = 0;
             int skippedDueToType = 0;
             int firstImportedGameIndex = -1;
             if ((contentType == GameData.ContentType.GENERIC || contentType == GameData.ContentType.MODEL_GAME || contentType == GameData.ContentType.EXERCISE)
@@ -1818,6 +1867,7 @@ namespace ChessForge
                                                 errorCount++;
                                                 sbErrors.Append(GuiUtilities.BuildGameProcessingErrorText(games[i], i + 1, error));
                                             }
+                                            importedGames++;
                                         }
                                         catch (Exception ex)
                                         {
@@ -1840,6 +1890,7 @@ namespace ChessForge
                         else
                         {
                             gameCount = 0;
+                            importedGames = 0;
                         }
                     }
                     else
@@ -1856,18 +1907,12 @@ namespace ChessForge
                             sbErrors.AppendLine(invalidEntities);
                         }
                         TextBoxDialog tbDlg = new TextBoxDialog(Properties.Resources.PgnErrors, sbErrors.ToString());
-                        //{
-                        //    Left = ChessForgeMain.Left + 100,
-                        //    Top = ChessForgeMain.Top + 100,
-                        //    Topmost = false,
-                        //    Owner = this
-                        //};
                         GuiUtilities.PositionDialog(tbDlg, this, 100);
                         tbDlg.ShowDialog();
                     }
                 }
             }
-            return gameCount;
+            return importedGames;
         }
 
 
@@ -3003,9 +3048,14 @@ namespace ChessForge
             {
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                 int count = chapter.GetModelGameCount();
-                if (ImportGamesFromPgn(GameData.ContentType.GENERIC, GameData.ContentType.MODEL_GAME) > 0)
+                int importedGames = ImportGamesFromPgn(GameData.ContentType.GENERIC, GameData.ContentType.MODEL_GAME);
+                if (importedGames > 0)
                 {
-
+                    if (count > 0)
+                    {
+                        AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(
+                            Properties.Resources.FlMsgGamesImported + " (" + importedGames.ToString() + ")", System.Windows.Media.Brushes.Green);
+                    }
                     if (chapter.GetModelGameCount() > count)
                     {
                         chapter.ActiveModelGameIndex = count;
@@ -3033,8 +3083,12 @@ namespace ChessForge
             {
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                 int count = chapter.GetExerciseCount();
-                if (ImportGamesFromPgn(GameData.ContentType.EXERCISE, GameData.ContentType.EXERCISE) > 0)
+
+                int importedExercises = ImportGamesFromPgn(GameData.ContentType.EXERCISE, GameData.ContentType.EXERCISE);
+                if (importedExercises > 0)
                 {
+                    AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(
+                        Properties.Resources.FlMsgExercisesImported + " (" + importedExercises.ToString() + ")", System.Windows.Media.Brushes.Green);
                     if (chapter.GetExerciseCount() > count)
                     {
                         chapter.ActiveExerciseIndex = count;

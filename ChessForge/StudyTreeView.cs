@@ -2,6 +2,7 @@
 using GameTree;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -634,7 +635,7 @@ namespace ChessForge
                     {
                         r.Foreground = sector.FirstNodeColor;
                     }
-                    if (i == sector.Nodes.Count - 1 && sector.BranchLevel >= EffectiveIndexDepth)
+                    if (sector.Nodes.Count > 1 && i == sector.Nodes.Count - 1 && sector.BranchLevel >= EffectiveIndexDepth)
                     {
                         ColorLastNode(sector, r, nd, levelGroup);
                     }

@@ -726,6 +726,12 @@
   <data name="TurnEngineOn" xml:space="preserve">
     <value>Włącz silnik</value>
   </data>
+  <data name="HideEvaluationChart" xml:space="preserve">
+    <value>Pokaż wykres ocen silnika</value>
+  </data>
+  <data name="ShowEvaluationChart" xml:space="preserve">
+    <value>Ukryj wykres ocen silnika</value>
+  </data>
   <data name="TopGames" xml:space="preserve">
     <value>Partie Mistrzowskie</value>
   </data>
@@ -785,6 +791,24 @@
   </data>
   <data name="CmExpandThisOnly" xml:space="preserve">
     <value>Zwiń wszystkie inne</value>
+  </data>
+  <data name="EvaluationChart" xml:space="preserve">
+    <value>Wykres Ocen Silnika</value>
+  </data>
+  <data name="Chart" xml:space="preserve">
+    <value>Wykres</value>
+  </data>
+  <data name="Scale" xml:space="preserve">
+    <value>Skala</value>
+  </data>
+  <data name="ChartErrorWrongTab" xml:space="preserve">
+    <value>Wykres nie jest dostępny w tej zakładce</value>
+  </data>
+  <data name="ChartErrorEvalInProgress" xml:space="preserve">
+    <value>Wykres nie jest dostępny gdy pracuje silnik</value>
+  </data>
+  <data name="ChartErrorInsufficientEvals" xml:space="preserve">
+    <value>Niewystarczająca liczba ruchów z oceną</value>
   </data>
   <data name="ToolTipScrollHome" xml:space="preserve">
     <value>Przewiń do początku</value>
@@ -1571,6 +1595,24 @@
   </data>
   <data name="FlMsgGamesSorted" xml:space="preserve">
     <value>Partie zostały posortowane</value>
+  </data>
+  <data name="FlMsgShiftToSkipFast" xml:space="preserve">
+    <value>Wciśnij SHIFT i lewy klawisz aby szybko przeskakiwać</value>
+  </data>
+  <data name="FlMsgItemsRemoved" xml:space="preserve">
+    <value>Usunięto wybrane pozycje </value>
+  </data>
+  <data name="FlMsgGamesImported" xml:space="preserve">
+    <value>Partie zostały zaimportowane </value>
+  </data>
+  <data name="FlMsgExercisesImported" xml:space="preserve">
+    <value>Ćwiczenia zostały zaimportowane </value>
+  </data>
+  <data name="FlMsgChapterImported" xml:space="preserve">
+    <value>Pozycje zaimportowane do nowego rozdziału</value>
+  </data>
+  <data name="FlMsgChaptersImported" xml:space="preserve">
+    <value>Rozdziały zostały zaimportowane</value>
   </data>
   <data name="MsgNoDuplicatesFound" xml:space="preserve">
     <value>Nie znaleziono duplikatów.</value>

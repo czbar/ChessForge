@@ -55,7 +55,11 @@ namespace ChessForge
             InitializeComponent();
             SetPositionButtons(nd.Nags);
             SetMoveButtons(nd.Nags);
+            
             UiTbComment.Text = nd.Comment ?? "";
+            UiTbComment.Focus();
+            UiTbComment.SelectAll();
+            
             Nags = nd.Nags;
 
             QuizPoints = nd.QuizPoints;

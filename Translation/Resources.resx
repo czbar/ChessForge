@@ -726,6 +726,12 @@
   <data name="TurnEngineOn" xml:space="preserve">
     <value>Turn the Engine On</value>
   </data>
+  <data name="HideEvaluationChart" xml:space="preserve">
+    <value>Hide Evaluation Chart</value>
+  </data>
+  <data name="ShowEvaluationChart" xml:space="preserve">
+    <value>Show Evaluation Chart</value>
+  </data>
   <data name="TopGames" xml:space="preserve">
     <value>Top Games</value>
   </data>
@@ -785,6 +791,24 @@
   </data>
   <data name="CmExpandThisOnly" xml:space="preserve">
     <value>Collapse All Else</value>
+  </data>
+  <data name="EvaluationChart" xml:space="preserve">
+    <value>Evaluation Chart</value>
+  </data>
+  <data name="Chart" xml:space="preserve">
+    <value>Chart</value>
+  </data>
+  <data name="Scale" xml:space="preserve">
+    <value>Scale</value>
+  </data>
+  <data name="ChartErrorWrongTab" xml:space="preserve">
+    <value>Chart not available in this tab</value>
+  </data>
+  <data name="ChartErrorEvalInProgress" xml:space="preserve">
+    <value>Chart not available while evaluation in progress</value>
+  </data>
+  <data name="ChartErrorInsufficientEvals" xml:space="preserve">
+    <value>Insufficient number of evaluated moves</value>
   </data>
   <data name="ToolTipScrollHome" xml:space="preserve">
     <value>Scroll to the top</value>
@@ -1234,7 +1258,7 @@
     <value>Rename Selected Chapter</value>
   </data>
   <data name="CreateIntro" xml:space="preserve">
-    <value>Create Intro for This Chapter</value>
+    <value>Create Intro for this Chapter</value>
   </data>
   <data name="OpenSelectedGame" xml:space="preserve">
     <value>Open Selected Game</value>
@@ -1571,6 +1595,24 @@
   </data>
   <data name="FlMsgGamesSorted" xml:space="preserve">
     <value>Games have been sorted</value>
+  </data>
+  <data name="FlMsgShiftToSkipFast" xml:space="preserve">
+    <value>Hold SHIFT + Left Button to skip fast </value>
+  </data>
+  <data name="FlMsgItemsRemoved" xml:space="preserve">
+    <value>Items Removed </value>
+  </data>
+  <data name="FlMsgGamesImported" xml:space="preserve">
+    <value>Games Imported </value>
+  </data>
+  <data name="FlMsgExercisesImported" xml:space="preserve">
+    <value>Exercises Imported </value>
+  </data>
+  <data name="FlMsgChapterImported" xml:space="preserve">
+    <value>Items Imported into New Chapter</value>
+  </data>
+  <data name="FlMsgChaptersImported" xml:space="preserve">
+    <value>Chapters Imported</value>
   </data>
   <data name="MsgNoDuplicatesFound" xml:space="preserve">
     <value>No duplicates found.</value>

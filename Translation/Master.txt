@@ -696,6 +696,13 @@ TurnEngineOff=Turn the Engine Off
 #Tool tip for turning AutoSave on
 TurnEngineOn=Turn the Engine On
 
+#Tool tip for hiding Eval Chart
+HideEvaluationChart=Hide Evaluation Chart
+
+#Tool tip for showing evaluation chart
+ShowEvaluationChart=Show Evaluation Chart
+
+
 #Top Games box title
 TopGames=Top Games
 
@@ -767,6 +774,30 @@ CmCollapseAll=Collapse All
 
 #Context Menu Item: Expand only this one
 CmExpandThisOnly=Collapse All Else
+
+
+###########################
+#
+# Header: Evaluation Chart
+#
+
+#Evaluation
+EvaluationChart=Evaluation Chart
+
+#Chart
+Chart=Chart
+
+#Scale
+Scale=Scale
+
+#Chart not available in the current tab
+ChartErrorWrongTab=Chart not available in this tab
+
+#Chart not available while evaluation in progress
+ChartErrorEvalInProgress=Chart not available while evaluation in progress
+
+#Insufficient number of evals to show chart
+ChartErrorInsufficientEvals=Insufficient number of evaluated moves
 
 
 ###########################
@@ -1365,7 +1396,7 @@ OpenSelectedChapter=Open Selected Chapter
 RenameSelectedChapter=Rename Selected Chapter
 
 #Create Intro 
-CreateIntro=Create Intro for This Chapter
+CreateIntro=Create Intro for this Chapter
 
 #Open the selected game
 OpenSelectedGame=Open Selected Game
@@ -1772,6 +1803,25 @@ FlMsgPastedMovesCount=Number of Pasted New Moves
 
 #Flash message: Games sorted.
 FlMsgGamesSorted=Games have been sorted
+
+#Flash message: Use shift to skip faster.
+FlMsgShiftToSkipFast=Hold SHIFT + Left Button to skip fast 
+
+#Flash message: Items removed.
+FlMsgItemsRemoved=Items Removed 
+
+#Flash message: Games Imported
+FlMsgGamesImported=Games Imported 
+
+#Flash message: Exercises Imported
+FlMsgExercisesImported=Exercises Imported 
+
+#Flash message: Chapter Imported
+FlMsgChapterImported=Items Imported into New Chapter
+
+#Flash message: Chapters Imported
+FlMsgChaptersImported=Chapters Imported
+
 
 
 ##################################

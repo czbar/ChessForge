@@ -87,6 +87,10 @@ namespace ChessForge
                     AppState.MainWin.BoardCommentBox.ShowTabHints();
                 }
 
+                // don't call it earlier so that ShowTabHints() above doesn't overrite the announcement
+                AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(
+                    Properties.Resources.FlMsgItemsRemoved + " (" + deletedArticles.Count.ToString() + ")", System.Windows.Media.Brushes.Green);
+
                 AppState.MainWin.ChaptersView.IsDirty = true;
                 if (AppState.ActiveTab == TabViewType.CHAPTERS)
                 {

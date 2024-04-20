@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
+        xmlns:uc="clr-namespace:ChessForge"
         mc:Ignorable="d"
         Title="Chess Forge" Height="900" Width="1676" Loaded="Window_Loaded" MouseDown="OnMouseDown" MouseUp="OnMouseUp" MouseMove="OnMouseMove" Closing="ChessForgeMain_Closing" 
         PreviewKeyDown="MainWindow_PreviewKeyDown"
@@ -21,7 +22,7 @@
             <Separator />
             <MenuItem x:Name="UiMnciExpandThisOne" Header="{x:Static p:Resources.CmExpandThisOnly}" Click="UiMnciExpandThisOne_Click"/>
         </ContextMenu>
-        
+
         <Style  x:Key="RoundedBorder" TargetType="Label">
             <Setter Property="Template">
                 <Setter.Value>
@@ -188,6 +189,8 @@
                         <ColumnDefinition Width="Auto "/>
                         <ColumnDefinition Width="Auto "/>
                         <ColumnDefinition Width="Auto "/>
+                        <ColumnDefinition Width="Auto "/>
+                        <ColumnDefinition Width="Auto "/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Label x:Name="UiLblAutoSave" Grid.Column="0"  Content="{x:Static p:Resources.AutoSave}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,2,0,0" Height="28"   />
@@ -211,7 +214,10 @@
                     <Label x:Name="UiLblEngine" Grid.Column="5"  Content="{x:Static p:Resources.Engine}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="30,2,0,0" Height="28"   />
                     <Image x:Name="UiImgEngineOn" Cursor="Hand" ToolTip="{x:Static p:Resources.TurnEngineOff}" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0"  Height="22" Width="40" Source="Resources/Images/ToggleOn.png" Visibility="Collapsed" PreviewMouseLeftButtonDown="EngineToggleOn_OnPreviewMouseLeftButtonDown" />
                     <Image x:Name="UiImgEngineOff" Cursor="Hand" ToolTip="{x:Static p:Resources.TurnEngineOn}" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0"  Height="22" Width="40" Source="Resources/Images/ToggleOff.png" Visibility="Visible"  PreviewMouseLeftButtonDown="EngineToggleOff_OnPreviewMouseLeftButtonDown" />
-                    <ProgressBar x:Name="UiPbEngineThinking" Visibility="Visible" Grid.Column="7" HorizontalAlignment="Left" Height="5" Margin="20,0,0,0" VerticalAlignment="Center" Width="100"/>
+                    <Label x:Name="UiLblChart" Grid.Column="7"  Content="{x:Static p:Resources.Chart}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="30,2,0,0" Height="28"   />
+                    <Image x:Name="UiImgChartOn" Cursor="Hand" ToolTip="{x:Static p:Resources.HideEvaluationChart}" Grid.Column="8" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0"  Height="22" Width="40" Source="Resources/Images/ToggleOn.png" Visibility="Collapsed" PreviewMouseLeftButtonDown="EvaluationChartToggleOn" />
+                    <Image x:Name="UiImgChartOff" Cursor="Hand" ToolTip="{x:Static p:Resources.ShowEvaluationChart}" Grid.Column="8" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0"  Height="22" Width="40" Source="Resources/Images/ToggleOff.png" Visibility="Visible" PreviewMouseLeftButtonDown="EvaluationChartToggleOff" />
+                    <ProgressBar x:Name="UiPbEngineThinking" Visibility="Visible" Grid.Column="9" HorizontalAlignment="Left" Height="5" Margin="20,0,0,0" VerticalAlignment="Center" Width="100"/>
                 </Grid>
             </Grid>
         </StackPanel>
@@ -556,7 +562,7 @@
                                     <MenuItem x:Name="UiMnReferenceArticles" Header="{x:Static p:Resources.MnGameExerciseReferences}" Click="UiMnReferenceArticles_Click"/>
                                     <MenuItem x:Name="_mnStudyTree_MarkThumbnail" Header="{x:Static p:Resources.MarkAsThumbnail}" Click="UiMn_MarkThumbnail_Click" InputGestureText="Ctrl+T" />
                                     <Separator />
-                                    <MenuItem x:Name="UiMnPromoteLine" Header="{x:Static p:Resources.PromoteLine}" Click="UiMnPromoteLine_Click" />
+                                    <MenuItem x:Name="UiMnPromoteLine" Header="{x:Static p:Resources.PromoteLine}" Click="UiMnPromoteLine_Click" InputGestureText="P" />
                                     <MenuItem x:Name="UiMnReorderLines" Header="{x:Static p:Resources.ReorderLines}" Click="UiMnReorderLines_Click" />
                                     <Separator />
                                     <MenuItem x:Name="UiMnDeleteMovesFromHere" Header="{x:Static p:Resources.DeleteMovesFromHere}" Click="UiMnDeleteMovesFromHere_Click" />
@@ -650,7 +656,7 @@
                                     <MenuItem x:Name="_mnGame_CreateExercise" Header="{x:Static p:Resources.CreateExerciseFromHere}" Click="UiMnGame_CreateExercise_Click" />
                                     <MenuItem x:Name="_mnGame_MarkThumbnail" Header="{x:Static p:Resources.MarkAsThumbnail}" Click="UiMn_MarkThumbnail_Click" InputGestureText="Ctrl+T" />
                                     <Separator />
-                                    <MenuItem x:Name="_mnGame_PromoteLine" Header="{x:Static p:Resources.PromoteLine}" Click="UiMnGame_PromoteLine_Click" />
+                                    <MenuItem x:Name="_mnGame_PromoteLine" Header="{x:Static p:Resources.PromoteLine}" Click="UiMnGame_PromoteLine_Click" InputGestureText="P"  />
                                     <MenuItem x:Name="UiMnGameReorderLines" Header="{x:Static p:Resources.ReorderLines}" Click="UiMnReorderLines_Click" />
                                     <Separator />
                                     <MenuItem x:Name="_mnGame_DeleteMovesFromHere" Header="{x:Static p:Resources.DeleteMovesFromHere}" Click="UiMnGame_DeleteMovesFromHere_Click" />
@@ -758,7 +764,7 @@
                                     <MenuItem x:Name="_mnExerc_StartTrainingFromHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere_Click" />
                                     <MenuItem x:Name="_mnExerc_MarkThumbnail" Header="{x:Static p:Resources.MarkAsThumbnail}" Click="UiMn_ExerciseMarkThumbnail_Click" InputGestureText="Ctrl+T" />
                                     <Separator x:Name="UiMnExerc_Separator_4"/>
-                                    <MenuItem x:Name="_mnExerc_PromoteLine" Header="{x:Static p:Resources.PromoteLine}" Click="UiMnExerc_PromoteLine_Click" />
+                                    <MenuItem x:Name="_mnExerc_PromoteLine" Header="{x:Static p:Resources.PromoteLine}" Click="UiMnExerc_PromoteLine_Click" InputGestureText="P"  />
                                     <MenuItem x:Name="UiMnExerc_ReorderLines" Header="{x:Static p:Resources.ReorderLines}" Click="UiMnReorderLines_Click" />
                                     <Separator />
                                     <MenuItem x:Name="_mnExerc_DeleteMovesFromHere" Header="{x:Static p:Resources.DeleteMovesFromHere}" Click="UiMnExerc_DeleteMovesFromHere_Click" />
@@ -1111,7 +1117,16 @@
                         <DataGridTextColumn Header="{x:Static p:Resources.EvaluationShort}" Width="50" Binding="{Binding BlackEval}"  CellStyle="{StaticResource DisableSelection}" CanUserReorder="False"/>
                     </DataGrid.Columns>
                 </DataGrid>
-                <RichTextBox x:Name="UiRtbBoardComment"  ContextMenu="{x:Null}" IsUndoEnabled="False" Panel.ZIndex="0" HorizontalAlignment="Left" Height="150" Margin="4,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="672" BorderThickness="1" IsReadOnly="True">
+                <uc:EvaluationChartControl x:Name="UiEvalChart" Panel.ZIndex="1"  
+                                           Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                           Width="672" Height="150" Margin="4,10,0,0" 
+                                           BorderThickness="1" BorderBrush="Black"
+                                           Visibility="Hidden">
+                </uc:EvaluationChartControl>
+                <RichTextBox x:Name="UiRtbBoardComment"  ContextMenu="{x:Null}" IsUndoEnabled="False" Panel.ZIndex="0" 
+                             Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                             Width="672" Height="150" Margin="4,10,0,0"
+                             BorderThickness="1" BorderBrush="Black" IsReadOnly="True">
                     <RichTextBox.Resources>
                         <Style TargetType="{x:Type Paragraph}">
                             <Setter Property="Margin" Value="0" />

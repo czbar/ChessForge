@@ -899,6 +899,15 @@ TurnEngineOff=
 #english: TurnEngineOn=Turn the Engine On
 TurnEngineOn=
 
+#description: Tool tip for hiding Eval Chart
+#english: HideEvaluationChart=Hide Evaluation Chart
+HideEvaluationChart=
+
+#description: Tool tip for showing evaluation chart
+#english: ShowEvaluationChart=Show Evaluation Chart
+ShowEvaluationChart=
+
+
 #description: Top Games box title
 #english: TopGames=Top Games
 TopGames=
@@ -990,6 +999,36 @@ CmCollapseAll=
 #description: Context Menu Item: Expand only this one
 #english: CmExpandThisOnly=Collapse All Else
 CmExpandThisOnly=
+
+
+###########################
+#
+# Header: Evaluation Chart
+#
+
+#description: Evaluation
+#english: EvaluationChart=Evaluation Chart
+EvaluationChart=
+
+#description: Chart
+#english: Chart=Chart
+Chart=
+
+#description: Scale
+#english: Scale=Scale
+Scale=
+
+#description: Chart not available in the current tab
+#english: ChartErrorWrongTab=Chart not available in this tab
+ChartErrorWrongTab=
+
+#description: Chart not available while evaluation in progress
+#english: ChartErrorEvalInProgress=Chart not available while evaluation in progress
+ChartErrorEvalInProgress=
+
+#description: Insufficient number of evals to show chart
+#english: ChartErrorInsufficientEvals=Insufficient number of evaluated moves
+ChartErrorInsufficientEvals=
 
 
 ###########################
@@ -1737,7 +1776,7 @@ OpenSelectedChapter=
 RenameSelectedChapter=
 
 #description: Create Intro 
-#english: CreateIntro=Create Intro for This Chapter
+#english: CreateIntro=Create Intro for this Chapter
 CreateIntro=
 
 #description: Open the selected game
@@ -2257,6 +2296,31 @@ FlMsgPastedMovesCount=
 #description: Flash message: Games sorted.
 #english: FlMsgGamesSorted=Games have been sorted
 FlMsgGamesSorted=
+
+#description: Flash message: Use shift to skip faster.
+#english: FlMsgShiftToSkipFast=Hold SHIFT + Left Button to skip fast 
+FlMsgShiftToSkipFast=
+
+#description: Flash message: Items removed.
+#english: FlMsgItemsRemoved=Items Removed 
+FlMsgItemsRemoved=
+
+#description: Flash message: Games Imported
+#english: FlMsgGamesImported=Games Imported 
+FlMsgGamesImported=
+
+#description: Flash message: Exercises Imported
+#english: FlMsgExercisesImported=Exercises Imported 
+FlMsgExercisesImported=
+
+#description: Flash message: Chapter Imported
+#english: FlMsgChapterImported=Items Imported into New Chapter
+FlMsgChapterImported=
+
+#description: Flash message: Chapters Imported
+#english: FlMsgChaptersImported=Chapters Imported
+FlMsgChaptersImported=
+
 
 
 ##################################

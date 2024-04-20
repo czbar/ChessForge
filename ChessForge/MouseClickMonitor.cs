@@ -52,6 +52,12 @@ namespace ChessForge
         // number of the clicks in the current series.
         private static int _clickCount = 0;
 
+        // counts timer events in the current series
+        private static int _timerEventCount = 0;
+
+        // additonal indicator of series running; reset as soon as we know the series ends (before the last action performed and _clickCountReset)
+        private static bool _seriesRunning = false;
+
         /// <summary>
         /// A click was received. Check if this is the current series
         /// or a new one.
@@ -69,8 +75,28 @@ namespace ChessForge
             else if (_lastClickAction == action)
             {
                 seriesInProgress = true;
-                // the current series continues
-                _clickCount++;
+                // the current series continues,
+                // make larger jumps if we have been at it for a while
+                if (_clickCount >= 16)
+                {
+                    _clickCount += 100;
+                }
+                else if (_clickCount >= 12)
+                {
+                    _clickCount += 50;
+                }
+                else if (_clickCount >= 8)
+                {
+                    _clickCount += 10;
+                }
+                else if (_clickCount >= 4)
+                {
+                    _clickCount += 5;
+                }
+                else
+                {
+                    _clickCount++;
+                }
                 // perform any action if necessary
                 PostClickAction();
                 // update the last click time
@@ -92,25 +118,48 @@ namespace ChessForge
         /// </summary>
         /// <param name="source"></param>
         /// <param name="e"></param>
-        public static void CheckClickSeriesStatus(object source, ElapsedEventArgs e)
+        public static void TimerClickSeriesStatus(object source, ElapsedEventArgs e)
         {
-            // check if the distance since the last click exceeds the allowed duration of a pause in a series
-            long diff = DateTime.Now.Ticks - _lastClickTime;
-            if (diff > MAX_PAUSE_DURATION_TICKS)
+            // we may be receiving timer events after the series has already finished
+            if (!_seriesRunning)
             {
-                // we haven't had a recent click so end the series
-                EndCurrentSeries();
+                _timerEventCount = 0;
             }
             else
             {
-                AppState.MainWin.Dispatcher.Invoke(() =>
-                {
-                    if (Mouse.LeftButton == MouseButtonState.Pressed)
-                    {
-                        RegisterClick(_lastClickAction);
-                    }
-                });
+                _timerEventCount++;
             }
+
+            // check if the distance since the last click exceeds the allowed duration of a pause in a series
+            long diff = DateTime.Now.Ticks - _lastClickTime;
+            AppState.MainWin.Dispatcher.Invoke(() =>
+            {
+                if (diff > MAX_PAUSE_DURATION_TICKS && Mouse.LeftButton != MouseButtonState.Pressed)
+                {
+                    // we haven't had a recent click so end the series
+                    EndCurrentSeries();
+                }
+                else
+                {
+                    AppLog.Message(LogLevel.DETAIL, "Click Series: Running = " + _seriesRunning.ToString() + " Timer Count = " + _timerEventCount.ToString());
+                    if (_seriesRunning && _timerEventCount >= 2)
+                    {
+                        if (Mouse.LeftButton == MouseButtonState.Pressed)
+                        {
+                            AppLog.Message(LogLevel.DETAIL, "Click Series: Mouse button still depressed.");
+                            if (Keyboard.IsKeyDown(Key.LeftShift))
+                            {
+                                RegisterClick(_lastClickAction);
+                            }
+                            else
+                            {
+                                AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgShiftToSkipFast, System.Windows.Media.Brushes.Green);
+                                EndCurrentSeries();
+                            }
+                        }
+                    }
+                }
+            });
         }
 
         /// <summary>
@@ -130,10 +179,16 @@ namespace ChessForge
         private static void StartNewSeries(MouseClickAction action)
         {
             _clickCount = 0;
+            if (Keyboard.IsKeyDown(Key.LeftShift))
+            {
+                _clickCount = 1;
+            }
             _lastClickAction = action;
             _lastClickTime = DateTime.Now.Ticks;
+            _timerEventCount = 0;
 
             AppState.MainWin.Timers.Start(AppTimers.TimerId.MOUSE_CLICK_MONITOR);
+            _seriesRunning = true;
         }
 
         /// <summary>
@@ -142,10 +197,17 @@ namespace ChessForge
         /// </summary>
         private static void EndCurrentSeries()
         {
+            // mark immediately, if we let EndSeriesAction() run first, we hit all sorts of timing issues
+            _seriesRunning = false;
+
             try
             {
                 AppState.MainWin.Timers.Stop(AppTimers.TimerId.MOUSE_CLICK_MONITOR);
-                EndSeriesAction();
+                // if _clickCount is 0, means it was not real series and the view was renfered
+                if (_clickCount != 0)
+                {
+                    EndSeriesAction();
+                }
             }
             catch { }
 
@@ -176,44 +238,70 @@ namespace ChessForge
 
                 GameData.ContentType contentType = AppState.GetContentTypeForActiveTab();
 
+                // note that we are working out endSeries and setting _sereiesRunning ASAP,
+                // otherwise rendering delays can cause bad timing problems.
                 AppState.MainWin.Dispatcher.Invoke(() =>
                 {
                     switch (_lastClickAction)
                     {
                         case MouseClickAction.NEXT_CHAPTER:
-                            AppState.MainWin.ClearViewForQuickSkip(contentType);
                             chapterIndex = _clickCount + activeChapterIndex;
                             endSeries = _clickCount + activeChapterIndex >= AppState.Workbook.Chapters.Count - 1;
+                            if (endSeries)
+                            {
+                                _seriesRunning = false;
+                            }
+                            AppState.MainWin.ClearViewForQuickSkip(contentType);
                             PreviousNextViewBars.SetChapterCounterControls(contentType, chapterIndex);
                             break;
                         case MouseClickAction.PREVIOUS_CHAPTER:
-                            AppState.MainWin.ClearViewForQuickSkip(contentType);
                             chapterIndex = activeChapterIndex - _clickCount;
                             endSeries = activeChapterIndex - _clickCount <= 0;
+                            if (endSeries)
+                            {
+                                _seriesRunning = false;
+                            }
+                            AppState.MainWin.ClearViewForQuickSkip(contentType);
                             PreviousNextViewBars.SetChapterCounterControls(contentType, chapterIndex);
                             break;
                         case MouseClickAction.NEXT_GAME:
-                            AppState.MainWin.ClearViewForQuickSkip(contentType);
                             gameIndex = _clickCount + activeGameIndex;
                             endSeries = _clickCount + activeGameIndex >= activeChapter.GetModelGameCount() - 1;
+                            if (endSeries)
+                            {
+                                _seriesRunning = false;
+                            }
+                            AppState.MainWin.ClearViewForQuickSkip(contentType);
                             PreviousNextViewBars.SetModelGameCounterControls(gameIndex);
                             break;
                         case MouseClickAction.PREVIOUS_GAME:
-                            AppState.MainWin.ClearViewForQuickSkip(contentType);
                             gameIndex = activeGameIndex - _clickCount;
                             endSeries = activeGameIndex - _clickCount <= 0;
+                            if (endSeries)
+                            {
+                                _seriesRunning = false;
+                            }
+                            AppState.MainWin.ClearViewForQuickSkip(contentType);
                             PreviousNextViewBars.SetModelGameCounterControls(gameIndex);
                             break;
                         case MouseClickAction.NEXT_EXERCISE:
-                            AppState.MainWin.ClearViewForQuickSkip(contentType);
                             exerciseIndex = _clickCount + activeExerciseIndex;
                             endSeries = _clickCount + activeExerciseIndex >= activeChapter.GetExerciseCount() - 1;
+                            if (endSeries)
+                            {
+                                _seriesRunning = false;
+                            }
+                            AppState.MainWin.ClearViewForQuickSkip(contentType);
                             PreviousNextViewBars.SetExerciseCounterControls(exerciseIndex);
                             break;
                         case MouseClickAction.PREVIOUS_EXERCISE:
-                            AppState.MainWin.ClearViewForQuickSkip(contentType);
                             exerciseIndex = activeExerciseIndex - _clickCount;
                             endSeries = activeExerciseIndex - _clickCount <= 0;
+                            if (endSeries)
+                            {
+                                _seriesRunning = false;
+                            }
+                            AppState.MainWin.ClearViewForQuickSkip(contentType);
                             PreviousNextViewBars.SetExerciseCounterControls(exerciseIndex);
                             break;
                     }
@@ -223,6 +311,8 @@ namespace ChessForge
 
             if (endSeries)
             {
+                // spurious but future proofing just in case 
+                _seriesRunning = false;
                 EndSeriesAction();
             }
         }
@@ -246,9 +336,9 @@ namespace ChessForge
                         break;
                     case MouseClickAction.NEXT_GAME:
                         AppState.MainWin.SelectModelGame(
-                            Math.Min(_clickCount + AppState.ActiveChapter.ActiveModelGameIndex, AppState.ActiveChapter.GetModelGameCount() - 1), 
+                            Math.Min(_clickCount + AppState.ActiveChapter.ActiveModelGameIndex, AppState.ActiveChapter.GetModelGameCount() - 1),
                             true);
-                        break;
+                       break;
                     case MouseClickAction.PREVIOUS_GAME:
                         AppState.MainWin.SelectModelGame(
                             Math.Max(AppState.ActiveChapter.ActiveModelGameIndex - _clickCount, 0),

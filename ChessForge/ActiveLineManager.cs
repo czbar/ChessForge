@@ -148,6 +148,8 @@ namespace ChessForge
             }
             _selectedRow = -1;
             _selectedColumn = -1;
+
+            AppState.MainWin.UiEvalChart.Update(line);
         }
 
         /// <summary>
@@ -561,6 +563,13 @@ namespace ChessForge
         /// <param name="e"></param>
         public void PreviewKeyDown(object sender, KeyEventArgs e)
         {
+            // TAB is not needed anywhere and is causing unnecessary selection in DataGrid so disable it
+            if (e.Key == Key.Tab && AppState.ActiveTab != TabViewType.INTRO)
+            {
+                e.Handled = true;
+                return;
+            }
+
             if ((Keyboard.Modifiers & (ModifierKeys.Control | ModifierKeys.Shift)) == 0)
             {
                 switch (e.Key)
@@ -580,6 +589,9 @@ namespace ChessForge
                     case Key.PageDown:
                         _mainWin.ActiveTreeView?.RichTextBoxControl.PageDown();
                         e.Handled = true;
+                        break;
+                    case Key.P:
+                        _mainWin.PromoteLine();
                         break;
                     default:
                         if (HandleKeyDown(e.Key))

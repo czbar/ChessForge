@@ -827,6 +827,42 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chart.
+        /// </summary>
+        public static string Chart {
+            get {
+                return ResourceManager.GetString("Chart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chart not available while evaluation in progress.
+        /// </summary>
+        public static string ChartErrorEvalInProgress {
+            get {
+                return ResourceManager.GetString("ChartErrorEvalInProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insufficient number of evaluated moves.
+        /// </summary>
+        public static string ChartErrorInsufficientEvals {
+            get {
+                return ResourceManager.GetString("ChartErrorInsufficientEvals", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chart not available in this tab.
+        /// </summary>
+        public static string ChartErrorWrongTab {
+            get {
+                return ResourceManager.GetString("ChartErrorWrongTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to check.
         /// </summary>
         public static string Check {
@@ -2573,6 +2609,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Evaluation Chart.
+        /// </summary>
+        public static string EvaluationChart {
+            get {
+                return ResourceManager.GetString("EvaluationChart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Evaluation Error.
         /// </summary>
         public static string EvaluationError {
@@ -2933,6 +2978,24 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Items Imported into New Chapter.
+        /// </summary>
+        public static string FlMsgChapterImported {
+            get {
+                return ResourceManager.GetString("FlMsgChapterImported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chapters Imported.
+        /// </summary>
+        public static string FlMsgChaptersImported {
+            get {
+                return ResourceManager.GetString("FlMsgChaptersImported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to FEN Copied to Clipboard.
         /// </summary>
         public static string FlMsgCopiedFEN {
@@ -2969,11 +3032,29 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exercises Imported .
+        /// </summary>
+        public static string FlMsgExercisesImported {
+            get {
+                return ResourceManager.GetString("FlMsgExercisesImported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Game Imported Successfully..
         /// </summary>
         public static string FlMsgGameImportSuccess {
             get {
                 return ResourceManager.GetString("FlMsgGameImportSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Games Imported .
+        /// </summary>
+        public static string FlMsgGamesImported {
+            get {
+                return ResourceManager.GetString("FlMsgGamesImported", resourceCulture);
             }
         }
         
@@ -2996,11 +3077,29 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Items Removed .
+        /// </summary>
+        public static string FlMsgItemsRemoved {
+            get {
+                return ResourceManager.GetString("FlMsgItemsRemoved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Number of Pasted New Moves.
         /// </summary>
         public static string FlMsgPastedMovesCount {
             get {
                 return ResourceManager.GetString("FlMsgPastedMovesCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hold SHIFT + Left Button to skip fast .
+        /// </summary>
+        public static string FlMsgShiftToSkipFast {
+            get {
+                return ResourceManager.GetString("FlMsgShiftToSkipFast", resourceCulture);
             }
         }
         
@@ -3334,6 +3433,15 @@ namespace ChessForge.Properties {
         public static string Help {
             get {
                 return ResourceManager.GetString("Help", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide Evaluation Chart.
+        /// </summary>
+        public static string HideEvaluationChart {
+            get {
+                return ResourceManager.GetString("HideEvaluationChart", resourceCulture);
             }
         }
         
@@ -5652,6 +5760,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Scale.
+        /// </summary>
+        public static string Scale {
+            get {
+                return ResourceManager.GetString("Scale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Scope.
         /// </summary>
         public static string Scope {
@@ -6017,6 +6134,15 @@ namespace ChessForge.Properties {
         public static string ShowAllChapters {
             get {
                 return ResourceManager.GetString("ShowAllChapters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Evaluation Chart.
+        /// </summary>
+        public static string ShowEvaluationChart {
+            get {
+                return ResourceManager.GetString("ShowEvaluationChart", resourceCulture);
             }
         }
         

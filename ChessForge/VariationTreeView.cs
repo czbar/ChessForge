@@ -197,6 +197,8 @@ namespace ChessForge
         // prefixes for run names
         private readonly string _run_fork_move_ = "_run_fork_move_";
         private readonly string _run_ = "run_";
+
+        // NOTE: we rely on the fact that both types on comments begin with run_comment (!)
         private readonly string _run_comment_ = "run_comment_";
         private readonly string _run_comment_before_move_ = "run_comment_before_move_";
         private readonly string _run_reference_ = "run_reference_";
@@ -1766,8 +1768,12 @@ namespace ChessForge
         /// <param name="includeNumber"></param>
         protected Run BuildNodeTextAndAddToPara(TreeNode nd, bool includeNumber, Paragraph para, int displayLevel = -1, bool inclComment = true)
         {
+            // check if we must set includeNumber to true
+            if (!includeNumber && (inclComment && IsLastRunComment(para) || !string.IsNullOrEmpty(nd.CommentBeforeMove)))
+            {
+                includeNumber = true;
+            }
             string nodeText = BuildNodeText(nd, includeNumber);
-
             SolidColorBrush fontColor = null;
             if (IsFork(nd.Parent) && !nd.IsMainLine())
             {
@@ -1782,10 +1788,10 @@ namespace ChessForge
             }
 
             Run rMove = AddRunToParagraph(nd, para, nodeText, fontColor);
-            // must use Insert... because cannot Add... before rMove is created.
 
             if (inclComment)
             {
+                // must use Insert... because cannot Add... before rMove is created.
                 InsertOrUpdateCommentBeforeMoveRun(nd);
                 AddReferenceRunToParagraph(nd, para);
                 AddCommentRunsToParagraph(nd, para, out bool isBlunder);
@@ -1911,237 +1917,6 @@ namespace ChessForge
             }
 
             return r;
-        }
-
-        /// <summary>
-        /// Creates the comment Run or Runs if there is a comment with the move.
-        /// Adds the runs to the paragraph.
-        /// </summary>
-        /// <param name="nd"></param>
-        /// <param name="para"></param>
-        private void AddCommentRunsToParagraph(TreeNode nd, Paragraph para, out bool isAssessmentBlunderShown)
-        {
-            isAssessmentBlunderShown = false;
-
-            if (!IsCommentRunToShow(nd))
-            {
-                return;
-            }
-
-            try
-            {
-                List<CommentPart> parts = CommentProcessor.SplitCommentTextAtUrls(nd.Comment);
-                if (nd.QuizPoints != 0)
-                {
-                    parts.Add(new CommentPart(CommentPartType.QUIZ_POINTS, " *" + Properties.Resources.QuizPoints + ": " + nd.QuizPoints.ToString() + "* "));
-                }
-
-                if (nd.IsThumbnail)
-                {
-                    CommentPart thumb = new CommentPart(CommentPartType.THUMBNAIL_SYMBOL, "");
-                    parts.Insert(0, thumb);
-                }
-
-                // check only here as we may have quiz points
-                if (parts == null)
-                {
-                    return;
-                }
-
-                //CommentPart startPart = new CommentPart(CommentPartType.TEXT, nd.NodeId == 0 ? "[ " : "[ ");
-                CommentPart startPart = new CommentPart(CommentPartType.TEXT, " ");
-                parts.Insert(0, startPart);
-
-                //CommentPart endPart = new CommentPart(CommentPartType.TEXT, nd.NodeId == 0 ? " ] " : " ] ");
-                CommentPart endPart = new CommentPart(CommentPartType.TEXT, " ");
-                parts.Add(endPart);
-
-                // in front of that start bracket!
-                if (HandleBlunders && nd.Assessment == (uint)ChfCommands.Assessment.BLUNDER && nd.IsMainLine())
-                {
-                    // if we only have start and end parts so far, delete them.
-                    // We don't need brackets if all we have ASSESSMENT
-                    if (parts.Count == 2)
-                    {
-                        parts.Clear();
-                        // but we need a space after assessment
-                        parts.Add(new CommentPart(CommentPartType.TEXT, " "));
-                    }
-
-                    CommentPart ass = new CommentPart(CommentPartType.ASSESSMENT, "");
-                    parts.Insert(0, ass);
-                }
-
-
-                Inline inlPrevious = null;
-                for (int i = 0; i < parts.Count; i++)
-                {
-                    CommentPart part = parts[i];
-                    Inline inl;
-
-                    switch (part.Type)
-                    {
-                        case CommentPartType.ASSESSMENT:
-                            string assSymbol = " ?? ";
-                            inl = new Run(assSymbol);
-                            inl.ToolTip = Properties.Resources.TooltipEngineBlunderDetect;
-                            inl.FontStyle = FontStyles.Normal;
-                            inl.Foreground = Brushes.White;
-                            inl.Background = Brushes.Red;
-                            inl.FontWeight = FontWeights.Bold;
-                            isAssessmentBlunderShown = true;
-                            break;
-                        case CommentPartType.THUMBNAIL_SYMBOL:
-                            // if this is not the second last part, insert extra space
-                            string thmb;
-                            if (i < parts.Count - 2)
-                            {
-                                thmb = Constants.CHAR_SQUARED_SQUARE.ToString() + " ";
-                            }
-                            else
-                            {
-                                thmb = Constants.CHAR_SQUARED_SQUARE.ToString();
-                            }
-                            _lastThumbnailNode = nd;
-                            inl = new Run(thmb);
-                            inl.ToolTip = nd.IsThumbnail ? Properties.Resources.ChapterThumbnail : null;
-                            inl.FontStyle = FontStyles.Normal;
-                            inl.Foreground = Brushes.Black;
-                            inl.FontWeight = FontWeights.Normal;
-                            inl.PreviewMouseDown += EventCommentRunClicked;
-                            break;
-                        case CommentPartType.URL:
-                            inl = new Hyperlink(new Run(part.Text));
-                            (inl as Hyperlink).NavigateUri = new Uri(part.Text);
-                            inl.FontWeight = FontWeights.Normal;
-                            inl.PreviewMouseDown += Hyperlink_MouseLeftButtonDown;
-                            inl.Foreground = Brushes.Blue;
-                            inl.Cursor = Cursors.Hand;
-                            break;
-                        default:
-                            inl = new Run(part.Text);
-                            inl.FontStyle = FontStyles.Normal;
-                            inl.Foreground = Brushes.Black;
-                            inl.FontWeight = FontWeights.Normal;
-                            inl.PreviewMouseDown += EventCommentRunClicked;
-                            break;
-                    }
-
-                    inl.Name = _run_comment_ + nd.NodeId.ToString();
-
-                    if (inlPrevious == null)
-                    {
-                        // insert after the reference run or immediately after the move run if no reference run
-                        Run rNode;
-                        if (_dictNodeToReferenceRun.ContainsKey(nd.NodeId))
-                        {
-                            rNode = _dictNodeToReferenceRun[nd.NodeId];
-                        }
-                        else
-                        {
-                            rNode = _dictNodeToRun[nd.NodeId];
-                        }
-                        para.Inlines.InsertAfter(rNode, inl);
-
-                        _dictNodeToCommentRun[nd.NodeId] = inl;
-                        _dictCommentRunToParagraph[inl] = para;
-                    }
-                    else
-                    {
-                        para.Inlines.InsertAfter(inlPrevious, inl);
-                    }
-
-                    inlPrevious = inl;
-                }
-            }
-            catch (Exception ex)
-            {
-                AppLog.Message("AddCommentRunsToParagraph()", ex);
-            }
-        }
-
-
-        /// <summary>
-        /// Creates the comment-before-move Run if there is a CommentBeforeRun with the move.
-        /// Adds the run to the paragraph.
-        /// </summary>
-        /// <param name="nd"></param>
-        /// <param name="para"></param>
-        private void AddCommentBeforeMoveRunToParagraph(TreeNode nd, Paragraph para)
-        {
-            if (string.IsNullOrEmpty(nd.CommentBeforeMove))
-            {
-                return;
-            }
-
-            try
-            {
-                string commentText = " " + (nd.CommentBeforeMove ?? "") + " ";
-
-                Run run = new Run(commentText);
-                run.FontStyle = FontStyles.Normal;
-                run.Foreground = Brushes.Black;
-                run.FontWeight = FontWeights.Normal;
-                run.PreviewMouseDown += EventCommentBeforeMoveRunClicked;
-                run.Name = _run_comment_ + nd.NodeId.ToString();
-
-                run.Name = _run_comment_before_move_ + nd.NodeId.ToString();
-
-                _dictNodeToCommentBeforeMoveRun[nd.NodeId] = run;
-                _dictCommentBeforeMoveRunToParagraph[run] = para;
-
-                Run rNode = _dictNodeToRun[nd.NodeId];
-                if (RichTextBoxUtilities.IsFirstNonEmptyRunInPara(rNode, para))
-                {
-                    // if this is the first run in the para remove leading space to eliminate spurious indent.
-                    run.Text = run.Text.Substring(1);
-                }
-                para.Inlines.InsertBefore(rNode, run);
-            }
-            catch (Exception ex)
-            {
-                AppLog.Message("AddCommentBeforeMoveRunToParagraph()", ex);
-            }
-        }
-
-        /// <summary>
-        /// Creates a new Reference Run and adds it to Paragraph.
-        /// A Reference Run contains just a single symbol indicating that there are game
-        /// references for the preceding Node.
-        /// </summary>
-        /// <param name="nd"></param>
-        /// <param name="para"></param>
-        private void AddReferenceRunToParagraph(TreeNode nd, Paragraph para)
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(nd.ArticleRefs))
-                {
-                    return;
-                }
-
-                Run r = new Run(BuildReferenceRunText(nd));
-
-                r.Name = _run_reference_ + nd.NodeId.ToString();
-                r.ToolTip = Properties.Resources.OpenReferencesDialog;
-
-                r.PreviewMouseDown += EventReferenceRunClicked;
-
-                r.FontStyle = FontStyles.Normal;
-
-                r.Foreground = Brushes.Black;
-                r.FontWeight = FontWeights.Normal;
-
-                Run rNode = _dictNodeToRun[nd.NodeId];
-                para.Inlines.InsertAfter(rNode, r);
-
-                _dictNodeToReferenceRun[nd.NodeId] = r;
-                _dictReferenceRunToParagraph[r] = para;
-            }
-            catch (Exception ex)
-            {
-                AppLog.Message("AddReferenceRunToParagraph()", ex);
-            }
         }
 
         /// <summary>
@@ -2694,192 +2469,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// If the Comment run for the passed node already exists, it will be updated.
-        /// If it does not exist, it will be created.
-        /// This also updates the run's text itself and move NAGs may have changed
-        /// before this method was called.
-        /// </summary>
-        /// <param name="nd"></param>
-        public Inline InsertOrUpdateCommentRun(TreeNode nd)
-        {
-            Inline inlComment;
-
-            if (nd == null)
-            {
-                return null;
-            }
-
-            try
-            {
-                Run r;
-                _dictNodeToRun.TryGetValue(nd.NodeId, out r);
-
-                if (r == null)
-                {
-                    // something seriously wrong
-                    AppLog.Message("ERROR: InsertOrUpdateCommentRun()- Run " + nd.NodeId.ToString() + " not found in _dictNodeToRun");
-                    return null;
-                }
-
-                // we are refreshing the move's text in case we have a change in NAG,
-                // be sure to keep any leading spaces
-                string spaces = TextUtils.GetLeadingSpaces(r.Text);
-                r.Text = BuildNodeText(nd, IsMoveTextWithNumber(r.Text));
-                r.Text = spaces + r.Text.TrimStart();
-
-                _dictNodeToCommentRun.TryGetValue(nd.NodeId, out inlComment);
-
-                if (!IsCommentRunToShow(nd))
-                {
-                    // if the comment run existed, remove it
-                    if (inlComment != null)
-                    {
-                        _dictNodeToCommentRun.Remove(nd.NodeId);
-                        RemoveCommentRunsFromHostingParagraph(inlComment);
-                    }
-                }
-                else
-                {
-                    _dictNodeToCommentRun.Remove(nd.NodeId);
-                    RemoveCommentRunsFromHostingParagraph(inlComment);
-
-                    Paragraph para = r.Parent as Paragraph;
-                    AddCommentRunsToParagraph(nd, para, out bool isBlunder);
-                    if (isBlunder)
-                    {
-                        TextUtils.RemoveBlunderNagFromText(r);
-                    }
-                }
-            }
-            catch
-            {
-                inlComment = null;
-            }
-
-            return inlComment;
-        }
-
-        /// <summary>
-        /// If the Comment Before Run for the passed node already exists, it will be updated.
-        /// If it does not exist, it will be created.
-        /// </summary>
-        /// <param name="nd"></param>
-        public Inline InsertOrUpdateCommentBeforeMoveRun(TreeNode nd)
-        {
-            Inline inlCommentBeforeMove;
-
-            if (nd == null)
-            {
-                return null;
-            }
-
-            try
-            {
-                Run rMove;
-                _dictNodeToRun.TryGetValue(nd.NodeId, out rMove);
-
-                if (rMove == null)
-                {
-                    // something seriously wrong
-                    AppLog.Message("ERROR: InsertOrUpdateCommentBeforeRun()- Run " + nd.NodeId.ToString() + " not found in _dictNodeToRun");
-                    return null;
-                }
-
-                _dictNodeToCommentBeforeMoveRun.TryGetValue(nd.NodeId, out inlCommentBeforeMove);
-
-                if (string.IsNullOrEmpty(nd.CommentBeforeMove))
-                {
-                    // if the comment run existed, remove it
-                    if (inlCommentBeforeMove != null)
-                    {
-                        _dictNodeToCommentBeforeMoveRun.Remove(nd.NodeId);
-                        RemoveRunFromHostingParagraph(inlCommentBeforeMove);
-                    }
-                }
-                else
-                {
-                    _dictNodeToCommentBeforeMoveRun.Remove(nd.NodeId);
-                    RemoveRunFromHostingParagraph(inlCommentBeforeMove);
-
-                    Paragraph para = rMove.Parent as Paragraph;
-                    AddCommentBeforeMoveRunToParagraph(nd, para);
-                }
-            }
-            catch
-            {
-                inlCommentBeforeMove = null;
-            }
-
-            return inlCommentBeforeMove;
-        }
-
-        /// <summary>
-        /// Updates reference runs for the passed list of nodes.
-        /// This is called when the list has changed e.g. after deletion
-        /// of a referenced article.
-        /// </summary>
-        /// <param name="nodes"></param>
-        public void UpdateReferenceRuns(List<FullNodeId> nodes)
-        {
-            if (AppState.Workbook != null)
-            {
-                foreach (FullNodeId fullNode in nodes)
-                {
-                    VariationTree tree = AppState.Workbook.GetTreeByTreeId(fullNode.TreeId);
-                    if (tree != null)
-                    {
-                        TreeNode nd = tree.GetNodeFromNodeId(fullNode.NodeId);
-                        InsertOrDeleteReferenceRun(nd);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Inserts or deleted a reference run depending
-        /// on whether we have any reference for the node
-        /// </summary>
-        /// <param name="nd"></param>
-        public void InsertOrDeleteReferenceRun(TreeNode nd)
-        {
-            if (nd == null)
-            {
-                return;
-            }
-
-            try
-            {
-                Run r;
-                _dictNodeToRun.TryGetValue(nd.NodeId, out r);
-
-                Run r_reference;
-                _dictNodeToReferenceRun.TryGetValue(nd.NodeId, out r_reference);
-
-                if (string.IsNullOrEmpty(nd.ArticleRefs))
-                {
-                    // if the reference run existed, remove it
-                    if (r_reference != null)
-                    {
-                        _dictNodeToReferenceRun.Remove(nd.NodeId);
-                        RemoveRunFromHostingParagraph(r_reference);
-                    }
-                }
-                else
-                {
-                    // if the reference run existed just leave it, otherwise create it
-                    if (r_reference == null)
-                    {
-                        Paragraph para = r.Parent as Paragraph;
-                        AddReferenceRunToParagraph(nd, para);
-                    }
-                }
-            }
-            catch
-            {
-            }
-        }
-
-        /// <summary>
         /// Checks if the move's text is prefixed by move number.
         /// </summary>
         /// <param name="txt"></param>
@@ -2925,20 +2514,6 @@ namespace ChessForge
                 _lastAddedRun.Foreground = attrs.FirstCharColor;
                 _lastAddedRun.FontWeight = FontWeights.Bold;
             }
-        }
-
-        /// <summary>
-        /// Checks if there is anything to show in the comment run i.e.
-        /// non-empty comment text, a thumbnail indicator or quiz points if the tree is in exercise editing mode.
-        /// </summary>
-        /// <param name="nd"></param>
-        /// <returns></returns>
-        private bool IsCommentRunToShow(TreeNode nd)
-        {
-            return !string.IsNullOrEmpty(nd.Comment)
-                   || nd.IsThumbnail
-                   || HandleBlunders && nd.Assessment == (uint)ChfCommands.Assessment.BLUNDER && nd.IsMainLine()
-                   || (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.EDITING && nd.QuizPoints != 0);
         }
 
         /// <summary>

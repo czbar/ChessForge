@@ -177,10 +177,11 @@ namespace ChessForge
                     AppState.MainWin.BoardCommentBox.ReportIdenticalPositionFound(nd);
                 }
             }
-            AppState.MainWin.ColorMoveSquares(nd.LastMoveEngineNotation);
+
             if (nd != null)
             {
                 AppState.MainWin.MainChessBoard.DisplayPosition(nd, true);
+                AppState.MainWin.ColorMoveSquares(nd.LastMoveEngineNotation);
             }
 
             if (!TrainingSession.IsTrainingInProgress && AppState.MainWin.EngineGameView != null)
@@ -338,6 +339,7 @@ namespace ChessForge
                             AppState.MainWin.AddNewNodeToVariationTreeView(nd);
                         }
 #endif
+                        AppState.MainWin.UiEvalChart.IsDirty = true;
                         AppState.MainWin.SelectLineAndMoveInWorkbookViews(AppState.MainWin.ActiveTreeView, AppState.MainWin.ActiveLine.GetLineId(), AppState.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false), true);
                     }
                     else

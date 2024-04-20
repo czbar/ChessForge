@@ -834,6 +834,7 @@ namespace ChessForge
                         ShowExplorers(false, false);
                         break;
                 }
+                ShowEvaluationChart();
                 EnableNavigationArrows();
                 ShowEvaluationControlsForCurrentStates();
                 ConfigureMainBoardContextMenu();
@@ -992,7 +993,22 @@ namespace ChessForge
                 }
                 ShowEvaluationControlsForCurrentStates();
             });
+        }
 
+        /// <summary>
+        /// Show or hide the evaluation chart depending on 
+        /// the current state and config.
+        /// </summary>
+        public static void ShowEvaluationChart()
+        {
+            if (MainWin.UiEvalChart.CanShowChart(false))
+            {
+                MainWin.UiEvalChart.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                MainWin.UiEvalChart.Visibility = Visibility.Hidden;
+            }
         }
 
         /// <summary>
@@ -1322,7 +1338,7 @@ namespace ChessForge
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "UiMnExerc_ShowAllSolutions":
-                                menuItem.IsEnabled = exerciseCount > 1 || exerciseCount== 1 && ActiveVariationTree?.ShowTreeLines == false;
+                                menuItem.IsEnabled = exerciseCount > 1 || exerciseCount == 1 && ActiveVariationTree?.ShowTreeLines == false;
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "UiMnExerc_HideAllSolutions":
@@ -1402,7 +1418,6 @@ namespace ChessForge
                     _mainWin.UiMnCloseWorkbook.Visibility = Visibility.Visible;
                 }
 
-                //MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
                 SetChessboardForActiveTab();
 
                 if (AppState.ActiveContentType == GameData.ContentType.STUDY_TREE && WorkbookManager.ActiveTab == TabViewType.STUDY
@@ -1609,8 +1624,17 @@ namespace ChessForge
                     MainWin.UiMnMainDeleteExercises.IsEnabled = WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.HasAnyExercises;
                     MainWin.UiMnRemoveDuplicates.IsEnabled = WorkbookManager.SessionWorkbook != null &&
                             (WorkbookManager.SessionWorkbook.HasAnyModelGames || WorkbookManager.SessionWorkbook.HasAnyExercises);
+
+                    if (MainWin.UiEvalChart.CanShowChart(false))
+                    {
+                        MainWin.UiEvalChart.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        MainWin.UiEvalChart.Visibility = Visibility.Hidden;
+                    }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     AppLog.Message("ConfigureMenusForManualReview()", ex);
                 }

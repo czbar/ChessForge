@@ -162,6 +162,9 @@
     </Compile>
     <Compile Include="EvaluationActiveLine.cs" />
     <Compile Include="EvaluationBar.cs" />
+    <Compile Include="EvaluationChartControl.xaml.cs">
+      <DependentUpon>EvaluationChartControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EvaluationLine.cs" />
     <Compile Include="EvaluationTrainingLine.cs" />
     <Compile Include="ExerciseTreeView.cs" />
@@ -295,6 +298,7 @@
     <Compile Include="SystemClipboard.cs" />
     <Compile Include="TopGamesViewRow.cs" />
     <Compile Include="TrainingViewMoveHandlers.cs" />
+    <Compile Include="VariationTreeViewMoveRuns.cs" />
     <Compile Include="WorkbookLocation.cs" />
     <Compile Include="WorkbookLocationNavigator.cs" />
     <Compile Include="WorkbookOperation.cs" />
@@ -412,6 +416,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EngineOptionsDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EvaluationChartControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

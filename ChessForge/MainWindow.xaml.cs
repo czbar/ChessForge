@@ -17,7 +17,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using WebAccess;
 using System.Management;
-using System.Windows.Documents;
 
 namespace ChessForge
 {
@@ -497,6 +496,13 @@ namespace ChessForge
             {
                 TurnExplorersOn();
             }
+            
+            if (Configuration.ShowEvaluationChart)
+            {
+                UiImgChartOn.Visibility = Visibility.Visible;
+                UiImgChartOff.Visibility = Visibility.Hidden;
+            }
+
             Timers.Start(AppTimers.TimerId.APP_START);
 
             ArticleSelected += EventSelectArticle;
@@ -1624,6 +1630,7 @@ namespace ChessForge
                 }
 
                 GuiUtilities.ForceFocus(tabToFocus, TabViewType.STUDY);
+                AppState.ShowEvaluationChart();
             }
             catch (Exception ex)
             {
@@ -1976,6 +1983,14 @@ namespace ChessForge
                     {
                         EvaluateActiveLineSelectedPosition(nd);
                     }
+                    if (AppState.MainWin.UiEvalChart.Visibility == System.Windows.Visibility.Visible)
+                    {
+                        if (AppState.MainWin.UiEvalChart.IsDirty)
+                        {
+                            AppState.MainWin.UiEvalChart.Update();
+                        }
+                        AppState.MainWin.UiEvalChart.SelectMove(nd);
+                    }
                     if (queryExplorer)// && !GamesEvaluationManager.IsEvaluationInProgress)
                     {
                         _openingStatsView.SetOpeningName();
@@ -2059,6 +2074,12 @@ namespace ChessForge
                 if (selectedNodeId >= 0)
                 {
                     TreeNode nd = ActiveLine.GetNodeFromId(selectedNodeId);
+
+                    if (AppState.MainWin.UiEvalChart.Visibility == System.Windows.Visibility.Visible)
+                    {
+                        AppState.MainWin.UiEvalChart.SelectMove(nd);
+                    }
+
                     if (selectedNodeId > 0)
                     {
                         ActiveLine.SelectPly((int)nd.Parent.MoveNumber, nd.Parent.ColorToMove);
