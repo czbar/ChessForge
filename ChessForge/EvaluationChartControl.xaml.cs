@@ -932,7 +932,15 @@ namespace ChessForge
 
             if (!string.IsNullOrEmpty(eval))
             {
-                if (eval.StartsWith("#"))
+                if (eval.StartsWith("#+") || eval.StartsWith("+#"))
+                {
+                    dVal = _evalScale + 5;
+                }
+                else if (eval.StartsWith("-#") || eval.StartsWith("#-"))
+                {
+                    dVal = -(_evalScale + 5);
+                }
+                else if (eval.StartsWith("#"))
                 {
                     if (color == PieceColor.White)
                     {
@@ -942,14 +950,6 @@ namespace ChessForge
                     {
                         dVal = _evalScale + 6;
                     }
-                }
-                else if (eval.StartsWith("#+") || eval.StartsWith("+#"))
-                {
-                    dVal = _evalScale + 5;
-                }
-                else if (eval.StartsWith("-#") || eval.StartsWith("#-"))
-                {
-                    dVal = -(_evalScale + 5);
                 }
                 else
                 {
