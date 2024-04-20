@@ -349,7 +349,7 @@ namespace ChessForge
             sb.AppendLine(PgnHeaders.BuildHeaderLine(key, value));
 
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_BLACK, chapter.GetTitle()));
-
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_INDEX_DEPTH, chapter.VariationIndexDepth == null ? "" : chapter.VariationIndexDepth.Value.ToString()));
             sb.AppendLine(BuildPreamble(tree));
 
             sb.AppendLine("");
