@@ -277,6 +277,7 @@ namespace ChessForge
                 if (depth > chapter.VariationIndexDepth)
                 {
                     chapter.VariationIndexDepth = depth;
+                    AppState.IsIndexDepthDirty = true;   
                 }
             }
         }
@@ -304,6 +305,7 @@ namespace ChessForge
                     }
                 }
                 chapter.VariationIndexDepth = depth;
+                AppState.IsIndexDepthDirty = true;
             }
         }
 
