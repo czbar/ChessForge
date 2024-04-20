@@ -528,13 +528,17 @@ namespace ChessForge
         /// </summary>
         /// <param name="para"></param>
         /// <returns></returns>
-        protected bool IsLastRunComment(Paragraph para)
+        protected bool IsLastRunComment(Paragraph para, TreeNode nd)
         {
             bool res = false;
 
             if (para != null && para.Inlines.Last().Name.StartsWith(_run_comment_))
             {
-                res = true;
+                // finally check if this is actual textual comment
+                if (nd.Parent != null && !string.IsNullOrEmpty(nd.Comment))
+                {
+                    res = true;
+                }
             }
 
             return res;
