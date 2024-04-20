@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace ChessForge
 {
@@ -1144,6 +1145,7 @@ namespace ChessForge
                     }
                 }
                 BuildFlowDocumentForVariationTree();
+                SelectLineAndMove(_mainVariationTree.SelectedLineId, _mainVariationTree.SelectedNodeId);
             }
             e.Handled = true;
         }
@@ -1167,6 +1169,7 @@ namespace ChessForge
                     }
                 }
                 BuildFlowDocumentForVariationTree();
+                SelectLineAndMove(_mainVariationTree.SelectedLineId, _mainVariationTree.SelectedNodeId);
             }
             e.Handled = true;
         }
