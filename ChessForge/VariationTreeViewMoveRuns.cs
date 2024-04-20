@@ -133,6 +133,12 @@ namespace ChessForge
                     Paragraph para = rMove.Parent as Paragraph;
                     AddCommentBeforeMoveRunToParagraph(nd, para);
                 }
+
+                // refresh the move's text if it is black's move as we may need a number in front.
+                if (nd.ColorToMove == PieceColor.White)
+                {
+                    UpdateRunText(rMove, nd, !string.IsNullOrWhiteSpace(nd.CommentBeforeMove));
+                }
             }
             catch
             {
