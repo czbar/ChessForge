@@ -1792,7 +1792,7 @@ namespace ChessForge
             if (inclComment)
             {
                 // must use Insert... because cannot Add... before rMove is created.
-                InsertOrUpdateCommentBeforeMoveRun(nd);
+                InsertOrUpdateCommentBeforeMoveRun(nd, includeNumber);
                 AddReferenceRunToParagraph(nd, para);
                 AddCommentRunsToParagraph(nd, para, out bool isBlunder);
                 if (isBlunder)
