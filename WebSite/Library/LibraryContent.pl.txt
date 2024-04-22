@@ -12,6 +12,14 @@ Description: Partie z turniejów i meczów.
       Description: Wszystkie partie z meczów o mistrzostwo świata mężczyzn.
       File:Tournaments/Mens World Individual Championships.pgn
 
+	  Book:Turniej Kandydatów 2024
+      Description: Partie turnieju Kandydatów do meczu o Mistrzostwo Świata, Toronto 2024
+      File:Tournaments/FIDE Candidates 2024 - Men.pgn
+
+	  Book:Turniej Kandydatek 2024
+      Description: Partie turnieju Kandydatek do meczu o Mistrzostwo Świata, Toronto 2024
+      File:Tournaments/FIDE Candidates 2024 - Women.pgn
+
 	  Book:Mistrzostwa Świata Rapid 2023 (mężczyźni)
       Description: Mistrzostwa Świata w Grze Szybkiej Mężczyzn 2023, Samarkanda, grudzień 2023.
       File:Tournaments/World Rapid Chess Championship Men 2023.pgn
