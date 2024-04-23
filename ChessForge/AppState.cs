@@ -12,6 +12,7 @@ using System.Reflection;
 using WebAccess;
 using ChessForge.Properties;
 using static ChessForge.WorkbookOperation;
+using System.Text;
 
 namespace ChessForge
 {
@@ -539,12 +540,14 @@ namespace ChessForge
         /// </summary>
         public static void UpdateAppTitleBar()
         {
-            string titleToShow = "";
+            StringBuilder sb = new StringBuilder(_mainWin.APP_NAME + " - ");
             if (Workbook != null)
             {
-                titleToShow = string.IsNullOrEmpty(WorkbookFilePath) ? Workbook.Title : Path.GetFileName(WorkbookFilePath);
+                string titleToShow = string.IsNullOrEmpty(WorkbookFilePath) ? Workbook.Title : Path.GetFileName(WorkbookFilePath);
+                sb.Append(titleToShow);
+                sb.Append(" " + Properties.Resources.VersionAbbr + " " + Workbook.Version.ToString());
             }
-            _mainWin.Title = _mainWin.APP_NAME + " - " + titleToShow;
+            _mainWin.Title = sb.ToString();
         }
 
 
