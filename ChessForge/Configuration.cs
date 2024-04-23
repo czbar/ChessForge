@@ -538,8 +538,6 @@ namespace ChessForge
         /// Time for the engine to evaluate position in the evaluation mode.
         /// </summary>
         private const string CFG_ENGINE_EVALUATION_TIME = "EngineEvaluationTime";
-        private const string CFG_EVAL_MOVE_RANGE_START = "EvalMoveRangeStart";
-        private const string CFG_EVAL_RANGE_END = "EvalMoveRangeEnd";
         private const string CFG_ENGINE_THREADS = "EngineThreads";
         private const string CFG_ENGINE_HASH_SIZE = "EngineHashSize";
         private const string CFG_ENGINE_MPV = "EngineMpv";
@@ -725,8 +723,6 @@ namespace ChessForge
 
                 sb.Append(CFG_ENGINE_MOVE_TIME + "=" + EngineMoveTime.ToString() + Environment.NewLine);
                 sb.Append(CFG_ENGINE_EVALUATION_TIME + "=" + EngineEvaluationTime.ToString() + Environment.NewLine);
-                sb.Append(CFG_EVAL_MOVE_RANGE_START + "=" + EvalMoveRangeStart.ToString() + Environment.NewLine);
-                sb.Append(CFG_EVAL_RANGE_END + "=" + EvalMoveRangeEnd.ToString() + Environment.NewLine);
                 sb.Append(CFG_ENGINE_THREADS + "=" + EngineThreads.ToString() + Environment.NewLine);
                 sb.Append(CFG_ENGINE_HASH_SIZE + "=" + EngineHashSize.ToString() + Environment.NewLine);
                 sb.Append(CFG_ENGINE_MPV + "=" + EngineMpv.ToString() + Environment.NewLine);
@@ -1071,12 +1067,6 @@ namespace ChessForge
                             break;
                         case CFG_ENGINE_EVALUATION_TIME:
                             int.TryParse(value, out _engineEvaluationTime);
-                            break;
-                        case CFG_EVAL_MOVE_RANGE_START:
-                            int.TryParse(value, out _evalMoveRangeStart);
-                            break;
-                        case CFG_EVAL_RANGE_END:
-                            int.TryParse(value, out _evalMoveRangeEnd);
                             break;
                         case CFG_ENGINE_MOVE_TIME:
                             int.TryParse(value, out _engineMoveTime);
