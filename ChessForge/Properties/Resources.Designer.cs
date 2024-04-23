@@ -1304,7 +1304,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create Intro for This Chapter.
+        ///   Looks up a localized string similar to Create Intro for this Chapter.
         /// </summary>
         public static string CreateIntro {
             get {
@@ -7367,6 +7367,15 @@ namespace ChessForge.Properties {
         public static string Version {
             get {
                 return ResourceManager.GetString("Version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ver..
+        /// </summary>
+        public static string VersionAbbr {
+            get {
+                return ResourceManager.GetString("VersionAbbr", resourceCulture);
             }
         }
         

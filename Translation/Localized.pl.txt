@@ -229,6 +229,10 @@ Evaluation=Ocena
 #english: Version=Version
 Version=Wersja
 
+#description: Version abbreviated
+#english: VersionAbbr=ver.
+VersionAbbr=w.
+
 #description: Chess engine
 #english: ChessEngine=Chess Engine
 ChessEngine=Silnik
@@ -1776,7 +1780,7 @@ OpenSelectedChapter=Otwórz Wybrany Rozdział
 RenameSelectedChapter=Zmień Nazwę Rozdziału
 
 #description: Create Intro 
-#english: CreateIntro=Create Intro for This Chapter
+#english: CreateIntro=Create Intro for this Chapter
 CreateIntro=Utwórz Wstęp do Rozdziału
 
 #description: Open the selected game

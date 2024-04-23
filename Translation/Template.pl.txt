@@ -229,6 +229,10 @@ Evaluation=Ocena
 #english: Version=Version
 Version=Wersja
 
+#description: Version abbreviated
+#english: VersionAbbr=ver.
+VersionAbbr=w.
+
 #description: Chess engine
 #english: ChessEngine=Chess Engine
 ChessEngine=Silnik

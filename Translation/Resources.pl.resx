@@ -276,6 +276,9 @@
   <data name="Version" xml:space="preserve">
     <value>Wersja</value>
   </data>
+  <data name="VersionAbbr" xml:space="preserve">
+    <value>w.</value>
+  </data>
   <data name="ChessEngine" xml:space="preserve">
     <value>Silnik</value>
   </data>

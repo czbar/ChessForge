@@ -176,6 +176,9 @@ Evaluation=Evaluation
 #Version
 Version=Version
 
+#Version abbreviated
+VersionAbbr=ver.
+
 #Chess engine
 ChessEngine=Chess Engine
 
