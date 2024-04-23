@@ -70,21 +70,25 @@ Description:Teoria i praktyka debiutów szachowych.
 	Shelf:Repertuar dla Czarnych
     Description: Debiuty analizowane z punktu widzenia czarnych.
         
-	  Book:Klasyczna Sycylijska 2...d6, 5...Sc6
+	  Book:Klasyczna Sycylijska 2...d6, 5...Sc6 (jęz. ang.)
       Description: Klasyczny, zawsze popularny na wszystkich szczeblach system w Obronie Syscylijskiej.
       File: Openings/Black/Classical Sicilian for Black.pgn
+    
+	  Book:Caro-Kann (jęz. ang.)
+      Description: Wszystko co musisz wiedzieć, żeby grać Caro-Kann.
+      File: Openings/Black/Caro-Kann for Black.pgn
 
 	  Book:Wariant Wymienny Obronny Francuskiej (jęz. ang.)
       Description: Jak przełamać symetrię grając czarnymi wariant wymienny Francuskiej.
       File: Openings/Black/French Exchange for Black.pgn
-      
-	  Book:Pułapki w Gambicie Stafforda (jęz. ang.)
-      Description: Zabawna rozprawka Erica Rosena o Gambicie Stafforda.  Zaadoptowana ze studium Erica na lichess.
-      File: Openings/Black/Stafford Gambit for Black.pgn
 	  
       Book:Obrona Ragozina (jęz. ang.)
       Description: Solidne element repertuaru czarnych przeciwko 1.d4.
       File: Openings/Black/Ragozin for Black.pgn
+      
+	  Book:Pułapki w Gambicie Stafforda (jęz. ang.)
+      Description: Zabawna rozprawka Erica Rosena o Gambicie Stafforda.  Zaadoptowana ze studium Erica na lichess.
+      File: Openings/Black/Stafford Gambit for Black.pgn
 
 	Shelf:Nietypowe Otwarcia 
     Description: Krótkie podręczniki dla rzadkich i nietypowych debiutów. 
