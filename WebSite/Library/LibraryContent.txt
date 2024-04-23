@@ -12,6 +12,14 @@ Description: Games from tournaments and matches.
       Description: All games from Men's World Championship Matches and Tournaments.
       File:Tournaments/Mens World Individual Championships.pgn
 
+	  Book:FIDE Candidates 2024 (Men)
+      Description: All games of the Men's World Chamionship Candidates, Toronto 2024
+      File:Tournaments/FIDE Candidates 2024 - Men.pgn
+
+	  Book:FIDE Candidates 2024 (Women)
+      Description: All games of the Women's World Chamionship Candidates, Toronto 2024
+      File:Tournaments/FIDE Candidates 2024 - Women.pgn
+
 	  Book:World Rapid Championship 2023 (Men)
       Description: World Rapid Championship (Men), Samarkand, December 2023.
       File:Tournaments/World Rapid Chess Championship Men 2023.pgn
@@ -44,7 +52,7 @@ Description:Workbooks examining theory and practice of various Openings.
     Description: Openings analyzed from the White player's point of view.
       
 	  Book:Budapest Gambit
-      Description: A few of options to safely counter the Budapest Gambit.
+      Description: A few options to safely counter the Budapest Gambit.
       File: Openings/White/Budapest for White.pgn
       
 	  Book:King's Indian - Karpov Variation
@@ -66,17 +74,21 @@ Description:Workbooks examining theory and practice of various Openings.
       Description: The classical, always popular at the highest level system in the Sicilian Defense.
       File: Openings/Black/Classical Sicilian for Black.pgn
     
+	  Book:Caro-Kann
+      Description: All the lines you need to know to play Caro-Kann.
+      File: Openings/Black/Caro-Kann for Black.pgn
+    
 	  Book:Exchange French
       Description: Breaking symmetry when facing the Exchange Variation in the French.
       File: Openings/Black/French Exchange for Black.pgn
-      
-	  Book:Stafford Gambit Traps
-      Description: Eric Rosen's entertaining treatise on the Stafford Gambit.  Adapted from Eric's lichess study.
-      File: Openings/Black/Stafford Gambit for Black.pgn
 	  
       Book:Ragozin Defense
       Description: A solid addition to one's repertoire against 1.d4.
       File: Openings/Black/Ragozin for Black.pgn
+      
+	  Book:Stafford Gambit Traps
+      Description: Eric Rosen's entertaining treatise on the Stafford Gambit.  Adapted from Eric's lichess study.
+      File: Openings/Black/Stafford Gambit for Black.pgn
 
 	Shelf:Unorthodox Openings
     Description: Short booklets on rare, unorthodox openings. 

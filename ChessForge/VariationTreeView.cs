@@ -1769,7 +1769,7 @@ namespace ChessForge
         protected Run BuildNodeTextAndAddToPara(TreeNode nd, bool includeNumber, Paragraph para, int displayLevel = -1, bool inclComment = true)
         {
             // check if we must set includeNumber to true
-            if (!includeNumber && (inclComment && IsLastRunComment(para) || !string.IsNullOrEmpty(nd.CommentBeforeMove)))
+            if (!includeNumber && (inclComment && IsLastRunComment(para, nd) || !string.IsNullOrEmpty(nd.CommentBeforeMove)))
             {
                 includeNumber = true;
             }
@@ -1792,7 +1792,7 @@ namespace ChessForge
             if (inclComment)
             {
                 // must use Insert... because cannot Add... before rMove is created.
-                InsertOrUpdateCommentBeforeMoveRun(nd);
+                InsertOrUpdateCommentBeforeMoveRun(nd, includeNumber);
                 AddReferenceRunToParagraph(nd, para);
                 AddCommentRunsToParagraph(nd, para, out bool isBlunder);
                 if (isBlunder)

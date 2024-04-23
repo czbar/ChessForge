@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace ChessForge
 {
@@ -82,7 +83,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Finds out is the move has a collapsed ancestor
+        /// Finds out if the move has a collapsed ancestor
         /// and if so, invokes UncollapseSector on that ancestor.
         /// </summary>
         /// <param name="nd"></param>
@@ -276,6 +277,7 @@ namespace ChessForge
                 if (depth > chapter.VariationIndexDepth)
                 {
                     chapter.VariationIndexDepth = depth;
+                    AppState.IsIndexDepthDirty = true;   
                 }
             }
         }
@@ -303,6 +305,7 @@ namespace ChessForge
                     }
                 }
                 chapter.VariationIndexDepth = depth;
+                AppState.IsIndexDepthDirty = true;
             }
         }
 
@@ -797,7 +800,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Handles a mouse click on over a move in the index paragraph.
+        /// Handles a mouse click on a move in the index paragraph.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -808,12 +811,23 @@ namespace ChessForge
             {
                 ClearCopySelect();
                 int nodeId = TextUtils.GetIdFromPrefixedString(r.Name);
-                // if sectors are collpase the Run may not be present
+                // if sectors are collapsed the Run may not be present
                 if (_dictNodeToRun.ContainsKey(nodeId))
                 {
                     Run target = _dictNodeToRun[nodeId];
                     SelectRun(target, 1, e.ChangedButton);
                     BringSelectedRunIntoView();
+                }
+                else
+                {
+                    TreeNode nd = _mainVariationTree.GetNodeFromNodeId(nodeId);
+                    if (UncollapseMove(nd))
+                    {
+                        BuildFlowDocumentForVariationTree();
+                        Run target = _dictNodeToRun[nodeId];
+                        SelectRun(target, 1, e.ChangedButton);
+                        BringSelectedRunIntoView();
+                    }
                 }
             }
         }
@@ -1060,7 +1074,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Collapses the sector beginning atthe passed NodeId
+        /// Collapses the sector beginning at the passed NodeId
         /// </summary>
         /// <param name="nodeId"></param>
         /// <returns></returns>
@@ -1144,6 +1158,7 @@ namespace ChessForge
                     }
                 }
                 BuildFlowDocumentForVariationTree();
+                SelectLineAndMove(_mainVariationTree.SelectedLineId, _mainVariationTree.SelectedNodeId);
             }
             e.Handled = true;
         }
@@ -1167,6 +1182,7 @@ namespace ChessForge
                     }
                 }
                 BuildFlowDocumentForVariationTree();
+                SelectLineAndMove(_mainVariationTree.SelectedLineId, _mainVariationTree.SelectedNodeId);
             }
             e.Handled = true;
         }

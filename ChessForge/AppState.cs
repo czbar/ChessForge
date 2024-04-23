@@ -435,10 +435,11 @@ namespace ChessForge
         /// </summary>
         public static string EngineName = Properties.Resources.UnknownEngine;
 
-        /// <summary>
-        /// Indicates whether there are any unsaved changes in the Workbook
-        /// </summary>
+        // Indicates whether there are any unsaved changes in the Workbook
         private static bool _isDirty;
+
+        // Indicates whether the index depth in any of the Studies is dirty
+        private static bool _isIndexDepthDirty;
 
         // path to the current workbook file
         private static string _workbookFilePath;
@@ -565,7 +566,7 @@ namespace ChessForge
         {
             bool result = true;
 
-            if (checkDirty && !IsDirty)
+            if (checkDirty && !IsDirty && !IsIndexDepthDirty)
             {
                 return true;
             }
@@ -749,6 +750,23 @@ namespace ChessForge
                 {
 
                     _isDirty = value;
+                    ConfigureSaveMenus();
+                });
+            }
+        }
+
+        /// <summary>
+        /// Indicates whether the index depth in any of the Studies was modified.
+        /// </summary>
+        public static bool IsIndexDepthDirty
+        {
+            get => _isIndexDepthDirty;
+            set
+            {
+                _mainWin.Dispatcher.Invoke(() =>
+                {
+
+                    _isIndexDepthDirty = value;
                     ConfigureSaveMenus();
                 });
             }
@@ -1028,7 +1046,7 @@ namespace ChessForge
                 resSaveAs = resSaveAs.Replace("$0", fileName);
                 _mainWin.UiMnWorkbookSaveAs.Header = resSaveAs;
 
-                if (!string.IsNullOrEmpty(filePath) && IsDirty)
+                if (!string.IsNullOrEmpty(filePath) && (IsDirty || IsIndexDepthDirty))
                 {
                     _mainWin.UiMnWorkbookSave.IsEnabled = true;
                 }

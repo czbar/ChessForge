@@ -93,7 +93,7 @@ namespace ChessForge
         /// If it does not exist, it will be created.
         /// </summary>
         /// <param name="nd"></param>
-        public Inline InsertOrUpdateCommentBeforeMoveRun(TreeNode nd)
+        public Inline InsertOrUpdateCommentBeforeMoveRun(TreeNode nd, bool? includeNumber = null)
         {
             Inline inlCommentBeforeMove;
 
@@ -133,6 +133,18 @@ namespace ChessForge
                     Paragraph para = rMove.Parent as Paragraph;
                     AddCommentBeforeMoveRunToParagraph(nd, para);
                 }
+
+                // if the passed includeNumber was true, do not question it (it is part of first render)
+                // otherwise, refresh the move's text if it is black's move as we may need a number in front.
+                if (includeNumber != true && nd.ColorToMove == PieceColor.White)
+                {
+                    // we need the number if this is the first run in the paragraph or previous move has a Comment
+                    // or this move has a CommentBeforeMove
+                    bool includeNo = RichTextBoxUtilities.IsFirstNonEmptyRunInPara(rMove, rMove.Parent as Paragraph)
+                                     || !string.IsNullOrWhiteSpace(nd.CommentBeforeMove) 
+                                     || (nd.Parent != null && (!string.IsNullOrEmpty(nd.Parent.Comment) || nd != nd.Parent.Children[0]));
+                    UpdateRunText(rMove, nd, includeNo);
+                }
             }
             catch
             {
@@ -158,7 +170,8 @@ namespace ChessForge
                 TreeNode nextNode = ShownVariationTree.GetNodeFromNodeId(nodeId);
                 if (nextNode != null)
                 {
-                    bool includeNumber = !string.IsNullOrWhiteSpace(currNode.Comment);
+                    // take care of the special case where node 0 may have a comment
+                    bool includeNumber = currNode.NodeId == 0 || !string.IsNullOrWhiteSpace(currNode.Comment);
                     UpdateRunText(nextMoveRun, nextNode, includeNumber);
                 }
             }
@@ -528,13 +541,17 @@ namespace ChessForge
         /// </summary>
         /// <param name="para"></param>
         /// <returns></returns>
-        protected bool IsLastRunComment(Paragraph para)
+        protected bool IsLastRunComment(Paragraph para, TreeNode nd)
         {
             bool res = false;
 
             if (para != null && para.Inlines.Last().Name.StartsWith(_run_comment_))
             {
-                res = true;
+                // finally check if this is actual textual comment
+                if (nd.Parent != null && !string.IsNullOrEmpty(nd.Parent.Comment))
+                {
+                    res = true;
+                }
             }
 
             return res;
