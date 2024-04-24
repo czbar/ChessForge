@@ -592,6 +592,7 @@ namespace ChessForge
                         break;
                     case Key.P:
                         _mainWin.PromoteLine();
+                        e.Handled = true;
                         break;
                     default:
                         if (HandleKeyDown(e.Key))
