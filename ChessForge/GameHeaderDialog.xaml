@@ -38,7 +38,7 @@
         <GroupBox x:Name="UiGbDate" HorizontalAlignment="Left" Height="165" Header="Date" Margin="369,192,0,0" VerticalAlignment="Top" Width="265">
             <Canvas>
                 <DatePicker x:Name="UiDatePicker" HorizontalAlignment="Left" Margin="28,10,0,0" VerticalAlignment="Top" IsTodayHighlighted="False" Width="150" LostFocus="UiDatePicker_LostFocus"/>
-                <Button Name="UiBtnClearDate" Width="32" Height="32"  HorizontalAlignment="Left" Margin="195,6,0,0" VerticalAlignment="Top" ToolTip="{x:Static p:Resources.Clear}" Click="UiBtnClearDate_Click" >
+                <Button Name="UiBtnClearDate" Width="30" Height="22"  HorizontalAlignment="Left" Margin="195,11,0,0" VerticalAlignment="Top" ToolTip="{x:Static p:Resources.Clear}" Click="UiBtnClearDate_Click" >
                     <Image Source="Resources/Images/eraser-rubber.png" Width="18" Height="18"></Image>
                 </Button>
                 <Label x:Name="UiLblPgnDate" Content="{x:Static p:Resources.PGN}" HorizontalAlignment="Left" Margin="25,40,0,0" VerticalAlignment="Top"/>
