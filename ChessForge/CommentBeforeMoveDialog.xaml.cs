@@ -27,6 +27,7 @@ namespace ChessForge
             InitializeComponent();
             UiTbCommentBeforeMove.Text = nd.CommentBeforeMove ?? "";
             UiTbCommentBeforeMove.Focus();
+            UiTbCommentBeforeMove.SelectAll();
         }
 
         /// <summary>
