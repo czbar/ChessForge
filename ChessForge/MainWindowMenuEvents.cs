@@ -745,17 +745,12 @@ namespace ChessForge
         private void UiMnBackupVersion_Click(object sender, RoutedEventArgs e)
         {
             BackupVersionDialog dlg = new BackupVersionDialog(WorkbookManager.SessionWorkbook);
-            //{
-            //    Left = ChessForgeMain.Left + 100,
-            //    Top = ChessForgeMain.Top + 100,
-            //    Topmost = false,
-            //    Owner = this
-            //};
             GuiUtilities.PositionDialog(dlg, this, 100);
             if (dlg.ShowDialog() == true)
             {
                 AppState.SaveWorkbookFile(dlg.BackupPath);
                 WorkbookManager.SessionWorkbook.SetVersion(dlg.IncrementedVersion);
+                AppState.UpdateAppTitleBar();
                 AppState.IsDirty = true;
             }
         }
