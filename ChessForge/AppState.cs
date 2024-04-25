@@ -697,12 +697,13 @@ namespace ChessForge
             tree.ContentType = GameData.ContentType.MODEL_GAME;
             tree.Header.SetHeaderValue(PgnHeaders.KEY_LICHESS_ID, lichessGameId);
             Article article = chapter.AddModelGame(tree);
+            int articleIndex = chapter.GetModelGameCount() - 1;
 
             if (article != null)
             {
                 added = true;
 
-                WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.CREATE_ARTICLE, chapter, article);
+                WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.CREATE_ARTICLE, chapter, article, articleIndex);
                 WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
 
                 chapter.ActiveModelGameIndex = chapter.GetModelGameCount() - 1;
