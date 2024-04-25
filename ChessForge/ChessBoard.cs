@@ -349,6 +349,14 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// What's the scale factor to apply in transforms for this instance of the ChesBoard.
+        /// </summary>
+        public double SizeScaleFactor
+        {
+            get => (double)SquareSize / (double)_canonicalSquareSize;
+        }
+
+        /// <summary>
         /// Creates the coordinates labels.
         /// </summary>
         private void InitializeCoordinateLabels()
