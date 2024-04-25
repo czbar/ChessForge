@@ -594,6 +594,42 @@ namespace ChessForge
                         _mainWin.PromoteLine();
                         e.Handled = true;
                         break;
+                    case Key.E:
+                        bool isEngineOn = _mainWin.UiImgEngineOn.Visibility == System.Windows.Visibility.Visible;
+                        if (isEngineOn)
+                        {
+                            _mainWin.EngineToggleOn_OnPreviewMouseLeftButtonDown(null, null);
+                        }
+                        else
+                        {
+                            _mainWin.EngineToggleOff_OnPreviewMouseLeftButtonDown(null, null);
+                        }
+                        e.Handled = true;
+                        break;
+                    case Key.X:
+                        bool isExplorerOn = _mainWin.UiImgExplorersOn.Visibility == System.Windows.Visibility.Visible;
+                        if (isExplorerOn)
+                        {
+                            _mainWin.ExplorersToggleOn_PreviewMouseDown(null, null);
+                        }
+                        else
+                        {
+                            _mainWin.ExplorersToggleOff_PreviewMouseDown(null, null);
+                        }
+                        e.Handled = true;
+                        break;
+                    case Key.C:
+                        bool isChartOn = _mainWin.UiImgChartOn.Visibility == System.Windows.Visibility.Visible;
+                        if (isChartOn)
+                        {
+                            _mainWin.EvaluationChartToggleOn(null, null);
+                        }
+                        else
+                        {
+                            _mainWin.EvaluationChartToggleOff(null, null);
+                        }
+                        e.Handled = true;
+                        break;
                     default:
                         if (HandleKeyDown(e.Key))
                         {
