@@ -131,9 +131,6 @@ GameCount=Number of Games
 #Exercise count
 ExerciseCount=Number of Exercises 
 
-#A line in a variation tree
-Line=Line
-
 #Bookmark
 Bookmark=Bookmark
 
@@ -1297,6 +1294,21 @@ StopDetectLevel=No Detection Beyond (cp)
 # Header: DIALOG Find Identical Positions / Found Games
 #
 
+#A line in a variation tree
+Line=Line
+
+#Main line
+MainLine=Main Line
+
+#Game text
+GameText=Game Text
+
+#Exercise text
+ExerciseText=Exercise Text
+
+#Side line
+SideLine=Side Line
+
 #Identical Positions dialog title
 DlgTitleIdenticalPositions=List of Identical Positions
 
@@ -1542,9 +1554,6 @@ CopyMainLineAfterMove=Copy and Paste Main Line after
 
 #Copy subtree aftre the selected move.
 CopySubtreeAfterMove=Copy and Paste Variation Tree after
-
-#Main line
-MainLine=Main Line
 
 #The "Next" term
 Next=Next

@@ -231,9 +231,6 @@
   <data name="ExerciseCount" xml:space="preserve">
     <value>Number of Exercises </value>
   </data>
-  <data name="Line" xml:space="preserve">
-    <value>Line</value>
-  </data>
   <data name="Bookmark" xml:space="preserve">
     <value>Bookmark</value>
   </data>
@@ -1176,6 +1173,21 @@
   <data name="StopDetectLevel" xml:space="preserve">
     <value>No Detection Beyond (cp)</value>
   </data>
+  <data name="Line" xml:space="preserve">
+    <value>Line</value>
+  </data>
+  <data name="MainLine" xml:space="preserve">
+    <value>Main Line</value>
+  </data>
+  <data name="GameText" xml:space="preserve">
+    <value>Game Text</value>
+  </data>
+  <data name="ExerciseText" xml:space="preserve">
+    <value>Exercise Text</value>
+  </data>
+  <data name="SideLine" xml:space="preserve">
+    <value>Side Line</value>
+  </data>
   <data name="DlgTitleIdenticalPositions" xml:space="preserve">
     <value>List of Identical Positions</value>
   </data>
@@ -1394,9 +1406,6 @@
   </data>
   <data name="CopySubtreeAfterMove" xml:space="preserve">
     <value>Copy and Paste Variation Tree after</value>
-  </data>
-  <data name="MainLine" xml:space="preserve">
-    <value>Main Line</value>
   </data>
   <data name="Next" xml:space="preserve">
     <value>Next</value>

@@ -169,10 +169,6 @@ GameCount=Liczba partii
 #english: ExerciseCount=Number of Exercises 
 ExerciseCount=Liczba ćwiczeń 
 
-#description: A line in a variation tree
-#english: Line=Line
-Line=Wariant
-
 #description: Bookmark
 #english: Bookmark=Bookmark
 Bookmark=Zakładka
@@ -1650,6 +1646,26 @@ StopDetectLevel=Poziom poza detekcją (cp)
 # Header: DIALOG Find Identical Positions / Found Games
 #
 
+#description: A line in a variation tree
+#english: Line=Line
+Line=Wariant
+
+#description: Main line
+#english: MainLine=Main Line
+MainLine=Główny wariant
+
+#description: Game text
+#english: GameText=Game Text
+GameText=Tekst partii
+
+#description: Exercise text
+#english: ExerciseText=Exercise Text
+ExerciseText=Tekst ćwiczenia
+
+#description: Side line
+#english: SideLine=Side Line
+SideLine=Boczny wariant
+
 #description: Identical Positions dialog title
 #english: DlgTitleIdenticalPositions=List of Identical Positions
 DlgTitleIdenticalPositions=Lista Identycznych Pozycji
@@ -1968,10 +1984,6 @@ CopyMainLineAfterMove=Skopiuj i wklej główny wariant po
 #description: Copy subtree aftre the selected move.
 #english: CopySubtreeAfterMove=Copy and Paste Variation Tree after
 CopySubtreeAfterMove=Skopiuj i wklej wszystkie warianty po
-
-#description: Main line
-#english: MainLine=Main Line
-MainLine=Główny wariant
 
 #description: The "Next" term
 #english: Next=Next

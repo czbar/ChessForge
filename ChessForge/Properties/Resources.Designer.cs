@@ -2708,6 +2708,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exercise Text.
+        /// </summary>
+        public static string ExerciseText {
+            get {
+                return ResourceManager.GetString("ExerciseText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exit.
         /// </summary>
         public static string Exit {
@@ -3307,6 +3316,15 @@ namespace ChessForge.Properties {
         public static string GamesWithWhite {
             get {
                 return ResourceManager.GetString("GamesWithWhite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game Text.
+        /// </summary>
+        public static string GameText {
+            get {
+                return ResourceManager.GetString("GameText", resourceCulture);
             }
         }
         
@@ -6188,6 +6206,15 @@ namespace ChessForge.Properties {
         public static string ShowSolutionsInChapter {
             get {
                 return ResourceManager.GetString("ShowSolutionsInChapter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Side Line.
+        /// </summary>
+        public static string SideLine {
+            get {
+                return ResourceManager.GetString("SideLine", resourceCulture);
             }
         }
         

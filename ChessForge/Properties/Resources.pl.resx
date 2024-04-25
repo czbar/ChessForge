@@ -231,9 +231,6 @@
   <data name="ExerciseCount" xml:space="preserve">
     <value>Liczba ćwiczeń </value>
   </data>
-  <data name="Line" xml:space="preserve">
-    <value>Wariant</value>
-  </data>
   <data name="Bookmark" xml:space="preserve">
     <value>Zakładka</value>
   </data>
@@ -1176,6 +1173,21 @@
   <data name="StopDetectLevel" xml:space="preserve">
     <value>Poziom poza detekcją (cp)</value>
   </data>
+  <data name="Line" xml:space="preserve">
+    <value>Wariant</value>
+  </data>
+  <data name="MainLine" xml:space="preserve">
+    <value>Główny wariant</value>
+  </data>
+  <data name="GameText" xml:space="preserve">
+    <value>Tekst partii</value>
+  </data>
+  <data name="ExerciseText" xml:space="preserve">
+    <value>Tekst ćwiczenia</value>
+  </data>
+  <data name="SideLine" xml:space="preserve">
+    <value>Boczny wariant</value>
+  </data>
   <data name="DlgTitleIdenticalPositions" xml:space="preserve">
     <value>Lista Identycznych Pozycji</value>
   </data>
@@ -1394,9 +1406,6 @@
   </data>
   <data name="CopySubtreeAfterMove" xml:space="preserve">
     <value>Skopiuj i wklej wszystkie warianty po</value>
-  </data>
-  <data name="MainLine" xml:space="preserve">
-    <value>Główny wariant</value>
   </data>
   <data name="Next" xml:space="preserve">
     <value>Następny</value>
