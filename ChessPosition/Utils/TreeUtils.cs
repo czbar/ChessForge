@@ -947,6 +947,7 @@ namespace ChessPosition
                     retNode = MoveUtils.ProcessAlgMove(algMove, insertAtNode, nodeId);
                     // copy some fields from the original one to the one created here
                     retNode.Comment = nodeToInsert.Comment;
+                    retNode.CommentBeforeMove = nodeToInsert.CommentBeforeMove;
                     retNode.Nags = nodeToInsert.Nags;
                     retNode.LastMoveAlgebraicNotationWithNag = nodeToInsert.LastMoveAlgebraicNotationWithNag;
                     retNode.Position.IsCheckmate = PositionUtils.IsCheckmate(retNode.Position, out bool isCheck);
