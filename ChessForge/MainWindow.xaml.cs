@@ -1540,7 +1540,6 @@ namespace ChessForge
                         AppLog.Message("wvs.ReadState()", ex);
                     }
 
-                    // Possibly we do not need to call this at all if ApplyStates ran.
                     SetupGuiForNewSession(AppState.WorkbookFilePath, true, wvs);
                 }
                 else
@@ -1613,16 +1612,24 @@ namespace ChessForge
                 }
                 LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
 
-                InitializeChaptersView();
+                // only build chapters view here, if we are showing this tab first
+                if (tabToFocus == TabViewType.CHAPTERS)
+                {
+                    InitializeChaptersView();
+                }
+                else
+                {
+                    _chaptersView = new ChaptersView(UiRtbChaptersView.Document, this);
+                    _chaptersView.IsDirty = true;
+                }
 
                 // reset so that GotFocus() does not bail 
                 WorkbookManager.ActiveTab = TabViewType.NONE;
 
                 // this just in case and for extra future proofing...
-                // : move the focus somewhere away from any tab that may have it so that the next call to Focus() is effective 
-                //
-                // However, due the use of ForceFocus() below, it is not necessary
-                UiRtbBoardComment.Focus();
+                // move the focus somewhere away from any tab that may have it so that the next call to Focus() is effective 
+                // However, due the use of ForceFocus() below, this is not necessary anymore
+                // UiRtbBoardComment.Focus();
 
                 if (tabToFocus == TabViewType.INTRO && WorkbookManager.SessionWorkbook.ActiveChapter.IsIntroEmpty())
                 {
@@ -1912,7 +1919,7 @@ namespace ChessForge
             // if this is very big, make sure the view is collapsed
             // to speed up initial reading
             // int articleCount = AppState.Workbook.GetArticleCount();
-            // if (articleCount > 500)  // TODO: this could be annoying to the user, on the other hand coule be a big perf hit, maybe do it per chapter?
+            // if (articleCount > 500)  // TODO: this could be annoying to the user, on the other hand could be a big perf hit, maybe do it per chapter?
             //{
             //    ExpandCollapseChaptersView(false, true);
             //}
