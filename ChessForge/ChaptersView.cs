@@ -24,7 +24,7 @@ namespace ChessForge
         private RichTextBox _richTextBox;
 
         // whether the view needs refreshing
-        private bool _isDirty;
+        private bool _isDirty = true;
 
         /// <summary>
         /// RichTextPara dictionary accessor
