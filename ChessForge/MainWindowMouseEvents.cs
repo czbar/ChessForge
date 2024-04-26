@@ -1176,17 +1176,22 @@ namespace ChessForge
             WorkbookLocationNavigator.SaveNewLocation(TabViewType.CHAPTERS);
 
             // we may need to show/hide Intro headers if something has changed
-            // TODO: consider creating it here if null, then we don't need to build it in Initialize() thus improving perf in some scenarios.
-            if (_chaptersView != null)
+            if (_chaptersView == null)
+            {
+                _chaptersView = new ChaptersView(UiRtbChaptersView.Document, this);
+                _chaptersView.IsDirty = true;
+            }
+            else
             {
                 if (_chaptersView.IsDirty)
                 {
                     _chaptersView.BuildFlowDocumentForChaptersView();
                 }
-                _chaptersView.UpdateIntroHeaders();
                 _chaptersView.HighlightActiveChapter();
                 _chaptersView.BringActiveChapterIntoView();
+                _chaptersView.UpdateIntroHeaders();
             }
+
             AppState.ConfigureMenusForManualReview();
             BoardCommentBox.ShowTabHints();
             try
