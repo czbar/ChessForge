@@ -33,6 +33,7 @@ namespace ChessForge
             SHOW_TRAINING_PROGRESS_POPUP_MENU,
             MOUSE_CLICK_MONITOR,
             FLASH_ANNOUNCEMENT,
+            WORKBOOK_READ_PROGRESS,
             APP_START,
         };
 
@@ -92,6 +93,11 @@ namespace ChessForge
         /// Monitors mouse click series.
         /// </summary>
         private Timer _mouseClickMontitor;
+
+        /// <summary>
+        /// Monitors workbook read progress.
+        /// </summary>
+        private Timer _workbookReadMontitor;
 
         /// <summary>
         /// When elapsed, it invokes the Training Move context menu.
@@ -174,6 +180,10 @@ namespace ChessForge
             _mouseClickMontitor = new Timer();
             InitMouseClickMonitor();
             _dictTimers.Add(TimerId.MOUSE_CLICK_MONITOR, _mouseClickMontitor);
+
+            _workbookReadMontitor = new Timer();
+            InitWorkbookReadMonitor();
+            _dictTimers.Add(TimerId.WORKBOOK_READ_PROGRESS, _workbookReadMontitor);
 
             _showTrainingProgressPopupMenu = new Timer();
             InitShowTrainingProgressPopupMenu();
@@ -386,6 +396,13 @@ namespace ChessForge
             _mouseClickMontitor.Elapsed += new ElapsedEventHandler(MouseClickMonitor.TimerClickSeriesStatus);
             _mouseClickMontitor.Interval = 200;
             _mouseClickMontitor.Enabled = false;
+        }
+
+        private void InitWorkbookReadMonitor()
+        {
+            _workbookReadMontitor.Elapsed += new ElapsedEventHandler(BackgroundPgnProcessingManager.ReportReadProgress);
+            _workbookReadMontitor.Interval = 500;
+            _workbookReadMontitor.Enabled = false;
         }
 
         private void InitShowTrainingProgressPopupMenu()
