@@ -1693,8 +1693,10 @@ namespace ChessForge
                 return;
             }
 
+            Mouse.SetCursor(Cursors.Wait);
             try
             {
+
                 _studyTreeView = new StudyTreeView(UiRtbStudyTreeView, GameData.ContentType.STUDY_TREE, -1);
 
                 _studyTreeView.ArticleSelected -= ArticleSelected;
@@ -1705,8 +1707,14 @@ namespace ChessForge
                 Article article = AppState.ActiveChapter.StudyTree;
                 if (!article.IsReady)
                 {
+                    // temporarily hide engine lines and chart if visible so that we can see the progress messages
+                    GuiUtilities.HideEngineLinesAndChart(out bool engineVisibility, out bool chartVisibility);
+
                     AppState.ActiveChapter.StudyTree = WorkbookManager.SessionWorkbook.GamesManager.ProcessArticleSync(article);
                     studyTree = AppState.ActiveChapter.StudyTree.Tree;
+                    
+                    // unhide engine lines and chart
+                    GuiUtilities.ShowEngineLinesAndChart(engineVisibility, chartVisibility);
                 }
                 else
                 {
@@ -1760,6 +1768,8 @@ namespace ChessForge
             {
                 AppLog.Message("SetupGuiForActiveStudyTree()", ex);
             }
+
+            Mouse.SetCursor(Cursors.Arrow);
         }
 
         /// <summary>
