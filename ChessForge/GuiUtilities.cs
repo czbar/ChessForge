@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Security.RightsManagement;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,6 +17,40 @@ namespace ChessForge
     /// </summary>
     public class GuiUtilities
     {
+        /// <summary>
+        /// Hides the EngineLines and EvalChart boxes, shows the Comment box
+        /// and returns the original status of the first two.
+        /// </summary>
+        /// <param name="engineOrigVisible"></param>
+        /// <param name="chartOrigVisible"></param>
+        public static void HideEngineLinesAndChart(out bool engineOrigVisible, out bool chartOrigVisible)
+        {
+            engineOrigVisible = AppState.MainWin.UiTbEngineLines.Visibility == Visibility.Visible;
+            chartOrigVisible = AppState.MainWin.UiEvalChart.Visibility == Visibility.Visible;
+
+            AppState.MainWin.UiTbEngineLines.Visibility = Visibility.Hidden;
+            AppState.MainWin.UiEvalChart.Visibility = Visibility.Hidden;
+
+            AppState.MainWin.UiRtbBoardComment.Visibility = Visibility.Visible;
+        }
+
+        /// <summary>
+        /// Shows one of the EngineLines, EvalChart and Comment boxes depending
+        /// on the passed arguments.
+        /// </summary>
+        /// <param name="engineVisible"></param>
+        /// <param name="chartVisible"></param>
+        public static void ShowEngineLinesAndChart(bool engineVisible, bool chartVisible)
+        {
+            AppState.MainWin.UiTbEngineLines.Visibility = engineVisible ? Visibility.Visible : Visibility.Hidden;
+            AppState.MainWin.UiEvalChart.Visibility = chartVisible ? Visibility.Visible : Visibility.Hidden;
+            
+            if (engineVisible || chartVisible)
+            {
+                AppState.MainWin.UiRtbBoardComment.Visibility = Visibility.Hidden;
+            }
+        }
+
         /// <summary>
         /// Returns the title for the game data suitable for the ContentType   
         /// </summary>
