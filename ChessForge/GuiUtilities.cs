@@ -19,6 +19,65 @@ namespace ChessForge
     public class GuiUtilities
     {
         /// <summary>
+        /// Returns the title for the game data suitable for the ContentType   
+        /// </summary>
+        /// <param name="game"></param>
+        /// <returns></returns>
+        public static string GetGameDataTitle(GameData game)
+        {
+            string title = "";
+
+            if (game != null && game.Header != null)
+            {
+                switch (game.GetContentType(false))
+                {
+                    case GameData.ContentType.STUDY_TREE:
+                    case GameData.ContentType.INTRO:
+                        title = game.Header.GetChapterTitle();
+                        break;
+                    case GameData.ContentType.MODEL_GAME:
+                    case GameData.ContentType.EXERCISE:
+                        title = game.GameTitleForList;
+                        break;
+                }
+            }
+
+            return title;
+        }
+
+        /// <summary>
+        /// Returns the resources string for representing 
+        /// the passed content type in the GUI.
+        /// </summary>
+        /// <param name="game"></param>
+        /// <returns></returns>
+        public static string GetGameDataTypeString(GameData game)
+        {
+            string str = "";
+
+            if (game != null)
+            {
+                switch (game.GetContentType(false))
+                {
+                    case GameData.ContentType.STUDY_TREE:
+                        str = Properties.Resources.Study;
+                        break;
+                    case GameData.ContentType.INTRO:
+                        str = Properties.Resources.Intro;
+                        break;
+                    case GameData.ContentType.MODEL_GAME:
+                        str = Properties.Resources.Game;
+                        break;
+                    case GameData.ContentType.EXERCISE:
+                        str = Properties.Resources.Exercise;
+                        break;
+                }
+            }
+
+            return str;
+        }
+
+        /// <summary>
         /// Adjusts the configured font size per configuration parameters.
         /// </summary>
         /// <param name="origSize"></param>
