@@ -70,7 +70,10 @@ namespace ChessForge
         /// <param name="e"></param>
         public static void ReportReadProgress(object source, ElapsedEventArgs e)
         {
-            AppState.Workbook.GamesManager.ReportReadingProgress();
+            if (AppState.Workbook.GamesManager != null)
+            {
+                AppState.Workbook.GamesManager.ReportReadingProgress();
+            }
         }
 
         /// <summary>
