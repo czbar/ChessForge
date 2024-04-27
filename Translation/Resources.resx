@@ -2420,7 +2420,19 @@
     <value>Processing study tree...</value>
   </data>
   <data name="ReadingItems" xml:space="preserve">
-    <value>Reading item $0 of $1</value>
+    <value>Processed items $0 of $1</value>
+  </data>
+  <data name="LargeItem" xml:space="preserve">
+    <value>Large item</value>
+  </data>
+  <data name="ProcessLargeItem" xml:space="preserve">
+    <value>Processing large item. Please wait... </value>
+  </data>
+  <data name="PrepareLargeView" xml:space="preserve">
+    <value>Preparing large view. Please wait... </value>
+  </data>
+  <data name="ProcessingTimeSecs" xml:space="preserve">
+    <value>Processing time (seconds)</value>
   </data>
   <data name="OebCheckmate" xml:space="preserve">
     <value>checkmate</value>

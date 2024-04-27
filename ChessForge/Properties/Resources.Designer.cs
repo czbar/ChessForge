@@ -3833,6 +3833,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Large item.
+        /// </summary>
+        public static string LargeItem {
+            get {
+                return ResourceManager.GetString("LargeItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Large Menu Font.
         /// </summary>
         public static string LargeMenuFont {
@@ -5382,6 +5391,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Preparing large view. Please wait... .
+        /// </summary>
+        public static string PrepareLargeView {
+            get {
+                return ResourceManager.GetString("PrepareLargeView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Preview Exercise.
         /// </summary>
         public static string PreviewExercise {
@@ -5450,6 +5468,24 @@ namespace ChessForge.Properties {
         public static string ProceedAndPaste {
             get {
                 return ResourceManager.GetString("ProceedAndPaste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Processing time (seconds).
+        /// </summary>
+        public static string ProcessingTimeSecs {
+            get {
+                return ResourceManager.GetString("ProcessingTimeSecs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Processing large item. Please wait... .
+        /// </summary>
+        public static string ProcessLargeItem {
+            get {
+                return ResourceManager.GetString("ProcessLargeItem", resourceCulture);
             }
         }
         
@@ -5535,7 +5571,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Reading item $0 of $1.
+        ///   Looks up a localized string similar to Processed items $0 of $1.
         /// </summary>
         public static string ReadingItems {
             get {

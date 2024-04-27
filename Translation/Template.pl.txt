@@ -3458,8 +3458,25 @@ ReadingWorkbookFile=Wczytywanie podręcznika...
 ReadingStudyTree=Przetwarzanie drzewa teorii...
 
 #description: Reading items
-#english: ReadingItems=Reading item $0 of $1
-ReadingItems=Wczytywanie elementu $0 z $1
+#english: ReadingItems=Processed items $0 of $1
+ReadingItems=Wczytano elementy $0 z $1
+
+#description: Large items
+#english: LargeItem=Large item
+LargeItem=Duży element
+
+#description: Processing large item
+#english: ProcessLargeItem=Processing large item. Please wait... 
+ProcessLargeItem=Trwa przetwarzanie dużego obiektu. Proszę czekać... 
+
+#description: Preparing large view
+#english: PrepareLargeView=Preparing large view. Please wait... 
+PrepareLargeView=Przygotowywanie dużego widoku. Proszę czekać... 
+
+#description: Processing time in seconds
+#english: ProcessingTimeSecs=Processing time (seconds)
+ProcessingTimeSecs=Czas przetwarzania (sekundy)
+
 
 ##################################
 #

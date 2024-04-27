@@ -2419,7 +2419,19 @@
     <value>Przetwarzanie drzewa teorii...</value>
   </data>
   <data name="ReadingItems" xml:space="preserve">
-    <value>Wczytywanie elementu $0 z $1</value>
+    <value>Wczytano elementy $0 z $1</value>
+  </data>
+  <data name="LargeItem" xml:space="preserve">
+    <value>Duży element</value>
+  </data>
+  <data name="ProcessLargeItem" xml:space="preserve">
+    <value>Trwa przetwarzanie dużego obiektu. Proszę czekać... </value>
+  </data>
+  <data name="PrepareLargeView" xml:space="preserve">
+    <value>Przygotowywanie dużego widoku. Proszę czekać... </value>
+  </data>
+  <data name="ProcessingTimeSecs" xml:space="preserve">
+    <value>Czas przetwarzania (sekundy)</value>
   </data>
   <data name="OebCheckmate" xml:space="preserve">
     <value>mat</value>

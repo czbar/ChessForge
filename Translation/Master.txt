@@ -2691,7 +2691,20 @@ ReadingWorkbookFile=Reading workbook file...
 ReadingStudyTree=Processing study tree...
 
 #Reading items
-ReadingItems=Reading item $0 of $1
+ReadingItems=Processed items $0 of $1
+
+#Large items
+LargeItem=Large item
+
+#Processing large item
+ProcessLargeItem=Processing large item. Please wait... 
+
+#Preparing large view
+PrepareLargeView=Preparing large view. Please wait... 
+
+#Processing time in seconds
+ProcessingTimeSecs=Processing time (seconds)
+
 
 ##################################
 #

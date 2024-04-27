@@ -3458,8 +3458,25 @@ ReadingWorkbookFile=
 ReadingStudyTree=
 
 #description: Reading items
-#english: ReadingItems=Reading item $0 of $1
+#english: ReadingItems=Processed items $0 of $1
 ReadingItems=
+
+#description: Large items
+#english: LargeItem=Large item
+LargeItem=
+
+#description: Processing large item
+#english: ProcessLargeItem=Processing large item. Please wait... 
+ProcessLargeItem=
+
+#description: Preparing large view
+#english: PrepareLargeView=Preparing large view. Please wait... 
+PrepareLargeView=
+
+#description: Processing time in seconds
+#english: ProcessingTimeSecs=Processing time (seconds)
+ProcessingTimeSecs=
+
 
 ##################################
 #
