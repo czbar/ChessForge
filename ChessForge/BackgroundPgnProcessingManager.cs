@@ -6,7 +6,10 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
+using System.Windows.Input;
+using System.Timers;
+using System.Windows.Media;
+using System.Windows.Documents;
 
 namespace ChessForge
 {
@@ -17,6 +20,9 @@ namespace ChessForge
     {
         // number of parallel workers in the pool
         private int _parallelWorkers = 4;
+
+        // number of bytes in Game before we consider it "LONG"
+        private int LONG_GAME_TEXT = 5000;
 
         // state of the parsing multi-task
         private ProcessState _state;
@@ -57,6 +63,17 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Event handler for WORKBOOK_READ_PROGRESS timer.
+        /// Invokes the routine reporting in the GUI.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        public static void ReportReadProgress(object source, ElapsedEventArgs e)
+        {
+            AppState.Workbook.GamesManager.ReportReadingProgress();
+        }
+
+        /// <summary>
         /// Accessor to the Game processing status.
         /// </summary>
         public ProcessState State { get => _state; }
@@ -86,6 +103,7 @@ namespace ChessForge
 
             if (_articlesToProcess == 0)
             {
+                AppState.MainWin.Timers.Stop(AppTimers.TimerId.WORKBOOK_READ_PROGRESS);
                 _state = ProcessState.FINISHED;
             }
             else
@@ -103,6 +121,7 @@ namespace ChessForge
             BackgroundPgnProcessor processor = _workerPool.Find(x => x.ArticleIndex == articleIndex);
             if (processor != null)
             {
+                Article article = _articleList[articleIndex];
                 // Check that the article has not been processed synchronously earlier.
                 if (!_articleList[articleIndex].IsReady && processor.DataObject.Tree != null)
                 {
@@ -115,11 +134,6 @@ namespace ChessForge
                 if (ArticlesNotStarted > 0)
                 {
                     ReuseWorker(processor);
-                }
-
-                if (_articlesCompleted % 500 == 0)
-                {
-                    AppState.MainWin.BoardCommentBox.ReadingItems(_articlesCompleted, _articleList.Count);
                 }
             }
             else
@@ -137,6 +151,7 @@ namespace ChessForge
             if (_state != ProcessState.FINISHED)
             {
                 _state = ProcessState.CANCELED;
+                AppState.MainWin.Timers.Stop(AppTimers.TimerId.WORKBOOK_READ_PROGRESS);
                 AppState.MainWin.BoardCommentBox.ShowTabHints();
             }
         }
@@ -153,6 +168,7 @@ namespace ChessForge
             Article retArticle = article;
 
             int index = GetArticleIndex(article);
+            bool isLarge = false;
 
             // we will get -1 if this is a newly created study tree that should not be processed
             if (index >= 0)
@@ -161,15 +177,39 @@ namespace ChessForge
                 {
                     if (!_articleList[index].IsReady)
                     {
-                        // set this upfront to stop async processing
-                        _articleList[index].IsReady = true;
+                        GameData game = _rawArticles[index];
+                        isLarge = game.GameText.Length > LONG_GAME_TEXT;
+                        if (isLarge)
+                        {
+                            List<string> subLines = new List<string>();
 
-                        retArticle = article.CloneMe();
-                        VariationTree tree = retArticle.Tree;
+                            string typ = GuiUtilities.GetGameDataTypeString(game);
+                            subLines.Add(Properties.Resources.LargeItem + " (" + typ + "): " + GuiUtilities.GetGameDataTitle(game));
 
-                        // check if fen needs to be set
-                        string fen = tree.Header.IsExercise() ? tree.Header.GetFenString() : null;
-                        PgnGameParser pp = new PgnGameParser(_rawArticles[index].GameText, tree, fen, false);
+                            AppState.MainWin.BoardCommentBox.UserWaitAnnouncement(Properties.Resources.ProcessLargeItem, Brushes.Blue, subLines);
+                            AppState.DoEvents();
+
+                            Paragraph para = new Paragraph();
+                            Run run = new Run(Properties.Resources.PrepareLargeView);
+                            para.Inlines.Add(run);
+                            AppState.MainWin.UiRtbStudyTreeView.Document.Blocks.Add(para);
+
+                            Mouse.SetCursor(Cursors.Wait);
+                        }
+                    }
+
+                    // set this upfront to stop async processing
+                    _articleList[index].IsReady = true;
+
+                    retArticle = article.CloneMe();
+                    VariationTree tree = retArticle.Tree;
+
+                    // check if fen needs to be set
+                    string fen = tree.Header.IsExercise() ? tree.Header.GetFenString() : null;
+                    PgnGameParser pp = new PgnGameParser(_rawArticles[index].GameText, tree, fen, false);
+                    if (isLarge)
+                    {
+                        ReportReadingProgress();
                     }
                 }
                 catch
@@ -177,9 +217,33 @@ namespace ChessForge
                 }
 
                 retArticle.IsReady = true;
+                Mouse.SetCursor(Cursors.Arrow);
             }
 
             return retArticle;
+        }
+
+        /// <summary>
+        /// Prepares and displays message in the Comment Board.
+        /// Updates the report view every so many 
+        /// </summary>
+        private void ReportReadingProgress()
+        {
+            try
+            {
+                int poolIndex = GetEarliestJob(out long ticks);
+                if (poolIndex >= 0)
+                {
+                    int gameIndex = _workerPool[poolIndex].ArticleIndex;
+                    GameData currGame = _rawArticles[gameIndex];
+                    if (currGame != null && currGame.GameText != null)
+                    {
+                        AppState.MainWin.BoardCommentBox.ReadingItems(_articlesCompleted, _articleList.Count, currGame, ticks);
+                        AppState.DoEvents();
+                    }
+                }
+            }
+            catch { }
         }
 
         /// <summary>
@@ -204,6 +268,7 @@ namespace ChessForge
                         UpdateVariablesOnJobFinish(i);
                     }
                 }
+                AppState.MainWin.Timers.Start(AppTimers.TimerId.WORKBOOK_READ_PROGRESS);
             }
         }
 
@@ -348,12 +413,14 @@ namespace ChessForge
 
                     if (_articlesCompleted >= _rawArticles.Count)
                     {
+                        AppState.MainWin.Timers.Stop(AppTimers.TimerId.WORKBOOK_READ_PROGRESS);
                         _state = ProcessState.FINISHED;
                         // note that the parent may not be the session workbook if this is part of ImportChapter
                         _parent.IsReady = true;
                         AppState.BackgroundReadFinished();
                         ReportErrors();
                         AppState.MainWin.BoardCommentBox.ShowTabHints();
+                        AppState.DoEvents();
                         if (AppState.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW)
                         {
                             AppState.ConfigureMenusForManualReview();
@@ -397,6 +464,34 @@ namespace ChessForge
             {
                 WorkbookManager.ShowPgnProcessingErrors(Properties.Resources.DlgParseErrors, ref sbErrors);
             }
+        }
+
+        /// <summary>
+        /// Finds the time, the longest running current job started
+        /// and the time it started.
+        /// </summary>
+        /// <param name="ticks"></param>
+        /// <returns></returns>
+        private int GetEarliestJob(out long ticks)
+        {
+            ticks = 0;
+            int poolIndex = -1;
+
+            for (int i = 0; i < _workerPool.Count; i++)
+            {
+                if (ticks == 0 || _workerPool[i].StartTime < ticks)
+                {
+                    ticks = _workerPool[i].StartTime;
+                    poolIndex = i;
+                }
+            }
+
+            if (ticks == 0)
+            {
+                poolIndex = -1;
+            }
+
+            return poolIndex;
         }
 
     }
