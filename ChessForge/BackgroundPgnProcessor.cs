@@ -27,6 +27,9 @@ namespace ChessForge
         // current state of the background worker
         private ProcessState _workerState;
 
+        // the time the process was started in ticks
+        private long _startTime;
+
         /// <summary>
         /// Public accessor the DataObject
         /// </summary>
@@ -39,6 +42,14 @@ namespace ChessForge
         public int ArticleIndex
         {
             get => _dataObject == null ? -1 : _dataObject.ArticleIndex;
+        }
+
+        /// <summary>
+        // The time the process was started in Ticks.
+        /// </summary>
+        public long StartTime
+        {
+            get => _startTime;
         }
 
         /// <summary>
@@ -74,6 +85,7 @@ namespace ChessForge
         /// <param name="fen"></param>
         public void Run(int articleIndex, string articleText, VariationTree tree, bool dummyRun, string fen = null)
         {
+            _startTime = DateTime.Now.Ticks;
             _workerState = ProcessState.RUNNING;
             try
             {
