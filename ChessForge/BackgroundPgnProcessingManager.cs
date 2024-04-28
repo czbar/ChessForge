@@ -242,6 +242,10 @@ namespace ChessForge
                     if (currGame != null && currGame.GameText != null)
                     {
                         AppState.MainWin.BoardCommentBox.ReadingItems(_articlesCompleted, _articleList.Count, currGame, ticks);
+                        if (_state == ProcessState.FINISHED)
+                        {
+                            AppState.MainWin.BoardCommentBox.ShowTabHints();
+                        }
                         AppState.DoEvents();
                     }
                 }
@@ -422,12 +426,12 @@ namespace ChessForge
                         _parent.IsReady = true;
                         AppState.BackgroundReadFinished();
                         ReportErrors();
-                        AppState.MainWin.BoardCommentBox.ShowTabHints();
-                        AppState.DoEvents();
                         if (AppState.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW)
                         {
                             AppState.ConfigureMenusForManualReview();
                         }
+                        AppState.MainWin.BoardCommentBox.ShowTabHints();
+                        AppState.DoEvents();
                     }
                 }
                 catch (Exception ex)
