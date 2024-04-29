@@ -496,7 +496,7 @@ namespace ChessForge
             {
                 TurnExplorersOn();
             }
-            
+
             if (Configuration.ShowEvaluationChart)
             {
                 UiImgChartOn.Visibility = Visibility.Visible;
@@ -1712,7 +1712,7 @@ namespace ChessForge
 
                     AppState.ActiveChapter.StudyTree = WorkbookManager.SessionWorkbook.GamesManager.ProcessArticleSync(article);
                     studyTree = AppState.ActiveChapter.StudyTree.Tree;
-                    
+
                     // unhide engine lines and chart
                     GuiUtilities.ShowEngineLinesAndChart(engineVisibility, chartVisibility);
                 }
@@ -3005,6 +3005,15 @@ namespace ChessForge
                     if (nd.Comment != dlg.Comment || nd.Nags != dlg.Nags || nd.QuizPoints != dlg.QuizPoints)
                     {
                         changed = true;
+                        if (nd.Nags != dlg.Nags)
+                        {
+                            if (NagUtils.GetMoveEvalNagId(nd.Nags) != NagUtils.GetMoveEvalNagId(dlg.Nags))
+                            {
+                                nd.Assessment = 0;
+                                nd.BestResponse = "";
+                            }
+                        }
+                        
                         nd.Comment = dlg.Comment;
                         nd.SetNags(dlg.Nags);
                         nd.QuizPoints = dlg.QuizPoints;
