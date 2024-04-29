@@ -373,6 +373,7 @@ namespace ChessForge
                             inl.FontStyle = FontStyles.Normal;
                             inl.FontWeight = FontWeights.Normal;
                             isAssessmentBlunderShown = true;
+                            inl.PreviewMouseDown += EventCommentRunClicked;
                             break;
                         case CommentPartType.THUMBNAIL_SYMBOL:
                             // if this is not the second last part, insert extra space
