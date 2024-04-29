@@ -71,6 +71,7 @@ namespace GameTree
         {
             NONE = 0,
             BLUNDER = 1,
+            MISTAKE = 2,
         }
 
         /// <summary>
