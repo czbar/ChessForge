@@ -233,7 +233,7 @@ namespace ChessForge
         /// a game in progress i.e. AppState.Mode is or is not equal to GAME_VS_COMPUTER.
         /// To distinguish we need to check Evaluation.Mode.
         /// </summary>
-        public static void MoveEvaluationFinished(TreeNode nd, int treeId, GoFenCommand.EvaluationMode mode, bool delayed)
+        public static void MoveEvaluationFinished(TreeNode nd, int treeId, GoFenCommand.EvaluationMode mode, bool delayed, string message)
         {
             AppLog.Message("MoveEvaluationFinished():" + " LearningMode=" + AppState.CurrentLearningMode + " GoFenMode=" + mode);
             ClearMoveCandidates(false);
@@ -257,7 +257,7 @@ namespace ChessForge
             else
             {
                 // eval request in MANUAL_REVIEW (could be for CONTINUOUS or LINE)
-                MoveEvaluationFinishedInManualReview(nd, treeId, delayed);
+                MoveEvaluationFinishedInManualReview(nd, treeId, delayed, message);
             }
         }
 
@@ -336,7 +336,7 @@ namespace ChessForge
         /// in Active Line or a LINE evaluation where we ask for 
         /// evaluation move by move automatically.
         /// </summary>
-        private static void MoveEvaluationFinishedInManualReview(TreeNode nd, int treeId, bool delayed)
+        private static void MoveEvaluationFinishedInManualReview(TreeNode nd, int treeId, bool delayed, string message)
         {
             int index = AppState.ActiveLine.GetIndexForNode(nd);
             lock (LearningMode.EvalLock)
@@ -353,11 +353,24 @@ namespace ChessForge
                     AppState.ActiveLine.SetEvaluation(nd, eval);
                     if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
                     {
+                        string bestMoveAlg;
+                        try
+                        {
+                            string bestMoveEng = GuiUtilities.GetMoveFromBestMoveMessage(message);
+                            BoardPosition pos = new BoardPosition(nd.Position);
+                            bestMoveAlg = MoveUtils.EngineNotationToAlgebraic(bestMoveEng, ref pos, out _);
+                        }
+                        catch 
+                        {
+                            bestMoveAlg = "";
+                        }
+
                         // assess the move
                         uint assess = (uint)MoveAssessment.GetMoveAssessment(nd);
-                        if (assess != nd.Assessment)
+                        if (assess != nd.Assessment || nd.Parent.BestResponse != bestMoveAlg)
                         {
                             nd.Assessment = assess;
+                            nd.Parent.BestResponse = bestMoveAlg;
                             _mainWin.Dispatcher.Invoke(() =>
                             {
                                 _mainWin.ActiveTreeView?.InsertOrUpdateCommentRun(nd);
@@ -992,7 +1005,7 @@ namespace ChessForge
                 }
 
                 // tell the app that the evaluation has finished
-                MoveEvaluationFinished(nd, treeId, mode, delayed);
+                MoveEvaluationFinished(nd, treeId, mode, delayed, message);
             }
             catch (Exception ex)
             {
@@ -1101,7 +1114,7 @@ namespace ChessForge
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AppLog.Message("ProcessInfoMessage()", ex);
             }
