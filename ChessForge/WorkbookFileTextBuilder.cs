@@ -809,6 +809,13 @@ namespace ChessForge
                     sb.Append("[" + sCmd + "]");
                 }
 
+                // Process the BestResponse command
+                if (!string.IsNullOrEmpty(nd.BestResponse))
+                {
+                    string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.BEST_RESPONSE) + " " + nd.BestResponse;
+                    sb.Append("[" + sCmd + "]");
+                }
+
                 // Process the CommentBeforeMove
                 if (!string.IsNullOrEmpty(nd.CommentBeforeMove))
                 {

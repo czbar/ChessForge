@@ -507,6 +507,12 @@ namespace GameTree
                             }
                         }
                         break;
+                    case ChfCommands.Command.BEST_RESPONSE:
+                        if (tokens.Length > 1)
+                        {
+                            nd.BestResponse = tokens[1];
+                        }
+                        break;
                     case ChfCommands.Command.COMMENT_BEFORE_MOVE:
                         int pos = command.IndexOf(' ');
                         if (pos > 0 && pos < command.Length - 1)
