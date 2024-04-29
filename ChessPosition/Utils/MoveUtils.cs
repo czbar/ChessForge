@@ -268,6 +268,34 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Builds move text string from the passed move parameters.
+        /// </summary>
+        /// <param name="algMove"></param>
+        /// <param name="moveNumber"></param>
+        /// <param name="colorToMove"></param>
+        /// <returns></returns>
+        public static string BuildStandaloneMoveText(string algMove, uint moveNumber, PieceColor colorToMove)
+        {
+            if (string.IsNullOrEmpty(algMove))
+            {
+                return "";
+            }
+
+            string sMove;
+            if (colorToMove == PieceColor.White)
+            {
+                sMove = moveNumber.ToString() + "." + algMove;
+            }
+            else
+            {
+                sMove = moveNumber.ToString() + "..." + algMove;
+            }
+
+            sMove = Languages.MapPieceSymbols(sMove, colorToMove);
+            return sMove;
+        }
+
+        /// <summary>
         /// Given a move with a number in front of it,
         /// returns the number and the color.
         /// Returns -1 if fails to parse.
