@@ -1589,6 +1589,8 @@ namespace GameTree
                 nd.SetNags(dummyNode.Nags);
                 nd.Comment = dummyNode.Comment;
                 nd.QuizPoints = dummyNode.QuizPoints;
+                nd.Assessment = dummyNode.Assessment;
+                nd.BestResponse = dummyNode.BestResponse;
             }
             catch
             {
