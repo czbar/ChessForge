@@ -23,6 +23,13 @@ namespace ChessForge
         {
             int nagId = Constants.GetNagIdFromString(nag);
             TreeNode nd = ActiveLine.GetSelectedTreeNode();
+
+            EditOperation op = null;
+            if (AppState.ActiveVariationTree != null)
+            {
+                op = new EditOperation(EditOperation.EditType.UPDATE_ANNOTATION, nd);
+            }
+
             if (nd != null && nagId > 0)
             {
                 int positionNag = NagUtils.GetPositionEvalNagId(nd.Nags);
@@ -50,12 +57,18 @@ namespace ChessForge
                         moveNag = nagId;
                     }
                     nd.Assessment = 0;
+                    nd.BestResponse = "";
                 }
 
                 // put the nags back together and update
                 string nags = NagUtils.BuildNagsString(moveNag, positionNag);
                 nd.SetNags(nags);
-                
+
+                if (op != null)
+                {
+                    AppState.ActiveVariationTree.OpsManager.PushOperation(op);
+                }
+
                 ActiveTreeView.InsertOrUpdateCommentRun(nd);
                 AppState.IsDirty = true;
             }
