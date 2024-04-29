@@ -321,6 +321,9 @@
   <data name="Elo" xml:space="preserve">
     <value>Elo</value>
   </data>
+  <data name="BestMove" xml:space="preserve">
+    <value>best</value>
+  </data>
   <data name="GameHeader" xml:space="preserve">
     <value>Game Header</value>
   </data>
@@ -2090,7 +2093,7 @@
     <value>To increment version select File-&gt;Backup Version</value>
   </data>
   <data name="TooltipEngineBlunderDetect" xml:space="preserve">
-    <value>Assessed as a blunder by the engine</value>
+    <value>Assessed by the engine</value>
   </data>
   <data name="PgnErrors" xml:space="preserve">
     <value>PGN parsing errors</value>

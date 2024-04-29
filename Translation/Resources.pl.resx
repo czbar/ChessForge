@@ -321,6 +321,9 @@
   <data name="Elo" xml:space="preserve">
     <value>Elo</value>
   </data>
+  <data name="BestMove" xml:space="preserve">
+    <value>najlepsze</value>
+  </data>
   <data name="GameHeader" xml:space="preserve">
     <value>Nagłówek Partii</value>
   </data>
@@ -2089,7 +2092,7 @@
     <value>Wybierz Plik-&gt;Zrób Kopię tej Wersji, by zwiększyć numer wersji</value>
   </data>
   <data name="TooltipEngineBlunderDetect" xml:space="preserve">
-    <value>Ocenione przez silnik jako duży błąd</value>
+    <value>Ocenione przez silnik</value>
   </data>
   <data name="PgnErrors" xml:space="preserve">
     <value>Błąd w pliku PGN</value>

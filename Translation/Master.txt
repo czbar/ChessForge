@@ -222,6 +222,8 @@ ECO=ECO
 #Elo
 Elo=Elo
 
+#Best move
+BestMove=best
 
 #Game Header
 GameHeader=Game Header
@@ -2315,8 +2317,8 @@ TooltipSideToMove=Determines some default settings
 #Tooltip for workbook version
 TooltipWorkbookVersion=To increment version select File->Backup Version
 
-#Tooltip for engine blunder detection
-TooltipEngineBlunderDetect=Assessed as a blunder by the engine
+#Tooltip for engine assessment
+TooltipEngineBlunderDetect=Assessed by the engine
 
 #Errors encountered while parsing a PGN file
 PgnErrors=PGN parsing errors

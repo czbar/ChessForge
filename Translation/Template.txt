@@ -290,6 +290,9 @@ ECO=
 #english: Elo=Elo
 Elo=
 
+#description: Best move
+#english: BestMove=best
+BestMove=
 
 #description: Game Header
 #english: GameHeader=Game Header
@@ -2972,8 +2975,8 @@ TooltipSideToMove=
 #english: TooltipWorkbookVersion=To increment version select File->Backup Version
 TooltipWorkbookVersion=
 
-#description: Tooltip for engine blunder detection
-#english: TooltipEngineBlunderDetect=Assessed as a blunder by the engine
+#description: Tooltip for engine assessment
+#english: TooltipEngineBlunderDetect=Assessed by the engine
 TooltipEngineBlunderDetect=
 
 #description: Errors encountered while parsing a PGN file

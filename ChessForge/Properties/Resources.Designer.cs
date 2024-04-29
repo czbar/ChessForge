@@ -251,6 +251,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to best.
+        /// </summary>
+        public static string BestMove {
+            get {
+                return ResourceManager.GetString("BestMove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Black.
         /// </summary>
         public static string Black {
@@ -6723,7 +6732,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Assessed as a blunder by the engine.
+        ///   Looks up a localized string similar to Assessed by the engine.
         /// </summary>
         public static string TooltipEngineBlunderDetect {
             get {
