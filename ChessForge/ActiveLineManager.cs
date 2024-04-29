@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -137,8 +138,30 @@ namespace ChessForge
         /// <param name="line"></param>
         public void SetNodeList(ObservableCollection<TreeNode> line)
         {
-            Line.SetNodeList(line);
-            _dgActiveLine.ItemsSource = Line.MoveList;
+            bool update = true;
+
+            // do not reassign ItemSource if no change.
+            // TODO: in the future we would want to avoid resetting the source
+            // even if the new line is longer because we added a move.
+            if (line != null && Line.NodeList != null && Line.NodeList.Count == line.Count)
+            {
+                update = false;
+                for (int i = 0; i < line.Count; i++)
+                {
+                    if (line[i] != Line.NodeList[i])
+                    {
+                        update = true;
+                        break;
+                    }
+                }
+            }
+
+            if (update)
+            {
+                Line.SetNodeList(line);
+                _dgActiveLine.ItemsSource = Line.MoveList;
+            }
+
             if (Configuration.DebugLevel > 0)
             {
                 if (WorkbookManager.ActiveTab == TabViewType.EXERCISE)
