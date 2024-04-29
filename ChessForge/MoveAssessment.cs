@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ChessPosition.Utils
 {
@@ -80,6 +79,28 @@ namespace ChessPosition.Utils
             }
 
             return ass;
+        }
+
+        /// <summary>
+        /// Builds the string with a symbol representing the assessment value.
+        /// </summary>
+        /// <param name="ass"></param>
+        /// <returns></returns>
+        public static string AssesssmentSymbol(uint ass)
+        {
+            string symbol = "";
+
+            switch ((ChfCommands.Assessment)ass)
+            {
+                case ChfCommands.Assessment.BLUNDER:
+                    symbol = "??";
+                    break;
+                case ChfCommands.Assessment.MISTAKE:
+                    symbol = "?";
+                    break;
+            }
+
+            return symbol;
         }
 
         /// <summary>
