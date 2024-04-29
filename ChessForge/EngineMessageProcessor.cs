@@ -367,10 +367,10 @@ namespace ChessForge
 
                         // assess the move
                         uint assess = (uint)MoveAssessment.GetMoveAssessment(nd);
-                        if (assess != nd.Assessment || nd.Parent.BestResponse != bestMoveAlg)
+                        if (assess != nd.Assessment || nd.BestResponse != bestMoveAlg)
                         {
                             nd.Assessment = assess;
-                            nd.Parent.BestResponse = bestMoveAlg;
+                            nd.BestResponse = bestMoveAlg;
                             _mainWin.Dispatcher.Invoke(() =>
                             {
                                 _mainWin.ActiveTreeView?.InsertOrUpdateCommentRun(nd);
