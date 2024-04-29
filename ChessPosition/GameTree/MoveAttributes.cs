@@ -39,10 +39,11 @@ namespace GameTree
         /// <param name="nodeId"></param>
         /// <param name="engineEval"></param>
         /// <param name="assessment"></param>
-        public MoveAttributes(int nodeId, string engineEval, uint assessment)
+        public MoveAttributes(int nodeId, string engineEval, uint assessment, string bestResponse)
         {
             NodeId = nodeId;
             EngineEval = engineEval;
+            BestResponse = bestResponse;
             Assessment = assessment;
         }
 
@@ -70,6 +71,11 @@ namespace GameTree
         /// Engine Evaluation.
         /// </summary>
         public string EngineEval;
+
+        /// <summary>
+        /// Best response.
+        /// </summary>
+        public string BestResponse;
 
         /// <summary>
         /// Coded move assessment (e.g. BLUNDER).
