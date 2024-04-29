@@ -613,6 +613,8 @@ namespace ChessPosition
                 if (nd != null)
                 {
                     nd.SetEngineEvaluation(attrs.EngineEval);
+                    nd.BestResponse = attrs.BestResponse;
+                    nd.Assessment = attrs.Assessment;
                 }
             }
         }
@@ -829,7 +831,7 @@ namespace ChessPosition
             {
                 if (!string.IsNullOrEmpty(nd.EngineEvaluation) || nd.Assessment > 0)
                 {
-                    lst.Add(new MoveAttributes(nd.NodeId, nd.EngineEvaluation, nd.Assessment));
+                    lst.Add(new MoveAttributes(nd.NodeId, nd.EngineEvaluation, nd.Assessment, nd.BestResponse));
                 }
             }
 
