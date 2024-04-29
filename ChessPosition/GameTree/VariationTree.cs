@@ -294,6 +294,11 @@ namespace GameTree
                     nd.SetEngineEvaluation(string.Empty);
                 }
                 nd.Assessment = 0;
+
+                if (!string.IsNullOrEmpty(nd.BestResponse))
+                {
+                    nd.BestResponse= string.Empty;
+                }
             }
         }
 
