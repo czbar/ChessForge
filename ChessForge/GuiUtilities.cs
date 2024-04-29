@@ -8,6 +8,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using ChessPosition;
+using EngineService;
 using GameTree;
 
 namespace ChessForge
@@ -17,6 +18,29 @@ namespace ChessForge
     /// </summary>
     public class GuiUtilities
     {
+        /// <summary>
+        /// Extracts engine notation of the move
+        /// from the "bestmove" message.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public static string GetMoveFromBestMoveMessage(string message)
+        {
+            if (string.IsNullOrEmpty(message))
+            {
+                return "";
+            }
+
+            string engMove = "";
+            string[] tokens = message.Split(' ');
+            if (tokens.Length > 1 && tokens[0] == UciCommands.ENG_BEST_MOVE)
+            {
+                engMove = tokens[1];
+            }
+
+            return engMove;
+        }
+
         /// <summary>
         /// Hides the EngineLines and EvalChart boxes, shows the Comment box
         /// and returns the original status of the first two.
