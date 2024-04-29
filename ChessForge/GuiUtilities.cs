@@ -8,6 +8,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using ChessPosition;
+using ChessPosition.Utils;
 using EngineService;
 using GameTree;
 
@@ -18,6 +19,24 @@ namespace ChessForge
     /// </summary>
     public class GuiUtilities
     {
+        /// <summary>
+        /// Builds text for the engine's error assessment.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        public static string BuildAssessmentComment(TreeNode nd)
+        {
+            StringBuilder sb = new StringBuilder(" [" + MoveAssessment.AssesssmentSymbol(nd.Assessment));
+            if (nd.Parent != null && !string.IsNullOrEmpty(nd.Parent.BestResponse))
+            {
+                sb.Append(" " + Properties.Resources.BestMove + ": ");
+                sb.Append(MoveUtils.BuildStandaloneMoveText(nd.Parent.BestResponse, nd.MoveNumber, nd.Parent.ColorToMove));
+            }
+            sb.Append("] ");
+            
+            return sb.ToString();
+        }
+
         /// <summary>
         /// Extracts engine notation of the move
         /// from the "bestmove" message.
