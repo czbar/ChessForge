@@ -714,14 +714,9 @@ Chessboards=Szachownice
 #english: EngineOptions=Engine Options
 EngineOptions=Opcje Silnika
 
-#description: Blunder detection options
-#english: BlunderDetectionOptions=Blunder Detection
-BlunderDetectionOptions=Detekcja Błędów
-
 #description: Opens a dialog allowing the user to select chess engine executable file
 #english: AnalysisEngine=Analysis Engine
 AnalysisEngine=Wybór Silnika
-
 
 #description: Engine Options dialog title
 #english: DlgTitleEngineOptions=Engine Options
@@ -1069,6 +1064,39 @@ EgSelectionAccuracyLabel=Dokładność wyboru ruchów wynosi
 #english: EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
 EgCentipawnAccuracy=maksymalne odchylenie od najlepszego ruchu wynosi
 
+
+#######################################
+#
+# Header: DIALOG Bad Move Options
+#
+
+#description: Blunder Detection dialog title
+#english: DlgBlunderDetection=Bad Move Detection
+DlgBlunderDetection=Detekcja Słabych Posunięć
+
+#description: Bad move detection options
+#english: BlunderDetectionOptions=Bad Move Detection
+BlunderDetectionOptions=Detekcja Słabych Posunięć
+
+#description: Blunder
+#english: Blunder=Blunder
+Blunder=Błąd
+
+#description: Mistake
+#english: Mistake=Mistake
+Mistake=Pomyłka
+
+#description: Drop in eval triggering detection
+#english: EvalDropTrigger=Evaluation Drop (cp)
+EvalDropTrigger=Pogorszenie Oceny (cp)
+
+#description: Threshold beyond which we don't detect
+#english: StopDetectLevel=No Detection Beyond (cp)
+StopDetectLevel=Poziom poza detekcją (cp)
+
+#description: Enable detection
+#english: EnableDetection=Enable Detection
+EnableDetection=Włącz detekcję
 
 #######################################
 #
@@ -1625,23 +1653,6 @@ EngineHashSize=Tablica mieszająca (MB)
 #english: EstimatedEvalTime=Estimated evaluation time
 EstimatedEvalTime=Szacowany czas oceny
 
-
-#######################################
-#
-# Header: DIALOG Blunder Detection
-#
-
-#description: Blunder Detection dialog title
-#english: DlgBlunderDetection=Blunder Detection
-DlgBlunderDetection=Detekcja Błędów
-
-#description: Drop in eval triggering detection
-#english: EvalDropTrigger=Evaluation Drop (cp)
-EvalDropTrigger=Pogorszenie Oceny (cp)
-
-#description: Threshold beyond which we don't detect
-#english: StopDetectLevel=No Detection Beyond (cp)
-StopDetectLevel=Poziom poza detekcją (cp)
 
 
 #######################################

@@ -305,7 +305,16 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Blunder Detection.
+        ///   Looks up a localized string similar to Blunder.
+        /// </summary>
+        public static string Blunder {
+            get {
+                return ResourceManager.GetString("Blunder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bad Move Detection.
         /// </summary>
         public static string BlunderDetectionOptions {
             get {
@@ -1673,7 +1682,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Blunder Detection.
+        ///   Looks up a localized string similar to Bad Move Detection.
         /// </summary>
         public static string DlgBlunderDetection {
             get {
@@ -2101,6 +2110,15 @@ namespace ChessForge.Properties {
         public static string EmptyGameTextFromLichess {
             get {
                 return ResourceManager.GetString("EmptyGameTextFromLichess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable Detection.
+        /// </summary>
+        public static string EnableDetection {
+            get {
+                return ResourceManager.GetString("EnableDetection", resourceCulture);
             }
         }
         
@@ -4090,6 +4108,15 @@ namespace ChessForge.Properties {
         public static string Minutes {
             get {
                 return ResourceManager.GetString("Minutes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mistake.
+        /// </summary>
+        public static string Mistake {
+            get {
+                return ResourceManager.GetString("Mistake", resourceCulture);
             }
         }
         

@@ -606,9 +606,6 @@
   <data name="EngineOptions" xml:space="preserve">
     <value>Opcje Silnika</value>
   </data>
-  <data name="BlunderDetectionOptions" xml:space="preserve">
-    <value>Detekcja Błędów</value>
-  </data>
   <data name="AnalysisEngine" xml:space="preserve">
     <value>Wybór Silnika</value>
   </data>
@@ -830,6 +827,27 @@
   </data>
   <data name="EgCentipawnAccuracy" xml:space="preserve">
     <value>maksymalne odchylenie od najlepszego ruchu wynosi</value>
+  </data>
+  <data name="DlgBlunderDetection" xml:space="preserve">
+    <value>Detekcja Słabych Posunięć</value>
+  </data>
+  <data name="BlunderDetectionOptions" xml:space="preserve">
+    <value>Detekcja Słabych Posunięć</value>
+  </data>
+  <data name="Blunder" xml:space="preserve">
+    <value>Błąd</value>
+  </data>
+  <data name="Mistake" xml:space="preserve">
+    <value>Pomyłka</value>
+  </data>
+  <data name="EvalDropTrigger" xml:space="preserve">
+    <value>Pogorszenie Oceny (cp)</value>
+  </data>
+  <data name="StopDetectLevel" xml:space="preserve">
+    <value>Poziom poza detekcją (cp)</value>
+  </data>
+  <data name="EnableDetection" xml:space="preserve">
+    <value>Włącz detekcję</value>
   </data>
   <data name="ReorderLines" xml:space="preserve">
     <value>Kolejność Wariantów</value>
@@ -1166,15 +1184,6 @@
   </data>
   <data name="EstimatedEvalTime" xml:space="preserve">
     <value>Szacowany czas oceny</value>
-  </data>
-  <data name="DlgBlunderDetection" xml:space="preserve">
-    <value>Detekcja Błędów</value>
-  </data>
-  <data name="EvalDropTrigger" xml:space="preserve">
-    <value>Pogorszenie Oceny (cp)</value>
-  </data>
-  <data name="StopDetectLevel" xml:space="preserve">
-    <value>Poziom poza detekcją (cp)</value>
   </data>
   <data name="Line" xml:space="preserve">
     <value>Wariant</value>

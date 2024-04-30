@@ -714,14 +714,9 @@ Chessboards=
 #english: EngineOptions=Engine Options
 EngineOptions=
 
-#description: Blunder detection options
-#english: BlunderDetectionOptions=Blunder Detection
-BlunderDetectionOptions=
-
 #description: Opens a dialog allowing the user to select chess engine executable file
 #english: AnalysisEngine=Analysis Engine
 AnalysisEngine=
-
 
 #description: Engine Options dialog title
 #english: DlgTitleEngineOptions=Engine Options
@@ -1069,6 +1064,39 @@ EgSelectionAccuracyLabel=
 #english: EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
 EgCentipawnAccuracy=
 
+
+#######################################
+#
+# Header: DIALOG Bad Move Options
+#
+
+#description: Blunder Detection dialog title
+#english: DlgBlunderDetection=Bad Move Detection
+DlgBlunderDetection=
+
+#description: Bad move detection options
+#english: BlunderDetectionOptions=Bad Move Detection
+BlunderDetectionOptions=
+
+#description: Blunder
+#english: Blunder=Blunder
+Blunder=
+
+#description: Mistake
+#english: Mistake=Mistake
+Mistake=
+
+#description: Drop in eval triggering detection
+#english: EvalDropTrigger=Evaluation Drop (cp)
+EvalDropTrigger=
+
+#description: Threshold beyond which we don't detect
+#english: StopDetectLevel=No Detection Beyond (cp)
+StopDetectLevel=
+
+#description: Enable detection
+#english: EnableDetection=Enable Detection
+EnableDetection=
 
 #######################################
 #
@@ -1625,23 +1653,6 @@ EngineHashSize=
 #english: EstimatedEvalTime=Estimated evaluation time
 EstimatedEvalTime=
 
-
-#######################################
-#
-# Header: DIALOG Blunder Detection
-#
-
-#description: Blunder Detection dialog title
-#english: DlgBlunderDetection=Blunder Detection
-DlgBlunderDetection=
-
-#description: Drop in eval triggering detection
-#english: EvalDropTrigger=Evaluation Drop (cp)
-EvalDropTrigger=
-
-#description: Threshold beyond which we don't detect
-#english: StopDetectLevel=No Detection Beyond (cp)
-StopDetectLevel=
 
 
 #######################################

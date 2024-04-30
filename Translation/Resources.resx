@@ -606,9 +606,6 @@
   <data name="EngineOptions" xml:space="preserve">
     <value>Engine Options</value>
   </data>
-  <data name="BlunderDetectionOptions" xml:space="preserve">
-    <value>Blunder Detection</value>
-  </data>
   <data name="AnalysisEngine" xml:space="preserve">
     <value>Analysis Engine</value>
   </data>
@@ -830,6 +827,27 @@
   </data>
   <data name="EgCentipawnAccuracy" xml:space="preserve">
     <value>max allowed centipawn deviation from the best move is</value>
+  </data>
+  <data name="DlgBlunderDetection" xml:space="preserve">
+    <value>Bad Move Detection</value>
+  </data>
+  <data name="BlunderDetectionOptions" xml:space="preserve">
+    <value>Bad Move Detection</value>
+  </data>
+  <data name="Blunder" xml:space="preserve">
+    <value>Blunder</value>
+  </data>
+  <data name="Mistake" xml:space="preserve">
+    <value>Mistake</value>
+  </data>
+  <data name="EvalDropTrigger" xml:space="preserve">
+    <value>Evaluation Drop (cp)</value>
+  </data>
+  <data name="StopDetectLevel" xml:space="preserve">
+    <value>No Detection Beyond (cp)</value>
+  </data>
+  <data name="EnableDetection" xml:space="preserve">
+    <value>Enable Detection</value>
   </data>
   <data name="ReorderLines" xml:space="preserve">
     <value>Reorder Lines</value>
@@ -1166,15 +1184,6 @@
   </data>
   <data name="EstimatedEvalTime" xml:space="preserve">
     <value>Estimated evaluation time</value>
-  </data>
-  <data name="DlgBlunderDetection" xml:space="preserve">
-    <value>Blunder Detection</value>
-  </data>
-  <data name="EvalDropTrigger" xml:space="preserve">
-    <value>Evaluation Drop (cp)</value>
-  </data>
-  <data name="StopDetectLevel" xml:space="preserve">
-    <value>No Detection Beyond (cp)</value>
   </data>
   <data name="Line" xml:space="preserve">
     <value>Line</value>
