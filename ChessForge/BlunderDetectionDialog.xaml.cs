@@ -25,6 +25,8 @@ namespace ChessForge
 
             UiTbMistakeMinDiff.Text = Configuration.MistakeDetectEvalDrop.ToString();
             UiTbMistakeMaxThresh.Text = Configuration.MistakeNoDetectThresh.ToString();
+
+            UiCbEnableDetection.IsChecked = Configuration.EnableBadMoveDetection;
         }
 
         /// <summary>
@@ -51,6 +53,8 @@ namespace ChessForge
             {
                 Configuration.MistakeNoDetectThresh = (uint)Math.Abs(val);
             }
+
+            Configuration.EnableBadMoveDetection = UiCbEnableDetection.IsChecked == true;
         }
 
         /// <summary>

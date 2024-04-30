@@ -6,7 +6,7 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        Title="{x:Static p:Resources.DlgBlunderDetection}" Height="300" Width="380">
+        Title="{x:Static p:Resources.DlgBlunderDetection}" Height="329" Width="380">
     <Grid>
         <GroupBox Margin="15,10,15,0" Height="85" VerticalAlignment="Top" Header="{x:Static p:Resources.Blunder}">
             <Canvas>
@@ -24,8 +24,10 @@
                 <TextBox x:Name="UiTbMistakeMaxThresh" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" HorizontalContentAlignment="Center" Width="40" Canvas.Left="250" Canvas.Top="35"/>
             </Canvas>
         </GroupBox>
-        <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Ok}" IsDefault="True" HorizontalAlignment="Center" Margin="-230,216,0,0" VerticalAlignment="Top" Width="100" Click="UiBtnOk_Click" />
-        <Button x:Name="UiBtnCancel" Content="{x:Static p:Resources.Cancel}" IsCancel="True" HorizontalAlignment="Center" Margin="0,216,0,0" VerticalAlignment="Top" Width="100" Click="UiBtnCancel_Click"/>
-        <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Center" Margin="230,216,0,0" VerticalAlignment="Top" Width="100" Click="UiBtnHelp_Click"/>
+        <CheckBox x:Name="UiCbEnableDetection" Content="{x:Static p:Resources.EnableDetection}" HorizontalAlignment="Left" Margin="20,210,0,0" VerticalAlignment="Top"/>
+
+        <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Ok}" IsDefault="True" HorizontalAlignment="Center" Margin="-230,245,0,0" VerticalAlignment="Top" Width="100" Click="UiBtnOk_Click" />
+        <Button x:Name="UiBtnCancel" Content="{x:Static p:Resources.Cancel}" IsCancel="True" HorizontalAlignment="Center" Margin="0,245,0,0" VerticalAlignment="Top" Width="100" Click="UiBtnCancel_Click"/>
+        <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Center" Margin="230,245,0,0" VerticalAlignment="Top" Width="100" Click="UiBtnHelp_Click"/>
     </Grid>
 </Window>
