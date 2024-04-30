@@ -84,9 +84,13 @@ namespace ChessPosition.Utils
                 {
                     if (double.TryParse(nd.EngineEvaluation, out double evalChild))
                     {
-                        if (IsBlunder(evalParent, evalChild, nd.Parent.ColorToMove))
+                        if (IsBlunder(evalParent, evalChild, nd.Parent.ColorToMove, true))
                         {
                             ass = ChfCommands.Assessment.BLUNDER;
+                        }
+                        else if (IsBlunder(evalParent, evalChild, nd.Parent.ColorToMove, false))
+                        {
+                            ass = ChfCommands.Assessment.MISTAKE;
                         }
                     }
                 }
@@ -118,21 +122,37 @@ namespace ChessPosition.Utils
         }
 
         /// <summary>
+        /// Corrects the configuration values if they are out of acceptable range.
+        /// None of the values should be below 100 cp,
+        /// Values for mistakes cannot be greater than those for blunders.
+        /// </summary>
+        public static void AdjustConfiguration()
+        {
+            Configuration.BlunderDetectEvalDrop = Math.Max(Configuration.BlunderDetectEvalDrop, 100);
+            Configuration.BlunderNoDetectThresh = Math.Max(Configuration.BlunderNoDetectThresh, 100);
+
+            Configuration.MistakeDetectEvalDrop = Math.Max(Configuration.MistakeDetectEvalDrop, 100);
+            Configuration.MistakeNoDetectThresh = Math.Max(Configuration.MistakeNoDetectThresh, 100);
+
+            Configuration.MistakeDetectEvalDrop = Math.Min(Configuration.BlunderDetectEvalDrop, Configuration.MistakeDetectEvalDrop);
+            Configuration.MistakeNoDetectThresh = Math.Min(Configuration.BlunderNoDetectThresh, Configuration.MistakeNoDetectThresh);
+        }
+
+        /// <summary>
         /// Sets up the values to use in detections.
         /// </summary>
         private static void Initialize()
         {
-            Initialized = true;
+            AdjustConfiguration();
 
             // set per config with sanity checks
-            BLUNDER_EVAL_DETECTION_DIFF = Math.Max(((double)Configuration.BlunderDetectEvalDrop) / 100, 1);
-            IGNORE_BLUNDER_THRESHOLD = Math.Max(((double)Configuration.BlunderNoDetectThresh) / 100, 1);
+            BLUNDER_EVAL_DETECTION_DIFF = ((double)Configuration.BlunderDetectEvalDrop) / 100;
+            IGNORE_BLUNDER_THRESHOLD = ((double)Configuration.BlunderNoDetectThresh) / 100;
 
-            MISTAKE_EVAL_DETECTION_DIFF = Math.Max(((double)Configuration.MistakeDetectEvalDrop) / 100, 1);
-            IGNORE_MISTAKE_THRESHOLD = Math.Max(((double)Configuration.MistakeNoDetectThresh) / 100, 1);
+            MISTAKE_EVAL_DETECTION_DIFF = ((double)Configuration.MistakeDetectEvalDrop) / 100;
+            IGNORE_MISTAKE_THRESHOLD = ((double)Configuration.MistakeNoDetectThresh) / 100;
 
-            MISTAKE_EVAL_DETECTION_DIFF = Math.Min(BLUNDER_EVAL_DETECTION_DIFF, MISTAKE_EVAL_DETECTION_DIFF);
-            IGNORE_MISTAKE_THRESHOLD = Math.Min(IGNORE_BLUNDER_THRESHOLD, IGNORE_MISTAKE_THRESHOLD);
+            Initialized = true;
         }
 
         /// <summary>
@@ -200,20 +220,23 @@ namespace ChessPosition.Utils
         /// <param name="prevEval"></param>
         /// <param name="currEval"></param>
         /// <returns></returns>
-        private static bool IsBlunder(double prevEval, double currEval, PieceColor colorToMove)
+        private static bool IsBlunder(double prevEval, double currEval, PieceColor colorToMove, bool blunderOnly)
         {
             bool res = false;
 
+            double evalDiff = blunderOnly ? BLUNDER_EVAL_DETECTION_DIFF : MISTAKE_EVAL_DETECTION_DIFF;
+            double ignoreLevel = blunderOnly ? IGNORE_BLUNDER_THRESHOLD : IGNORE_MISTAKE_THRESHOLD;
+
             if (colorToMove == PieceColor.White)
             {
-                if ((currEval - prevEval < -BLUNDER_EVAL_DETECTION_DIFF) && ((Math.Abs(prevEval) <= IGNORE_BLUNDER_THRESHOLD) || Math.Abs(currEval) <= IGNORE_BLUNDER_THRESHOLD))
+                if ((currEval - prevEval < -evalDiff) && ((Math.Abs(prevEval) <= ignoreLevel) || Math.Abs(currEval) <= ignoreLevel))
                 {
                     res = true;
                 }
             }
             else
             {
-                if ((currEval - prevEval > BLUNDER_EVAL_DETECTION_DIFF) && ((Math.Abs(prevEval) <= IGNORE_BLUNDER_THRESHOLD) || Math.Abs(currEval) <= IGNORE_BLUNDER_THRESHOLD))
+                if ((currEval - prevEval > evalDiff) && ((Math.Abs(prevEval) <= ignoreLevel) || Math.Abs(currEval) <= ignoreLevel))
                 {
                     res = true;
                 }
