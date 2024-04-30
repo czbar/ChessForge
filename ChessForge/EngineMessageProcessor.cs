@@ -365,16 +365,19 @@ namespace ChessForge
                             bestMoveAlg = "";
                         }
 
-                        // assess the move
-                        uint assess = (uint)MoveAssessment.GetMoveAssessment(nd);
-                        if (assess != nd.Assessment || nd.BestResponse != bestMoveAlg)
+                        if (Configuration.EnableBadMoveDetection)
                         {
-                            nd.Assessment = assess;
-                            nd.BestResponse = bestMoveAlg;
-                            _mainWin.Dispatcher.Invoke(() =>
+                            // assess the move
+                            uint assess = (uint)MoveAssessment.GetMoveAssessment(nd);
+                            if (assess != nd.Assessment || nd.BestResponse != bestMoveAlg)
                             {
-                                _mainWin.ActiveTreeView?.InsertOrUpdateCommentRun(nd);
-                            });
+                                nd.Assessment = assess;
+                                nd.BestResponse = bestMoveAlg;
+                                _mainWin.Dispatcher.Invoke(() =>
+                                {
+                                    _mainWin.ActiveTreeView?.InsertOrUpdateCommentRun(nd);
+                                });
+                            }
                         }
                     }
 
