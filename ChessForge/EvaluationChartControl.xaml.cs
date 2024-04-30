@@ -70,9 +70,6 @@ namespace ChessForge
         // label displaying the move currently selected in the chart.
         private Label _lblMove = new Label();
 
-        // fixed position evaluation label
-        private Label _lblFixedPosEval = new Label();
-
         // evaluation label in the white (top) half 
         private Label _lblWhiteEval = new Label();
 
@@ -127,7 +124,6 @@ namespace ChessForge
             ConfigureZoomButtons();
             ConfigureTitleLabel();
             ConfigureMoveLabel();
-            ConfigureFixedPositionEvaluationLabel();
 
             ConfigureVerticalLine();
             ConfigureEvaluationLabels();
@@ -324,21 +320,6 @@ namespace ChessForge
             Canvas.SetTop(_lblMove, 0);
 
             Canvas.SetZIndex(_lblMove, _zIndexMoveLabel);
-        }
-
-        /// <summary>
-        /// Creates the move label.
-        /// </summary>
-        private void ConfigureFixedPositionEvaluationLabel()
-        {
-            _lblFixedPosEval.Background = Brushes.Transparent;
-            _lblFixedPosEval.FontSize = _lblFixedPosEval.FontSize - 2;
-
-            UiCnvWhite.Children.Add(_lblFixedPosEval);
-            Canvas.SetRight(_lblFixedPosEval, 5);
-            Canvas.SetTop(_lblFixedPosEval, 18);
-
-            Canvas.SetZIndex(_lblFixedPosEval, _zFixedPosEvalLabel);
         }
 
         /// <summary>
@@ -728,19 +709,10 @@ namespace ChessForge
             if (nd != null && nd.NodeId != 0)
             {
                 _lblMove.Content = MoveUtils.BuildSingleMoveText(nd, true, false, 0);
-                if (!string.IsNullOrEmpty(nd.EngineEvaluation))
-                {
-                    _lblFixedPosEval.Content = nd.EngineEvaluation;
-                }
-                else
-                {
-                    _lblFixedPosEval.Content = "";
-                }
             }
             else
             {
                 _lblMove.Content = "";
-                _lblFixedPosEval.Content = "";
             }
         }
 
