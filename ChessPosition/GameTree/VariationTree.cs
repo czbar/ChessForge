@@ -294,6 +294,11 @@ namespace GameTree
                     nd.SetEngineEvaluation(string.Empty);
                 }
                 nd.Assessment = 0;
+
+                if (!string.IsNullOrEmpty(nd.BestResponse))
+                {
+                    nd.BestResponse= string.Empty;
+                }
             }
         }
 
@@ -505,6 +510,12 @@ namespace GameTree
                             {
                                 nd.Assessment = ass;
                             }
+                        }
+                        break;
+                    case ChfCommands.Command.BEST_RESPONSE:
+                        if (tokens.Length > 1)
+                        {
+                            nd.BestResponse = tokens[1];
                         }
                         break;
                     case ChfCommands.Command.COMMENT_BEFORE_MOVE:
@@ -1578,6 +1589,8 @@ namespace GameTree
                 nd.SetNags(dummyNode.Nags);
                 nd.Comment = dummyNode.Comment;
                 nd.QuizPoints = dummyNode.QuizPoints;
+                nd.Assessment = dummyNode.Assessment;
+                nd.BestResponse = dummyNode.BestResponse;
             }
             catch
             {

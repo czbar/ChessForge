@@ -12,6 +12,7 @@ using System.Reflection;
 using WebAccess;
 using ChessForge.Properties;
 using static ChessForge.WorkbookOperation;
+using System.Text;
 
 namespace ChessForge
 {
@@ -539,12 +540,14 @@ namespace ChessForge
         /// </summary>
         public static void UpdateAppTitleBar()
         {
-            string titleToShow = "";
+            StringBuilder sb = new StringBuilder(_mainWin.APP_NAME + " - ");
             if (Workbook != null)
             {
-                titleToShow = string.IsNullOrEmpty(WorkbookFilePath) ? Workbook.Title : Path.GetFileName(WorkbookFilePath);
+                string titleToShow = string.IsNullOrEmpty(WorkbookFilePath) ? Workbook.Title : Path.GetFileName(WorkbookFilePath);
+                sb.Append(titleToShow);
+                sb.Append(" " + Properties.Resources.VersionAbbr + " " + Workbook.Version.ToString());
             }
-            _mainWin.Title = _mainWin.APP_NAME + " - " + titleToShow;
+            _mainWin.Title = sb.ToString();
         }
 
 
@@ -694,12 +697,13 @@ namespace ChessForge
             tree.ContentType = GameData.ContentType.MODEL_GAME;
             tree.Header.SetHeaderValue(PgnHeaders.KEY_LICHESS_ID, lichessGameId);
             Article article = chapter.AddModelGame(tree);
+            int articleIndex = chapter.GetModelGameCount() - 1;
 
             if (article != null)
             {
                 added = true;
 
-                WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.CREATE_ARTICLE, chapter, article);
+                WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.CREATE_ARTICLE, chapter, article, articleIndex);
                 WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
 
                 chapter.ActiveModelGameIndex = chapter.GetModelGameCount() - 1;

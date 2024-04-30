@@ -87,6 +87,7 @@ namespace ChessForge
                                     }
                                     ali.StemLineText = MoveUtils.BuildStemText(node, moveNumberOffset);
                                     ali.TailLineText = MoveUtils.BuildTailText(node, moveNumberOffset, out ali.TailLinePlyCount);
+                                    ali.IsTailLineMain = node.IsMainLine();
                                     ali.StemLine = TreeUtils.GetStemLine(node);
                                     ali.TailLine = TreeUtils.GetTailLine(node);
                                     ali.IsSelected = true;
@@ -122,6 +123,7 @@ namespace ChessForge
                                     }
                                     ali.StemLineText = MoveUtils.BuildStemText(node, moveNumberOffset);
                                     ali.TailLineText = MoveUtils.BuildTailText(node, moveNumberOffset, out ali.TailLinePlyCount);
+                                    ali.IsTailLineMain = node.IsMainLine();
                                     ali.StemLine = TreeUtils.GetStemLine(node);
                                     ali.TailLine = TreeUtils.GetTailLine(node);
                                     ali.IsSelected = true;

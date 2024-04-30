@@ -85,7 +85,7 @@ namespace ChessForge
                 uint moveNumberOffset = 0;
                 if (AppState.ActiveVariationTree != null)
                 {
-                    moveNumberOffset= AppState.ActiveVariationTree.MoveNumberOffset;
+                    moveNumberOffset = AppState.ActiveVariationTree.MoveNumberOffset;
                 }
                 AddNewParagraphToDoc("bold_prompt", MoveUtils.BuildSingleMoveText(nd, true, false, moveNumberOffset));
                 if (AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
@@ -140,12 +140,28 @@ namespace ChessForge
         /// </summary>
         /// <param name="itemNo"></param>
         /// <param name="itemCount"></param>
-        public void ReadingItems(int itemNo, int itemCount)
+        public void ReadingItems(int itemNo, int itemCount, GameData game = null, long ticks = 0)
         {
             string msg = Properties.Resources.ReadingItems;
             msg = msg.Replace("$0", itemNo.ToString());
             msg = msg.Replace("$1", itemCount.ToString());
-            UserWaitAnnouncement(msg, Brushes.Blue);
+
+            List<string> subLines = null;
+            if (game != null)
+            {
+                TimeSpan ts = TimeSpan.FromTicks(DateTime.Now.Ticks - ticks);
+                if (ts.Seconds > 1)
+                {
+                    subLines = new List<string>();
+                    string typ = GuiUtilities.GetGameDataTypeString(game);
+                    subLines.Add(Properties.Resources.LargeItem + " (" + typ + "): " + GuiUtilities.GetGameDataTitle(game));
+
+                    string tsString = ts.TotalSeconds.ToString("F1");
+                    subLines.Add(Properties.Resources.ProcessingTimeSecs + ": " + tsString);
+                }
+            }
+
+            UserWaitAnnouncement(msg, Brushes.Blue, subLines);
         }
 
         /// <summary>
@@ -436,7 +452,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="txt"></param>
         /// <param name="brush"></param>
-        private void UserWaitAnnouncement(string txt, Brush brush)
+        public void UserWaitAnnouncement(string txt, Brush brush, List<string> subLines = null)
         {
             if (brush == null)
             {
@@ -453,6 +469,19 @@ namespace ChessForge
                 Paragraph para = CreateParagraphWithText("user_wait", txt, false);
                 Document.Blocks.Add(para);
                 para.Foreground = brush;
+
+                if (subLines != null)
+                {
+                    foreach (string line in subLines)
+                    {
+                        Run run = new Run("\n" + line);
+                        run.FontSize = Constants.BASE_FIXED_FONT_SIZE - 2;
+                        run.Foreground = Brushes.Black;
+                        run.FontWeight = FontWeights.Normal;
+
+                        para.Inlines.Add(run);
+                    }
+                }
             });
         }
     }

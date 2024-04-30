@@ -348,6 +348,11 @@ namespace ChessForge
         public List<TreeNode> TailLine;
 
         /// <summary>
+        /// Whether the TailLine is the main line ("game text") of the tree.
+        /// </summary>
+        public bool IsTailLineMain;
+
+        /// <summary>
         /// List of nodes for the main line.
         /// </summary>
         public List<TreeNode> MainLine;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -137,8 +138,30 @@ namespace ChessForge
         /// <param name="line"></param>
         public void SetNodeList(ObservableCollection<TreeNode> line)
         {
-            Line.SetNodeList(line);
-            _dgActiveLine.ItemsSource = Line.MoveList;
+            bool update = true;
+
+            // do not reassign ItemSource if no change.
+            // TODO: in the future we would want to avoid resetting the source
+            // even if the new line is longer because we added a move.
+            if (line != null && Line.NodeList != null && Line.NodeList.Count == line.Count)
+            {
+                update = false;
+                for (int i = 0; i < line.Count; i++)
+                {
+                    if (line[i] != Line.NodeList[i])
+                    {
+                        update = true;
+                        break;
+                    }
+                }
+            }
+
+            if (update)
+            {
+                Line.SetNodeList(line);
+                _dgActiveLine.ItemsSource = Line.MoveList;
+            }
+
             if (Configuration.DebugLevel > 0)
             {
                 if (WorkbookManager.ActiveTab == TabViewType.EXERCISE)
@@ -592,6 +615,43 @@ namespace ChessForge
                         break;
                     case Key.P:
                         _mainWin.PromoteLine();
+                        e.Handled = true;
+                        break;
+                    case Key.E:
+                        bool isEngineOn = _mainWin.UiImgEngineOn.Visibility == System.Windows.Visibility.Visible;
+                        if (isEngineOn)
+                        {
+                            _mainWin.EngineToggleOn_OnPreviewMouseLeftButtonDown(null, null);
+                        }
+                        else
+                        {
+                            _mainWin.EngineToggleOff_OnPreviewMouseLeftButtonDown(null, null);
+                        }
+                        e.Handled = true;
+                        break;
+                    case Key.X:
+                        bool isExplorerOn = _mainWin.UiImgExplorersOn.Visibility == System.Windows.Visibility.Visible;
+                        if (isExplorerOn)
+                        {
+                            _mainWin.ExplorersToggleOn_PreviewMouseDown(null, null);
+                        }
+                        else
+                        {
+                            _mainWin.ExplorersToggleOff_PreviewMouseDown(null, null);
+                        }
+                        e.Handled = true;
+                        break;
+                    case Key.C:
+                        bool isChartOn = _mainWin.UiImgChartOn.Visibility == System.Windows.Visibility.Visible;
+                        if (isChartOn)
+                        {
+                            _mainWin.EvaluationChartToggleOn(null, null);
+                        }
+                        else
+                        {
+                            _mainWin.EvaluationChartToggleOff(null, null);
+                        }
+                        e.Handled = true;
                         break;
                     default:
                         if (HandleKeyDown(e.Key))

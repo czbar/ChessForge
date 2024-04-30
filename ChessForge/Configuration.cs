@@ -142,14 +142,29 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Evaluation drop triggering detection 
+        /// Evaluation drop triggering blunder detection 
         /// </summary>
         public static uint BlunderDetectEvalDrop = 200;
 
         /// <summary>
         /// Threshold beyond which blunders are ignored.
         /// </summary>
-        public static uint BlunderNoDetectThresh = 500;
+        public static uint BlunderNoDetectThresh = 300;
+
+        /// <summary>
+        /// Evaluation drop triggering mistake detection 
+        /// </summary>
+        public static uint MistakeDetectEvalDrop = 100;
+
+        /// <summary>
+        /// Threshold beyond which mistakes are ignored.
+        /// </summary>
+        public static uint MistakeNoDetectThresh = 250;
+
+        /// <summary>
+        /// Whether bad mov detection should be enabled
+        /// </summary>
+        public static bool EnableBadMoveDetection = true;
 
         /// <summary>
         /// Determines the default navigation ("stay here" or Chapters list) 
@@ -538,14 +553,15 @@ namespace ChessForge
         /// Time for the engine to evaluate position in the evaluation mode.
         /// </summary>
         private const string CFG_ENGINE_EVALUATION_TIME = "EngineEvaluationTime";
-        private const string CFG_EVAL_MOVE_RANGE_START = "EvalMoveRangeStart";
-        private const string CFG_EVAL_RANGE_END = "EvalMoveRangeEnd";
         private const string CFG_ENGINE_THREADS = "EngineThreads";
         private const string CFG_ENGINE_HASH_SIZE = "EngineHashSize";
         private const string CFG_ENGINE_MPV = "EngineMpv";
         private const string CFG_VIABLE_MOVE_CP_DIFF = "ViableMoveCpDiff";
         private const string CFG_BLUNDER_DET_EVAL_DROP = "BlunderDetEvalDrop";
         private const string CFG_BLUNDER_NO_DET_THRESH = "BlunderNoDetThresh";
+        private const string CFG_MISTAKE_DET_EVAL_DROP = "MistakeDetEvalDrop";
+        private const string CFG_MISTAKE_NO_DET_THRESH = "MistakeNoDetThresh";
+        private const string CFG_BAD_MOVE_DETECTION = "BadMoveDetection";
 
         private const string CFG_FONT_SIZE_DIFF = "FontSizeDiff";
         private const string CFG_AUTO_SAVE_FREQ = "AutoSaveFrequency";
@@ -725,8 +741,6 @@ namespace ChessForge
 
                 sb.Append(CFG_ENGINE_MOVE_TIME + "=" + EngineMoveTime.ToString() + Environment.NewLine);
                 sb.Append(CFG_ENGINE_EVALUATION_TIME + "=" + EngineEvaluationTime.ToString() + Environment.NewLine);
-                sb.Append(CFG_EVAL_MOVE_RANGE_START + "=" + EvalMoveRangeStart.ToString() + Environment.NewLine);
-                sb.Append(CFG_EVAL_RANGE_END + "=" + EvalMoveRangeEnd.ToString() + Environment.NewLine);
                 sb.Append(CFG_ENGINE_THREADS + "=" + EngineThreads.ToString() + Environment.NewLine);
                 sb.Append(CFG_ENGINE_HASH_SIZE + "=" + EngineHashSize.ToString() + Environment.NewLine);
                 sb.Append(CFG_ENGINE_MPV + "=" + EngineMpv.ToString() + Environment.NewLine);
@@ -737,6 +751,9 @@ namespace ChessForge
                 sb.Append(CFG_VIABLE_MOVE_CP_DIFF + "=" + ViableMoveCpDiff.ToString() + Environment.NewLine);
                 sb.Append(CFG_BLUNDER_DET_EVAL_DROP + "=" + BlunderDetectEvalDrop.ToString() + Environment.NewLine);
                 sb.Append(CFG_BLUNDER_NO_DET_THRESH + "=" + BlunderNoDetectThresh.ToString() + Environment.NewLine);
+                sb.Append(CFG_MISTAKE_DET_EVAL_DROP + "=" + MistakeDetectEvalDrop.ToString() + Environment.NewLine);
+                sb.Append(CFG_MISTAKE_NO_DET_THRESH + "=" + MistakeNoDetectThresh.ToString() + Environment.NewLine);
+                sb.AppendLine(CFG_BAD_MOVE_DETECTION + "=" + (EnableBadMoveDetection ? "1" : "0"));
 
                 sb.Append(CFG_PGN_EXP_BOOKMARKS + "=" + (PgnExportBookmarks ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_PGN_EXP_EVALS + "=" + (PgnExportEvaluations ? "1" : "0") + Environment.NewLine);
@@ -1069,14 +1086,17 @@ namespace ChessForge
                         case CFG_BLUNDER_NO_DET_THRESH:
                             uint.TryParse(value, out BlunderNoDetectThresh);
                             break;
+                        case CFG_MISTAKE_DET_EVAL_DROP:
+                            uint.TryParse(value, out MistakeDetectEvalDrop);
+                            break;
+                        case CFG_MISTAKE_NO_DET_THRESH:
+                            uint.TryParse(value, out MistakeNoDetectThresh);
+                            break;
+                        case CFG_BAD_MOVE_DETECTION:
+                            EnableBadMoveDetection = value != "0" ? true : false;
+                            break;
                         case CFG_ENGINE_EVALUATION_TIME:
                             int.TryParse(value, out _engineEvaluationTime);
-                            break;
-                        case CFG_EVAL_MOVE_RANGE_START:
-                            int.TryParse(value, out _evalMoveRangeStart);
-                            break;
-                        case CFG_EVAL_RANGE_END:
-                            int.TryParse(value, out _evalMoveRangeEnd);
                             break;
                         case CFG_ENGINE_MOVE_TIME:
                             int.TryParse(value, out _engineMoveTime);

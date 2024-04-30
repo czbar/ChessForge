@@ -169,10 +169,6 @@ GameCount=Liczba partii
 #english: ExerciseCount=Number of Exercises 
 ExerciseCount=Liczba ćwiczeń 
 
-#description: A line in a variation tree
-#english: Line=Line
-Line=Wariant
-
 #description: Bookmark
 #english: Bookmark=Bookmark
 Bookmark=Zakładka
@@ -228,6 +224,10 @@ Evaluation=Ocena
 #description: Version
 #english: Version=Version
 Version=Wersja
+
+#description: Version abbreviated
+#english: VersionAbbr=ver.
+VersionAbbr=w.
 
 #description: Chess engine
 #english: ChessEngine=Chess Engine
@@ -290,6 +290,9 @@ ECO=ECO
 #english: Elo=Elo
 Elo=Elo
 
+#description: Best move
+#english: BestMove=best
+BestMove=najlepsze
 
 #description: Game Header
 #english: GameHeader=Game Header
@@ -711,14 +714,9 @@ Chessboards=Szachownice
 #english: EngineOptions=Engine Options
 EngineOptions=Opcje Silnika
 
-#description: Blunder detection options
-#english: BlunderDetectionOptions=Blunder Detection
-BlunderDetectionOptions=Detekcja Błędów
-
 #description: Opens a dialog allowing the user to select chess engine executable file
 #english: AnalysisEngine=Analysis Engine
 AnalysisEngine=Wybór Silnika
-
 
 #description: Engine Options dialog title
 #english: DlgTitleEngineOptions=Engine Options
@@ -1066,6 +1064,39 @@ EgSelectionAccuracyLabel=Dokładność wyboru ruchów wynosi
 #english: EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
 EgCentipawnAccuracy=maksymalne odchylenie od najlepszego ruchu wynosi
 
+
+#######################################
+#
+# Header: DIALOG Bad Move Options
+#
+
+#description: Blunder Detection dialog title
+#english: DlgBlunderDetection=Bad Move Detection
+DlgBlunderDetection=Detekcja Słabych Posunięć
+
+#description: Bad move detection options
+#english: BlunderDetectionOptions=Bad Move Detection
+BlunderDetectionOptions=Detekcja Słabych Posunięć
+
+#description: Blunder
+#english: Blunder=Blunder
+Blunder=Błąd
+
+#description: Mistake
+#english: Mistake=Mistake
+Mistake=Pomyłka
+
+#description: Drop in eval triggering detection
+#english: EvalDropTrigger=Evaluation Drop (cp)
+EvalDropTrigger=Pogorszenie Oceny (cp)
+
+#description: Threshold beyond which we don't detect
+#english: StopDetectLevel=No Detection Beyond (cp)
+StopDetectLevel=Poziom poza detekcją (cp)
+
+#description: Enable detection
+#english: EnableDetection=Enable Detection
+EnableDetection=Włącz detekcję
 
 #######################################
 #
@@ -1623,28 +1654,31 @@ EngineHashSize=Tablica mieszająca (MB)
 EstimatedEvalTime=Szacowany czas oceny
 
 
-#######################################
-#
-# Header: DIALOG Blunder Detection
-#
-
-#description: Blunder Detection dialog title
-#english: DlgBlunderDetection=Blunder Detection
-DlgBlunderDetection=Detekcja Błędów
-
-#description: Drop in eval triggering detection
-#english: EvalDropTrigger=Evaluation Drop (cp)
-EvalDropTrigger=Pogorszenie Oceny (cp)
-
-#description: Threshold beyond which we don't detect
-#english: StopDetectLevel=No Detection Beyond (cp)
-StopDetectLevel=Poziom poza detekcją (cp)
-
 
 #######################################
 #
 # Header: DIALOG Find Identical Positions / Found Games
 #
+
+#description: A line in a variation tree
+#english: Line=Line
+Line=Wariant
+
+#description: Main line
+#english: MainLine=Main Line
+MainLine=Główny wariant
+
+#description: Game text
+#english: GameText=Game Text
+GameText=Tekst partii
+
+#description: Exercise text
+#english: ExerciseText=Exercise Text
+ExerciseText=Tekst ćwiczenia
+
+#description: Side line
+#english: SideLine=Side Line
+SideLine=Boczny wariant
 
 #description: Identical Positions dialog title
 #english: DlgTitleIdenticalPositions=List of Identical Positions
@@ -1964,10 +1998,6 @@ CopyMainLineAfterMove=Skopiuj i wklej główny wariant po
 #description: Copy subtree aftre the selected move.
 #english: CopySubtreeAfterMove=Copy and Paste Variation Tree after
 CopySubtreeAfterMove=Skopiuj i wklej wszystkie warianty po
-
-#description: Main line
-#english: MainLine=Main Line
-MainLine=Główny wariant
 
 #description: The "Next" term
 #english: Next=Next
@@ -2956,9 +2986,9 @@ TooltipSideToMove=Decyduje o pewnych domyślnych ustawieniach
 #english: TooltipWorkbookVersion=To increment version select File->Backup Version
 TooltipWorkbookVersion=Wybierz Plik->Zrób Kopię tej Wersji, by zwiększyć numer wersji
 
-#description: Tooltip for engine blunder detection
-#english: TooltipEngineBlunderDetect=Assessed as a blunder by the engine
-TooltipEngineBlunderDetect=Ocenione przez silnik jako duży błąd
+#description: Tooltip for engine assessment
+#english: TooltipEngineBlunderDetect=Assessed by the engine
+TooltipEngineBlunderDetect=Ocenione przez silnik
 
 #description: Errors encountered while parsing a PGN file
 #english: PgnErrors=PGN parsing errors
@@ -3442,8 +3472,25 @@ ReadingWorkbookFile=Wczytywanie podręcznika...
 ReadingStudyTree=Przetwarzanie drzewa teorii...
 
 #description: Reading items
-#english: ReadingItems=Reading item $0 of $1
-ReadingItems=Wczytywanie elementu $0 z $1
+#english: ReadingItems=Processed items $0 of $1
+ReadingItems=Wczytano elementy $0 z $1
+
+#description: Large items
+#english: LargeItem=Large item
+LargeItem=Duży element
+
+#description: Processing large item
+#english: ProcessLargeItem=Processing large item. Please wait... 
+ProcessLargeItem=Trwa przetwarzanie dużego obiektu. Proszę czekać... 
+
+#description: Preparing large view
+#english: PrepareLargeView=Preparing large view. Please wait... 
+PrepareLargeView=Przygotowywanie dużego widoku. Proszę czekać... 
+
+#description: Processing time in seconds
+#english: ProcessingTimeSecs=Processing time (seconds)
+ProcessingTimeSecs=Czas przetwarzania (sekundy)
+
 
 ##################################
 #

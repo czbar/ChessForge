@@ -356,9 +356,21 @@ namespace ChessForge
         {
             int plyCount = 0;
 
+            string lineName = Properties.Resources.Line;
+            switch (item.ContentType)
+            {
+                case GameData.ContentType.MODEL_GAME:
+                    lineName = item.IsTailLineMain ? Properties.Resources.GameText : Properties.Resources.SideLine;
+                    break;
+                case GameData.ContentType.EXERCISE:
+                    lineName = item.IsTailLineMain ? Properties.Resources.ExerciseText : Properties.Resources.SideLine;
+                    break;
+            }
+
             if (item.TailLine.Count > 0)
             {
-                Run r = new Run(" (" + Properties.Resources.MainLine + ": ");
+                string trailPrefix = " (" + lineName + ": ";
+                Run r = new Run(trailPrefix);
                 r.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff;
                 para.Inlines.Add(r);
             }

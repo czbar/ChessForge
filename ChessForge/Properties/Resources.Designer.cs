@@ -251,6 +251,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to best.
+        /// </summary>
+        public static string BestMove {
+            get {
+                return ResourceManager.GetString("BestMove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Black.
         /// </summary>
         public static string Black {
@@ -296,7 +305,16 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Blunder Detection.
+        ///   Looks up a localized string similar to Blunder.
+        /// </summary>
+        public static string Blunder {
+            get {
+                return ResourceManager.GetString("Blunder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bad Move Detection.
         /// </summary>
         public static string BlunderDetectionOptions {
             get {
@@ -1304,7 +1322,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create Intro for This Chapter.
+        ///   Looks up a localized string similar to Create Intro for this Chapter.
         /// </summary>
         public static string CreateIntro {
             get {
@@ -1664,7 +1682,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Blunder Detection.
+        ///   Looks up a localized string similar to Bad Move Detection.
         /// </summary>
         public static string DlgBlunderDetection {
             get {
@@ -2092,6 +2110,15 @@ namespace ChessForge.Properties {
         public static string EmptyGameTextFromLichess {
             get {
                 return ResourceManager.GetString("EmptyGameTextFromLichess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable Detection.
+        /// </summary>
+        public static string EnableDetection {
+            get {
+                return ResourceManager.GetString("EnableDetection", resourceCulture);
             }
         }
         
@@ -2708,6 +2735,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exercise Text.
+        /// </summary>
+        public static string ExerciseText {
+            get {
+                return ResourceManager.GetString("ExerciseText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exit.
         /// </summary>
         public static string Exit {
@@ -3311,6 +3347,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Game Text.
+        /// </summary>
+        public static string GameText {
+            get {
+                return ResourceManager.GetString("GameText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Game Thumbnails.
         /// </summary>
         public static string GameThumbnails {
@@ -3815,6 +3860,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Large item.
+        /// </summary>
+        public static string LargeItem {
+            get {
+                return ResourceManager.GetString("LargeItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Large Menu Font.
         /// </summary>
         public static string LargeMenuFont {
@@ -4054,6 +4108,15 @@ namespace ChessForge.Properties {
         public static string Minutes {
             get {
                 return ResourceManager.GetString("Minutes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mistake.
+        /// </summary>
+        public static string Mistake {
+            get {
+                return ResourceManager.GetString("Mistake", resourceCulture);
             }
         }
         
@@ -5364,6 +5427,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Preparing large view. Please wait... .
+        /// </summary>
+        public static string PrepareLargeView {
+            get {
+                return ResourceManager.GetString("PrepareLargeView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Preview Exercise.
         /// </summary>
         public static string PreviewExercise {
@@ -5432,6 +5504,24 @@ namespace ChessForge.Properties {
         public static string ProceedAndPaste {
             get {
                 return ResourceManager.GetString("ProceedAndPaste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Processing time (seconds).
+        /// </summary>
+        public static string ProcessingTimeSecs {
+            get {
+                return ResourceManager.GetString("ProcessingTimeSecs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Processing large item. Please wait... .
+        /// </summary>
+        public static string ProcessLargeItem {
+            get {
+                return ResourceManager.GetString("ProcessLargeItem", resourceCulture);
             }
         }
         
@@ -5517,7 +5607,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Reading item $0 of $1.
+        ///   Looks up a localized string similar to Processed items $0 of $1.
         /// </summary>
         public static string ReadingItems {
             get {
@@ -6192,6 +6282,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Side Line.
+        /// </summary>
+        public static string SideLine {
+            get {
+                return ResourceManager.GetString("SideLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Side to Move.
         /// </summary>
         public static string SideToMove {
@@ -6660,7 +6759,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Assessed as a blunder by the engine.
+        ///   Looks up a localized string similar to Assessed by the engine.
         /// </summary>
         public static string TooltipEngineBlunderDetect {
             get {
@@ -7367,6 +7466,15 @@ namespace ChessForge.Properties {
         public static string Version {
             get {
                 return ResourceManager.GetString("Version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ver..
+        /// </summary>
+        public static string VersionAbbr {
+            get {
+                return ResourceManager.GetString("VersionAbbr", resourceCulture);
             }
         }
         

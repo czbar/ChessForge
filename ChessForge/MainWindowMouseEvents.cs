@@ -796,7 +796,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void EvaluationChartToggleOff(object sender, MouseButtonEventArgs e)
+        public void EvaluationChartToggleOff(object sender, MouseButtonEventArgs e)
         {
             Configuration.ShowEvaluationChart = true;
             UiImgChartOff.Visibility = Visibility.Collapsed;
@@ -836,7 +836,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ExplorersToggleOff_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        public void ExplorersToggleOff_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (AppState.CurrentLearningMode != LearningMode.Mode.ENGINE_GAME && AppState.CurrentLearningMode != LearningMode.Mode.TRAINING)
             {
@@ -939,12 +939,15 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void EngineToggleOff_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        public void EngineToggleOff_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (!EngineMessageProcessor.IsEngineAvailable)
             {
                 BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.EngineNotAvailable);
-                e.Handled = true;
+                if (e != null)
+                {
+                    e.Handled = true;
+                }
                 return;
             }
 
@@ -954,7 +957,10 @@ namespace ChessForge
                 || AppState.ActiveTab == TabViewType.BOOKMARKS
                 || AppState.ActiveTab == TabViewType.CHAPTERS)
             {
-                e.Handled = true;
+                if (e != null)
+                {
+                    e.Handled = true;
+                }
                 return;
             }
 
@@ -973,7 +979,10 @@ namespace ChessForge
                 UiTrainingView.RequestMoveEvaluation(ActiveVariationTreeId, true);
             }
 
-            e.Handled = true;
+            if (e != null)
+            {
+                e.Handled = true;
+            }
         }
 
         //**************************************************************
@@ -1167,17 +1176,22 @@ namespace ChessForge
             WorkbookLocationNavigator.SaveNewLocation(TabViewType.CHAPTERS);
 
             // we may need to show/hide Intro headers if something has changed
-            // TODO: consider creating it here if null, then we don't need to build it in Initialize() thus improving perf in some scenarios.
-            if (_chaptersView != null)
+            if (_chaptersView == null)
+            {
+                _chaptersView = new ChaptersView(UiRtbChaptersView.Document, this);
+                _chaptersView.IsDirty = true;
+            }
+            else
             {
                 if (_chaptersView.IsDirty)
                 {
                     _chaptersView.BuildFlowDocumentForChaptersView();
                 }
-                _chaptersView.UpdateIntroHeaders();
                 _chaptersView.HighlightActiveChapter();
                 _chaptersView.BringActiveChapterIntoView();
+                _chaptersView.UpdateIntroHeaders();
             }
+
             AppState.ConfigureMenusForManualReview();
             BoardCommentBox.ShowTabHints();
             try

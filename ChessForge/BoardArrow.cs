@@ -69,6 +69,9 @@ namespace ChessForge
         // transform group
         private TransformGroup _transGroup;
 
+        // size of the square divided by the "canonical" (defualt) size
+        private double _squareSizeScale;
+
         /// <summary>
         /// Constructs the arrow object.
         /// Creates necessary objects for drawing and transforming.
@@ -79,6 +82,7 @@ namespace ChessForge
         public BoardArrow(ChessBoard chessboard, SquareCoords start, string color)
         {
             _chessboard = chessboard;
+            _squareSizeScale = _chessboard.SizeScaleFactor;
 
             Color = color.ToLower();
 
@@ -158,6 +162,8 @@ namespace ChessForge
         /// <param name="end"></param>
         public void Draw(SquareCoords end)
         {
+            double heightAdjustment = 12 * _squareSizeScale;
+
             AppState.MainWin.Dispatcher.Invoke(() =>
             {
                 EndSquare = new SquareCoords(end);
@@ -168,7 +174,7 @@ namespace ChessForge
                 _angle = CalculateAngle(_startPoint, _endPoint);
                 _distance = GuiUtilities.CalculateDistance(_startPoint, _endPoint);
 
-                _scaleFactor = (_distance + 1 - (_triangle.Source.Height + 12)) / _stem.Source.Height;
+                _scaleFactor = (_distance + 1 - (_triangle.Source.Height + heightAdjustment)) / _stem.Source.Height;
 
                 CreateTransforms();
 
@@ -223,7 +229,7 @@ namespace ChessForge
         /// <returns></returns>
         private Point CalculateStemStart(Point pStart, Point pEnd)
         {
-            double OFFSET = 20;
+            double OFFSET = 20 * _squareSizeScale;
 
             double percentOfDistance = OFFSET / _distance;
 
@@ -243,7 +249,7 @@ namespace ChessForge
         /// <returns></returns>
         private Point CalculateArrowEnd(Point pStart, Point pEnd)
         {
-            double OFFSET = 3;
+            double OFFSET = 3 * _squareSizeScale;
 
             double percentOfDistance = OFFSET / _distance;
 

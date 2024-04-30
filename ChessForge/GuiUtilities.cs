@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Security.RightsManagement;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,6 +8,8 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using ChessPosition;
+using ChessPosition.Utils;
+using EngineService;
 using GameTree;
 
 namespace ChessForge
@@ -18,6 +19,140 @@ namespace ChessForge
     /// </summary>
     public class GuiUtilities
     {
+        /// <summary>
+        /// Builds text for the engine's error assessment.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        public static string BuildAssessmentComment(TreeNode nd)
+        {
+            StringBuilder sb = new StringBuilder(" [" + MoveAssessment.AssesssmentSymbol(nd.Assessment));
+            if (nd.Parent != null && !string.IsNullOrEmpty(nd.Parent.BestResponse))
+            {
+                sb.Append(" " + Properties.Resources.BestMove + ": ");
+                sb.Append(MoveUtils.BuildStandaloneMoveText(nd.Parent.BestResponse, nd.MoveNumber, nd.Parent.ColorToMove));
+            }
+            sb.Append("] ");
+            
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// Extracts engine notation of the move
+        /// from the "bestmove" message.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public static string GetMoveFromBestMoveMessage(string message)
+        {
+            if (string.IsNullOrEmpty(message))
+            {
+                return "";
+            }
+
+            string engMove = "";
+            string[] tokens = message.Split(' ');
+            if (tokens.Length > 1 && tokens[0] == UciCommands.ENG_BEST_MOVE)
+            {
+                engMove = tokens[1];
+            }
+
+            return engMove;
+        }
+
+        /// <summary>
+        /// Hides the EngineLines and EvalChart boxes, shows the Comment box
+        /// and returns the original status of the first two.
+        /// </summary>
+        /// <param name="engineOrigVisible"></param>
+        /// <param name="chartOrigVisible"></param>
+        public static void HideEngineLinesAndChart(out bool engineOrigVisible, out bool chartOrigVisible)
+        {
+            engineOrigVisible = AppState.MainWin.UiTbEngineLines.Visibility == Visibility.Visible;
+            chartOrigVisible = AppState.MainWin.UiEvalChart.Visibility == Visibility.Visible;
+
+            AppState.MainWin.UiTbEngineLines.Visibility = Visibility.Hidden;
+            AppState.MainWin.UiEvalChart.Visibility = Visibility.Hidden;
+
+            AppState.MainWin.UiRtbBoardComment.Visibility = Visibility.Visible;
+        }
+
+        /// <summary>
+        /// Shows one of the EngineLines, EvalChart and Comment boxes depending
+        /// on the passed arguments.
+        /// </summary>
+        /// <param name="engineVisible"></param>
+        /// <param name="chartVisible"></param>
+        public static void ShowEngineLinesAndChart(bool engineVisible, bool chartVisible)
+        {
+            AppState.MainWin.UiTbEngineLines.Visibility = engineVisible ? Visibility.Visible : Visibility.Hidden;
+            AppState.MainWin.UiEvalChart.Visibility = chartVisible ? Visibility.Visible : Visibility.Hidden;
+            
+            if (engineVisible || chartVisible)
+            {
+                AppState.MainWin.UiRtbBoardComment.Visibility = Visibility.Hidden;
+            }
+        }
+
+        /// <summary>
+        /// Returns the title for the game data suitable for the ContentType   
+        /// </summary>
+        /// <param name="game"></param>
+        /// <returns></returns>
+        public static string GetGameDataTitle(GameData game)
+        {
+            string title = "";
+
+            if (game != null && game.Header != null)
+            {
+                switch (game.GetContentType(false))
+                {
+                    case GameData.ContentType.STUDY_TREE:
+                    case GameData.ContentType.INTRO:
+                        title = game.Header.GetChapterTitle();
+                        break;
+                    case GameData.ContentType.MODEL_GAME:
+                    case GameData.ContentType.EXERCISE:
+                        title = game.GameTitleForList;
+                        break;
+                }
+            }
+
+            return title;
+        }
+
+        /// <summary>
+        /// Returns the resources string for representing 
+        /// the passed content type in the GUI.
+        /// </summary>
+        /// <param name="game"></param>
+        /// <returns></returns>
+        public static string GetGameDataTypeString(GameData game)
+        {
+            string str = "";
+
+            if (game != null)
+            {
+                switch (game.GetContentType(false))
+                {
+                    case GameData.ContentType.STUDY_TREE:
+                        str = Properties.Resources.Study;
+                        break;
+                    case GameData.ContentType.INTRO:
+                        str = Properties.Resources.Intro;
+                        break;
+                    case GameData.ContentType.MODEL_GAME:
+                        str = Properties.Resources.Game;
+                        break;
+                    case GameData.ContentType.EXERCISE:
+                        str = Properties.Resources.Exercise;
+                        break;
+                }
+            }
+
+            return str;
+        }
+
         /// <summary>
         /// Adjusts the configured font size per configuration parameters.
         /// </summary>

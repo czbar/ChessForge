@@ -6,18 +6,28 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        Title="{x:Static p:Resources.DlgBlunderDetection}" Height="200" Width="380">
+        Title="{x:Static p:Resources.DlgBlunderDetection}" Height="329" Width="380">
     <Grid>
-        <GroupBox Margin="10,10" Height="80" VerticalAlignment="Top">
+        <GroupBox Margin="15,10,15,0" Height="85" VerticalAlignment="Top" Header="{x:Static p:Resources.Blunder}">
             <Canvas>
-                <Label x:Name="UiLblMinDiff" Content="{x:Static p:Resources.EvalDropTrigger}" Canvas.Left="20" Canvas.Top="10"/>
-                <Label x:Name="UiLblMaxThresh" Content="{x:Static p:Resources.StopDetectLevel}" Canvas.Left="20" Canvas.Top="40"/>
-                <TextBox x:Name="UiTbMinDiff" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" HorizontalContentAlignment="Center" Width="40" Canvas.Left="250" Canvas.Top="15"/>
-                <TextBox x:Name="UiTbMaxThresh" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" HorizontalContentAlignment="Center" Width="40" Canvas.Left="250" Canvas.Top="45"/>
+                <Label x:Name="UiLblBlunderMinDiff" Content="{x:Static p:Resources.EvalDropTrigger}" Canvas.Left="20" Canvas.Top="0"/>
+                <Label x:Name="UiLblBlunderMaxThresh" Content="{x:Static p:Resources.StopDetectLevel}" Canvas.Left="20" Canvas.Top="30"/>
+                <TextBox x:Name="UiTbBlunderMinDiff" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" HorizontalContentAlignment="Center" Width="40" Canvas.Left="250" Canvas.Top="5"/>
+                <TextBox x:Name="UiTbBlunderMaxThresh" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" HorizontalContentAlignment="Center" Width="40" Canvas.Left="250" Canvas.Top="35"/>
             </Canvas>
         </GroupBox>
-        <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Ok}" IsDefault="True" HorizontalAlignment="Center" Margin="-230,116,0,0" VerticalAlignment="Top" Width="100" Click="UiBtnOk_Click" />
-        <Button x:Name="UiBtnCancel" Content="{x:Static p:Resources.Cancel}" IsCancel="True" HorizontalAlignment="Center" Margin="0,116,0,0" VerticalAlignment="Top" Width="100" Click="UiBtnCancel_Click"/>
-        <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Center" Margin="230,116,0,0" VerticalAlignment="Top" Width="100" Click="UiBtnHelp_Click"/>
+        <GroupBox Margin="15,110,15,0" Height="85" VerticalAlignment="Top"  Header="{x:Static p:Resources.Mistake}">
+            <Canvas>
+                <Label x:Name="UiLblMistakeMinDiff" Content="{x:Static p:Resources.EvalDropTrigger}" Canvas.Left="20" Canvas.Top="0"/>
+                <Label x:Name="UiLblMistakeMaxThresh" Content="{x:Static p:Resources.StopDetectLevel}" Canvas.Left="20" Canvas.Top="30"/>
+                <TextBox x:Name="UiTbMistakeMinDiff" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" HorizontalContentAlignment="Center" Width="40" Canvas.Left="250" Canvas.Top="5"/>
+                <TextBox x:Name="UiTbMistakeMaxThresh" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" HorizontalContentAlignment="Center" Width="40" Canvas.Left="250" Canvas.Top="35"/>
+            </Canvas>
+        </GroupBox>
+        <CheckBox x:Name="UiCbEnableDetection" Content="{x:Static p:Resources.EnableDetection}" HorizontalAlignment="Left" Margin="20,210,0,0" VerticalAlignment="Top"/>
+
+        <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Ok}" IsDefault="True" HorizontalAlignment="Center" Margin="-230,245,0,0" VerticalAlignment="Top" Width="100" Click="UiBtnOk_Click" />
+        <Button x:Name="UiBtnCancel" Content="{x:Static p:Resources.Cancel}" IsCancel="True" HorizontalAlignment="Center" Margin="0,245,0,0" VerticalAlignment="Top" Width="100" Click="UiBtnCancel_Click"/>
+        <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Center" Margin="230,245,0,0" VerticalAlignment="Top" Width="100" Click="UiBtnHelp_Click"/>
     </Grid>
 </Window>

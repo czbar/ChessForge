@@ -101,6 +101,17 @@ namespace GameTree
         }
 
         /// <summary>
+        /// The best response in to the move 
+        /// contained in this position as determined by the engine
+        /// when evaluating the previuos move.
+        /// </summary>
+        public string BestResponse
+        {
+            get => _bestResponse;
+            set => _bestResponse = value;
+        }
+
+        /// <summary>
         /// Coded assessment of the move.
         /// </summary>
         public uint Assessment
@@ -269,6 +280,9 @@ namespace GameTree
 
         // engine evaluation
         private string _engEval;
+
+        // best response in this position as determined by the engine
+        private string _bestResponse;
 
         // points awarded in the solving analysis mode
         private int _quizPoints;
@@ -589,6 +603,7 @@ namespace GameTree
         /// <summary>
         /// Localized text for the ply to show without the move number
         /// with check / mate symbol and optionally with NAGs
+        /// TODO: move this to some utilities class
         /// </summary>
         /// <returns></returns>
         public string GetGuiPlyText(bool withNags)

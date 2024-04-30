@@ -231,9 +231,6 @@
   <data name="ExerciseCount" xml:space="preserve">
     <value>Number of Exercises </value>
   </data>
-  <data name="Line" xml:space="preserve">
-    <value>Line</value>
-  </data>
   <data name="Bookmark" xml:space="preserve">
     <value>Bookmark</value>
   </data>
@@ -275,6 +272,9 @@
   </data>
   <data name="Version" xml:space="preserve">
     <value>Version</value>
+  </data>
+  <data name="VersionAbbr" xml:space="preserve">
+    <value>ver.</value>
   </data>
   <data name="ChessEngine" xml:space="preserve">
     <value>Chess Engine</value>
@@ -320,6 +320,9 @@
   </data>
   <data name="Elo" xml:space="preserve">
     <value>Elo</value>
+  </data>
+  <data name="BestMove" xml:space="preserve">
+    <value>best</value>
   </data>
   <data name="GameHeader" xml:space="preserve">
     <value>Game Header</value>
@@ -603,9 +606,6 @@
   <data name="EngineOptions" xml:space="preserve">
     <value>Engine Options</value>
   </data>
-  <data name="BlunderDetectionOptions" xml:space="preserve">
-    <value>Blunder Detection</value>
-  </data>
   <data name="AnalysisEngine" xml:space="preserve">
     <value>Analysis Engine</value>
   </data>
@@ -827,6 +827,27 @@
   </data>
   <data name="EgCentipawnAccuracy" xml:space="preserve">
     <value>max allowed centipawn deviation from the best move is</value>
+  </data>
+  <data name="DlgBlunderDetection" xml:space="preserve">
+    <value>Bad Move Detection</value>
+  </data>
+  <data name="BlunderDetectionOptions" xml:space="preserve">
+    <value>Bad Move Detection</value>
+  </data>
+  <data name="Blunder" xml:space="preserve">
+    <value>Blunder</value>
+  </data>
+  <data name="Mistake" xml:space="preserve">
+    <value>Mistake</value>
+  </data>
+  <data name="EvalDropTrigger" xml:space="preserve">
+    <value>Evaluation Drop (cp)</value>
+  </data>
+  <data name="StopDetectLevel" xml:space="preserve">
+    <value>No Detection Beyond (cp)</value>
+  </data>
+  <data name="EnableDetection" xml:space="preserve">
+    <value>Enable Detection</value>
   </data>
   <data name="ReorderLines" xml:space="preserve">
     <value>Reorder Lines</value>
@@ -1164,14 +1185,20 @@
   <data name="EstimatedEvalTime" xml:space="preserve">
     <value>Estimated evaluation time</value>
   </data>
-  <data name="DlgBlunderDetection" xml:space="preserve">
-    <value>Blunder Detection</value>
+  <data name="Line" xml:space="preserve">
+    <value>Line</value>
   </data>
-  <data name="EvalDropTrigger" xml:space="preserve">
-    <value>Evaluation Drop (cp)</value>
+  <data name="MainLine" xml:space="preserve">
+    <value>Main Line</value>
   </data>
-  <data name="StopDetectLevel" xml:space="preserve">
-    <value>No Detection Beyond (cp)</value>
+  <data name="GameText" xml:space="preserve">
+    <value>Game Text</value>
+  </data>
+  <data name="ExerciseText" xml:space="preserve">
+    <value>Exercise Text</value>
+  </data>
+  <data name="SideLine" xml:space="preserve">
+    <value>Side Line</value>
   </data>
   <data name="DlgTitleIdenticalPositions" xml:space="preserve">
     <value>List of Identical Positions</value>
@@ -1391,9 +1418,6 @@
   </data>
   <data name="CopySubtreeAfterMove" xml:space="preserve">
     <value>Copy and Paste Variation Tree after</value>
-  </data>
-  <data name="MainLine" xml:space="preserve">
-    <value>Main Line</value>
   </data>
   <data name="Next" xml:space="preserve">
     <value>Next</value>
@@ -2078,7 +2102,7 @@
     <value>To increment version select File-&gt;Backup Version</value>
   </data>
   <data name="TooltipEngineBlunderDetect" xml:space="preserve">
-    <value>Assessed as a blunder by the engine</value>
+    <value>Assessed by the engine</value>
   </data>
   <data name="PgnErrors" xml:space="preserve">
     <value>PGN parsing errors</value>
@@ -2408,7 +2432,19 @@
     <value>Processing study tree...</value>
   </data>
   <data name="ReadingItems" xml:space="preserve">
-    <value>Reading item $0 of $1</value>
+    <value>Processed items $0 of $1</value>
+  </data>
+  <data name="LargeItem" xml:space="preserve">
+    <value>Large item</value>
+  </data>
+  <data name="ProcessLargeItem" xml:space="preserve">
+    <value>Processing large item. Please wait... </value>
+  </data>
+  <data name="PrepareLargeView" xml:space="preserve">
+    <value>Preparing large view. Please wait... </value>
+  </data>
+  <data name="ProcessingTimeSecs" xml:space="preserve">
+    <value>Processing time (seconds)</value>
   </data>
   <data name="OebCheckmate" xml:space="preserve">
     <value>checkmate</value>

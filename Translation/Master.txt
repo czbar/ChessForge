@@ -131,9 +131,6 @@ GameCount=Number of Games
 #Exercise count
 ExerciseCount=Number of Exercises 
 
-#A line in a variation tree
-Line=Line
-
 #Bookmark
 Bookmark=Bookmark
 
@@ -175,6 +172,9 @@ Evaluation=Evaluation
 
 #Version
 Version=Version
+
+#Version abbreviated
+VersionAbbr=ver.
 
 #Chess engine
 ChessEngine=Chess Engine
@@ -222,6 +222,8 @@ ECO=ECO
 #Elo
 Elo=Elo
 
+#Best move
+BestMove=best
 
 #Game Header
 GameHeader=Game Header
@@ -549,12 +551,8 @@ Chessboards=Chessboards
 #Opens the Engine Options dialog
 EngineOptions=Engine Options
 
-#Blunder detection options
-BlunderDetectionOptions=Blunder Detection
-
 #Opens a dialog allowing the user to select chess engine executable file
 AnalysisEngine=Analysis Engine
-
 
 #Engine Options dialog title
 DlgTitleEngineOptions=Engine Options
@@ -829,6 +827,32 @@ EgSelectionAccuracyLabel=Move selection accuracy is
 #Cenitpawn accuracy
 EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
 
+
+#######################################
+#
+# Header: DIALOG Bad Move Options
+#
+
+#Blunder Detection dialog title
+DlgBlunderDetection=Bad Move Detection
+
+#Bad move detection options
+BlunderDetectionOptions=Bad Move Detection
+
+#Blunder
+Blunder=Blunder
+
+#Mistake
+Mistake=Mistake
+
+#Drop in eval triggering detection
+EvalDropTrigger=Evaluation Drop (cp)
+
+#Threshold beyond which we don't detect
+StopDetectLevel=No Detection Beyond (cp)
+
+#Enable detection
+EnableDetection=Enable Detection
 
 #######################################
 #
@@ -1274,25 +1298,26 @@ EngineHashSize=Hash Table (MB)
 EstimatedEvalTime=Estimated evaluation time
 
 
-#######################################
-#
-# Header: DIALOG Blunder Detection
-#
-
-#Blunder Detection dialog title
-DlgBlunderDetection=Blunder Detection
-
-#Drop in eval triggering detection
-EvalDropTrigger=Evaluation Drop (cp)
-
-#Threshold beyond which we don't detect
-StopDetectLevel=No Detection Beyond (cp)
-
 
 #######################################
 #
 # Header: DIALOG Find Identical Positions / Found Games
 #
+
+#A line in a variation tree
+Line=Line
+
+#Main line
+MainLine=Main Line
+
+#Game text
+GameText=Game Text
+
+#Exercise text
+ExerciseText=Exercise Text
+
+#Side line
+SideLine=Side Line
 
 #Identical Positions dialog title
 DlgTitleIdenticalPositions=List of Identical Positions
@@ -1539,9 +1564,6 @@ CopyMainLineAfterMove=Copy and Paste Main Line after
 
 #Copy subtree aftre the selected move.
 CopySubtreeAfterMove=Copy and Paste Variation Tree after
-
-#Main line
-MainLine=Main Line
 
 #The "Next" term
 Next=Next
@@ -2303,8 +2325,8 @@ TooltipSideToMove=Determines some default settings
 #Tooltip for workbook version
 TooltipWorkbookVersion=To increment version select File->Backup Version
 
-#Tooltip for engine blunder detection
-TooltipEngineBlunderDetect=Assessed as a blunder by the engine
+#Tooltip for engine assessment
+TooltipEngineBlunderDetect=Assessed by the engine
 
 #Errors encountered while parsing a PGN file
 PgnErrors=PGN parsing errors
@@ -2679,7 +2701,20 @@ ReadingWorkbookFile=Reading workbook file...
 ReadingStudyTree=Processing study tree...
 
 #Reading items
-ReadingItems=Reading item $0 of $1
+ReadingItems=Processed items $0 of $1
+
+#Large items
+LargeItem=Large item
+
+#Processing large item
+ProcessLargeItem=Processing large item. Please wait... 
+
+#Preparing large view
+PrepareLargeView=Preparing large view. Please wait... 
+
+#Processing time in seconds
+ProcessingTimeSecs=Processing time (seconds)
+
 
 ##################################
 #

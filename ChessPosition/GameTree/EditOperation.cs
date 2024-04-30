@@ -112,6 +112,8 @@ namespace GameTree
                     _node.Nags = nd.Nags;
                     _node.Comment = nd.Comment;
                     _node.QuizPoints = nd.QuizPoints;
+                    _node.Assessment = nd.Assessment;
+                    _node.BestResponse = nd.BestResponse;
                 }
                 else if (tp == EditType.UPDATE_COMMENT_BEFORE_MOVE)
                 {

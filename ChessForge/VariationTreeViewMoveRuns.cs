@@ -9,7 +9,6 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Xml;
 
 namespace ChessForge
 {
@@ -337,16 +336,13 @@ namespace ChessForge
                     return;
                 }
 
-                //CommentPart startPart = new CommentPart(CommentPartType.TEXT, nd.NodeId == 0 ? "[ " : "[ ");
                 CommentPart startPart = new CommentPart(CommentPartType.TEXT, " ");
                 parts.Insert(0, startPart);
 
-                //CommentPart endPart = new CommentPart(CommentPartType.TEXT, nd.NodeId == 0 ? " ] " : " ] ");
                 CommentPart endPart = new CommentPart(CommentPartType.TEXT, " ");
                 parts.Add(endPart);
 
-                // in front of that start bracket!
-                if (HandleBlunders && nd.Assessment == (uint)ChfCommands.Assessment.BLUNDER && nd.IsMainLine())
+                if (HandleBlunders && nd.Assessment != (uint)ChfCommands.Assessment.NONE && nd.IsMainLine())
                 {
                     // if we only have start and end parts so far, delete them.
                     // We don't need brackets if all we have ASSESSMENT
@@ -354,7 +350,7 @@ namespace ChessForge
                     {
                         parts.Clear();
                         // but we need a space after assessment
-                        parts.Add(new CommentPart(CommentPartType.TEXT, " "));
+                        //parts.Add(new CommentPart(CommentPartType.TEXT, " "));
                     }
 
                     CommentPart ass = new CommentPart(CommentPartType.ASSESSMENT, "");
@@ -371,14 +367,13 @@ namespace ChessForge
                     switch (part.Type)
                     {
                         case CommentPartType.ASSESSMENT:
-                            string assSymbol = " ?? ";
-                            inl = new Run(assSymbol);
+                            string assString = GuiUtilities.BuildAssessmentComment(nd);
+                            inl = new Run(assString);
                             inl.ToolTip = Properties.Resources.TooltipEngineBlunderDetect;
                             inl.FontStyle = FontStyles.Normal;
-                            inl.Foreground = Brushes.White;
-                            inl.Background = Brushes.Red;
-                            inl.FontWeight = FontWeights.Bold;
+                            inl.FontWeight = FontWeights.Normal;
                             isAssessmentBlunderShown = true;
+                            inl.PreviewMouseDown += EventCommentRunClicked;
                             break;
                         case CommentPartType.THUMBNAIL_SYMBOL:
                             // if this is not the second last part, insert extra space
@@ -567,7 +562,7 @@ namespace ChessForge
         {
             return !string.IsNullOrEmpty(nd.Comment)
                    || nd.IsThumbnail
-                   || HandleBlunders && nd.Assessment == (uint)ChfCommands.Assessment.BLUNDER && nd.IsMainLine()
+                   || HandleBlunders && nd.Assessment != 0 && nd.IsMainLine()
                    || (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.EDITING && nd.QuizPoints != 0);
         }
 

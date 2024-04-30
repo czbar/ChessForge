@@ -496,7 +496,7 @@ namespace ChessForge
             {
                 TurnExplorersOn();
             }
-            
+
             if (Configuration.ShowEvaluationChart)
             {
                 UiImgChartOn.Visibility = Visibility.Visible;
@@ -1540,7 +1540,6 @@ namespace ChessForge
                         AppLog.Message("wvs.ReadState()", ex);
                     }
 
-                    // Possibly we do not need to call this at all if ApplyStates ran.
                     SetupGuiForNewSession(AppState.WorkbookFilePath, true, wvs);
                 }
                 else
@@ -1613,16 +1612,24 @@ namespace ChessForge
                 }
                 LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
 
-                InitializeChaptersView();
+                // only build chapters view here, if we are showing this tab first
+                if (tabToFocus == TabViewType.CHAPTERS)
+                {
+                    InitializeChaptersView();
+                }
+                else
+                {
+                    _chaptersView = new ChaptersView(UiRtbChaptersView.Document, this);
+                    _chaptersView.IsDirty = true;
+                }
 
                 // reset so that GotFocus() does not bail 
                 WorkbookManager.ActiveTab = TabViewType.NONE;
 
                 // this just in case and for extra future proofing...
-                // : move the focus somewhere away from any tab that may have it so that the next call to Focus() is effective 
-                //
-                // However, due the use of ForceFocus() below, it is not necessary
-                UiRtbBoardComment.Focus();
+                // move the focus somewhere away from any tab that may have it so that the next call to Focus() is effective 
+                // However, due the use of ForceFocus() below, this is not necessary anymore
+                // UiRtbBoardComment.Focus();
 
                 if (tabToFocus == TabViewType.INTRO && WorkbookManager.SessionWorkbook.ActiveChapter.IsIntroEmpty())
                 {
@@ -1686,8 +1693,10 @@ namespace ChessForge
                 return;
             }
 
+            Mouse.SetCursor(Cursors.Wait);
             try
             {
+
                 _studyTreeView = new StudyTreeView(UiRtbStudyTreeView, GameData.ContentType.STUDY_TREE, -1);
 
                 _studyTreeView.ArticleSelected -= ArticleSelected;
@@ -1698,8 +1707,14 @@ namespace ChessForge
                 Article article = AppState.ActiveChapter.StudyTree;
                 if (!article.IsReady)
                 {
+                    // temporarily hide engine lines and chart if visible so that we can see the progress messages
+                    GuiUtilities.HideEngineLinesAndChart(out bool engineVisibility, out bool chartVisibility);
+
                     AppState.ActiveChapter.StudyTree = WorkbookManager.SessionWorkbook.GamesManager.ProcessArticleSync(article);
                     studyTree = AppState.ActiveChapter.StudyTree.Tree;
+
+                    // unhide engine lines and chart
+                    GuiUtilities.ShowEngineLinesAndChart(engineVisibility, chartVisibility);
                 }
                 else
                 {
@@ -1753,6 +1768,8 @@ namespace ChessForge
             {
                 AppLog.Message("SetupGuiForActiveStudyTree()", ex);
             }
+
+            Mouse.SetCursor(Cursors.Arrow);
         }
 
         /// <summary>
@@ -1912,7 +1929,7 @@ namespace ChessForge
             // if this is very big, make sure the view is collapsed
             // to speed up initial reading
             // int articleCount = AppState.Workbook.GetArticleCount();
-            // if (articleCount > 500)  // TODO: this could be annoying to the user, on the other hand coule be a big perf hit, maybe do it per chapter?
+            // if (articleCount > 500)  // TODO: this could be annoying to the user, on the other hand could be a big perf hit, maybe do it per chapter?
             //{
             //    ExpandCollapseChaptersView(false, true);
             //}
@@ -2988,6 +3005,15 @@ namespace ChessForge
                     if (nd.Comment != dlg.Comment || nd.Nags != dlg.Nags || nd.QuizPoints != dlg.QuizPoints)
                     {
                         changed = true;
+                        if (nd.Nags != dlg.Nags)
+                        {
+                            if (NagUtils.GetMoveEvalNagId(nd.Nags) != NagUtils.GetMoveEvalNagId(dlg.Nags))
+                            {
+                                nd.Assessment = 0;
+                                nd.BestResponse = "";
+                            }
+                        }
+                        
                         nd.Comment = dlg.Comment;
                         nd.SetNags(dlg.Nags);
                         nd.QuizPoints = dlg.QuizPoints;
