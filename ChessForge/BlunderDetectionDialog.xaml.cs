@@ -1,16 +1,9 @@
-﻿using System;
+﻿using ChessPosition.Utils;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace ChessForge
 {
@@ -25,9 +18,13 @@ namespace ChessForge
         public BlunderDetectionDialog()
         {
             InitializeComponent();
+            MoveAssessment.AdjustConfiguration();
 
-            UiTbMinDiff.Text = Configuration.BlunderDetectEvalDrop.ToString();
-            UiTbMaxThresh.Text = Configuration.BlunderNoDetectThresh.ToString();
+            UiTbBlunderMinDiff.Text = Configuration.BlunderDetectEvalDrop.ToString();
+            UiTbBlunderMaxThresh.Text = Configuration.BlunderNoDetectThresh.ToString();
+
+            UiTbMistakeMinDiff.Text = Configuration.MistakeDetectEvalDrop.ToString();
+            UiTbMistakeMaxThresh.Text = Configuration.MistakeNoDetectThresh.ToString();
         }
 
         /// <summary>
@@ -37,13 +34,22 @@ namespace ChessForge
         {
             int val;
 
-            if (int.TryParse(UiTbMinDiff.Text, out val))
+            if (int.TryParse(UiTbBlunderMinDiff.Text, out val))
             {
                 Configuration.BlunderDetectEvalDrop = (uint)Math.Abs(val);
             }
-            if (int.TryParse(UiTbMaxThresh.Text, out val))
+            if (int.TryParse(UiTbBlunderMaxThresh.Text, out val))
             {
                 Configuration.BlunderNoDetectThresh = (uint)Math.Abs(val);
+            }
+
+            if (int.TryParse(UiTbMistakeMinDiff.Text, out val))
+            {
+                Configuration.MistakeDetectEvalDrop = (uint)Math.Abs(val);
+            }
+            if (int.TryParse(UiTbMistakeMaxThresh.Text, out val))
+            {
+                Configuration.MistakeNoDetectThresh = (uint)Math.Abs(val);
             }
         }
 
@@ -55,6 +61,7 @@ namespace ChessForge
         private void UiBtnOk_Click(object sender, RoutedEventArgs e)
         {
             UpdateConfigValues();
+            MoveAssessment.Initialized = false;
             DialogResult = true;
         }
 
@@ -75,7 +82,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Blunder-Detection-Dialog");
+            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Bad-Move-Detection");
         }
     }
 }
