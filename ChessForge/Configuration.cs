@@ -142,14 +142,24 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Evaluation drop triggering detection 
+        /// Evaluation drop triggering blunder detection 
         /// </summary>
         public static uint BlunderDetectEvalDrop = 200;
 
         /// <summary>
         /// Threshold beyond which blunders are ignored.
         /// </summary>
-        public static uint BlunderNoDetectThresh = 500;
+        public static uint BlunderNoDetectThresh = 300;
+
+        /// <summary>
+        /// Evaluation drop triggering mistake detection 
+        /// </summary>
+        public static uint MistakeDetectEvalDrop = 100;
+
+        /// <summary>
+        /// Threshold beyond which mistakes are ignored.
+        /// </summary>
+        public static uint MistakeNoDetectThresh = 250;
 
         /// <summary>
         /// Determines the default navigation ("stay here" or Chapters list) 
@@ -544,6 +554,8 @@ namespace ChessForge
         private const string CFG_VIABLE_MOVE_CP_DIFF = "ViableMoveCpDiff";
         private const string CFG_BLUNDER_DET_EVAL_DROP = "BlunderDetEvalDrop";
         private const string CFG_BLUNDER_NO_DET_THRESH = "BlunderNoDetThresh";
+        private const string CFG_MISTAKE_DET_EVAL_DROP = "MistakeDetEvalDrop";
+        private const string CFG_MISTAKE_NO_DET_THRESH = "MistakeNoDetThresh";
 
         private const string CFG_FONT_SIZE_DIFF = "FontSizeDiff";
         private const string CFG_AUTO_SAVE_FREQ = "AutoSaveFrequency";
@@ -733,6 +745,8 @@ namespace ChessForge
                 sb.Append(CFG_VIABLE_MOVE_CP_DIFF + "=" + ViableMoveCpDiff.ToString() + Environment.NewLine);
                 sb.Append(CFG_BLUNDER_DET_EVAL_DROP + "=" + BlunderDetectEvalDrop.ToString() + Environment.NewLine);
                 sb.Append(CFG_BLUNDER_NO_DET_THRESH + "=" + BlunderNoDetectThresh.ToString() + Environment.NewLine);
+                sb.Append(CFG_MISTAKE_DET_EVAL_DROP + "=" + MistakeDetectEvalDrop.ToString() + Environment.NewLine);
+                sb.Append(CFG_MISTAKE_NO_DET_THRESH + "=" + MistakeNoDetectThresh.ToString() + Environment.NewLine);
 
                 sb.Append(CFG_PGN_EXP_BOOKMARKS + "=" + (PgnExportBookmarks ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_PGN_EXP_EVALS + "=" + (PgnExportEvaluations ? "1" : "0") + Environment.NewLine);
@@ -1064,6 +1078,12 @@ namespace ChessForge
                             break;
                         case CFG_BLUNDER_NO_DET_THRESH:
                             uint.TryParse(value, out BlunderNoDetectThresh);
+                            break;
+                        case CFG_MISTAKE_DET_EVAL_DROP:
+                            uint.TryParse(value, out MistakeDetectEvalDrop);
+                            break;
+                        case CFG_MISTAKE_NO_DET_THRESH:
+                            uint.TryParse(value, out MistakeNoDetectThresh);
                             break;
                         case CFG_ENGINE_EVALUATION_TIME:
                             int.TryParse(value, out _engineEvaluationTime);
