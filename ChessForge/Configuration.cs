@@ -162,6 +162,11 @@ namespace ChessForge
         public static uint MistakeNoDetectThresh = 250;
 
         /// <summary>
+        /// Whether bad mov detection should be enabled
+        /// </summary>
+        public static bool EnableBadMoveDetection = true;
+
+        /// <summary>
         /// Determines the default navigation ("stay here" or Chapters list) 
         /// target after a Copy/Move action.
         /// </summary>
@@ -556,6 +561,7 @@ namespace ChessForge
         private const string CFG_BLUNDER_NO_DET_THRESH = "BlunderNoDetThresh";
         private const string CFG_MISTAKE_DET_EVAL_DROP = "MistakeDetEvalDrop";
         private const string CFG_MISTAKE_NO_DET_THRESH = "MistakeNoDetThresh";
+        private const string CFG_BAD_MOVE_DETECTION = "BadMoveDetection";
 
         private const string CFG_FONT_SIZE_DIFF = "FontSizeDiff";
         private const string CFG_AUTO_SAVE_FREQ = "AutoSaveFrequency";
@@ -747,6 +753,7 @@ namespace ChessForge
                 sb.Append(CFG_BLUNDER_NO_DET_THRESH + "=" + BlunderNoDetectThresh.ToString() + Environment.NewLine);
                 sb.Append(CFG_MISTAKE_DET_EVAL_DROP + "=" + MistakeDetectEvalDrop.ToString() + Environment.NewLine);
                 sb.Append(CFG_MISTAKE_NO_DET_THRESH + "=" + MistakeNoDetectThresh.ToString() + Environment.NewLine);
+                sb.AppendLine(CFG_BAD_MOVE_DETECTION + "=" + (EnableBadMoveDetection ? "1" : "0"));
 
                 sb.Append(CFG_PGN_EXP_BOOKMARKS + "=" + (PgnExportBookmarks ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_PGN_EXP_EVALS + "=" + (PgnExportEvaluations ? "1" : "0") + Environment.NewLine);
@@ -1084,6 +1091,9 @@ namespace ChessForge
                             break;
                         case CFG_MISTAKE_NO_DET_THRESH:
                             uint.TryParse(value, out MistakeNoDetectThresh);
+                            break;
+                        case CFG_BAD_MOVE_DETECTION:
+                            EnableBadMoveDetection = value != "0" ? true : false;
                             break;
                         case CFG_ENGINE_EVALUATION_TIME:
                             int.TryParse(value, out _engineEvaluationTime);
