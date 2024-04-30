@@ -14,10 +14,22 @@ namespace ChessPosition.Utils
     public class MoveAssessment
     {
         // bad eval above beyond which we no longer care about blunders 
-        private static double IGNORE_BLUNDER_THRESHOLD = 5;
+        private static double IGNORE_BLUNDER_THRESHOLD = 3;
+
+        // bad eval above beyond which we no longer care about mistakes 
+        private static double IGNORE_MISTAKE_THRESHOLD = 2.5;
 
         // the drop in evaluation that triggers blunder determination.
         private static double BLUNDER_EVAL_DETECTION_DIFF = 2;
+
+        // the drop in evaluation that triggers mistake determination.
+        private static double MISTAKE_EVAL_DETECTION_DIFF = 1;
+
+        /// <summary>
+        /// Flags if the settings have been initialized and are up to date
+        /// (it will be reset after the values are edited by the user).
+        /// </summary>
+        public static bool Initialized = false;
 
         /// <summary>
         /// Determines the assessment of the passed move by comparing its evaluation
@@ -27,8 +39,10 @@ namespace ChessPosition.Utils
         /// <returns></returns>
         public static ChfCommands.Assessment GetMoveAssessment(TreeNode nd)
         {
-            BLUNDER_EVAL_DETECTION_DIFF = ((double)Configuration.BlunderDetectEvalDrop)/100;
-            IGNORE_BLUNDER_THRESHOLD = ((double)Configuration.BlunderNoDetectThresh) / 100;
+            if (!Initialized)
+            {
+                Initialize();
+            }
 
             ChfCommands.Assessment ass = ChfCommands.Assessment.NONE;
             if (!IsPotentialBlunder(nd))
@@ -101,6 +115,24 @@ namespace ChessPosition.Utils
             }
 
             return symbol;
+        }
+
+        /// <summary>
+        /// Sets up the values to use in detections.
+        /// </summary>
+        private static void Initialize()
+        {
+            Initialized = true;
+
+            // set per config with sanity checks
+            BLUNDER_EVAL_DETECTION_DIFF = Math.Max(((double)Configuration.BlunderDetectEvalDrop) / 100, 1);
+            IGNORE_BLUNDER_THRESHOLD = Math.Max(((double)Configuration.BlunderNoDetectThresh) / 100, 1);
+
+            MISTAKE_EVAL_DETECTION_DIFF = Math.Max(((double)Configuration.MistakeDetectEvalDrop) / 100, 1);
+            IGNORE_MISTAKE_THRESHOLD = Math.Max(((double)Configuration.MistakeNoDetectThresh) / 100, 1);
+
+            MISTAKE_EVAL_DETECTION_DIFF = Math.Min(BLUNDER_EVAL_DETECTION_DIFF, MISTAKE_EVAL_DETECTION_DIFF);
+            IGNORE_MISTAKE_THRESHOLD = Math.Min(IGNORE_BLUNDER_THRESHOLD, IGNORE_MISTAKE_THRESHOLD);
         }
 
         /// <summary>
