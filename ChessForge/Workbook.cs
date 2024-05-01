@@ -849,6 +849,11 @@ namespace ChessForge
                         UndoDeleteChapter(chapters[i], indices[i]);
                     }
                 }
+
+                if (indices.Count > 0)
+                {
+                    PulseManager.ChaperIndexToBringIntoView = indices[0];
+                }
             }
             catch
             {
@@ -1196,6 +1201,7 @@ namespace ChessForge
             // create new chapter
             Chapter mergedChapter = new Chapter();
             mergedChapter.SetTitle(title);
+
             mergedChapter.StudyTree = new Article(mergedTree);
             Chapters.Add(mergedChapter);
             SetActiveChapter(mergedChapter);
