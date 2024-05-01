@@ -170,7 +170,7 @@ namespace ChessForge
                 if (nextNode != null)
                 {
                     // take care of the special case where node 0 may have a comment
-                    bool includeNumber = currNode.NodeId == 0 || !string.IsNullOrWhiteSpace(currNode.Comment);
+                    bool includeNumber = currNode.NodeId == 0 || !string.IsNullOrWhiteSpace(currNode.Comment) || !string.IsNullOrEmpty(nextNode.CommentBeforeMove);
                     UpdateRunText(nextMoveRun, nextNode, includeNumber);
                 }
             }
