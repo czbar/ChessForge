@@ -198,6 +198,8 @@ namespace ChessForge
             {
             }
 
+            AppState.SetupGuiForCurrentStates();
+
             return done;
         }
 
