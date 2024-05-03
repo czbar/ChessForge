@@ -824,7 +824,7 @@ namespace ChessForge
 
             if (EngineMessageProcessor.IsEngineAvailable)
             {
-                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.LINE, EvaluationManager.LineSource.ACTIVE_LINE);
+                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.LINE, true, EvaluationManager.LineSource.ACTIVE_LINE);
 
                 int idx = ActiveLine.GetSelectedPlyNodeIndex(true);
                 // if idx == 0, bump it to 1
