@@ -784,7 +784,8 @@ namespace ChessForge
             UiImgChartOff.Visibility = Visibility.Visible;
             UiImgChartOn.Visibility = Visibility.Collapsed;
 
-            UiEvalChart.Visibility = Visibility.Collapsed;
+            MultiTextBoxManager.ShowEvaluationChart();
+            
             if (e != null)
             {
                 e.Handled = true;
@@ -808,6 +809,8 @@ namespace ChessForge
             {
                 UiEvalChart.Update();
             }
+
+            MultiTextBoxManager.ShowEvaluationChart();
 
             if (e != null)
             {
@@ -917,14 +920,15 @@ namespace ChessForge
                 TrainingSession.IsContinuousEvaluation = false;
                 if (EvaluationManager.CurrentMode != EvaluationManager.Mode.ENGINE_GAME)
                 {
-                    EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
+                    EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE, false);
                 }
             }
             else
             {
-                StopEvaluation(false);
+                StopEvaluation(false, false);
                 TrainingSession.IsContinuousEvaluation = false;
             }
+            AppState.SetupGuiForCurrentStates();
 
             if (e != null)
             {
