@@ -809,7 +809,7 @@ namespace ChessForge
                 WorkbookFilePath = "";
                 UpdateAppTitleBar();
                 SwapCommentBoxForEngineLines(false);
-                LearningMode.ChangeCurrentMode(LearningMode.Mode.IDLE);
+                LearningMode.ChangeCurrentMode(LearningMode.Mode.IDLE, false);
                 SetupGuiForCurrentStates();
                 if (updateCommentBox)
                 {
@@ -1023,14 +1023,7 @@ namespace ChessForge
         /// </summary>
         public static void ShowEvaluationChart()
         {
-            if (MainWin.UiEvalChart.CanShowChart(false))
-            {
-                MainWin.UiEvalChart.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                MainWin.UiEvalChart.Visibility = Visibility.Hidden;
-            }
+            MultiTextBoxManager.ShowEvaluationChart();
         }
 
         /// <summary>
@@ -1646,15 +1639,6 @@ namespace ChessForge
                     MainWin.UiMnMainDeleteExercises.IsEnabled = WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.HasAnyExercises;
                     MainWin.UiMnRemoveDuplicates.IsEnabled = WorkbookManager.SessionWorkbook != null &&
                             (WorkbookManager.SessionWorkbook.HasAnyModelGames || WorkbookManager.SessionWorkbook.HasAnyExercises);
-
-                    if (MainWin.UiEvalChart.CanShowChart(false))
-                    {
-                        MainWin.UiEvalChart.Visibility = Visibility.Visible;
-                    }
-                    else
-                    {
-                        MainWin.UiEvalChart.Visibility = Visibility.Hidden;
-                    }
                 }
                 catch (Exception ex)
                 {
