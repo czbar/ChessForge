@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="672"
              Visibility="Visible">
-    <Grid MouseMove="Grid_MouseMove" PreviewMouseDown="Grid_PreviewMouseDown">
+    <Grid x:Name="MainGrid" MouseMove="Grid_MouseMove" PreviewMouseDown="Grid_PreviewMouseDown">
         <Grid.RowDefinitions>
             <RowDefinition Height="74"/>
             <RowDefinition Height="74"/>
@@ -16,18 +16,6 @@
         <Canvas x:Name="UiCnvWhite" Grid.Row="0" Background="LightGreen" ClipToBounds="True" Grid.ColumnSpan="2" 
                 Height="74" Width="670" 
                 HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Label x:Name="UiBtnScale" Content="" Canvas.Left="268" Canvas.Top="5" Panel.ZIndex="4"
-                    Height="18" Padding="0" VerticalContentAlignment="Center" HorizontalAlignment="Right"
-                    FontSize="11"
-                    Foreground="DarkGreen" Background="Transparent" BorderThickness="0" />
-            <Button x:Name="UiBtnPlus" Content="+" Canvas.Left="317" Canvas.Top="4" Panel.ZIndex="4"
-                    Width="16" Height="18" Padding="0" VerticalContentAlignment="Center" 
-                    FontSize="14" FontWeight="Bold" Foreground="DarkGreen"
-                    BorderThickness="0" Background="Transparent" Click="UiBtnPlus_Click" />
-            <Button x:Name="UiBtnMinus" Content="-" Canvas.Left="333" Canvas.Top="4" Panel.ZIndex="4"
-                    Width="16" Height="18" Padding="0" VerticalContentAlignment="Center"
-                    FontSize="14" FontWeight="Bold" Foreground="DarkGreen"
-                    BorderThickness="0" Background="Transparent" Click="UiBtnMinus_Click" />
         </Canvas>
         <Canvas x:Name="UiCnvBlack" Grid.Row="1" Background="Green" ClipToBounds="True" Grid.ColumnSpan="2" 
                 Height="74" Width="670" 
