@@ -33,6 +33,8 @@ namespace ChessForge
                 if (AppState.CurrentLearningMode == LearningMode.Mode.IDLE)
                 {
                     MainWin.UiEvalChart.Visibility = Visibility.Hidden;
+                    MainWin.UiEvalChart.IsDirty = true;
+
                     MainWin.UiTbEngineLines.Visibility = Visibility.Hidden;
                 }
                 else
@@ -41,6 +43,7 @@ namespace ChessForge
                     {
                         ResizeMultiBoxes(fullSize);
                         MainWin.UiEvalChart.Visibility = Visibility.Visible;
+                        MainWin.UiEvalChart.Update();
                     }
                     else
                     {
