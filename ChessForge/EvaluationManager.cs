@@ -161,7 +161,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="mode"></param>
         /// <param name="lineSource"></param>
-        public static void ChangeCurrentMode(Mode mode, LineSource lineSource = LineSource.NONE)
+        public static void ChangeCurrentMode(Mode mode, bool updateGui = true, LineSource lineSource = LineSource.NONE)
         {
             Mode previousMode = _currentMode;
 
@@ -204,19 +204,25 @@ namespace ChessForge
             }
 
             AppLog.Message(LogLevel.DETAIL, "EvaluationManager:ChangeCurrentMode() to " + mode.ToString());
-            AppState.SetupGuiForCurrentStates();
+            if (updateGui)
+            {
+                AppState.SetupGuiForCurrentStates();
+            }
         }
 
         /// <summary>
         /// Reset the state to get ready for another evaluation run.
         /// </summary>
-        public static void Reset()
+        public static void Reset(bool updateGui = true)
         {
             lock (EvaluationLock)
             {
-                ChangeCurrentMode(Mode.IDLE);
+                ChangeCurrentMode(Mode.IDLE, false);
             }
-            AppState.SetupGuiForCurrentStates();
+            if (updateGui)
+            {
+                AppState.SetupGuiForCurrentStates();
+            }
         }
 
         /// <summary>
