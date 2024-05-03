@@ -404,7 +404,8 @@ namespace ChessForge
                     {
                         if (EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS)
                         {
-                            EvaluationManager.Reset();
+                            // (false) because SetupGuiForCurrentStates would have been called by StopEvaluation
+                            EvaluationManager.Reset(false);
                         }
                     }
 
@@ -412,11 +413,17 @@ namespace ChessForge
                     {
                         MoveEvalFinished?.Invoke(null, eventArgs);
                     }
+
+                    AppState.MainWin.UiEvalChart.IsDirty = true;
+                    if (MultiTextBoxManager.IsChartTurnedOn())
+                    {
+                        AppState.MainWin.UiEvalChart.Update();
+                    }
                 }
                 else
                 {
                     // something may be wrong, check the health of the engine
-                    if (!EngineMessageProcessor.IsEngineHealthy)
+                    if (!IsEngineHealthy)
                     {
                         AppLog.Message("Restarting the engine due to a null message");
                         EngineLog.Message("Restarting the engine due to a null message");
