@@ -644,7 +644,7 @@ namespace ChessForge
                                     break;
                                 case WorkbookOperationType.DELETE_ENGINE_EVALS:
                                     AppState.MainWin.ActiveTreeView?.BuildFlowDocumentForVariationTree();
-                                    ActiveLine.RefreshNodeList();
+                                    ActiveLine.RefreshNodeList(true);
                                     break;
                             }
 

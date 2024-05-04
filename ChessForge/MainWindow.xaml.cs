@@ -2090,7 +2090,7 @@ namespace ChessForge
         {
             try
             {
-                ActiveLine.SetNodeList(line);
+                ActiveLine.SetNodeList(line, false);
 
                 if (selectedNodeId >= 0)
                 {
