@@ -348,7 +348,7 @@ namespace ChessForge
                     string paraName = parentPara.Name;
                     if (paraName.StartsWith(_par_line_moves_))
                     {
-                        EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.LINE, EvaluationManager.LineSource.TRAINING_LINE);
+                        EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.LINE, true, EvaluationManager.LineSource.TRAINING_LINE);
                         SetMainLineRunsToEvaluate(paraName, _lastClickedRun);
                         Paragraph gamePara = FindParagraphByName(_par_game_moves_, true);
                         if (gamePara != null)
@@ -359,7 +359,7 @@ namespace ChessForge
                     }
                     else if (paraName.StartsWith(_par_game_moves_))
                     {
-                        EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.LINE, EvaluationManager.LineSource.TRAINING_LINE);
+                        EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.LINE, true, EvaluationManager.LineSource.TRAINING_LINE);
                         SetGameRunsToEvaluate(parentPara, _lastClickedRun);
                         RequestMoveEvaluation(_mainWin.ActiveVariationTreeId);
                     }

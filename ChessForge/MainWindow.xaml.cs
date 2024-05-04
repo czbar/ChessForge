@@ -489,12 +489,16 @@ namespace ChessForge
             ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
             SetEvaluationLabels();
 
-            LearningMode.ChangeCurrentMode(LearningMode.Mode.IDLE);
-            AppState.SetupGuiForCurrentStates();
+            LearningMode.ChangeCurrentMode(LearningMode.Mode.IDLE, false);
 
             if (Configuration.ShowExplorers)
             {
                 TurnExplorersOn();
+            }
+            else
+            {
+                // TurnExplorersOn calls this in the branch above
+                AppState.SetupGuiForCurrentStates();
             }
 
             if (Configuration.ShowEvaluationChart)
@@ -1610,7 +1614,7 @@ namespace ChessForge
                 {
                     WorkbookManager.UpdateRecentFilesList(fileName);
                 }
-                LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
+                LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW, false);
 
                 // only build chapters view here, if we are showing this tab first
                 if (tabToFocus == TabViewType.CHAPTERS)
@@ -1637,7 +1641,7 @@ namespace ChessForge
                 }
 
                 GuiUtilities.ForceFocus(tabToFocus, TabViewType.STUDY);
-                AppState.ShowEvaluationChart();
+                MultiTextBoxManager.ShowEvaluationChart(false);
             }
             catch (Exception ex)
             {
@@ -2004,7 +2008,7 @@ namespace ChessForge
                     {
                         if (AppState.MainWin.UiEvalChart.IsDirty)
                         {
-                            AppState.MainWin.UiEvalChart.Update();
+                            MultiTextBoxManager.ShowEvaluationChart(true);
                         }
                         AppState.MainWin.UiEvalChart.SelectMove(nd);
                     }
@@ -2086,7 +2090,7 @@ namespace ChessForge
         {
             try
             {
-                ActiveLine.SetNodeList(line);
+                ActiveLine.SetNodeList(line, false);
 
                 if (selectedNodeId >= 0)
                 {
@@ -2955,19 +2959,10 @@ namespace ChessForge
         {
             EngineMessageProcessor.StopEngineEvaluation(ignoreBestMoveResponse);
 
-            if (updateGui)
-            {
-                EvaluationManager.Reset();
-            }
+            EvaluationManager.Reset(updateGui);
 
             AppState.ResetEvaluationControls();
             AppState.ShowMoveEvaluationControls(false, true);
-
-            if (updateGui)
-            {
-                // TODO: remove as EvaluationManager.Reset() already calls this
-                AppState.SetupGuiForCurrentStates();
-            }
 
             if (LearningMode.CurrentMode == LearningMode.Mode.MANUAL_REVIEW)
             {
@@ -3013,10 +3008,11 @@ namespace ChessForge
                                 nd.BestResponse = "";
                             }
                         }
-                        
+
                         nd.Comment = dlg.Comment;
                         nd.SetNags(dlg.Nags);
                         nd.QuizPoints = dlg.QuizPoints;
+                        ActiveLine.UpdateMoveText(nd);
                         AppState.IsDirty = true;
 
                         if (op != null)

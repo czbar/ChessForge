@@ -142,7 +142,7 @@ namespace ChessForge
                         case MoveAttribute.ENGINE_EVALUATION:
                             // there may have been "assessments" so need to refresh this
                             ActiveTreeView.BuildFlowDocumentForVariationTree();
-                            ActiveLine.RefreshNodeList();
+                            ActiveLine.RefreshNodeList(true);
                             break;
                     }
                 }

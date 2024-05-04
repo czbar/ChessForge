@@ -161,7 +161,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="mode"></param>
         /// <param name="lineSource"></param>
-        public static void ChangeCurrentMode(Mode mode, LineSource lineSource = LineSource.NONE)
+        public static void ChangeCurrentMode(Mode mode, bool updateGui = true, LineSource lineSource = LineSource.NONE)
         {
             Mode previousMode = _currentMode;
 
@@ -174,8 +174,7 @@ namespace ChessForge
                     EngineMessageProcessor.StopEngineEvaluation();
                     AppState.SwapCommentBoxForEngineLines(TrainingSession.IsContinuousEvaluation);
 
-                    AppState.MainWin.UiEvalChart.IsDirty = true;
-                    AppState.MainWin.UiEvalChart.Update();
+                    MultiTextBoxManager.ShowEvaluationChart(true);
                     break;
                 case Mode.CONTINUOUS:
                     AppState.MainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
@@ -204,19 +203,25 @@ namespace ChessForge
             }
 
             AppLog.Message(LogLevel.DETAIL, "EvaluationManager:ChangeCurrentMode() to " + mode.ToString());
-            AppState.SetupGuiForCurrentStates();
+            if (updateGui)
+            {
+                AppState.SetupGuiForCurrentStates();
+            }
         }
 
         /// <summary>
         /// Reset the state to get ready for another evaluation run.
         /// </summary>
-        public static void Reset()
+        public static void Reset(bool updateGui = true)
         {
             lock (EvaluationLock)
             {
-                ChangeCurrentMode(Mode.IDLE);
+                ChangeCurrentMode(Mode.IDLE, false);
             }
-            AppState.SetupGuiForCurrentStates();
+            if (updateGui)
+            {
+                AppState.SetupGuiForCurrentStates();
+            }
         }
 
         /// <summary>

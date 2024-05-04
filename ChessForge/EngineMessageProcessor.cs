@@ -404,7 +404,9 @@ namespace ChessForge
                     {
                         if (EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS)
                         {
-                            EvaluationManager.Reset();
+                            // (true) as arg because although SetupGuiForCurrentStates would have been called by StopEvaluation
+                            // we need to make some changes (engine toggle and hide the progress bar)
+                            EvaluationManager.Reset(true);
                         }
                     }
 
@@ -412,11 +414,17 @@ namespace ChessForge
                     {
                         MoveEvalFinished?.Invoke(null, eventArgs);
                     }
+
+                    AppState.MainWin.UiEvalChart.IsDirty = true;
+                    if (MultiTextBoxManager.IsChartTurnedOn())
+                    {
+                        MultiTextBoxManager.ShowEvaluationChart(true);
+                    }
                 }
                 else
                 {
                     // something may be wrong, check the health of the engine
-                    if (!EngineMessageProcessor.IsEngineHealthy)
+                    if (!IsEngineHealthy)
                     {
                         AppLog.Message("Restarting the engine due to a null message");
                         EngineLog.Message("Restarting the engine due to a null message");

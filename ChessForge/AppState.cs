@@ -809,7 +809,7 @@ namespace ChessForge
                 WorkbookFilePath = "";
                 UpdateAppTitleBar();
                 SwapCommentBoxForEngineLines(false);
-                LearningMode.ChangeCurrentMode(LearningMode.Mode.IDLE);
+                LearningMode.ChangeCurrentMode(LearningMode.Mode.IDLE, false);
                 SetupGuiForCurrentStates();
                 if (updateCommentBox)
                 {
@@ -856,7 +856,7 @@ namespace ChessForge
                         ShowExplorers(false, false);
                         break;
                 }
-                ShowEvaluationChart();
+                MultiTextBoxManager.ShowEvaluationChart(false);
                 EnableNavigationArrows();
                 ShowEvaluationControlsForCurrentStates();
                 ConfigureMainBoardContextMenu();
@@ -1015,22 +1015,6 @@ namespace ChessForge
                 }
                 ShowEvaluationControlsForCurrentStates();
             });
-        }
-
-        /// <summary>
-        /// Show or hide the evaluation chart depending on 
-        /// the current state and config.
-        /// </summary>
-        public static void ShowEvaluationChart()
-        {
-            if (MainWin.UiEvalChart.CanShowChart(false))
-            {
-                MainWin.UiEvalChart.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                MainWin.UiEvalChart.Visibility = Visibility.Hidden;
-            }
         }
 
         /// <summary>
@@ -1646,15 +1630,6 @@ namespace ChessForge
                     MainWin.UiMnMainDeleteExercises.IsEnabled = WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.HasAnyExercises;
                     MainWin.UiMnRemoveDuplicates.IsEnabled = WorkbookManager.SessionWorkbook != null &&
                             (WorkbookManager.SessionWorkbook.HasAnyModelGames || WorkbookManager.SessionWorkbook.HasAnyExercises);
-
-                    if (MainWin.UiEvalChart.CanShowChart(false))
-                    {
-                        MainWin.UiEvalChart.Visibility = Visibility.Visible;
-                    }
-                    else
-                    {
-                        MainWin.UiEvalChart.Visibility = Visibility.Hidden;
-                    }
                 }
                 catch (Exception ex)
                 {

@@ -16,7 +16,7 @@ namespace ChessForge
     public class DownloadWebGamesManager
     {
         // max number of games to download
-        public static int MAX_DOWNLOAD_GAME_COUNT = 500;
+        public static int MAX_DOWNLOAD_GAME_COUNT = 1000;
 
         /// <summary>
         /// Invokes the dialog for requesting the download.

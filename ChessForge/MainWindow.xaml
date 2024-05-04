@@ -404,9 +404,11 @@
                                     <MenuItem x:Name="UiMnChptCollapseAll" Header="{x:Static p:Resources.CollapseAll}" Click="UiMnChptCollapseAll_Click" InputGestureText="Ctrl -" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
-                            <RichTextBox x:Name="UiRtbChaptersView" Grid.Row="1"  ContextMenu="{x:Null}" IsUndoEnabled="False" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
-                                 SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                                   Height="640" MinHeight="500" IsReadOnly="True" MouseLeftButtonUp="UiRtbChaptersView_MouseLeftButtonUp" 
+                            <RichTextBox x:Name="UiRtbChaptersView" Grid.Row="1"  ContextMenu="{x:Null}" IsUndoEnabled="False" HorizontalAlignment="Left" 
+                                         Width="2000"
+                                         Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
+                                         SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden"
+                                         Height="640" MinHeight="500" IsReadOnly="True" MouseLeftButtonUp="UiRtbChaptersView_MouseLeftButtonUp" 
                                          MouseEnter="UiRtbChaptersView_MouseEnter" MouseLeave="UiRtbChaptersView_MouseLeave" MouseMove="UiRtbChaptersView_MouseMove" LayoutUpdated="UiRtbChaptersView_LayoutUpdated" >
                                 <RichTextBox.Resources>
                                     <Style TargetType="{x:Type Paragraph}">
@@ -1117,12 +1119,16 @@
                         <DataGridTextColumn Header="{x:Static p:Resources.EvaluationShort}" Width="50" Binding="{Binding BlackEval}"  CellStyle="{StaticResource DisableSelection}" CanUserReorder="False"/>
                     </DataGrid.Columns>
                 </DataGrid>
-                <uc:EvaluationChartControl x:Name="UiEvalChart" Panel.ZIndex="1"  
+                <uc:EvaluationChartControl x:Name="UiEvalChart" Panel.ZIndex="1"  FontSize="12"
                                            Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top"
                                            Width="672" Height="150" Margin="4,10,0,0" 
                                            BorderThickness="1" BorderBrush="Black"
                                            Visibility="Hidden">
                 </uc:EvaluationChartControl>
+                <TextBox x:Name="UiTbEngineLines" TextWrapping="NoWrap" Text="" 
+                         Width="672" Height="150" Margin="0,10,0,0" 
+                         Grid.Row="2" VerticalAlignment="Top" 
+                         BorderThickness="1" Background="#FFF2F5F3" BorderBrush="Black" Visibility="Hidden" VerticalScrollBarVisibility="Auto" />
                 <RichTextBox x:Name="UiRtbBoardComment"  ContextMenu="{x:Null}" IsUndoEnabled="False" Panel.ZIndex="0" 
                              Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" 
                              Width="672" Height="150" Margin="4,10,0,0"
@@ -1167,7 +1173,6 @@
                         </ContextMenu>
                     </RichTextBox.ContextMenu>
                 </RichTextBox>
-                <TextBox x:Name="UiTbEngineLines" TextWrapping="NoWrap" Text="" Height="150" Margin="4,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="672" BorderThickness="1" Background="#FFF2F5F3" BorderBrush="Black" Visibility="Hidden" VerticalScrollBarVisibility="Auto" />
                 <Button x:Name="UiBtnExitTraining" Panel.ZIndex="1" Grid.Column="1" Content="{x:Static p:Resources.ExitTraining}" FontWeight="Bold" FontSize="18" HorizontalAlignment="Left" Margin="70,50,0,0" Width="160" Height="40" Grid.Row="2" VerticalAlignment="Top" Click="UiBtnExitTraining_Click" Visibility="Collapsed" />
                 <Button x:Name="UiBtnExitGame" Panel.ZIndex="1" Grid.Column="1" Content="{x:Static p:Resources.ExitGame}" FontWeight="Bold" FontSize="18" HorizontalAlignment="Left" Margin="70,50,20,0" Width="160" Height="40" Grid.Row="2" VerticalAlignment="Top" Click="UiBtnExitGame_Click" Visibility="Collapsed" />
                 <Button x:Name="UiBtnShowExplorer" Panel.ZIndex="0" Grid.Column="1" Grid.ColumnSpan="2" Content="{x:Static p:Resources.ShowExplorer}" FontWeight="Bold" FontSize="12" HorizontalAlignment="Left" Margin="235,50,20,0" Width="100" Height="24" Grid.Row="2" VerticalAlignment="Top" Click="UiBtnShowExplorer_Click" Visibility="Collapsed" />

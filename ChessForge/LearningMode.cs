@@ -65,12 +65,15 @@ namespace ChessForge
         /// <summary>
         /// Switches application to another mode.
         /// </summary>
-        public static void ChangeCurrentMode(LearningMode.Mode mode)
+        public static void ChangeCurrentMode(LearningMode.Mode mode, bool updateGui = true)
         {
             _previousMode = _currentMode;
             _currentMode = mode;
 
-            AppState.SetupGuiForCurrentStates();
+            if (updateGui)
+            {
+                AppState.SetupGuiForCurrentStates();
+            }
         }
 
         /// <summary>

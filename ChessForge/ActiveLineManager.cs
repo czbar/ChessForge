@@ -61,20 +61,12 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Removes all engine evaluations from the scoresheet.
-        /// </summary>
-        public void DeleteEngineEvaluations()
-        {
-            Line.DeleteEngineEvaluations();
-        }
-
-        /// <summary>
         /// Force updating of engine evaluations
         /// e.g. as part of Undo for Delete Engine Evals.
         /// </summary>
-        public void RefreshNodeList()
+        public void RefreshNodeList(bool forceUpdate)
         {
-            SetNodeList(Line.NodeList);
+            SetNodeList(Line.NodeList, forceUpdate);
         }
 
         /// <summary>
@@ -133,17 +125,41 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Updates text on the Move object.
+        /// </summary>
+        /// <param name="nd"></param>
+        public void UpdateMoveText(TreeNode nd)
+        {
+            if (nd != null)
+            {
+                PieceColor color;
+                MoveWithEval mev = Line.GetMoveFromNodeId(nd.NodeId, out color);
+                if (mev != null)
+                {
+                    if (color == PieceColor.White)
+                    {
+                        mev.WhitePly = nd.GetGuiPlyText(true);
+                    }
+                    else
+                    {
+                        mev.BlackPly = nd.GetGuiPlyText(true);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Binds a new line to this object and DataGrid control.
         /// </summary>
         /// <param name="line"></param>
-        public void SetNodeList(ObservableCollection<TreeNode> line)
+        public void SetNodeList(ObservableCollection<TreeNode> line, bool forceUpdate)
         {
             bool update = true;
 
             // do not reassign ItemSource if no change.
             // TODO: in the future we would want to avoid resetting the source
             // even if the new line is longer because we added a move.
-            if (line != null && Line.NodeList != null && Line.NodeList.Count == line.Count)
+            if (!forceUpdate && line != null && Line.NodeList != null && Line.NodeList.Count == line.Count)
             {
                 update = false;
                 for (int i = 0; i < line.Count; i++)
@@ -172,7 +188,7 @@ namespace ChessForge
             _selectedRow = -1;
             _selectedColumn = -1;
 
-            AppState.MainWin.UiEvalChart.Update(line);
+            MultiTextBoxManager.ShowEvaluationChart(true, line);
         }
 
         /// <summary>

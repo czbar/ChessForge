@@ -230,6 +230,7 @@
     <Compile Include="MoveAssessment.cs" />
     <Compile Include="MoveCandidates.cs" />
     <Compile Include="MoveEvaluation.cs" />
+    <Compile Include="MultiTextBoxManager.cs" />
     <Compile Include="OnlineLibraryContentDialog.xaml.cs">
       <DependentUpon>OnlineLibraryContentDialog.xaml</DependentUpon>
     </Compile>

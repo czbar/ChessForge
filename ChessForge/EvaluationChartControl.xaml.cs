@@ -16,26 +16,41 @@ namespace ChessForge
     /// </summary>
     public partial class EvaluationChartControl : UserControl
     {
-        // width of the 2 canvases
-        private double CANVAS_WIDTH = 670;
+        /// <summary>
+        /// Height of either Canvas in the control
+        /// </summary>
+        public double CanvasHeight = 74;
 
-        // height of the 2 canvases
-        private double CANVAS_HEIGHT = 74;
+        /// <summary>
+        /// Diameter if the move marker.
+        /// </summary>
+        public int MarkerSize = 8;
 
-        // diameter of the marker
-        private int MARKER_SIZE = 8;
-
-        // max allowed scale
-        private int MAX_EVAL_SCALE = 16;
-
-        // min allowed scale
-        private int MIN_EVAL_SCALE = 1;
+        /// <summary>
+        /// Font size to use as base for other font sizes. 
+        /// </summary>
+        public int BaseFontSize = 12;
 
         /// <summary>
         /// Set to true from the client if the evaluations have changed
         /// or as the chart becomes visible after being hidden.
         /// </summary>
         public bool IsDirty = true;
+
+        /// <summary>
+        /// Whether the control is in full or half size.
+        /// It is in full size when first created.
+        /// </summary>
+        public bool IsFullSize = true;
+
+        // max allowed scale
+        private int MAX_EVAL_SCALE = 16;
+
+        // width of the 2 canvases
+        private double CANVAS_WIDTH = 670;
+
+        // min allowed scale
+        private int MIN_EVAL_SCALE = 1;
 
         // length of the X-axis in either canvas
         private double _maxX;
@@ -70,9 +85,6 @@ namespace ChessForge
         // label displaying the move currently selected in the chart.
         private Label _lblMove = new Label();
 
-        // fixed position evaluation label
-        private Label _lblFixedPosEval = new Label();
-
         // evaluation label in the white (top) half 
         private Label _lblWhiteEval = new Label();
 
@@ -85,13 +97,22 @@ namespace ChessForge
         // ply marker in the black (bottom) half  
         private Ellipse _blackMarker = new Ellipse();
 
+        // scale label
+        private Label _lblScale;
+
+        // scale button "+"
+        private Button _btnPlus;
+
+        // scale button "-"
+        private Button _btnMinus;
+
         // zIndex for the GUI elements
         private int _zIndexMidLine = 1;
         private int _zIndexVertLine = 1;
         private int _zIndexMarker = 2;
         private int _zIndexEvalLabel = 3;
         private int _zIndexMoveLabel = 4;
-        private int _zFixedPosEvalLabel = 4;
+        private int _zScaleElements = 4;
 
         /// <summary>
         /// Creates the dialog and calculates the limits.
@@ -100,12 +121,32 @@ namespace ChessForge
         public EvaluationChartControl()
         {
             InitializeComponent();
+
+            CreateScaleElements();
+            InitSizes();
+        }
+
+        /// <summary>
+        /// Sets sizes and positions of the GUI elements.
+        /// Invokes at the start and every time the chart's size
+        /// changes between full and half.
+        /// The full vs half size information is held in the MultiTextBoxManager class
+        /// and it sets the internal sizes on this control accordingly.
+        /// </summary>
+        public void InitSizes()
+        {
+            UiCnvWhite.Children.Clear();
+            UiCnvBlack.Children.Clear();
+
+            MainGrid.RowDefinitions[0].Height = new GridLength(CanvasHeight);
+            MainGrid.RowDefinitions[1].Height = new GridLength(CanvasHeight);
+
             UiCnvWhite.Width = CANVAS_WIDTH;
-            UiCnvWhite.Height = CANVAS_HEIGHT; ;
+            UiCnvWhite.Height = CanvasHeight;
             UiCnvWhite.Background = ChessForgeColors.TABLE_HIGHLIGHT_GREEN;
 
             UiCnvBlack.Width = CANVAS_WIDTH;
-            UiCnvBlack.Height = CANVAS_HEIGHT;
+            UiCnvBlack.Height = CanvasHeight;
             UiCnvBlack.Background = ChessForgeColors.TABLE_HEADER_GREEN;
 
             Line UiMidLine = new Line();
@@ -113,33 +154,32 @@ namespace ChessForge
             UiMidLine.StrokeThickness = 1;
             UiMidLine.X1 = 0;
             UiMidLine.X1 = CANVAS_WIDTH;
-            UiMidLine.Y1 = CANVAS_HEIGHT;
-            UiMidLine.Y2 = CANVAS_HEIGHT;
+            UiMidLine.Y1 = CanvasHeight;
+            UiMidLine.Y2 = CanvasHeight;
 
             UiCnvWhite.Children.Add(UiMidLine);
-            Canvas.SetZIndex(UiMidLine, _zIndexMidLine);
+            Panel.SetZIndex(UiMidLine, _zIndexMidLine);
 
-            // get the maxX and maxY based on the size of the canvases (mins are 0)
-            // TODO: how to get these from the Canvas?
             _maxX = CANVAS_WIDTH;
-            _maxY = CANVAS_HEIGHT;
+            _maxY = CanvasHeight;
 
-            ConfigureZoomButtons();
+            ConfigureScaleElements();
             ConfigureTitleLabel();
             ConfigureMoveLabel();
-            ConfigureFixedPositionEvaluationLabel();
 
             ConfigureVerticalLine();
             ConfigureEvaluationLabels();
             ConfigureMarkers();
+
+            IsDirty = true;
         }
 
         /// <summary>
         /// Overloaded method to render the chart with the current active line.
         /// </summary>
-        public void Update()
+        public void Refresh()
         {
-            Update(AppState.MainWin.ActiveLine.GetNodeList());
+            Refresh(AppState.MainWin.ActiveLine.GetNodeList());
         }
 
         /// <summary>
@@ -148,11 +188,11 @@ namespace ChessForge
         /// Displays the updated chart.
         /// </summary>
         /// <param name="nodeList"></param>
-        public void Update(ObservableCollection<TreeNode> nodeList)
+        public void Refresh(ObservableCollection<TreeNode> nodeList)
         {
             AppState.MainWin.Dispatcher.Invoke(() =>
             {
-                if (CanShowChart(false))
+                if (MultiTextBoxManager.CanShowEvaluationChart(false, out _))
                 {
                     try
                     {
@@ -229,55 +269,7 @@ namespace ChessForge
         /// <returns></returns>
         public bool ReportIfCanShow()
         {
-            return CanShowChart(true);
-        }
-
-        /// <summary>
-        /// Checks it chart can be currently shown.
-        /// If it can't and showReason == true, a flash announcement
-        /// with the reason will be displayed.
-        /// </summary>
-        /// <returns></returns>
-        public bool CanShowChart(bool showReason)
-        {
-            bool res = true;
-
-            if (Configuration.ShowEvaluationChart)
-            {
-                if (AppState.ActiveTab != TabViewType.STUDY && AppState.ActiveTab != TabViewType.MODEL_GAME)
-                {
-                    // report wrong tab
-                    if (showReason)
-                    {
-                        AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.ChartErrorWrongTab, Brushes.Red);
-                    }
-                    res = false;
-                }
-                else if (EvaluationManager.IsRunning)
-                {
-                    // report evaluation in progress
-                    if (showReason)
-                    {
-                        AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.ChartErrorEvalInProgress, Brushes.Red);
-                    }
-                    res = false;
-                }
-                else if (!HasMovesWithEval(AppState.ActiveLine.GetNodeList(), 2))
-                {
-                    // insufficient moves with evaluations
-                    if (showReason)
-                    {
-                        AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.ChartErrorInsufficientEvals, Brushes.Red);
-                    }
-                    res = false;
-                }
-            }
-            else
-            {
-                res = false;
-            }
-
-            return res;
+            return MultiTextBoxManager.CanShowEvaluationChart(true, out _);
         }
 
         //*****************************************************
@@ -285,18 +277,6 @@ namespace ChessForge
         //  INITIALIZATION OF DYNAMIC CONTROLS
         //
         //*****************************************************
-
-        /// <summary>
-        /// Place the buttons in the center.
-        /// </summary>
-        private void ConfigureZoomButtons()
-        {
-            Canvas.SetLeft(UiBtnPlus, (CANVAS_WIDTH / 2) - 18);
-            Canvas.SetLeft(UiBtnMinus, (CANVAS_WIDTH / 2) + 1);
-
-            Canvas.SetLeft(UiBtnScale, (CANVAS_WIDTH / 2) - 80);
-            SetScaleLabelText();
-        }
 
         /// <summary>
         /// Creates the static label with "Evaluation Chart" title.
@@ -309,6 +289,8 @@ namespace ChessForge
             UiCnvWhite.Children.Add(_lblTitle);
             Canvas.SetLeft(_lblTitle, 5);
             Canvas.SetTop(_lblTitle, 0);
+
+            _lblTitle.FontSize = BaseFontSize;
         }
 
         /// <summary>
@@ -318,27 +300,13 @@ namespace ChessForge
         {
             _lblMove.Background = Brushes.Transparent;
             _lblMove.FontWeight = FontWeights.Bold;
+            _lblMove.FontSize = BaseFontSize;
 
             UiCnvWhite.Children.Add(_lblMove);
             Canvas.SetRight(_lblMove, 5);
             Canvas.SetTop(_lblMove, 0);
 
             Canvas.SetZIndex(_lblMove, _zIndexMoveLabel);
-        }
-
-        /// <summary>
-        /// Creates the move label.
-        /// </summary>
-        private void ConfigureFixedPositionEvaluationLabel()
-        {
-            _lblFixedPosEval.Background = Brushes.Transparent;
-            _lblFixedPosEval.FontSize = _lblFixedPosEval.FontSize - 2;
-
-            UiCnvWhite.Children.Add(_lblFixedPosEval);
-            Canvas.SetRight(_lblFixedPosEval, 5);
-            Canvas.SetTop(_lblFixedPosEval, 18);
-
-            Canvas.SetZIndex(_lblFixedPosEval, _zFixedPosEvalLabel);
         }
 
         /// <summary>
@@ -361,7 +329,7 @@ namespace ChessForge
             line.X1 = -1;
             line.X2 = -1;
             line.Y1 = 0;
-            line.Y2 = CANVAS_HEIGHT;
+            line.Y2 = CanvasHeight;
             line.Stroke = Brushes.Ivory;
 
             cnv.Children.Add(line);
@@ -389,6 +357,7 @@ namespace ChessForge
         {
             lbl.Foreground = Brushes.Black;
             lbl.Background = Brushes.Ivory;
+            lbl.FontSize = BaseFontSize;
             lbl.Visibility = Visibility.Collapsed;
             cnv.Children.Add(lbl);
             Canvas.SetZIndex(lbl, _zIndexEvalLabel);
@@ -410,13 +379,49 @@ namespace ChessForge
         /// <param name="marker"></param>
         private void ConfigureMarker(Canvas cnv, Ellipse marker)
         {
-            marker.Width = MARKER_SIZE;
-            marker.Height = MARKER_SIZE;
+            marker.Width = MarkerSize;
+            marker.Height = MarkerSize;
             marker.Fill = Brushes.Yellow;
 
             cnv.Children.Add(marker);
             marker.Visibility = Visibility.Collapsed;
             Canvas.SetZIndex(marker, _zIndexMarker);
+        }
+
+        /// <summary>
+        /// Configures Scale Elements.
+        /// </summary>
+        private void ConfigureScaleElements()
+        {
+            UiCnvWhite.Children.Add(_lblScale);
+            UiCnvWhite.Children.Add(_btnPlus);
+            UiCnvWhite.Children.Add(_btnMinus);
+
+            Panel.SetZIndex(_lblScale, _zScaleElements);
+            Canvas.SetLeft(_lblScale, 268);
+            Canvas.SetTop(_lblScale, 7);
+            _lblScale.Height = BaseFontSize + 6;
+            _lblScale.FontSize = BaseFontSize - 1;
+
+            Panel.SetZIndex(_btnPlus, _zScaleElements);
+            Canvas.SetLeft(_btnPlus, 317);
+            Canvas.SetTop(_btnPlus, 4);
+            _btnPlus.Height = BaseFontSize + 6;
+            _btnPlus.Width = BaseFontSize + 4;
+            _btnPlus.FontSize = BaseFontSize + 2;
+
+            Panel.SetZIndex(_btnMinus, _zScaleElements);
+            Canvas.SetLeft(_btnMinus, 333);
+            Canvas.SetTop(_btnMinus, 4);
+            _btnMinus.Height = BaseFontSize + 6;
+            _btnMinus.Width = BaseFontSize + 4;
+            _btnMinus.FontSize = BaseFontSize + 2;
+
+            Canvas.SetLeft(_btnPlus, (CANVAS_WIDTH / 2) - 18);
+            Canvas.SetLeft(_btnMinus, (CANVAS_WIDTH / 2) + 1);
+
+            Canvas.SetLeft(_lblScale, (CANVAS_WIDTH / 2) - 80);
+            SetScaleLabelText();
         }
 
         //*****************************************************
@@ -547,7 +552,7 @@ namespace ChessForge
                 if (singleNode)
                 {
                     // vertical up/down line
-                    Point whitePoint = new Point(p.Value.X - _halfPixelsPerPly, CANVAS_HEIGHT - p.Value.Y);
+                    Point whitePoint = new Point(p.Value.X - _halfPixelsPerPly, CanvasHeight - p.Value.Y);
                     whitePath.Add(new LineSegment(whitePoint, false));
                     whiteLine.Points.Add(whitePoint);
 
@@ -555,7 +560,7 @@ namespace ChessForge
                     blackPath.Add(new LineSegment(blackPoint, false));
                     blackLine.Points.Add(blackPoint);
 
-                    whitePoint = new Point(p.Value.X, CANVAS_HEIGHT - p.Value.Y);
+                    whitePoint = new Point(p.Value.X, CanvasHeight - p.Value.Y);
                     whitePath.Add(new LineSegment(whitePoint, false));
                     whiteLine.Points.Add(whitePoint);
 
@@ -565,7 +570,7 @@ namespace ChessForge
                 }
                 else
                 {
-                    whitePath.Add(new LineSegment(new Point(p.Value.X, CANVAS_HEIGHT - p.Value.Y), false));
+                    whitePath.Add(new LineSegment(new Point(p.Value.X, CanvasHeight - p.Value.Y), false));
                     blackPath.Add(new LineSegment(new Point(p.Value.X, -p.Value.Y), false));
                 }
             }
@@ -584,7 +589,7 @@ namespace ChessForge
             Point? p = GetPointForMove(nd);
             if (p.HasValue)
             {
-                Point whitePoint = new Point(p.Value.X, CANVAS_HEIGHT - p.Value.Y);
+                Point whitePoint = new Point(p.Value.X, CanvasHeight - p.Value.Y);
                 whitePath.Add(new LineSegment(whitePoint, true));
 
                 Point blackPoint = new Point(p.Value.X, -p.Value.Y);
@@ -610,7 +615,7 @@ namespace ChessForge
                 if (singleNode)
                 {
                     // extension for a single node
-                    Point whitePoint = new Point(p.Value.X + _halfPixelsPerPly, CANVAS_HEIGHT - p.Value.Y);
+                    Point whitePoint = new Point(p.Value.X + _halfPixelsPerPly, CanvasHeight - p.Value.Y);
                     whitePath.Add(new LineSegment(whitePoint, false));
                     whiteLine.Points.Add(whitePoint);
 
@@ -619,14 +624,14 @@ namespace ChessForge
                     blackLine.Points.Add(blackPoint);
 
                     // vertical up/down line
-                    whitePoint = new Point(p.Value.X + _halfPixelsPerPly, CANVAS_HEIGHT);
+                    whitePoint = new Point(p.Value.X + _halfPixelsPerPly, CanvasHeight);
                     blackPoint = new Point(p.Value.X + _halfPixelsPerPly, 0);
                     whitePath.Add(new LineSegment(whitePoint, false));
                     blackPath.Add(new LineSegment(blackPoint, false));
                 }
                 else
                 {
-                    whitePath.Add(new LineSegment(new Point(p.Value.X, CANVAS_HEIGHT), false));
+                    whitePath.Add(new LineSegment(new Point(p.Value.X, CanvasHeight), false));
                     blackPath.Add(new LineSegment(new Point(p.Value.X, 0), false));
                 }
             }
@@ -728,19 +733,10 @@ namespace ChessForge
             if (nd != null && nd.NodeId != 0)
             {
                 _lblMove.Content = MoveUtils.BuildSingleMoveText(nd, true, false, 0);
-                if (!string.IsNullOrEmpty(nd.EngineEvaluation))
-                {
-                    _lblFixedPosEval.Content = nd.EngineEvaluation;
-                }
-                else
-                {
-                    _lblFixedPosEval.Content = "";
-                }
             }
             else
             {
                 _lblMove.Content = "";
-                _lblFixedPosEval.Content = "";
             }
         }
 
@@ -772,7 +768,7 @@ namespace ChessForge
                         isValuePositive = true;
                         marker = _whiteMarker;
                         otherMarker = _blackMarker;
-                        p.Y = CANVAS_HEIGHT - p.Y;
+                        p.Y = CanvasHeight - p.Y;
                     }
                     else
                     {
@@ -782,8 +778,8 @@ namespace ChessForge
                         otherMarker = _whiteMarker;
                     }
 
-                    p.Y = p.Y - MARKER_SIZE;
-                    p.X = p.X - (MARKER_SIZE / 2);
+                    p.Y = p.Y - MarkerSize;
+                    p.X = p.X - (MarkerSize / 2);
 
                     marker.Visibility = Visibility.Visible;
                     otherMarker.Visibility = Visibility.Collapsed;
@@ -792,7 +788,7 @@ namespace ChessForge
                     {
                         Point pOther = new Point();
                         pOther.X = p.X;
-                        pOther.Y = CANVAS_HEIGHT + p.Y;
+                        pOther.Y = CanvasHeight + p.Y;
                         otherMarker.Visibility = Visibility.Visible;
                         Canvas.SetLeft(otherMarker, pOther.X);
                         Canvas.SetTop(otherMarker, pOther.Y);
@@ -1046,7 +1042,7 @@ namespace ChessForge
         /// <returns></returns>
         private void SetScaleLabelText()
         {
-            UiBtnScale.Content = Properties.Resources.Scale + ": " + _evalScale.ToString("F1");
+            _lblScale.Content = Properties.Resources.Scale + ": " + _evalScale.ToString("F1");
         }
 
         /// <summary>
@@ -1135,7 +1131,7 @@ namespace ChessForge
         {
             _evalScale = Math.Max(MIN_EVAL_SCALE, _evalScale / 2);
             IsDirty = true;
-            Update(_nodeList);
+            Refresh(_nodeList);
         }
 
         /// <summary>
@@ -1147,7 +1143,56 @@ namespace ChessForge
         {
             _evalScale = Math.Min(MAX_EVAL_SCALE, _evalScale * 2);
             IsDirty = true;
-            Update(_nodeList);
+            Refresh(_nodeList);
+        }
+
+        /// <summary>
+        /// Configures the Scale label and buttons.
+        /// </summary>
+        private void CreateScaleElements()
+        {
+            CreateScaleLabel();
+
+            _btnPlus = CreateScaleButton("+");
+            _btnPlus.Click += UiBtnPlus_Click;
+
+            _btnMinus = CreateScaleButton("-");
+            _btnMinus.Click += UiBtnMinus_Click;
+        }
+
+        /// <summary>
+        /// Creates the Scale label.
+        /// </summary>
+        private void CreateScaleLabel()
+        {
+            _lblScale = new Label();
+            _lblScale.Height = BaseFontSize + 6;
+            _lblScale.Padding = new Thickness(0, 0, 0, 0);
+            _lblScale.FontSize = BaseFontSize - 1;
+            _lblScale.Foreground = Brushes.DarkGreen;
+            _lblScale.Padding = new Thickness(0, 0, 0, 0);
+        }
+
+        /// <summary>
+        /// Creates a single Scale Button
+        /// either "+" or "-".
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        private Button CreateScaleButton(string text)
+        {
+            Button button = new Button();
+            button.Content = text;
+            button.Height = BaseFontSize + 6;
+            button.Width = BaseFontSize + 4;
+            button.FontSize = BaseFontSize + 2;
+            button.FontWeight = FontWeights.Bold;
+            button.Foreground = Brushes.DarkGreen;
+            button.Background = Brushes.Transparent;
+            button.BorderThickness = new Thickness(0, 0, 0, 0);
+            button.Padding = new Thickness(0, 0, 0, 0);
+
+            return button;
         }
     }
 }

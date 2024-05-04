@@ -12,7 +12,7 @@ using System.Windows.Input;
 using ChessPosition.GameTree;
 using System.Windows.Documents;
 using System.Linq;
-using static ChessForge.SoundPlayer;
+using System.Windows.Media;
 
 namespace ChessForge
 {
@@ -411,9 +411,22 @@ namespace ChessForge
                         }
                     }
 
+                    // Prepare Flash Notification text
+                    StringBuilder flash = new StringBuilder("Merging chapters:");
+                    foreach (Chapter chapter in sourceChapters)
+                    {
+                        flash.Append(" [" + (chapter.Index + 1).ToString() + "]");
+                    }
+
+
                     WorkbookManager.SessionWorkbook.MergeChapters(merged, title, sourceChapters);
                     _chaptersView.BuildFlowDocumentForChaptersView();
                     UiTabChapters.Focus();
+
+                    // complete and display the Flash notification
+                    flash.Append("\ninto new chapter [" + (WorkbookManager.SessionWorkbook.GetChapterCount()).ToString() + "]");
+                    AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(flash.ToString(), Brushes.Green);
+
                     PulseManager.ChaperIndexToBringIntoView = WorkbookManager.SessionWorkbook.GetChapterCount() - 1;
                 }
 
@@ -513,10 +526,11 @@ namespace ChessForge
             }
 
             AppState.ActiveVariationTree.OpsManager.Undo(out EditOperation.EditType opType, out string selectedLineId, out int selectedNodeId);
+
             TreeNode selectedNode = AppState.ActiveVariationTree.GetNodeFromNodeId(selectedNodeId);
-            
-            UiEvalChart.IsDirty = true;
-            UiEvalChart.Update();
+            ActiveLine.UpdateMoveText(selectedNode);
+
+            MultiTextBoxManager.ShowEvaluationChart(true);
 
             if (selectedNode == null)
             {
@@ -632,7 +646,7 @@ namespace ChessForge
                                     break;
                                 case WorkbookOperationType.DELETE_ENGINE_EVALS:
                                     AppState.MainWin.ActiveTreeView?.BuildFlowDocumentForVariationTree();
-                                    ActiveLine.RefreshNodeList();
+                                    ActiveLine.RefreshNodeList(true);
                                     break;
                             }
 
@@ -811,7 +825,7 @@ namespace ChessForge
 
             if (EngineMessageProcessor.IsEngineAvailable)
             {
-                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.LINE, EvaluationManager.LineSource.ACTIVE_LINE);
+                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.LINE, true, EvaluationManager.LineSource.ACTIVE_LINE);
 
                 int idx = ActiveLine.GetSelectedPlyNodeIndex(true);
                 // if idx == 0, bump it to 1

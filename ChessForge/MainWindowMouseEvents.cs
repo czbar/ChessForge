@@ -784,7 +784,8 @@ namespace ChessForge
             UiImgChartOff.Visibility = Visibility.Visible;
             UiImgChartOn.Visibility = Visibility.Collapsed;
 
-            UiEvalChart.Visibility = Visibility.Collapsed;
+            MultiTextBoxManager.ShowEvaluationChart(false);
+
             if (e != null)
             {
                 e.Handled = true;
@@ -802,12 +803,8 @@ namespace ChessForge
             UiImgChartOff.Visibility = Visibility.Collapsed;
             UiImgChartOn.Visibility = Visibility.Visible;
 
-            UiEvalChart.IsDirty = true;
-
-            if (UiEvalChart.ReportIfCanShow())
-            {
-                UiEvalChart.Update();
-            }
+            UiEvalChart.ReportIfCanShow();
+            MultiTextBoxManager.ShowEvaluationChart(true);
 
             if (e != null)
             {
@@ -917,14 +914,15 @@ namespace ChessForge
                 TrainingSession.IsContinuousEvaluation = false;
                 if (EvaluationManager.CurrentMode != EvaluationManager.Mode.ENGINE_GAME)
                 {
-                    EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
+                    EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE, false);
                 }
             }
             else
             {
-                StopEvaluation(false);
+                StopEvaluation(false, false);
                 TrainingSession.IsContinuousEvaluation = false;
             }
+            AppState.SetupGuiForCurrentStates();
 
             if (e != null)
             {
@@ -952,7 +950,7 @@ namespace ChessForge
             }
 
             // no eval in auto-replay
-            if (ActiveLineReplay.IsReplayActive 
+            if (ActiveLineReplay.IsReplayActive
                 || AppState.ActiveTab == TabViewType.INTRO
                 || AppState.ActiveTab == TabViewType.BOOKMARKS
                 || AppState.ActiveTab == TabViewType.CHAPTERS)
