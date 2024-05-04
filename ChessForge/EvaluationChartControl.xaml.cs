@@ -177,9 +177,9 @@ namespace ChessForge
         /// <summary>
         /// Overloaded method to render the chart with the current active line.
         /// </summary>
-        public void Update()
+        public void Refresh()
         {
-            Update(AppState.MainWin.ActiveLine.GetNodeList());
+            Refresh(AppState.MainWin.ActiveLine.GetNodeList());
         }
 
         /// <summary>
@@ -188,11 +188,11 @@ namespace ChessForge
         /// Displays the updated chart.
         /// </summary>
         /// <param name="nodeList"></param>
-        public void Update(ObservableCollection<TreeNode> nodeList)
+        public void Refresh(ObservableCollection<TreeNode> nodeList)
         {
             AppState.MainWin.Dispatcher.Invoke(() =>
             {
-                if (CanShowChart(false, out _))
+                if (MultiTextBoxManager.CanShowEvaluationChart(false, out _))
                 {
                     try
                     {
@@ -269,53 +269,7 @@ namespace ChessForge
         /// <returns></returns>
         public bool ReportIfCanShow()
         {
-            return CanShowChart(true, out _);
-        }
-
-        /// <summary>
-        /// Checks it chart can be currently shown.
-        /// If it can't and showReason == true, a flash announcement
-        /// with the reason will be displayed.
-        /// </summary>
-        /// <returns></returns>
-        public bool CanShowChart(bool showReason, out bool fullSize)
-        {
-            bool res = true;
-            fullSize = true;
-
-            if (Configuration.ShowEvaluationChart)
-            {
-                if (AppState.ActiveTab != TabViewType.STUDY && AppState.ActiveTab != TabViewType.MODEL_GAME)
-                {
-                    // report wrong tab
-                    if (showReason)
-                    {
-                        AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.ChartErrorWrongTab, Brushes.Red);
-                    }
-                    res = false;
-                }
-                else if (!HasMovesWithEval(AppState.ActiveLine.GetNodeList(), 2))
-                {
-                    // insufficient moves with evaluations
-                    if (showReason)
-                    {
-                        AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.ChartErrorInsufficientEvals, Brushes.Red);
-                    }
-                    res = false;
-                }
-
-                if (res && EvaluationManager.IsRunning)
-                {
-                    fullSize = false;
-                }
-
-            }
-            else
-            {
-                res = false;
-            }
-
-            return res;
+            return MultiTextBoxManager.CanShowEvaluationChart(true, out _);
         }
 
         //*****************************************************
@@ -1177,7 +1131,7 @@ namespace ChessForge
         {
             _evalScale = Math.Max(MIN_EVAL_SCALE, _evalScale / 2);
             IsDirty = true;
-            Update(_nodeList);
+            Refresh(_nodeList);
         }
 
         /// <summary>
@@ -1189,7 +1143,7 @@ namespace ChessForge
         {
             _evalScale = Math.Min(MAX_EVAL_SCALE, _evalScale * 2);
             IsDirty = true;
-            Update(_nodeList);
+            Refresh(_nodeList);
         }
 
         /// <summary>

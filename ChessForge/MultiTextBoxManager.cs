@@ -1,9 +1,13 @@
-﻿using System;
+﻿using ChessPosition;
+using GameTree;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 
 namespace ChessForge
 {
@@ -26,10 +30,20 @@ namespace ChessForge
         /// Show or hide the evaluation chart depending on 
         /// the current state and config.
         /// </summary>
-        public static void ShowEvaluationChart()
+        public static void ShowEvaluationChart(bool forceRefresh, ObservableCollection<TreeNode> nodeList = null)
         {
             MainWin.Dispatcher.Invoke(() =>
             {
+                if (forceRefresh)
+                {
+                    MainWin.UiEvalChart.IsDirty = true;
+                }
+
+                if (nodeList == null)
+                {
+                    nodeList = AppState.MainWin.ActiveLine.GetNodeList();
+                }
+
                 if (AppState.CurrentLearningMode == LearningMode.Mode.IDLE)
                 {
                     MainWin.UiEvalChart.Visibility = Visibility.Hidden;
@@ -39,11 +53,11 @@ namespace ChessForge
                 }
                 else
                 {
-                    if (IsChartTurnedOn() && MainWin.UiEvalChart.CanShowChart(false, out bool fullSize))
+                    if (IsChartTurnedOn() && CanShowEvaluationChart(false, out bool fullSize))
                     {
                         ResizeMultiBoxes(fullSize);
                         MainWin.UiEvalChart.Visibility = Visibility.Visible;
-                        MainWin.UiEvalChart.Update();
+                        MainWin.UiEvalChart.Refresh(nodeList);
                     }
                     else
                     {
@@ -55,6 +69,43 @@ namespace ChessForge
                     }
                 }
             });
+        }
+
+        /// <summary>
+        /// Checks if the evaluation chart can be currently shown.
+        /// If it can't and showReason == true, a flash announcement
+        /// with the reason will be displayed.
+        /// </summary>
+        /// <returns></returns>
+        public static bool CanShowEvaluationChart(bool showReason, out bool fullSize)
+        {
+            bool res = true;
+            fullSize = true;
+
+            if (Configuration.ShowEvaluationChart)
+            {
+                if (AppState.ActiveTab != TabViewType.STUDY && AppState.ActiveTab != TabViewType.MODEL_GAME)
+                {
+                    // report wrong tab
+                    if (showReason)
+                    {
+                        AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.ChartErrorWrongTab, Brushes.Red);
+                    }
+                    res = false;
+                }
+
+                if (res && EvaluationManager.IsRunning)
+                {
+                    fullSize = false;
+                }
+
+            }
+            else
+            {
+                res = false;
+            }
+
+            return res;
         }
 
         /// <summary>
