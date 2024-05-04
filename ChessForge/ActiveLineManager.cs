@@ -125,6 +125,30 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Updates text on the Move object.
+        /// </summary>
+        /// <param name="nd"></param>
+        public void UpdateMoveText(TreeNode nd)
+        {
+            if (nd != null)
+            {
+                PieceColor color;
+                MoveWithEval mev = Line.GetMoveFromNodeId(nd.NodeId, out color);
+                if (mev != null)
+                {
+                    if (color == PieceColor.White)
+                    {
+                        mev.WhitePly = nd.GetGuiPlyText(true);
+                    }
+                    else
+                    {
+                        mev.BlackPly = nd.GetGuiPlyText(true);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Binds a new line to this object and DataGrid control.
         /// </summary>
         /// <param name="line"></param>
