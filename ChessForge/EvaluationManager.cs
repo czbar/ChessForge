@@ -174,8 +174,7 @@ namespace ChessForge
                     EngineMessageProcessor.StopEngineEvaluation();
                     AppState.SwapCommentBoxForEngineLines(TrainingSession.IsContinuousEvaluation);
 
-                    AppState.MainWin.UiEvalChart.IsDirty = true;
-                    AppState.MainWin.UiEvalChart.Update();
+                    MultiTextBoxManager.ShowEvaluationChart(true);
                     break;
                 case Mode.CONTINUOUS:
                     AppState.MainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);

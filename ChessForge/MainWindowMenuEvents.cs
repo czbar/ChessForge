@@ -528,8 +528,7 @@ namespace ChessForge
             AppState.ActiveVariationTree.OpsManager.Undo(out EditOperation.EditType opType, out string selectedLineId, out int selectedNodeId);
             TreeNode selectedNode = AppState.ActiveVariationTree.GetNodeFromNodeId(selectedNodeId);
             
-            UiEvalChart.IsDirty = true;
-            UiEvalChart.Update();
+            MultiTextBoxManager.ShowEvaluationChart(true);
 
             if (selectedNode == null)
             {

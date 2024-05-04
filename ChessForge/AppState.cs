@@ -856,7 +856,7 @@ namespace ChessForge
                         ShowExplorers(false, false);
                         break;
                 }
-                ShowEvaluationChart();
+                MultiTextBoxManager.ShowEvaluationChart(false);
                 EnableNavigationArrows();
                 ShowEvaluationControlsForCurrentStates();
                 ConfigureMainBoardContextMenu();
@@ -1015,15 +1015,6 @@ namespace ChessForge
                 }
                 ShowEvaluationControlsForCurrentStates();
             });
-        }
-
-        /// <summary>
-        /// Show or hide the evaluation chart depending on 
-        /// the current state and config.
-        /// </summary>
-        public static void ShowEvaluationChart()
-        {
-            MultiTextBoxManager.ShowEvaluationChart();
         }
 
         /// <summary>

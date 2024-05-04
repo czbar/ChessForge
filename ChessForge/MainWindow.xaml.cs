@@ -1641,7 +1641,7 @@ namespace ChessForge
                 }
 
                 GuiUtilities.ForceFocus(tabToFocus, TabViewType.STUDY);
-                AppState.ShowEvaluationChart();
+                MultiTextBoxManager.ShowEvaluationChart(false);
             }
             catch (Exception ex)
             {
@@ -2008,7 +2008,7 @@ namespace ChessForge
                     {
                         if (AppState.MainWin.UiEvalChart.IsDirty)
                         {
-                            AppState.MainWin.UiEvalChart.Update();
+                            MultiTextBoxManager.ShowEvaluationChart(true);
                         }
                         AppState.MainWin.UiEvalChart.SelectMove(nd);
                     }
