@@ -70,6 +70,8 @@ namespace ChessForge
                 }
 
                 ActiveTreeView.InsertOrUpdateCommentRun(nd);
+                ActiveLine.UpdateMoveText(nd);
+                
                 AppState.IsDirty = true;
             }
         }
