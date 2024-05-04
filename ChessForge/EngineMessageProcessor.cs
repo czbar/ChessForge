@@ -404,8 +404,9 @@ namespace ChessForge
                     {
                         if (EvaluationManager.CurrentMode != EvaluationManager.Mode.CONTINUOUS)
                         {
-                            // (false) because SetupGuiForCurrentStates would have been called by StopEvaluation
-                            EvaluationManager.Reset(false);
+                            // (true) as arg because although SetupGuiForCurrentStates would have been called by StopEvaluation
+                            // we need to make some changes (engine toggle and hide the progress bar)
+                            EvaluationManager.Reset(true);
                         }
                     }
 
@@ -417,7 +418,7 @@ namespace ChessForge
                     AppState.MainWin.UiEvalChart.IsDirty = true;
                     if (MultiTextBoxManager.IsChartTurnedOn())
                     {
-                        AppState.MainWin.UiEvalChart.Update();
+                        MultiTextBoxManager.ShowEvaluationChart(true);
                     }
                 }
                 else
