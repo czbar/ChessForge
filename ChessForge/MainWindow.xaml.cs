@@ -3012,6 +3012,7 @@ namespace ChessForge
                         nd.Comment = dlg.Comment;
                         nd.SetNags(dlg.Nags);
                         nd.QuizPoints = dlg.QuizPoints;
+                        ActiveLine.UpdateMoveText(nd);
                         AppState.IsDirty = true;
 
                         if (op != null)
