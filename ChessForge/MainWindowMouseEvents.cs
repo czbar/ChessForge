@@ -784,8 +784,8 @@ namespace ChessForge
             UiImgChartOff.Visibility = Visibility.Visible;
             UiImgChartOn.Visibility = Visibility.Collapsed;
 
-            MultiTextBoxManager.ShowEvaluationChart();
-            
+            MultiTextBoxManager.ShowEvaluationChart(false);
+
             if (e != null)
             {
                 e.Handled = true;
@@ -803,14 +803,8 @@ namespace ChessForge
             UiImgChartOff.Visibility = Visibility.Collapsed;
             UiImgChartOn.Visibility = Visibility.Visible;
 
-            UiEvalChart.IsDirty = true;
-
-            if (UiEvalChart.ReportIfCanShow())
-            {
-                UiEvalChart.Update();
-            }
-
-            MultiTextBoxManager.ShowEvaluationChart();
+            UiEvalChart.ReportIfCanShow();
+            MultiTextBoxManager.ShowEvaluationChart(true);
 
             if (e != null)
             {
@@ -956,7 +950,7 @@ namespace ChessForge
             }
 
             // no eval in auto-replay
-            if (ActiveLineReplay.IsReplayActive 
+            if (ActiveLineReplay.IsReplayActive
                 || AppState.ActiveTab == TabViewType.INTRO
                 || AppState.ActiveTab == TabViewType.BOOKMARKS
                 || AppState.ActiveTab == TabViewType.CHAPTERS)
