@@ -172,7 +172,7 @@ namespace ChessForge
             _selectedRow = -1;
             _selectedColumn = -1;
 
-            AppState.MainWin.UiEvalChart.Update(line);
+            MultiTextBoxManager.ShowEvaluationChart(true, line);
         }
 
         /// <summary>
