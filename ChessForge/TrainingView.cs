@@ -724,7 +724,6 @@ namespace ChessForge
             if (nd == null)
             {
                 AppLog.Message("TrainingView:ShowEvaluationResult(): null node received ");
-                DebugUtils.ShowDebugMessage("Null node in Training ShowEvaluationResult");
                 return;
             }
 
