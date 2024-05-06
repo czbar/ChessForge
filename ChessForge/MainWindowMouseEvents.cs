@@ -820,7 +820,7 @@ namespace ChessForge
         /// <param name="e"></param>
         public void ExplorersToggleOn_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            TurnExplorersOff();
+            TurnExplorersOff(true);
 
             if (e != null)
             {
@@ -873,25 +873,43 @@ namespace ChessForge
                 WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, ActiveVariationTree.SelectedNode);
             }
 
-            AppState.AreExplorersOn = true;
             AppState.SetupGuiForCurrentStates();
         }
 
         /// <summary>
         /// Deactivates and hides explorers.
         /// </summary>
-        private void TurnExplorersOff()
+        public void TurnExplorersOff(bool userAction)
         {
-            Configuration.ShowExplorers = false;
-
-            AppState.AreExplorersOn = false;
+            if (userAction)
+            {
+                // user clicked the toggle so update configuration
+                Configuration.ShowExplorers = false;
+            }
 
             UiImgExplorersOff.Visibility = Visibility.Visible;
             UiImgExplorersOn.Visibility = Visibility.Collapsed;
             WebAccessManager.IsEnabledExplorerQueries = false;
 
-            AppState.AreExplorersOn = false;
             AppState.ShowExplorers(false, ActiveTreeView != null && ActiveTreeView.HasEntities);
+        }
+
+        /// <summary>
+        /// Updates the states of explorers based on the current configuration
+        /// as oppose to being temporarily off e.g. due to being in the Training Mode.
+        /// </summary>
+        public void UpdateExplorersToggleState()
+        {
+            if (AppState.AreExplorersOn)
+            {
+                UiImgExplorersOff.Visibility = Visibility.Collapsed;
+                UiImgExplorersOn.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                UiImgExplorersOff.Visibility = Visibility.Visible;
+                UiImgExplorersOn.Visibility = Visibility.Collapsed;
+            }
         }
 
         /// <summary>

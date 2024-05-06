@@ -784,7 +784,7 @@ namespace ChessForge
 
                     SetSolvingMode(mode);
                     _mainWin.EngineToggleOn_OnPreviewMouseLeftButtonDown(null, null);
-                    _mainWin.ExplorersToggleOn_PreviewMouseDown(null, null);
+                    _mainWin.TurnExplorersOff(false);
 
                     string lineId = ShownVariationTree.SelectedLineId;
                     if (string.IsNullOrEmpty(lineId))
@@ -838,6 +838,7 @@ namespace ChessForge
                 SetupGuiForSolvingMode(mode);
                 BuildFlowDocumentForVariationTree();
 
+                _mainWin.UpdateExplorersToggleState();
                 _mainWin.BoardCommentBox.ShowTabHints();
             }
             catch
