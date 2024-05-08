@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 
 namespace ChessForge
@@ -80,6 +79,15 @@ namespace ChessForge
                 win.UiCnvDarkShade.Visibility = Visibility.Visible;
                 win.UiCnvDarkShade.Opacity = CurrentTheme.DarkShadeOpacity;
             }
+
+            win.UiDgActiveLine.Foreground = CurrentTheme.RtbForeground;
+            win.UiDgActiveLine.Background = CurrentTheme.RtbBackground;
+
+            win.UiDgActiveLine.RowBackground = CurrentTheme.RtbBackground;
+
+            win.UiDgActiveLine.ColumnHeaderStyle = new Style(typeof(DataGridColumnHeader));
+            win.UiDgActiveLine.ColumnHeaderStyle.Setters.Add(new Setter(Control.ForegroundProperty, Brushes.Black));
+            win.UiDgActiveLine.ColumnHeaderStyle.Setters.Add(new Setter(Control.BackgroundProperty, Brushes.LightGray));
         }
 
         /// <summary>
