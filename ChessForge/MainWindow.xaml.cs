@@ -2746,7 +2746,7 @@ namespace ChessForge
             }
             else
             {
-                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.EngineReplaced, Brushes.Green);
+                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.EngineReplaced, CommentBox.HintType.INFO);
                 return true;
             }
         }

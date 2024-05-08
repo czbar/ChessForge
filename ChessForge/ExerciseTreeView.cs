@@ -1104,7 +1104,7 @@ namespace ChessForge
         {
             if (_dummyBoardInDrag)
             {
-                AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.cbJustPicture);
+                AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.cbJustPicture, CommentBox.HintType.ERROR);
                 _dummyBoardInDrag = false;
             }
             _dummyBoardLeftClicked = false;

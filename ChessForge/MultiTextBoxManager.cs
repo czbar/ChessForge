@@ -89,7 +89,7 @@ namespace ChessForge
                     // report wrong tab
                     if (showReason)
                     {
-                        AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.ChartErrorWrongTab, Brushes.Red);
+                        AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.ChartErrorWrongTab, CommentBox.HintType.ERROR);
                     }
                     res = false;
                 }

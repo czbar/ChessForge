@@ -723,7 +723,7 @@ namespace ChessForge
                 IsDirty = true;
                 MainWin.SelectModelGame(chapter.ActiveModelGameIndex, true);
 
-                MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgGameImportSuccess, System.Windows.Media.Brushes.Green);
+                MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgGameImportSuccess, CommentBox.HintType.INFO);
             }
 
             return added;

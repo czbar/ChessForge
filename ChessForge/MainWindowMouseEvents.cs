@@ -81,12 +81,12 @@ namespace ChessForge
                 {
                     if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
                     {
-                        BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.InfoLineEvalInProgress);
+                        BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.InfoLineEvalInProgress, CommentBox.HintType.ERROR);
                         return;
                     }
                     else if (EvaluationManager.CurrentMode == EvaluationManager.Mode.ENGINE_GAME)
                     {
-                        BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.InfoEngineThinking);
+                        BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.InfoEngineThinking, CommentBox.HintType.ERROR);
                         return;
                     }
                 }
@@ -959,7 +959,7 @@ namespace ChessForge
         {
             if (!EngineMessageProcessor.IsEngineAvailable)
             {
-                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.EngineNotAvailable);
+                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.EngineNotAvailable, CommentBox.HintType.ERROR);
                 if (e != null)
                 {
                     e.Handled = true;
@@ -1678,7 +1678,7 @@ namespace ChessForge
         {
             if (AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
             {
-                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.InfoExitGameBeforeTabSwitch);
+                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.InfoExitGameBeforeTabSwitch, CommentBox.HintType.ERROR);
                 if (TrainingSession.IsTrainingInProgress)
                 {
                     UiTabTrainingProgress.Focus();

@@ -12,6 +12,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using static ChessForge.CommentBox;
 
 namespace ChessForge
 {
@@ -1931,7 +1932,7 @@ namespace ChessForge
             {
                 List<TreeNode> lstNodes = TreeUtils.CopyNodeList(_selectedForCopy);
                 SystemClipboard.CopyMoveList(lstNodes, ShownVariationTree.MoveNumberOffset);
-                _mainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgCopiedMoves, Brushes.Green);
+                _mainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgCopiedMoves, HintType.INFO);
             }
         }
 

@@ -77,11 +77,11 @@ namespace ChessForge
                             targetView.SelectNode(firstInserted.NodeId);
 
                             string msg = Properties.Resources.FlMsgPastedMovesCount + ": " + insertedNewNodes.Count;
-                            AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(msg, System.Windows.Media.Brushes.Green, 14);
+                            AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(msg, CommentBox.HintType.INFO, 14);
                         }
                         else
                         {
-                            AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.VariationAlreadyExists, System.Windows.Media.Brushes.Red, 14);
+                            AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.VariationAlreadyExists, CommentBox.HintType.ERROR, 14);
                         }
                     }
                     else
@@ -98,7 +98,7 @@ namespace ChessForge
 
                         string msg = Properties.Resources.ErrClipboardLinePaste + " ("
                             + MoveUtils.BuildSingleMoveText(failedInsertions[0], true, false, targetTree.MoveNumberOffset) + ")";
-                        AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(msg, System.Windows.Media.Brushes.Red, 14);
+                        AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(msg, CommentBox.HintType.ERROR, 14);
                     }
                 }
             }
@@ -190,12 +190,12 @@ namespace ChessForge
                 {
                     if (ex is ParserException parserException)
                     {
-                        AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(GuiUtilities.TranslateParseException(parserException), System.Windows.Media.Brushes.Red, 14);
+                        AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(GuiUtilities.TranslateParseException(parserException), CommentBox.HintType.ERROR, 14);
                     }
                     else
                     {
                         AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.Error + ": " + ex.Message,
-                            System.Windows.Media.Brushes.Red, 14);
+                            CommentBox.HintType.ERROR, 14);
                     }
                 }
 
@@ -203,7 +203,7 @@ namespace ChessForge
             }
             else
             {
-                AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.InvalidPgn, System.Windows.Media.Brushes.Red, 14);
+                AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.InvalidPgn, CommentBox.HintType.ERROR, 14);
             }
 
             return lstNodes;
@@ -250,7 +250,7 @@ namespace ChessForge
             int articleCount = PgnArticleUtils.PasteArticlesFromPgn(clipText, out addedChapters, out cancelled);
             if (articleCount == 0)
             {
-                AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.InvalidPgn, System.Windows.Media.Brushes.Red, 14);
+                AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.InvalidPgn, CommentBox.HintType.ERROR, 14);
             }
             else
             {

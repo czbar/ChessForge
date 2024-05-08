@@ -189,7 +189,7 @@ namespace ChessForge
                             string typ = GuiUtilities.GetGameDataTypeString(game);
                             subLines.Add(Properties.Resources.LargeItem + " (" + typ + "): " + GuiUtilities.GetGameDataTitle(game));
 
-                            AppState.MainWin.BoardCommentBox.UserWaitAnnouncement(Properties.Resources.ProcessLargeItem, Brushes.Blue, subLines);
+                            AppState.MainWin.BoardCommentBox.UserWaitAnnouncement(Properties.Resources.ProcessLargeItem, CommentBox.HintType.PROGRESS, subLines);
                             AppState.DoEvents();
 
                             Paragraph para = new Paragraph();
