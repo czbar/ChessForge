@@ -132,6 +132,10 @@ namespace ChessForge
             {
                 UpdateDiagramShapes(node);
             }
+            // same for moves as we set the foreground accordign to the current theme
+            // rather than what's in XAML
+            UpdateMovesColor();
+
             AppState.IsDirty = currDirty;
 
             _selectedNode = Nodes[0];
@@ -505,7 +509,7 @@ namespace ChessForge
 
             Run rMove = new Run();
             rMove.Name = _run_move_ + nodeId.ToString();
-            rMove.Foreground = Brushes.Blue;
+            rMove.Foreground = ChessForgeColors.CurrentTheme.IntroMoveForeground;
             rMove.FontWeight = FontWeights.Bold;
             rMove.FontSize = MOVE_FONT_SIZE;
 
@@ -544,12 +548,6 @@ namespace ChessForge
                 if (run != null)
                 {
                     IntroMoveDialog dlg = new IntroMoveDialog(SelectedNode, run);
-                    //{
-                    //    Left = AppState.MainWin.Left + 100,
-                    //    Top = AppState.MainWin.Top + 100,
-                    //    Topmost = false,
-                    //    Owner = AppState.MainWin
-                    //};
                     GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
                     if (dlg.ShowDialog() == true)
@@ -1109,6 +1107,40 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Update foreground color of all Moves.
+        /// This is necessary when opening the first time
+        /// as color configuration may have changed,
+        /// and when switching modes.
+        /// </summary>
+        private void UpdateMovesColor()
+        {
+            foreach (Block block in _rtb.Document.Blocks)
+            {
+                Paragraph para = block as Paragraph;
+                if (para != null)
+                {
+                    foreach (Inline inPara in para.Inlines)
+                    {
+                        if (inPara is InlineUIContainer iuc)
+                        {
+                            TextBlock tb = iuc.Child as TextBlock;
+                            if (tb != null)
+                            {
+                                foreach (Inline inTb in tb.Inlines)
+                                {
+                                    if (inTb is Run run)
+                                    {
+                                        run.Foreground = ChessForgeColors.CurrentTheme.IntroMoveForeground;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Inserts a move's Run into a TextBlock that is then inserted into an InlineUIContainer
         /// and finally in the Document.
         /// We determine the place to insert the new move in, and are guessing the number 
@@ -1319,7 +1351,7 @@ namespace ChessForge
             Canvas sideCanvas = new Canvas();
             sideCanvas.Width = 21;
             sideCanvas.Height = parent.Height + 2;
-            sideCanvas.Background = Brushes.White;
+            sideCanvas.Background = ChessForgeColors.CurrentTheme.IntroDiagSideCanvasBackground;
             parent.Children.Add(sideCanvas);
             Canvas.SetLeft(sideCanvas, 250);
             Canvas.SetTop(sideCanvas, -1);
@@ -1569,7 +1601,7 @@ namespace ChessForge
         private Canvas SetupDiagramCanvas()
         {
             Canvas canvas = new Canvas();
-            canvas.Background = Brushes.Black;
+            canvas.Background = ChessForgeColors.CurrentTheme.IntroDiagBackground;
             canvas.Width = 270;
             canvas.Height = 250;
 
