@@ -61,7 +61,6 @@
     <Compile Include="GameTree\Operation.cs" />
     <Compile Include="Parsers\GameHeader.cs" />
     <Compile Include="GameTree\PlyForTreeView.cs" />
-    <Compile Include="GameTree\RichTextPara.cs" />
     <Compile Include="GameTree\VariationTree.cs" />
     <Compile Include="GameTree\TreeNode.cs" />
     <Compile Include="GameTree\TreeMerge.cs" />
