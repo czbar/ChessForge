@@ -239,7 +239,7 @@ namespace ChessForge
         /// Highlights the row with the selected game.
         /// </summary>
         /// <param name="highlightedGameId"></param>
-        public void SetRowBackgorunds(string highlightedGameId)
+        public void SetRowBackgrounds(string highlightedGameId)
         {
             for (int i = 0; i < _gamesTable.RowGroups[0].Rows.Count; i++)
             {
