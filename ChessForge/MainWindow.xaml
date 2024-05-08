@@ -608,9 +608,6 @@
                                     <Style TargetType="{x:Type Paragraph}">
                                         <Setter Property="Margin" Value="0" />
                                     </Style>
-                                    <SolidColorBrush x:Key="WorkbookBackgroundBrush" Color="White"/>
-                                    <SolidColorBrush x:Key="WorkbookHighlightBrush" Color="LightSkyBlue"/>
-                                    <SolidColorBrush x:Key="WorkbookLineHighlightBrush" Color="Yellow"/>
                                 </RichTextBox.Resources>
                                 <FlowDocument>
                                 </FlowDocument>
