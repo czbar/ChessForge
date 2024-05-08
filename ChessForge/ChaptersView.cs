@@ -118,6 +118,7 @@ namespace ChessForge
             _mainWin.UiRtbChaptersView.IsReadOnly = true;
 
             _richTextBox = AppState.MainWin.UiRtbChaptersView;
+            _richTextBox.Document.PageWidth = 1000;
         }
         /// <summary>
         /// Flags whether the view needs refreshing

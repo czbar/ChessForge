@@ -409,9 +409,8 @@
                                 </ContextMenu>
                             </Grid.ContextMenu>
                             <RichTextBox x:Name="UiRtbChaptersView" Grid.Row="1"  ContextMenu="{x:Null}" IsUndoEnabled="False" HorizontalAlignment="Left" 
-                                         Width="2000"
                                          Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
-                                         SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden"
+                                         SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                                          Height="640" MinHeight="500" IsReadOnly="True" MouseLeftButtonUp="UiRtbChaptersView_MouseLeftButtonUp" 
                                          MouseEnter="UiRtbChaptersView_MouseEnter" MouseLeave="UiRtbChaptersView_MouseLeave" MouseMove="UiRtbChaptersView_MouseMove" LayoutUpdated="UiRtbChaptersView_LayoutUpdated" >
                                 <RichTextBox.Resources>
