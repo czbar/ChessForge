@@ -109,6 +109,13 @@ namespace ChessForge
         public double DarkShadeOpacity;
 
         /// <summary>
+        /// Colors for various Hint Types in the Comment Box
+        /// </summary>
+        public SolidColorBrush HintErrorForeground;
+        public SolidColorBrush HintInfoForeground;
+        public SolidColorBrush HintProgressForeground;
+
+        /// <summary>
         /// Colors to rotate through in the tree views.
         /// </summary>
         public SolidColorBrush ModuloColor_0;

@@ -131,6 +131,27 @@ namespace ChessForge
         public static LinearGradientBrush ShowExplorerLinearBrush;
 
         /// <summary>
+        /// Returns color to use for a given hint type
+        /// in the comment box.
+        /// </summary>
+        /// <param name="typ"></param>
+        /// <returns></returns>
+        public static SolidColorBrush GetHintForeground(CommentBox.HintType typ)
+        {
+            switch (typ)
+            {
+                case CommentBox.HintType.ERROR:
+                    return CurrentTheme.HintErrorForeground;
+                case CommentBox.HintType.INFO:
+                    return CurrentTheme.HintInfoForeground;
+                case CommentBox.HintType.PROGRESS:
+                    return CurrentTheme.HintProgressForeground;
+                default:
+                    return CurrentTheme.RtbForeground;
+            }
+        }
+
+        /// <summary>
         /// Creates gradient brushes for the result and percentage labels in the Explorers.
         /// </summary>
         /// <param name="color1"></param>
@@ -177,12 +198,16 @@ namespace ChessForge
             LightMode.EngineLinesBackground = new SolidColorBrush(Color.FromRgb(0xF2, 0xF5, 0xF3));
 
             LightMode.DarkShadeOpacity = 0;
-        }
 
-        /// <summary>
-        /// Sets colors for the Dark Mode.
-        /// </summary>
-        private static void InitDarkModeSet()
+            LightMode.HintErrorForeground = Brushes.Red;
+            LightMode.HintInfoForeground = Brushes.Green;
+            LightMode.HintProgressForeground = Brushes.Blue;
+    }
+
+    /// <summary>
+    /// Sets colors for the Dark Mode.
+    /// </summary>
+    private static void InitDarkModeSet()
         {
             DarkMode.RtbForeground = Brushes.White;
             DarkMode.RtbBackground = new SolidColorBrush(Color.FromRgb(0x44, 0x44, 0x44));
@@ -209,6 +234,10 @@ namespace ChessForge
             DarkMode.EngineLinesBackground = DarkMode.RtbBackground;
 
             DarkMode.DarkShadeOpacity = 0.1;
+
+            DarkMode.HintErrorForeground = Brushes.OrangeRed;
+            DarkMode.HintInfoForeground = Brushes.LightGreen;
+            DarkMode.HintProgressForeground = Brushes.LightBlue;
         }
     }
 }
