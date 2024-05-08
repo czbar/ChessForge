@@ -284,31 +284,6 @@ namespace ChessForge
         private int _currParagraphLevel;
 
         /// <summary>
-        /// Color to use for the background of the moves selected for copy.
-        /// </summary>
-        private SolidColorBrush _brushSelectedForCopyBkg = Brushes.LightBlue;
-
-        /// <summary>
-        /// Color to use for the background of the selected move.
-        /// </summary>
-        private SolidColorBrush _brushSelectedMoveBkg = new SolidColorBrush(Color.FromRgb(0, 0, 0));
-
-        /// <summary>
-        /// Color to use for the foreground of the selected move.
-        /// </summary>
-        private SolidColorBrush _brushSelectedMoveFore = new SolidColorBrush(Color.FromRgb(255, 255, 255));
-
-        /// <summary>
-        /// Color to use for the background of the selected move when showing copy selection.
-        /// </summary>
-        private SolidColorBrush _brushCopySelectedMoveBkg = Brushes.Blue;
-
-        /// <summary>
-        /// Color to use for the foreground of the selected move when showing copy selection.
-        /// </summary>
-        private SolidColorBrush _brushCopySelectedMoveFore = new SolidColorBrush(Color.FromRgb(255, 255, 255));
-
-        /// <summary>
         /// Selected (clicked) run.
         /// </summary>
         private Run _selectedRun;
@@ -969,8 +944,8 @@ namespace ChessForge
                         _selectedRunBkg = (SolidColorBrush)_selectedRun.Background;
                         _selectedRunFore = (SolidColorBrush)_selectedRun.Foreground;
 
-                        _selectedRun.Background = _brushSelectedMoveBkg;
-                        _selectedRun.Foreground = _brushSelectedMoveFore;
+                        _selectedRun.Background = ChessForgeColors.CurrentTheme.RtbSelectRunBackground;
+                        _selectedRun.Foreground = ChessForgeColors.CurrentTheme.RtbSelectRunForeground;
 
                         if (nodeId != 0)
                         {
@@ -2040,13 +2015,13 @@ namespace ChessForge
                 {
                     if (nd == selectedNode)
                     {
-                        _dictNodeToRun[nd.NodeId].Foreground = _brushCopySelectedMoveFore;
-                        _dictNodeToRun[nd.NodeId].Background = _brushCopySelectedMoveBkg;
+                        _dictNodeToRun[nd.NodeId].Foreground = ChessForgeColors.CurrentTheme.RtbSelectMoveWhileCopyForeground;
+                        _dictNodeToRun[nd.NodeId].Background = ChessForgeColors.CurrentTheme.RtbSelectMoveWhileCopyBackground;
                     }
                     else
                     {
                         _dictNodeToRun[nd.NodeId].Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
-                        _dictNodeToRun[nd.NodeId].Background = _brushSelectedForCopyBkg;
+                        _dictNodeToRun[nd.NodeId].Background = ChessForgeColors.CurrentTheme.RtbSelectMovesForCopyBackground;
                     }
                 }
             }
@@ -2076,8 +2051,8 @@ namespace ChessForge
                     HighlightActiveLine();
                     if (selectedNode != null)
                     {
-                        _dictNodeToRun[selectedNode.NodeId].Foreground = _brushSelectedMoveFore;
-                        _dictNodeToRun[selectedNode.NodeId].Background = _brushSelectedMoveBkg;
+                        _dictNodeToRun[selectedNode.NodeId].Foreground = ChessForgeColors.CurrentTheme.RtbSelectRunForeground;
+                        _dictNodeToRun[selectedNode.NodeId].Background = ChessForgeColors.CurrentTheme.RtbSelectRunBackground;
                     }
                     _selectedForCopy.Clear();
                 }
@@ -2177,8 +2152,8 @@ namespace ChessForge
                         _selectedRunBkg = (SolidColorBrush)r.Background;
                         _selectedRunFore = (SolidColorBrush)r.Foreground;
 
-                        r.Background = _brushSelectedMoveBkg;
-                        r.Foreground = _brushSelectedMoveFore;
+                        r.Background = ChessForgeColors.CurrentTheme.RtbSelectRunBackground;
+                        r.Foreground = ChessForgeColors.CurrentTheme.RtbSelectRunForeground;
 
                         // this is a right click offer the context menu
                         if (changedButton == MouseButton.Right)

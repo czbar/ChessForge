@@ -45,10 +45,24 @@ namespace ChessForge
 
 
         /// <summary>
+        /// Foreground color of the selected move
+        /// while there is a copy selection
+        /// e.g. for copy/paste
+        /// </summary>
+        public SolidColorBrush RtbSelectMoveWhileCopyForeground;
+
+        /// <summary>
+        /// Background color of the selected move
+        /// while there is a copy selection
+        /// e.g. for copy/paste
+        /// </summary>
+        public SolidColorBrush RtbSelectMoveWhileCopyBackground;
+
+        /// <summary>
         /// Background color for the multi-move selection
         /// e.g. for copy/paste
         /// </summary>
-        public SolidColorBrush RtbSelectMovesBackground;
+        public SolidColorBrush RtbSelectMovesForCopyBackground;
 
 
         /// <summary>

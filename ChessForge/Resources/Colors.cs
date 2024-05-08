@@ -69,6 +69,8 @@ namespace ChessForge
             win.UiTbEngineLines.Foreground = CurrentTheme.RtbForeground;
             win.UiTbEngineLines.Background = CurrentTheme.EngineLinesBackground;
 
+            win.UiLblScoresheet.Foreground = CurrentTheme.RtbForeground;
+
             if (CurrentTheme.DarkShadeOpacity == 0)
             {
                 win.UiCnvDarkShade.Visibility = Visibility.Collapsed;
@@ -202,6 +204,10 @@ namespace ChessForge
             LightMode.HintErrorForeground = Brushes.Red;
             LightMode.HintInfoForeground = Brushes.Green;
             LightMode.HintProgressForeground = Brushes.Blue;
+
+            LightMode.RtbSelectMoveWhileCopyForeground = Brushes.White;
+            LightMode.RtbSelectMoveWhileCopyBackground = Brushes.Blue;
+            LightMode.RtbSelectMovesForCopyBackground = Brushes.LightBlue;
     }
 
     /// <summary>
@@ -238,6 +244,10 @@ namespace ChessForge
             DarkMode.HintErrorForeground = Brushes.OrangeRed;
             DarkMode.HintInfoForeground = Brushes.LightGreen;
             DarkMode.HintProgressForeground = Brushes.LightBlue;
+
+            DarkMode.RtbSelectMoveWhileCopyForeground = Brushes.Black;
+            DarkMode.RtbSelectMoveWhileCopyBackground = Brushes.LightBlue;
+            DarkMode.RtbSelectMovesForCopyBackground = Brushes.Blue;
         }
     }
 }
