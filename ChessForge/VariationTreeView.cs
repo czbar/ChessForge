@@ -283,11 +283,6 @@ namespace ChessForge
         private int _currParagraphLevel;
 
         /// <summary>
-        /// Color to use for the background of the highlighted line.
-        /// </summary>
-        private SolidColorBrush _brushSelectedBkg = new SolidColorBrush(Color.FromRgb(255, 255, 206));
-
-        /// <summary>
         /// Color to use for the background of the moves selected for copy.
         /// </summary>
         private SolidColorBrush _brushSelectedForCopyBkg = Brushes.LightBlue;
@@ -311,16 +306,6 @@ namespace ChessForge
         /// Color to use for the foreground of the selected move when showing copy selection.
         /// </summary>
         private SolidColorBrush _brushCopySelectedMoveFore = new SolidColorBrush(Color.FromRgb(255, 255, 255));
-
-        /// <summary>
-        /// Color to use for the overall background.
-        /// </summary>
-        private SolidColorBrush _brushRegularBkg = new SolidColorBrush(Color.FromRgb(255, 255, 255));
-
-        /// <summary>
-        /// Color to use for the overall foreground.
-        /// </summary>
-        private SolidColorBrush _brushRegularFore = new SolidColorBrush(Color.FromRgb(0, 0, 0));
 
         /// <summary>
         /// Selected (clicked) run.
@@ -935,7 +920,7 @@ namespace ChessForge
                         {
                             if (_dictNodeToRun.ContainsKey(nd.NodeId))
                             {
-                                _dictNodeToRun[nd.NodeId].Background = _brushRegularBkg;
+                                _dictNodeToRun[nd.NodeId].Background = ChessForgeColors.CurrentTheme.RtbBackground;
                             }
                             else if (Configuration.DebugLevel != 0)
                             {
@@ -962,17 +947,17 @@ namespace ChessForge
                                 //we should always have this key, so allow crash in the debug mode
                                 if (_dictNodeToRun.ContainsKey(nd.NodeId))
                                 {
-                                    _dictNodeToRun[nd.NodeId].Background = _brushSelectedBkg;
+                                    _dictNodeToRun[nd.NodeId].Background = ChessForgeColors.CurrentTheme.RtbSelectLineBackground;
                                 }
                                 else if (Configuration.DebugLevel != 0)
                                 {
                                     //we should always have this key, so show deubug message if not
                                     if (_debugSelectedBkgMsgCount < 2)
                                     {
-                                        DebugUtils.ShowDebugMessage("WorkbookView:SelectLineAndMove()-_brushSelectedBkg nodeId=" + nd.NodeId.ToString() + " not in _dictNodeToRun");
+                                        DebugUtils.ShowDebugMessage("WorkbookView:SelectLineAndMove()-BrushSelectedBkg nodeId=" + nd.NodeId.ToString() + " not in _dictNodeToRun");
                                         _debugSelectedBkgMsgCount++;
                                     }
-                                    AppLog.Message("WorkbookView:SelectLineAndMove()-_brushSelectedBkg nodeId=" + nd.NodeId.ToString() + " not in _dictNodeToRun");
+                                    AppLog.Message("WorkbookView:SelectLineAndMove()-BrushSelectedBkg nodeId=" + nd.NodeId.ToString() + " not in _dictNodeToRun");
                                 }
                             }
                         }
@@ -1374,7 +1359,7 @@ namespace ChessForge
                 Run rPreamble = new Run(preamble);
                 para.Inlines.Add(rPreamble);
                 para.BorderThickness = new Thickness(1, 1, 1, 1);
-                para.BorderBrush = Brushes.Black;
+                para.BorderBrush = ChessForgeColors.CurrentTheme.RtbForeground;
                 para.Padding = new Thickness(10, 10, 10, 10);
 
                 para.MouseLeftButtonDown += EventPageHeaderClicked;
@@ -1623,7 +1608,7 @@ namespace ChessForge
                 {
                     r.FontWeight = FontWeights.Normal;
                 }
-                r.Foreground = Brushes.Black;
+                r.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
 
                 _dictNodeToRun[nd.NodeId] = r;
                 _dictRunToParagraph[r] = para;
@@ -2059,7 +2044,7 @@ namespace ChessForge
                     }
                     else
                     {
-                        _dictNodeToRun[nd.NodeId].Foreground = _brushRegularFore;
+                        _dictNodeToRun[nd.NodeId].Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
                         _dictNodeToRun[nd.NodeId].Background = _brushSelectedForCopyBkg;
                     }
                 }
@@ -2085,7 +2070,7 @@ namespace ChessForge
                     TreeNode selectedNode = GetSelectedNode();
                     foreach (TreeNode nd in _selectedForCopy)
                     {
-                        _dictNodeToRun[nd.NodeId].Background = _brushRegularBkg;
+                        _dictNodeToRun[nd.NodeId].Background = ChessForgeColors.CurrentTheme.RtbBackground; ;
                     }
                     HighlightActiveLine();
                     if (selectedNode != null)
@@ -2161,7 +2146,7 @@ namespace ChessForge
                                 // if we are dealing with a subtree, we may not have all nodes from the line.
                                 if (_dictNodeToRun.TryGetValue(nd.NodeId, out run))
                                 {
-                                    run.Background = _brushRegularBkg;
+                                    run.Background = ChessForgeColors.CurrentTheme.RtbBackground;
                                 }
                             }
                         }
@@ -2233,7 +2218,7 @@ namespace ChessForge
                 {
                     if (_dictNodeToRun.TryGetValue(nd.NodeId, out Run run))
                     {
-                        run.Background = _brushSelectedBkg;
+                        run.Background = ChessForgeColors.CurrentTheme.RtbSelectLineBackground;
                     }
                 }
             }
@@ -2254,7 +2239,7 @@ namespace ChessForge
                     {
                         if (_dictNodeToRun.TryGetValue(nd.NodeId, out Run run))
                         {
-                            run.Background = _brushSelectedBkg;
+                            run.Background = ChessForgeColors.CurrentTheme.RtbSelectLineBackground;
                         }
                     }
                 }

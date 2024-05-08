@@ -811,7 +811,7 @@ namespace ChessForge
             Run r_eval = new Run("(" + strEval + ") ");
             r_eval.Name = runName;
             r_eval.FontWeight = FontWeights.Normal;
-            r_eval.Foreground = Brushes.Black;
+            r_eval.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
 
             return r_eval;
         }
@@ -854,7 +854,10 @@ namespace ChessForge
                     para.Inlines.Add(r_prefix);
                 }
 
-                Run r = CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, true, true, _moveNumberOffset) + " ", runName, Brushes.Black);
+                Run r = CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, true, true, 
+                    _moveNumberOffset) + " ", 
+                    runName, 
+                    ChessForgeColors.CurrentTheme.RtbForeground);
                 para.Inlines.Add(r);
 
                 if (!userMove)
@@ -911,7 +914,7 @@ namespace ChessForge
                 note.FontSize = para.FontSize - 2;
                 note.FontStyle = FontStyles.Italic;
                 note.FontWeight = FontWeights.Normal;
-                note.Foreground = Brushes.Black;
+                note.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
 
                 note.Text = "  " + Properties.Resources.MsgTakebackInfo;
                 para.Inlines.Add(note);
@@ -990,7 +993,11 @@ namespace ChessForge
             // NOTE without nd.Parent != null we'd be getting "starting position" text in front
             while (nd != null && nd.Parent != null)
             {
-                Run r = CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, nd.Parent.NodeId == 0, false, _moveNumberOffset) + " ", _run_stem_move_ + nd.NodeId.ToString(), Brushes.Black, true);
+                Run r = CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, nd.Parent.NodeId == 0, false, 
+                    _moveNumberOffset) + " ", 
+                    _run_stem_move_ + nd.NodeId.ToString(),
+                    ChessForgeColors.CurrentTheme.RtbForeground, true);
+
                 nd = nd.Parent;
 
                 if (prevRun == null)
