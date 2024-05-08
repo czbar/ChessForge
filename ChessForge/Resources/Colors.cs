@@ -88,6 +88,8 @@ namespace ChessForge
             win.UiDgActiveLine.ColumnHeaderStyle = new Style(typeof(DataGridColumnHeader));
             win.UiDgActiveLine.ColumnHeaderStyle.Setters.Add(new Setter(Control.ForegroundProperty, Brushes.Black));
             win.UiDgActiveLine.ColumnHeaderStyle.Setters.Add(new Setter(Control.BackgroundProperty, Brushes.LightGray));
+
+            win.UiRtbTopGames.Background = CurrentTheme.RtbBackground;
         }
 
         /// <summary>

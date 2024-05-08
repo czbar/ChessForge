@@ -137,6 +137,8 @@ namespace ChessForge
         private TableRow BuildTableGameRow()
         {
             _row = new TableRow();
+            _row.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
+
             TableCell cellRatings = new TableCell(BuildRatingsPara());
             _row.Cells.Add(cellRatings);
 
@@ -170,6 +172,7 @@ namespace ChessForge
 
             _lblWhiteRating = new Label
             {
+                Foreground = ChessForgeColors.CurrentTheme.RtbForeground,
                 Width = _namesColumnWidth,
                 Height = 20 + Configuration.FontSizeDiff,
                 FontSize = _baseFontSize + Configuration.FontSizeDiff,
@@ -186,6 +189,7 @@ namespace ChessForge
 
             _lblBlackRating = new Label
             {
+                Foreground = ChessForgeColors.CurrentTheme.RtbForeground,
                 Width = _namesColumnWidth,
                 Height = 20 + Configuration.FontSizeDiff,
                 FontSize = _baseFontSize + Configuration.FontSizeDiff,
@@ -227,6 +231,7 @@ namespace ChessForge
 
             _lblWhitePlayer = new Label
             {
+                Foreground = ChessForgeColors.CurrentTheme.RtbForeground,
                 Width = _namesColumnWidth - 8,
                 Height = 20 + Configuration.FontSizeDiff,
                 FontSize = _baseFontSize + Configuration.FontSizeDiff,
@@ -244,6 +249,7 @@ namespace ChessForge
 
             _lblBlackPlayer = new Label
             {
+                Foreground = ChessForgeColors.CurrentTheme.RtbForeground,
                 Width = _namesColumnWidth - 8,
                 Height = 20 + Configuration.FontSizeDiff,
                 FontSize = _baseFontSize + Configuration.FontSizeDiff,
@@ -286,6 +292,7 @@ namespace ChessForge
 
             _lblResult = new Label
             {
+                Foreground = ChessForgeColors.CurrentTheme.RtbForeground,
                 Width = _resultColumnWidth,
                 Height = 20 + Configuration.FontSizeDiff,
                 FontSize = _baseFontSize - 1 + Configuration.FontSizeDiff,
@@ -330,6 +337,7 @@ namespace ChessForge
 
             _lblDate = new Label
             {
+                Foreground = ChessForgeColors.CurrentTheme.RtbForeground,
                 Width = _dateColumnWidth - 6,
                 Height = 20 + Configuration.FontSizeDiff,
                 FontSize = _baseFontSize - 1 + Configuration.FontSizeDiff,
