@@ -403,12 +403,15 @@ namespace ChessForge
             UiTabIntro.Visibility = Configuration.ShowIntroTab ? Visibility.Visible : Visibility.Collapsed;
             SoundPlayer.Initialize();
 
+            InitializeConfiguration();
+
+            ChessForgeColors.Initialize(Configuration.ColorTheme);
+            ChessForgeColors.SetMainControlColors();
+
             BoardCommentBox = new CommentBox(UiRtbBoardComment.Document, this);
             ActiveLine = new ActiveLineManager(UiDgActiveLine, this);
 
             EngineLinesBox.Initialize(this, UiTbEngineLines, UiPbEngineThinking);
-
-            InitializeConfiguration();
 
             // Note: must be called only AFTER configuration has been initialized.
             Timers = new AppTimers(this);
@@ -426,7 +429,6 @@ namespace ChessForge
             BookmarkManager.InitBookmarksGui(this);
 
             ActiveLineReplay = new GameReplay(this, MainChessBoard, BoardCommentBox);
-            ChessForgeColors.Initialize();
 
             _isDebugMode = Configuration.DebugLevel != 0;
         }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace ChessForge
@@ -16,8 +17,20 @@ namespace ChessForge
         /// <summary>
         /// Creates required objects.
         /// </summary>
-        public static void Initialize()
+        public static void Initialize(string theme)
         {
+            InitLightModeSet();
+            InitDarkModeSet();
+
+            if (theme.ToUpper() == "DARK")
+            {
+                CurrentTheme = DarkMode;
+            }
+            else
+            {
+                CurrentTheme = LightMode;
+            }
+
             WhiteWinLinearBrush = CreateGradientBrushForResult(EXPLORER_PCT_WHITE_GRAD.Color, EXPLORER_PCT_WHITE.Color);
             DrawLinearBrush = CreateGradientBrushForResult(EXPLORER_PCT_DRAW_GRAD.Color, EXPLORER_PCT_DRAW.Color);
             BlackWinLinearBrush = CreateGradientBrushForResult(EXPLORER_PCT_BLACK_GRAD.Color, EXPLORER_PCT_BLACK.Color);
@@ -26,8 +39,50 @@ namespace ChessForge
             ShowExplorerLinearBrush = CreateGradientBrushForResult(TABLE_HEADER_GREEN.Color, TABLE_HIGHLIGHT_GREEN.Color);
         }
 
-        public static SolidColorBrush VARIATION_INDEX_FORE = new SolidColorBrush(Color.FromRgb(18, 55, 97));
-        public static SolidColorBrush INDEX_SECTION_TITLE = new SolidColorBrush(Color.FromRgb(0x09, 0x4e, 0x89));
+        /// <summary>
+        /// Sets background and foreground colors on the main controls.
+        /// </summary>
+        public static void SetMainControlColors()
+        {
+            MainWindow win = AppState.MainWin;
+
+            Brush rtbFg = CurrentTheme.RtbForeground;
+            Brush rtbBg = CurrentTheme.RtbBackground;
+
+            SetRichTextBoxColors(win.UiRtbChaptersView, rtbFg, rtbBg);
+            SetRichTextBoxColors(win.UiRtbIntroView, rtbFg, rtbBg);
+            SetRichTextBoxColors(win.UiRtbStudyTreeView, rtbFg, rtbBg);
+            SetRichTextBoxColors(win.UiRtbModelGamesView, rtbFg, rtbBg);
+            SetRichTextBoxColors(win.UiRtbExercisesView, rtbFg, rtbBg);
+            SetRichTextBoxColors(win.UiRtbTrainingProgress, rtbFg, rtbBg);
+
+            win.Background = CurrentTheme.RtbBackground;
+            win.UiTabCtrlManualReview.Background = CurrentTheme.RtbBackground;
+            win.UiTabCtrlTraining.Background = CurrentTheme.RtbBackground;
+            win.UiTabCtrlEngineGame.Background = CurrentTheme.RtbBackground;
+        }
+
+        /// <summary>
+        /// Sets the foreground and background color on the RichTextBox. 
+        /// </summary>
+        /// <param name="rtb"></param>
+        /// <param name="foreground"></param>
+        /// <param name="background"></param>
+        private static void SetRichTextBoxColors(RichTextBox rtb, Brush foreground, Brush background)
+        {
+            try
+            {
+                rtb.Foreground = foreground;
+                rtb.Background = background;
+            }
+            catch { }
+        }
+
+
+        public static ThemeColorSet CurrentTheme;
+
+        public static ThemeColorSet LightMode = new ThemeColorSet();
+        public static ThemeColorSet DarkMode = new ThemeColorSet();
 
         public static SolidColorBrush WORKBOOK_TABLE_HILITE_FORE = new SolidColorBrush(Color.FromRgb(255, 0, 0));
         public static SolidColorBrush WORKBOOK_TABLE_REGULAR_FORE = new SolidColorBrush(Color.FromRgb(0, 0, 0));
@@ -72,6 +127,58 @@ namespace ChessForge
             brush.GradientStops.Add(new GradientStop(color2, 0.8));
 
             return brush;
+        }
+
+        /// <summary>
+        /// Sets colors for the Light Mode.
+        /// </summary>
+        private static void InitLightModeSet()
+        {
+            LightMode.RtbForeground = Brushes.Black;
+            LightMode.RtbBackground = Brushes.White;
+
+            LightMode.RtbSelectRunForeground = Brushes.White;
+            LightMode.RtbSelectRunBackground = Brushes.Black;
+
+            LightMode.RtbSelectLineForeground = Brushes.Black;
+            LightMode.RtbSelectLineBackground = new SolidColorBrush(Color.FromRgb(255, 255, 206));
+
+            LightMode.IntroMoveForeground = Brushes.Blue;
+            LightMode.IntroDiagBackground = Brushes.Black;
+            LightMode.IntroDiagSideCanvasBackground = Brushes.White;
+
+            LightMode.IndexPrefixForeground = new SolidColorBrush(Color.FromRgb(18, 55, 97));
+
+            LightMode.ModuloColor_0 = Brushes.Blue;
+            LightMode.ModuloColor_1 = Brushes.Green;
+            LightMode.ModuloColor_2 = Brushes.Magenta;
+            LightMode.ModuloColor_3 = Brushes.Firebrick;
+        }
+
+        /// <summary>
+        /// Sets colors for the Dark Mode.
+        /// </summary>
+        private static void InitDarkModeSet()
+        {
+            DarkMode.RtbForeground = Brushes.White;
+            DarkMode.RtbBackground = new SolidColorBrush(Color.FromRgb(0x44, 0x44, 0x44));
+
+            DarkMode.RtbSelectRunForeground = Brushes.Black;
+            DarkMode.RtbSelectRunBackground = Brushes.White;
+
+            DarkMode.RtbSelectLineForeground = Brushes.White;
+            DarkMode.RtbSelectLineBackground = new SolidColorBrush(Color.FromRgb(100, 100, 0));
+
+            DarkMode.IntroMoveForeground = Brushes.LightBlue;
+            DarkMode.IntroDiagBackground = Brushes.Black;
+            DarkMode.IntroDiagSideCanvasBackground = DarkMode.RtbBackground;
+
+            DarkMode.IndexPrefixForeground = Brushes.LightBlue;
+
+            DarkMode.ModuloColor_0 = Brushes.LightCyan;
+            DarkMode.ModuloColor_1 = Brushes.LightGreen;
+            DarkMode.ModuloColor_2 = Brushes.LightPink;
+            DarkMode.ModuloColor_3 = Brushes.Yellow;
         }
     }
 }
