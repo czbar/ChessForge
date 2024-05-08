@@ -90,6 +90,8 @@ namespace ChessForge
             win.UiDgActiveLine.ColumnHeaderStyle.Setters.Add(new Setter(Control.BackgroundProperty, Brushes.LightGray));
 
             win.UiRtbTopGames.Background = CurrentTheme.RtbBackground;
+
+            win.UiRtbOpenings.Background = CurrentTheme.RtbBackground;
         }
 
         /// <summary>
