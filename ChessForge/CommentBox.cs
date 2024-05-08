@@ -22,6 +22,16 @@ namespace ChessForge
     /// </summary>
     public class CommentBox : RichTextBuilder
     {
+        /// <summary>
+        /// Type of comment being displayed.
+        /// </summary>
+        public enum HintType
+        {
+            ERROR,  // red
+            INFO,   // green
+            PROGRESS // blue
+        }
+
         // main application window
         private MainWindow _mainWin;
 
@@ -123,7 +133,7 @@ namespace ChessForge
         /// </summary>
         public void StartingEngine()
         {
-            UserWaitAnnouncement(Properties.Resources.ChessEngineLoading, null);
+            UserWaitAnnouncement(Properties.Resources.ChessEngineLoading, HintType.PROGRESS);
         }
 
         /// <summary>
@@ -132,7 +142,7 @@ namespace ChessForge
         /// </summary>
         public void ReadingFile()
         {
-            UserWaitAnnouncement(Properties.Resources.ReadingWorkbookFile, Brushes.Blue);
+            UserWaitAnnouncement(Properties.Resources.ReadingWorkbookFile, HintType.PROGRESS);
         }
 
         /// <summary>
@@ -161,7 +171,7 @@ namespace ChessForge
                 }
             }
 
-            UserWaitAnnouncement(msg, Brushes.Blue, subLines);
+            UserWaitAnnouncement(msg, HintType.PROGRESS, subLines);
         }
 
         /// <summary>
@@ -169,7 +179,7 @@ namespace ChessForge
         /// </summary>
         public void OpenFile()
         {
-            UserWaitAnnouncement(Properties.Resources.cbUseMenuToOpenWorkbook, Brushes.Blue);
+            UserWaitAnnouncement(Properties.Resources.cbUseMenuToOpenWorkbook, HintType.PROGRESS);
         }
 
         /// <summary>
@@ -177,7 +187,7 @@ namespace ChessForge
         /// to close it later on.
         /// </summary>
         /// <param name="txt"></param>
-        public void ShowFlashAnnouncement(string txt, Brush brush = null, int fontSize = 0)
+        public void ShowFlashAnnouncement(string txt, HintType typ, int fontSize = 0)
         {
             _mainWin.Dispatcher.Invoke(() =>
             {
@@ -198,11 +208,7 @@ namespace ChessForge
                         para.FontSize = fontSize;
                     }
                     Document.Blocks.Add(para);
-                    para.Foreground = Brushes.Red;
-                    if (brush != null)
-                    {
-                        para.Foreground = brush;
-                    }
+                    para.Foreground = ChessForgeColors.GetHintForeground(typ);
 
                     _mainWin.Timers.Start(AppTimers.TimerId.FLASH_ANNOUNCEMENT);
 
@@ -442,7 +448,7 @@ namespace ChessForge
         /// <param name="txt"></param>
         public void EngineResetOnError(string txt)
         {
-            UserWaitAnnouncement(txt, Brushes.Red);
+            UserWaitAnnouncement(txt, HintType.ERROR);
         }
 
         /// <summary>
@@ -452,13 +458,8 @@ namespace ChessForge
         /// </summary>
         /// <param name="txt"></param>
         /// <param name="brush"></param>
-        public void UserWaitAnnouncement(string txt, Brush brush, List<string> subLines = null)
+        public void UserWaitAnnouncement(string txt, HintType typ, List<string> subLines = null)
         {
-            if (brush == null)
-            {
-                brush = Brushes.Green;
-            }
-
             _mainWin.Dispatcher.Invoke(() =>
             {
                 Document.Blocks.Clear();
@@ -468,7 +469,7 @@ namespace ChessForge
 
                 Paragraph para = CreateParagraphWithText("user_wait", txt, false);
                 Document.Blocks.Add(para);
-                para.Foreground = brush;
+                para.Foreground = ChessForgeColors.GetHintForeground(typ);
 
                 if (subLines != null)
                 {
@@ -476,7 +477,7 @@ namespace ChessForge
                     {
                         Run run = new Run("\n" + line);
                         run.FontSize = Constants.BASE_FIXED_FONT_SIZE - 2;
-                        run.Foreground = Brushes.Black;
+                        run.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
                         run.FontWeight = FontWeights.Normal;
 
                         para.Inlines.Add(run);
