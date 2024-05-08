@@ -85,6 +85,9 @@ namespace ChessForge
         {
             _row = new TableRow();
 
+            _row.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
+            _row.Background = ChessForgeColors.CurrentTheme.RtbBackground;
+
             _runMove = new Run("");
             _runMove.Name = "";
             _runMove.Cursor = Cursors.Arrow;
@@ -144,7 +147,7 @@ namespace ChessForge
             {
                 Width = scaleFactor * (_totalGamesColumnWidth),
                 Height = 20 + Configuration.FontSizeDiff,
-                Background = Brushes.White
+                Background = ChessForgeColors.CurrentTheme.RtbBackground,
             };
 
             _lblTotalGames = new Label
@@ -160,7 +163,8 @@ namespace ChessForge
                 Padding = new Thickness(0, 0, 0, 0)
             };
 
-            _lblTotalGames.Background = Brushes.White;
+            _lblTotalGames.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
+            _lblTotalGames.Background = ChessForgeColors.CurrentTheme.RtbBackground;
 
             canvas.Children.Add(_lblTotalGames);
 
@@ -238,7 +242,7 @@ namespace ChessForge
             {
                 Width = scaleFactor * 110 + 2,
                 Height = 20 + Configuration.FontSizeDiff,
-                Background = Brushes.White
+                Background = ChessForgeColors.CurrentTheme.RtbBackground,
             };
 
             _lblPctWhite = BuildPercentLabel();
