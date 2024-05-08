@@ -68,6 +68,16 @@ namespace ChessForge
 
             win.UiTbEngineLines.Foreground = CurrentTheme.RtbForeground;
             win.UiTbEngineLines.Background = CurrentTheme.EngineLinesBackground;
+
+            if (CurrentTheme.DarkShadeOpacity == 0)
+            {
+                win.UiCnvDarkShade.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                win.UiCnvDarkShade.Visibility = Visibility.Visible;
+                win.UiCnvDarkShade.Opacity = CurrentTheme.DarkShadeOpacity;
+            }
         }
 
         /// <summary>
@@ -165,6 +175,8 @@ namespace ChessForge
             LightMode.BorderBrush = Brushes.Black;
 
             LightMode.EngineLinesBackground = new SolidColorBrush(Color.FromRgb(0xF2, 0xF5, 0xF3));
+
+            LightMode.DarkShadeOpacity = 0;
         }
 
         /// <summary>
@@ -195,6 +207,8 @@ namespace ChessForge
             DarkMode.BorderBrush = Brushes.White;
 
             DarkMode.EngineLinesBackground = DarkMode.RtbBackground;
+
+            DarkMode.DarkShadeOpacity = 0.1;
         }
     }
 }

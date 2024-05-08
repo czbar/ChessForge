@@ -104,6 +104,11 @@ namespace ChessForge
         public SolidColorBrush BorderBrush;
 
         /// <summary>
+        /// Opacity of the shade over the main chessboard
+        /// </summary>
+        public double DarkShadeOpacity;
+
+        /// <summary>
         /// Colors to rotate through in the tree views.
         /// </summary>
         public SolidColorBrush ModuloColor_0;

@@ -264,6 +264,10 @@
                         <Canvas.Background>
                             <SolidColorBrush Color="{DynamicResource MainBoardBackGround}"/>
                         </Canvas.Background>
+                        <Canvas x:Name="UiCnvDarkShade" Visibility="Collapsed" Margin="20,20,20,20" HorizontalAlignment="Left" 
+                                VerticalAlignment="Top" Width="640" Height="640" Grid.Column="0" 
+                                Background="Black" Opacity="0.1" Panel.ZIndex="20" >
+                        </Canvas>
                         <Image x:Name="UiImgMainChessboard" Margin="20,20,20,20" Source="Resources/Images/ChessBoardBlue.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="640" Height="640" Grid.Column="0" />
                         <Label x:Name="UiLblEvalBarHost" Content=""  FontSize="8" Padding="0,8,0,8" HorizontalContentAlignment="Center" Foreground="White" Canvas.Left="663" Canvas.Top="20" Width="14" Height="640" Background="SlateGray" Panel.ZIndex="1" Visibility="Collapsed" MouseMove="UiLblEvalBarHost_MouseMove" MouseLeave="UiLblEvalBarHost_MouseLeave" />
                         <Label x:Name="UiLblEvalBarWhite" Content="" FontSize="8" Padding="0,8,0,8" HorizontalContentAlignment="Center" Foreground="Black" Canvas.Left="663" Canvas.Top="20" Width="14" Height="320" Background="WhiteSmoke" Panel.ZIndex="2" Visibility="Collapsed" MouseMove="UiLblEvalBarWhite_MouseMove" MouseLeave="UiLblEvalBarWhite_MouseLeave"/>
