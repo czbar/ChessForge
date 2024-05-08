@@ -91,7 +91,18 @@ namespace ChessForge
         /// Foreground of index prefixes.
         /// </summary>
         public SolidColorBrush IndexPrefixForeground;
- 
+
+        /// <summary>
+        /// Background of the Engine Lines TextBox.
+        /// </summary>
+        public SolidColorBrush EngineLinesBackground;
+
+        /// <summary>
+        /// Color to be used for the border of CommentBox,
+        /// Engine Lines and Eval Chart.
+        /// </summary>
+        public SolidColorBrush BorderBrush;
+
         /// <summary>
         /// Colors to rotate through in the tree views.
         /// </summary>

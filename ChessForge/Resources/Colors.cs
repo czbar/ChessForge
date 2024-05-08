@@ -55,11 +55,19 @@ namespace ChessForge
             SetRichTextBoxColors(win.UiRtbModelGamesView, rtbFg, rtbBg);
             SetRichTextBoxColors(win.UiRtbExercisesView, rtbFg, rtbBg);
             SetRichTextBoxColors(win.UiRtbTrainingProgress, rtbFg, rtbBg);
+            SetRichTextBoxColors(win.UiRtbBoardComment, rtbFg, rtbBg);
 
             win.Background = CurrentTheme.RtbBackground;
             win.UiTabCtrlManualReview.Background = CurrentTheme.RtbBackground;
             win.UiTabCtrlTraining.Background = CurrentTheme.RtbBackground;
             win.UiTabCtrlEngineGame.Background = CurrentTheme.RtbBackground;
+
+            win.UiRtbBoardComment.BorderBrush = CurrentTheme.BorderBrush;
+            win.UiTbEngineLines.BorderBrush = CurrentTheme.BorderBrush;
+            win.UiEvalChart.BorderBrush = CurrentTheme.BorderBrush;
+
+            win.UiTbEngineLines.Foreground = CurrentTheme.RtbForeground;
+            win.UiTbEngineLines.Background = CurrentTheme.EngineLinesBackground;
         }
 
         /// <summary>
@@ -153,6 +161,10 @@ namespace ChessForge
             LightMode.ModuloColor_1 = Brushes.Green;
             LightMode.ModuloColor_2 = Brushes.Magenta;
             LightMode.ModuloColor_3 = Brushes.Firebrick;
+
+            LightMode.BorderBrush = Brushes.Black;
+
+            LightMode.EngineLinesBackground = new SolidColorBrush(Color.FromRgb(0xF2, 0xF5, 0xF3));
         }
 
         /// <summary>
@@ -179,6 +191,10 @@ namespace ChessForge
             DarkMode.ModuloColor_1 = Brushes.LightGreen;
             DarkMode.ModuloColor_2 = Brushes.LightPink;
             DarkMode.ModuloColor_3 = Brushes.Yellow;
+
+            DarkMode.BorderBrush = Brushes.White;
+
+            DarkMode.EngineLinesBackground = DarkMode.RtbBackground;
         }
     }
 }
