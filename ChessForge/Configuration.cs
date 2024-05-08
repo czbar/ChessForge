@@ -111,12 +111,17 @@ namespace ChessForge
         public static string ChessboardColors = "";
 
         /// <summary>
+        /// Name of the color theme to apply
+        /// </summary>
+        public static string ColorTheme = "light";
+
+        /// <summary>
         /// Path to the engine executable
         /// </summary>
         public static string EngineExePath = "";
 
         /// <summary>
-        /// Version for which not show the update alert
+        /// Version for which not to show the update alert
         /// </summary>
         public static string DoNotShowVersion = "";
 
