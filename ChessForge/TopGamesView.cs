@@ -110,7 +110,7 @@ namespace ChessForge
 
             for (int i = 0; i < MAX_GAME_ROW_COUNT; i++)
             {
-                TopGamesViewRow row = new TopGamesViewRow();
+                TopGamesViewRow row = new TopGamesViewRow(_isMainWin);
                 _lstRows.Add(row);
                 _gamesTable.RowGroups[0].Rows.Add(row.Row);
             }
