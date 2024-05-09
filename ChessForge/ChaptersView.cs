@@ -768,7 +768,7 @@ namespace ChessForge
             r.Name = _run_create_intro_ + chapter.Index.ToString();
             r.FontWeight = FontWeights.Normal;
             r.FontStyle = FontStyles.Italic;
-            r.Foreground = Brushes.Gray;
+            r.Foreground = ChessForgeColors.CurrentTheme.ChaptersCreateIntroForeground;
             r.FontSize -= 2;
             r.MouseDown += EventCreateIntroHeaderClicked;
             if (studyRun == null)
@@ -801,7 +801,6 @@ namespace ChessForge
         /// <returns></returns>
         private Run InsertModelGamesRuns(Paragraph para, Chapter chapter)
         {
-            //para.Inlines.Add(new Run("\n"));
             para.Inlines.Add(CreateRun(STYLE_SUBHEADER, "\n" + SUBHEADER_INDENT, true));
             InsertExpandCollapseSymbolRun(para, _run_model_games_expand_char_, chapter.Index, GameData.ContentType.MODEL_GAME, chapter.IsModelGamesListExpanded, chapter.HasAnyModelGame);
             string res = Resources.Games;
