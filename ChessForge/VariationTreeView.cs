@@ -176,23 +176,23 @@ namespace ChessForge
         public int LastClickedNodeId { get => _lastClickedNodeId; set => _lastClickedNodeId = value; }
 
         /// <summary>
-        /// Layout definitions for paragrahs at different levels.
+        /// Layout definitions for paragraphs at different levels.
         /// </summary>
         private Dictionary<string, RichTextPara> _richTextParas = new Dictionary<string, RichTextPara>()
         {
-            ["0"] = new RichTextPara(0, 10, 16, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(0, 0, 0)), TextAlignment.Left),
-            ["1"] = new RichTextPara(40, 10, 16, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(69, 89, 191)), TextAlignment.Left),
-            ["2"] = new RichTextPara(70, 5, 14, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(51, 159, 141)), TextAlignment.Left),
-            ["3"] = new RichTextPara(90, 5, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
-            ["4"] = new RichTextPara(105, 5, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(128, 98, 63)), TextAlignment.Left),
-            ["5"] = new RichTextPara(110, 5, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(100, 90, 63)), TextAlignment.Left),
-            ["6"] = new RichTextPara(115, 5, 11, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(90, 60, 60)), TextAlignment.Left),
-            ["7"] = new RichTextPara(120, 5, 11, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(60, 60, 60)), TextAlignment.Left),
-            ["8"] = new RichTextPara(125, 5, 11, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(40, 50, 60)), TextAlignment.Left),
-            ["9"] = new RichTextPara(130, 5, 11, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(30, 50, 40)), TextAlignment.Left),
-            ["10"] = new RichTextPara(135, 5, 11, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(20, 20, 10)), TextAlignment.Left),
-            ["default"] = new RichTextPara(140, 5, 11, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(20, 0, 0)), TextAlignment.Left),
-            ["preamble"] = new RichTextPara(40, 10, 16, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(69, 89, 191)), TextAlignment.Left),
+            ["0"] = new RichTextPara(0, 10, 16, FontWeights.Bold, TextAlignment.Left),
+            ["1"] = new RichTextPara(40, 10, 16, FontWeights.Normal, TextAlignment.Left),
+            ["2"] = new RichTextPara(70, 5, 14, FontWeights.Normal, TextAlignment.Left),
+            ["3"] = new RichTextPara(90, 5, 12, FontWeights.Normal, TextAlignment.Left),
+            ["4"] = new RichTextPara(105, 5, 12, FontWeights.Normal, TextAlignment.Left),
+            ["5"] = new RichTextPara(110, 5, 12, FontWeights.Normal, TextAlignment.Left),
+            ["6"] = new RichTextPara(115, 5, 11, FontWeights.Normal, TextAlignment.Left),
+            ["7"] = new RichTextPara(120, 5, 11, FontWeights.Normal, TextAlignment.Left),
+            ["8"] = new RichTextPara(125, 5, 11, FontWeights.Normal, TextAlignment.Left),
+            ["9"] = new RichTextPara(130, 5, 11, FontWeights.Normal, TextAlignment.Left),
+            ["10"] = new RichTextPara(135, 5, 11, FontWeights.Normal, TextAlignment.Left),
+            ["default"] = new RichTextPara(140, 5, 11, FontWeights.Normal, TextAlignment.Left),
+            ["preamble"] = new RichTextPara(40, 10, 16, FontWeights.Normal, TextAlignment.Left),
         };
 
         // prefixes for run names
@@ -1744,7 +1744,8 @@ namespace ChessForge
                     {
                         displayLevel = _currParagraphLevel;
                     }
-                    fontColor = GetParaAttrs(displayLevel.ToString(), true).FirstCharColor;
+
+                    fontColor = ChessForgeColors.GetForegroundForLevel(displayLevel - 1);
                 }
             }
 
@@ -2472,7 +2473,7 @@ namespace ChessForge
             {
                 string style = _currParagraphLevel.ToString();
                 RichTextPara attrs = GetParaAttrs(style, true);
-                _lastAddedRun.Foreground = attrs.FirstCharColor;
+                _lastAddedRun.Foreground = ChessForgeColors.GetForegroundForLevel(_currParagraphLevel - 1);
                 _lastAddedRun.FontWeight = FontWeights.Bold;
             }
         }
