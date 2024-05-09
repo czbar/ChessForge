@@ -129,6 +129,8 @@
                         <MenuItem Header="{x:Static p:Resources.AnalysisEngine}" Click="UiMnSelectEngine_Click" />
                         <MenuItem Header="{x:Static p:Resources.DlgOnlineLibraries}" Click="UiMnOnlineLibraries_Click" />
                         <Separator />
+                        <MenuItem x:Name="UiMnDarkMode"  Header="{x:Static p:Resources.DarkMode}" IsCheckable="True" Checked="UiMnDarkMode_Checked" Unchecked="UiMnDarkMode_Unchecked"   />
+                        <Separator />
                         <MenuItem x:Name="UiMnIncreaseFontSize" Header="{x:Static p:Resources.IncreaseFontSize}" Click="UiBtnFontSizeUp_Click" >
                             <MenuItem.Icon>
                                 <Image Source="Resources/Images/FontSizeUp.png"/>

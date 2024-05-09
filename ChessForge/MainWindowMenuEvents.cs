@@ -11,8 +11,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using ChessPosition.GameTree;
 using System.Windows.Documents;
-using System.Linq;
-using System.Windows.Media;
 
 namespace ChessForge
 {
@@ -79,6 +77,26 @@ namespace ChessForge
                 // must set the LastClickedNode as this is what the Promote method takes as the "current" line.
                 ActiveTreeView.LastClickedNodeId = nd.NodeId;
                 UiMnPromoteLine_Click(null, null);
+            }
+        }
+
+        /// <summary>
+        /// Rebuilds all tree views
+        /// </summary>
+        public void RebuildAllTreeViews(bool? increaseFontDirection = null)
+        {
+            _studyTreeView?.BuildFlowDocumentForVariationTree();
+            _modelGameTreeView?.BuildFlowDocumentForVariationTree();
+            _exerciseTreeView?.BuildFlowDocumentForVariationTree();
+            _chaptersView?.BuildFlowDocumentForChaptersView();
+
+            if (TrainingSession.IsTrainingInProgress)
+            {
+                UiTrainingView.IncrementFontSize(increaseFontDirection);
+            }
+            else
+            {
+                RestoreSelectedLineAndMoveInActiveView();
             }
         }
 
@@ -3479,6 +3497,45 @@ namespace ChessForge
         //
         //*********************
 
+        // allows or blocks mode re-initialization.
+        // this is used at strtup when this method is called when we set IsChecked
+        // on the menu item.
+        private bool _modeUpdatesBlocked = false;
+
+        /// <summary>
+        /// The user requests switch to the dark mode.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnDarkMode_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_modeUpdatesBlocked)
+            {
+                ChessForgeColors.Initialize(ColorThemes.DARK_MODE);
+                Configuration.IsDarkMode = true;
+                ChessForgeColors.SetMainControlColors();
+                RebuildAllTreeViews();
+            }
+            _modeUpdatesBlocked = false;
+        }
+
+        /// <summary>
+        /// The user requests switch to the light mode.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnDarkMode_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_modeUpdatesBlocked)
+            {
+                ChessForgeColors.Initialize(ColorThemes.LIGHT_MODE);
+                Configuration.IsDarkMode = false;
+                ChessForgeColors.SetMainControlColors();
+                RebuildAllTreeViews();
+            }
+            _modeUpdatesBlocked = false;
+        }
+
         /// <summary>
         /// Auto-replays the current Active Line on a menu request.
         /// </summary>
@@ -4209,29 +4266,6 @@ namespace ChessForge
             Configuration.AutoSave = false;
             Timers.Stop(AppTimers.TimerId.AUTO_SAVE);
             SetupMenuBarControls();
-        }
-
-        /// <summary>
-        /// Rebuilds all tree views
-        /// </summary>
-        private void RebuildAllTreeViews(bool? increaseFontDirection = null)
-        {
-            _studyTreeView?.BuildFlowDocumentForVariationTree();
-
-            _modelGameTreeView?.BuildFlowDocumentForVariationTree();
-
-            _exerciseTreeView?.BuildFlowDocumentForVariationTree();
-
-            _chaptersView?.BuildFlowDocumentForChaptersView();
-
-            if (TrainingSession.IsTrainingInProgress)
-            {
-                UiTrainingView.IncrementFontSize(increaseFontDirection);
-            }
-            else
-            {
-                RestoreSelectedLineAndMoveInActiveView();
-            }
         }
 
         /// <summary>
