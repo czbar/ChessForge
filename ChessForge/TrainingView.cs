@@ -169,10 +169,10 @@ namespace ChessForge
         private int _nodeIdSuppressFloatingBoard = -1;
 
         // Brush color for user moves
-        private Brush _userBrush = ChessForgeColors.GetHintForeground(CommentBox.HintType.INFO);
+        private SolidColorBrush _userBrush = ChessForgeColors.GetHintForeground(CommentBox.HintType.INFO);
 
         // Brush color for workbook moves
-        private Brush _workbookBrush = ChessForgeColors.GetHintForeground(CommentBox.HintType.PROGRESS);
+        private SolidColorBrush _workbookBrush = ChessForgeColors.GetHintForeground(CommentBox.HintType.PROGRESS);
 
         /// <summary>
         /// Names and prefixes for Runs.
@@ -325,6 +325,86 @@ namespace ChessForge
                         }
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// A color theme was change in the application and the colors
+        /// must be updated.
+        /// </summary>
+        public void UpdateColors()
+        {
+            SolidColorBrush previousUserBrush = _userBrush;
+            SolidColorBrush previousWorkbookBrush = _workbookBrush;
+
+            _userBrush = ChessForgeColors.GetHintForeground(CommentBox.HintType.INFO);
+            _workbookBrush = ChessForgeColors.GetHintForeground(CommentBox.HintType.PROGRESS);
+
+            // first create a dictionary of colors
+            Dictionary<string, SolidColorBrush> _dictColors = new Dictionary<string, SolidColorBrush>();
+
+            _dictColors[_run_engine_game_move_] = ChessForgeColors.CurrentTheme.TrainingEngineGameForeground;
+            _dictColors[_run_wb_move_] = ChessForgeColors.CurrentTheme.RtbForeground; //TODO: fix
+            _dictColors[_run_line_move_] = ChessForgeColors.CurrentTheme.RtbForeground;
+            _dictColors[_run_move_eval_] = ChessForgeColors.CurrentTheme.RtbForeground;
+            _dictColors[_run_stem_move_] = ChessForgeColors.CurrentTheme.RtbForeground;
+            _dictColors[_run_user_wb_alignment_] = ChessForgeColors.CurrentTheme.RtbForeground;
+            _dictColors[_run_wb_response_alignment_] = ChessForgeColors.CurrentTheme.RtbForeground;
+            _dictColors[_run_wb_alternatives_] = _workbookBrush;
+            _dictColors[_run_wb_comment_] = _workbookBrush;
+            _dictColors[_run_wb_ended_] = ChessForgeColors.CurrentTheme.RtbForeground;
+
+            foreach (var block in Document.Blocks)
+            {
+                if (block is Paragraph b)
+                {
+                    if (b.Name == _par_checkmate_ || b.Name == _par_stalemate_)
+                    {
+                        foreach (Inline inl in b.Inlines)
+                        {
+                            if (inl is Run run)
+                            {
+                                run.Foreground = ChessForgeColors.CurrentTheme.TrainingCheckmateForeground;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (Inline inl in b.Inlines)
+                        {
+                            if (inl is Run run)
+                            {
+                                string prefix = TextUtils.GetPrefixFromPrefixedString(run.Name);
+
+                                // special case for _run_wb_move_
+                                if (prefix == _run_wb_move_)
+                                {
+                                    if (run.Foreground == previousUserBrush)
+                                    {
+                                        run.Foreground = _userBrush;
+                                    }
+                                    else
+                                    {
+                                        run.Foreground = _workbookBrush;
+                                    }
+                                }
+                                else if (_dictColors.TryGetValue(prefix, out SolidColorBrush brush))
+                                {
+                                    run.Foreground = brush;
+                                }
+                                else
+                                {
+                                    run.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (_dictParas[ParaType.TAKEBACK] != null)
+            {
+                BuildTakebackParagraph();
             }
         }
 
@@ -900,29 +980,32 @@ namespace ChessForge
         /// <summary>
         /// Adds a Paragraph with a Run to click if the user wants to take their move back.
         /// </summary>
-        private void AddTakebackParagraph()
+        private void BuildTakebackParagraph()
         {
             // first check if exsists
-            if (_dictParas[ParaType.TAKEBACK] == null)
+            _dictParas.TryGetValue(ParaType.TAKEBACK, out Paragraph para);
+            if (para == null)
             {
-                Paragraph para = AddNewParagraphToDoc(STYLE_TAKEBACK, "");
-                para.Foreground = ChessForgeColors.CurrentTheme.TrainingTakebackForeground;
+                para = AddNewParagraphToDoc(STYLE_TAKEBACK, "");
                 _dictParas[ParaType.TAKEBACK] = para;
-
                 para.MouseDown += EventTakebackParaClicked;
                 para.Cursor = Cursors.Hand;
-
-                para.Inlines.Add(new Run("\n " + Properties.Resources.MsgTakebackWanted));
-
-                Run note = new Run();
-                note.FontSize = para.FontSize - 2;
-                note.FontStyle = FontStyles.Italic;
-                note.FontWeight = FontWeights.Normal;
-                note.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
-
-                note.Text = "  " + Properties.Resources.MsgTakebackInfo;
-                para.Inlines.Add(note);
             }
+
+            para.Inlines.Clear();
+
+            para.Foreground = ChessForgeColors.CurrentTheme.TrainingTakebackForeground;
+
+            para.Inlines.Add(new Run("\n " + Properties.Resources.MsgTakebackWanted));
+
+            Run note = new Run();
+            note.FontSize = para.FontSize - 2;
+            note.FontStyle = FontStyles.Italic;
+            note.FontWeight = FontWeights.Normal;
+            note.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
+
+            note.Text = "  " + Properties.Resources.MsgTakebackInfo;
+            para.Inlines.Add(note);
         }
 
         /// <summary>
@@ -946,6 +1029,7 @@ namespace ChessForge
             string paraName = _par_stalemate_;
 
             Paragraph para = AddNewParagraphToDoc(STYLE_CHECKMATE, "");
+            para.Foreground = ChessForgeColors.CurrentTheme.TrainingCheckmateForeground;
             para.Name = paraName;
 
             Run r_prefix = new Run();
@@ -1143,7 +1227,7 @@ namespace ChessForge
                             SoundPlayer.PlayTrainingSound(SoundPlayer.Sound.NOT_IN_WORKBOOK);
                             TrainingSession.IsTakebackAvailable = true;
 
-                            AddTakebackParagraph();
+                            BuildTakebackParagraph();
 
                             string note = "";
                             switch (_sourceType)
