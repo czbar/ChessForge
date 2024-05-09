@@ -16,12 +16,12 @@ namespace ChessForge
         /// <summary>
         /// Creates required objects.
         /// </summary>
-        public static void Initialize(string theme)
+        public static void Initialize(ColorThemes theme)
         {
             InitLightModeSet();
             InitDarkModeSet();
 
-            if (theme.ToUpper() == "DARK")
+            if (theme == ColorThemes.DARK_MODE)
             {
                 CurrentTheme = DarkMode;
             }
@@ -80,33 +80,18 @@ namespace ChessForge
                 win.UiCnvDarkShade.Opacity = CurrentTheme.DarkShadeOpacity;
             }
 
-            win.UiDgActiveLine.Foreground = CurrentTheme.RtbForeground;
-            win.UiDgActiveLine.Background = CurrentTheme.RtbBackground;
-
-            win.UiDgActiveLine.RowBackground = CurrentTheme.RtbBackground;
-
-            //if we get an exception here changing styles, change approach!
-            win.UiDgActiveLine.ColumnHeaderStyle = new Style(typeof(DataGridColumnHeader));
-            win.UiDgActiveLine.ColumnHeaderStyle.Setters.Add(new Setter(Control.ForegroundProperty, Brushes.Black));
-            win.UiDgActiveLine.ColumnHeaderStyle.Setters.Add(new Setter(Control.BackgroundProperty, Brushes.LightGray));
-
-            win.UiDgEngineGame.Foreground = CurrentTheme.RtbForeground;
-            win.UiDgEngineGame.Background = CurrentTheme.RtbBackground;
-
-            win.UiDgEngineGame.RowBackground = CurrentTheme.RtbBackground;
-
-            win.UiDgEngineGame.ColumnHeaderStyle = new Style(typeof(DataGridColumnHeader));
-            win.UiDgEngineGame.ColumnHeaderStyle.Setters.Add(new Setter(Control.ForegroundProperty, Brushes.Black));
-            win.UiDgEngineGame.ColumnHeaderStyle.Setters.Add(new Setter(Control.BackgroundProperty, Brushes.LightGray));
+            SetupDataGrid(win.UiDgActiveLine);
+            SetupDataGrid(win.UiDgEngineGame);
 
             win.UiRtbTopGames.Background = CurrentTheme.RtbBackground;
 
             win.UiRtbOpenings.Background = CurrentTheme.RtbBackground;
 
-            win.UiGridBookmarks.Background = CurrentTheme.RtbBackground;
+            win.UiGridBookmarks.Background = CurrentTheme.BookmarksBackground;
             win.UiLblBmChapters.Foreground = CurrentTheme.RtbForeground;
             win.UiLblBmCContent.Foreground = CurrentTheme.RtbForeground;
             win.UiLblBookmarkPage.Foreground = CurrentTheme.RtbForeground;
+            BookmarkManager.HighlightBookmark(null);
         }
 
         /// <summary>
@@ -125,6 +110,18 @@ namespace ChessForge
             catch { }
         }
 
+        /// <summary>
+        /// Sets up colors for a DataGrid
+        /// </summary>
+        /// <param name="dg"></param>
+        private static void SetupDataGrid(DataGrid dg)
+        {
+            dg.Foreground = CurrentTheme.RtbForeground;
+            dg.Background = CurrentTheme.RtbBackground;
+            dg.RowBackground = CurrentTheme.RtbBackground;
+
+            dg.ColumnHeaderStyle = CurrentTheme.DataGridHeaderStyle;
+        }
 
         public static ThemeColorSet CurrentTheme;
 
@@ -229,6 +226,13 @@ namespace ChessForge
         /// </summary>
         private static void InitLightModeSet()
         {
+            if (LightMode.DataGridHeaderStyle == null)
+            {
+                LightMode.DataGridHeaderStyle = new Style(typeof(DataGridColumnHeader));
+                LightMode.DataGridHeaderStyle.Setters.Add(new Setter(Control.ForegroundProperty, Brushes.Black));
+                LightMode.DataGridHeaderStyle.Setters.Add(new Setter(Control.BackgroundProperty, Brushes.LightGray));
+            }
+
             LightMode.RtbForeground = Brushes.Black;
             LightMode.RtbBackground = Brushes.White;
 
@@ -266,13 +270,23 @@ namespace ChessForge
             LightMode.TrainingCheckmateForeground = Brushes.Navy;
             LightMode.TrainingTakebackForeground = Brushes.OrangeRed;
             LightMode.TrainingEngineGameForeground = Brushes.Brown;
-    }
 
-    /// <summary>
-    /// Sets colors for the Dark Mode.
-    /// </summary>
-    private static void InitDarkModeSet()
+            LightMode.ChaptersCreateIntroForeground = Brushes.Gray;
+            LightMode.BookmarksBackground = new SolidColorBrush(Color.FromRgb(229, 229, 229));
+        }
+
+        /// <summary>
+        /// Sets colors for the Dark Mode.
+        /// </summary>
+        private static void InitDarkModeSet()
         {
+            if (DarkMode.DataGridHeaderStyle == null)
+            {
+                DarkMode.DataGridHeaderStyle = new Style(typeof(DataGridColumnHeader));
+                DarkMode.DataGridHeaderStyle.Setters.Add(new Setter(Control.ForegroundProperty, Brushes.Black));
+                DarkMode.DataGridHeaderStyle.Setters.Add(new Setter(Control.BackgroundProperty, Brushes.DarkGray));
+            }
+
             DarkMode.RtbForeground = Brushes.White;
             DarkMode.RtbBackground = new SolidColorBrush(Color.FromRgb(0x44, 0x44, 0x44));
 
@@ -310,6 +324,9 @@ namespace ChessForge
             DarkMode.TrainingCheckmateForeground = Brushes.LightBlue;
             DarkMode.TrainingTakebackForeground = Brushes.Yellow;
             DarkMode.TrainingEngineGameForeground = Brushes.Gold;
+
+            DarkMode.ChaptersCreateIntroForeground = Brushes.LightGray;
+            DarkMode.BookmarksBackground = DarkMode.RtbBackground;
         }
     }
 }
