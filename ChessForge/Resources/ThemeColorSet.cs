@@ -7,6 +7,15 @@ using System.Windows.Media;
 namespace ChessForge
 {
     /// <summary>
+    /// Supported color themes
+    /// </summary>
+    public enum ColorThemes
+    {
+        DARK_MODE,
+        LIGHT_MODE,
+    }
+
+    /// <summary>
     /// Colors that must be defined for a color theme/mode.
     /// </summary>
     public class ThemeColorSet
@@ -75,6 +84,10 @@ namespace ChessForge
         /// </summary>
         public SolidColorBrush DataGridBackground;
 
+        /// <summary>
+        /// Foreground for the Create Intro text in the Chapters view.
+        /// </summary>
+        public SolidColorBrush ChaptersCreateIntroForeground;
 
         /// <summary>
         /// Foreground of the selected DataGrid cell
@@ -85,6 +98,11 @@ namespace ChessForge
         /// Background of the selected DataGrid cell
         /// </summary>
         public SolidColorBrush DataGridSelectBackground;
+
+        /// <summary>
+        /// Background of the Bookmarks View
+        /// </summary>
+        public SolidColorBrush BookmarksBackground;
 
         /// <summary>
         /// Foreground of the move in Intro
@@ -152,5 +170,10 @@ namespace ChessForge
         /// Opacity of the shade over the main chessboard
         /// </summary>
         public double DarkShadeOpacity;
+
+        /// <summary>
+        /// Style to use for the DataGerid Header
+        /// </summary>
+        public System.Windows.Style DataGridHeaderStyle;
     }
 }
