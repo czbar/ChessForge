@@ -172,6 +172,38 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns brush for the passed level using
+        /// the circular selection of colors.
+        /// </summary>
+        /// <param name="level"></param>
+        /// <returns></returns>
+        public static SolidColorBrush GetForegroundForLevel(int level)
+        {
+            SolidColorBrush brush;
+
+            switch (level)
+            {
+                case 0:
+                    brush = CurrentTheme.ModuloColor_0;
+                    break;
+                case 1:
+                    brush = CurrentTheme.ModuloColor_1;
+                    break;
+                case 2:
+                    brush = CurrentTheme.ModuloColor_2;
+                    break;
+                case 3:
+                    brush = CurrentTheme.ModuloColor_3;
+                    break;
+                default:
+                    brush = CurrentTheme.RtbForeground;
+                    break;
+            }
+
+            return brush;
+        }
+
+        /// <summary>
         /// Creates gradient brushes for the result and percentage labels in the Explorers.
         /// </summary>
         /// <param name="color1"></param>
