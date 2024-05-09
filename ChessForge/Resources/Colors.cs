@@ -122,14 +122,9 @@ namespace ChessForge
         public static ThemeColorSet LightMode = new ThemeColorSet();
         public static ThemeColorSet DarkMode = new ThemeColorSet();
 
-        public static SolidColorBrush WORKBOOK_TABLE_HILITE_FORE = new SolidColorBrush(Color.FromRgb(255, 0, 0));
-        public static SolidColorBrush WORKBOOK_TABLE_REGULAR_FORE = new SolidColorBrush(Color.FromRgb(0, 0, 0));
-
         public static SolidColorBrush TABLE_ROW_LIGHT_GRAY = new SolidColorBrush(Color.FromRgb(247, 246, 245));
         public static SolidColorBrush TABLE_HEADER_GREEN = new SolidColorBrush(Color.FromRgb(192, 214, 167));
         public static SolidColorBrush TABLE_HIGHLIGHT_GREEN = new SolidColorBrush(Color.FromRgb(224, 235, 211));
-
-        public static SolidColorBrush INTRO_MOVE_BACKGROUND = new SolidColorBrush(Color.FromRgb(225, 225, 225));
 
         public static SolidColorBrush EXPLORER_PCT_BORDER = new SolidColorBrush(Color.FromRgb(225, 225, 225));
         public static SolidColorBrush EXPLORER_PCT_WHITE = new SolidColorBrush(Color.FromRgb(238, 238, 238));
