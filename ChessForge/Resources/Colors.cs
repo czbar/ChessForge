@@ -268,7 +268,7 @@ namespace ChessForge
             LightMode.RtbSelectMovesForCopyBackground = Brushes.LightBlue;
 
             LightMode.TrainingCheckmateForeground = Brushes.Navy;
-            LightMode.TrainingTakebackForeground = Brushes.OrangeRed;
+            LightMode.TrainingTakebackForeground = Brushes.DarkOrange;
             LightMode.TrainingEngineGameForeground = Brushes.Brown;
 
             LightMode.ChaptersCreateIntroForeground = Brushes.Gray;
