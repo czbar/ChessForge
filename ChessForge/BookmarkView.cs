@@ -81,7 +81,7 @@ namespace ChessForge
         /// <param name="on"></param>
         public void Highlight(bool on)
         {
-            SolidColorBrush br = on ? Brushes.Red : Brushes.Black;
+            SolidColorBrush br = on ? ChessForgeColors.GetHintForeground(CommentBox.HintType.ERROR) : ChessForgeColors.CurrentTheme.RtbForeground;
             ChessBoard.SetTopLabelColor(br);
             ChessBoard.SetMainLabelColor(br);
         }

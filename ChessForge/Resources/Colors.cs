@@ -85,6 +85,7 @@ namespace ChessForge
 
             win.UiDgActiveLine.RowBackground = CurrentTheme.RtbBackground;
 
+            //if we get an exception here changing styles, change approach!
             win.UiDgActiveLine.ColumnHeaderStyle = new Style(typeof(DataGridColumnHeader));
             win.UiDgActiveLine.ColumnHeaderStyle.Setters.Add(new Setter(Control.ForegroundProperty, Brushes.Black));
             win.UiDgActiveLine.ColumnHeaderStyle.Setters.Add(new Setter(Control.BackgroundProperty, Brushes.LightGray));
@@ -92,6 +93,11 @@ namespace ChessForge
             win.UiRtbTopGames.Background = CurrentTheme.RtbBackground;
 
             win.UiRtbOpenings.Background = CurrentTheme.RtbBackground;
+
+            win.UiGridBookmarks.Background = CurrentTheme.RtbBackground;
+            win.UiLblBmChapters.Foreground = CurrentTheme.RtbForeground;
+            win.UiLblBmCContent.Foreground = CurrentTheme.RtbForeground;
+            win.UiLblBookmarkPage.Foreground = CurrentTheme.RtbForeground;
         }
 
         /// <summary>
