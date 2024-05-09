@@ -90,6 +90,15 @@ namespace ChessForge
             win.UiDgActiveLine.ColumnHeaderStyle.Setters.Add(new Setter(Control.ForegroundProperty, Brushes.Black));
             win.UiDgActiveLine.ColumnHeaderStyle.Setters.Add(new Setter(Control.BackgroundProperty, Brushes.LightGray));
 
+            win.UiDgEngineGame.Foreground = CurrentTheme.RtbForeground;
+            win.UiDgEngineGame.Background = CurrentTheme.RtbBackground;
+
+            win.UiDgEngineGame.RowBackground = CurrentTheme.RtbBackground;
+
+            win.UiDgEngineGame.ColumnHeaderStyle = new Style(typeof(DataGridColumnHeader));
+            win.UiDgEngineGame.ColumnHeaderStyle.Setters.Add(new Setter(Control.ForegroundProperty, Brushes.Black));
+            win.UiDgEngineGame.ColumnHeaderStyle.Setters.Add(new Setter(Control.BackgroundProperty, Brushes.LightGray));
+
             win.UiRtbTopGames.Background = CurrentTheme.RtbBackground;
 
             win.UiRtbOpenings.Background = CurrentTheme.RtbBackground;
