@@ -785,7 +785,7 @@ namespace ChessForge
         /// </summary>
         public void BringSelectedRunIntoView()
         {
-            if (TextUtils.GetIdFromPrefixedString(_selectedRun.Name) != 0)
+            if (_selectedRun != null && (TextUtils.GetIdFromPrefixedString(_selectedRun.Name) != 0))
             {
                 _selectedRun?.BringIntoView();
             }
