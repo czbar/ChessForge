@@ -714,6 +714,11 @@ Chessboards=Szachownice
 #english: EngineOptions=Engine Options
 EngineOptions=Opcje Silnika
 
+
+#description: Dark mode
+#english: DarkMode=Dark Mode
+DarkMode=Tryb Ciemny
+
 #description: Opens a dialog allowing the user to select chess engine executable file
 #english: AnalysisEngine=Analysis Engine
 AnalysisEngine=Wybór Silnika
@@ -3230,11 +3235,11 @@ TrnSessionStart=Zaczynamy sesję treningową.
 TrnMakeFirstMove=Rozpocznij trening wykonując swój pierwszy ruch na szachownicy.
 
 #description: User is White
-#english: TrnUserPlaysWhite=You play White and the virtual coach plays Black
+#english: TrnUserPlaysWhite=You play White and the virtual coach plays Black.
 TrnUserPlaysWhite=Grasz białymi, a wirtualny trener gra czarnymi.
 
 #description: User is Black
-#english: TrnUserPlaysBlack=You play Black and the virtual coach plays White
+#english: TrnUserPlaysBlack=You play Black and the virtual coach plays White.
 TrnUserPlaysBlack=Grasz czarnymi, a wirtualny trener gra białymi.
 
 #description: Click move instruction
