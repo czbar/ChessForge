@@ -653,6 +653,28 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Highlights the passed bookmark,
+        /// unhighlights the rest.
+        /// </summary>
+        /// <param name="bm"></param>
+        public static void HighlightBookmark(Bookmark bm)
+        {
+            foreach (BookmarkView bv in BookmarkGuiList)
+            {
+                BookmarkWrapper bw = bv.BookmarkWrapper;
+
+                if (bw != null && bw.Bookmark == bm)
+                {
+                    bv.Highlight(true);
+                }
+                else
+                {
+                    bv.Highlight(false);
+                }
+            }
+        }
+
+        /// <summary>
         /// Deletes a bookmark from the parent tree
         /// and the list of bookmarks.
         /// </summary>
@@ -682,28 +704,6 @@ namespace ChessForge
             }
             catch
             {
-            }
-        }
-
-        /// <summary>
-        /// Highlights the passed bookmark,
-        /// unhighlights the rest.
-        /// </summary>
-        /// <param name="bm"></param>
-        private static void HighlightBookmark(Bookmark bm)
-        {
-            foreach (BookmarkView bv in BookmarkGuiList)
-            {
-                BookmarkWrapper bw = bv.BookmarkWrapper;
-
-                if (bw != null && bw.Bookmark == bm)
-                {
-                    bv.Highlight(true);
-                }
-                else
-                {
-                    bv.Highlight(false);
-                }
             }
         }
 
