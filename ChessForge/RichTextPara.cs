@@ -31,7 +31,7 @@ namespace ChessForge
             FontSize = font_size;
             FontWeight = font_weight;
             TextAlign = align;
-            ForegroundColor = foregroundColor == null ? ChessForgeColors.CurrentTheme.RtbForeground : foregroundColor;
+            ForegroundColor = foregroundColor;
         }
 
         /// <summary>
