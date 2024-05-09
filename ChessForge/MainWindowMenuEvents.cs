@@ -83,7 +83,7 @@ namespace ChessForge
         /// <summary>
         /// Rebuilds all tree views
         /// </summary>
-        public void RebuildAllTreeViews(bool? increaseFontDirection = null)
+        public void RebuildAllTreeViews(bool? increaseFontDirection = null, bool? updateColors = null)
         {
             _studyTreeView?.BuildFlowDocumentForVariationTree();
             _modelGameTreeView?.BuildFlowDocumentForVariationTree();
@@ -93,6 +93,10 @@ namespace ChessForge
             if (TrainingSession.IsTrainingInProgress)
             {
                 UiTrainingView.IncrementFontSize(increaseFontDirection);
+                if (updateColors == true)
+                {
+                    UiTrainingView.UpdateColors();
+                }
             }
             else
             {
@@ -3514,7 +3518,7 @@ namespace ChessForge
                 ChessForgeColors.Initialize(ColorThemes.DARK_MODE);
                 Configuration.IsDarkMode = true;
                 ChessForgeColors.SetMainControlColors();
-                RebuildAllTreeViews();
+                RebuildAllTreeViews(null, true);
             }
             _modeUpdatesBlocked = false;
         }
@@ -3531,7 +3535,7 @@ namespace ChessForge
                 ChessForgeColors.Initialize(ColorThemes.LIGHT_MODE);
                 Configuration.IsDarkMode = false;
                 ChessForgeColors.SetMainControlColors();
-                RebuildAllTreeViews();
+                RebuildAllTreeViews(null, true);
             }
             _modeUpdatesBlocked = false;
         }
