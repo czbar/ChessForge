@@ -405,7 +405,17 @@ namespace ChessForge
 
             InitializeConfiguration();
 
-            ChessForgeColors.Initialize(Configuration.ColorTheme);
+            // initialize GUI theme
+            if (Configuration.IsDarkMode) 
+            {
+                ChessForgeColors.Initialize(ColorThemes.DARK_MODE);
+                _modeUpdatesBlocked = true;
+                UiMnDarkMode.IsChecked = Configuration.IsDarkMode;
+            }
+            else
+            {
+                ChessForgeColors.Initialize(ColorThemes.LIGHT_MODE);
+            }
             ChessForgeColors.SetMainControlColors();
 
             BoardCommentBox = new CommentBox(UiRtbBoardComment.Document, this);
