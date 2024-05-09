@@ -66,18 +66,18 @@ namespace ChessForge
         /// </summary>
         internal Dictionary<string, RichTextPara> _richTextParas = new Dictionary<string, RichTextPara>()
         {
-            ["title"] = new RichTextPara(0, 0, 24, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(0, 0, 0)), TextAlignment.Center),
-            ["big_red"] = new RichTextPara(0, 10, 20, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(0, 0, 0)), TextAlignment.Center),
-            ["user_wait"] = new RichTextPara(0, 10, 20, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(0, 0, 0)), TextAlignment.Center),
-            ["bold_prompt"] = new RichTextPara(0, 5, 14, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(69, 89, 191)), TextAlignment.Center),
-            ["eval_results"] = new RichTextPara(30, 5, 14, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(51, 159, 141)), TextAlignment.Center),
-            ["normal"] = new RichTextPara(0, 0, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Center),
-            ["normal_14"] = new RichTextPara(0, 0, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Center),
-            ["default"] = new RichTextPara(10, 5, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(128, 98, 63)), TextAlignment.Center),
-            ["dummy"] = new RichTextPara(0, 16, 10, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(0, 0, 0)), TextAlignment.Center),
-            ["bold_16"] = new RichTextPara(0, 0, 16, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(69, 89, 191)), TextAlignment.Center),
-            ["bold_18"] = new RichTextPara(0, 5, 18, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(69, 89, 191)), TextAlignment.Center),
-            ["end_of_game"] = new RichTextPara(0, 5, 18, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(69, 89, 191)), TextAlignment.Center),
+            ["title"] = new RichTextPara(0, 0, 24, FontWeights.Bold, TextAlignment.Center),
+            ["big_red"] = new RichTextPara(0, 10, 20, FontWeights.Bold, TextAlignment.Center),
+            ["user_wait"] = new RichTextPara(0, 10, 20, FontWeights.Bold, TextAlignment.Center),
+            ["bold_prompt"] = new RichTextPara(0, 5, 14, FontWeights.Bold, TextAlignment.Center),
+            ["eval_results"] = new RichTextPara(30, 5, 14, FontWeights.Normal, TextAlignment.Center),
+            ["normal"] = new RichTextPara(0, 0, 12, FontWeights.Normal, TextAlignment.Center),
+            ["normal_14"] = new RichTextPara(0, 0, 12, FontWeights.Normal, TextAlignment.Center),
+            ["default"] = new RichTextPara(10, 5, 12, FontWeights.Normal, TextAlignment.Center),
+            ["dummy"] = new RichTextPara(0, 16, 10, FontWeights.Normal, TextAlignment.Center),
+            ["bold_16"] = new RichTextPara(0, 0, 16, FontWeights.Bold, TextAlignment.Center),
+            ["bold_18"] = new RichTextPara(0, 5, 18, FontWeights.Bold, TextAlignment.Center),
+            ["end_of_game"] = new RichTextPara(0, 5, 18, FontWeights.Bold, TextAlignment.Center),
         };
 
         /// <summary>

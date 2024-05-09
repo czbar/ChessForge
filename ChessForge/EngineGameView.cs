@@ -70,11 +70,11 @@ namespace ChessForge
         /// </summary>
         internal Dictionary<string, RichTextPara> _richTextParas = new Dictionary<string, RichTextPara>()
         {
-            [STYLE_INTRO] = new RichTextPara(0, 0, 14, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(0, 0, 0)), TextAlignment.Left),
-            [STYLE_ENGINE_OPTIONS] = new RichTextPara(20, 0, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(0, 0, 0)), TextAlignment.Left),
-            [STYLE_GAME_MOVES] = new RichTextPara(10, 20, 16, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
-            [STYLE_MOVE_PROMPT] = new RichTextPara(0, 0, 14, FontWeights.Bold, Brushes.Green, TextAlignment.Left, Brushes.Green),
-            [STYLE_DEFAULT] = new RichTextPara(10, 5, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(128, 98, 63)), TextAlignment.Left),
+            [STYLE_INTRO] = new RichTextPara(0, 0, 14, FontWeights.Normal, TextAlignment.Left),
+            [STYLE_ENGINE_OPTIONS] = new RichTextPara(20, 0, 12, FontWeights.Normal, TextAlignment.Left),
+            [STYLE_GAME_MOVES] = new RichTextPara(10, 20, 16, FontWeights.Bold, TextAlignment.Left),
+            [STYLE_MOVE_PROMPT] = new RichTextPara(0, 0, 14, FontWeights.Bold, TextAlignment.Left, Brushes.Green),
+            [STYLE_DEFAULT] = new RichTextPara(10, 5, 12, FontWeights.Normal, TextAlignment.Left),
         };
 
         /// <summary>

@@ -249,20 +249,20 @@ namespace ChessForge
         /// </summary>
         internal Dictionary<string, RichTextPara> _richTextParas = new Dictionary<string, RichTextPara>()
         {
-            [STYLE_INTRO] = new RichTextPara(0, 0, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(0, 0, 0)), TextAlignment.Left),
-            [STYLE_FIRST_PROMPT] = new RichTextPara(10, 0, 16, FontWeights.Bold, Brushes.Green, TextAlignment.Left, Brushes.Green),
-            [STYLE_SECOND_PROMPT] = new RichTextPara(10, 0, 14, FontWeights.Bold, Brushes.Green, TextAlignment.Left, Brushes.Green),
-            [STYLE_STEM_LINE] = new RichTextPara(0, 10, 14, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(69, 89, 191)), TextAlignment.Left),
-            [STYLE_TAKEBACK] = new RichTextPara(20, 0, 16, FontWeights.Bold, Brushes.Blue, TextAlignment.Left, Brushes.DarkOrange),
-            [STYLE_DEFAULT] = new RichTextPara(10, 5, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(128, 98, 63)), TextAlignment.Left),
+            [STYLE_INTRO] = new RichTextPara(0, 0, 12, FontWeights.Normal, TextAlignment.Left),
+            [STYLE_FIRST_PROMPT] = new RichTextPara(10, 0, 16, FontWeights.Bold, TextAlignment.Left, Brushes.Green),
+            [STYLE_SECOND_PROMPT] = new RichTextPara(10, 0, 14, FontWeights.Bold, TextAlignment.Left, Brushes.Green),
+            [STYLE_STEM_LINE] = new RichTextPara(0, 10, 14, FontWeights.Bold, TextAlignment.Left),
+            [STYLE_TAKEBACK] = new RichTextPara(20, 0, 16, FontWeights.Bold, TextAlignment.Left, Brushes.DarkOrange),
+            [STYLE_DEFAULT] = new RichTextPara(10, 5, 12, FontWeights.Normal,    TextAlignment.Left),
 
-            [STYLE_MOVES_MAIN] = new RichTextPara(10, 5, 16, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
-            [STYLE_COACH_NOTES] = new RichTextPara(50, 5, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
-            [STYLE_ENGINE_EVAL] = new RichTextPara(80, 0, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
-            [STYLE_ENGINE_GAME] = new RichTextPara(50, 0, 16, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
+            [STYLE_MOVES_MAIN] = new RichTextPara(10, 5, 16, FontWeights.Bold, TextAlignment.Left),
+            [STYLE_COACH_NOTES] = new RichTextPara(50, 5, 12, FontWeights.Normal,  TextAlignment.Left),
+            [STYLE_ENGINE_EVAL] = new RichTextPara(80, 0, 12, FontWeights.Normal,  TextAlignment.Left),
+            [STYLE_ENGINE_GAME] = new RichTextPara(50, 0, 16, FontWeights.Normal,  TextAlignment.Left),
 
-            [STYLE_CHECKMATE] = new RichTextPara(50, 0, 16, FontWeights.Bold, Brushes.Navy, TextAlignment.Left, Brushes.Navy),
-            [STYLE_STALEMATE] = new RichTextPara(50, 0, 16, FontWeights.Bold, Brushes.Navy, TextAlignment.Left, Brushes.Navy),
+            [STYLE_CHECKMATE] = new RichTextPara(50, 0, 16, FontWeights.Bold, TextAlignment.Left, Brushes.Navy),
+            [STYLE_STALEMATE] = new RichTextPara(50, 0, 16, FontWeights.Bold, TextAlignment.Left, Brushes.Navy),
         };
 
         /// <summary>

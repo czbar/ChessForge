@@ -21,17 +21,15 @@ namespace ChessForge
         /// <param name="bottom"></param>
         /// <param name="font_size"></param>
         /// <param name="font_weight"></param>
-        /// <param name="firstCharColor"></param>
         /// <param name="align"></param>
         /// <param name="foregroundColor"></param>
         public RichTextPara(int left, int bottom, int font_size, FontWeight font_weight,
-                            SolidColorBrush firstCharColor, TextAlignment align, SolidColorBrush foregroundColor = null)
+                            TextAlignment align, SolidColorBrush foregroundColor = null)
         {
             LeftIndent = left;
             BottomMargin = bottom;
             FontSize = font_size;
             FontWeight = font_weight;
-            FirstCharColor = firstCharColor;
             TextAlign = align;
             ForegroundColor = foregroundColor == null ? ChessForgeColors.CurrentTheme.RtbForeground : foregroundColor;
         }
@@ -46,7 +44,6 @@ namespace ChessForge
             BottomMargin = rtp.BottomMargin;
             FontSize = rtp.FontSize;
             FontWeight = rtp.FontWeight;
-            FirstCharColor = rtp.FirstCharColor;
             TextAlign = rtp.TextAlign;
             ForegroundColor = rtp.ForegroundColor;
         }
@@ -79,12 +76,6 @@ namespace ChessForge
         /// Default font weight to use.
         /// </summary>
         public FontWeight FontWeight { get; set; }
-
-        /// <summary>
-        /// Special color for this paragraph.
-        /// Can be used e.g. to color the first Run
-        /// </summary>
-        public SolidColorBrush FirstCharColor { get; set; }
 
         /// <summary>
         /// Text alignment in the paragraph.

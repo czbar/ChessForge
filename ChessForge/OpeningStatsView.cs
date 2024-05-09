@@ -110,8 +110,8 @@ namespace ChessForge
         /// </summary>
         private readonly Dictionary<string, RichTextPara> _richTextParas = new Dictionary<string, RichTextPara>()
         {
-            [STYLE_WORKBOOK_TITLE] = new RichTextPara(0, 10, 18, FontWeights.Bold, null, TextAlignment.Left),
-            ["default"] = new RichTextPara(140, 5, 11, FontWeights.Normal, null, TextAlignment.Left),
+            [STYLE_WORKBOOK_TITLE] = new RichTextPara(0, 10, 18, FontWeights.Bold, TextAlignment.Left),
+            ["default"] = new RichTextPara(140, 5, 11, FontWeights.Normal, TextAlignment.Left),
         };
 
         /// <summary>
