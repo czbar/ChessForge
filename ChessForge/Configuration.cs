@@ -111,9 +111,9 @@ namespace ChessForge
         public static string ChessboardColors = "";
 
         /// <summary>
-        /// Name of the color theme to apply
+        /// Determines if the GUI is in dark mode
         /// </summary>
-        public static string ColorTheme = "light";
+        public static bool IsDarkMode = false;
 
         /// <summary>
         /// Path to the engine executable
@@ -568,6 +568,8 @@ namespace ChessForge
         private const string CFG_MISTAKE_NO_DET_THRESH = "MistakeNoDetThresh";
         private const string CFG_BAD_MOVE_DETECTION = "BadMoveDetection";
 
+        private const string CFG_IS_DARK_MODE = "IsDarkMode";
+
         private const string CFG_FONT_SIZE_DIFF = "FontSizeDiff";
         private const string CFG_AUTO_SAVE_FREQ = "AutoSaveFrequency";
 
@@ -759,6 +761,8 @@ namespace ChessForge
                 sb.Append(CFG_MISTAKE_DET_EVAL_DROP + "=" + MistakeDetectEvalDrop.ToString() + Environment.NewLine);
                 sb.Append(CFG_MISTAKE_NO_DET_THRESH + "=" + MistakeNoDetectThresh.ToString() + Environment.NewLine);
                 sb.AppendLine(CFG_BAD_MOVE_DETECTION + "=" + (EnableBadMoveDetection ? "1" : "0"));
+
+                sb.AppendLine(CFG_IS_DARK_MODE + "=" + (IsDarkMode ? "1" : "0"));
 
                 sb.Append(CFG_PGN_EXP_BOOKMARKS + "=" + (PgnExportBookmarks ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_PGN_EXP_EVALS + "=" + (PgnExportEvaluations ? "1" : "0") + Environment.NewLine);
@@ -1099,6 +1103,9 @@ namespace ChessForge
                             break;
                         case CFG_BAD_MOVE_DETECTION:
                             EnableBadMoveDetection = value != "0" ? true : false;
+                            break;
+                        case CFG_IS_DARK_MODE:
+                            IsDarkMode = value != "0" ? true : false;
                             break;
                         case CFG_ENGINE_EVALUATION_TIME:
                             int.TryParse(value, out _engineEvaluationTime);
