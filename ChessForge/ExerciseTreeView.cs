@@ -10,7 +10,6 @@ using System.Windows.Documents;
 using System.Windows.Media;
 using ChessPosition;
 using System.Windows.Media.Imaging;
-using System.Windows.Media.Media3D;
 using System.Windows.Input;
 using System.Collections.ObjectModel;
 
@@ -77,7 +76,7 @@ namespace ChessForge
                 para = CreateParagraph("1", true);
 
                 Run r = new Run();
-                r.Foreground = Brushes.DarkGreen;
+                r.Foreground = ChessForgeColors.GetHintForeground(CommentBox.HintType.INFO);
                 if (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.ANALYSIS)
                 {
                     r.Text = Properties.Resources.AnalysisByMoves;
@@ -117,7 +116,7 @@ namespace ChessForge
                 para = CreateParagraph("1", true);
 
                 Run r = new Run();
-                r.Foreground = Brushes.Black;
+                r.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
                 r.Text = Properties.Resources.QuizPointsAvailable + ": " + (mainQuizPoints + sideLineQuizPoints).ToString() + ". ";
 
                 if (sideLineQuizPoints != 0)
@@ -155,6 +154,8 @@ namespace ChessForge
 
             if (mode == VariationTree.SolvingMode.GUESS_MOVE || mode == VariationTree.SolvingMode.ANALYSIS)
             {
+                _lblExit.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
+
                 Article article = WorkbookManager.SessionWorkbook.ActiveArticle;
                 if (article.Solver.IsSolvingFinished
                     ||
@@ -650,6 +651,7 @@ namespace ChessForge
         {
             Label lbl = new Label();
             lbl.FontSize = 12; // not configurable!
+            lbl.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
             switch (mode)
             {
                 case VariationTree.SolvingMode.GUESS_MOVE:
