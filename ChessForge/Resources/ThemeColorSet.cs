@@ -118,9 +118,20 @@ namespace ChessForge
         public SolidColorBrush BorderBrush;
 
         /// <summary>
-        /// Opacity of the shade over the main chessboard
+        /// Foreground to ask the user about the takeback
         /// </summary>
-        public double DarkShadeOpacity;
+        public SolidColorBrush TrainingTakebackForeground;
+
+        /// <summary>
+        /// Foreground to announce checkmate or stalemate
+        /// in Training View
+        /// </summary>
+        public SolidColorBrush TrainingCheckmateForeground;
+
+        /// <summary>
+        /// Foreground for engine game moves
+        /// </summary>
+        public SolidColorBrush TrainingEngineGameForeground;
 
         /// <summary>
         /// Colors for various Hint Types in the Comment Box
@@ -136,5 +147,10 @@ namespace ChessForge
         public SolidColorBrush ModuloColor_1;
         public SolidColorBrush ModuloColor_2;
         public SolidColorBrush ModuloColor_3;
+
+        /// <summary>
+        /// Opacity of the shade over the main chessboard
+        /// </summary>
+        public double DarkShadeOpacity;
     }
 }

@@ -258,6 +258,10 @@ namespace ChessForge
             LightMode.RtbSelectMoveWhileCopyForeground = Brushes.White;
             LightMode.RtbSelectMoveWhileCopyBackground = Brushes.Blue;
             LightMode.RtbSelectMovesForCopyBackground = Brushes.LightBlue;
+
+            LightMode.TrainingCheckmateForeground = Brushes.Navy;
+            LightMode.TrainingTakebackForeground = Brushes.OrangeRed;
+            LightMode.TrainingEngineGameForeground = Brushes.Brown;
     }
 
     /// <summary>
@@ -298,6 +302,10 @@ namespace ChessForge
             DarkMode.RtbSelectMoveWhileCopyForeground = Brushes.Black;
             DarkMode.RtbSelectMoveWhileCopyBackground = Brushes.LightBlue;
             DarkMode.RtbSelectMovesForCopyBackground = Brushes.Blue;
+
+            DarkMode.TrainingCheckmateForeground = Brushes.LightBlue;
+            DarkMode.TrainingTakebackForeground = Brushes.Yellow;
+            DarkMode.TrainingEngineGameForeground = Brushes.Gold;
         }
     }
 }
