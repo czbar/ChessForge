@@ -244,6 +244,24 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Recreates the tables with the current Color Theme.
+        /// This will be called in response to user selecting the DarkMode
+        /// menu item.
+        /// </summary>
+        public void UpdateColorTheme()
+        {
+            // reset variables that, if set, block proper re-build.
+            _openingNameTable = null;
+            _lstRows.Clear();
+            
+            CreateOpeningStatsTable();
+            if (_lastOpeningStats != null)
+            {
+                BuildFlowDocument(_lastDataMode, _lastOpeningStats, _lasterrorMessage);
+            }
+        }
+
+        /// <summary>
         /// Updates the opening name table
         /// </summary>
         private void UpdateOpeningNameTable()
@@ -338,12 +356,25 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Variables that store the data used in the most recent call.
+        /// Their only purpose is to be used when calling BuildFlowDocument()
+        /// from UpdateColorTheme()
+        /// </summary>
+        private static DataMode _lastDataMode = DataMode.NO_DATA;
+        private static LichessOpeningsStats _lastOpeningStats = null;
+        private string _lasterrorMessage = ""; 
+
+        /// <summary>
         /// Builds the flow for this view.
         /// Queries the Web Client for Openings Stats data to show in the 
         /// main table.
         /// </summary>
         private void BuildFlowDocument(DataMode mode, LichessOpeningsStats openingStats, string errorMessage = "")
         {
+            _lastDataMode = mode;
+            _lastOpeningStats = openingStats;
+            _lasterrorMessage = errorMessage;
+
             Document.Blocks.Clear();
             Document.PageWidth = 590;
 
@@ -507,6 +538,7 @@ namespace ChessForge
 
             CreateStatsTableColumns(scaleFactor);
 
+            _lstRows.Clear();
             for (int i = 0; i < MAX_MOVE_ROW_COUNT; i++)
             {
                 OpeningStatsViewRow row = new OpeningStatsViewRow(this);
@@ -781,8 +813,8 @@ namespace ChessForge
             Table table = CreateTable(0);
             table.FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff;
             table.CellSpacing = 0;
-            table.Foreground = Brushes.Black;
-            table.Background = Brushes.White;
+            table.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
+            table.Background = ChessForgeColors.CurrentTheme.RtbBackground;
             table.RowGroups.Add(new TableRowGroup());
 
             table.Columns.Add(new TableColumn());
@@ -802,7 +834,7 @@ namespace ChessForge
                     TableRow row = new TableRow();
                     table.RowGroups[0].Rows.Add(row);
 
-                    Run rMove = new Run(move.San);
+                    Run rMove = new Run(" " + move.San);
                     rMove.MouseLeftButtonDown += EventMoveClicked;
                     rMove.Name = MOVE_PREFIX + move.Uci;
                     rMove.Cursor = Cursors.Arrow;
