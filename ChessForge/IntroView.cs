@@ -286,6 +286,9 @@ namespace ChessForge
                     hyperlink.NavigateUri = new Uri(dlg.UiTbUrl.Text);
                     hyperlink.ToolTip = dlg.UiTbUrl.Text;
                     hyperlink.MouseDown += EventHyperlinkClicked;
+                    hyperlink.Foreground = ChessForgeColors.CurrentTheme.HyperlinkForeground;
+                    hyperlink.MouseEnter += EventHyperlinkMouseEnter;
+                    hyperlink.MouseLeave += EventHyperlinkMouseLeave;
 
                     if (insertBefore == null)
                     {
@@ -328,6 +331,34 @@ namespace ChessForge
                     _selectedHyperlink = hyperlink;
                     EnableMenuItems(false, false, true, null);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Highlight the link when hovered over. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventHyperlinkMouseEnter(object sender, MouseEventArgs e)
+        {
+            if (sender is Hyperlink hl)
+            {
+                hl.Foreground = ChessForgeColors.CurrentTheme.HyperlinkHoveredForeground;
+                e.Handled = true;
+            }
+        }
+
+        /// <summary>
+        /// Back to normal hyperlink color when mouse left.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventHyperlinkMouseLeave(object sender, MouseEventArgs e)
+        {
+            if (sender is Hyperlink hl)
+            {
+                hl.Foreground = ChessForgeColors.CurrentTheme.HyperlinkForeground;
+                e.Handled = true;
             }
         }
 
@@ -904,6 +935,14 @@ namespace ChessForge
                 {
                     hyperlink.MouseDown -= EventHyperlinkClicked;
                     hyperlink.MouseDown += EventHyperlinkClicked;
+
+                    hyperlink.Foreground = ChessForgeColors.CurrentTheme.HyperlinkForeground;
+
+                    hyperlink.MouseEnter -= EventHyperlinkMouseEnter;
+                    hyperlink.MouseEnter += EventHyperlinkMouseEnter;
+
+                    hyperlink.MouseLeave -= EventHyperlinkMouseLeave;
+                    hyperlink.MouseLeave += EventHyperlinkMouseLeave;
                 }
             }
         }
