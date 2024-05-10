@@ -398,8 +398,10 @@ namespace ChessForge
                             inl = new Hyperlink(new Run(part.Text));
                             (inl as Hyperlink).NavigateUri = new Uri(part.Text);
                             inl.FontWeight = FontWeights.Normal;
-                            inl.PreviewMouseDown += Hyperlink_MouseLeftButtonDown;
-                            inl.Foreground = Brushes.Blue;
+                            inl.PreviewMouseDown += EventHyperlinkMouseLeftButtonDown;
+                            inl.MouseEnter += EventHyperlinkMouseEnter;
+                            inl.MouseLeave += EventHyperlinkMouseLeave;
+                            inl.Foreground = ChessForgeColors.CurrentTheme.HyperlinkForeground;
                             inl.Cursor = Cursors.Hand;
                             break;
                         default:

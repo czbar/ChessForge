@@ -2244,7 +2244,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Hyperlink_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void EventHyperlinkMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
             {
@@ -2254,6 +2254,34 @@ namespace ChessForge
                     Process.Start(hyperlink.NavigateUri.ToString());
                 }
                 catch { }
+            }
+        }
+
+        /// <summary>
+        /// Highlight the link when hovered over. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventHyperlinkMouseEnter(object sender, MouseEventArgs e)
+        {
+            if (sender is Hyperlink hl)
+            {
+                hl.Foreground = ChessForgeColors.CurrentTheme.HyperlinkHoveredForeground;
+                e.Handled = true;
+            }
+        }
+
+        /// <summary>
+        /// Back to normal hyperlink color when mouse left.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventHyperlinkMouseLeave(object sender, MouseEventArgs e)
+        {
+            if (sender is Hyperlink hl)
+            {
+                hl.Foreground = ChessForgeColors.CurrentTheme.HyperlinkForeground;
+                e.Handled = true;
             }
         }
 
