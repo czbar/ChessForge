@@ -255,7 +255,8 @@ namespace ChessForge
             _lstRows.Clear();
             
             CreateOpeningStatsTable();
-            if (_lastOpeningStats != null)
+            if (_lastDataMode == DataMode.OPENINGS && _lastOpeningStats != null 
+                || _lastDataMode == DataMode.TABLEBASE &&  TablebaseExplorer.Response.Moves != null)
             {
                 BuildFlowDocument(_lastDataMode, _lastOpeningStats, _lasterrorMessage);
             }
