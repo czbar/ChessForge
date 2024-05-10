@@ -151,6 +151,21 @@ namespace ChessForge
         /// </summary>
         public SolidColorBrush TrainingEngineGameForeground;
 
+
+        //*******************************
+        //    HYPERLINK COLORS
+        //*******************************
+
+        /// <summary>
+        /// Foreground of the hyperlink text.
+        /// </summary>
+        public SolidColorBrush HyperlinkForeground;
+
+        /// <summary>
+        /// Foreground of the hyperlink text when hovered over.
+        /// </summary>
+        public SolidColorBrush HyperlinkHoveredForeground;
+
         /// <summary>
         /// Colors for various Hint Types in the Comment Box
         /// </summary>

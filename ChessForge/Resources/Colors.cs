@@ -273,6 +273,9 @@ namespace ChessForge
 
             LightMode.ChaptersCreateIntroForeground = Brushes.Gray;
             LightMode.BookmarksBackground = new SolidColorBrush(Color.FromRgb(229, 229, 229));
+
+            LightMode.HyperlinkForeground = new SolidColorBrush(Color.FromRgb(0, 153, 213));
+            LightMode.HyperlinkHoveredForeground = new SolidColorBrush(Color.FromRgb(79, 102, 165));
         }
 
         /// <summary>
@@ -327,6 +330,9 @@ namespace ChessForge
 
             DarkMode.ChaptersCreateIntroForeground = Brushes.LightGray;
             DarkMode.BookmarksBackground = DarkMode.RtbBackground;
+
+            DarkMode.HyperlinkForeground = new SolidColorBrush(Color.FromRgb(9, 147, 189));
+            DarkMode.HyperlinkHoveredForeground = new SolidColorBrush(Color.FromRgb(0, 244, 255));
         }
     }
 }
