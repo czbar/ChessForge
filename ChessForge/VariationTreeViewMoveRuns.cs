@@ -390,7 +390,7 @@ namespace ChessForge
                             inl = new Run(thmb);
                             inl.ToolTip = nd.IsThumbnail ? Properties.Resources.ChapterThumbnail : null;
                             inl.FontStyle = FontStyles.Normal;
-                            inl.Foreground = Brushes.Black;
+                            inl.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
                             inl.FontWeight = FontWeights.Normal;
                             inl.PreviewMouseDown += EventCommentRunClicked;
                             break;
@@ -398,14 +398,16 @@ namespace ChessForge
                             inl = new Hyperlink(new Run(part.Text));
                             (inl as Hyperlink).NavigateUri = new Uri(part.Text);
                             inl.FontWeight = FontWeights.Normal;
-                            inl.PreviewMouseDown += Hyperlink_MouseLeftButtonDown;
-                            inl.Foreground = Brushes.Blue;
+                            inl.PreviewMouseDown += EventHyperlinkMouseLeftButtonDown;
+                            inl.MouseEnter += EventHyperlinkMouseEnter;
+                            inl.MouseLeave += EventHyperlinkMouseLeave;
+                            inl.Foreground = ChessForgeColors.CurrentTheme.HyperlinkForeground;
                             inl.Cursor = Cursors.Hand;
                             break;
                         default:
                             inl = new Run(part.Text);
                             inl.FontStyle = FontStyles.Normal;
-                            inl.Foreground = Brushes.Black;
+                            inl.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
                             inl.FontWeight = FontWeights.Normal;
                             inl.PreviewMouseDown += EventCommentRunClicked;
                             break;
@@ -463,7 +465,7 @@ namespace ChessForge
 
                 Run run = new Run(commentText);
                 run.FontStyle = FontStyles.Normal;
-                run.Foreground = Brushes.Black;
+                run.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
                 run.FontWeight = FontWeights.Normal;
                 run.PreviewMouseDown += EventCommentBeforeMoveRunClicked;
                 run.Name = _run_comment_ + nd.NodeId.ToString();
@@ -512,7 +514,7 @@ namespace ChessForge
 
                 r.FontStyle = FontStyles.Normal;
 
-                r.Foreground = Brushes.Black;
+                r.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
                 r.FontWeight = FontWeights.Normal;
 
                 Run rNode = _dictNodeToRun[nd.NodeId];

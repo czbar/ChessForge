@@ -110,7 +110,7 @@ namespace ChessForge
 
             for (int i = 0; i < MAX_GAME_ROW_COUNT; i++)
             {
-                TopGamesViewRow row = new TopGamesViewRow();
+                TopGamesViewRow row = new TopGamesViewRow(_isMainWin);
                 _lstRows.Add(row);
                 _gamesTable.RowGroups[0].Rows.Add(row.Row);
             }
@@ -124,10 +124,25 @@ namespace ChessForge
         /// <param name="e"></param>
         public void TopGamesReceived(LichessOpeningsStats stats)
         {
+            _lastOpeningStats = stats;
             LichessGamesPreviewDialog.SetOpeningsData(stats);
             BuildFlowDocument(stats);
         }
 
+        /// <summary>
+        /// Recreates the tables with the current Color Theme.
+        /// This will be called in response to user selecting the DarkMode
+        /// menu item.
+        /// </summary>
+        public void UpdateColorTheme()
+        {
+            CreateTopGamesTable();
+            TopGamesReceived(_lastOpeningStats);
+        }
+
+        // Stores the data used in the most recent call.
+        // Its only purpose is to be used when calling BuildFlowDocument()
+        private LichessOpeningsStats _lastOpeningStats;
 
         /// <summary>
         /// Event handlers requesting the build the view 
@@ -239,7 +254,7 @@ namespace ChessForge
         /// Highlights the row with the selected game.
         /// </summary>
         /// <param name="highlightedGameId"></param>
-        public void SetRowBackgorunds(string highlightedGameId)
+        public void SetRowBackgrounds(string highlightedGameId)
         {
             for (int i = 0; i < _gamesTable.RowGroups[0].Rows.Count; i++)
             {

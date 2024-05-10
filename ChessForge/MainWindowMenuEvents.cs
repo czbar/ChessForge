@@ -11,8 +11,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using ChessPosition.GameTree;
 using System.Windows.Documents;
-using System.Linq;
-using System.Windows.Media;
 
 namespace ChessForge
 {
@@ -79,6 +77,30 @@ namespace ChessForge
                 // must set the LastClickedNode as this is what the Promote method takes as the "current" line.
                 ActiveTreeView.LastClickedNodeId = nd.NodeId;
                 UiMnPromoteLine_Click(null, null);
+            }
+        }
+
+        /// <summary>
+        /// Rebuilds all tree views
+        /// </summary>
+        public void RebuildAllTreeViews(bool? increaseFontDirection = null, bool? updateColors = null)
+        {
+            _studyTreeView?.BuildFlowDocumentForVariationTree();
+            _modelGameTreeView?.BuildFlowDocumentForVariationTree();
+            _exerciseTreeView?.BuildFlowDocumentForVariationTree();
+            _chaptersView?.BuildFlowDocumentForChaptersView();
+
+            if (TrainingSession.IsTrainingInProgress)
+            {
+                UiTrainingView.IncrementFontSize(increaseFontDirection);
+                if (updateColors == true)
+                {
+                    UiTrainingView.UpdateColors();
+                }
+            }
+            else
+            {
+                RestoreSelectedLineAndMoveInActiveView();
             }
         }
 
@@ -425,7 +447,7 @@ namespace ChessForge
 
                     // complete and display the Flash notification
                     flash.Append("\ninto new chapter [" + (WorkbookManager.SessionWorkbook.GetChapterCount()).ToString() + "]");
-                    AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(flash.ToString(), Brushes.Green);
+                    AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(flash.ToString(), CommentBox.HintType.INFO);
 
                     PulseManager.ChaperIndexToBringIntoView = WorkbookManager.SessionWorkbook.GetChapterCount() - 1;
                 }
@@ -1336,7 +1358,7 @@ namespace ChessForge
                         if (importedChapters > 0)
                         {
                             AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(
-                                Properties.Resources.FlMsgChaptersImported + " (" + importedChapters.ToString() + ")", System.Windows.Media.Brushes.Green);
+                                Properties.Resources.FlMsgChaptersImported + " (" + importedChapters.ToString() + ")", CommentBox.HintType.INFO);
                         }
 
                     }
@@ -1345,7 +1367,7 @@ namespace ChessForge
                 {
                     CreateChapterFromNewGames(gamesCount, ref games, fileName);
                     AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(
-                        Properties.Resources.FlMsgChapterImported, System.Windows.Media.Brushes.Green);
+                        Properties.Resources.FlMsgChapterImported, CommentBox.HintType.INFO);
                 }
             }
         }
@@ -1773,7 +1795,7 @@ namespace ChessForge
             if (count > 0)
             {
                 AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(
-                    Properties.Resources.FlMsgGamesImported + " (" + count.ToString() + ")", System.Windows.Media.Brushes.Green);
+                    Properties.Resources.FlMsgGamesImported + " (" + count.ToString() + ")", CommentBox.HintType.INFO);
             }
         }
 
@@ -1799,7 +1821,7 @@ namespace ChessForge
             if (count > 0)
             {
                 AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(
-                    Properties.Resources.FlMsgExercisesImported + " (" + count.ToString() + ")", System.Windows.Media.Brushes.Green);
+                    Properties.Resources.FlMsgExercisesImported + " (" + count.ToString() + ")", CommentBox.HintType.INFO);
             }
         }
 
@@ -2226,7 +2248,7 @@ namespace ChessForge
                     _exerciseTreeView.ShowHideSolution(true);
                 }
 
-                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgSolutionsShown, System.Windows.Media.Brushes.Green);
+                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgSolutionsShown, CommentBox.HintType.INFO);
             }
             catch (Exception ex)
             {
@@ -2256,7 +2278,7 @@ namespace ChessForge
                     _exerciseTreeView.ShowHideSolution(false);
                 }
 
-                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgSolutionsHidden, System.Windows.Media.Brushes.Green);
+                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgSolutionsHidden, CommentBox.HintType.INFO);
             }
             catch (Exception ex)
             {
@@ -2598,7 +2620,7 @@ namespace ChessForge
         public void UiMnciCopyFen_Click(object sender, RoutedEventArgs e)
         {
             ActiveTreeView.CopyFenToClipboard();
-            BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgCopiedFEN, System.Windows.Media.Brushes.Green);
+            BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgCopiedFEN, CommentBox.HintType.INFO);
         }
 
         /// <summary>
@@ -2650,7 +2672,7 @@ namespace ChessForge
                     {
                         AppState.IsDirty = true;
                         SoundPlayer.PlayConfirmationSound();
-                        BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.BookmarkAdded, System.Windows.Media.Brushes.Green);
+                        BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.BookmarkAdded, CommentBox.HintType.INFO);
                         //  UiTabBookmarks.Focus();
                     }
                 }
@@ -2681,7 +2703,7 @@ namespace ChessForge
                 if (BookmarkManager.DeleteBookmark(chapterIndex, articleType, articleIndex, nodeId) != null)
                 {
                     SoundPlayer.PlayConfirmationSound();
-                    BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.BookmarkDeleted, System.Windows.Media.Brushes.Green);
+                    BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.BookmarkDeleted, CommentBox.HintType.INFO);
                 }
             }
             catch (Exception ex)
@@ -3064,7 +3086,7 @@ namespace ChessForge
                     if (count > 0)
                     {
                         AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(
-                            Properties.Resources.FlMsgGamesImported + " (" + importedGames.ToString() + ")", System.Windows.Media.Brushes.Green);
+                            Properties.Resources.FlMsgGamesImported + " (" + importedGames.ToString() + ")", CommentBox.HintType.INFO);
                     }
                     if (chapter.GetModelGameCount() > count)
                     {
@@ -3098,7 +3120,7 @@ namespace ChessForge
                 if (importedExercises > 0)
                 {
                     AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(
-                        Properties.Resources.FlMsgExercisesImported + " (" + importedExercises.ToString() + ")", System.Windows.Media.Brushes.Green);
+                        Properties.Resources.FlMsgExercisesImported + " (" + importedExercises.ToString() + ")", CommentBox.HintType.INFO);
                     if (chapter.GetExerciseCount() > count)
                     {
                         chapter.ActiveExerciseIndex = count;
@@ -3282,7 +3304,7 @@ namespace ChessForge
             {
                 ActiveTreeView.PlaceSelectedForCopyInClipboard();
                 ActiveTreeView.DeleteRemainingMoves();
-                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgCopiedMoves, System.Windows.Media.Brushes.Green);
+                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgCopiedMoves, CommentBox.HintType.INFO);
             }
         }
 
@@ -3307,7 +3329,7 @@ namespace ChessForge
             {
                 ActiveTreeView.SelectActiveLineForCopy();
                 ActiveTreeView.PlaceSelectedForCopyInClipboard();
-                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgCopiedLine, System.Windows.Media.Brushes.Green);
+                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgCopiedLine, CommentBox.HintType.INFO);
             }
         }
 
@@ -3322,7 +3344,7 @@ namespace ChessForge
             {
                 ActiveTreeView.SelectSubtreeForCopy();
                 ActiveTreeView.PlaceSelectedForCopyInClipboard();
-                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgCopiedTree, System.Windows.Media.Brushes.Green);
+                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgCopiedTree, CommentBox.HintType.INFO);
             }
         }
 
@@ -3478,6 +3500,49 @@ namespace ChessForge
         // OTHER
         //
         //*********************
+
+        // allows or blocks mode re-initialization.
+        // this is used at strtup when this method is called when we set IsChecked
+        // on the menu item.
+        private bool _modeUpdatesBlocked = false;
+
+        /// <summary>
+        /// The user requests switch to the dark mode.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnDarkMode_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_modeUpdatesBlocked)
+            {
+                ChessForgeColors.Initialize(ColorThemes.DARK_MODE);
+                Configuration.IsDarkMode = true;
+                ChessForgeColors.SetMainControlColors();
+                RebuildAllTreeViews(null, true);
+                _openingStatsView.UpdateColorTheme();
+                _topGamesView.UpdateColorTheme();
+            }
+            _modeUpdatesBlocked = false;
+        }
+
+        /// <summary>
+        /// The user requests switch to the light mode.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnDarkMode_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_modeUpdatesBlocked)
+            {
+                ChessForgeColors.Initialize(ColorThemes.LIGHT_MODE);
+                Configuration.IsDarkMode = false;
+                ChessForgeColors.SetMainControlColors();
+                RebuildAllTreeViews(null, true);
+                _openingStatsView.UpdateColorTheme();
+                _topGamesView.UpdateColorTheme();
+            }
+            _modeUpdatesBlocked = false;
+        }
 
         /// <summary>
         /// Auto-replays the current Active Line on a menu request.
@@ -4209,29 +4274,6 @@ namespace ChessForge
             Configuration.AutoSave = false;
             Timers.Stop(AppTimers.TimerId.AUTO_SAVE);
             SetupMenuBarControls();
-        }
-
-        /// <summary>
-        /// Rebuilds all tree views
-        /// </summary>
-        private void RebuildAllTreeViews(bool? increaseFontDirection = null)
-        {
-            _studyTreeView?.BuildFlowDocumentForVariationTree();
-
-            _modelGameTreeView?.BuildFlowDocumentForVariationTree();
-
-            _exerciseTreeView?.BuildFlowDocumentForVariationTree();
-
-            _chaptersView?.BuildFlowDocumentForChaptersView();
-
-            if (TrainingSession.IsTrainingInProgress)
-            {
-                UiTrainingView.IncrementFontSize(increaseFontDirection);
-            }
-            else
-            {
-                RestoreSelectedLineAndMoveInActiveView();
-            }
         }
 
         /// <summary>

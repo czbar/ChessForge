@@ -606,6 +606,9 @@
   <data name="EngineOptions" xml:space="preserve">
     <value>Engine Options</value>
   </data>
+  <data name="DarkMode" xml:space="preserve">
+    <value>Dark Mode</value>
+  </data>
   <data name="AnalysisEngine" xml:space="preserve">
     <value>Analysis Engine</value>
   </data>
@@ -2273,10 +2276,10 @@
     <value>To begin, make your first move on the chessboard.</value>
   </data>
   <data name="TrnUserPlaysWhite" xml:space="preserve">
-    <value>You play White and the virtual coach plays Black</value>
+    <value>You play White and the virtual coach plays Black.</value>
   </data>
   <data name="TrnUserPlaysBlack" xml:space="preserve">
-    <value>You play Black and the virtual coach plays White</value>
+    <value>You play Black and the virtual coach plays White.</value>
   </data>
   <data name="TrnClickMoveBelow" xml:space="preserve">
     <value>Click any move below to restart training from it.  </value>

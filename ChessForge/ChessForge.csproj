@@ -262,8 +262,10 @@
       <DependentUpon>ReorderLinesDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="RepositionPieceProcessor.cs" />
+    <Compile Include="Resources\ThemeColorSet.cs" />
     <Compile Include="ResourceUtils.cs" />
     <Compile Include="RichTextBoxUtilities.cs" />
+    <Compile Include="RichTextPara.cs" />
     <Compile Include="SearchPositionDialog.xaml.cs">
       <DependentUpon>SearchPositionDialog.xaml</DependentUpon>
     </Compile>

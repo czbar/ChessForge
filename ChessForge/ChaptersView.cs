@@ -62,12 +62,12 @@ namespace ChessForge
         /// </summary>
         private readonly Dictionary<string, RichTextPara> _richTextParas = new Dictionary<string, RichTextPara>()
         {
-            [STYLE_WORKBOOK_TITLE] = new RichTextPara(0, 10, 18, FontWeights.Bold, null, TextAlignment.Left),
-            [STYLE_CHAPTER_TITLE] = new RichTextPara(10, 10, 16, FontWeights.Normal, null, TextAlignment.Left),
-            [STYLE_SUBHEADER] = new RichTextPara(40, 10, 14, FontWeights.Normal, null, TextAlignment.Left),
-            [STYLE_MODEL_GAME] = new RichTextPara(70, 5, 14, FontWeights.Normal, null, TextAlignment.Left),
-            [STYLE_EXERCISE] = new RichTextPara(90, 5, 14, FontWeights.Normal, null, TextAlignment.Left),
-            ["default"] = new RichTextPara(140, 5, 11, FontWeights.Normal, null, TextAlignment.Left),
+            [STYLE_WORKBOOK_TITLE] = new RichTextPara(0, 10, 18, FontWeights.Bold, TextAlignment.Left),
+            [STYLE_CHAPTER_TITLE] = new RichTextPara(10, 10, 16, FontWeights.Normal, TextAlignment.Left),
+            [STYLE_SUBHEADER] = new RichTextPara(40, 10, 14, FontWeights.Normal, TextAlignment.Left),
+            [STYLE_MODEL_GAME] = new RichTextPara(70, 5, 14, FontWeights.Normal, TextAlignment.Left),
+            [STYLE_EXERCISE] = new RichTextPara(90, 5, 14, FontWeights.Normal, TextAlignment.Left),
+            ["default"] = new RichTextPara(140, 5, 11, FontWeights.Normal, TextAlignment.Left),
         };
 
         /// <summary>
@@ -118,6 +118,7 @@ namespace ChessForge
             _mainWin.UiRtbChaptersView.IsReadOnly = true;
 
             _richTextBox = AppState.MainWin.UiRtbChaptersView;
+            _richTextBox.Document.PageWidth = 1000;
         }
         /// <summary>
         /// Flags whether the view needs refreshing
@@ -767,7 +768,7 @@ namespace ChessForge
             r.Name = _run_create_intro_ + chapter.Index.ToString();
             r.FontWeight = FontWeights.Normal;
             r.FontStyle = FontStyles.Italic;
-            r.Foreground = Brushes.Gray;
+            r.Foreground = ChessForgeColors.CurrentTheme.ChaptersCreateIntroForeground;
             r.FontSize -= 2;
             r.MouseDown += EventCreateIntroHeaderClicked;
             if (studyRun == null)
@@ -800,7 +801,6 @@ namespace ChessForge
         /// <returns></returns>
         private Run InsertModelGamesRuns(Paragraph para, Chapter chapter)
         {
-            //para.Inlines.Add(new Run("\n"));
             para.Inlines.Add(CreateRun(STYLE_SUBHEADER, "\n" + SUBHEADER_INDENT, true));
             InsertExpandCollapseSymbolRun(para, _run_model_games_expand_char_, chapter.Index, GameData.ContentType.MODEL_GAME, chapter.IsModelGamesListExpanded, chapter.HasAnyModelGame);
             string res = Resources.Games;

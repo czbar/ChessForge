@@ -63,7 +63,7 @@ namespace ChessForge
                                 SetThumbnails(chapter, dlg.ThumbnailMove, dlg.ThumbnailMoveColor, dlg.OverwriteThumbnails);
                             }
                             AppState.IsDirty = true;
-                            AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgGamesThumbnailsSet, System.Windows.Media.Brushes.Green);
+                            AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgGamesThumbnailsSet, CommentBox.HintType.INFO);
                         }
 
                         // go to the appropriate view
@@ -220,7 +220,7 @@ namespace ChessForge
                     {
                         if (!emptyEntryList)
                         {
-                            AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.ItemsAlreadyInChapter);
+                            AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.ItemsAlreadyInChapter, CommentBox.HintType.ERROR);
                         }
                     }
                 }
@@ -695,7 +695,7 @@ namespace ChessForge
                     AppState.MainWin.ChaptersView.BuildFlowDocumentForChaptersView();
                 }
 
-                AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgGamesSorted, System.Windows.Media.Brushes.Green);
+                AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgGamesSorted, CommentBox.HintType.INFO);
             }
             catch
             {

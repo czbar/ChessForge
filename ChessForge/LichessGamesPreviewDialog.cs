@@ -274,7 +274,7 @@ namespace ChessForge
         override protected void DownloadGame(string gameId)
         {
             _ = GameDownload.GetGame(gameId);
-            _topGamesView.SetRowBackgorunds(gameId);
+            _topGamesView.SetRowBackgrounds(gameId);
         }
 
         /// <summary>

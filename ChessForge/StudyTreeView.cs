@@ -354,7 +354,7 @@ namespace ChessForge
             if (EffectiveIndexDepth >= 0)
             {
                 Paragraph para = CreateParagraph("0", true);
-                para.Foreground = ChessForgeColors.VARIATION_INDEX_FORE;
+                para.Foreground = ChessForgeColors.CurrentTheme.IndexPrefixForeground;
                 para.FontWeight = FontWeights.Normal;
                 para.FontSize = para.FontSize - 1;
                 para.Margin = new Thickness(0, 0, 0, 0);
@@ -569,7 +569,7 @@ namespace ChessForge
         {
             Run rPlus = new Run(Constants.CHAR_DOWN_ARROW.ToString());
             rPlus.FontWeight = FontWeights.Normal;
-            rPlus.Foreground = Brushes.Black;
+            rPlus.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
             rPlus.ToolTip = Properties.Resources.ToolTipIncreaseIndexDepth;
             rPlus.PreviewMouseDown += EventDownArrowClicked;
             para.Inlines.Add(rPlus);
@@ -578,7 +578,7 @@ namespace ChessForge
             {
                 Run rMinus = new Run(Constants.CHAR_UP_ARROW.ToString());
                 rMinus.FontWeight = FontWeights.Normal;
-                rMinus.Foreground = Brushes.Black;
+                rMinus.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
                 rMinus.ToolTip = Properties.Resources.ToolTipDecreaseIndexDepth;
                 rMinus.PreviewMouseDown += EventUpArrowClicked;
                 para.Inlines.Add(rMinus);
@@ -631,7 +631,7 @@ namespace ChessForge
                     {
                         r.FontWeight = FontWeights.Normal;
                     }
-                    r.Foreground = Brushes.Black;
+                    r.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
                     parenthesis = false;
 
                     if (i == 0 && sector.FirstNodeColor != null && !IsEffectiveIndexLevel(sector.BranchLevel))
@@ -667,7 +667,7 @@ namespace ChessForge
             Run rIndexTitle = BuildSectionIdTitle(startNode.LineId);
             rIndexTitle.Name = _idxprefix_ + startNode.NodeId.ToString();
             rIndexTitle.PreviewMouseDown += EventIdxPrefixRunClicked;
-            rIndexTitle.Foreground = ChessForgeColors.VARIATION_INDEX_FORE;
+            rIndexTitle.Foreground = ChessForgeColors.CurrentTheme.IndexPrefixForeground;
             rIndexTitle.ToolTip = Properties.Resources.TtClickToExpandCollapse;
             para.Inlines.Add(rIndexTitle);
             para.FontWeight = FontWeights.DemiBold;

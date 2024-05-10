@@ -714,6 +714,11 @@ Chessboards=
 #english: EngineOptions=Engine Options
 EngineOptions=
 
+
+#description: Dark mode
+#english: DarkMode=Dark Mode
+DarkMode=
+
 #description: Opens a dialog allowing the user to select chess engine executable file
 #english: AnalysisEngine=Analysis Engine
 AnalysisEngine=
@@ -3230,11 +3235,11 @@ TrnSessionStart=
 TrnMakeFirstMove=
 
 #description: User is White
-#english: TrnUserPlaysWhite=You play White and the virtual coach plays Black
+#english: TrnUserPlaysWhite=You play White and the virtual coach plays Black.
 TrnUserPlaysWhite=
 
 #description: User is Black
-#english: TrnUserPlaysBlack=You play Black and the virtual coach plays White
+#english: TrnUserPlaysBlack=You play Black and the virtual coach plays White.
 TrnUserPlaysBlack=
 
 #description: Click move instruction

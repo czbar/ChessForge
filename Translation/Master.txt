@@ -551,6 +551,10 @@ Chessboards=Chessboards
 #Opens the Engine Options dialog
 EngineOptions=Engine Options
 
+
+#Dark mode
+DarkMode=Dark Mode
+
 #Opens a dialog allowing the user to select chess engine executable file
 AnalysisEngine=Analysis Engine
 
@@ -2512,10 +2516,10 @@ TrnSessionStart=Starting a training session.
 TrnMakeFirstMove=To begin, make your first move on the chessboard.
 
 #User is White
-TrnUserPlaysWhite=You play White and the virtual coach plays Black
+TrnUserPlaysWhite=You play White and the virtual coach plays Black.
 
 #User is Black
-TrnUserPlaysBlack=You play Black and the virtual coach plays White
+TrnUserPlaysBlack=You play Black and the virtual coach plays White.
 
 #Click move instruction
 TrnClickMoveBelow=Click any move below to restart training from it.  

@@ -1430,6 +1430,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dark Mode.
+        /// </summary>
+        public static string DarkMode {
+            get {
+                return ResourceManager.GetString("DarkMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File processing is in progress. Please wait....
         /// </summary>
         public static string DataProcessingInProgress {
@@ -7209,7 +7218,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You play Black and the virtual coach plays White.
+        ///   Looks up a localized string similar to You play Black and the virtual coach plays White..
         /// </summary>
         public static string TrnUserPlaysBlack {
             get {
@@ -7218,7 +7227,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You play White and the virtual coach plays Black.
+        ///   Looks up a localized string similar to You play White and the virtual coach plays Black..
         /// </summary>
         public static string TrnUserPlaysWhite {
             get {

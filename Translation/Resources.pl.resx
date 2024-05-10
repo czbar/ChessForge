@@ -606,6 +606,9 @@
   <data name="EngineOptions" xml:space="preserve">
     <value>Opcje Silnika</value>
   </data>
+  <data name="DarkMode" xml:space="preserve">
+    <value>Tryb Ciemny</value>
+  </data>
   <data name="AnalysisEngine" xml:space="preserve">
     <value>Wybór Silnika</value>
   </data>

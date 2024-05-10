@@ -140,7 +140,7 @@ namespace ChessForge
                 FontSize = attrs.FontSize,
                 FontWeight = attrs.FontWeight,
                 TextAlignment = attrs.TextAlign,
-                Foreground = attrs.ForegroundColor
+                Foreground = attrs.ForegroundColor ?? ChessForgeColors.CurrentTheme.RtbForeground,
             };
 
             return para;
@@ -212,8 +212,8 @@ namespace ChessForge
             {
                 FontSize = attrs.FontSize,
                 FontWeight = attrs.FontWeight,
-                Foreground = attrs.ForegroundColor
-            };
+                Foreground = attrs.ForegroundColor ?? ChessForgeColors.CurrentTheme.RtbForeground,
+        };
 
             r.Text = text;
 

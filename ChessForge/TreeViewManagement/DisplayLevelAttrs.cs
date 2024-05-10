@@ -43,7 +43,7 @@ namespace ChessForge
                 FontSize = fontSize,
                 FontWeight = displayLevel == 0 ? FontWeights.DemiBold : FontWeights.Normal,
                 TextAlignment = TextAlignment.Left,
-                Foreground = Brushes.Black
+                Foreground = ChessForgeColors.CurrentTheme.RtbForeground
             };
 
             return para;
@@ -93,19 +93,19 @@ namespace ChessForge
             switch (modLevel)
             {
                 case 0:
-                    brush = Brushes.Blue;
+                    brush = ChessForgeColors.CurrentTheme.ModuloColor_0;
                     break;
                 case 1:
-                    brush = Brushes.Green;
+                    brush = ChessForgeColors.CurrentTheme.ModuloColor_1;
                     break;
                 case 2:
-                    brush = Brushes.Magenta;
+                    brush = ChessForgeColors.CurrentTheme.ModuloColor_2;
                     break;
                 case 3:
-                    brush = Brushes.Firebrick;
+                    brush = ChessForgeColors.CurrentTheme.ModuloColor_3;
                     break;
                 default:
-                    brush = Brushes.Black;
+                    brush = ChessForgeColors.CurrentTheme.RtbForeground;
                     break;
             }
 

@@ -282,7 +282,7 @@ namespace ChessForge
         {
             if (!EngineMessageProcessor.IsEngineAvailable)
             {
-                _mainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.EngineNotAvailable);
+                _mainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.EngineNotAvailable, CommentBox.HintType.ERROR);
                 return;
             }
 
@@ -332,7 +332,7 @@ namespace ChessForge
         {
             if (!EngineMessageProcessor.IsEngineAvailable)
             {
-                AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.EngineNotAvailable);
+                AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.EngineNotAvailable, CommentBox.HintType.ERROR);
                 return;
             }
 

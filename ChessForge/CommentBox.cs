@@ -22,6 +22,16 @@ namespace ChessForge
     /// </summary>
     public class CommentBox : RichTextBuilder
     {
+        /// <summary>
+        /// Type of comment being displayed.
+        /// </summary>
+        public enum HintType
+        {
+            ERROR,  // red
+            INFO,   // green
+            PROGRESS // blue
+        }
+
         // main application window
         private MainWindow _mainWin;
 
@@ -56,18 +66,18 @@ namespace ChessForge
         /// </summary>
         internal Dictionary<string, RichTextPara> _richTextParas = new Dictionary<string, RichTextPara>()
         {
-            ["title"] = new RichTextPara(0, 0, 24, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(0, 0, 0)), TextAlignment.Center),
-            ["big_red"] = new RichTextPara(0, 10, 20, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(0, 0, 0)), TextAlignment.Center),
-            ["user_wait"] = new RichTextPara(0, 10, 20, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(0, 0, 0)), TextAlignment.Center),
-            ["bold_prompt"] = new RichTextPara(0, 5, 14, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(69, 89, 191)), TextAlignment.Center),
-            ["eval_results"] = new RichTextPara(30, 5, 14, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(51, 159, 141)), TextAlignment.Center),
-            ["normal"] = new RichTextPara(0, 0, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Center),
-            ["normal_14"] = new RichTextPara(0, 0, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Center),
-            ["default"] = new RichTextPara(10, 5, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(128, 98, 63)), TextAlignment.Center),
-            ["dummy"] = new RichTextPara(0, 16, 10, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(0, 0, 0)), TextAlignment.Center),
-            ["bold_16"] = new RichTextPara(0, 0, 16, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(69, 89, 191)), TextAlignment.Center),
-            ["bold_18"] = new RichTextPara(0, 5, 18, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(69, 89, 191)), TextAlignment.Center),
-            ["end_of_game"] = new RichTextPara(0, 5, 18, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(69, 89, 191)), TextAlignment.Center),
+            ["title"] = new RichTextPara(0, 0, 24, FontWeights.Bold, TextAlignment.Center),
+            ["big_red"] = new RichTextPara(0, 10, 20, FontWeights.Bold, TextAlignment.Center),
+            ["user_wait"] = new RichTextPara(0, 10, 20, FontWeights.Bold, TextAlignment.Center),
+            ["bold_prompt"] = new RichTextPara(0, 5, 14, FontWeights.Bold, TextAlignment.Center),
+            ["eval_results"] = new RichTextPara(30, 5, 14, FontWeights.Normal, TextAlignment.Center),
+            ["normal"] = new RichTextPara(0, 0, 12, FontWeights.Normal, TextAlignment.Center),
+            ["normal_14"] = new RichTextPara(0, 0, 12, FontWeights.Normal, TextAlignment.Center),
+            ["default"] = new RichTextPara(10, 5, 12, FontWeights.Normal, TextAlignment.Center),
+            ["dummy"] = new RichTextPara(0, 16, 10, FontWeights.Normal, TextAlignment.Center),
+            ["bold_16"] = new RichTextPara(0, 0, 16, FontWeights.Bold, TextAlignment.Center),
+            ["bold_18"] = new RichTextPara(0, 5, 18, FontWeights.Bold, TextAlignment.Center),
+            ["end_of_game"] = new RichTextPara(0, 5, 18, FontWeights.Bold, TextAlignment.Center),
         };
 
         /// <summary>
@@ -123,7 +133,7 @@ namespace ChessForge
         /// </summary>
         public void StartingEngine()
         {
-            UserWaitAnnouncement(Properties.Resources.ChessEngineLoading, null);
+            UserWaitAnnouncement(Properties.Resources.ChessEngineLoading, HintType.PROGRESS);
         }
 
         /// <summary>
@@ -132,7 +142,7 @@ namespace ChessForge
         /// </summary>
         public void ReadingFile()
         {
-            UserWaitAnnouncement(Properties.Resources.ReadingWorkbookFile, Brushes.Blue);
+            UserWaitAnnouncement(Properties.Resources.ReadingWorkbookFile, HintType.PROGRESS);
         }
 
         /// <summary>
@@ -161,7 +171,7 @@ namespace ChessForge
                 }
             }
 
-            UserWaitAnnouncement(msg, Brushes.Blue, subLines);
+            UserWaitAnnouncement(msg, HintType.PROGRESS, subLines);
         }
 
         /// <summary>
@@ -169,7 +179,7 @@ namespace ChessForge
         /// </summary>
         public void OpenFile()
         {
-            UserWaitAnnouncement(Properties.Resources.cbUseMenuToOpenWorkbook, Brushes.Blue);
+            UserWaitAnnouncement(Properties.Resources.cbUseMenuToOpenWorkbook, HintType.PROGRESS);
         }
 
         /// <summary>
@@ -177,7 +187,7 @@ namespace ChessForge
         /// to close it later on.
         /// </summary>
         /// <param name="txt"></param>
-        public void ShowFlashAnnouncement(string txt, Brush brush = null, int fontSize = 0)
+        public void ShowFlashAnnouncement(string txt, HintType typ, int fontSize = 0)
         {
             _mainWin.Dispatcher.Invoke(() =>
             {
@@ -198,11 +208,7 @@ namespace ChessForge
                         para.FontSize = fontSize;
                     }
                     Document.Blocks.Add(para);
-                    para.Foreground = Brushes.Red;
-                    if (brush != null)
-                    {
-                        para.Foreground = brush;
-                    }
+                    para.Foreground = ChessForgeColors.GetHintForeground(typ);
 
                     _mainWin.Timers.Start(AppTimers.TimerId.FLASH_ANNOUNCEMENT);
 
@@ -442,7 +448,7 @@ namespace ChessForge
         /// <param name="txt"></param>
         public void EngineResetOnError(string txt)
         {
-            UserWaitAnnouncement(txt, Brushes.Red);
+            UserWaitAnnouncement(txt, HintType.ERROR);
         }
 
         /// <summary>
@@ -452,13 +458,8 @@ namespace ChessForge
         /// </summary>
         /// <param name="txt"></param>
         /// <param name="brush"></param>
-        public void UserWaitAnnouncement(string txt, Brush brush, List<string> subLines = null)
+        public void UserWaitAnnouncement(string txt, HintType typ, List<string> subLines = null)
         {
-            if (brush == null)
-            {
-                brush = Brushes.Green;
-            }
-
             _mainWin.Dispatcher.Invoke(() =>
             {
                 Document.Blocks.Clear();
@@ -468,7 +469,7 @@ namespace ChessForge
 
                 Paragraph para = CreateParagraphWithText("user_wait", txt, false);
                 Document.Blocks.Add(para);
-                para.Foreground = brush;
+                para.Foreground = ChessForgeColors.GetHintForeground(typ);
 
                 if (subLines != null)
                 {
@@ -476,7 +477,7 @@ namespace ChessForge
                     {
                         Run run = new Run("\n" + line);
                         run.FontSize = Constants.BASE_FIXED_FONT_SIZE - 2;
-                        run.Foreground = Brushes.Black;
+                        run.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
                         run.FontWeight = FontWeights.Normal;
 
                         para.Inlines.Add(run);

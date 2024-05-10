@@ -169,10 +169,10 @@ namespace ChessForge
         private int _nodeIdSuppressFloatingBoard = -1;
 
         // Brush color for user moves
-        private Brush _userBrush = Brushes.Green;
+        private SolidColorBrush _userBrush = ChessForgeColors.GetHintForeground(CommentBox.HintType.INFO);
 
         // Brush color for workbook moves
-        private Brush _workbookBrush = Brushes.Blue;
+        private SolidColorBrush _workbookBrush = ChessForgeColors.GetHintForeground(CommentBox.HintType.PROGRESS);
 
         /// <summary>
         /// Names and prefixes for Runs.
@@ -231,7 +231,6 @@ namespace ChessForge
         private static readonly string STYLE_ENGINE_GAME = "engine_game";
 
         private static readonly string STYLE_CHECKMATE = "mate";
-        private static readonly string STYLE_STALEMATE = "stalemate";
 
         private static readonly string STYLE_DEFAULT = "default";
 
@@ -249,20 +248,19 @@ namespace ChessForge
         /// </summary>
         internal Dictionary<string, RichTextPara> _richTextParas = new Dictionary<string, RichTextPara>()
         {
-            [STYLE_INTRO] = new RichTextPara(0, 0, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(0, 0, 0)), TextAlignment.Left),
-            [STYLE_FIRST_PROMPT] = new RichTextPara(10, 0, 16, FontWeights.Bold, Brushes.Green, TextAlignment.Left, Brushes.Green),
-            [STYLE_SECOND_PROMPT] = new RichTextPara(10, 0, 14, FontWeights.Bold, Brushes.Green, TextAlignment.Left, Brushes.Green),
-            [STYLE_STEM_LINE] = new RichTextPara(0, 10, 14, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(69, 89, 191)), TextAlignment.Left),
-            [STYLE_TAKEBACK] = new RichTextPara(20, 0, 16, FontWeights.Bold, Brushes.Blue, TextAlignment.Left, Brushes.DarkOrange),
-            [STYLE_DEFAULT] = new RichTextPara(10, 5, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(128, 98, 63)), TextAlignment.Left),
+            [STYLE_INTRO] = new RichTextPara(0, 0, 12, FontWeights.Normal, TextAlignment.Left),
+            [STYLE_FIRST_PROMPT] = new RichTextPara(10, 0, 16, FontWeights.Bold, TextAlignment.Left, Brushes.Green),
+            [STYLE_SECOND_PROMPT] = new RichTextPara(10, 0, 14, FontWeights.Bold, TextAlignment.Left, Brushes.Green),
+            [STYLE_STEM_LINE] = new RichTextPara(0, 10, 14, FontWeights.Bold, TextAlignment.Left),
+            [STYLE_TAKEBACK] = new RichTextPara(20, 0, 16, FontWeights.Bold, TextAlignment.Left, Brushes.DarkOrange),
+            [STYLE_DEFAULT] = new RichTextPara(10, 5, 12, FontWeights.Normal, TextAlignment.Left),
 
-            [STYLE_MOVES_MAIN] = new RichTextPara(10, 5, 16, FontWeights.Bold, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
-            [STYLE_COACH_NOTES] = new RichTextPara(50, 5, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
-            [STYLE_ENGINE_EVAL] = new RichTextPara(80, 0, 12, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
-            [STYLE_ENGINE_GAME] = new RichTextPara(50, 0, 16, FontWeights.Normal, new SolidColorBrush(Color.FromRgb(120, 61, 172)), TextAlignment.Left),
+            [STYLE_MOVES_MAIN] = new RichTextPara(10, 5, 16, FontWeights.Bold, TextAlignment.Left),
+            [STYLE_COACH_NOTES] = new RichTextPara(50, 5, 12, FontWeights.Normal, TextAlignment.Left),
+            [STYLE_ENGINE_EVAL] = new RichTextPara(80, 0, 12, FontWeights.Normal, TextAlignment.Left),
+            [STYLE_ENGINE_GAME] = new RichTextPara(50, 0, 16, FontWeights.Normal, TextAlignment.Left),
 
-            [STYLE_CHECKMATE] = new RichTextPara(50, 0, 16, FontWeights.Bold, Brushes.Navy, TextAlignment.Left, Brushes.Navy),
-            [STYLE_STALEMATE] = new RichTextPara(50, 0, 16, FontWeights.Bold, Brushes.Navy, TextAlignment.Left, Brushes.Navy),
+            [STYLE_CHECKMATE] = new RichTextPara(50, 0, 16, FontWeights.Bold, TextAlignment.Left, Brushes.Navy),
         };
 
         /// <summary>
@@ -296,7 +294,7 @@ namespace ChessForge
             TrainingSession.ResetTrainingLine(node);
             Document.Blocks.Clear();
             InitParaDictionary();
-            _moveNumberOffset =_mainWin.ActiveVariationTree.MoveNumberOffset;
+            _moveNumberOffset = _mainWin.ActiveVariationTree.MoveNumberOffset;
             BuildIntroText(node);
         }
 
@@ -327,6 +325,86 @@ namespace ChessForge
                         }
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// A color theme was change in the application and the colors
+        /// must be updated.
+        /// </summary>
+        public void UpdateColors()
+        {
+            SolidColorBrush previousUserBrush = _userBrush;
+            SolidColorBrush previousWorkbookBrush = _workbookBrush;
+
+            _userBrush = ChessForgeColors.GetHintForeground(CommentBox.HintType.INFO);
+            _workbookBrush = ChessForgeColors.GetHintForeground(CommentBox.HintType.PROGRESS);
+
+            // first create a dictionary of colors
+            Dictionary<string, SolidColorBrush> _dictColors = new Dictionary<string, SolidColorBrush>();
+
+            _dictColors[_run_engine_game_move_] = ChessForgeColors.CurrentTheme.TrainingEngineGameForeground;
+            _dictColors[_run_wb_move_] = ChessForgeColors.CurrentTheme.RtbForeground; //TODO: fix
+            _dictColors[_run_line_move_] = ChessForgeColors.CurrentTheme.RtbForeground;
+            _dictColors[_run_move_eval_] = ChessForgeColors.CurrentTheme.RtbForeground;
+            _dictColors[_run_stem_move_] = ChessForgeColors.CurrentTheme.RtbForeground;
+            _dictColors[_run_user_wb_alignment_] = ChessForgeColors.CurrentTheme.RtbForeground;
+            _dictColors[_run_wb_response_alignment_] = ChessForgeColors.CurrentTheme.RtbForeground;
+            _dictColors[_run_wb_alternatives_] = _workbookBrush;
+            _dictColors[_run_wb_comment_] = _workbookBrush;
+            _dictColors[_run_wb_ended_] = ChessForgeColors.CurrentTheme.RtbForeground;
+
+            foreach (var block in Document.Blocks)
+            {
+                if (block is Paragraph b)
+                {
+                    if (b.Name == _par_checkmate_ || b.Name == _par_stalemate_)
+                    {
+                        foreach (Inline inl in b.Inlines)
+                        {
+                            if (inl is Run run)
+                            {
+                                run.Foreground = ChessForgeColors.CurrentTheme.TrainingCheckmateForeground;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (Inline inl in b.Inlines)
+                        {
+                            if (inl is Run run)
+                            {
+                                string prefix = TextUtils.GetPrefixFromPrefixedString(run.Name);
+
+                                // special case for _run_wb_move_
+                                if (prefix == _run_wb_move_)
+                                {
+                                    if (run.Foreground == previousUserBrush)
+                                    {
+                                        run.Foreground = _userBrush;
+                                    }
+                                    else
+                                    {
+                                        run.Foreground = _workbookBrush;
+                                    }
+                                }
+                                else if (_dictColors.TryGetValue(prefix, out SolidColorBrush brush))
+                                {
+                                    run.Foreground = brush;
+                                }
+                                else
+                                {
+                                    run.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (_dictParas[ParaType.TAKEBACK] != null)
+            {
+                BuildTakebackParagraph();
             }
         }
 
@@ -615,7 +693,8 @@ namespace ChessForge
                 text = MoveUtils.BuildSingleMoveText(nd, false, false, _moveNumberOffset) + " ";
             }
 
-            Run gm = CreateButtonRun(text, _run_engine_game_move_ + nd.NodeId.ToString(), Brushes.Brown);
+            Brush moveColor = ChessForgeColors.CurrentTheme.TrainingEngineGameForeground;
+            Run gm = CreateButtonRun(text, _run_engine_game_move_ + nd.NodeId.ToString(), moveColor);
             _paraCurrentEngineGame.Inlines.Add(gm);
 
             if (nd.Position.IsCheckmate)
@@ -689,9 +768,11 @@ namespace ChessForge
             {
                 _paraCurrentEngineGame.Inlines.Add(rWbEnded);
             }
+
+            Brush moveColor = ChessForgeColors.CurrentTheme.TrainingEngineGameForeground;
             _paraCurrentEngineGame.Inlines.Add(new Run("\n" + Properties.Resources.TrnGameInProgress + "\n"));
             string text = "          " + MoveUtils.BuildSingleMoveText(nd, true, false, _moveNumberOffset) + " ";
-            Run r_root = CreateButtonRun(text, _run_engine_game_move_ + nd.NodeId.ToString(), Brushes.Brown);
+            Run r_root = CreateButtonRun(text, _run_engine_game_move_ + nd.NodeId.ToString(), moveColor);
             _paraCurrentEngineGame.Inlines.Add(r_root);
             if (dictEvalRunsToKeep.ContainsKey(nd.NodeId))
             {
@@ -705,7 +786,7 @@ namespace ChessForge
                 nd = nd.Children[0];
                 _currentEngineGameMoveCount++;
                 text = MoveUtils.BuildSingleMoveText(nd, false, false, _moveNumberOffset) + " ";
-                Run gm = CreateButtonRun(text, _run_engine_game_move_ + nd.NodeId.ToString(), Brushes.Brown);
+                Run gm = CreateButtonRun(text, _run_engine_game_move_ + nd.NodeId.ToString(), moveColor);
                 _paraCurrentEngineGame.Inlines.Add(gm);
                 if (dictEvalRunsToKeep.ContainsKey(nd.NodeId))
                 {
@@ -724,7 +805,6 @@ namespace ChessForge
             if (nd == null)
             {
                 AppLog.Message("TrainingView:ShowEvaluationResult(): null node received ");
-                DebugUtils.ShowDebugMessage("Null node in Training ShowEvaluationResult");
                 return;
             }
 
@@ -812,7 +892,7 @@ namespace ChessForge
             Run r_eval = new Run("(" + strEval + ") ");
             r_eval.Name = runName;
             r_eval.FontWeight = FontWeights.Normal;
-            r_eval.Foreground = Brushes.Black;
+            r_eval.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
 
             return r_eval;
         }
@@ -855,7 +935,10 @@ namespace ChessForge
                     para.Inlines.Add(r_prefix);
                 }
 
-                Run r = CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, true, true, _moveNumberOffset) + " ", runName, Brushes.Black);
+                Run r = CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, true, true,
+                    _moveNumberOffset) + " ",
+                    runName,
+                    ChessForgeColors.CurrentTheme.RtbForeground);
                 para.Inlines.Add(r);
 
                 if (!userMove)
@@ -877,6 +960,7 @@ namespace ChessForge
             string paraName = _par_checkmate_;
 
             Paragraph para = AddNewParagraphToDoc(STYLE_CHECKMATE, "");
+            para.Foreground = ChessForgeColors.CurrentTheme.TrainingCheckmateForeground;
             para.Name = paraName;
 
             Run r_prefix = new Run();
@@ -896,27 +980,32 @@ namespace ChessForge
         /// <summary>
         /// Adds a Paragraph with a Run to click if the user wants to take their move back.
         /// </summary>
-        private void AddTakebackParagraph()
+        private void BuildTakebackParagraph()
         {
             // first check if exsists
-            if (_dictParas[ParaType.TAKEBACK] == null)
+            _dictParas.TryGetValue(ParaType.TAKEBACK, out Paragraph para);
+            if (para == null)
             {
-                Paragraph para = AddNewParagraphToDoc(STYLE_TAKEBACK, "");
+                para = AddNewParagraphToDoc(STYLE_TAKEBACK, "");
                 _dictParas[ParaType.TAKEBACK] = para;
                 para.MouseDown += EventTakebackParaClicked;
                 para.Cursor = Cursors.Hand;
-
-                para.Inlines.Add(new Run("\n " + Properties.Resources.MsgTakebackWanted));
-
-                Run note = new Run();
-                note.FontSize = para.FontSize - 2;
-                note.FontStyle = FontStyles.Italic;
-                note.FontWeight = FontWeights.Normal;
-                note.Foreground = Brushes.Black;
-
-                note.Text = "  " + Properties.Resources.MsgTakebackInfo;
-                para.Inlines.Add(note);
             }
+
+            para.Inlines.Clear();
+
+            para.Foreground = ChessForgeColors.CurrentTheme.TrainingTakebackForeground;
+
+            para.Inlines.Add(new Run("\n " + Properties.Resources.MsgTakebackWanted));
+
+            Run note = new Run();
+            note.FontSize = para.FontSize - 2;
+            note.FontStyle = FontStyles.Italic;
+            note.FontWeight = FontWeights.Normal;
+            note.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
+
+            note.Text = "  " + Properties.Resources.MsgTakebackInfo;
+            para.Inlines.Add(note);
         }
 
         /// <summary>
@@ -940,6 +1029,7 @@ namespace ChessForge
             string paraName = _par_stalemate_;
 
             Paragraph para = AddNewParagraphToDoc(STYLE_CHECKMATE, "");
+            para.Foreground = ChessForgeColors.CurrentTheme.TrainingCheckmateForeground;
             para.Name = paraName;
 
             Run r_prefix = new Run();
@@ -991,7 +1081,11 @@ namespace ChessForge
             // NOTE without nd.Parent != null we'd be getting "starting position" text in front
             while (nd != null && nd.Parent != null)
             {
-                Run r = CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, nd.Parent.NodeId == 0, false, _moveNumberOffset) + " ", _run_stem_move_ + nd.NodeId.ToString(), Brushes.Black, true);
+                Run r = CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, nd.Parent.NodeId == 0, false,
+                    _moveNumberOffset) + " ",
+                    _run_stem_move_ + nd.NodeId.ToString(),
+                    ChessForgeColors.CurrentTheme.RtbForeground, true);
+
                 nd = nd.Parent;
 
                 if (prevRun == null)
@@ -1031,6 +1125,7 @@ namespace ChessForge
             _dictParas[ParaType.INSTRUCTIONS] = AddNewParagraphToDoc(STYLE_INTRO, sbInstruction.ToString());
 
             _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc(STYLE_FIRST_PROMPT, Properties.Resources.TrnMakeFirstMove);
+            _dictParas[ParaType.PROMPT_TO_MOVE].Foreground = ChessForgeColors.GetHintForeground(CommentBox.HintType.INFO);
         }
 
         /// <summary>
@@ -1072,6 +1167,7 @@ namespace ChessForge
 
                 Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
                 _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc(STYLE_SECOND_PROMPT, "\n   " + Properties.Resources.YourTurn + "...");
+                _dictParas[ParaType.PROMPT_TO_MOVE].Foreground = ChessForgeColors.GetHintForeground(CommentBox.HintType.INFO);
 
                 _mainWin.BoardCommentBox.GameMoveMade(nd, false);
             }
@@ -1131,7 +1227,7 @@ namespace ChessForge
                             SoundPlayer.PlayTrainingSound(SoundPlayer.Sound.NOT_IN_WORKBOOK);
                             TrainingSession.IsTakebackAvailable = true;
 
-                            AddTakebackParagraph();
+                            BuildTakebackParagraph();
 
                             string note = "";
                             switch (_sourceType)

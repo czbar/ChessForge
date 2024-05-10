@@ -153,7 +153,7 @@ namespace ChessForge
                             }
                             else
                             {
-                                AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgShiftToSkipFast, System.Windows.Media.Brushes.Green);
+                                AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgShiftToSkipFast, CommentBox.HintType.INFO);
                                 EndCurrentSeries();
                             }
                         }

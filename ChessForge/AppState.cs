@@ -40,9 +40,6 @@ namespace ChessForge
         // main application window
         private static MainWindow _mainWin;
 
-        // whether Openings and Top Games explorers are turned on
-        private static bool _areExplorersOn;
-
         // last active tab in the Manual Review tab control
         private static TabViewType _lastActiveManualReviewTab = TabViewType.NONE;
 
@@ -51,8 +48,7 @@ namespace ChessForge
         /// </summary>
         public static bool AreExplorersOn
         {
-            get => _areExplorersOn;
-            set => _areExplorersOn = value;
+            get => Configuration.ShowExplorers;
         }
 
         /// <summary>
@@ -727,7 +723,7 @@ namespace ChessForge
                 IsDirty = true;
                 MainWin.SelectModelGame(chapter.ActiveModelGameIndex, true);
 
-                MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgGameImportSuccess, System.Windows.Media.Brushes.Green);
+                MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgGameImportSuccess, CommentBox.HintType.INFO);
             }
 
             return added;
@@ -908,6 +904,11 @@ namespace ChessForge
                 MainWin.UiRtbOpenings.Visibility = Visibility.Hidden;
                 MainWin.UiRtbTopGames.Visibility = Visibility.Hidden;
                 MainWin.UiBtnShowExplorer.Visibility = (!AreExplorersOn && validTabActive && anythingToShow) ? Visibility.Visible : Visibility.Collapsed;
+            }
+
+            if (visible && AreExplorersOn)
+            {
+                MainWin.UpdateExplorersToggleState();
             }
         }
 
@@ -1505,7 +1506,7 @@ namespace ChessForge
                 _mainWin.UiBtnExitGame.Visibility = Visibility.Collapsed;
 
                 ShowEvaluationControlsForCurrentStates();
-                MainWin.ExplorersToggleOn_PreviewMouseDown(null, null);
+                MainWin.TurnExplorersOff(false);
 
                 ConfigureMenusForTraining();
             });

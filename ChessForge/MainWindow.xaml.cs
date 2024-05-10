@@ -403,12 +403,25 @@ namespace ChessForge
             UiTabIntro.Visibility = Configuration.ShowIntroTab ? Visibility.Visible : Visibility.Collapsed;
             SoundPlayer.Initialize();
 
+            InitializeConfiguration();
+
+            // initialize GUI theme
+            if (Configuration.IsDarkMode) 
+            {
+                ChessForgeColors.Initialize(ColorThemes.DARK_MODE);
+                _modeUpdatesBlocked = true;
+                UiMnDarkMode.IsChecked = Configuration.IsDarkMode;
+            }
+            else
+            {
+                ChessForgeColors.Initialize(ColorThemes.LIGHT_MODE);
+            }
+            ChessForgeColors.SetMainControlColors();
+
             BoardCommentBox = new CommentBox(UiRtbBoardComment.Document, this);
             ActiveLine = new ActiveLineManager(UiDgActiveLine, this);
 
             EngineLinesBox.Initialize(this, UiTbEngineLines, UiPbEngineThinking);
-
-            InitializeConfiguration();
 
             // Note: must be called only AFTER configuration has been initialized.
             Timers = new AppTimers(this);
@@ -426,7 +439,6 @@ namespace ChessForge
             BookmarkManager.InitBookmarksGui(this);
 
             ActiveLineReplay = new GameReplay(this, MainChessBoard, BoardCommentBox);
-            ChessForgeColors.Initialize();
 
             _isDebugMode = Configuration.DebugLevel != 0;
         }
@@ -2744,7 +2756,7 @@ namespace ChessForge
             }
             else
             {
-                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.EngineReplaced, Brushes.Green);
+                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.EngineReplaced, CommentBox.HintType.INFO);
                 return true;
             }
         }

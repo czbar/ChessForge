@@ -44,6 +44,9 @@ namespace ChessForge
         // the TableRow to use in the calling Table
         private TableRow _row;
 
+        // whether this is in the context of main window rather than a dialog
+        private bool _isMainWin;
+
         /// <summary>
         /// The TableRow to use in the calling Table.
         /// </summary>
@@ -55,8 +58,9 @@ namespace ChessForge
         /// <summary>
         /// Constructs the TopGamesViewRow object. 
         /// </summary>
-        public TopGamesViewRow()
+        public TopGamesViewRow(bool isMainWin)
         {
+            _isMainWin = isMainWin;
             BuildTableGameRow();
         }
 
@@ -137,6 +141,12 @@ namespace ChessForge
         private TableRow BuildTableGameRow()
         {
             _row = new TableRow();
+
+            if (_isMainWin)
+            {
+                _row.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
+            }
+
             TableCell cellRatings = new TableCell(BuildRatingsPara());
             _row.Cells.Add(cellRatings);
 
@@ -169,7 +179,7 @@ namespace ChessForge
             };
 
             _lblWhiteRating = new Label
-            {
+            {                
                 Width = _namesColumnWidth,
                 Height = 20 + Configuration.FontSizeDiff,
                 FontSize = _baseFontSize + Configuration.FontSizeDiff,
@@ -180,6 +190,10 @@ namespace ChessForge
                 BorderThickness = new Thickness(0, 0, 0, 0),
                 Padding = new Thickness(0, 0, 0, 0)
             };
+            if (_isMainWin)
+            {
+                _lblWhiteRating.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
+            }
             canvas.Children.Add(_lblWhiteRating);
             Canvas.SetLeft(_lblWhiteRating, 0);
             Canvas.SetTop(_lblWhiteRating, 2);
@@ -196,6 +210,10 @@ namespace ChessForge
                 BorderThickness = new Thickness(0, 0, 0, 0),
                 Padding = new Thickness(0, 0, 0, 0)
             };
+            if (_isMainWin)
+            {
+                _lblBlackRating.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
+            }
             canvas.Children.Add(_lblBlackRating);
             Canvas.SetLeft(_lblBlackRating, 0);
             Canvas.SetTop(_lblBlackRating, 20);
@@ -238,6 +256,10 @@ namespace ChessForge
                 BorderThickness = new Thickness(0, 0, 0, 0),
                 Padding = new Thickness(0, 0, 0, 0)
             };
+            if (_isMainWin)
+            {
+                _lblWhitePlayer.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
+            }
             canvas.Children.Add(_lblWhitePlayer);
             Canvas.SetLeft(_lblWhitePlayer, 4);
             Canvas.SetTop(_lblWhitePlayer, 2);
@@ -255,6 +277,10 @@ namespace ChessForge
                 BorderThickness = new Thickness(0, 0, 0, 0),
                 Padding = new Thickness(0, 0, 0, 0)
             };
+            if (_isMainWin)
+            {
+                _lblBlackPlayer.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
+            }
             canvas.Children.Add(_lblBlackPlayer);
             Canvas.SetLeft(_lblBlackPlayer, 4);
             Canvas.SetTop(_lblBlackPlayer, 20);
@@ -295,6 +321,10 @@ namespace ChessForge
                 BorderThickness = new Thickness(0, 0, 0, 0),
                 Padding = new Thickness(0, 0, 0, 0)
             };
+            if (_isMainWin)
+            {
+                _lblResult.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
+            }
 
             Style style = AppState.MainWin.FindResource("RoundedBorder") as Style;
             _lblResult.Style = style;
@@ -340,6 +370,10 @@ namespace ChessForge
                 BorderThickness = new Thickness(0, 0, 0, 0),
                 Padding = new Thickness(0, 0, 0, 0)
             };
+            if (_isMainWin)
+            {
+                _lblDate.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
+            }
 
             canvas.Children.Add(_lblDate);
             Canvas.SetLeft(_lblDate, 0);

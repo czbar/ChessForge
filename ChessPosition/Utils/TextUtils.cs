@@ -526,6 +526,32 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Returns prefix of the string i.e. the substring
+        /// from the start to the last occurence of the separator,
+        /// inclusive.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="separ"></param>
+        /// <returns></returns>
+        public static string GetPrefixFromPrefixedString(string str, char separ = '_')
+        {
+            if (string.IsNullOrEmpty(str))
+            {
+                return "";
+            }
+
+            int lastCharPos = str.LastIndexOf(separ);
+            if (lastCharPos > 0 && lastCharPos < str.Length - 1)
+            {
+                return str.Substring(0, lastCharPos + 1);
+            }
+            else
+            {
+                return str;
+            }
+        }
+
+        /// <summary>
         /// Returns the PieceColor value corresponding to the passed string.
         /// </summary>
         /// <param name="color"></param>
