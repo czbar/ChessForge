@@ -124,10 +124,25 @@ namespace ChessForge
         /// <param name="e"></param>
         public void TopGamesReceived(LichessOpeningsStats stats)
         {
+            _lastOpeningStats = stats;
             LichessGamesPreviewDialog.SetOpeningsData(stats);
             BuildFlowDocument(stats);
         }
 
+        /// <summary>
+        /// Recreates the tables with the current Color Theme.
+        /// This will be called in response to user selecting the DarkMode
+        /// menu item.
+        /// </summary>
+        public void UpdateColorTheme()
+        {
+            CreateTopGamesTable();
+            TopGamesReceived(_lastOpeningStats);
+        }
+
+        // Stores the data used in the most recent call.
+        // Its only purpose is to be used when calling BuildFlowDocument()
+        private LichessOpeningsStats _lastOpeningStats;
 
         /// <summary>
         /// Event handlers requesting the build the view 
