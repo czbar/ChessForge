@@ -3519,6 +3519,8 @@ namespace ChessForge
                 Configuration.IsDarkMode = true;
                 ChessForgeColors.SetMainControlColors();
                 RebuildAllTreeViews(null, true);
+                _openingStatsView.UpdateColorTheme();
+                _topGamesView.UpdateColorTheme();
             }
             _modeUpdatesBlocked = false;
         }
@@ -3536,6 +3538,8 @@ namespace ChessForge
                 Configuration.IsDarkMode = false;
                 ChessForgeColors.SetMainControlColors();
                 RebuildAllTreeViews(null, true);
+                _openingStatsView.UpdateColorTheme();
+                _topGamesView.UpdateColorTheme();
             }
             _modeUpdatesBlocked = false;
         }
