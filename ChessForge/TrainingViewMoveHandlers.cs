@@ -101,17 +101,26 @@ namespace ChessForge
         public void ReportLastMoveVsWorkbook()
         {
             AppLog.Message("ReportLastMoveVsWorkbook()");
-            
+
             // if we got here via a rollback, the CHECK_FOR_USER_MOVE may not have been stopped.
             _mainWin.Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
             
             TrainingSession.IsTakebackAvailable = false;
             RemoveTakebackParagraph();
 
+            // this method may be called after we exited training while exiting application
+            // and there is no ActiveVariationTree.
+            if (_mainWin.ActiveVariationTree == null)
+            {
+                return;
+            }
+
             lock (TrainingSession.UserVsWorkbookMoveLock)
             {
                 if (TrainingSession.CurrentState != TrainingSession.State.USER_MOVE_COMPLETED)
+                {
                     return;
+                }
 
                 if (TrainingSession.IsContinuousEvaluation)
                 {
