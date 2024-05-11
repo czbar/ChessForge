@@ -896,7 +896,7 @@ namespace ChessForge
 
         /// <summary>
         /// Updates the states of explorers based on the current configuration
-        /// as oppose to being temporarily off e.g. due to being in the Training Mode.
+        /// as opposed to being temporarily off e.g. due to being in the Training Mode.
         /// </summary>
         public void UpdateExplorersToggleState()
         {
@@ -904,11 +904,13 @@ namespace ChessForge
             {
                 UiImgExplorersOff.Visibility = Visibility.Collapsed;
                 UiImgExplorersOn.Visibility = Visibility.Visible;
+                WebAccessManager.IsEnabledExplorerQueries = true;
             }
             else
             {
                 UiImgExplorersOff.Visibility = Visibility.Visible;
                 UiImgExplorersOn.Visibility = Visibility.Collapsed;
+                WebAccessManager.IsEnabledExplorerQueries = false;
             }
         }
 
