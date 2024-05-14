@@ -3515,15 +3515,22 @@ namespace ChessForge
         {
             if (!_modeUpdatesBlocked)
             {
-                ChessForgeColors.Initialize(ColorThemes.DARK_MODE);
-                Configuration.IsDarkMode = true;
-                ChessForgeColors.SetMainControlColors();
-                RebuildAllTreeViews(null, true);
-                _openingStatsView.UpdateColorTheme();
-                _topGamesView.UpdateColorTheme();
-                if (UiRtbBoardComment.Visibility == Visibility.Visible)
+                try
                 {
-                    BoardCommentBox.ShowTabHints();
+                    ChessForgeColors.Initialize(ColorThemes.DARK_MODE);
+                    Configuration.IsDarkMode = true;
+                    ChessForgeColors.SetMainControlColors();
+                    RebuildAllTreeViews(null, true);
+                    _openingStatsView.UpdateColorTheme();
+                    _topGamesView.UpdateColorTheme();
+                    if (UiRtbBoardComment.Visibility == Visibility.Visible)
+                    {
+                        BoardCommentBox.ShowTabHints();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    AppLog.Message("UiMnDarkMode_Checked()", ex);
                 }
             }
             _modeUpdatesBlocked = false;
@@ -3538,15 +3545,22 @@ namespace ChessForge
         {
             if (!_modeUpdatesBlocked)
             {
-                ChessForgeColors.Initialize(ColorThemes.LIGHT_MODE);
-                Configuration.IsDarkMode = false;
-                ChessForgeColors.SetMainControlColors();
-                RebuildAllTreeViews(null, true);
-                _openingStatsView.UpdateColorTheme();
-                _topGamesView.UpdateColorTheme();
-                if (UiRtbBoardComment.Visibility == Visibility.Visible)
+                try
                 {
-                    BoardCommentBox.ShowTabHints();
+                    ChessForgeColors.Initialize(ColorThemes.LIGHT_MODE);
+                    Configuration.IsDarkMode = false;
+                    ChessForgeColors.SetMainControlColors();
+                    RebuildAllTreeViews(null, true);
+                    _openingStatsView.UpdateColorTheme();
+                    _topGamesView.UpdateColorTheme();
+                    if (UiRtbBoardComment.Visibility == Visibility.Visible)
+                    {
+                        BoardCommentBox.ShowTabHints();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    AppLog.Message("UiMnDarkMode_Checked()", ex);
                 }
             }
             _modeUpdatesBlocked = false;
