@@ -189,25 +189,28 @@ namespace ChessForge
         {
             int rowNo = 0;
             _gameIdList.Clear();
-            AdjustGamesTableRowCount(stats.TopGames.Length);
-            foreach (LichessTopGame game in stats.TopGames)
+            if (stats != null)
             {
-                if (rowNo >= MAX_GAME_ROW_COUNT)
+                AdjustGamesTableRowCount(stats.TopGames.Length);
+                foreach (LichessTopGame game in stats.TopGames)
                 {
-                    break;
-                }
+                    if (rowNo >= MAX_GAME_ROW_COUNT)
+                    {
+                        break;
+                    }
 
-                TableRow row = _lstRows[rowNo].Row;
-                _lstRows[rowNo].SetLabels(game);
+                    TableRow row = _lstRows[rowNo].Row;
+                    _lstRows[rowNo].SetLabels(game);
 
-                if (!string.IsNullOrWhiteSpace(game.Id))
-                {
-                    _gameIdList.Add(game.Id);
-                    row.Name = _rowNamePrefix + game.Id;
-                    row.PreviewMouseDown += Row_PreviewMouseDown;
-                    row.Cursor = Cursors.Arrow;
+                    if (!string.IsNullOrWhiteSpace(game.Id))
+                    {
+                        _gameIdList.Add(game.Id);
+                        row.Name = _rowNamePrefix + game.Id;
+                        row.PreviewMouseDown += Row_PreviewMouseDown;
+                        row.Cursor = Cursors.Arrow;
+                    }
+                    rowNo++;
                 }
-                rowNo++;
             }
 
             return _gamesTable;
