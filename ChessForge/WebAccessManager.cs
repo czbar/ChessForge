@@ -88,7 +88,7 @@ namespace ChessForge
                 if (WebAccessState.HasReadyRequest)
                 {
                     WebAccessState.IsMandatoryDelayOn = true;
-                    AppLog.Message(2, "Execute Web Request for: " + WebAccessState.ReadyNode.LastMoveAlgebraicNotation);
+                    AppLog.Message(2, "Execute Web Request for: " + (WebAccessState.ReadyNode == null ? "null" : WebAccessState.ReadyNode.LastMoveAlgebraicNotation));
                     ExecuteRequest(WebAccessState.ReadyNodeTreeId, WebAccessState.ReadyNode);
                     WebAccessState.HasReadyRequest = false;
                 }
