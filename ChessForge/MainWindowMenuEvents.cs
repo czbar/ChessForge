@@ -3560,7 +3560,7 @@ namespace ChessForge
                 }
                 catch (Exception ex)
                 {
-                    AppLog.Message("UiMnDarkMode_Checked()", ex);
+                    AppLog.Message("UiMnDarkMode_Unchecked()", ex);
                 }
             }
             _modeUpdatesBlocked = false;
