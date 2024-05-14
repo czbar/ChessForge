@@ -1416,7 +1416,7 @@ namespace ChessForge
         {
             _mainWin.Dispatcher.Invoke(() =>
             {
-                if (CurrentLearningMode == LearningMode.Mode.IDLE)
+                if (Workbook == null)
                 {
                     _mainWin.UiMnCloseWorkbook.Visibility = Visibility.Collapsed;
                 }

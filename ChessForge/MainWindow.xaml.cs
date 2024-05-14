@@ -1557,6 +1557,7 @@ namespace ChessForge
                     }
 
                     SetupGuiForNewSession(AppState.WorkbookFilePath, true, wvs);
+                    AppState.SetupGuiForCurrentStates();
                 }
                 else
                 {
