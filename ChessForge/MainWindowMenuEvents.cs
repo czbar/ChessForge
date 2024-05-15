@@ -1407,7 +1407,7 @@ namespace ChessForge
                         chapter.StudyTree.Tree.ContentType = GameData.ContentType.STUDY_TREE;
 
                         CopySelectedItemsToChapter(chapter, true, out string error, games, out _);
-                        
+
                         undoArticleList.Add(new ArticleListItem(chapter));
 
                         _chaptersView.BuildFlowDocumentForChaptersView();
@@ -1879,7 +1879,7 @@ namespace ChessForge
                                                     skippedDueToType++;
                                                 }
                                             }
-                                            else 
+                                            else
                                             {
                                                 undoItem = new ArticleListItem(chapter, chapter.Index, chapter.GetArticleAtIndex(targetcontentType, index), index);
                                                 if (undoItem.Article != null)
@@ -4408,6 +4408,45 @@ namespace ChessForge
 
             UiBtnFontSizeFixed.Visibility = Configuration.UseFixedFont ? Visibility.Hidden : Visibility.Visible;
             UiBtnFontSizeVariable.Visibility = Configuration.UseFixedFont ? Visibility.Visible : Visibility.Hidden;
+        }
+
+        /// <summary>
+        /// Invoked from a debug menu,
+        /// writes out the content of the current view to an RTF file.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnWriteRtf_Click(object sender, RoutedEventArgs e)
+        {
+            TabViewType vt = AppState.ActiveTab;
+            FlowDocument doc = null;
+            switch (vt)
+            {
+                case TabViewType.STUDY:
+                    doc = UiRtbStudyTreeView.Document;
+                    break;
+                case TabViewType.MODEL_GAME:
+                    doc = UiRtbModelGamesView.Document;
+                    break;
+                case TabViewType.EXERCISE:
+                    doc = UiRtbExercisesView.Document;
+                    break;
+            }
+
+            if (doc != null)
+            {
+                // Create a TextRange covering the entire content of the FlowDocument
+                TextRange textRange = new TextRange(doc.ContentStart, doc.ContentEnd);
+
+                string distinct = "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss");
+                string fileName = DebugUtils.BuildLogFileName(App.AppPath, "rtf", distinct, "rtf");
+                // Create a file stream to save the RTF content
+                using (FileStream fileStream = new FileStream(fileName, FileMode.Create))
+                {
+                    // Save the content in RTF format
+                    textRange.Save(fileStream, DataFormats.Rtf);
+                }
+            }
         }
 
         /// <summary>
