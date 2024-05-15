@@ -53,7 +53,7 @@ namespace ChessPosition
         /// given the log type and distinct name part of any
         /// </summary>
         /// <returns></returns>
-        public static string BuildLogFileName(string dir, string logType, string distinctPart)
+        public static string BuildLogFileName(string dir, string logType, string distinctPart, string extension = null)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -62,7 +62,15 @@ namespace ChessPosition
             {
                 sb.Append(distinctPart);
             }
-            sb.Append(".txt");
+
+            if (string.IsNullOrEmpty(extension))
+            {
+                sb.Append(".txt");
+            }
+            else
+            {
+                sb.Append("." + extension);
+            }
 
             return Path.Combine(dir, sb.ToString());
         }
