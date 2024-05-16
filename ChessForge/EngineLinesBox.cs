@@ -69,7 +69,7 @@ namespace ChessForge
         public static void ShowEngineLines(object source, ElapsedEventArgs e, bool force = false)
         {
             // prevent "choking"
-            if (!force && _isShowEngineLinesRunning && (source == null || source is Timer))
+            if (AppState.MainWin.ProcessingMouseUp || (!force && _isShowEngineLinesRunning && (source == null || source is Timer)))
             {
                 return;
             }
@@ -96,7 +96,7 @@ namespace ChessForge
         public static void ShowEngineLinesEx(object source, ElapsedEventArgs e)
         {
             // check if we are paused.
-            if (_pauseCount > 0)
+            if (AppState.MainWin.ProcessingMouseUp || _pauseCount > 0)
             {
                 _pauseCount--;
                 return;

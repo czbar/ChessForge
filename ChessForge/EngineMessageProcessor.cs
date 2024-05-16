@@ -797,7 +797,10 @@ namespace ChessForge
                         }
                         if (message.StartsWith(UciCommands.ENG_INFO))
                         {
-                            ProcessInfoMessage(message, evalNode);
+                            if (!AppState.MainWin.ProcessingMouseUp)
+                            {
+                                ProcessInfoMessage(message, evalNode);
+                            }
                         }
                         else if (message.StartsWith(UciCommands.ENG_BEST_MOVE))
                         {

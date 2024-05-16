@@ -16,6 +16,16 @@ namespace ChessForge
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// Indicates whether the Main Window is currently processing the mouse up event.
+        /// This would normally be after the user made their move and can be resource intensive. 
+        /// Therefore, other processes should query this flag and limit their processing if it is up.
+        /// </summary>
+        public bool ProcessingMouseUp
+        {
+            get => _processingMouseUp;
+        }
+
         // a flag to use to prevent processing MouseDown before MouseUp is finished.
         private bool _processingMouseUp = false;
 
