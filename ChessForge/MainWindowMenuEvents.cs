@@ -4422,6 +4422,9 @@ namespace ChessForge
             FlowDocument doc = null;
             switch (vt)
             {
+                case TabViewType.INTRO:
+                    doc = UiRtbIntroView.Document;
+                    break;
                 case TabViewType.STUDY:
                     doc = UiRtbStudyTreeView.Document;
                     break;
