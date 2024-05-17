@@ -103,7 +103,7 @@
                         <MenuItem x:Name="UiMnMainPlayEngine" Header="{x:Static p:Resources.PlayAgainstComputer}"  Click="UiMnPlayEngine_Click" />
                     </MenuItem>
                     <MenuItem Header="{x:Static p:Resources.Edit}" Margin="0,0,0,0">
-                        <MenuItem x:Name="UiMnFindGames" Header="{x:Static p:Resources.FindGames}" Click="UiMnFindGames_Click"/>
+                        <MenuItem x:Name="UiMnFindGames" Header="{x:Static p:Resources.FindGames}" Click="UiMnFindGames_Click" InputGestureText="Ctrl+G" />
                         <MenuItem x:Name="UiMnFindPositions" Header="{x:Static p:Resources.SearchByFen}"  Click="UiMnFindPositions_Click" InputGestureText="Shift+F3" />
                         <MenuItem x:Name="UiMnFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}"  Click="UiMnFindIdenticalPosition_Click" InputGestureText="F3" />
                         <Separator />

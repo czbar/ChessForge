@@ -697,6 +697,10 @@ namespace ChessForge
                                 _mainWin.CustomCommand_MoveItemUp(null, null);
                                 e.Handled = true;
                                 break;
+                            case Key.G:
+                                _mainWin.UiMnFindGames_Click(null, null);
+                                e.Handled = true;
+                                break;
                             case Key.D:
                                 _mainWin.CustomCommand_MoveItemDown(null, null);
                                 e.Handled = true;
