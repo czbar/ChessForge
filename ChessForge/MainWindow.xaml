@@ -96,7 +96,7 @@
                         <Separator />
                     </MenuItem>
                     <MenuItem Header="{x:Static p:Resources.Training}" Margin="0,0,0,0">
-                        <MenuItem x:Name="UiMnStartTraining"  Header="{x:Static p:Resources.StartNewSession}"  Click="UiMnStartTrainingHere_Click"/>
+                        <MenuItem x:Name="UiMnStartTraining"  Header="{x:Static p:Resources.StartNewSession}"  Click="UiMnStartTrainingHere_Click" InputGestureText="T" />
                         <MenuItem x:Name="UiMnRestartTraining"  Header="{x:Static p:Resources.RestartTrainingSession}" Click="UiMnTrainRestartTraining_Click"/>
                         <MenuItem x:Name="UiMnExitTraining" Header="{x:Static p:Resources.ExitTraining}" Click="UiMnStopTraining_Click"/>
                         <Separator />
@@ -242,7 +242,7 @@
                     <Canvas x:Name="MainCanvas" Grid.Column="0" HorizontalAlignment="Left" Height="680" Margin="0,0,0,0" VerticalAlignment="Top" Width="680" ContextMenuOpening="MainCanvas_ContextMenuOpening">
                         <Canvas.ContextMenu>
                             <ContextMenu  x:Name="UiMncMainBoard">
-                                <MenuItem x:Name="UiMnciStartTrainingHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere_Click" />
+                                <MenuItem x:Name="UiMnciStartTrainingHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere_Click" InputGestureText="T" />
                                 <MenuItem x:Name="UiMnciRestartTraining"  Header="{x:Static p:Resources.RestartTraining}" Click="UiMnTrainRestartTraining_Click"/>
                                 <MenuItem x:Name="UiMnciExitTraining" Header="{x:Static p:Resources.ExitTraining}" Click="UiMnStopTraining_Click"/>
                                 <Separator x:Name="UiMncMainBoardSepar_1" />

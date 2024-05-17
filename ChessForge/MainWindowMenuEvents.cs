@@ -2785,9 +2785,9 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiMnStartTrainingHere_Click(object sender, RoutedEventArgs e)
+        public void UiMnStartTrainingHere_Click(object sender, RoutedEventArgs e)
         {
-            if (ActiveVariationTree == null)
+            if (ActiveVariationTree == null || !AppState.IsTreeViewTabActive())
             {
                 return;
             }

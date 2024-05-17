@@ -1599,7 +1599,7 @@ namespace ChessForge
                 {
                     GuiConfiguration.ConfigureAppBarFontButtons();
 
-                    MainWin.UiMnStartTraining.IsEnabled = true;
+                    MainWin.UiMnStartTraining.IsEnabled = IsVariationTreeTabType;
                     MainWin.UiMnRestartTraining.IsEnabled = false;
                     MainWin.UiMnExitTraining.IsEnabled = false;
 
