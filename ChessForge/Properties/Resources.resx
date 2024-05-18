@@ -1263,6 +1263,138 @@
   <data name="RestartGameFrom" xml:space="preserve">
     <value>Restart Game from </value>
   </data>
+  <data name="ExitTrainingSession" xml:space="preserve">
+    <value>Exit the training session?</value>
+  </data>
+  <data name="RestartTraining" xml:space="preserve">
+    <value>Restart the training session?</value>
+  </data>
+  <data name="MergeTrainingIntoStudy" xml:space="preserve">
+    <value>Merge new moves from this session into the source</value>
+  </data>
+  <data name="BtnDontSaveSession" xml:space="preserve">
+    <value>Do Not Save Session</value>
+  </data>
+  <data name="BtnMergeSession" xml:space="preserve">
+    <value>Merge Session Line to Source</value>
+  </data>
+  <data name="BtnCreateGame" xml:space="preserve">
+    <value>Create Game From Session's Last Line</value>
+  </data>
+  <data name="YourMoveWas" xml:space="preserve">
+    <value>Your move was</value>
+  </data>
+  <data name="WaitForEngineResponse" xml:space="preserve">
+    <value>Wait for engine's response...</value>
+  </data>
+  <data name="WaitForResponse" xml:space="preserve">
+    <value>Wait for a response...</value>
+  </data>
+  <data name="TrnGameStarted" xml:space="preserve">
+    <value>A training game against the engine has started. Wait for the engine's move...</value>
+  </data>
+  <data name="EnginePlayed" xml:space="preserve">
+    <value>The engine played</value>
+  </data>
+  <data name="CoachPlayed" xml:space="preserve">
+    <value>The coach played</value>
+  </data>
+  <data name="YourTurn" xml:space="preserve">
+    <value>It is your turn now</value>
+  </data>
+  <data name="TrnAlternativeIs" xml:space="preserve">
+    <value>The alternative is</value>
+  </data>
+  <data name="TrnAlternativesAre" xml:space="preserve">
+    <value>The alternatives are</value>
+  </data>
+  <data name="TrnAlternative" xml:space="preserve">
+    <value>Alternative</value>
+  </data>
+  <data name="TrnAlternatives" xml:space="preserve">
+    <value>Alternatives</value>
+  </data>
+  <data name="TrnPrefixYour" xml:space="preserve">
+    <value>your</value>
+  </data>
+  <data name="TrnPrefixEngine" xml:space="preserve">
+    <value>engine's</value>
+  </data>
+  <data name="TrnLineEnded" xml:space="preserve">
+    <value>The workbook's training line has ended</value>
+  </data>
+  <data name="TrnGameInProgress" xml:space="preserve">
+    <value>A training game against the engine is in progress...</value>
+  </data>
+  <data name="TrnPlayMoveInstead" xml:space="preserve">
+    <value>Play $0 instead of Your Move</value>
+  </data>
+  <data name="TrnStudyResponse" xml:space="preserve">
+    <value>Workbook response</value>
+  </data>
+  <data name="TrnStudyMoveNotInSource" xml:space="preserve">
+    <value>This is not in the Workbook</value>
+  </data>
+  <data name="TrnStudyOnlyMove" xml:space="preserve">
+    <value>The only move in the Workbook is</value>
+  </data>
+  <data name="TrnStudySourceMoves" xml:space="preserve">
+    <value>The Workbook moves are</value>
+  </data>
+  <data name="TrnGameResponse" xml:space="preserve">
+    <value>Response from the Game</value>
+  </data>
+  <data name="TrnGameMoveNotInSource" xml:space="preserve">
+    <value>This is not in the Game</value>
+  </data>
+  <data name="TrnGameOnlyMove" xml:space="preserve">
+    <value>The only move in the Game is</value>
+  </data>
+  <data name="TrnGameSourceMoves" xml:space="preserve">
+    <value>The moves in the Game are</value>
+  </data>
+  <data name="TrnExerciseResponse" xml:space="preserve">
+    <value>Response from the Exercise</value>
+  </data>
+  <data name="TrnExerciseMoveNotInSource" xml:space="preserve">
+    <value>This is not in the Exercise</value>
+  </data>
+  <data name="TrnExerciseOnlyMove" xml:space="preserve">
+    <value>The only move in the Exercise is</value>
+  </data>
+  <data name="TrnExerciseSourceMoves" xml:space="preserve">
+    <value>The moves in the Exercise are</value>
+  </data>
+  <data name="TrnUserCheckmatedEngine" xml:space="preserve">
+    <value>The training game has ended. You have delivered a checkmate!</value>
+  </data>
+  <data name="TrnEngineCheckmatedUser" xml:space="preserve">
+    <value>The training game has ended. You have been checkmated by the engine.</value>
+  </data>
+  <data name="TrnGameStalemate" xml:space="preserve">
+    <value>This is a stalemate. The game has been drawn.</value>
+  </data>
+  <data name="TrnSessionStartsAfter" xml:space="preserve">
+    <value>This training session begins after:</value>
+  </data>
+  <data name="TrnSessionStart" xml:space="preserve">
+    <value>Starting a training session.</value>
+  </data>
+  <data name="TrnMakeFirstMove" xml:space="preserve">
+    <value>To begin, make your first move on the chessboard.</value>
+  </data>
+  <data name="TrnUserPlaysWhite" xml:space="preserve">
+    <value>You play White and the virtual coach plays Black.</value>
+  </data>
+  <data name="TrnUserPlaysBlack" xml:space="preserve">
+    <value>You play Black and the virtual coach plays White.</value>
+  </data>
+  <data name="TrnClickMoveBelow" xml:space="preserve">
+    <value>Click any move below to restart training from it.  </value>
+  </data>
+  <data name="TrnRightClickMove" xml:space="preserve">
+    <value>Right click to open the context menu.  </value>
+  </data>
   <data name="CreateNewChapter" xml:space="preserve">
     <value>Create New Chapter</value>
   </data>
@@ -1779,12 +1911,6 @@
   <data name="NoTrainingStartMove" xml:space="preserve">
     <value>No move selected to start training from.</value>
   </data>
-  <data name="ExitTrainingSession" xml:space="preserve">
-    <value>Exit the training session?</value>
-  </data>
-  <data name="RestartTraining" xml:space="preserve">
-    <value>Restart the training session?</value>
-  </data>
   <data name="NoNewVersion" xml:space="preserve">
     <value>No new version available.</value>
   </data>
@@ -1815,9 +1941,6 @@
   </data>
   <data name="FileAlreadyOpen" xml:space="preserve">
     <value>$0 is already open."</value>
-  </data>
-  <data name="MergeTrainingIntoStudy" xml:space="preserve">
-    <value>Merge new moves from this session into the source</value>
   </data>
   <data name="NoLongerValid" xml:space="preserve">
     <value>is no longer valid</value>
@@ -2172,120 +2295,6 @@
   </data>
   <data name="CurrentlyViewed" xml:space="preserve">
     <value>Currently viewed</value>
-  </data>
-  <data name="YourMoveWas" xml:space="preserve">
-    <value>Your move was</value>
-  </data>
-  <data name="WaitForEngineResponse" xml:space="preserve">
-    <value>Wait for engine's response...</value>
-  </data>
-  <data name="WaitForResponse" xml:space="preserve">
-    <value>Wait for a response...</value>
-  </data>
-  <data name="TrnGameStarted" xml:space="preserve">
-    <value>A training game against the engine has started. Wait for the engine's move...</value>
-  </data>
-  <data name="EnginePlayed" xml:space="preserve">
-    <value>The engine played</value>
-  </data>
-  <data name="CoachPlayed" xml:space="preserve">
-    <value>The coach played</value>
-  </data>
-  <data name="YourTurn" xml:space="preserve">
-    <value>It is your turn now</value>
-  </data>
-  <data name="TrnAlternativeIs" xml:space="preserve">
-    <value>The alternative is</value>
-  </data>
-  <data name="TrnAlternativesAre" xml:space="preserve">
-    <value>The alternatives are</value>
-  </data>
-  <data name="TrnAlternative" xml:space="preserve">
-    <value>Alternative</value>
-  </data>
-  <data name="TrnAlternatives" xml:space="preserve">
-    <value>Alternatives</value>
-  </data>
-  <data name="TrnPrefixYour" xml:space="preserve">
-    <value>your</value>
-  </data>
-  <data name="TrnPrefixEngine" xml:space="preserve">
-    <value>engine's</value>
-  </data>
-  <data name="TrnLineEnded" xml:space="preserve">
-    <value>The workbook's training line has ended</value>
-  </data>
-  <data name="TrnGameInProgress" xml:space="preserve">
-    <value>A training game against the engine is in progress...</value>
-  </data>
-  <data name="TrnPlayMoveInstead" xml:space="preserve">
-    <value>Play $0 instead of Your Move</value>
-  </data>
-  <data name="TrnStudyResponse" xml:space="preserve">
-    <value>Workbook response</value>
-  </data>
-  <data name="TrnStudyMoveNotInSource" xml:space="preserve">
-    <value>This is not in the Workbook</value>
-  </data>
-  <data name="TrnStudyOnlyMove" xml:space="preserve">
-    <value>The only move in the Workbook is</value>
-  </data>
-  <data name="TrnStudySourceMoves" xml:space="preserve">
-    <value>The Workbook moves are</value>
-  </data>
-  <data name="TrnGameResponse" xml:space="preserve">
-    <value>Response from the Game</value>
-  </data>
-  <data name="TrnGameMoveNotInSource" xml:space="preserve">
-    <value>This is not in the Game</value>
-  </data>
-  <data name="TrnGameOnlyMove" xml:space="preserve">
-    <value>The only move in the Game is</value>
-  </data>
-  <data name="TrnGameSourceMoves" xml:space="preserve">
-    <value>The moves in the Game are</value>
-  </data>
-  <data name="TrnExerciseResponse" xml:space="preserve">
-    <value>Response from the Exercise</value>
-  </data>
-  <data name="TrnExerciseMoveNotInSource" xml:space="preserve">
-    <value>This is not in the Exercise</value>
-  </data>
-  <data name="TrnExerciseOnlyMove" xml:space="preserve">
-    <value>The only move in the Exercise is</value>
-  </data>
-  <data name="TrnExerciseSourceMoves" xml:space="preserve">
-    <value>The moves in the Exercise are</value>
-  </data>
-  <data name="TrnUserCheckmatedEngine" xml:space="preserve">
-    <value>The training game has ended. You have delivered a checkmate!</value>
-  </data>
-  <data name="TrnEngineCheckmatedUser" xml:space="preserve">
-    <value>The training game has ended. You have been checkmated by the engine.</value>
-  </data>
-  <data name="TrnGameStalemate" xml:space="preserve">
-    <value>This is a stalemate. The game has been drawn.</value>
-  </data>
-  <data name="TrnSessionStartsAfter" xml:space="preserve">
-    <value>This training session begins after:</value>
-  </data>
-  <data name="TrnSessionStart" xml:space="preserve">
-    <value>Starting a training session.</value>
-  </data>
-  <data name="TrnMakeFirstMove" xml:space="preserve">
-    <value>To begin, make your first move on the chessboard.</value>
-  </data>
-  <data name="TrnUserPlaysWhite" xml:space="preserve">
-    <value>You play White and the virtual coach plays Black.</value>
-  </data>
-  <data name="TrnUserPlaysBlack" xml:space="preserve">
-    <value>You play Black and the virtual coach plays White.</value>
-  </data>
-  <data name="TrnClickMoveBelow" xml:space="preserve">
-    <value>Click any move below to restart training from it.  </value>
-  </data>
-  <data name="TrnRightClickMove" xml:space="preserve">
-    <value>Right click to open the context menu.  </value>
   </data>
   <data name="EngGamePlayingVsEngine" xml:space="preserve">
     <value>You are playing against the engine. </value>
