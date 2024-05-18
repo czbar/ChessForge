@@ -67,6 +67,8 @@ namespace ChessForge
             SetRichTextBoxColors(win.UiRtbTrainingProgress, rtbFg, rtbBg);
             SetRichTextBoxColors(win.UiRtbBoardComment, rtbFg, rtbBg);
 
+            win.UiTrainingSessionBox.ApplyColorTheme(CurrentTheme);
+
             win.Background = CurrentTheme.RtbBackground;
             win.UiTabCtrlManualReview.Background = CurrentTheme.RtbBackground;
             win.UiTabCtrlTraining.Background = CurrentTheme.RtbBackground;
