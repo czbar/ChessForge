@@ -2781,107 +2781,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// A request from the menu to start training at the currently selected position.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void UiMnStartTrainingHere_Click(object sender, RoutedEventArgs e)
-        {
-            if (ActiveVariationTree == null || !AppState.IsTreeViewTabActive())
-            {
-                return;
-            }
-
-            // do some housekeeping just in case
-            if (AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
-            {
-                StopEngineGame();
-            }
-            else if (EvaluationManager.IsRunning)
-            {
-                EngineMessageProcessor.StopEngineEvaluation();
-            }
-
-            TreeNode nd = ActiveLine.GetSelectedTreeNode();
-            if (nd != null)
-            {
-                SetAppInTrainingMode(nd);
-            }
-            else
-            {
-                MessageBox.Show(Properties.Resources.NoTrainingStartMove, Properties.Resources.Training, MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-        }
-
-        /// <summary>
-        /// Exits the Training session, if confirmed by the user.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnStopTraining_Click(object sender, RoutedEventArgs e)
-        {
-            if (MessageBox.Show(Properties.Resources.ExitTrainingSession, Properties.Resources.Training, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-            {
-                try
-                {
-                    AppLog.Message("Stopping Training Session");
-                    EngineMessageProcessor.ResetEngineEvaluation();
-
-                    UiTrainingView.CleanupVariationTree();
-                    if (WorkbookManager.PromptAndSaveWorkbook(false, out bool saved))
-                    {
-                        EngineMessageProcessor.StopEngineEvaluation();
-                        EvaluationManager.Reset();
-
-                        TrainingSession.IsTrainingInProgress = false;
-                        TrainingSession.IsContinuousEvaluation = false;
-                        MainChessBoard.RemoveMoveSquareColors();
-                        LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
-                        if (ActiveVariationTree.ContentType == GameData.ContentType.EXERCISE)
-                        {
-                            _exerciseTreeView.DeactivateSolvingMode(VariationTree.SolvingMode.NONE);
-                        }
-                        //AppState.SetupGuiForCurrentStates();
-
-                        if (saved)
-                        {
-                            // at this point the source tree is set.
-                            // Find the last node in EngineGame that we can find in the ActiveTree too 
-                            TreeNode lastNode = UiTrainingView.LastTrainingNodePresentInActiveTree();
-                            {
-                                if (lastNode != null)
-                                {
-                                    SetActiveLine(lastNode.LineId, lastNode.NodeId);
-                                    ActiveTreeView.SelectLineAndMove(lastNode.LineId, lastNode.NodeId);
-                                }
-                            }
-                        }
-
-                        ActiveLine.DisplayPositionForSelectedCell();
-                        AppState.SwapCommentBoxForEngineLines(false);
-                        BoardCommentBox.RestoreTitleMessage();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    AppLog.Message("UiMnStopTraining_Click()", ex);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Handles a context menu event to start training
-        /// from the recently clicked bookmark.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnTrainFromBookmark_Click(object sender, RoutedEventArgs e)
-        {
-            BookmarkManager.SetActiveEntities(false);
-            SetAppInTrainingMode(BookmarkManager.SelectedBookmarkNode);
-        }
-
-        /// <summary>
         /// Handles a request from the Bookmarks page to navigate to 
         /// the bookmarked position.
         /// </summary>
@@ -3732,12 +3631,6 @@ namespace ChessForge
                 }
 
                 GameHeaderDialog dlg = new GameHeaderDialog(tree, Properties.Resources.GameHeader);
-                //{
-                //    Left = ChessForgeMain.Left + 100,
-                //    Top = ChessForgeMain.Top + 100,
-                //    Topmost = false,
-                //    Owner = this
-                //};
                 GuiUtilities.PositionDialog(dlg, this, 100);
                 dlg.ShowDialog();
                 if (dlg.ExitOK)
