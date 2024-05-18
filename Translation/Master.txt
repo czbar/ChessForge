@@ -1404,6 +1404,9 @@ RestartTraining=Restart the training session?
 #Confirmation to merge training moves into the Study Tree / Game or Exercise
 MergeTrainingIntoStudy=Merge new moves from this session into the source
 
+#Chess Forge Training Game header Event
+ChessForgeTrainingGame=Chess Forge Training Game
+
 #Button Do Not Save Session 
 BtnDontSaveSession=Do Not Save Session
 

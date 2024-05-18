@@ -1272,6 +1272,9 @@
   <data name="MergeTrainingIntoStudy" xml:space="preserve">
     <value>Dodaj ruchy z tej sesji do źródła</value>
   </data>
+  <data name="ChessForgeTrainingGame" xml:space="preserve">
+    <value>Partia Treningowa w Chess Forge</value>
+  </data>
   <data name="BtnDontSaveSession" xml:space="preserve">
     <value>Nie Zapisuj tej Sesji</value>
   </data>

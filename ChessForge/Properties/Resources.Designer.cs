@@ -998,6 +998,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chess Forge Training Game.
+        /// </summary>
+        public static string ChessForgeTrainingGame {
+            get {
+                return ResourceManager.GetString("ChessForgeTrainingGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clear.
         /// </summary>
         public static string Clear {

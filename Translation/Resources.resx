@@ -1272,6 +1272,9 @@
   <data name="MergeTrainingIntoStudy" xml:space="preserve">
     <value>Merge new moves from this session into the source</value>
   </data>
+  <data name="ChessForgeTrainingGame" xml:space="preserve">
+    <value>Chess Forge Training Game</value>
+  </data>
   <data name="BtnDontSaveSession" xml:space="preserve">
     <value>Do Not Save Session</value>
   </data>

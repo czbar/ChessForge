@@ -1789,6 +1789,10 @@ RestartTraining=
 #english: MergeTrainingIntoStudy=Merge new moves from this session into the source
 MergeTrainingIntoStudy=
 
+#description: Chess Forge Training Game header Event
+#english: ChessForgeTrainingGame=Chess Forge Training Game
+ChessForgeTrainingGame=
+
 #description: Button Do Not Save Session 
 #english: BtnDontSaveSession=Do Not Save Session
 BtnDontSaveSession=

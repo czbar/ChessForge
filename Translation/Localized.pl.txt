@@ -1789,6 +1789,10 @@ RestartTraining=Zacznij trening od początku
 #english: MergeTrainingIntoStudy=Merge new moves from this session into the source
 MergeTrainingIntoStudy=Dodaj ruchy z tej sesji do źródła
 
+#description: Chess Forge Training Game header Event
+#english: ChessForgeTrainingGame=Chess Forge Training Game
+ChessForgeTrainingGame=Partia Treningowa w Chess Forge
+
 #description: Button Do Not Save Session 
 #english: BtnDontSaveSession=Do Not Save Session
 BtnDontSaveSession=Nie Zapisuj tej Sesji
