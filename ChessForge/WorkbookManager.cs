@@ -1100,7 +1100,6 @@ namespace ChessForge
             dlg.ShowDialog();
         }
 
-
         /// <summary>
         /// This function will be called when:
         /// 1. the user selects File->Save (userRequest == true)
@@ -1186,6 +1185,34 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// No real merge happening here, since the moves are already in the tree.
+        /// They just need to have their training flag removed.
+        /// The source view must be rebuilt.
+        /// </summary>
+        /// <param name="isAppClosing"></param>
+        public static void MergeLineFromTraining(bool isAppClosing = false)
+        {
+            VariationTree activeTree = AppState.ActiveVariationTree;
+
+            // prepare data for undo
+            EditOperation op = new EditOperation(EditOperation.EditType.SAVE_TRAINING_MOVES, activeTree.GetListOfNodeIds(false), null);
+            activeTree.OpsManager.PushOperation(op);
+
+            activeTree.ClearTrainingFlags();
+            activeTree.BuildLines();
+            if (isAppClosing)
+            {
+                AppState.SaveWorkbookFile(null);
+            }
+            else
+            {
+                AppState.IsDirty = true;
+            }
+            AppState.MainWin.RebuildActiveTreeView();
+            AppState.MainWin.RefreshSelectedActiveLineAndNode();
+        }
+
+        /// <summary>
         /// Prompts for and saves training moves with the Workbook.
         /// If this is invoked due to the app closing, the Cancel option is not offered.
         /// </summary>
@@ -1224,30 +1251,13 @@ namespace ChessForge
                     break;
             }
 
-            string message = Properties.Resources.MergeTrainingIntoStudy + "?";
+            string message = Properties.Resources.MergeTrainingIntoStudy + " (" + origin + ")?";
 
             res = MessageBox.Show(message, Properties.Resources.SaveWorkbook,
                 buttons, MessageBoxImage.Question);
             if (res == MessageBoxResult.Yes)
             {
-                VariationTree activeTree = AppState.ActiveVariationTree;
-
-                // prepare data for undo
-                EditOperation op = new EditOperation(EditOperation.EditType.SAVE_TRAINING_MOVES, activeTree.GetListOfNodeIds(false), null);
-                activeTree.OpsManager.PushOperation(op);
-
-                activeTree.ClearTrainingFlags();
-                activeTree.BuildLines();
-                if (isAppClosing)
-                {
-                    AppState.SaveWorkbookFile(null);
-                }
-                else
-                {
-                    AppState.IsDirty = true;
-                }
-                AppState.MainWin.RebuildActiveTreeView();
-                AppState.MainWin.RefreshSelectedActiveLineAndNode();
+                MergeLineFromTraining(isAppClosing);
             }
             else if (res == MessageBoxResult.No)
             {
