@@ -272,36 +272,46 @@ namespace ChessForge
             // check if the engine game is in progress and we were awaiting engine's move
             if (LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME && EngineGame.CurrentState == EngineGame.GameState.ENGINE_THINKING)
             {
-                ProcessEngineGameMove(nd);
-                if (ActiveEvaluationMode == GoFenCommand.EvaluationMode.GAME)
+                TreeNode lastGameNode = EngineGame.GetLastGameNode();
+                if (lastGameNode == nd)
                 {
-                    // make sure this one is going
-                    _mainWin.Timers.Start(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
+                    ProcessEngineGameMove(nd);
+                    if (ActiveEvaluationMode == GoFenCommand.EvaluationMode.GAME)
+                    {
+                        // make sure this one is going
+                        _mainWin.Timers.Start(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
+                    }
+                    else
+                    {
+                        _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
+                        _mainWin.ResetEvaluationProgressBar();
+                    }
+
+                    // if this is Training with Continuous mode, switch to Continuous
+                    if (TrainingSession.IsTrainingInProgress && TrainingSession.IsContinuousEvaluation)
+                    {
+                        // if another GAME request is being processed (e.g. because we had a rollback) do not change mode
+                        // as it will change the GUI
+                        if (ActiveEvaluationMode != GoFenCommand.EvaluationMode.GAME)
+                        {
+                            EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.CONTINUOUS);
+                        }
+                    }
+                    else
+                    {
+                        EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
+                    }
+
+                    if (TrainingSession.IsTrainingInProgress)
+                    {
+                        _mainWin.EngineTrainingGameMoveMade();
+                    }
                 }
                 else
                 {
                     _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
                     _mainWin.ResetEvaluationProgressBar();
-                }
-
-                // if this is Training with Continuous mode, switch to Continuous
-                if (TrainingSession.IsTrainingInProgress && TrainingSession.IsContinuousEvaluation)
-                {
-                    // if another GAME request is being processed (e.g. because we had a rollback) do not change mode
-                    // as it will change the GUI
-                    if (ActiveEvaluationMode != GoFenCommand.EvaluationMode.GAME)
-                    {
-                        EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.CONTINUOUS);
-                    }
-                }
-                else
-                {
-                    EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
-                }
-
-                if (TrainingSession.IsTrainingInProgress)
-                {
-                    _mainWin.EngineTrainingGameMoveMade();
+                    _mainWin.Timers.Start(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
                 }
             }
         }
