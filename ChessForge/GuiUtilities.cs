@@ -682,6 +682,26 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Builds the header for a training game.
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <param name="trainingSide"></param>
+        public static void CreateHeaderForTrainingGame(VariationTree tree, PieceColor trainingSide)
+        {
+            if (tree != null && tree.Header != null)
+            {
+                string white = trainingSide == PieceColor.White ? Properties.Resources.User : Properties.Resources.ChessEngine;
+                string black = trainingSide == PieceColor.White ? Properties.Resources.ChessEngine : Properties.Resources.User;
+
+                tree.Header.SetHeaderValue(PgnHeaders.KEY_WHITE, white);
+                tree.Header.SetHeaderValue(PgnHeaders.KEY_BLACK, black);
+                tree.Header.SetHeaderValue(PgnHeaders.KEY_DATE, 
+                    TextUtils.AdjustPgnDateString(DateTime.Now.ToString("yyy.MM.dd"), out _, out _));
+                tree.Header.SetHeaderValue(PgnHeaders.KEY_EVENT, Properties.Resources.ChessForgeTrainingGame);
+            }
+        }
+
+        /// <summary>
         /// Builds a line of text for display in the processing errors list.
         /// </summary>
         /// <param name="gm"></param>

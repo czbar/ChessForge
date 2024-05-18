@@ -96,14 +96,14 @@
                         <Separator />
                     </MenuItem>
                     <MenuItem Header="{x:Static p:Resources.Training}" Margin="0,0,0,0">
-                        <MenuItem x:Name="UiMnStartTraining"  Header="{x:Static p:Resources.StartNewSession}"  Click="UiMnStartTrainingHere_Click"/>
+                        <MenuItem x:Name="UiMnStartTraining"  Header="{x:Static p:Resources.StartNewSession}"  Click="UiMnStartTrainingHere_Click" InputGestureText="T" />
                         <MenuItem x:Name="UiMnRestartTraining"  Header="{x:Static p:Resources.RestartTrainingSession}" Click="UiMnTrainRestartTraining_Click"/>
                         <MenuItem x:Name="UiMnExitTraining" Header="{x:Static p:Resources.ExitTraining}" Click="UiMnStopTraining_Click"/>
                         <Separator />
                         <MenuItem x:Name="UiMnMainPlayEngine" Header="{x:Static p:Resources.PlayAgainstComputer}"  Click="UiMnPlayEngine_Click" />
                     </MenuItem>
                     <MenuItem Header="{x:Static p:Resources.Edit}" Margin="0,0,0,0">
-                        <MenuItem x:Name="UiMnFindGames" Header="{x:Static p:Resources.FindGames}" Click="UiMnFindGames_Click"/>
+                        <MenuItem x:Name="UiMnFindGames" Header="{x:Static p:Resources.FindGames}" Click="UiMnFindGames_Click" InputGestureText="Ctrl+G" />
                         <MenuItem x:Name="UiMnFindPositions" Header="{x:Static p:Resources.SearchByFen}"  Click="UiMnFindPositions_Click" InputGestureText="Shift+F3" />
                         <MenuItem x:Name="UiMnFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}"  Click="UiMnFindIdenticalPosition_Click" InputGestureText="F3" />
                         <Separator />
@@ -242,7 +242,7 @@
                     <Canvas x:Name="MainCanvas" Grid.Column="0" HorizontalAlignment="Left" Height="680" Margin="0,0,0,0" VerticalAlignment="Top" Width="680" ContextMenuOpening="MainCanvas_ContextMenuOpening">
                         <Canvas.ContextMenu>
                             <ContextMenu  x:Name="UiMncMainBoard">
-                                <MenuItem x:Name="UiMnciStartTrainingHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere_Click" />
+                                <MenuItem x:Name="UiMnciStartTrainingHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere_Click" InputGestureText="T" />
                                 <MenuItem x:Name="UiMnciRestartTraining"  Header="{x:Static p:Resources.RestartTraining}" Click="UiMnTrainRestartTraining_Click"/>
                                 <MenuItem x:Name="UiMnciExitTraining" Header="{x:Static p:Resources.ExitTraining}" Click="UiMnStopTraining_Click"/>
                                 <Separator x:Name="UiMncMainBoardSepar_1" />
@@ -1152,14 +1152,25 @@
                         </Paragraph>
                     </FlowDocument>
                 </RichTextBox>
-                <RichTextBox x:Name="UiRtbOpenings" IsUndoEnabled="False"  ContextMenu="{x:Null}" Panel.ZIndex="0" HorizontalAlignment="Left" Height="150" Margin="5,10,0,0" Grid.Row="2" VerticalScrollBarVisibility="Auto"
-                             Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Width="590" BorderThickness="1" IsReadOnly="True">
+                <RichTextBox x:Name="UiRtbOpenings" IsUndoEnabled="False"  ContextMenu="{x:Null}" 
+                             Panel.ZIndex="0" HorizontalAlignment="Left" 
+                             Height="150" Width="590" Margin="5,10,0,0"
+                             Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" 
+                             VerticalScrollBarVisibility="Auto"
+                             VerticalAlignment="Top" BorderThickness="1" IsReadOnly="True">
                     <RichTextBox.Resources>
                         <Style TargetType="{x:Type Paragraph}">
                             <Setter Property="Margin" Value="0" />
                         </Style>
                     </RichTextBox.Resources>
                 </RichTextBox>
+                <uc:TrainingSessionControl x:Name="UiTrainingSessionBox" FontSize="12"
+                                           Panel.ZIndex="0" HorizontalAlignment="Left" 
+                                           Height="150" Width="669" Margin="5,10,0,0" 
+                                           Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" 
+                                           VerticalAlignment="Top" BorderThickness="1" BorderBrush="Black"
+                                           Visibility="Hidden">
+                </uc:TrainingSessionControl>
                 <RichTextBox x:Name="UiRtbTopGames" IsUndoEnabled="False" Panel.ZIndex="0" HorizontalAlignment="Left" Height="150" Margin="600,10,0,0" Grid.Row="2" VerticalScrollBarVisibility="Auto"
                              Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Width="260" BorderThickness="1" IsReadOnly="True">
                     <RichTextBox.Resources>

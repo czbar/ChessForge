@@ -404,6 +404,33 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create Game From Session&apos;s Last Line.
+        /// </summary>
+        public static string BtnCreateGame {
+            get {
+                return ResourceManager.GetString("BtnCreateGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do Not Save Session.
+        /// </summary>
+        public static string BtnDontSaveSession {
+            get {
+                return ResourceManager.GetString("BtnDontSaveSession", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Merge Session Line to Source.
+        /// </summary>
+        public static string BtnMergeSession {
+            get {
+                return ResourceManager.GetString("BtnMergeSession", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Calculating....
         /// </summary>
         public static string Calculating {
@@ -967,6 +994,15 @@ namespace ChessForge.Properties {
         public static string ChessForgeOnlineLibrary {
             get {
                 return ResourceManager.GetString("ChessForgeOnlineLibrary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chess Forge Training Game.
+        /// </summary>
+        public static string ChessForgeTrainingGame {
+            get {
+                return ResourceManager.GetString("ChessForgeTrainingGame", resourceCulture);
             }
         }
         

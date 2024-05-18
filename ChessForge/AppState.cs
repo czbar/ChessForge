@@ -1416,7 +1416,7 @@ namespace ChessForge
         {
             _mainWin.Dispatcher.Invoke(() =>
             {
-                if (CurrentLearningMode == LearningMode.Mode.IDLE)
+                if (Workbook == null)
                 {
                     _mainWin.UiMnCloseWorkbook.Visibility = Visibility.Collapsed;
                 }
@@ -1458,6 +1458,7 @@ namespace ChessForge
                 _mainWin.UiTabBookmarks.IsEnabled = true;
 
                 _mainWin.UiBtnExitTraining.Visibility = Visibility.Collapsed;
+                _mainWin.UiTrainingSessionBox.Visibility = Visibility.Collapsed;
                 _mainWin.UiBtnExitGame.Visibility = Visibility.Collapsed;
 
                 ShowGuiActiveLine(true);
@@ -1502,13 +1503,16 @@ namespace ChessForge
 
                 _mainWin.UiTabTrainingProgress.Visibility = Visibility.Visible;
 
-                _mainWin.UiBtnExitTraining.Visibility = Visibility.Visible;
+                //_mainWin.UiBtnExitTraining.Visibility = Visibility.Visible;
+                _mainWin.UiBtnExitTraining.Visibility = Visibility.Collapsed; // to be deprecated
+                _mainWin.UiTrainingSessionBox.Visibility = Visibility.Visible;
                 _mainWin.UiBtnExitGame.Visibility = Visibility.Collapsed;
 
                 ShowEvaluationControlsForCurrentStates();
                 MainWin.TurnExplorersOff(false);
 
                 ConfigureMenusForTraining();
+                _mainWin.UiTrainingSessionBox.ShowElements(false);
             });
         }
 
@@ -1545,13 +1549,16 @@ namespace ChessForge
 
                     _mainWin.UiTabCtrlEngineGame.Visibility = Visibility.Hidden;
 
-                    _mainWin.UiBtnExitTraining.Visibility = Visibility.Visible;
+//                    _mainWin.UiBtnExitTraining.Visibility = Visibility.Visible;
+                    _mainWin.UiBtnExitTraining.Visibility = Visibility.Collapsed; // to be deprecated
+                    _mainWin.UiTrainingSessionBox.Visibility = Visibility.Visible;
                     _mainWin.UiBtnExitGame.Visibility = Visibility.Collapsed;
 
 
                     ShowEvaluationControlsForCurrentStates();
                     ConfigureMenusForEngineGame();
 
+                    _mainWin.UiTrainingSessionBox.ShowElements(true);
                     //ShowGuiEngineGameLine(true, MainWin.UiTabCtrlTraining);
                 }
                 else
@@ -1573,6 +1580,7 @@ namespace ChessForge
                     _mainWin.UiTabTrainingProgress.Visibility = Visibility.Hidden;
 
                     _mainWin.UiBtnExitTraining.Visibility = Visibility.Collapsed;
+                    _mainWin.UiTrainingSessionBox.Visibility = Visibility.Collapsed;
                     _mainWin.UiBtnExitGame.Visibility = Visibility.Visible;
 
                     _mainWin.UiMnCloseWorkbook.Visibility = Visibility.Visible;
@@ -1599,7 +1607,7 @@ namespace ChessForge
                 {
                     GuiConfiguration.ConfigureAppBarFontButtons();
 
-                    MainWin.UiMnStartTraining.IsEnabled = true;
+                    MainWin.UiMnStartTraining.IsEnabled = IsVariationTreeTabType;
                     MainWin.UiMnRestartTraining.IsEnabled = false;
                     MainWin.UiMnExitTraining.IsEnabled = false;
 

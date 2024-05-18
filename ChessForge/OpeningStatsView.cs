@@ -575,7 +575,6 @@ namespace ChessForge
             }
         }
 
-
         /// <summary>
         /// Builds the main table with opening stats
         /// </summary>
@@ -583,17 +582,20 @@ namespace ChessForge
         {
             int rowNo = 0;
 
-            AdjustGamesTableRowCount(stats.Moves.Length);
-            foreach (WebAccess.LichessMoveStats move in stats.Moves)
+            if (stats != null)
             {
-                if (rowNo >= MAX_MOVE_ROW_COUNT)
+                AdjustGamesTableRowCount(stats.Moves.Length);
+                foreach (WebAccess.LichessMoveStats move in stats.Moves)
                 {
-                    break;
-                }
+                    if (rowNo >= MAX_MOVE_ROW_COUNT)
+                    {
+                        break;
+                    }
 
-                TableRow row = _lstRows[rowNo].Row;
-                _lstRows[rowNo].SetLabels(move, _moveNumberString, _node.ColorToMove);
-                rowNo++;
+                    TableRow row = _lstRows[rowNo].Row;
+                    _lstRows[rowNo].SetLabels(move, _moveNumberString, _node.ColorToMove);
+                    rowNo++;
+                }
             }
         }
 

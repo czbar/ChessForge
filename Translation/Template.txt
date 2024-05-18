@@ -1762,7 +1762,7 @@ MsgInvalidMoveRange=
 
 #######################################
 #
-# Header: CONTEXT MENU in Training View
+# Header: TRAINING VIEW
 #
 
 #description: User wants to restart the game against the engine after a certain move in the Training Session
@@ -1776,6 +1776,201 @@ RestartFrom=
 #description: Restart game from a selected move (context menu item)
 #english: RestartGameFrom=Restart Game from 
 RestartGameFrom=
+
+#description: Confirmation to exit training session
+#english: ExitTrainingSession=Exit the training session?
+ExitTrainingSession=
+
+#description: Restart the training session
+#english: RestartTraining=Restart the training session?
+RestartTraining=
+
+#description: Confirmation to merge training moves into the Study Tree / Game or Exercise
+#english: MergeTrainingIntoStudy=Merge new moves from this session into the source
+MergeTrainingIntoStudy=
+
+#description: Chess Forge Training Game header Event
+#english: ChessForgeTrainingGame=Chess Forge Training Game
+ChessForgeTrainingGame=
+
+#description: Button Do Not Save Session 
+#english: BtnDontSaveSession=Do Not Save Session
+BtnDontSaveSession=
+
+#description: Button Merge session to source 
+#english: BtnMergeSession=Merge Session Line to Source
+BtnMergeSession=
+
+#description: Button Merge session to source 
+#english: BtnCreateGame=Create Game From Session's Last Line
+BtnCreateGame=
+
+#
+# Training Prompts
+#
+
+#description:  User's move was
+#english: YourMoveWas=Your move was
+YourMoveWas=
+
+#description:  Wait for engine's response
+#english: WaitForEngineResponse=Wait for engine's response...
+WaitForEngineResponse=
+
+#description:  Wait for response
+#english: WaitForResponse=Wait for a response...
+WaitForResponse=
+
+#description:  Game started, wait for the engine
+#english: TrnGameStarted=A training game against the engine has started. Wait for the engine's move...
+TrnGameStarted=
+
+#description:  Engine Played
+#english: EnginePlayed=The engine played
+EnginePlayed=
+
+#description:  Coach Played
+#english: CoachPlayed=The coach played
+CoachPlayed=
+
+#description:  Your turn now
+#english: YourTurn=It is your turn now
+YourTurn=
+
+#description: Alternative is
+#english: TrnAlternativeIs=The alternative is
+TrnAlternativeIs=
+
+#description: Alternatives are
+#english: TrnAlternativesAre=The alternatives are
+TrnAlternativesAre=
+
+#description: Alternative
+#english: TrnAlternative=Alternative
+TrnAlternative=
+
+#description: Alternatives
+#english: TrnAlternatives=Alternatives
+TrnAlternatives=
+
+#description: Prefix Your (for "after your move")
+#english: TrnPrefixYour=your
+TrnPrefixYour=
+
+#description: Perefix Engine (for "after engine's move")
+#english: TrnPrefixEngine=engine's
+TrnPrefixEngine=
+
+#description: End of line
+#english: TrnLineEnded=The workbook's training line has ended
+TrnLineEnded=
+
+#description: Training Game in progress
+#english: TrnGameInProgress=A training game against the engine is in progress...
+TrnGameInProgress=
+
+#description: Play this move instead
+#english: TrnPlayMoveInstead=Play $0 instead of Your Move
+TrnPlayMoveInstead=
+
+### Training from Study
+
+#description: Response 
+#english: TrnStudyResponse=Workbook response
+TrnStudyResponse=
+
+#description: Not in the source 
+#english: TrnStudyMoveNotInSource=This is not in the Workbook
+TrnStudyMoveNotInSource=
+
+#description: The only move 
+#english: TrnStudyOnlyMove=The only move in the Workbook is
+TrnStudyOnlyMove=
+
+#description: The only moves
+#english: TrnStudySourceMoves=The Workbook moves are
+TrnStudySourceMoves=
+
+
+### Training from Game
+
+#description: Response 
+#english: TrnGameResponse=Response from the Game
+TrnGameResponse=
+
+#description: Not in the source 
+#english: TrnGameMoveNotInSource=This is not in the Game
+TrnGameMoveNotInSource=
+
+#description: The only move 
+#english: TrnGameOnlyMove=The only move in the Game is
+TrnGameOnlyMove=
+
+#description: The only moves
+#english: TrnGameSourceMoves=The moves in the Game are
+TrnGameSourceMoves=
+
+
+### Training from Exercise
+
+#description: Response 
+#english: TrnExerciseResponse=Response from the Exercise
+TrnExerciseResponse=
+
+#description: Not in the source 
+#english: TrnExerciseMoveNotInSource=This is not in the Exercise
+TrnExerciseMoveNotInSource=
+
+#description: The only move 
+#english: TrnExerciseOnlyMove=The only move in the Exercise is
+TrnExerciseOnlyMove=
+
+#description: The only moves
+#english: TrnExerciseSourceMoves=The moves in the Exercise are
+TrnExerciseSourceMoves=
+
+
+#description: Game ended, user checkmated engine
+#english: TrnUserCheckmatedEngine=The training game has ended. You have delivered a checkmate!
+TrnUserCheckmatedEngine=
+
+#description: Game ended, engine checkmated user
+#english: TrnEngineCheckmatedUser=The training game has ended. You have been checkmated by the engine.
+TrnEngineCheckmatedUser=
+
+#description: Game ended in a stalemate
+#english: TrnGameStalemate=This is a stalemate. The game has been drawn.
+TrnGameStalemate=
+
+#description: Training session start header
+#english: TrnSessionStartsAfter=This training session begins after:
+TrnSessionStartsAfter=
+
+#description: Training session start note
+#english: TrnSessionStart=Starting a training session.
+TrnSessionStart=
+
+#description: Prompt for the user the first move
+#english: TrnMakeFirstMove=To begin, make your first move on the chessboard.
+TrnMakeFirstMove=
+
+#description: User is White
+#english: TrnUserPlaysWhite=You play White and the virtual coach plays Black.
+TrnUserPlaysWhite=
+
+#description: User is Black
+#english: TrnUserPlaysBlack=You play Black and the virtual coach plays White.
+TrnUserPlaysBlack=
+
+#description: Click move instruction
+#english: TrnClickMoveBelow=Click any move below to restart training from it.  
+TrnClickMoveBelow=
+
+#description: Right click move instruction
+#english: TrnRightClickMove=Right click to open the context menu.  
+TrnRightClickMove=
+
+
 
 
 #
@@ -2549,14 +2744,6 @@ ErrorNoBookmarksWhileSolving=
 #english: NoTrainingStartMove=No move selected to start training from.
 NoTrainingStartMove=
 
-#description: Confirmation to exit training session
-#english: ExitTrainingSession=Exit the training session?
-ExitTrainingSession=
-
-#description: Restart the training session
-#english: RestartTraining=Restart the training session?
-RestartTraining=
-
 #description: No new version available
 #english: NoNewVersion=No new version available.
 NoNewVersion=
@@ -2596,10 +2783,6 @@ SaveWorkbook=
 #description: File already open
 #english: FileAlreadyOpen=$0 is already open."
 FileAlreadyOpen=
-
-#description: Confirmation to merge training moves into the Study Tree / Game or Exercise
-#english: MergeTrainingIntoStudy=Merge new moves from this session into the source
-MergeTrainingIntoStudy=
 
 #description: (Move) no longer valid 
 #english: NoLongerValid=is no longer valid
@@ -3083,173 +3266,6 @@ ExplorersAbout=
 #description: Currently viewed
 #english: CurrentlyViewed=Currently viewed
 CurrentlyViewed=
-
-##################################
-#
-# Header: Training
-#
-
-#description:  User's move was
-#english: YourMoveWas=Your move was
-YourMoveWas=
-
-#description:  Wait for engine's response
-#english: WaitForEngineResponse=Wait for engine's response...
-WaitForEngineResponse=
-
-#description:  Wait for response
-#english: WaitForResponse=Wait for a response...
-WaitForResponse=
-
-#description:  Game started, wait for the engine
-#english: TrnGameStarted=A training game against the engine has started. Wait for the engine's move...
-TrnGameStarted=
-
-#description:  Engine Played
-#english: EnginePlayed=The engine played
-EnginePlayed=
-
-#description:  Coach Played
-#english: CoachPlayed=The coach played
-CoachPlayed=
-
-#description:  Your turn now
-#english: YourTurn=It is your turn now
-YourTurn=
-
-#description: Alternative is
-#english: TrnAlternativeIs=The alternative is
-TrnAlternativeIs=
-
-#description: Alternatives are
-#english: TrnAlternativesAre=The alternatives are
-TrnAlternativesAre=
-
-#description: Alternative
-#english: TrnAlternative=Alternative
-TrnAlternative=
-
-#description: Alternatives
-#english: TrnAlternatives=Alternatives
-TrnAlternatives=
-
-#description: Prefix Your (for "after your move")
-#english: TrnPrefixYour=your
-TrnPrefixYour=
-
-#description: Perefix Engine (for "after engine's move")
-#english: TrnPrefixEngine=engine's
-TrnPrefixEngine=
-
-#description: End of line
-#english: TrnLineEnded=The workbook's training line has ended
-TrnLineEnded=
-
-#description: Training Game in progress
-#english: TrnGameInProgress=A training game against the engine is in progress...
-TrnGameInProgress=
-
-#description: Play this move instead
-#english: TrnPlayMoveInstead=Play $0 instead of Your Move
-TrnPlayMoveInstead=
-
-### Training from Study
-
-#description: Response 
-#english: TrnStudyResponse=Workbook response
-TrnStudyResponse=
-
-#description: Not in the source 
-#english: TrnStudyMoveNotInSource=This is not in the Workbook
-TrnStudyMoveNotInSource=
-
-#description: The only move 
-#english: TrnStudyOnlyMove=The only move in the Workbook is
-TrnStudyOnlyMove=
-
-#description: The only moves
-#english: TrnStudySourceMoves=The Workbook moves are
-TrnStudySourceMoves=
-
-
-### Training from Game
-
-#description: Response 
-#english: TrnGameResponse=Response from the Game
-TrnGameResponse=
-
-#description: Not in the source 
-#english: TrnGameMoveNotInSource=This is not in the Game
-TrnGameMoveNotInSource=
-
-#description: The only move 
-#english: TrnGameOnlyMove=The only move in the Game is
-TrnGameOnlyMove=
-
-#description: The only moves
-#english: TrnGameSourceMoves=The moves in the Game are
-TrnGameSourceMoves=
-
-
-### Training from Exercise
-
-#description: Response 
-#english: TrnExerciseResponse=Response from the Exercise
-TrnExerciseResponse=
-
-#description: Not in the source 
-#english: TrnExerciseMoveNotInSource=This is not in the Exercise
-TrnExerciseMoveNotInSource=
-
-#description: The only move 
-#english: TrnExerciseOnlyMove=The only move in the Exercise is
-TrnExerciseOnlyMove=
-
-#description: The only moves
-#english: TrnExerciseSourceMoves=The moves in the Exercise are
-TrnExerciseSourceMoves=
-
-
-#description: Game ended, user checkmated engine
-#english: TrnUserCheckmatedEngine=The training game has ended. You have delivered a checkmate!
-TrnUserCheckmatedEngine=
-
-#description: Game ended, engine checkmated user
-#english: TrnEngineCheckmatedUser=The training game has ended. You have been checkmated by the engine.
-TrnEngineCheckmatedUser=
-
-#description: Game ended in a stalemate
-#english: TrnGameStalemate=This is a stalemate. The game has been drawn.
-TrnGameStalemate=
-
-#description: Training session start header
-#english: TrnSessionStartsAfter=This training session begins after:
-TrnSessionStartsAfter=
-
-#description: Training session start note
-#english: TrnSessionStart=Starting a training session.
-TrnSessionStart=
-
-#description: Prompt for the user the first move
-#english: TrnMakeFirstMove=To begin, make your first move on the chessboard.
-TrnMakeFirstMove=
-
-#description: User is White
-#english: TrnUserPlaysWhite=You play White and the virtual coach plays Black.
-TrnUserPlaysWhite=
-
-#description: User is Black
-#english: TrnUserPlaysBlack=You play Black and the virtual coach plays White.
-TrnUserPlaysBlack=
-
-#description: Click move instruction
-#english: TrnClickMoveBelow=Click any move below to restart training from it.  
-TrnClickMoveBelow=
-
-#description: Right click move instruction
-#english: TrnRightClickMove=Right click to open the context menu.  
-TrnRightClickMove=
-
 
 
 ##################################

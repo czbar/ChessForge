@@ -1407,7 +1407,7 @@ namespace ChessForge
                         chapter.StudyTree.Tree.ContentType = GameData.ContentType.STUDY_TREE;
 
                         CopySelectedItemsToChapter(chapter, true, out string error, games, out _);
-                        
+
                         undoArticleList.Add(new ArticleListItem(chapter));
 
                         _chaptersView.BuildFlowDocumentForChaptersView();
@@ -1879,7 +1879,7 @@ namespace ChessForge
                                                     skippedDueToType++;
                                                 }
                                             }
-                                            else 
+                                            else
                                             {
                                                 undoItem = new ArticleListItem(chapter, chapter.Index, chapter.GetArticleAtIndex(targetcontentType, index), index);
                                                 if (undoItem.Article != null)
@@ -2781,107 +2781,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// A request from the menu to start training at the currently selected position.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnStartTrainingHere_Click(object sender, RoutedEventArgs e)
-        {
-            if (ActiveVariationTree == null)
-            {
-                return;
-            }
-
-            // do some housekeeping just in case
-            if (AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
-            {
-                StopEngineGame();
-            }
-            else if (EvaluationManager.IsRunning)
-            {
-                EngineMessageProcessor.StopEngineEvaluation();
-            }
-
-            TreeNode nd = ActiveLine.GetSelectedTreeNode();
-            if (nd != null)
-            {
-                SetAppInTrainingMode(nd);
-            }
-            else
-            {
-                MessageBox.Show(Properties.Resources.NoTrainingStartMove, Properties.Resources.Training, MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-        }
-
-        /// <summary>
-        /// Exits the Training session, if confirmed by the user.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnStopTraining_Click(object sender, RoutedEventArgs e)
-        {
-            if (MessageBox.Show(Properties.Resources.ExitTrainingSession, Properties.Resources.Training, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-            {
-                try
-                {
-                    AppLog.Message("Stopping Training Session");
-                    EngineMessageProcessor.ResetEngineEvaluation();
-
-                    UiTrainingView.CleanupVariationTree();
-                    if (WorkbookManager.PromptAndSaveWorkbook(false, out bool saved))
-                    {
-                        EngineMessageProcessor.StopEngineEvaluation();
-                        EvaluationManager.Reset();
-
-                        TrainingSession.IsTrainingInProgress = false;
-                        TrainingSession.IsContinuousEvaluation = false;
-                        MainChessBoard.RemoveMoveSquareColors();
-                        LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
-                        if (ActiveVariationTree.ContentType == GameData.ContentType.EXERCISE)
-                        {
-                            _exerciseTreeView.DeactivateSolvingMode(VariationTree.SolvingMode.NONE);
-                        }
-                        //AppState.SetupGuiForCurrentStates();
-
-                        if (saved)
-                        {
-                            // at this point the source tree is set.
-                            // Find the last node in EngineGame that we can find in the ActiveTree too 
-                            TreeNode lastNode = UiTrainingView.LastTrainingNodePresentInActiveTree();
-                            {
-                                if (lastNode != null)
-                                {
-                                    SetActiveLine(lastNode.LineId, lastNode.NodeId);
-                                    ActiveTreeView.SelectLineAndMove(lastNode.LineId, lastNode.NodeId);
-                                }
-                            }
-                        }
-
-                        ActiveLine.DisplayPositionForSelectedCell();
-                        AppState.SwapCommentBoxForEngineLines(false);
-                        BoardCommentBox.RestoreTitleMessage();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    AppLog.Message("UiMnStopTraining_Click()", ex);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Handles a context menu event to start training
-        /// from the recently clicked bookmark.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnTrainFromBookmark_Click(object sender, RoutedEventArgs e)
-        {
-            BookmarkManager.SetActiveEntities(false);
-            SetAppInTrainingMode(BookmarkManager.SelectedBookmarkNode);
-        }
-
-        /// <summary>
         /// Handles a request from the Bookmarks page to navigate to 
         /// the bookmarked position.
         /// </summary>
@@ -3515,12 +3414,23 @@ namespace ChessForge
         {
             if (!_modeUpdatesBlocked)
             {
-                ChessForgeColors.Initialize(ColorThemes.DARK_MODE);
-                Configuration.IsDarkMode = true;
-                ChessForgeColors.SetMainControlColors();
-                RebuildAllTreeViews(null, true);
-                _openingStatsView.UpdateColorTheme();
-                _topGamesView.UpdateColorTheme();
+                try
+                {
+                    ChessForgeColors.Initialize(ColorThemes.DARK_MODE);
+                    Configuration.IsDarkMode = true;
+                    ChessForgeColors.SetMainControlColors();
+                    RebuildAllTreeViews(null, true);
+                    _openingStatsView.UpdateColorTheme();
+                    _topGamesView.UpdateColorTheme();
+                    if (UiRtbBoardComment.Visibility == Visibility.Visible)
+                    {
+                        BoardCommentBox.ShowTabHints();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    AppLog.Message("UiMnDarkMode_Checked()", ex);
+                }
             }
             _modeUpdatesBlocked = false;
         }
@@ -3534,12 +3444,23 @@ namespace ChessForge
         {
             if (!_modeUpdatesBlocked)
             {
-                ChessForgeColors.Initialize(ColorThemes.LIGHT_MODE);
-                Configuration.IsDarkMode = false;
-                ChessForgeColors.SetMainControlColors();
-                RebuildAllTreeViews(null, true);
-                _openingStatsView.UpdateColorTheme();
-                _topGamesView.UpdateColorTheme();
+                try
+                {
+                    ChessForgeColors.Initialize(ColorThemes.LIGHT_MODE);
+                    Configuration.IsDarkMode = false;
+                    ChessForgeColors.SetMainControlColors();
+                    RebuildAllTreeViews(null, true);
+                    _openingStatsView.UpdateColorTheme();
+                    _topGamesView.UpdateColorTheme();
+                    if (UiRtbBoardComment.Visibility == Visibility.Visible)
+                    {
+                        BoardCommentBox.ShowTabHints();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    AppLog.Message("UiMnDarkMode_Unchecked()", ex);
+                }
             }
             _modeUpdatesBlocked = false;
         }
@@ -3710,12 +3631,6 @@ namespace ChessForge
                 }
 
                 GameHeaderDialog dlg = new GameHeaderDialog(tree, Properties.Resources.GameHeader);
-                //{
-                //    Left = ChessForgeMain.Left + 100,
-                //    Top = ChessForgeMain.Top + 100,
-                //    Topmost = false,
-                //    Owner = this
-                //};
                 GuiUtilities.PositionDialog(dlg, this, 100);
                 dlg.ShowDialog();
                 if (dlg.ExitOK)
@@ -4386,6 +4301,48 @@ namespace ChessForge
 
             UiBtnFontSizeFixed.Visibility = Configuration.UseFixedFont ? Visibility.Hidden : Visibility.Visible;
             UiBtnFontSizeVariable.Visibility = Configuration.UseFixedFont ? Visibility.Visible : Visibility.Hidden;
+        }
+
+        /// <summary>
+        /// Invoked from a debug menu,
+        /// writes out the content of the current view to an RTF file.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnWriteRtf_Click(object sender, RoutedEventArgs e)
+        {
+            TabViewType vt = AppState.ActiveTab;
+            FlowDocument doc = null;
+            switch (vt)
+            {
+                case TabViewType.INTRO:
+                    doc = UiRtbIntroView.Document;
+                    break;
+                case TabViewType.STUDY:
+                    doc = UiRtbStudyTreeView.Document;
+                    break;
+                case TabViewType.MODEL_GAME:
+                    doc = UiRtbModelGamesView.Document;
+                    break;
+                case TabViewType.EXERCISE:
+                    doc = UiRtbExercisesView.Document;
+                    break;
+            }
+
+            if (doc != null)
+            {
+                // Create a TextRange covering the entire content of the FlowDocument
+                TextRange textRange = new TextRange(doc.ContentStart, doc.ContentEnd);
+
+                string distinct = "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss");
+                string fileName = DebugUtils.BuildLogFileName(App.AppPath, "rtf", distinct, "rtf");
+                // Create a file stream to save the RTF content
+                using (FileStream fileStream = new FileStream(fileName, FileMode.Create))
+                {
+                    // Save the content in RTF format
+                    textRange.Save(fileStream, DataFormats.Rtf);
+                }
+            }
         }
 
         /// <summary>

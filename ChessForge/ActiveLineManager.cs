@@ -669,6 +669,10 @@ namespace ChessForge
                         }
                         e.Handled = true;
                         break;
+                    case Key.T:
+                        _mainWin.UiMnStartTrainingHere_Click(null, null);
+                        e.Handled = true;
+                        break;
                     default:
                         if (HandleKeyDown(e.Key))
                         {
@@ -695,6 +699,10 @@ namespace ChessForge
                                 break;
                             case Key.U:
                                 _mainWin.CustomCommand_MoveItemUp(null, null);
+                                e.Handled = true;
+                                break;
+                            case Key.G:
+                                _mainWin.UiMnFindGames_Click(null, null);
                                 e.Handled = true;
                                 break;
                             case Key.D:

@@ -16,6 +16,16 @@ namespace ChessForge
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// Indicates whether the Main Window is currently processing the mouse up event.
+        /// This would normally be after the user made their move and can be resource intensive. 
+        /// Therefore, other processes should query this flag and limit their processing if it is up.
+        /// </summary>
+        public bool ProcessingMouseUp
+        {
+            get => _processingMouseUp;
+        }
+
         // a flag to use to prevent processing MouseDown before MouseUp is finished.
         private bool _processingMouseUp = false;
 
@@ -896,7 +906,7 @@ namespace ChessForge
 
         /// <summary>
         /// Updates the states of explorers based on the current configuration
-        /// as oppose to being temporarily off e.g. due to being in the Training Mode.
+        /// as opposed to being temporarily off e.g. due to being in the Training Mode.
         /// </summary>
         public void UpdateExplorersToggleState()
         {
@@ -904,11 +914,13 @@ namespace ChessForge
             {
                 UiImgExplorersOff.Visibility = Visibility.Collapsed;
                 UiImgExplorersOn.Visibility = Visibility.Visible;
+                WebAccessManager.IsEnabledExplorerQueries = true;
             }
             else
             {
                 UiImgExplorersOff.Visibility = Visibility.Visible;
                 UiImgExplorersOn.Visibility = Visibility.Collapsed;
+                WebAccessManager.IsEnabledExplorerQueries = false;
             }
         }
 

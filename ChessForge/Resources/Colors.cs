@@ -45,6 +45,17 @@ namespace ChessForge
         {
             MainWindow win = AppState.MainWin;
 
+            if (CurrentTheme == DarkMode)
+            {
+                win.UiImgChapterArrowUp.Source = ImageSources.ChaptersUpArrowDarkMode;
+                win.UiImgChapterArrowDown.Source = ImageSources.ChaptersDnArrowDarkMode;
+            }
+            else
+            {
+                win.UiImgChapterArrowUp.Source = ImageSources.ChaptersUpArrow;
+                win.UiImgChapterArrowDown.Source = ImageSources.ChaptersDnArrow;
+            }
+
             Brush rtbFg = CurrentTheme.RtbForeground;
             Brush rtbBg = CurrentTheme.RtbBackground;
 
@@ -55,6 +66,8 @@ namespace ChessForge
             SetRichTextBoxColors(win.UiRtbExercisesView, rtbFg, rtbBg);
             SetRichTextBoxColors(win.UiRtbTrainingProgress, rtbFg, rtbBg);
             SetRichTextBoxColors(win.UiRtbBoardComment, rtbFg, rtbBg);
+
+            win.UiTrainingSessionBox.ApplyColorTheme(CurrentTheme);
 
             win.Background = CurrentTheme.RtbBackground;
             win.UiTabCtrlManualReview.Background = CurrentTheme.RtbBackground;

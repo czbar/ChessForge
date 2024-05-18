@@ -221,6 +221,7 @@
     <Compile Include="GuiUtilities.cs" />
     <Compile Include="ActiveLineManager.cs" />
     <Compile Include="MainWindowToolsMenu.cs" />
+    <Compile Include="MainWindowTrainingActions.cs" />
     <Compile Include="ManageChapterDialog.xaml.cs">
       <DependentUpon>ManageChapterDialog.xaml</DependentUpon>
     </Compile>
@@ -289,6 +290,9 @@
     <Compile Include="StatsUtils.cs" />
     <Compile Include="StudyTreeView.cs" />
     <Compile Include="Tools.cs" />
+    <Compile Include="TrainingSessionControl.xaml.cs">
+      <DependentUpon>TrainingSessionControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TreeViewManagement\DisplayLevelAttrs.cs" />
     <Compile Include="TreeViewManagement\LineSectorManager.cs" />
     <Compile Include="SelectArticlesDialog.xaml.cs">
@@ -538,6 +542,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="TrainingSessionControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UpdateAvailableDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -646,6 +654,8 @@
     <Resource Include="Resources\Images\ChessBoardLightGreenIcon.png" />
     <Resource Include="Resources\Images\ChapterDnArrow.png" />
     <Resource Include="Resources\Images\ChapterUpArrow.png" />
+    <Resource Include="Resources\Images\ChapterDnArrowDarkMode.png" />
+    <Resource Include="Resources\Images\ChapterUpArrowDarkMode.png" />
     <Content Include="Resources\Sounds\Confirmation.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

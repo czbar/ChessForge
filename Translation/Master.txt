@@ -1383,7 +1383,7 @@ MsgInvalidMoveRange=Invalid Move Range
 
 #######################################
 #
-# Header: CONTEXT MENU in Training View
+# Header: TRAINING VIEW
 #
 
 #User wants to restart the game against the engine after a certain move in the Training Session
@@ -1394,6 +1394,156 @@ RestartFrom=Restart from
 
 #Restart game from a selected move (context menu item)
 RestartGameFrom=Restart Game from 
+
+#Confirmation to exit training session
+ExitTrainingSession=Exit the training session?
+
+#Restart the training session
+RestartTraining=Restart the training session?
+
+#Confirmation to merge training moves into the Study Tree / Game or Exercise
+MergeTrainingIntoStudy=Merge new moves from this session into the source
+
+#Chess Forge Training Game header Event
+ChessForgeTrainingGame=Chess Forge Training Game
+
+#Button Do Not Save Session 
+BtnDontSaveSession=Do Not Save Session
+
+#Button Merge session to source 
+BtnMergeSession=Merge Session Line to Source
+
+#Button Merge session to source 
+BtnCreateGame=Create Game From Session's Last Line
+
+#
+# Training Prompts
+#
+
+# User's move was
+YourMoveWas=Your move was
+
+# Wait for engine's response
+WaitForEngineResponse=Wait for engine's response...
+
+# Wait for response
+WaitForResponse=Wait for a response...
+
+# Game started, wait for the engine
+TrnGameStarted=A training game against the engine has started. Wait for the engine's move...
+
+# Engine Played
+EnginePlayed=The engine played
+
+# Coach Played
+CoachPlayed=The coach played
+
+# Your turn now
+YourTurn=It is your turn now
+
+#Alternative is
+TrnAlternativeIs=The alternative is
+
+#Alternatives are
+TrnAlternativesAre=The alternatives are
+
+#Alternative
+TrnAlternative=Alternative
+
+#Alternatives
+TrnAlternatives=Alternatives
+
+#Prefix Your (for "after your move")
+TrnPrefixYour=your
+
+#Perefix Engine (for "after engine's move")
+TrnPrefixEngine=engine's
+
+#End of line
+TrnLineEnded=The workbook's training line has ended
+
+#Training Game in progress
+TrnGameInProgress=A training game against the engine is in progress...
+
+#Play this move instead
+TrnPlayMoveInstead=Play $0 instead of Your Move
+
+### Training from Study
+
+#Response 
+TrnStudyResponse=Workbook response
+
+#Not in the source 
+TrnStudyMoveNotInSource=This is not in the Workbook
+
+#The only move 
+TrnStudyOnlyMove=The only move in the Workbook is
+
+#The only moves
+TrnStudySourceMoves=The Workbook moves are
+
+
+### Training from Game
+
+#Response 
+TrnGameResponse=Response from the Game
+
+#Not in the source 
+TrnGameMoveNotInSource=This is not in the Game
+
+#The only move 
+TrnGameOnlyMove=The only move in the Game is
+
+#The only moves
+TrnGameSourceMoves=The moves in the Game are
+
+
+### Training from Exercise
+
+#Response 
+TrnExerciseResponse=Response from the Exercise
+
+#Not in the source 
+TrnExerciseMoveNotInSource=This is not in the Exercise
+
+#The only move 
+TrnExerciseOnlyMove=The only move in the Exercise is
+
+#The only moves
+TrnExerciseSourceMoves=The moves in the Exercise are
+
+
+#Game ended, user checkmated engine
+TrnUserCheckmatedEngine=The training game has ended. You have delivered a checkmate!
+
+#Game ended, engine checkmated user
+TrnEngineCheckmatedUser=The training game has ended. You have been checkmated by the engine.
+
+#Game ended in a stalemate
+TrnGameStalemate=This is a stalemate. The game has been drawn.
+
+#Training session start header
+TrnSessionStartsAfter=This training session begins after:
+
+#Training session start note
+TrnSessionStart=Starting a training session.
+
+#Prompt for the user the first move
+TrnMakeFirstMove=To begin, make your first move on the chessboard.
+
+#User is White
+TrnUserPlaysWhite=You play White and the virtual coach plays Black.
+
+#User is Black
+TrnUserPlaysBlack=You play Black and the virtual coach plays White.
+
+#Click move instruction
+TrnClickMoveBelow=Click any move below to restart training from it.  
+
+#Right click move instruction
+TrnRightClickMove=Right click to open the context menu.  
+
+
 
 
 #
@@ -1995,12 +2145,6 @@ ErrorNoBookmarksWhileSolving=Cannot bookmark positions while solving.
 #No move to start training from
 NoTrainingStartMove=No move selected to start training from.
 
-#Confirmation to exit training session
-ExitTrainingSession=Exit the training session?
-
-#Restart the training session
-RestartTraining=Restart the training session?
-
 #No new version available
 NoNewVersion=No new version available.
 
@@ -2030,9 +2174,6 @@ SaveWorkbook=Save the Workbook?
 
 #File already open
 FileAlreadyOpen=$0 is already open."
-
-#Confirmation to merge training moves into the Study Tree / Game or Exercise
-MergeTrainingIntoStudy=Merge new moves from this session into the source
 
 #(Move) no longer valid 
 NoLongerValid=is no longer valid
@@ -2398,135 +2539,6 @@ ExplorersAbout=Openings/Tablebases
 
 #Currently viewed
 CurrentlyViewed=Currently viewed
-
-##################################
-#
-# Header: Training
-#
-
-# User's move was
-YourMoveWas=Your move was
-
-# Wait for engine's response
-WaitForEngineResponse=Wait for engine's response...
-
-# Wait for response
-WaitForResponse=Wait for a response...
-
-# Game started, wait for the engine
-TrnGameStarted=A training game against the engine has started. Wait for the engine's move...
-
-# Engine Played
-EnginePlayed=The engine played
-
-# Coach Played
-CoachPlayed=The coach played
-
-# Your turn now
-YourTurn=It is your turn now
-
-#Alternative is
-TrnAlternativeIs=The alternative is
-
-#Alternatives are
-TrnAlternativesAre=The alternatives are
-
-#Alternative
-TrnAlternative=Alternative
-
-#Alternatives
-TrnAlternatives=Alternatives
-
-#Prefix Your (for "after your move")
-TrnPrefixYour=your
-
-#Perefix Engine (for "after engine's move")
-TrnPrefixEngine=engine's
-
-#End of line
-TrnLineEnded=The workbook's training line has ended
-
-#Training Game in progress
-TrnGameInProgress=A training game against the engine is in progress...
-
-#Play this move instead
-TrnPlayMoveInstead=Play $0 instead of Your Move
-
-### Training from Study
-
-#Response 
-TrnStudyResponse=Workbook response
-
-#Not in the source 
-TrnStudyMoveNotInSource=This is not in the Workbook
-
-#The only move 
-TrnStudyOnlyMove=The only move in the Workbook is
-
-#The only moves
-TrnStudySourceMoves=The Workbook moves are
-
-
-### Training from Game
-
-#Response 
-TrnGameResponse=Response from the Game
-
-#Not in the source 
-TrnGameMoveNotInSource=This is not in the Game
-
-#The only move 
-TrnGameOnlyMove=The only move in the Game is
-
-#The only moves
-TrnGameSourceMoves=The moves in the Game are
-
-
-### Training from Exercise
-
-#Response 
-TrnExerciseResponse=Response from the Exercise
-
-#Not in the source 
-TrnExerciseMoveNotInSource=This is not in the Exercise
-
-#The only move 
-TrnExerciseOnlyMove=The only move in the Exercise is
-
-#The only moves
-TrnExerciseSourceMoves=The moves in the Exercise are
-
-
-#Game ended, user checkmated engine
-TrnUserCheckmatedEngine=The training game has ended. You have delivered a checkmate!
-
-#Game ended, engine checkmated user
-TrnEngineCheckmatedUser=The training game has ended. You have been checkmated by the engine.
-
-#Game ended in a stalemate
-TrnGameStalemate=This is a stalemate. The game has been drawn.
-
-#Training session start header
-TrnSessionStartsAfter=This training session begins after:
-
-#Training session start note
-TrnSessionStart=Starting a training session.
-
-#Prompt for the user the first move
-TrnMakeFirstMove=To begin, make your first move on the chessboard.
-
-#User is White
-TrnUserPlaysWhite=You play White and the virtual coach plays Black.
-
-#User is Black
-TrnUserPlaysBlack=You play Black and the virtual coach plays White.
-
-#Click move instruction
-TrnClickMoveBelow=Click any move below to restart training from it.  
-
-#Right click move instruction
-TrnRightClickMove=Right click to open the context menu.  
-
 
 
 ##################################

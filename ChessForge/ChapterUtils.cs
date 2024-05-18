@@ -150,10 +150,21 @@ namespace ChessForge
             int index = InvokeSelectSingleChapterDialog(out bool newChapter);
             if (index >= 0)
             {
+                Chapter targetChapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(index);
+
+                if (newChapter)
+                {
+                    ChapterTitleDialog dlg = new ChapterTitleDialog(targetChapter);
+                    GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
+                    if (dlg.ShowDialog() == true)
+                    {
+                        targetChapter.SetTitle(dlg.ChapterTitle);
+                    }
+                }
+
                 RemoveChapters(lstArticles);
                 bool emptyEntryList = lstArticles.Count == 0;
 
-                Chapter targetChapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(index);
                 if (newChapter && startNode != null)
                 {
                     SetChapterTitle(startNode, targetChapter);
@@ -447,8 +458,6 @@ namespace ChessForge
                 int chapterIndex = -1;
 
                 SelectSingleChapterDialog dlg = new SelectSingleChapterDialog();
-                {
-                };
                 GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
                 if (dlg.ShowDialog() == true)

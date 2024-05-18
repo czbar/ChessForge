@@ -1762,7 +1762,7 @@ MsgInvalidMoveRange=Nieprawidłowy zakres ruchów
 
 #######################################
 #
-# Header: CONTEXT MENU in Training View
+# Header: TRAINING VIEW
 #
 
 #description: User wants to restart the game against the engine after a certain move in the Training Session
@@ -1776,6 +1776,201 @@ RestartFrom=Cofnij do
 #description: Restart game from a selected move (context menu item)
 #english: RestartGameFrom=Restart Game from 
 RestartGameFrom=Cofnij Partię do
+
+#description: Confirmation to exit training session
+#english: ExitTrainingSession=Exit the training session?
+ExitTrainingSession=Wyjście z sesji treningowej
+
+#description: Restart the training session
+#english: RestartTraining=Restart the training session?
+RestartTraining=Zacznij trening od początku
+
+#description: Confirmation to merge training moves into the Study Tree / Game or Exercise
+#english: MergeTrainingIntoStudy=Merge new moves from this session into the source
+MergeTrainingIntoStudy=Dodaj ruchy z tej sesji do źródła
+
+#description: Chess Forge Training Game header Event
+#english: ChessForgeTrainingGame=Chess Forge Training Game
+ChessForgeTrainingGame=Partia Treningowa w Chess Forge
+
+#description: Button Do Not Save Session 
+#english: BtnDontSaveSession=Do Not Save Session
+BtnDontSaveSession=Nie Zapisuj tej Sesji
+
+#description: Button Merge session to source 
+#english: BtnMergeSession=Merge Session Line to Source
+BtnMergeSession=Dodaj Ruchy z tej Sesji do Źródła
+
+#description: Button Merge session to source 
+#english: BtnCreateGame=Create Game From Session's Last Line
+BtnCreateGame=Utwórz Partię z Ostatniej Gry w tej Sesji
+
+#
+# Training Prompts
+#
+
+#description:  User's move was
+#english: YourMoveWas=Your move was
+YourMoveWas=Zagrałeś
+
+#description:  Wait for engine's response
+#english: WaitForEngineResponse=Wait for engine's response...
+WaitForEngineResponse=Czekaj na odpowiedź silnika...
+
+#description:  Wait for response
+#english: WaitForResponse=Wait for a response...
+WaitForResponse=Czekaj na odpowiedź...
+
+#description:  Game started, wait for the engine
+#english: TrnGameStarted=A training game against the engine has started. Wait for the engine's move...
+TrnGameStarted=Partia treningowa z silnikiem rozpoczęta. Czekaj na ruch silnika...
+
+#description:  Engine Played
+#english: EnginePlayed=The engine played
+EnginePlayed=Silnik zagrał
+
+#description:  Coach Played
+#english: CoachPlayed=The coach played
+CoachPlayed=Trener zagrał
+
+#description:  Your turn now
+#english: YourTurn=It is your turn now
+YourTurn=Kolej na Twoje posunięcie
+
+#description: Alternative is
+#english: TrnAlternativeIs=The alternative is
+TrnAlternativeIs=Alternatywną opcją jest
+
+#description: Alternatives are
+#english: TrnAlternativesAre=The alternatives are
+TrnAlternativesAre=Alternatywne opcje to
+
+#description: Alternative
+#english: TrnAlternative=Alternative
+TrnAlternative=Alternatywa
+
+#description: Alternatives
+#english: TrnAlternatives=Alternatives
+TrnAlternatives=Alternatywy
+
+#description: Prefix Your (for "after your move")
+#english: TrnPrefixYour=your
+TrnPrefixYour=Twoim
+
+#description: Perefix Engine (for "after engine's move")
+#english: TrnPrefixEngine=engine's
+TrnPrefixEngine=Silnika
+
+#description: End of line
+#english: TrnLineEnded=The workbook's training line has ended
+TrnLineEnded=Koniec wariantu treningowego z podręcznika
+
+#description: Training Game in progress
+#english: TrnGameInProgress=A training game against the engine is in progress...
+TrnGameInProgress=Trwa partia treningowa z silnikiem...
+
+#description: Play this move instead
+#english: TrnPlayMoveInstead=Play $0 instead of Your Move
+TrnPlayMoveInstead=Graj $0 zamiast Twojego ruchu
+
+### Training from Study
+
+#description: Response 
+#english: TrnStudyResponse=Workbook response
+TrnStudyResponse=Odpowiedź z Podręcznika
+
+#description: Not in the source 
+#english: TrnStudyMoveNotInSource=This is not in the Workbook
+TrnStudyMoveNotInSource=Tego ruchu nie ma w Podręczniku
+
+#description: The only move 
+#english: TrnStudyOnlyMove=The only move in the Workbook is
+TrnStudyOnlyMove=Jedyny ruch w Podręczniku to
+
+#description: The only moves
+#english: TrnStudySourceMoves=The Workbook moves are
+TrnStudySourceMoves=Ruchy z Podręcznika to
+
+
+### Training from Game
+
+#description: Response 
+#english: TrnGameResponse=Response from the Game
+TrnGameResponse=Opowiedź z Partii
+
+#description: Not in the source 
+#english: TrnGameMoveNotInSource=This is not in the Game
+TrnGameMoveNotInSource=Tego ruchu nie ma w Partii
+
+#description: The only move 
+#english: TrnGameOnlyMove=The only move in the Game is
+TrnGameOnlyMove=Jedyny ruch w Partii to
+
+#description: The only moves
+#english: TrnGameSourceMoves=The moves in the Game are
+TrnGameSourceMoves=Ruchy w Partii to
+
+
+### Training from Exercise
+
+#description: Response 
+#english: TrnExerciseResponse=Response from the Exercise
+TrnExerciseResponse=Opowiedź z Ćwiczenia
+
+#description: Not in the source 
+#english: TrnExerciseMoveNotInSource=This is not in the Exercise
+TrnExerciseMoveNotInSource=Tego ruchu nie ma w Ćwiczeniu
+
+#description: The only move 
+#english: TrnExerciseOnlyMove=The only move in the Exercise is
+TrnExerciseOnlyMove=Jedyny ruch w Ćwiczeniu to
+
+#description: The only moves
+#english: TrnExerciseSourceMoves=The moves in the Exercise are
+TrnExerciseSourceMoves=Ruchy w Ćwiczeniu to
+
+
+#description: Game ended, user checkmated engine
+#english: TrnUserCheckmatedEngine=The training game has ended. You have delivered a checkmate!
+TrnUserCheckmatedEngine=Partia zakończona.Silnik został zamatowany.
+
+#description: Game ended, engine checkmated user
+#english: TrnEngineCheckmatedUser=The training game has ended. You have been checkmated by the engine.
+TrnEngineCheckmatedUser=Partia zakończona. Silnik zamatował Cię.
+
+#description: Game ended in a stalemate
+#english: TrnGameStalemate=This is a stalemate. The game has been drawn.
+TrnGameStalemate=Partia zakończyła się patem. Remis.
+
+#description: Training session start header
+#english: TrnSessionStartsAfter=This training session begins after:
+TrnSessionStartsAfter=Ta sesja treningowa zaczyna się po ruchach:
+
+#description: Training session start note
+#english: TrnSessionStart=Starting a training session.
+TrnSessionStart=Zaczynamy sesję treningową.
+
+#description: Prompt for the user the first move
+#english: TrnMakeFirstMove=To begin, make your first move on the chessboard.
+TrnMakeFirstMove=Rozpocznij trening wykonując swój pierwszy ruch na szachownicy.
+
+#description: User is White
+#english: TrnUserPlaysWhite=You play White and the virtual coach plays Black.
+TrnUserPlaysWhite=Grasz białymi, a wirtualny trener gra czarnymi.
+
+#description: User is Black
+#english: TrnUserPlaysBlack=You play Black and the virtual coach plays White.
+TrnUserPlaysBlack=Grasz czarnymi, a wirtualny trener gra białymi.
+
+#description: Click move instruction
+#english: TrnClickMoveBelow=Click any move below to restart training from it.  
+TrnClickMoveBelow=Kliknij na dowolny ruch poniżej aby cofnąć trening do niego.
+
+#description: Right click move instruction
+#english: TrnRightClickMove=Right click to open the context menu.  
+TrnRightClickMove=Prawy przycisk myszki wywoła menu.
+
+
 
 
 #
@@ -2549,14 +2744,6 @@ ErrorNoBookmarksWhileSolving=Nie można dodawać zakładek podczas rozwiąywania
 #english: NoTrainingStartMove=No move selected to start training from.
 NoTrainingStartMove=Takie posunięcie nie istnieje
 
-#description: Confirmation to exit training session
-#english: ExitTrainingSession=Exit the training session?
-ExitTrainingSession=Wyjście z sesji treningowej
-
-#description: Restart the training session
-#english: RestartTraining=Restart the training session?
-RestartTraining=Zacznij trening od początku
-
 #description: No new version available
 #english: NoNewVersion=No new version available.
 NoNewVersion=Brak nowej wersji
@@ -2596,10 +2783,6 @@ SaveWorkbook=Zapisać Podręcznik?
 #description: File already open
 #english: FileAlreadyOpen=$0 is already open."
 FileAlreadyOpen=Plik już otwarty
-
-#description: Confirmation to merge training moves into the Study Tree / Game or Exercise
-#english: MergeTrainingIntoStudy=Merge new moves from this session into the source
-MergeTrainingIntoStudy=Dodać ruchy z tej sesji do źródła
 
 #description: (Move) no longer valid 
 #english: NoLongerValid=is no longer valid
@@ -3083,173 +3266,6 @@ ExplorersAbout=Otwarcia/Tablice
 #description: Currently viewed
 #english: CurrentlyViewed=Currently viewed
 CurrentlyViewed=Obecnie wyświetlane
-
-##################################
-#
-# Header: Training
-#
-
-#description:  User's move was
-#english: YourMoveWas=Your move was
-YourMoveWas=Zagrałeś
-
-#description:  Wait for engine's response
-#english: WaitForEngineResponse=Wait for engine's response...
-WaitForEngineResponse=Czekaj na odpowiedź silnika...
-
-#description:  Wait for response
-#english: WaitForResponse=Wait for a response...
-WaitForResponse=Czekaj na odpowiedź...
-
-#description:  Game started, wait for the engine
-#english: TrnGameStarted=A training game against the engine has started. Wait for the engine's move...
-TrnGameStarted=Partia treningowa z silnikiem rozpoczęta. Czekaj na ruch silnika...
-
-#description:  Engine Played
-#english: EnginePlayed=The engine played
-EnginePlayed=Silnik zagrał
-
-#description:  Coach Played
-#english: CoachPlayed=The coach played
-CoachPlayed=Trener zagrał
-
-#description:  Your turn now
-#english: YourTurn=It is your turn now
-YourTurn=Kolej na Twoje posunięcie
-
-#description: Alternative is
-#english: TrnAlternativeIs=The alternative is
-TrnAlternativeIs=Alternatywną opcją jest
-
-#description: Alternatives are
-#english: TrnAlternativesAre=The alternatives are
-TrnAlternativesAre=Alternatywne opcje to
-
-#description: Alternative
-#english: TrnAlternative=Alternative
-TrnAlternative=Alternatywa
-
-#description: Alternatives
-#english: TrnAlternatives=Alternatives
-TrnAlternatives=Alternatywy
-
-#description: Prefix Your (for "after your move")
-#english: TrnPrefixYour=your
-TrnPrefixYour=Twoim
-
-#description: Perefix Engine (for "after engine's move")
-#english: TrnPrefixEngine=engine's
-TrnPrefixEngine=Silnika
-
-#description: End of line
-#english: TrnLineEnded=The workbook's training line has ended
-TrnLineEnded=Koniec wariantu treningowego z podręcznika
-
-#description: Training Game in progress
-#english: TrnGameInProgress=A training game against the engine is in progress...
-TrnGameInProgress=Trwa partia treningowa z silnikiem...
-
-#description: Play this move instead
-#english: TrnPlayMoveInstead=Play $0 instead of Your Move
-TrnPlayMoveInstead=Graj $0 zamiast Twojego ruchu
-
-### Training from Study
-
-#description: Response 
-#english: TrnStudyResponse=Workbook response
-TrnStudyResponse=Odpowiedź z Podręcznika
-
-#description: Not in the source 
-#english: TrnStudyMoveNotInSource=This is not in the Workbook
-TrnStudyMoveNotInSource=Tego ruchu nie ma w Podręczniku
-
-#description: The only move 
-#english: TrnStudyOnlyMove=The only move in the Workbook is
-TrnStudyOnlyMove=Jedyny ruch w Podręczniku to
-
-#description: The only moves
-#english: TrnStudySourceMoves=The Workbook moves are
-TrnStudySourceMoves=Ruchy z Podręcznika to
-
-
-### Training from Game
-
-#description: Response 
-#english: TrnGameResponse=Response from the Game
-TrnGameResponse=Opowiedź z Partii
-
-#description: Not in the source 
-#english: TrnGameMoveNotInSource=This is not in the Game
-TrnGameMoveNotInSource=Tego ruchu nie ma w Partii
-
-#description: The only move 
-#english: TrnGameOnlyMove=The only move in the Game is
-TrnGameOnlyMove=Jedyny ruch w Partii to
-
-#description: The only moves
-#english: TrnGameSourceMoves=The moves in the Game are
-TrnGameSourceMoves=Ruchy w Partii to
-
-
-### Training from Exercise
-
-#description: Response 
-#english: TrnExerciseResponse=Response from the Exercise
-TrnExerciseResponse=Opowiedź z Ćwiczenia
-
-#description: Not in the source 
-#english: TrnExerciseMoveNotInSource=This is not in the Exercise
-TrnExerciseMoveNotInSource=Tego ruchu nie ma w Ćwiczeniu
-
-#description: The only move 
-#english: TrnExerciseOnlyMove=The only move in the Exercise is
-TrnExerciseOnlyMove=Jedyny ruch w Ćwiczeniu to
-
-#description: The only moves
-#english: TrnExerciseSourceMoves=The moves in the Exercise are
-TrnExerciseSourceMoves=Ruchy w Ćwiczeniu to
-
-
-#description: Game ended, user checkmated engine
-#english: TrnUserCheckmatedEngine=The training game has ended. You have delivered a checkmate!
-TrnUserCheckmatedEngine=Partia zakończona.Silnik został zamatowany.
-
-#description: Game ended, engine checkmated user
-#english: TrnEngineCheckmatedUser=The training game has ended. You have been checkmated by the engine.
-TrnEngineCheckmatedUser=Partia zakończona. Silnik zamatował Cię.
-
-#description: Game ended in a stalemate
-#english: TrnGameStalemate=This is a stalemate. The game has been drawn.
-TrnGameStalemate=Partia zakończyła się patem. Remis.
-
-#description: Training session start header
-#english: TrnSessionStartsAfter=This training session begins after:
-TrnSessionStartsAfter=Ta sesja treningowa zaczyna się po ruchach:
-
-#description: Training session start note
-#english: TrnSessionStart=Starting a training session.
-TrnSessionStart=Zaczynamy sesję treningową.
-
-#description: Prompt for the user the first move
-#english: TrnMakeFirstMove=To begin, make your first move on the chessboard.
-TrnMakeFirstMove=Rozpocznij trening wykonując swój pierwszy ruch na szachownicy.
-
-#description: User is White
-#english: TrnUserPlaysWhite=You play White and the virtual coach plays Black.
-TrnUserPlaysWhite=Grasz białymi, a wirtualny trener gra czarnymi.
-
-#description: User is Black
-#english: TrnUserPlaysBlack=You play Black and the virtual coach plays White.
-TrnUserPlaysBlack=Grasz czarnymi, a wirtualny trener gra białymi.
-
-#description: Click move instruction
-#english: TrnClickMoveBelow=Click any move below to restart training from it.  
-TrnClickMoveBelow=Kliknij na dowolny ruch poniżej aby cofnąć trening do niego.
-
-#description: Right click move instruction
-#english: TrnRightClickMove=Right click to open the context menu.  
-TrnRightClickMove=Prawy przycisk myszki wywoła menu.
-
 
 
 ##################################
