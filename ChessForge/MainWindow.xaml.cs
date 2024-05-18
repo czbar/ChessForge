@@ -2934,12 +2934,6 @@ namespace ChessForge
         private bool ShowChapterTitleDialog(Chapter chapter)
         {
             ChapterTitleDialog dlg = new ChapterTitleDialog(chapter);
-            //{
-            //    Left = ChessForgeMain.Left + 100,
-            //    Top = ChessForgeMain.Top + 100,
-            //    Topmost = false,
-            //    Owner = this
-            //};
             GuiUtilities.PositionDialog(dlg, this, 100);
 
             bool res = dlg.ShowDialog() == true;
