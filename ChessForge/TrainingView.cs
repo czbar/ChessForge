@@ -521,7 +521,9 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Removes all nodes marked "IsNewTrainingNode" unless they exist in the EngineGame.Line
+        /// Removes all nodes marked "IsNewTrainingNode" unless they exist in the EngineGame.Line.
+        /// In other words removes all game moves made previously that are not part of the current game
+        /// which is the only one we would consider saving.
         /// </summary>
         public void CleanupVariationTree()
         {
