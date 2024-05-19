@@ -283,6 +283,7 @@ namespace ChessForge
             UiImgAutoSaveOn.IsEnabled = enable;
 
             UiImgEngineOn.IsEnabled = enable;
+            UiImgEngineOnGray.IsEnabled = enable;
             UiImgEngineOff.IsEnabled = enable;
 
             UiImgExplorersOn.IsEnabled = enable;
@@ -525,6 +526,8 @@ namespace ChessForge
 
             ArticleSelected += EventSelectArticle;
 
+            AppState.UpdateEngineToggleImages();
+
             Timers.Start(AppTimers.TimerId.PULSE);
             AppLog.LogAvailableThreadsCounts();
         }
@@ -564,6 +567,7 @@ namespace ChessForge
             UiMnStudyDontSaveEvals.IsChecked = isOn;
 
             Configuration.DontSavePositionEvals = isOn;
+            AppState.UpdateEngineToggleImages();
         }
 
         /// <summary>
@@ -847,12 +851,6 @@ namespace ChessForge
                             if (verCompare < 0)
                             {
                                 UpdateAvailableDialog dlg = new UpdateAvailableDialog(ver, updSource);
-                                //{
-                                //    Left = ChessForgeMain.Left + 100,
-                                //    Top = ChessForgeMain.Top + 100,
-                                //    Topmost = false,
-                                //    Owner = this
-                                //};
                                 GuiUtilities.PositionDialog(dlg, this, 100);
                                 dlg.ShowDialog();
                                 res = true;
