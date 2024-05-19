@@ -418,6 +418,8 @@ namespace ChessForge
             }
             ChessForgeColors.SetMainControlColors();
 
+            SetDontSaveEvalsMenuItems(Configuration.DontSavePositionEvals);
+
             BoardCommentBox = new CommentBox(UiRtbBoardComment.Document, this);
             ActiveLine = new ActiveLineManager(UiDgActiveLine, this);
 
@@ -548,6 +550,20 @@ namespace ChessForge
             UiComboBoxBmContent.Items.Add(new ContentTypeListItem(GameData.ContentType.STUDY_TREE, Properties.Resources.Study));
             UiComboBoxBmContent.Items.Add(new ContentTypeListItem(GameData.ContentType.MODEL_GAME, Properties.Resources.Games));
             UiComboBoxBmContent.Items.Add(new ContentTypeListItem(GameData.ContentType.EXERCISE, Properties.Resources.Exercises));
+        }
+
+        /// <summary>
+        /// Updates the menu and configuration item for DontSavePositionEvals. 
+        /// </summary>
+        /// <param name="isOn"></param>
+        public void SetDontSaveEvalsMenuItems(bool isOn)
+        {
+            UiMnciDontSaveEvals.IsChecked = isOn;
+            UiMnExercDontSaveEvals.IsChecked = isOn;
+            UiMnGameDontSaveEvals.IsChecked = isOn;
+            UiMnStudyDontSaveEvals.IsChecked = isOn;
+
+            Configuration.DontSavePositionEvals = isOn;
         }
 
         /// <summary>
