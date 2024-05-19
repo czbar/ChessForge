@@ -306,6 +306,19 @@ ExerciseHeader=
 #english: EvaluatePosition=Evaluate Position
 EvaluatePosition=
 
+#description: Option to not update evaluations 
+#english: DoNotUpdatePositionEval=Do Not Update Position Evaluations
+DoNotUpdatePositionEval=
+
+#description: Flash message that position evals are now persisted 
+#english: FlMsgUpdatePositionEvalOn=Position evaluations will now be updated
+FlMsgUpdatePositionEvalOn=
+
+#description: Flash message that position evals will now not be persisted 
+#english: FlMsgUpdatePositionEvalOff=Position evaluations will no longer be updated
+FlMsgUpdatePositionEvalOff=
+
+
 #description: Evaluate a move
 #english: EvaluateMove=Evaluate Move
 EvaluateMove=
