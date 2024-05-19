@@ -738,6 +738,10 @@
   <data name="TurnEngineOn" xml:space="preserve">
     <value>Włącz silnik</value>
   </data>
+  <data name="TtAllowEvalUpdate" xml:space="preserve">
+    <value>Wyłącz silnik
+(Oceny nie są uaktualniane. Włącz przez Ctrl+K.)</value>
+  </data>
   <data name="HideEvaluationChart" xml:space="preserve">
     <value>Pokaż wykres ocen silnika</value>
   </data>

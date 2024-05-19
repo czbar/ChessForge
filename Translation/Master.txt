@@ -708,6 +708,9 @@ TurnEngineOff=Turn the Engine Off
 #Tool tip for turning AutoSave on
 TurnEngineOn=Turn the Engine On
 
+#Tool tip for allowing evakuation persistance
+TtAllowEvalUpdate=Turn the Engine Off\n(Evaluations are not being updated. Ctrl+K to allow.)
+
 #Tool tip for hiding Eval Chart
 HideEvaluationChart=Hide Evaluation Chart
 

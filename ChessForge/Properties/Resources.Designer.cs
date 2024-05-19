@@ -7299,6 +7299,16 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Turn the Engine Off
+        ///(Evaluations are not being updated. Ctrl+K to allow.).
+        /// </summary>
+        public static string TtAllowEvalUpdate {
+            get {
+                return ResourceManager.GetString("TtAllowEvalUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Click to Expand.
         /// </summary>
         public static string TtClickToExpand {

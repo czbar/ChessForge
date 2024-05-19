@@ -738,6 +738,10 @@
   <data name="TurnEngineOn" xml:space="preserve">
     <value>Turn the Engine On</value>
   </data>
+  <data name="TtAllowEvalUpdate" xml:space="preserve">
+    <value>Turn the Engine Off
+(Evaluations are not being updated. Ctrl+K to allow.)</value>
+  </data>
   <data name="HideEvaluationChart" xml:space="preserve">
     <value>Hide Evaluation Chart</value>
   </data>

@@ -915,6 +915,10 @@ TurnEngineOff=
 #english: TurnEngineOn=Turn the Engine On
 TurnEngineOn=
 
+#description: Tool tip for allowing evakuation persistance
+#english: TtAllowEvalUpdate=Turn the Engine Off\n(Evaluations are not being updated. Ctrl+K to allow.)
+TtAllowEvalUpdate=
+
 #description: Tool tip for hiding Eval Chart
 #english: HideEvaluationChart=Hide Evaluation Chart
 HideEvaluationChart=
