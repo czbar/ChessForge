@@ -207,6 +207,8 @@ namespace ChessForge
             {
                 AppState.SetupGuiForCurrentStates();
             }
+
+            AppState.UpdateEngineToggleImages();
         }
 
         /// <summary>
