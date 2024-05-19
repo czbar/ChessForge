@@ -3401,7 +3401,7 @@ namespace ChessForge
         //*********************
 
         // allows or blocks mode re-initialization.
-        // this is used at strtup when this method is called when we set IsChecked
+        // this is used at startup when this method is called when we set IsChecked
         // on the menu item.
         private bool _modeUpdatesBlocked = false;
 
@@ -3463,6 +3463,20 @@ namespace ChessForge
                 }
             }
             _modeUpdatesBlocked = false;
+        }
+
+        /// <summary>
+        /// Update the status of the DontSaveEvals flag
+        /// per the menu item's status in the event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnDontSaveEvals_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is MenuItem mni)
+            {
+                SetDontSaveEvalsMenuItems(mni.IsChecked);
+            }
         }
 
         /// <summary>
