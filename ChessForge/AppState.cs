@@ -1162,7 +1162,7 @@ namespace ChessForge
                             case "UiMnStudyFindIdentical":
                                 menuItem.IsEnabled = isEnabled;
                                 break;
-                            case "_mnWorkbookEvalMove":
+                            case "UiMnStudyWorkbookEvalMove":
                                 menuItem.IsEnabled = tree != null && tree.SelectedNode != null;
                                 break;
                             case "_mnWorkbookEvalLine":
@@ -1337,6 +1337,9 @@ namespace ChessForge
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "_mnExerc_DeleteMovesFromHere":
+                            case "UiMnExerc_EvalLine":
+                            case "UiMnExerc_EvalMove":
+                            case "UiMnExercDontSaveEvals":
                                 menuItem.IsEnabled = exerciseIndex >= 0 && selectedNodeId > 0 && isSolutionShown;
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
@@ -1355,10 +1358,6 @@ namespace ChessForge
                             case "UiMnExercMarkBookmark":
                                 menuItem.IsEnabled = exerciseIndex >= 0 && selectedNodeId > 0 && isSolutionShown;
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
-                                break;
-                            case "_mnExerc_EvalLine":
-                            case "UiMnExerc_EvalMove":
-                                menuItem.Visibility = Visibility.Collapsed;
                                 break;
                             case "_mnExerc_MarkThumbnail":
                                 menuItem.IsEnabled = exerciseIndex >= 0 && selectedNodeId > 0 && isSolutionShown;
@@ -1397,6 +1396,8 @@ namespace ChessForge
                             case "UiMnExerc_Separator_6":
                             case "UiMnExerc_Separator_7":
                             case "UiMnExerc_Separator_8":
+                            case "UiMnStudyExercSepar_EvalPos":
+                            case "UiMnStudyExercSepar_EvalLine":
                                 separ.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                         }
@@ -1726,6 +1727,9 @@ namespace ChessForge
 
                         _mainWin.UiMnciEvalPos.Visibility = Visibility.Visible;
                         _mainWin.UiMnciEvalLine.Visibility = Visibility.Visible;
+                        _mainWin.UiMnciDontSaveEvals.Visibility = Visibility.Visible;
+                        _mainWin.UiMnciSepar_EvalPos.Visibility = Visibility.Visible;
+                        _mainWin.UiMnciSepar_EvalLine.Visibility = Visibility.Visible;
 
                         _mainWin.UiMncMainBoardSepar_2.Visibility = Visibility.Visible;
 
@@ -1749,6 +1753,9 @@ namespace ChessForge
 
                         _mainWin.UiMnciEvalPos.Visibility = Visibility.Collapsed;
                         _mainWin.UiMnciEvalLine.Visibility = Visibility.Collapsed;
+                        _mainWin.UiMnciDontSaveEvals.Visibility = Visibility.Collapsed;
+                        _mainWin.UiMnciSepar_EvalPos.Visibility = Visibility.Collapsed;
+                        _mainWin.UiMnciSepar_EvalLine.Visibility = Visibility.Collapsed;
 
                         _mainWin.UiMncMainBoardSepar_2.Visibility = Visibility.Collapsed;
 
@@ -1797,6 +1804,9 @@ namespace ChessForge
 
                         _mainWin.UiMnciEvalPos.Visibility = Visibility.Collapsed;
                         _mainWin.UiMnciEvalLine.Visibility = Visibility.Collapsed;
+                        _mainWin.UiMnciDontSaveEvals.Visibility = Visibility.Collapsed;
+                        _mainWin.UiMnciSepar_EvalPos.Visibility = Visibility.Collapsed;
+                        _mainWin.UiMnciSepar_EvalLine.Visibility = Visibility.Collapsed;
 
                         _mainWin.UiMncMainBoardSepar_2.Visibility = Visibility.Collapsed;
 
