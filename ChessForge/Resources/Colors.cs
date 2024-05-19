@@ -243,7 +243,6 @@ namespace ChessForge
             {
                 LightMode.DataGridHeaderStyle = new Style(typeof(DataGridColumnHeader));
                 LightMode.DataGridHeaderStyle.Setters.Add(new Setter(Control.ForegroundProperty, Brushes.Black));
-                LightMode.DataGridHeaderStyle.Setters.Add(new Setter(Control.BackgroundProperty, Brushes.LightGray));
             }
 
             LightMode.RtbForeground = Brushes.Black;
@@ -300,7 +299,6 @@ namespace ChessForge
             {
                 DarkMode.DataGridHeaderStyle = new Style(typeof(DataGridColumnHeader));
                 DarkMode.DataGridHeaderStyle.Setters.Add(new Setter(Control.ForegroundProperty, Brushes.Black));
-                DarkMode.DataGridHeaderStyle.Setters.Add(new Setter(Control.BackgroundProperty, Brushes.DarkGray));
             }
 
             DarkMode.RtbForeground = Brushes.White;

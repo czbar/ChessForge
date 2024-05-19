@@ -937,6 +937,7 @@ namespace ChessForge
 
             UiImgEngineOff.Visibility = Visibility.Visible;
             UiImgEngineOn.Visibility = Visibility.Collapsed;
+            UiImgEngineOnGray.Visibility = Visibility.Collapsed;
 
             if (AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
             {
@@ -996,7 +997,16 @@ namespace ChessForge
             {
                 EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.CONTINUOUS);
                 UiImgEngineOff.Visibility = Visibility.Collapsed;
-                UiImgEngineOn.Visibility = Visibility.Visible;
+                if (AppState.EngineEvaluationsUpdateble)
+                {
+                    UiImgEngineOn.Visibility = Visibility.Visible;
+                    UiImgEngineOn.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    UiImgEngineOn.Visibility = Visibility.Collapsed;
+                    UiImgEngineOn.Visibility = Visibility.Visible;
+                }
                 Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
                 EvaluateActiveLineSelectedPosition();
             }
@@ -1340,6 +1350,7 @@ namespace ChessForge
             StopReplayIfActive();
 
             UiImgEngineOn.IsEnabled = true;
+            UiImgEngineOnGray.IsEnabled = true;
             UiImgEngineOff.IsEnabled = true;
 
             AppState.ShowExplorers(AppState.AreExplorersOn, true);
@@ -1505,6 +1516,7 @@ namespace ChessForge
             articleIndex = -1;
 
             UiImgEngineOn.IsEnabled = true;
+            UiImgEngineOnGray.IsEnabled = true;
             UiImgEngineOff.IsEnabled = true;
 
             WorkbookManager.ActiveTab = TabViewType.MODEL_GAME;
@@ -1612,6 +1624,7 @@ namespace ChessForge
             articleIndex = -1;
 
             UiImgEngineOn.IsEnabled = true;
+            UiImgEngineOnGray.IsEnabled = true;
             UiImgEngineOff.IsEnabled = true;
 
             WorkbookManager.ActiveTab = TabViewType.EXERCISE;

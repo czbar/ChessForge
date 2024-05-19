@@ -116,6 +116,11 @@ namespace ChessForge
         public static bool IsDarkMode = false;
 
         /// <summary>
+        /// Determines whether position evaluations are saved
+        /// </summary>
+        public static bool DontSavePositionEvals = false;
+
+        /// <summary>
         /// Path to the engine executable
         /// </summary>
         public static string EngineExePath = "";
@@ -569,6 +574,7 @@ namespace ChessForge
         private const string CFG_BAD_MOVE_DETECTION = "BadMoveDetection";
 
         private const string CFG_IS_DARK_MODE = "IsDarkMode";
+        private const string CFG_DONT_SAVE_EVALS = "DontSavePositionEvals";
 
         private const string CFG_FONT_SIZE_DIFF = "FontSizeDiff";
         private const string CFG_AUTO_SAVE_FREQ = "AutoSaveFrequency";
@@ -763,6 +769,7 @@ namespace ChessForge
                 sb.AppendLine(CFG_BAD_MOVE_DETECTION + "=" + (EnableBadMoveDetection ? "1" : "0"));
 
                 sb.AppendLine(CFG_IS_DARK_MODE + "=" + (IsDarkMode ? "1" : "0"));
+                sb.AppendLine(CFG_DONT_SAVE_EVALS + "=" + (DontSavePositionEvals ? "1" : "0"));
 
                 sb.Append(CFG_PGN_EXP_BOOKMARKS + "=" + (PgnExportBookmarks ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_PGN_EXP_EVALS + "=" + (PgnExportEvaluations ? "1" : "0") + Environment.NewLine);
@@ -1106,6 +1113,9 @@ namespace ChessForge
                             break;
                         case CFG_IS_DARK_MODE:
                             IsDarkMode = value != "0" ? true : false;
+                            break;
+                        case CFG_DONT_SAVE_EVALS:
+                            DontSavePositionEvals = value != "0" ? true : false;
                             break;
                         case CFG_ENGINE_EVALUATION_TIME:
                             int.TryParse(value, out _engineEvaluationTime);

@@ -123,7 +123,7 @@ namespace ChessForge
         /// <returns></returns>
         public static bool IsEngineLinesTurnedOn()
         {
-            return MainWin.UiImgEngineOn.Visibility == Visibility.Visible;
+            return MainWin.UiImgEngineOn.Visibility == Visibility.Visible || MainWin.UiImgEngineOnGray.Visibility == Visibility.Visible;
         }
 
         /// <summary>

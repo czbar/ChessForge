@@ -272,36 +272,46 @@ namespace ChessForge
             // check if the engine game is in progress and we were awaiting engine's move
             if (LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME && EngineGame.CurrentState == EngineGame.GameState.ENGINE_THINKING)
             {
-                ProcessEngineGameMove(nd);
-                if (ActiveEvaluationMode == GoFenCommand.EvaluationMode.GAME)
+                TreeNode lastGameNode = EngineGame.GetLastGameNode();
+                if (lastGameNode == nd)
                 {
-                    // make sure this one is going
-                    _mainWin.Timers.Start(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
+                    ProcessEngineGameMove(nd);
+                    if (ActiveEvaluationMode == GoFenCommand.EvaluationMode.GAME)
+                    {
+                        // make sure this one is going
+                        _mainWin.Timers.Start(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
+                    }
+                    else
+                    {
+                        _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
+                        _mainWin.ResetEvaluationProgressBar();
+                    }
+
+                    // if this is Training with Continuous mode, switch to Continuous
+                    if (TrainingSession.IsTrainingInProgress && TrainingSession.IsContinuousEvaluation)
+                    {
+                        // if another GAME request is being processed (e.g. because we had a rollback) do not change mode
+                        // as it will change the GUI
+                        if (ActiveEvaluationMode != GoFenCommand.EvaluationMode.GAME)
+                        {
+                            EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.CONTINUOUS);
+                        }
+                    }
+                    else
+                    {
+                        EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
+                    }
+
+                    if (TrainingSession.IsTrainingInProgress)
+                    {
+                        _mainWin.EngineTrainingGameMoveMade();
+                    }
                 }
                 else
                 {
                     _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
                     _mainWin.ResetEvaluationProgressBar();
-                }
-
-                // if this is Training with Continuous mode, switch to Continuous
-                if (TrainingSession.IsTrainingInProgress && TrainingSession.IsContinuousEvaluation)
-                {
-                    // if another GAME request is being processed (e.g. because we had a rollback) do not change mode
-                    // as it will change the GUI
-                    if (ActiveEvaluationMode != GoFenCommand.EvaluationMode.GAME)
-                    {
-                        EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.CONTINUOUS);
-                    }
-                }
-                else
-                {
-                    EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
-                }
-
-                if (TrainingSession.IsTrainingInProgress)
-                {
-                    _mainWin.EngineTrainingGameMoveMade();
+                    _mainWin.Timers.Start(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
                 }
             }
         }
@@ -350,7 +360,11 @@ namespace ChessForge
                     bool isWhiteEval = (index - 1) % 2 == 0;
                     int moveIndex = (index - 1) / 2;
 
-                    AppState.ActiveLine.SetEvaluation(nd, eval);
+                    if (AppState.EngineEvaluationsUpdateble)
+                    {
+                        AppState.ActiveLine.SetEvaluation(nd, eval);
+                    }
+
                     if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
                     {
                         string bestMoveAlg;
@@ -360,7 +374,7 @@ namespace ChessForge
                             BoardPosition pos = new BoardPosition(nd.Position);
                             bestMoveAlg = MoveUtils.EngineNotationToAlgebraic(bestMoveEng, ref pos, out _);
                         }
-                        catch 
+                        catch
                         {
                             bestMoveAlg = "";
                         }
@@ -980,7 +994,10 @@ namespace ChessForge
                             if (PositionUtils.IsStalemate(nd.Position))
                             {
                                 nd.Position.IsStalemate = true;
-                                nd.SetEngineEvaluation(0.ToString("F2"));
+                                if (AppState.EngineEvaluationsUpdateble)
+                                {
+                                    nd.SetEngineEvaluation(0.ToString("F2"));
+                                }
                             }
                             EngineLinesBox.ShowEngineLines(nd, null);
                         }
@@ -1005,7 +1022,10 @@ namespace ChessForge
 
                     if (moveCandidates != null && moveCandidates.Lines.Count > 0)
                     {
-                        nd.SetEngineEvaluation(EvaluationManager.BuildEvaluationText(moveCandidates.Lines[0], nd.Position.ColorToMove));
+                        if (AppState.EngineEvaluationsUpdateble)
+                        {
+                            nd.SetEngineEvaluation(EvaluationManager.BuildEvaluationText(moveCandidates.Lines[0], nd.Position.ColorToMove));
+                        }
                         EngineLinesBox.EvalLinesToProcess.Remove(nd);
                     }
                     else

@@ -1871,6 +1871,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Do Not Update Position Evaluations.
+        /// </summary>
+        public static string DoNotUpdatePositionEval {
+            get {
+                return ResourceManager.GetString("DoNotUpdatePositionEval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Downloaded Games.
         /// </summary>
         public static string DownloadedGames {
@@ -3199,6 +3208,24 @@ namespace ChessForge.Properties {
         public static string FlMsgSolutionsShown {
             get {
                 return ResourceManager.GetString("FlMsgSolutionsShown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Position evaluations will no longer be updated.
+        /// </summary>
+        public static string FlMsgUpdatePositionEvalOff {
+            get {
+                return ResourceManager.GetString("FlMsgUpdatePositionEvalOff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Position evaluations will now be updated.
+        /// </summary>
+        public static string FlMsgUpdatePositionEvalOn {
+            get {
+                return ResourceManager.GetString("FlMsgUpdatePositionEvalOn", resourceCulture);
             }
         }
         
@@ -7268,6 +7295,16 @@ namespace ChessForge.Properties {
         public static string TrnUserPlaysWhite {
             get {
                 return ResourceManager.GetString("TrnUserPlaysWhite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turn the Engine Off
+        ///(Evaluations are not being updated. Ctrl+K to allow.).
+        /// </summary>
+        public static string TtAllowEvalUpdate {
+            get {
+                return ResourceManager.GetString("TtAllowEvalUpdate", resourceCulture);
             }
         }
         

@@ -283,6 +283,7 @@ namespace ChessForge
             UiImgAutoSaveOn.IsEnabled = enable;
 
             UiImgEngineOn.IsEnabled = enable;
+            UiImgEngineOnGray.IsEnabled = enable;
             UiImgEngineOff.IsEnabled = enable;
 
             UiImgExplorersOn.IsEnabled = enable;
@@ -418,6 +419,8 @@ namespace ChessForge
             }
             ChessForgeColors.SetMainControlColors();
 
+            SetDontSaveEvalsMenuItems(Configuration.DontSavePositionEvals);
+
             BoardCommentBox = new CommentBox(UiRtbBoardComment.Document, this);
             ActiveLine = new ActiveLineManager(UiDgActiveLine, this);
 
@@ -523,6 +526,8 @@ namespace ChessForge
 
             ArticleSelected += EventSelectArticle;
 
+            AppState.UpdateEngineToggleImages();
+
             Timers.Start(AppTimers.TimerId.PULSE);
             AppLog.LogAvailableThreadsCounts();
         }
@@ -548,6 +553,21 @@ namespace ChessForge
             UiComboBoxBmContent.Items.Add(new ContentTypeListItem(GameData.ContentType.STUDY_TREE, Properties.Resources.Study));
             UiComboBoxBmContent.Items.Add(new ContentTypeListItem(GameData.ContentType.MODEL_GAME, Properties.Resources.Games));
             UiComboBoxBmContent.Items.Add(new ContentTypeListItem(GameData.ContentType.EXERCISE, Properties.Resources.Exercises));
+        }
+
+        /// <summary>
+        /// Updates the menu and configuration item for DontSavePositionEvals. 
+        /// </summary>
+        /// <param name="isOn"></param>
+        public void SetDontSaveEvalsMenuItems(bool isOn)
+        {
+            UiMnciDontSaveEvals.IsChecked = isOn;
+            UiMnExercDontSaveEvals.IsChecked = isOn;
+            UiMnGameDontSaveEvals.IsChecked = isOn;
+            UiMnStudyDontSaveEvals.IsChecked = isOn;
+
+            Configuration.DontSavePositionEvals = isOn;
+            AppState.UpdateEngineToggleImages();
         }
 
         /// <summary>
@@ -831,12 +851,6 @@ namespace ChessForge
                             if (verCompare < 0)
                             {
                                 UpdateAvailableDialog dlg = new UpdateAvailableDialog(ver, updSource);
-                                //{
-                                //    Left = ChessForgeMain.Left + 100,
-                                //    Top = ChessForgeMain.Top + 100,
-                                //    Topmost = false,
-                                //    Owner = this
-                                //};
                                 GuiUtilities.PositionDialog(dlg, this, 100);
                                 dlg.ShowDialog();
                                 res = true;
@@ -2934,12 +2948,6 @@ namespace ChessForge
         private bool ShowChapterTitleDialog(Chapter chapter)
         {
             ChapterTitleDialog dlg = new ChapterTitleDialog(chapter);
-            //{
-            //    Left = ChessForgeMain.Left + 100,
-            //    Top = ChessForgeMain.Top + 100,
-            //    Topmost = false,
-            //    Owner = this
-            //};
             GuiUtilities.PositionDialog(dlg, this, 100);
 
             bool res = dlg.ShowDialog() == true;

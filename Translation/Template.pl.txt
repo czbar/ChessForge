@@ -306,6 +306,19 @@ ExerciseHeader=Nagłówek Ćwiczenia
 #english: EvaluatePosition=Evaluate Position
 EvaluatePosition=Oceń pozycję
 
+#description: Option to not update evaluations 
+#english: DoNotUpdatePositionEval=Do Not Update Position Evaluations
+DoNotUpdatePositionEval=Nie uaktualniaj ocen pozycji
+
+#description: Flash message that position evals are now persisted 
+#english: FlMsgUpdatePositionEvalOn=Position evaluations will now be updated
+FlMsgUpdatePositionEvalOn=Oceny pozycji będą teraz zapisywane
+
+#description: Flash message that position evals will now not be persisted 
+#english: FlMsgUpdatePositionEvalOff=Position evaluations will no longer be updated
+FlMsgUpdatePositionEvalOff=Oceny pozycji nie będą teraz zapisywane
+
+
 #description: Evaluate a move
 #english: EvaluateMove=Evaluate Move
 EvaluateMove=Oceń posunięcie
@@ -901,6 +914,10 @@ TurnEngineOff=Wyłącz silnik
 #description: Tool tip for turning AutoSave on
 #english: TurnEngineOn=Turn the Engine On
 TurnEngineOn=Włącz silnik
+
+#description: Tool tip for allowing evakuation persistance
+#english: TtAllowEvalUpdate=Turn the Engine Off\n(Evaluations are not being updated. Ctrl+K to allow.)
+TtAllowEvalUpdate=Wyłącz silnik\n(Oceny nie są uaktualniane. Włącz przez Ctrl+K.)
 
 #description: Tool tip for hiding Eval Chart
 #english: HideEvaluationChart=Hide Evaluation Chart

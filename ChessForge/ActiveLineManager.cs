@@ -634,7 +634,8 @@ namespace ChessForge
                         e.Handled = true;
                         break;
                     case Key.E:
-                        bool isEngineOn = _mainWin.UiImgEngineOn.Visibility == System.Windows.Visibility.Visible;
+                        bool isEngineOn = _mainWin.UiImgEngineOff.Visibility != System.Windows.Visibility.Visible 
+                            || _mainWin.UiImgEngineOnGray.Visibility == System.Windows.Visibility.Visible;
                         if (isEngineOn)
                         {
                             _mainWin.EngineToggleOn_OnPreviewMouseLeftButtonDown(null, null);
@@ -735,6 +736,13 @@ namespace ChessForge
                                 break;
                             case Key.L:
                                 _mainWin.UiMnSelectHighlighted_Click(null, null);
+                                e.Handled = true;
+                                break;
+                            case Key.K:
+                                _mainWin.SetDontSaveEvalsMenuItems(!Configuration.DontSavePositionEvals);
+                                string msg = Configuration.DontSavePositionEvals ? Properties.Resources.FlMsgUpdatePositionEvalOff : Properties.Resources.FlMsgUpdatePositionEvalOn;
+                                CommentBox.HintType ht = Configuration.DontSavePositionEvals ? CommentBox.HintType.ERROR : CommentBox.HintType.INFO;
+                                _mainWin.BoardCommentBox.ShowFlashAnnouncement(msg, ht);
                                 e.Handled = true;
                                 break;
                         }
