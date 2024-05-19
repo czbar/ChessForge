@@ -63,6 +63,36 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Evaluations are not updatable if we are in the CONTINUOUS evaluation mode
+        /// and Configuration.DontSavePositionEvals is true.
+        /// </summary>
+        public static bool EngineEvaluationsUpdateble
+        {
+            get => !Configuration.DontSavePositionEvals || CurrentEvaluationMode != EvaluationManager.Mode.CONTINUOUS;
+        }
+
+        /// <summary>
+        /// Depending on the cofiguration and current evaluation mode,
+        /// update Engine Toggle imgaes
+        /// </summary>
+        public static void UpdateEngineToggleImages()
+        {
+            if (MainWin.UiImgEngineOn.Visibility == Visibility.Visible || MainWin.UiImgEngineOnGray.Visibility == Visibility.Visible)
+            {
+                if (EngineEvaluationsUpdateble)
+                {
+                    _mainWin.UiImgEngineOn.Visibility = Visibility.Visible;
+                    _mainWin.UiImgEngineOnGray.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    _mainWin.UiImgEngineOn.Visibility = Visibility.Collapsed;
+                    _mainWin.UiImgEngineOnGray.Visibility = Visibility.Visible;
+                }
+            }
+        }
+
+        /// <summary>
         /// The currently Active Tab.
         /// </summary>
         public static TabViewType ActiveTab
@@ -1873,12 +1903,21 @@ namespace ChessForge
                  _mainWin.UiImgEngineOff.IsEnabled = true;
                  if (eval)
                  {
+                     if (EngineEvaluationsUpdateble)
+                     {
+                         _mainWin.UiImgEngineOn.Visibility = Visibility.Visible;
+                         _mainWin.UiImgEngineOnGray.Visibility = Visibility.Collapsed;
+                     }
+                     else
+                     {
+                         _mainWin.UiImgEngineOn.Visibility = Visibility.Collapsed;
+                         _mainWin.UiImgEngineOnGray.Visibility = Visibility.Visible;
+                     }
+                     _mainWin.UiImgEngineOff.Visibility = Visibility.Collapsed;
+
                      if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS
                          && (LearningMode.CurrentMode != LearningMode.Mode.ENGINE_GAME || EngineGame.CurrentState != EngineGame.GameState.ENGINE_THINKING))
                      {
-                         _mainWin.UiImgEngineOn.Visibility = Visibility.Visible;
-                         _mainWin.UiImgEngineOff.Visibility = Visibility.Collapsed;
-
                          _mainWin.UiMnciEvalLine.IsEnabled = true;
                          _mainWin.UiMnciEvalPos.IsEnabled = false;
 
@@ -1886,9 +1925,6 @@ namespace ChessForge
                      }
                      else
                      {
-                         _mainWin.UiImgEngineOn.Visibility = Visibility.Visible;
-                         _mainWin.UiImgEngineOff.Visibility = Visibility.Collapsed;
-
                          _mainWin.UiMnciEvalLine.IsEnabled = false;
                          _mainWin.UiMnciEvalPos.IsEnabled = false;
 
@@ -1898,6 +1934,7 @@ namespace ChessForge
                  else
                  {
                      _mainWin.UiImgEngineOn.Visibility = Visibility.Collapsed;
+                     _mainWin.UiImgEngineOnGray.Visibility = Visibility.Collapsed;
                      _mainWin.UiImgEngineOff.Visibility = Visibility.Visible;
 
                      if (MainWin.ActiveLineReplay.IsReplayActive)
