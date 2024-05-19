@@ -737,6 +737,13 @@ namespace ChessForge
                                 _mainWin.UiMnSelectHighlighted_Click(null, null);
                                 e.Handled = true;
                                 break;
+                            case Key.K:
+                                _mainWin.SetDontSaveEvalsMenuItems(!Configuration.DontSavePositionEvals);
+                                string msg = Configuration.DontSavePositionEvals ? Properties.Resources.FlMsgUpdatePositionEvalOff : Properties.Resources.FlMsgUpdatePositionEvalOn;
+                                CommentBox.HintType ht = Configuration.DontSavePositionEvals ? CommentBox.HintType.ERROR : CommentBox.HintType.INFO;
+                                _mainWin.BoardCommentBox.ShowFlashAnnouncement(msg, ht);
+                                e.Handled = true;
+                                break;
                         }
                     }
                     catch { }
