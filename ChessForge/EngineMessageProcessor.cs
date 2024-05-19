@@ -360,7 +360,11 @@ namespace ChessForge
                     bool isWhiteEval = (index - 1) % 2 == 0;
                     int moveIndex = (index - 1) / 2;
 
-                    AppState.ActiveLine.SetEvaluation(nd, eval);
+                    if (AppState.EngineEvaluationsUpdateble)
+                    {
+                        AppState.ActiveLine.SetEvaluation(nd, eval);
+                    }
+
                     if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
                     {
                         string bestMoveAlg;
@@ -370,7 +374,7 @@ namespace ChessForge
                             BoardPosition pos = new BoardPosition(nd.Position);
                             bestMoveAlg = MoveUtils.EngineNotationToAlgebraic(bestMoveEng, ref pos, out _);
                         }
-                        catch 
+                        catch
                         {
                             bestMoveAlg = "";
                         }
@@ -990,7 +994,10 @@ namespace ChessForge
                             if (PositionUtils.IsStalemate(nd.Position))
                             {
                                 nd.Position.IsStalemate = true;
-                                nd.SetEngineEvaluation(0.ToString("F2"));
+                                if (AppState.EngineEvaluationsUpdateble)
+                                {
+                                    nd.SetEngineEvaluation(0.ToString("F2"));
+                                }
                             }
                             EngineLinesBox.ShowEngineLines(nd, null);
                         }
@@ -1015,7 +1022,10 @@ namespace ChessForge
 
                     if (moveCandidates != null && moveCandidates.Lines.Count > 0)
                     {
-                        nd.SetEngineEvaluation(EvaluationManager.BuildEvaluationText(moveCandidates.Lines[0], nd.Position.ColorToMove));
+                        if (AppState.EngineEvaluationsUpdateble)
+                        {
+                            nd.SetEngineEvaluation(EvaluationManager.BuildEvaluationText(moveCandidates.Lines[0], nd.Position.ColorToMove));
+                        }
                         EngineLinesBox.EvalLinesToProcess.Remove(nd);
                     }
                     else
