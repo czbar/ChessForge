@@ -634,7 +634,8 @@ namespace ChessForge
                         e.Handled = true;
                         break;
                     case Key.E:
-                        bool isEngineOn = _mainWin.UiImgEngineOn.Visibility == System.Windows.Visibility.Visible;
+                        bool isEngineOn = _mainWin.UiImgEngineOff.Visibility != System.Windows.Visibility.Visible 
+                            || _mainWin.UiImgEngineOnGray.Visibility == System.Windows.Visibility.Visible;
                         if (isEngineOn)
                         {
                             _mainWin.EngineToggleOn_OnPreviewMouseLeftButtonDown(null, null);
