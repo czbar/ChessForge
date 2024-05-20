@@ -1276,6 +1276,9 @@
   <data name="RestartGameFrom" xml:space="preserve">
     <value>Restart Game from </value>
   </data>
+  <data name="ReplaceEngineMove" xml:space="preserve">
+    <value>Replace Engine Move</value>
+  </data>
   <data name="ExitTrainingSession" xml:space="preserve">
     <value>Exit the training session?</value>
   </data>

@@ -1794,6 +1794,10 @@ RestartFrom=
 #english: RestartGameFrom=Restart Game from 
 RestartGameFrom=
 
+#description: Replace engine move
+#english: ReplaceEngineMove=Replace Engine Move
+ReplaceEngineMove=
+
 #description: Confirmation to exit training session
 #english: ExitTrainingSession=Exit the training session?
 ExitTrainingSession=

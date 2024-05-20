@@ -5751,6 +5751,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Replace Engine Move.
+        /// </summary>
+        public static string ReplaceEngineMove {
+            get {
+                return ResourceManager.GetString("ReplaceEngineMove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Replay.
         /// </summary>
         public static string Replay {

@@ -1408,6 +1408,9 @@ RestartFrom=Restart from
 #Restart game from a selected move (context menu item)
 RestartGameFrom=Restart Game from 
 
+#Replace engine move
+ReplaceEngineMove=Replace Engine Move
+
 #Confirmation to exit training session
 ExitTrainingSession=Exit the training session?
 

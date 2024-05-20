@@ -1794,6 +1794,10 @@ RestartFrom=Cofnij do
 #english: RestartGameFrom=Restart Game from 
 RestartGameFrom=Cofnij Partię do
 
+#description: Replace engine move
+#english: ReplaceEngineMove=Replace Engine Move
+ReplaceEngineMove=Zmień Ruch Silnika
+
 #description: Confirmation to exit training session
 #english: ExitTrainingSession=Exit the training session?
 ExitTrainingSession=Wyjście z sesji treningowej

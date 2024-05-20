@@ -1276,6 +1276,9 @@
   <data name="RestartGameFrom" xml:space="preserve">
     <value>Cofnij Partię do</value>
   </data>
+  <data name="ReplaceEngineMove" xml:space="preserve">
+    <value>Zmień Ruch Silnika</value>
+  </data>
   <data name="ExitTrainingSession" xml:space="preserve">
     <value>Wyjście z sesji treningowej</value>
   </data>
