@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ChessPosition;
 using GameTree;
 
 namespace ChessForge
@@ -41,7 +42,10 @@ namespace ChessForge
         /// Whether a training session is in progress.
         /// </summary>
         public static bool IsTrainingInProgress
-        { get => _isTrainingInProgress; set => _isTrainingInProgress = value; }
+        { 
+            get => _isTrainingInProgress; 
+            set => _isTrainingInProgress = value; 
+        }
 
         /// <summary>
         /// Whether continuous engine evaluation is on during Training.
@@ -68,6 +72,11 @@ namespace ChessForge
         /// The current training line.
         /// </summary>
         public static List<TreeNode> TrainingLine = new List<TreeNode>();
+
+        /// <summary>
+        /// The side that is training. It can be different from the Workbook's training side.
+        /// </summary>
+        public static PieceColor TrainingSide;
 
         /// <summary>
         /// Sets the state of the Training session.
