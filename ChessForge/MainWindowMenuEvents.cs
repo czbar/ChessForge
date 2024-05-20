@@ -2815,6 +2815,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// The user wants to replace the clicked engine move with their own.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnReplaceEngineMove_Click(object sender, RoutedEventArgs e)
+        {
+            UiTrainingView.ReplaceEngineMove();
+        }
+
+        /// <summary>
         /// The user requested evaluation of the most recently clicked run/move.
         /// </summary>
         /// <param name="sender"></param>

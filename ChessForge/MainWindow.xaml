@@ -311,6 +311,7 @@
                                     <Separator x:Name="_mnTrainSepar_1" />
                                     <MenuItem x:Name="_mnTrainRestartGame" Header="{x:Static p:Resources.RestartGameAfter}" Click="UiMnTrainRestartGame_Click" />
                                     <MenuItem x:Name="_mnRollBackTraining" Header="{x:Static p:Resources.RestartFrom}" Click="UiMnRollBackTraining_Click" />
+                                    <MenuItem x:Name="UiMncTrainReplaceEngineMove" Header="{x:Static p:Resources.ReplaceEngineMove}"  Click="UiMnReplaceEngineMove_Click" />
                                     <Separator x:Name="_mnTrainSepar_2" />
                                     <MenuItem x:Name="_mnTrainEvalMove" Header="{x:Static p:Resources.EvaluatePosition}" Click="UiMnTrainEvalMove_Click" />
                                     <MenuItem x:Name="_mnTrainEvalLine" Header="{x:Static p:Resources.EvaluateLine}" Click="UiMnTrainEvalLine_Click" />
