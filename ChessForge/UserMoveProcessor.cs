@@ -276,7 +276,20 @@ namespace ChessForge
                 }
 
                 EngineGame.Line.AddPlyAndMove(nd);
-                EngineGame.SwitchToAwaitEngineMove(nd, endOfGame);
+
+                // here we need to disinguish between a "regular" user move (in the "else" branch below)
+                // and the case we made a manual move to replace the engine's move
+                if (TrainingSession.IsTrainingInProgress && TrainingSession.TrainingSide == nd.ColorToMove)
+                {
+                    // the user's move was replacing the existing engine's move so we stay with the user on the move.
+                    EngineGame.SwitchToAwaitUserMove(nd);
+                    // this is an "irregular" situation so must force handling of the user move that otherwise would not be invoked
+                    AppState.MainWin.UiTrainingView.UserGameMoveMade();
+                }
+                else
+                {
+                    EngineGame.SwitchToAwaitEngineMove(nd, endOfGame);
+                }
                 return true;
             }
             else
