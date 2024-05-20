@@ -89,7 +89,8 @@ namespace ChessForge
             Document.Blocks.Clear();
             AddNewParagraphToDoc("dummy", "");
 
-            if (userMove)
+            // user moved and it was not user replacing the last engine move in Training
+            if (userMove && (!TrainingSession.IsTrainingInProgress || nd.ColorToMove != TrainingSession.TrainingSide))
             {
                 AddNewParagraphToDoc("normal", Properties.Resources.YourMoveWas + ":");
                 uint moveNumberOffset = 0;
@@ -126,6 +127,29 @@ namespace ChessForge
                 AddNewParagraphToDoc("normal", Properties.Resources.YourTurn);
             }
         }
+
+        /// <summary>
+        /// Prompt the user to make a replacement move for the passed engine move.
+        /// </summary>
+        /// <param name="nd"></param>
+        public void GameEngineReplacementToMake(TreeNode nd)
+        {
+            Document.Blocks.Clear();
+            AddNewParagraphToDoc("dummy", "");
+
+            try
+            {
+                uint moveNumberOffset = 0;
+                if (AppState.ActiveVariationTree != null)
+                {
+                    moveNumberOffset = AppState.ActiveVariationTree.MoveNumberOffset;
+                }
+                AddNewParagraphToDoc("bold_16", Properties.Resources.ReplacingEngineMove);
+                AddNewParagraphToDoc("bold_16", Properties.Resources.MakeMoveForEngine);
+            }
+            catch { }
+        }
+
 
         /// <summary>
         /// A message about the chess engine being loaded
