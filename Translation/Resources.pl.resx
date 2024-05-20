@@ -1321,6 +1321,12 @@
   <data name="YourTurn" xml:space="preserve">
     <value>Kolej na Twoje posunięcie</value>
   </data>
+  <data name="ReplacingEngineMove" xml:space="preserve">
+    <value>Zażądałeś ręcznej zmiany ruchu silnika.</value>
+  </data>
+  <data name="MakeMoveForEngine" xml:space="preserve">
+    <value>Wykonaj ruch za silnik na szachownicy.</value>
+  </data>
   <data name="TrnAlternativeIs" xml:space="preserve">
     <value>Alternatywną opcją jest</value>
   </data>

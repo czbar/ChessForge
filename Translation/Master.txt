@@ -1457,6 +1457,12 @@ CoachPlayed=The coach played
 # Your turn now
 YourTurn=It is your turn now
 
+# You replacing engine's move
+ReplacingEngineMove=You requested to manually replace the engine's move.
+
+# Make the engine's replacement move
+MakeMoveForEngine=Make the move for the engine on the board.
+
 #Alternative is
 TrnAlternativeIs=The alternative is
 

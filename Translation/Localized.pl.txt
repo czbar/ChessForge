@@ -1858,6 +1858,14 @@ CoachPlayed=Trener zagrał
 #english: YourTurn=It is your turn now
 YourTurn=Kolej na Twoje posunięcie
 
+#description:  You replacing engine's move
+#english: ReplacingEngineMove=You requested to manually replace the engine's move.
+ReplacingEngineMove=Zażądałeś ręcznej zmiany ruchu silnika.
+
+#description:  Make the engine's replacement move
+#english: MakeMoveForEngine=Make the move for the engine on the board.
+MakeMoveForEngine=Wykonaj ruch za silnik na szachownicy.
+
 #description: Alternative is
 #english: TrnAlternativeIs=The alternative is
 TrnAlternativeIs=Alternatywną opcją jest
