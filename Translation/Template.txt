@@ -1794,6 +1794,10 @@ RestartFrom=
 #english: RestartGameFrom=Restart Game from 
 RestartGameFrom=
 
+#description: Replace engine move
+#english: ReplaceEngineMove=Replace Engine Move
+ReplaceEngineMove=
+
 #description: Confirmation to exit training session
 #english: ExitTrainingSession=Exit the training session?
 ExitTrainingSession=
@@ -1853,6 +1857,14 @@ CoachPlayed=
 #description:  Your turn now
 #english: YourTurn=It is your turn now
 YourTurn=
+
+#description:  You replacing engine's move
+#english: ReplacingEngineMove=You requested to manually replace the engine's move.
+ReplacingEngineMove=
+
+#description:  Make the engine's replacement move
+#english: MakeMoveForEngine=Make the move for the engine on the board.
+MakeMoveForEngine=
 
 #description: Alternative is
 #english: TrnAlternativeIs=The alternative is

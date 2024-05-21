@@ -289,6 +289,7 @@ namespace ChessForge
             _sourceType = contentType;
             _currentEngineGameMoveCount = 0;
             _trainingSide = node.ColorToMove;
+            TrainingSession.TrainingSide = _trainingSide;
 
             _startingNode = node;
             TrainingSession.ResetTrainingLine(node);
@@ -758,43 +759,48 @@ namespace ChessForge
                     }
                 }
             }
-
-            TreeNode nd = _engineGameRootNode.Children[0];
+            _paraCurrentEngineGame.Inlines.Clear();
             _currentEngineGameMoveCount = 0;
 
-            // preserve note about the workbook line ending if there was one
-            Run rWbEnded = GetWorkbookEndedRun();
-
-            _paraCurrentEngineGame.Inlines.Clear();
-            if (rWbEnded != null)
+            // in the EngineMoveReplacement scenario _engineGameRootNode.Children.Count can be zero
+            // (if we are replacing the very first engine move)
+            if (_engineGameRootNode.Children.Count > 0)
             {
-                _paraCurrentEngineGame.Inlines.Add(rWbEnded);
-            }
+                TreeNode nd = _engineGameRootNode.Children[0];
 
-            Brush moveColor = ChessForgeColors.CurrentTheme.TrainingEngineGameForeground;
-            _paraCurrentEngineGame.Inlines.Add(new Run("\n" + Properties.Resources.TrnGameInProgress + "\n"));
-            string text = "          " + MoveUtils.BuildSingleMoveText(nd, true, false, _moveNumberOffset) + " ";
-            Run r_root = CreateButtonRun(text, _run_engine_game_move_ + nd.NodeId.ToString(), moveColor);
-            _paraCurrentEngineGame.Inlines.Add(r_root);
-            if (dictEvalRunsToKeep.ContainsKey(nd.NodeId))
-            {
-                _paraCurrentEngineGame.Inlines.Add(dictEvalRunsToKeep[nd.NodeId]);
-            }
+                // preserve note about the workbook line ending if there was one
+                Run rWbEnded = GetWorkbookEndedRun();
 
-            _currentEngineGameMoveCount++;
+                if (rWbEnded != null)
+                {
+                    _paraCurrentEngineGame.Inlines.Add(rWbEnded);
+                }
 
-            while (nd.Children.Count > 0)
-            {
-                nd = nd.Children[0];
-                _currentEngineGameMoveCount++;
-                text = MoveUtils.BuildSingleMoveText(nd, false, false, _moveNumberOffset) + " ";
-                Run gm = CreateButtonRun(text, _run_engine_game_move_ + nd.NodeId.ToString(), moveColor);
-                _paraCurrentEngineGame.Inlines.Add(gm);
+                Brush moveColor = ChessForgeColors.CurrentTheme.TrainingEngineGameForeground;
+                _paraCurrentEngineGame.Inlines.Add(new Run("\n" + Properties.Resources.TrnGameInProgress + "\n"));
+                string text = "          " + MoveUtils.BuildSingleMoveText(nd, true, false, _moveNumberOffset) + " ";
+                Run r_root = CreateButtonRun(text, _run_engine_game_move_ + nd.NodeId.ToString(), moveColor);
+                _paraCurrentEngineGame.Inlines.Add(r_root);
                 if (dictEvalRunsToKeep.ContainsKey(nd.NodeId))
                 {
                     _paraCurrentEngineGame.Inlines.Add(dictEvalRunsToKeep[nd.NodeId]);
                 }
-            };
+
+                _currentEngineGameMoveCount++;
+
+                while (nd.Children.Count > 0)
+                {
+                    nd = nd.Children[0];
+                    _currentEngineGameMoveCount++;
+                    text = MoveUtils.BuildSingleMoveText(nd, false, false, _moveNumberOffset) + " ";
+                    Run gm = CreateButtonRun(text, _run_engine_game_move_ + nd.NodeId.ToString(), moveColor);
+                    _paraCurrentEngineGame.Inlines.Add(gm);
+                    if (dictEvalRunsToKeep.ContainsKey(nd.NodeId))
+                    {
+                        _paraCurrentEngineGame.Inlines.Add(dictEvalRunsToKeep[nd.NodeId]);
+                    }
+                };
+            }
         }
 
         /// <summary>
@@ -1523,6 +1529,13 @@ namespace ChessForge
                                 mi.Header = Properties.Resources.RestartFrom + " " + moveTxt;
                                 mi.Visibility = (_moveContext == MoveContext.LINE || _moveContext == MoveContext.WORKBOOK_COMMENT) ? Visibility.Visible : Visibility.Collapsed;
                                 break;
+                            case "UiMncTrainReplaceEngineMove":
+                                mi.Header = Properties.Resources.ReplaceEngineMove + " " + moveTxt;
+                                mi.Visibility = (_moveContext == MoveContext.GAME 
+                                                 && EngineGame.CurrentState == EngineGame.GameState.USER_THINKING
+                                                 && _lastClickedNode.ColorToMove == TrainingSession.TrainingSide) 
+                                                 ? Visibility.Visible : Visibility.Collapsed;
+                                break;
                             case "_mnTrainSwitchToWorkbook":
                                 string altMove = Properties.Resources.TrnPlayMoveInstead;
                                 altMove = altMove.Replace("$0", moveTxt);
@@ -1630,31 +1643,165 @@ namespace ChessForge
                 {
                     if (_lastClickedNode.ColorToMove != _trainingSide)
                     {
-                        SoundPlayer.PlayMoveSound(_lastClickedNode.LastMoveAlgebraicNotation);
-                        EngineGame.RestartAtUserMove(nd);
-                        _mainWin.BoardCommentBox.GameMoveMade(nd, true);
+                        RestartGameAtUserMove(nd);
                     }
                     else
                     {
-                        SoundPlayer.PlayMoveSound(_lastClickedNode.LastMoveAlgebraicNotation);
-                        EngineGame.RestartAtEngineMove(nd);
-                        if (TrainingSession.IsContinuousEvaluation)
-                        {
-                            RequestMoveEvaluation(_mainWin.ActiveVariationTreeId, true);
-                        }
-                        _mainWin.BoardCommentBox.GameMoveMade(nd, false);
+                        RestartGameAtEngineMove(nd);
                     }
-                    _mainWin.DisplayPosition(nd);
-                    RebuildEngineGamePara(nd);
 
-                    RemoveCheckmatePara();
-                    RemoveStalematePara();
+                    UpdateViewForGameRestart(nd);
                 }
                 catch (Exception ex)
                 {
                     AppLog.Message("RestartGameAfter()", ex);
                 }
             }
+        }
+
+        /// <summary>
+        /// Switches to special mode where this is the engine's turn but we are allowing the user 
+        /// to manually enter the move that will replace the current engine's move.
+        /// </summary>
+        public void ReplaceEngineMove()
+        {
+            // first check that we are indeed replacing an engine move
+            TreeNode nd = _lastClickedNode;
+            if (nd != null && _lastClickedNode.ColorToMove == _trainingSide)
+            {
+                try
+                {
+                    // pretend that the parent of this move was engine's move so we can enter the wait-for-user mode.
+                    // in effect, we are changing sides for a single ply
+                    RestartGameAtEngineMove(nd.Parent, true);
+                    UpdateViewForGameRestart(nd.Parent);
+                }
+                catch (Exception ex)
+                {
+                    AppLog.Message("ReplaceEngineMove()", ex);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Roll back training to the last selected node
+        /// or the move before.
+        /// </summary>
+        public void RollbackTraining()
+        {
+            if (!TrainingSession.IsContinuousEvaluation)
+            {
+                _mainWin.StopEvaluation(true);
+            }
+
+            if (_lastClickedNode != null)
+            {
+                if (_lastClickedNode.ColorToMove == _trainingSide)
+                {
+                    RollbackToUserMove();
+                }
+                else
+                {
+                    // A user move was clicked so rollback to the previous Workbook move
+                    RollbackToWorkbookMove();
+                }
+            }
+
+            // TODO: remove when no side effects seen
+            //if (TrainingSession.IsContinuousEvaluation)
+            //{
+            //    RequestMoveEvaluation(_mainWin.ActiveVariationTreeId, true);
+            //}
+        }
+
+        /// <summary>
+        /// Handles key presses.
+        /// </summary>
+        /// <param name="e"></param>
+        public void ProcessKeyDown(KeyEventArgs e)
+        {
+            try
+            {
+                switch (e.Key)
+                {
+                    case Key.Space:
+                        if (TrainingSession.IsTakebackAvailable)
+                        {
+                            RestartFromLastUserWorkbookMove();
+                            e.Handled = true;
+                        }
+                        break;
+                }
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// Removes all training moves below the specified node.
+        /// There should be at most one training node child under the node.
+        /// </summary>
+        /// <param name="nd"></param>
+        public void RemoveTrainingMoves(TreeNode nd)
+        {
+            if (nd != null)
+            {
+                foreach (TreeNode child in nd.Children)
+                {
+                    if (child.IsNewTrainingMove)
+                    {
+                        _mainWin.ActiveVariationTree.DeleteRemainingMoves(child);
+                    }
+                    break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Restarts the game at the passed user move.
+        /// </summary>
+        /// <param name="nd"></param>
+        private void RestartGameAtUserMove(TreeNode nd)
+        {
+            SoundPlayer.PlayMoveSound(nd.LastMoveAlgebraicNotation);
+            EngineGame.RestartAtUserMove(nd);
+            _mainWin.BoardCommentBox.GameMoveMade(nd, true);
+        }
+
+        /// <summary>
+        /// Restarts the game at the specified engine move.
+        /// </summary>
+        /// <param name="nd"></param>
+        private void RestartGameAtEngineMove(TreeNode nd, bool isEngineMoveReplacement = false)
+        {
+            SoundPlayer.PlayMoveSound(nd.LastMoveAlgebraicNotation);
+            EngineGame.RestartAtEngineMove(nd);
+            if (TrainingSession.IsContinuousEvaluation)
+            {
+                RequestMoveEvaluation(_mainWin.ActiveVariationTreeId, true);
+            }
+
+            if (isEngineMoveReplacement)
+            {
+                _mainWin.BoardCommentBox.GameEngineReplacementToMake(nd);
+            }
+            else
+            {
+                _mainWin.BoardCommentBox.GameMoveMade(nd, false);
+            }
+        }
+
+        /// <summary>
+        /// Updates the chessboard with the current position
+        /// and refreshes the game paragraphs.
+        /// </summary>
+        /// <param name="nd"></param>
+        private void UpdateViewForGameRestart(TreeNode nd)
+        {
+            _mainWin.DisplayPosition(nd);
+            RebuildEngineGamePara(nd);
+
+            RemoveCheckmatePara();
+            RemoveStalematePara();
         }
 
         /// <summary>
@@ -1736,79 +1883,6 @@ namespace ChessForge
             }
 
             e.Handled = true;
-        }
-
-        /// <summary>
-        /// Roll back training to the last selected node
-        /// or the move before.
-        /// </summary>
-        public void RollbackTraining()
-        {
-            if (!TrainingSession.IsContinuousEvaluation)
-            {
-                _mainWin.StopEvaluation(true);
-            }
-
-            if (_lastClickedNode != null)
-            {
-                if (_lastClickedNode.ColorToMove == _trainingSide)
-                {
-                    RollbackToUserMove();
-                }
-                else
-                {
-                    // A user move was clicked so rollback to the previous Workbook move
-                    RollbackToWorkbookMove();
-                }
-            }
-
-            // TODO: remove when no side effects seen
-            //if (TrainingSession.IsContinuousEvaluation)
-            //{
-            //    RequestMoveEvaluation(_mainWin.ActiveVariationTreeId, true);
-            //}
-        }
-
-        /// <summary>
-        /// Handles key presses.
-        /// </summary>
-        /// <param name="e"></param>
-        public void ProcessKeyDown(KeyEventArgs e)
-        {
-            try
-            {
-                switch (e.Key)
-                {
-                    case Key.Space:
-                        if (TrainingSession.IsTakebackAvailable)
-                        {
-                            RestartFromLastUserWorkbookMove();
-                            e.Handled = true;
-                        }
-                        break;
-                }
-            }
-            catch { }
-        }
-
-        /// <summary>
-        /// Removes all training moves below the specified node.
-        /// There should be at most one training node child under the node.
-        /// </summary>
-        /// <param name="nd"></param>
-        public void RemoveTrainingMoves(TreeNode nd)
-        {
-            if (nd != null)
-            {
-                foreach (TreeNode child in nd.Children)
-                {
-                    if (child.IsNewTrainingMove)
-                    {
-                        _mainWin.ActiveVariationTree.DeleteRemainingMoves(child);
-                    }
-                    break;
-                }
-            }
         }
 
         /// <summary>

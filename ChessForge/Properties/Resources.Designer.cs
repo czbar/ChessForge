@@ -4085,6 +4085,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Make the move for the engine on the board..
+        /// </summary>
+        public static string MakeMoveForEngine {
+            get {
+                return ResourceManager.GetString("MakeMoveForEngine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manage Chapter.
         /// </summary>
         public static string ManageChapter {
@@ -5747,6 +5756,24 @@ namespace ChessForge.Properties {
         public static string ReorderLines {
             get {
                 return ResourceManager.GetString("ReorderLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace Engine Move.
+        /// </summary>
+        public static string ReplaceEngineMove {
+            get {
+                return ResourceManager.GetString("ReplaceEngineMove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You requested to manually replace the engine&apos;s move.
+        /// </summary>
+        public static string ReplacingEngineMove {
+            get {
+                return ResourceManager.GetString("ReplacingEngineMove", resourceCulture);
             }
         }
         

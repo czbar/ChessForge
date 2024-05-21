@@ -583,23 +583,14 @@ namespace ChessForge
                         switch (mi.Name)
                         {
                             case "_mnTrainEvalMove":
-                                mi.Visibility = Visibility.Collapsed;
-                                break;
                             case "_mnTrainEvalLine":
-                                mi.Visibility = Visibility.Collapsed;
-                                break;
                             case "_mnTrainRestartGame":
-                                mi.Visibility = Visibility.Collapsed;
-                                break;
                             case "_mnRollBackTraining":
-                                mi.Visibility = Visibility.Collapsed;
-                                break;
                             case "_mnTrainSwitchToWorkbook":
+                            case "UiMncTrainReplaceEngineMove":
                                 mi.Visibility = Visibility.Collapsed;
                                 break;
                             case "_mnTrainRestartTraining":
-                                mi.Visibility = Visibility.Visible;
-                                break;
                             case "_mnTrainExitTraining":
                                 mi.Visibility = Visibility.Visible;
                                 break;

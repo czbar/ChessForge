@@ -77,19 +77,22 @@ namespace ChessForge
         /// </summary>
         public static void UpdateEngineToggleImages()
         {
-            if (MainWin.UiImgEngineOn.Visibility == Visibility.Visible || MainWin.UiImgEngineOnGray.Visibility == Visibility.Visible)
+            MainWin.Dispatcher.Invoke(() =>
             {
-                if (EngineEvaluationsUpdateble)
+                if (MainWin.UiImgEngineOn.Visibility == Visibility.Visible || MainWin.UiImgEngineOnGray.Visibility == Visibility.Visible)
                 {
-                    _mainWin.UiImgEngineOn.Visibility = Visibility.Visible;
-                    _mainWin.UiImgEngineOnGray.Visibility = Visibility.Collapsed;
+                    if (EngineEvaluationsUpdateble)
+                    {
+                        _mainWin.UiImgEngineOn.Visibility = Visibility.Visible;
+                        _mainWin.UiImgEngineOnGray.Visibility = Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        _mainWin.UiImgEngineOn.Visibility = Visibility.Collapsed;
+                        _mainWin.UiImgEngineOnGray.Visibility = Visibility.Visible;
+                    }
                 }
-                else
-                {
-                    _mainWin.UiImgEngineOn.Visibility = Visibility.Collapsed;
-                    _mainWin.UiImgEngineOnGray.Visibility = Visibility.Visible;
-                }
-            }
+            });
         }
 
         /// <summary>

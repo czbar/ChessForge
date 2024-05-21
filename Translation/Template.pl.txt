@@ -1794,6 +1794,10 @@ RestartFrom=Cofnij do
 #english: RestartGameFrom=Restart Game from 
 RestartGameFrom=Cofnij Partię do
 
+#description: Replace engine move
+#english: ReplaceEngineMove=Replace Engine Move
+ReplaceEngineMove=Zmień Ruch Silnika
+
 #description: Confirmation to exit training session
 #english: ExitTrainingSession=Exit the training session?
 ExitTrainingSession=Wyjście z sesji treningowej
@@ -1853,6 +1857,14 @@ CoachPlayed=Trener zagrał
 #description:  Your turn now
 #english: YourTurn=It is your turn now
 YourTurn=Kolej na Twoje posunięcie
+
+#description:  You replacing engine's move
+#english: ReplacingEngineMove=You requested to manually replace the engine's move.
+ReplacingEngineMove=Zażądałeś ręcznej zmiany ruchu silnika.
+
+#description:  Make the engine's replacement move
+#english: MakeMoveForEngine=Make the move for the engine on the board.
+MakeMoveForEngine=Wykonaj ruch za silnik na szachownicy.
 
 #description: Alternative is
 #english: TrnAlternativeIs=The alternative is
