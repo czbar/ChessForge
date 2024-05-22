@@ -169,6 +169,11 @@ namespace GameTree
         public const string KEY_INDEX_DEPTH = "IndexDepth";
 
         /// <summary>
+        /// Depth of the index in the Study View
+        /// </summary>
+        public const string KEY_SHOW_ALL_SOLUTIONS = "ShowSolutions";
+
+        /// <summary>
         /// A preamble line. There can be many per header and will be combined
         /// together into a preamble.
         /// </summary>

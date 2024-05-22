@@ -266,7 +266,7 @@ namespace GameTree
             {
                 return null;
             }
-            
+
             return _headers.Where(kvp => kvp.Key == key).FirstOrDefault().Value;
         }
 
@@ -410,6 +410,15 @@ namespace GameTree
             {
                 return value;
             }
+        }
+
+        /// <summary>
+        /// Returns the value of the "ShowAllSolutions" header.
+        /// </summary>
+        /// <returns></returns>
+        public string GetShowAllSolutions()
+        {
+            return _headers.Where(kvp => kvp.Key == PgnHeaders.KEY_SHOW_ALL_SOLUTIONS).FirstOrDefault().Value;
         }
 
         /// <summary>
