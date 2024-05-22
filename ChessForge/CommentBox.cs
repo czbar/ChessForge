@@ -81,6 +81,34 @@ namespace ChessForge
         };
 
         /// <summary>
+        /// When the user switches between the Light and Dark mode, we cannot easily repaint the comment box as
+        /// we don't keep track of what is exactly displayed there.
+        /// Therefore, we simply apply the CurrentTheme.RtbForeground and CurrentTheme.RtbBackground
+        /// to all Paragraphs and Runs.
+        /// It will be exactly what's needed in most cases and in others, temporarily the colors may be a little
+        /// different than expected. The effort to make it perfect would not be justified.
+        /// </summary>
+        public void UpdateColorTheme()
+        {
+            foreach (Block block in Document.Blocks)
+            {
+                if (block is Paragraph para)
+                {
+                    para.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
+                    para.Background = ChessForgeColors.CurrentTheme.RtbBackground;
+                    foreach (Inline inl in para.Inlines)
+                    {
+                        if (inl is Run run)
+                        {
+                            run.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
+                            run.Background = ChessForgeColors.CurrentTheme.RtbBackground;
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Displays the last move made by the user.
         /// </summary>
         /// <param name="nd"></param>
