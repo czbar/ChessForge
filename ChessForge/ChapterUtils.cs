@@ -40,9 +40,9 @@ namespace ChessForge
                             AppState.IsDirty = true;
                         }
 
-                        if (dlg.ShowSolutionOnOpen != chapter.ShowAllSolutions)
+                        if (dlg.ShowSolutionOnOpen != chapter.ShowSolutionsOnOpen)
                         {
-                            chapter.ShowAllSolutions = dlg.ShowSolutionOnOpen;
+                            chapter.ShowSolutionsOnOpen = dlg.ShowSolutionOnOpen;
                             AppState.MainWin.UpdateShowSolutionInExerciseView(dlg.ShowSolutionOnOpen);
                             UpdateShowSolutions(dlg.ApplyToAllChapters ? null : chapter, dlg.ShowSolutionOnOpen);
                             AppState.IsDirty = true;

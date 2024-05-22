@@ -416,9 +416,9 @@ namespace GameTree
         /// Returns the value of the "ShowAllSolutions" header.
         /// </summary>
         /// <returns></returns>
-        public string GetShowAllSolutions()
+        public string GetShowSolutionsOnOpen()
         {
-            return _headers.Where(kvp => kvp.Key == PgnHeaders.KEY_SHOW_ALL_SOLUTIONS).FirstOrDefault().Value;
+            return _headers.Where(kvp => kvp.Key == PgnHeaders.KEY_SHOW_SOLUTIONS_ON_OPEN).FirstOrDefault().Value;
         }
 
         /// <summary>

@@ -45,15 +45,15 @@ namespace ChessForge
         /// <summary>
         /// Whether solution to the Exercises should be shown or hidden when opening.
         /// </summary>
-        public bool ShowAllSolutions
+        public bool ShowSolutionsOnOpen
         {
             get
             {
-                return StudyTree.Tree.Header.GetShowAllSolutions() == "1";
+                return StudyTree.Tree.Header.GetShowSolutionsOnOpen() == "1";
             }
             set
             {
-                StudyTree.Tree.Header.SetHeaderValue(PgnHeaders.KEY_SHOW_ALL_SOLUTIONS, value ? "1" : "0"); 
+                StudyTree.Tree.Header.SetHeaderValue(PgnHeaders.KEY_SHOW_SOLUTIONS_ON_OPEN, value ? "1" : "0"); 
             }
         }
 

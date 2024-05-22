@@ -62,7 +62,7 @@ namespace ChessForge
         {
             InitializeComponent();
 
-            ShowSolutionOnOpen = chapter.ShowAllSolutions;
+            ShowSolutionOnOpen = chapter.ShowSolutionsOnOpen;
             UiCbShowSolutions.IsChecked = ShowSolutionOnOpen;
 
             UiLabelChapterTitle.Content = Properties.Resources.Chapter + ": " + chapter.GetTitle();

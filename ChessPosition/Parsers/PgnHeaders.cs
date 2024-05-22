@@ -171,7 +171,7 @@ namespace GameTree
         /// <summary>
         /// Depth of the index in the Study View
         /// </summary>
-        public const string KEY_SHOW_ALL_SOLUTIONS = "ShowSolutions";
+        public const string KEY_SHOW_SOLUTIONS_ON_OPEN = "ShowSolutionsOnOpen";
 
         /// <summary>
         /// A preamble line. There can be many per header and will be combined
