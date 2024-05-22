@@ -21,6 +21,11 @@ namespace ChessForge
         public bool RegenerateStudy = false;
 
         /// <summary>
+        /// In Exercises: whether to show solutions on open
+        /// </summary>
+        public bool ShowSolutionOnOpen;
+
+        /// <summary>
         /// Selected Sort Criterion
         /// </summary>
         public GameSortCriterion.SortItem SortGamesBy = GameSortCriterion.SortItem.NONE;
@@ -56,6 +61,9 @@ namespace ChessForge
         public ManageChapterDialog(Chapter chapter)
         {
             InitializeComponent();
+
+            ShowSolutionOnOpen = chapter.ShowAllSolutions;
+            UiCbShowSolutions.IsChecked = ShowSolutionOnOpen;
 
             UiLabelChapterTitle.Content = Properties.Resources.Chapter + ": " + chapter.GetTitle();
 
@@ -142,6 +150,8 @@ namespace ChessForge
                 }
                 Configuration.AutogenTreeDepth = treeDepth;
             }
+
+            ShowSolutionOnOpen = UiCbShowSolutions.IsChecked == true;   
 
             GameSortCriterion crit = UiComboBoxSortBy.SelectedItem as GameSortCriterion;
             if (crit != null && crit.ItemId != GameSortCriterion.SortItem.NONE)
