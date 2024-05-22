@@ -2048,6 +2048,24 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Shows/hides solution in the current exercise view
+        /// </summary>
+        public void UpdateShowSolutionInExerciseView(bool show)
+        {
+            try
+            {
+                if (_exerciseTreeView != null)
+                {
+                    _exerciseTreeView.ShowHideSolution(show);
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("UpdateShowSolutionInExerciseView()", ex);
+            }
+        }
+
+        /// <summary>
         /// Marks the current node as a Thumbnail for the current tree.
         /// </summary>
         /// <param name="sender"></param>
@@ -2238,17 +2256,12 @@ namespace ChessForge
             try
             {
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                foreach (Article exc in chapter.Exercises)
+                if (chapter != null)
                 {
-                    exc.Tree.ShowTreeLines = true;
+                    ChapterUtils.UpdateShowSolutionsInChapter(chapter, true);
+                    UpdateShowSolutionInExerciseView(true);
+                    BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgSolutionsShown, CommentBox.HintType.INFO);
                 }
-
-                if (_exerciseTreeView != null)
-                {
-                    _exerciseTreeView.ShowHideSolution(true);
-                }
-
-                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgSolutionsShown, CommentBox.HintType.INFO);
             }
             catch (Exception ex)
             {
@@ -2268,17 +2281,12 @@ namespace ChessForge
             try
             {
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                foreach (Article exc in chapter.Exercises)
+                if (chapter != null)
                 {
-                    exc.Tree.ShowTreeLines = false;
+                    ChapterUtils.UpdateShowSolutionsInChapter(chapter, false);
+                    UpdateShowSolutionInExerciseView(false);
+                    BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgSolutionsHidden, CommentBox.HintType.INFO);
                 }
-
-                if (_exerciseTreeView != null)
-                {
-                    _exerciseTreeView.ShowHideSolution(false);
-                }
-
-                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgSolutionsHidden, CommentBox.HintType.INFO);
             }
             catch (Exception ex)
             {
