@@ -427,6 +427,36 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Update the chapter title that is displayed above the Study Tree.
+        /// </summary>
+        public void UpdateChapterTitle()
+        {
+            if (WorkbookManager.SessionWorkbook.ActiveChapter != null)
+            {
+                if (_pageHeaderParagraph == null)
+                {
+                    _pageHeaderParagraph = CreateParagraph("0", true);
+                    _pageHeaderParagraph.MouseLeftButtonDown += EventPageHeaderClicked;
+                }
+
+                _pageHeaderParagraph.Inlines.Clear();
+
+                Run rPrefix = new Run();
+                rPrefix.TextDecorations = TextDecorations.Underline;
+                _pageHeaderParagraph.Inlines.Add(rPrefix);
+
+                Run r = new Run(WorkbookManager.SessionWorkbook.ActiveChapter.GetTitle());
+                r.TextDecorations = TextDecorations.Underline;
+                _pageHeaderParagraph.Inlines.Add(r);
+            }
+        }
+
+
+        /// <summary>
+        /// A dummoy method to be overridden in the Exercise view.
+        /// </summary>
+        /// <returns></returns>
         virtual public Paragraph BuildGuessingFinishedParagraph()
         {
             return null;
@@ -1114,19 +1144,7 @@ namespace ChessForge
                         }
                         break;
                     case GameData.ContentType.STUDY_TREE:
-                        if (WorkbookManager.SessionWorkbook.ActiveChapter != null)
-                        {
-                            _pageHeaderParagraph = CreateParagraph("0", true);
-                            _pageHeaderParagraph.MouseLeftButtonDown += EventPageHeaderClicked;
-
-                            Run rPrefix = new Run();
-                            rPrefix.TextDecorations = TextDecorations.Underline;
-                            _pageHeaderParagraph.Inlines.Add(rPrefix);
-
-                            Run r = new Run(WorkbookManager.SessionWorkbook.ActiveChapter.GetTitle());
-                            r.TextDecorations = TextDecorations.Underline;
-                            _pageHeaderParagraph.Inlines.Add(r);
-                        }
+                        UpdateChapterTitle();
                         break;
                 }
             }
