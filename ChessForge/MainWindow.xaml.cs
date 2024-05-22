@@ -2957,13 +2957,16 @@ namespace ChessForge
                 chapter.SetTitle(dlg.ChapterTitle);
                 _chaptersView.BuildFlowDocumentForChaptersView();
                 // study tree also shows title so update it there
-                // TODO: update only the Header
                 if (_studyTreeView == null)
                 {
                     _studyTreeView = new StudyTreeView(UiRtbStudyTreeView, GameData.ContentType.STUDY_TREE, -1);
+                    _studyTreeView.BuildFlowDocumentForVariationTree();
+                }
+                else
+                {
+                    _studyTreeView.UpdateChapterTitle();
                 }
 
-                _studyTreeView.BuildFlowDocumentForVariationTree();
                 AppState.IsDirty = true;
                 return true;
             }
