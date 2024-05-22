@@ -43,7 +43,22 @@ namespace ChessForge
         public bool AlwaysShowIntroTab = false;
 
         /// <summary>
-        /// Wheter Intro tab is to be shown
+        /// Whether solution to the Exercises should be shown or hidden when opening.
+        /// </summary>
+        public bool ShowAllSolutions
+        {
+            get
+            {
+                return StudyTree.Tree.Header.GetShowAllSolutions() == "1";
+            }
+            set
+            {
+                StudyTree.Tree.Header.SetHeaderValue(PgnHeaders.KEY_SHOW_ALL_SOLUTIONS, value ? "1" : "0"); 
+            }
+        }
+
+        /// <summary>
+        /// Whether the Intro tab is to be shown
         /// </summary>
         public bool ShowIntro
         {
