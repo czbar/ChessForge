@@ -2318,6 +2318,10 @@ Exercise0of0=Ćwiczenie $0 z $1
 #english: ShowSolutionsInChapter=Show All Solutions in Chapter
 ShowSolutionsInChapter=Pokaż Wszystkie Rozwiązania w Rozdziale
 
+#description: Show/hide all solutions by default
+#english: ShowSolutionsByDefault=Show Solutions on Open
+ShowSolutionsByDefault=Pokaż rozwiązania po otwarciu
+
 #description: Hide all solutions in chapter
 #english: HideSolutionsInChapter=Hide All Solutions in Chapter
 HideSolutionsInChapter=Ukryj Wszystkie Rozwiązania w Rozdziale

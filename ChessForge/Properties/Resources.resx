@@ -1630,6 +1630,9 @@
   <data name="ShowSolutionsInChapter" xml:space="preserve">
     <value>Show All Solutions in Chapter</value>
   </data>
+  <data name="ShowSolutionsByDefault" xml:space="preserve">
+    <value>Show Solutions on Open</value>
+  </data>
   <data name="HideSolutionsInChapter" xml:space="preserve">
     <value>Hide All Solutions in Chapter</value>
   </data>

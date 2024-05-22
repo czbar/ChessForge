@@ -1630,6 +1630,9 @@
   <data name="ShowSolutionsInChapter" xml:space="preserve">
     <value>Pokaż Wszystkie Rozwiązania w Rozdziale</value>
   </data>
+  <data name="ShowSolutionsByDefault" xml:space="preserve">
+    <value>Pokaż rozwiązania po otwarciu</value>
+  </data>
   <data name="HideSolutionsInChapter" xml:space="preserve">
     <value>Ukryj Wszystkie Rozwiązania w Rozdziale</value>
   </data>

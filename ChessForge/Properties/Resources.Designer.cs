@@ -5769,7 +5769,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You requested to manually replace the engine&apos;s move.
+        ///   Looks up a localized string similar to You requested to manually replace the engine&apos;s move..
         /// </summary>
         public static string ReplacingEngineMove {
             get {
@@ -6368,6 +6368,15 @@ namespace ChessForge.Properties {
         public static string ShowSolution {
             get {
                 return ResourceManager.GetString("ShowSolution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Solutions.
+        /// </summary>
+        public static string ShowSolutionsByDefault {
+            get {
+                return ResourceManager.GetString("ShowSolutionsByDefault", resourceCulture);
             }
         }
         
