@@ -3432,10 +3432,7 @@ namespace ChessForge
                     RebuildAllTreeViews(null, true);
                     _openingStatsView.UpdateColorTheme();
                     _topGamesView.UpdateColorTheme();
-                    if (UiRtbBoardComment.Visibility == Visibility.Visible)
-                    {
-                        BoardCommentBox.ShowTabHints();
-                    }
+                    BoardCommentBox.UpdateColorTheme();
                 }
                 catch (Exception ex)
                 {
@@ -3462,10 +3459,7 @@ namespace ChessForge
                     RebuildAllTreeViews(null, true);
                     _openingStatsView.UpdateColorTheme();
                     _topGamesView.UpdateColorTheme();
-                    if (UiRtbBoardComment.Visibility == Visibility.Visible)
-                    {
-                        BoardCommentBox.ShowTabHints();
-                    }
+                    BoardCommentBox.UpdateColorTheme();
                 }
                 catch (Exception ex)
                 {
