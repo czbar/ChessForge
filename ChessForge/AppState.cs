@@ -816,7 +816,7 @@ namespace ChessForge
             IsDirty = false;
             WorkbookManager.ClearAll();
             Workbook?.GamesManager.CancelAll();
-            _mainWin.ClearTreeViews();
+            _mainWin.ClearTreeViews(true);
             MainWin.UiTabIntro.Visibility = Visibility.Collapsed;
             _mainWin.UiTabChapters.Focus();
             _mainWin.SetupGuiForChapters();
