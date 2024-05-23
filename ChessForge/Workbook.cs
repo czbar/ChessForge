@@ -265,6 +265,7 @@ namespace ChessForge
                         case GameData.ContentType.EXERCISE:
                             chapter.Exercises.Add(article);
                             article.ShowSolutionByDefault = chapter.ShowSolutionsOnOpen;
+                            article.Tree.ShowTreeLines = chapter.ShowSolutionsOnOpen;
                             break;
                     }
 
