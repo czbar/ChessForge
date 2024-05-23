@@ -14,7 +14,6 @@ using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 using WebAccess;
 using System.Management;
 
@@ -140,6 +139,11 @@ namespace ChessForge
                     _studyTreeView.BuildFlowDocumentForVariationTree();
                 }
             }
+            else
+            {
+                PreviousNextViewBars.BuildPreviousNextBar(GameData.ContentType.STUDY_TREE);
+            }
+
             if (_modelGameTreeView != null)
             {
                 _modelGameTreeView.Clear(GameData.ContentType.MODEL_GAME);
@@ -148,6 +152,11 @@ namespace ChessForge
                     _modelGameTreeView.BuildFlowDocumentForVariationTree();
                 }
             }
+            else
+            {
+                PreviousNextViewBars.BuildPreviousNextBar(GameData.ContentType.MODEL_GAME);
+            }
+
             if (_exerciseTreeView != null)
             {
                 _exerciseTreeView.Clear(GameData.ContentType.EXERCISE);
@@ -155,6 +164,10 @@ namespace ChessForge
                 {
                     _exerciseTreeView.BuildFlowDocumentForVariationTree();
                 }
+            }
+            else
+            {
+                PreviousNextViewBars.BuildPreviousNextBar(GameData.ContentType.EXERCISE);
             }
         }
 
@@ -1450,7 +1463,17 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnCloseWorkbook_Click(object sender, RoutedEventArgs e)
         {
-            WorkbookManager.AskToSaveWorkbookOnClose();
+            // check if training is in progress
+            if (TrainingSession.IsTrainingInProgress)
+            {
+                UiMnStopTraining_Click(null, null);
+            }
+
+            // check that the user have not cancelled exit from training in the block above
+            if (!TrainingSession.IsTrainingInProgress)
+            {
+                WorkbookManager.AskToSaveWorkbookOnClose();
+            }
         }
 
         /// <summary>
@@ -2793,12 +2816,6 @@ namespace ChessForge
         public bool ShowWorkbookOptionsDialog(bool save)
         {
             WorkbookOptionsDialog dlg = new WorkbookOptionsDialog(SessionWorkbook);
-            //{
-            //    Left = ChessForgeMain.Left + 100,
-            //    Top = ChessForgeMain.Top + 100,
-            //    Topmost = false,
-            //    Owner = this
-            //};
             GuiUtilities.PositionDialog(dlg, this, 100);
 
             dlg.ShowDialog();
