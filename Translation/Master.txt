@@ -65,9 +65,6 @@ Event=Event
 #Header
 Header=Header
 
-#Preamble
-Preamble=Preamble
-
 #Chapter
 Chapter=Chapter
 
@@ -225,12 +222,6 @@ Elo=Elo
 #Best move
 BestMove=best
 
-#Game Header
-GameHeader=Game Header
-
-#Exercise Header
-ExerciseHeader=Exercise Header
-
 #Request to evaluate a position
 EvaluatePosition=Evaluate Position
 
@@ -339,6 +330,27 @@ GoForward=Go forward (ALT + →)
 
 #Go back 
 GoBack=Go back (ALT + ←)
+
+
+##################################
+#
+# Header: ARTICLE HEADER
+#
+
+#Preamble
+Preamble=Preamble
+
+#Annotator
+Annotator=Annotator
+
+#Author
+Author=Author
+
+#Game Header
+GameHeader=Game Header
+
+#Exercise Header
+ExerciseHeader=Exercise Header
 
 
 ##################################

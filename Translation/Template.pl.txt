@@ -81,10 +81,6 @@ Event=Miejsce
 #english: Header=Header
 Header=Nagłówek
 
-#description: Preamble
-#english: Preamble=Preamble
-Preamble=Opis
-
 #description: Chapter
 #english: Chapter=Chapter
 Chapter=Rozdział
@@ -294,14 +290,6 @@ Elo=Elo
 #english: BestMove=best
 BestMove=najlepsze
 
-#description: Game Header
-#english: GameHeader=Game Header
-GameHeader=Nagłówek Partii
-
-#description: Exercise Header
-#english: ExerciseHeader=Exercise Header
-ExerciseHeader=Nagłówek Ćwiczenia
-
 #description: Request to evaluate a position
 #english: EvaluatePosition=Evaluate Position
 EvaluatePosition=Oceń pozycję
@@ -445,6 +433,32 @@ GoForward=Idź do przodu (ALT + →)
 #description: Go back 
 #english: GoBack=Go back (ALT + ←)
 GoBack=Idź wstecz (ALT + ←)
+
+
+##################################
+#
+# Header: ARTICLE HEADER
+#
+
+#description: Preamble
+#english: Preamble=Preamble
+Preamble=Opis
+
+#description: Annotator
+#english: Annotator=Annotator
+Annotator=Komentator
+
+#description: Author
+#english: Author=Author
+Author=Autor
+
+#description: Game Header
+#english: GameHeader=Game Header
+GameHeader=Nagłówek Partii
+
+#description: Exercise Header
+#english: ExerciseHeader=Exercise Header
+ExerciseHeader=Nagłówek Ćwiczenia
 
 
 ##################################

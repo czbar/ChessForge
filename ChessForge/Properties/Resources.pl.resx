@@ -165,9 +165,6 @@
   <data name="Header" xml:space="preserve">
     <value>Nagłówek</value>
   </data>
-  <data name="Preamble" xml:space="preserve">
-    <value>Opis</value>
-  </data>
   <data name="Chapter" xml:space="preserve">
     <value>Rozdział</value>
   </data>
@@ -324,12 +321,6 @@
   <data name="BestMove" xml:space="preserve">
     <value>najlepsze</value>
   </data>
-  <data name="GameHeader" xml:space="preserve">
-    <value>Nagłówek Partii</value>
-  </data>
-  <data name="ExerciseHeader" xml:space="preserve">
-    <value>Nagłówek Ćwiczenia</value>
-  </data>
   <data name="EvaluatePosition" xml:space="preserve">
     <value>Oceń pozycję</value>
   </data>
@@ -434,6 +425,21 @@
   </data>
   <data name="GoBack" xml:space="preserve">
     <value>Idź wstecz (ALT + ←)</value>
+  </data>
+  <data name="Preamble" xml:space="preserve">
+    <value>Opis</value>
+  </data>
+  <data name="Annotator" xml:space="preserve">
+    <value>Komentator</value>
+  </data>
+  <data name="Author" xml:space="preserve">
+    <value>Autor</value>
+  </data>
+  <data name="GameHeader" xml:space="preserve">
+    <value>Nagłówek Partii</value>
+  </data>
+  <data name="ExerciseHeader" xml:space="preserve">
+    <value>Nagłówek Ćwiczenia</value>
   </data>
   <data name="FontSize" xml:space="preserve">
     <value>Rozmiar czcionki</value>

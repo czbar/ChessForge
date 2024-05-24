@@ -165,9 +165,6 @@
   <data name="Header" xml:space="preserve">
     <value>Header</value>
   </data>
-  <data name="Preamble" xml:space="preserve">
-    <value>Preamble</value>
-  </data>
   <data name="Chapter" xml:space="preserve">
     <value>Chapter</value>
   </data>
@@ -324,12 +321,6 @@
   <data name="BestMove" xml:space="preserve">
     <value>best</value>
   </data>
-  <data name="GameHeader" xml:space="preserve">
-    <value>Game Header</value>
-  </data>
-  <data name="ExerciseHeader" xml:space="preserve">
-    <value>Exercise Header</value>
-  </data>
   <data name="EvaluatePosition" xml:space="preserve">
     <value>Evaluate Position</value>
   </data>
@@ -434,6 +425,21 @@
   </data>
   <data name="GoBack" xml:space="preserve">
     <value>Go back (ALT + ←)</value>
+  </data>
+  <data name="Preamble" xml:space="preserve">
+    <value>Preamble</value>
+  </data>
+  <data name="Annotator" xml:space="preserve">
+    <value>Annotator</value>
+  </data>
+  <data name="Author" xml:space="preserve">
+    <value>Author</value>
+  </data>
+  <data name="GameHeader" xml:space="preserve">
+    <value>Game Header</value>
+  </data>
+  <data name="ExerciseHeader" xml:space="preserve">
+    <value>Exercise Header</value>
   </data>
   <data name="FontSize" xml:space="preserve">
     <value>Font Size</value>
