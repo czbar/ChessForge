@@ -9,36 +9,41 @@
          AllowsTransparency="False"
          Background="Transparent"
         ShowInTaskbar="True"
-        Title="{x:Static p:Resources.DlgTitleWorkbookOptions}" Height="345" Width="400" HorizontalAlignment="Left">
+        Title="{x:Static p:Resources.DlgTitleWorkbookOptions}" Height="385" Width="400" HorizontalAlignment="Left">
 
     <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"  >
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBox x:Name="UiTbTitle" HorizontalAlignment="Left" VerticalContentAlignment="Center" Margin="134,23,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="26" Width="231" Visibility="Visible"/>
+        <Label x:Name="UiLblTitle" Content="{x:Static p:Resources.Title}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="UiTbTitle" HorizontalAlignment="Left" VerticalContentAlignment="Center" Margin="95,12,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="26" Width="280" Visibility="Visible"/>
 
-        <Label x:Name="UiLblTrainingSide" Content="{x:Static p:Resources.TrainingSide}" HorizontalAlignment="Left" Margin="29,59,0,0" VerticalAlignment="Top" Width="100"/>
-        <Label x:Name="UiLblVersion" Content="{x:Static p:Resources.Version}" HorizontalAlignment="Left" Margin="286,59,0,0" VerticalAlignment="Top" Width="90"/>
-        <Label x:Name="UiLblTitle" Content="{x:Static p:Resources.WorkbookTitle}" HorizontalAlignment="Left" Margin="28,21,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="UiLblSideToMove" Content="WHITE" BorderThickness="1" BorderBrush="Black" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="134,59,0,0" VerticalAlignment="Top" VerticalContentAlignment="Top" Width="77" Height="26" MouseDown="UiImgSwapColor_PreviewMouseDown"/>
+        <Label x:Name="UiLblAuthor" Content="{x:Static p:Resources.Author}" HorizontalAlignment="Left" Margin="10,45,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="UiTbAuthor" HorizontalAlignment="Left" VerticalContentAlignment="Center" Margin="95,47,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="26" Width="280" Visibility="Visible"/>
 
-        <Button x:Name="UiBtnOK" Content="{x:Static p:Resources.Save}" HorizontalAlignment="Left" Margin="52,255,0,0" VerticalAlignment="Top" Width="80" Height="22"  Visibility="Visible" PreviewMouseDown="UiBtnOK_PreviewMouseDown"/>
-        <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Left" Margin="150,255,0,0" VerticalAlignment="Top" Width="80" Height="22"  Visibility="Visible" PreviewMouseDown="UiBtnCancel_PreviewMouseDown" />
-        <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Left" Margin="273,255,0,0" VerticalAlignment="Top" Width="80" Height="22"  Visibility="Visible" Click="UiBtnHelp_Click" />
+        <Label x:Name="UiLblVersion" Content="{x:Static p:Resources.Version}" HorizontalAlignment="Left" Margin="260,75,0,0" VerticalAlignment="Top" />
 
-        <Image x:Name="UiImgSwapColor" HorizontalAlignment="Left" Height="28" Margin="218,58,0,0" VerticalAlignment="Top" Width="28" Source="Resources/Images/swap_vert.png" PreviewMouseDown="UiImgSwapColor_PreviewMouseDown"/>
+        <Canvas Margin="0,110,0,0" >
+            <Label x:Name="UiLblTrainingSide" Content="{x:Static p:Resources.TrainingSide}" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100"/>
+            <Label x:Name="UiLblSideToMove" Content="WHITE" Margin="134,10,0,0"  BorderThickness="1" BorderBrush="Black" HorizontalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Top" Width="120" Height="26" MouseDown="UiImgSwapColor_PreviewMouseDown"/>
+            <Image x:Name="UiImgSwapColor" HorizontalAlignment="Left" Height="28" Margin="261,10,0,0" VerticalAlignment="Top" Width="28" Source="Resources/Images/swap_vert.png" PreviewMouseDown="UiImgSwapColor_PreviewMouseDown"/>
 
-        <Label x:Name="UiLblBoardOrientation" Content="{x:Static p:Resources.InitBoardOrientation}" HorizontalAlignment="Left" Margin="29,108,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="UiLblBoardStudy" Content="{x:Static p:Resources.Study}" HorizontalAlignment="Left" Margin="70,140,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="UiLblBoardGames" Content="{x:Static p:Resources.Games}" HorizontalAlignment="Left" Margin="70,170,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="UiLblBoardExercises" Content="{x:Static p:Resources.Exercise}" HorizontalAlignment="Left" Margin="70,200,0,0" VerticalAlignment="Top"/>
+            <Button x:Name="UiBtnOK" Content="{x:Static p:Resources.Save}" HorizontalAlignment="Left" Margin="30,195,0,0" VerticalAlignment="Top" Width="80" Height="22"  Visibility="Visible" PreviewMouseDown="UiBtnOK_PreviewMouseDown"/>
+            <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Left" Margin="128,195,0,0" VerticalAlignment="Top" Width="80" Height="22"  Visibility="Visible" PreviewMouseDown="UiBtnCancel_PreviewMouseDown" />
+            <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Left" Margin="273,195,0,0" VerticalAlignment="Top" Width="80" Height="22"  Visibility="Visible" Click="UiBtnHelp_Click" />
 
-        <Label x:Name="UiLblBoardStudyOrient" Content="" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="134,140,0,0" Width="120" Height="26" VerticalAlignment="Top" PreviewMouseDown="UiLblBoardStudyOrient_PreviewMouseDown"/>
-        <Label x:Name="UiLblBoardGamesOrient" Content="" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="134,170,0,0" Width="120" Height="26" VerticalAlignment="Top" PreviewMouseDown="UiLblBoardGamesOrient_PreviewMouseDown"/>
-        <Label x:Name="UiLblBoardExercisesOrient" Content="" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="134,200,0,0" Width="120" Height="26" VerticalAlignment="Top" PreviewMouseDown="UiLblBoardExercisesOrient_PreviewMouseDown"/>
+            <Label x:Name="UiLblBoardOrientation" Content="{x:Static p:Resources.InitBoardOrientation}" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="UiLblBoardStudy" Content="{x:Static p:Resources.Study}" HorizontalAlignment="Left" Margin="70,80,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="UiLblBoardGames" Content="{x:Static p:Resources.Games}" HorizontalAlignment="Left" Margin="70,110,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="UiLblBoardExercises" Content="{x:Static p:Resources.Exercise}" HorizontalAlignment="Left" Margin="70,140,0,0" VerticalAlignment="Top"/>
 
-        <Image x:Name="UiImgSwapStudyOrient" HorizontalAlignment="Left" Height="28" Margin="261,140,0,0" VerticalAlignment="Top" Width="28" Source="Resources/Images/swap_vert.png" PreviewMouseDown="UiLblBoardStudyOrient_PreviewMouseDown" />
-        <Image x:Name="UiImgSwapGameOrient" HorizontalAlignment="Left" Height="28" Margin="261,170,0,0" VerticalAlignment="Top" Width="28" Source="Resources/Images/swap_vert.png" PreviewMouseDown="UiLblBoardGamesOrient_PreviewMouseDown" />
-        <Image x:Name="UiImgSwapExerciseOrient" HorizontalAlignment="Left" Height="28" Margin="261,200,0,0" VerticalAlignment="Top" Width="28" Source="Resources/Images/swap_vert.png" PreviewMouseDown="UiLblBoardExercisesOrient_PreviewMouseDown" />
+            <Label x:Name="UiLblBoardStudyOrient" Content="" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="134,80,0,0" Width="120" Height="26" VerticalAlignment="Top" PreviewMouseDown="UiLblBoardStudyOrient_PreviewMouseDown"/>
+            <Label x:Name="UiLblBoardGamesOrient" Content="" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="134,110,0,0" Width="120" Height="26" VerticalAlignment="Top" PreviewMouseDown="UiLblBoardGamesOrient_PreviewMouseDown"/>
+            <Label x:Name="UiLblBoardExercisesOrient" Content="" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="134,140,0,0" Width="120" Height="26" VerticalAlignment="Top" PreviewMouseDown="UiLblBoardExercisesOrient_PreviewMouseDown"/>
+
+            <Image x:Name="UiImgSwapStudyOrient" HorizontalAlignment="Left" Height="28" Margin="261,80,0,0" VerticalAlignment="Top" Width="28" Source="Resources/Images/swap_vert.png" PreviewMouseDown="UiLblBoardStudyOrient_PreviewMouseDown" />
+            <Image x:Name="UiImgSwapGameOrient" HorizontalAlignment="Left" Height="28" Margin="261,110,0,0" VerticalAlignment="Top" Width="28" Source="Resources/Images/swap_vert.png" PreviewMouseDown="UiLblBoardGamesOrient_PreviewMouseDown" />
+            <Image x:Name="UiImgSwapExerciseOrient" HorizontalAlignment="Left" Height="28" Margin="261,140,0,0" VerticalAlignment="Top" Width="28" Source="Resources/Images/swap_vert.png" PreviewMouseDown="UiLblBoardExercisesOrient_PreviewMouseDown" />
+        </Canvas>
     </Grid>
 </Window>
