@@ -53,7 +53,7 @@ namespace ChessForge
             }
             set
             {
-                StudyTree.Tree.Header.SetHeaderValue(PgnHeaders.KEY_SHOW_SOLUTIONS_ON_OPEN, value ? "1" : "0"); 
+                StudyTree.Tree.Header.SetHeaderValue(PgnHeaders.KEY_SHOW_SOLUTIONS_ON_OPEN, value ? "1" : "0");
             }
         }
 
@@ -639,12 +639,30 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns the author of this chapter.
+        /// </summary>
+        /// <returns></returns>
+        public string GetAuthor()
+        {
+            return StudyTree.Tree.Header.GetAnnotator(out _);
+        }
+
+        /// <summary>
         /// Sets the title of the Chapter.
         /// </summary>
         /// <param name="title"></param>
         public void SetTitle(string title)
         {
             _title = title;
+        }
+
+        /// <summary>
+        /// Sets the title of the Chapter.
+        /// </summary>
+        /// <param name="author"></param>
+        public void SetAuthor(string author)
+        {
+            StudyTree.Tree.Header.SetHeaderValue(PgnHeaders.KEY_ANNOTATOR, author);
         }
 
         /// <summary>
