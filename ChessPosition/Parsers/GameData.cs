@@ -197,6 +197,17 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Returns the name of the Annotator's name.
+        /// This is only called for the first "game"
+        /// in the PGN (i.e. Workbook data)
+        /// </summary>
+        /// <returns></returns>
+        public string GetAnnotator()
+        {
+            return Header.GetAnnotator();
+        }
+
+        /// <summary>
         /// Returns the version of the Workbook
         /// </summary>
         /// <returns></returns>

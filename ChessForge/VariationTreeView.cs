@@ -427,6 +427,41 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Update the chapter title that is displayed above the Study Tree.
+        /// </summary>
+        public void UpdateChapterTitle()
+        {
+            Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+            if (chapter != null)
+            {
+                if (_pageHeaderParagraph == null)
+                {
+                    _pageHeaderParagraph = CreateParagraph("0", true);
+                    _pageHeaderParagraph.MouseLeftButtonDown += EventPageHeaderClicked;
+                }
+
+                _pageHeaderParagraph.Inlines.Clear();
+
+                Run rTitle = new Run(chapter.GetTitle());
+                rTitle.TextDecorations = TextDecorations.Underline;
+                _pageHeaderParagraph.Inlines.Add(rTitle);
+
+                if (!string.IsNullOrWhiteSpace(chapter.GetAuthor()))
+                {
+                    Run rAuthor = new Run("\n    " + Properties.Resources.Author + ": " + chapter.GetAuthor());
+                    rAuthor.FontWeight = FontWeights.Normal;
+                    rAuthor.FontSize = GuiUtilities.AdjustFontSize(Constants.BASE_FIXED_FONT_SIZE) - 2;
+                    _pageHeaderParagraph.Inlines.Add(rAuthor);
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// A dummy method to be overridden in the Exercise view.
+        /// </summary>
+        /// <returns></returns>
         virtual public Paragraph BuildGuessingFinishedParagraph()
         {
             return null;
@@ -1082,6 +1117,13 @@ namespace ChessForge
                             }
                         }
 
+                        string annotator = _mainVariationTree.Header.GetAnnotator(out _);
+                        if (!string.IsNullOrWhiteSpace(annotator))
+                        {
+                            Run rAnnotator = CreateRun("1", "      " + Properties.Resources.Annotator + ": " + annotator + "\n", true);
+                            _pageHeaderParagraph.Inlines.Add(rAnnotator);
+                        }
+
                         string dateForDisplay = TextUtils.BuildDateFromDisplayFromPgnString(_mainVariationTree.Header.GetDate(out _));
                         if (!string.IsNullOrEmpty(dateForDisplay))
                         {
@@ -1114,19 +1156,7 @@ namespace ChessForge
                         }
                         break;
                     case GameData.ContentType.STUDY_TREE:
-                        if (WorkbookManager.SessionWorkbook.ActiveChapter != null)
-                        {
-                            _pageHeaderParagraph = CreateParagraph("0", true);
-                            _pageHeaderParagraph.MouseLeftButtonDown += EventPageHeaderClicked;
-
-                            Run rPrefix = new Run();
-                            rPrefix.TextDecorations = TextDecorations.Underline;
-                            _pageHeaderParagraph.Inlines.Add(rPrefix);
-
-                            Run r = new Run(WorkbookManager.SessionWorkbook.ActiveChapter.GetTitle());
-                            r.TextDecorations = TextDecorations.Underline;
-                            _pageHeaderParagraph.Inlines.Add(r);
-                        }
+                        UpdateChapterTitle();
                         break;
                 }
             }

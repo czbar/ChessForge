@@ -33,7 +33,12 @@
                 <TextBox x:Name="UiTbLastTreeMoveNo" Width="40" Margin="120,50, 0, 0" />
             </Canvas>
         </GroupBox>
-        <CheckBox x:Name="UiCbAllChapters" IsChecked="False" Content="{x:Static p:Resources.ApplyToAllChapters}" Margin="265, 195, 10, 0" Height="20" VerticalAlignment="Top"/>
+        <GroupBox x:Name="UiGbExercise" Header="{x:Static p:Resources.Exercise}" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="225" Margin="245, 150, 0, 0">
+            <Canvas>
+                <CheckBox x:Name="UiCbShowSolutions" Content="{x:Static p:Resources.ShowSolutionsByDefault}" Margin="8,15,0,0" Checked="UiCbGenerateStudyTree_Checked" Unchecked="UiCbGenerateStudyTree_Unchecked" />
+            </Canvas>
+        </GroupBox>
+        <CheckBox x:Name="UiCbAllChapters" IsChecked="False" Content="{x:Static p:Resources.ApplyToAllChapters}" Margin="265,241,10,0" Height="20" VerticalAlignment="Top"/>
         <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="-220,0,0,20" Width="100" VerticalAlignment="Bottom" Click="UiBtnOk_Click" />
         <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="0,0,0,20" Width="100" VerticalAlignment="Bottom"/>
         <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Center" Margin="220,0,0,20" Width="100" VerticalAlignment="Bottom" Click="UiBtnHelp_Click" />

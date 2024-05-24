@@ -29,6 +29,11 @@ namespace ChessForge
         public string WorkbookTitle;
 
         /// <summary>
+        /// Author's name entered by the user
+        /// </summary>
+        public string Author;
+
+        /// <summary>
         /// Determines the initial board orientation in the Study view.
         /// </summary>
         public PieceColor StudyBoardOrientation;
@@ -64,9 +69,11 @@ namespace ChessForge
         {
             InitializeComponent();
             WorkbookTitle = _workbook.Title;
+            Author = _workbook.Author;
             TrainingSide = _workbook.TrainingSideConfig;
 
             UiTbTitle.Text = _workbook.Title;
+            UiTbAuthor.Text = _workbook.Author;
             UiLblSideToMove.Content = _workbook.TrainingSideConfig == PieceColor.Black ? _strBlack : _strWhite;
 
             UiLblSideToMove.ToolTip = Properties.Resources.TooltipSideToMove;
@@ -124,6 +131,7 @@ namespace ChessForge
         private void UiBtnOK_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             WorkbookTitle = UiTbTitle.Text;
+            Author = UiTbAuthor.Text;
 
             if ((string)UiLblSideToMove.Content == _strBlack)
             {

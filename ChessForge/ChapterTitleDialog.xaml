@@ -7,11 +7,14 @@
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
         ShowInTaskbar="True"
-        Title="{x:Static p:Resources.ChapterTitle}" Height="150" Width="600">
+        Title="{x:Static p:Resources.Chapter}" Height="160" Width="570">
     <Grid>
-        <TextBox x:Name="UiTbChapterTitle" TabIndex="0" HorizontalAlignment="Center" Margin="0,20,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="428" PreviewKeyDown="UiTbChapterTitle_PreviewKeyDown"/>
-        <Button x:Name="UiBtnOK" TabIndex="1" IsDefault="True" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="-120,60,0,0" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnOK_Click"/>
-        <Button x:Name="UiBtnCancel" TabIndex="2" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="120,60,0,0" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
+        <Label x:Name="UiLblTitle" Margin="15,6" VerticalAlignment="Top" Content="{x:Static p:Resources.Title}">  </Label>
+        <TextBox x:Name="UiTbChapterTitle" TabIndex="0" HorizontalAlignment="Left" Margin="100,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="428" PreviewKeyDown="UiTbChapterTitle_PreviewKeyDown"/>
+        <Label x:Name="UiLblAuthor" Margin="15,36" VerticalAlignment="Top" Content="{x:Static p:Resources.Author}"></Label>
+        <TextBox x:Name="UiTbAuthor" TabIndex="1" HorizontalAlignment="Left" Margin="100,40,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="428" PreviewKeyDown="UiTbChapterTitle_PreviewKeyDown"/>
+        <Button x:Name="UiBtnOK" TabIndex="2" IsDefault="True" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="-110,80,0,0" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnOK_Click"/>
+        <Button x:Name="UiBtnCancel" TabIndex="3" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="110,80,0,0" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
 
     </Grid>
 </Window>

@@ -338,10 +338,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// TODO: compare with GetColumnRowFromMouseClick()
-        /// in MainWindowUtils to see if we can have one function
-        /// for different controls (?)
-        /// 
         /// Note: we are only allowing for single selection.
         /// If, somehow, there is more than 1 cell in the selection
         /// we will return the first one.

@@ -266,7 +266,7 @@ namespace GameTree
             {
                 return null;
             }
-            
+
             return _headers.Where(kvp => kvp.Key == key).FirstOrDefault().Value;
         }
 
@@ -277,6 +277,15 @@ namespace GameTree
         public string GetWorkbookTitle()
         {
             return _headers.Where(kvp => kvp.Key == PgnHeaders.KEY_WORKBOOK_TITLE).FirstOrDefault().Value;
+        }
+
+        /// <summary>
+        /// Returns the name of the author/annotator
+        /// </summary>
+        /// <returns></returns>
+        public string GetAnnotator()
+        {
+            return _headers.Where(kvp => kvp.Key == PgnHeaders.KEY_ANNOTATOR).FirstOrDefault().Value;
         }
 
         /// <summary>
@@ -394,6 +403,25 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Returns the value of the "Annotator" header.
+        /// </summary>
+        /// <returns></returns>
+        public string GetAnnotator(out string key, string value = null)
+        {
+            string headerKey = PgnHeaders.KEY_ANNOTATOR;
+            key = headerKey;
+
+            if (value == null)
+            {
+                return _headers.Where(kvp => kvp.Key == headerKey).FirstOrDefault().Value;
+            }
+            else
+            {
+                return value;
+            }
+        }
+
+        /// <summary>
         /// Returns the value of the "IndexDepth" header.
         /// </summary>
         /// <returns></returns>
@@ -410,6 +438,15 @@ namespace GameTree
             {
                 return value;
             }
+        }
+
+        /// <summary>
+        /// Returns the value of the "ShowAllSolutions" header.
+        /// </summary>
+        /// <returns></returns>
+        public string GetShowSolutionsOnOpen()
+        {
+            return _headers.Where(kvp => kvp.Key == PgnHeaders.KEY_SHOW_SOLUTIONS_ON_OPEN).FirstOrDefault().Value;
         }
 
         /// <summary>

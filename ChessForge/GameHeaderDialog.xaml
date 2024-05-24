@@ -27,7 +27,7 @@
                 <TextBox x:Name="UiTbRound" TabIndex="6" HorizontalAlignment="Left" TextWrapping="NoWrap" Text="" VerticalAlignment="Center" Width="40" Canvas.Left="563" Canvas.Top="66"/>
             </Canvas>
         </GroupBox>
-        <GroupBox x:Name="UiGbResult" HorizontalAlignment="Left" Height="46" Header="{x:Static p:Resources.Result}" Margin="369,143,0,0" VerticalAlignment="Top" Width="265">
+        <GroupBox x:Name="UiGbResult" HorizontalAlignment="Left" Height="46" Header="{x:Static p:Resources.Result}" Margin="369,138,0,0" VerticalAlignment="Top" Width="265">
             <StackPanel>
                 <RadioButton x:Name="UiRbWhiteWin" Content="1-0" HorizontalAlignment="Left" Margin="35,4,0,0" VerticalAlignment="Top" Width="50"/>
                 <RadioButton x:Name="UiRbBlackWin" Content="0-1" HorizontalAlignment="Left" Margin="85,-15,0,0" VerticalAlignment="Top" Width="50"/>
@@ -47,11 +47,14 @@
                 <CheckBox x:Name="UiCbIgnoreDay" Content="{x:Static p:Resources.IgnoreDay}" HorizontalAlignment="Left" Margin="30,110,0,0" VerticalAlignment="Top" Unchecked="UiCbIgnoreDay_Unchecked" Checked="UiCbIgnoreDay_Checked"/>
             </Canvas>
         </GroupBox>
-        <GroupBox x:Name="UiGbPreamble" HorizontalAlignment="Left" Height="215" Header="{x:Static p:Resources.Preamble}" Margin="12,143,0,0" VerticalAlignment="Top" Width="342">
+        <GroupBox  x:Name="UiGbAnnotator" Header="{x:Static p:Resources.Annotator}" Margin="12,138,0,0" Width="342" HorizontalAlignment="Left" Height="46" VerticalAlignment="Top">
+            <TextBox x:Name="UiTbAnnotator" AcceptsReturn="False" HorizontalAlignment="Left" Margin="7,2,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="318" PreviewKeyDown="UiTbPreamble_PreviewKeyDown"/>
+        </GroupBox>
+        <GroupBox x:Name="UiGbPreamble" HorizontalAlignment="Left" Height="165" Header="{x:Static p:Resources.Preamble}" Margin="12,193,0,0" VerticalAlignment="Top" Width="342">
             <Canvas>
-                <TextBox x:Name="UiTbPreamble" AcceptsReturn="True" HorizontalAlignment="Left" Margin="7,4,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="318" Height="182" PreviewKeyDown="UiTbPreamble_PreviewKeyDown"/>
-                <Label x:Name="UiLblFirstMoveNumber" Visibility="Collapsed" Content="{x:Static p:Resources.FirstMoveNumber}" HorizontalAlignment="Right" VerticalAlignment="Center" Canvas.Right="40" Canvas.Top="161" />
-                <TextBox x:Name="UiTbFirstMoveNumber" Visibility="Collapsed" HorizontalAlignment="Right" Canvas.Right="6" Canvas.Top="166" Text="1" HorizontalContentAlignment="Center" VerticalAlignment="Top" Width="30"/>
+                <TextBox x:Name="UiTbPreamble" AcceptsReturn="True" HorizontalAlignment="Left" Margin="7,4,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="318" Height="132" PreviewKeyDown="UiTbPreamble_PreviewKeyDown"/>
+                <Label x:Name="UiLblFirstMoveNumber" Visibility="Collapsed" Content="{x:Static p:Resources.FirstMoveNumber}" HorizontalAlignment="Right" VerticalAlignment="Center" Canvas.Right="40" Canvas.Top="111" />
+                <TextBox x:Name="UiTbFirstMoveNumber" Visibility="Collapsed" HorizontalAlignment="Right" Canvas.Right="6" Canvas.Top="116" Text="1" HorizontalContentAlignment="Center" VerticalAlignment="Top" Width="30"/>
             </Canvas>
         </GroupBox>
         <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Left" Margin="180,374,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnOk_Click"/>

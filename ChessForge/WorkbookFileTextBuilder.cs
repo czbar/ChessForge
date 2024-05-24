@@ -60,6 +60,7 @@ namespace ChessForge
 
             // workbook headers
             sb.AppendLine(PgnHeaders.GetWorkbookTitleText(_workbook.Title));
+            sb.AppendLine(PgnHeaders.GetAuthorText(_workbook.Author));
             sb.AppendLine(PgnHeaders.GetWorkbookVersionText(_workbook.Version.ToString()));
             sb.AppendLine(PgnHeaders.GetWorkbookGuidText(_workbook.Guid));
             sb.AppendLine(PgnHeaders.GetTrainingSideText(_workbook.TrainingSideConfig));
@@ -339,6 +340,7 @@ namespace ChessForge
 
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_CHAPTER_TITLE, chapter.GetTitle()));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_GUID, chapter.Guid));
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_ANNOTATOR, chapter.GetAuthor()));
 
             VariationTree tree = chapter.StudyTree.Tree;
 
@@ -350,6 +352,7 @@ namespace ChessForge
 
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_BLACK, chapter.GetTitle()));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_INDEX_DEPTH, chapter.VariationIndexDepth == null ? "" : chapter.VariationIndexDepth.Value.ToString()));
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_SHOW_SOLUTIONS_ON_OPEN, chapter.ShowSolutionsOnOpen ? "1" : "0"));
             sb.AppendLine(BuildPreamble(tree));
 
             sb.AppendLine("");
@@ -379,6 +382,7 @@ namespace ChessForge
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_BLACK, tree.Header.GetBlackPlayer(out _)));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_WHITE_ELO, tree.Header.GetWhitePlayerElo(out _)));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_BLACK_ELO, tree.Header.GetBlackPlayerElo(out _)));
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_ANNOTATOR, tree.Header.GetAnnotator(out _)));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_RESULT, tree.Header.GetResult(out _)));
             sb.AppendLine(BuildPreamble(tree));
 
@@ -435,6 +439,7 @@ namespace ChessForge
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_BLACK, tree.Header.GetBlackPlayer(out _)));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_WHITE_ELO, tree.Header.GetWhitePlayerElo(out _)));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_BLACK_ELO, tree.Header.GetBlackPlayerElo(out _)));
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_ANNOTATOR, tree.Header.GetAnnotator(out _)));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_RESULT, tree.Header.GetResult(out _)));
             sb.AppendLine(BuildPreamble(tree));
 

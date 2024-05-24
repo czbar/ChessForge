@@ -43,7 +43,22 @@ namespace ChessForge
         public bool AlwaysShowIntroTab = false;
 
         /// <summary>
-        /// Wheter Intro tab is to be shown
+        /// Whether solution to the Exercises should be shown or hidden when opening.
+        /// </summary>
+        public bool ShowSolutionsOnOpen
+        {
+            get
+            {
+                return StudyTree.Tree.Header.GetShowSolutionsOnOpen() == "1";
+            }
+            set
+            {
+                StudyTree.Tree.Header.SetHeaderValue(PgnHeaders.KEY_SHOW_SOLUTIONS_ON_OPEN, value ? "1" : "0");
+            }
+        }
+
+        /// <summary>
+        /// Whether the Intro tab is to be shown
         /// </summary>
         public bool ShowIntro
         {
@@ -624,12 +639,30 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns the author of this chapter.
+        /// </summary>
+        /// <returns></returns>
+        public string GetAuthor()
+        {
+            return StudyTree.Tree.Header.GetAnnotator(out _);
+        }
+
+        /// <summary>
         /// Sets the title of the Chapter.
         /// </summary>
         /// <param name="title"></param>
         public void SetTitle(string title)
         {
             _title = title;
+        }
+
+        /// <summary>
+        /// Sets the title of the Chapter.
+        /// </summary>
+        /// <param name="author"></param>
+        public void SetAuthor(string author)
+        {
+            StudyTree.Tree.Header.SetHeaderValue(PgnHeaders.KEY_ANNOTATOR, author);
         }
 
         /// <summary>

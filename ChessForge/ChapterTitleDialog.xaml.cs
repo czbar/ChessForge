@@ -25,6 +25,11 @@ namespace ChessForge
         public string ChapterTitle { get; set; }
 
         /// <summary>
+        /// Author of the chapter.
+        /// </summary>
+        public string Author{ get; set; }
+
+        /// <summary>
         /// Constructor.
         /// Sets the text to the current title of the chapter.
         /// </summary>
@@ -35,6 +40,8 @@ namespace ChessForge
             UiTbChapterTitle.Text = chapter.GetTitle();
             UiTbChapterTitle.Focus();
             UiTbChapterTitle.SelectAll();
+
+            UiTbAuthor.Text = chapter.GetAuthor();
         }
 
         /// <summary>
@@ -45,6 +52,8 @@ namespace ChessForge
         private void UiBtnOK_Click(object sender, RoutedEventArgs e)
         {
             ChapterTitle = UiTbChapterTitle.Text;
+            Author = UiTbAuthor.Text;
+
             DialogResult = true;
         }
 

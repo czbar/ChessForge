@@ -21,28 +21,24 @@ namespace ChessForge
         {
             try
             {
+                Chapter chapter = AppState.ActiveChapter;
                 switch (contentType)
                 {
                     case GameData.ContentType.STUDY_TREE:
                     case GameData.ContentType.INTRO:
                         break;
                     case GameData.ContentType.MODEL_GAME:
-                        int gameIndex = AppState.ActiveChapter.ActiveModelGameIndex;
+                        int gameIndex = chapter == null ? -1 : chapter.ActiveModelGameIndex;
                         SetModelGameCounterControls(gameIndex);
                         break;
                     case GameData.ContentType.EXERCISE:
-                        int exerciseIndex = WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex;
+                        int exerciseIndex = chapter == null ? -1 : chapter.ActiveExerciseIndex;
                         SetExerciseCounterControls(exerciseIndex);
                         break;
                 }
-                if (WorkbookManager.SessionWorkbook != null)
-                {
-                    int chapterIndex = WorkbookManager.SessionWorkbook.ActiveChapterIndex;
-                    if (chapterIndex >= 0)
-                    {
-                        SetChapterCounterControls(contentType, chapterIndex);
-                    }
-                }
+
+                int chapterIndex = chapter == null ? -1 : WorkbookManager.SessionWorkbook.ActiveChapterIndex;
+                SetChapterCounterControls(contentType, chapterIndex);
             }
             catch
             {
@@ -138,17 +134,16 @@ namespace ChessForge
                                           int itemIndex,
                                           int itemCount)
         {
+            string fullTitle = AppState.ActiveChapter == null ? "" : AppState.ActiveChapter.GetTitle();
+            string titleForLabel = GuiUtilities.AdjustTextToFit(lblTitle, fullTitle);
+            lblTitle.Content = titleForLabel;
+            lblTitle.ToolTip = fullTitle;
+            lblCounter.ToolTip = fullTitle;
+
             if (itemCount > 0)
             {
                 string counter = ResourceUtils.GetCounterBarText(itemType, itemIndex, itemCount);
                 lblCounter.Content = counter;
-
-                string fullTitle = AppState.ActiveChapter == null ? "" : AppState.ActiveChapter.GetTitle();
-
-                string titleForLabel = GuiUtilities.AdjustTextToFit(lblTitle, fullTitle);
-                lblTitle.Content = titleForLabel;
-                lblTitle.ToolTip = fullTitle;
-                lblCounter.ToolTip = fullTitle;
 
                 imgRightArrow.Visibility = Visibility.Visible;
                 imgLeftArrow.Visibility = Visibility.Visible;

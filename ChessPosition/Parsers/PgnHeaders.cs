@@ -102,8 +102,7 @@ namespace GameTree
         public const string KEY_GUID = "Guid";
 
         /// <summary>
-        /// The number of a chapter. The same number may appear in multiple
-        /// Variation Trees thus organizing them into chapters.
+        /// The title of a chapter.
         /// </summary>
         public const string KEY_CHAPTER_TITLE = "ChapterTitle";
 
@@ -149,6 +148,11 @@ namespace GameTree
         public const string KEY_BLACK = "Black";
 
         /// <summary>
+        /// Annotator or Author of the content.
+        /// </summary>
+        public const string KEY_ANNOTATOR = "Annotator";
+
+        /// <summary>
         /// Chess variant
         /// </summary>
         public const string KEY_VARIANT = "Variant";
@@ -167,6 +171,11 @@ namespace GameTree
         /// Depth of the index in the Study View
         /// </summary>
         public const string KEY_INDEX_DEPTH = "IndexDepth";
+
+        /// <summary>
+        /// Depth of the index in the Study View
+        /// </summary>
+        public const string KEY_SHOW_SOLUTIONS_ON_OPEN = "ShowSolutionsOnOpen";
 
         /// <summary>
         /// A preamble line. There can be many per header and will be combined
@@ -193,6 +202,16 @@ namespace GameTree
         public static string GetWorkbookTitleText(string title)
         {
             return BuildHeaderLine(KEY_WORKBOOK_TITLE, title);
+        }
+
+        /// <summary>
+        /// Builds header line for the Author's name
+        /// </summary>
+        /// <param name="title"></param>
+        /// <returns></returns>
+        public static string GetAuthorText(string author)
+        {
+            return BuildHeaderLine(KEY_ANNOTATOR, author);
         }
 
         /// <summary>

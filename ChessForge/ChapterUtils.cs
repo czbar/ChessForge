@@ -40,6 +40,14 @@ namespace ChessForge
                             AppState.IsDirty = true;
                         }
 
+                        if (dlg.ShowSolutionOnOpen != chapter.ShowSolutionsOnOpen)
+                        {
+                            chapter.ShowSolutionsOnOpen = dlg.ShowSolutionOnOpen;
+                            UpdateShowSolutions(dlg.ApplyToAllChapters ? null : chapter, dlg.ShowSolutionOnOpen);
+                            AppState.MainWin.UpdateShowSolutionInExerciseView(dlg.ShowSolutionOnOpen);
+                            AppState.IsDirty = true;
+                        }
+
                         if (sortGames)
                         {
                             if (dlg.ApplyToAllChapters)
@@ -85,6 +93,46 @@ namespace ChessForge
                     catch (Exception ex)
                     {
                         AppLog.Message("ManageChapter()", ex);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates show/hide solutions on open flag in a chapter.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="show"></param>
+        public static void UpdateShowSolutionsInChapter(Chapter chapter, bool show)
+        {
+            if (chapter != null)
+            {
+                foreach (Article exc in chapter.Exercises)
+                {
+                    exc.Tree.ShowTreeLines = show;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates show/hide solutions on open flag in a chapter
+        /// or entire workbook.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="show"></param>
+        public static void UpdateShowSolutions(Chapter chapter, bool show)
+        {
+            if (chapter != null)
+            {
+                UpdateShowSolutionsInChapter(chapter, show);
+            }
+            else
+            {
+                if (AppState.Workbook != null)
+                {
+                    foreach (Chapter ch in AppState.Workbook.Chapters)
+                    {
+                        UpdateShowSolutionsInChapter(ch, show);
                     }
                 }
             }
@@ -159,6 +207,7 @@ namespace ChessForge
                     if (dlg.ShowDialog() == true)
                     {
                         targetChapter.SetTitle(dlg.ChapterTitle);
+                        targetChapter.SetAuthor(dlg.Author);
                     }
                 }
 

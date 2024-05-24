@@ -179,6 +179,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Annotator.
+        /// </summary>
+        public static string Annotator {
+            get {
+                return ResourceManager.GetString("Annotator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Application Options.
         /// </summary>
         public static string ApplicationOptions {
@@ -211,6 +220,15 @@ namespace ChessForge.Properties {
         public static string AssignECO {
             get {
                 return ResourceManager.GetString("AssignECO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Author.
+        /// </summary>
+        public static string Author {
+            get {
+                return ResourceManager.GetString("Author", resourceCulture);
             }
         }
         
@@ -5769,7 +5787,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You requested to manually replace the engine&apos;s move.
+        ///   Looks up a localized string similar to You requested to manually replace the engine&apos;s move..
         /// </summary>
         public static string ReplacingEngineMove {
             get {
@@ -6368,6 +6386,15 @@ namespace ChessForge.Properties {
         public static string ShowSolution {
             get {
                 return ResourceManager.GetString("ShowSolution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Solutions on Open.
+        /// </summary>
+        public static string ShowSolutionsByDefault {
+            get {
+                return ResourceManager.GetString("ShowSolutionsByDefault", resourceCulture);
             }
         }
         

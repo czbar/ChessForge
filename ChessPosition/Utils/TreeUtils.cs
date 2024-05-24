@@ -127,6 +127,7 @@ namespace ChessPosition
                 VariationTree copy = new VariationTree(source.ContentType);
                 copy.Header = source.Header.CloneMe(true);
                 copy.Nodes.Clear();
+                copy.ShowTreeLines = source.ShowTreeLines;
 
                 Dictionary<int, int> dictNodeIdToIndex = new Dictionary<int, int>();
                 List<int> parentIds = new List<int>();

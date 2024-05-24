@@ -290,11 +290,23 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Whether any solution has been provided.
+        /// Whether any text to display exists.
+        /// Note if there are no solution moves but there is a comment for the move 0, 
+        /// then there is something to display.
         /// </summary>
         public bool IsMainVariationTreeEmpty
         {
-            get => (_mainVariationTree == null || _mainVariationTree.Nodes.Count <= 1);
+            get => (_mainVariationTree == null 
+                || _mainVariationTree.Nodes.Count == 0 
+                || _mainVariationTree.Nodes.Count == 1 && string.IsNullOrWhiteSpace(_mainVariationTree.Nodes[0].Comment));
+        }
+
+        /// <summary>
+        /// Whether the exercise has any solution moves (i.e. moves beyond the move 0).
+        /// </summary>
+        public bool ExerciseHasSolution
+        {
+            get => _mainVariationTree != null && _mainVariationTree.Nodes.Count > 1;
         }
 
         /// <summary>
@@ -765,7 +777,7 @@ namespace ChessForge
         /// <param name="mode"></param>
         private void ActivateSolvingMode(VariationTree.SolvingMode mode)
         {
-            if (IsMainVariationTreeEmpty)
+            if (!ExerciseHasSolution)
             {
                 MessageBox.Show(Properties.Resources.ExerciseNoSolution, Properties.Resources.Exercise, MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
