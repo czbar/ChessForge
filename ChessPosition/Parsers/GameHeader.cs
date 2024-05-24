@@ -394,6 +394,25 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Returns the value of the "Annotator" header.
+        /// </summary>
+        /// <returns></returns>
+        public string GetAnnotator(out string key, string value = null)
+        {
+            string headerKey = PgnHeaders.KEY_ANNOTATOR;
+            key = headerKey;
+
+            if (value == null)
+            {
+                return _headers.Where(kvp => kvp.Key == headerKey).FirstOrDefault().Value;
+            }
+            else
+            {
+                return value;
+            }
+        }
+
+        /// <summary>
         /// Returns the value of the "IndexDepth" header.
         /// </summary>
         /// <returns></returns>

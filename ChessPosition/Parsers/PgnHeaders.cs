@@ -102,8 +102,7 @@ namespace GameTree
         public const string KEY_GUID = "Guid";
 
         /// <summary>
-        /// The number of a chapter. The same number may appear in multiple
-        /// Variation Trees thus organizing them into chapters.
+        /// The title of a chapter.
         /// </summary>
         public const string KEY_CHAPTER_TITLE = "ChapterTitle";
 
@@ -147,6 +146,11 @@ namespace GameTree
         /// to keep some PGN viewers happy.
         /// </summary>
         public const string KEY_BLACK = "Black";
+
+        /// <summary>
+        /// Annotator or Author of the content.
+        /// </summary>
+        public const string KEY_ANNOTATOR = "Annotator";
 
         /// <summary>
         /// Chess variant

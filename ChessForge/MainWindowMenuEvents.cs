@@ -2202,6 +2202,7 @@ namespace ChessForge
             tree.Header.SetHeaderValue(PgnHeaders.KEY_VARIANT, header.GetVariant(out _));
             tree.Header.SetHeaderValue(PgnHeaders.KEY_WHITE_ELO, header.GetWhitePlayerElo(out _));
             tree.Header.SetHeaderValue(PgnHeaders.KEY_BLACK_ELO, header.GetBlackPlayerElo(out _));
+            tree.Header.SetHeaderValue(PgnHeaders.KEY_ANNOTATOR, header.GetAnnotator(out _));
             tree.Header.SetHeaderValue(PgnHeaders.KEY_RESULT, header.GetResult(out _));
             tree.Header.SetHeaderValue(PgnHeaders.KEY_EVENT, header.GetEventName(out _));
             tree.Header.SetHeaderValue(PgnHeaders.KEY_ROUND, header.GetRound(out _));
