@@ -280,6 +280,15 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Returns the name of the author/annotator
+        /// </summary>
+        /// <returns></returns>
+        public string GetAnnotator()
+        {
+            return _headers.Where(kvp => kvp.Key == PgnHeaders.KEY_ANNOTATOR).FirstOrDefault().Value;
+        }
+
+        /// <summary>
         /// Returns the version of this workbook.
         /// </summary>
         /// <returns></returns>

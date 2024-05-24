@@ -60,6 +60,7 @@ namespace ChessForge
 
             // workbook headers
             sb.AppendLine(PgnHeaders.GetWorkbookTitleText(_workbook.Title));
+            sb.AppendLine(PgnHeaders.GetAuthorText(_workbook.Author));
             sb.AppendLine(PgnHeaders.GetWorkbookVersionText(_workbook.Version.ToString()));
             sb.AppendLine(PgnHeaders.GetWorkbookGuidText(_workbook.Guid));
             sb.AppendLine(PgnHeaders.GetTrainingSideText(_workbook.TrainingSideConfig));

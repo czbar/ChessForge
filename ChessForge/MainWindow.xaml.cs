@@ -2823,6 +2823,7 @@ namespace ChessForge
             if (dlg.ExitOK)
             {
                 SessionWorkbook.Title = dlg.WorkbookTitle;
+                SessionWorkbook.Author= dlg.Author;
                 SessionWorkbook.TrainingSideConfig = dlg.TrainingSide;
                 SessionWorkbook.TrainingSideCurrent = dlg.TrainingSide;
 

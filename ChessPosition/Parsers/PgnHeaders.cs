@@ -205,6 +205,16 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Builds header line for the Author's name
+        /// </summary>
+        /// <param name="title"></param>
+        /// <returns></returns>
+        public static string GetAuthorText(string author)
+        {
+            return BuildHeaderLine(KEY_ANNOTATOR, author);
+        }
+
+        /// <summary>
         /// Builds header line for the Workbook Version
         /// </summary>
         /// <param name="ver"></param>

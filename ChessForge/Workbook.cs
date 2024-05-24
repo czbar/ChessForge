@@ -104,6 +104,9 @@ namespace ChessForge
         // workbook title
         private string _title = "";
 
+        // annotator's name
+        private string _author;
+
         // Version object for this Workbook
         private WorkbookVersion _version;
 
@@ -725,6 +728,15 @@ namespace ChessForge
                 }
             }
             set => _title = (value ?? "");
+        }
+
+        /// <summary>
+        /// Workbook author's name
+        /// </summary>
+        public string Author
+        {
+            get => _author;
+            set => _author = value;
         }
 
         /// <summary>
