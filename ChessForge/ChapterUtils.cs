@@ -207,6 +207,7 @@ namespace ChessForge
                     if (dlg.ShowDialog() == true)
                     {
                         targetChapter.SetTitle(dlg.ChapterTitle);
+                        targetChapter.SetAuthor(dlg.Author);
                     }
                 }
 

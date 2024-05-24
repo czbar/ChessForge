@@ -2973,6 +2973,7 @@ namespace ChessForge
             if (res)
             {
                 chapter.SetTitle(dlg.ChapterTitle);
+                chapter.SetAuthor(dlg.Author);
                 _chaptersView.BuildFlowDocumentForChaptersView();
                 // study tree also shows title so update it there
                 if (_studyTreeView == null)
