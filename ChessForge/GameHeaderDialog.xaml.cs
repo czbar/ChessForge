@@ -50,6 +50,7 @@ namespace ChessForge
             UiTbEvent.Text = _tree.Header.GetEventName(out _) ?? "";
             UiTbRound.Text = _tree.Header.GetRound(out _) ?? "";
 
+            UiTbAnnotator.Text = _tree.Header.GetAnnotator(out _) ?? "";
             UiTbPreamble.Text = _tree.Header.BuildPreambleText();
 
             UiTbFirstMoveNumber.Text = (_tree.MoveNumberOffset + 1).ToString();
@@ -131,6 +132,7 @@ namespace ChessForge
             _tree.Header.SetHeaderValue(PgnHeaders.KEY_BLACK, UiTbBlack.Text);
             _tree.Header.SetHeaderValue(PgnHeaders.KEY_WHITE_ELO, UiTbWhiteElo.Text);
             _tree.Header.SetHeaderValue(PgnHeaders.KEY_BLACK_ELO, UiTbBlackElo.Text);
+            _tree.Header.SetHeaderValue(PgnHeaders.KEY_ANNOTATOR, UiTbAnnotator.Text);
 
             _tree.Header.SetHeaderValue(PgnHeaders.KEY_ECO, UiTbEco.Text);
 
