@@ -1112,6 +1112,13 @@ namespace ChessForge
                             }
                         }
 
+                        string annotator = _mainVariationTree.Header.GetAnnotator(out _);
+                        if (!string.IsNullOrWhiteSpace(annotator))
+                        {
+                            Run rAnnotator = CreateRun("1", "      " + Properties.Resources.Annotator + ": " + annotator + "\n", true);
+                            _pageHeaderParagraph.Inlines.Add(rAnnotator);
+                        }
+
                         string dateForDisplay = TextUtils.BuildDateFromDisplayFromPgnString(_mainVariationTree.Header.GetDate(out _));
                         if (!string.IsNullOrEmpty(dateForDisplay))
                         {
