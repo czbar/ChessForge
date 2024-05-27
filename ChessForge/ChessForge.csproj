@@ -267,6 +267,7 @@
     <Compile Include="ResourceUtils.cs" />
     <Compile Include="RichTextBoxUtilities.cs" />
     <Compile Include="RichTextPara.cs" />
+    <Compile Include="RtfWriter.cs" />
     <Compile Include="SearchPositionDialog.xaml.cs">
       <DependentUpon>SearchPositionDialog.xaml</DependentUpon>
     </Compile>
