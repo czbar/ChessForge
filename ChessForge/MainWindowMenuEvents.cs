@@ -4360,56 +4360,7 @@ namespace ChessForge
                     break;
             }
 
-            if (doc != null)
-            {
-                // Create a TextRange covering the entire content of the FlowDocument
-                TextRange textRange = new TextRange(doc.ContentStart, doc.ContentEnd);
-
-                string distinct = "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss");
-                string fileName = DebugUtils.BuildLogFileName(App.AppPath, "rtf", distinct, "rtf");
-                // Create a file stream to save the RTF content
-                using (FileStream fileStream = new FileStream(fileName, FileMode.Create))
-                {
-                    // Save the content in RTF format
-                    textRange.Save(fileStream, DataFormats.Rtf);
-                }
-            }
+            RtfWriter.WriteRtf(doc);
         }
-
-        /// <summary>
-        /// Print request from the Main Menu
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnPrint_Click(object sender, RoutedEventArgs e)
-        {
-            TabViewType vt = AppState.ActiveTab;
-            switch (vt)
-            {
-                case TabViewType.STUDY:
-                    PrintView(UiRtbStudyTreeView);
-                    break;
-                case TabViewType.MODEL_GAME:
-                    PrintView(UiRtbModelGamesView);
-                    break;
-                case TabViewType.EXERCISE:
-                    PrintView(UiRtbExercisesView);
-                    break;
-            }
-        }
-
-        /// <summary>
-        /// Prints the content of the passed RichTextBox
-        /// </summary>
-        /// <param name="rtb"></param>
-        private void PrintView(RichTextBox rtb)
-        {
-            PrintDialog pd = new PrintDialog();
-            if ((pd.ShowDialog() == true))
-            {
-                pd.PrintDocument((((IDocumentPaginatorSource)rtb.Document).DocumentPaginator), "printing as paginator");
-            }
-        }
-
     }
 }
