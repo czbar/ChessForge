@@ -2529,47 +2529,6 @@ namespace ChessForge
             MessageBox.Show(sError + fileName, Properties.Resources.ImportPgn, MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
-
-#if false
-
-        /// <summary>
-        /// Shows the dialog with info about generic PGN files.
-        /// </summary>
-        /// <returns></returns>
-        public bool ShowGenericPgnInfoDialog()
-        {
-            bool res = true;
-
-            if (Configuration.ShowGenericPgnInfo)
-            {
-                GenericPgnInfoDialog dlgInfo = new GenericPgnInfoDialog
-                {
-                    Left = ChessForgeMain.Left + 100,
-                    Top = ChessForgeMain.Top + 100,
-                    Topmost = false,
-                    Owner = this
-                };
-                dlgInfo.ShowDialog();
-                if (dlgInfo.ExitOk)
-                {
-                    if (Configuration.ShowGenericPgnInfo != dlgInfo.ShowGenericPgnInfo)
-                    {
-                        Configuration.ShowGenericPgnInfo = dlgInfo.ShowGenericPgnInfo;
-                        Configuration.WriteOutConfiguration();
-                    }
-                    res = true;
-                }
-                else
-                {
-                    res = false;
-                }
-            }
-
-            return res;
-        }
-#endif
-
-
         /// <summary>
         /// Shows the OpenFileDialog to let the user
         /// select a PGN file.

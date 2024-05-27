@@ -408,12 +408,6 @@ namespace ChessForge
         public static bool MainWinMaximized = false;
 
         /// <summary>
-        /// Whether to show the generic PGN file info
-        /// when opening a non-Chess Forge file.
-        /// </summary>
-        public static bool ShowGenericPgnInfo = true;
-
-        /// <summary>
         /// Whether to show move options at a fork.
         /// </summary>
         public static bool ShowMovesAtFork = true;
@@ -596,7 +590,6 @@ namespace ChessForge
         private const string CFG_SHOW_EVALUATION_CHART = "ShowEvaluationChart";
         private const string CFG_SHOW_INTRO_TAB = "ShowIntroTab";
         private const string CFG_MAIN_WIN_MAXIMIZED = "MainWinMaximized";
-        private const string CFG_SHOW_GENERIC_PGN_INFO = "ShowGenericPgnInfo";
         private const string CFG_ALLOW_MOUSE_WHEEL_FOR_MOVES = "AllowMouseWheelForMoves";
 
 
@@ -783,7 +776,6 @@ namespace ChessForge
                 sb.Append(CFG_SHOW_EXPLORERS + "=" + (ShowExplorers ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_SHOW_EVALUATION_CHART + "=" + (ShowEvaluationChart? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_SHOW_INTRO_TAB + "=" + (ShowIntroTab ? "1" : "0") + Environment.NewLine);
-                sb.Append(CFG_SHOW_GENERIC_PGN_INFO + "=" + (ShowGenericPgnInfo ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_ALLOW_MOUSE_WHEEL_FOR_MOVES + "=" + (AllowMouseWheelForMoves ? "1" : "0") + Environment.NewLine);
 
                 sb.Append(Environment.NewLine);
@@ -1142,9 +1134,6 @@ namespace ChessForge
                             break;
                         case CFG_PGN_EXP_EVALS:
                             PgnExportEvaluations = value != "0" ? true : false;
-                            break;
-                        case CFG_SHOW_GENERIC_PGN_INFO:
-                            ShowGenericPgnInfo = value != "0" ? true : false;
                             break;
                         case CFG_SHOW_MOVES_AT_FORK:
                             ShowMovesAtFork = value != "0" ? true : false;
