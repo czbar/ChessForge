@@ -241,8 +241,10 @@
       <DependentUpon>OperationScopeDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="PgnArticleUtils.cs" />
+    <Compile Include="PieceImageDictionaries.cs" />
     <Compile Include="PlayerStats.cs" />
     <Compile Include="PositionBoardDragEvents.cs" />
+    <Compile Include="PositionImageGenerator.cs" />
     <Compile Include="PostCopyMoveDialog.xaml.cs">
       <DependentUpon>PostCopyMoveDialog.xaml</DependentUpon>
     </Compile>
