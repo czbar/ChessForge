@@ -1695,7 +1695,7 @@ namespace ChessForge
                 // However, due the use of ForceFocus() below, this is not necessary anymore
                 // UiRtbBoardComment.Focus();
 
-                if (tabToFocus == TabViewType.INTRO && WorkbookManager.SessionWorkbook.ActiveChapter.IsIntroEmpty())
+                if (tabToFocus == TabViewType.INTRO && !WorkbookManager.SessionWorkbook.ActiveChapter.ShowIntro)
                 {
                     tabToFocus = TabViewType.STUDY;
                 }
