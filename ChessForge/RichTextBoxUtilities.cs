@@ -298,6 +298,67 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Gets the orientation (aka "flip state") of the diagram
+        /// by checking the status of the hidden checkbox in the diagram.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        public static bool GetDiagramFlipState(Paragraph para)
+        {
+            bool res = false;
+
+            try
+            {
+                CheckBox cb = FindFlippedCheckBox(para);
+                if (cb != null)
+                {
+                    res = cb.IsChecked == true;
+                }
+            }
+            catch
+            {
+            }
+
+            return res;
+        }
+
+        /// <summary>
+        /// Returns the diagram's "flip state" CheckBox
+        /// </summary>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        public static CheckBox FindFlippedCheckBox(Paragraph para)
+        {
+            try
+            {
+                CheckBox cb = null;
+
+                foreach (Inline inl in para.Inlines)
+                {
+                    if (inl is InlineUIContainer)
+                    {
+                        Viewbox vb = ((InlineUIContainer)inl).Child as Viewbox;
+                        Canvas canvas = vb.Child as Canvas;
+                        foreach (UIElement uie in canvas.Children)
+                        {
+                            if (uie is CheckBox)
+                            {
+                                cb = uie as CheckBox;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                return cb;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Returns a string with plain text combined from all Runs in the Paragraph.
         /// </summary>
         /// <param name="para"></param>

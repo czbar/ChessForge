@@ -1114,7 +1114,7 @@ namespace ChessForge
                 diag.Node = nd;
             }
 
-            bool flipState = GetDiagramFlipState(para);
+            bool flipState = RichTextBoxUtilities.GetDiagramFlipState(para);
             if (flip)
             {
                 flipState = !flipState;
@@ -1451,7 +1451,7 @@ namespace ChessForge
         {
             try
             {
-                CheckBox cb = FindFlippedCheckBox(para);
+                CheckBox cb = RichTextBoxUtilities.FindFlippedCheckBox(para);
                 if (cb != null)
                 {
                     cb.IsChecked = isFlipped;
@@ -1459,67 +1459,6 @@ namespace ChessForge
             }
             catch
             {
-            }
-        }
-
-        /// <summary>
-        /// Gets the orientation (aka "flip state") of the diagram
-        /// by checking the status of the hidden checkbox in the diagram.
-        /// </summary>
-        /// <param name="para"></param>
-        /// <returns></returns>
-        private bool GetDiagramFlipState(Paragraph para)
-        {
-            bool res = false;
-
-            try
-            {
-                CheckBox cb = FindFlippedCheckBox(para);
-                if (cb != null)
-                {
-                    res = cb.IsChecked == true;
-                }
-            }
-            catch
-            {
-            }
-
-            return res;
-        }
-
-        /// <summary>
-        /// Returns the diagram's "flip state" CheckBox
-        /// </summary>
-        /// <param name="para"></param>
-        /// <returns></returns>
-        private CheckBox FindFlippedCheckBox(Paragraph para)
-        {
-            try
-            {
-                CheckBox cb = null;
-
-                foreach (Inline inl in para.Inlines)
-                {
-                    if (inl is InlineUIContainer)
-                    {
-                        Viewbox vb = ((InlineUIContainer)inl).Child as Viewbox;
-                        Canvas canvas = vb.Child as Canvas;
-                        foreach (UIElement uie in canvas.Children)
-                        {
-                            if (uie is CheckBox)
-                            {
-                                cb = uie as CheckBox;
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                return cb;
-            }
-            catch
-            {
-                return null;
             }
         }
 
