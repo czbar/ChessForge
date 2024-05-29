@@ -26,7 +26,7 @@ namespace ChessForge
         {
             if (guiDoc != null)
             {
-                FlowDocument printDoc = CreateDocumentForPrint(guiDoc, tree, out List<int> diagrams);
+                FlowDocument printDoc = CreateDocumentForPrint(guiDoc, tree, out List<RtfDiagram> diagrams);
 
                 // Create a TextRange covering the entire content of the FlowDocument
                 TextRange textRange = new TextRange(printDoc.ContentStart, printDoc.ContentEnd);
@@ -43,10 +43,11 @@ namespace ChessForge
                     rtfContent = Encoding.UTF8.GetString(stream.ToArray());
                 }
 
-                foreach (int nodeId in diagrams)
+                foreach (RtfDiagram diagram in diagrams)
                 {
-                    string diag = BuildTextForDiagram(tree.GetNodeFromNodeId(nodeId));
-                    rtfContent = rtfContent.Replace("<Diagram " + nodeId.ToString() + ">", diag);
+                    string diag = BuildTextForDiagram(diagram);
+                    string ph = DiagramPlaceHolder(diagram.Node.NodeId);
+                    rtfContent = rtfContent.Replace(ph, diag);
                 }
 
                 File.WriteAllText(fileName, rtfContent);
@@ -59,12 +60,12 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd"></param>
         /// <returns></returns>
-        private static string BuildTextForDiagram(TreeNode nd)
+        private static string BuildTextForDiagram(RtfDiagram diag)
         {
             StringBuilder sb = new StringBuilder();
-            if (nd != null)
+            if (diag.Node != null)
             {
-                byte[] diagram = PositionImageGenerator.GenerateImage(null);
+                byte[] diagram = PositionImageGenerator.GenerateImage(diag);
                 string rtfImage = GetImageRtf(diagram);
                 //string rtfImageTag = $@"{{\pict\pngblip\picw{ChessBoards.ChessBoardGreySmall.PixelWidth}\pich{ChessBoards.ChessBoardGreySmall.PixelHeight}\picwgoal{ChessBoards.ChessBoardGreySmall.PixelWidth * 15}\pichgoal{ChessBoards.ChessBoardGreySmall.PixelHeight * 15} {rtfImage}}}";
                 string rtfImageTag = @"{\pict\pngblip\picw" + "242" + @"\pich" + "242" +
@@ -99,9 +100,9 @@ namespace ChessForge
         /// <param name="guiDoc"></param>
         /// <param name="diagrams"></param>
         /// <returns></returns>
-        private static FlowDocument CreateDocumentForPrint(FlowDocument guiDoc, VariationTree tree, out List<int> diagrams)
+        private static FlowDocument CreateDocumentForPrint(FlowDocument guiDoc, VariationTree tree, out List<RtfDiagram> diagrams)
         {
-            diagrams = new List<int>();
+            diagrams = new List<RtfDiagram>();
 
             FlowDocument printDoc = new FlowDocument();
 
@@ -121,8 +122,9 @@ namespace ChessForge
                             TreeNode nd = tree.GetNodeFromNodeId(nodeId);
                             if (nd != null)
                             {
+                                bool isFlipped = RichTextBoxUtilities.GetDiagramFlipState(para);
                                 printPara.Inlines.Add(CreateDiagramPlaceholderRun(nodeId));
-                                diagrams.Add(nodeId);
+                                diagrams.Add(new RtfDiagram(nd, isFlipped));
                             }
                         }
                     }
@@ -216,6 +218,33 @@ namespace ChessForge
         private static string DiagramPlaceHolder(int nodeId)
         {
             return "<Diagram " + nodeId + ">";
+        }
+    }
+
+    /// <summary>
+    /// Holds attributes of the diagram to generate an image for.
+    /// </summary>
+    public class RtfDiagram
+    {
+        /// <summary>
+        /// TreeNode represented by the diagram.
+        /// </summary>
+        public TreeNode Node;
+
+        /// <summary>
+        /// Whether the diagram should be flipped.
+        /// </summary>
+        public bool IsFlipped;
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="isFlipped"></param>
+        public RtfDiagram(TreeNode node, bool isFlipped)
+        {
+            Node = node;    
+            IsFlipped = isFlipped;
         }
     }
 }
