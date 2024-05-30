@@ -56,7 +56,6 @@ namespace ChessForge
 
         /// <summary>
         /// Builds text for a diagram representing the passed TreeNode.
-        /// TODO: handle "flipped".
         /// </summary>
         /// <param name="nd"></param>
         /// <returns></returns>
@@ -79,7 +78,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Codes the image byta array into an RTF format string.
+        /// Codes the image byte array into an RTF format string.
         /// </summary>
         /// <param name="imageBytes"></param>
         /// <returns></returns>
@@ -109,31 +108,39 @@ namespace ChessForge
             foreach (Block block in guiDoc.Blocks)
             {
                 lastRunWasIntroMove = false;
-                if (block is Paragraph para)
+                if (block is Paragraph guiPara)
                 {
                     Paragraph printPara = new Paragraph();
-                    CopyParaAttributes(printPara, para);
+                    CopyParaAttributes(printPara, guiPara);
                     printDoc.Blocks.Add(printPara);
 
-                    if (para.Name != null && para.Name.StartsWith(RichTextBoxUtilities.DiagramParaPrefix))
+                    if (guiPara.Name != null && guiPara.Name.StartsWith(RichTextBoxUtilities.DiagramParaPrefix))
                     {
-                        ProcessDiagram(printPara, para, tree, diagrams);
+                        ProcessDiagram(printPara, guiPara, tree, diagrams);
                     }
                     else
                     {
-                        foreach (Inline inl in para.Inlines)
+                        foreach (Inline inl in guiPara.Inlines)
                         {
-                            if (inl is Run run)
+                            if (inl is Run run && run.Text != null)
                             {
                                 lastRunWasIntroMove = false;
-                                // TODO: do a proper split, as this can be in the middle of a run too
-                                if (run.Text == "\n")
-                                {
-                                    printDoc.Blocks.Add(printPara);
-                                    printPara = new Paragraph();
-                                }
 
-                                ProcessTextRun(run, printPara);
+                                // if Run's text contains newline chars, create a new para for each (otherwise, no new line in RTF)
+                                string[] tokens = run.Text.Split('\n');
+                                for (int i = 0; i < tokens.Length; i++)
+                                {
+                                    if (i == 0)
+                                    {
+                                        ProcessTextRun(run, printPara);
+                                    }
+                                    else
+                                    {
+                                        printDoc.Blocks.Add(printPara);
+                                        printPara = new Paragraph();
+                                        ProcessTextRun(run, printPara);
+                                    }
+                                }
                             }
                             else if (inl is InlineUIContainer uic)
                             {
@@ -165,9 +172,13 @@ namespace ChessForge
         /// <param name="printPara"></param>
         private static void ProcessTextRun(Run run, Paragraph printPara)
         {
-            Run printRun = new Run();
-            CopyRunAttributes(printRun, run);
-            printPara.Inlines.Add(printRun);
+            if (!string.IsNullOrEmpty(run.Text))
+            {
+                Run printRun = new Run();
+                CopyRunAttributes(printRun, run);
+                printRun.Text = GuiUtilities.RemoveCharsFromString(printRun.Text);
+                printPara.Inlines.Add(printRun);
+            }
         }
 
         /// <summary>
