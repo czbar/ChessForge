@@ -105,6 +105,8 @@ namespace ChessForge
             FlowDocument printDoc = new FlowDocument();
 
             bool lastRunWasIntroMove = false;
+            Paragraph lastDiagramPara = null;
+
             foreach (Block block in guiDoc.Blocks)
             {
                 lastRunWasIntroMove = false;
@@ -112,11 +114,32 @@ namespace ChessForge
                 {
                     Paragraph printPara = new Paragraph();
                     CopyParaAttributes(printPara, guiPara);
+
                     printDoc.Blocks.Add(printPara);
 
                     if (guiPara.Name != null && guiPara.Name.StartsWith(RichTextBoxUtilities.DiagramParaPrefix))
                     {
                         ProcessDiagram(printPara, guiPara, tree, diagrams);
+                        lastDiagramPara = printPara;
+                    }
+                    else if (guiPara.Name == RichTextBoxUtilities.ExerciseUnderBoardControls)
+                    {
+                        printPara.Margin = new Thickness(30, 0, 0, 0);
+                        if (tree.Nodes.Count > 0)
+                        {
+                            Run run = new Run();
+                            run.FontSize = printPara.FontSize + 4;
+                            if (tree.Nodes[0].ColorToMove == PieceColor.White)
+                            {
+                                run.Text = " " + Constants.CHAR_WHITE_LARGE_TRIANGLE_UP.ToString();
+                            }
+                            else
+                            {
+                                run.Text = " " + Constants.CHAR_BLACK_LARGE_TRIANGLE_DOWN.ToString();
+                            }
+                            lastDiagramPara.Inlines.Add(run);
+                            printDoc.Blocks.Remove(printPara);
+                        }
                     }
                     else
                     {
@@ -132,13 +155,13 @@ namespace ChessForge
                                 {
                                     if (i == 0)
                                     {
-                                        ProcessTextRun(run, printPara);
+                                        ProcessTextRun(run, tokens[0], printPara);
                                     }
                                     else
                                     {
                                         printDoc.Blocks.Add(printPara);
                                         printPara = new Paragraph();
-                                        ProcessTextRun(run, printPara);
+                                        ProcessTextRun(run, tokens[i], printPara);
                                     }
                                 }
                             }
@@ -155,6 +178,11 @@ namespace ChessForge
                             }
                         }
                     }
+
+                    if (guiPara.Name == RichTextBoxUtilities.HeaderParagraphName)
+                    {
+                        printDoc.Blocks.Add(new Paragraph());
+                    }
                 }
                 else
                 {
@@ -170,13 +198,13 @@ namespace ChessForge
         /// </summary>
         /// <param name="run"></param>
         /// <param name="printPara"></param>
-        private static void ProcessTextRun(Run run, Paragraph printPara)
+        private static void ProcessTextRun(Run run, string txt, Paragraph printPara)
         {
             if (!string.IsNullOrEmpty(run.Text))
             {
                 Run printRun = new Run();
                 CopyRunAttributes(printRun, run);
-                printRun.Text = GuiUtilities.RemoveCharsFromString(printRun.Text);
+                printRun.Text = GuiUtilities.RemoveCharsFromString(txt);
                 printPara.Inlines.Add(printRun);
             }
         }
