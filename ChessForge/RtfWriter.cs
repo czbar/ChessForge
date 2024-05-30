@@ -103,11 +103,12 @@ namespace ChessForge
         private static FlowDocument CreateDocumentForPrint(FlowDocument guiDoc, VariationTree tree, out List<RtfDiagram> diagrams)
         {
             diagrams = new List<RtfDiagram>();
-
             FlowDocument printDoc = new FlowDocument();
 
+            bool lastRunWasIntroMove = false;
             foreach (Block block in guiDoc.Blocks)
             {
+                lastRunWasIntroMove = false;
                 if (block is Paragraph para)
                 {
                     Paragraph printPara = new Paragraph();
@@ -116,17 +117,7 @@ namespace ChessForge
 
                     if (para.Name != null && para.Name.StartsWith(RichTextBoxUtilities.DiagramParaPrefix))
                     {
-                        int nodeId = TextUtils.GetIdFromPrefixedString(para.Name);
-                        if (tree != null)
-                        {
-                            TreeNode nd = tree.GetNodeFromNodeId(nodeId);
-                            if (nd != null)
-                            {
-                                bool isFlipped = RichTextBoxUtilities.GetDiagramFlipState(para);
-                                printPara.Inlines.Add(CreateDiagramPlaceholderRun(nodeId));
-                                diagrams.Add(new RtfDiagram(nd, isFlipped));
-                            }
-                        }
+                        ProcessDiagram(printPara, para, tree, diagrams);
                     }
                     else
                     {
@@ -134,6 +125,7 @@ namespace ChessForge
                         {
                             if (inl is Run run)
                             {
+                                lastRunWasIntroMove = false;
                                 // TODO: do a proper split, as this can be in the middle of a run too
                                 if (run.Text == "\n")
                                 {
@@ -141,13 +133,18 @@ namespace ChessForge
                                     printPara = new Paragraph();
                                 }
 
-                                Run printRun = new Run();
-                                CopyRunAttributes(printRun, run);
-                                printPara.Inlines.Add(printRun);
+                                ProcessTextRun(run, printPara);
                             }
-                            else
+                            else if (inl is InlineUIContainer uic)
                             {
-                                AppLog.Message("RTF Write: Inline element type = " + block.GetType().ToString());
+                                if (inl.Name != null && inl.Name.StartsWith(RichTextBoxUtilities.UicMovePrefix))
+                                {
+                                    lastRunWasIntroMove = ProcessIntroMove(printPara, uic, lastRunWasIntroMove);
+                                }
+                                else
+                                {
+                                    lastRunWasIntroMove = false;
+                                }
                             }
                         }
                     }
@@ -159,6 +156,76 @@ namespace ChessForge
             }
 
             return printDoc;
+        }
+
+        /// <summary>
+        /// Processes a single "simple text" Run. 
+        /// </summary>
+        /// <param name="run"></param>
+        /// <param name="printPara"></param>
+        private static void ProcessTextRun(Run run, Paragraph printPara)
+        {
+            Run printRun = new Run();
+            CopyRunAttributes(printRun, run);
+            printPara.Inlines.Add(printRun);
+        }
+
+        /// <summary>
+        /// Processes a paragraph representing a diagram.
+        /// </summary>
+        /// <param name="printPara"></param>
+        /// <param name="para"></param>
+        /// <param name="tree"></param>
+        /// <param name="diagrams"></param>
+        private static void ProcessDiagram(Paragraph printPara, Paragraph para, VariationTree tree, List<RtfDiagram> diagrams)
+        {
+            int nodeId = TextUtils.GetIdFromPrefixedString(para.Name);
+            if (tree != null)
+            {
+                TreeNode nd = tree.GetNodeFromNodeId(nodeId);
+                if (nd != null)
+                {
+                    bool isFlipped = RichTextBoxUtilities.GetDiagramFlipState(para);
+                    printPara.Inlines.Add(CreateDiagramPlaceholderRun(nodeId));
+                    diagrams.Add(new RtfDiagram(nd, isFlipped));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Process a special Move encoding found in the Intro view.
+        /// </summary>
+        /// <param name="printPara"></param>
+        /// <param name="uic"></param>
+        /// <param name="lastRunWasIntroMove"></param>
+        /// <returns></returns>
+        private static bool ProcessIntroMove(Paragraph printPara, InlineUIContainer uic, bool lastRunWasIntroMove)
+        {
+            bool handled = false;
+
+            // there should be just one child of type TextBlock
+            var tb = uic.Child;
+            if (tb != null && tb is TextBlock tbMove)
+            {
+                // this should have just one inline of type Run
+                if (tbMove.Inlines.Count > 0)
+                {
+                    Run rMove = tbMove.Inlines.FirstInline as Run;
+                    if (rMove != null && rMove.Text != null)
+                    {
+                        Run moveRun = new Run();
+                        CopyRunAttributes(moveRun, rMove);
+                        if (lastRunWasIntroMove && moveRun.Text != null && moveRun.Text[0] == ' ')
+                        {
+                            moveRun.Text = moveRun.Text.Substring(1);
+                        }
+                        printPara.Inlines.Add(moveRun);
+                        handled = true;
+                    }
+                }
+            }
+
+            return handled;
         }
 
         /// <summary>
@@ -243,7 +310,7 @@ namespace ChessForge
         /// <param name="isFlipped"></param>
         public RtfDiagram(TreeNode node, bool isFlipped)
         {
-            Node = node;    
+            Node = node;
             IsFlipped = isFlipped;
         }
     }
