@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Linq;
 using ChessPosition;
 using ChessPosition.Utils;
 using EngineService;
@@ -19,6 +20,35 @@ namespace ChessForge
     /// </summary>
     public class GuiUtilities
     {
+        /// <summary>
+        /// List of chars that should be removed when processing a view for export 
+        /// into a file. 
+        /// </summary>
+        private static List<char> CharsToRemoveInPrint = new List<char>()
+          {
+            Constants.CHAR_UP_ARROW,
+            Constants.CHAR_DOWN_ARROW, 
+            Constants.CHAR_REFERENCE_MARK,
+            Constants.CHAR_SQUARED_SQUARE,
+          };
+
+        /// <summary>
+        /// Removes characters not intended for text output from the passed string.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public static string RemoveCharsFromString(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+            {
+                return input;
+            }
+            else
+            {
+                return new string(input.Where(c => !CharsToRemoveInPrint.Contains(c)).ToArray());
+            }
+        }
+
         /// <summary>
         /// Builds text for the engine's error assessment.
         /// </summary>
@@ -33,7 +63,7 @@ namespace ChessForge
                 sb.Append(MoveUtils.BuildStandaloneMoveText(nd.Parent.BestResponse, nd.MoveNumber, nd.Parent.ColorToMove));
             }
             sb.Append("] ");
-            
+
             return sb.ToString();
         }
 
@@ -87,7 +117,7 @@ namespace ChessForge
         {
             AppState.MainWin.UiTbEngineLines.Visibility = engineVisible ? Visibility.Visible : Visibility.Hidden;
             AppState.MainWin.UiEvalChart.Visibility = chartVisible ? Visibility.Visible : Visibility.Hidden;
-            
+
             if (engineVisible || chartVisible)
             {
                 AppState.MainWin.UiRtbBoardComment.Visibility = Visibility.Hidden;
@@ -194,7 +224,7 @@ namespace ChessForge
         public static bool CheckVerticalScrollBarVisibility(RichTextBox richTextBox)
         {
             bool visible = false;
-            
+
             // get the ScrollViewer inside the RichTextBox
             ScrollViewer scrollViewer = GetVisualChild<ScrollViewer>(richTextBox);
 
@@ -695,7 +725,7 @@ namespace ChessForge
 
                 tree.Header.SetHeaderValue(PgnHeaders.KEY_WHITE, white);
                 tree.Header.SetHeaderValue(PgnHeaders.KEY_BLACK, black);
-                tree.Header.SetHeaderValue(PgnHeaders.KEY_DATE, 
+                tree.Header.SetHeaderValue(PgnHeaders.KEY_DATE,
                     TextUtils.AdjustPgnDateString(DateTime.Now.ToString("yyy.MM.dd"), out _, out _));
                 tree.Header.SetHeaderValue(PgnHeaders.KEY_EVENT, Properties.Resources.ChessForgeTrainingGame);
             }
