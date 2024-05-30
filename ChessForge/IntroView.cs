@@ -54,7 +54,6 @@ namespace ChessForge
         /// Names and prefixes for xaml elements.
         /// </summary>
         private readonly string _run_move_ = "run_move_";
-        private readonly string _uic_move_ = "uic_move_";
         private readonly string _vbox_diag_ = "vbox_move_";
         private readonly string _flip_img_ = "flip_img_";
 
@@ -559,7 +558,7 @@ namespace ChessForge
 
             try
             {
-                string uicName = _uic_move_ + SelectedNode.NodeId.ToString();
+                string uicName = RichTextBoxUtilities.UicMovePrefix + SelectedNode.NodeId.ToString();
                 Inline inlClicked = FindInlineByName(uicName);
 
                 TextBlock tb = (inlClicked as InlineUIContainer).Child as TextBlock;
@@ -746,7 +745,7 @@ namespace ChessForge
             if (nd != null)
             {
                 _selectedNode = nd;
-                string uicName = _uic_move_ + nodeId.ToString();
+                string uicName = RichTextBoxUtilities.UicMovePrefix + nodeId.ToString();
                 Inline inlClicked = FindInlineByName(uicName);
                 if (adjustCaret)
                 {
@@ -918,7 +917,7 @@ namespace ChessForge
             bool isDiag = para.Name.StartsWith(RichTextBoxUtilities.DiagramParaPrefix);
             foreach (Inline inline in para.Inlines)
             {
-                if (inline is InlineUIContainer iuc && inline.Name.StartsWith(_uic_move_))
+                if (inline is InlineUIContainer iuc && inline.Name.StartsWith(RichTextBoxUtilities.UicMovePrefix))
                 {
                     iuc.MouseDown -= EventMoveClicked;
                     iuc.MouseDown += EventMoveClicked;
@@ -1203,7 +1202,7 @@ namespace ChessForge
                 tbMove.Inlines.Add(run);
 
                 InlineUIContainer uic = new InlineUIContainer();
-                uic.Name = _uic_move_ + node.NodeId.ToString();
+                uic.Name = RichTextBoxUtilities.UicMovePrefix + node.NodeId.ToString();
                 uic.Child = tbMove;
 
                 uic.MouseDown -= EventMoveClicked;
@@ -1367,7 +1366,7 @@ namespace ChessForge
 
                 InlineUIContainer uic = new InlineUIContainer();
                 uic.Child = viewBox;
-                uic.Name = _uic_move_ + nd.NodeId.ToString();
+                uic.Name = RichTextBoxUtilities.UicMovePrefix + nd.NodeId.ToString();
                 viewBox.Name = _vbox_diag_ + nd.NodeId.ToString();
                 para.Inlines.Add(uic);
             }
@@ -1876,7 +1875,7 @@ namespace ChessForge
                     // do start and end point to the same Element?
                     if (uicStart != null && uicEnd != null && !string.IsNullOrEmpty(uicStart.Name))
                     {
-                        if (uicStart.Name.Contains(_uic_move_) && uicStart.Name == uicEnd.Name)
+                        if (uicStart.Name.Contains(RichTextBoxUtilities.UicMovePrefix) && uicStart.Name == uicEnd.Name)
                         {
                             move = uicStart;
                         }

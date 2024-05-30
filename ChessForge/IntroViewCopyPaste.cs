@@ -210,7 +210,7 @@ namespace ChessForge
                             string name = ((TextElement)position.Parent).Name;
                             int nodeId = TextUtils.GetIdFromPrefixedString(name);
                             TreeNode node = GetNodeById(nodeId);
-                            if (name.StartsWith(_uic_move_))
+                            if (name.StartsWith(RichTextBoxUtilities.UicMovePrefix))
                             {
                                 if (!plainTextOnly)
                                 {

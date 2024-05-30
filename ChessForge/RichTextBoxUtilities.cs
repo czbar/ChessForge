@@ -28,6 +28,11 @@ namespace ChessForge
         public static readonly string MoveTextBoxPrefix = "tb_move_";
 
         /// <summary>
+        /// Prefix for naming an Inline for a Move in Intro. 
+        /// </summary>
+        public static readonly string UicMovePrefix = "uic_move_";
+
+        /// <summary>
         /// Finds a paragraph with a given name in the document.
         /// Returns null if not found.
         /// </summary>
