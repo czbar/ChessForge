@@ -27,7 +27,7 @@ namespace ChessForge
         private static List<char> CharsToRemoveInPrint = new List<char>()
           {
             Constants.CHAR_UP_ARROW,
-            Constants.CHAR_DOWN_ARROW, 
+            Constants.CHAR_DOWN_ARROW,
             Constants.CHAR_REFERENCE_MARK,
             Constants.CHAR_SQUARED_SQUARE,
           };
@@ -39,13 +39,22 @@ namespace ChessForge
         /// <returns></returns>
         public static string RemoveCharsFromString(string input)
         {
-            if (string.IsNullOrEmpty(input))
+            if (string.IsNullOrWhiteSpace(input))
             {
+                // note "WhiteSpace" in the above check.  We don't want indent runs like "   " to obliterated in the else branch!
                 return input;
             }
             else
             {
-                return new string(input.Where(c => !CharsToRemoveInPrint.Contains(c)).ToArray());
+                string replaced = new string(input.Where(c => !CharsToRemoveInPrint.Contains(c)).ToArray());
+                if (string.IsNullOrWhiteSpace(replaced))
+                {
+                    // after removing unwanted chars we only have white space
+                    // remove so that we don't have spurious blanks in the output.
+                    replaced = "";
+                }
+
+                return replaced;
             }
         }
 
