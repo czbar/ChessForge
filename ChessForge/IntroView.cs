@@ -8,7 +8,6 @@ using System.Windows;
 using ChessPosition;
 using System.Windows.Controls;
 using GameTree;
-using System.Windows.Media;
 using System.Windows.Input;
 using System.Diagnostics;
 
@@ -55,7 +54,6 @@ namespace ChessForge
         /// Names and prefixes for xaml elements.
         /// </summary>
         private readonly string _run_move_ = "run_move_";
-        private readonly string _tb_move_ = "tb_move_";
         private readonly string _uic_move_ = "uic_move_";
         private readonly string _vbox_diag_ = "vbox_move_";
         private readonly string _flip_img_ = "flip_img_";
@@ -1201,7 +1199,7 @@ namespace ChessForge
                 RichTextBoxUtilities.GetMoveInsertionPlace(_rtb, out Paragraph paraToInsertIn, out Inline inlineToInsertBefore, out double fontSize);
 
                 tbMove = new TextBlock();
-                tbMove.Name = _tb_move_ + node.NodeId.ToString();
+                tbMove.Name = RichTextBoxUtilities.MoveTextBoxPrefix + node.NodeId.ToString();
                 tbMove.Inlines.Add(run);
 
                 InlineUIContainer uic = new InlineUIContainer();

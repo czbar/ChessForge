@@ -23,6 +23,11 @@ namespace ChessForge
         public static readonly string DiagramParaPrefix = "para_diag_";
 
         /// <summary>
+        /// Prefix for naming Text Boxes with moves in Intro. 
+        /// </summary>
+        public static readonly string MoveTextBoxPrefix = "tb_move_";
+
+        /// <summary>
         /// Finds a paragraph with a given name in the document.
         /// Returns null if not found.
         /// </summary>
