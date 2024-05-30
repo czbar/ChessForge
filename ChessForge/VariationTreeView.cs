@@ -202,10 +202,6 @@ namespace ChessForge
         // NOTE: we rely on the fact that both types on comments begin with run_comment (!)
         private readonly string _run_comment_ = "run_comment_";
         private readonly string _run_comment_before_move_ = "run_comment_before_move_";
-        private readonly string _run_reference_ = "run_reference_";
-
-        // name of the header paragraph
-        private readonly string _para_header_ = "para_header_";
 
         /// <summary>
         /// Most recent clicked node.
@@ -1071,7 +1067,7 @@ namespace ChessForge
 
                         _pageHeaderParagraph = CreateParagraph("0", true);
                         _pageHeaderParagraph.Margin = new Thickness(0, 0, 0, 0);
-                        _pageHeaderParagraph.Name = _para_header_;
+                        _pageHeaderParagraph.Name = RichTextBoxUtilities.HeaderParagraphName;
                         _pageHeaderParagraph.MouseLeftButtonDown += EventPageHeaderClicked;
 
                         bool hasPlayerNames = !(string.IsNullOrWhiteSpace(whitePlayer) && string.IsNullOrWhiteSpace(blackPlayer));

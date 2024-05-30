@@ -360,6 +360,7 @@ namespace ChessForge
             if (_mainVariationTree != null && _mainVariationTree.Header.GetContentType(out _) == GameData.ContentType.EXERCISE)
             {
                 Paragraph para = CreateParagraph("2", false);
+                para.Name = RichTextBoxUtilities.DiagramParaPrefix + _mainVariationTree.Nodes[0].NodeId;
                 para.Margin = new Thickness(20, 0, 0, 20);
 
 
@@ -445,6 +446,7 @@ namespace ChessForge
             if (_mainVariationTree != null && _mainVariationTree.Header.GetContentType(out _) == GameData.ContentType.EXERCISE)
             {
                 Paragraph para = CreateParagraph("2", false);
+                para.Name = RichTextBoxUtilities.ExerciseUnderBoardControls;
                 para.Margin = new Thickness(90, 0, 0, 20);
 
                 PieceColor color = WorkbookManager.SessionWorkbook.ActiveChapter.GetSideToSolveExercise();

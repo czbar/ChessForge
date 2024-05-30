@@ -33,6 +33,21 @@ namespace ChessForge
         public static readonly string UicMovePrefix = "uic_move_";
 
         /// <summary>
+        // Name of the header paragraph.
+        /// </summary>
+        public static readonly string HeaderParagraphName = "para_header_";
+
+        /// <summary>
+        // Name of the header paragraph.
+        /// </summary>
+        public static readonly string ExerciseUnderBoardControls = "para_underboard_";
+
+        /// <summary>
+        /// Prefix for the Run with the reference symbol
+        /// </summary>
+        public static readonly string ReferenceRunPrefix = "run_reference_";
+
+        /// <summary>
         /// Finds a paragraph with a given name in the document.
         /// Returns null if not found.
         /// </summary>
