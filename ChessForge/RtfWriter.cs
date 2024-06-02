@@ -23,12 +23,26 @@ namespace ChessForge
         /// <param name="chapter"></param>
         public static void WriteRtf(Chapter chapter)
         {
-            List<FlowDocument> docs = new List<FlowDocument>();
-
-            FlowDocument printDoc = new FlowDocument();
-            List<RtfDiagram> diagrams = new List<RtfDiagram>();
-            if (chapter != null)
+            if (chapter == null)
             {
+                return;
+            }
+
+            try
+            {
+                List<FlowDocument> docs = new List<FlowDocument>();
+                FlowDocument printDoc = new FlowDocument();
+                List<RtfDiagram> diagrams = new List<RtfDiagram>();
+
+                FlowDocument chapterTitleDoc = new FlowDocument();
+                Paragraph para = new Paragraph();
+                para.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff + 2;
+                para.FontWeight = FontWeights.Bold;
+                para.TextAlignment = TextAlignment.Center;
+                para.Inlines.Add(new Run(chapter.GetTitle()));
+                chapterTitleDoc.Blocks.Add(para);
+                docs.Add(CreateDocumentForPrint(printDoc, chapterTitleDoc, null, ref diagrams));
+
                 if (!chapter.IsIntroEmpty())
                 {
                     FlowDocument guiDoc = new FlowDocument();
@@ -58,29 +72,33 @@ namespace ChessForge
                     exerciseView.BuildFlowDocumentForVariationTree(chapter.Exercises[i].Tree);
                     docs.Add(CreateDocumentForPrint(printDoc, guiDoc, chapter.Exercises[i].Tree, ref diagrams));
                 }
+
+                TextRange textRange = new TextRange(printDoc.ContentStart, printDoc.ContentEnd);
+
+                string distinct = "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss");
+                string fileName = DebugUtils.BuildLogFileName(App.AppPath, "rtf", distinct, "rtf");
+                string rtfContent;
+
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    // Save the content in RTF format
+                    textRange.Save(stream, DataFormats.Rtf);
+                    rtfContent = Encoding.UTF8.GetString(stream.ToArray());
+                }
+
+                foreach (RtfDiagram diagram in diagrams)
+                {
+                    string diag = BuildTextForDiagram(diagram);
+                    string ph = DiagramPlaceHolder(diagram.DiagramId);
+                    rtfContent = rtfContent.Replace(ph, diag);
+                }
+
+                File.WriteAllText(fileName, rtfContent);
             }
-
-            TextRange textRange = new TextRange(printDoc.ContentStart, printDoc.ContentEnd);
-
-            string distinct = "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss");
-            string fileName = DebugUtils.BuildLogFileName(App.AppPath, "rtf", distinct, "rtf");
-            string rtfContent;
-
-            using (MemoryStream stream = new MemoryStream())
+            catch (Exception ex)
             {
-                // Save the content in RTF format
-                textRange.Save(stream, DataFormats.Rtf);
-                rtfContent = Encoding.UTF8.GetString(stream.ToArray());
+                AppLog.Message("WriteRtf()", ex);
             }
-
-            foreach (RtfDiagram diagram in diagrams)
-            {
-                string diag = BuildTextForDiagram(diagram);
-                string ph = DiagramPlaceHolder(diagram.DiagramId);
-                rtfContent = rtfContent.Replace(ph, diag);
-            }
-
-            File.WriteAllText(fileName, rtfContent);
         }
 
         /// <summary>
@@ -313,6 +331,7 @@ namespace ChessForge
             target.FontSize = source.FontSize;
             target.TextDecorations = source.TextDecorations;
             target.Margin = source.Margin;
+            target.TextAlignment = source.TextAlignment;
         }
 
         /// <summary>
