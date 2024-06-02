@@ -1,9 +1,6 @@
 ﻿using GameTree;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Documents;
@@ -262,6 +259,18 @@ namespace ChessForge
         /// <param name="entityIndex"></param>
         public ExerciseTreeView(GameData.ContentType contentType, int entityIndex)
             : base(AppState.MainWin.UiRtbExercisesView, contentType, entityIndex)
+        {
+        }
+
+        /// <summary>
+        /// Constructor to use when exporting the view.  
+        /// The passed guiDoc will be built rather then RichTextBox's document.
+        /// </summary>
+        /// <param name="guiDoc"></param>
+        /// <param name="contentType"></param>
+        /// <param name="entityIndex"></param>
+        public ExerciseTreeView(FlowDocument guiDoc, GameData.ContentType contentType, int entityIndex)
+            : base(guiDoc, contentType, entityIndex)
         {
         }
 
