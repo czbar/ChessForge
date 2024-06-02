@@ -84,9 +84,14 @@ namespace ChessForge
         /// Constructor. Builds the content if not empty.
         /// Initializes data structures.
         /// </summary>
-        public IntroView(FlowDocument doc, Chapter parentChapter) : base(doc)
+        public IntroView(FlowDocument doc, Chapter parentChapter, RichTextBox printRtb = null) : base(doc)
         {
             bool isAppDirty = AppState.IsDirty;
+
+            if (printRtb != null)
+            {
+                _rtb = printRtb;
+            }
 
             Document.Blocks.Clear();
 
