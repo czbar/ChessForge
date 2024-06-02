@@ -80,6 +80,9 @@ namespace ChessForge
         // refrence to the RichTextBox of this view.
         private static RichTextBox _rtb = AppState.MainWin.UiRtbIntroView;
 
+        // flags if the view is in the "print" mode
+        private bool _isPrintMode;
+
         /// <summary>
         /// Constructor. Builds the content if not empty.
         /// Initializes data structures.
@@ -90,7 +93,13 @@ namespace ChessForge
 
             if (printRtb != null)
             {
+                _isPrintMode = true;
                 _rtb = printRtb;
+            }
+            else
+            {
+                _isPrintMode = false;
+                _rtb = AppState.MainWin.UiRtbIntroView;
             }
 
             Document.Blocks.Clear();
@@ -98,7 +107,7 @@ namespace ChessForge
             ParentChapter = parentChapter;
 
             // set the event handler for text changes.
-            if (!_initialized)
+            if (!_initialized && !_isPrintMode)
             {
                 _rtb.TextChanged += UiRtbIntroView_TextChanged;
                 _initialized = true;
@@ -140,13 +149,16 @@ namespace ChessForge
 
             AppState.IsDirty = currDirty;
 
-            _selectedNode = Nodes[0];
-            if (AppState.ActiveVariationTree != null)
+            if (!_isPrintMode)
             {
-                AppState.ActiveVariationTree.SetSelectedNodeId(_selectedNode.NodeId);
-            }
+                _selectedNode = Nodes[0];
+                if (AppState.ActiveVariationTree != null)
+                {
+                    AppState.ActiveVariationTree.SetSelectedNodeId(_selectedNode.NodeId);
+                }
 
-            WebAccessManager.ExplorerRequest(Intro.Tree.TreeId, Nodes[0]);
+                WebAccessManager.ExplorerRequest(Intro.Tree.TreeId, Nodes[0]);
+            }
         }
 
         /// <summary>
@@ -528,7 +540,10 @@ namespace ChessForge
         /// <returns></returns>
         public TextBlock InsertMove(TreeNode node, bool fromClipboard = false)
         {
-            AppState.MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
+            if (!_isPrintMode)
+            {
+                AppState.MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
+            }
 
             if (string.IsNullOrEmpty(node.LastMoveAlgebraicNotation))
             {
@@ -546,7 +561,10 @@ namespace ChessForge
             rMove.FontWeight = FontWeights.Bold;
             rMove.FontSize = MOVE_FONT_SIZE;
 
-            WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, _selectedNode);
+            if (!_isPrintMode)
+            {
+                WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, _selectedNode);
+            }
 
             return InsertMoveTextBlock(rMove, node, fromClipboard);
         }
@@ -1082,15 +1100,18 @@ namespace ChessForge
 
             IntroViewDiagram diag = new IntroViewDiagram();
             Paragraph para = BuildDiagramParagraph(diag, node, isFlipped);
-            diag.Chessboard.DisplayPosition(node, true);
-            diag.Node = node;
 
+            if (!_isPrintMode)
+            {
+                diag.Chessboard.DisplayPosition(node, true);
+                diag.Node = node;
+
+                AppState.MainWin.DisplayPosition(node);
+
+                _isTextDirty = true;
+                AppState.IsDirty = true;
+            }
             DiagramList.Add(diag);
-
-            AppState.MainWin.DisplayPosition(node);
-
-            _isTextDirty = true;
-            AppState.IsDirty = true;
 
             Document.Blocks.InsertBefore(nextPara, para);
 
@@ -1125,13 +1146,14 @@ namespace ChessForge
             CreateDiagramElements(para, diag, nd, flipState);
             DiagramList.Add(diag);
 
-            SetInlineUIContainerEventHandlers(para);
-
-            diag.Chessboard.DisplayPosition(nd, true);
-            AppState.MainWin.DisplayPosition(nd);
-
-            _isTextDirty = true;
-            AppState.IsDirty = true;
+            if (!_isPrintMode)
+            {
+                SetInlineUIContainerEventHandlers(para);
+                diag.Chessboard.DisplayPosition(nd, true);
+                AppState.MainWin.DisplayPosition(nd);
+                _isTextDirty = true;
+                AppState.IsDirty = true;
+            }
         }
 
         /// <summary>
