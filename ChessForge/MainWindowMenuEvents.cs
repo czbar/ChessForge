@@ -4319,7 +4319,7 @@ namespace ChessForge
                     break;
             }
 
-            RtfWriter.WriteRtf(doc, ActiveVariationTree);
+            RtfWriter.WriteRtf(AppState.ActiveChapter);
         }
     }
 }
