@@ -18,40 +18,69 @@ namespace ChessForge
     public class RtfWriter
     {
         /// <summary>
-        /// Writes out an RTF document representing the passed FlowDocument.
+        /// Exports the passed chapter into an RTF file.
         /// </summary>
-        /// <param name="guiDoc"></param>
-        /// <param name="tree"></param>
-        public static void WriteRtf(FlowDocument guiDoc, VariationTree tree)
+        /// <param name="chapter"></param>
+        public static void WriteRtf(Chapter chapter)
         {
-            if (guiDoc != null)
+            List<FlowDocument> docs = new List<FlowDocument>();
+
+            FlowDocument printDoc = new FlowDocument();
+            List<RtfDiagram> diagrams = new List<RtfDiagram>();
+            if (chapter != null)
             {
-                FlowDocument printDoc = CreateDocumentForPrint(guiDoc, tree, out List<RtfDiagram> diagrams);
-
-                // Create a TextRange covering the entire content of the FlowDocument
-                TextRange textRange = new TextRange(printDoc.ContentStart, printDoc.ContentEnd);
-
-                string distinct = "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss");
-                string fileName = DebugUtils.BuildLogFileName(App.AppPath, "rtf", distinct, "rtf");
-
-                string rtfContent;
-
-                using (MemoryStream stream = new MemoryStream())
+                if (!chapter.IsIntroEmpty())
                 {
-                    // Save the content in RTF format
-                    textRange.Save(stream, DataFormats.Rtf);
-                    rtfContent = Encoding.UTF8.GetString(stream.ToArray());
+                    FlowDocument guiDoc = new FlowDocument();
+                    RichTextBox rtb = new RichTextBox();
+                    IntroView introView = new IntroView(guiDoc, chapter, rtb);
+                    docs.Add(CreateDocumentForPrint(printDoc, rtb.Document, chapter.Intro.Tree, ref diagrams));
                 }
 
-                foreach (RtfDiagram diagram in diagrams)
+                RichTextBox rtbStudy = new RichTextBox();
+                StudyTreeView studyView = new StudyTreeView(rtbStudy, GameData.ContentType.STUDY_TREE, 0);
+                studyView.BuildFlowDocumentForVariationTree(chapter.StudyTree.Tree);
+                docs.Add(CreateDocumentForPrint(printDoc, rtbStudy.Document, chapter.StudyTree.Tree, ref diagrams));
+
+                for (int i = 0; i < chapter.ModelGames.Count; i++)
                 {
-                    string diag = BuildTextForDiagram(diagram);
-                    string ph = DiagramPlaceHolder(diagram.Node.NodeId);
-                    rtfContent = rtfContent.Replace(ph, diag);
+                    FlowDocument guiDoc = new FlowDocument();
+                    VariationTreeView gameView = new VariationTreeView(guiDoc, GameData.ContentType.MODEL_GAME, i);
+                    gameView.BuildFlowDocumentForVariationTree(chapter.ModelGames[i].Tree);
+                    //gameView.BuildFlowDocumentForPrint(guiDoc, chapter.ModelGames[i].Tree);
+                    docs.Add(CreateDocumentForPrint(printDoc, guiDoc, chapter.ModelGames[i].Tree, ref diagrams));
                 }
 
-                File.WriteAllText(fileName, rtfContent);
+                for (int i = 0; i < chapter.Exercises.Count; i++)
+                {
+                    FlowDocument guiDoc = new FlowDocument();
+                    VariationTreeView exerciseView = new ExerciseTreeView(guiDoc, GameData.ContentType.EXERCISE, i);
+                    exerciseView.BuildFlowDocumentForVariationTree(chapter.Exercises[i].Tree);
+                    docs.Add(CreateDocumentForPrint(printDoc, guiDoc, chapter.Exercises[i].Tree, ref diagrams));
+                }
             }
+
+            TextRange textRange = new TextRange(printDoc.ContentStart, printDoc.ContentEnd);
+
+            string distinct = "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss");
+            string fileName = DebugUtils.BuildLogFileName(App.AppPath, "rtf", distinct, "rtf");
+            string rtfContent;
+
+            using (MemoryStream stream = new MemoryStream())
+            {
+                // Save the content in RTF format
+                textRange.Save(stream, DataFormats.Rtf);
+                rtfContent = Encoding.UTF8.GetString(stream.ToArray());
+            }
+
+            foreach (RtfDiagram diagram in diagrams)
+            {
+                string diag = BuildTextForDiagram(diagram);
+                string ph = DiagramPlaceHolder(diagram.DiagramId);
+                rtfContent = rtfContent.Replace(ph, diag);
+            }
+
+            File.WriteAllText(fileName, rtfContent);
         }
 
         /// <summary>
@@ -99,10 +128,9 @@ namespace ChessForge
         /// <param name="guiDoc"></param>
         /// <param name="diagrams"></param>
         /// <returns></returns>
-        private static FlowDocument CreateDocumentForPrint(FlowDocument guiDoc, VariationTree tree, out List<RtfDiagram> diagrams)
+        private static FlowDocument CreateDocumentForPrint(FlowDocument printDoc, FlowDocument guiDoc, VariationTree tree, ref List<RtfDiagram> diagrams)
         {
-            diagrams = new List<RtfDiagram>();
-            FlowDocument printDoc = new FlowDocument();
+            int diagramId = 0;
 
             bool lastRunWasIntroMove = false;
             Paragraph lastDiagramPara = null;
@@ -119,7 +147,8 @@ namespace ChessForge
 
                     if (guiPara.Name != null && guiPara.Name.StartsWith(RichTextBoxUtilities.DiagramParaPrefix))
                     {
-                        ProcessDiagram(printPara, guiPara, tree, diagrams);
+                        diagramId++;
+                        ProcessDiagram(diagramId, printPara, guiPara, tree, diagrams);
                         lastDiagramPara = printPara;
                     }
                     else if (guiPara.Name == RichTextBoxUtilities.ExerciseUnderBoardControls)
@@ -216,7 +245,7 @@ namespace ChessForge
         /// <param name="para"></param>
         /// <param name="tree"></param>
         /// <param name="diagrams"></param>
-        private static void ProcessDiagram(Paragraph printPara, Paragraph para, VariationTree tree, List<RtfDiagram> diagrams)
+        private static void ProcessDiagram(int diagramId, Paragraph printPara, Paragraph para, VariationTree tree, List<RtfDiagram> diagrams)
         {
             int nodeId = TextUtils.GetIdFromPrefixedString(para.Name);
             if (tree != null)
@@ -225,8 +254,8 @@ namespace ChessForge
                 if (nd != null)
                 {
                     bool isFlipped = RichTextBoxUtilities.GetDiagramFlipState(para);
-                    printPara.Inlines.Add(CreateDiagramPlaceholderRun(nodeId));
-                    diagrams.Add(new RtfDiagram(nd, isFlipped));
+                    printPara.Inlines.Add(CreateDiagramPlaceholderRun(diagramId));
+                    diagrams.Add(new RtfDiagram(diagramId, nd, isFlipped));
                 }
             }
         }
@@ -308,11 +337,11 @@ namespace ChessForge
         /// <summary>
         /// Creates a Run with the diagram placeholder text.
         /// </summary>
-        /// <param name="nodeId"></param>
+        /// <param name="diagramId"></param>
         /// <returns></returns>
-        private static Run CreateDiagramPlaceholderRun(int nodeId)
+        private static Run CreateDiagramPlaceholderRun(int diagramId)
         {
-            Run run = new Run(DiagramPlaceHolder(nodeId));
+            Run run = new Run(DiagramPlaceHolder(diagramId));
             return run;
         }
 
@@ -333,6 +362,12 @@ namespace ChessForge
     public class RtfDiagram
     {
         /// <summary>
+        /// An ID uniquely identifying the diagram while
+        /// the document is being built.
+        /// </summary>
+        public int DiagramId;
+
+        /// <summary>
         /// TreeNode represented by the diagram.
         /// </summary>
         public TreeNode Node;
@@ -347,8 +382,9 @@ namespace ChessForge
         /// </summary>
         /// <param name="node"></param>
         /// <param name="isFlipped"></param>
-        public RtfDiagram(TreeNode node, bool isFlipped)
+        public RtfDiagram(int diagramId, TreeNode node, bool isFlipped)
         {
+            DiagramId = diagramId;
             Node = node;
             IsFlipped = isFlipped;
         }
