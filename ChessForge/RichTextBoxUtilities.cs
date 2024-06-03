@@ -48,6 +48,33 @@ namespace ChessForge
         public static readonly string ReferenceRunPrefix = "run_reference_";
 
         /// <summary>
+        /// Returns true if the passed paragraph contains no inlines
+        /// or only empty Runs.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        public static bool HasNonEmptyInline(Paragraph para)
+        {
+            bool res = false;
+
+            if (para != null)
+            {
+                foreach (Inline inl in para.Inlines)
+                {
+                    Run run = inl as Run;
+                    // if this is not a Run we consider that this Paragraph has non-empty content (e.g. InlineUIContainer)
+                    if (run == null || !string.IsNullOrEmpty(run.Text))
+                    {
+                        res = true;
+                        break;
+                    }
+                }
+            }
+
+            return res;
+        }
+
+        /// <summary>
         /// Finds a paragraph with a given name in the document.
         /// Returns null if not found.
         /// </summary>
