@@ -428,19 +428,19 @@ namespace ChessForge
 
                                 for (int i = 0; i < sector.Nodes.Count; i++)
                                 {
-                                    if (i < firstSkip || i > lastSkip)
-                                    {
+                                    //if (i < firstSkip || i > lastSkip)
+                                    //{
                                         TreeNode nd = sector.Nodes[i];
                                         BuildIndexNodeAndAddToPara(nd, firstMove, para);
                                         firstMove = false;
-                                    }
-                                    else if (i == firstSkip)
-                                    {
-                                        Run rElipsis = new Run(" [...] ");
-                                        rElipsis.FontWeight = FontWeights.Normal;
-                                        para.Inlines.Add(rElipsis);
-                                        firstMove = true;
-                                    }
+                                    //}
+                                    //else if (i == firstSkip)
+                                    //{
+                                    //    Run rElipsis = new Run(" [...] ");
+                                    //    rElipsis.FontWeight = FontWeights.Normal;
+                                    //    para.Inlines.Add(rElipsis);
+                                    //    firstMove = true;
+                                    //}
                                 }
                             }
                             rIdTitle.FontWeight = FontWeights.DemiBold;
