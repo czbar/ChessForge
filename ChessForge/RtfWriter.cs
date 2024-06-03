@@ -1,13 +1,13 @@
 ﻿using ChessPosition;
-using System;
-using System.IO;
-using System.Windows.Documents;
-using System.Windows;
-using System.Windows.Media;
-using System.Text;
-using System.Windows.Controls;
 using GameTree;
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Media;
 
 namespace ChessForge
 {
@@ -17,60 +17,88 @@ namespace ChessForge
     /// </summary>
     public class RtfWriter
     {
+        // TODO: these fields are meant to be Configuration items.
+        private static string _termForExercise = Properties.Resources.Exercise;
+        private static bool _continuousArticleNumbering = true;
+
+        // counts exported games if _continuousArticleNumbering is on 
+        private static int _currentGameNumber = 0;
+
+        // counts exported exercises if _continuousArticleNumbering is on 
+        private static int _currentExerciseNumber = 0;
+
+        // true if we are only printing a single Chapter
+        private static bool _printChapterOnly;
+
+        // true if we are only printing a single Article
+        private static bool _printArticleOnly;
+
         /// <summary>
         /// Exports the passed chapter into an RTF file.
         /// </summary>
         /// <param name="chapter"></param>
-        public static void WriteRtf(Chapter chapter)
+        public static void WriteRtf(Chapter ch, Article article)
         {
-            if (chapter == null)
-            {
-                return;
-            }
+            ResetCounters();
+
+            _printChapterOnly = ch != null;
+            _printArticleOnly = article != null;
+
+            // we only use Fixed Font size when "printing".  Set Configuration.UseFixedFont to true temporarily
+            bool saveUseFixedFont = Configuration.UseFixedFont;
+            Configuration.UseFixedFont = true;
 
             try
             {
-                List<FlowDocument> docs = new List<FlowDocument>();
                 FlowDocument printDoc = new FlowDocument();
                 List<RtfDiagram> diagrams = new List<RtfDiagram>();
 
-                FlowDocument chapterTitleDoc = new FlowDocument();
-                Paragraph para = new Paragraph();
-                para.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff + 2;
-                para.FontWeight = FontWeights.Bold;
-                para.TextAlignment = TextAlignment.Center;
-                para.Inlines.Add(new Run(chapter.GetTitle()));
-                chapterTitleDoc.Blocks.Add(para);
-                docs.Add(CreateDocumentForPrint(printDoc, chapterTitleDoc, null, ref diagrams));
-
-                if (!chapter.IsIntroEmpty())
+                foreach (Chapter chapter in AppState.Workbook.Chapters)
                 {
-                    FlowDocument guiDoc = new FlowDocument();
-                    RichTextBox rtb = new RichTextBox();
-                    IntroView introView = new IntroView(guiDoc, chapter, rtb);
-                    docs.Add(CreateDocumentForPrint(printDoc, rtb.Document, chapter.Intro.Tree, ref diagrams));
-                }
+                    if (!_printChapterOnly || ch == chapter)
+                    {
+                        FlowDocument chapterTitleDoc = PrintChapterTitle(chapter);
+                        CreateDocumentForPrint(printDoc, chapterTitleDoc, null, ref diagrams);
 
-                RichTextBox rtbStudy = new RichTextBox();
-                StudyTreeView studyView = new StudyTreeView(rtbStudy, GameData.ContentType.STUDY_TREE, 0);
-                studyView.BuildFlowDocumentForVariationTree(chapter.StudyTree.Tree);
-                docs.Add(CreateDocumentForPrint(printDoc, rtbStudy.Document, chapter.StudyTree.Tree, ref diagrams));
+                        if (!chapter.IsIntroEmpty())
+                        {
+                            FlowDocument doc = PrintIntro(chapter);
+                            CreateDocumentForPrint(printDoc, doc, chapter.Intro.Tree, ref diagrams);
+                        }
 
-                for (int i = 0; i < chapter.ModelGames.Count; i++)
-                {
-                    FlowDocument guiDoc = new FlowDocument();
-                    VariationTreeView gameView = new VariationTreeView(guiDoc, GameData.ContentType.MODEL_GAME, i);
-                    gameView.BuildFlowDocumentForVariationTree(chapter.ModelGames[i].Tree);
-                    //gameView.BuildFlowDocumentForPrint(guiDoc, chapter.ModelGames[i].Tree);
-                    docs.Add(CreateDocumentForPrint(printDoc, guiDoc, chapter.ModelGames[i].Tree, ref diagrams));
-                }
+                        if (chapter.StudyTree.Tree.Nodes.Count > 1 ||
+                            (chapter.StudyTree.Tree.Nodes.Count == 1 && !string.IsNullOrWhiteSpace(chapter.StudyTree.Tree.Nodes[0].Comment)))
+                        {
+                            CreateDocumentForPrint(printDoc, PrintStudyHeader(), null, ref diagrams);
 
-                for (int i = 0; i < chapter.Exercises.Count; i++)
-                {
-                    FlowDocument guiDoc = new FlowDocument();
-                    VariationTreeView exerciseView = new ExerciseTreeView(guiDoc, GameData.ContentType.EXERCISE, i);
-                    exerciseView.BuildFlowDocumentForVariationTree(chapter.Exercises[i].Tree);
-                    docs.Add(CreateDocumentForPrint(printDoc, guiDoc, chapter.Exercises[i].Tree, ref diagrams));
+                            RichTextBox rtbStudy = new RichTextBox();
+                            StudyTreeView studyView = new StudyTreeView(rtbStudy, GameData.ContentType.STUDY_TREE, 0);
+                            studyView.BuildFlowDocumentForVariationTree(chapter.StudyTree.Tree);
+                            CreateDocumentForPrint(printDoc, rtbStudy.Document, chapter.StudyTree.Tree, ref diagrams);
+                        }
+
+                        if (chapter.ModelGames.Count > 0)
+                        {
+                            //CreateDocumentForPrint(printDoc, PrintGamesHeader(), null, ref diagrams);
+
+                            for (int i = 0; i < chapter.ModelGames.Count; i++)
+                            {
+                                FlowDocument guiDoc = PrintGame(chapter.ModelGames[i], i, ref diagrams);
+                                CreateDocumentForPrint(printDoc, guiDoc, chapter.ModelGames[i].Tree, ref diagrams);
+                            }
+                        }
+
+                        if (chapter.Exercises.Count > 0)
+                        {
+                            //CreateDocumentForPrint(printDoc, PrintExercisesHeader(), null, ref diagrams);
+
+                            for (int i = 0; i < chapter.Exercises.Count; i++)
+                            {
+                                FlowDocument guiDoc = PrintExercise(printDoc, chapter.Exercises[i], i, ref diagrams);
+                                CreateDocumentForPrint(printDoc, guiDoc, chapter.Exercises[i].Tree, ref diagrams);
+                            }
+                        }
+                    }
                 }
 
                 TextRange textRange = new TextRange(printDoc.ContentStart, printDoc.ContentEnd);
@@ -86,18 +114,327 @@ namespace ChessForge
                     rtfContent = Encoding.UTF8.GetString(stream.ToArray());
                 }
 
-                foreach (RtfDiagram diagram in diagrams)
-                {
-                    string diag = BuildTextForDiagram(diagram);
-                    string ph = DiagramPlaceHolder(diagram.DiagramId);
-                    rtfContent = rtfContent.Replace(ph, diag);
-                }
+                rtfContent = CreateFinalRtfString(rtfContent, diagrams);
 
                 File.WriteAllText(fileName, rtfContent);
             }
             catch (Exception ex)
             {
                 AppLog.Message("WriteRtf()", ex);
+            }
+            finally
+            {
+                Configuration.UseFixedFont = saveUseFixedFont;
+            }
+        }
+
+        /// <summary>
+        /// Generates the string ready to be exported as RTF file.
+        /// Performs the placeholder replacements and creates diagrams.
+        /// </summary>
+        /// <param name="rtfContent"></param>
+        /// <param name="diagrams"></param>
+        /// <returns></returns>
+        private static string CreateFinalRtfString(string rtfContent, List<RtfDiagram> diagrams)
+        {
+            rtfContent = InsertColumnFormatting(rtfContent);
+
+            foreach (RtfDiagram diagram in diagrams)
+            {
+                string diag = BuildTextForDiagram(diagram);
+                string ph = DiagramPlaceHolder(diagram.DiagramId);
+                rtfContent = rtfContent.Replace(ph, diag);
+            }
+
+            return rtfContent;
+        }
+
+        /// <summary>
+        /// Creates a flow document with the Workbook's title.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <returns></returns>
+        private static FlowDocument PrintWorkbookTitle(Chapter chapter)
+        {
+            FlowDocument doc = new FlowDocument();
+
+            string title = AppState.Workbook.Title;
+
+            Paragraph paraTitle = new Paragraph();
+            paraTitle.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff + 6;
+            paraTitle.FontWeight = FontWeights.Bold;
+            paraTitle.TextAlignment = TextAlignment.Center;
+            paraTitle.Inlines.Add(new Run(title));
+            doc.Blocks.Add(paraTitle);
+
+            // add a dummy paragraph a a spacer before the further content
+            Paragraph paraDummy = new Paragraph();
+            paraDummy.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff + 2;
+            doc.Blocks.Add(paraDummy);
+
+            return doc;
+        }
+
+        /// <summary>
+        /// Creates a flow document with the Chapter's title.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <returns></returns>
+        private static FlowDocument PrintChapterTitle(Chapter chapter)
+        {
+            FlowDocument doc = new FlowDocument();
+
+            Paragraph paraChapterNo = new Paragraph();
+            paraChapterNo.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff + 4;
+            paraChapterNo.FontWeight = FontWeights.Bold;
+
+            string title = chapter.Title;
+            int chapterNo = chapter.Index + 1;
+
+            Run runNo = new Run();
+            runNo.Text = Properties.Resources.Chapter + " " + chapterNo.ToString();
+            paraChapterNo.Inlines.Add(runNo);
+            doc.Blocks.Add(paraChapterNo);
+
+            // if title is empty, do not include the second paragraph
+            if (!string.IsNullOrWhiteSpace(title))
+            {
+                Paragraph paraDummy1 = new Paragraph();
+                paraDummy1.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff;
+                doc.Blocks.Add(paraDummy1);
+
+                Paragraph paraChapterTitle = new Paragraph();
+                paraChapterTitle.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff + 2;
+                paraChapterTitle.FontWeight = FontWeights.Bold;
+                paraChapterTitle.TextAlignment = TextAlignment.Center;
+                paraChapterTitle.Inlines.Add(new Run(title));
+                doc.Blocks.Add(paraChapterTitle);
+            }
+
+            // add a dummy paragraph a a spacer before the further content
+            Paragraph paraDummy2 = new Paragraph();
+            paraDummy2.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff;
+            doc.Blocks.Add(paraDummy2);
+
+            return doc;
+        }
+
+        /// <summary>
+        /// Creates a flow document with the Study header.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <returns></returns>
+        private static FlowDocument PrintStudyHeader()
+        {
+            FlowDocument doc = new FlowDocument();
+
+            // add a dummy paragraph a a spacer before the further content
+            Paragraph paraDummy1 = new Paragraph();
+            paraDummy1.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff + 4;
+            doc.Blocks.Add(paraDummy1);
+
+            Paragraph para = new Paragraph();
+            para.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff + 2;
+            para.FontWeight = FontWeights.Bold;
+            para.TextAlignment = TextAlignment.Center;
+            string studyTitle = Properties.Resources.Study;
+            para.Inlines.Add(new Run(studyTitle));
+            doc.Blocks.Add(para);
+
+            return doc;
+        }
+
+        /// <summary>
+        /// Creates a flow document with the Games header.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <returns></returns>
+        private static FlowDocument PrintGamesHeader()
+        {
+            FlowDocument doc = new FlowDocument();
+
+            // add a dummy paragraph a a spacer before the further content
+            Paragraph paraDummy1 = new Paragraph();
+            paraDummy1.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff + 8;
+            doc.Blocks.Add(paraDummy1);
+
+            Paragraph para = new Paragraph();
+            para.TextAlignment = TextAlignment.Center;
+            para.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff + 2;
+            para.FontWeight = FontWeights.Bold;
+            string gamesHeader = Properties.Resources.Games;
+            para.Inlines.Add(new Run(gamesHeader));
+            doc.Blocks.Add(para);
+
+            Paragraph paraDummy2 = new Paragraph();
+            paraDummy2.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff + 4;
+            doc.Blocks.Add(paraDummy2);
+
+            return doc;
+        }
+
+        /// <summary>
+        /// Creates a flow document with the Games header.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <returns></returns>
+        private static FlowDocument PrintExercisesHeader()
+        {
+            FlowDocument doc = new FlowDocument();
+
+            // add a dummy paragraph a a spacer before the further content
+            Paragraph paraDummy1 = new Paragraph();
+            paraDummy1.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff + 4;
+            doc.Blocks.Add(paraDummy1);
+
+            Paragraph para = new Paragraph();
+            para.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff + 2;
+            para.FontWeight = FontWeights.Bold;
+            string exercisesHeader = Properties.Resources.Exercises;
+            para.Inlines.Add(new Run(exercisesHeader));
+            doc.Blocks.Add(para);
+
+            return doc;
+        }
+
+        /// <summary>
+        /// Prints the intro.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <returns></returns>
+        private static FlowDocument PrintIntro(Chapter chapter)
+        {
+            RichTextBox rtb = new RichTextBox();
+            IntroView introView = new IntroView(new FlowDocument(), chapter, rtb);
+
+            // the user may have placed an empty line at the start.
+            // we don't want it in print so remove it
+            Block first = rtb.Document.Blocks.FirstBlock;
+            if (first is Paragraph para)
+            {
+                if (!RichTextBoxUtilities.HasNonEmptyInline(para))
+                {
+                    rtb.Document.Blocks.Remove(first);
+                }
+            }
+
+            Paragraph paraBeginCols2 = new Paragraph();
+            Run runBeginCols2 = new Run(BeginTwoColumns());
+            paraBeginCols2.Inlines.Add(runBeginCols2);
+
+            Paragraph paraEndCols2 = new Paragraph();
+            Run runEndCols2 = new Run(EndTwoColumns());
+            paraEndCols2.Inlines.Add(runEndCols2);
+
+            rtb.Document.Blocks.InsertBefore(rtb.Document.Blocks.FirstBlock, paraBeginCols2);
+            rtb.Document.Blocks.Add(paraEndCols2);
+
+            return rtb.Document;
+        }
+        /// <summary>
+        /// Print a single Game
+        /// </summary>
+        /// <param name="game"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        private static FlowDocument PrintGame(Article game, int index, ref List<RtfDiagram> diagrams)
+        {
+            _currentGameNumber++;
+            int gameNo = _continuousArticleNumbering ? _currentGameNumber : index + 1;
+
+            FlowDocument doc = new FlowDocument();
+
+            Paragraph paraDummy1 = new Paragraph();
+            paraDummy1.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff + 2;
+
+            Paragraph para = new Paragraph();
+            para.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff;
+            para.FontWeight = FontWeights.Bold;
+            string gamesHeader = Properties.Resources.Game + " " + gameNo.ToString();
+            para.TextAlignment = TextAlignment.Center;
+            para.TextDecorations = TextDecorations.Underline;
+
+            para.Inlines.Add(new Run(gamesHeader));
+
+            VariationTreeView gameView = new VariationTreeView(doc, GameData.ContentType.MODEL_GAME, gameNo);
+            gameView.BuildFlowDocumentForVariationTree(game.Tree);
+
+            AddColumnFormatPlaceholdersAfterHeader(doc);
+            doc.Blocks.InsertBefore(doc.Blocks.FirstBlock, paraDummy1);
+            doc.Blocks.InsertAfter(paraDummy1, para);
+
+            return doc;
+        }
+
+
+        /// <summary>
+        /// Print a single Exercise
+        /// </summary>
+        /// <param name="game"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        private static FlowDocument PrintExercise(FlowDocument printDoc, Article exercise, int index, ref List<RtfDiagram> diagrams)
+        {
+            _currentExerciseNumber++;
+            int exerciseNo = _continuousArticleNumbering ? _currentExerciseNumber : index + 1;
+
+            FlowDocument doc = new FlowDocument();
+
+            Paragraph paraDummy1 = new Paragraph();
+            paraDummy1.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff + 2;
+
+            Paragraph para = new Paragraph();
+            para.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff;
+            para.FontWeight = FontWeights.Bold;
+            para.TextAlignment = TextAlignment.Center;
+            para.TextDecorations = TextDecorations.Underline;
+            string exerciseHeader = Properties.Resources.Exercise + " " + exerciseNo.ToString();
+            para.Inlines.Add(new Run(exerciseHeader));
+
+            VariationTreeView exerciseView = new ExerciseTreeView(doc, GameData.ContentType.EXERCISE, exerciseNo);
+            exerciseView.BuildFlowDocumentForVariationTree(exercise.Tree);
+
+            AddColumnFormatPlaceholdersAfterHeader(doc);
+            doc.Blocks.InsertBefore(doc.Blocks.FirstBlock, paraDummy1);
+            doc.Blocks.InsertAfter(paraDummy1, para);
+
+            return doc;
+        }
+
+
+        /// <summary>
+        /// Puts 2-column format placeholders after the Game or Exercise header.
+        /// </summary>
+        /// <param name="doc"></param>
+        private static void AddColumnFormatPlaceholdersAfterHeader(FlowDocument doc)
+        {
+            Paragraph pageHeader = null;
+
+            foreach (Block block in doc.Blocks)
+            {
+                if (block is Paragraph p)
+                {
+                    if (p.Name == RichTextBoxUtilities.HeaderParagraphName)
+                    {
+                        pageHeader = p;
+                        break;
+                    }
+                }
+            }
+
+            if (pageHeader != null)
+            {
+                Paragraph paraBeginCols2 = new Paragraph();
+                Run runBeginCols2 = new Run(BeginTwoColumns());
+                paraBeginCols2.Inlines.Add(runBeginCols2);
+
+                doc.Blocks.InsertAfter(pageHeader, paraBeginCols2);
+
+                Paragraph paraEndCols2 = new Paragraph();
+                Run runEndCols2 = new Run(EndTwoColumns());
+                paraEndCols2.Inlines.Add(runEndCols2);
+
+                doc.Blocks.Add(paraEndCols2);
             }
         }
 
@@ -315,6 +652,35 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Replace 2-column formatting placeholders with
+        /// the RTF formatting commands.
+        /// </summary>
+        /// <param name="rtfContent"></param>
+        /// <returns></returns>
+        private static string InsertColumnFormatting(string rtfContent)
+        {
+            string[] lines = rtfContent.Split('\n');
+
+            StringBuilder sb = new StringBuilder();
+            foreach (string line in lines)
+            {
+                if (line.IndexOf(BeginTwoColumns()) >= 0)
+                {
+                    sb.Append(@"\sect\sectd\pard\sbknone\linex0\cols2" + '\r');
+                }
+                else if (line.IndexOf(EndTwoColumns()) >= 0)
+                {
+                    sb.Append(@"\sect\sectd\par\sbknone\linex0");
+                }
+                else
+                {
+                    sb.AppendLine(line);
+                }
+            }
+            return sb.ToString();
+        }
+
+        /// <summary>
         /// Applies attributes of the source Paragraph to the target.
         /// </summary>
         /// <param name="target"></param>
@@ -373,39 +739,35 @@ namespace ChessForge
         {
             return "<Diagram " + nodeId + ">";
         }
-    }
-
-    /// <summary>
-    /// Holds attributes of the diagram to generate an image for.
-    /// </summary>
-    public class RtfDiagram
-    {
-        /// <summary>
-        /// An ID uniquely identifying the diagram while
-        /// the document is being built.
-        /// </summary>
-        public int DiagramId;
 
         /// <summary>
-        /// TreeNode represented by the diagram.
+        /// Placeholder for the start of 2 column layout
         /// </summary>
-        public TreeNode Node;
-
-        /// <summary>
-        /// Whether the diagram should be flipped.
-        /// </summary>
-        public bool IsFlipped;
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        /// <param name="node"></param>
-        /// <param name="isFlipped"></param>
-        public RtfDiagram(int diagramId, TreeNode node, bool isFlipped)
+        /// <param name="nodeId"></param>
+        /// <returns></returns>
+        private static string BeginTwoColumns()
         {
-            DiagramId = diagramId;
-            Node = node;
-            IsFlipped = isFlipped;
+            return "<BEGIN 2 COLUMNS>";
+        }
+
+        /// <summary>
+        /// Placeholder for the end of 2 column layout
+        /// </summary>
+        /// <param name="nodeId"></param>
+        /// <returns></returns>
+        private static string EndTwoColumns()
+        {
+            return "<END 2 COLUMNS>";
+        }
+
+        /// <summary>
+        /// Resets the article counters.
+        /// </summary>
+        private static void ResetCounters()
+        {
+            _currentGameNumber = 0;
+            _currentExerciseNumber = 0;
         }
     }
+
 }
