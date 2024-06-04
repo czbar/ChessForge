@@ -46,6 +46,10 @@ namespace ChessForge
         // Article being printed
         private static Article _articleToPrint;
 
+        // running id of the diagrams in the document
+        private static int diagramId = 0;
+
+
         /// <summary>
         /// Exports the passed chapter into an RTF file.
         /// </summary>
@@ -686,8 +690,6 @@ namespace ChessForge
         /// <returns></returns>
         private static FlowDocument CreateDocumentForPrint(FlowDocument printDoc, FlowDocument guiDoc, VariationTree tree, ref List<RtfDiagram> diagrams)
         {
-            int diagramId = 0;
-
             bool lastRunWasIntroMove = false;
             Paragraph lastDiagramPara = null;
 
