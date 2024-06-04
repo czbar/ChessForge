@@ -354,6 +354,7 @@ namespace ChessForge
             if (EffectiveIndexDepth >= 0)
             {
                 Paragraph para = CreateParagraph("0", true);
+                para.Name = RichTextBoxUtilities.StudyIndexParagraphName;
                 para.Foreground = ChessForgeColors.CurrentTheme.IndexPrefixForeground;
                 para.FontWeight = FontWeights.Normal;
                 para.FontSize = para.FontSize - 1;
