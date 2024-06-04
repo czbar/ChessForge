@@ -69,6 +69,13 @@ namespace ChessForge
                 FlowDocument printDoc = new FlowDocument();
                 List<RtfDiagram> diagrams = new List<RtfDiagram>();
 
+                if (scope == PrintScope.WORKBOOK)
+                {
+                    FlowDocument workbookFP = PrintWorkbookFrontPage();
+                    CreateDocumentForPrint(printDoc, workbookFP, null, ref diagrams);
+                    isFirstPrintPage = false;
+                }
+
                 foreach (Chapter chapter in AppState.Workbook.Chapters)
                 {
                     if (_printScope == PrintScope.WORKBOOK || _printScope == PrintScope.CHAPTER && ch == chapter)
@@ -90,10 +97,15 @@ namespace ChessForge
                             CreateDocumentForPrint(printDoc, doc, chapter.Intro.Tree, ref diagrams);
                         }
 
-                        if (chapter.StudyTree.Tree.Nodes.Count > 1 ||
-                            (chapter.StudyTree.Tree.Nodes.Count == 1 && !string.IsNullOrWhiteSpace(chapter.StudyTree.Tree.Nodes[0].Comment)))
+                        if (!chapter.IsStudyEmpty())
                         {
-                            CreateDocumentForPrint(printDoc, PrintStudyHeader(), null, ref diagrams);
+                            // if we are printing just this study or there was no Intro, print without the header and page break.
+                            if (scope != PrintScope.ARTICLE && !chapter.IsIntroEmpty())
+                            {
+                                FlowDocument docStudyHeader = PrintStudyHeader();
+                                AddPageBreakPlaceholder(docStudyHeader);
+                                CreateDocumentForPrint(printDoc, docStudyHeader, null, ref diagrams);
+                            }
 
                             FlowDocument doc = PrintStudy(chapter);
                             CreateDocumentForPrint(printDoc, doc, chapter.StudyTree.Tree, ref diagrams);
@@ -199,6 +211,65 @@ namespace ChessForge
             doc.Blocks.Add(paraDummy);
 
             return doc;
+        }
+
+        /// <summary>
+        /// Creates FlowDocument for the front page of the Workbook.
+        /// </summary>
+        /// <returns></returns>
+        private static FlowDocument PrintWorkbookFrontPage()
+        {
+            FlowDocument doc = new FlowDocument();
+            
+            Run cfInfo = new Run();
+            StringBuilder sb = new StringBuilder();
+            sb.Append(Properties.Resources.ChessForgeGenNotice);
+            sb.Append(" " + Constants.CHAR_SUPER_LEFT_PARENTHESIS + Constants.CHAR_TRADE_MARK + Constants.CHAR_SUPER_RIGHT_PARENTHESIS);
+            cfInfo.Text = sb.ToString();
+            Paragraph paraChessForgeInfo = CreateParagraphForFrontPage(0, 60, cfInfo);
+            doc.Blocks.Add(paraChessForgeInfo);
+
+            
+            Run runTitle = new Run(AppState.Workbook.Title);
+            runTitle.FontWeight = FontWeights.Bold;
+            Paragraph paraTitle = CreateParagraphForFrontPage(8, 10, runTitle);
+            doc.Blocks.Add(paraTitle);
+
+
+            Run runVersion = new Run(Properties.Resources.Version + ": " + AppState.Workbook.Version);
+            Paragraph paraVersion = CreateParagraphForFrontPage(-2, 50, runVersion);
+            doc.Blocks.Add(paraVersion);
+
+            if (!string.IsNullOrEmpty(AppState.Workbook.Author))
+            {
+                Run runAuthorPrefix = new Run(Properties.Resources.Author + ": ");
+                Run runAuthor = new Run(AppState.Workbook.Author);
+                runAuthor.FontWeight = FontWeights.Bold;
+                Paragraph paraAuthor = CreateParagraphForFrontPage(0, 20, runAuthorPrefix);
+                paraAuthor.Inlines.Add(runAuthor);
+                doc.Blocks.Add(paraAuthor);
+            }
+
+            return doc;
+        }
+
+        /// <summary>
+        /// Creates a paragraph for use when building the Front Page FlowDocument.
+        /// </summary>
+        /// <param name="adjFontSize"></param>
+        /// <param name="bottomMargin"></param>
+        /// <param name="run"></param>
+        /// <returns></returns>
+        private static Paragraph CreateParagraphForFrontPage(int adjFontSize, double bottomMargin, Run run)
+        {
+            Paragraph para = new Paragraph();
+
+            para.Margin = new Thickness(0, 0, 0, bottomMargin);
+            para.TextAlignment = TextAlignment.Center;
+            para.FontSize = Constants.BASE_FIXED_FONT_SIZE + adjFontSize;
+            para.Inlines.Add(run);
+
+            return para;
         }
 
         /// <summary>
