@@ -62,6 +62,8 @@ namespace ChessForge
             bool saveUseFixedFont = Configuration.UseFixedFont;
             Configuration.UseFixedFont = true;
 
+            bool isFirstPrintPage = true;
+
             try
             {
                 FlowDocument printDoc = new FlowDocument();
@@ -72,6 +74,14 @@ namespace ChessForge
                     if (_printScope == PrintScope.WORKBOOK || _printScope == PrintScope.CHAPTER && ch == chapter)
                     {
                         FlowDocument chapterTitleDoc = PrintChapterTitle(chapter);
+                        if (!isFirstPrintPage)
+                        {
+                            AddPageBreakPlaceholder(chapterTitleDoc);
+                        }
+                        else
+                        {
+                            isFirstPrintPage = false;
+                        }
                         CreateDocumentForPrint(printDoc, chapterTitleDoc, null, ref diagrams);
 
                         if (!chapter.IsIntroEmpty())
@@ -93,7 +103,9 @@ namespace ChessForge
 
                         if (chapter.ModelGames.Count > 0)
                         {
-                            //CreateDocumentForPrint(printDoc, PrintGamesHeader(), null, ref diagrams);
+                            FlowDocument docGamesHeader = PrintGamesHeader();
+                            AddPageBreakPlaceholder(docGamesHeader);
+                            CreateDocumentForPrint(printDoc, docGamesHeader, null, ref diagrams);
 
                             for (int i = 0; i < chapter.ModelGames.Count; i++)
                             {
@@ -104,7 +116,9 @@ namespace ChessForge
 
                         if (chapter.Exercises.Count > 0)
                         {
-                            //CreateDocumentForPrint(printDoc, PrintExercisesHeader(), null, ref diagrams);
+                            FlowDocument docExercisesHeader = PrintExercisesHeader();
+                            AddPageBreakPlaceholder(docExercisesHeader);
+                            CreateDocumentForPrint(printDoc, docExercisesHeader, null, ref diagrams);
 
                             for (int i = 0; i < chapter.Exercises.Count; i++)
                             {
@@ -453,6 +467,21 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Inserts a Page Break placeholder paragraph
+        /// at the start of the document.
+        /// </summary>
+        /// <param name="doc"></param>
+        private static void AddPageBreakPlaceholder(FlowDocument doc)
+        {
+            Paragraph paraPageBreak = new Paragraph();
+            paraPageBreak.FontSize = 1;
+            Run runPageBreak = new Run(PageBreak());
+            paraPageBreak.Inlines.Add(runPageBreak);
+
+            doc.Blocks.InsertBefore(doc.Blocks.FirstBlock, paraPageBreak);
+        }
+
+        /// <summary>
         /// Builds text for a diagram representing the passed TreeNode.
         /// </summary>
         /// <param name="nd"></param>
@@ -684,7 +713,12 @@ namespace ChessForge
                 }
                 else if (line.IndexOf(EndTwoColumns()) >= 0)
                 {
-                    sb.Append(@"\sect\sectd\par\sbknone\linex0");
+                    sb.Append(@"\sect\sectd\par\sbknone\linex0" + '\r');
+                }
+                else if (line.IndexOf(PageBreak()) >= 0)
+                {
+                    string upd = line.Replace(PageBreak(), @" {\page} ");
+                    sb.Append(upd);
                 }
                 else
                 {
@@ -772,6 +806,16 @@ namespace ChessForge
         private static string EndTwoColumns()
         {
             return "<END 2 COLUMNS>";
+        }
+
+        /// <summary>
+        /// Placeholder for page break
+        /// </summary>
+        /// <param name="nodeId"></param>
+        /// <returns></returns>
+        private static string PageBreak()
+        {
+            return "<PAGE BREAK>";
         }
 
         /// <summary>
