@@ -1,0 +1,21 @@
+﻿<Window x:Class="ChessForge.RtfExportDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ChessForge"
+        mc:Ignorable="d"
+        xmlns:p="clr-namespace:ChessForge.Properties"
+        Title="{x:Static p:Resources.DlgExportRtf}" Height="210" Width="280">
+    <Grid>
+        <GroupBox Header="{x:Static p:Resources.Scope}" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="245" Height="105">
+            <StackPanel>
+                <RadioButton x:Name="UiRbCurrentItem" Content="{x:Static p:Resources.CurrentItem}" HorizontalAlignment="Left" Margin="15,10,0,0" VerticalAlignment="Top" />
+                <RadioButton x:Name="UiRbCurrentChapter" Content="{x:Static p:Resources.CurrentChapter}" HorizontalAlignment="Left" Margin="15,10,0,0" VerticalAlignment="Top" />
+                <RadioButton x:Name="UiRbWorkbook" Content="{x:Static p:Resources.EntireWorkbook}" HorizontalAlignment="Left" Margin="15,10,0,0" VerticalAlignment="Top" />
+            </StackPanel>
+        </GroupBox>
+        <Button x:Name="UiBtnOk" Content="OK" IsDefault="True" HorizontalAlignment="Center" Margin="-120,130,0,0" VerticalAlignment="Top" Width="100" Click="UiBtnOk_Click" />
+        <Button x:Name="UiBtnCancel" Content="Cancel" IsCancel="True" HorizontalAlignment="Center" Margin="120,130,0,0" VerticalAlignment="Top" Width="100"/>
+    </Grid>
+</Window>

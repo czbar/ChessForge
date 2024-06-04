@@ -270,6 +270,9 @@
     <Compile Include="RichTextBoxUtilities.cs" />
     <Compile Include="RichTextPara.cs" />
     <Compile Include="RtfDiagram.cs" />
+    <Compile Include="RtfExportDialog.xaml.cs">
+      <DependentUpon>RtfExportDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RtfWriter.cs" />
     <Compile Include="SearchPositionDialog.xaml.cs">
       <DependentUpon>SearchPositionDialog.xaml</DependentUpon>
@@ -500,6 +503,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ReorderLinesDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RtfExportDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
