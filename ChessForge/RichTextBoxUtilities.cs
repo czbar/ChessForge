@@ -38,6 +38,11 @@ namespace ChessForge
         public static readonly string HeaderParagraphName = "para_header_";
 
         /// <summary>
+        // Name of the index paragraph in the study.
+        /// </summary>
+        public static readonly string StudyIndexParagraphName = "para_index_";
+
+        /// <summary>
         // Name of the header paragraph.
         /// </summary>
         public static readonly string ExerciseUnderBoardControls = "para_underboard_";
