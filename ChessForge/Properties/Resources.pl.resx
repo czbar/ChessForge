@@ -537,6 +537,9 @@
   <data name="SaveAs" xml:space="preserve">
     <value>Zapisz $0 jako ...</value>
   </data>
+  <data name="ExportRtf" xml:space="preserve">
+    <value>Eksportuj jako RTF</value>
+  </data>
   <data name="BackUpThisVersion" xml:space="preserve">
     <value>Zrób kopię tej wersji...</value>
   </data>
@@ -870,6 +873,12 @@
   </data>
   <data name="EnableDetection" xml:space="preserve">
     <value>Włącz detekcję</value>
+  </data>
+  <data name="DlgExportRtf" xml:space="preserve">
+    <value>Export do Pliku RTF</value>
+  </data>
+  <data name="ChessForgeGenNotice" xml:space="preserve">
+    <value>Wygenerowano programem Chess Forge</value>
   </data>
   <data name="ReorderLines" xml:space="preserve">
     <value>Kolejność Wariantów</value>
