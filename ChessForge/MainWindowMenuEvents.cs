@@ -4301,25 +4301,10 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnWriteRtf_Click(object sender, RoutedEventArgs e)
         {
-            TabViewType vt = AppState.ActiveTab;
-            FlowDocument doc = null;
-            switch (vt)
-            {
-                case TabViewType.INTRO:
-                    doc = UiRtbIntroView.Document;
-                    break;
-                case TabViewType.STUDY:
-                    doc = UiRtbStudyTreeView.Document;
-                    break;
-                case TabViewType.MODEL_GAME:
-                    doc = UiRtbModelGamesView.Document;
-                    break;
-                case TabViewType.EXERCISE:
-                    doc = UiRtbExercisesView.Document;
-                    break;
-            }
+            RtfExportDialog dlg = new RtfExportDialog();
+            GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
-            RtfWriter.WriteRtf(PrintScope.CHAPTER, AppState.ActiveChapter, null);
+            dlg.ShowDialog();
         }
     }
 }
