@@ -729,16 +729,6 @@ namespace ChessForge
             mnDebugDumpStates.Header = "Dump States and Timers";
             mnDebug.Items.Add(mnDebugDumpStates);
             mnDebugDumpStates.Click += UiMnDebugDumpStates_Click;
-
-            MenuItem mnDebugWriteRtf = new MenuItem
-            {
-                Name = "WriteRtf"
-            };
-
-            mnDebugWriteRtf.Header = "Write RTF";
-            mnDebug.Items.Add(mnDebugWriteRtf);
-            mnDebugWriteRtf.Click += UiMnWriteRtf_Click;
-
         }
 
         // tracks the application start stage
