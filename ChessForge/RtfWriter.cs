@@ -95,10 +95,8 @@ namespace ChessForge
                         {
                             CreateDocumentForPrint(printDoc, PrintStudyHeader(), null, ref diagrams);
 
-                            RichTextBox rtbStudy = new RichTextBox();
-                            StudyTreeView studyView = new StudyTreeView(rtbStudy, GameData.ContentType.STUDY_TREE, 0);
-                            studyView.BuildFlowDocumentForVariationTree(chapter.StudyTree.Tree);
-                            CreateDocumentForPrint(printDoc, rtbStudy.Document, chapter.StudyTree.Tree, ref diagrams);
+                            FlowDocument doc = PrintStudy(chapter);
+                            CreateDocumentForPrint(printDoc, doc, chapter.StudyTree.Tree, ref diagrams);
                         }
 
                         if (chapter.ModelGames.Count > 0)
@@ -359,6 +357,53 @@ namespace ChessForge
 
             return rtb.Document;
         }
+
+        /// <summary>
+        /// Prints the intro.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <returns></returns>
+        private static FlowDocument PrintStudy(Chapter chapter)
+        {
+            RichTextBox rtbStudy = new RichTextBox();
+            StudyTreeView studyView = new StudyTreeView(rtbStudy, GameData.ContentType.STUDY_TREE, 0);
+            studyView.BuildFlowDocumentForVariationTree(chapter.StudyTree.Tree);
+
+            Paragraph paraIndex = null;
+            foreach (Block block in rtbStudy.Document.Blocks)
+            {
+                if (block is Paragraph para)
+                {
+                    if (para.Name == RichTextBoxUtilities.StudyIndexParagraphName)
+                    {
+                        paraIndex = para;
+                        break;
+                    }
+                }
+            }
+
+            if (paraIndex == null)
+            {
+                paraIndex = rtbStudy.Document.Blocks.FirstBlock as Paragraph;
+            }
+
+            if (paraIndex != null)
+            {
+                Paragraph paraBeginCols2 = new Paragraph();
+                Run runBeginCols2 = new Run(BeginTwoColumns());
+                paraBeginCols2.Inlines.Add(runBeginCols2);
+
+                Paragraph paraEndCols2 = new Paragraph();
+                Run runEndCols2 = new Run(EndTwoColumns());
+                paraEndCols2.Inlines.Add(runEndCols2);
+
+                rtbStudy.Document.Blocks.InsertAfter(paraIndex, paraBeginCols2);
+                rtbStudy.Document.Blocks.Add(paraEndCols2);
+            }
+
+            return rtbStudy.Document;
+        }
+
         /// <summary>
         /// Print a single Game
         /// </summary>
@@ -429,6 +474,48 @@ namespace ChessForge
             return doc;
         }
 
+        /// <summary>
+        /// Inserts formatting command placeholders in the Study document 
+        /// after the index paragraph.
+        /// </summary>
+        /// <param name="doc"></param>
+        private static void AddColumnFormatPlaceholdersAfterIndex(FlowDocument doc)
+        {
+            Paragraph paraIndex = null;
+            foreach (Block block in doc.Blocks)
+            {
+                if (block is Paragraph para)
+                {
+                    if (para.Name == RichTextBoxUtilities.StudyIndexParagraphName)
+                    {
+                        paraIndex = para;
+                        break;
+                    }
+                }
+            }
+
+            if (paraIndex != null)
+            {
+                Paragraph paraBeginCols2 = new Paragraph();
+                Run runBeginCols2 = new Run(BeginTwoColumns());
+                paraBeginCols2.Inlines.Add(runBeginCols2);
+
+                Paragraph paraEndCols2 = new Paragraph();
+                Run runEndCols2 = new Run(EndTwoColumns());
+                paraEndCols2.Inlines.Add(runEndCols2);
+
+                if (paraIndex == null)
+                {
+                    // if there was no index, insert the command before the FirstBlock
+                    doc.Blocks.InsertBefore(doc.Blocks.FirstBlock, paraBeginCols2);
+                }
+                else
+                {
+                    doc.Blocks.InsertAfter(paraIndex, paraBeginCols2);
+                }
+                doc.Blocks.Add(paraEndCols2);
+            }
+        }
 
         /// <summary>
         /// Puts 2-column format placeholders after the Game or Exercise header.
