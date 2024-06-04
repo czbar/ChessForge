@@ -12,6 +12,16 @@ using System.Windows.Media;
 namespace ChessForge
 {
     /// <summary>
+    /// The scope of Export/Print operation.
+    /// </summary>
+    public enum PrintScope
+    {
+        ARTICLE,
+        CHAPTER,
+        WORKBOOK,
+    }
+
+    /// <summary>
     /// Manages outputting the content of the workbook's articles
     /// to an RTF file.
     /// </summary>
@@ -27,22 +37,26 @@ namespace ChessForge
         // counts exported exercises if _continuousArticleNumbering is on 
         private static int _currentExerciseNumber = 0;
 
-        // true if we are only printing a single Chapter
-        private static bool _printChapterOnly;
+        // scope of the export/print operation
+        private static PrintScope _printScope;
 
-        // true if we are only printing a single Article
-        private static bool _printArticleOnly;
+        // Chapter being printed
+        private static Chapter _chapterToPrint;
+
+        // Article being printed
+        private static Article _articleToPrint;
 
         /// <summary>
         /// Exports the passed chapter into an RTF file.
         /// </summary>
         /// <param name="chapter"></param>
-        public static void WriteRtf(Chapter ch, Article article)
+        public static void WriteRtf(PrintScope scope, Chapter ch, Article article)
         {
             ResetCounters();
 
-            _printChapterOnly = ch != null;
-            _printArticleOnly = article != null;
+            _printScope = scope;
+            _chapterToPrint = ch;
+            _articleToPrint = article;
 
             // we only use Fixed Font size when "printing".  Set Configuration.UseFixedFont to true temporarily
             bool saveUseFixedFont = Configuration.UseFixedFont;
@@ -55,7 +69,7 @@ namespace ChessForge
 
                 foreach (Chapter chapter in AppState.Workbook.Chapters)
                 {
-                    if (!_printChapterOnly || ch == chapter)
+                    if (_printScope == PrintScope.WORKBOOK || _printScope == PrintScope.CHAPTER && ch == chapter)
                     {
                         FlowDocument chapterTitleDoc = PrintChapterTitle(chapter);
                         CreateDocumentForPrint(printDoc, chapterTitleDoc, null, ref diagrams);
