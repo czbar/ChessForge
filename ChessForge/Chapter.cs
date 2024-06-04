@@ -133,6 +133,17 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Determines whether the Study is empty (mainly for Export/Print purposes).
+        /// The study is considered empty if it only has a root node and no comment on it.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsStudyEmpty()
+        {
+            return StudyTree.Tree.Nodes.Count == 0 || 
+                StudyTree.Tree.Nodes.Count == 1 && string.IsNullOrWhiteSpace(StudyTree.Tree.Nodes[0].Comment);
+        }
+
+        /// <summary>
         /// Tests if the content of the Intro article is empty.
         /// It is empty if there is nothing in the CodedContent property
         /// or no Paragraph in the decoded content.
