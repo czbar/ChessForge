@@ -12,7 +12,17 @@ namespace ChessForge
         /// Scope of export selected by the user.
         /// </summary>
         public static PrintScope Scope = PrintScope.ARTICLE;
-        
+
+        /// <summary>
+        /// Chapter to print if scope is chapter.
+        /// </summary>
+        public Chapter Chapter;
+
+        /// <summary>
+        /// Article to print, if scope is Article.
+        /// </summary>
+        public Article Article;
+
         /// <summary>
         /// Initializes the data.
         /// </summary>
@@ -41,15 +51,15 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnOk_Click(object sender, RoutedEventArgs e)
         {
-            Chapter chapter = AppState.ActiveChapter;
-            Article article = null;
+            Chapter = AppState.ActiveChapter;
+            Article = null;
 
             if (UiRbCurrentItem.IsChecked == true)
             {
                 Scope = PrintScope.ARTICLE;
-                if (chapter != null)
+                if (Chapter != null)
                 {
-                    article = chapter.ActiveArticle;
+                    Article = Chapter.ActiveArticle;
                 }
             }
             else if (UiRbCurrentChapter.IsChecked == true)
@@ -60,10 +70,6 @@ namespace ChessForge
             {
                 Scope = PrintScope.WORKBOOK;
             }
-
-            Mouse.SetCursor(Cursors.Wait);
-            RtfWriter.WriteRtf(Scope, chapter, article);
-            Mouse.SetCursor(Cursors.Arrow);
             
             DialogResult = true; 
         }
