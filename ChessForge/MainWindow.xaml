@@ -90,6 +90,7 @@
                         <Separator />
                         <MenuItem x:Name="UiMnWorkbookSave" Header="{x:Static p:Resources.Save}" Click="UiMnWorkbookSave_Click" InputGestureText="Ctrl+S" />
                         <MenuItem x:Name="UiMnWorkbookSaveAs" Header="{x:Static p:Resources.SaveAs}" Click="UiMnWorkbookSaveAs_Click" />
+                        <Separator />
                         <MenuItem x:Name="UiMnExportRtf" Header="{x:Static p:Resources.ExportRtf}" Click="UiMnWriteRtf_Click" />
                         <Separator />
                         <MenuItem x:Name="UiMnBackupVersion" Header="{x:Static p:Resources.BackUpThisVersion}" Click="UiMnBackupVersion_Click" />
