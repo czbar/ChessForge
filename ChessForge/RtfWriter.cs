@@ -30,6 +30,8 @@ namespace ChessForge
         // TODO: these fields are meant to be Configuration items.
         private static string _termForExercise = Properties.Resources.Exercise;
         private static bool _continuousArticleNumbering = true;
+        private static bool _includeContentsList = true;
+        private static bool _includeIndex = true;
 
         // counts exported games if _continuousArticleNumbering is on 
         private static int _currentGameNumber = 0;
@@ -78,6 +80,13 @@ namespace ChessForge
                     FlowDocument workbookFP = PrintWorkbookFrontPage();
                     CreateDocumentForPrint(printDoc, workbookFP, null, ref diagrams);
                     isFirstPrintPage = false;
+
+                    if (_includeContentsList)
+                    {
+                        FlowDocument docContents = PrintWorkbookContents(AppState.Workbook);
+                        AddPageBreakPlaceholder(docContents);
+                        CreateDocumentForPrint(printDoc, docContents, null, ref diagrams);
+                    }
                 }
 
                 foreach (Chapter chapter in AppState.Workbook.Chapters)
@@ -143,6 +152,23 @@ namespace ChessForge
                     }
                 }
 
+                if (_includeIndex)
+                {
+                    FlowDocument docGameIndex = PrintGameIndex(AppState.Workbook, true);
+                    if (docGameIndex != null)
+                    {
+                        AddPageBreakPlaceholder(docGameIndex);
+                        CreateDocumentForPrint(printDoc, docGameIndex, null, ref diagrams);
+                    }
+
+                    FlowDocument docExerciseIndex = PrintGameIndex(AppState.Workbook, false);
+                    if (docExerciseIndex != null)
+                    {
+                        AddPageBreakPlaceholder(docExerciseIndex);
+                        CreateDocumentForPrint(printDoc, docExerciseIndex, null, ref diagrams);
+                    }
+                }
+
                 TextRange textRange = new TextRange(printDoc.ContentStart, printDoc.ContentEnd);
 
                 string distinct = "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss");
@@ -192,39 +218,13 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Creates a flow document with the Workbook's title.
-        /// </summary>
-        /// <param name="chapter"></param>
-        /// <returns></returns>
-        private static FlowDocument PrintWorkbookTitle(Chapter chapter)
-        {
-            FlowDocument doc = new FlowDocument();
-
-            string title = AppState.Workbook.Title;
-
-            Paragraph paraTitle = new Paragraph();
-            paraTitle.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff + 6;
-            paraTitle.FontWeight = FontWeights.Bold;
-            paraTitle.TextAlignment = TextAlignment.Center;
-            paraTitle.Inlines.Add(new Run(title));
-            doc.Blocks.Add(paraTitle);
-
-            // add a dummy paragraph a a spacer before the further content
-            Paragraph paraDummy = new Paragraph();
-            paraDummy.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff + 2;
-            doc.Blocks.Add(paraDummy);
-
-            return doc;
-        }
-
-        /// <summary>
         /// Creates FlowDocument for the front page of the Workbook.
         /// </summary>
         /// <returns></returns>
         private static FlowDocument PrintWorkbookFrontPage()
         {
             FlowDocument doc = new FlowDocument();
-            
+
             Run cfInfo = new Run();
             StringBuilder sb = new StringBuilder();
             sb.Append(Properties.Resources.ChessForgeGenNotice);
@@ -233,7 +233,7 @@ namespace ChessForge
             Paragraph paraChessForgeInfo = CreateParagraphForFrontPage(0, 60, cfInfo);
             doc.Blocks.Add(paraChessForgeInfo);
 
-            
+
             Run runTitle = new Run(AppState.Workbook.Title);
             runTitle.FontWeight = FontWeights.Bold;
             Paragraph paraTitle = CreateParagraphForFrontPage(8, 10, runTitle);
@@ -258,22 +258,99 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Creates a paragraph for use when building the Front Page FlowDocument.
+        /// Print the Contents list for a Workbook
         /// </summary>
-        /// <param name="adjFontSize"></param>
-        /// <param name="bottomMargin"></param>
-        /// <param name="run"></param>
+        /// <param name="chapter"></param>
         /// <returns></returns>
-        private static Paragraph CreateParagraphForFrontPage(int adjFontSize, double bottomMargin, Run run)
+        private static FlowDocument PrintWorkbookContents(Workbook workbook)
         {
-            Paragraph para = new Paragraph();
+            FlowDocument doc = new FlowDocument();
 
-            para.Margin = new Thickness(0, 0, 0, bottomMargin);
-            para.TextAlignment = TextAlignment.Center;
-            para.FontSize = Constants.BASE_FIXED_FONT_SIZE + adjFontSize;
-            para.Inlines.Add(run);
+            Paragraph paraHeader = new Paragraph();
+            paraHeader.Margin = new Thickness(0, 0, 0, 30);
+            paraHeader.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff + 4;
+            paraHeader.FontWeight = FontWeights.Bold;
+            Run runHeader = new Run(Properties.Resources.Contents);
+            paraHeader.Inlines.Add(runHeader);
+            doc.Blocks.Add(paraHeader);
 
-            return para;
+            foreach (Chapter chapter in workbook.Chapters)
+            {
+                Paragraph paraChapter = new Paragraph();
+                paraChapter.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff;
+                paraChapter.FontWeight = FontWeights.Normal;
+
+                Run title = new Run((chapter.Index + 1).ToString() + ".\t " + chapter.Title);
+                paraChapter.Inlines.Add(title);
+
+                doc.Blocks.Add(paraChapter);
+            }
+
+            return doc;
+        }
+
+        /// <summary>
+        /// Prints the index of all games in the Workbook.
+        /// </summary>
+        /// <param name="workbook"></param>
+        /// <returns></returns>
+        private static FlowDocument PrintGameIndex(Workbook workbook, bool gameOrExerc)
+        {
+            FlowDocument doc = new FlowDocument();
+
+            Paragraph paraHeader = new Paragraph();
+            paraHeader.Margin = new Thickness(0, 0, 0, 30);
+            paraHeader.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff + 4;
+            paraHeader.FontWeight = FontWeights.Bold;
+            Run runHeader = new Run(gameOrExerc ? Properties.Resources.GameIndex : Properties.Resources.ExerciseIndex);
+            paraHeader.Inlines.Add(runHeader);
+            doc.Blocks.Add(paraHeader);
+
+            int itemCounter = 0;
+            foreach (Chapter chapter in workbook.Chapters)
+            {
+                int itemCount = gameOrExerc ? chapter.GetModelGameCount() : chapter.GetExerciseCount();
+                if (itemCount > 0)
+                {
+                    Paragraph paraChapter = new Paragraph();
+                    paraChapter.Margin = new Thickness(0, 20, 0, 10);
+                    paraChapter.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff;
+                    paraChapter.FontWeight = FontWeights.Bold;
+
+                    Run chapterTitle = new Run(Properties.Resources.Chapter + " " + (chapter.Index + 1).ToString());
+                    paraChapter.Inlines.Add(chapterTitle);
+
+                    doc.Blocks.Add(paraChapter);
+
+                    List<Article> articles = gameOrExerc ? chapter.ModelGames : chapter.Exercises;
+                    foreach (Article article in articles)
+                    {
+                        itemCounter++;
+
+                        Paragraph paraArticle = new Paragraph();
+                        paraArticle.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff;
+                        paraArticle.FontWeight = FontWeights.Normal;
+
+                        string articleTitle = gameOrExerc ?
+                              article.Tree.Header.BuildGameHeaderLine(false, false, true, true, false) 
+                            : article.Tree.Header.BuildGameHeaderLine(true, false, true, true, false);
+
+                        Run title = new Run(itemCounter.ToString() + ".\t " + articleTitle);
+                        paraArticle.Inlines.Add(title);
+
+                        doc.Blocks.Add(paraArticle);
+                    }
+                }
+            }
+
+            if (itemCounter == 0)
+            {
+                return null;
+            }
+            else
+            {
+                return doc;
+            }
         }
 
         /// <summary>
@@ -547,6 +624,25 @@ namespace ChessForge
             doc.Blocks.InsertAfter(paraDummy1, para);
 
             return doc;
+        }
+
+        /// <summary>
+        /// Creates a paragraph for use when building the Front Page FlowDocument.
+        /// </summary>
+        /// <param name="adjFontSize"></param>
+        /// <param name="bottomMargin"></param>
+        /// <param name="run"></param>
+        /// <returns></returns>
+        private static Paragraph CreateParagraphForFrontPage(int adjFontSize, double bottomMargin, Run run)
+        {
+            Paragraph para = new Paragraph();
+
+            para.Margin = new Thickness(0, 0, 0, bottomMargin);
+            para.TextAlignment = TextAlignment.Center;
+            para.FontSize = Constants.BASE_FIXED_FONT_SIZE + adjFontSize;
+            para.Inlines.Add(run);
+
+            return para;
         }
 
         /// <summary>
