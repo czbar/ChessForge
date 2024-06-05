@@ -168,6 +168,7 @@
     <Compile Include="EvaluationLine.cs" />
     <Compile Include="EvaluationTrainingLine.cs" />
     <Compile Include="ExerciseTreeView.cs" />
+    <Compile Include="FileUtils.cs" />
     <Compile Include="FindDuplicates.cs" />
     <Compile Include="FindGames.cs" />
     <Compile Include="FindIdenticalPositions.cs" />
