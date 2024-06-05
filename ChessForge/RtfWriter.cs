@@ -1,5 +1,6 @@
 ﻿using ChessPosition;
 using GameTree;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -51,12 +52,52 @@ namespace ChessForge
         // running id of the diagrams in the document
         private static int diagramId = 0;
 
+        /// <summary>
+        /// Asks the user for the RTF file to export to.
+        /// If the current Workbook has a WorkbookFilePath (i.e. it is not viewed from an online library),
+        /// suggest the workbook path with the extension replaced.
+        /// Otherwise, suggest a name based om the workbooks name.
+        /// </summary>
+        public static string SelectTargetRtfFile()
+        {
+            string rtfExt = ".rtf";
+            string rtfFileName;
+
+            if (string.IsNullOrEmpty(AppState.WorkbookFilePath))
+            {
+                rtfFileName = TextUtils.RemoveInvalidCharsFromFileName(WorkbookManager.SessionWorkbook.Title) + rtfExt;
+            }
+            else
+            {
+                rtfFileName = FileUtils.ReplacePathExtension(AppState.WorkbookFilePath, rtfExt);
+            }
+
+            SaveFileDialog saveDlg = new SaveFileDialog
+            {
+                Filter = Properties.Resources.RtfFiles + " (*.rtf)|*.rtf"
+            };
+
+            saveDlg.FileName = Path.GetFileName(rtfFileName);
+            saveDlg.Title = Properties.Resources.ExportRtf;
+
+            saveDlg.OverwritePrompt = true;
+            if (saveDlg.ShowDialog() == true)
+            {
+                rtfFileName = saveDlg.FileName;
+            }
+            else
+            {
+                rtfFileName = "";
+            }
+
+            return rtfFileName;
+        }
 
         /// <summary>
         /// Exports the passed chapter into an RTF file.
         /// </summary>
         /// <param name="chapter"></param>
-        public static void WriteRtf(PrintScope scope, Chapter ch, Article article)
+        public static void WriteRtf(string fileName, PrintScope scope, Chapter ch, Article article)
         {
             ResetCounters();
 
@@ -172,7 +213,6 @@ namespace ChessForge
                 TextRange textRange = new TextRange(printDoc.ContentStart, printDoc.ContentEnd);
 
                 string distinct = "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss");
-                string fileName = DebugUtils.BuildLogFileName(App.AppPath, "rtf", distinct, "rtf");
                 string rtfContent;
 
                 using (MemoryStream stream = new MemoryStream())
@@ -332,7 +372,7 @@ namespace ChessForge
                         paraArticle.FontWeight = FontWeights.Normal;
 
                         string articleTitle = gameOrExerc ?
-                              article.Tree.Header.BuildGameHeaderLine(false, false, true, true, false) 
+                              article.Tree.Header.BuildGameHeaderLine(false, false, true, true, false)
                             : article.Tree.Header.BuildGameHeaderLine(true, false, true, true, false);
 
                         Run title = new Run(itemCounter.ToString() + ".\t " + articleTitle);
