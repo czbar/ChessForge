@@ -4304,7 +4304,21 @@ namespace ChessForge
             RtfExportDialog dlg = new RtfExportDialog();
             GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
-            dlg.ShowDialog();
+            if (dlg.ShowDialog() == true)
+            {
+                try
+                {
+                    string filePath = RtfWriter.SelectTargetRtfFile();
+
+                    if (!string.IsNullOrEmpty(filePath) && filePath[0] != '.')
+                    {
+                        Mouse.SetCursor(Cursors.Wait);
+                        RtfWriter.WriteRtf(filePath, RtfExportDialog.Scope, dlg.Chapter, dlg.Article);
+                        Mouse.SetCursor(Cursors.Arrow);
+                    }
+                }
+                catch { }
+            }
         }
     }
 }
