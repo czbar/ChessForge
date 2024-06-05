@@ -854,6 +854,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chapter Items.
+        /// </summary>
+        public static string ChapterItems {
+            get {
+                return ResourceManager.GetString("ChapterItems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chapters.
         /// </summary>
         public static string Chapters {
@@ -1250,6 +1259,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Contents.
+        /// </summary>
+        public static string Contents {
+            get {
+                return ResourceManager.GetString("Contents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Copy.
         /// </summary>
         public static string Copy {
@@ -1480,6 +1498,15 @@ namespace ChessForge.Properties {
         public static string CurrentVersion {
             get {
                 return ResourceManager.GetString("CurrentVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Custom Terms.
+        /// </summary>
+        public static string CustomTerms {
+            get {
+                return ResourceManager.GetString("CustomTerms", resourceCulture);
             }
         }
         
@@ -2798,6 +2825,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exercise Index.
+        /// </summary>
+        public static string ExerciseIndex {
+            get {
+                return ResourceManager.GetString("ExerciseIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This exercise has no solution provided..
         /// </summary>
         public static string ExerciseNoSolution {
@@ -2929,6 +2965,15 @@ namespace ChessForge.Properties {
         public static string ExplorersAbout {
             get {
                 return ResourceManager.GetString("ExplorersAbout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export.
+        /// </summary>
+        public static string Export {
+            get {
+                return ResourceManager.GetString("Export", resourceCulture);
             }
         }
         
@@ -3388,6 +3433,15 @@ namespace ChessForge.Properties {
         public static string GameHeader {
             get {
                 return ResourceManager.GetString("GameHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game Index.
+        /// </summary>
+        public static string GameIndex {
+            get {
+                return ResourceManager.GetString("GameIndex", resourceCulture);
             }
         }
         
@@ -5931,6 +5985,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to RTF files.
+        /// </summary>
+        public static string RtfFiles {
+            get {
+                return ResourceManager.GetString("RtfFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string Save {
@@ -7462,6 +7525,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Two Column Format.
+        /// </summary>
+        public static string TwoColumnFormat {
+            get {
+                return ResourceManager.GetString("TwoColumnFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Undo.
         /// </summary>
         public static string Undo {
@@ -7800,6 +7872,15 @@ namespace ChessForge.Properties {
         public static string WorkbookFiles {
             get {
                 return ResourceManager.GetString("WorkbookFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Workbook Items.
+        /// </summary>
+        public static string WorkbookItems {
+            get {
+                return ResourceManager.GetString("WorkbookItems", resourceCulture);
             }
         }
         
