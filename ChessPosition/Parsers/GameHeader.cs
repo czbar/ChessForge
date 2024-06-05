@@ -164,7 +164,7 @@ namespace GameTree
         /// <summary>
         /// Builds text for the column with the name of the game.
         /// </summary>
-        public string BuildGameHeaderLine(bool simplified, bool includeResult = true, bool includeECO = true, bool includeYear = false)
+        public string BuildGameHeaderLine(bool simplified, bool includeResult = true, bool includeECO = true, bool includeYear = false, bool includeElo = true)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -174,8 +174,8 @@ namespace GameTree
             bool hasWhite = !string.IsNullOrEmpty(white);
             bool hasBlack = !string.IsNullOrEmpty(black);
 
-            string whiteElo = GetWhitePlayerElo(out _);
-            string blackElo = GetBlackPlayerElo(out _);
+            string whiteElo = includeElo ? GetWhitePlayerElo(out _) : "";
+            string blackElo = includeElo ? GetBlackPlayerElo(out _) : "";
 
             string eco = GetECO(out _);
 
