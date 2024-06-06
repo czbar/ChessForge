@@ -130,6 +130,7 @@
     <Compile Include="CommentBeforeMoveDialog.xaml.cs">
       <DependentUpon>CommentBeforeMoveDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ConfigurationRtfExport.cs" />
     <Compile Include="ConfirmUndoDialog.xaml.cs">
       <DependentUpon>ConfirmUndoDialog.xaml</DependentUpon>
     </Compile>
