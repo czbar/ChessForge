@@ -4313,7 +4313,7 @@ namespace ChessForge
                     if (!string.IsNullOrEmpty(filePath) && filePath[0] != '.')
                     {
                         Mouse.SetCursor(Cursors.Wait);
-                        RtfWriter.WriteRtf(filePath, RtfExportDialog.Scope, dlg.Chapter, dlg.Article);
+                        RtfWriter.WriteRtf(filePath);
                         Mouse.SetCursor(Cursors.Arrow);
                     }
                 }
