@@ -28,6 +28,37 @@ namespace ChessForge
         /// </summary>
         public static string ArticleScopeCoded = "3";
 
+        /// <summary>
+        /// Gets currently configured PrintScope. 
+        /// </summary>
+        /// <returns></returns>
+        public static PrintScope GetScope()
+        {
+            string scopeString = GetStringValue(CFG_SCOPE);
+            
+            return GetScopeFromString(scopeString);
+        }
+
+        /// <summary>
+        /// Converts encoded scope into PrintScope enum.
+        /// </summary>
+        /// <param name="scopeString"></param>
+        /// <returns></returns>
+        public static PrintScope GetScopeFromString(string scopeString)
+        {
+            PrintScope scope = PrintScope.WORKBOOK;
+
+            if (scopeString == ConfigurationRtfExport.ChapterScopeCoded)
+            {
+                scope = PrintScope.CHAPTER;
+            }
+            else if (scopeString == ConfigurationRtfExport.ArticleScopeCoded)
+            {
+                scope = PrintScope.ARTICLE;
+            }
+
+            return scope;
+        }
 
         //*********************************
         // CONFIGURATION ITEM NAMES
@@ -126,7 +157,7 @@ namespace ChessForge
         /// <summary>
         /// The custom term for Games
         /// </summary>
-        public const string CUSTOM_TERM_GAMES = ItemPrefix + "CustomTermExercises";
+        public const string CUSTOM_TERM_GAMES = ItemPrefix + "CustomTermGames";
 
         /// <summary>
         /// The custom term for Game
