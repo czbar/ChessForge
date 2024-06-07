@@ -14,24 +14,13 @@ namespace ChessForge
         public static PrintScope Scope;
 
         /// <summary>
-        /// Chapter to print if scope is chapter.
-        /// </summary>
-        public Chapter Chapter;
-
-        /// <summary>
-        /// Article to print, if scope is Article.
-        /// </summary>
-        public Article Article;
-
-        /// <summary>
         /// Initializes the data.
         /// </summary>
         public RtfExportDialog()
         {
             InitializeComponent();
 
-            string scope = ConfigurationRtfExport.GetStringValue(ConfigurationRtfExport.CFG_SCOPE);
-            Scope = GetScopeFromString(scope);
+            Scope = ConfigurationRtfExport.GetScope();
 
             switch (Scope)
             {
@@ -116,8 +105,8 @@ namespace ChessForge
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.CFG_SCOPE, GetSelectedScopeString());
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.INCLUDE_CONTENTS, UiCbContents.IsChecked == true);
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.INCLUDE_GAME_INDEX, UiCbGameIndex.IsChecked == true);
-
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.INCLUDE_EXERCISE_INDEX, UiCbExerciseIndex.IsChecked == true);
+
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.INCLUDE_INTRO, UiCbIntro.IsChecked == true);
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.INCLUDE_STUDY, UiCbStudy.IsChecked == true);
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.INCLUDE_GAMES, UiCbGames.IsChecked == true);
@@ -129,7 +118,7 @@ namespace ChessForge
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.TWO_COLUMN_EXERCISES, UiCbExercises2Col.IsChecked == true);
 
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.USE_CUSTOM_STUDY, UiCbStudyCustom.IsChecked == true);
-            ConfigurationRtfExport.SetValue(ConfigurationRtfExport.USE_CUSTOM_GAMES, UiCbStudyCustom.IsChecked == true);
+            ConfigurationRtfExport.SetValue(ConfigurationRtfExport.USE_CUSTOM_GAMES, UiCbGamesCustom.IsChecked == true);
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.USE_CUSTOM_GAME, UiCbGameCustom.IsChecked == true);
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.USE_CUSTOM_EXERCISES, UiCbExercisesCustom.IsChecked == true);
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.USE_CUSTOM_EXERCISE, UiCbExerciseCustom.IsChecked == true);
@@ -183,36 +172,12 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Converts encoded scope into PrintScope enum.
-        /// </summary>
-        /// <param name="scopeString"></param>
-        /// <returns></returns>
-        private PrintScope GetScopeFromString(string scopeString)
-        {
-            PrintScope scope = PrintScope.WORKBOOK;
-            
-            if (scopeString == ConfigurationRtfExport.ChapterScopeCoded)
-            {
-                scope = PrintScope.CHAPTER;
-            }
-            else if (scopeString == ConfigurationRtfExport.ArticleScopeCoded)
-            {
-                scope = PrintScope.ARTICLE;
-            }
-
-            return scope;
-        }
-
-        /// <summary>
         /// Proceed with the export as configured.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void UiBtnOk_Click(object sender, RoutedEventArgs e)
         {
-            Chapter = AppState.ActiveChapter;
-            Article = null;
-
             SaveConfiguration();
             DialogResult = true;
         }
