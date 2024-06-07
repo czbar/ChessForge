@@ -2,12 +2,31 @@
 
 namespace ChessForge
 {
+    /// <summary>
+    /// Configuration items for the RTF export.
+    /// </summary>
     public class ConfigurationRtfExport
     {
         /// <summary>
         /// Prefix idetifying a config item as pertaining to RTF Export.
         /// </summary>
         public const string ItemPrefix = "RtfExport_";
+
+
+        /// <summary>
+        /// A string representing Workbook Scope in the config file.
+        /// </summary>
+        public static string WorkbookScopeCoded = "1";
+
+        /// <summary>
+        /// A string representing Chapter Scope in the config file.
+        /// </summary>
+        public static string ChapterScopeCoded = "2";
+
+        /// <summary>
+        /// A string representing Article Scope in the config file.
+        /// </summary>
+        public static string ArticleScopeCoded = "3";
 
 
         //*********************************
@@ -17,112 +36,112 @@ namespace ChessForge
         /// <summary>
         /// Scope of the export: Workbook, Chapter or Current View (which is ActiveArticle or Contents.
         /// </summary>
-        public const string CFG_SCOPE = "MoveSpeed";
+        public const string CFG_SCOPE = ItemPrefix + "Scope";
 
         /// <summary>
         /// Whether to include Contents table.
         /// </summary>
-        public const string INCLUDE_CONTENTS = ItemPrefix + "DefaultIndexDepth";
+        public const string INCLUDE_CONTENTS = ItemPrefix + "IncludeContents";
 
         /// <summary>
         /// Whether to include Games index.
         /// </summary>
-        public const string INCLUDE_GAMES_INDEX = ItemPrefix + "DefaultIndexDepth";
+        public const string INCLUDE_GAME_INDEX = ItemPrefix + "IncludeGameIndex";
 
         /// <summary>
         /// Whether to include Exercise Index.
         /// </summary>
-        public const string INCLUDE_EXRCISE_INDEX = ItemPrefix + "DefaultIndexDepth";
+        public const string INCLUDE_EXERCISE_INDEX = ItemPrefix + "IncludeExerciseIndex";
 
         /// <summary>
         /// Whether to include Intro.
         /// </summary>
-        public const string INCLUDE_INTRO = ItemPrefix + "DefaultIndexDepth";
+        public const string INCLUDE_INTRO = ItemPrefix + "IncludeIntro";
 
         /// <summary>
         /// Whether to include Study.
         /// </summary>
-        public const string INCLUDE_STUDY = ItemPrefix + "DefaultIndexDepth";
+        public const string INCLUDE_STUDY = ItemPrefix + "IncludeStudy";
 
         /// <summary>
         /// Whether to include Games.
         /// </summary>
-        public const string INCLUDE_GAMES = ItemPrefix + "DefaultIndexDepth";
+        public const string INCLUDE_GAMES = ItemPrefix + "IncludeGames";
 
         /// <summary>
         /// Whether to include Exercises.
         /// </summary>
-        public const string INCLUDE_EXERCISES = ItemPrefix + "DefaultIndexDepth";
+        public const string INCLUDE_EXERCISES = ItemPrefix + "IncludeExercises";
 
         /// <summary>
         /// Whether to use 2 column format in Intro.
         /// </summary>
-        public const string TWO_COLUMN_INTRO = ItemPrefix + "DefaultIndexDepth";
+        public const string TWO_COLUMN_INTRO = ItemPrefix + "TwoColsIntro";
 
         /// <summary>
         /// Whether to use 2 column format in Study.
         /// </summary>
-        public const string TWO_COLUMN_STUDY = ItemPrefix + "DefaultIndexDepth";
+        public const string TWO_COLUMN_STUDY = ItemPrefix + "TwoColsStudy";
 
         /// <summary>
         /// Whether to use 2 column format in Games.
         /// </summary>
-        public const string TWO_COLUMN_GAMES = ItemPrefix + "DefaultIndexDepth";
+        public const string TWO_COLUMN_GAMES = ItemPrefix + "TwoColsGames";
 
         /// <summary>
         /// Whether to use 2 column format in Exercises.
         /// </summary>
-        public const string TWO_COLUMN_EXERCISES = ItemPrefix + "DefaultIndexDepth";
+        public const string TWO_COLUMN_EXERCISES = ItemPrefix + "TwoColsExercises";
 
         /// <summary>
         /// Whether to a use a custom term for Study
         /// </summary>
-        public const string USE_CUSTOM_STUDY = ItemPrefix + "DefaultIndexDepth";
+        public const string USE_CUSTOM_STUDY = ItemPrefix + "UseCustomStudy";
 
         /// <summary>
         /// Whether to a use a custom term for Games
         /// </summary>
-        public const string USE_CUSTOM_GAMES = ItemPrefix + "DefaultIndexDepth";
+        public const string USE_CUSTOM_GAMES = ItemPrefix + "UseCustomGames";
 
         /// <summary>
         /// Whether to a use a custom term for Game
         /// </summary>
-        public const string USE_CUSTOM_GAME = ItemPrefix + "DefaultIndexDepth";
+        public const string USE_CUSTOM_GAME = ItemPrefix + "UseCustomGame";
 
         /// <summary>
         /// Whether to a use a custom term for Exercises
         /// </summary>
-        public const string USE_CUSTOM_EXERCISES = ItemPrefix + "DefaultIndexDepth";
+        public const string USE_CUSTOM_EXERCISES = ItemPrefix + "UseCustomExercises";
 
         /// <summary>
         /// Whether to a use a custom term for Exercise
         /// </summary>
-        public const string USE_CUSTOM_EXERCISE = ItemPrefix + "DefaultIndexDepth";
+        public const string USE_CUSTOM_EXERCISE = ItemPrefix + "UseCustomExercise";
 
         /// <summary>
         /// The custom term for Study
         /// </summary>
-        public const string CUSTOM_TERM_STUDY = ItemPrefix + "DefaultIndexDepth";
+        public const string CUSTOM_TERM_STUDY = ItemPrefix + "CustomTermStudy";
 
         /// <summary>
         /// The custom term for Games
         /// </summary>
-        public const string CUSTOM_TERM_GAMES = ItemPrefix + "DefaultIndexDepth";
+        public const string CUSTOM_TERM_GAMES = ItemPrefix + "CustomTermExercises";
 
         /// <summary>
         /// The custom term for Game
         /// </summary>
-        public const string CUSTOM_TERM_GAME = ItemPrefix + "DefaultIndexDepth";
+        public const string CUSTOM_TERM_GAME = ItemPrefix + "CustomTermGame";
 
         /// <summary>
         /// The custom term for Exercises
         /// </summary>
-        public const string CUSTOM_TERM_EXERCISES = ItemPrefix + "DefaultIndexDepth";
+        public const string CUSTOM_TERM_EXERCISES = ItemPrefix + "CustomTermExercises";
 
         /// <summary>
         /// The custom term for Exercise
         /// </summary>
-        public const string CUSTOM_TERM_EXERCISE = ItemPrefix + "DefaultIndexDepth";
+        public const string CUSTOM_TERM_EXERCISE = ItemPrefix + "CustomTermExercise";
 
         // the dictionary of configuration items
         private static Dictionary<string, string> _rtfConfigItems = new Dictionary<string, string>();
@@ -135,7 +154,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        public string GetStringValue(string item)
+        public static string GetStringValue(string item)
         {
             if (!_initialized)
             {
@@ -157,7 +176,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        public bool GetBoolValue(string item)
+        public static bool GetBoolValue(string item)
         {
             if (!_initialized)
             {
@@ -179,7 +198,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="item"></param>
         /// <param name="value"></param>
-        public void SetValue(string item, string value)
+        public static void SetValue(string item, string value)
         {
             _rtfConfigItems[item] = value;
         }
@@ -189,7 +208,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="item"></param>
         /// <param name="value"></param>
-        public void SetValue(string item, bool value)
+        public static void SetValue(string item, bool value)
         {
             _rtfConfigItems[item] = value ? "1" : "0";
         }
@@ -200,8 +219,8 @@ namespace ChessForge
         private static void InitializeRtfConfig()
         {
             _rtfConfigItems[INCLUDE_CONTENTS] = "1";
-            _rtfConfigItems[INCLUDE_GAMES_INDEX] = "1";
-            _rtfConfigItems[INCLUDE_EXRCISE_INDEX] = "1";
+            _rtfConfigItems[INCLUDE_GAME_INDEX] = "1";
+            _rtfConfigItems[INCLUDE_EXERCISE_INDEX] = "1";
 
             _rtfConfigItems[INCLUDE_INTRO] = "1";
             _rtfConfigItems[INCLUDE_STUDY] = "1";
