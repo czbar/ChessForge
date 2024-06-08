@@ -6,23 +6,23 @@
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
         xmlns:p="clr-namespace:ChessForge.Properties"
-        Title="{x:Static p:Resources.DlgExportRtf}" Height="410" Width="565">
+        Title="{x:Static p:Resources.DlgExportRtf}" Height="410" Width="575">
     <Grid>
         <GroupBox Header="{x:Static p:Resources.Scope}" Margin="15,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="160" Height="135">
             <StackPanel>
-                <RadioButton x:Name="UiRbWorkbook" Content="{x:Static p:Resources.Workbook}" HorizontalAlignment="Left" Margin="15,15,0,0" VerticalAlignment="Top" />
-                <RadioButton x:Name="UiRbCurrentChapter" Content="{x:Static p:Resources.Chapter}" HorizontalAlignment="Left" Margin="15,15,0,0" VerticalAlignment="Top" />
-                <RadioButton x:Name="UiRbCurrentItem" Content="{x:Static p:Resources.CurrentItem}" HorizontalAlignment="Left" Margin="15,15,0,0" VerticalAlignment="Top" />
+                <RadioButton x:Name="UiRbWorkbook" Content="{x:Static p:Resources.Workbook}" HorizontalAlignment="Left" Margin="15,15,0,0" VerticalAlignment="Top" Checked="UiRbWorkbook_Checked" />
+                <RadioButton x:Name="UiRbCurrentChapter" Content="{x:Static p:Resources.Chapter}" HorizontalAlignment="Left" Margin="15,15,0,0" VerticalAlignment="Top" Checked="UiRbCurrentChapter_Checked" />
+                <RadioButton x:Name="UiRbCurrentItem" Content="{x:Static p:Resources.CurrentItem}" HorizontalAlignment="Left" Margin="15,15,0,0" VerticalAlignment="Top" Checked="UiRbCurrentItem_Checked" />
             </StackPanel>
         </GroupBox>
-        <GroupBox Header="{x:Static p:Resources.WorkbookItems}" Margin="190,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="180" Height="135">
+        <GroupBox x:Name="UiGbWorkbookItems" Header="{x:Static p:Resources.WorkbookItems}" Margin="190,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="180" Height="135">
             <StackPanel>
                 <CheckBox x:Name="UiCbContents" Content="{x:Static p:Resources.Contents}" Margin="10,15,0,0"/>
                 <CheckBox x:Name="UiCbGameIndex" Content="{x:Static p:Resources.GameIndex}" Margin="10,15,0,0"/>
                 <CheckBox x:Name="UiCbExerciseIndex" Content="{x:Static p:Resources.ExerciseIndex}" Margin="10,15,0,0"/>
             </StackPanel>
         </GroupBox>
-        <GroupBox Header="{x:Static p:Resources.ChapterItems}" Margin="385,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="160" Height="135">
+        <GroupBox x:Name="UiGbChapterItems" Header="{x:Static p:Resources.ChapterItems}" Margin="385,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="160" Height="135">
             <StackPanel>
                 <CheckBox x:Name="UiCbIntro" Content="{x:Static p:Resources.Intro}" Margin="10,10,0,0"/>
                 <CheckBox x:Name="UiCbStudy" Content="{x:Static p:Resources.Study}" Margin="10,10,0,0"/>
@@ -40,17 +40,22 @@
         </GroupBox>
         <GroupBox Header="{x:Static p:Resources.CustomTerms}" Margin="190,150,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="355" Height="162">
             <Canvas>
-                <CheckBox x:Name="UiCbStudyCustom" Content="{x:Static p:Resources.Study}" Margin="30,10,0,0"/>
-                <CheckBox x:Name="UiCbGamesCustom" Content="{x:Static p:Resources.Games}" Margin="30,36,0,0"/>
-                <CheckBox x:Name="UiCbGameCustom" Content="{x:Static p:Resources.Game}" Margin="30,62,0,0"/>
-                <CheckBox x:Name="UiCbExercisesCustom" Content="{x:Static p:Resources.Exercises}" Margin="30,88,0,0"/>
-                <CheckBox x:Name="UiCbExerciseCustom" Content="{x:Static p:Resources.Exercise}" Margin="30,114,0,0"/>
+                <CheckBox x:Name="UiCbStudyCustom" Content="{x:Static p:Resources.Study}" Margin="30,10,0,0" Checked="UiCbStudyCustom_Checked" Unchecked="UiCbStudyCustom_Unchecked"/>
+                <CheckBox x:Name="UiCbGamesCustom" Content="{x:Static p:Resources.Games}" Margin="30,36,0,0" Checked="UiCbGamesCustom_Checked" Unchecked="UiCbGamesCustom_Unchecked"/>
+                <CheckBox x:Name="UiCbGameCustom" Content="{x:Static p:Resources.Game}" Margin="30,62,0,0" Checked="UiCbGameCustom_Checked" Unchecked="UiCbGameCustom_Unchecked"/>
+                <CheckBox x:Name="UiCbExercisesCustom" Content="{x:Static p:Resources.Exercises}" Margin="30,88,0,0" Checked="UiCbExercisesCustom_Checked" Unchecked="UiCbExercisesCustom_Unchecked"/>
+                <CheckBox x:Name="UiCbExerciseCustom" Content="{x:Static p:Resources.Exercise}" Margin="30,114,0,0" Checked="UiCbExerciseCustom_Checked" Unchecked="UiCbExerciseCustom_Unchecked"/>
 
                 <TextBox x:Name="UiTbStudyCustom" TextWrapping="NoWrap" Text="" Margin="150,8,0,0" Width="140" Height="20"/>
+                <TextBox x:Name="UiTbStudyCustomDummy" IsEnabled="False" Visibility="Hidden" Text="" Margin="150,8,0,0" Width="140" Height="20"/>
                 <TextBox x:Name="UiTbGamesCustom" TextWrapping="NoWrap" Text="" Margin="150,34,0,0" Width="140" Height="20"/>
-                <TextBox x:Name="UiTbGameCustom" TextWrapping="NoWrap" Text="" Margin="150,60,0,0" Width="140" Height="20"/>
+                <TextBox x:Name="UiTbGamesCustomDummy" IsEnabled="False" Visibility="Hidden" Text="" Margin="150,34,0,0" Width="140" Height="20"/>
+                <TextBox x:Name="UiTbGameCustom" TextWrapping="NoWrap" Margin="150,60,0,0" Width="140" Height="20"/>
+                <TextBox x:Name="UiTbGameCustomDummy" IsEnabled="False" Visibility="Hidden" Text="" Margin="150,60,0,0" Width="140" Height="20"/>
                 <TextBox x:Name="UiTbExercisesCustom" TextWrapping="NoWrap" Text="" Margin="150,86,0,0" Width="140" Height="20"/>
+                <TextBox x:Name="UiTbExercisesCustomDummy" IsEnabled="False" Visibility="Hidden" Text="" Margin="150,86,0,0" Width="140" Height="20"/>
                 <TextBox x:Name="UiTbExerciseCustom" TextWrapping="NoWrap" Text="" Margin="150,112,0,0" Width="140" Height="20"/>
+                <TextBox x:Name="UiTbExerciseCustomDummy" IsEnabled="False" Visibility="Hidden" Text="" Margin="150,112,0,0" Width="140" Height="20"/>
             </Canvas>
         </GroupBox>
         <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Export}" IsDefault="True" HorizontalAlignment="Center" Margin="-120,0,0,25" VerticalAlignment="Bottom" Width="100" Click="UiBtnOk_Click" />
