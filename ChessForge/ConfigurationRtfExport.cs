@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using static ChessForge.SoundPlayer;
+using System.Text;
 
 namespace ChessForge
 {
@@ -35,7 +38,7 @@ namespace ChessForge
         public static PrintScope GetScope()
         {
             string scopeString = GetStringValue(CFG_SCOPE);
-            
+
             return GetScopeFromString(scopeString);
         }
 
@@ -177,9 +180,6 @@ namespace ChessForge
         // the dictionary of configuration items
         private static Dictionary<string, string> _rtfConfigItems = new Dictionary<string, string>();
 
-        // whether the dictionary has been initilized
-        private static bool _initialized = false;
-
         /// <summary>
         /// Gets the string value of a given item.
         /// </summary>
@@ -187,11 +187,6 @@ namespace ChessForge
         /// <returns></returns>
         public static string GetStringValue(string item)
         {
-            if (!_initialized)
-            {
-                InitializeRtfConfig();
-            }
-
             if (_rtfConfigItems.ContainsKey(item))
             {
                 return _rtfConfigItems[item];
@@ -209,11 +204,6 @@ namespace ChessForge
         /// <returns></returns>
         public static bool GetBoolValue(string item)
         {
-            if (!_initialized)
-            {
-                InitializeRtfConfig();
-            }
-
             if (_rtfConfigItems.ContainsKey(item))
             {
                 return _rtfConfigItems[item] == "1";
@@ -247,8 +237,10 @@ namespace ChessForge
         /// <summary>
         /// Initializes the dictionary of configuration items.
         /// </summary>
-        private static void InitializeRtfConfig()
+        public static void InitializeRtfConfig()
         {
+            _rtfConfigItems[CFG_SCOPE] = "1";
+
             _rtfConfigItems[INCLUDE_CONTENTS] = "1";
             _rtfConfigItems[INCLUDE_GAME_INDEX] = "1";
             _rtfConfigItems[INCLUDE_EXERCISE_INDEX] = "1";
@@ -274,8 +266,35 @@ namespace ChessForge
             _rtfConfigItems[CUSTOM_TERM_GAME] = "";
             _rtfConfigItems[CUSTOM_TERM_EXERCISES] = "";
             _rtfConfigItems[CUSTOM_TERM_EXERCISE] = "";
+        }
 
-            _initialized = true;
+        /// <summary>
+        /// Appends all items to the ChessForge's configuration file text.
+        /// </summary>
+        /// <param name="sb"></param>
+        public static void AppendToConfigurationFile(StringBuilder sb)
+        {
+            try
+            {
+                foreach (var item in _rtfConfigItems)
+                {
+                    sb.Append(item.Key + "=" + (item.Value ?? "") + Environment.NewLine);
+                }
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// Process a single configuration name/value pair
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        public static void ProcessConfigurationItem(string name, string value)
+        {
+            if (_rtfConfigItems.ContainsKey(name))
+            {
+                _rtfConfigItems[name] = value;
+            }
         }
 
     }

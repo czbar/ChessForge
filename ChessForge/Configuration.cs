@@ -799,6 +799,7 @@ namespace ChessForge
 
                 sb.Append(Environment.NewLine);
 
+                ConfigurationRtfExport.AppendToConfigurationFile(sb);
 
                 File.WriteAllText(fileName, sb.ToString());
             }
@@ -1031,6 +1032,10 @@ namespace ChessForge
                 if (name.StartsWith(CFG_RECENT_FILES))
                 {
                     RecentFiles.Add(value.Trim());
+                }
+                else if (name.StartsWith(ConfigurationRtfExport.ItemPrefix))
+                {
+                    ConfigurationRtfExport.ProcessConfigurationItem(name, value);
                 }
                 else
                 {
