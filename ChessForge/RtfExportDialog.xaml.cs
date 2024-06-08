@@ -196,14 +196,28 @@ namespace ChessForge
         private void SaveConfiguration()
         {
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.CFG_SCOPE, GetSelectedScopeString());
-            ConfigurationRtfExport.SetValue(ConfigurationRtfExport.INCLUDE_CONTENTS, UiCbContents.IsChecked == true);
-            ConfigurationRtfExport.SetValue(ConfigurationRtfExport.INCLUDE_GAME_INDEX, UiCbGameIndex.IsChecked == true);
-            ConfigurationRtfExport.SetValue(ConfigurationRtfExport.INCLUDE_EXERCISE_INDEX, UiCbExerciseIndex.IsChecked == true);
 
-            ConfigurationRtfExport.SetValue(ConfigurationRtfExport.INCLUDE_INTRO, UiCbIntro.IsChecked == true);
-            ConfigurationRtfExport.SetValue(ConfigurationRtfExport.INCLUDE_STUDY, UiCbStudy.IsChecked == true);
-            ConfigurationRtfExport.SetValue(ConfigurationRtfExport.INCLUDE_GAMES, UiCbGames.IsChecked == true);
-            ConfigurationRtfExport.SetValue(ConfigurationRtfExport.INCLUDE_EXERCISES, UiCbExercises.IsChecked == true);
+            if (UiGbWorkbookItems.IsEnabled)
+            {
+                _lastCbContent = UiCbContents.IsChecked == true;
+                _lastCbGameIndex = UiCbGameIndex.IsChecked == true;
+                _lastCbExerciseIndex = UiCbExerciseIndex.IsChecked == true;
+            }
+            ConfigurationRtfExport.SetValue(ConfigurationRtfExport.INCLUDE_CONTENTS, _lastCbContent);
+            ConfigurationRtfExport.SetValue(ConfigurationRtfExport.INCLUDE_GAME_INDEX, _lastCbGameIndex);
+            ConfigurationRtfExport.SetValue(ConfigurationRtfExport.INCLUDE_EXERCISE_INDEX, _lastCbExerciseIndex);
+
+            if (UiGbChapterItems.IsEnabled)
+            {
+                _lastCbIntro = UiCbIntro.IsChecked == true;
+                _lastCbStudy = UiCbStudy.IsChecked == true;
+                _lastCbGames = UiCbGames.IsChecked == true;
+                _lastCbExercises = UiCbExercises.IsChecked == true;
+            }
+            ConfigurationRtfExport.SetValue(ConfigurationRtfExport.INCLUDE_INTRO, _lastCbIntro);
+            ConfigurationRtfExport.SetValue(ConfigurationRtfExport.INCLUDE_STUDY, _lastCbStudy);
+            ConfigurationRtfExport.SetValue(ConfigurationRtfExport.INCLUDE_GAMES, _lastCbGames);
+            ConfigurationRtfExport.SetValue(ConfigurationRtfExport.INCLUDE_EXERCISES, _lastCbExercises);
 
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.TWO_COLUMN_INTRO, UiCbIntro2Col.IsChecked == true);
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.TWO_COLUMN_STUDY, UiCbStudy2Col.IsChecked == true);
@@ -221,6 +235,8 @@ namespace ChessForge
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.CUSTOM_TERM_GAME, UiTbGameCustom.Text);
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.CUSTOM_TERM_EXERCISES, UiTbExercisesCustom.Text);
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.CUSTOM_TERM_EXERCISE, UiTbExerciseCustom.Text);
+
+            Configuration.WriteOutConfiguration();
         }
 
         /// <summary>
