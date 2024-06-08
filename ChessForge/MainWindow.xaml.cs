@@ -670,6 +670,7 @@ namespace ChessForge
         private void ReadConfiguration()
         {
             Configuration.StartDirectory = App.AppPath;
+            ConfigurationRtfExport.InitializeRtfConfig();
             Configuration.ReadConfigurationFile();
         }
 
