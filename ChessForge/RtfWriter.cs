@@ -28,7 +28,7 @@ namespace ChessForge
     /// </summary>
     public class RtfWriter
     {
-        // TODO: these fields are meant to be Configuration items.
+        // TODO: these field is meant to be Configuration items.
         private static bool _continuousArticleNumbering = true;
 
         // counts exported games if _continuousArticleNumbering is on 
@@ -48,6 +48,75 @@ namespace ChessForge
 
         // running id of the diagrams in the document
         private static int diagramId = 0;
+
+        /// <summary>
+        /// Exports the passed chapter into an RTF file.
+        /// </summary>
+        /// <param name="chapter"></param>
+        public static void WriteRtf(string fileName)
+        {
+            ResetCounters();
+            bool saveUseFixedFont = Configuration.UseFixedFont;
+            // we only use Fixed Font size when "printing".  Set Configuration.UseFixedFont to true temporarily
+            Configuration.UseFixedFont = true;
+
+            try
+            {
+                // dummy write to trigger an error on access, before we take time to process.
+                File.WriteAllText(fileName, "");
+
+                PrintScope scope = ConfigurationRtfExport.GetScope();
+
+                _printScope = scope;
+                _chapterToPrint = AppState.ActiveChapter;
+                _articleToPrint = AppState.Workbook.ActiveArticle;
+
+
+                FlowDocument printDoc = new FlowDocument();
+                List<RtfDiagram> diagrams = new List<RtfDiagram>();
+
+                if (scope == PrintScope.ARTICLE)
+                {
+                    PrintActiveViewToFlowDoc(printDoc, _chapterToPrint, ref diagrams);
+                }
+                else
+                {
+                    PrintWorkbookOrChapterScopeToFlowDoc(printDoc, scope, ref diagrams);
+                }
+
+                WriteOutFile(fileName, printDoc, ref diagrams);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                Configuration.UseFixedFont = saveUseFixedFont;
+            }
+        }
+
+        /// <summary>
+        /// Calls function to finalize the RTF text and writes out the content.
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="printDoc"></param>
+        /// <param name="diagrams"></param>
+        private static void WriteOutFile(string fileName, FlowDocument printDoc, ref List<RtfDiagram> diagrams)
+        {
+            TextRange textRange = new TextRange(printDoc.ContentStart, printDoc.ContentEnd);
+            string rtfContent;
+
+            using (MemoryStream stream = new MemoryStream())
+            {
+                // Save the content in RTF format
+                textRange.Save(stream, DataFormats.Rtf);
+                rtfContent = Encoding.UTF8.GetString(stream.ToArray());
+            }
+
+            rtfContent = CreateFinalRtfString(rtfContent, diagrams);
+            File.WriteAllText(fileName, rtfContent);
+        }
 
         /// <summary>
         /// Asks the user for the RTF file to export to.
@@ -90,180 +159,251 @@ namespace ChessForge
             return rtfFileName;
         }
 
+
+        //********************************************************************
+        //
+        //   PRINTING ARTICLES/ITEMS TO THE PASSED FLOW DOCUMENT
+        //
+        //********************************************************************
+
         /// <summary>
-        /// Exports the passed chapter into an RTF file.
+        /// Prints either the active chapter or the entire workbook to the passed FlowDocument.
         /// </summary>
-        /// <param name="chapter"></param>
-        public static void WriteRtf(string fileName)
+        /// <param name="printDoc"></param>
+        /// <param name="scope"></param>
+        /// <param name="diagrams"></param>
+        private static void PrintWorkbookOrChapterScopeToFlowDoc(FlowDocument printDoc, PrintScope scope, ref List<RtfDiagram> diagrams)
         {
-            ResetCounters();
-            bool saveUseFixedFont = Configuration.UseFixedFont;
-            Configuration.UseFixedFont = true;
-
-            try
+            bool isFirstPrintPage = true;
+            if (scope == PrintScope.WORKBOOK)
             {
-                // dummy write to trigger an error on access, before we take time to process.
-                File.WriteAllText(fileName, "");
+                FlowDocument workbookFP = PrintWorkbookFrontPage();
+                CreateDocumentForPrint(printDoc, workbookFP, null, ref diagrams);
+                isFirstPrintPage = false;
 
-                PrintScope scope = ConfigurationRtfExport.GetScope();
-
-                _printScope = scope;
-                _chapterToPrint = AppState.ActiveChapter;
-                _articleToPrint = AppState.Workbook.ActiveArticle;
-
-                // we only use Fixed Font size when "printing".  Set Configuration.UseFixedFont to true temporarily
-
-                bool isFirstPrintPage = true;
-
-                FlowDocument printDoc = new FlowDocument();
-                List<RtfDiagram> diagrams = new List<RtfDiagram>();
-
-                if (scope == PrintScope.WORKBOOK)
+                if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_CONTENTS))
                 {
-                    FlowDocument workbookFP = PrintWorkbookFrontPage();
-                    CreateDocumentForPrint(printDoc, workbookFP, null, ref diagrams);
-                    isFirstPrintPage = false;
-
-                    if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_CONTENTS))
-                    {
-                        FlowDocument docContents = PrintWorkbookContents(AppState.Workbook);
-                        AddPageBreakPlaceholder(docContents);
-                        CreateDocumentForPrint(printDoc, docContents, null, ref diagrams);
-                    }
+                    FlowDocument docContents = PrintWorkbookContents(AppState.Workbook);
+                    AddPageBreakPlaceholder(docContents);
+                    CreateDocumentForPrint(printDoc, docContents, null, ref diagrams);
                 }
-
-                foreach (Chapter chapter in AppState.Workbook.Chapters)
-                {
-                    if (_printScope == PrintScope.WORKBOOK || _printScope == PrintScope.CHAPTER && _chapterToPrint == chapter)
-                    {
-                        FlowDocument chapterTitleDoc = PrintChapterTitle(chapter);
-                        if (!isFirstPrintPage)
-                        {
-                            AddPageBreakPlaceholder(chapterTitleDoc);
-                        }
-                        else
-                        {
-                            isFirstPrintPage = false;
-                        }
-                        CreateDocumentForPrint(printDoc, chapterTitleDoc, null, ref diagrams);
-
-                        bool introPrinted = false;
-                        if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_INTRO))
-                        {
-                            if (!chapter.IsIntroEmpty())
-                            {
-                                FlowDocument doc = PrintIntro(chapter);
-                                CreateDocumentForPrint(printDoc, doc, chapter.Intro.Tree, ref diagrams);
-                                introPrinted = true;
-                            }
-                        }
-
-                        if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_STUDY))
-                        {
-                            if (!chapter.IsStudyEmpty())
-                            {
-                                // if we are printing just this study or there was no Intro, print without the header and page break.
-                                if (scope != PrintScope.ARTICLE && introPrinted)
-                                {
-                                    FlowDocument docStudyHeader = PrintStudyHeader();
-                                    AddPageBreakPlaceholder(docStudyHeader);
-                                    CreateDocumentForPrint(printDoc, docStudyHeader, null, ref diagrams);
-                                }
-
-                                FlowDocument doc = PrintStudy(chapter);
-                                CreateDocumentForPrint(printDoc, doc, chapter.StudyTree.Tree, ref diagrams);
-                            }
-                        }
-
-                        if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_GAMES))
-                        {
-                            if (chapter.ModelGames.Count > 0)
-                            {
-                                FlowDocument docGamesHeader = PrintGamesHeader();
-                                AddPageBreakPlaceholder(docGamesHeader);
-                                CreateDocumentForPrint(printDoc, docGamesHeader, null, ref diagrams);
-
-                                for (int i = 0; i < chapter.ModelGames.Count; i++)
-                                {
-                                    FlowDocument guiDoc = PrintGame(chapter.ModelGames[i], i, ref diagrams);
-                                    CreateDocumentForPrint(printDoc, guiDoc, chapter.ModelGames[i].Tree, ref diagrams);
-                                }
-                            }
-                        }
-
-                        if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_EXERCISES))
-                        {
-                            if (chapter.Exercises.Count > 0)
-                            {
-                                FlowDocument docExercisesHeader = PrintExercisesHeader();
-                                AddPageBreakPlaceholder(docExercisesHeader);
-                                CreateDocumentForPrint(printDoc, docExercisesHeader, null, ref diagrams);
-
-                                for (int i = 0; i < chapter.Exercises.Count; i++)
-                                {
-                                    FlowDocument guiDoc = PrintExercise(printDoc, chapter.Exercises[i], i, ref diagrams);
-                                    CreateDocumentForPrint(printDoc, guiDoc, chapter.Exercises[i].Tree, ref diagrams);
-                                }
-                            }
-                        }
-                    }
-                }
-
-                if (scope == PrintScope.WORKBOOK)
-                {
-                    if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_GAME_INDEX))
-                    {
-                        FlowDocument docGameIndex = PrintGameOrExerciseIndex(AppState.Workbook, true);
-                        if (docGameIndex != null)
-                        {
-                            AddPageBreakPlaceholder(docGameIndex);
-                            CreateDocumentForPrint(printDoc, docGameIndex, null, ref diagrams);
-                        }
-                    }
-
-                    if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_EXERCISE_INDEX))
-                    {
-                        FlowDocument docExerciseIndex = PrintGameOrExerciseIndex(AppState.Workbook, false);
-                        if (docExerciseIndex != null)
-                        {
-                            AddPageBreakPlaceholder(docExerciseIndex);
-                            CreateDocumentForPrint(printDoc, docExerciseIndex, null, ref diagrams);
-                        }
-                    }
-                }
-
-                WriteOutFile(fileName, printDoc, ref diagrams);
             }
-            catch (Exception ex)
+
+            PrintChaptersToFlowDoc(printDoc, scope, ref diagrams, isFirstPrintPage);
+
+            if (scope == PrintScope.WORKBOOK)
             {
-                MessageBox.Show(ex.Message, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            finally
-            {
-                Configuration.UseFixedFont = saveUseFixedFont;
+                if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_GAME_INDEX))
+                {
+                    FlowDocument docGameIndex = PrintGameOrExerciseIndex(AppState.Workbook, true);
+                    if (docGameIndex != null)
+                    {
+                        AddPageBreakPlaceholder(docGameIndex);
+                        CreateDocumentForPrint(printDoc, docGameIndex, null, ref diagrams);
+                    }
+                }
+
+                if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_EXERCISE_INDEX))
+                {
+                    FlowDocument docExerciseIndex = PrintGameOrExerciseIndex(AppState.Workbook, false);
+                    if (docExerciseIndex != null)
+                    {
+                        AddPageBreakPlaceholder(docExerciseIndex);
+                        CreateDocumentForPrint(printDoc, docExerciseIndex, null, ref diagrams);
+                    }
+                }
             }
         }
 
         /// <summary>
-        /// Calls function to finalize the RTF text and writes out the content.
+        /// Process the content of the active chapter or all chapters 
+        /// and places it in the printDoc.
         /// </summary>
-        /// <param name="fileName"></param>
+        /// <param name="printDoc"></param>
+        /// <param name="scope"></param>
+        /// <param name="diagrams"></param>
+        /// <param name="isFirstPrintPage"></param>
+        private static void PrintChaptersToFlowDoc(FlowDocument printDoc, PrintScope scope, ref List<RtfDiagram> diagrams, bool isFirstPrintPage)
+        {
+            foreach (Chapter chapter in AppState.Workbook.Chapters)
+            {
+                // if scope is CHAPTER, only act when we encounter the active chapter
+                if (_printScope == PrintScope.WORKBOOK || _printScope == PrintScope.CHAPTER && _chapterToPrint == chapter)
+                {
+                    FlowDocument chapterTitleDoc = PrintChapterTitle(chapter);
+                    if (!isFirstPrintPage)
+                    {
+                        AddPageBreakPlaceholder(chapterTitleDoc);
+                    }
+                    else
+                    {
+                        isFirstPrintPage = false;
+                    }
+                    CreateDocumentForPrint(printDoc, chapterTitleDoc, null, ref diagrams);
+
+                    bool introPrinted = false;
+                    if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_INTRO))
+                    {
+                        if (!chapter.IsIntroEmpty())
+                        {
+                            PrintIntroToFlowDoc(printDoc, chapter, ref diagrams);
+                            introPrinted = true;
+                        }
+                    }
+
+                    if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_STUDY))
+                    {
+                        if (!chapter.IsStudyEmpty())
+                        {
+                            PrintStudyToFlowDoc(printDoc, scope, chapter, introPrinted, ref diagrams);
+                        }
+                    }
+
+                    if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_GAMES))
+                    {
+                        if (chapter.ModelGames.Count > 0)
+                        {
+                            FlowDocument docGamesHeader = PrintGamesHeader();
+                            AddPageBreakPlaceholder(docGamesHeader);
+                            CreateDocumentForPrint(printDoc, docGamesHeader, null, ref diagrams);
+
+                            for (int i = 0; i < chapter.ModelGames.Count; i++)
+                            {
+                                PrintGameToFlowDoc(printDoc, chapter, i, ref diagrams);
+                            }
+                        }
+                    }
+
+                    if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_EXERCISES))
+                    {
+                        if (chapter.Exercises.Count > 0)
+                        {
+                            FlowDocument docExercisesHeader = PrintExercisesHeader();
+                            AddPageBreakPlaceholder(docExercisesHeader);
+                            CreateDocumentForPrint(printDoc, docExercisesHeader, null, ref diagrams);
+
+                            for (int i = 0; i < chapter.Exercises.Count; i++)
+                            {
+                                PrintExerciseToFlowDoc(printDoc, chapter, i, ref diagrams);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Requests processing of the current view.
+        /// </summary>
+        /// <param name="printDoc"></param>
+        /// <param name="chapter"></param>
+        /// <param name="diagrams"></param>
+        private static void PrintActiveViewToFlowDoc(FlowDocument printDoc, Chapter chapter, ref List<RtfDiagram> diagrams)
+        {
+            if (AppState.ActiveTab == TabViewType.CHAPTERS)
+            {
+                PrintChaptersViewToFlowDoc(printDoc, ref diagrams);
+            }
+            else
+            {
+                switch (AppState.Workbook.ActiveArticle.Tree.ContentType)
+                {
+                    case GameData.ContentType.INTRO:
+                        PrintIntroToFlowDoc(printDoc, chapter, ref diagrams);
+                        break;
+                    case GameData.ContentType.STUDY_TREE:
+                        PrintStudyToFlowDoc(printDoc, PrintScope.ARTICLE, chapter, true, ref diagrams);
+                        break;
+                    case GameData.ContentType.MODEL_GAME:
+                        PrintGameToFlowDoc(printDoc, chapter, -1, ref diagrams);
+                        break;
+                    case GameData.ContentType.EXERCISE:
+                        PrintExerciseToFlowDoc(printDoc, chapter, -1, ref diagrams);
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Process the contents list place it in the printDoc.
+        /// </summary>
         /// <param name="printDoc"></param>
         /// <param name="diagrams"></param>
-        private static void WriteOutFile(string fileName, FlowDocument printDoc, ref List<RtfDiagram> diagrams)
+        private static void PrintChaptersViewToFlowDoc(FlowDocument printDoc, ref List<RtfDiagram> diagrams)
         {
-            TextRange textRange = new TextRange(printDoc.ContentStart, printDoc.ContentEnd);
-            string rtfContent;
+            FlowDocument workbookFP = PrintWorkbookFrontPage();
+            CreateDocumentForPrint(printDoc, workbookFP, null, ref diagrams);
 
-            using (MemoryStream stream = new MemoryStream())
+            FlowDocument docContents = PrintWorkbookContents(AppState.Workbook);
+            AddPageBreakPlaceholder(docContents);
+            CreateDocumentForPrint(printDoc, docContents, null, ref diagrams);
+
+            FlowDocument docGameIndex = PrintGameOrExerciseIndex(AppState.Workbook, true);
+            if (docGameIndex != null)
             {
-                // Save the content in RTF format
-                textRange.Save(stream, DataFormats.Rtf);
-                rtfContent = Encoding.UTF8.GetString(stream.ToArray());
+                AddPageBreakPlaceholder(docGameIndex);
+                CreateDocumentForPrint(printDoc, docGameIndex, null, ref diagrams);
+            }
+        }
+
+        /// <summary>
+        /// Process the content of the Intro and places it in the printDoc.
+        /// </summary>
+        /// <param name="printDoc"></param>
+        /// <param name="chapter"></param>
+        /// <param name="diagrams"></param>
+        private static void PrintIntroToFlowDoc(FlowDocument printDoc, Chapter chapter, ref List<RtfDiagram> diagrams)
+        {
+            FlowDocument doc = PrintIntro(chapter);
+            CreateDocumentForPrint(printDoc, doc, chapter.Intro.Tree, ref diagrams);
+        }
+
+        /// <summary>
+        /// Process the content of the Study and places it in the printDoc.
+        /// </summary>
+        /// <param name="printDoc"></param>
+        /// <param name="scope"></param>
+        /// <param name="chapter"></param>
+        /// <param name="introPrinted"></param>
+        /// <param name="diagrams"></param>
+        private static void PrintStudyToFlowDoc(FlowDocument printDoc, PrintScope scope, Chapter chapter, bool introPrinted, ref List<RtfDiagram> diagrams)
+        {
+            // if we are printing just this study or there was no Intro, print without the header and page break.
+            if (scope != PrintScope.ARTICLE && introPrinted)
+            {
+                FlowDocument docStudyHeader = PrintStudyHeader();
+                AddPageBreakPlaceholder(docStudyHeader);
+                CreateDocumentForPrint(printDoc, docStudyHeader, null, ref diagrams);
             }
 
-            rtfContent = CreateFinalRtfString(rtfContent, diagrams);
-            File.WriteAllText(fileName, rtfContent);
+            FlowDocument doc = PrintStudy(chapter);
+            CreateDocumentForPrint(printDoc, doc, chapter.StudyTree.Tree, ref diagrams);
+        }
+
+        /// <summary>
+        /// Process a single Game and places it in the printDoc.
+        /// </summary>
+        /// <param name="printDoc"></param>
+        /// <param name="chapter"></param>
+        /// <param name="gameIndex"></param>
+        /// <param name="diagrams"></param>
+        private static void PrintGameToFlowDoc(FlowDocument printDoc, Chapter chapter, int gameIndex, ref List<RtfDiagram> diagrams)
+        {
+            FlowDocument guiDoc = PrintGame(chapter.ModelGames[gameIndex], gameIndex, ref diagrams);
+            CreateDocumentForPrint(printDoc, guiDoc, chapter.ModelGames[gameIndex].Tree, ref diagrams);
+        }
+
+        /// <summary>
+        /// Process a single Exercise and places it in the printDoc.
+        /// </summary>
+        /// <param name="printDoc"></param>
+        /// <param name="chapter"></param>
+        /// <param name="exerciseIndex"></param>
+        /// <param name="diagrams"></param>
+        private static void PrintExerciseToFlowDoc(FlowDocument printDoc, Chapter chapter, int exerciseIndex, ref List<RtfDiagram> diagrams)
+        {
+            FlowDocument guiDoc = PrintExercise(printDoc, chapter.Exercises[exerciseIndex], exerciseIndex, ref diagrams);
+            CreateDocumentForPrint(printDoc, guiDoc, chapter.Exercises[exerciseIndex].Tree, ref diagrams);
         }
 
         /// <summary>
@@ -413,14 +553,7 @@ namespace ChessForge
                 }
             }
 
-            if (itemCounter == 0)
-            {
-                return null;
-            }
-            else
-            {
-                return doc;
-            }
+            return itemCounter == 0 ? null : doc;
         }
 
         /// <summary>
@@ -618,7 +751,7 @@ namespace ChessForge
         private static FlowDocument PrintStudy(Chapter chapter)
         {
             RichTextBox rtbStudy = new RichTextBox();
-            StudyTreeView studyView = new StudyTreeView(rtbStudy, GameData.ContentType.STUDY_TREE, 0);
+            StudyTreeView studyView = new StudyTreeView(rtbStudy, GameData.ContentType.STUDY_TREE);
             studyView.BuildFlowDocumentForVariationTree(chapter.StudyTree.Tree);
 
             Paragraph paraIndex = null;
@@ -676,24 +809,29 @@ namespace ChessForge
             paraDummy1.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff + 2;
 
             Paragraph para = new Paragraph();
-            para.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff;
-            para.FontWeight = FontWeights.Bold;
 
-            string gameHeader = Properties.Resources.Game + " " + gameNo.ToString();
-            if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.USE_CUSTOM_GAME))
+            // if index < 0 then we are printing for the CurrentView scope hance no need for a header
+            if (index >= 0)
             {
-                gameHeader = ConfigurationRtfExport.GetStringValue(ConfigurationRtfExport.CUSTOM_TERM_GAME);
+                para.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff;
+                para.FontWeight = FontWeights.Bold;
+
+                string gameHeader = Properties.Resources.Game + " " + gameNo.ToString();
+                if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.USE_CUSTOM_GAME))
+                {
+                    gameHeader = ConfigurationRtfExport.GetStringValue(ConfigurationRtfExport.CUSTOM_TERM_GAME);
+                }
+
+                para.TextAlignment = TextAlignment.Center;
+                para.TextDecorations = TextDecorations.Underline;
+
+                if (!string.IsNullOrWhiteSpace(gameHeader))
+                {
+                    para.Inlines.Add(new Run(gameHeader));
+                }
             }
 
-            para.TextAlignment = TextAlignment.Center;
-            para.TextDecorations = TextDecorations.Underline;
-
-            if (!string.IsNullOrWhiteSpace(gameHeader))
-            {
-                para.Inlines.Add(new Run(gameHeader));
-            }
-
-            VariationTreeView gameView = new VariationTreeView(doc, GameData.ContentType.MODEL_GAME, gameNo);
+            VariationTreeView gameView = new VariationTreeView(doc, GameData.ContentType.MODEL_GAME);
             gameView.BuildFlowDocumentForVariationTree(game.Tree);
 
             if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.TWO_COLUMN_GAMES))
@@ -723,23 +861,27 @@ namespace ChessForge
             paraDummy1.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff + 2;
 
             Paragraph para = new Paragraph();
-            para.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff;
-            para.FontWeight = FontWeights.Bold;
-            para.TextAlignment = TextAlignment.Center;
-            para.TextDecorations = TextDecorations.Underline;
 
-            string exerciseHeader = Properties.Resources.Exercise + " " + exerciseNo.ToString();
-            if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.USE_CUSTOM_EXERCISE))
+            if (exerciseNo >= 0)
             {
-                exerciseHeader = ConfigurationRtfExport.GetStringValue(ConfigurationRtfExport.CUSTOM_TERM_EXERCISE);
+                para.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff;
+                para.FontWeight = FontWeights.Bold;
+                para.TextAlignment = TextAlignment.Center;
+                para.TextDecorations = TextDecorations.Underline;
+
+                string exerciseHeader = Properties.Resources.Exercise + " " + exerciseNo.ToString();
+                if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.USE_CUSTOM_EXERCISE))
+                {
+                    exerciseHeader = ConfigurationRtfExport.GetStringValue(ConfigurationRtfExport.CUSTOM_TERM_EXERCISE);
+                }
+
+                if (!string.IsNullOrWhiteSpace(exerciseHeader))
+                {
+                    para.Inlines.Add(new Run(exerciseHeader));
+                }
             }
 
-            if (!string.IsNullOrWhiteSpace(exerciseHeader))
-            {
-                para.Inlines.Add(new Run(exerciseHeader));
-            }
-
-            VariationTreeView exerciseView = new ExerciseTreeView(doc, GameData.ContentType.EXERCISE, exerciseNo);
+            VariationTreeView exerciseView = new ExerciseTreeView(doc, GameData.ContentType.EXERCISE);
             exerciseView.BuildFlowDocumentForVariationTree(exercise.Tree);
 
             if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.TWO_COLUMN_EXERCISES))
@@ -1110,6 +1252,24 @@ namespace ChessForge
             return sb.ToString();
         }
 
+
+
+        //******************************************************
+        //
+        //   UTILITIES
+        //
+        //******************************************************
+
+
+        /// <summary>
+        /// Resets the article counters.
+        /// </summary>
+        private static void ResetCounters()
+        {
+            _currentGameNumber = 0;
+            _currentExerciseNumber = 0;
+        }
+
         /// <summary>
         /// Applies attributes of the source Paragraph to the target.
         /// </summary>
@@ -1198,15 +1358,6 @@ namespace ChessForge
         private static string PageBreak()
         {
             return "<PAGE BREAK>";
-        }
-
-        /// <summary>
-        /// Resets the article counters.
-        /// </summary>
-        private static void ResetCounters()
-        {
-            _currentGameNumber = 0;
-            _currentExerciseNumber = 0;
         }
     }
 
