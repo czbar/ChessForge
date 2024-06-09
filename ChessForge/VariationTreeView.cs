@@ -51,14 +51,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Index of the entity (game or exercise) in the Active Chapter.
-        /// </summary>
-        public int EntityIndex
-        {
-            get => _entityIndex;
-        }
-
-        /// <summary>
         /// Whether to show blunder assessments.
         /// </summary>
         public bool HandleBlunders
@@ -101,9 +93,6 @@ namespace ChessForge
         // content type in this view
         private GameData.ContentType _contentType;
 
-        // game/exercise index in this view
-        private int _entityIndex = -1;
-
         // the node for whcih a thumbnail was last created.
         private TreeNode _lastThumbnailNode = null;
 
@@ -137,7 +126,7 @@ namespace ChessForge
         /// a call to the base class's constructor.
         /// </summary>
         /// <param name="doc"></param>
-        public VariationTreeView(RichTextBox rtb, GameData.ContentType contentType, int entityIndex) : base(rtb.Document)
+        public VariationTreeView(RichTextBox rtb, GameData.ContentType contentType) : base(rtb.Document)
         {
             _mainWin = AppState.MainWin;
             _contentType = contentType;
@@ -150,7 +139,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="contentType"></param>
         /// <param name="entityIndex"></param>
-        public VariationTreeView(FlowDocument doc, GameData.ContentType contentType, int entityIndex) : base(doc)
+        public VariationTreeView(FlowDocument doc, GameData.ContentType contentType) : base(doc)
         {
             _mainWin = AppState.MainWin;
             _contentType = contentType;

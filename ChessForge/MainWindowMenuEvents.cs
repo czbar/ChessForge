@@ -32,7 +32,7 @@ namespace ChessForge
             WorkbookManager.CreateNewWorkbook();
 
             // TODO: this call looks unnecessary as SetupGuiForNewSession() below creates this view again.
-            _studyTreeView = new StudyTreeView(UiRtbStudyTreeView, GameData.ContentType.STUDY_TREE, -1);
+            _studyTreeView = new StudyTreeView(UiRtbStudyTreeView, GameData.ContentType.STUDY_TREE);
 
             // ask for the options
             if (!ShowWorkbookOptionsDialog(false))

@@ -1752,7 +1752,7 @@ namespace ChessForge
             try
             {
 
-                _studyTreeView = new StudyTreeView(UiRtbStudyTreeView, GameData.ContentType.STUDY_TREE, -1);
+                _studyTreeView = new StudyTreeView(UiRtbStudyTreeView, GameData.ContentType.STUDY_TREE);
 
                 _studyTreeView.ArticleSelected -= ArticleSelected;
                 _studyTreeView.ArticleSelected += ArticleSelected;
@@ -1841,7 +1841,7 @@ namespace ChessForge
 
             try
             {
-                _modelGameTreeView = new VariationTreeView(UiRtbModelGamesView, GameData.ContentType.MODEL_GAME, gameIndex);
+                _modelGameTreeView = new VariationTreeView(UiRtbModelGamesView, GameData.ContentType.MODEL_GAME);
                 UiRtbModelGamesView.IsDocumentEnabled = true;
                 if (ActiveVariationTree.Nodes.Count == 0)
                 {
@@ -1913,7 +1913,7 @@ namespace ChessForge
 
             try
             {
-                _exerciseTreeView = new ExerciseTreeView(GameData.ContentType.EXERCISE, exerciseIndex);
+                _exerciseTreeView = new ExerciseTreeView(GameData.ContentType.EXERCISE);
                 UiRtbExercisesView.IsDocumentEnabled = true;
 
                 if (ActiveVariationTree.Nodes.Count == 0)
@@ -2969,7 +2969,7 @@ namespace ChessForge
                 // study tree also shows title so update it there
                 if (_studyTreeView == null)
                 {
-                    _studyTreeView = new StudyTreeView(UiRtbStudyTreeView, GameData.ContentType.STUDY_TREE, -1);
+                    _studyTreeView = new StudyTreeView(UiRtbStudyTreeView, GameData.ContentType.STUDY_TREE);
                     _studyTreeView.BuildFlowDocumentForVariationTree();
                 }
                 else
