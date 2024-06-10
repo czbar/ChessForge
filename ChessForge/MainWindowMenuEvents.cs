@@ -2734,6 +2734,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Invokes dialog for creating thumbnails.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnSetThumbnails_Click(object sender, RoutedEventArgs e)
+        {
+            ChapterUtils.InvokeSetThumbnailsDialog(AppState.ActiveChapter);
+        }
+
+        /// <summary>
         /// Invokes dialog to split the active chapter.
         /// </summary>
         /// <param name="sender"></param>
