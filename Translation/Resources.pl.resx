@@ -688,7 +688,7 @@
     <value>Narzędzia</value>
   </data>
   <data name="MnEvaluateGames" xml:space="preserve">
-    <value>Oceń partie z podręcznika</value>
+    <value>Oceń partie</value>
   </data>
   <data name="StripComments" xml:space="preserve">
     <value>Usuń komentarze...</value>
@@ -1127,10 +1127,16 @@
     <value>Zastosuj do wszystkich rozdziałów</value>
   </data>
   <data name="GamesOrder" xml:space="preserve">
-    <value>Kolejność Partii</value>
+    <value>Sortuj Partie</value>
+  </data>
+  <data name="Criteria" xml:space="preserve">
+    <value>Kryteria</value>
   </data>
   <data name="GameThumbnails" xml:space="preserve">
-    <value>Wizytówki Partii</value>
+    <value>Utwórz Wizytówki Partii</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>Miejsce</value>
   </data>
   <data name="CreateAtMove" xml:space="preserve">
     <value>Utwórz po ruchu</value>

@@ -1448,6 +1448,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Criteria.
+        /// </summary>
+        public static string Criteria {
+            get {
+                return ResourceManager.GetString("Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid criterion: min number of moves cannot be greater than max..
         /// </summary>
         public static string CritMaxMovesLessMin {
@@ -3491,7 +3500,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Games Order.
+        ///   Looks up a localized string similar to Sort Games.
         /// </summary>
         public static string GamesOrder {
             get {
@@ -3527,7 +3536,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Game Thumbnails.
+        ///   Looks up a localized string similar to Set Game Thumbnails.
         /// </summary>
         public static string GameThumbnails {
             get {
@@ -4166,6 +4175,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Location.
+        /// </summary>
+        public static string Location {
+            get {
+                return ResourceManager.GetString("Location", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lost quiz points.
         /// </summary>
         public static string LostQuizPoints {
@@ -4301,7 +4319,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Evaluate Games in Workbook.
+        ///   Looks up a localized string similar to Evaluate Games.
         /// </summary>
         public static string MnEvaluateGames {
             get {
@@ -5823,7 +5841,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Regenerate.
+        ///   Looks up a localized string similar to Regenerate Study.
         /// </summary>
         public static string RegenerateStudyTree {
             get {

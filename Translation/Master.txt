@@ -648,7 +648,7 @@ RestoreFontDefaults=Restore Font Defaults
 Tools=Tools
 
 #Evaluate Games
-MnEvaluateGames=Evaluate Games in Workbook
+MnEvaluateGames=Evaluate Games
 
 #Strip all comments
 StripComments=Delete Comments...
@@ -1194,7 +1194,7 @@ DlgManageChapter=Manage Chapter
 SortBy=Sort By
 
 #Regenerate Study Tree
-RegenerateStudyTree=Regenerate
+RegenerateStudyTree=Regenerate Study
 
 #Warning for regenerate study tree
 MsgThisOverwritesStudy=This will replace the current Study. Proceed?
@@ -1233,10 +1233,16 @@ ApplyToAllChapters=Apply to All Chapters
 #
 
 #Sort order for games
-GamesOrder=Games Order
+GamesOrder=Sort Games
+
+#Criteria
+Criteria=Criteria
 
 #Game Thumbnails
-GameThumbnails=Game Thumbnails
+GameThumbnails=Set Game Thumbnails
+
+#Location
+Location=Location
 
 #Create at Move
 CreateAtMove=Create at Move
