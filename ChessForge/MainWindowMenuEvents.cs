@@ -2724,6 +2724,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Invokes dialog for sorting games in the active chapter / workbook.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnSortGames_Click(object sender, RoutedEventArgs e)
+        {
+            ChapterUtils.InvokeSortGamesDialog(AppState.ActiveChapter);
+        }
+
+        /// <summary>
         /// Invokes dialog to split the active chapter.
         /// </summary>
         /// <param name="sender"></param>
