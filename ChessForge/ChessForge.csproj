@@ -285,6 +285,9 @@
     <Compile Include="SelectLibraryDialog.xaml.cs">
       <DependentUpon>SelectLibraryDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SetThumbnailsDialog.xaml.cs">
+      <DependentUpon>SetThumbnailsDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SingleLineEditor.xaml.cs">
       <DependentUpon>SingleLineEditor.xaml</DependentUpon>
     </Compile>
@@ -540,6 +543,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SelectSingleChapterDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SetThumbnailsDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

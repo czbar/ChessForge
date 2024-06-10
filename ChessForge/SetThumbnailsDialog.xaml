@@ -1,0 +1,27 @@
+﻿<Window x:Class="ChessForge.SetThumbnailsDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:p="clr-namespace:ChessForge.Properties"
+        xmlns:local="clr-namespace:ChessForge"
+        mc:Ignorable="d"
+        Title="{x:Static p:Resources.GameThumbnails}" Height="300" Width="380">
+    <Grid>
+        <Label x:Name="UiLabelChapterTitle" Content="{x:Static p:Resources.Chapter}" HorizontalAlignment="Center" HorizontalContentAlignment="Left" Margin="-15,16,0,0" Padding="35,0,20,0" VerticalAlignment="Top"/>
+        <GroupBox x:Name="UiGbThumbnails" Header="{x:Static p:Resources.Location}" Height="125" VerticalAlignment="Top" Width="300" HorizontalAlignment="Center" Margin="0, 40, 0, 0">
+            <Canvas Margin="0,0,0,0">
+                <Label x:Name="UiLblThumbMove" Margin="30,8,0,0" HorizontalAlignment="Left" Content="{x:Static p:Resources.CreateAtMove}" />
+                <TextBox x:Name="UiTbThumbMove" Margin="160,12,0,0" HorizontalAlignment="Left" Width="40" Text="" TextChanged="UiTbThumbMove_TextChanged" />
+                <RadioButton x:Name="UiRbWhite" Content="{x:Static p:Resources.WhiteMove}" IsChecked="True" Margin="35,45"/>
+                <RadioButton x:Name="UiRbBlack" Content="{x:Static p:Resources.BlackMove}" Margin="120,45"/>
+                <CheckBox x:Name="UiCbOverwriteThumb" Content="{x:Static p:Resources.OverwriteExisting}" Margin="35,77,0,0" />
+            </Canvas>
+        </GroupBox>
+        <CheckBox x:Name="UiCbAllChapters" IsChecked="False" Content="{x:Static p:Resources.ApplyToAllChapters}" Margin="0,185,10,0" Height="20" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="-220,0,0,20" Width="90" VerticalAlignment="Bottom" Click="UiBtnOk_Click" />
+        <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="0,0,0,20" Width="90" VerticalAlignment="Bottom"/>
+        <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Center" Margin="220,0,0,20" Width="90" VerticalAlignment="Bottom" Click="UiBtnHelp_Click" />
+
+    </Grid>
+</Window>
