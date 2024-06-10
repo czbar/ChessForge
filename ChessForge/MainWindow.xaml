@@ -121,9 +121,9 @@
                                 <Image Source="Resources/Images/flip_board.png"/>
                             </MenuItem.Icon>
                         </MenuItem>
+                        <MenuItem x:Name="UiMnChessboards" Header="{x:Static p:Resources.Chessboards}" Click="UiMnChessboards_Click" />
                         <Separator />
                         <MenuItem Header="{x:Static p:Resources.ApplicationOptions}" Click="UiMnApplicationOptions_Click" />
-                        <MenuItem x:Name="UiMnChessboards" Header="{x:Static p:Resources.Chessboards}" Click="UiMnChessboards_Click" />
                         <MenuItem Header="{x:Static p:Resources.EngineOptions}" Click="UiMnEngineOptions_Click" />
                         <MenuItem x:Name="UiMnWorkbookOptions" Header="{x:Static p:Resources.WorkbookOptions}" Click="UiMnWorkbookOptions_Click" />
                         <MenuItem Header="{x:Static p:Resources.BlunderDetectionOptions}" Click="UiMnBlunderDetectionOptions_Click" />
