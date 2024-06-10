@@ -1663,6 +1663,8 @@ namespace ChessForge
                     MainWin.UiMnCopyArticles.IsEnabled = WorkbookManager.SessionWorkbook != null;
                     MainWin.UiMnMoveArticles.IsEnabled = WorkbookManager.SessionWorkbook != null;
 
+                    MainWin.UiMnOrderGames.IsEnabled = AppState.ActiveChapter != null;
+                    MainWin.UiMnSetThumbnails.IsEnabled = AppState.ActiveChapter != null;
                     MainWin.UiMnManageChapter.IsEnabled = AppState.ActiveChapter != null;
                     MainWin.UiMnSplitChapter.IsEnabled = AppState.ActiveChapter != null;
 
