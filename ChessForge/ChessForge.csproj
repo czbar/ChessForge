@@ -288,6 +288,9 @@
     <Compile Include="SingleLineEditor.xaml.cs">
       <DependentUpon>SingleLineEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SortGamesDialog.xaml.cs">
+      <DependentUpon>SortGamesDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SplitChapterDialog.xaml.cs">
       <DependentUpon>SplitChapterDialog.xaml</DependentUpon>
     </Compile>
@@ -541,6 +544,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SingleLineEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SortGamesDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
