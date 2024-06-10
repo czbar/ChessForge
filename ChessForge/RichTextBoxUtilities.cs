@@ -23,6 +23,63 @@ namespace ChessForge
         public static readonly string DiagramParaPrefix = "para_diag_";
 
         /// <summary>
+        /// Prefix for naming Text Boxes with moves in Intro. 
+        /// </summary>
+        public static readonly string MoveTextBoxPrefix = "tb_move_";
+
+        /// <summary>
+        /// Prefix for naming an Inline for a Move in Intro. 
+        /// </summary>
+        public static readonly string UicMovePrefix = "uic_move_";
+
+        /// <summary>
+        // Name of the header paragraph.
+        /// </summary>
+        public static readonly string HeaderParagraphName = "para_header_";
+
+        /// <summary>
+        // Name of the index paragraph in the study.
+        /// </summary>
+        public static readonly string StudyIndexParagraphName = "para_index_";
+
+        /// <summary>
+        // Name of the header paragraph.
+        /// </summary>
+        public static readonly string ExerciseUnderBoardControls = "para_underboard_";
+
+        /// <summary>
+        /// Prefix for the Run with the reference symbol
+        /// </summary>
+        public static readonly string ReferenceRunPrefix = "run_reference_";
+
+        /// <summary>
+        /// Returns true if the passed paragraph contains no inlines
+        /// or only empty Runs.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        public static bool HasNonEmptyInline(Paragraph para)
+        {
+            bool res = false;
+
+            if (para != null)
+            {
+                foreach (Inline inl in para.Inlines)
+                {
+                    Run run = inl as Run;
+                    // if this is not a Run we consider that this Paragraph has non-empty content (e.g. InlineUIContainer)
+                    if (run == null || !string.IsNullOrEmpty(run.Text))
+                    {
+                        res = true;
+                        break;
+                    }
+                }
+            }
+
+            return res;
+        }
+
+        /// <summary>
         /// Finds a paragraph with a given name in the document.
         /// Returns null if not found.
         /// </summary>
@@ -294,6 +351,67 @@ namespace ChessForge
             else
             {
                 return "\n" + BuildDiagramString(node.Position) + "\n";
+            }
+        }
+
+        /// <summary>
+        /// Gets the orientation (aka "flip state") of the diagram
+        /// by checking the status of the hidden checkbox in the diagram.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        public static bool GetDiagramFlipState(Paragraph para)
+        {
+            bool res = false;
+
+            try
+            {
+                CheckBox cb = FindFlippedCheckBox(para);
+                if (cb != null)
+                {
+                    res = cb.IsChecked == true;
+                }
+            }
+            catch
+            {
+            }
+
+            return res;
+        }
+
+        /// <summary>
+        /// Returns the diagram's "flip state" CheckBox
+        /// </summary>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        public static CheckBox FindFlippedCheckBox(Paragraph para)
+        {
+            try
+            {
+                CheckBox cb = null;
+
+                foreach (Inline inl in para.Inlines)
+                {
+                    if (inl is InlineUIContainer)
+                    {
+                        Viewbox vb = ((InlineUIContainer)inl).Child as Viewbox;
+                        Canvas canvas = vb.Child as Canvas;
+                        foreach (UIElement uie in canvas.Children)
+                        {
+                            if (uie is CheckBox)
+                            {
+                                cb = uie as CheckBox;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                return cb;
+            }
+            catch
+            {
+                return null;
             }
         }
 

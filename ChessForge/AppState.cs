@@ -1087,6 +1087,8 @@ namespace ChessForge
                     _mainWin.UiMnWorkbookSaveAs.IsEnabled = false;
                     _mainWin.UiMnBackupVersion.IsEnabled = false;
                 }
+
+                MainWin.UiMnExportRtf.IsEnabled = AppState.Workbook != null;
             });
         }
 
@@ -1583,7 +1585,7 @@ namespace ChessForge
 
                     _mainWin.UiTabCtrlEngineGame.Visibility = Visibility.Hidden;
 
-//                    _mainWin.UiBtnExitTraining.Visibility = Visibility.Visible;
+                    //                    _mainWin.UiBtnExitTraining.Visibility = Visibility.Visible;
                     _mainWin.UiBtnExitTraining.Visibility = Visibility.Collapsed; // to be deprecated
                     _mainWin.UiTrainingSessionBox.Visibility = Visibility.Visible;
                     _mainWin.UiBtnExitGame.Visibility = Visibility.Collapsed;

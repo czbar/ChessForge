@@ -670,6 +670,7 @@ namespace ChessForge
         private void ReadConfiguration()
         {
             Configuration.StartDirectory = App.AppPath;
+            ConfigurationRtfExport.InitializeRtfConfig();
             Configuration.ReadConfigurationFile();
         }
 
@@ -729,16 +730,6 @@ namespace ChessForge
             mnDebugDumpStates.Header = "Dump States and Timers";
             mnDebug.Items.Add(mnDebugDumpStates);
             mnDebugDumpStates.Click += UiMnDebugDumpStates_Click;
-
-            MenuItem mnDebugWriteRtf = new MenuItem
-            {
-                Name = "WriteRtf"
-            };
-
-            mnDebugWriteRtf.Header = "Write RTF";
-            mnDebug.Items.Add(mnDebugWriteRtf);
-            mnDebugWriteRtf.Click += UiMnWriteRtf_Click;
-
         }
 
         // tracks the application start stage
@@ -1695,7 +1686,7 @@ namespace ChessForge
                 // However, due the use of ForceFocus() below, this is not necessary anymore
                 // UiRtbBoardComment.Focus();
 
-                if (tabToFocus == TabViewType.INTRO && WorkbookManager.SessionWorkbook.ActiveChapter.IsIntroEmpty())
+                if (tabToFocus == TabViewType.INTRO && !WorkbookManager.SessionWorkbook.ActiveChapter.ShowIntro)
                 {
                     tabToFocus = TabViewType.STUDY;
                 }
@@ -1761,7 +1752,7 @@ namespace ChessForge
             try
             {
 
-                _studyTreeView = new StudyTreeView(UiRtbStudyTreeView, GameData.ContentType.STUDY_TREE, -1);
+                _studyTreeView = new StudyTreeView(UiRtbStudyTreeView, GameData.ContentType.STUDY_TREE);
 
                 _studyTreeView.ArticleSelected -= ArticleSelected;
                 _studyTreeView.ArticleSelected += ArticleSelected;
@@ -1850,7 +1841,7 @@ namespace ChessForge
 
             try
             {
-                _modelGameTreeView = new VariationTreeView(UiRtbModelGamesView, GameData.ContentType.MODEL_GAME, gameIndex);
+                _modelGameTreeView = new VariationTreeView(UiRtbModelGamesView, GameData.ContentType.MODEL_GAME);
                 UiRtbModelGamesView.IsDocumentEnabled = true;
                 if (ActiveVariationTree.Nodes.Count == 0)
                 {
@@ -1922,7 +1913,7 @@ namespace ChessForge
 
             try
             {
-                _exerciseTreeView = new ExerciseTreeView(GameData.ContentType.EXERCISE, exerciseIndex);
+                _exerciseTreeView = new ExerciseTreeView(GameData.ContentType.EXERCISE);
                 UiRtbExercisesView.IsDocumentEnabled = true;
 
                 if (ActiveVariationTree.Nodes.Count == 0)
@@ -2978,7 +2969,7 @@ namespace ChessForge
                 // study tree also shows title so update it there
                 if (_studyTreeView == null)
                 {
-                    _studyTreeView = new StudyTreeView(UiRtbStudyTreeView, GameData.ContentType.STUDY_TREE, -1);
+                    _studyTreeView = new StudyTreeView(UiRtbStudyTreeView, GameData.ContentType.STUDY_TREE);
                     _studyTreeView.BuildFlowDocumentForVariationTree();
                 }
                 else

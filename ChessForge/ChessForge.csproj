@@ -130,6 +130,7 @@
     <Compile Include="CommentBeforeMoveDialog.xaml.cs">
       <DependentUpon>CommentBeforeMoveDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ConfigurationRtfExport.cs" />
     <Compile Include="ConfirmUndoDialog.xaml.cs">
       <DependentUpon>ConfirmUndoDialog.xaml</DependentUpon>
     </Compile>
@@ -168,6 +169,7 @@
     <Compile Include="EvaluationLine.cs" />
     <Compile Include="EvaluationTrainingLine.cs" />
     <Compile Include="ExerciseTreeView.cs" />
+    <Compile Include="FileUtils.cs" />
     <Compile Include="FindDuplicates.cs" />
     <Compile Include="FindGames.cs" />
     <Compile Include="FindIdenticalPositions.cs" />
@@ -241,8 +243,10 @@
       <DependentUpon>OperationScopeDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="PgnArticleUtils.cs" />
+    <Compile Include="PieceImageDictionaries.cs" />
     <Compile Include="PlayerStats.cs" />
     <Compile Include="PositionBoardDragEvents.cs" />
+    <Compile Include="PositionImageGenerator.cs" />
     <Compile Include="PostCopyMoveDialog.xaml.cs">
       <DependentUpon>PostCopyMoveDialog.xaml</DependentUpon>
     </Compile>
@@ -267,6 +271,11 @@
     <Compile Include="ResourceUtils.cs" />
     <Compile Include="RichTextBoxUtilities.cs" />
     <Compile Include="RichTextPara.cs" />
+    <Compile Include="RtfDiagram.cs" />
+    <Compile Include="RtfExportDialog.xaml.cs">
+      <DependentUpon>RtfExportDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RtfWriter.cs" />
     <Compile Include="SearchPositionDialog.xaml.cs">
       <DependentUpon>SearchPositionDialog.xaml</DependentUpon>
     </Compile>
@@ -305,6 +314,7 @@
     <Compile Include="SystemClipboard.cs" />
     <Compile Include="TopGamesViewRow.cs" />
     <Compile Include="TrainingViewMoveHandlers.cs" />
+    <Compile Include="VariationTreeViewBuild.cs" />
     <Compile Include="VariationTreeViewMoveRuns.cs" />
     <Compile Include="WorkbookLocation.cs" />
     <Compile Include="WorkbookLocationNavigator.cs" />
@@ -495,6 +505,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ReorderLinesDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RtfExportDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

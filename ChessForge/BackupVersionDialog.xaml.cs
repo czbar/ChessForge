@@ -1,16 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
 namespace ChessForge
 {
@@ -87,9 +75,9 @@ namespace ChessForge
             // this will be ".pgn" but we call this method for future proofing
             string ext = System.IO.Path.GetExtension(AppState.WorkbookFilePath);
 
-            string _workbookPathNoExt = AppState.WorkbookFilePath.Substring(0, AppState.WorkbookFilePath.Length - ext.Length);
+            string workbookPathNoExt = AppState.WorkbookFilePath.Substring(0, AppState.WorkbookFilePath.Length - ext.Length);
 
-            _backupPath = _workbookPathNoExt + " v" + _workbook.Version.ToString().Replace('.', '_') + ext;
+            _backupPath = workbookPathNoExt + " v" + _workbook.Version.ToString().Replace('.', '_') + ext;
             UiTbBackupFileName.Text = System.IO.Path.GetFileName(_backupPath);
             UiTbBackupFileName.ToolTip = _backupPath;
 

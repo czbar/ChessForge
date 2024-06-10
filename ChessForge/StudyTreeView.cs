@@ -55,7 +55,7 @@ namespace ChessForge
         /// <param name="rtb"></param>
         /// <param name="contentType"></param>
         /// <param name="entityIndex"></param>
-        public StudyTreeView(RichTextBox rtb, GameData.ContentType contentType, int entityIndex) : base(rtb, contentType, entityIndex)
+        public StudyTreeView(RichTextBox rtb, GameData.ContentType contentType) : base(rtb, contentType)
         {
             LineManager = new LineSectorManager(this);
         }
@@ -354,6 +354,7 @@ namespace ChessForge
             if (EffectiveIndexDepth >= 0)
             {
                 Paragraph para = CreateParagraph("0", true);
+                para.Name = RichTextBoxUtilities.StudyIndexParagraphName;
                 para.Foreground = ChessForgeColors.CurrentTheme.IndexPrefixForeground;
                 para.FontWeight = FontWeights.Normal;
                 para.FontSize = para.FontSize - 1;
@@ -428,19 +429,19 @@ namespace ChessForge
 
                                 for (int i = 0; i < sector.Nodes.Count; i++)
                                 {
-                                    if (i < firstSkip || i > lastSkip)
-                                    {
+                                    //if (i < firstSkip || i > lastSkip)
+                                    //{
                                         TreeNode nd = sector.Nodes[i];
                                         BuildIndexNodeAndAddToPara(nd, firstMove, para);
                                         firstMove = false;
-                                    }
-                                    else if (i == firstSkip)
-                                    {
-                                        Run rElipsis = new Run(" [...] ");
-                                        rElipsis.FontWeight = FontWeights.Normal;
-                                        para.Inlines.Add(rElipsis);
-                                        firstMove = true;
-                                    }
+                                    //}
+                                    //else if (i == firstSkip)
+                                    //{
+                                    //    Run rElipsis = new Run(" [...] ");
+                                    //    rElipsis.FontWeight = FontWeights.Normal;
+                                    //    para.Inlines.Add(rElipsis);
+                                    //    firstMove = true;
+                                    //}
                                 }
                             }
                             rIdTitle.FontWeight = FontWeights.DemiBold;

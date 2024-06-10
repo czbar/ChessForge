@@ -1265,7 +1265,15 @@ namespace ChessForge
                 }
 
                 WorkbookManager.ActiveTab = TabViewType.INTRO;
-                RebuildIntroView();
+                if (_introView == null || _introView.Document == null || _introView.Document.Blocks.Count == 0)
+                {
+                    SetupGuiForIntro(true);
+                }
+                else
+                {
+                    RebuildIntroView();
+                }
+
                 if (WorkbookManager.SessionWorkbook != null)
                 {
                     WorkbookLocationNavigator.SaveNewLocation(WorkbookManager.SessionWorkbook.ActiveChapter, GameData.ContentType.INTRO, -1);

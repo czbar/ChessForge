@@ -132,14 +132,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// The first branch level for index line.
-        /// Normally it will be 1 unless the node 0 is fork (e.g. the tree contains
-        /// multiple first moves like 1.e4 and 1.d4) 
-        /// in which case it is 2.
-        /// </summary>
-        private int _firstIndexBranchLevel = -1;
-
-        /// <summary>
         /// Separates lines out of the tree, sets line Ids on the nodes
         /// and places the lines in the list.
         /// </summary>
@@ -151,15 +143,6 @@ namespace ChessForge
             LineSectors = new List<LineSector>();
             LineSector rootSector = CreateRootLineSector(root);
             LineSectors.Add(rootSector);
-
-            if (rootSector.Children.Count > 1)
-            {
-                _firstIndexBranchLevel = 2;
-            }
-            else
-            {
-                _firstIndexBranchLevel = 1;
-            }
 
             ProcessChildSectors(rootSector, root);
 

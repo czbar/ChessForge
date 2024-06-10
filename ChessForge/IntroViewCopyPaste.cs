@@ -179,7 +179,7 @@ namespace ChessForge
                                     {
                                         int nodeId = TextUtils.GetIdFromPrefixedString(positionParent.Name);
                                         TreeNode node = GetNodeById(nodeId);
-                                        flipped = GetDiagramFlipState(positionParent);
+                                        flipped = RichTextBoxUtilities.GetDiagramFlipState(positionParent);
                                         if (!plainTextOnly)
                                         {
                                             IntroViewClipboard.AddDiagram(node, flipped);
@@ -210,7 +210,7 @@ namespace ChessForge
                             string name = ((TextElement)position.Parent).Name;
                             int nodeId = TextUtils.GetIdFromPrefixedString(name);
                             TreeNode node = GetNodeById(nodeId);
-                            if (name.StartsWith(_uic_move_))
+                            if (name.StartsWith(RichTextBoxUtilities.UicMovePrefix))
                             {
                                 if (!plainTextOnly)
                                 {

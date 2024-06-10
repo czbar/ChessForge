@@ -51,14 +51,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Index of the entity (game or exercise) in the Active Chapter.
-        /// </summary>
-        public int EntityIndex
-        {
-            get => _entityIndex;
-        }
-
-        /// <summary>
         /// Whether to show blunder assessments.
         /// </summary>
         public bool HandleBlunders
@@ -101,9 +93,6 @@ namespace ChessForge
         // content type in this view
         private GameData.ContentType _contentType;
 
-        // game/exercise index in this view
-        private int _entityIndex = -1;
-
         // the node for whcih a thumbnail was last created.
         private TreeNode _lastThumbnailNode = null;
 
@@ -137,11 +126,24 @@ namespace ChessForge
         /// a call to the base class's constructor.
         /// </summary>
         /// <param name="doc"></param>
-        public VariationTreeView(RichTextBox rtb, GameData.ContentType contentType, int entityIndex) : base(rtb.Document)
+        public VariationTreeView(RichTextBox rtb, GameData.ContentType contentType) : base(rtb.Document)
         {
             _mainWin = AppState.MainWin;
             _contentType = contentType;
             RichTextBoxControl = rtb;
+        }
+
+        /// <summary>
+        /// Contructors assuming the null value for the RichTextBox.
+        /// It is used when building "invisible" views for printing.
+        /// </summary>
+        /// <param name="contentType"></param>
+        /// <param name="entityIndex"></param>
+        public VariationTreeView(FlowDocument doc, GameData.ContentType contentType) : base(doc)
+        {
+            _mainWin = AppState.MainWin;
+            _contentType = contentType;
+            RichTextBoxControl = null;
         }
 
         /// <summary>
@@ -202,10 +204,6 @@ namespace ChessForge
         // NOTE: we rely on the fact that both types on comments begin with run_comment (!)
         private readonly string _run_comment_ = "run_comment_";
         private readonly string _run_comment_before_move_ = "run_comment_before_move_";
-        private readonly string _run_reference_ = "run_reference_";
-
-        // name of the header paragraph
-        private readonly string _para_header_ = "para_header_";
 
         /// <summary>
         /// Most recent clicked node.
@@ -306,28 +304,36 @@ namespace ChessForge
         /// Builds the FlowDocument from the entire Variation Tree for the RichTextBox to display.
         /// Inserts dummy (no text) run for the starting position (NodeId == 0)
         /// </summary>
-        public void BuildFlowDocumentForVariationTree(int rootNodeId = 0, bool includeStem = true)
+        public void BuildFlowDocumentForVariationTree(VariationTree treeForPrint = null, int rootNodeId = 0, bool includeStem = true)
         {
             try
             {
                 GameData.ContentType contentType = GameData.ContentType.NONE;
-                if (_contentType == GameData.ContentType.STUDY_TREE)
+
+                if (treeForPrint == null)
                 {
-                    _mainVariationTree = WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree;
+                    if (_contentType == GameData.ContentType.STUDY_TREE)
+                    {
+                        _mainVariationTree = WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree;
+                    }
+                    else
+                    {
+                        _mainVariationTree = _mainWin.ActiveVariationTree;
+                        if (_mainVariationTree != null && _mainVariationTree.AssociatedPrimary != null)
+                        {
+                            // ActiveVariationTree may return a secondary tree which we don't want so check for it
+                            _mainVariationTree = _mainVariationTree.AssociatedPrimary;
+                        }
+                    }
+
+                    if (_mainVariationTree == null || _mainVariationTree.ContentType != this.ContentType)
+                    {
+                        return;
+                    }
                 }
                 else
                 {
-                    _mainVariationTree = _mainWin.ActiveVariationTree;
-                    if (_mainVariationTree != null && _mainVariationTree.AssociatedPrimary != null)
-                    {
-                        // ActiveVariationTree may return a secondary tree which we don't want so check for it
-                        _mainVariationTree = _mainVariationTree.AssociatedPrimary;
-                    }
-                }
-
-                if (_mainVariationTree == null || _mainVariationTree.ContentType != this.ContentType)
-                {
-                    return;
+                    _mainVariationTree = treeForPrint;
                 }
 
                 if (string.IsNullOrEmpty(_mainVariationTree.RootNode.LineId) || _mainVariationTree.Nodes.Count > 1 && string.IsNullOrEmpty(_mainVariationTree.Nodes[1].LineId))
@@ -339,14 +345,17 @@ namespace ChessForge
 
                 Clear(GameData.ContentType.GENERIC);
 
-                PreviousNextViewBars.BuildPreviousNextBar(contentType);
+                if (treeForPrint == null)
+                {
+                    PreviousNextViewBars.BuildPreviousNextBar(contentType);
+                }
 
                 Document.Blocks.Add(BuildDummyPararaph());
 
-                Paragraph titlePara = BuildPageHeader(contentType);
-                if (titlePara != null)
+                _pageHeaderParagraph = BuildPageHeader(_mainVariationTree, contentType);
+                if (_pageHeaderParagraph != null)
                 {
-                    Document.Blocks.Add(titlePara);
+                    Document.Blocks.Add(_pageHeaderParagraph);
                 }
 
                 BuildExerciseParagraphs();
@@ -357,19 +366,22 @@ namespace ChessForge
                     Document.Blocks.Add(preamblePara);
                 }
 
-                Paragraph quizInfoPara = BuildQuizInfoPara();
-                if (quizInfoPara != null)
+                if (treeForPrint == null)
                 {
-                    Document.Blocks.Add(quizInfoPara);
+                    Paragraph quizInfoPara = BuildQuizInfoPara();
+                    if (quizInfoPara != null)
+                    {
+                        Document.Blocks.Add(quizInfoPara);
+                    }
+
+                    Paragraph movePromptPara = BuildYourMovePrompt();
+                    if (movePromptPara != null)
+                    {
+                        Document.Blocks.Add(movePromptPara);
+                    }
                 }
 
-                Paragraph movePromptPara = BuildYourMovePrompt();
-                if (movePromptPara != null)
-                {
-                    Document.Blocks.Add(movePromptPara);
-                }
-
-                if (contentType != GameData.ContentType.EXERCISE || ShownVariationTree.ShowTreeLines)
+                if (contentType != GameData.ContentType.EXERCISE || ShownVariationTree.ShowTreeLines || treeForPrint != null)
                 {
                     // we will traverse back from each leaf to the nearest parent fork (or root of we run out)
                     // and note the distances in the Nodes so that we can use them when creating the document
@@ -1045,123 +1057,6 @@ namespace ChessForge
             dummy.Margin = new Thickness(0, 0, 0, 0);
             dummy.Inlines.Add(new Run(""));
             return dummy;
-        }
-
-        /// <summary>
-        /// Builds the top paragraph for the page if applicable.
-        /// It will be Game/Exercise header or the chapter's title
-        /// if we are in the Chapters View
-        /// </summary>
-        /// <returns></returns>
-        private Paragraph BuildPageHeader(GameData.ContentType contentType)
-        {
-            _pageHeaderParagraph = null;
-
-            if (_mainVariationTree != null)
-            {
-                switch (contentType)
-                {
-                    case GameData.ContentType.MODEL_GAME:
-                    case GameData.ContentType.EXERCISE:
-                        string whitePlayer = _mainVariationTree.Header.GetWhitePlayer(out _);
-                        string blackPlayer = _mainVariationTree.Header.GetBlackPlayer(out _);
-
-                        string whitePlayerElo = _mainVariationTree.Header.GetWhitePlayerElo(out _);
-                        string blackPlayerElo = _mainVariationTree.Header.GetBlackPlayerElo(out _);
-
-                        _pageHeaderParagraph = CreateParagraph("0", true);
-                        _pageHeaderParagraph.Margin = new Thickness(0, 0, 0, 0);
-                        _pageHeaderParagraph.Name = _para_header_;
-                        _pageHeaderParagraph.MouseLeftButtonDown += EventPageHeaderClicked;
-
-                        bool hasPlayerNames = !(string.IsNullOrWhiteSpace(whitePlayer) && string.IsNullOrWhiteSpace(blackPlayer));
-
-                        if (hasPlayerNames)
-                        {
-                            Run rWhiteSquare = CreateRun("0", (Constants.CharWhiteSquare.ToString() + " "), true);
-                            rWhiteSquare.FontWeight = FontWeights.Normal;
-                            _pageHeaderParagraph.Inlines.Add(rWhiteSquare);
-
-                            Run rWhite = CreateRun("0", (BuildPlayerLine(whitePlayer, whitePlayerElo) + "\n"), true);
-                            _pageHeaderParagraph.Inlines.Add(rWhite);
-
-                            Run rBlackSquare = CreateRun("0", (Constants.CharBlackSquare.ToString() + " "), true);
-                            rBlackSquare.FontWeight = FontWeights.Normal;
-                            _pageHeaderParagraph.Inlines.Add(rBlackSquare);
-
-                            Run rBlack = CreateRun("0", (BuildPlayerLine(blackPlayer, blackPlayerElo)) + "\n", true);
-                            _pageHeaderParagraph.Inlines.Add(rBlack);
-                        }
-
-                        if (!string.IsNullOrEmpty(_mainVariationTree.Header.GetEventName(out _)))
-                        {
-                            if (hasPlayerNames)
-                            {
-                                string round = _mainVariationTree.Header.GetRound(out _);
-                                if (!string.IsNullOrWhiteSpace(round))
-                                {
-                                    round = " (" + round + ")";
-                                }
-                                else
-                                {
-                                    round = "";
-                                }
-                                string eventName = _mainVariationTree.Header.GetEventName(out _) + round;
-                                Run rEvent = CreateRun("1", "      " + eventName + "\n", true);
-                                _pageHeaderParagraph.Inlines.Add(rEvent);
-                            }
-                            else
-                            {
-                                Run rEvent = CreateRun("0", _mainVariationTree.Header.GetEventName(out _) + "\n", true);
-                                _pageHeaderParagraph.Inlines.Add(rEvent);
-                            }
-                        }
-
-                        string annotator = _mainVariationTree.Header.GetAnnotator(out _);
-                        if (!string.IsNullOrWhiteSpace(annotator))
-                        {
-                            Run rAnnotator = CreateRun("1", "      " + Properties.Resources.Annotator + ": " + annotator + "\n", true);
-                            _pageHeaderParagraph.Inlines.Add(rAnnotator);
-                        }
-
-                        string dateForDisplay = TextUtils.BuildDateFromDisplayFromPgnString(_mainVariationTree.Header.GetDate(out _));
-                        if (!string.IsNullOrEmpty(dateForDisplay))
-                        {
-                            Run rDate = CreateRun("1", "      " + Properties.Resources.Date + ": " + dateForDisplay + "\n", true);
-                            _pageHeaderParagraph.Inlines.Add(rDate);
-                        }
-
-                        string eco = _mainVariationTree.Header.GetECO(out _);
-                        string result = _mainVariationTree.Header.GetResult(out _);
-                        BuildResultAndEcoLine(eco, result, out Run rEco, out Run rResult);
-                        if (rEco != null || rResult != null)
-                        {
-                            Run rIndent = new Run("      ");
-                            rIndent.FontWeight = FontWeights.Normal;
-                            _pageHeaderParagraph.Inlines.Add(rIndent);
-
-                            if (rEco != null)
-                            {
-                                rEco.FontWeight = FontWeights.Bold;
-                                _pageHeaderParagraph.Inlines.Add(rEco);
-                            }
-                            if (rResult != null)
-                            {
-                                rResult.FontWeight = FontWeights.Normal;
-                                _pageHeaderParagraph.Inlines.Add(rResult);
-                            }
-
-                            Run rNewLine = new Run("\n");
-                            _pageHeaderParagraph.Inlines.Add(rNewLine);
-                        }
-                        break;
-                    case GameData.ContentType.STUDY_TREE:
-                        UpdateChapterTitle();
-                        break;
-                }
-            }
-
-            return _pageHeaderParagraph;
         }
 
         /// <summary>

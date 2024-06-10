@@ -8,7 +8,6 @@ using System.Windows;
 using ChessPosition;
 using System.Windows.Controls;
 using GameTree;
-using System.Windows.Media;
 using System.Windows.Input;
 using System.Diagnostics;
 
@@ -55,8 +54,6 @@ namespace ChessForge
         /// Names and prefixes for xaml elements.
         /// </summary>
         private readonly string _run_move_ = "run_move_";
-        private readonly string _tb_move_ = "tb_move_";
-        private readonly string _uic_move_ = "uic_move_";
         private readonly string _vbox_diag_ = "vbox_move_";
         private readonly string _flip_img_ = "flip_img_";
 
@@ -83,20 +80,34 @@ namespace ChessForge
         // refrence to the RichTextBox of this view.
         private static RichTextBox _rtb = AppState.MainWin.UiRtbIntroView;
 
+        // flags if the view is in the "print" mode
+        private bool _isPrintMode;
+
         /// <summary>
         /// Constructor. Builds the content if not empty.
         /// Initializes data structures.
         /// </summary>
-        public IntroView(FlowDocument doc, Chapter parentChapter) : base(doc)
+        public IntroView(FlowDocument doc, Chapter parentChapter, RichTextBox printRtb = null) : base(doc)
         {
             bool isAppDirty = AppState.IsDirty;
+
+            if (printRtb != null)
+            {
+                _isPrintMode = true;
+                _rtb = printRtb;
+            }
+            else
+            {
+                _isPrintMode = false;
+                _rtb = AppState.MainWin.UiRtbIntroView;
+            }
 
             Document.Blocks.Clear();
 
             ParentChapter = parentChapter;
 
             // set the event handler for text changes.
-            if (!_initialized)
+            if (!_initialized && !_isPrintMode)
             {
                 _rtb.TextChanged += UiRtbIntroView_TextChanged;
                 _initialized = true;
@@ -138,13 +149,16 @@ namespace ChessForge
 
             AppState.IsDirty = currDirty;
 
-            _selectedNode = Nodes[0];
-            if (AppState.ActiveVariationTree != null)
+            if (!_isPrintMode)
             {
-                AppState.ActiveVariationTree.SetSelectedNodeId(_selectedNode.NodeId);
-            }
+                _selectedNode = Nodes[0];
+                if (AppState.ActiveVariationTree != null)
+                {
+                    AppState.ActiveVariationTree.SetSelectedNodeId(_selectedNode.NodeId);
+                }
 
-            WebAccessManager.ExplorerRequest(Intro.Tree.TreeId, Nodes[0]);
+                WebAccessManager.ExplorerRequest(Intro.Tree.TreeId, Nodes[0]);
+            }
         }
 
         /// <summary>
@@ -526,7 +540,10 @@ namespace ChessForge
         /// <returns></returns>
         public TextBlock InsertMove(TreeNode node, bool fromClipboard = false)
         {
-            AppState.MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
+            if (!_isPrintMode)
+            {
+                AppState.MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
+            }
 
             if (string.IsNullOrEmpty(node.LastMoveAlgebraicNotation))
             {
@@ -544,7 +561,10 @@ namespace ChessForge
             rMove.FontWeight = FontWeights.Bold;
             rMove.FontSize = MOVE_FONT_SIZE;
 
-            WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, _selectedNode);
+            if (!_isPrintMode)
+            {
+                WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, _selectedNode);
+            }
 
             return InsertMoveTextBlock(rMove, node, fromClipboard);
         }
@@ -561,7 +581,7 @@ namespace ChessForge
 
             try
             {
-                string uicName = _uic_move_ + SelectedNode.NodeId.ToString();
+                string uicName = RichTextBoxUtilities.UicMovePrefix + SelectedNode.NodeId.ToString();
                 Inline inlClicked = FindInlineByName(uicName);
 
                 TextBlock tb = (inlClicked as InlineUIContainer).Child as TextBlock;
@@ -748,7 +768,7 @@ namespace ChessForge
             if (nd != null)
             {
                 _selectedNode = nd;
-                string uicName = _uic_move_ + nodeId.ToString();
+                string uicName = RichTextBoxUtilities.UicMovePrefix + nodeId.ToString();
                 Inline inlClicked = FindInlineByName(uicName);
                 if (adjustCaret)
                 {
@@ -920,7 +940,7 @@ namespace ChessForge
             bool isDiag = para.Name.StartsWith(RichTextBoxUtilities.DiagramParaPrefix);
             foreach (Inline inline in para.Inlines)
             {
-                if (inline is InlineUIContainer iuc && inline.Name.StartsWith(_uic_move_))
+                if (inline is InlineUIContainer iuc && inline.Name.StartsWith(RichTextBoxUtilities.UicMovePrefix))
                 {
                     iuc.MouseDown -= EventMoveClicked;
                     iuc.MouseDown += EventMoveClicked;
@@ -1080,15 +1100,18 @@ namespace ChessForge
 
             IntroViewDiagram diag = new IntroViewDiagram();
             Paragraph para = BuildDiagramParagraph(diag, node, isFlipped);
-            diag.Chessboard.DisplayPosition(node, true);
-            diag.Node = node;
 
+            if (!_isPrintMode)
+            {
+                diag.Chessboard.DisplayPosition(node, true);
+                diag.Node = node;
+
+                AppState.MainWin.DisplayPosition(node);
+
+                _isTextDirty = true;
+                AppState.IsDirty = true;
+            }
             DiagramList.Add(diag);
-
-            AppState.MainWin.DisplayPosition(node);
-
-            _isTextDirty = true;
-            AppState.IsDirty = true;
 
             Document.Blocks.InsertBefore(nextPara, para);
 
@@ -1114,7 +1137,7 @@ namespace ChessForge
                 diag.Node = nd;
             }
 
-            bool flipState = GetDiagramFlipState(para);
+            bool flipState = RichTextBoxUtilities.GetDiagramFlipState(para);
             if (flip)
             {
                 flipState = !flipState;
@@ -1123,13 +1146,14 @@ namespace ChessForge
             CreateDiagramElements(para, diag, nd, flipState);
             DiagramList.Add(diag);
 
-            SetInlineUIContainerEventHandlers(para);
-
-            diag.Chessboard.DisplayPosition(nd, true);
-            AppState.MainWin.DisplayPosition(nd);
-
-            _isTextDirty = true;
-            AppState.IsDirty = true;
+            if (!_isPrintMode)
+            {
+                SetInlineUIContainerEventHandlers(para);
+                diag.Chessboard.DisplayPosition(nd, true);
+                AppState.MainWin.DisplayPosition(nd);
+                _isTextDirty = true;
+                AppState.IsDirty = true;
+            }
         }
 
         /// <summary>
@@ -1201,11 +1225,11 @@ namespace ChessForge
                 RichTextBoxUtilities.GetMoveInsertionPlace(_rtb, out Paragraph paraToInsertIn, out Inline inlineToInsertBefore, out double fontSize);
 
                 tbMove = new TextBlock();
-                tbMove.Name = _tb_move_ + node.NodeId.ToString();
+                tbMove.Name = RichTextBoxUtilities.MoveTextBoxPrefix + node.NodeId.ToString();
                 tbMove.Inlines.Add(run);
 
                 InlineUIContainer uic = new InlineUIContainer();
-                uic.Name = _uic_move_ + node.NodeId.ToString();
+                uic.Name = RichTextBoxUtilities.UicMovePrefix + node.NodeId.ToString();
                 uic.Child = tbMove;
 
                 uic.MouseDown -= EventMoveClicked;
@@ -1369,7 +1393,7 @@ namespace ChessForge
 
                 InlineUIContainer uic = new InlineUIContainer();
                 uic.Child = viewBox;
-                uic.Name = _uic_move_ + nd.NodeId.ToString();
+                uic.Name = RichTextBoxUtilities.UicMovePrefix + nd.NodeId.ToString();
                 viewBox.Name = _vbox_diag_ + nd.NodeId.ToString();
                 para.Inlines.Add(uic);
             }
@@ -1451,7 +1475,7 @@ namespace ChessForge
         {
             try
             {
-                CheckBox cb = FindFlippedCheckBox(para);
+                CheckBox cb = RichTextBoxUtilities.FindFlippedCheckBox(para);
                 if (cb != null)
                 {
                     cb.IsChecked = isFlipped;
@@ -1459,67 +1483,6 @@ namespace ChessForge
             }
             catch
             {
-            }
-        }
-
-        /// <summary>
-        /// Gets the orientation (aka "flip state") of the diagram
-        /// by checking the status of the hidden checkbox in the diagram.
-        /// </summary>
-        /// <param name="para"></param>
-        /// <returns></returns>
-        private bool GetDiagramFlipState(Paragraph para)
-        {
-            bool res = false;
-
-            try
-            {
-                CheckBox cb = FindFlippedCheckBox(para);
-                if (cb != null)
-                {
-                    res = cb.IsChecked == true;
-                }
-            }
-            catch
-            {
-            }
-
-            return res;
-        }
-
-        /// <summary>
-        /// Returns the diagram's "flip state" CheckBox
-        /// </summary>
-        /// <param name="para"></param>
-        /// <returns></returns>
-        private CheckBox FindFlippedCheckBox(Paragraph para)
-        {
-            try
-            {
-                CheckBox cb = null;
-
-                foreach (Inline inl in para.Inlines)
-                {
-                    if (inl is InlineUIContainer)
-                    {
-                        Viewbox vb = ((InlineUIContainer)inl).Child as Viewbox;
-                        Canvas canvas = vb.Child as Canvas;
-                        foreach (UIElement uie in canvas.Children)
-                        {
-                            if (uie is CheckBox)
-                            {
-                                cb = uie as CheckBox;
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                return cb;
-            }
-            catch
-            {
-                return null;
             }
         }
 
@@ -1939,7 +1902,7 @@ namespace ChessForge
                     // do start and end point to the same Element?
                     if (uicStart != null && uicEnd != null && !string.IsNullOrEmpty(uicStart.Name))
                     {
-                        if (uicStart.Name.Contains(_uic_move_) && uicStart.Name == uicEnd.Name)
+                        if (uicStart.Name.Contains(RichTextBoxUtilities.UicMovePrefix) && uicStart.Name == uicEnd.Name)
                         {
                             move = uicStart;
                         }

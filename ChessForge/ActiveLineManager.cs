@@ -435,10 +435,15 @@ namespace ChessForge
                 return null;
             }
 
-            if (GetPlyCount() == 1)
+            int plyCount = GetPlyCount();
+            if (plyCount == 1)
             {
                 // game with no moves
                 return _mainWin.ActiveVariationTree.Nodes[0];
+            }
+            else if (plyCount == 0) 
+            {
+                return null;
             }
 
             if (GetSelectedRowColumn(out int row, out int column))

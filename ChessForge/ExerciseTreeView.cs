@@ -1,9 +1,6 @@
 ﻿using GameTree;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Documents;
@@ -259,9 +256,19 @@ namespace ChessForge
         /// <param name="doc"></param>
         /// <param name="mainWin"></param>
         /// <param name="contentType"></param>
-        /// <param name="entityIndex"></param>
-        public ExerciseTreeView(GameData.ContentType contentType, int entityIndex)
-            : base(AppState.MainWin.UiRtbExercisesView, contentType, entityIndex)
+        public ExerciseTreeView(GameData.ContentType contentType)
+            : base(AppState.MainWin.UiRtbExercisesView, contentType)
+        {
+        }
+
+        /// <summary>
+        /// Constructor to use when exporting the view.  
+        /// The passed guiDoc will be built rather then RichTextBox's document.
+        /// </summary>
+        /// <param name="guiDoc"></param>
+        /// <param name="contentType"></param>
+        public ExerciseTreeView(FlowDocument guiDoc, GameData.ContentType contentType)
+            : base(guiDoc, contentType)
         {
         }
 
@@ -360,6 +367,7 @@ namespace ChessForge
             if (_mainVariationTree != null && _mainVariationTree.Header.GetContentType(out _) == GameData.ContentType.EXERCISE)
             {
                 Paragraph para = CreateParagraph("2", false);
+                para.Name = RichTextBoxUtilities.DiagramParaPrefix + _mainVariationTree.Nodes[0].NodeId;
                 para.Margin = new Thickness(20, 0, 0, 20);
 
 
@@ -445,6 +453,7 @@ namespace ChessForge
             if (_mainVariationTree != null && _mainVariationTree.Header.GetContentType(out _) == GameData.ContentType.EXERCISE)
             {
                 Paragraph para = CreateParagraph("2", false);
+                para.Name = RichTextBoxUtilities.ExerciseUnderBoardControls;
                 para.Margin = new Thickness(90, 0, 0, 20);
 
                 PieceColor color = WorkbookManager.SessionWorkbook.ActiveChapter.GetSideToSolveExercise();

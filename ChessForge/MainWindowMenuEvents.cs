@@ -32,7 +32,7 @@ namespace ChessForge
             WorkbookManager.CreateNewWorkbook();
 
             // TODO: this call looks unnecessary as SetupGuiForNewSession() below creates this view again.
-            _studyTreeView = new StudyTreeView(UiRtbStudyTreeView, GameData.ContentType.STUDY_TREE, -1);
+            _studyTreeView = new StudyTreeView(UiRtbStudyTreeView, GameData.ContentType.STUDY_TREE);
 
             // ask for the options
             if (!ShowWorkbookOptionsDialog(false))
@@ -2529,47 +2529,6 @@ namespace ChessForge
             MessageBox.Show(sError + fileName, Properties.Resources.ImportPgn, MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
-
-#if false
-
-        /// <summary>
-        /// Shows the dialog with info about generic PGN files.
-        /// </summary>
-        /// <returns></returns>
-        public bool ShowGenericPgnInfoDialog()
-        {
-            bool res = true;
-
-            if (Configuration.ShowGenericPgnInfo)
-            {
-                GenericPgnInfoDialog dlgInfo = new GenericPgnInfoDialog
-                {
-                    Left = ChessForgeMain.Left + 100,
-                    Top = ChessForgeMain.Top + 100,
-                    Topmost = false,
-                    Owner = this
-                };
-                dlgInfo.ShowDialog();
-                if (dlgInfo.ExitOk)
-                {
-                    if (Configuration.ShowGenericPgnInfo != dlgInfo.ShowGenericPgnInfo)
-                    {
-                        Configuration.ShowGenericPgnInfo = dlgInfo.ShowGenericPgnInfo;
-                        Configuration.WriteOutConfiguration();
-                    }
-                    res = true;
-                }
-                else
-                {
-                    res = false;
-                }
-            }
-
-            return res;
-        }
-#endif
-
-
         /// <summary>
         /// Shows the OpenFileDialog to let the user
         /// select a PGN file.
@@ -4342,74 +4301,24 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnWriteRtf_Click(object sender, RoutedEventArgs e)
         {
-            TabViewType vt = AppState.ActiveTab;
-            FlowDocument doc = null;
-            switch (vt)
-            {
-                case TabViewType.INTRO:
-                    doc = UiRtbIntroView.Document;
-                    break;
-                case TabViewType.STUDY:
-                    doc = UiRtbStudyTreeView.Document;
-                    break;
-                case TabViewType.MODEL_GAME:
-                    doc = UiRtbModelGamesView.Document;
-                    break;
-                case TabViewType.EXERCISE:
-                    doc = UiRtbExercisesView.Document;
-                    break;
-            }
+            RtfExportDialog dlg = new RtfExportDialog();
+            GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
-            if (doc != null)
+            if (dlg.ShowDialog() == true)
             {
-                // Create a TextRange covering the entire content of the FlowDocument
-                TextRange textRange = new TextRange(doc.ContentStart, doc.ContentEnd);
-
-                string distinct = "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss");
-                string fileName = DebugUtils.BuildLogFileName(App.AppPath, "rtf", distinct, "rtf");
-                // Create a file stream to save the RTF content
-                using (FileStream fileStream = new FileStream(fileName, FileMode.Create))
+                try
                 {
-                    // Save the content in RTF format
-                    textRange.Save(fileStream, DataFormats.Rtf);
+                    string filePath = RtfWriter.SelectTargetRtfFile();
+
+                    if (!string.IsNullOrEmpty(filePath) && filePath[0] != '.')
+                    {
+                        Mouse.SetCursor(Cursors.Wait);
+                        RtfWriter.WriteRtf(filePath);
+                        Mouse.SetCursor(Cursors.Arrow);
+                    }
                 }
+                catch { }
             }
         }
-
-        /// <summary>
-        /// Print request from the Main Menu
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnPrint_Click(object sender, RoutedEventArgs e)
-        {
-            TabViewType vt = AppState.ActiveTab;
-            switch (vt)
-            {
-                case TabViewType.STUDY:
-                    PrintView(UiRtbStudyTreeView);
-                    break;
-                case TabViewType.MODEL_GAME:
-                    PrintView(UiRtbModelGamesView);
-                    break;
-                case TabViewType.EXERCISE:
-                    PrintView(UiRtbExercisesView);
-                    break;
-            }
-        }
-
-        /// <summary>
-        /// Prints the content of the passed RichTextBox
-        /// </summary>
-        /// <param name="rtb"></param>
-        private void PrintView(RichTextBox rtb)
-        {
-            PrintDialog pd = new PrintDialog();
-            if ((pd.ShowDialog() == true))
-            {
-                pd.PrintDocument((((IDocumentPaginatorSource)rtb.Document).DocumentPaginator), "printing as paginator");
-            }
-        }
-
     }
 }

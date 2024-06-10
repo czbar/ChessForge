@@ -251,6 +251,31 @@ namespace ChessPosition
         public const char CharBlackSquare = '\u2B1B';
 
         /// <summary>
+        /// Trade Mark (TM) symbol.
+        /// </summary>
+        public const char CHAR_TRADE_MARK = '\u2122';
+
+        /// <summary>
+        /// Superscript left parenthesis.
+        /// </summary>
+        public const char CHAR_SUPER_LEFT_PARENTHESIS = '\u207D';
+
+        /// <summary>
+        /// Superscript right parenthesis.
+        /// </summary>
+        public const char CHAR_SUPER_RIGHT_PARENTHESIS = '\u207E';
+
+        /// <summary>
+        /// Character for a Large White Triangle Up.
+        /// </summary>
+        public const char CHAR_WHITE_LARGE_TRIANGLE_UP = '\u25B3';
+
+        /// <summary>
+        /// Character for a Large Blacke Triangle Down.
+        /// </summary>
+        public const char CHAR_BLACK_LARGE_TRIANGLE_DOWN = '\u25BC';
+
+        /// <summary>
         /// Character for a Black Triangle Up to use in Online Library.
         /// </summary>
         public const char CHAR_BLACK_TRIANGLE_UP = '\u25BE';
