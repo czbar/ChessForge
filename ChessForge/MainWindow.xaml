@@ -153,7 +153,7 @@
                         <MenuItem x:Name="UiMnEvaluateGames" Header="{x:Static p:Resources.MnEvaluateGames}" Click="UiMnEvaluateGames_Click" />
                         <MenuItem x:Name="UiMnAssignECO" Header="{x:Static p:Resources.AssignECO}" Click="UiAssignEco_Click" />
                         <MenuItem x:Name="UiMnOrderGames" Header="{x:Static p:Resources.GamesOrder}" Click="UiMnSortGames_Click" />
-                        <MenuItem x:Name="UiMnSetThumbnails" Header="{x:Static p:Resources.GameThumbnails}" />
+                        <MenuItem x:Name="UiMnSetThumbnails" Header="{x:Static p:Resources.GameThumbnails}" Click="UiMnSetThumbnails_Click" />
                         <Separator />
                         <MenuItem x:Name="UiMnSplitChapter" Header="{x:Static p:Resources.SplitChapterMenu}"  Click="UiMnSplitChapter_Click" />
                         <MenuItem x:Name="UiMnMergeChapters" Header="{x:Static p:Resources.MergeChapters}" Click="UiMnMergeChapters_Click" />
