@@ -28,7 +28,7 @@ namespace ChessForge
                     SortGamesDialog dlg = new SortGamesDialog(chapter);
                     GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
-                    if (dlg.ShowDialog() == true)
+                    if (dlg.ShowDialog() == true && dlg.SortGamesBy != GameSortCriterion.SortItem.NONE)
                     {
                         if (dlg.ApplyToAllChapters)
                         {
@@ -48,6 +48,43 @@ namespace ChessForge
                 catch (Exception ex)
                 {
                     AppLog.Message("InvokeSortGamesDialog()", ex);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Invokes the dialog for setting thumbnails in a chapter/workbook.
+        /// </summary>
+        /// <param name="chapter"></param>
+        public static void InvokeSetThumbnailsDialog(Chapter chapter)
+        {
+            if (chapter != null)
+            {
+                SetThumbnailsDialog dlg = new SetThumbnailsDialog(chapter);
+                GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
+
+                if (dlg.ShowDialog() == true)
+                {
+                    try
+                    {
+                        if (dlg.ThumbnailMove > 0)
+                        {
+                            if (dlg.ApplyToAllChapters)
+                            {
+                                SetThumbnails(null, dlg.ThumbnailMove, dlg.ThumbnailMoveColor, dlg.OverwriteThumbnails);
+                            }
+                            else
+                            {
+                                SetThumbnails(chapter, dlg.ThumbnailMove, dlg.ThumbnailMoveColor, dlg.OverwriteThumbnails);
+                            }
+                            AppState.IsDirty = true;
+                            AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgGamesThumbnailsSet, CommentBox.HintType.INFO);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        AppLog.Message("InvokeSetThumbnailsDialog()", ex);
+                    }
                 }
             }
         }
