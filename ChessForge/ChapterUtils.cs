@@ -1,13 +1,11 @@
-﻿using ChessForge;
+﻿using ChessPosition;
+using ChessPosition.GameTree;
+using GameTree;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using GameTree;
-using ChessPosition;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
-using ChessPosition.GameTree;
 using System.Windows.Input;
 
 namespace ChessForge
@@ -17,6 +15,43 @@ namespace ChessForge
     /// </summary>
     public class ChapterUtils
     {
+        /// <summary>
+        /// Invokes the dialog for sorting games in a chapter/workbook.
+        /// </summary>
+        /// <param name="chapter"></param>
+        public static void InvokeSortGamesDialog(Chapter chapter)
+        {
+            if (chapter != null)
+            {
+                try
+                {
+                    SortGamesDialog dlg = new SortGamesDialog(chapter);
+                    GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
+
+                    if (dlg.ShowDialog() == true)
+                    {
+                        if (dlg.ApplyToAllChapters)
+                        {
+                            SortGames(null, dlg.SortGamesBy, dlg.SortGamesDirection);
+                        }
+                        else
+                        {
+                            SortGames(chapter, dlg.SortGamesBy, dlg.SortGamesDirection);
+                        }
+
+                        AppState.IsDirty = true;
+                        GuiUtilities.RefreshChaptersView(null);
+                        AppState.MainWin.UiTabChapters.Focus();
+                        PulseManager.ChaperIndexToBringIntoView = chapter.Index;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    AppLog.Message("InvokeSortGamesDialog()", ex);
+                }
+            }
+        }
+
         /// <summary>
         /// Invokes dialog for managing some aspects of the active chapter.
         /// </summary>
@@ -610,7 +645,7 @@ namespace ChessForge
 
             try
             {
-                foreach(ArticleListItem item in articles)
+                foreach (ArticleListItem item in articles)
                 {
                     if (item.Chapter != null)
                     {
@@ -892,7 +927,8 @@ namespace ChessForge
             }
             catch (Exception ex)
             {
-                AppLog.Message("SetThumbnailsInChapter()", ex);            }
+                AppLog.Message("SetThumbnailsInChapter()", ex);
+            }
         }
 
         /// <summary>
