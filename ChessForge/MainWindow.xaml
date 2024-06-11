@@ -74,7 +74,7 @@
                     <RowDefinition Height="30" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="400" />
+                    <ColumnDefinition Width="450" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
@@ -158,7 +158,6 @@
                         <Separator />
                         <MenuItem x:Name="UiMnSplitChapter" Header="{x:Static p:Resources.SplitChapterMenu}"  Click="UiMnSplitChapter_Click" />
                         <MenuItem x:Name="UiMnMergeChapters" Header="{x:Static p:Resources.MergeChapters}" Click="UiMnMergeChapters_Click" />
-                        <MenuItem x:Name="UiMnManageChapter" Header="{x:Static p:Resources.ManageChapter}"  Click="UiMnManageChapter_Click" />
                     </MenuItem>
                     <MenuItem Header="{x:Static p:Resources.Tools}" Margin="0,0,0,0">
                         <MenuItem x:Name="UiMnCopyArticles" Header="{x:Static p:Resources.CopyArticlesToChapter}" Click="UiMnCopyArticles_Click" />
