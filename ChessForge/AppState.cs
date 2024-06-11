@@ -1189,6 +1189,9 @@ namespace ChessForge
                         MenuItem menuItem = item as MenuItem;
                         switch (menuItem.Name)
                         {
+                            case "UiMnRegenerateStudy":
+                                menuItem.IsEnabled = true;
+                                break;
                             case "UiMnStudyStartTrainingHere":
                             case "UiMnStudy_CreateExercise":
                                 menuItem.IsEnabled = !isMate;
