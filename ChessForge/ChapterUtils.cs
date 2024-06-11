@@ -16,6 +16,35 @@ namespace ChessForge
     public class ChapterUtils
     {
         /// <summary>
+        /// Invokes the dialog for specifying regeneration's depth.
+        /// </summary>
+        /// <param name="chapter"></param>
+        public static void InvokeRegenerateStudyDialog(Chapter chapter)
+        {
+            if (chapter != null)
+            {
+                RegenerateStudyDialog dlg = new RegenerateStudyDialog(chapter);
+                GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
+
+                if (dlg.ShowDialog() == true)
+                {
+                    try
+                    {
+                        RegenerateStudy(dlg.ApplyToAllChapters ? null : chapter);
+                        AppState.IsDirty = true;
+
+                        // go to the appropriate view
+                        AppState.MainWin.SetupGuiForActiveStudyTree(true);
+                    }
+                    catch (Exception ex)
+                    {
+                        AppLog.Message("InvokeRegenerateStudyDialog()", ex);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Invokes the dialog for sorting games in a chapter/workbook.
         /// </summary>
         /// <param name="chapter"></param>
