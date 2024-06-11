@@ -53,6 +53,37 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Invokes the dialog for configuring the exercise view.
+        /// </summary>
+        /// <param name="chapter"></param>
+        public static void InvokeExerciseViewConfigDialog(Chapter chapter)
+        {
+            if (chapter != null)
+            {
+                ExerciseSolutionsDialog dlg = new ExerciseSolutionsDialog(chapter);
+                GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
+
+                if (dlg.ShowDialog() == true)
+                {
+                    try
+                    {
+                        if (dlg.ShowSolutionOnOpen != chapter.ShowSolutionsOnOpen)
+                        {
+                            chapter.ShowSolutionsOnOpen = dlg.ShowSolutionOnOpen;
+                            UpdateShowSolutions(dlg.ApplyToAllChapters ? null : chapter, dlg.ShowSolutionOnOpen);
+                            AppState.MainWin.UpdateShowSolutionInExerciseView(dlg.ShowSolutionOnOpen);
+                            AppState.IsDirty = true;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        AppLog.Message("InvokeExerciseViewConfigDialog()", ex);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Invokes the dialog for setting thumbnails in a chapter/workbook.
         /// </summary>
         /// <param name="chapter"></param>
