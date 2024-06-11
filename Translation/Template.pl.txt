@@ -1519,12 +1519,12 @@ DlgManageChapter=Organizacja Rozdziału
 SortBy=Sortuj wg.
 
 #description: Regenerate Study Tree
-#english: RegenerateStudyTree=Regenerate Study
-RegenerateStudyTree=Wygeneruj
+#english: RegenerateStudyTree=Regenerate Study from Games
+RegenerateStudyTree=Wygeneruj Teorię z Partii
 
 #description: Warning for regenerate study tree
-#english: MsgThisOverwritesStudy=This will replace the current Study. Proceed?
-MsgThisOverwritesStudy=Nowe drzewo zastąpi istniejącą teorię. Kontynuować?
+#english: MsgThisOverwritesStudy=This will delete and replace the current Study. Proceed?
+MsgThisOverwritesStudy=Nowe drzewo teorri zastąpi obecne. Kontynuować?
 
 #description: Sort by ECO
 #english: SortByEco=ECO

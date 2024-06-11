@@ -4697,7 +4697,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This will replace the current Study. Proceed?.
+        ///   Looks up a localized string similar to This will delete and replace the current Study. Proceed?.
         /// </summary>
         public static string MsgThisOverwritesStudy {
             get {
@@ -5850,7 +5850,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Regenerate Study.
+        ///   Looks up a localized string similar to Regenerate Study from Games.
         /// </summary>
         public static string RegenerateStudyTree {
             get {

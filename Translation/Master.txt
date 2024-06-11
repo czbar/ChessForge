@@ -1194,10 +1194,10 @@ DlgManageChapter=Manage Chapter
 SortBy=Sort By
 
 #Regenerate Study Tree
-RegenerateStudyTree=Regenerate Study
+RegenerateStudyTree=Regenerate Study from Games
 
 #Warning for regenerate study tree
-MsgThisOverwritesStudy=This will replace the current Study. Proceed?
+MsgThisOverwritesStudy=This will delete and replace the current Study. Proceed?
 
 #Sort by ECO
 SortByEco=ECO

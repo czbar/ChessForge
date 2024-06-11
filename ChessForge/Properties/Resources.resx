@@ -1094,10 +1094,10 @@
     <value>Sort By</value>
   </data>
   <data name="RegenerateStudyTree" xml:space="preserve">
-    <value>Regenerate Study</value>
+    <value>Regenerate Study from Games</value>
   </data>
   <data name="MsgThisOverwritesStudy" xml:space="preserve">
-    <value>This will replace the current Study. Proceed?</value>
+    <value>This will delete and replace the current Study. Proceed?</value>
   </data>
   <data name="SortByEco" xml:space="preserve">
     <value>ECO</value>
