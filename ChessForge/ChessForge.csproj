@@ -184,6 +184,7 @@
       <DependentUpon>GamesEvalDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="GamesEvaluationManager.cs" />
+    <Compile Include="GameSortCriterion.cs" />
     <Compile Include="GuiConfiguration.cs" />
     <Compile Include="HiddenClickDialog.xaml.cs">
       <DependentUpon>HiddenClickDialog.xaml</DependentUpon>
@@ -227,9 +228,6 @@
     <Compile Include="ActiveLineManager.cs" />
     <Compile Include="MainWindowToolsMenu.cs" />
     <Compile Include="MainWindowTrainingActions.cs" />
-    <Compile Include="ManageChapterDialog.xaml.cs">
-      <DependentUpon>ManageChapterDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ManualReviewState.cs" />
     <Compile Include="MouseClickMonitor.cs" />
     <Compile Include="MoveAnimator.cs" />
@@ -492,10 +490,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="ManageChapterDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="OnlineLibraryContentDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
