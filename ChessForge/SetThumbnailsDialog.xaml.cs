@@ -11,7 +11,7 @@ using System.Windows.Documents;
 namespace ChessForge
 {
     /// <summary>
-    /// Interaction logic for ManageChapterDialog.xaml
+    /// Interaction logic for SetThumbnailsDialog.xaml
     /// </summary>
     public partial class SetThumbnailsDialog : Window
     {

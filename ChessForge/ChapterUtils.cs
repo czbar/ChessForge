@@ -150,87 +150,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Invokes dialog for managing some aspects of the active chapter.
-        /// </summary>
-        /// <param name="chapter"></param>
-        public static void ManageChapter(Chapter chapter)
-        {
-            if (chapter != null)
-            {
-                ManageChapterDialog dlg = new ManageChapterDialog(chapter);
-                GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
-
-                if (dlg.ShowDialog() == true)
-                {
-                    try
-                    {
-                        bool regenerateStudy = dlg.RegenerateStudy;
-                        bool sortGames = dlg.SortGamesBy != GameSortCriterion.SortItem.NONE && chapter.ModelGames.Count > 1;
-                        if (dlg.RegenerateStudy)
-                        {
-                            RegenerateStudy(dlg.ApplyToAllChapters ? null : chapter);
-                            AppState.IsDirty = true;
-                        }
-
-                        if (dlg.ShowSolutionOnOpen != chapter.ShowSolutionsOnOpen)
-                        {
-                            chapter.ShowSolutionsOnOpen = dlg.ShowSolutionOnOpen;
-                            UpdateShowSolutions(dlg.ApplyToAllChapters ? null : chapter, dlg.ShowSolutionOnOpen);
-                            AppState.MainWin.UpdateShowSolutionInExerciseView(dlg.ShowSolutionOnOpen);
-                            AppState.IsDirty = true;
-                        }
-
-                        if (sortGames)
-                        {
-                            if (dlg.ApplyToAllChapters)
-                            {
-                                SortGames(null, dlg.SortGamesBy, dlg.SortGamesDirection);
-                            }
-                            else
-                            {
-                                SortGames(chapter, dlg.SortGamesBy, dlg.SortGamesDirection);
-                            }
-                            AppState.IsDirty = true;
-                        }
-                        if (dlg.ThumbnailMove > 0)
-                        {
-                            if (dlg.ApplyToAllChapters)
-                            {
-                                SetThumbnails(null, dlg.ThumbnailMove, dlg.ThumbnailMoveColor, dlg.OverwriteThumbnails);
-                            }
-                            else
-                            {
-                                SetThumbnails(chapter, dlg.ThumbnailMove, dlg.ThumbnailMoveColor, dlg.OverwriteThumbnails);
-                            }
-                            AppState.IsDirty = true;
-                            AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgGamesThumbnailsSet, CommentBox.HintType.INFO);
-                        }
-
-                        // go to the appropriate view
-                        if (dlg.RegenerateStudy)
-                        {
-                            AppState.MainWin.SetupGuiForActiveStudyTree(true);
-                            if (sortGames)
-                            {
-                                AppState.MainWin.ChaptersView.IsDirty = true;
-                            }
-                        }
-                        else if (sortGames)
-                        {
-                            GuiUtilities.RefreshChaptersView(null);
-                            AppState.MainWin.UiTabChapters.Focus();
-                            PulseManager.ChaperIndexToBringIntoView = chapter.Index;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        AppLog.Message("ManageChapter()", ex);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
         /// Updates show/hide solutions on open flag in a chapter.
         /// </summary>
         /// <param name="chapter"></param>
@@ -1074,9 +993,9 @@ namespace ChessForge
                 overwriteWarningIssued = true;
 
                 if (MessageBox.Show(Properties.Resources.MsgThisOverwritesStudy,
-                    Properties.Resources.Information,
+                    Properties.Resources.Warning,
                     MessageBoxButton.YesNo,
-                    MessageBoxImage.Question) != MessageBoxResult.Yes)
+                    MessageBoxImage.Warning) != MessageBoxResult.Yes)
                 {
                     return false;
                 }

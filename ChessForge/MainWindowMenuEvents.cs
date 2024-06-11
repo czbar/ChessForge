@@ -2714,16 +2714,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Invokes dialog for managing some aspects of the active chapter.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnManageChapter_Click(object sender, RoutedEventArgs e)
-        {
-            ChapterUtils.ManageChapter(AppState.ActiveChapter);
-        }
-
-        /// <summary>
         /// Invokes dialog for sorting games in the active chapter / workbook.
         /// </summary>
         /// <param name="sender"></param>

@@ -3,7 +3,7 @@
 namespace ChessForge
 {
     /// <summary>
-    /// Interaction logic for ManageChapterDialog.xaml
+    /// Interaction logic for RegenerateStudyDialog.xaml
     /// </summary>
     public partial class RegenerateStudyDialog : Window
     {
