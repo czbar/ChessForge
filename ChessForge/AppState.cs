@@ -1665,8 +1665,10 @@ namespace ChessForge
 
                     MainWin.UiMnOrderGames.IsEnabled = AppState.ActiveChapter != null;
                     MainWin.UiMnSetThumbnails.IsEnabled = AppState.ActiveChapter != null;
+                    MainWin.UiMnExerciseViewConfig.IsEnabled = AppState.ActiveChapter != null;
                     MainWin.UiMnManageChapter.IsEnabled = AppState.ActiveChapter != null;
                     MainWin.UiMnSplitChapter.IsEnabled = AppState.ActiveChapter != null;
+                    
 
                     MainWin.UiMnAnnotations.IsEnabled = IsTreeViewTabActive();
                     MainWin.UiMnPaste.IsEnabled = !string.IsNullOrEmpty(SystemClipboard.GetText());
