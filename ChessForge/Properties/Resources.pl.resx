@@ -1126,6 +1126,15 @@
   <data name="ApplyToAllChapters" xml:space="preserve">
     <value>Zastosuj do wszystkich rozdziałów</value>
   </data>
+  <data name="ExerciseViewConfig" xml:space="preserve">
+    <value>Widok Ćwiczeń</value>
+  </data>
+  <data name="ShowSolutionsByDefault" xml:space="preserve">
+    <value>Pokaż po otwarciu</value>
+  </data>
+  <data name="Solutions" xml:space="preserve">
+    <value>Rozwiązania</value>
+  </data>
   <data name="GamesOrder" xml:space="preserve">
     <value>Sortuj Partie</value>
   </data>
@@ -1677,9 +1686,6 @@
   </data>
   <data name="ShowSolutionsInChapter" xml:space="preserve">
     <value>Pokaż Wszystkie Rozwiązania w Rozdziale</value>
-  </data>
-  <data name="ShowSolutionsByDefault" xml:space="preserve">
-    <value>Pokaż rozwiązania po otwarciu</value>
   </data>
   <data name="HideSolutionsInChapter" xml:space="preserve">
     <value>Ukryj Wszystkie Rozwiązania w Rozdziale</value>

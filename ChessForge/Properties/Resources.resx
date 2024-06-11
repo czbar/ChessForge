@@ -1126,6 +1126,15 @@
   <data name="ApplyToAllChapters" xml:space="preserve">
     <value>Apply to All Chapters</value>
   </data>
+  <data name="ExerciseViewConfig" xml:space="preserve">
+    <value>Exercise View</value>
+  </data>
+  <data name="ShowSolutionsByDefault" xml:space="preserve">
+    <value>Show on Open</value>
+  </data>
+  <data name="Solutions" xml:space="preserve">
+    <value>Solutions</value>
+  </data>
   <data name="GamesOrder" xml:space="preserve">
     <value>Sort Games</value>
   </data>
@@ -1677,9 +1686,6 @@
   </data>
   <data name="ShowSolutionsInChapter" xml:space="preserve">
     <value>Show All Solutions in Chapter</value>
-  </data>
-  <data name="ShowSolutionsByDefault" xml:space="preserve">
-    <value>Show Solutions on Open</value>
   </data>
   <data name="HideSolutionsInChapter" xml:space="preserve">
     <value>Hide All Solutions in Chapter</value>

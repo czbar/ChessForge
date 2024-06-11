@@ -1232,6 +1232,15 @@ ApplyToAllChapters=Apply to All Chapters
 # Header: DIALOG Manage Chapter
 #
 
+#Exercise view configuration
+ExerciseViewConfig=Exercise View
+
+#Show/hide all solutions by default
+ShowSolutionsByDefault=Show on Open
+
+#Solutions
+Solutions=Solutions
+
 #Sort order for games
 GamesOrder=Sort Games
 
@@ -1874,9 +1883,6 @@ Exercise0of0=Exercise $0 of $1
 
 #Show all solutions in chapter
 ShowSolutionsInChapter=Show All Solutions in Chapter
-
-#Show/hide all solutions by default
-ShowSolutionsByDefault=Show Solutions on Open
 
 #Hide all solutions in chapter
 HideSolutionsInChapter=Hide All Solutions in Chapter

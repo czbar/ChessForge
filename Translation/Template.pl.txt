@@ -1568,6 +1568,18 @@ ApplyToAllChapters=Zastosuj do wszystkich rozdziałów
 # Header: DIALOG Manage Chapter
 #
 
+#description: Exercise view configuration
+#english: ExerciseViewConfig=Exercise View
+ExerciseViewConfig=Widok Ćwiczeń
+
+#description: Show/hide all solutions by default
+#english: ShowSolutionsByDefault=Show on Open
+ShowSolutionsByDefault=Pokaż po otwarciu
+
+#description: Solutions
+#english: Solutions=Solutions
+Solutions=Rozwiązania
+
 #description: Sort order for games
 #english: GamesOrder=Sort Games
 GamesOrder=Sortuj Partie
@@ -2394,10 +2406,6 @@ Exercise0of0=Ćwiczenie $0 z $1
 #description: Show all solutions in chapter
 #english: ShowSolutionsInChapter=Show All Solutions in Chapter
 ShowSolutionsInChapter=Pokaż Wszystkie Rozwiązania w Rozdziale
-
-#description: Show/hide all solutions by default
-#english: ShowSolutionsByDefault=Show Solutions on Open
-ShowSolutionsByDefault=Pokaż rozwiązania po otwarciu
 
 #description: Hide all solutions in chapter
 #english: HideSolutionsInChapter=Hide All Solutions in Chapter

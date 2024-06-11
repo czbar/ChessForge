@@ -2879,6 +2879,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exercise View.
+        /// </summary>
+        public static string ExerciseViewConfig {
+            get {
+                return ResourceManager.GetString("ExerciseViewConfig", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exit.
         /// </summary>
         public static string Exit {
@@ -6498,7 +6507,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Show Solutions on Open.
+        ///   Looks up a localized string similar to Show on Open.
         /// </summary>
         public static string ShowSolutionsByDefault {
             get {
@@ -6539,6 +6548,15 @@ namespace ChessForge.Properties {
         public static string Slow {
             get {
                 return ResourceManager.GetString("Slow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Solutions.
+        /// </summary>
+        public static string Solutions {
+            get {
+                return ResourceManager.GetString("Solutions", resourceCulture);
             }
         }
         
