@@ -2744,6 +2744,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Invokes dialog for configuring Exercise View.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnExerciseViewConfig_Click(object sender, RoutedEventArgs e)
+        {
+            ChapterUtils.InvokeExerciseViewConfigDialog(AppState.ActiveChapter);
+        }
+
+        /// <summary>
         /// Invokes dialog to split the active chapter.
         /// </summary>
         /// <param name="sender"></param>
