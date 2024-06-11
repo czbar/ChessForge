@@ -3060,6 +3060,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// The user indicated intention to regenerate the study.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnRegenerateStudy_Click(object sender, RoutedEventArgs e)
+        {
+            ChapterUtils.InvokeRegenerateStudyDialog(AppState.ActiveChapter);
+        }
+
+        /// <summary>
         /// The user requested from the Study menu to promote the currently selected line.
         /// </summary>
         /// <param name="sender"></param>
