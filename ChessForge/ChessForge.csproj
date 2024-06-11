@@ -168,6 +168,9 @@
     </Compile>
     <Compile Include="EvaluationLine.cs" />
     <Compile Include="EvaluationTrainingLine.cs" />
+    <Compile Include="ExerciseSolutionsDialog.xaml.cs">
+      <DependentUpon>ExerciseSolutionsDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ExerciseTreeView.cs" />
     <Compile Include="FileUtils.cs" />
     <Compile Include="FindDuplicates.cs" />
@@ -443,6 +446,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EvaluationChartControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ExerciseSolutionsDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
