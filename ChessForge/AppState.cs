@@ -1001,6 +1001,16 @@ namespace ChessForge
             {
                 _mainWin.UiRtbBoardComment.Visibility = showEngineLines ? Visibility.Hidden : Visibility.Visible;
                 _mainWin.UiTbEngineLines.Visibility = showEngineLines ? Visibility.Visible : Visibility.Hidden;
+
+                if (showEngineLines && MultiTextBoxManager.CanShowEvaluationChart(false, out _))
+                {
+                    _mainWin.UiEvalChart.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    _mainWin.UiEvalChart.Visibility = Visibility.Hidden;
+                }
+
                 if (!showEngineLines)
                 {
                     _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
