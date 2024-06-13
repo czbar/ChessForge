@@ -16,6 +16,20 @@ namespace ChessForge
     public class ChapterUtils
     {
         /// <summary>
+        /// Through some loose programming we may end up with some garbage in the Study Tree header
+        /// (e.g. after regenerating) which in turn may affect things like the title of an exercise
+        /// when created from a position in the Study.
+        /// </summary>
+        /// <param name="tree"></param>
+        public static void ClearStudyTreeHeader(VariationTree tree)
+        {
+            tree.Header.SetHeaderValue(PgnHeaders.KEY_WHITE_ELO, "");
+            tree.Header.SetHeaderValue(PgnHeaders.KEY_BLACK_ELO, "");
+            tree.Header.SetHeaderValue(PgnHeaders.KEY_DATE, "");
+            tree.Header.SetHeaderValue(PgnHeaders.KEY_EVENT, "");
+        }
+
+        /// <summary>
         /// Invokes the dialog for specifying regeneration's depth.
         /// </summary>
         /// <param name="chapter"></param>
@@ -1026,6 +1040,7 @@ namespace ChessForge
                         TreeUtils.TrimTree(ref tree, Configuration.AutogenTreeDepth, PieceColor.Black);
                         tree.ContentType = GameData.ContentType.STUDY_TREE;
                         tree.BuildLines();
+                        ChapterUtils.ClearStudyTreeHeader(tree);
                         chapter.StudyTree.Tree = tree;
 
                         // if we are in the study tab, must set the new tree as active tree (does not happen automatically)
