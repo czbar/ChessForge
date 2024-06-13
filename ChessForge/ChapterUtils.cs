@@ -30,8 +30,10 @@ namespace ChessForge
                 {
                     try
                     {
-                        RegenerateStudy(dlg.ApplyToAllChapters ? null : chapter);
-                        AppState.IsDirty = true;
+                        if (RegenerateStudy(dlg.ApplyToAllChapters ? null : chapter))
+                        {
+                            AppState.IsDirty = true;
+                        }
 
                         // go to the appropriate view
                         AppState.MainWin.SetupGuiForActiveStudyTree(true);
@@ -951,8 +953,9 @@ namespace ChessForge
         /// Regenerates the Study Tree from the Games.
         /// </summary>
         /// <param name="chapter"></param>
-        private static void RegenerateStudy(Chapter chapter)
+        private static bool RegenerateStudy(Chapter chapter)
         {
+            bool done = false;
             bool overwriteWarningIssued = false;
 
             Mouse.SetCursor(Cursors.Wait);
@@ -960,7 +963,7 @@ namespace ChessForge
             {
                 if (chapter != null)
                 {
-                    RegenerateChapterStudy(chapter, ref overwriteWarningIssued);
+                    done = RegenerateChapterStudy(chapter, ref overwriteWarningIssued);
                 }
                 else
                 {
@@ -971,6 +974,10 @@ namespace ChessForge
                         {
                             break;
                         }
+                        else
+                        {
+                            done = true;
+                        }
                     }
                 }
             }
@@ -980,6 +987,7 @@ namespace ChessForge
             }
 
             Mouse.SetCursor(Cursors.Arrow);
+            return done;
         }
 
         /// <summary>
