@@ -2168,6 +2168,8 @@ namespace ChessForge
                     {
                         tree.Header.SetHeaderValue(PgnHeaders.KEY_WHITE, chapter.Title);
                         tree.Header.SetHeaderValue(PgnHeaders.KEY_BLACK, Properties.Resources.StudyTreeAfter + " " + MoveUtils.BuildSingleMoveText(nd, true, true, ActiveVariationTree.MoveNumberOffset));
+
+                        ChapterUtils.ClearStudyTreeHeader(tree);
                     }
                     CreateNewExerciseFromTree(tree);
                 }
