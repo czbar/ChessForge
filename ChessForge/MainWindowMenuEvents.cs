@@ -799,11 +799,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnNewWorkbook_Click(object sender, RoutedEventArgs e)
         {
-            bool created = CreateNewWorkbook();
-            if (!created)
-            {
-                AppState.RestartInIdleMode();
-            }
+            CreateNewWorkbook();
         }
 
         //**********************
