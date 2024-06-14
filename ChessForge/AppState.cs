@@ -93,6 +93,24 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns true if the EvaluationChart control is currently visible.
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsEvalChartVisible()
+        {
+            return MainWin.UiImgChartOn.Visibility == System.Windows.Visibility.Visible;
+        }
+
+        /// <summary>
+        /// Returns true if the EngineLines text box is currently visible.
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsEngineLinesVisible()
+        {
+            return MainWin.UiTbEngineLines.Visibility == System.Windows.Visibility.Visible;
+        }
+
+        /// <summary>
         /// The currently Active Tab.
         /// </summary>
         public static TabViewType ActiveTab
@@ -1678,7 +1696,7 @@ namespace ChessForge
                     MainWin.UiMnSetThumbnails.IsEnabled = AppState.ActiveChapter != null;
                     MainWin.UiMnExerciseViewConfig.IsEnabled = AppState.ActiveChapter != null;
                     MainWin.UiMnSplitChapter.IsEnabled = AppState.ActiveChapter != null;
-                    
+
 
                     MainWin.UiMnAnnotations.IsEnabled = IsTreeViewTabActive();
                     MainWin.UiMnPaste.IsEnabled = !string.IsNullOrEmpty(SystemClipboard.GetText());
