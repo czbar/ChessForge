@@ -1,18 +1,15 @@
-﻿using System;
-using System.IO;
-using System.Windows;
-using System.Collections.Generic;
+﻿using ChessForge.Properties;
 using ChessPosition;
 using GameTree;
-using Path = System.IO.Path;
-using System.Timers;
-using System.Windows.Controls;
-using ChessForge;
+using System;
+using System.IO;
 using System.Reflection;
-using WebAccess;
-using ChessForge.Properties;
-using static ChessForge.WorkbookOperation;
 using System.Text;
+using System.Timers;
+using System.Windows;
+using System.Windows.Controls;
+using WebAccess;
+using Path = System.IO.Path;
 
 namespace ChessForge
 {
@@ -824,6 +821,7 @@ namespace ChessForge
             {
                 _mainWin.ActiveLine.Clear();
                 _mainWin.UiRtbChaptersView.Document.Blocks.Clear();
+                _mainWin.UiRtbIntroView.Document.Blocks.Clear();
                 _mainWin.UiRtbStudyTreeView.Document.Blocks.Clear();
                 _mainWin.UiRtbTrainingProgress.Document.Blocks.Clear();
 
