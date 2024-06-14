@@ -1022,7 +1022,7 @@ namespace ChessForge
                 //string rtfImageTag = $@"{{\pict\pngblip\picw{ChessBoards.ChessBoardGreySmall.PixelWidth}\pich{ChessBoards.ChessBoardGreySmall.PixelHeight}\picwgoal{ChessBoards.ChessBoardGreySmall.PixelWidth * 15}\pichgoal{ChessBoards.ChessBoardGreySmall.PixelHeight * 15} {rtfImage}}}";
                 string rtfImageTag = @"{\pict\pngblip\picw" + "242" + @"\pich" + "242" +
                                             @"\picwgoal" + "2800" + @"\pichgoal" + "2800" +
-                                            @"\bin " + rtfImage + "}";
+                                            @" " + rtfImage + "}";
 
                 sb.Append(rtfImageTag);
             }
@@ -1229,8 +1229,9 @@ namespace ChessForge
             string[] lines = rtfContent.Split('\n');
 
             StringBuilder sb = new StringBuilder();
-            foreach (string line in lines)
+            for(int i = 0; i < lines.Length; i++)
             {
+                string line = lines[i];
                 if (line.IndexOf(BeginTwoColumns()) >= 0)
                 {
                     sb.Append(@"\sect\sectd\pard\sbknone\linex0\cols2" + '\r');
@@ -1241,8 +1242,8 @@ namespace ChessForge
                 }
                 else if (line.IndexOf(PageBreak()) >= 0)
                 {
-                    string upd = line.Replace(PageBreak(), @" {\page} ");
-                    sb.Append(upd);
+                    sb.Append(@"\par \pard\plain \pagebb{\loch}" + '\r');
+                    sb.Append(@"\par \pard\plain {\loch}" + '\r');
                 }
                 else
                 {
