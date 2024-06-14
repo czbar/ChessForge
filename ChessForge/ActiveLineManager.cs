@@ -365,7 +365,10 @@ namespace ChessForge
         public void SelectPly(int moveNo, PieceColor colorToMove)
         {
             // the under board message may not be relevant anymore
-            _mainWin.BoardCommentBox.RestoreTitleMessage();
+            if (!AppState.IsEvalChartVisible() && !AppState.IsEngineLinesVisible())
+            {
+                _mainWin.BoardCommentBox.RestoreTitleMessage();
+            }
 
             ClearSelection();
 
