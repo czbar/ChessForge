@@ -1841,7 +1841,7 @@ namespace ChessForge
                 string fileName = SelectPgnFile();
                 if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
                 {
-                    Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                    Chapter activeChapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                     ObservableCollection<GameData> games = new ObservableCollection<GameData>();
                     gameCount = WorkbookManager.ReadPgnFile(fileName, ref games, contentType, targetcontentType);
 
@@ -1861,63 +1861,91 @@ namespace ChessForge
                     {
                         if (ShowSelectGamesDialog(contentType, ref games))
                         {
-                            Mouse.SetCursor(Cursors.Wait);
-                            try
+                            int chapterIndex = ChapterUtils.InvokeSelectSingleChapterDialog(activeChapter.Index, out bool newChapter);
+
+                            bool proceed = true;
+
+                            if (chapterIndex >= 0)
                             {
-
-                                for (int i = 0; i < games.Count; i++)
+                                Chapter targetChapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(chapterIndex);
+                                if (newChapter)
                                 {
-                                    if (games[i].IsSelected)
+                                    ChapterTitleDialog dlg = new ChapterTitleDialog(targetChapter);
+                                    GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
+                                    if (dlg.ShowDialog() == true)
                                     {
-                                        try
-                                        {
-                                            int index = PgnArticleUtils.AddArticle(chapter, games[i], contentType, out string error, targetcontentType);
-                                            if (index < 0)
-                                            {
-                                                if (string.IsNullOrEmpty(error))
-                                                {
-                                                    skippedDueToType++;
-                                                }
-                                            }
-                                            else
-                                            {
-                                                undoItem = new ArticleListItem(chapter, chapter.Index, chapter.GetArticleAtIndex(targetcontentType, index), index);
-                                                if (undoItem.Article != null)
-                                                {
-                                                    undoArticleList.Add(undoItem);
-                                                }
-
-                                                if (firstImportedGameIndex < 0)
-                                                {
-                                                    firstImportedGameIndex = index;
-                                                }
-                                            }
-
-                                            AppState.IsDirty = true;
-                                            if (!string.IsNullOrEmpty(error))
-                                            {
-                                                errorCount++;
-                                                sbErrors.Append(GuiUtilities.BuildGameProcessingErrorText(games[i], i + 1, error));
-                                            }
-                                            importedGames++;
-                                        }
-                                        catch (Exception ex)
-                                        {
-                                            errorCount++;
-                                            sbErrors.Append(GuiUtilities.BuildGameProcessingErrorText(games[i], i + 1, ex.Message));
-                                        }
+                                        targetChapter.SetTitle(dlg.ChapterTitle);
+                                        targetChapter.SetAuthor(dlg.Author);
+                                    }
+                                    else
+                                    {
+                                        AppState.Workbook.Chapters.Remove(targetChapter);
+                                        AppState.Workbook.ActiveChapter = activeChapter;
+                                        proceed = false;
                                     }
                                 }
-                                RefreshChaptersViewAfterImport(targetcontentType, chapter, firstImportedGameIndex);
-                            }
-                            catch { }
 
-                            if (undoArticleList.Count > 0)
-                            {
-                                WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.INSERT_ARTICLES, (object)undoArticleList);
-                                WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
+                                if (proceed)
+                                {
+                                    Mouse.SetCursor(Cursors.Wait);
+                                    try
+                                    {
+
+                                        for (int i = 0; i < games.Count; i++)
+                                        {
+                                            if (games[i].IsSelected)
+                                            {
+                                                try
+                                                {
+                                                    int index = PgnArticleUtils.AddArticle(targetChapter, games[i], contentType, out string error, targetcontentType);
+                                                    if (index < 0)
+                                                    {
+                                                        if (string.IsNullOrEmpty(error))
+                                                        {
+                                                            skippedDueToType++;
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        undoItem = new ArticleListItem(targetChapter, targetChapter.Index, targetChapter.GetArticleAtIndex(targetcontentType, index), index);
+                                                        if (undoItem.Article != null)
+                                                        {
+                                                            undoArticleList.Add(undoItem);
+                                                        }
+
+                                                        if (firstImportedGameIndex < 0)
+                                                        {
+                                                            firstImportedGameIndex = index;
+                                                        }
+                                                    }
+
+                                                    AppState.IsDirty = true;
+                                                    if (!string.IsNullOrEmpty(error))
+                                                    {
+                                                        errorCount++;
+                                                        sbErrors.Append(GuiUtilities.BuildGameProcessingErrorText(games[i], i + 1, error));
+                                                    }
+                                                    importedGames++;
+                                                }
+                                                catch (Exception ex)
+                                                {
+                                                    errorCount++;
+                                                    sbErrors.Append(GuiUtilities.BuildGameProcessingErrorText(games[i], i + 1, ex.Message));
+                                                }
+                                            }
+                                        }
+                                        RefreshChaptersViewAfterImport(targetcontentType, targetChapter, firstImportedGameIndex);
+                                    }
+                                    catch { }
+
+                                    if (undoArticleList.Count > 0)
+                                    {
+                                        WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.INSERT_ARTICLES, (object)undoArticleList);
+                                        WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
+                                    }
+                                    Mouse.SetCursor(Cursors.Arrow);
+                                }
                             }
-                            Mouse.SetCursor(Cursors.Arrow);
                         }
                         else
                         {
@@ -2503,9 +2531,22 @@ namespace ChessForge
                 mode = SelectGamesDialog.Mode.IMPORT_EXERCISES;
             }
 
+            bool res = false;
             SelectGamesDialog dlg = new SelectGamesDialog(ref games, mode);
             GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
-            return dlg.ShowDialog() == true;
+            if (dlg.ShowDialog() == true)
+            {
+                foreach (var game in games)
+                {
+                    if (game.IsSelected)
+                    {
+                        res = true;
+                        break;
+                    }
+                }
+            }
+
+            return res;
         }
 
         /// <summary>
