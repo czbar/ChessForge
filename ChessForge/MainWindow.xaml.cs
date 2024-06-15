@@ -1658,7 +1658,7 @@ namespace ChessForge
                 AppState.UpdateAppTitleBar();
                 if (SessionWorkbook.TrainingSideConfig == PieceColor.None)
                 {
-                    ShowWorkbookOptionsDialog(false);
+                    ShowWorkbookOptionsDialog();
                 }
                 MainChessBoard.FlipBoard(SessionWorkbook.StudyBoardOrientationConfig);
                 if (isChessForgeFile)
@@ -2804,7 +2804,7 @@ namespace ChessForge
         /// Shows the Workbook options dialog.
         /// </summary>
         /// <returns></returns>
-        public bool ShowWorkbookOptionsDialog(bool save)
+        public bool ShowWorkbookOptionsDialog()
         {
             WorkbookOptionsDialog dlg = new WorkbookOptionsDialog(SessionWorkbook);
             GuiUtilities.PositionDialog(dlg, this, 100);
@@ -2823,11 +2823,6 @@ namespace ChessForge
                 SessionWorkbook.ExerciseBoardOrientationConfig = dlg.ExerciseBoardOrientation;
 
                 AppState.IsDirty = true;
-
-                if (save)
-                {
-                    AppState.SaveWorkbookFile(null);
-                }
 
                 switch (WorkbookManager.ActiveTab)
                 {
@@ -2849,7 +2844,6 @@ namespace ChessForge
                     _chaptersView.BuildFlowDocumentForChaptersView();
                 }
 
-                BoardCommentBox.ShowTabHints();
                 return true;
             }
             else
