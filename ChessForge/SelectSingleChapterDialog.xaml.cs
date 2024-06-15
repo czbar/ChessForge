@@ -25,7 +25,7 @@ namespace ChessForge
         /// <summary>
         /// Constructs the dialog and binds the list of chapters.
         /// </summary>
-        public SelectSingleChapterDialog()
+        public SelectSingleChapterDialog(int chapterIndex)
         {
             InitializeComponent();
             UiBtnCreateNew.Content = "   " + Properties.Resources.CreateNewChapter + "    ";
@@ -36,6 +36,9 @@ namespace ChessForge
                 UiLbChapters.IsEnabled = false;
                 UiBtnOk.IsEnabled = false;
             }
+
+            UiLbChapters.SelectedIndex = chapterIndex;
+            UiLbChapters.Focus();
         }
 
         /// <summary>
