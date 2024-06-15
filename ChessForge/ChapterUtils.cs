@@ -262,7 +262,7 @@ namespace ChessForge
         /// <param name="action"></param>
         public static void ProcessCopyOrMoveArticles(TreeNode startNode, ObservableCollection<ArticleListItem> lstArticles, ArticlesAction action)
         {
-            int index = InvokeSelectSingleChapterDialog(out bool newChapter);
+            int index = InvokeSelectSingleChapterDialog(-1, out bool newChapter);
             if (index >= 0)
             {
                 Chapter targetChapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(index);
@@ -565,15 +565,13 @@ namespace ChessForge
         /// and returns the selected index.
         /// </summary>
         /// <returns></returns>
-        public static int InvokeSelectSingleChapterDialog(out bool newChapter)
+        public static int InvokeSelectSingleChapterDialog(int chapterIndex, out bool newChapter)
         {
             newChapter = false;
 
             try
             {
-                int chapterIndex = -1;
-
-                SelectSingleChapterDialog dlg = new SelectSingleChapterDialog();
+                SelectSingleChapterDialog dlg = new SelectSingleChapterDialog(chapterIndex);
                 GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
                 if (dlg.ShowDialog() == true)
