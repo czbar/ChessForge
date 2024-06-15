@@ -803,7 +803,7 @@ namespace ChessForge
                     games.Insert(0, null);
                     ProcessGamesInBackground(ref games, ref SessionWorkbook, chapter);
 
-                    if (AppState.MainWin.ShowWorkbookOptionsDialog(false))
+                    if (AppState.MainWin.ShowWorkbookOptionsDialog())
                     {
                         if (SaveWorkbookToNewFileV2(""))
                         {

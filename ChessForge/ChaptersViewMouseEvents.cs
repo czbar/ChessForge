@@ -38,7 +38,7 @@ namespace ChessForge
 
                 if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
                 {
-                    _mainWin.ShowWorkbookOptionsDialog(false);
+                    _mainWin.ShowWorkbookOptionsDialog();
                 }
 
                 e.Handled = true;

@@ -35,7 +35,7 @@ namespace ChessForge
             _studyTreeView = new StudyTreeView(UiRtbStudyTreeView, GameData.ContentType.STUDY_TREE);
 
             // ask for the options
-            if (!ShowWorkbookOptionsDialog(false))
+            if (!ShowWorkbookOptionsDialog())
             {
                 // user abandoned
                 return false;
@@ -3299,7 +3299,7 @@ namespace ChessForge
         {
             if (AppState.CurrentLearningMode != LearningMode.Mode.IDLE)
             {
-                if (ShowWorkbookOptionsDialog(false))
+                if (ShowWorkbookOptionsDialog())
                 {
                     AppState.IsDirty = true;
                 }
