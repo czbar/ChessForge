@@ -31,12 +31,6 @@ namespace ChessForge
             UiBtnCreateNew.Content = "   " + Properties.Resources.CreateNewChapter + "    ";
             UiBtnCreateNew.Background = Brushes.LightGreen;
             UiLbChapters.ItemsSource = WorkbookManager.SessionWorkbook.Chapters;
-            if (WorkbookManager.SessionWorkbook.Chapters.Count == 1)
-            {
-                UiLbChapters.IsEnabled = false;
-                UiBtnOk.IsEnabled = false;
-            }
-
             UiLbChapters.SelectedIndex = chapterIndex;
             UiLbChapters.Focus();
         }
