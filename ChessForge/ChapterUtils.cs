@@ -586,6 +586,10 @@ namespace ChessForge
                         chapterIndex = dlg.SelectedIndex;
                     }
                 }
+                else
+                {
+                    chapterIndex = -1;
+                }
 
                 return chapterIndex;
             }
