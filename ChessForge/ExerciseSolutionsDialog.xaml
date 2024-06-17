@@ -6,7 +6,7 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        Title="{x:Static p:Resources.ExerciseViewConfig}" Height="250" Width="400">
+        Title="{x:Static p:Resources.ShowSolutions}" Height="250" Width="400">
     <Grid>
         <Label x:Name="UiLabelChapterTitle" Content="{x:Static p:Resources.Chapter}" HorizontalAlignment="Center" HorizontalContentAlignment="Left" Margin="-15,16,0,0" Padding="35,0,20,0" VerticalAlignment="Top"/>
         <GroupBox x:Name="UiGbExercise" Header="{x:Static p:Resources.Solutions}" Height="70" VerticalAlignment="Top" HorizontalAlignment="Center" Width="225" Margin="0, 40, 0, 0">
