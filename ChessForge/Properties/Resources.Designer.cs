@@ -6507,6 +6507,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show Solutions.
+        /// </summary>
+        public static string ShowSolutions {
+            get {
+                return ResourceManager.GetString("ShowSolutions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show on Open.
         /// </summary>
         public static string ShowSolutionsByDefault {

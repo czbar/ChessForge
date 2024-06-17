@@ -1524,7 +1524,7 @@ RegenerateStudyTree=Wygeneruj Teorię z Partii
 
 #description: Warning for regenerate study tree
 #english: MsgThisOverwritesStudy=This will delete and replace the current Study. Proceed?
-MsgThisOverwritesStudy=Nowe drzewo teorri zastąpi obecne. Kontynuować?
+MsgThisOverwritesStudy=Nowe drzewo teorii zastąpi obecne. Kontynuować?
 
 #description: Sort by ECO
 #english: SortByEco=ECO
@@ -1571,6 +1571,10 @@ ApplyToAllChapters=Zastosuj do wszystkich rozdziałów
 #description: Exercise view configuration
 #english: ExerciseViewConfig=Exercise View
 ExerciseViewConfig=Widok Ćwiczeń
+
+#description: Solutions
+#english: ShowSolutions=Show Solutions
+ShowSolutions=Pokaż Rozwiązania
 
 #description: Show/hide all solutions by default
 #english: ShowSolutionsByDefault=Show on Open

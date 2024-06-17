@@ -1097,7 +1097,7 @@
     <value>Wygeneruj Teorię z Partii</value>
   </data>
   <data name="MsgThisOverwritesStudy" xml:space="preserve">
-    <value>Nowe drzewo teorri zastąpi obecne. Kontynuować?</value>
+    <value>Nowe drzewo teorii zastąpi obecne. Kontynuować?</value>
   </data>
   <data name="SortByEco" xml:space="preserve">
     <value>Kodu Otwarcia (ECO)</value>
@@ -1128,6 +1128,9 @@
   </data>
   <data name="ExerciseViewConfig" xml:space="preserve">
     <value>Widok Ćwiczeń</value>
+  </data>
+  <data name="ShowSolutions" xml:space="preserve">
+    <value>Pokaż Rozwiązania</value>
   </data>
   <data name="ShowSolutionsByDefault" xml:space="preserve">
     <value>Pokaż po otwarciu</value>
