@@ -172,7 +172,6 @@ namespace ChessForge
                 {
                     moveNumberOffset = AppState.ActiveVariationTree.MoveNumberOffset;
                 }
-                AddNewParagraphToDoc("bold_16", Properties.Resources.ReplacingEngineMove);
                 AddNewParagraphToDoc("bold_16", Properties.Resources.MakeMoveForEngine);
             }
             catch { }
