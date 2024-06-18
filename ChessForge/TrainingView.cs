@@ -700,6 +700,9 @@ namespace ChessForge
             Run gm = CreateButtonRun(text, _run_engine_game_move_ + nd.NodeId.ToString(), moveColor);
             _paraCurrentEngineGame.Inlines.Add(gm);
 
+            Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
+            _dictParas[ParaType.PROMPT_TO_MOVE] = null;
+
             if (nd.Position.IsCheckmate)
             {
                 BuildCheckmateParagraph(nd, isUserMove);
@@ -707,6 +710,19 @@ namespace ChessForge
             else if (nd.Position.IsStalemate)
             {
                 BuildStalemateParagraph(nd);
+            }
+            else
+            {
+                if (nd.ColorToMove == TrainingSession.TrainingSide)
+                {
+                    _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc(STYLE_SECOND_PROMPT, "\n   " + Properties.Resources.YourTurn + "...");
+                    _dictParas[ParaType.PROMPT_TO_MOVE].Foreground = ChessForgeColors.GetHintForeground(CommentBox.HintType.INFO);
+                }
+                else
+                {
+                    _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc(STYLE_SECOND_PROMPT, "\n   " + Properties.Resources.WaitForEngineResponse);
+                    _dictParas[ParaType.PROMPT_TO_MOVE].Foreground = ChessForgeColors.GetHintForeground(CommentBox.HintType.INFO);
+                }
             }
 
             _currentEngineGameMoveCount++;
@@ -1531,9 +1547,9 @@ namespace ChessForge
                                 break;
                             case "UiMncTrainReplaceEngineMove":
                                 mi.Header = Properties.Resources.ReplaceEngineMove + " " + moveTxt;
-                                mi.Visibility = (_moveContext == MoveContext.GAME 
+                                mi.Visibility = (_moveContext == MoveContext.GAME
                                                  && EngineGame.CurrentState == EngineGame.GameState.USER_THINKING
-                                                 && _lastClickedNode.ColorToMove == TrainingSession.TrainingSide) 
+                                                 && _lastClickedNode.ColorToMove == TrainingSession.TrainingSide)
                                                  ? Visibility.Visible : Visibility.Collapsed;
                                 break;
                             case "_mnTrainSwitchToWorkbook":
@@ -1783,6 +1799,15 @@ namespace ChessForge
             if (isEngineMoveReplacement)
             {
                 _mainWin.BoardCommentBox.GameEngineReplacementToMake(nd);
+
+                // takeback paragraph may exist and could be confusing to the user
+                Document.Blocks.Remove(_dictParas[ParaType.TAKEBACK]);
+                _dictParas[ParaType.TAKEBACK] = null;
+
+                Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
+                _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc(STYLE_SECOND_PROMPT, "\n   " + Properties.Resources.ReplacingEngineMove
+                    + "\n   " + Properties.Resources.MakeMoveForEngine);
+                _dictParas[ParaType.PROMPT_TO_MOVE].Foreground = ChessForgeColors.GetHintForeground(CommentBox.HintType.ERROR);
             }
             else
             {
