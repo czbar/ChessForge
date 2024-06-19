@@ -269,6 +269,7 @@ namespace ChessForge
 
                 if (newChapter)
                 {
+                    targetChapter.SetTitle(SuggestChapterTitle(startNode));
                     ChapterTitleDialog dlg = new ChapterTitleDialog(targetChapter);
                     GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
                     if (dlg.ShowDialog() == true)
@@ -283,7 +284,6 @@ namespace ChessForge
 
                 if (newChapter && startNode != null)
                 {
-                    SetChapterTitle(startNode, targetChapter);
                     List<TreeNode> stem = TreeUtils.GetStemLine(startNode, true);
                     targetChapter.StudyTree.Tree.Nodes = TreeUtils.CopyNodeList(stem);
                     targetChapter.StudyTree.Tree.Nodes[stem.Count - 1].IsThumbnail = true;
@@ -437,14 +437,32 @@ namespace ChessForge
         {
             if (nd != null && chapter != null)
             {
-                string title = "";
+                string title = SuggestChapterTitle(nd);
+                chapter.SetTitle(title);
+            }
+        }
+
+        /// <summary>
+        /// Suggests the chapter title based on the passed position.
+        /// This is useful after copying/moving games that were find after
+        /// search for identical positions.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        private static string SuggestChapterTitle(TreeNode nd)
+        {
+            string title = "";
+
+            if (nd != null)
+            {
                 if (nd.Eco != null)
                 {
                     title = nd.Eco + ": ";
                 }
                 title += MoveUtils.BuildSingleMoveText(nd, true, true, 0);
-                chapter.SetTitle(title);
             }
+
+            return title;
         }
 
         /// <summary>
