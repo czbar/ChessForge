@@ -87,7 +87,7 @@ namespace ChessForge
                         AppState.IsDirty = true;
                         GuiUtilities.RefreshChaptersView(null);
                         AppState.MainWin.UiTabChapters.Focus();
-                        PulseManager.ChaperIndexToBringIntoView = chapter.Index;
+                        PulseManager.ChapterIndexToBringIntoView = chapter.Index;
                     }
                 }
                 catch (Exception ex)
@@ -262,7 +262,11 @@ namespace ChessForge
         /// <param name="action"></param>
         public static void ProcessCopyOrMoveArticles(TreeNode startNode, ObservableCollection<ArticleListItem> lstArticles, ArticlesAction action)
         {
+            // preserve/restore the active chapter as the dialog may change it if new chapter was requested
+            Chapter currActiveChapter = AppState.ActiveChapter;
             int index = InvokeSelectSingleChapterDialog(-1, out bool newChapter);
+            WorkbookManager.SessionWorkbook.ActiveChapter = currActiveChapter;
+
             if (index >= 0)
             {
                 Chapter targetChapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(index);
@@ -335,11 +339,12 @@ namespace ChessForge
 
                             if (gotoChaptersView)
                             {
+                                AppState.Workbook.ActiveChapter = targetChapter;
                                 targetChapter.IsViewExpanded = true;
                                 // show chapter view with the target chapter in the view and expanded
                                 AppState.MainWin.ChaptersView.IsDirty = true;
                                 AppState.MainWin.UiTabChapters.Focus();
-                                PulseManager.ChaperIndexToBringIntoView = targetChapter.Index;
+                                PulseManager.ChapterIndexToBringIntoView = targetChapter.Index;
                             }
                         }
                     }
@@ -368,15 +373,17 @@ namespace ChessForge
             try
             {
                 AppState.MainWin.ChaptersView.IsDirty = true;
-                Chapter chapter = AppState.Workbook.ActiveChapter;
+                Chapter activeChapter = AppState.Workbook.ActiveChapter;
 
                 // if we are in the Chapters view, we want to refresh the view
                 // and bring the target chapter into view.
                 if (AppState.ActiveTab == TabViewType.CHAPTERS)
                 {
+                    // if in Chapters view then change active chapter to target
+                    AppState.Workbook.ActiveChapter = targetChapter;
                     GuiUtilities.RefreshChaptersView(null);
                     AppState.MainWin.UiTabChapters.Focus();
-                    PulseManager.ChaperIndexToBringIntoView = targetChapter.Index;
+                    PulseManager.ChapterIndexToBringIntoView = targetChapter.Index;
                 }
                 else if (action == ArticlesAction.COPY)
                 {
@@ -389,11 +396,11 @@ namespace ChessForge
                 {
                     if (AppState.ActiveTab == TabViewType.MODEL_GAME && (contentType == GameData.ContentType.MODEL_GAME || contentType == GameData.ContentType.GENERIC))
                     {
-                        UpdateModelGamesView(chapter);
+                        UpdateModelGamesView(activeChapter);
                     }
                     if (AppState.ActiveTab == TabViewType.EXERCISE && (contentType == GameData.ContentType.EXERCISE || contentType == GameData.ContentType.GENERIC))
                     {
-                        UpdateExercisesView(chapter);
+                        UpdateExercisesView(activeChapter);
                     }
                 }
             }
