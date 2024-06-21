@@ -449,7 +449,7 @@ namespace ChessForge
                     flash.Append("\ninto new chapter [" + (WorkbookManager.SessionWorkbook.GetChapterCount()).ToString() + "]");
                     AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(flash.ToString(), CommentBox.HintType.INFO);
 
-                    PulseManager.ChaperIndexToBringIntoView = WorkbookManager.SessionWorkbook.GetChapterCount() - 1;
+                    PulseManager.ChapterIndexToBringIntoView = WorkbookManager.SessionWorkbook.GetChapterCount() - 1;
                 }
 
                 AppState.IsDirty = mergedCount > 1;
@@ -1343,7 +1343,7 @@ namespace ChessForge
                                 if (_chaptersView != null)
                                 {
                                     _chaptersView.BuildFlowDocumentForChaptersView();
-                                    PulseManager.ChaperIndexToBringIntoView = WorkbookManager.SessionWorkbook.GetChapterCount() - 1;
+                                    PulseManager.ChapterIndexToBringIntoView = WorkbookManager.SessionWorkbook.GetChapterCount() - 1;
                                 }
                                 AppState.IsDirty = true;
 
@@ -1599,7 +1599,7 @@ namespace ChessForge
                 _chaptersView.RebuildChapterParagraph(AppState.Workbook.Chapters[index - 1]);
                 SelectChapterByIndex(index - 1, false, false);
 
-                PulseManager.ChaperIndexToBringIntoView = index - 1;
+                PulseManager.ChapterIndexToBringIntoView = index - 1;
                 AppState.IsDirty = true;
             }
         }
@@ -1622,7 +1622,7 @@ namespace ChessForge
                 _chaptersView.RebuildChapterParagraph(AppState.Workbook.Chapters[index + 1]);
                 SelectChapterByIndex(index + 1, false, false);
 
-                PulseManager.ChaperIndexToBringIntoView = index + 1;
+                PulseManager.ChapterIndexToBringIntoView = index + 1;
                 AppState.IsDirty = true;
             }
         }
@@ -1876,6 +1876,7 @@ namespace ChessForge
                                     {
                                         targetChapter.SetTitle(dlg.ChapterTitle);
                                         targetChapter.SetAuthor(dlg.Author);
+                                        AppState.Workbook.ActiveChapter = targetChapter;
                                     }
                                     else
                                     {
@@ -1883,6 +1884,10 @@ namespace ChessForge
                                         AppState.Workbook.ActiveChapter = activeChapter;
                                         proceed = false;
                                     }
+                                }
+                                else
+                                {
+                                    AppState.Workbook.ActiveChapter = targetChapter;
                                 }
 
                                 if (proceed)
@@ -1942,6 +1947,11 @@ namespace ChessForge
                                     {
                                         WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.INSERT_ARTICLES, (object)undoArticleList);
                                         WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
+                                    }
+
+                                    if (AppState.ActiveTab == TabViewType.CHAPTERS)
+                                    {
+                                        ChaptersView.BringActiveChapterIntoView();
                                     }
                                     Mouse.SetCursor(Cursors.Arrow);
                                 }
