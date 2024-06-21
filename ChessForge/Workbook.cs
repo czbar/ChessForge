@@ -866,7 +866,7 @@ namespace ChessForge
 
                 if (indices.Count > 0)
                 {
-                    PulseManager.ChaperIndexToBringIntoView = indices[0];
+                    PulseManager.ChapterIndexToBringIntoView = indices[0];
                 }
             }
             catch

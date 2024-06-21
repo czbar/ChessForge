@@ -411,7 +411,7 @@ namespace ChessForge
             {
                 if (AppState.ActiveChapter != null)
                 {
-                    PulseManager.ChaperIndexToBringIntoView = AppState.ActiveChapter.Index;
+                    PulseManager.ChapterIndexToBringIntoView = AppState.ActiveChapter.Index;
                 }
             }
             catch { }
@@ -1037,7 +1037,7 @@ namespace ChessForge
                     if (newSelChapter != null)
                     {
                         ActivateAndHighlightChapter(newSelChapter, chapter, true);
-                        PulseManager.ChaperIndexToBringIntoView = newSelChapter.Index;
+                        PulseManager.ChapterIndexToBringIntoView = newSelChapter.Index;
                     }
                     break;
                 case WorkbookManager.ItemType.MODEL_GAME:

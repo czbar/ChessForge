@@ -1126,7 +1126,7 @@ namespace ChessForge
                 BuildFlowDocumentForChaptersView();
 
                 AppState.MainWin.SelectChapterByIndex(targetIndex, false, false);
-                PulseManager.ChaperIndexToBringIntoView = targetIndex;
+                PulseManager.ChapterIndexToBringIntoView = targetIndex;
             }
         }
 

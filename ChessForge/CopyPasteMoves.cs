@@ -262,7 +262,7 @@ namespace ChessForge
                     {
                         GuiUtilities.RefreshChaptersView(null);
                         AppState.MainWin.UiTabChapters.Focus();
-                        PulseManager.ChaperIndexToBringIntoView = AppState.Workbook.Chapters.Count - 1;
+                        PulseManager.ChapterIndexToBringIntoView = AppState.Workbook.Chapters.Count - 1;
                     }
                     else
                     {

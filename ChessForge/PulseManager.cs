@@ -46,7 +46,7 @@ namespace ChessForge
         /// <summary>
         /// Index of the chapter to bring into view.
         /// </summary>
-        public static int ChaperIndexToBringIntoView
+        public static int ChapterIndexToBringIntoView
         {
             set => _chapterIndexToBringIntoView = value;
         }
