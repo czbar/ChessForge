@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using ChessPosition;
+using System.Windows;
 
 namespace ChessForge
 {
@@ -35,6 +36,18 @@ namespace ChessForge
             InitializeComponent();
 
             Scope = ConfigurationRtfExport.GetScope();
+
+            // check if current view is printanble, if not disable the radiobutton and change scope if CurrentViewSelected
+            TabViewType vt = AppState.ActiveTab;
+            if (vt != TabViewType.CHAPTERS && vt != TabViewType.INTRO && vt != TabViewType.STUDY && vt != TabViewType.MODEL_GAME && vt != TabViewType.EXERCISE)
+            {
+                UiRbCurrentItem.IsEnabled = false;
+                if (Scope == PrintScope.ARTICLE)
+                {
+                    Scope = PrintScope.CHAPTER;
+                }
+            }
+
             SetControlStates();
         }
 
@@ -116,8 +129,7 @@ namespace ChessForge
                 UiCbExerciseCustom_Unchecked(null, null);
 
             // the Scope button must only be set now so that the controls that will be disabled have their values preserved.
-            sVal = ConfigurationRtfExport.GetStringValue(ConfigurationRtfExport.CFG_SCOPE);
-            SetScopeButton(sVal);
+            SetScopeButton(Scope);
         }
 
         /// <summary>
@@ -243,13 +255,13 @@ namespace ChessForge
         /// Sets the radio button corresponding to the passed value.
         /// </summary>
         /// <param name="sVal"></param>
-        private void SetScopeButton(string sVal)
+        private void SetScopeButton(PrintScope scope)
         {
-            if (sVal == ConfigurationRtfExport.ChapterScopeCoded)
+            if (scope == PrintScope.CHAPTER)
             {
                 UiRbCurrentChapter.IsChecked = true;
             }
-            else if (sVal == ConfigurationRtfExport.ArticleScopeCoded)
+            else if (scope == PrintScope.ARTICLE && UiRbCurrentItem.IsEnabled == true)
             {
                 UiRbCurrentItem.IsChecked = true;
             }
