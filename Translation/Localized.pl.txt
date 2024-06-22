@@ -1390,13 +1390,14 @@ MsgNoPositionsFound=Nie znaleziono takicj pozycji.
 #
 
 
-#description: Duplicates of
-#english: DuplicatesOf=Duplicates of
-DuplicatesOf=Duplikaty
+#description: Number of duplicated items
+#english: NumberOfDuplicatedItems=Number of duplicated items
+NumberOfDuplicatedItems=Liczba zduplikowanych elementów
 
 #description: Select article duplicates to delete
-#english: SelectArticleDuplicatesToDelete=Select Items to Delete
-SelectArticleDuplicatesToDelete=Zaznacz pozycje do usunięcia
+#english: SelectArticleDuplicatesToDelete=Selected Items will be DELETED
+SelectArticleDuplicatesToDelete=Zaznaczone pozycje będą USUNIĘTE
+
 
 
 #######################################
@@ -1519,11 +1520,11 @@ DlgManageChapter=Organizacja Rozdziału
 SortBy=Sortuj wg.
 
 #description: Regenerate Study Tree
-#english: RegenerateStudyTree=Regenerate Study
+#english: RegenerateStudyTree=Regenerate Study from Games
 RegenerateStudyTree=Wygeneruj Teorię z Partii
 
 #description: Warning for regenerate study tree
-#english: MsgThisOverwritesStudy=This will replace the current Study. Proceed?
+#english: MsgThisOverwritesStudy=This will delete and replace the current Study. Proceed?
 MsgThisOverwritesStudy=Nowe drzewo teorii zastąpi obecne. Kontynuować?
 
 #description: Sort by ECO
@@ -1571,6 +1572,10 @@ ApplyToAllChapters=Zastosuj do wszystkich rozdziałów
 #description: Exercise view configuration
 #english: ExerciseViewConfig=Exercise View
 ExerciseViewConfig=Widok Ćwiczeń
+
+#description: Solutions
+#english: ShowSolutions=Show Solutions
+ShowSolutions=Pokaż Rozwiązania
 
 #description: Show/hide all solutions by default
 #english: ShowSolutionsByDefault=Show on Open
@@ -3981,6 +3986,3 @@ IllegalCastling=Niedozwolona roszada.
 #description: Workbook info
 #english: AboutWorkbook=This PGN Workbook is optimized for viewing in Chess Forge https://sourceforge.net/projects/chessforge/ \nChess Forge is a Free and Open Source Windows application.
 AboutWorkbook=Ten podręcznik PGN najlepiej oglądać w programie Chess Forge https://sourceforge.net/projects/chessforge/ \nChess Forge to Wolne i Otwarte Oprogramowanie do systemu Windows.
-
-
-ShowSolutions=Pokaż Rozwiązania

@@ -1090,11 +1090,12 @@ MsgNoPositionsFound=Specified position has not been found.
 #
 
 
-#Duplicates of
-DuplicatesOf=Duplicates of
+#Number of duplicated items
+NumberOfDuplicatedItems=Number of duplicated items
 
 #Select article duplicates to delete
-SelectArticleDuplicatesToDelete=Select Items to Delete
+SelectArticleDuplicatesToDelete=Selected Items will be DELETED
+
 
 
 #######################################

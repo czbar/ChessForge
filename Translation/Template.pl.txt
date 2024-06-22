@@ -1390,13 +1390,14 @@ MsgNoPositionsFound=Nie znaleziono takicj pozycji.
 #
 
 
-#description: Duplicates of
-#english: DuplicatesOf=Duplicates of
-DuplicatesOf=Duplikaty
+#description: Number of duplicated items
+#english: NumberOfDuplicatedItems=Number of duplicated items
+NumberOfDuplicatedItems=Liczba zduplikowanych elementów
 
 #description: Select article duplicates to delete
-#english: SelectArticleDuplicatesToDelete=Select Items to Delete
-SelectArticleDuplicatesToDelete=Zaznacz pozycje do usunięcia
+#english: SelectArticleDuplicatesToDelete=Selected Items will be DELETED
+SelectArticleDuplicatesToDelete=Zaznaczone pozycje będą USUNIĘTE
+
 
 
 #######################################

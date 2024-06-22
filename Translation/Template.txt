@@ -1390,13 +1390,14 @@ MsgNoPositionsFound=
 #
 
 
-#description: Duplicates of
-#english: DuplicatesOf=Duplicates of
-DuplicatesOf=
+#description: Number of duplicated items
+#english: NumberOfDuplicatedItems=Number of duplicated items
+NumberOfDuplicatedItems=
 
 #description: Select article duplicates to delete
-#english: SelectArticleDuplicatesToDelete=Select Items to Delete
+#english: SelectArticleDuplicatesToDelete=Selected Items will be DELETED
 SelectArticleDuplicatesToDelete=
+
 
 
 #######################################

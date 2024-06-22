@@ -1018,11 +1018,11 @@
   <data name="MsgNoPositionsFound" xml:space="preserve">
     <value>Nie znaleziono takicj pozycji.</value>
   </data>
-  <data name="DuplicatesOf" xml:space="preserve">
-    <value>Duplikaty</value>
+  <data name="NumberOfDuplicatedItems" xml:space="preserve">
+    <value>Liczba zduplikowanych elementów</value>
   </data>
   <data name="SelectArticleDuplicatesToDelete" xml:space="preserve">
-    <value>Zaznacz pozycje do usunięcia</value>
+    <value>Zaznaczone pozycje będą USUNIĘTE</value>
   </data>
   <data name="Statistics" xml:space="preserve">
     <value>Statystyka</value>
