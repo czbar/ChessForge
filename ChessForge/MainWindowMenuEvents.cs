@@ -1215,6 +1215,7 @@ namespace ChessForge
             }
 
             _chaptersView?.BuildFlowDocumentForChaptersView();
+            _chaptersView?.BringActiveChapterIntoView();
         }
 
         /// <summary>
