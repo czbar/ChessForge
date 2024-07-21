@@ -442,7 +442,7 @@ namespace ChessForge
         /// <summary>
         /// Update the chapter title that is displayed above the Study Tree.
         /// </summary>
-        public void UpdateChapterTitle()
+        public Paragraph UpdateChapterTitle()
         {
             Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
             if (chapter != null)
@@ -467,6 +467,8 @@ namespace ChessForge
                     _pageHeaderParagraph.Inlines.Add(rAuthor);
                 }
             }
+
+            return _pageHeaderParagraph;
         }
 
 
