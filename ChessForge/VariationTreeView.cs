@@ -352,10 +352,15 @@ namespace ChessForge
 
                 Document.Blocks.Add(BuildDummyPararaph());
 
-                _pageHeaderParagraph = BuildPageHeader(_mainVariationTree, contentType);
-                if (_pageHeaderParagraph != null)
+                // do not print page header if this is RTF export (print) and the view is Study
+                // NOTE: first, it is redundant; second, it will print the title of the active chapter
+                if (treeForPrint == null || contentType != GameData.ContentType.STUDY_TREE)
                 {
-                    Document.Blocks.Add(_pageHeaderParagraph);
+                    _pageHeaderParagraph = BuildPageHeader(_mainVariationTree, contentType);
+                    if (_pageHeaderParagraph != null)
+                    {
+                        Document.Blocks.Add(_pageHeaderParagraph);
+                    }
                 }
 
                 BuildExerciseParagraphs();
