@@ -267,9 +267,21 @@ namespace ChessForge
                             AddPageBreakPlaceholder(docGamesHeader);
                             CreateDocumentForPrint(printDoc, docGamesHeader, null, ref diagrams);
 
+                            // if "two-column format" is set, place the start command before the first game
+                            // and the end command after the last one
+                            if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.TWO_COLUMN_GAMES))
+                            {
+                                printDoc.Blocks.Add(CreateTwoColumnBeginPara());
+                            }
+
                             for (int i = 0; i < chapter.ModelGames.Count; i++)
                             {
                                 PrintGameToFlowDoc(printDoc, chapter, i, ref diagrams);
+                            }
+
+                            if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.TWO_COLUMN_GAMES))
+                            {
+                                printDoc.Blocks.Add(CreateTwoColumnEndPara());
                             }
                         }
                     }
@@ -282,9 +294,21 @@ namespace ChessForge
                             AddPageBreakPlaceholder(docExercisesHeader);
                             CreateDocumentForPrint(printDoc, docExercisesHeader, null, ref diagrams);
 
+                            // if "two-column format" is set, place the start command before the first exercise
+                            // and the end command after the last one
+                            if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.TWO_COLUMN_EXERCISES))
+                            {
+                                printDoc.Blocks.Add(CreateTwoColumnBeginPara());
+                            }
+
                             for (int i = 0; i < chapter.Exercises.Count; i++)
                             {
                                 PrintExerciseToFlowDoc(printDoc, chapter, i, ref diagrams);
+                            }
+
+                            if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.TWO_COLUMN_EXERCISES))
+                            {
+                                printDoc.Blocks.Add(CreateTwoColumnEndPara());
                             }
                         }
                     }
@@ -818,7 +842,7 @@ namespace ChessForge
         /// Print a single Game
         /// </summary>
         /// <param name="game"></param>
-        /// <param name="index"></param>
+        /// <param name="index">If index==-1 this is printed as part of "current view"</param>
         /// <returns></returns>
         private static FlowDocument PrintGame(Article game, int index, ref List<RtfDiagram> diagrams)
         {
@@ -832,7 +856,7 @@ namespace ChessForge
 
             Paragraph para = new Paragraph();
 
-            // if index < 0 then we are printing for the CurrentView scope hance no need for a header
+            // if index < 0 then we are printing for the CurrentView scope hence no need for a header
             if (index >= 0)
             {
                 para.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff;
@@ -856,12 +880,22 @@ namespace ChessForge
             VariationTreeView gameView = new VariationTreeView(doc, GameData.ContentType.MODEL_GAME);
             gameView.BuildFlowDocumentForVariationTree(game.Tree);
 
-            if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.TWO_COLUMN_GAMES))
+            // if part of "current view" print set the "two-column format, if so configured.
+            // if chapter/workbook view then this is set up before/after first/last game.
+            if (index < 0 && ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.TWO_COLUMN_GAMES))
             {
                 AddColumnFormatPlaceholdersAfterHeader(doc);
             }
-            doc.Blocks.InsertBefore(doc.Blocks.FirstBlock, paraDummy1);
-            doc.Blocks.InsertAfter(paraDummy1, para);
+
+            if (index != 0)
+            {
+                doc.Blocks.InsertBefore(doc.Blocks.FirstBlock, paraDummy1);
+                doc.Blocks.InsertAfter(paraDummy1, para);
+            }
+            else
+            {
+                doc.Blocks.InsertBefore(doc.Blocks.FirstBlock, para);
+            }
 
             return doc;
         }
@@ -870,7 +904,7 @@ namespace ChessForge
         /// Print a single Exercise
         /// </summary>
         /// <param name="game"></param>
-        /// <param name="index"></param>
+        /// <param name="index">If index==-1 this is printed as part of "current view"</param>
         /// <returns></returns>
         private static FlowDocument PrintExercise(FlowDocument printDoc, Article exercise, int index, ref List<RtfDiagram> diagrams)
         {
@@ -884,7 +918,8 @@ namespace ChessForge
 
             Paragraph para = new Paragraph();
 
-            if (exerciseNo >= 0)
+            // if index < 0 then we are printing for the CurrentView scope hence no need for a header
+            if (index >= 0)
             {
                 para.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff;
                 para.FontWeight = FontWeights.Bold;
@@ -906,12 +941,22 @@ namespace ChessForge
             VariationTreeView exerciseView = new ExerciseTreeView(doc, GameData.ContentType.EXERCISE);
             exerciseView.BuildFlowDocumentForVariationTree(exercise.Tree);
 
-            if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.TWO_COLUMN_EXERCISES))
+            // if part of "current view" print set the "two-column format, if so configured.
+            // if chapter/workbook view then this is set up before/after first/last exercise.
+            if (index < 0 && ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.TWO_COLUMN_EXERCISES))
             {
                 AddColumnFormatPlaceholdersAfterHeader(doc);
             }
-            doc.Blocks.InsertBefore(doc.Blocks.FirstBlock, paraDummy1);
-            doc.Blocks.InsertAfter(paraDummy1, para);
+
+            if (index != 0)
+            {
+                doc.Blocks.InsertBefore(doc.Blocks.FirstBlock, paraDummy1);
+                doc.Blocks.InsertAfter(paraDummy1, para);
+            }
+            else
+            {
+                doc.Blocks.InsertBefore(doc.Blocks.FirstBlock, para);
+            }
 
             return doc;
         }
@@ -933,6 +978,32 @@ namespace ChessForge
             para.Inlines.Add(run);
 
             return para;
+        }
+
+        /// <summary>
+        /// Creates a paragraph with "Begin Two-Column Section" command. 
+        /// </summary>
+        /// <returns></returns>
+        private static Paragraph CreateTwoColumnBeginPara()
+        {
+            Paragraph paraBeginCols2 = new Paragraph();
+            Run runBeginCols2 = new Run(BeginTwoColumns());
+            paraBeginCols2.Inlines.Add(runBeginCols2);
+
+            return paraBeginCols2;
+        }
+
+        /// <summary>
+        /// Creates a paragraph with "End Two-Column Section" command. 
+        /// </summary>
+        /// <returns></returns>
+        private static Paragraph CreateTwoColumnEndPara()
+        {
+            Paragraph paraEndCols2 = new Paragraph();
+            Run runEndCols2 = new Run(EndTwoColumns());
+            paraEndCols2.Inlines.Add(runEndCols2);
+
+            return paraEndCols2;
         }
 
         /// <summary>
