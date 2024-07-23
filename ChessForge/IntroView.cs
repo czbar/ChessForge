@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using GameTree;
 using System.Windows.Input;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace ChessForge
 {
@@ -206,6 +207,11 @@ namespace ChessForge
             if (!string.IsNullOrEmpty(Intro.CodedContent))
             {
                 string xaml = EncodingUtils.Base64Decode(Intro.CodedContent);
+                if (_isPrintMode)
+                {
+                    // if printing, font size directives must be removed.
+                    xaml = RemoveFontSizes(xaml);
+                }
                 StringToFlowDocument(xaml);
                 _rtb.Document = Document;
                 _maxRunId = GetHighestId();
@@ -318,6 +324,28 @@ namespace ChessForge
             {
                 AppLog.Message("CreateHyperlink()", ex);
             }
+        }
+
+        /// <summary>
+        /// Removes all expressions FontSize="n".
+        /// This is needed for printing because otherwise, the printout
+        /// can be a bad mix of font sizes.
+        /// TODO: set font sizes on every run in Intro.
+        /// </summary>
+        /// <param name="xaml"></param>
+        /// <returns></returns>
+        private string RemoveFontSizes(string xaml)
+        {
+            string result = xaml;
+            if (!string.IsNullOrEmpty(xaml))
+            {
+                string pattern = @"FontSize=""\d+""";
+                string replacement = "";
+
+                result = Regex.Replace(xaml, pattern, replacement);
+            }
+
+            return result;
         }
 
         /// <summary>
