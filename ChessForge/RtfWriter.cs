@@ -389,8 +389,19 @@ namespace ChessForge
         /// <param name="diagrams"></param>
         private static void PrintGameToFlowDoc(FlowDocument printDoc, Chapter chapter, int gameIndex, ref List<RtfDiagram> diagrams)
         {
-            FlowDocument guiDoc = PrintGame(chapter.ModelGames[gameIndex], gameIndex, ref diagrams);
-            CreateDocumentForPrint(printDoc, guiDoc, chapter.ModelGames[gameIndex].Tree, ref diagrams);
+            Article game;
+
+            if (gameIndex >= 0)
+            {
+                game = chapter.ModelGames[gameIndex];
+            }
+            else
+            {
+                game = chapter.ModelGames[chapter.ActiveModelGameIndex];
+            }
+
+            FlowDocument guiDoc = PrintGame(game, gameIndex, ref diagrams);
+            CreateDocumentForPrint(printDoc, guiDoc, game.Tree, ref diagrams);
         }
 
         /// <summary>
@@ -402,8 +413,19 @@ namespace ChessForge
         /// <param name="diagrams"></param>
         private static void PrintExerciseToFlowDoc(FlowDocument printDoc, Chapter chapter, int exerciseIndex, ref List<RtfDiagram> diagrams)
         {
-            FlowDocument guiDoc = PrintExercise(printDoc, chapter.Exercises[exerciseIndex], exerciseIndex, ref diagrams);
-            CreateDocumentForPrint(printDoc, guiDoc, chapter.Exercises[exerciseIndex].Tree, ref diagrams);
+            Article exercise;
+
+            if (exerciseIndex >= 0)
+            {
+                exercise = chapter.Exercises[exerciseIndex];
+            }
+            else
+            {
+                exercise = chapter.Exercises[chapter.ActiveExerciseIndex];
+            }
+
+            FlowDocument guiDoc = PrintExercise(printDoc, exercise, exerciseIndex, ref diagrams);
+            CreateDocumentForPrint(printDoc, guiDoc, exercise.Tree, ref diagrams);
         }
 
         /// <summary>
