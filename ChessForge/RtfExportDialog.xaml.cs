@@ -99,34 +99,19 @@ namespace ChessForge
             UiTbExerciseCustom.Text = sVal;
 
             bVal = ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.USE_CUSTOM_STUDY);
-            if (bVal)
-                UiCbStudyCustom_Checked(null, null);
-            else
-                UiCbStudyCustom_Unchecked(null, null);
+            UiCbStudyCustom.IsChecked = bVal;
 
             bVal = ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.USE_CUSTOM_GAMES);
-            if (bVal)
-                UiCbGamesCustom_Checked(null, null);
-            else
-                UiCbGamesCustom_Unchecked(null, null);
-            
+            UiCbGamesCustom.IsChecked = bVal;
+
             bVal = ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.USE_CUSTOM_GAME);
-            if (bVal)
-                UiCbGameCustom_Checked(null, null);
-            else
-                UiCbGameCustom_Unchecked(null, null);
+            UiCbGameCustom.IsChecked = bVal;
 
             bVal = ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.USE_CUSTOM_EXERCISES);
-            if (bVal)
-                UiCbExercisesCustom_Checked(null, null);
-            else
-                UiCbExercisesCustom_Unchecked(null, null);
+            UiCbExercisesCustom.IsChecked = bVal;
 
             bVal = ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.USE_CUSTOM_EXERCISE);
-            if (bVal)
-                UiCbExerciseCustom_Checked(null, null);
-            else
-                UiCbExerciseCustom_Unchecked(null, null);
+            UiCbExerciseCustom.IsChecked = bVal;
 
             // the Scope button must only be set now so that the controls that will be disabled have their values preserved.
             SetScopeButton(Scope);
