@@ -55,8 +55,9 @@ namespace ChessForge
         /// <param name="rtb"></param>
         /// <param name="contentType"></param>
         /// <param name="entityIndex"></param>
-        public StudyTreeView(RichTextBox rtb, GameData.ContentType contentType) : base(rtb, contentType)
+        public StudyTreeView(RichTextBox rtb, GameData.ContentType contentType, bool isPrinting = false) : base(rtb, contentType)
         {
+            _isPrinting = isPrinting;
             LineManager = new LineSectorManager(this);
         }
 

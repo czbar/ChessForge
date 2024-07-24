@@ -807,7 +807,7 @@ namespace ChessForge
         private static FlowDocument PrintStudy(Chapter chapter)
         {
             RichTextBox rtbStudy = new RichTextBox();
-            StudyTreeView studyView = new StudyTreeView(rtbStudy, GameData.ContentType.STUDY_TREE);
+            StudyTreeView studyView = new StudyTreeView(rtbStudy, GameData.ContentType.STUDY_TREE, true);
             studyView.BuildFlowDocumentForVariationTree(chapter.StudyTree.Tree);
 
             Paragraph paraIndex = null;
