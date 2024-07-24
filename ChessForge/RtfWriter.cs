@@ -53,8 +53,10 @@ namespace ChessForge
         /// Exports the passed chapter into an RTF file.
         /// </summary>
         /// <param name="chapter"></param>
-        public static void WriteRtf(string fileName)
+        public static bool WriteRtf(string fileName)
         {
+            bool result = true;
+
             ResetCounters();
             bool saveUseFixedFont = Configuration.UseFixedFont;
             // we only use Fixed Font size when "printing".  Set Configuration.UseFixedFont to true temporarily
@@ -89,11 +91,14 @@ namespace ChessForge
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
+                result = false;
             }
             finally
             {
                 Configuration.UseFixedFont = saveUseFixedFont;
             }
+
+            return result;
         }
 
         /// <summary>
@@ -734,6 +739,7 @@ namespace ChessForge
 
             Paragraph para = new Paragraph();
             para.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff + 2;
+            para.TextAlignment = TextAlignment.Center;
             para.FontWeight = FontWeights.Bold;
 
             string exercisesHeader = Properties.Resources.Exercises;
@@ -747,6 +753,10 @@ namespace ChessForge
                 para.Inlines.Add(new Run(exercisesHeader));
                 doc.Blocks.Add(para);
             }
+
+            Paragraph paraDummy2 = new Paragraph();
+            paraDummy2.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff + 4;
+            doc.Blocks.Add(paraDummy2);
 
             return doc;
         }
