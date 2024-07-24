@@ -211,6 +211,8 @@ namespace ChessForge
                 {
                     // if printing, font size directives must be removed.
                     xaml = RemoveFontSizes(xaml);
+                    // now set the font size for the whole Intro
+                    _rtb.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff;                    
                 }
                 StringToFlowDocument(xaml);
                 _rtb.Document = Document;
