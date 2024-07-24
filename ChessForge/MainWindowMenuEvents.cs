@@ -4381,23 +4381,29 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnWriteRtf_Click(object sender, RoutedEventArgs e)
         {
-            RtfExportDialog dlg = new RtfExportDialog();
-            GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
+            bool done = false;
 
-            if (dlg.ShowDialog() == true)
+            while (!done)
             {
-                try
-                {
-                    string filePath = RtfWriter.SelectTargetRtfFile();
+                done = true;
+                RtfExportDialog dlg = new RtfExportDialog();
+                GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
-                    if (!string.IsNullOrEmpty(filePath) && filePath[0] != '.')
+                if (dlg.ShowDialog() == true)
+                {
+                    try
                     {
-                        Mouse.SetCursor(Cursors.Wait);
-                        RtfWriter.WriteRtf(filePath);
-                        Mouse.SetCursor(Cursors.Arrow);
+                        string filePath = RtfWriter.SelectTargetRtfFile();
+
+                        if (!string.IsNullOrEmpty(filePath) && filePath[0] != '.')
+                        {
+                            Mouse.SetCursor(Cursors.Wait);
+                            done = RtfWriter.WriteRtf(filePath);
+                            Mouse.SetCursor(Cursors.Arrow);
+                        }
                     }
+                    catch { }
                 }
-                catch { }
             }
         }
     }
