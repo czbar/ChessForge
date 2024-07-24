@@ -62,7 +62,7 @@ namespace ChessForge
         /// </summary>
         public bool ShowIntro
         {
-            get => AlwaysShowIntroTab || !IsIntroEmpty();
+            get => AlwaysShowIntroTab || !IsSavedIntroEmpty();
         }
 
         /// <summary>
@@ -144,12 +144,29 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Tests if the content of the Intro article is empty.
+        /// Checks if both the current intro view and the saved intro
+        /// is empty.
+        /// It does this by forcing to save the Intro view if currently active
+        /// and them calling IsSavedIntroEmpty().
+        /// </summary>
+        /// <returns></returns>
+        public bool IsIntroEmpty()
+        {
+            if (AppState.ActiveTab == TabViewType.INTRO)
+            {
+                AppState.MainWin.SaveIntro();
+            }
+
+            return IsSavedIntroEmpty();
+        }
+
+        /// <summary>
+        /// Checks if the content of the saved Intro article is empty.
         /// It is empty if there is nothing in the CodedContent property
         /// or no Paragraph in the decoded content.
         /// </summary>
         /// <returns></returns>
-        public bool IsIntroEmpty()
+        public bool IsSavedIntroEmpty()
         {
             string content = EncodingUtils.Base64Decode(Intro.CodedContent);
             int paraPos = content.IndexOf("<Paragraph");
