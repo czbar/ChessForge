@@ -117,6 +117,9 @@ namespace ChessForge
         // the list of nodes currently selected for copying into clipboard
         private List<TreeNode> _selectedForCopy = new List<TreeNode>();
 
+        // whether the view is built for display or print/export
+        protected bool _isPrinting = false;
+
         // the RichTextBox control underlying this view.
         public RichTextBox RichTextBoxControl;
 
@@ -144,6 +147,9 @@ namespace ChessForge
             _mainWin = AppState.MainWin;
             _contentType = contentType;
             RichTextBoxControl = null;
+
+            // this constructors is only called when printing (RTF exporting)
+            _isPrinting = true;
         }
 
         /// <summary>
