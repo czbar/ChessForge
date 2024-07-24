@@ -631,9 +631,9 @@ namespace ChessForge
             // if title is empty, do not include the second paragraph
             if (!string.IsNullOrWhiteSpace(title))
             {
-                Paragraph paraDummy1 = new Paragraph();
-                paraDummy1.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff;
-                doc.Blocks.Add(paraDummy1);
+                //Paragraph paraDummy1 = new Paragraph();
+                //paraDummy1.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff;
+                //doc.Blocks.Add(paraDummy1);
 
                 Paragraph paraChapterTitle = new Paragraph();
                 paraChapterTitle.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff + 2;
@@ -661,9 +661,9 @@ namespace ChessForge
             FlowDocument doc = new FlowDocument();
 
             // add a dummy paragraph a a spacer before the further content
-            Paragraph paraDummy1 = new Paragraph();
-            paraDummy1.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff + 4;
-            doc.Blocks.Add(paraDummy1);
+            //Paragraph paraDummy1 = new Paragraph();
+            //paraDummy1.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff + 4;
+            //doc.Blocks.Add(paraDummy1);
 
             Paragraph para = new Paragraph();
             para.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff + 2;
@@ -695,9 +695,9 @@ namespace ChessForge
             FlowDocument doc = new FlowDocument();
 
             // add a dummy paragraph a a spacer before the further content
-            Paragraph paraDummy1 = new Paragraph();
-            paraDummy1.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff + 8;
-            doc.Blocks.Add(paraDummy1);
+            //Paragraph paraDummy1 = new Paragraph();
+            //paraDummy1.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff + 8;
+            //doc.Blocks.Add(paraDummy1);
 
             Paragraph para = new Paragraph();
             para.TextAlignment = TextAlignment.Center;
@@ -733,9 +733,9 @@ namespace ChessForge
             FlowDocument doc = new FlowDocument();
 
             // add a dummy paragraph a a spacer before the further content
-            Paragraph paraDummy1 = new Paragraph();
-            paraDummy1.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff + 4;
-            doc.Blocks.Add(paraDummy1);
+            //Paragraph paraDummy1 = new Paragraph();
+            //paraDummy1.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff + 4;
+            //doc.Blocks.Add(paraDummy1);
 
             Paragraph para = new Paragraph();
             para.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff + 2;
@@ -1341,11 +1341,11 @@ namespace ChessForge
                 }
                 else if (line.IndexOf(EndTwoColumns()) >= 0)
                 {
-                    sb.Append(@"\sect\sectd\par\sbknone\linex0" + '\r');
+                    sb.Append(@"\sect\sectd\sbknone\linex0" + '\r');
                 }
                 else if (line.IndexOf(PageBreak()) >= 0)
                 {
-                    sb.Append(@"\par \pard\plain \pagebb{\loch}" + '\r');
+                    sb.Append(@"\pard\plain \pagebb{\loch}" + '\r');
                     sb.Append(@"\par \pard\plain {\loch}" + '\r');
                 }
                 else
