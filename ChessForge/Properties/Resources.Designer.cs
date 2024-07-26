@@ -1511,7 +1511,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Custom Terms.
+        ///   Looks up a localized string similar to Custom Headers.
         /// </summary>
         public static string CustomTerms {
             get {
@@ -2987,7 +2987,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Export as RTF.
+        ///   Looks up a localized string similar to Export as RTF (Beta).
         /// </summary>
         public static string ExportRtf {
             get {

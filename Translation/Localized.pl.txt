@@ -1186,7 +1186,7 @@ TwoColumnFormat=Format 2-kolumnowy
 
 #description: Custom Terms
 #english: CustomTerms=Custom Terms
-CustomTerms=Niestandardowe Terminy
+CustomTerms=Niestandardowe Nagłówki
 
 
 #######################################

@@ -619,7 +619,7 @@ SaveAs=
 Export=
 
 #description: Export as RTF
-#english: ExportRtf=Export as RTF
+#english: ExportRtf=Export as RTF (Beta)
 ExportRtf=
 
 #description: Saves a copy of the current Workbook with the current version number, increments the version number
@@ -1185,7 +1185,7 @@ ChapterItems=
 TwoColumnFormat=
 
 #description: Custom Terms
-#english: CustomTerms=Custom Terms
+#english: CustomTerms=Custom Headers
 CustomTerms=
 
 

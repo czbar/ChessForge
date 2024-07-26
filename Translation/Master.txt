@@ -477,7 +477,7 @@ SaveAs=Save $0 As ...
 Export=Export
 
 #Export as RTF
-ExportRtf=Export as RTF
+ExportRtf=Export as RTF (Beta)
 
 #Saves a copy of the current Workbook with the current version number, increments the version number
 BackUpThisVersion=Back up this Version ...
@@ -923,7 +923,7 @@ ChapterItems=Chapter Items
 TwoColumnFormat=Two Column Format
 
 #Custom Terms
-CustomTerms=Custom Terms
+CustomTerms=Custom Headers
 
 
 #######################################

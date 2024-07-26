@@ -619,7 +619,7 @@ SaveAs=Zapisz $0 jako ...
 Export=Eksportuj
 
 #description: Export as RTF
-#english: ExportRtf=Export as RTF
+#english: ExportRtf=Export as RTF (Beta)
 ExportRtf=Eksportuj jako RTF
 
 #description: Saves a copy of the current Workbook with the current version number, increments the version number
@@ -1185,8 +1185,8 @@ ChapterItems=Elementy Rozdziału
 TwoColumnFormat=Format 2-kolumnowy
 
 #description: Custom Terms
-#english: CustomTerms=Custom Terms
-CustomTerms=Niestandardowe Terminy
+#english: CustomTerms=Custom Headers
+CustomTerms=Niestandardowe Nagłówki
 
 
 #######################################

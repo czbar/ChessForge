@@ -544,7 +544,7 @@
     <value>Export</value>
   </data>
   <data name="ExportRtf" xml:space="preserve">
-    <value>Export as RTF</value>
+    <value>Export as RTF (Beta)</value>
   </data>
   <data name="BackUpThisVersion" xml:space="preserve">
     <value>Back up this Version ...</value>
@@ -905,7 +905,7 @@
     <value>Two Column Format</value>
   </data>
   <data name="CustomTerms" xml:space="preserve">
-    <value>Custom Terms</value>
+    <value>Custom Headers</value>
   </data>
   <data name="ReorderLines" xml:space="preserve">
     <value>Reorder Lines</value>
