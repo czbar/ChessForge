@@ -168,6 +168,9 @@
     </Compile>
     <Compile Include="EvaluationLine.cs" />
     <Compile Include="EvaluationTrainingLine.cs" />
+    <Compile Include="ExerciseSolutionsDialog.xaml.cs">
+      <DependentUpon>ExerciseSolutionsDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ExerciseTreeView.cs" />
     <Compile Include="FileUtils.cs" />
     <Compile Include="FindDuplicates.cs" />
@@ -181,6 +184,7 @@
       <DependentUpon>GamesEvalDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="GamesEvaluationManager.cs" />
+    <Compile Include="GameSortCriterion.cs" />
     <Compile Include="GuiConfiguration.cs" />
     <Compile Include="HiddenClickDialog.xaml.cs">
       <DependentUpon>HiddenClickDialog.xaml</DependentUpon>
@@ -224,9 +228,6 @@
     <Compile Include="ActiveLineManager.cs" />
     <Compile Include="MainWindowToolsMenu.cs" />
     <Compile Include="MainWindowTrainingActions.cs" />
-    <Compile Include="ManageChapterDialog.xaml.cs">
-      <DependentUpon>ManageChapterDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ManualReviewState.cs" />
     <Compile Include="MouseClickMonitor.cs" />
     <Compile Include="MoveAnimator.cs" />
@@ -263,6 +264,9 @@
     </Compile>
     <Compile Include="PulseManager.cs" />
     <Compile Include="ReferenceGamePreviewDialog.cs" />
+    <Compile Include="RegenerateStudyDialog.xaml.cs">
+      <DependentUpon>RegenerateStudyDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ReorderLinesDialog.xaml.cs">
       <DependentUpon>ReorderLinesDialog.xaml</DependentUpon>
     </Compile>
@@ -285,8 +289,14 @@
     <Compile Include="SelectLibraryDialog.xaml.cs">
       <DependentUpon>SelectLibraryDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SetThumbnailsDialog.xaml.cs">
+      <DependentUpon>SetThumbnailsDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SingleLineEditor.xaml.cs">
       <DependentUpon>SingleLineEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SortGamesDialog.xaml.cs">
+      <DependentUpon>SortGamesDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="SplitChapterDialog.xaml.cs">
       <DependentUpon>SplitChapterDialog.xaml</DependentUpon>
@@ -440,6 +450,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ExerciseSolutionsDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GameHeaderDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -476,10 +490,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="ManageChapterDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="OnlineLibraryContentDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -501,6 +511,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GamePreviewDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RegenerateStudyDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -540,7 +554,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="SetThumbnailsDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SingleLineEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SortGamesDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

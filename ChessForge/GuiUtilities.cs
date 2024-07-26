@@ -371,7 +371,7 @@ namespace ChessForge
                 AppState.MainWin.ChaptersView.BuildFlowDocumentForChaptersView();
                 if (chapterToView != null)
                 {
-                    PulseManager.ChaperIndexToBringIntoView = chapterToView.Index;
+                    PulseManager.ChapterIndexToBringIntoView = chapterToView.Index;
                 }
             }
         }

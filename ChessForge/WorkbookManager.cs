@@ -803,7 +803,7 @@ namespace ChessForge
                     games.Insert(0, null);
                     ProcessGamesInBackground(ref games, ref SessionWorkbook, chapter);
 
-                    if (AppState.MainWin.ShowWorkbookOptionsDialog(false))
+                    if (AppState.MainWin.ShowWorkbookOptionsDialog())
                     {
                         if (SaveWorkbookToNewFileV2(""))
                         {
@@ -1269,27 +1269,18 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Ask the user whether they intend to close the Workbook
-        /// e.g. because they selected File->New while there is a workbook currently open.
+        /// Check/ask whether to save the current workbook.
         /// </summary>
         /// <returns></returns>
         public static bool AskToCloseWorkbook()
         {
-            // if a workbook is open ask whether to close it first
             if (AppState.CurrentLearningMode != LearningMode.Mode.IDLE)
             {
-                if (MessageBox.Show(Properties.Resources.CloseThisWorkbook, Properties.Resources.Confirm, MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
+                AskToSaveWorkbookOnClose();
+                // if we are not in IDLE mode then the user did not close
+                if (AppState.CurrentLearningMode != LearningMode.Mode.IDLE)
                 {
                     return false;
-                }
-                else
-                {
-                    WorkbookManager.AskToSaveWorkbookOnClose();
-                    // if we are not in IDLE mode then the user did not close
-                    if (AppState.CurrentLearningMode != LearningMode.Mode.IDLE)
-                    {
-                        return false;
-                    }
                 }
             }
 

@@ -544,7 +544,7 @@
     <value>Export</value>
   </data>
   <data name="ExportRtf" xml:space="preserve">
-    <value>Export as RTF</value>
+    <value>Export as RTF (Beta)</value>
   </data>
   <data name="BackUpThisVersion" xml:space="preserve">
     <value>Back up this Version ...</value>
@@ -688,7 +688,7 @@
     <value>Tools</value>
   </data>
   <data name="MnEvaluateGames" xml:space="preserve">
-    <value>Evaluate Games in Workbook</value>
+    <value>Evaluate Games</value>
   </data>
   <data name="StripComments" xml:space="preserve">
     <value>Delete Comments...</value>
@@ -905,7 +905,7 @@
     <value>Two Column Format</value>
   </data>
   <data name="CustomTerms" xml:space="preserve">
-    <value>Custom Terms</value>
+    <value>Custom Headers</value>
   </data>
   <data name="ReorderLines" xml:space="preserve">
     <value>Reorder Lines</value>
@@ -1018,11 +1018,11 @@
   <data name="MsgNoPositionsFound" xml:space="preserve">
     <value>Specified position has not been found.</value>
   </data>
-  <data name="DuplicatesOf" xml:space="preserve">
-    <value>Duplicates of</value>
+  <data name="NumberOfDuplicatedItems" xml:space="preserve">
+    <value>Number of duplicated items</value>
   </data>
   <data name="SelectArticleDuplicatesToDelete" xml:space="preserve">
-    <value>Select Items to Delete</value>
+    <value>Selected Items will be DELETED</value>
   </data>
   <data name="Statistics" xml:space="preserve">
     <value>Statistics</value>
@@ -1094,10 +1094,10 @@
     <value>Sort By</value>
   </data>
   <data name="RegenerateStudyTree" xml:space="preserve">
-    <value>Regenerate</value>
+    <value>Regenerate Study from Games</value>
   </data>
   <data name="MsgThisOverwritesStudy" xml:space="preserve">
-    <value>This will replace the current Study. Proceed?</value>
+    <value>This will delete and replace the current Study. Proceed?</value>
   </data>
   <data name="SortByEco" xml:space="preserve">
     <value>ECO</value>
@@ -1126,11 +1126,29 @@
   <data name="ApplyToAllChapters" xml:space="preserve">
     <value>Apply to All Chapters</value>
   </data>
+  <data name="ExerciseViewConfig" xml:space="preserve">
+    <value>Exercise View</value>
+  </data>
+  <data name="ShowSolutions" xml:space="preserve">
+    <value>Show Solutions</value>
+  </data>
+  <data name="ShowSolutionsByDefault" xml:space="preserve">
+    <value>Show on Open</value>
+  </data>
+  <data name="Solutions" xml:space="preserve">
+    <value>Solutions</value>
+  </data>
   <data name="GamesOrder" xml:space="preserve">
-    <value>Games Order</value>
+    <value>Sort Games</value>
+  </data>
+  <data name="Criteria" xml:space="preserve">
+    <value>Criteria</value>
   </data>
   <data name="GameThumbnails" xml:space="preserve">
-    <value>Game Thumbnails</value>
+    <value>Set Game Thumbnails</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>Location</value>
   </data>
   <data name="CreateAtMove" xml:space="preserve">
     <value>Create at Move</value>
@@ -1671,9 +1689,6 @@
   </data>
   <data name="ShowSolutionsInChapter" xml:space="preserve">
     <value>Show All Solutions in Chapter</value>
-  </data>
-  <data name="ShowSolutionsByDefault" xml:space="preserve">
-    <value>Show Solutions on Open</value>
   </data>
   <data name="HideSolutionsInChapter" xml:space="preserve">
     <value>Hide All Solutions in Chapter</value>

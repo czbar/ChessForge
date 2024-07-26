@@ -1448,6 +1448,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Criteria.
+        /// </summary>
+        public static string Criteria {
+            get {
+                return ResourceManager.GetString("Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid criterion: min number of moves cannot be greater than max..
         /// </summary>
         public static string CritMaxMovesLessMin {
@@ -1502,7 +1511,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Custom Terms.
+        ///   Looks up a localized string similar to Custom Headers.
         /// </summary>
         public static string CustomTerms {
             get {
@@ -2002,15 +2011,6 @@ namespace ChessForge.Properties {
         public static string Draws {
             get {
                 return ResourceManager.GetString("Draws", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Duplicates of.
-        /// </summary>
-        public static string DuplicatesOf {
-            get {
-                return ResourceManager.GetString("DuplicatesOf", resourceCulture);
             }
         }
         
@@ -2870,6 +2870,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exercise View.
+        /// </summary>
+        public static string ExerciseViewConfig {
+            get {
+                return ResourceManager.GetString("ExerciseViewConfig", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exit.
         /// </summary>
         public static string Exit {
@@ -2978,7 +2987,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Export as RTF.
+        ///   Looks up a localized string similar to Export as RTF (Beta).
         /// </summary>
         public static string ExportRtf {
             get {
@@ -3491,7 +3500,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Games Order.
+        ///   Looks up a localized string similar to Sort Games.
         /// </summary>
         public static string GamesOrder {
             get {
@@ -3527,7 +3536,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Game Thumbnails.
+        ///   Looks up a localized string similar to Set Game Thumbnails.
         /// </summary>
         public static string GameThumbnails {
             get {
@@ -4166,6 +4175,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Location.
+        /// </summary>
+        public static string Location {
+            get {
+                return ResourceManager.GetString("Location", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lost quiz points.
         /// </summary>
         public static string LostQuizPoints {
@@ -4301,7 +4319,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Evaluate Games in Workbook.
+        ///   Looks up a localized string similar to Evaluate Games.
         /// </summary>
         public static string MnEvaluateGames {
             get {
@@ -4670,7 +4688,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This will replace the current Study. Proceed?.
+        ///   Looks up a localized string similar to This will delete and replace the current Study. Proceed?.
         /// </summary>
         public static string MsgThisOverwritesStudy {
             get {
@@ -4865,6 +4883,15 @@ namespace ChessForge.Properties {
         public static string NoTrainingStartMove {
             get {
                 return ResourceManager.GetString("NoTrainingStartMove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of duplicated items.
+        /// </summary>
+        public static string NumberOfDuplicatedItems {
+            get {
+                return ResourceManager.GetString("NumberOfDuplicatedItems", resourceCulture);
             }
         }
         
@@ -5823,7 +5850,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Regenerate.
+        ///   Looks up a localized string similar to Regenerate Study from Games.
         /// </summary>
         public static string RegenerateStudyTree {
             get {
@@ -6156,7 +6183,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select Items to Delete.
+        ///   Looks up a localized string similar to Selected Items will be DELETED.
         /// </summary>
         public static string SelectArticleDuplicatesToDelete {
             get {
@@ -6480,7 +6507,16 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Show Solutions on Open.
+        ///   Looks up a localized string similar to Show Solutions.
+        /// </summary>
+        public static string ShowSolutions {
+            get {
+                return ResourceManager.GetString("ShowSolutions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show on Open.
         /// </summary>
         public static string ShowSolutionsByDefault {
             get {
@@ -6521,6 +6557,15 @@ namespace ChessForge.Properties {
         public static string Slow {
             get {
                 return ResourceManager.GetString("Slow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Solutions.
+        /// </summary>
+        public static string Solutions {
+            get {
+                return ResourceManager.GetString("Solutions", resourceCulture);
             }
         }
         

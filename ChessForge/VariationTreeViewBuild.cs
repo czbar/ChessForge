@@ -121,7 +121,7 @@ namespace ChessForge
                         }
                         break;
                     case GameData.ContentType.STUDY_TREE:
-                        UpdateChapterTitle();
+                        headerPara = UpdateChapterTitle();
                         break;
                 }
             }

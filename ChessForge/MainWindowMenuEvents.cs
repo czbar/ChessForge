@@ -35,7 +35,7 @@ namespace ChessForge
             _studyTreeView = new StudyTreeView(UiRtbStudyTreeView, GameData.ContentType.STUDY_TREE);
 
             // ask for the options
-            if (!ShowWorkbookOptionsDialog(false))
+            if (!ShowWorkbookOptionsDialog())
             {
                 // user abandoned
                 return false;
@@ -449,7 +449,7 @@ namespace ChessForge
                     flash.Append("\ninto new chapter [" + (WorkbookManager.SessionWorkbook.GetChapterCount()).ToString() + "]");
                     AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(flash.ToString(), CommentBox.HintType.INFO);
 
-                    PulseManager.ChaperIndexToBringIntoView = WorkbookManager.SessionWorkbook.GetChapterCount() - 1;
+                    PulseManager.ChapterIndexToBringIntoView = WorkbookManager.SessionWorkbook.GetChapterCount() - 1;
                 }
 
                 AppState.IsDirty = mergedCount > 1;
@@ -799,11 +799,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnNewWorkbook_Click(object sender, RoutedEventArgs e)
         {
-            bool created = CreateNewWorkbook();
-            if (!created)
-            {
-                AppState.RestartInIdleMode();
-            }
+            CreateNewWorkbook();
         }
 
         //**********************
@@ -1219,6 +1215,7 @@ namespace ChessForge
             }
 
             _chaptersView?.BuildFlowDocumentForChaptersView();
+            _chaptersView?.BringActiveChapterIntoView();
         }
 
         /// <summary>
@@ -1347,7 +1344,7 @@ namespace ChessForge
                                 if (_chaptersView != null)
                                 {
                                     _chaptersView.BuildFlowDocumentForChaptersView();
-                                    PulseManager.ChaperIndexToBringIntoView = WorkbookManager.SessionWorkbook.GetChapterCount() - 1;
+                                    PulseManager.ChapterIndexToBringIntoView = WorkbookManager.SessionWorkbook.GetChapterCount() - 1;
                                 }
                                 AppState.IsDirty = true;
 
@@ -1603,7 +1600,7 @@ namespace ChessForge
                 _chaptersView.RebuildChapterParagraph(AppState.Workbook.Chapters[index - 1]);
                 SelectChapterByIndex(index - 1, false, false);
 
-                PulseManager.ChaperIndexToBringIntoView = index - 1;
+                PulseManager.ChapterIndexToBringIntoView = index - 1;
                 AppState.IsDirty = true;
             }
         }
@@ -1626,7 +1623,7 @@ namespace ChessForge
                 _chaptersView.RebuildChapterParagraph(AppState.Workbook.Chapters[index + 1]);
                 SelectChapterByIndex(index + 1, false, false);
 
-                PulseManager.ChaperIndexToBringIntoView = index + 1;
+                PulseManager.ChapterIndexToBringIntoView = index + 1;
                 AppState.IsDirty = true;
             }
         }
@@ -1845,7 +1842,7 @@ namespace ChessForge
                 string fileName = SelectPgnFile();
                 if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
                 {
-                    Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                    Chapter activeChapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                     ObservableCollection<GameData> games = new ObservableCollection<GameData>();
                     gameCount = WorkbookManager.ReadPgnFile(fileName, ref games, contentType, targetcontentType);
 
@@ -1865,63 +1862,101 @@ namespace ChessForge
                     {
                         if (ShowSelectGamesDialog(contentType, ref games))
                         {
-                            Mouse.SetCursor(Cursors.Wait);
-                            try
+                            int chapterIndex = ChapterUtils.InvokeSelectSingleChapterDialog(activeChapter.Index, out bool newChapter);
+
+                            bool proceed = true;
+
+                            if (chapterIndex >= 0)
                             {
-
-                                for (int i = 0; i < games.Count; i++)
+                                Chapter targetChapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(chapterIndex);
+                                if (newChapter)
                                 {
-                                    if (games[i].IsSelected)
+                                    ChapterTitleDialog dlg = new ChapterTitleDialog(targetChapter);
+                                    GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
+                                    if (dlg.ShowDialog() == true)
                                     {
-                                        try
-                                        {
-                                            int index = PgnArticleUtils.AddArticle(chapter, games[i], contentType, out string error, targetcontentType);
-                                            if (index < 0)
-                                            {
-                                                if (string.IsNullOrEmpty(error))
-                                                {
-                                                    skippedDueToType++;
-                                                }
-                                            }
-                                            else
-                                            {
-                                                undoItem = new ArticleListItem(chapter, chapter.Index, chapter.GetArticleAtIndex(targetcontentType, index), index);
-                                                if (undoItem.Article != null)
-                                                {
-                                                    undoArticleList.Add(undoItem);
-                                                }
-
-                                                if (firstImportedGameIndex < 0)
-                                                {
-                                                    firstImportedGameIndex = index;
-                                                }
-                                            }
-
-                                            AppState.IsDirty = true;
-                                            if (!string.IsNullOrEmpty(error))
-                                            {
-                                                errorCount++;
-                                                sbErrors.Append(GuiUtilities.BuildGameProcessingErrorText(games[i], i + 1, error));
-                                            }
-                                            importedGames++;
-                                        }
-                                        catch (Exception ex)
-                                        {
-                                            errorCount++;
-                                            sbErrors.Append(GuiUtilities.BuildGameProcessingErrorText(games[i], i + 1, ex.Message));
-                                        }
+                                        targetChapter.SetTitle(dlg.ChapterTitle);
+                                        targetChapter.SetAuthor(dlg.Author);
+                                        AppState.Workbook.ActiveChapter = targetChapter;
+                                    }
+                                    else
+                                    {
+                                        AppState.Workbook.Chapters.Remove(targetChapter);
+                                        AppState.Workbook.ActiveChapter = activeChapter;
+                                        proceed = false;
                                     }
                                 }
-                                RefreshChaptersViewAfterImport(targetcontentType, chapter, firstImportedGameIndex);
-                            }
-                            catch { }
+                                else
+                                {
+                                    AppState.Workbook.ActiveChapter = targetChapter;
+                                }
 
-                            if (undoArticleList.Count > 0)
-                            {
-                                WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.INSERT_ARTICLES, (object)undoArticleList);
-                                WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
+                                if (proceed)
+                                {
+                                    Mouse.SetCursor(Cursors.Wait);
+                                    try
+                                    {
+
+                                        for (int i = 0; i < games.Count; i++)
+                                        {
+                                            if (games[i].IsSelected)
+                                            {
+                                                try
+                                                {
+                                                    int index = PgnArticleUtils.AddArticle(targetChapter, games[i], contentType, out string error, targetcontentType);
+                                                    if (index < 0)
+                                                    {
+                                                        if (string.IsNullOrEmpty(error))
+                                                        {
+                                                            skippedDueToType++;
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        undoItem = new ArticleListItem(targetChapter, targetChapter.Index, targetChapter.GetArticleAtIndex(targetcontentType, index), index);
+                                                        if (undoItem.Article != null)
+                                                        {
+                                                            undoArticleList.Add(undoItem);
+                                                        }
+
+                                                        if (firstImportedGameIndex < 0)
+                                                        {
+                                                            firstImportedGameIndex = index;
+                                                        }
+                                                    }
+
+                                                    AppState.IsDirty = true;
+                                                    if (!string.IsNullOrEmpty(error))
+                                                    {
+                                                        errorCount++;
+                                                        sbErrors.Append(GuiUtilities.BuildGameProcessingErrorText(games[i], i + 1, error));
+                                                    }
+                                                    importedGames++;
+                                                }
+                                                catch (Exception ex)
+                                                {
+                                                    errorCount++;
+                                                    sbErrors.Append(GuiUtilities.BuildGameProcessingErrorText(games[i], i + 1, ex.Message));
+                                                }
+                                            }
+                                        }
+                                        RefreshChaptersViewAfterImport(targetcontentType, targetChapter, firstImportedGameIndex);
+                                    }
+                                    catch { }
+
+                                    if (undoArticleList.Count > 0)
+                                    {
+                                        WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.INSERT_ARTICLES, (object)undoArticleList);
+                                        WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
+                                    }
+
+                                    if (AppState.ActiveTab == TabViewType.CHAPTERS)
+                                    {
+                                        ChaptersView.BringActiveChapterIntoView();
+                                    }
+                                    Mouse.SetCursor(Cursors.Arrow);
+                                }
                             }
-                            Mouse.SetCursor(Cursors.Arrow);
                         }
                         else
                         {
@@ -2168,6 +2203,8 @@ namespace ChessForge
                     {
                         tree.Header.SetHeaderValue(PgnHeaders.KEY_WHITE, chapter.Title);
                         tree.Header.SetHeaderValue(PgnHeaders.KEY_BLACK, Properties.Resources.StudyTreeAfter + " " + MoveUtils.BuildSingleMoveText(nd, true, true, ActiveVariationTree.MoveNumberOffset));
+
+                        ChapterUtils.ClearStudyTreeHeader(tree);
                     }
                     CreateNewExerciseFromTree(tree);
                 }
@@ -2505,9 +2542,22 @@ namespace ChessForge
                 mode = SelectGamesDialog.Mode.IMPORT_EXERCISES;
             }
 
+            bool res = false;
             SelectGamesDialog dlg = new SelectGamesDialog(ref games, mode);
             GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
-            return dlg.ShowDialog() == true;
+            if (dlg.ShowDialog() == true)
+            {
+                foreach (var game in games)
+                {
+                    if (game.IsSelected)
+                    {
+                        res = true;
+                        break;
+                    }
+                }
+            }
+
+            return res;
         }
 
         /// <summary>
@@ -2714,13 +2764,33 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Invokes dialog for managing some aspects of the active chapter.
+        /// Invokes dialog for sorting games in the active chapter / workbook.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiMnManageChapter_Click(object sender, RoutedEventArgs e)
+        private void UiMnSortGames_Click(object sender, RoutedEventArgs e)
         {
-            ChapterUtils.ManageChapter(AppState.ActiveChapter);
+            ChapterUtils.InvokeSortGamesDialog(AppState.ActiveChapter);
+        }
+
+        /// <summary>
+        /// Invokes dialog for creating thumbnails.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnSetThumbnails_Click(object sender, RoutedEventArgs e)
+        {
+            ChapterUtils.InvokeSetThumbnailsDialog(AppState.ActiveChapter);
+        }
+
+        /// <summary>
+        /// Invokes dialog for configuring Exercise View.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnExerciseViewConfig_Click(object sender, RoutedEventArgs e)
+        {
+            ChapterUtils.InvokeExerciseViewConfigDialog(AppState.ActiveChapter);
         }
 
         /// <summary>
@@ -3030,6 +3100,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// The user indicated intention to regenerate the study.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnRegenerateStudy_Click(object sender, RoutedEventArgs e)
+        {
+            ChapterUtils.InvokeRegenerateStudyDialog(AppState.ActiveChapter);
+        }
+
+        /// <summary>
         /// The user requested from the Study menu to promote the currently selected line.
         /// </summary>
         /// <param name="sender"></param>
@@ -3271,7 +3351,7 @@ namespace ChessForge
         {
             if (AppState.CurrentLearningMode != LearningMode.Mode.IDLE)
             {
-                if (ShowWorkbookOptionsDialog(false))
+                if (ShowWorkbookOptionsDialog())
                 {
                     AppState.IsDirty = true;
                 }
@@ -4301,23 +4381,29 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnWriteRtf_Click(object sender, RoutedEventArgs e)
         {
-            RtfExportDialog dlg = new RtfExportDialog();
-            GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
+            bool done = false;
 
-            if (dlg.ShowDialog() == true)
+            while (!done)
             {
-                try
-                {
-                    string filePath = RtfWriter.SelectTargetRtfFile();
+                done = true;
+                RtfExportDialog dlg = new RtfExportDialog();
+                GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
-                    if (!string.IsNullOrEmpty(filePath) && filePath[0] != '.')
+                if (dlg.ShowDialog() == true)
+                {
+                    try
                     {
-                        Mouse.SetCursor(Cursors.Wait);
-                        RtfWriter.WriteRtf(filePath);
-                        Mouse.SetCursor(Cursors.Arrow);
+                        string filePath = RtfWriter.SelectTargetRtfFile();
+
+                        if (!string.IsNullOrEmpty(filePath) && filePath[0] != '.')
+                        {
+                            Mouse.SetCursor(Cursors.Wait);
+                            done = RtfWriter.WriteRtf(filePath);
+                            Mouse.SetCursor(Cursors.Arrow);
+                        }
                     }
+                    catch { }
                 }
-                catch { }
             }
         }
     }

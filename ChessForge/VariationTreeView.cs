@@ -117,6 +117,9 @@ namespace ChessForge
         // the list of nodes currently selected for copying into clipboard
         private List<TreeNode> _selectedForCopy = new List<TreeNode>();
 
+        // whether the view is built for display or print/export
+        protected bool _isPrinting = false;
+
         // the RichTextBox control underlying this view.
         public RichTextBox RichTextBoxControl;
 
@@ -144,6 +147,9 @@ namespace ChessForge
             _mainWin = AppState.MainWin;
             _contentType = contentType;
             RichTextBoxControl = null;
+
+            // this constructors is only called when printing (RTF exporting)
+            _isPrinting = true;
         }
 
         /// <summary>
@@ -352,10 +358,15 @@ namespace ChessForge
 
                 Document.Blocks.Add(BuildDummyPararaph());
 
-                _pageHeaderParagraph = BuildPageHeader(_mainVariationTree, contentType);
-                if (_pageHeaderParagraph != null)
+                // do not print page header if this is RTF export (print) and the view is Study
+                // NOTE: first, it is redundant; second, it will print the title of the active chapter
+                if (treeForPrint == null || contentType != GameData.ContentType.STUDY_TREE)
                 {
-                    Document.Blocks.Add(_pageHeaderParagraph);
+                    _pageHeaderParagraph = BuildPageHeader(_mainVariationTree, contentType);
+                    if (_pageHeaderParagraph != null)
+                    {
+                        Document.Blocks.Add(_pageHeaderParagraph);
+                    }
                 }
 
                 BuildExerciseParagraphs();
@@ -442,7 +453,7 @@ namespace ChessForge
         /// <summary>
         /// Update the chapter title that is displayed above the Study Tree.
         /// </summary>
-        public void UpdateChapterTitle()
+        public Paragraph UpdateChapterTitle()
         {
             Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
             if (chapter != null)
@@ -467,6 +478,8 @@ namespace ChessForge
                     _pageHeaderParagraph.Inlines.Add(rAuthor);
                 }
             }
+
+            return _pageHeaderParagraph;
         }
 
 

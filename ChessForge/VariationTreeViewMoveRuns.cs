@@ -324,7 +324,8 @@ namespace ChessForge
                     parts.Add(new CommentPart(CommentPartType.QUIZ_POINTS, " *" + Properties.Resources.QuizPoints + ": " + nd.QuizPoints.ToString() + "* "));
                 }
 
-                if (nd.IsThumbnail)
+                // only add the thumbnail part if we are not printing/exporting
+                if (nd.IsThumbnail && !_isPrinting)
                 {
                     CommentPart thumb = new CommentPart(CommentPartType.THUMBNAIL_SYMBOL, "");
                     parts.Insert(0, thumb);
@@ -362,6 +363,7 @@ namespace ChessForge
                 for (int i = 0; i < parts.Count; i++)
                 {
                     CommentPart part = parts[i];
+
                     Inline inl;
 
                     switch (part.Type)
@@ -557,13 +559,15 @@ namespace ChessForge
         /// <summary>
         /// Checks if there is anything to show in the comment run i.e.
         /// non-empty comment text, a thumbnail indicator or quiz points if the tree is in exercise editing mode.
+        /// Note: if we only have a thumbnail and we building a printing/exporting view,
+        /// we consider that there is nothing to show.
         /// </summary>
         /// <param name="nd"></param>
         /// <returns></returns>
         private bool IsCommentRunToShow(TreeNode nd)
         {
             return !string.IsNullOrEmpty(nd.Comment)
-                   || nd.IsThumbnail
+                   || (nd.IsThumbnail && !_isPrinting)
                    || HandleBlunders && nd.Assessment != 0 && nd.IsMainLine()
                    || (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.EDITING && nd.QuizPoints != 0);
         }

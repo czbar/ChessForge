@@ -1,13 +1,11 @@
-﻿using ChessForge;
+﻿using ChessPosition;
+using ChessPosition.GameTree;
+using GameTree;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using GameTree;
-using ChessPosition;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
-using ChessPosition.GameTree;
 using System.Windows.Input;
 
 namespace ChessForge
@@ -18,28 +16,102 @@ namespace ChessForge
     public class ChapterUtils
     {
         /// <summary>
-        /// Invokes dialog for managing some aspects of the active chapter.
+        /// Through some loose programming we may end up with some garbage in the Study Tree header
+        /// (e.g. after regenerating) which in turn may affect things like the title of an exercise
+        /// when created from a position in the Study.
+        /// </summary>
+        /// <param name="tree"></param>
+        public static void ClearStudyTreeHeader(VariationTree tree)
+        {
+            tree.Header.SetHeaderValue(PgnHeaders.KEY_WHITE_ELO, "");
+            tree.Header.SetHeaderValue(PgnHeaders.KEY_BLACK_ELO, "");
+            tree.Header.SetHeaderValue(PgnHeaders.KEY_DATE, "");
+            tree.Header.SetHeaderValue(PgnHeaders.KEY_EVENT, "");
+        }
+
+        /// <summary>
+        /// Invokes the dialog for specifying regeneration's depth.
         /// </summary>
         /// <param name="chapter"></param>
-        public static void ManageChapter(Chapter chapter)
+        public static void InvokeRegenerateStudyDialog(Chapter chapter)
         {
             if (chapter != null)
             {
-                ManageChapterDialog dlg = new ManageChapterDialog(chapter);
+                RegenerateStudyDialog dlg = new RegenerateStudyDialog(chapter);
                 GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
                 if (dlg.ShowDialog() == true)
                 {
                     try
                     {
-                        bool regenerateStudy = dlg.RegenerateStudy;
-                        bool sortGames = dlg.SortGamesBy != GameSortCriterion.SortItem.NONE && chapter.ModelGames.Count > 1;
-                        if (dlg.RegenerateStudy)
+                        if (RegenerateStudy(dlg.ApplyToAllChapters ? null : chapter))
                         {
-                            RegenerateStudy(dlg.ApplyToAllChapters ? null : chapter);
                             AppState.IsDirty = true;
                         }
 
+                        // go to the appropriate view
+                        AppState.MainWin.SetupGuiForActiveStudyTree(true);
+                    }
+                    catch (Exception ex)
+                    {
+                        AppLog.Message("InvokeRegenerateStudyDialog()", ex);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Invokes the dialog for sorting games in a chapter/workbook.
+        /// </summary>
+        /// <param name="chapter"></param>
+        public static void InvokeSortGamesDialog(Chapter chapter)
+        {
+            if (chapter != null)
+            {
+                try
+                {
+                    SortGamesDialog dlg = new SortGamesDialog(chapter);
+                    GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
+
+                    if (dlg.ShowDialog() == true && dlg.SortGamesBy != GameSortCriterion.SortItem.NONE)
+                    {
+                        if (dlg.ApplyToAllChapters)
+                        {
+                            SortGames(null, dlg.SortGamesBy, dlg.SortGamesDirection);
+                        }
+                        else
+                        {
+                            SortGames(chapter, dlg.SortGamesBy, dlg.SortGamesDirection);
+                        }
+
+                        AppState.IsDirty = true;
+                        GuiUtilities.RefreshChaptersView(null);
+                        AppState.MainWin.UiTabChapters.Focus();
+                        PulseManager.ChapterIndexToBringIntoView = chapter.Index;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    AppLog.Message("InvokeSortGamesDialog()", ex);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Invokes the dialog for configuring the exercise view.
+        /// </summary>
+        /// <param name="chapter"></param>
+        public static void InvokeExerciseViewConfigDialog(Chapter chapter)
+        {
+            if (chapter != null)
+            {
+                ExerciseSolutionsDialog dlg = new ExerciseSolutionsDialog(chapter);
+                GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
+
+                if (dlg.ShowDialog() == true)
+                {
+                    try
+                    {
                         if (dlg.ShowSolutionOnOpen != chapter.ShowSolutionsOnOpen)
                         {
                             chapter.ShowSolutionsOnOpen = dlg.ShowSolutionOnOpen;
@@ -47,19 +119,30 @@ namespace ChessForge
                             AppState.MainWin.UpdateShowSolutionInExerciseView(dlg.ShowSolutionOnOpen);
                             AppState.IsDirty = true;
                         }
+                    }
+                    catch (Exception ex)
+                    {
+                        AppLog.Message("InvokeExerciseViewConfigDialog()", ex);
+                    }
+                }
+            }
+        }
 
-                        if (sortGames)
-                        {
-                            if (dlg.ApplyToAllChapters)
-                            {
-                                SortGames(null, dlg.SortGamesBy, dlg.SortGamesDirection);
-                            }
-                            else
-                            {
-                                SortGames(chapter, dlg.SortGamesBy, dlg.SortGamesDirection);
-                            }
-                            AppState.IsDirty = true;
-                        }
+        /// <summary>
+        /// Invokes the dialog for setting thumbnails in a chapter/workbook.
+        /// </summary>
+        /// <param name="chapter"></param>
+        public static void InvokeSetThumbnailsDialog(Chapter chapter)
+        {
+            if (chapter != null)
+            {
+                SetThumbnailsDialog dlg = new SetThumbnailsDialog(chapter);
+                GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
+
+                if (dlg.ShowDialog() == true)
+                {
+                    try
+                    {
                         if (dlg.ThumbnailMove > 0)
                         {
                             if (dlg.ApplyToAllChapters)
@@ -73,26 +156,10 @@ namespace ChessForge
                             AppState.IsDirty = true;
                             AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgGamesThumbnailsSet, CommentBox.HintType.INFO);
                         }
-
-                        // go to the appropriate view
-                        if (dlg.RegenerateStudy)
-                        {
-                            AppState.MainWin.SetupGuiForActiveStudyTree(true);
-                            if (sortGames)
-                            {
-                                AppState.MainWin.ChaptersView.IsDirty = true;
-                            }
-                        }
-                        else if (sortGames)
-                        {
-                            GuiUtilities.RefreshChaptersView(null);
-                            AppState.MainWin.UiTabChapters.Focus();
-                            PulseManager.ChaperIndexToBringIntoView = chapter.Index;
-                        }
                     }
                     catch (Exception ex)
                     {
-                        AppLog.Message("ManageChapter()", ex);
+                        AppLog.Message("InvokeSetThumbnailsDialog()", ex);
                     }
                 }
             }
@@ -195,13 +262,18 @@ namespace ChessForge
         /// <param name="action"></param>
         public static void ProcessCopyOrMoveArticles(TreeNode startNode, ObservableCollection<ArticleListItem> lstArticles, ArticlesAction action)
         {
-            int index = InvokeSelectSingleChapterDialog(out bool newChapter);
+            // preserve/restore the active chapter as the dialog may change it if new chapter was requested
+            Chapter currActiveChapter = AppState.ActiveChapter;
+            int index = InvokeSelectSingleChapterDialog(-1, out bool newChapter);
+            WorkbookManager.SessionWorkbook.ActiveChapter = currActiveChapter;
+
             if (index >= 0)
             {
                 Chapter targetChapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(index);
 
                 if (newChapter)
                 {
+                    targetChapter.SetTitle(SuggestChapterTitle(startNode));
                     ChapterTitleDialog dlg = new ChapterTitleDialog(targetChapter);
                     GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
                     if (dlg.ShowDialog() == true)
@@ -216,7 +288,6 @@ namespace ChessForge
 
                 if (newChapter && startNode != null)
                 {
-                    SetChapterTitle(startNode, targetChapter);
                     List<TreeNode> stem = TreeUtils.GetStemLine(startNode, true);
                     targetChapter.StudyTree.Tree.Nodes = TreeUtils.CopyNodeList(stem);
                     targetChapter.StudyTree.Tree.Nodes[stem.Count - 1].IsThumbnail = true;
@@ -268,11 +339,12 @@ namespace ChessForge
 
                             if (gotoChaptersView)
                             {
+                                AppState.Workbook.ActiveChapter = targetChapter;
                                 targetChapter.IsViewExpanded = true;
                                 // show chapter view with the target chapter in the view and expanded
                                 AppState.MainWin.ChaptersView.IsDirty = true;
                                 AppState.MainWin.UiTabChapters.Focus();
-                                PulseManager.ChaperIndexToBringIntoView = targetChapter.Index;
+                                PulseManager.ChapterIndexToBringIntoView = targetChapter.Index;
                             }
                         }
                     }
@@ -301,15 +373,17 @@ namespace ChessForge
             try
             {
                 AppState.MainWin.ChaptersView.IsDirty = true;
-                Chapter chapter = AppState.Workbook.ActiveChapter;
+                Chapter activeChapter = AppState.Workbook.ActiveChapter;
 
                 // if we are in the Chapters view, we want to refresh the view
                 // and bring the target chapter into view.
                 if (AppState.ActiveTab == TabViewType.CHAPTERS)
                 {
+                    // if in Chapters view then change active chapter to target
+                    AppState.Workbook.ActiveChapter = targetChapter;
                     GuiUtilities.RefreshChaptersView(null);
                     AppState.MainWin.UiTabChapters.Focus();
-                    PulseManager.ChaperIndexToBringIntoView = targetChapter.Index;
+                    PulseManager.ChapterIndexToBringIntoView = targetChapter.Index;
                 }
                 else if (action == ArticlesAction.COPY)
                 {
@@ -322,11 +396,11 @@ namespace ChessForge
                 {
                     if (AppState.ActiveTab == TabViewType.MODEL_GAME && (contentType == GameData.ContentType.MODEL_GAME || contentType == GameData.ContentType.GENERIC))
                     {
-                        UpdateModelGamesView(chapter);
+                        UpdateModelGamesView(activeChapter);
                     }
                     if (AppState.ActiveTab == TabViewType.EXERCISE && (contentType == GameData.ContentType.EXERCISE || contentType == GameData.ContentType.GENERIC))
                     {
-                        UpdateExercisesView(chapter);
+                        UpdateExercisesView(activeChapter);
                     }
                 }
             }
@@ -370,14 +444,32 @@ namespace ChessForge
         {
             if (nd != null && chapter != null)
             {
-                string title = "";
+                string title = SuggestChapterTitle(nd);
+                chapter.SetTitle(title);
+            }
+        }
+
+        /// <summary>
+        /// Suggests the chapter title based on the passed position.
+        /// This is useful after copying/moving games that were find after
+        /// search for identical positions.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        private static string SuggestChapterTitle(TreeNode nd)
+        {
+            string title = "";
+
+            if (nd != null)
+            {
                 if (nd.Eco != null)
                 {
                     title = nd.Eco + ": ";
                 }
                 title += MoveUtils.BuildSingleMoveText(nd, true, true, 0);
-                chapter.SetTitle(title);
             }
+
+            return title;
         }
 
         /// <summary>
@@ -498,15 +590,13 @@ namespace ChessForge
         /// and returns the selected index.
         /// </summary>
         /// <returns></returns>
-        public static int InvokeSelectSingleChapterDialog(out bool newChapter)
+        public static int InvokeSelectSingleChapterDialog(int chapterIndex, out bool newChapter)
         {
             newChapter = false;
 
             try
             {
-                int chapterIndex = -1;
-
-                SelectSingleChapterDialog dlg = new SelectSingleChapterDialog();
+                SelectSingleChapterDialog dlg = new SelectSingleChapterDialog(chapterIndex);
                 GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
                 if (dlg.ShowDialog() == true)
@@ -520,6 +610,10 @@ namespace ChessForge
                     {
                         chapterIndex = dlg.SelectedIndex;
                     }
+                }
+                else
+                {
+                    chapterIndex = -1;
                 }
 
                 return chapterIndex;
@@ -610,7 +704,7 @@ namespace ChessForge
 
             try
             {
-                foreach(ArticleListItem item in articles)
+                foreach (ArticleListItem item in articles)
                 {
                     if (item.Chapter != null)
                     {
@@ -892,15 +986,17 @@ namespace ChessForge
             }
             catch (Exception ex)
             {
-                AppLog.Message("SetThumbnailsInChapter()", ex);            }
+                AppLog.Message("SetThumbnailsInChapter()", ex);
+            }
         }
 
         /// <summary>
         /// Regenerates the Study Tree from the Games.
         /// </summary>
         /// <param name="chapter"></param>
-        private static void RegenerateStudy(Chapter chapter)
+        private static bool RegenerateStudy(Chapter chapter)
         {
+            bool done = false;
             bool overwriteWarningIssued = false;
 
             Mouse.SetCursor(Cursors.Wait);
@@ -908,7 +1004,7 @@ namespace ChessForge
             {
                 if (chapter != null)
                 {
-                    RegenerateChapterStudy(chapter, ref overwriteWarningIssued);
+                    done = RegenerateChapterStudy(chapter, ref overwriteWarningIssued);
                 }
                 else
                 {
@@ -919,6 +1015,10 @@ namespace ChessForge
                         {
                             break;
                         }
+                        else
+                        {
+                            done = true;
+                        }
                     }
                 }
             }
@@ -928,6 +1028,7 @@ namespace ChessForge
             }
 
             Mouse.SetCursor(Cursors.Arrow);
+            return done;
         }
 
         /// <summary>
@@ -941,9 +1042,9 @@ namespace ChessForge
                 overwriteWarningIssued = true;
 
                 if (MessageBox.Show(Properties.Resources.MsgThisOverwritesStudy,
-                    Properties.Resources.Information,
+                    Properties.Resources.Warning,
                     MessageBoxButton.YesNo,
-                    MessageBoxImage.Question) != MessageBoxResult.Yes)
+                    MessageBoxImage.Warning) != MessageBoxResult.Yes)
                 {
                     return false;
                 }
@@ -966,6 +1067,7 @@ namespace ChessForge
                         TreeUtils.TrimTree(ref tree, Configuration.AutogenTreeDepth, PieceColor.Black);
                         tree.ContentType = GameData.ContentType.STUDY_TREE;
                         tree.BuildLines();
+                        ChapterUtils.ClearStudyTreeHeader(tree);
                         chapter.StudyTree.Tree = tree;
 
                         // if we are in the study tab, must set the new tree as active tree (does not happen automatically)

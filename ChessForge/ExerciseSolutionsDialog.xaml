@@ -1,0 +1,23 @@
+﻿<Window x:Class="ChessForge.ExerciseSolutionsDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:p="clr-namespace:ChessForge.Properties"
+        xmlns:local="clr-namespace:ChessForge"
+        mc:Ignorable="d"
+        Title="{x:Static p:Resources.ShowSolutions}" Height="250" Width="400">
+    <Grid>
+        <Label x:Name="UiLabelChapterTitle" Content="{x:Static p:Resources.Chapter}" HorizontalAlignment="Center" HorizontalContentAlignment="Left" Margin="-15,16,0,0" Padding="35,0,20,0" VerticalAlignment="Top"/>
+        <GroupBox x:Name="UiGbExercise" Header="{x:Static p:Resources.Solutions}" Height="70" VerticalAlignment="Top" HorizontalAlignment="Center" Width="225" Margin="0, 40, 0, 0">
+            <Canvas>
+                <CheckBox x:Name="UiCbShowSolutions" Content="{x:Static p:Resources.ShowSolutionsByDefault}" Margin="8,15,0,0" />
+            </Canvas>
+        </GroupBox>
+        <CheckBox x:Name="UiCbAllChapters" IsChecked="False" Content="{x:Static p:Resources.ApplyToAllChapters}" Margin="0,130,10,0" Height="20" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="-220,0,0,20" Width="90" VerticalAlignment="Bottom" Click="UiBtnOk_Click" />
+        <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="0,0,0,20" Width="90" VerticalAlignment="Bottom"/>
+        <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Center" Margin="220,0,0,20" Width="90" VerticalAlignment="Bottom" Click="UiBtnHelp_Click" />
+
+    </Grid>
+</Window>

@@ -477,7 +477,7 @@ SaveAs=Save $0 As ...
 Export=Export
 
 #Export as RTF
-ExportRtf=Export as RTF
+ExportRtf=Export as RTF (Beta)
 
 #Saves a copy of the current Workbook with the current version number, increments the version number
 BackUpThisVersion=Back up this Version ...
@@ -648,7 +648,7 @@ RestoreFontDefaults=Restore Font Defaults
 Tools=Tools
 
 #Evaluate Games
-MnEvaluateGames=Evaluate Games in Workbook
+MnEvaluateGames=Evaluate Games
 
 #Strip all comments
 StripComments=Delete Comments...
@@ -923,7 +923,7 @@ ChapterItems=Chapter Items
 TwoColumnFormat=Two Column Format
 
 #Custom Terms
-CustomTerms=Custom Terms
+CustomTerms=Custom Headers
 
 
 #######################################
@@ -1090,11 +1090,12 @@ MsgNoPositionsFound=Specified position has not been found.
 #
 
 
-#Duplicates of
-DuplicatesOf=Duplicates of
+#Number of duplicated items
+NumberOfDuplicatedItems=Number of duplicated items
 
 #Select article duplicates to delete
-SelectArticleDuplicatesToDelete=Select Items to Delete
+SelectArticleDuplicatesToDelete=Selected Items will be DELETED
+
 
 
 #######################################
@@ -1194,10 +1195,10 @@ DlgManageChapter=Manage Chapter
 SortBy=Sort By
 
 #Regenerate Study Tree
-RegenerateStudyTree=Regenerate
+RegenerateStudyTree=Regenerate Study from Games
 
 #Warning for regenerate study tree
-MsgThisOverwritesStudy=This will replace the current Study. Proceed?
+MsgThisOverwritesStudy=This will delete and replace the current Study. Proceed?
 
 #Sort by ECO
 SortByEco=ECO
@@ -1232,11 +1233,29 @@ ApplyToAllChapters=Apply to All Chapters
 # Header: DIALOG Manage Chapter
 #
 
+#Exercise view configuration
+ExerciseViewConfig=Exercise View
+
+#Solutions
+ShowSolutions=Show Solutions
+
+#Show/hide all solutions by default
+ShowSolutionsByDefault=Show on Open
+
+#Solutions
+Solutions=Solutions
+
 #Sort order for games
-GamesOrder=Games Order
+GamesOrder=Sort Games
+
+#Criteria
+Criteria=Criteria
 
 #Game Thumbnails
-GameThumbnails=Game Thumbnails
+GameThumbnails=Set Game Thumbnails
+
+#Location
+Location=Location
 
 #Create at Move
 CreateAtMove=Create at Move
@@ -1868,9 +1887,6 @@ Exercise0of0=Exercise $0 of $1
 
 #Show all solutions in chapter
 ShowSolutionsInChapter=Show All Solutions in Chapter
-
-#Show/hide all solutions by default
-ShowSolutionsByDefault=Show Solutions on Open
 
 #Hide all solutions in chapter
 HideSolutionsInChapter=Hide All Solutions in Chapter

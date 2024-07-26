@@ -1,0 +1,26 @@
+﻿<Window x:Class="ChessForge.SortGamesDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:p="clr-namespace:ChessForge.Properties"
+        xmlns:local="clr-namespace:ChessForge"
+        mc:Ignorable="d"
+        Title="{x:Static p:Resources.GamesOrder}" Height="280" Width="380">
+    <Grid>
+        <Label x:Name="UiLabelChapterTitle" Content="{x:Static p:Resources.Chapter}" HorizontalAlignment="Center" HorizontalContentAlignment="Left" Margin="-15,16,0,0" Padding="35,0,20,0" VerticalAlignment="Top"/>
+        <GroupBox x:Name="UiGbGames" Header="{x:Static p:Resources.Criteria}" Height="110" HorizontalAlignment="Center" Width="260" VerticalAlignment="Top" Margin="0, 40, 0, 0">
+            <Canvas Margin="0,0,0,0">
+                <Label x:Name="UiLblSortBy" Margin="20,10,0,0" HorizontalAlignment="Left" Content="{x:Static p:Resources.SortBy}" />
+                <ComboBox x:Name="UiComboBoxSortBy" Margin="105,12,10,0" Width="100" VerticalAlignment="Top" SelectionChanged="UiComboBoxSortBy_SelectionChanged" />
+                <Label x:Name="UiLblSortDirection" Margin="20,45,0,0" HorizontalAlignment="Left" Content="{x:Static p:Resources.SortDirection}" />
+                <ComboBox x:Name="UiComboBoxSortDirection" Margin="105,50,0,0"  Width="100" />
+            </Canvas>
+        </GroupBox>
+        <CheckBox x:Name="UiCbAllChapters" IsChecked="False" Content="{x:Static p:Resources.ApplyToAllChapters}" Margin="0,170,10,0" Height="20" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="-220,0,0,20" Width="90" VerticalAlignment="Bottom" Click="UiBtnOk_Click" />
+        <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="0,0,0,20" Width="90" VerticalAlignment="Bottom"/>
+        <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Center" Margin="220,0,0,20" Width="90" VerticalAlignment="Bottom" Click="UiBtnHelp_Click" />
+
+    </Grid>
+</Window>

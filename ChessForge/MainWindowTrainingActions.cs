@@ -82,6 +82,9 @@ namespace ChessForge
 
                     // remove training moves from source, BEFORE we change ActiveVariation tree
                     AppState.MainWin.ActiveVariationTree.RemoveTrainingMoves();
+                    
+                    // clear training move flags (otherwise we have a side effect of the program asking whether to save the training line!)
+                    tree.ClearTrainingFlags();
 
                     chapter.AddModelGame(tree);
                     int index = chapter.GetModelGameCount() - 1;

@@ -29,9 +29,20 @@ namespace ChessForge
             string title = Properties.Resources.RemoveDuplicates;
             Title = TextUtils.RemoveTrailingDots(title);
 
+            int duplicatedCount = 0;
+            foreach (var item in duplicateList)
+            {
+                if (item.IsOriginal)
+                {
+                    duplicatedCount++;
+                }
+            }
+
             // populate _duplicateList
             InsertEmptyItems(duplicateList);
             UiLvArticles.ItemsSource = DuplicateList;
+
+            (UiLvArticles.View as GridView).Columns[1].Header = Properties.Resources.NumberOfDuplicatedItems + " = " + duplicatedCount.ToString();
         }
 
         /// <summary>

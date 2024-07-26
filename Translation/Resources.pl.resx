@@ -688,7 +688,7 @@
     <value>Narzędzia</value>
   </data>
   <data name="MnEvaluateGames" xml:space="preserve">
-    <value>Oceń partie z podręcznika</value>
+    <value>Oceń partie</value>
   </data>
   <data name="StripComments" xml:space="preserve">
     <value>Usuń komentarze...</value>
@@ -905,7 +905,7 @@
     <value>Format 2-kolumnowy</value>
   </data>
   <data name="CustomTerms" xml:space="preserve">
-    <value>Niestandardowe Terminy</value>
+    <value>Niestandardowe Nagłówki</value>
   </data>
   <data name="ReorderLines" xml:space="preserve">
     <value>Kolejność Wariantów</value>
@@ -1018,11 +1018,11 @@
   <data name="MsgNoPositionsFound" xml:space="preserve">
     <value>Nie znaleziono takicj pozycji.</value>
   </data>
-  <data name="DuplicatesOf" xml:space="preserve">
-    <value>Duplikaty</value>
+  <data name="NumberOfDuplicatedItems" xml:space="preserve">
+    <value>Liczba zduplikowanych elementów</value>
   </data>
   <data name="SelectArticleDuplicatesToDelete" xml:space="preserve">
-    <value>Zaznacz pozycje do usunięcia</value>
+    <value>Zaznaczone pozycje będą USUNIĘTE</value>
   </data>
   <data name="Statistics" xml:space="preserve">
     <value>Statystyka</value>
@@ -1094,10 +1094,10 @@
     <value>Sortuj wg.</value>
   </data>
   <data name="RegenerateStudyTree" xml:space="preserve">
-    <value>Wygeneruj</value>
+    <value>Wygeneruj Teorię z Partii</value>
   </data>
   <data name="MsgThisOverwritesStudy" xml:space="preserve">
-    <value>Nowe drzewo zastąpi istniejącą teorię. Kontynuować?</value>
+    <value>Nowe drzewo teorii zastąpi obecne. Kontynuować?</value>
   </data>
   <data name="SortByEco" xml:space="preserve">
     <value>Kodu Otwarcia (ECO)</value>
@@ -1126,11 +1126,29 @@
   <data name="ApplyToAllChapters" xml:space="preserve">
     <value>Zastosuj do wszystkich rozdziałów</value>
   </data>
+  <data name="ExerciseViewConfig" xml:space="preserve">
+    <value>Widok Ćwiczeń</value>
+  </data>
+  <data name="ShowSolutions" xml:space="preserve">
+    <value>Pokaż Rozwiązania</value>
+  </data>
+  <data name="ShowSolutionsByDefault" xml:space="preserve">
+    <value>Pokaż po otwarciu</value>
+  </data>
+  <data name="Solutions" xml:space="preserve">
+    <value>Rozwiązania</value>
+  </data>
   <data name="GamesOrder" xml:space="preserve">
-    <value>Kolejność Partii</value>
+    <value>Sortuj Partie</value>
+  </data>
+  <data name="Criteria" xml:space="preserve">
+    <value>Kryteria</value>
   </data>
   <data name="GameThumbnails" xml:space="preserve">
-    <value>Wizytówki Partii</value>
+    <value>Utwórz Wizytówki Partii</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>Miejsce</value>
   </data>
   <data name="CreateAtMove" xml:space="preserve">
     <value>Utwórz po ruchu</value>
@@ -1671,9 +1689,6 @@
   </data>
   <data name="ShowSolutionsInChapter" xml:space="preserve">
     <value>Pokaż Wszystkie Rozwiązania w Rozdziale</value>
-  </data>
-  <data name="ShowSolutionsByDefault" xml:space="preserve">
-    <value>Pokaż rozwiązania po otwarciu</value>
   </data>
   <data name="HideSolutionsInChapter" xml:space="preserve">
     <value>Ukryj Wszystkie Rozwiązania w Rozdziale</value>

@@ -619,7 +619,7 @@ SaveAs=Zapisz $0 jako ...
 Export=Eksportuj
 
 #description: Export as RTF
-#english: ExportRtf=Export as RTF
+#english: ExportRtf=Export as RTF (Beta)
 ExportRtf=Eksportuj jako RTF
 
 #description: Saves a copy of the current Workbook with the current version number, increments the version number
@@ -838,8 +838,8 @@ RestoreFontDefaults=Przywróć Domyślne Wartości
 Tools=Narzędzia
 
 #description: Evaluate Games
-#english: MnEvaluateGames=Evaluate Games in Workbook
-MnEvaluateGames=Oceń partie z podręcznika
+#english: MnEvaluateGames=Evaluate Games
+MnEvaluateGames=Oceń partie
 
 #description: Strip all comments
 #english: StripComments=Delete Comments...
@@ -1185,8 +1185,8 @@ ChapterItems=Elementy Rozdziału
 TwoColumnFormat=Format 2-kolumnowy
 
 #description: Custom Terms
-#english: CustomTerms=Custom Terms
-CustomTerms=Niestandardowe Terminy
+#english: CustomTerms=Custom Headers
+CustomTerms=Niestandardowe Nagłówki
 
 
 #######################################
@@ -1390,13 +1390,14 @@ MsgNoPositionsFound=Nie znaleziono takicj pozycji.
 #
 
 
-#description: Duplicates of
-#english: DuplicatesOf=Duplicates of
-DuplicatesOf=Duplikaty
+#description: Number of duplicated items
+#english: NumberOfDuplicatedItems=Number of duplicated items
+NumberOfDuplicatedItems=Liczba zduplikowanych elementów
 
 #description: Select article duplicates to delete
-#english: SelectArticleDuplicatesToDelete=Select Items to Delete
-SelectArticleDuplicatesToDelete=Zaznacz pozycje do usunięcia
+#english: SelectArticleDuplicatesToDelete=Selected Items will be DELETED
+SelectArticleDuplicatesToDelete=Zaznaczone pozycje będą USUNIĘTE
+
 
 
 #######################################
@@ -1519,12 +1520,12 @@ DlgManageChapter=Organizacja Rozdziału
 SortBy=Sortuj wg.
 
 #description: Regenerate Study Tree
-#english: RegenerateStudyTree=Regenerate
-RegenerateStudyTree=Wygeneruj
+#english: RegenerateStudyTree=Regenerate Study from Games
+RegenerateStudyTree=Wygeneruj Teorię z Partii
 
 #description: Warning for regenerate study tree
-#english: MsgThisOverwritesStudy=This will replace the current Study. Proceed?
-MsgThisOverwritesStudy=Nowe drzewo zastąpi istniejącą teorię. Kontynuować?
+#english: MsgThisOverwritesStudy=This will delete and replace the current Study. Proceed?
+MsgThisOverwritesStudy=Nowe drzewo teorii zastąpi obecne. Kontynuować?
 
 #description: Sort by ECO
 #english: SortByEco=ECO
@@ -1568,13 +1569,37 @@ ApplyToAllChapters=Zastosuj do wszystkich rozdziałów
 # Header: DIALOG Manage Chapter
 #
 
+#description: Exercise view configuration
+#english: ExerciseViewConfig=Exercise View
+ExerciseViewConfig=Widok Ćwiczeń
+
+#description: Solutions
+#english: ShowSolutions=Show Solutions
+ShowSolutions=Pokaż Rozwiązania
+
+#description: Show/hide all solutions by default
+#english: ShowSolutionsByDefault=Show on Open
+ShowSolutionsByDefault=Pokaż po otwarciu
+
+#description: Solutions
+#english: Solutions=Solutions
+Solutions=Rozwiązania
+
 #description: Sort order for games
-#english: GamesOrder=Games Order
-GamesOrder=Kolejność Partii
+#english: GamesOrder=Sort Games
+GamesOrder=Sortuj Partie
+
+#description: Criteria
+#english: Criteria=Criteria
+Criteria=Kryteria
 
 #description: Game Thumbnails
-#english: GameThumbnails=Game Thumbnails
-GameThumbnails=Wizytówki Partii
+#english: GameThumbnails=Set Game Thumbnails
+GameThumbnails=Utwórz Wizytówki Partii
+
+#description: Location
+#english: Location=Location
+Location=Miejsce
 
 #description: Create at Move
 #english: CreateAtMove=Create at Move
@@ -2386,10 +2411,6 @@ Exercise0of0=Ćwiczenie $0 z $1
 #description: Show all solutions in chapter
 #english: ShowSolutionsInChapter=Show All Solutions in Chapter
 ShowSolutionsInChapter=Pokaż Wszystkie Rozwiązania w Rozdziale
-
-#description: Show/hide all solutions by default
-#english: ShowSolutionsByDefault=Show Solutions on Open
-ShowSolutionsByDefault=Pokaż rozwiązania po otwarciu
 
 #description: Hide all solutions in chapter
 #english: HideSolutionsInChapter=Hide All Solutions in Chapter

@@ -1,18 +1,15 @@
-﻿using System;
-using System.IO;
-using System.Windows;
-using System.Collections.Generic;
+﻿using ChessForge.Properties;
 using ChessPosition;
 using GameTree;
-using Path = System.IO.Path;
-using System.Timers;
-using System.Windows.Controls;
-using ChessForge;
+using System;
+using System.IO;
 using System.Reflection;
-using WebAccess;
-using ChessForge.Properties;
-using static ChessForge.WorkbookOperation;
 using System.Text;
+using System.Timers;
+using System.Windows;
+using System.Windows.Controls;
+using WebAccess;
+using Path = System.IO.Path;
 
 namespace ChessForge
 {
@@ -93,6 +90,24 @@ namespace ChessForge
                     }
                 }
             });
+        }
+
+        /// <summary>
+        /// Returns true if the EvaluationChart control is currently visible.
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsEvalChartVisible()
+        {
+            return MainWin.UiImgChartOn.Visibility == System.Windows.Visibility.Visible;
+        }
+
+        /// <summary>
+        /// Returns true if the EngineLines text box is currently visible.
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsEngineLinesVisible()
+        {
+            return MainWin.UiTbEngineLines.Visibility == System.Windows.Visibility.Visible;
         }
 
         /// <summary>
@@ -824,6 +839,7 @@ namespace ChessForge
             {
                 _mainWin.ActiveLine.Clear();
                 _mainWin.UiRtbChaptersView.Document.Blocks.Clear();
+                _mainWin.UiRtbIntroView.Document.Blocks.Clear();
                 _mainWin.UiRtbStudyTreeView.Document.Blocks.Clear();
                 _mainWin.UiRtbTrainingProgress.Document.Blocks.Clear();
 
@@ -1001,6 +1017,16 @@ namespace ChessForge
             {
                 _mainWin.UiRtbBoardComment.Visibility = showEngineLines ? Visibility.Hidden : Visibility.Visible;
                 _mainWin.UiTbEngineLines.Visibility = showEngineLines ? Visibility.Visible : Visibility.Hidden;
+
+                if (showEngineLines && MultiTextBoxManager.CanShowEvaluationChart(false, out _))
+                {
+                    _mainWin.UiEvalChart.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    _mainWin.UiEvalChart.Visibility = Visibility.Hidden;
+                }
+
                 if (!showEngineLines)
                 {
                     _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
@@ -1189,6 +1215,9 @@ namespace ChessForge
                         MenuItem menuItem = item as MenuItem;
                         switch (menuItem.Name)
                         {
+                            case "UiMnRegenerateStudy":
+                                menuItem.IsEnabled = true;
+                                break;
                             case "UiMnStudyStartTrainingHere":
                             case "UiMnStudy_CreateExercise":
                                 menuItem.IsEnabled = !isMate;
@@ -1663,8 +1692,11 @@ namespace ChessForge
                     MainWin.UiMnCopyArticles.IsEnabled = WorkbookManager.SessionWorkbook != null;
                     MainWin.UiMnMoveArticles.IsEnabled = WorkbookManager.SessionWorkbook != null;
 
-                    MainWin.UiMnManageChapter.IsEnabled = AppState.ActiveChapter != null;
+                    MainWin.UiMnOrderGames.IsEnabled = AppState.ActiveChapter != null;
+                    MainWin.UiMnSetThumbnails.IsEnabled = AppState.ActiveChapter != null;
+                    MainWin.UiMnExerciseViewConfig.IsEnabled = AppState.ActiveChapter != null;
                     MainWin.UiMnSplitChapter.IsEnabled = AppState.ActiveChapter != null;
+
 
                     MainWin.UiMnAnnotations.IsEnabled = IsTreeViewTabActive();
                     MainWin.UiMnPaste.IsEnabled = !string.IsNullOrEmpty(SystemClipboard.GetText());
