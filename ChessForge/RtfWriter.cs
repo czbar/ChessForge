@@ -397,6 +397,12 @@ namespace ChessForge
         /// <param name="diagrams"></param>
         private static void PrintStudyToFlowDoc(FlowDocument printDoc, PrintScope scope, Chapter chapter, bool introPrinted, ref List<RtfDiagram> diagrams)
         {
+            if (scope == PrintScope.ARTICLE)
+            {
+                FlowDocument chapterTitleDoc = PrintChapterTitle(chapter);
+                CreateDocumentForPrint(printDoc, chapterTitleDoc, null, ref diagrams);
+            }
+
             // if we are printing just this study or there was no Intro, print without the header and page break.
             if (scope != PrintScope.ARTICLE && introPrinted)
             {
