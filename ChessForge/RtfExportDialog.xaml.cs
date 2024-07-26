@@ -98,6 +98,12 @@ namespace ChessForge
             sVal = ConfigurationRtfExport.GetStringValue(ConfigurationRtfExport.CUSTOM_TERM_EXERCISE);
             UiTbExerciseCustom.Text = sVal;
 
+            UiCbStudyCustom.IsChecked = null;
+            UiCbGamesCustom.IsChecked = null;
+            UiCbGameCustom.IsChecked = null;
+            UiCbExercisesCustom.IsChecked = null;
+            UiCbExerciseCustom.IsChecked = null;
+
             bVal = ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.USE_CUSTOM_STUDY);
             UiCbStudyCustom.IsChecked = bVal;
 
