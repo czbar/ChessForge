@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chess Forge</title>
-    <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -18,8 +17,6 @@
             <a href="training.html" class="nav-link">Training</a>
             <a href="feedback.html" class="nav-link">Contact</a>
         </nav>
-        <img src="images/icon_green_flipped.png" alt="Chess Forge icon" />
-        <p> Chess Forge for Windows</p>
     </header>
 
     <div class="subheader">
@@ -38,165 +35,168 @@
 
     <main>
 
-        <section class="content">
-            <h1>Getting Started</h1>
-            <article class="release">
-                <p>Chess Forge can be installed on a Windows PC or used as a portable application.</p>
-                <p>The simplest way to install the program is to navigate to the download page (click the link below),
-                    download the installer, and run it on your PC.
-                </p>
-                <a href="https://sourceforge.net/projects/chessforge/">Download Page</a>
+        <div class="page-content">
+            
+            <section class="content">
+                <article class="release">
+                    <h2>Getting Started</h2>
+                    <p>Chess Forge can be installed on a Windows PC or used as a portable application.</p>
+                    <p>The simplest way to install the program is to navigate to the download page (click the link below),
+                        download the installer, and run it on your PC.
+                    </p>
+                    <a href="https://sourceforge.net/projects/chessforge/">Download Page</a>
 
-                <p>
-                    Note that currently the installer is not digitally signed, so the browser and/or the Windows system
-                    will likely issue a few warnings. </p>
+                    <p>
+                        Note that currently the installer is not digitally signed, so the browser and/or the Windows system
+                        will likely issue a few warnings. </p>
 
-                <p>For detailed information and the instructions on using Chess Forge as a portable application, see the
-                    Installation Guide (click the link below).</p>
+                    <p>For detailed information and the instructions on using Chess Forge as a portable application, see the
+                        Installation Guide (click the link below).</p>
 
-                <a href="https://github.com/czbar/ChessForge/wiki/Installation" target="_blank">Installation Guide</a>
+                    <a href="https://github.com/czbar/ChessForge/wiki/Installation" target="_blank">Installation Guide</a>
 
-                <p>Run the installed program.</p>
-            </article>
+                    <p>Run the installed program.</p>
+                </article>
 
-            <article class="release">
-                <h2>Open a Workbook</h2>
-                <p>You can open a workbook from either the local disk or from the ChessForge online library. </p>
-                <h3>From a local file</h3>
-                <p>Select <code>File->Open</code> from the main menu and choose a workbook.
-                    There are a few samples distributed with the installation and you can find them in the
-                    <code>Documents/{user_name}/Chess Forge</code> folder.
-                </p>
-                <p class="marginimage" padding="200">
-                    <img src="images/FileOpen.jpg" alt="File->Open menu item" />
-                </p>
-                <h3>From the online library </h3>
-                Alternatively, if your PC is online, select <code>File->Online Library - Public</code> from the main
-                menu to open Chess Forge's Public Library.
-                Click on any book in the library to view it. </p>
-                <p class="marginimage" padding="200">
-                    <img src="images/OnlineLibraryGlimpse.jpg" alt=" Online Library" />
-                </p>
-            </article>
+                <article class="release">
+                    <h2>Open a Workbook</h2>
+                    <p>You can open a workbook from either the local disk or from the ChessForge online library. </p>
+                    <h3>From a local file</h3>
+                    <p>Select <code>File->Open</code> from the main menu and choose a workbook.
+                        There are a few samples distributed with the installation and you can find them in the
+                        <code>Documents/{user_name}/Chess Forge</code> folder.
+                    </p>
+                    <p class="marginimage" padding="200">
+                        <img src="images/FileOpen.jpg" alt="File->Open menu item" />
+                    </p>
+                    <h3>From the online library </h3>
+                    Alternatively, if your PC is online, select <code>File->Online Library - Public</code> from the main
+                    menu to open Chess Forge's Public Library.
+                    Click on any book in the library to view it. </p>
+                    <p class="marginimage" padding="200">
+                        <img src="images/OnlineLibraryGlimpse.jpg" alt=" Online Library" />
+                    </p>
+                </article>
 
-            <article class="release">
-                <h2>Main Window</h2>
-                <p>When you open a given workbook for the first time, it will initially show the chapters view.</p>
-                <p class="marginimage" padding="200">
-                    <img src="images/ChaptersViewGlimpse.jpg" alt="Chapters View" />
-                </p>
-                <p>Click on <code>Study</code> or double click the chapter's title to open the Study view. The image
-                    below identifies the various elements of the window.</p>
-                <p padding="200">
-                    <img src="images/MainWindow.jpg" alt="Main Window" />
-                </p>
-                <p>If the engine is turned on, the box below the Main Chessboard will display the engine lines instead
-                    of
-                    user hints.</p>
-                <p padding="200">
-                    <img src="images/EngineLines.jpg" alt="Engine Lines" />
-                </p>
-            </article>
+                <article class="release">
+                    <h2>Main Window</h2>
+                    <p>When you open a given workbook for the first time, it will initially show the chapters view.</p>
+                    <p class="marginimage" padding="200">
+                        <img src="images/ChaptersViewGlimpse.jpg" alt="Chapters View" />
+                    </p>
+                    <p>Click on <code>Study</code> or double click the chapter's title to open the Study view. The image
+                        below identifies the various elements of the window.</p>
+                    <p padding="200">
+                        <img src="images/MainWindow.jpg" alt="Main Window" />
+                    </p>
+                    <p>If the engine is turned on, the box below the Main Chessboard will display the engine lines instead
+                        of
+                        user hints.</p>
+                    <p padding="200">
+                        <img src="images/EngineLines.jpg" alt="Engine Lines" />
+                    </p>
+                </article>
 
-            <article class=" release">
-                <h2>Self-Indexing Study View</h2>
-                <p>The Study is shown as a uniquely designed, self-indexing view which includes a Variation Index
-                    displayed under the chapter's title.</p>
-                <p>The full variation tree is displayed under the Index and is organized into sections/paragraphs
-                    corresponding to the index table. This mimicks the experience of reading a chess book.
-                </p>
-                <p>
-                    <img src="images/VariationIndex.jpg" alt="Variation Index" />
-                </p>
-                <p>Note that as a result, there will typically be no single "main line" in the view.
-                    Each "section" has its own "main line".
-                </p>
-                <p>The index adjusts itself as you edit variations.</p>
-                <p>The depth of the index can be instantly increased or decreased by clicking the arrows next to the
-                    Index's header.
-                    If you decrease the depth to 0, the Index will disappear altogether. You can bring it back by
-                    clicking
-                    the chapter's title.
-                </p>
-                <p>The depth setting will be remembered for each study between sessions.</p>
-                <p><i>Coming in version 1.8:</i> Each indexed variation can be collapsed or expanded for more
-                    convenient/focused viewing.
-                    The collapsed/expand state is not remembered between sessions. The view always re-opens with all
-                    lines expanded.</p>
-            </article>
+                <article class=" release">
+                    <h2>Self-Indexing Study View</h2>
+                    <p>The Study is shown as a uniquely designed, self-indexing view which includes a Variation Index
+                        displayed under the chapter's title.</p>
+                    <p>The full variation tree is displayed under the Index and is organized into sections/paragraphs
+                        corresponding to the index table. This mimicks the experience of reading a chess book.
+                    </p>
+                    <p>
+                        <img src="images/VariationIndex.jpg" alt="Variation Index" />
+                    </p>
+                    <p>Note that as a result, there will typically be no single "main line" in the view.
+                        Each "section" has its own "main line".
+                    </p>
+                    <p>The index adjusts itself as you edit variations.</p>
+                    <p>The depth of the index can be instantly increased or decreased by clicking the arrows next to the
+                        Index's header.
+                        If you decrease the depth to 0, the Index will disappear altogether. You can bring it back by
+                        clicking
+                        the chapter's title.
+                    </p>
+                    <p>The depth setting will be remembered for each study between sessions.</p>
+                    <p><i>Coming in version 1.8:</i> Each indexed variation can be collapsed or expanded for more
+                        convenient/focused viewing.
+                        The collapsed/expand state is not remembered between sessions. The view always re-opens with all
+                        lines expanded.</p>
+                </article>
 
-            <article class=" release">
-                <h2>Games View</h2>
-                <p>The Games view is designed for showing a single game at a time.
-                    Therefore, unlike the Study view, it does not have the Variation Index and has a single main line.
-                    That main line is, of course, the text of the game (i.e. the actual moves as opposed to any comments
-                    that may have been added to the game)
-                    and is shown in a bolded font.
-                </p>
-                <p>
-                    <img src="images/GamesView.jpg" alt="Games View" />
-                </p>
-            </article>
+                <article class=" release">
+                    <h2>Games View</h2>
+                    <p>The Games view is designed for showing a single game at a time.
+                        Therefore, unlike the Study view, it does not have the Variation Index and has a single main line.
+                        That main line is, of course, the text of the game (i.e. the actual moves as opposed to any comments
+                        that may have been added to the game)
+                        and is shown in a bolded font.
+                    </p>
+                    <p>
+                        <img src="images/GamesView.jpg" alt="Games View" />
+                    </p>
+                </article>
 
-            <article class=" release">
-                <h2>Exercises View</h2>
-                <p>In Chess Forge terminology, an exercise is a game fragment starting at any position.
-                    It can be a tactical problem, an endgame study, or any other kind of analysis.
-                    The Exercise view differs significantly from the other views.</p>
-                <p>
-                    <img src="images/ExercisesView.jpg" alt="Exercises View" />
-                </p>
-                <p>It lacks the Scoresheet on the right hand side and when opened for the first time in a session the
-                    variation tree (a.k.a. Solution) is hidden.
-                    You need to click the <i>Show Solution</i> header to open it.</p>
-                <p>The starting position is shown on a small diagram below the headers and there are prominent buttons
-                    allowing the user to enter one of the two solving modes. </p>
-            </article>
+                <article class=" release">
+                    <h2>Exercises View</h2>
+                    <p>In Chess Forge terminology, an exercise is a game fragment starting at any position.
+                        It can be a tactical problem, an endgame study, or any other kind of analysis.
+                        The Exercise view differs significantly from the other views.</p>
+                    <p>
+                        <img src="images/ExercisesView.jpg" alt="Exercises View" />
+                    </p>
+                    <p>It lacks the Scoresheet on the right hand side and when opened for the first time in a session the
+                        variation tree (a.k.a. Solution) is hidden.
+                        You need to click the <i>Show Solution</i> header to open it.</p>
+                    <p>The starting position is shown on a small diagram below the headers and there are prominent buttons
+                        allowing the user to enter one of the two solving modes. </p>
+                </article>
 
-            <article class=" release">
-                <h2>Training View</h2>
-                <p>Please refer to the Training page.</p>
-                <p><a href="training.html"> Training</a></p>
-            </article>
+                <article class=" release">
+                    <h2>Training View</h2>
+                    <p>Please refer to the Training page.</p>
+                    <p><a href="training.html"> Training</a></p>
+                </article>
 
-            <article class=" release">
-                <h2>Key Features</h2>
+                <article class=" release">
+                    <h2>Key Features</h2>
+                    <ul>
+                        <li>Peruse, study, and evaluate with engines chess content from Chess Forge's workbooks and/or plain
+                            PGN files.</li>
+                        <li>Study and train against downloaded, coach-supplied, or self-created PGN Workbooks.</li>
+                        <li>Author own workbooks for different stages of the game or automatically create them from PGN
+                            files.</li>
+                        <li>Browse and edit variations in the special self-indexing Study View (see above).</li>
+                        <li>View, evaluate, and edit model games with the help of the engine and Opening Explorer.</li>
+                        <li>In any position, use the Opening Explorer to preview/import Top Games from lichess.org.</li>
+                        <li>View, edit, or solve exercises and endgames. Choose from two solving modes: guessing the main
+                            line or submitting an analysis</li>
+                        <li>Analyze endgames with tablebases.</li>
+                        <li>Download any user's games from lichess.org or chess.com into the currently open or a new
+                            workbook.</li>
+                        <li>Organize downloaded games of a player into repertoire, white/black, chapters and trees.</li>
+                        <li>Test your knowledge against the content of the Workbook. Start a game against the engine from
+                            any position.</li>
+                        <li>Restart / roll-back your training or your engine game at any point.</li>
+                    </ul>
+                    <p> Note: some features (e.g the Opening Explorer, Online Library, lichess downloads) are only available
+                        if your PC is online. </p>
+                </article>
+
+            </section>
+
+            <aside class="sidebar">
+                <h3>Resources on GitHub</h3>
                 <ul>
-                    <li>Peruse, study, and evaluate with engines chess content from Chess Forge's workbooks and/or plain
-                        PGN files.</li>
-                    <li>Study and train against downloaded, coach-supplied, or self-created PGN Workbooks.</li>
-                    <li>Author own workbooks for different stages of the game or automatically create them from PGN
-                        files.</li>
-                    <li>Browse and edit variations in the special self-indexing Study View (see above).</li>
-                    <li>View, evaluate, and edit model games with the help of the engine and Opening Explorer.</li>
-                    <li>In any position, use the Opening Explorer to preview/import Top Games from lichess.org.</li>
-                    <li>View, edit, or solve exercises and endgames. Choose from two solving modes: guessing the main
-                        line or submitting an analysis</li>
-                    <li>Analyze endgames with tablebases.</li>
-                    <li>Download any user's games from lichess.org or chess.com into the currently open or a new
-                        workbook.</li>
-                    <li>Organize downloaded games of a player into repertoire, white/black, chapters and trees.</li>
-                    <li>Test your knowledge against the content of the Workbook. Start a game against the engine from
-                        any position.</li>
-                    <li>Restart / roll-back your training or your engine game at any point.</li>
+                    <li><a href="https://github.com/czbar/ChessForge/wiki/Installation" target="_blank">Installation
+                            Guide</a></li>
+                    <li><a href="https://github.com/czbar/ChessForge/wiki/User's-Manual" target="_blank">User's Manual</a>
+                    </li>
+                    <li><a href="https://github.com/czbar/ChessForge/wiki/Frequently-Asked-Questions"
+                            target="_blank">FAQ</a></li>
                 </ul>
-                <p> Note: some features (e.g the Opening Explorer, Online Library, lichess downloads) are only available
-                    if your PC is online. </p>
-            </article>
-
-        </section>
-
-        <aside class="sidebar">
-            <h3>Resources on GitHub</h3>
-            <ul>
-                <li><a href="https://github.com/czbar/ChessForge/wiki/Installation" target="_blank">Installation
-                        Guide</a></li>
-                <li><a href="https://github.com/czbar/ChessForge/wiki/User's-Manual" target="_blank">User's Manual</a>
-                </li>
-                <li><a href="https://github.com/czbar/ChessForge/wiki/Frequently-Asked-Questions"
-                        target="_blank">FAQ</a></li>
-            </ul>
-        </aside>
+            </aside>
+        </div>
 
     </main>
 
