@@ -33,21 +33,20 @@ header {
   padding-bottom: 10px;
 }
 
+.header-box {
+  display: flex;
+  align-items: center;
+}
+
 header p {
-  font-size: 3em;
-  position: relative;
-  top: 0px;
-  left: 60px;
+  font-size: xx-large;
   font-weight: bold;
 }
 
 header img {
-  float: left;
   width: 128px;
   height: 128px;
-  padding: 15px;
-  padding-left: 45px;
-  left: 100px;
+  padding: 20px;
 }
 
 .subheader {
@@ -55,7 +54,7 @@ header img {
   background-color: #099;
   color: white;
   padding: 10px;
-  padding-left: 10%;
+  padding-left: 5%;
   padding-right: 20%;
 }
 
@@ -63,7 +62,6 @@ header img {
   font-family: 'Open Sans', Arial, sans-serif;
   color: white;
 }
-
 
 nav {
   display: flex;
@@ -92,7 +90,7 @@ main {
 
 .sidebar {
   flex: 1;
-  padding: 20px;
+  padding-left: 20px;
   border-left: 1px solid #ddd;
 }
 
@@ -128,8 +126,9 @@ h2 {
   color: #fff;
   padding: 10px;
   margin-left: 10%;
-  margin-right: 60%;
   margin-top: 10px;
+  min-width: fit-content;
+  max-width: 40ex;
 }
 
 footer {
@@ -142,9 +141,15 @@ footer {
 .form-container {
   background-color: lightgray;
   padding: 20px;
-  border-radius: 10px;
-  max-width: 600px;
-  margin-left: 5%;
+  border-radius: 5px;
+  min-width: 700px;
+  margin: 20px;
+}
+
+@media (max-width: 700px) {
+  .form-container {
+    min-width: 0;
+  }
 }
 
 /* Style for the form inputs */
@@ -189,4 +194,15 @@ footer {
 .form-submit:hover {
   background-color: #033;
   /* You can change this color as needed */
+}
+
+.page-content {
+  display: flex;
+  flex-direction: row;
+}
+
+@media (max-width: 700px) {
+  .page-content {
+    flex-direction: column-reverse;
+  }
 }

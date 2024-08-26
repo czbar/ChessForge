@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chess Forge</title>
-    <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -18,8 +17,6 @@
             <a href="training.html" class="nav-link">Training</a>
             <a href="feedback.html" class="nav-link">Contact</a>
         </nav>
-        <img src="images/icon_green_flipped.png" alt="Chess Forge icon" />
-        <p> Chess Forge for Windows</p>
     </header>
 
     <div class="subheader">
@@ -36,147 +33,150 @@
 
     <main>
 
-        <section class="content">
-            <h2>Workbooks</h2>
-            <article class="release">
-                <p>Chess Forge organizes its content into what are known as workbooks. Physically, workbooks are simply
-                    text
-                    files in the PGN format with some
-                    Chess Forge specific extensions.</p>
-                <p> These extensions, include extra tags identifying the file as a ChessForge workbook, extra headers
-                    identifying PGN "game" types as Studies, Games or Exercises in the Chess Forge's context etc.
-                </p>
-                <p>Each workbook contains one or more chapters, and within each chapter:
+        <div class="page-content">
+
+            <section class="content">
+                <article class="release">
+                    <h2>Workbooks</h2>
+                    <p>Chess Forge organizes its content into what are known as workbooks. Physically, workbooks are simply
+                        text
+                        files in the PGN format with some
+                        Chess Forge specific extensions.</p>
+                    <p> These extensions, include extra tags identifying the file as a ChessForge workbook, extra headers
+                        identifying PGN "game" types as Studies, Games or Exercises in the Chess Forge's context etc.
+                    </p>
+                    <p>Each workbook contains one or more chapters, and within each chapter:
+                    <ul>
+                        <li>An optional Intro</li>
+                        <li>A Study</li>
+                        <li>Any number of Games</li>
+                        <li>Any number of Exercises</li>
+                    </ul>
+                    </p>
+                    <p>You can create a new workbook from scratch or start by importing a PGN file, then utilize Chess
+                        Forge's
+                        unique capabilities to edit it.</p>
+                </article>
+                </article>
+
+                <article class="release">
+                    <h2>General Editing</h2>
+                    <p>This section applies to Studies, Games and Exercises i.e. views that display a variation tree.</p>
+                    <p>In each of these views, one move or position is always selected, indicated by highlighting
+                        and reflected on the main chessboard.
+                    </p>
+                    <p>If there is no highlighted move/position, it means that the starting position has been selected. In
+                        particular, that will be the case when you open a Study for the first time.
+                    </p>
+                    <p> Most of the editing will be done by entering moves with the mouse. Moves are appended to the
+                        currently selected one and branches
+                        will be created where other move have already been added previously.</p>
+                </article>
+
+                <article class="release">
+                    <h3>Managing Lines</h3>
+                    <p> We will refer to branches of the variation tree as lines, as per the standard chess terminology.
+                        Lines can be selected and <i>(coming in version 1.8)</i> re-ordered.</p>
+                    <p class="marginimage">
+                        <img src="images/ReorderLines.jpg" alt="Reorder Lines" />
+                    </p>
+                    <p>Refer to the User's Manual for details.</p>
+                    <p><a href="https://github.com/czbar/ChessForge/wiki/Working-with-Moves-and-Lines"
+                            target="_blank">Working with Moves and Lines</a>
+                </article>
+
+                <article class="release">
+                    <h3>Copy/Paste Moves, Lines and Trees</h3>
+                    <p> A unique feature of Chess Forge as a PGN editor is the ability to copy and paste moves, lines and
+                        trees within
+                        the same view or across views/chapters/workbooks.</p>
+                    <p>
+                        You can copy moves, lines and trees from any Chess Forge view or from any text with valid algebraic
+                        notation (not necessarily PGN).
+                    </p>
+                    <h4>Select and Copy Moves </h4>
+                    <p>Click on any move to select it. While pressing the SHIFT key, click on another move to select the
+                        sequence of moves
+                        between the two moves. The selected sequence will be highlighted in blue.
+                    </p>
+                    <p class="marginimage">
+                        <img src="images/CopyPasteMoves.jpg" alt="Copy/Paste Moves" />
+                    </p>
+                    <h3>Select and Copy Line </h3>
+                    <p>Click on any move to select it. Press CTRL-L to select the currently highlighted line.
+                        The selection will now be bighlighted in blue.
+                    </p>
+                    <p class="marginimage">
+                        <img src="images/CopyPasteLine.jpg" alt="Copy/Paste Line" />
+                    </p>
+                    <h4>Select and Copy Tree </h4>
+                    <p>Click on any move to select it. Press CTRL-A to select the variation sub-tree under the highlighted
+                        move.
+                        The selected sub-tree will be bighlighted in blue.
+                    </p>
+                    <p class="marginimage">
+                        <img src="images/CopyPasteTree.jpg" alt="Copy/Paste Tree" />
+                    </p>
+                    <h4>Paste Selected Moves</h4>
+                    <p>Navigate to the target view (variation tree) and select a move at which you want to paste the
+                        selection.
+                    </p>
+                    <p class="marginimage">
+                        <img src="images/PrePasteMoves.jpg" alt="Pre-Paste Moves" />
+                    </p>
+                    <p>Press CTRL-V. If the move sequence can be legally inserted at the selected move, it will be pasted.
+                        Note that, in the example shown here, you could have selected 3.Bb5 as well.
+                        Chess Forge checks if the moves can be pasted at the selected location or at the next move
+                        (it will match the side on the move in the target position and in the selection being pasted).
+                    </p>
+                    <p>If we used the Copy/Paste Tree option, the end result will be as shown in the image below.</p>
+                    <p class="marginimage">
+                        <img src="images/PostPasteMoves.jpg" alt="Post-Paste Moves" />
+                    </p>
+                    <p>Note that the actual move numbering does not matter. You can try pasting the moves anywhere.
+                        If the moves cannot be legally inserted in the specified place, Chess Forge will abort the action
+                        and briefly display a warning message in the Hints box under the main chessboard.
+                    </p>
+                </article>
+
+                <article class="release">
+                    <h2>Copy/Paste PGN Games</h2>
+                    <p>
+                        You can copy one or more PGN games to your clipboard and then paste them (Ctrl+V) into Chess Forge.
+                        The program will intelligently analyze the clipboard content.
+                        If it's valid PGN, Chess Forge will offer to import the game(s) into your current chapter.
+                        Even more, if the PGN data originates from Chess Forge and includes specific Chapter or Intro tags,
+                        the program will offer to incorporate those entire chapters into your current workbook. </p>
+                </article>
+
+                <article class="release">
+                    <h2>Editing Intro View</h2>
+                    <p>
+                        Unlike the views discussed earlier, the Introduction view (or Intro view for short) doesn't contain
+                        a variation tree.
+                        Instead, it's designed to provide a free-form text description and notes about the upcoming chapter.
+                        You can format the text similarly to Microsoft Word's rich text formatting, and you can also insert
+                        diagrams and moves for illustration purposes. </p>
+                    <p class="marginimage">
+                        <img src="images/IntroView.jpg" alt="Intro View" />
+                    </p>
+                    <p>For detailed instructions, refer to the User's Manual.</p>
+                    <p><a href="https://github.com/czbar/ChessForge/wiki/Intro-Editor" target="_blank">Intro Editor</a>
+                </article>
+
+            </section>
+            <aside class="sidebar">
+                <h3>Resources on GitHub</h3>
                 <ul>
-                    <li>An optional Intro</li>
-                    <li>A Study</li>
-                    <li>Any number of Games</li>
-                    <li>Any number of Exercises</li>
+                    <li><a href="https://github.com/czbar/ChessForge/wiki/Installation" target="_blank">Installation
+                            Guide</a></li>
+                    <li><a href="https://github.com/czbar/ChessForge/wiki/User's-Manual" target="_blank">User's Manual</a>
+                    </li>
+                    <li><a href="https://github.com/czbar/ChessForge/wiki/Frequently-Asked-Questions"
+                            target="_blank">FAQ</a></li>
                 </ul>
-                </p>
-                <p>You can create a new workbook from scratch or start by importing a PGN file, then utilize Chess
-                    Forge's
-                    unique capabilities to edit it.</p>
-            </article>
-            </article>
-
-            <article class="release">
-                <h2>General Editing</h2>
-                <p>This section applies to Studies, Games and Exercises i.e. views that display a variation tree.</p>
-                <p>In each of these views, one move or position is always selected, indicated by highlighting
-                    and reflected on the main chessboard.
-                </p>
-                <p>If there is no highlighted move/position, it means that the starting position has been selected. In
-                    particular, that will be the case when you open a Study for the first time.
-                </p>
-                <p> Most of the editing will be done by entering moves with the mouse. Moves are appended to the
-                    currently selected one and branches
-                    will be created where other move have already been added previously.</p>
-            </article>
-
-            <article class="release">
-                <h3>Managing Lines</h3>
-                <p> We will refer to branches of the variation tree as lines, as per the standard chess terminology.
-                    Lines can be selected and <i>(coming in version 1.8)</i> re-ordered.</p>
-                <p class="marginimage">
-                    <img src="images/ReorderLines.jpg" alt="Reorder Lines" />
-                </p>
-                <p>Refer to the User's Manual for details.</p>
-                <p><a href="https://github.com/czbar/ChessForge/wiki/Working-with-Moves-and-Lines"
-                        target="_blank">Working with Moves and Lines</a>
-            </article>
-
-            <article class="release">
-                <h3>Copy/Paste Moves, Lines and Trees</h3>
-                <p> A unique feature of Chess Forge as a PGN editor is the ability to copy and paste moves, lines and
-                    trees within
-                    the same view or across views/chapters/workbooks.</p>
-                <p>
-                    You can copy moves, lines and trees from any Chess Forge view or from any text with valid algebraic
-                    notation (not necessarily PGN).
-                </p>
-                <h4>Select and Copy Moves </h4>
-                <p>Click on any move to select it. While pressing the SHIFT key, click on another move to select the
-                    sequence of moves
-                    between the two moves. The selected sequence will be highlighted in blue.
-                </p>
-                <p class="marginimage">
-                    <img src="images/CopyPasteMoves.jpg" alt="Copy/Paste Moves" />
-                </p>
-                <h3>Select and Copy Line </h3>
-                <p>Click on any move to select it. Press CTRL-L to select the currently highlighted line.
-                    The selection will now be bighlighted in blue.
-                </p>
-                <p class="marginimage">
-                    <img src="images/CopyPasteLine.jpg" alt="Copy/Paste Line" />
-                </p>
-                <h4>Select and Copy Tree </h4>
-                <p>Click on any move to select it. Press CTRL-A to select the variation sub-tree under the highlighted
-                    move.
-                    The selected sub-tree will be bighlighted in blue.
-                </p>
-                <p class="marginimage">
-                    <img src="images/CopyPasteTree.jpg" alt="Copy/Paste Tree" />
-                </p>
-                <h4>Paste Selected Moves</h4>
-                <p>Navigate to the target view (variation tree) and select a move at which you want to paste the
-                    selection.
-                </p>
-                <p class="marginimage">
-                    <img src="images/PrePasteMoves.jpg" alt="Pre-Paste Moves" />
-                </p>
-                <p>Press CTRL-V. If the move sequence can be legally inserted at the selected move, it will be pasted.
-                    Note that, in the example shown here, you could have selected 3.Bb5 as well.
-                    Chess Forge checks if the moves can be pasted at the selected location or at the next move
-                    (it will match the side on the move in the target position and in the selection being pasted).
-                </p>
-                <p>If we used the Copy/Paste Tree option, the end result will be as shown in the image below.</p>
-                <p class="marginimage">
-                    <img src="images/PostPasteMoves.jpg" alt="Post-Paste Moves" />
-                </p>
-                <p>Note that the actual move numbering does not matter. You can try pasting the moves anywhere.
-                    If the moves cannot be legally inserted in the specified place, Chess Forge will abort the action
-                    and briefly display a warning message in the Hints box under the main chessboard.
-                </p>
-            </article>
-
-            <article class="release">
-                <h2>Copy/Paste PGN Games</h2>
-                <p>
-                    You can copy one or more PGN games to your clipboard and then paste them (Ctrl+V) into Chess Forge.
-                    The program will intelligently analyze the clipboard content.
-                    If it's valid PGN, Chess Forge will offer to import the game(s) into your current chapter.
-                    Even more, if the PGN data originates from Chess Forge and includes specific Chapter or Intro tags,
-                    the program will offer to incorporate those entire chapters into your current workbook. </p>
-            </article>
-
-            <article class="release">
-                <h2>Editing Intro View</h2>
-                <p>
-                    Unlike the views discussed earlier, the Introduction view (or Intro view for short) doesn't contain
-                    a variation tree.
-                    Instead, it's designed to provide a free-form text description and notes about the upcoming chapter.
-                    You can format the text similarly to Microsoft Word's rich text formatting, and you can also insert
-                    diagrams and moves for illustration purposes. </p>
-                <p class="marginimage">
-                    <img src="images/IntroView.jpg" alt="Intro View" />
-                </p>
-                <p>For detailed instructions, refer to the User's Manual.</p>
-                <p><a href="https://github.com/czbar/ChessForge/wiki/Intro-Editor" target="_blank">Intro Editor</a>
-            </article>
-
-        </section>
-        <aside class="sidebar">
-            <h3>Resources on GitHub</h3>
-            <ul>
-                <li><a href="https://github.com/czbar/ChessForge/wiki/Installation" target="_blank">Installation
-                        Guide</a></li>
-                <li><a href="https://github.com/czbar/ChessForge/wiki/User's-Manual" target="_blank">User's Manual</a>
-                </li>
-                <li><a href="https://github.com/czbar/ChessForge/wiki/Frequently-Asked-Questions"
-                        target="_blank">FAQ</a></li>
-            </ul>
-        </aside>
+            </aside>
+        </div>
 
     </main>
 
