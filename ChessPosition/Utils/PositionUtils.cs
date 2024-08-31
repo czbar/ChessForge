@@ -1092,7 +1092,7 @@ namespace ChessPosition
         /// </summary>
         /// <param name="line"></param>
         /// <returns></returns>
-        public static ObservableCollection<MoveWithEval> BuildMoveListFromLine(ObservableCollection<TreeNode> line)
+        public static ObservableCollection<MoveWithEval> BuildMoveListFromLine(ObservableCollection<TreeNode> line, uint moveNumberOffset)
         {
             var game = new ObservableCollection<MoveWithEval>();
 
@@ -1107,7 +1107,7 @@ namespace ChessPosition
                 TreeNode node = line[1];
                 if (node.ColorToMove == PieceColor.White)
                 {
-                    move.Number = node.Position.MoveNumber.ToString() + ".";
+                    move.Number = (node.Position.MoveNumber + moveNumberOffset) .ToString() + ".";
                     SetWhiteMoveInMoveList(null, ref move);
                     SetBlackMoveInMoveList(node, ref move);
 
@@ -1121,7 +1121,7 @@ namespace ChessPosition
                 MoveWithEval move = new MoveWithEval();
 
                 TreeNode whiteNode = line[i];
-                move.Number = whiteNode.Position.MoveNumber.ToString() + ".";
+                move.Number = (whiteNode.Position.MoveNumber + moveNumberOffset).ToString() + ".";
                 SetWhiteMoveInMoveList(whiteNode, ref move);
 
                 if (i + 1 < line.Count)
