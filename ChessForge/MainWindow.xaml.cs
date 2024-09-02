@@ -134,7 +134,7 @@ namespace ChessForge
             if (_studyTreeView != null)
             {
                 _studyTreeView.Clear(GameData.ContentType.STUDY_TREE);
-                if (rebuild)
+                if (rebuild && AppState.Workbook != null)
                 {
                     _studyTreeView.BuildFlowDocumentForVariationTree();
                 }
