@@ -732,7 +732,7 @@ namespace ChessForge
             PlaceMarker(nd);
             if (nd != null && nd.NodeId != 0)
             {
-                _lblMove.Content = MoveUtils.BuildSingleMoveText(nd, true, false, 0);
+                _lblMove.Content = MoveUtils.BuildSingleMoveText(nd, true, false, AppState.ActiveVariationTree == null ? 0: AppState.ActiveVariationTree.MoveNumberOffset);
             }
             else
             {

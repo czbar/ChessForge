@@ -84,7 +84,9 @@ namespace ChessForge
 
             if (Configuration.ShowEvaluationChart)
             {
-                if (AppState.ActiveTab != TabViewType.STUDY && AppState.ActiveTab != TabViewType.MODEL_GAME)
+                if (AppState.ActiveTab != TabViewType.STUDY 
+                    && AppState.ActiveTab != TabViewType.MODEL_GAME 
+                    && (AppState.ActiveTab != TabViewType.EXERCISE || AppState.IsUserSolving() || !AppState.ActiveVariationTree.ShowTreeLines))
                 {
                     // report wrong tab
                     if (showReason)

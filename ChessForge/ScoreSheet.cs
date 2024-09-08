@@ -81,7 +81,8 @@ namespace ChessForge
         /// </summary>
         public void BuildMoveListFromPlyList()
         {
-            MoveList = PositionUtils.BuildMoveListFromLine(NodeList);
+            uint moveNumberOffset = AppState.ActiveVariationTree == null ? 0 : AppState.ActiveVariationTree.MoveNumberOffset;
+            MoveList = PositionUtils.BuildMoveListFromLine(NodeList, moveNumberOffset);
         }
 
         /// <summary>
@@ -89,7 +90,8 @@ namespace ChessForge
         /// </summary>
         public void RefreshMovesText()
         {
-            ObservableCollection<MoveWithEval> tmp = PositionUtils.BuildMoveListFromLine(NodeList);
+            uint moveNumberOffset = AppState.ActiveVariationTree == null ? 0 : AppState.ActiveVariationTree.MoveNumberOffset;
+            ObservableCollection<MoveWithEval> tmp = PositionUtils.BuildMoveListFromLine(NodeList, moveNumberOffset);
             if (tmp.Count == MoveList.Count)
             {
                 for (int i = 0; i < tmp.Count; i++)
@@ -379,7 +381,7 @@ namespace ChessForge
                 move.WhitePly = nd.GetGuiPlyText(true);
                 move.WhiteEval = nd.EngineEvaluation;
                 move.WhiteNodeId = nd.NodeId;
-                move.Number = (MoveList.Count + 1).ToString() + ".";
+                move.Number = ((MoveList.Count + 1) + (AppState.ActiveVariationTree == null ? 0 : AppState.ActiveVariationTree.MoveNumberOffset)).ToString() + ".";
                 MoveList.Add(move);
             }
         }

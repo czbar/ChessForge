@@ -153,7 +153,9 @@ namespace ChessForge
                             }
                             else
                             {
-                                AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgShiftToSkipFast, CommentBox.HintType.INFO);
+                                // Commenting out as it can be confusing to the usr
+                                // 
+                                //AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgShiftToSkipFast, CommentBox.HintType.INFO);
                                 EndCurrentSeries();
                             }
                         }

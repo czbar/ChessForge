@@ -1205,7 +1205,7 @@ namespace ChessForge
             WorkbookLocationNavigator.SaveNewLocation(TabViewType.CHAPTERS);
 
             // we may need to show/hide Intro headers if something has changed
-            if (_chaptersView == null)
+            if (_chaptersView == null || AppState.Workbook == null)
             {
                 _chaptersView = new ChaptersView(UiRtbChaptersView.Document, this);
                 _chaptersView.IsDirty = true;
@@ -1669,7 +1669,15 @@ namespace ChessForge
                     }
 
                     AppState.ConfigureMainBoardContextMenu();
-                    ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
+
+                    if (ActiveVariationTree != null && ActiveVariationTree.ShowTreeLines)
+                    {
+                        ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.SHOW_ACTIVE_LINE);
+                    }
+                    else
+                    {
+                        ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
+                    }
                 }
             }
             catch
