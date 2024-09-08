@@ -1340,10 +1340,12 @@ namespace ChessForge
             if (showHide)
             {
                 _mainVariationTree.CurrentSolvingMode = VariationTree.SolvingMode.EDITING;
+                AppState.MainWin.ResizeTabControl(AppState.MainWin.UiTabCtrlManualReview, TabControlSizeMode.SHOW_ACTIVE_LINE);
             }
             else
             {
                 _mainVariationTree.CurrentSolvingMode = VariationTree.SolvingMode.NONE;
+                AppState.MainWin.ResizeTabControl(AppState.MainWin.UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
             }
 
             AppState.ShowExplorers(AppState.AreExplorersOn, true);
