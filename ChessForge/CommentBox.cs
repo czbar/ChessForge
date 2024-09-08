@@ -297,7 +297,8 @@ namespace ChessForge
         public void ShowTabHints()
         {
             if (WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.GamesManager.State == ProcessState.RUNNING
-                || _mainWin.ActiveLineReplay.IsReplayActive)
+                || _mainWin.ActiveLineReplay.IsReplayActive
+                || MultiTextBoxManager.CanShowEvaluationChart(false, out _) )
             {
                 return;
             }
