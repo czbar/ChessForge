@@ -545,7 +545,7 @@ namespace ChessForge
         {
             bool res = false;
 
-            if ((Keyboard.Modifiers & ModifierKeys.Alt) > 0)
+            if ((Keyboard.Modifiers & ModifierKeys.Alt) > 0 && Keyboard.IsKeyDown(Key.LeftAlt))
             {
                 var key = (e.Key == Key.System ? e.SystemKey : e.Key);
 
@@ -584,7 +584,7 @@ namespace ChessForge
 
             try
             {
-                if ((Keyboard.Modifiers & ModifierKeys.Alt) > 0)
+                if ((Keyboard.Modifiers & ModifierKeys.Alt) > 0 && Keyboard.IsKeyDown(Key.LeftAlt))
                 {
                     var key = (e.Key == Key.System ? e.SystemKey : e.Key);
 
