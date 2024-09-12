@@ -2105,6 +2105,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Toggles the Diagram flag on the currently selected node.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMn_ToggleDiagramFlag_Click(object sender, RoutedEventArgs e)
+        {
+            ActiveTreeView?.ToggleDiagramFlag();
+        }
+
+        /// <summary>
         /// Marks the current node as a Thumbnail for the current tree.
         /// </summary>
         /// <param name="sender"></param>

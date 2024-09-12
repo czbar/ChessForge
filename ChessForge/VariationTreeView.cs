@@ -629,6 +629,25 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Toggles the diagram flag on the currently selected node.
+        /// </summary>
+        public void ToggleDiagramFlag()
+        {
+            try
+            {
+                TreeNode nd = GetSelectedNode();
+                if (nd != null)
+                {
+                    nd.IsDiagram = !nd.IsDiagram;
+                    AppState.IsDirty = true;
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
         /// The thumbnail Node has changed. Remove any thumbnail icon
         /// that may be set and place it on the current thumbnail.
         /// </summary>
