@@ -1753,6 +1753,9 @@ ConfirmDeleteExercise=Delete Exercise
 #Insert a diagram
 InsertDiagram=Insert Diagram
 
+#Remove the diagram
+RemoveDiagram=Remove Diagram
+
 #Edit a diagram
 EditDiagram=Edit Diagram
 

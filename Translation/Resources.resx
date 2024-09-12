@@ -1582,6 +1582,9 @@
   <data name="InsertDiagram" xml:space="preserve">
     <value>Insert Diagram</value>
   </data>
+  <data name="RemoveDiagram" xml:space="preserve">
+    <value>Remove Diagram</value>
+  </data>
   <data name="EditDiagram" xml:space="preserve">
     <value>Edit Diagram</value>
   </data>
