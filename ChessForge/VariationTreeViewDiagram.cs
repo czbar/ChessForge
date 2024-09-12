@@ -12,9 +12,14 @@ namespace ChessForge
     public class VariationTreeViewDiagram
     {
         /// <summary>
-        /// The length of the ViewBox's side
+        /// The length of the ViewBox's side on the main line
         /// </summary>
-        private static int VIEWBOX_SIDE_LENGTH = 160;
+        private static int VIEWBOX_MAIN_LINE_SIDE_LENGTH = 160;
+
+        /// <summary>
+        /// The length of the ViewBox's side on a side line
+        /// </summary>
+        private static int VIEWBOX_SIDE_LINE_SIDE_LENGTH = 140;
 
         /// <summary>
         /// The actual width and height of the image to use for the chessboard 
@@ -43,7 +48,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd"></param>
         /// <returns></returns>
-        public static InlineUIContainer CreateDiagram(TreeNode nd, out ChessBoardSmall chessboard)
+        public static InlineUIContainer CreateDiagram(TreeNode nd, out ChessBoardSmall chessboard, bool largeDiagram)
         {
             InlineUIContainer iuc = null;
             chessboard = null;
@@ -55,8 +60,8 @@ namespace ChessForge
                     Canvas baseCanvas = SetupDiagramCanvas(CHESSBOARD_IMAGE_SIDE_LENGTH);
                     Image imgChessBoard = CreateChessBoard(baseCanvas, out chessboard);
                     baseCanvas.Children.Add(imgChessBoard);
-
-                    Viewbox viewBox = SetupDiagramViewbox(baseCanvas);
+                    
+                    Viewbox viewBox = SetupDiagramViewbox(baseCanvas, largeDiagram);
 
                     iuc = new InlineUIContainer();
                     iuc.Child = viewBox;
@@ -113,12 +118,12 @@ namespace ChessForge
         /// </summary>
         /// <param name="canvas"></param>
         /// <returns></returns>
-        private static Viewbox SetupDiagramViewbox(Canvas canvas)
+        private static Viewbox SetupDiagramViewbox(Canvas canvas, bool largeDiagram)
         {
             Viewbox viewBox = new Viewbox();
             viewBox.Child = canvas;
-            viewBox.Width = VIEWBOX_SIDE_LENGTH;
-            viewBox.Height = VIEWBOX_SIDE_LENGTH;
+            viewBox.Width = largeDiagram ? VIEWBOX_MAIN_LINE_SIDE_LENGTH : VIEWBOX_SIDE_LINE_SIDE_LENGTH;
+            viewBox.Height = largeDiagram ? VIEWBOX_MAIN_LINE_SIDE_LENGTH : VIEWBOX_SIDE_LINE_SIDE_LENGTH;
             viewBox.Visibility = Visibility.Visible;
 
             return viewBox;
