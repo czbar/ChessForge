@@ -759,6 +759,7 @@ namespace ChessForge
         {
             if (nd.IsBookmark
                 || nd.IsThumbnail
+                || nd.IsDiagram
                 || !string.IsNullOrEmpty(nd.ArticleRefs)
                 || !string.IsNullOrEmpty(nd.Comment)
                 || !string.IsNullOrEmpty(nd.CommentBeforeMove)
