@@ -302,6 +302,27 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Inserts a position diagram (if flagged on the node in the paragraph.  
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="para"></param>
+        private void AddDiagramToParagraph(TreeNode nd, Paragraph para)
+        {
+            if (nd.IsDiagram)
+            {
+                InlineUIContainer iuc = VariationTreeViewDiagram.CreateDiagram(nd, out ChessBoardSmall chessboard);
+                if (iuc != null)
+                {
+                    para.Inlines.Add(new Run("\n"));
+                    para.Inlines.Add(iuc);
+                    para.Inlines.Add(new Run("\n"));
+
+                    chessboard.DisplayPosition(nd, false);
+                }
+            }
+        }
+
+        /// <summary>
         /// Creates the comment Run or Runs if there is a comment with the move.
         /// Adds the runs to the paragraph.
         /// </summary>
