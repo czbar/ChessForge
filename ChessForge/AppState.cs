@@ -1233,6 +1233,7 @@ namespace ChessForge
                                 menuItem.IsEnabled = tree != null && tree.Nodes.Count > 1;
                                 break;
                             case "_mnStudyTree_MarkThumbnail":
+                            case "UiMnStudyInsertDiagram":
                                 menuItem.IsEnabled = tree != null && tree.SelectedNode != null;
                                 break;
                             case "UiMnStCopyMoves":
@@ -1316,6 +1317,7 @@ namespace ChessForge
                                 menuItem.IsEnabled = gameIndex >= 0 && selectedNodeId > 0;
                                 break;
                             case "_mnGame_MarkThumbnail":
+                            case "UiMnGameInsertDiagram":
                                 menuItem.IsEnabled = gameIndex >= 0 && selectedNodeId > 0;
                                 break;
                             case "UiMnGameCopyMoves":
@@ -1424,6 +1426,7 @@ namespace ChessForge
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "_mnExerc_MarkThumbnail":
+                            case "UiMnExerc_InsertDiagram":
                                 menuItem.IsEnabled = exerciseIndex >= 0 && selectedNodeId > 0 && isSolutionShown;
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
