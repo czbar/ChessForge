@@ -1313,6 +1313,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Whether diagram inerted here should be large or small.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        protected virtual bool IsLargeDiagram(TreeNode nd)
+        {
+            return nd != null && nd.IsMainLine();
+        }
+
+        /// <summary>
         /// On Mouse up on the button brings the first node to view.
         /// Doing it from the click handler would be premature (ineffective).
         /// </summary>

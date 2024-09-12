@@ -84,6 +84,17 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Whether diagram inerted here should be large or small.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        override protected bool IsLargeDiagram(TreeNode nd)
+        {
+            return true;
+        }
+
+
+        /// <summary>
         /// Finds out if the move has a collapsed ancestor
         /// and if so, invokes UncollapseSector on that ancestor.
         /// </summary>
