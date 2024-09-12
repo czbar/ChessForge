@@ -1716,6 +1716,7 @@ namespace ChessForge
                 InsertOrUpdateCommentBeforeMoveRun(nd, includeNumber);
                 AddReferenceRunToParagraph(nd, para);
                 AddCommentRunsToParagraph(nd, para, out bool isBlunder);
+                AddDiagramToParagraph(nd, para);
                 if (isBlunder)
                 {
                     TextUtils.RemoveBlunderNagFromText(rMove);
