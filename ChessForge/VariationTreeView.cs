@@ -2198,13 +2198,27 @@ namespace ChessForge
         /// Event handler invoked when a Run was clicked.
         /// In response, we highlight the line to which this Run belongs
         /// (selecting the top branch for the part of the line beyond
-        /// the clicked Run),
+        /// the clicked Run).
+        /// 
+        /// This event will also be invoked if an inline diagram was clicked.
+        /// In that case the diagram's associated Run will be identified.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void EventRunClicked(object sender, MouseButtonEventArgs e)
         {
-            Run r = e.Source as Run;
+            Run r = null;
+
+            if (e.Source is Run)
+            {
+                r = e.Source as Run;
+            }
+            else if (sender is InlineUIContainer iuc)
+            {
+                int nodeId = TextUtils.GetIdFromPrefixedString(iuc.Name);
+                r =_dictNodeToRun[nodeId];
+            }
+
             _mainWin.StopReplayIfActive();
             SelectRun(r, e.ClickCount, e.ChangedButton);
         }

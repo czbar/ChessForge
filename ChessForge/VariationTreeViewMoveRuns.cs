@@ -316,6 +316,8 @@ namespace ChessForge
                     para.Inlines.Add(new Run("\n"));
                     para.Inlines.Add(iuc);
                     para.Inlines.Add(new Run("\n"));
+                    
+                    iuc.MouseDown += EventRunClicked;
 
                     chessboard.DisplayPosition(nd, false);
                 }
