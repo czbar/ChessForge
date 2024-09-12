@@ -1207,6 +1207,7 @@ namespace ChessForge
                 VariationTreeView view = AppState.MainWin.ActiveTreeView;
 
                 ConfigureBookmarkMenuOptions(MainWin.UiMnMarkBookmark, MainWin.UiMnStDeleteBookmark);
+                ConfigureDiagramMenuOptions(MainWin.UiMnStudyInsertDiagram, MainWin.UiMnStudyDeleteDiagram);
 
                 foreach (var item in MainWin.UiMncStudyTree.Items)
                 {
@@ -1277,6 +1278,7 @@ namespace ChessForge
                 VariationTreeView view = MainWin.ActiveTreeView;
 
                 ConfigureBookmarkMenuOptions(MainWin.UiMnGameMarkBookmark, MainWin.UiMnGameDeleteBookmark);
+                ConfigureDiagramMenuOptions(MainWin.UiMnGame_InsertDiagram, MainWin.UiMnGame_DeleteDiagram);
 
                 foreach (var item in MainWin.UiMncModelGames.Items)
                 {
@@ -1363,6 +1365,7 @@ namespace ChessForge
                 else
                 {
                     ConfigureBookmarkMenuOptions(MainWin.UiMnExercMarkBookmark, MainWin.UiMnExercDeleteBookmark);
+                    ConfigureDiagramMenuOptions(MainWin.UiMnExerc_InsertDiagram, MainWin.UiMnExerc_DeleteDiagram);
                 }
 
                 foreach (var item in MainWin.UiMncExercises.Items)
@@ -1928,6 +1931,33 @@ namespace ChessForge
 
                 deleteBookmark.Visibility = hasBookmark ? Visibility.Visible : Visibility.Collapsed;
                 deleteBookmark.IsEnabled = hasBookmark;
+            }
+        }
+
+        /// <summary>
+        /// Configures the Insert/Remove Diagram menu options
+        /// </summary>
+        /// <param name="addBookmark"></param>
+        /// <param name="deleteBookmark"></param>
+        private static void ConfigureDiagramMenuOptions(MenuItem insertDiagram, MenuItem removeDiagram)
+        {
+            TreeNode nd = AppState.GetCurrentNode();
+
+            if (nd == null)
+            {
+                insertDiagram.Visibility = Visibility.Visible;
+                insertDiagram.IsEnabled = false;
+
+                removeDiagram.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                bool hasDiagram = nd.IsDiagram;
+                insertDiagram.Visibility = hasDiagram ? Visibility.Collapsed : Visibility.Visible;
+                insertDiagram.IsEnabled = !hasDiagram;
+
+                removeDiagram.Visibility = hasDiagram ? Visibility.Visible : Visibility.Collapsed;
+                removeDiagram.IsEnabled = hasDiagram;
             }
         }
 
