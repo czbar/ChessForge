@@ -310,7 +310,7 @@ namespace ChessForge
         {
             if (nd.IsDiagram)
             {
-                InlineUIContainer iuc = VariationTreeViewDiagram.CreateDiagram(nd, out ChessBoardSmall chessboard);
+                InlineUIContainer iuc = VariationTreeViewDiagram.CreateDiagram(nd, out ChessBoardSmall chessboard, IsLargeDiagram(nd));
                 if (iuc != null)
                 {
                     para.Inlines.Add(new Run("\n"));
