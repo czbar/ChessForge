@@ -786,6 +786,13 @@ namespace ChessForge
                     sb.Append("[" + sCmd + "]");
                 }
 
+                // Process a Diagram command
+                if (nd.IsDiagram)
+                {
+                    string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.DIAGRAM);
+                    sb.Append("[" + sCmd + "]");
+                }
+
                 // Process an Article References command
                 if (!string.IsNullOrEmpty(nd.ArticleRefs))
                 {

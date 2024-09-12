@@ -481,6 +481,9 @@ namespace GameTree
                     case ChfCommands.Command.THUMBNAIL:
                         nd.IsThumbnail = true;
                         break;
+                    case ChfCommands.Command.DIAGRAM:
+                        nd.IsDiagram = true;
+                        break;
                     case ChfCommands.Command.ARTICLE_REFS:
                         if (tokens.Length > 1)
                         {
