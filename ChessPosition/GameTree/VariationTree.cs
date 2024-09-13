@@ -1657,6 +1657,30 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Deletes a previously inserted diagram.
+        /// </summary>
+        /// <param name="nd"></param>
+        public void UndoInsertDiagram(TreeNode nd)
+        {
+            if (nd != null)
+            {
+                nd.IsDiagram = false;
+            }
+        }
+
+        /// <summary>
+        /// Re-inserts a previously deleted diagram.
+        /// </summary>
+        /// <param name="nd"></param>
+        public void UndoDeleteDiagram(TreeNode nd)
+        {
+            if (nd != null)
+            {
+                nd.IsDiagram = true;
+            }
+        }
+
+        /// <summary>
         /// Restores stripped comments and nags.
         /// </summary>
         /// <param name="opData"></param>

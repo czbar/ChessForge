@@ -639,6 +639,10 @@ namespace ChessForge
                 if (nd != null)
                 {
                     nd.IsDiagram = !nd.IsDiagram;
+
+                    EditOperation.EditType typ = nd.IsDiagram ? EditOperation.EditType.INSERT_DIAGRAM : EditOperation.EditType.DELETE_DIAGRAM;
+                    EditOperation op = new EditOperation(typ, nd);
+                    AppState.ActiveVariationTree?.OpsManager.PushOperation(op);
                     AppState.IsDirty = true;
                 }
             }

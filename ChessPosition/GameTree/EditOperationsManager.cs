@@ -73,6 +73,12 @@ namespace GameTree
                         selectedNodeId= op.Node.Parent.NodeId;
                         selectedLineId= op.Node.Parent.LineId;
                         break;
+                    case EditOperation.EditType.INSERT_DIAGRAM:
+                        _owningTree.UndoInsertDiagram(op.Node);
+                        break;
+                    case EditOperation.EditType.DELETE_DIAGRAM:
+                        _owningTree.UndoDeleteDiagram(op.Node);
+                        break;
                 }
             }
             catch
