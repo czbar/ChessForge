@@ -302,7 +302,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Inserts a position diagram (if flagged on the node in the paragraph.  
+        /// Inserts a position diagram (if flagged on the node in the paragraph).  
         /// </summary>
         /// <param name="nd"></param>
         /// <param name="para"></param>
@@ -313,11 +313,24 @@ namespace ChessForge
                 InlineUIContainer iuc = VariationTreeViewDiagram.CreateDiagram(nd, out ChessBoardSmall chessboard, IsLargeDiagram(nd));
                 if (iuc != null)
                 {
-                    para.Inlines.Add(new Run("\n"));
-                    para.Inlines.Add(iuc);
-                    para.Inlines.Add(new Run("\n"));
+                    Run preDiagRun = new Run("\n");
+                    preDiagRun.Name = RichTextBoxUtilities.PreInlineDiagramRunPrefix + nd.NodeId.ToString();
+                    para.Inlines.Add(preDiagRun);
                     
+                    para.Inlines.Add(iuc);
                     iuc.MouseDown += EventRunClicked;
+
+                    // TODO: the following needs resolving in some other way.
+                    // e.g. perhaps always add the post diag run and remove in post-processing
+                    // if it is found to be the last run in a paragraph.
+
+                    // if there are moves further in the same para, insert a new line.
+                    if (nd.Children.Count <= 1 || nd.Parent.Children.Count <= 1) // || nd.Parent.Children[nd.Parent.Children.Count - 1] != nd)
+                    {
+                        Run postDiagRun = new Run("\n");
+                        postDiagRun.Name = RichTextBoxUtilities.PostInlineDiagramRunPrefix + nd.NodeId.ToString();
+                        para.Inlines.Add(postDiagRun);
+                    }
 
                     chessboard.DisplayPosition(nd, false);
                 }
