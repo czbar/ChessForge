@@ -2216,7 +2216,10 @@ namespace ChessForge
             else if (sender is InlineUIContainer iuc)
             {
                 int nodeId = TextUtils.GetIdFromPrefixedString(iuc.Name);
-                r =_dictNodeToRun[nodeId];
+                if (_dictNodeToRun.ContainsKey(nodeId))
+                {
+                    r = _dictNodeToRun[nodeId];
+                }
             }
 
             _mainWin.StopReplayIfActive();
