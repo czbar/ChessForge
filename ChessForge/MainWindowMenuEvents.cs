@@ -2111,11 +2111,11 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMn_ToggleDiagramFlag_Click(object sender, RoutedEventArgs e)
         {
-            ActiveTreeView?.ToggleDiagramFlag();
             if (AppState.MainWin.ActiveTreeView != null)
             {
                 TreeNode nd = AppState.MainWin.ActiveTreeView.GetSelectedNode();
                 string lineId = AppState.MainWin.ActiveVariationTree.SelectedLineId;
+                ActiveTreeView?.ToggleDiagramFlag();
                 AppState.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
                 if (nd != null)
                 {
