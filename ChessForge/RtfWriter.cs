@@ -1193,40 +1193,7 @@ namespace ChessForge
                             {
                                 lastRunWasIntroMove = false;
 
-                                //CreateTextRuns(printDoc, printPara, run);
-                                
-                                // if this is a pre/post-inline diagram run then ignore
-                                if (run.Name != null && 
-                                    run.Name.StartsWith(RichTextBoxUtilities.PreInlineDiagramRunPrefix))
-                                {
-                                    continue;
-                                }
-
-                                if (run.Name != null &&
-                                    run.Name.StartsWith(RichTextBoxUtilities.PostInlineDiagramRunPrefix))
-                                {
-                                    printDoc.Blocks.Add(printPara);
-                                    printPara = new Paragraph();
-                                    printDoc.Blocks.Add(printPara);
-                                    printPara = new Paragraph();
-                                    continue;
-                                }
-
-                                // if Run's text contains newline chars, create a new para for each (otherwise, no new line in RTF)
-                                string[] tokens = run.Text.Split('\n');
-                                for (int i = 0; i < tokens.Length; i++)
-                                {
-                                    if (i == 0)
-                                    {
-                                        ProcessTextRun(run, tokens[0], printPara);
-                                    }
-                                    else
-                                    {
-                                        printDoc.Blocks.Add(printPara);
-                                        printPara = new Paragraph();
-                                        ProcessTextRun(run, tokens[i], printPara);
-                                    }
-                                }
+                                printPara = CreateTextRuns(printDoc, printPara, run);
                             }
                             else if (inl is InlineUIContainer uic)
                             {
@@ -1237,17 +1204,7 @@ namespace ChessForge
                                 else if (inl.Name.StartsWith(RichTextBoxUtilities.InlineDiagramIucPrefix))
                                 {
                                     printDoc.Blocks.Add(printPara);
-
-                                    int nodeId = TextUtils.GetIdFromPrefixedString(inl.Name);
-                                    // this is an inline diagram so create a new paragraph and register the diagram
-                                    printPara = new Paragraph();
-                                    _diagramId++;
-                                    ProcessDiagram(_diagramId, printPara, tree, nodeId, diagrams);
-                                    printDoc.Blocks.Add(printPara);
-
-                                    Paragraph dummy = new Paragraph();
-                                    printDoc.Blocks.Add(dummy);
-
+                                    printPara = CreateInlineDiagramForPrint(printDoc,  printPara, inl.Name, tree, ref diagrams);
                                     lastRunWasIntroMove = false;
                                 }
                                 else
@@ -1257,6 +1214,8 @@ namespace ChessForge
                             }
                         }
                     }
+
+                    // the very last printPara may not have been added
                     if (!printDoc.Blocks.Contains(printPara))
                     {
                         printDoc.Blocks.Add(printPara);
@@ -1266,7 +1225,6 @@ namespace ChessForge
                     {
                         printDoc.Blocks.Add(new Paragraph());
                     }
-
                 }
                 else
                 {
@@ -1275,6 +1233,32 @@ namespace ChessForge
             }
 
             return printDoc;
+        }
+
+        /// <summary>
+        /// Inserts placeholder for an inline diagram.
+        /// </summary>
+        /// <param name="printDoc"></param>
+        /// <param name="printPara"></param>
+        /// <param name="inlName"></param>
+        /// <param name="tree"></param>
+        /// <param name="diagrams"></param>
+        /// <returns></returns>
+        private static Paragraph CreateInlineDiagramForPrint(FlowDocument printDoc, Paragraph printPara, string inlName, VariationTree tree, ref List<RtfDiagram> diagrams)
+        {
+            printDoc.Blocks.Add(printPara);
+
+            int nodeId = TextUtils.GetIdFromPrefixedString(inlName);
+            // this is an inline diagram so create a new paragraph and register the diagram
+            printPara = new Paragraph();
+            _diagramId++;
+            ProcessDiagram(_diagramId, printPara, tree, nodeId, diagrams);
+            printDoc.Blocks.Add(printPara);
+
+            Paragraph dummy = new Paragraph();
+            printDoc.Blocks.Add(dummy);
+
+            return printPara;
         }
 
         /// <summary>
@@ -1317,7 +1301,14 @@ namespace ChessForge
             }
         }
 
-        private static void CreateTextRuns(FlowDocument printDoc, Paragraph printPara, Run run)
+        /// <summary>
+        /// Creates print objects for text runs.
+        /// </summary>
+        /// <param name="printDoc"></param>
+        /// <param name="printPara"></param>
+        /// <param name="run"></param>
+        /// <returns></returns>
+        private static Paragraph CreateTextRuns(FlowDocument printDoc, Paragraph printPara, Run run)
         {
             if (run.Name != null && run.Name.StartsWith(RichTextBoxUtilities.PreInlineDiagramRunPrefix))
             {
@@ -1351,6 +1342,8 @@ namespace ChessForge
                     }
                 }
             }
+
+            return printPara;
         }
 
         /// <summary>
@@ -1459,7 +1452,7 @@ namespace ChessForge
             string[] lines = rtfContent.Split('\n');
 
             StringBuilder sb = new StringBuilder();
-            for(int i = 0; i < lines.Length; i++)
+            for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
                 if (line.IndexOf(BeginTwoColumns()) >= 0)
