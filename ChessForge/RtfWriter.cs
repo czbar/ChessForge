@@ -47,7 +47,7 @@ namespace ChessForge
         private static Article _articleToPrint;
 
         // running id of the diagrams in the document
-        private static int diagramId = 0;
+        private static int _diagramId = 0;
 
         /// <summary>
         /// Exports the passed chapter into an RTF file.
@@ -806,7 +806,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Prints the intro.
+        /// Prints the Study.
         /// </summary>
         /// <param name="chapter"></param>
         /// <returns></returns>
@@ -1178,28 +1178,12 @@ namespace ChessForge
 
                     if (guiPara.Name != null && guiPara.Name.StartsWith(RichTextBoxUtilities.DiagramParaPrefix))
                     {
-                        diagramId++;
-                        ProcessDiagram(diagramId, printPara, guiPara, tree, diagrams);
+                        CreateIntroDiagramForPrint(printPara, guiPara, tree, ref diagrams);
                         lastDiagramPara = printPara;
                     }
                     else if (guiPara.Name == RichTextBoxUtilities.ExerciseUnderBoardControls)
                     {
-                        printPara.Margin = new Thickness(30, 0, 0, 0);
-                        if (tree.Nodes.Count > 0)
-                        {
-                            Run run = new Run();
-                            run.FontSize = printPara.FontSize + 4;
-                            if (tree.Nodes[0].ColorToMove == PieceColor.White)
-                            {
-                                run.Text = " " + Constants.CHAR_WHITE_LARGE_TRIANGLE_UP.ToString();
-                            }
-                            else
-                            {
-                                run.Text = " " + Constants.CHAR_BLACK_LARGE_TRIANGLE_DOWN.ToString();
-                            }
-                            lastDiagramPara.Inlines.Add(run);
-                            printDoc.Blocks.Remove(printPara);
-                        }
+                        CreateExerciseUnderBoardControls(printDoc, printPara, lastDiagramPara, tree);
                     }
                     else
                     {
@@ -1208,6 +1192,25 @@ namespace ChessForge
                             if (inl is Run run && run.Text != null)
                             {
                                 lastRunWasIntroMove = false;
+
+                                //CreateTextRuns(printDoc, printPara, run);
+                                
+                                // if this is a pre/post-inline diagram run then ignore
+                                if (run.Name != null && 
+                                    run.Name.StartsWith(RichTextBoxUtilities.PreInlineDiagramRunPrefix))
+                                {
+                                    continue;
+                                }
+
+                                if (run.Name != null &&
+                                    run.Name.StartsWith(RichTextBoxUtilities.PostInlineDiagramRunPrefix))
+                                {
+                                    printDoc.Blocks.Add(printPara);
+                                    printPara = new Paragraph();
+                                    printDoc.Blocks.Add(printPara);
+                                    printPara = new Paragraph();
+                                    continue;
+                                }
 
                                 // if Run's text contains newline chars, create a new para for each (otherwise, no new line in RTF)
                                 string[] tokens = run.Text.Split('\n');
@@ -1231,6 +1234,22 @@ namespace ChessForge
                                 {
                                     lastRunWasIntroMove = ProcessIntroMove(printPara, uic, lastRunWasIntroMove);
                                 }
+                                else if (inl.Name.StartsWith(RichTextBoxUtilities.InlineDiagramIucPrefix))
+                                {
+                                    printDoc.Blocks.Add(printPara);
+
+                                    int nodeId = TextUtils.GetIdFromPrefixedString(inl.Name);
+                                    // this is an inline diagram so create a new paragraph and register the diagram
+                                    printPara = new Paragraph();
+                                    _diagramId++;
+                                    ProcessDiagram(_diagramId, printPara, tree, nodeId, diagrams);
+                                    printDoc.Blocks.Add(printPara);
+
+                                    Paragraph dummy = new Paragraph();
+                                    printDoc.Blocks.Add(dummy);
+
+                                    lastRunWasIntroMove = false;
+                                }
                                 else
                                 {
                                     lastRunWasIntroMove = false;
@@ -1238,11 +1257,16 @@ namespace ChessForge
                             }
                         }
                     }
+                    if (!printDoc.Blocks.Contains(printPara))
+                    {
+                        printDoc.Blocks.Add(printPara);
+                    }
 
                     if (guiPara.Name == RichTextBoxUtilities.HeaderParagraphName)
                     {
                         printDoc.Blocks.Add(new Paragraph());
                     }
+
                 }
                 else
                 {
@@ -1251,6 +1275,82 @@ namespace ChessForge
             }
 
             return printDoc;
+        }
+
+        /// <summary>
+        /// Inserts a diagram placeholder into the Print Doc.
+        /// </summary>
+        /// <param name="printPara"></param>
+        /// <param name="guiPara"></param>
+        /// <param name="tree"></param>
+        /// <param name="diagrams"></param>
+        private static void CreateIntroDiagramForPrint(Paragraph printPara, Paragraph guiPara, VariationTree tree, ref List<RtfDiagram> diagrams)
+        {
+            _diagramId++;
+            ProcessDiagram(_diagramId, printPara, guiPara, tree, diagrams);
+        }
+
+        /// <summary>
+        /// Builds Run for the white/black triangle under the exercise diagram.
+        /// </summary>
+        /// <param name="printDoc"></param>
+        /// <param name="printPara"></param>
+        /// <param name="lastDiagramPara"></param>
+        /// <param name="tree"></param>
+        private static void CreateExerciseUnderBoardControls(FlowDocument printDoc, Paragraph printPara, Paragraph lastDiagramPara, VariationTree tree)
+        {
+            printPara.Margin = new Thickness(30, 0, 0, 0);
+            if (tree.Nodes.Count > 0)
+            {
+                Run run = new Run();
+                run.FontSize = printPara.FontSize + 4;
+                if (tree.Nodes[0].ColorToMove == PieceColor.White)
+                {
+                    run.Text = " " + Constants.CHAR_WHITE_LARGE_TRIANGLE_UP.ToString();
+                }
+                else
+                {
+                    run.Text = " " + Constants.CHAR_BLACK_LARGE_TRIANGLE_DOWN.ToString();
+                }
+                lastDiagramPara.Inlines.Add(run);
+                printDoc.Blocks.Remove(printPara);
+            }
+        }
+
+        private static void CreateTextRuns(FlowDocument printDoc, Paragraph printPara, Run run)
+        {
+            if (run.Name != null && run.Name.StartsWith(RichTextBoxUtilities.PreInlineDiagramRunPrefix))
+            {
+                // do nothing since diagram that follows will create its Paragraph
+            }
+            else if (run.Name != null && run.Name.StartsWith(RichTextBoxUtilities.PostInlineDiagramRunPrefix))
+            {
+                // this is post inline diagram so complete the current paragraph
+                // and add a dummy one to create space after the diagram
+                printDoc.Blocks.Add(printPara);
+
+                printPara = new Paragraph();
+                printDoc.Blocks.Add(printPara);
+                printPara = new Paragraph();
+            }
+            else
+            {
+                // if Run's text contains newline chars, create a new para for each (otherwise, no new line in RTF)
+                string[] tokens = run.Text.Split('\n');
+                for (int i = 0; i < tokens.Length; i++)
+                {
+                    if (i == 0)
+                    {
+                        ProcessTextRun(run, tokens[0], printPara);
+                    }
+                    else
+                    {
+                        printDoc.Blocks.Add(printPara);
+                        printPara = new Paragraph();
+                        ProcessTextRun(run, tokens[i], printPara);
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -1270,7 +1370,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Processes a paragraph representing a diagram.
+        /// Processes a paragraph representing an Intro-style diagram.
         /// </summary>
         /// <param name="printPara"></param>
         /// <param name="para"></param>
@@ -1287,6 +1387,27 @@ namespace ChessForge
                     bool isFlipped = RichTextBoxUtilities.GetDiagramFlipState(para);
                     printPara.Inlines.Add(CreateDiagramPlaceholderRun(diagramId));
                     diagrams.Add(new RtfDiagram(diagramId, nd, isFlipped));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Creates a paragraph representing an inline diagram.
+        /// </summary>
+        /// <param name="diagramId"></param>
+        /// <param name="printPara"></param>
+        /// <param name="tree"></param>
+        /// <param name="nodeId"></param>
+        /// <param name="diagrams"></param>
+        private static void ProcessDiagram(int diagramId, Paragraph printPara, VariationTree tree, int nodeId, List<RtfDiagram> diagrams)
+        {
+            if (tree != null)
+            {
+                TreeNode nd = tree.GetNodeFromNodeId(nodeId);
+                if (nd != null)
+                {
+                    printPara.Inlines.Add(CreateDiagramPlaceholderRun(diagramId));
+                    diagrams.Add(new RtfDiagram(diagramId, nd, false));
                 }
             }
         }
@@ -1369,7 +1490,6 @@ namespace ChessForge
         //   UTILITIES
         //
         //******************************************************
-
 
         /// <summary>
         /// Resets the article counters.
