@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace GameTree
 {
@@ -24,6 +19,8 @@ namespace GameTree
             MERGE_TREE,
             PASTE_MOVES,
             SAVE_TRAINING_MOVES,
+            INSERT_DIAGRAM,
+            DELETE_DIAGRAM,
         }
 
         /// <summary>

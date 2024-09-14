@@ -481,6 +481,9 @@ namespace GameTree
                     case ChfCommands.Command.THUMBNAIL:
                         nd.IsThumbnail = true;
                         break;
+                    case ChfCommands.Command.DIAGRAM:
+                        nd.IsDiagram = true;
+                        break;
                     case ChfCommands.Command.ARTICLE_REFS:
                         if (tokens.Length > 1)
                         {
@@ -1650,6 +1653,30 @@ namespace GameTree
             }
             catch
             {
+            }
+        }
+
+        /// <summary>
+        /// Deletes a previously inserted diagram.
+        /// </summary>
+        /// <param name="nd"></param>
+        public void UndoInsertDiagram(TreeNode nd)
+        {
+            if (nd != null)
+            {
+                nd.IsDiagram = false;
+            }
+        }
+
+        /// <summary>
+        /// Re-inserts a previously deleted diagram.
+        /// </summary>
+        /// <param name="nd"></param>
+        public void UndoDeleteDiagram(TreeNode nd)
+        {
+            if (nd != null)
+            {
+                nd.IsDiagram = true;
             }
         }
 

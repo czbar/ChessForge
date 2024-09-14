@@ -629,6 +629,29 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Toggles the diagram flag on the currently selected node.
+        /// </summary>
+        public void ToggleDiagramFlag()
+        {
+            try
+            {
+                TreeNode nd = GetSelectedNode();
+                if (nd != null)
+                {
+                    nd.IsDiagram = !nd.IsDiagram;
+
+                    EditOperation.EditType typ = nd.IsDiagram ? EditOperation.EditType.INSERT_DIAGRAM : EditOperation.EditType.DELETE_DIAGRAM;
+                    EditOperation op = new EditOperation(typ, nd);
+                    AppState.ActiveVariationTree?.OpsManager.PushOperation(op);
+                    AppState.IsDirty = true;
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
         /// The thumbnail Node has changed. Remove any thumbnail icon
         /// that may be set and place it on the current thumbnail.
         /// </summary>
@@ -1294,6 +1317,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Whether diagram inerted here should be large or small.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        protected virtual bool IsLargeDiagram(TreeNode nd)
+        {
+            return nd != null && nd.IsMainLine();
+        }
+
+        /// <summary>
         /// On Mouse up on the button brings the first node to view.
         /// Doing it from the click handler would be premature (ineffective).
         /// </summary>
@@ -1697,6 +1730,7 @@ namespace ChessForge
                 InsertOrUpdateCommentBeforeMoveRun(nd, includeNumber);
                 AddReferenceRunToParagraph(nd, para);
                 AddCommentRunsToParagraph(nd, para, out bool isBlunder);
+                AddDiagramToParagraph(nd, para);
                 if (isBlunder)
                 {
                     TextUtils.RemoveBlunderNagFromText(rMove);
@@ -2168,13 +2202,30 @@ namespace ChessForge
         /// Event handler invoked when a Run was clicked.
         /// In response, we highlight the line to which this Run belongs
         /// (selecting the top branch for the part of the line beyond
-        /// the clicked Run),
+        /// the clicked Run).
+        /// 
+        /// This event will also be invoked if an inline diagram was clicked.
+        /// In that case the diagram's associated Run will be identified.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void EventRunClicked(object sender, MouseButtonEventArgs e)
         {
-            Run r = e.Source as Run;
+            Run r = null;
+
+            if (e.Source is Run)
+            {
+                r = e.Source as Run;
+            }
+            else if (sender is InlineUIContainer iuc)
+            {
+                int nodeId = TextUtils.GetIdFromPrefixedString(iuc.Name);
+                if (_dictNodeToRun.ContainsKey(nodeId))
+                {
+                    r = _dictNodeToRun[nodeId];
+                }
+            }
+
             _mainWin.StopReplayIfActive();
             SelectRun(r, e.ClickCount, e.ChangedButton);
         }

@@ -2241,6 +2241,10 @@ ConfirmDeleteExercise=
 #english: InsertDiagram=Insert Diagram
 InsertDiagram=
 
+#description: Remove the diagram
+#english: RemoveDiagram=Remove Diagram
+RemoveDiagram=
+
 #description: Edit a diagram
 #english: EditDiagram=Edit Diagram
 EditDiagram=

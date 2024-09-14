@@ -1775,7 +1775,7 @@ namespace ChessForge
                 }
             }
 
-            if ((Keyboard.Modifiers & ModifierKeys.Control) > 0)
+            if ((Keyboard.Modifiers & ModifierKeys.Control) > 0 && (Keyboard.Modifiers & ModifierKeys.Alt) == 0 )
             {
                 try
                 {

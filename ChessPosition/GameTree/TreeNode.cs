@@ -185,6 +185,11 @@ namespace GameTree
         public bool IsThumbnail = false;
 
         /// <summary>
+        /// Whether a position from this node should be shown on the inline diagram.
+        /// </summary>
+        public bool IsDiagram = false;
+
+        /// <summary>
         /// References to Games or Exercises
         /// in the form of GUID|GUID|...|GUID
         /// </summary>

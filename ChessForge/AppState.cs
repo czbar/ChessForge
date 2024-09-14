@@ -1207,6 +1207,7 @@ namespace ChessForge
                 VariationTreeView view = AppState.MainWin.ActiveTreeView;
 
                 ConfigureBookmarkMenuOptions(MainWin.UiMnMarkBookmark, MainWin.UiMnStDeleteBookmark);
+                ConfigureDiagramMenuOptions(MainWin.UiMnStudyInsertDiagram, MainWin.UiMnStudyDeleteDiagram);
 
                 foreach (var item in MainWin.UiMncStudyTree.Items)
                 {
@@ -1233,6 +1234,7 @@ namespace ChessForge
                                 menuItem.IsEnabled = tree != null && tree.Nodes.Count > 1;
                                 break;
                             case "_mnStudyTree_MarkThumbnail":
+                            case "UiMnStudyInsertDiagram":
                                 menuItem.IsEnabled = tree != null && tree.SelectedNode != null;
                                 break;
                             case "UiMnStCopyMoves":
@@ -1276,6 +1278,7 @@ namespace ChessForge
                 VariationTreeView view = MainWin.ActiveTreeView;
 
                 ConfigureBookmarkMenuOptions(MainWin.UiMnGameMarkBookmark, MainWin.UiMnGameDeleteBookmark);
+                ConfigureDiagramMenuOptions(MainWin.UiMnGame_InsertDiagram, MainWin.UiMnGame_DeleteDiagram);
 
                 foreach (var item in MainWin.UiMncModelGames.Items)
                 {
@@ -1316,6 +1319,7 @@ namespace ChessForge
                                 menuItem.IsEnabled = gameIndex >= 0 && selectedNodeId > 0;
                                 break;
                             case "_mnGame_MarkThumbnail":
+                            case "UiMnGameInsertDiagram":
                                 menuItem.IsEnabled = gameIndex >= 0 && selectedNodeId > 0;
                                 break;
                             case "UiMnGameCopyMoves":
@@ -1361,6 +1365,7 @@ namespace ChessForge
                 else
                 {
                     ConfigureBookmarkMenuOptions(MainWin.UiMnExercMarkBookmark, MainWin.UiMnExercDeleteBookmark);
+                    ConfigureDiagramMenuOptions(MainWin.UiMnExerc_InsertDiagram, MainWin.UiMnExerc_DeleteDiagram);
                 }
 
                 foreach (var item in MainWin.UiMncExercises.Items)
@@ -1424,6 +1429,7 @@ namespace ChessForge
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "_mnExerc_MarkThumbnail":
+                            case "UiMnExerc_InsertDiagram":
                                 menuItem.IsEnabled = exerciseIndex >= 0 && selectedNodeId > 0 && isSolutionShown;
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
@@ -1493,7 +1499,8 @@ namespace ChessForge
                 SetChessboardForActiveTab();
 
                 if (AppState.ActiveContentType == GameData.ContentType.STUDY_TREE && WorkbookManager.ActiveTab == TabViewType.STUDY
-                   || WorkbookManager.ActiveTab == TabViewType.MODEL_GAME)
+                   || WorkbookManager.ActiveTab == TabViewType.MODEL_GAME
+                   || WorkbookManager.ActiveTab == TabViewType.EXERCISE && ActiveVariationTree != null && ActiveVariationTree.ShowTreeLines)
                 {
                     _mainWin.UiDgActiveLine.Visibility = Visibility.Visible;
                     _mainWin.UiLblScoresheet.Visibility = Visibility.Visible;
@@ -1924,6 +1931,33 @@ namespace ChessForge
 
                 deleteBookmark.Visibility = hasBookmark ? Visibility.Visible : Visibility.Collapsed;
                 deleteBookmark.IsEnabled = hasBookmark;
+            }
+        }
+
+        /// <summary>
+        /// Configures the Insert/Remove Diagram menu options
+        /// </summary>
+        /// <param name="addBookmark"></param>
+        /// <param name="deleteBookmark"></param>
+        private static void ConfigureDiagramMenuOptions(MenuItem insertDiagram, MenuItem removeDiagram)
+        {
+            TreeNode nd = AppState.GetCurrentNode();
+
+            if (nd == null)
+            {
+                insertDiagram.Visibility = Visibility.Visible;
+                insertDiagram.IsEnabled = false;
+
+                removeDiagram.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                bool hasDiagram = nd.IsDiagram;
+                insertDiagram.Visibility = hasDiagram ? Visibility.Collapsed : Visibility.Visible;
+                insertDiagram.IsEnabled = !hasDiagram;
+
+                removeDiagram.Visibility = hasDiagram ? Visibility.Visible : Visibility.Collapsed;
+                removeDiagram.IsEnabled = hasDiagram;
             }
         }
 

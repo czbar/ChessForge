@@ -23,6 +23,21 @@ namespace ChessForge
         public static readonly string DiagramParaPrefix = "para_diag_";
 
         /// <summary>
+        /// Prefix for naming InlineUIContainer representing an inline diagram.
+        /// </summary>
+        public static readonly string InlineDiagramIucPrefix = "iuc_inl_diag_";
+
+        /// <summary>
+        /// Prefix for naming runs preceding an inline diagram.
+        /// </summary>
+        public static readonly string PreInlineDiagramRunPrefix = "run_preinl_diag_";
+
+        /// <summary>
+        /// Prefix for naming runs following an inline diagram.
+        /// </summary>
+        public static readonly string PostInlineDiagramRunPrefix = "run_postinl_diag_";
+
+        /// <summary>
         /// Prefix for naming Text Boxes with moves in Intro. 
         /// </summary>
         public static readonly string MoveTextBoxPrefix = "tb_move_";

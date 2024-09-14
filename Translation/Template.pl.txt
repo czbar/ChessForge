@@ -2241,6 +2241,10 @@ ConfirmDeleteExercise=Usunąć ćwiczenie
 #english: InsertDiagram=Insert Diagram
 InsertDiagram=Wstaw Diagram
 
+#description: Remove the diagram
+#english: RemoveDiagram=Remove Diagram
+RemoveDiagram=Usuń Diagram
+
 #description: Edit a diagram
 #english: EditDiagram=Edit Diagram
 EditDiagram=Edytuj Diagram

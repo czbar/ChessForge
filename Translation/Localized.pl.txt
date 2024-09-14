@@ -619,7 +619,7 @@ SaveAs=Zapisz $0 jako ...
 Export=Eksportuj
 
 #description: Export as RTF
-#english: ExportRtf=Export as RTF
+#english: ExportRtf=Export as RTF (Beta)
 ExportRtf=Eksportuj jako RTF
 
 #description: Saves a copy of the current Workbook with the current version number, increments the version number
@@ -1185,7 +1185,7 @@ ChapterItems=Elementy Rozdziału
 TwoColumnFormat=Format 2-kolumnowy
 
 #description: Custom Terms
-#english: CustomTerms=Custom Terms
+#english: CustomTerms=Custom Headers
 CustomTerms=Niestandardowe Nagłówki
 
 
@@ -2240,6 +2240,10 @@ ConfirmDeleteExercise=Usunąć ćwiczenie
 #description: Insert a diagram
 #english: InsertDiagram=Insert Diagram
 InsertDiagram=Wstaw Diagram
+
+#description: Remove the diagram
+#english: RemoveDiagram=Remove Diagram
+RemoveDiagram=Usuń Diagram
 
 #description: Edit a diagram
 #english: EditDiagram=Edit Diagram

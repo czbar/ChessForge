@@ -759,6 +759,7 @@ namespace ChessForge
         {
             if (nd.IsBookmark
                 || nd.IsThumbnail
+                || nd.IsDiagram
                 || !string.IsNullOrEmpty(nd.ArticleRefs)
                 || !string.IsNullOrEmpty(nd.Comment)
                 || !string.IsNullOrEmpty(nd.CommentBeforeMove)
@@ -783,6 +784,13 @@ namespace ChessForge
                 if (nd.IsThumbnail)
                 {
                     string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.THUMBNAIL);
+                    sb.Append("[" + sCmd + "]");
+                }
+
+                // Process a Diagram command
+                if (nd.IsDiagram)
+                {
+                    string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.DIAGRAM);
                     sb.Append("[" + sCmd + "]");
                 }
 
