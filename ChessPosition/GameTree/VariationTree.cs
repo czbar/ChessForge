@@ -1703,6 +1703,24 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Removes the current thumbnail and restores the previous one.
+        /// </summary>
+        /// <param name=""></param>
+        /// <param name=""></param>
+        public void UndoMarkThumbnail(object currThumb, object prevThumb)
+        {
+            if (currThumb != null && currThumb is TreeNode currNode)
+            {
+                ClearThumbnail(currNode);
+            }
+
+            if (prevThumb != null && prevThumb is TreeNode prevNode)
+            {
+                SetThumbnail(prevNode);
+            }
+        }
+
+        /// <summary>
         /// Restores deleted engine evaluations and assessments.
         /// </summary>
         /// <param name="opData"></param>

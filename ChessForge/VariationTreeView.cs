@@ -620,6 +620,10 @@ namespace ChessForge
 
                     InsertOrUpdateCommentRun(nd);
 
+                    EditOperation.EditType typ = EditOperation.EditType.MARK_THUMBNAIL;
+                    EditOperation op = new EditOperation(typ, nd, prevThumbnail);
+                    AppState.ActiveVariationTree?.OpsManager.PushOperation(op);
+
                     AppState.IsDirty = true;
                 }
             }
