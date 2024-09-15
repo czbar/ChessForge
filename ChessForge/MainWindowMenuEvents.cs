@@ -1,16 +1,15 @@
 ﻿using ChessPosition;
+using ChessPosition.GameTree;
 using GameTree;
 using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Text;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using ChessPosition.GameTree;
-using System.Windows.Documents;
 
 namespace ChessForge
 {
