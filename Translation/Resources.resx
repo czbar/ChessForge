@@ -1615,8 +1615,17 @@
   <data name="MarkAsThumbnail" xml:space="preserve">
     <value>Mark as Thumbnail</value>
   </data>
+  <data name="DeleteThumbnail" xml:space="preserve">
+    <value>Delete Thumbnail</value>
+  </data>
   <data name="ChapterThumbnail" xml:space="preserve">
-    <value>Thumbnail for Chapters View</value>
+    <value>Chapter Thumbnail</value>
+  </data>
+  <data name="GameThumbnail" xml:space="preserve">
+    <value>Game Thumbnail</value>
+  </data>
+  <data name="ExerciseThumbnail" xml:space="preserve">
+    <value>Exercise Thumbnail</value>
   </data>
   <data name="CopyMoves" xml:space="preserve">
     <value>Copy Moves</value>

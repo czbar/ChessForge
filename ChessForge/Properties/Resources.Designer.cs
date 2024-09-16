@@ -881,7 +881,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Thumbnail for Chapters View.
+        ///   Looks up a localized string similar to Chapter Thumbnail.
         /// </summary>
         public static string ChapterThumbnail {
             get {
@@ -1786,6 +1786,15 @@ namespace ChessForge.Properties {
         public static string DeleteThisGame {
             get {
                 return ResourceManager.GetString("DeleteThisGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Thumbnail.
+        /// </summary>
+        public static string DeleteThumbnail {
+            get {
+                return ResourceManager.GetString("DeleteThumbnail", resourceCulture);
             }
         }
         
@@ -2870,6 +2879,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exercise Thumbnail.
+        /// </summary>
+        public static string ExerciseThumbnail {
+            get {
+                return ResourceManager.GetString("ExerciseThumbnail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exercise View.
         /// </summary>
         public static string ExerciseViewConfig {
@@ -3532,6 +3550,15 @@ namespace ChessForge.Properties {
         public static string GameText {
             get {
                 return ResourceManager.GetString("GameText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game Thumbnail.
+        /// </summary>
+        public static string GameThumbnail {
+            get {
+                return ResourceManager.GetString("GameThumbnail", resourceCulture);
             }
         }
         

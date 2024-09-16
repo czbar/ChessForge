@@ -2290,9 +2290,21 @@ BookmarkAllOptionsHere=Utwórz zakładki dla wszystkich opcji
 #english: MarkAsThumbnail=Mark as Thumbnail
 MarkAsThumbnail=Zaznacz jako Wizytówkę
 
+#description: Removes the thumbnail mark from the current position
+#english: DeleteThumbnail=Delete Thumbnail
+DeleteThumbnail=Usuń wizytówkę
+
 #description: ChapterThumbnail
-#english: ChapterThumbnail=Thumbnail for Chapters View
-ChapterThumbnail=Wizytówka Rozdziału
+#english: ChapterThumbnail=Chapter Thumbnail
+ChapterThumbnail=Wizytówka rozdziału
+
+#description: GameThumbnail
+#english: GameThumbnail=Game Thumbnail
+GameThumbnail=Wizytówka partii
+
+#description: ExerciseThumbnail
+#english: ExerciseThumbnail=Exercise Thumbnail
+ExerciseThumbnail=Wizytówka ćwiczenia
 
 #description: Copy selected moves
 #english: CopyMoves=Copy Moves

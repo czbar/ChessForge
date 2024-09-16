@@ -1791,8 +1791,17 @@ BookmarkAllOptionsHere=Bookmark All Options Here
 #Mark the current position as a thumbnail
 MarkAsThumbnail=Mark as Thumbnail
 
+#Removes the thumbnail mark from the current position
+DeleteThumbnail=Delete Thumbnail
+
 #ChapterThumbnail
-ChapterThumbnail=Thumbnail for Chapters View
+ChapterThumbnail=Chapter Thumbnail
+
+#GameThumbnail
+GameThumbnail=Game Thumbnail
+
+#ExerciseThumbnail
+ExerciseThumbnail=Exercise Thumbnail
 
 #Copy selected moves
 CopyMoves=Copy Moves

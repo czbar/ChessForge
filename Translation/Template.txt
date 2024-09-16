@@ -2290,9 +2290,21 @@ BookmarkAllOptionsHere=
 #english: MarkAsThumbnail=Mark as Thumbnail
 MarkAsThumbnail=
 
+#description: Removes the thumbnail mark from the current position
+#english: DeleteThumbnail=Delete Thumbnail
+DeleteThumbnail=
+
 #description: ChapterThumbnail
-#english: ChapterThumbnail=Thumbnail for Chapters View
+#english: ChapterThumbnail=Chapter Thumbnail
 ChapterThumbnail=
+
+#description: GameThumbnail
+#english: GameThumbnail=Game Thumbnail
+GameThumbnail=
+
+#description: ExerciseThumbnail
+#english: ExerciseThumbnail=Exercise Thumbnail
+ExerciseThumbnail=
 
 #description: Copy selected moves
 #english: CopyMoves=Copy Moves

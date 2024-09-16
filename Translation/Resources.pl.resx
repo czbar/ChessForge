@@ -1615,8 +1615,17 @@
   <data name="MarkAsThumbnail" xml:space="preserve">
     <value>Zaznacz jako Wizytówkę</value>
   </data>
+  <data name="DeleteThumbnail" xml:space="preserve">
+    <value>Usuń wizytówkę</value>
+  </data>
   <data name="ChapterThumbnail" xml:space="preserve">
-    <value>Wizytówka Rozdziału</value>
+    <value>Wizytówka rozdziału</value>
+  </data>
+  <data name="GameThumbnail" xml:space="preserve">
+    <value>Wizytówka partii</value>
+  </data>
+  <data name="ExerciseThumbnail" xml:space="preserve">
+    <value>Wizytówka ćwiczenia</value>
   </data>
   <data name="CopyMoves" xml:space="preserve">
     <value>Skopiuj ruchy</value>
