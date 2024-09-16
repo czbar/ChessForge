@@ -1616,7 +1616,7 @@
     <value>Mark as Thumbnail</value>
   </data>
   <data name="DeleteThumbnail" xml:space="preserve">
-    <value>Delete Thumbnail</value>
+    <value>Remove Thumbnail</value>
   </data>
   <data name="ChapterThumbnail" xml:space="preserve">
     <value>Chapter Thumbnail</value>

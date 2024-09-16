@@ -2291,7 +2291,7 @@ BookmarkAllOptionsHere=Utwórz zakładki dla wszystkich opcji
 MarkAsThumbnail=Zaznacz jako Wizytówkę
 
 #description: Removes the thumbnail mark from the current position
-#english: DeleteThumbnail=Delete Thumbnail
+#english: DeleteThumbnail=Remove Thumbnail
 DeleteThumbnail=Usuń wizytówkę
 
 #description: ChapterThumbnail

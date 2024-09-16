@@ -1792,7 +1792,7 @@ BookmarkAllOptionsHere=Bookmark All Options Here
 MarkAsThumbnail=Mark as Thumbnail
 
 #Removes the thumbnail mark from the current position
-DeleteThumbnail=Delete Thumbnail
+DeleteThumbnail=Remove Thumbnail
 
 #ChapterThumbnail
 ChapterThumbnail=Chapter Thumbnail

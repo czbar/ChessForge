@@ -2291,7 +2291,7 @@ BookmarkAllOptionsHere=
 MarkAsThumbnail=
 
 #description: Removes the thumbnail mark from the current position
-#english: DeleteThumbnail=Delete Thumbnail
+#english: DeleteThumbnail=Remove Thumbnail
 DeleteThumbnail=
 
 #description: ChapterThumbnail
