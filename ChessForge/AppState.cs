@@ -1204,6 +1204,8 @@ namespace ChessForge
                 bool isMate = IsCheckMateOrStalemate(lastClickedNodeId);
 
                 VariationTree tree = ActiveVariationTree;
+                TreeNode selectedNode = tree?.SelectedNode;
+
                 VariationTreeView view = AppState.MainWin.ActiveTreeView;
 
                 ConfigureBookmarkMenuOptions(MainWin.UiMnMarkBookmark, MainWin.UiMnStDeleteBookmark);
@@ -1234,6 +1236,9 @@ namespace ChessForge
                                 menuItem.IsEnabled = tree != null && tree.Nodes.Count > 1;
                                 break;
                             case "_mnStudyTree_MarkThumbnail":
+                                menuItem.IsEnabled = tree != null && tree.SelectedNode != null;
+                                SetMarkThumbnailMenuItemHeader(menuItem, selectedNode);
+                                break;
                             case "UiMnStudyInsertDiagram":
                                 menuItem.IsEnabled = tree != null && tree.SelectedNode != null;
                                 break;
@@ -1275,6 +1280,9 @@ namespace ChessForge
                 int gameCount = chapter.GetModelGameCount();
                 int gameIndex = chapter.ActiveModelGameIndex;
 
+                VariationTree tree = ActiveVariationTree;
+                TreeNode selectedNode = tree?.SelectedNode;
+                
                 VariationTreeView view = MainWin.ActiveTreeView;
 
                 ConfigureBookmarkMenuOptions(MainWin.UiMnGameMarkBookmark, MainWin.UiMnGameDeleteBookmark);
@@ -1319,6 +1327,9 @@ namespace ChessForge
                                 menuItem.IsEnabled = gameIndex >= 0 && selectedNodeId > 0;
                                 break;
                             case "_mnGame_MarkThumbnail":
+                                menuItem.IsEnabled = gameIndex >= 0 && selectedNodeId > 0;
+                                SetMarkThumbnailMenuItemHeader(menuItem, selectedNode);
+                                break;
                             case "UiMnGameInsertDiagram":
                                 menuItem.IsEnabled = gameIndex >= 0 && selectedNodeId > 0;
                                 break;
@@ -1354,6 +1365,10 @@ namespace ChessForge
                 int exerciseIndex = chapter.ActiveExerciseIndex;
 
                 bool isTrainingOrSolving = TrainingSession.IsTrainingInProgress || IsUserSolving();
+
+                VariationTree tree = ActiveVariationTree;
+                TreeNode selectedNode = tree?.SelectedNode;
+
                 VariationTreeView view = AppState.MainWin.ActiveTreeView;
                 bool isSolutionShown = ActiveVariationTree == null ? false : ActiveVariationTree.ShowTreeLines;
 
@@ -1429,6 +1444,10 @@ namespace ChessForge
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "_mnExerc_MarkThumbnail":
+                                menuItem.IsEnabled = exerciseIndex >= 0 && selectedNodeId > 0 && isSolutionShown;
+                                menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
+                                SetMarkThumbnailMenuItemHeader(menuItem, selectedNode);
+                                break;
                             case "UiMnExerc_InsertDiagram":
                                 menuItem.IsEnabled = exerciseIndex >= 0 && selectedNodeId > 0 && isSolutionShown;
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
@@ -1477,6 +1496,24 @@ namespace ChessForge
             catch (Exception ex)
             {
                 AppLog.Message("EnableModelGamesMenus()", ex);
+            }
+        }
+
+        /// <summary>
+        /// Sets the text of the Mark/Delete Thumbnail menu item depending on the status of
+        /// the passed node.
+        /// </summary>
+        /// <param name="menuItem"></param>
+        /// <param name="nd"></param>
+        private static void SetMarkThumbnailMenuItemHeader(MenuItem menuItem, TreeNode nd)
+        {
+            if (nd != null && nd.IsThumbnail)
+            {
+                menuItem.Header = Resources.DeleteThumbnail;
+            }
+            else
+            {
+                menuItem.Header = Resources.MarkAsThumbnail;
             }
         }
 
