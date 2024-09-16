@@ -4,11 +4,10 @@ using GameTree;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 
 namespace ChessForge
 {
@@ -426,7 +425,8 @@ namespace ChessForge
                             }
                             _lastThumbnailNode = nd;
                             inl = new Run(thmb);
-                            inl.ToolTip = nd.IsThumbnail ? Properties.Resources.ChapterThumbnail : null;
+                            string toolTip = BuildThumbnailToolTip(nd);
+                            inl.ToolTip = toolTip;
                             inl.FontStyle = FontStyles.Normal;
                             inl.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
                             inl.FontWeight = FontWeights.Normal;
@@ -482,6 +482,34 @@ namespace ChessForge
             {
                 AppLog.Message("AddCommentRunsToParagraph()", ex);
             }
+        }
+
+        /// <summary>
+        /// Builds an appropriate tooltip for the node if applicable.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        private string BuildThumbnailToolTip(TreeNode nd)
+        {
+            string toolTip = null;
+
+            if (nd != null && nd.IsThumbnail)
+            {
+                if (_mainVariationTree.ContentType == GameData.ContentType.MODEL_GAME)
+                {
+                    toolTip = Properties.Resources.GameThumbnail;
+                }
+                else if (_mainVariationTree.ContentType == GameData.ContentType.EXERCISE)
+                {
+                    toolTip = Properties.Resources.ExerciseThumbnail;
+                }
+                else
+                {
+                    toolTip = Properties.Resources.ChapterThumbnail;
+                }
+            }
+
+            return toolTip;
         }
 
         /// <summary>
