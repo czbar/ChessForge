@@ -2108,7 +2108,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiMn_ToggleDiagramFlag_Click(object sender, RoutedEventArgs e)
+        public void UiMn_ToggleDiagramFlag_Click(object sender, RoutedEventArgs e)
         {
             if (AppState.MainWin.ActiveTreeView != null)
             {
