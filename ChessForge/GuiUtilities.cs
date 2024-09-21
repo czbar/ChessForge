@@ -134,6 +134,33 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns the TabViewType corresponding to the passed ContentType.
+        /// </summary>
+        /// <param name="contentType"></param>
+        /// <returns></returns>
+        public static TabViewType ContentTypeToTabView(GameData.ContentType contentType)
+        {
+            TabViewType viewType = TabViewType.NONE;
+            switch (contentType)
+            {
+                case GameData.ContentType.STUDY_TREE:
+                    viewType = TabViewType.STUDY;
+                    break;
+                case GameData.ContentType.MODEL_GAME:
+                    viewType = TabViewType.MODEL_GAME;
+                    break;
+                case GameData.ContentType.EXERCISE:
+                    viewType = TabViewType.EXERCISE;
+                    break;
+                case GameData.ContentType.INTRO:
+                    viewType = TabViewType.INTRO;
+                    break;
+            }
+
+            return viewType;
+        }
+
+        /// <summary>
         /// Returns the title for the game data suitable for the ContentType   
         /// </summary>
         /// <param name="game"></param>
