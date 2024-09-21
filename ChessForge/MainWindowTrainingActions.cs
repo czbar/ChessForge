@@ -148,8 +148,14 @@ namespace ChessForge
                 TrainingSession.IsTrainingInProgress = false;
                 TrainingSession.IsContinuousEvaluation = false;
                 MainChessBoard.RemoveMoveSquareColors();
+
+                GameData.ContentType contentType = ActiveVariationTree == null ? GameData.ContentType.NONE : ActiveVariationTree.ContentType;
+
+                AppState.SwapCommentBoxForEngineLines(false);
+                BoardCommentBox.RestoreTitleMessage(contentType);
                 LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
-                if (ActiveVariationTree.ContentType == GameData.ContentType.EXERCISE)
+
+                if (contentType == GameData.ContentType.EXERCISE)
                 {
                     _exerciseTreeView.DeactivateSolvingMode(VariationTree.SolvingMode.NONE);
                 }
@@ -169,8 +175,6 @@ namespace ChessForge
                 }
 
                 ActiveLine.DisplayPositionForSelectedCell();
-                AppState.SwapCommentBoxForEngineLines(false);
-                BoardCommentBox.RestoreTitleMessage();
             }
             catch (Exception ex)
             {
