@@ -609,7 +609,7 @@
                                 </ContextMenu>
                             </Grid.ContextMenu>
                             <Label x:Name="UiStudyLblChapterTitle" Height="30" Content="" MaxWidth="320" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="-150,-3,10,0" FontWeight="Normal" FontStyle="Normal" MouseDoubleClick="UiStudyLblChapterTitle_MouseDoubleClick"  />
-                            <Grid x:Name="UiGridStudyTreePrevNext" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Visible" >
+                            <Grid x:Name="UiGridStudyTreePrevNext" Grid.Row="0" Panel.ZIndex="1" HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Visible" >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto "/>
                                     <ColumnDefinition Width="Auto "/>
@@ -703,7 +703,7 @@
                                     <MenuItem x:Name="UiMnGameDeleteBookmark" Visibility="Collapsed" Header="{x:Static p:Resources.DeleteThisBookmark}" Click="UiMnciDeleteBookmark_Click" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
-                            <Grid x:Name="UiGridModelGamePrevNext" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible" >
+                            <Grid x:Name="UiGridModelGamePrevNext" Grid.Row="0" Panel.ZIndex="1" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible" >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto "/>
                                     <ColumnDefinition Width="Auto "/>
@@ -717,7 +717,7 @@
                                 <Image x:Name="UiImgModelGameRightArrow" Grid.Column="2" Cursor="Hand"  HorizontalAlignment="Right" Margin="10,0,0,0" Source="Resources/Images/RightArrow.png" PreviewMouseLeftButtonDown="UiNextModelGame_ButtonDown"  />
                             </Grid>
                             <Label x:Name="UiGamesLblChapterTitle" Grid.Column="0" Height="30" Content="" MaxWidth="220" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,-3,0,0" FontWeight="Normal" FontStyle="Normal" MouseDoubleClick="UiGamesLblChapterTitle_MouseDoubleClick"  />
-                            <Grid x:Name="UiGridModelGamePrevNextChapter" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Visible" >
+                            <Grid x:Name="UiGridModelGamePrevNextChapter" Grid.Row="0" Panel.ZIndex="1" HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Visible" >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto "/>
                                     <ColumnDefinition Width="Auto "/>
@@ -816,7 +816,7 @@
                                     <MenuItem x:Name="UiMnExercDeleteBookmark" Visibility="Collapsed" Header="{x:Static p:Resources.DeleteThisBookmark}" Click="UiMnciDeleteBookmark_Click" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
-                            <Grid x:Name="UiGridExercisePrevNext" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible" >
+                            <Grid x:Name="UiGridExercisePrevNext" Grid.Row="0" Panel.ZIndex="1" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible" >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto "/>
                                     <ColumnDefinition Width="Auto "/>
@@ -830,8 +830,8 @@
                                 <Label x:Name="UiLblExerciseCounter" Grid.Column="1" Content="" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="10,-3,0,0" FontWeight="Bold"/>
                                 <Image x:Name="UiImgExerciseRightArrow" Grid.Column="2" Cursor="Hand"  HorizontalAlignment="Right" Margin="10,0,0,0" Source="Resources/Images/RightArrow.png" PreviewMouseLeftButtonDown="UiImgExerciseRightArrow_PreviewMouseLeftButtonDown"  />
                             </Grid>
-                            <Label x:Name="UiExerciseLblChapterTitle" Grid.Column="0" Height="30" Content="" MaxWidth="400" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,-3,10,0" FontWeight="Normal" FontStyle="Normal" MouseDoubleClick="UiExerciseLblChapterTitle_MouseDoubleClick"  />
-                            <Grid x:Name="UiGridExercisePrevNextChapter" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Visible" >
+                            <Label x:Name="UiExerciseLblChapterTitle" Grid.Column="0" Height="30" Content="" MaxWidth="220" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,-3,10,0" FontWeight="Normal" FontStyle="Normal" MouseDoubleClick="UiExerciseLblChapterTitle_MouseDoubleClick"  />
+                            <Grid x:Name="UiGridExercisePrevNextChapter" Panel.ZIndex="1" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Visible" >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto "/>
                                     <ColumnDefinition Width="Auto "/>
