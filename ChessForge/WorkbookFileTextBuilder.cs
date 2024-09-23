@@ -421,15 +421,6 @@ namespace ChessForge
 
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_CONTENT_TYPE, PgnHeaders.VALUE_EXERCISE));
 
-            if (tree.RootNode != null)
-            {
-                BoardPosition pos = new BoardPosition(tree.Nodes[0].Position);
-                UpShiftOnePly(ref pos);
-
-                string fen = FenParser.GenerateFenFromPosition(pos, tree.MoveNumberOffset);
-                sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_FEN_STRING, fen));
-            }
-
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_EVENT, tree.Header.GetEventName(out _)));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_ROUND, tree.Header.GetRound(out _)));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_ECO, tree.Header.GetECO(out _)));
@@ -442,6 +433,16 @@ namespace ChessForge
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_ANNOTATOR, tree.Header.GetAnnotator(out _)));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_RESULT, tree.Header.GetResult(out _)));
             sb.AppendLine(BuildPreamble(tree));
+
+            // FEN, if required, must be last for compatibility with ChesBase.
+            if (tree.RootNode != null)
+            {
+                BoardPosition pos = new BoardPosition(tree.Nodes[0].Position);
+                UpShiftOnePly(ref pos);
+
+                string fen = FenParser.GenerateFenFromPosition(pos, tree.MoveNumberOffset);
+                sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_FEN_STRING, fen));
+            }
 
             sb.AppendLine();
             return sb.ToString();
