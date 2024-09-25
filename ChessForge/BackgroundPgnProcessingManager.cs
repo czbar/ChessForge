@@ -1,15 +1,12 @@
-﻿using GameTree;
-using ChessPosition;
+﻿using ChessPosition;
+using GameTree;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using System.Timers;
-using System.Windows.Media;
 using System.Windows.Documents;
+using System.Windows.Input;
 
 namespace ChessForge
 {
@@ -416,22 +413,27 @@ namespace ChessForge
                 {
                     _articlesInProgress--;
                     _articlesCompleted++;
-                    _rawArticles[articleIndex].IsProcessed = true;
 
-                    if (_articlesCompleted >= _rawArticles.Count)
+                    // item at index 0 can be null if we are reading generic PGN
+                    if (articleIndex > 0 || _rawArticles[0] != null)
                     {
-                        AppState.MainWin.Timers.Stop(AppTimers.TimerId.WORKBOOK_READ_PROGRESS);
-                        _state = ProcessState.FINISHED;
-                        // note that the parent may not be the session workbook if this is part of ImportChapter
-                        _parent.IsReady = true;
-                        AppState.BackgroundReadFinished();
-                        ReportErrors();
-                        if (AppState.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW)
+                        _rawArticles[articleIndex].IsProcessed = true;
+
+                        if (_articlesCompleted >= _rawArticles.Count)
                         {
-                            AppState.ConfigureMenusForManualReview();
+                            AppState.MainWin.Timers.Stop(AppTimers.TimerId.WORKBOOK_READ_PROGRESS);
+                            _state = ProcessState.FINISHED;
+                            // note that the parent may not be the session workbook if this is part of ImportChapter
+                            _parent.IsReady = true;
+                            AppState.BackgroundReadFinished();
+                            ReportErrors();
+                            if (AppState.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW)
+                            {
+                                AppState.ConfigureMenusForManualReview();
+                            }
+                            AppState.MainWin.BoardCommentBox.ShowTabHints();
+                            AppState.DoEvents();
                         }
-                        AppState.MainWin.BoardCommentBox.ShowTabHints();
-                        AppState.DoEvents();
                     }
                 }
                 catch (Exception ex)
