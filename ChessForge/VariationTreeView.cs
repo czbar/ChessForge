@@ -1589,14 +1589,15 @@ namespace ChessForge
                     return;
                 }
 
+                bool diagram = false;
                 // if the node has 1 child, print it,
                 // keep the same level and sublevel as the parent
                 // call this method on the child
                 if (GetNodeType(nd) == NodeType.ISOLATED || GetNodeType(nd) == NodeType.LEAF)
                 {
                     TreeNode child = nd.Children[0];
-                    BuildNodeTextAndAddToPara(child, includeNumber, para);
-                    BuildTreeLineText(child, para, false);
+                    BuildNodeTextAndAddToPara(child, includeNumber, para, out diagram);
+                    BuildTreeLineText(child, para, diagram);
                     return;
                 }
 
@@ -1612,7 +1613,7 @@ namespace ChessForge
                     bool multi = (nodeType == NodeType.FORK_WITH_FORK_LINES) || nd.Children.Count > 2;
 
                     // the first child remains at the same level as the parent
-                    BuildNodeTextAndAddToPara(nd.Children[0], includeNumber, para);
+                    BuildNodeTextAndAddToPara(nd.Children[0], includeNumber, para, out diagram);
 
                     bool specialTopLineCase = false;
 
@@ -1652,8 +1653,8 @@ namespace ChessForge
                             }
                         }
 
-                        BuildNodeTextAndAddToPara(nd.Children[i], true, para2);
-                        BuildTreeLineText(nd.Children[i], para2, false);
+                        BuildNodeTextAndAddToPara(nd.Children[i], true, para2, out diagram);
+                        BuildTreeLineText(nd.Children[i], para2, diagram);
 
                         if (multi && i == nd.Children.Count - 1)
                         {
@@ -1704,8 +1705,10 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd"></param>
         /// <param name="includeNumber"></param>
-        protected Run BuildNodeTextAndAddToPara(TreeNode nd, bool includeNumber, Paragraph para, int displayLevel = -1, bool inclComment = true)
+        protected Run BuildNodeTextAndAddToPara(TreeNode nd, bool includeNumber, Paragraph para, out bool diagram, int displayLevel = -1, bool inclComment = true)
         {
+            diagram = false;
+
             // check if we must set includeNumber to true
             if (!includeNumber && (inclComment && IsLastRunComment(para, nd) || !string.IsNullOrEmpty(nd.CommentBeforeMove)))
             {
@@ -1734,7 +1737,10 @@ namespace ChessForge
                 InsertOrUpdateCommentBeforeMoveRun(nd, includeNumber);
                 AddReferenceRunToParagraph(nd, para);
                 AddCommentRunsToParagraph(nd, para, out bool isBlunder);
-                AddDiagramToParagraph(nd, para);
+                if (AddDiagramToParagraph(nd, para))
+                {
+                    diagram = true;
+                }
                 if (isBlunder)
                 {
                     TextUtils.RemoveBlunderNagFromText(rMove);
