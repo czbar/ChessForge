@@ -305,8 +305,10 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd"></param>
         /// <param name="para"></param>
-        private void AddDiagramToParagraph(TreeNode nd, Paragraph para)
+        private bool AddDiagramToParagraph(TreeNode nd, Paragraph para)
         {
+            bool diagramInserted = false;
+
             if (nd.IsDiagram)
             {
                 InlineUIContainer iuc = VariationTreeViewDiagram.CreateDiagram(nd, out ChessBoardSmall chessboard, IsLargeDiagram(nd));
@@ -332,8 +334,11 @@ namespace ChessForge
                     }
 
                     chessboard.DisplayPosition(nd, false);
+                    diagramInserted = true;
                 }
             }
+
+            return diagramInserted;
         }
 
         /// <summary>
