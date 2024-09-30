@@ -41,7 +41,7 @@
                     </Button>
                 </StackPanel>
             </GroupBox>
-            <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Ok}" Width="70" HorizontalAlignment="Left" Margin="304,247,0,0" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
+            <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Ok}" Width="70" HorizontalAlignment="Left" Margin="304,247,0,0" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
             <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" Width="70" HorizontalAlignment="Left" Margin="390,247,0,0" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
             <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" Width="70" HorizontalAlignment="Left" Margin="495,247,0,0" VerticalAlignment="Top" Click="UiBtnHelp_Click" />
             <GroupBox x:Name="UiGbQuizPoints" Header="{x:Static p:Resources.QuizPoints}" Margin="201,225,0,0" Width="85" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left"   >
