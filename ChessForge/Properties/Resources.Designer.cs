@@ -1790,7 +1790,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete Thumbnail.
+        ///   Looks up a localized string similar to Remove Thumbnail.
         /// </summary>
         public static string DeleteThumbnail {
             get {
@@ -5864,6 +5864,15 @@ namespace ChessForge.Properties {
         public static string ReadingWorkbookFile {
             get {
                 return ResourceManager.GetString("ReadingWorkbookFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to References.
+        /// </summary>
+        public static string References {
+            get {
+                return ResourceManager.GetString("References", resourceCulture);
             }
         }
         

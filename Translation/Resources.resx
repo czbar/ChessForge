@@ -369,6 +369,9 @@
   <data name="GameExerciseReferences" xml:space="preserve">
     <value>Game and Exercise References</value>
   </data>
+  <data name="References" xml:space="preserve">
+    <value>References</value>
+  </data>
   <data name="OpenView" xml:space="preserve">
     <value>Open View</value>
   </data>

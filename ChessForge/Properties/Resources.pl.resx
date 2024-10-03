@@ -369,6 +369,9 @@
   <data name="GameExerciseReferences" xml:space="preserve">
     <value>Odsyłacze do partii i ćwiczeń</value>
   </data>
+  <data name="References" xml:space="preserve">
+    <value>Odsyłacze</value>
+  </data>
   <data name="OpenView" xml:space="preserve">
     <value>Otwórz widok</value>
   </data>

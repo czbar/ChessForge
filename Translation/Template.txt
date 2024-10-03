@@ -355,6 +355,10 @@ Stalemate=
 #english: GameExerciseReferences=Game and Exercise References
 GameExerciseReferences=
 
+#description: References
+#english: References=References
+References=
+
 #description: Open a view
 #english: OpenView=Open View
 OpenView=

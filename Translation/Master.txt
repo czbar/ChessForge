@@ -271,6 +271,9 @@ Stalemate=stalemate
 #Game and Exercise References
 GameExerciseReferences=Game and Exercise References
 
+#References
+References=References
+
 #Open a view
 OpenView=Open View
 

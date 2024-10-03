@@ -355,6 +355,10 @@ Stalemate=pat
 #english: GameExerciseReferences=Game and Exercise References
 GameExerciseReferences=Odsyłacze do partii i ćwiczeń
 
+#description: References
+#english: References=References
+References=Odsyłacze
+
 #description: Open a view
 #english: OpenView=Open View
 OpenView=Otwórz widok
