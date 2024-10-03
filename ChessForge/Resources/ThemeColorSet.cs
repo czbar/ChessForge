@@ -167,6 +167,16 @@ namespace ChessForge
         public SolidColorBrush HyperlinkHoveredForeground;
 
         /// <summary>
+        /// Foreground of the reference text.
+        /// </summary>
+        public SolidColorBrush ReferenceForeground;
+
+        /// <summary>
+        /// Foreground of the reference text when hovered over.
+        /// </summary>
+        public SolidColorBrush ReferenceHoveredForeground;
+
+        /// <summary>
         /// Colors for various Hint Types in the Comment Box
         /// </summary>
         public SolidColorBrush HintErrorForeground;

@@ -288,6 +288,9 @@ namespace ChessForge
 
             LightMode.HyperlinkForeground = new SolidColorBrush(Color.FromRgb(0, 153, 213));
             LightMode.HyperlinkHoveredForeground = new SolidColorBrush(Color.FromRgb(79, 102, 165));
+
+            LightMode.ReferenceForeground = new SolidColorBrush(Color.FromRgb(0, 153, 213));
+            LightMode.ReferenceHoveredForeground = new SolidColorBrush(Color.FromRgb(79, 102, 165));
         }
 
         /// <summary>
@@ -344,6 +347,9 @@ namespace ChessForge
 
             DarkMode.HyperlinkForeground = new SolidColorBrush(Color.FromRgb(9, 147, 189));
             DarkMode.HyperlinkHoveredForeground = new SolidColorBrush(Color.FromRgb(0, 244, 255));
+
+            DarkMode.ReferenceForeground = new SolidColorBrush(Color.FromRgb(9, 147, 189));
+            DarkMode.ReferenceHoveredForeground = new SolidColorBrush(Color.FromRgb(0, 244, 255));
         }
     }
 }
