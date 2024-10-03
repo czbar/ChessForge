@@ -1,5 +1,4 @@
 ﻿using ChessPosition;
-using ChessPosition.Utils;
 using GameTree;
 using System;
 using System.Collections.Generic;
@@ -210,6 +209,7 @@ namespace ChessForge
         // NOTE: we rely on the fact that both types on comments begin with run_comment (!)
         private readonly string _run_comment_ = "run_comment_";
         private readonly string _run_comment_before_move_ = "run_comment_before_move_";
+        private readonly string _run_comment_article_ref = "run_comment_artcle_ref_";
 
         /// <summary>
         /// Most recent clicked node.
@@ -258,11 +258,6 @@ namespace ChessForge
         private Dictionary<int, Inline> _dictNodeToCommentBeforeMoveRun = new Dictionary<int, Inline>();
 
         /// <summary>
-        /// Maps Node Ids to Reference Runs for quick access.
-        /// </summary>
-        private Dictionary<int, Run> _dictNodeToReferenceRun = new Dictionary<int, Run>();
-
-        /// <summary>
         /// Maps Runs to Paragraphs for quick access.
         /// </summary>
         private Dictionary<Run, Paragraph> _dictRunToParagraph = new Dictionary<Run, Paragraph>();
@@ -276,11 +271,6 @@ namespace ChessForge
         /// Maps CommentBeforeMove Runs to Paragraphs for quick access.
         /// </summary>
         private Dictionary<Inline, Paragraph> _dictCommentBeforeMoveRunToParagraph = new Dictionary<Inline, Paragraph>();
-
-        /// <summary>
-        /// Maps Reference Runs to Paragraphs for quick access.
-        /// </summary>
-        private Dictionary<Run, Paragraph> _dictReferenceRunToParagraph = new Dictionary<Run, Paragraph>();
 
         /// <summary>
         /// Current Paragraph level.
@@ -1067,9 +1057,6 @@ namespace ChessForge
                 _dictCommentRunToParagraph.Clear();
                 _dictCommentBeforeMoveRunToParagraph.Clear();
 
-                _dictNodeToReferenceRun.Clear();
-                _dictReferenceRunToParagraph.Clear();
-
                 _currParagraphLevel = 0;
             }
             catch (Exception ex)
@@ -1535,11 +1522,6 @@ namespace ChessForge
                     rParent = _dictNodeToCommentRun[parent.NodeId];
                     para = _dictCommentRunToParagraph[rParent];
                 }
-                else if (_dictNodeToReferenceRun.ContainsKey(parent.NodeId))
-                {
-                    rParent = _dictNodeToReferenceRun[parent.NodeId];
-                    para = _dictReferenceRunToParagraph[rParent as Run];
-                }
                 else
                 {
                     rParent = _dictNodeToRun[parent.NodeId];
@@ -1735,7 +1717,6 @@ namespace ChessForge
             {
                 // must use Insert... because cannot Add... before rMove is created.
                 InsertOrUpdateCommentBeforeMoveRun(nd, includeNumber);
-                AddReferenceRunToParagraph(nd, para);
                 AddCommentRunsToParagraph(nd, para, out bool isBlunder);
                 if (AddDiagramToParagraph(nd, para))
                 {
@@ -1801,7 +1782,6 @@ namespace ChessForge
             if (nd != null)
             {
                 Run r = AddRunToParagraph(nd, para, "", Brushes.White);
-                AddReferenceRunToParagraph(nd, para);
                 AddCommentRunsToParagraph(nd, para, out bool isBlunder);
                 if (isBlunder)
                 {
@@ -2287,6 +2267,56 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// An article reference in the comment was clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventReferenceMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                try
+                {
+                    if (sender is Inline inl)
+                    {
+                        int nodeId = TextUtils.GetNodeIdAndArticleRefFromPrefixedString(inl.Name, out string articleRef);
+                        Article art = AppState.Workbook.GetArticleByGuid(articleRef, out int chapterIndex, out int articleIndex);
+                        _mainWin.SelectArticle(chapterIndex, art.ContentType, articleIndex);
+                    }
+                }
+                catch { }
+            }
+        }
+
+        /// <summary>
+        /// Highlight the article reference when hovered over. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventReferenceMouseEnter(object sender, MouseEventArgs e)
+        {
+            if (sender is Inline inl)
+            {
+                inl.Foreground = ChessForgeColors.CurrentTheme.ReferenceHoveredForeground;
+                e.Handled = true;
+            }
+        }
+
+        /// <summary>
+        /// Back to normal article reference color when mouse left.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventReferenceMouseLeave(object sender, MouseEventArgs e)
+        {
+            if (sender is Inline inl)
+            {
+                inl.Foreground = ChessForgeColors.CurrentTheme.ReferenceForeground;
+                e.Handled = true;
+            }
+        }
+
+        /// <summary>
         /// A "comment run" was clicked.
         /// Invoke the dialog and update the run as needed.
         /// </summary>
@@ -2345,61 +2375,6 @@ namespace ChessForge
                         InsertOrUpdateCommentBeforeMoveRun(nd);
                     }
                 }
-            }
-        }
-
-        /// <summary>
-        /// Event handler for Article selection.
-        /// MainWindow subscribes to it with EventSelectArticle().
-        /// </summary>
-        public event EventHandler<ChessForgeEventArgs> ArticleSelected;
-
-        /// <summary>
-        /// A "reference" run was clicked.
-        /// Open the Game Preview dialog.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void EventReferenceRunClicked(object sender, MouseButtonEventArgs e)
-        {
-            if (!IsSelectionEnabled())
-            {
-                return;
-            }
-
-            try
-            {
-                TreeNode nd = GetClickedNode(e);
-                SelectRun(_dictNodeToRun[nd.NodeId], e.ClickCount, e.ChangedButton);
-
-                ArticleReferencesDialog dlg = new ArticleReferencesDialog(nd);
-                GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
-
-                dlg.ShowDialog();
-
-                if (dlg.SelectedArticle != null)
-                {
-                    // we exited after user selected Open Full View from the context menu of an item
-                    WorkbookManager.SessionWorkbook.GetArticleByGuid(dlg.SelectedArticle.Tree.Header.GetGuid(out _), out int chapterIndex, out int articleIndex);
-
-                    ChessForgeEventArgs args = new ChessForgeEventArgs();
-                    args.ChapterIndex = chapterIndex;
-                    args.ArticleIndex = articleIndex;
-                    args.ContentType = dlg.SelectedArticle.Tree.Header.GetContentType(out _);
-
-                    ArticleSelected?.Invoke(this, args);
-                }
-                else
-                {
-                    if (dlg.DialogResult == true)
-                    {
-                        // user requested the dialog for editing references
-                        AppState.MainWin.UiMnReferenceArticles_Click(null, null);
-                    }
-                }
-            }
-            catch
-            {
             }
         }
 
