@@ -16,6 +16,7 @@ namespace ChessPosition.Utils
         URL,
         THUMBNAIL_SYMBOL,
         QUIZ_POINTS,
+        REFERENCE,
     }
 
     /// <summary>
