@@ -2031,61 +2031,6 @@ namespace ChessForge
         //*****************************************************************************
 
         /// <summary>
-        /// Event handler for Article selection.
-        /// MainWindow subscribes to it with EventSelectArticle().
-        /// </summary>
-        public static event EventHandler<ChessForgeEventArgs> ArticleSelected;
-
-
-        /// <summary>
-        /// Invokes the Select Articles dialog to allow the user
-        /// to edit Article references.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void UiMnReferenceArticles_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                TreeNode nd = ActiveTreeView.GetSelectedNode();
-                ObservableCollection<ArticleListItem> articleList = WorkbookManager.SessionWorkbook.GenerateArticleList();
-                SelectArticlesDialog dlg = new SelectArticlesDialog(nd, true, null, ref articleList, false, ArticlesAction.NONE);
-                //{
-                //    Left = ChessForgeMain.Left + 100,
-                //    Top = ChessForgeMain.Top + 100,
-                //    Topmost = false,
-                //    Owner = this
-                //};
-                GuiUtilities.PositionDialog(dlg, this, 100);
-                if (dlg.ShowDialog() == true)
-                {
-                    List<string> refGuids = dlg.GetSelectedReferenceStrings();
-                    ActiveVariationTree.SetArticleRefs(nd, refGuids);
-                    ActiveTreeView.InsertOrDeleteReferenceRun(nd);
-                    AppState.IsDirty = true;
-
-                    if (dlg.SelectedArticle != null)
-                    {
-                        WorkbookManager.SessionWorkbook.GetArticleByGuid(dlg.SelectedArticle.Tree.Header.GetGuid(out _), out int chapterIndex, out int articleIndex);
-
-                        ChessForgeEventArgs args = new ChessForgeEventArgs
-                        {
-                            ChapterIndex = chapterIndex,
-                            ArticleIndex = articleIndex,
-                            ContentType = dlg.SelectedArticle.Tree.Header.GetContentType(out _)
-                        };
-
-                        ArticleSelected?.Invoke(this, args);
-                    }
-                }
-
-            }
-            catch
-            {
-            }
-        }
-
-        /// <summary>
         /// Shows/hides solution in the current exercise view
         /// </summary>
         public void UpdateShowSolutionInExerciseView(bool show)
@@ -3939,10 +3884,6 @@ namespace ChessForge
                     WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.DELETE_MODEL_GAME, chapter, article, index);
                     chapter.ModelGames.RemoveAt(index);
                     List<FullNodeId> affectedNodes = WorkbookManager.RemoveArticleReferences(guid);
-                    if (affectedNodes.Count > 0)
-                    {
-                        _studyTreeView?.UpdateReferenceRuns(affectedNodes);
-                    }
                     WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
                     AppState.IsDirty = true;
                 }
@@ -3969,10 +3910,6 @@ namespace ChessForge
                     WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.DELETE_EXERCISE, chapter, article, index);
                     chapter.Exercises.RemoveAt(index);
                     List<FullNodeId> affectedNodes = WorkbookManager.RemoveArticleReferences(guid);
-                    if (affectedNodes.Count > 0)
-                    {
-                        _studyTreeView?.UpdateReferenceRuns(affectedNodes);
-                    }
                     WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
                     AppState.IsDirty = true;
                 }
