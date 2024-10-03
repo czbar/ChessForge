@@ -575,7 +575,6 @@
                                 <ContextMenu x:Name="UiMncStudyTree">
                                     <MenuItem x:Name="UiMnStudyStartTrainingHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere_Click" InputGestureText="T" />
                                     <MenuItem x:Name="UiMnStudy_CreateExercise" Header="{x:Static p:Resources.CreateExerciseFromHere}" Click="UiMn_CreateExercise_Click"  />
-                                    <MenuItem x:Name="UiMnReferenceArticles" Header="{x:Static p:Resources.MnGameExerciseReferences}" Click="UiMnReferenceArticles_Click"/>
                                     <MenuItem x:Name="_mnStudyTree_MarkThumbnail" Header="{x:Static p:Resources.MarkAsThumbnail}" Click="UiMn_MarkThumbnail_Click" InputGestureText="Ctrl+T" />
                                     <MenuItem x:Name="UiMnStudyInsertDiagram" Header="{x:Static p:Resources.InsertDiagram}"  Click="UiMn_ToggleDiagramFlag_Click" InputGestureText="Ctrl+I" />
                                     <MenuItem x:Name="UiMnStudyDeleteDiagram" Visibility="Collapsed" Header="{x:Static p:Resources.RemoveDiagram}" Click="UiMn_ToggleDiagramFlag_Click" InputGestureText="Ctrl+I" />
