@@ -343,7 +343,7 @@ namespace ChessForge
         /// <param name="articleIndex"></param>
         /// <returns></returns>
         /// 
-        public Article GetArticleByGuid(string guid, out int chapterIndex, out int articleIndex)
+        public Article GetArticleByGuid(string guid, out int chapterIndex, out int articleIndex, bool includeStudy = false)
         {
             chapterIndex = -1;
             articleIndex = -1;
@@ -367,6 +367,14 @@ namespace ChessForge
                         chapterIndex = i;
                         articleIndex = j;
                         return Chapters[i].Exercises[j];
+                    }
+                }
+
+                if (includeStudy)
+                {
+                    if (Chapters[i].StudyTree.Tree.Header.GetGuid(out _) == guid)
+                    {
+                        return Chapters[i].StudyTree;
                     }
                 }
             }
