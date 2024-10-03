@@ -760,10 +760,6 @@ namespace ChessForge
                     if (nd != null)
                     {
                         nd.AddArticleReference(guid);
-                        if (MainWin.StudyTreeView != null)
-                        {
-                            MainWin.StudyTreeView.InsertOrDeleteReferenceRun(nd);
-                        }
                     }
                 }
 
