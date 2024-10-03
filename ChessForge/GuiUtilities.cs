@@ -77,6 +77,31 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Builds a list of articles from a list of references.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        public static List<Article> BuildReferencedArticlesList(TreeNode nd)
+        {
+            List<Article> articles = new List<Article>();
+
+            if (!string.IsNullOrEmpty(nd.ArticleRefs))
+            {
+                string[] refs = nd.ArticleRefs.Split('|');
+                foreach (string guid in refs)
+                {
+                    Article article = WorkbookManager.SessionWorkbook.GetArticleByGuid(guid, out _, out _, true);
+                    if (article != null)
+                    {
+                        articles.Add(article);
+                    }
+                }
+            }
+
+            return articles;
+        }
+
+        /// <summary>
         /// Extracts engine notation of the move
         /// from the "bestmove" message.
         /// </summary>
