@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 
@@ -139,7 +138,7 @@ namespace ChessForge
                     // we need the number if this is the first run in the paragraph or previous move has a Comment
                     // or this move has a CommentBeforeMove
                     bool includeNo = RichTextBoxUtilities.IsFirstNonEmptyRunInPara(rMove, rMove.Parent as Paragraph)
-                                     || !string.IsNullOrWhiteSpace(nd.CommentBeforeMove) 
+                                     || !string.IsNullOrWhiteSpace(nd.CommentBeforeMove)
                                      || (nd.Parent != null && (!string.IsNullOrEmpty(nd.Parent.Comment) || nd != nd.Parent.Children[0]));
                     UpdateRunText(rMove, nd, includeNo);
                 }
@@ -203,7 +202,7 @@ namespace ChessForge
             if (currRun != null)
             {
                 Paragraph para = currRun.Parent as Paragraph;
-                if ( (para != null))
+                if ((para != null))
                 {
                     bool runFound = false;
                     foreach (Inline inline in para.Inlines)
@@ -233,73 +232,6 @@ namespace ChessForge
             return nextRun;
         }
 
-
-        /// <summary>
-        /// Updates reference runs for the passed list of nodes.
-        /// This is called when the list has changed e.g. after deletion
-        /// of a referenced article.
-        /// </summary>
-        /// <param name="nodes"></param>
-        public void UpdateReferenceRuns(List<FullNodeId> nodes)
-        {
-            if (AppState.Workbook != null)
-            {
-                foreach (FullNodeId fullNode in nodes)
-                {
-                    VariationTree tree = AppState.Workbook.GetTreeByTreeId(fullNode.TreeId);
-                    if (tree != null)
-                    {
-                        TreeNode nd = tree.GetNodeFromNodeId(fullNode.NodeId);
-                        InsertOrDeleteReferenceRun(nd);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Inserts or deletes a reference run depending
-        /// on whether we have any reference for the node
-        /// </summary>
-        /// <param name="nd"></param>
-        public void InsertOrDeleteReferenceRun(TreeNode nd)
-        {
-            if (nd == null)
-            {
-                return;
-            }
-
-            try
-            {
-                Run r;
-                _dictNodeToRun.TryGetValue(nd.NodeId, out r);
-
-                Run r_reference;
-                _dictNodeToReferenceRun.TryGetValue(nd.NodeId, out r_reference);
-
-                if (string.IsNullOrEmpty(nd.ArticleRefs))
-                {
-                    // if the reference run existed, remove it
-                    if (r_reference != null)
-                    {
-                        _dictNodeToReferenceRun.Remove(nd.NodeId);
-                        RemoveRunFromHostingParagraph(r_reference);
-                    }
-                }
-                else
-                {
-                    // if the reference run existed just leave it, otherwise create it
-                    if (r_reference == null)
-                    {
-                        Paragraph para = r.Parent as Paragraph;
-                        AddReferenceRunToParagraph(nd, para);
-                    }
-                }
-            }
-            catch
-            {
-            }
-        }
-
         /// <summary>
         /// Inserts a position diagram (if flagged on the node in the paragraph).  
         /// </summary>
@@ -317,7 +249,7 @@ namespace ChessForge
                     Run preDiagRun = new Run("\n");
                     preDiagRun.Name = RichTextBoxUtilities.PreInlineDiagramRunPrefix + nd.NodeId.ToString();
                     para.Inlines.Add(preDiagRun);
-                    
+
                     para.Inlines.Add(iuc);
                     iuc.MouseDown += EventRunClicked;
 
@@ -371,6 +303,30 @@ namespace ChessForge
                     parts.Insert(0, thumb);
                 }
 
+                if (!string.IsNullOrEmpty(nd.ArticleRefs))
+                {
+                    List<Article> articles = GuiUtilities.BuildReferencedArticlesList(nd);
+                    bool first = true;
+                    foreach (Article article in articles)
+                    {
+                        string title;
+                        if (article.ContentType == GameData.ContentType.STUDY_TREE)
+                        {
+                            title = Properties.Resources.Chapter + " " + article.Tree.Header.GetChapterTitle();
+                        }
+                        else
+                        {
+                            title = article.Tree.Header.BuildGameReferenceTitle();
+                        }
+                        if (!first)
+                        {
+                            title = "; " + title;
+                        }
+                        parts.Add(new CommentPart(CommentPartType.REFERENCE, " " + title, article.Guid));
+                        first = false;
+                    }
+                }
+
                 // check only here as we may have quiz points
                 if (parts == null)
                 {
@@ -403,73 +359,24 @@ namespace ChessForge
                 for (int i = 0; i < parts.Count; i++)
                 {
                     CommentPart part = parts[i];
-
-                    Inline inl;
-
-                    switch (part.Type)
+                    if (part.Type == CommentPartType.ASSESSMENT)
                     {
-                        case CommentPartType.ASSESSMENT:
-                            string assString = GuiUtilities.BuildAssessmentComment(nd);
-                            inl = new Run(assString);
-                            inl.ToolTip = Properties.Resources.TooltipEngineBlunderDetect;
-                            inl.FontStyle = FontStyles.Normal;
-                            inl.FontWeight = FontWeights.Normal;
-                            isAssessmentBlunderShown = true;
-                            inl.PreviewMouseDown += EventCommentRunClicked;
-                            break;
-                        case CommentPartType.THUMBNAIL_SYMBOL:
-                            // if this is not the second last part, insert extra space
-                            string thmb;
-                            if (i < parts.Count - 2)
-                            {
-                                thmb = Constants.CHAR_SQUARED_SQUARE.ToString() + " ";
-                            }
-                            else
-                            {
-                                thmb = Constants.CHAR_SQUARED_SQUARE.ToString();
-                            }
-                            _lastThumbnailNode = nd;
-                            inl = new Run(thmb);
-                            string toolTip = BuildThumbnailToolTip(nd);
-                            inl.ToolTip = toolTip;
-                            inl.FontStyle = FontStyles.Normal;
-                            inl.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
-                            inl.FontWeight = FontWeights.Normal;
-                            inl.PreviewMouseDown += EventCommentRunClicked;
-                            break;
-                        case CommentPartType.URL:
-                            inl = new Hyperlink(new Run(part.Text));
-                            (inl as Hyperlink).NavigateUri = new Uri(part.Text);
-                            inl.FontWeight = FontWeights.Normal;
-                            inl.PreviewMouseDown += EventHyperlinkMouseLeftButtonDown;
-                            inl.MouseEnter += EventHyperlinkMouseEnter;
-                            inl.MouseLeave += EventHyperlinkMouseLeave;
-                            inl.Foreground = ChessForgeColors.CurrentTheme.HyperlinkForeground;
-                            inl.Cursor = Cursors.Hand;
-                            break;
-                        default:
-                            inl = new Run(part.Text);
-                            inl.FontStyle = FontStyles.Normal;
-                            inl.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
-                            inl.FontWeight = FontWeights.Normal;
-                            inl.PreviewMouseDown += EventCommentRunClicked;
-                            break;
+                        isAssessmentBlunderShown = true;
                     }
 
-                    inl.Name = _run_comment_ + nd.NodeId.ToString();
+                    Inline inl = CreateInlineForCommentPart(part, nd, i, parts.Count);
+
+                    // the above may or may not have set the name.
+                    if (string.IsNullOrEmpty(inl.Name))
+                    {
+                        inl.Name = _run_comment_ + nd.NodeId.ToString();
+                    }
 
                     if (inlPrevious == null)
                     {
                         // insert after the reference run or immediately after the move run if no reference run
                         Run rNode;
-                        if (_dictNodeToReferenceRun.ContainsKey(nd.NodeId))
-                        {
-                            rNode = _dictNodeToReferenceRun[nd.NodeId];
-                        }
-                        else
-                        {
-                            rNode = _dictNodeToRun[nd.NodeId];
-                        }
+                        rNode = _dictNodeToRun[nd.NodeId];
                         para.Inlines.InsertAfter(rNode, inl);
 
                         _dictNodeToCommentRun[nd.NodeId] = inl;
@@ -487,6 +394,80 @@ namespace ChessForge
             {
                 AppLog.Message("AddCommentRunsToParagraph()", ex);
             }
+        }
+
+        /// <summary>
+        /// Creates an Inline for a single part of the comment.
+        /// </summary>
+        /// <param name="part"></param>
+        /// <param name="nd"></param>
+        /// <param name="i"></param>
+        /// <param name="partsCount"></param>
+        /// <returns></returns>
+        private Inline CreateInlineForCommentPart(CommentPart part, TreeNode nd, int i, int partsCount)
+        {
+            Inline inl;
+
+            switch (part.Type)
+            {
+                case CommentPartType.ASSESSMENT:
+                    string assString = GuiUtilities.BuildAssessmentComment(nd);
+                    inl = new Run(assString);
+                    inl.ToolTip = Properties.Resources.TooltipEngineBlunderDetect;
+                    inl.FontStyle = FontStyles.Normal;
+                    inl.FontWeight = FontWeights.Normal;
+                    inl.PreviewMouseDown += EventCommentRunClicked;
+                    break;
+                case CommentPartType.THUMBNAIL_SYMBOL:
+                    // if this is not the second last part, insert extra space
+                    string thmb;
+                    if (i < partsCount - 2)
+                    {
+                        thmb = Constants.CHAR_SQUARED_SQUARE.ToString() + " ";
+                    }
+                    else
+                    {
+                        thmb = Constants.CHAR_SQUARED_SQUARE.ToString();
+                    }
+                    _lastThumbnailNode = nd;
+                    inl = new Run(thmb);
+                    string toolTip = BuildThumbnailToolTip(nd);
+                    inl.ToolTip = toolTip;
+                    inl.FontStyle = FontStyles.Normal;
+                    inl.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
+                    inl.FontWeight = FontWeights.Normal;
+                    inl.PreviewMouseDown += EventCommentRunClicked;
+                    break;
+                case CommentPartType.URL:
+                    inl = new Hyperlink(new Run(part.Text));
+                    (inl as Hyperlink).NavigateUri = new Uri(part.Text);
+                    inl.FontWeight = FontWeights.Normal;
+                    inl.PreviewMouseDown += EventHyperlinkMouseLeftButtonDown;
+                    inl.MouseEnter += EventHyperlinkMouseEnter;
+                    inl.MouseLeave += EventHyperlinkMouseLeave;
+                    inl.Foreground = ChessForgeColors.CurrentTheme.HyperlinkForeground;
+                    inl.Cursor = Cursors.Hand;
+                    break;
+                case CommentPartType.REFERENCE:
+                    inl = new Run(part.Text);
+                    inl.FontWeight = FontWeights.Normal;
+                    inl.Name = _run_comment_article_ref + nd.NodeId.ToString() + "_" + (part.Guid ?? "");
+                    inl.PreviewMouseDown += EventReferenceMouseLeftButtonDown;
+                    inl.MouseEnter += EventReferenceMouseEnter;
+                    inl.MouseLeave += EventReferenceMouseLeave;
+                    inl.Foreground = ChessForgeColors.CurrentTheme.ReferenceForeground;
+                    inl.Cursor = Cursors.Hand;
+                    break;
+                default:
+                    inl = new Run(part.Text);
+                    inl.FontStyle = FontStyles.Normal;
+                    inl.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
+                    inl.FontWeight = FontWeights.Normal;
+                    inl.PreviewMouseDown += EventCommentRunClicked;
+                    break;
+            }
+
+            return inl;
         }
 
         /// <summary>
@@ -561,46 +542,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Creates a new Reference Run and adds it to Paragraph.
-        /// A Reference Run contains just a single symbol indicating that there are game
-        /// references for the preceding Node.
-        /// </summary>
-        /// <param name="nd"></param>
-        /// <param name="para"></param>
-        private void AddReferenceRunToParagraph(TreeNode nd, Paragraph para)
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(nd.ArticleRefs))
-                {
-                    return;
-                }
-
-                Run r = new Run(BuildReferenceRunText(nd));
-
-                r.Name = RichTextBoxUtilities.ReferenceRunPrefix + nd.NodeId.ToString();
-                r.ToolTip = Properties.Resources.OpenReferencesDialog;
-
-                r.PreviewMouseDown += EventReferenceRunClicked;
-
-                r.FontStyle = FontStyles.Normal;
-
-                r.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
-                r.FontWeight = FontWeights.Normal;
-
-                Run rNode = _dictNodeToRun[nd.NodeId];
-                para.Inlines.InsertAfter(rNode, r);
-
-                _dictNodeToReferenceRun[nd.NodeId] = r;
-                _dictReferenceRunToParagraph[r] = para;
-            }
-            catch (Exception ex)
-            {
-                AppLog.Message("AddReferenceRunToParagraph()", ex);
-            }
-        }
-
-        /// <summary>
         /// Checks if the last run in the paragraph is a comment.
         /// NOTE: we rely on the fact the both pre- and post-move comment run names
         /// begin with the _run_comment_ constant.
@@ -636,6 +577,7 @@ namespace ChessForge
         private bool IsCommentRunToShow(TreeNode nd)
         {
             return !string.IsNullOrEmpty(nd.Comment)
+                   || !string.IsNullOrEmpty(nd.ArticleRefs)
                    || (nd.IsThumbnail && !_isPrinting)
                    || HandleBlunders && nd.Assessment != 0 && nd.IsMainLine()
                    || (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.EDITING && nd.QuizPoints != 0);
