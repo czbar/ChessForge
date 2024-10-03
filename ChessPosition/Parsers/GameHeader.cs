@@ -256,6 +256,63 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Builds text for an article reference inside a comment.
+        /// If it is a reference to game then replace missing names with NN,
+        /// if to an exercise then don't show anything.
+        /// </summary>
+        public string BuildGameReferenceTitle()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            string white = GetWhitePlayer(out _);
+            string black = GetBlackPlayer(out _);
+
+            bool hasWhite = !string.IsNullOrEmpty(white);
+            bool hasBlack = !string.IsNullOrEmpty(black);
+
+            if (GetContentType(out _) == GameData.ContentType.EXERCISE)
+            {
+                if (hasWhite || hasBlack)
+                {
+                    if (hasWhite)
+                    {
+                        sb.Append(white);
+                    }
+
+                    if (hasWhite && hasBlack)
+                    {
+                        sb.Append(" - ");
+                    }
+
+                    if (hasBlack)
+                    {
+                        sb.Append(black);
+                    }
+                }
+            }
+            else
+            {
+                sb.Append(white ?? "NN");
+                sb.Append(" - ");
+                sb.Append(black ?? "NN");
+            }
+
+            string result = GetResult(out _);
+            if (!string.IsNullOrEmpty(result))
+            {
+                sb.Append(' ' + result);
+            }
+
+            int year = GetYear();
+            if (year != 0)
+            {
+                sb.Append(", " + year.ToString());
+            }
+
+            return sb.ToString();
+        }
+
+        /// <summary>
         /// Returns a value for the passed key.
         /// </summary>
         /// <param name="key"></param>
