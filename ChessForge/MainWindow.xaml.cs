@@ -537,8 +537,6 @@ namespace ChessForge
 
             Timers.Start(AppTimers.TimerId.APP_START);
 
-            ArticleSelected += EventSelectArticle;
-
             AppState.UpdateEngineToggleImages();
 
             Timers.Start(AppTimers.TimerId.PULSE);
@@ -639,16 +637,6 @@ namespace ChessForge
             Languages.SetSessionLanguage(Configuration.CultureName);
 
             Languages.InitializeChessSymbolMapping(Properties.Resources.PieceSymbolMap);
-        }
-
-        /// <summary>
-        /// Subscribes to events requiring selections of an Article.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void EventSelectArticle(object sender, ChessForgeEventArgs e)
-        {
-            SelectArticle(e.ChapterIndex, e.ContentType, e.ArticleIndex);
         }
 
         /// <summary>
@@ -1753,9 +1741,6 @@ namespace ChessForge
             {
 
                 _studyTreeView = new StudyTreeView(UiRtbStudyTreeView, GameData.ContentType.STUDY_TREE);
-
-                _studyTreeView.ArticleSelected -= ArticleSelected;
-                _studyTreeView.ArticleSelected += ArticleSelected;
 
                 VariationTree studyTree;
 
