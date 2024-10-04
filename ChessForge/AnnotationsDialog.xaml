@@ -7,11 +7,17 @@
         xmlns:local="clr-namespace:ChessForge"
         ShowInTaskbar="True"
         mc:Ignorable="d"
-        Title="{x:Static p:Resources.Annotations}" Height="330" Width="600">
+        Title="{x:Static p:Resources.Annotations}" Height="380" Width="600">
     <Canvas x:Name="UiCnvButtons" Margin="0,0">
         <Grid Margin="0,0,0,0">
-            <GroupBox x:Name="UiGbComment" Header="{x:Static p:Resources.Comment}" Margin="201,15,0,0" Width="370" Height="208" HorizontalAlignment="Left" VerticalAlignment="Top">
-                <TextBox x:Name="UiTbComment" HorizontalAlignment="Left" Margin="14,10" TextWrapping="Wrap" Text="" Width="330" Height="160" VerticalAlignment="Top" PreviewKeyDown="UiTbComment_PreviewKeyDown" />
+            <GroupBox x:Name="UiGbComment" Header="{x:Static p:Resources.Comment}" Margin="201,15,0,0" Width="370" Height="150" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <TextBox x:Name="UiTbComment" HorizontalAlignment="Left" Margin="10,10" TextWrapping="Wrap" Text="" Width="338" Height="107" VerticalAlignment="Top" PreviewKeyDown="UiTbComment_PreviewKeyDown" />
+            </GroupBox>
+            <GroupBox x:Name="UiGbReferences" Header="{x:Static p:Resources.GameExerciseReferences}" Margin="201,170,0,0" Width="370" Height="50" HorizontalAlignment="Left" VerticalAlignment="Top" MouseLeftButtonDown="UiGbReferences_MouseLeftButtonDown">
+                <Label x:Name="UiLblReferences" FontStyle="Italic" Content="" Margin="10,0 14, 0" MouseLeftButtonDown="UiLblReferences_MouseLeftButtonDown"  />
+            </GroupBox>
+            <GroupBox x:Name="UiGbSeeChapter" Header="{x:Static p:Resources.ChapterReference}" Margin="201,225,0,0" Width="370" Height="50" HorizontalAlignment="Left" VerticalAlignment="Top" MouseLeftButtonDown="UiGbSeeChapter_MouseLeftButtonDown">
+                <Label x:Name="UiLblChapter"  FontStyle="Italic" Content="" Margin="10,0 14, 0" MouseLeftButtonDown="UiLblChapter_MouseLeftButtonDown"  />
             </GroupBox>
             <GroupBox x:Name="UiGbMove" Header="{x:Static p:Resources.Move}" Margin="28,15" Width="65" Height="260" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <StackPanel Margin="0,0,0,0" HorizontalAlignment="Center" >
@@ -41,10 +47,10 @@
                     </Button>
                 </StackPanel>
             </GroupBox>
-            <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Ok}" Width="70" HorizontalAlignment="Left" Margin="304,247,0,0" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
-            <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" Width="70" HorizontalAlignment="Left" Margin="390,247,0,0" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
-            <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" Width="70" HorizontalAlignment="Left" Margin="495,247,0,0" VerticalAlignment="Top" Click="UiBtnHelp_Click" />
-            <GroupBox x:Name="UiGbQuizPoints" Header="{x:Static p:Resources.QuizPoints}" Margin="201,225,0,0" Width="85" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left"   >
+            <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Ok}" Width="70" HorizontalAlignment="Left" Margin="304,297,0,0" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
+            <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" Width="70" HorizontalAlignment="Left" Margin="390,297,0,0" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
+            <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" Width="70" HorizontalAlignment="Left" Margin="495,297,0,0" VerticalAlignment="Top" Click="UiBtnHelp_Click" />
+            <GroupBox x:Name="UiGbQuizPoints" Header="{x:Static p:Resources.QuizPoints}" Margin="201,275,0,0" Width="85" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left"   >
                 <TextBox x:Name="UiTbQuizPoints" HorizontalAlignment="Left" Margin="18,2,0,0" TextWrapping="Wrap" Text="" Width="40" Height="20"/>
             </GroupBox>
         </Grid>

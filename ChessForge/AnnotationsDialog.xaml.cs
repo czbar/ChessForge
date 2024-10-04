@@ -1,8 +1,5 @@
-﻿using ChessPosition;
-using GameTree;
-using System;
+﻿using GameTree;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,6 +15,11 @@ namespace ChessForge
         /// Comment for the move for which this dialog was invoked.
         /// </summary>
         public string Comment { get; set; }
+
+        /// <summary>
+        /// References
+        /// </summary>
+        public string ArticleRefs { get; set; }
 
         /// <summary>
         /// Quiz points
@@ -41,6 +43,11 @@ namespace ChessForge
         private bool _isExerciseEditing = false;
 
         /// <summary>
+        /// Node for which the comment is being handled.
+        /// </summary>
+        private TreeNode _node;
+
+        /// <summary>
         /// Constructs the dialog.
         /// Sets the values passed by the caller.
         /// </summary>
@@ -48,14 +55,19 @@ namespace ChessForge
         /// <param name="comment"></param>
         public AnnotationsDialog(TreeNode nd)
         {
+            _node = nd;
+
             InitializeComponent();
             SetPositionButtons(nd.Nags);
             SetMoveButtons(nd.Nags);
-            
+
+            UiGbReferences.Header += " (" + Properties.Resources.ClickToEdit + ")";
+            UiGbSeeChapter.Header += " (" + Properties.Resources.ClickToEdit + ")";
+
             UiTbComment.Text = nd.Comment ?? "";
             UiTbComment.Focus();
             UiTbComment.SelectAll();
-            
+
             Nags = nd.Nags;
 
             QuizPoints = nd.QuizPoints;
@@ -74,7 +86,32 @@ namespace ChessForge
                 MoveButtonHporizontally(UiBtnHelp, -50);
             }
 
+            SetArticleRefsText(_node.ArticleRefs);
             UiTbComment.Focus();
+        }
+
+        /// <summary>
+        /// Sets the text for the Article reference label
+        /// </summary>
+        private void SetArticleRefsText(string refs)
+        {
+            StringBuilder sb = new StringBuilder();
+            List<Article> lstRefs = GuiUtilities.BuildReferencedArticlesList(refs);
+            if (lstRefs != null && lstRefs.Count > 0)
+            {
+                bool first = true;
+
+                foreach (Article article in lstRefs)
+                {
+                    if (!first)
+                    {
+                        sb.Append("; ");
+                    }
+                    sb.Append(article.Tree.Header.BuildGameReferenceTitle(true));
+                    first = false;
+                }
+            }
+            UiLblReferences.Content = sb.ToString();
         }
 
         /// <summary>
@@ -379,6 +416,56 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Invokes games/exercises references editor.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiLblReferences_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var dlg = new SelectArticleRefsDialog(_node);
+            GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
+
+            if (dlg.ShowDialog() == true)
+            {
+                ArticleRefs = dlg.ArticleRefs;
+                SetArticleRefsText(ArticleRefs);
+            }
+
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// Same as clicking the label.
+        /// Invokes games/exercises references editor.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiGbReferences_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            UiLblReferences_MouseLeftButtonDown(sender, e);
+        }
+
+        /// <summary>
+        /// Invokes chapter references editor.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiGbSeeChapter_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            UiLblChapter_MouseLeftButtonDown(sender, e);
+        }
+
+        /// <summary>
+        /// Same as clicking the label.
+        /// Invokes chapters references editor.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiLblChapter_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            e.Handled = true;
+        }
     }
 }
 
