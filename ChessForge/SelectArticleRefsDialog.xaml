@@ -1,0 +1,51 @@
+﻿<Window x:Class="ChessForge.SelectArticleRefsDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:p="clr-namespace:ChessForge.Properties"
+        xmlns:local="clr-namespace:ChessForge"
+        mc:Ignorable="d"
+        ShowInTaskbar="True"
+        Title="{x:Static p:Resources.SelectReferences}" Height="460" Width="800">
+
+    <Grid x:Name="UiGridMain">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="300"/>
+            <RowDefinition Height="140"/>
+        </Grid.RowDefinitions>
+        <TextBox x:Name="UiTbToMove" Visibility="Collapsed" HorizontalAlignment="Left" Margin="712,44,0,0" HorizontalContentAlignment="Center" Text="" VerticalAlignment="Top" Width="30"/>
+        <ListView x:Name="UiLvGames" Margin="10,0,10,0"  Grid.Row="1" ItemsSource="{Binding}" >
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="Focusable" Value="False"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ArticleIndex}" Value="-1">
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.Resources>
+                <DataTemplate x:Key="SelectionCell">
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox Margin="10,0,0,0" BorderBrush="Black" BorderThickness="1" IsChecked="{Binding Path=IsSelected}" Visibility="{Binding Path=NonChapterCheckBoxVisible}"  />
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.Resources>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn CellTemplate="{StaticResource SelectionCell}"  Width="40"/>
+                    <GridViewColumn Header="{x:Static p:Resources.Item}" DisplayMemberBinding="{Binding Path=GameTitleForList}" Width="640"/>
+                    <GridViewColumn Header="{x:Static p:Resources.Date}"  DisplayMemberBinding="{Binding Path=Date}" Width="80"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Right" Margin="0,30,120,0" Grid.Row="2" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
+        <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Right" Margin="0,30,20,0" Grid.Row="2" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
+        <Label x:Name="UiLblInstruct" Content="{x:Static p:Resources.SelectItems}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" />
+
+    </Grid>
+</Window>
