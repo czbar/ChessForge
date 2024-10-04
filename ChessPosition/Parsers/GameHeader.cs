@@ -260,7 +260,7 @@ namespace GameTree
         /// If it is a reference to game then replace missing names with NN,
         /// if to an exercise then don't show anything.
         /// </summary>
-        public string BuildGameReferenceTitle()
+        public string BuildGameReferenceTitle(bool minimal)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -289,6 +289,10 @@ namespace GameTree
                         sb.Append(black);
                     }
                 }
+                else
+                {
+                    sb.Append("NN");
+                }
             }
             else
             {
@@ -297,10 +301,13 @@ namespace GameTree
                 sb.Append(black ?? "NN");
             }
 
-            string result = GetResult(out _);
-            if (!string.IsNullOrEmpty(result))
+            if (!minimal)
             {
-                sb.Append(' ' + result);
+                string result = GetResult(out _);
+                if (!string.IsNullOrEmpty(result))
+                {
+                    sb.Append(' ' + result);
+                }
             }
 
             int year = GetYear();
