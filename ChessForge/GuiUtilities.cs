@@ -81,13 +81,13 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd"></param>
         /// <returns></returns>
-        public static List<Article> BuildReferencedArticlesList(TreeNode nd)
+        public static List<Article> BuildReferencedArticlesList(string articleRefs)
         {
             List<Article> articles = new List<Article>();
 
-            if (!string.IsNullOrEmpty(nd.ArticleRefs))
+            if (!string.IsNullOrEmpty(articleRefs))
             {
-                string[] refs = nd.ArticleRefs.Split('|');
+                string[] refs = articleRefs.Split('|');
                 foreach (string guid in refs)
                 {
                     Article article = WorkbookManager.SessionWorkbook.GetArticleByGuid(guid, out _, out _, true);
