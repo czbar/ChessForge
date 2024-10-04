@@ -225,6 +225,9 @@ Elo=Elo
 #Best move
 BestMove=best
 
+#Click to edit
+ClickToEdit= click to edit
+
 #Request to evaluate a position
 EvaluatePosition=Evaluate Position
 
@@ -270,6 +273,9 @@ Stalemate=stalemate
 
 #Game and Exercise References
 GameExerciseReferences=Game and Exercise References
+
+#Chapter Reference
+ChapterReference=Chapter Reference
 
 #References
 References=References

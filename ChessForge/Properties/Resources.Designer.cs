@@ -863,6 +863,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chapter Reference.
+        /// </summary>
+        public static string ChapterReference {
+            get {
+                return ResourceManager.GetString("ChapterReference", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chapters.
         /// </summary>
         public static string Chapters {
@@ -1057,6 +1066,15 @@ namespace ChessForge.Properties {
         public static string ClearBoard {
             get {
                 return ResourceManager.GetString("ClearBoard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to click to edit.
+        /// </summary>
+        public static string ClickToEdit {
+            get {
+                return ResourceManager.GetString("ClickToEdit", resourceCulture);
             }
         }
         

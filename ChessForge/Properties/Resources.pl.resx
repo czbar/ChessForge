@@ -324,6 +324,9 @@
   <data name="BestMove" xml:space="preserve">
     <value>najlepsze</value>
   </data>
+  <data name="ClickToEdit" xml:space="preserve">
+    <value>kliknij by edytować</value>
+  </data>
   <data name="EvaluatePosition" xml:space="preserve">
     <value>Oceń pozycję</value>
   </data>
@@ -368,6 +371,9 @@
   </data>
   <data name="GameExerciseReferences" xml:space="preserve">
     <value>Odsyłacze do partii i ćwiczeń</value>
+  </data>
+  <data name="ChapterReference" xml:space="preserve">
+    <value>Odsyłacz do rozdziału</value>
   </data>
   <data name="References" xml:space="preserve">
     <value>Odsyłacze</value>

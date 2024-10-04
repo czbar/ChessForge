@@ -294,6 +294,10 @@ Elo=
 #english: BestMove=best
 BestMove=
 
+#description: Click to edit
+#english: ClickToEdit= click to edit
+ClickToEdit=
+
 #description: Request to evaluate a position
 #english: EvaluatePosition=Evaluate Position
 EvaluatePosition=
@@ -354,6 +358,10 @@ Stalemate=
 #description: Game and Exercise References
 #english: GameExerciseReferences=Game and Exercise References
 GameExerciseReferences=
+
+#description: Game and Exercise References
+#english: ChapterReference=Chapter Reference
+ChapterReference=
 
 #description: References
 #english: References=References

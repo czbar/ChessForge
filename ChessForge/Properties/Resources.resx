@@ -324,6 +324,9 @@
   <data name="BestMove" xml:space="preserve">
     <value>best</value>
   </data>
+  <data name="ClickToEdit" xml:space="preserve">
+    <value>click to edit</value>
+  </data>
   <data name="EvaluatePosition" xml:space="preserve">
     <value>Evaluate Position</value>
   </data>
@@ -368,6 +371,9 @@
   </data>
   <data name="GameExerciseReferences" xml:space="preserve">
     <value>Game and Exercise References</value>
+  </data>
+  <data name="ChapterReference" xml:space="preserve">
+    <value>Chapter Reference</value>
   </data>
   <data name="References" xml:space="preserve">
     <value>References</value>
