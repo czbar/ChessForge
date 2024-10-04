@@ -55,13 +55,13 @@ namespace ChessForge
                     if (inlComment != null)
                     {
                         _dictNodeToCommentRun.Remove(nd.NodeId);
-                        RemoveCommentRunsFromHostingParagraph(inlComment);
+                        RemoveCommentRunsFromHostingParagraph(inlComment, nd.NodeId);
                     }
                 }
                 else
                 {
                     _dictNodeToCommentRun.Remove(nd.NodeId);
-                    RemoveCommentRunsFromHostingParagraph(inlComment);
+                    RemoveCommentRunsFromHostingParagraph(inlComment, nd.NodeId);
 
                     Paragraph para = r.Parent as Paragraph;
                     AddCommentRunsToParagraph(nd, para, out bool isBlunder);
@@ -305,7 +305,7 @@ namespace ChessForge
 
                 if (!string.IsNullOrEmpty(nd.ArticleRefs))
                 {
-                    List<Article> articles = GuiUtilities.BuildReferencedArticlesList(nd);
+                    List<Article> articles = GuiUtilities.BuildReferencedArticlesList(nd.ArticleRefs);
                     bool first = true;
                     foreach (Article article in articles)
                     {
@@ -316,7 +316,7 @@ namespace ChessForge
                         }
                         else
                         {
-                            title = article.Tree.Header.BuildGameReferenceTitle();
+                            title = article.Tree.Header.BuildGameReferenceTitle(false);
                         }
                         if (!first)
                         {
@@ -452,7 +452,7 @@ namespace ChessForge
                     inl = new Run(part.Text);
                     inl.FontWeight = FontWeights.Normal;
                     inl.Name = _run_comment_article_ref + nd.NodeId.ToString() + "_" + (part.Guid ?? "");
-                    inl.PreviewMouseDown += EventReferenceMouseLeftButtonDown;
+                    inl.PreviewMouseDown += EventReferenceMouseButtonDown;
                     inl.MouseEnter += EventReferenceMouseEnter;
                     inl.MouseLeave += EventReferenceMouseLeave;
                     inl.Foreground = ChessForgeColors.CurrentTheme.ReferenceForeground;
