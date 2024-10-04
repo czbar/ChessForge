@@ -206,11 +206,6 @@ namespace ChessForge
         private readonly string _run_fork_move_ = "_run_fork_move_";
         private readonly string _run_ = "run_";
 
-        // NOTE: we rely on the fact that both types on comments begin with run_comment (!)
-        private readonly string _run_comment_ = "run_comment_";
-        private readonly string _run_comment_before_move_ = "run_comment_before_move_";
-        private readonly string _run_comment_article_ref = "run_comment_artcle_ref_";
-
         /// <summary>
         /// Most recent clicked node.
         /// This allows the context menu to reference the correct move.
@@ -2271,21 +2266,27 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void EventReferenceMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void EventReferenceMouseButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
+            try
             {
-                try
+                if (sender is Inline inl)
                 {
-                    if (sender is Inline inl)
+                    int nodeId = TextUtils.GetNodeIdAndArticleRefFromPrefixedString(inl.Name, out string articleRef);
+
+                    if (_dictNodeToRun.ContainsKey(nodeId))
                     {
-                        int nodeId = TextUtils.GetNodeIdAndArticleRefFromPrefixedString(inl.Name, out string articleRef);
+                        SelectRun(_dictNodeToRun[nodeId], 1, MouseButton.Left);
+                    }
+
+                    if (e.ChangedButton == MouseButton.Left)
+                    {
                         Article art = AppState.Workbook.GetArticleByGuid(articleRef, out int chapterIndex, out int articleIndex);
                         _mainWin.SelectArticle(chapterIndex, art.ContentType, articleIndex);
                     }
                 }
-                catch { }
             }
+            catch { }
         }
 
         /// <summary>
@@ -2329,20 +2330,17 @@ namespace ChessForge
                 return;
             }
 
-            if (e.ClickCount == 2)
+            Run r = (Run)e.Source;
+
+            int nodeId = TextUtils.GetIdFromPrefixedString(r.Name);
+            TreeNode nd = _mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId);
+
+            if (_dictNodeToRun.ContainsKey(nd.NodeId))
             {
-                Run r = (Run)e.Source;
-
-                int nodeId = TextUtils.GetIdFromPrefixedString(r.Name);
-                TreeNode nd = _mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId);
-
-                if (_dictNodeToRun.ContainsKey(nd.NodeId))
+                SelectRun(_dictNodeToRun[nd.NodeId], 1, MouseButton.Left);
+                if (e.ClickCount == 2 && _mainWin.InvokeAnnotationsDialog(nd))
                 {
-                    SelectRun(_dictNodeToRun[nd.NodeId], 1, MouseButton.Left);
-                    if (_mainWin.InvokeAnnotationsDialog(nd))
-                    {
-                        InsertOrUpdateCommentRun(nd);
-                    }
+                    InsertOrUpdateCommentRun(nd);
                 }
             }
         }
