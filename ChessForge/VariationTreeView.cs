@@ -2281,8 +2281,18 @@ namespace ChessForge
 
                     if (e.ChangedButton == MouseButton.Left)
                     {
-                        Article art = AppState.Workbook.GetArticleByGuid(articleRef, out int chapterIndex, out int articleIndex);
-                        _mainWin.SelectArticle(chapterIndex, art.ContentType, articleIndex);
+                        Article art = AppState.Workbook.GetArticleByGuid(articleRef, out int chapterIndex, out int articleIndex, true);
+                        if (art != null)
+                        {
+                            if (art.ContentType == GameData.ContentType.MODEL_GAME || art.ContentType == GameData.ContentType.EXERCISE)
+                            {
+                                _mainWin.SelectArticle(chapterIndex, art.ContentType, articleIndex);
+                            }
+                            else
+                            {
+                                _mainWin.SelectChapterByIndex(chapterIndex, true);
+                            }
+                        }
                     }
                 }
             }
