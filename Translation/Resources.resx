@@ -373,7 +373,7 @@
     <value>Game and Exercise References</value>
   </data>
   <data name="ChapterReference" xml:space="preserve">
-    <value>Chapter Reference</value>
+    <value>Chapter References</value>
   </data>
   <data name="References" xml:space="preserve">
     <value>References</value>
@@ -2281,6 +2281,9 @@
   </data>
   <data name="SelectReferences" xml:space="preserve">
     <value>Select Reference Games and/or Exercises</value>
+  </data>
+  <data name="SelectChapterReferences" xml:space="preserve">
+    <value>Select Chapter References</value>
   </data>
   <data name="MergeGamesAndCopy" xml:space="preserve">
     <value>Merge Games into the Study Tree and Copy them into the Games section.</value>

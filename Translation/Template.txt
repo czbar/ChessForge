@@ -359,8 +359,8 @@ Stalemate=
 #english: GameExerciseReferences=Game and Exercise References
 GameExerciseReferences=
 
-#description: Game and Exercise References
-#english: ChapterReference=Chapter Reference
+#description: Chapter Reference
+#english: ChapterReference=Chapter References
 ChapterReference=
 
 #description: References
@@ -3256,6 +3256,10 @@ SelectGameAndExercises=
 #english: SelectReferences=Select Reference Games and/or Exercises
 SelectReferences=
 
+
+#description: Select Chapter references
+#english: SelectChapterReferences=Select Chapter References
+SelectChapterReferences=
 
 #description: Merge games and copy
 #english: MergeGamesAndCopy=Merge Games into the Study Tree and Copy them into the Games section.

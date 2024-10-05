@@ -359,9 +359,9 @@ Stalemate=pat
 #english: GameExerciseReferences=Game and Exercise References
 GameExerciseReferences=Odsyłacze do partii i ćwiczeń
 
-#description: Game and Exercise References
-#english: ChapterReference=Chapter Reference
-ChapterReference=Odsyłacz do rozdziału
+#description: Chapter Reference
+#english: ChapterReference=Chapter References
+ChapterReference=Odsyłacze do rozdziałów
 
 #description: References
 #english: References=References
@@ -3256,6 +3256,10 @@ SelectGameAndExercises=Wybierz Partie i Ćwiczenia
 #english: SelectReferences=Select Reference Games and/or Exercises
 SelectReferences=Wybierz Partie i Ćwiczenia do Odsyłacza
 
+
+#description: Select Chapter references
+#english: SelectChapterReferences=Select Chapter References
+SelectChapterReferences=Wybierz Rozdział(y) do Odsyłacza
 
 #description: Merge games and copy
 #english: MergeGamesAndCopy=Merge Games into the Study Tree and Copy them into the Games section.

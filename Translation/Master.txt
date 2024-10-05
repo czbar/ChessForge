@@ -275,7 +275,7 @@ Stalemate=stalemate
 GameExerciseReferences=Game and Exercise References
 
 #Chapter Reference
-ChapterReference=Chapter Reference
+ChapterReference=Chapter References
 
 #References
 References=References
@@ -2535,6 +2535,9 @@ SelectGameAndExercises=Select Games and/or Exercises
 #Select Reference Games/Exercises (dialog title)
 SelectReferences=Select Reference Games and/or Exercises
 
+
+#Select Chapter references
+SelectChapterReferences=Select Chapter References
 
 #Merge games and copy
 MergeGamesAndCopy=Merge Games into the Study Tree and Copy them into the Games section.

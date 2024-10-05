@@ -863,7 +863,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chapter Reference.
+        ///   Looks up a localized string similar to Chapter References.
         /// </summary>
         public static string ChapterReference {
             get {
@@ -6260,6 +6260,15 @@ namespace ChessForge.Properties {
         public static string SelectChapter {
             get {
                 return ResourceManager.GetString("SelectChapter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Chapter References.
+        /// </summary>
+        public static string SelectChapterReferences {
+            get {
+                return ResourceManager.GetString("SelectChapterReferences", resourceCulture);
             }
         }
         
