@@ -14,7 +14,7 @@ namespace ChessForge
         /// <summary>
         /// A '|' separated list of selected reference GUID.
         /// </summary>
-        public string ArticleRefs;
+        public string GameExerciseRefs;
 
         /// <summary>
         /// The list of games to process.
@@ -157,7 +157,7 @@ namespace ChessForge
                 first = false;
             }
 
-            ArticleRefs = sb.ToString();
+            GameExerciseRefs = sb.ToString();
 
             DialogResult = true;
         }
