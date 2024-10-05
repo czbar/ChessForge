@@ -3017,10 +3017,10 @@ namespace ChessForge
 
                 AnnotationsDialog dlg = new AnnotationsDialog(nd);
                 GuiUtilities.PositionDialog(dlg, this, 100);
-                dlg.ShowDialog();
-                if (dlg.ExitOk)
+                
+                if (dlg.ShowDialog() == true)
                 {
-                    if (nd.Comment != dlg.Comment || nd.Nags != dlg.Nags || nd.QuizPoints != dlg.QuizPoints || nd.ArticleRefs != dlg.ArticleRefs)
+                    if (nd.Comment != dlg.Comment || nd.Nags != dlg.Nags || nd.QuizPoints != dlg.QuizPoints || nd.ArticleRefs != dlg.References)
                     {
                         changed = true;
                         if (nd.Nags != dlg.Nags)
@@ -3033,7 +3033,7 @@ namespace ChessForge
                         }
 
                         nd.Comment = dlg.Comment;
-                        nd.ArticleRefs = dlg.ArticleRefs;
+                        nd.ArticleRefs = dlg.References;
                         nd.SetNags(dlg.Nags);
                         nd.QuizPoints = dlg.QuizPoints;
                         ActiveLine.UpdateMoveText(nd);
