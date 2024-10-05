@@ -487,7 +487,7 @@ namespace GameTree
                     case ChfCommands.Command.ARTICLE_REFS:
                         if (tokens.Length > 1)
                         {
-                            nd.ArticleRefs = tokens[1];
+                            nd.References = tokens[1];
                         }
                         break;
                     case ChfCommands.Command.ENGINE_EVALUATION:
@@ -877,7 +877,7 @@ namespace GameTree
         public void SetArticleRefs(TreeNode nd, List<String> refGuids)
         {
             TreeNode node = GetNodeFromNodeId(nd.NodeId);
-            node.ArticleRefs = string.Empty;
+            node.References = string.Empty;
             foreach (string s in refGuids)
             {
                 node.AddArticleReference(s);

@@ -91,7 +91,7 @@ namespace ChessForge
                 MoveButtonHporizontally(UiBtnHelp, -50);
             }
 
-            SplitReferencesString(_node.ArticleRefs);
+            SplitReferencesString(_node.References);
 
             SetRefsLabelContent(_gameExerciseRefs, UiLblGameExerciseRefs);
             SetRefsLabelContent(_chapterRefs, UiLblGameExerciseRefs);

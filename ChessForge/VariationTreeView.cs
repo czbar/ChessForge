@@ -2464,7 +2464,7 @@ namespace ChessForge
         /// <returns></returns>
         private string BuildReferenceRunText(TreeNode nd)
         {
-            if (string.IsNullOrEmpty(nd.ArticleRefs))
+            if (string.IsNullOrEmpty(nd.References))
             {
                 return "";
             }

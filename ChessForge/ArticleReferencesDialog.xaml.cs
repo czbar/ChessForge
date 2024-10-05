@@ -53,9 +53,9 @@ namespace ChessForge
         /// </summary>
         private void BuildArticleList()
         {
-            if (!string.IsNullOrEmpty(_node.ArticleRefs))
+            if (!string.IsNullOrEmpty(_node.References))
             {
-                string[] refs = _node.ArticleRefs.Split('|');
+                string[] refs = _node.References.Split('|');
                 foreach (string guid in refs)
                 {
                     Article art = WorkbookManager.SessionWorkbook.GetArticleByGuid(guid, out _, out _);

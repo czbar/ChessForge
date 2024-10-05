@@ -303,9 +303,9 @@ namespace ChessForge
                     parts.Insert(0, thumb);
                 }
 
-                if (!string.IsNullOrEmpty(nd.ArticleRefs))
+                if (!string.IsNullOrEmpty(nd.References))
                 {
-                    List<Article> articles = GuiUtilities.BuildReferencedArticlesList(nd.ArticleRefs);
+                    List<Article> articles = GuiUtilities.BuildReferencedArticlesList(nd.References);
                     bool first = true;
                     foreach (Article article in articles)
                     {
@@ -577,7 +577,7 @@ namespace ChessForge
         private bool IsCommentRunToShow(TreeNode nd)
         {
             return !string.IsNullOrEmpty(nd.Comment)
-                   || !string.IsNullOrEmpty(nd.ArticleRefs)
+                   || !string.IsNullOrEmpty(nd.References)
                    || (nd.IsThumbnail && !_isPrinting)
                    || HandleBlunders && nd.Assessment != 0 && nd.IsMainLine()
                    || (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.EDITING && nd.QuizPoints != 0);

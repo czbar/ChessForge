@@ -3020,7 +3020,7 @@ namespace ChessForge
                 
                 if (dlg.ShowDialog() == true)
                 {
-                    if (nd.Comment != dlg.Comment || nd.Nags != dlg.Nags || nd.QuizPoints != dlg.QuizPoints || nd.ArticleRefs != dlg.References)
+                    if (nd.Comment != dlg.Comment || nd.Nags != dlg.Nags || nd.QuizPoints != dlg.QuizPoints || nd.References != dlg.References)
                     {
                         changed = true;
                         if (nd.Nags != dlg.Nags)
@@ -3033,7 +3033,7 @@ namespace ChessForge
                         }
 
                         nd.Comment = dlg.Comment;
-                        nd.ArticleRefs = dlg.References;
+                        nd.References = dlg.References;
                         nd.SetNags(dlg.Nags);
                         nd.QuizPoints = dlg.QuizPoints;
                         ActiveLine.UpdateMoveText(nd);

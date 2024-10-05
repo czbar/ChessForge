@@ -113,9 +113,9 @@ namespace ChessForge
 
             try
             {
-                if (!string.IsNullOrEmpty(_node.ArticleRefs))
+                if (!string.IsNullOrEmpty(_node.References))
                 {
-                    string[] refs = _node.ArticleRefs.Split('|');
+                    string[] refs = _node.References.Split('|');
                     foreach (string guid in refs)
                     {
                         foreach (ArticleListItem item in _articleList)

@@ -761,7 +761,7 @@ namespace ChessForge
             if (nd.IsBookmark
                 || nd.IsThumbnail
                 || nd.IsDiagram
-                || !string.IsNullOrEmpty(nd.ArticleRefs)
+                || !string.IsNullOrEmpty(nd.References)
                 || !string.IsNullOrEmpty(nd.Comment)
                 || !string.IsNullOrEmpty(nd.CommentBeforeMove)
                 || !string.IsNullOrEmpty(nd.EngineEvaluation)
@@ -796,9 +796,9 @@ namespace ChessForge
                 }
 
                 // Process an Article References command
-                if (!string.IsNullOrEmpty(nd.ArticleRefs))
+                if (!string.IsNullOrEmpty(nd.References))
                 {
-                    string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.ARTICLE_REFS) + " " + nd.ArticleRefs;
+                    string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.ARTICLE_REFS) + " " + nd.References;
                     sb.Append("[" + sCmd + "]");
                 }
 
