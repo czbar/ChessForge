@@ -17,9 +17,19 @@ namespace ChessForge
         public string Comment { get; set; }
 
         /// <summary>
-        /// References
+        /// Combined References
         /// </summary>
-        public string ArticleRefs { get; set; }
+        public string References { get; set; }
+
+        /// <summary>
+        /// Game/Exercise References
+        /// </summary>
+        private string _gameExerciseRefs = "";
+
+        /// <summary>
+        /// Chapter References
+        /// </summary>
+        private string _chapterRefs = "";
 
         /// <summary>
         /// Quiz points
@@ -30,11 +40,6 @@ namespace ChessForge
         /// NAGs string for the position.
         /// </summary>
         public string Nags { get; set; }
-
-        /// <summary>
-        /// Whether exit occurred on user's pushing the OK button  
-        /// </summary>
-        public bool ExitOk = false;
 
         /// <summary>
         /// Whether we are editing an Exercise and therefore should allow
@@ -86,32 +91,90 @@ namespace ChessForge
                 MoveButtonHporizontally(UiBtnHelp, -50);
             }
 
-            SetArticleRefsText(_node.ArticleRefs);
+            SplitReferencesString(_node.ArticleRefs);
+
+            SetRefsLabelContent(_gameExerciseRefs, UiLblGameExerciseRefs);
+            SetRefsLabelContent(_chapterRefs, UiLblGameExerciseRefs);
+
             UiTbComment.Focus();
         }
 
         /// <summary>
-        /// Sets the text for the Article reference label
+        /// Splits a '|' separated list of references into Game/Exercise refs
+        /// and Chapter refs.
         /// </summary>
-        private void SetArticleRefsText(string refs)
+        /// <param name="refs"></param>
+        private void SplitReferencesString(string refs)
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sbGameExerciseRefs = new StringBuilder();
+            StringBuilder sbChapterRefs = new StringBuilder();
+
             List<Article> lstRefs = GuiUtilities.BuildReferencedArticlesList(refs);
             if (lstRefs != null && lstRefs.Count > 0)
             {
-                bool first = true;
+                bool firstArticle = true;
+                bool firstChapter = true;
 
                 foreach (Article article in lstRefs)
                 {
-                    if (!first)
+                    if (article.ContentType == GameData.ContentType.MODEL_GAME || article.ContentType == GameData.ContentType.EXERCISE)
                     {
-                        sb.Append("; ");
+                        if (!firstArticle)
+                        {
+                            sbGameExerciseRefs.Append("; ");
+                        }
+                        sbGameExerciseRefs.Append(article.Tree.Header.BuildGameReferenceTitle(true));
+                        firstArticle = false;
                     }
-                    sb.Append(article.Tree.Header.BuildGameReferenceTitle(true));
-                    first = false;
+                    else if (article.ContentType == GameData.ContentType.STUDY_TREE)
+                    {
+                        if (!firstChapter)
+                        {
+                            sbChapterRefs.Append("; ");
+                        }
+                        Chapter chapter = AppState.Workbook.GetChapterByGuid(article.Guid, out int index);
+                        sbChapterRefs.Append(chapter.TitleWithNumber);
+                        firstChapter = false;
+                    }
                 }
             }
-            UiLblReferences.Content = sb.ToString();
+            _gameExerciseRefs = sbGameExerciseRefs.ToString();
+            _chapterRefs = sbChapterRefs.ToString();
+        }
+
+        /// <summary>
+        /// Sets the text for a reference label
+        /// </summary>
+        private void SetRefsLabelContent(string refs, Label lblRefs)
+        {
+            StringBuilder sbRefs = new StringBuilder();
+
+            List<Article> lstRefs = GuiUtilities.BuildReferencedArticlesList(refs);
+            if (lstRefs != null && lstRefs.Count > 0)
+            {
+                bool firstArticle = true;
+
+                foreach (Article article in lstRefs)
+                {
+                    if (!firstArticle)
+                    {
+                        sbRefs.Append("; ");
+                    }
+
+                    if (article.ContentType == GameData.ContentType.STUDY_TREE)
+                    {
+                        Chapter chapter = AppState.Workbook.GetChapterByGuid(article.Guid, out int index);
+                        sbRefs.Append(chapter.TitleWithNumber);
+                    }
+                    else
+                    {
+                        sbRefs.Append(article.Tree.Header.BuildGameReferenceTitle(true));
+                    }
+
+                    firstArticle = false;
+                }
+            }
+            lblRefs.Content = sbRefs.ToString();
         }
 
         /// <summary>
@@ -232,34 +295,6 @@ namespace ChessForge
                     UiRbDubious.IsChecked = true;
                     break;
             }
-        }
-
-        /// <summary>
-        /// Closes the dialog after user pushed the Cancel button.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiBtnCancel_Click(object sender, RoutedEventArgs e)
-        {
-            ExitOk = false;
-            Close();
-        }
-
-        /// <summary>
-        /// Closes the dialog after user pushed the OK button.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiBtnOk_Click(object sender, RoutedEventArgs e)
-        {
-            Comment = UiTbComment.Text;
-            if (_isExerciseEditing)
-            {
-                QuizPoints = ParseQuizPoints(UiTbQuizPoints.Text);
-            }
-            BuildNagsString();
-            ExitOk = true;
-            Close();
         }
 
         /// <summary>
@@ -394,16 +429,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Links to the relevant Wiki page.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
-        {
-            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Annotation-Editor");
-        }
-
-        /// <summary>
         /// Handles the key down event in the text box. 
         /// </summary>
         /// <param name="sender"></param>
@@ -414,6 +439,26 @@ namespace ChessForge
             {
                 e.Handled = true;
             }
+        }
+
+        /// <summary>
+        /// Same as clicking the label.
+        /// Invokes chapters references editor.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiLblChapter_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var dlg = new SelectChapterRefsDialog(_chapterRefs);
+            GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
+
+            if (dlg.ShowDialog() == true)
+            {
+                _chapterRefs = dlg.ChapterRefs ?? "";
+                SetRefsLabelContent(_chapterRefs, UiLblChapterRefs);
+            }
+
+            e.Handled = true;
         }
 
         /// <summary>
@@ -428,8 +473,8 @@ namespace ChessForge
 
             if (dlg.ShowDialog() == true)
             {
-                ArticleRefs = dlg.ArticleRefs;
-                SetArticleRefsText(ArticleRefs);
+                _gameExerciseRefs = dlg.GameExerciseRefs ?? "";
+                SetRefsLabelContent(_gameExerciseRefs, UiLblGameExerciseRefs);
             }
 
             e.Handled = true;
@@ -457,15 +502,55 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Same as clicking the label.
-        /// Invokes chapters references editor.
+        /// Combines the GameExercise and Chapter references strings.
+        /// </summary>
+        private void CombineRefs()
+        {
+            References = _gameExerciseRefs;
+            if (_gameExerciseRefs.Length > 0 && _chapterRefs.Length > 0)
+            {
+                References += "|";
+            }
+            References += _chapterRefs;
+        }
+
+        /// <summary>
+        /// Closes the dialog after user pushed the OK button.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiLblChapter_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void UiBtnOk_Click(object sender, RoutedEventArgs e)
         {
-            e.Handled = true;
+            Comment = UiTbComment.Text;
+            CombineRefs();
+            if (_isExerciseEditing)
+            {
+                QuizPoints = ParseQuizPoints(UiTbQuizPoints.Text);
+            }
+            BuildNagsString();
+            DialogResult = true;
         }
+
+        /// <summary>
+        /// Closes the dialog after user pushed the Cancel button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
+        }
+
+        /// <summary>
+        /// Links to the relevant Wiki page.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Annotation-Editor");
+        }
+
     }
 }
 
