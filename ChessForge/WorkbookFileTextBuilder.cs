@@ -432,9 +432,9 @@ namespace ChessForge
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_BLACK_ELO, tree.Header.GetBlackPlayerElo(out _)));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_ANNOTATOR, tree.Header.GetAnnotator(out _)));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_RESULT, tree.Header.GetResult(out _)));
-            sb.AppendLine(BuildPreamble(tree));
 
             // FEN, if required, must be last for compatibility with ChesBase.
+            // Here though, seems that we can put it in front of Preamble which is safer.
             if (tree.RootNode != null)
             {
                 BoardPosition pos = new BoardPosition(tree.Nodes[0].Position);
@@ -443,6 +443,7 @@ namespace ChessForge
                 string fen = FenParser.GenerateFenFromPosition(pos, tree.MoveNumberOffset);
                 sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_FEN_STRING, fen));
             }
+            sb.AppendLine(BuildPreamble(tree));
 
             sb.AppendLine();
             return sb.ToString();
