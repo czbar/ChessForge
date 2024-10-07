@@ -870,21 +870,6 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Sets Article Refererences on the Node.
-        /// </summary>
-        /// <param name="nd"></param>
-        /// <param name="refGuids"></param>
-        public void SetArticleRefs(TreeNode nd, List<String> refGuids)
-        {
-            TreeNode node = GetNodeFromNodeId(nd.NodeId);
-            node.References = string.Empty;
-            foreach (string s in refGuids)
-            {
-                node.AddArticleReference(s);
-            }
-        }
-
-        /// <summary>
         /// Removes all reference to the passed guid in this Tree.
         /// Returns the number of affected nodes and adds them to the passed list.
         /// </summary>
