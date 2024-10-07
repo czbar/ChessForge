@@ -51,6 +51,9 @@ namespace ChessForge
         // active tab when entering the dialog
         private TabViewType _activeTabOnEntry;
 
+        // active view when entering the dialog
+        private VariationTreeView _activeViewOnEntry;
+
         // active tab when exiting the dialog
         private TabViewType _activeTabOnExit;
 
@@ -59,11 +62,12 @@ namespace ChessForge
         /// </summary>
         /// <param name="lichessGameId"></param>
         /// <param name="gameIdList"></param>
-        public LichessGamesPreviewDialog(string lichessGameId, List<string> gameIdList, TabViewType activeTab)
+        public LichessGamesPreviewDialog(string lichessGameId, List<string> gameIdList, TabViewType activeTab, VariationTreeView activeTreeView)
             : base(lichessGameId, gameIdList, true)
         {
             GameDownload.GameReceived += GameReceived;
             _activeTabOnEntry = activeTab;
+            _activeViewOnEntry = activeTreeView;
             _activeTabOnExit = activeTab;
             ConfigureTopGamesView();
             DownloadGame(_currentGameId);
@@ -177,8 +181,7 @@ namespace ChessForge
                     AppState.MainWin.UiTabChapters.Focus();
                     _importedGameIds.Add(_currentGameId);
 
-                    AppState.FinalizeLichessDownload(chapter, _tree, _currentGameId, _activeTabOnEntry);
-                    //_activeTabOnExit = TabViewType.MODEL_GAME;
+                    AppState.FinalizeLichessDownload(chapter, _tree, _currentGameId, _activeTabOnEntry, _activeViewOnEntry);
                 }
             }
         }
