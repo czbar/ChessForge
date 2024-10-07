@@ -294,7 +294,8 @@ namespace ChessForge
             // pass ActiveTab so that we can add a reference if this is a Study Tree
             TabViewType activeTab = WorkbookManager.ActiveTab;
 
-            LichessGamesPreviewDialog dlg = new LichessGamesPreviewDialog(_clickedGameId, _gameIdList, AppState.ActiveTab);
+            LichessGamesPreviewDialog dlg = new LichessGamesPreviewDialog(_clickedGameId, _gameIdList, 
+                                                AppState.ActiveTab, AppState.MainWin.ActiveTreeView, AppState.ActiveArticleIndex);
             GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
             dlg.ShowDialog();
 

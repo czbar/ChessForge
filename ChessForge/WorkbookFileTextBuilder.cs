@@ -421,15 +421,6 @@ namespace ChessForge
 
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_CONTENT_TYPE, PgnHeaders.VALUE_EXERCISE));
 
-            if (tree.RootNode != null)
-            {
-                BoardPosition pos = new BoardPosition(tree.Nodes[0].Position);
-                UpShiftOnePly(ref pos);
-
-                string fen = FenParser.GenerateFenFromPosition(pos, tree.MoveNumberOffset);
-                sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_FEN_STRING, fen));
-            }
-
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_EVENT, tree.Header.GetEventName(out _)));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_ROUND, tree.Header.GetRound(out _)));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_ECO, tree.Header.GetECO(out _)));
@@ -441,6 +432,17 @@ namespace ChessForge
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_BLACK_ELO, tree.Header.GetBlackPlayerElo(out _)));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_ANNOTATOR, tree.Header.GetAnnotator(out _)));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_RESULT, tree.Header.GetResult(out _)));
+
+            // FEN, if required, must be last for compatibility with ChesBase.
+            // Here though, seems that we can put it in front of Preamble which is safer.
+            if (tree.RootNode != null)
+            {
+                BoardPosition pos = new BoardPosition(tree.Nodes[0].Position);
+                UpShiftOnePly(ref pos);
+
+                string fen = FenParser.GenerateFenFromPosition(pos, tree.MoveNumberOffset);
+                sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_FEN_STRING, fen));
+            }
             sb.AppendLine(BuildPreamble(tree));
 
             sb.AppendLine();
@@ -760,7 +762,7 @@ namespace ChessForge
             if (nd.IsBookmark
                 || nd.IsThumbnail
                 || nd.IsDiagram
-                || !string.IsNullOrEmpty(nd.ArticleRefs)
+                || !string.IsNullOrEmpty(nd.References)
                 || !string.IsNullOrEmpty(nd.Comment)
                 || !string.IsNullOrEmpty(nd.CommentBeforeMove)
                 || !string.IsNullOrEmpty(nd.EngineEvaluation)
@@ -795,9 +797,9 @@ namespace ChessForge
                 }
 
                 // Process an Article References command
-                if (!string.IsNullOrEmpty(nd.ArticleRefs))
+                if (!string.IsNullOrEmpty(nd.References))
                 {
-                    string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.ARTICLE_REFS) + " " + nd.ArticleRefs;
+                    string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.ARTICLE_REFS) + " " + nd.References;
                     sb.Append("[" + sCmd + "]");
                 }
 

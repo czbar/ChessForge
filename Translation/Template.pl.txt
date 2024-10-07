@@ -294,6 +294,10 @@ Elo=Elo
 #english: BestMove=best
 BestMove=najlepsze
 
+#description: Click to edit
+#english: ClickToEdit= click to edit
+ClickToEdit= kliknij by edytować
+
 #description: Request to evaluate a position
 #english: EvaluatePosition=Evaluate Position
 EvaluatePosition=Oceń pozycję
@@ -354,6 +358,14 @@ Stalemate=pat
 #description: Game and Exercise References
 #english: GameExerciseReferences=Game and Exercise References
 GameExerciseReferences=Odsyłacze do partii i ćwiczeń
+
+#description: Chapter Reference
+#english: ChapterReference=Chapter References
+ChapterReference=Odsyłacze do rozdziałów
+
+#description: References
+#english: References=References
+References=Odsyłacze
 
 #description: Open a view
 #english: OpenView=Open View
@@ -2290,9 +2302,21 @@ BookmarkAllOptionsHere=Utwórz zakładki dla wszystkich opcji
 #english: MarkAsThumbnail=Mark as Thumbnail
 MarkAsThumbnail=Zaznacz jako Wizytówkę
 
+#description: Removes the thumbnail mark from the current position
+#english: DeleteThumbnail=Remove Thumbnail
+DeleteThumbnail=Usuń wizytówkę
+
 #description: ChapterThumbnail
-#english: ChapterThumbnail=Thumbnail for Chapters View
-ChapterThumbnail=Wizytówka Rozdziału
+#english: ChapterThumbnail=Chapter Thumbnail
+ChapterThumbnail=Wizytówka rozdziału
+
+#description: GameThumbnail
+#english: GameThumbnail=Game Thumbnail
+GameThumbnail=Wizytówka partii
+
+#description: ExerciseThumbnail
+#english: ExerciseThumbnail=Exercise Thumbnail
+ExerciseThumbnail=Wizytówka ćwiczenia
 
 #description: Copy selected moves
 #english: CopyMoves=Copy Moves
@@ -3232,6 +3256,10 @@ SelectGameAndExercises=Wybierz Partie i Ćwiczenia
 #english: SelectReferences=Select Reference Games and/or Exercises
 SelectReferences=Wybierz Partie i Ćwiczenia do Odsyłacza
 
+
+#description: Select Chapter references
+#english: SelectChapterReferences=Select Chapter References
+SelectChapterReferences=Wybierz Rozdział(y) do Odsyłacza
 
 #description: Merge games and copy
 #english: MergeGamesAndCopy=Merge Games into the Study Tree and Copy them into the Games section.

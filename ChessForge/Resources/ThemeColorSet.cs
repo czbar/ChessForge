@@ -167,6 +167,26 @@ namespace ChessForge
         public SolidColorBrush HyperlinkHoveredForeground;
 
         /// <summary>
+        /// Foreground of the game/exercise reference text.
+        /// </summary>
+        public SolidColorBrush GameExerciseRefForeground;
+
+        /// <summary>
+        /// Foreground of game/exercise text when hovered over.
+        /// </summary>
+        public SolidColorBrush GameExerciseRefHoveredForeground;
+
+        /// <summary>
+        /// Foreground of the chapter reference text.
+        /// </summary>
+        public SolidColorBrush ChapterRefForeground;
+
+        /// <summary>
+        /// Foreground of chapter text when hovered over.
+        /// </summary>
+        public SolidColorBrush ChapterRefHoveredForeground;
+
+        /// <summary>
         /// Colors for various Hint Types in the Comment Box
         /// </summary>
         public SolidColorBrush HintErrorForeground;

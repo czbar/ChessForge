@@ -294,6 +294,10 @@ Elo=
 #english: BestMove=best
 BestMove=
 
+#description: Click to edit
+#english: ClickToEdit= click to edit
+ClickToEdit=
+
 #description: Request to evaluate a position
 #english: EvaluatePosition=Evaluate Position
 EvaluatePosition=
@@ -354,6 +358,14 @@ Stalemate=
 #description: Game and Exercise References
 #english: GameExerciseReferences=Game and Exercise References
 GameExerciseReferences=
+
+#description: Chapter Reference
+#english: ChapterReference=Chapter References
+ChapterReference=
+
+#description: References
+#english: References=References
+References=
 
 #description: Open a view
 #english: OpenView=Open View
@@ -2290,9 +2302,21 @@ BookmarkAllOptionsHere=
 #english: MarkAsThumbnail=Mark as Thumbnail
 MarkAsThumbnail=
 
+#description: Removes the thumbnail mark from the current position
+#english: DeleteThumbnail=Remove Thumbnail
+DeleteThumbnail=
+
 #description: ChapterThumbnail
-#english: ChapterThumbnail=Thumbnail for Chapters View
+#english: ChapterThumbnail=Chapter Thumbnail
 ChapterThumbnail=
+
+#description: GameThumbnail
+#english: GameThumbnail=Game Thumbnail
+GameThumbnail=
+
+#description: ExerciseThumbnail
+#english: ExerciseThumbnail=Exercise Thumbnail
+ExerciseThumbnail=
 
 #description: Copy selected moves
 #english: CopyMoves=Copy Moves
@@ -3232,6 +3256,10 @@ SelectGameAndExercises=
 #english: SelectReferences=Select Reference Games and/or Exercises
 SelectReferences=
 
+
+#description: Select Chapter references
+#english: SelectChapterReferences=Select Chapter References
+SelectChapterReferences=
 
 #description: Merge games and copy
 #english: MergeGamesAndCopy=Merge Games into the Study Tree and Copy them into the Games section.

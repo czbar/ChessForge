@@ -294,7 +294,7 @@ namespace ChessForge
         /// more relevant is to be shown.
         /// </summary>
         /// <param name="title"></param>
-        public void ShowTabHints()
+        public void ShowTabHints(TabViewType viewType = TabViewType.NONE)
         {
             if (WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.GamesManager.State == ProcessState.RUNNING
                 || _mainWin.ActiveLineReplay.IsReplayActive
@@ -319,7 +319,12 @@ namespace ChessForge
                         AddNewParagraphToDoc("title", title);
                         AddNewParagraphToDoc("bold_prompt", Properties.Resources.cbActions);
                         string commentText = "";
-                        switch (AppState.ActiveTab)
+                        if (viewType == TabViewType.NONE)
+                        {
+                            viewType = AppState.ActiveTab;
+                        }
+
+                        switch (viewType)
                         {
                             case TabViewType.CHAPTERS:
                                 commentText = Strings.QuickInstructionForChapters;
@@ -378,11 +383,12 @@ namespace ChessForge
         /// Invoked when the game replay stops to revert to showing
         /// the workbook title message.
         /// </summary>
-        public void RestoreTitleMessage()
+        public void RestoreTitleMessage(GameData.ContentType contentType = GameData.ContentType.NONE)
         {
             if (_mainWin.SessionWorkbook != null)
             {
-                ShowTabHints();
+                TabViewType viewType = GuiUtilities.ContentTypeToTabView(contentType);
+                ShowTabHints(viewType);
             }
         }
 

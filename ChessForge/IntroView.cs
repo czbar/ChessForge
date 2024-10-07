@@ -301,17 +301,12 @@ namespace ChessForge
                     RichTextBoxUtilities.GetMoveInsertionPlace(_rtb, out Paragraph para, out Inline insertBefore, out double fontSize);
 
                     Run run = new Run(dlg.UiTbText.Text);
-                    run.Cursor = Cursors.Hand;
+                    //run.Cursor = Cursors.Hand;
                     run.FontSize = fontSize;
 
+                    hlText = dlg.UiTbUrl.Text;
                     Hyperlink hyperlink = new Hyperlink(run);
-                    hyperlink.NavigateUri = new Uri(dlg.UiTbUrl.Text);
-                    hyperlink.ToolTip = dlg.UiTbUrl.Text;
-                    hyperlink.MouseDown += EventHyperlinkClicked;
-                    hyperlink.Foreground = ChessForgeColors.CurrentTheme.HyperlinkForeground;
-                    hyperlink.MouseEnter += EventHyperlinkMouseEnter;
-                    hyperlink.MouseLeave += EventHyperlinkMouseLeave;
-
+                    SetupHyperlink(hyperlink, hlText);
                     if (insertBefore == null)
                     {
                         para.Inlines.Add(hyperlink);
@@ -325,6 +320,28 @@ namespace ChessForge
             catch (Exception ex)
             {
                 AppLog.Message("CreateHyperlink()", ex);
+            }
+        }
+
+        /// <summary>
+        /// Configures colors and events for a hyperlink.
+        /// </summary>
+        /// <param name="hyperlink"></param>
+        /// <param name="text"></param>
+        private void SetupHyperlink(Hyperlink hyperlink, string text)
+        {
+            if (hyperlink != null)
+            {
+                hyperlink.NavigateUri = new Uri(text);
+                hyperlink.ToolTip = text;
+                hyperlink.MouseDown += EventHyperlinkClicked;
+                hyperlink.Foreground = ChessForgeColors.CurrentTheme.HyperlinkForeground;
+                hyperlink.MouseEnter += EventHyperlinkMouseEnter;
+                hyperlink.MouseLeave += EventHyperlinkMouseLeave;
+                if (hyperlink.Inlines.Count > 0)
+                {
+                    hyperlink.Inlines.FirstInline.Cursor = Cursors.Hand;
+                }
             }
         }
 
@@ -705,6 +722,7 @@ namespace ChessForge
             if (_selectedHyperlink != null)
             {
                 EditHyperlinkDialog dlg = new EditHyperlinkDialog(_selectedHyperlink, null);
+                GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
                 if (dlg.ShowDialog() == true)
                 {
                     Run run = dlg.HyperlinkRun;

@@ -59,14 +59,16 @@ namespace ChessForge
         /// </summary>
         /// <param name="lichessGameId"></param>
         /// <param name="gameIdList"></param>
-        public LichessGamesPreviewDialog(string lichessGameId, List<string> gameIdList, TabViewType activeTab)
-            : base(lichessGameId, gameIdList, true)
+        public LichessGamesPreviewDialog(string lichessGameId, List<string> gameIdList, TabViewType activeTab, 
+                                         VariationTreeView activeTreeView, int activeArticleIndex)
+            : base(lichessGameId, gameIdList, activeTreeView, activeArticleIndex, true)
         {
             GameDownload.GameReceived += GameReceived;
             _activeTabOnEntry = activeTab;
             _activeTabOnExit = activeTab;
             ConfigureTopGamesView();
             DownloadGame(_currentGameId);
+            _activeArticleIndexOnEntry = activeArticleIndex;
         }
 
         /// <summary>
@@ -177,8 +179,7 @@ namespace ChessForge
                     AppState.MainWin.UiTabChapters.Focus();
                     _importedGameIds.Add(_currentGameId);
 
-                    AppState.FinalizeLichessDownload(chapter, _tree, _currentGameId, _activeTabOnEntry);
-                    //_activeTabOnExit = TabViewType.MODEL_GAME;
+                    AppState.FinalizeLichessDownload(chapter, _tree, _currentGameId, _activeTabOnEntry, _activeViewOnEntry);
                 }
             }
         }

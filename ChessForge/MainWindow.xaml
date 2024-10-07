@@ -575,10 +575,9 @@
                                 <ContextMenu x:Name="UiMncStudyTree">
                                     <MenuItem x:Name="UiMnStudyStartTrainingHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere_Click" InputGestureText="T" />
                                     <MenuItem x:Name="UiMnStudy_CreateExercise" Header="{x:Static p:Resources.CreateExerciseFromHere}" Click="UiMn_CreateExercise_Click"  />
-                                    <MenuItem x:Name="UiMnReferenceArticles" Header="{x:Static p:Resources.MnGameExerciseReferences}" Click="UiMnReferenceArticles_Click"/>
                                     <MenuItem x:Name="_mnStudyTree_MarkThumbnail" Header="{x:Static p:Resources.MarkAsThumbnail}" Click="UiMn_MarkThumbnail_Click" InputGestureText="Ctrl+T" />
-                                    <MenuItem x:Name="UiMnStudyInsertDiagram" Header="{x:Static p:Resources.InsertDiagram}"  Click="UiMn_ToggleDiagramFlag_Click" />
-                                    <MenuItem x:Name="UiMnStudyDeleteDiagram" Visibility="Collapsed" Header="{x:Static p:Resources.RemoveDiagram}" Click="UiMn_ToggleDiagramFlag_Click" />
+                                    <MenuItem x:Name="UiMnStudyInsertDiagram" Header="{x:Static p:Resources.InsertDiagram}"  Click="UiMn_ToggleDiagramFlag_Click" InputGestureText="Ctrl+I" />
+                                    <MenuItem x:Name="UiMnStudyDeleteDiagram" Visibility="Collapsed" Header="{x:Static p:Resources.RemoveDiagram}" Click="UiMn_ToggleDiagramFlag_Click" InputGestureText="Ctrl+I" />
                                     <Separator />
                                     <MenuItem x:Name="UiMnPromoteLine" Header="{x:Static p:Resources.PromoteLine}" Click="UiMnPromoteLine_Click" InputGestureText="P" />
                                     <MenuItem x:Name="UiMnReorderLines" Header="{x:Static p:Resources.ReorderLines}" Click="UiMnReorderLines_Click" />
@@ -609,7 +608,7 @@
                                 </ContextMenu>
                             </Grid.ContextMenu>
                             <Label x:Name="UiStudyLblChapterTitle" Height="30" Content="" MaxWidth="320" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="-150,-3,10,0" FontWeight="Normal" FontStyle="Normal" MouseDoubleClick="UiStudyLblChapterTitle_MouseDoubleClick"  />
-                            <Grid x:Name="UiGridStudyTreePrevNext" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Visible" >
+                            <Grid x:Name="UiGridStudyTreePrevNext" Grid.Row="0" Panel.ZIndex="1" HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Visible" >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto "/>
                                     <ColumnDefinition Width="Auto "/>
@@ -634,22 +633,22 @@
                                 </FlowDocument>
                             </RichTextBox>
                             <StackPanel x:Name="UiStpStNags" Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" Height="48" Margin="0,588,0,0" VerticalAlignment="Top">
-                                <Button x:Name="UiBtnStPencil" Background="Transparent" Margin="0,0,0,0" Width="30" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnPencil_Click"  />
-                                <Button x:Name="UiBtnStCommentBeforeMove" Background="Transparent" Margin="0,0,0,0" Width="30" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnCommentBeforeMove_Click"  />
-                                <Button x:Name="UiBtnStEvalWin" Background="Transparent" Margin="30,0,0,0" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalWin_Click" />
-                                <Button x:Name="UiBtnStEvalPlusMinus" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalPlusMinus_Click" />
-                                <Button x:Name="UiBtnStEvalPlusEqual" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalPlusEqual_Click" />
-                                <Button x:Name="UiBtnStEvalEqual" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalEqual_Click" />
-                                <Button x:Name="UiBtnStEvalUnclear" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalUnclear_Click" />
-                                <Button x:Name="UiBtnStEvalEqualPlus" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalEqualPlus_Click" />
-                                <Button x:Name="UiBtnStEvalMinusPlus" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalMinusPlus_Click" />
-                                <Button x:Name="UiBtnStEvalLoss" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalLoss_Click" />
-                                <Button x:Name="UiBtnStEvalExclamExclam" Background="Transparent" Margin="30,0,0,0" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalExclamExclam_Click" />
-                                <Button x:Name="UiBtnStEvalExclam" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalExclam_Click" />
-                                <Button x:Name="UiBtnStEvalExclamQuest" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalExclamQuest_Click" />
-                                <Button x:Name="UiBtnStEvalQuestExclam" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalQuestExclam_Click" />
-                                <Button x:Name="UiBtnStEvalQuest" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalQuest_Click" />
-                                <Button x:Name="UiBtnStEvalQuestQuest" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalQuestQuest_Click" />
+                                <Button x:Name="UiBtnStPencil" Background="Transparent" Margin="0,0,0,0" Width="30" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnPencil_Click"  />
+                                <Button x:Name="UiBtnStCommentBeforeMove" Background="Transparent" Margin="0,0,0,0" Width="30" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnCommentBeforeMove_Click"  />
+                                <Button x:Name="UiBtnStEvalWin" Background="Transparent" Margin="30,0,0,0" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalWin_Click" />
+                                <Button x:Name="UiBtnStEvalPlusMinus" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalPlusMinus_Click" />
+                                <Button x:Name="UiBtnStEvalPlusEqual" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalPlusEqual_Click" />
+                                <Button x:Name="UiBtnStEvalEqual" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalEqual_Click" />
+                                <Button x:Name="UiBtnStEvalUnclear" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalUnclear_Click" />
+                                <Button x:Name="UiBtnStEvalEqualPlus" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalEqualPlus_Click" />
+                                <Button x:Name="UiBtnStEvalMinusPlus" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalMinusPlus_Click" />
+                                <Button x:Name="UiBtnStEvalLoss" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalLoss_Click" />
+                                <Button x:Name="UiBtnStEvalExclamExclam" Background="Transparent" Margin="30,0,0,0" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalExclamExclam_Click" />
+                                <Button x:Name="UiBtnStEvalExclam" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalExclam_Click" />
+                                <Button x:Name="UiBtnStEvalExclamQuest" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalExclamQuest_Click" />
+                                <Button x:Name="UiBtnStEvalQuestExclam" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalQuestExclam_Click" />
+                                <Button x:Name="UiBtnStEvalQuest" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalQuest_Click" />
+                                <Button x:Name="UiBtnStEvalQuestQuest" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalQuestQuest_Click" />
                             </StackPanel>
                         </Grid>
                     </TabItem>
@@ -675,8 +674,8 @@
                                     <MenuItem x:Name="_mnGame_StartTrainingFromHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere_Click" InputGestureText="T" />
                                     <MenuItem x:Name="_mnGame_CreateExercise" Header="{x:Static p:Resources.CreateExerciseFromHere}" Click="UiMnGame_CreateExercise_Click" />
                                     <MenuItem x:Name="_mnGame_MarkThumbnail" Header="{x:Static p:Resources.MarkAsThumbnail}" Click="UiMn_MarkThumbnail_Click" InputGestureText="Ctrl+T" />
-                                    <MenuItem x:Name="UiMnGame_InsertDiagram" Header="{x:Static p:Resources.InsertDiagram}" Click="UiMn_ToggleDiagramFlag_Click" />
-                                    <MenuItem x:Name="UiMnGame_DeleteDiagram" Visibility="Collapsed" Header="{x:Static p:Resources.RemoveDiagram}" Click="UiMn_ToggleDiagramFlag_Click" />
+                                    <MenuItem x:Name="UiMnGame_InsertDiagram" Header="{x:Static p:Resources.InsertDiagram}" Click="UiMn_ToggleDiagramFlag_Click" InputGestureText="Ctrl+I" />
+                                    <MenuItem x:Name="UiMnGame_DeleteDiagram" Visibility="Collapsed" Header="{x:Static p:Resources.RemoveDiagram}" Click="UiMn_ToggleDiagramFlag_Click" InputGestureText="Ctrl+I" />
                                     <Separator />
                                     <MenuItem x:Name="_mnGame_PromoteLine" Header="{x:Static p:Resources.PromoteLine}" Click="UiMnGame_PromoteLine_Click" InputGestureText="P"  />
                                     <MenuItem x:Name="UiMnGameReorderLines" Header="{x:Static p:Resources.ReorderLines}" Click="UiMnReorderLines_Click" />
@@ -703,7 +702,7 @@
                                     <MenuItem x:Name="UiMnGameDeleteBookmark" Visibility="Collapsed" Header="{x:Static p:Resources.DeleteThisBookmark}" Click="UiMnciDeleteBookmark_Click" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
-                            <Grid x:Name="UiGridModelGamePrevNext" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible" >
+                            <Grid x:Name="UiGridModelGamePrevNext" Grid.Row="0" Panel.ZIndex="1" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible" >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto "/>
                                     <ColumnDefinition Width="Auto "/>
@@ -717,7 +716,7 @@
                                 <Image x:Name="UiImgModelGameRightArrow" Grid.Column="2" Cursor="Hand"  HorizontalAlignment="Right" Margin="10,0,0,0" Source="Resources/Images/RightArrow.png" PreviewMouseLeftButtonDown="UiNextModelGame_ButtonDown"  />
                             </Grid>
                             <Label x:Name="UiGamesLblChapterTitle" Grid.Column="0" Height="30" Content="" MaxWidth="220" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,-3,0,0" FontWeight="Normal" FontStyle="Normal" MouseDoubleClick="UiGamesLblChapterTitle_MouseDoubleClick"  />
-                            <Grid x:Name="UiGridModelGamePrevNextChapter" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Visible" >
+                            <Grid x:Name="UiGridModelGamePrevNextChapter" Grid.Row="0" Panel.ZIndex="1" HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Visible" >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto "/>
                                     <ColumnDefinition Width="Auto "/>
@@ -743,22 +742,22 @@
                                 </FlowDocument>
                             </RichTextBox>
                             <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" Height="48" Margin="0,588,0,0" VerticalAlignment="Top">
-                                <Button x:Name="UiBtnGmPencil" Background="Transparent" Margin="0,0,0,0" Width="30" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnPencil_Click"  />
-                                <Button x:Name="UiBtnGmCommentBeforeMove" Background="Transparent" Margin="0,0,0,0" Width="30" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnCommentBeforeMove_Click"  />
-                                <Button x:Name="UiBtnGmEvalWin" Background="Transparent" Margin="30,0,0,0" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalWin_Click" />
-                                <Button x:Name="UiBtnGmEvalPlusMinus" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalPlusMinus_Click" />
-                                <Button x:Name="UiBtnGmEvalPlusEqual" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalPlusEqual_Click" />
-                                <Button x:Name="UiBtnGmEvalEqual" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalEqual_Click" />
-                                <Button x:Name="UiBtnGmEvalUnclear" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalUnclear_Click" />
-                                <Button x:Name="UiBtnGmEvalEqualPlus" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalEqualPlus_Click" />
-                                <Button x:Name="UiBtnGmEvalMinusPlus" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalMinusPlus_Click" />
-                                <Button x:Name="UiBtnGmEvalLoss" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalLoss_Click" />
-                                <Button x:Name="UiBtnGmEvalExclamExclam" Background="Transparent" Margin="30,0,0,0" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalExclamExclam_Click" />
-                                <Button x:Name="UiBtnGmEvalExclam" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalExclam_Click" />
-                                <Button x:Name="UiBtnGmEvalExclamQuest" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalExclamQuest_Click" />
-                                <Button x:Name="UiBtnGmEvalQuestExclam" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalQuestExclam_Click" />
-                                <Button x:Name="UiBtnGmEvalQuest" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalQuest_Click" />
-                                <Button x:Name="UiBtnGmEvalQuestQuest" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalQuestQuest_Click" />
+                                <Button x:Name="UiBtnGmPencil" Background="Transparent" Margin="0,0,0,0" Width="30" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnPencil_Click"  />
+                                <Button x:Name="UiBtnGmCommentBeforeMove" Background="Transparent" Margin="0,0,0,0" Width="30" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnCommentBeforeMove_Click"  />
+                                <Button x:Name="UiBtnGmEvalWin" Background="Transparent" Margin="30,0,0,0" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalWin_Click" />
+                                <Button x:Name="UiBtnGmEvalPlusMinus" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalPlusMinus_Click" />
+                                <Button x:Name="UiBtnGmEvalPlusEqual" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalPlusEqual_Click" />
+                                <Button x:Name="UiBtnGmEvalEqual" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalEqual_Click" />
+                                <Button x:Name="UiBtnGmEvalUnclear" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalUnclear_Click" />
+                                <Button x:Name="UiBtnGmEvalEqualPlus" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalEqualPlus_Click" />
+                                <Button x:Name="UiBtnGmEvalMinusPlus" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalMinusPlus_Click" />
+                                <Button x:Name="UiBtnGmEvalLoss" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalLoss_Click" />
+                                <Button x:Name="UiBtnGmEvalExclamExclam" Background="Transparent" Margin="30,0,0,0" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalExclamExclam_Click" />
+                                <Button x:Name="UiBtnGmEvalExclam" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalExclam_Click" />
+                                <Button x:Name="UiBtnGmEvalExclamQuest" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalExclamQuest_Click" />
+                                <Button x:Name="UiBtnGmEvalQuestExclam" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalQuestExclam_Click" />
+                                <Button x:Name="UiBtnGmEvalQuest" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalQuest_Click" />
+                                <Button x:Name="UiBtnGmEvalQuestQuest" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalQuestQuest_Click" />
                             </StackPanel>
                         </Grid>
                     </TabItem>
@@ -788,8 +787,8 @@
                                     <Separator x:Name="UiMnExerc_Separator_8"/>
                                     <MenuItem x:Name="_mnExerc_StartTrainingFromHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere_Click" InputGestureText="T" />
                                     <MenuItem x:Name="_mnExerc_MarkThumbnail" Header="{x:Static p:Resources.MarkAsThumbnail}" Click="UiMn_ExerciseMarkThumbnail_Click" InputGestureText="Ctrl+T" />
-                                    <MenuItem x:Name="UiMnExerc_InsertDiagram" Header="{x:Static p:Resources.InsertDiagram}" Click="UiMn_ToggleDiagramFlag_Click"  />
-                                    <MenuItem x:Name="UiMnExerc_DeleteDiagram" Visibility="Collapsed" Header="{x:Static p:Resources.RemoveDiagram}" Click="UiMn_ToggleDiagramFlag_Click" />
+                                    <MenuItem x:Name="UiMnExerc_InsertDiagram" Header="{x:Static p:Resources.InsertDiagram}" Click="UiMn_ToggleDiagramFlag_Click" InputGestureText="Ctrl+I" />
+                                    <MenuItem x:Name="UiMnExerc_DeleteDiagram" Visibility="Collapsed" Header="{x:Static p:Resources.RemoveDiagram}" Click="UiMn_ToggleDiagramFlag_Click" InputGestureText="Ctrl+I" />
                                     <Separator x:Name="UiMnExerc_Separator_4"/>
                                     <MenuItem x:Name="_mnExerc_PromoteLine" Header="{x:Static p:Resources.PromoteLine}" Click="UiMnExerc_PromoteLine_Click" InputGestureText="P"  />
                                     <MenuItem x:Name="UiMnExerc_ReorderLines" Header="{x:Static p:Resources.ReorderLines}" Click="UiMnReorderLines_Click" />
@@ -816,7 +815,7 @@
                                     <MenuItem x:Name="UiMnExercDeleteBookmark" Visibility="Collapsed" Header="{x:Static p:Resources.DeleteThisBookmark}" Click="UiMnciDeleteBookmark_Click" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
-                            <Grid x:Name="UiGridExercisePrevNext" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible" >
+                            <Grid x:Name="UiGridExercisePrevNext" Grid.Row="0" Panel.ZIndex="1" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible" >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto "/>
                                     <ColumnDefinition Width="Auto "/>
@@ -830,8 +829,8 @@
                                 <Label x:Name="UiLblExerciseCounter" Grid.Column="1" Content="" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="10,-3,0,0" FontWeight="Bold"/>
                                 <Image x:Name="UiImgExerciseRightArrow" Grid.Column="2" Cursor="Hand"  HorizontalAlignment="Right" Margin="10,0,0,0" Source="Resources/Images/RightArrow.png" PreviewMouseLeftButtonDown="UiImgExerciseRightArrow_PreviewMouseLeftButtonDown"  />
                             </Grid>
-                            <Label x:Name="UiExerciseLblChapterTitle" Grid.Column="0" Height="30" Content="" MaxWidth="400" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,-3,10,0" FontWeight="Normal" FontStyle="Normal" MouseDoubleClick="UiExerciseLblChapterTitle_MouseDoubleClick"  />
-                            <Grid x:Name="UiGridExercisePrevNextChapter" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Visible" >
+                            <Label x:Name="UiExerciseLblChapterTitle" Grid.Column="0" Height="30" Content="" MaxWidth="220" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,-3,10,0" FontWeight="Normal" FontStyle="Normal" MouseDoubleClick="UiExerciseLblChapterTitle_MouseDoubleClick"  />
+                            <Grid x:Name="UiGridExercisePrevNextChapter" Panel.ZIndex="1" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Visible" >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto "/>
                                     <ColumnDefinition Width="Auto "/>
@@ -857,22 +856,22 @@
                                 </FlowDocument>
                             </RichTextBox>
                             <StackPanel x:Name="UiStpExNags" Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" Height="48" Margin="0,588,0,0" VerticalAlignment="Top">
-                                <Button x:Name="UiBtnExPencil" Background="Transparent" Margin="0,0,0,0" Width="30" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnPencil_Click"  />
-                                <Button x:Name="UiBtnExCommentBeforeMove" Background="Transparent" Margin="0,0,0,0" Width="30" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnCommentBeforeMove_Click"  />
-                                <Button x:Name="UiBtnExEvalWin" Background="Transparent" Margin="30,0,0,0" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalWin_Click" />
-                                <Button x:Name="UiBtnExEvalPlusMinus" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalPlusMinus_Click" />
-                                <Button x:Name="UiBtnExEvalPlusEqual" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalPlusEqual_Click" />
-                                <Button x:Name="UiBtnExEvalEqual" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalEqual_Click" />
-                                <Button x:Name="UiBtnExEvalUnclear" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalUnclear_Click" />
-                                <Button x:Name="UiBtnExEvalEqualPlus" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalEqualPlus_Click" />
-                                <Button x:Name="UiBtnExEvalMinusPlus" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalMinusPlus_Click" />
-                                <Button x:Name="UiBtnExEvalLoss" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalLoss_Click" />
-                                <Button x:Name="UiBtnExEvalExclamExclam" Background="Transparent" Margin="30,0,0,0" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalExclamExclam_Click" />
-                                <Button x:Name="UiBtnExEvalExclam" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalExclam_Click" />
-                                <Button x:Name="UiBtnExEvalExclamQuest" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalExclamQuest_Click" />
-                                <Button x:Name="UiBtnExEvalQuestExclam" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalQuestExclam_Click" />
-                                <Button x:Name="UiBtnExEvalQuest" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalQuest_Click" />
-                                <Button x:Name="UiBtnExEvalQuestQuest" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="10" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalQuestQuest_Click" />
+                                <Button x:Name="UiBtnExPencil" Background="Transparent" Margin="0,0,0,0" Width="30" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnPencil_Click"  />
+                                <Button x:Name="UiBtnExCommentBeforeMove" Background="Transparent" Margin="0,0,0,0" Width="30" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnCommentBeforeMove_Click"  />
+                                <Button x:Name="UiBtnExEvalWin" Background="Transparent" Margin="30,0,0,0" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalWin_Click" />
+                                <Button x:Name="UiBtnExEvalPlusMinus" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalPlusMinus_Click" />
+                                <Button x:Name="UiBtnExEvalPlusEqual" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalPlusEqual_Click" />
+                                <Button x:Name="UiBtnExEvalEqual" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalEqual_Click" />
+                                <Button x:Name="UiBtnExEvalUnclear" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalUnclear_Click" />
+                                <Button x:Name="UiBtnExEvalEqualPlus" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalEqualPlus_Click" />
+                                <Button x:Name="UiBtnExEvalMinusPlus" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalMinusPlus_Click" />
+                                <Button x:Name="UiBtnExEvalLoss" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalLoss_Click" />
+                                <Button x:Name="UiBtnExEvalExclamExclam" Background="Transparent" Margin="30,0,0,0" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalExclamExclam_Click" />
+                                <Button x:Name="UiBtnExEvalExclam" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalExclam_Click" />
+                                <Button x:Name="UiBtnExEvalExclamQuest" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalExclamQuest_Click" />
+                                <Button x:Name="UiBtnExEvalQuestExclam" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalQuestExclam_Click" />
+                                <Button x:Name="UiBtnExEvalQuest" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalQuest_Click" />
+                                <Button x:Name="UiBtnExEvalQuestQuest" Background="Transparent" Width="18" Height="18" BorderThickness="0" FontSize="12" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalQuestQuest_Click" />
                             </StackPanel>
                         </Grid>
                     </TabItem>

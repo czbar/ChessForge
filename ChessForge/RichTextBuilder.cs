@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChessPosition;
+using GameTree;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,8 +7,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
-using ChessPosition;
-using GameTree;
 
 namespace ChessForge
 {
@@ -24,6 +23,12 @@ namespace ChessForge
         /// The Dictionary must be implemented in derived classes.
         /// </summary>
         internal abstract Dictionary<string, RichTextPara> RichTextParas { get; }
+
+        // NOTE: we rely on the fact that both types on comments begin with run_comment (!)
+        protected readonly string _run_comment_ = "run_comment_";
+        protected readonly string _run_comment_before_move_ = "run_comment_before_move_";
+        protected readonly string _run_comment_article_ref = "run_comment_artcle_ref_";
+
 
         /// <summary>
         /// Constructs the object and sets pointer to its associated FlowDocument.
@@ -367,7 +372,7 @@ namespace ChessForge
         /// This applies to parts of the comment for a given node.
         /// </summary>
         /// <param name="inlComment"></param>
-        public void RemoveCommentRunsFromHostingParagraph(Inline inlComment)
+        public void RemoveCommentRunsFromHostingParagraph(Inline inlComment, int nodeId)
         {
             if (inlComment == null)
             {
@@ -376,10 +381,11 @@ namespace ChessForge
 
             Paragraph parent = inlComment.Parent as Paragraph;
 
+            string articleRefPrefix = _run_comment_article_ref + nodeId.ToString() + "_";
             List<Inline> inlinesToRemove = new List<Inline>();
             foreach (Inline inl in parent.Inlines)
             {
-                if (inl.Name == inlComment.Name)
+                if (inl.Name != null && (inl.Name == inlComment.Name || inl.Name.StartsWith(articleRefPrefix)))
                 {
                     inlinesToRemove.Add(inl);
                 }

@@ -26,7 +26,7 @@ namespace ChessForge
         /// <param name="gameIdList"></param>
         /// <param name="games"></param>
         public ReferenceGamePreviewDialog(List<string> gameIdList, List<Article> games)
-            : base(null, gameIdList)
+            : base(null, gameIdList, null, -1)
         {
             this.Width = 695;
             UiBtnExit.Margin = new Thickness(UiBtnExit.Margin.Left, UiGReplaySpeed.Margin.Top - 35, 0, 0);

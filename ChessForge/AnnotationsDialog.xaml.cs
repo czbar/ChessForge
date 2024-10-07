@@ -1,9 +1,4 @@
-﻿using ChessPosition;
-using GameTree;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using GameTree;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -20,6 +15,31 @@ namespace ChessForge
         public string Comment { get; set; }
 
         /// <summary>
+        /// Combined Reference Guids
+        /// </summary>
+        public string ReferenceGuids { get; set; }
+
+        /// <summary>
+        /// Game/Exercise References GUIDs string
+        /// </summary>
+        private string _gameExerciseRefGuids = "";
+
+        /// <summary>
+        /// Chapter References GUIDs string
+        /// </summary>
+        private string _chapterRefGuids = "";
+
+        /// <summary>
+        /// Game/Exercise References text for the GUI
+        /// </summary>
+        private string _gameExerciseRefsText = "";
+
+        /// <summary>
+        /// Chapter References text for the GUI
+        /// </summary>
+        private string _chapterRefsText = "";
+
+        /// <summary>
         /// Quiz points
         /// </summary>
         public int QuizPoints { get; set; }
@@ -30,15 +50,15 @@ namespace ChessForge
         public string Nags { get; set; }
 
         /// <summary>
-        /// Whether exit occurred on user's pushing the OK button  
-        /// </summary>
-        public bool ExitOk = false;
-
-        /// <summary>
         /// Whether we are editing an Exercise and therefore should allow
         /// editing quiz points.
         /// </summary>
         private bool _isExerciseEditing = false;
+
+        /// <summary>
+        /// Node for which the comment is being handled.
+        /// </summary>
+        private TreeNode _node;
 
         /// <summary>
         /// Constructs the dialog.
@@ -48,14 +68,19 @@ namespace ChessForge
         /// <param name="comment"></param>
         public AnnotationsDialog(TreeNode nd)
         {
+            _node = nd;
+
             InitializeComponent();
             SetPositionButtons(nd.Nags);
             SetMoveButtons(nd.Nags);
-            
+
+            UiGbReferences.Header += " (" + Properties.Resources.ClickToEdit + ")";
+            UiGbSeeChapter.Header += " (" + Properties.Resources.ClickToEdit + ")";
+
             UiTbComment.Text = nd.Comment ?? "";
             UiTbComment.Focus();
             UiTbComment.SelectAll();
-            
+
             Nags = nd.Nags;
 
             QuizPoints = nd.QuizPoints;
@@ -73,6 +98,12 @@ namespace ChessForge
                 MoveButtonHporizontally(UiBtnCancel, -50);
                 MoveButtonHporizontally(UiBtnHelp, -50);
             }
+
+            GuiUtilities.SplitReferencesString(_node.References, out _gameExerciseRefGuids, out _chapterRefGuids);
+
+            GuiUtilities.GetReferencesTextByType(_node.References, out _gameExerciseRefsText, out _chapterRefsText);
+            UiLblGameExerciseRefs.Content = _gameExerciseRefsText;
+            UiLblChapterRefs.Content = _chapterRefsText;
 
             UiTbComment.Focus();
         }
@@ -195,34 +226,6 @@ namespace ChessForge
                     UiRbDubious.IsChecked = true;
                     break;
             }
-        }
-
-        /// <summary>
-        /// Closes the dialog after user pushed the Cancel button.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiBtnCancel_Click(object sender, RoutedEventArgs e)
-        {
-            ExitOk = false;
-            Close();
-        }
-
-        /// <summary>
-        /// Closes the dialog after user pushed the OK button.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiBtnOk_Click(object sender, RoutedEventArgs e)
-        {
-            Comment = UiTbComment.Text;
-            if (_isExerciseEditing)
-            {
-                QuizPoints = ParseQuizPoints(UiTbQuizPoints.Text);
-            }
-            BuildNagsString();
-            ExitOk = true;
-            Close();
         }
 
         /// <summary>
@@ -357,16 +360,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Links to the relevant Wiki page.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
-        {
-            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Annotation-Editor");
-        }
-
-        /// <summary>
         /// Handles the key down event in the text box. 
         /// </summary>
         /// <param name="sender"></param>
@@ -377,6 +370,105 @@ namespace ChessForge
             {
                 e.Handled = true;
             }
+        }
+
+        /// <summary>
+        /// Same as clicking the label.
+        /// Invokes chapters references editor.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiLblChapterRefs_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var dlg = new SelectChapterRefsDialog(_chapterRefsText);
+            GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
+
+            if (dlg.ShowDialog() == true)
+            {
+                _chapterRefGuids = dlg.ChapterRefGuids ?? "";
+                GuiUtilities.GetReferencesTextByType(_chapterRefGuids, out _, out _chapterRefsText);
+                UiLblChapterRefs.Content = _chapterRefsText;
+            }
+
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// Invokes games/exercises references editor.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiLblGameExerciseRefs_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var dlg = new SelectArticleRefsDialog(_node);
+            GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
+
+            if (dlg.ShowDialog() == true)
+            {
+                _gameExerciseRefGuids = dlg.GameExerciseRefGuids ?? "";
+                GuiUtilities.GetReferencesTextByType(_gameExerciseRefGuids, out _gameExerciseRefsText, out _);
+                UiLblGameExerciseRefs.Content = _gameExerciseRefsText;
+            }
+
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// Same as clicking the label.
+        /// Invokes games/exercises references editor.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiGbReferences_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            UiLblGameExerciseRefs_MouseLeftButtonDown(sender, e);
+        }
+
+        /// <summary>
+        /// Invokes chapter references editor.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiGbSeeChapter_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            UiLblChapterRefs_MouseLeftButtonDown(sender, e);
+        }
+
+        /// <summary>
+        /// Closes the dialog after user pushed the OK button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnOk_Click(object sender, RoutedEventArgs e)
+        {
+            Comment = UiTbComment.Text;
+            ReferenceGuids = GuiUtilities.CombineReferences(_gameExerciseRefGuids, _chapterRefGuids);
+            if (_isExerciseEditing)
+            {
+                QuizPoints = ParseQuizPoints(UiTbQuizPoints.Text);
+            }
+            BuildNagsString();
+            DialogResult = true;
+        }
+
+        /// <summary>
+        /// Closes the dialog after user pushed the Cancel button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
+        }
+
+        /// <summary>
+        /// Links to the relevant Wiki page.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Annotation-Editor");
         }
 
     }

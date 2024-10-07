@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
@@ -288,6 +285,12 @@ namespace ChessForge
 
             LightMode.HyperlinkForeground = new SolidColorBrush(Color.FromRgb(0, 153, 213));
             LightMode.HyperlinkHoveredForeground = new SolidColorBrush(Color.FromRgb(79, 102, 165));
+
+            LightMode.GameExerciseRefForeground = new SolidColorBrush(Color.FromRgb(0, 132, 132));
+            LightMode.GameExerciseRefHoveredForeground = new SolidColorBrush(Color.FromRgb(0, 106, 106));
+
+            LightMode.ChapterRefForeground = new SolidColorBrush(Color.FromRgb(191, 0, 96));
+            LightMode.ChapterRefHoveredForeground = new SolidColorBrush(Color.FromRgb(157, 0, 79));
         }
 
         /// <summary>
@@ -344,6 +347,12 @@ namespace ChessForge
 
             DarkMode.HyperlinkForeground = new SolidColorBrush(Color.FromRgb(9, 147, 189));
             DarkMode.HyperlinkHoveredForeground = new SolidColorBrush(Color.FromRgb(0, 244, 255));
+
+            DarkMode.GameExerciseRefForeground = new SolidColorBrush(Color.FromRgb(29, 167, 209));
+            DarkMode.GameExerciseRefHoveredForeground = new SolidColorBrush(Color.FromRgb(0, 244, 255));
+
+            DarkMode.ChapterRefForeground = new SolidColorBrush(Color.FromRgb(255, 98, 176));
+            DarkMode.ChapterRefHoveredForeground = new SolidColorBrush(Color.FromRgb(255, 147, 201));
         }
     }
 }

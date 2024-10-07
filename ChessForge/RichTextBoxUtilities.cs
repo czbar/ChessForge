@@ -164,6 +164,31 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Makes a copy of a Hyperlink
+        /// that can be encountered in Intros.
+        /// </summary>
+        /// <param name="src"></param>
+        /// <returns></returns>
+        public static Hyperlink CopyHyperlink(Hyperlink src)
+        {
+            Run runToAdd;
+
+            if (src.Inlines.Count > 0 && src.Inlines.FirstInline is Run run)
+            {
+                runToAdd = CopyRun(run);
+            }
+            else
+            {
+                runToAdd = new Run("???");
+            }
+
+            Hyperlink hlToAdd = new Hyperlink(runToAdd);
+            hlToAdd.NavigateUri = src.NavigateUri;
+
+            return hlToAdd;
+        }
+
+        /// <summary>
         /// Makes a copy of a Paragraph with selected properties.
         /// </summary>
         /// <param name="src"></param>
@@ -478,6 +503,29 @@ namespace ChessForge
             if (run != null && run.Text != null)
             {
                 return run.Text;
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Returns plain text from a Hyperlink
+        /// </summary>
+        /// <param name="run"></param>
+        /// <returns></returns>
+        public static string GetHyperlinkPlainText(Hyperlink hl)
+        {
+            if (hl != null)
+            {
+                StringBuilder sb = new StringBuilder();
+                if (hl.Inlines.Count > 0 && hl.Inlines.FirstInline is Run run)
+                {
+                    sb.Append(run.Text);
+                }
+                sb.Append(" (" + hl.NavigateUri.ToString() + ")");
+                return sb.ToString();
             }
             else
             {

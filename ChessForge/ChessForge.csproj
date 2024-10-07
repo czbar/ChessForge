@@ -283,6 +283,12 @@
     <Compile Include="SearchPositionDialog.xaml.cs">
       <DependentUpon>SearchPositionDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SelectArticleRefsDialog.xaml.cs">
+      <DependentUpon>SelectArticleRefsDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SelectChapterRefsDialog.xaml.cs">
+      <DependentUpon>SelectChapterRefsDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SelectDuplicatesDialog.xaml.cs">
       <DependentUpon>SelectDuplicatesDialog.xaml</DependentUpon>
     </Compile>
@@ -531,7 +537,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="SelectArticleRefsDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SelectArticlesDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SelectChapterRefsDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

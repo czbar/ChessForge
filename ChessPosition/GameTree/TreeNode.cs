@@ -190,10 +190,10 @@ namespace GameTree
         public bool IsDiagram = false;
 
         /// <summary>
-        /// References to Games or Exercises
+        /// References to Games, Exercises or Chapters
         /// in the form of GUID|GUID|...|GUID
         /// </summary>
-        public string ArticleRefs;
+        public string References;
 
         /// <summary>
         /// General purpose property to assist certain
@@ -408,13 +408,13 @@ namespace GameTree
         {
             if (!string.IsNullOrEmpty(artref))
             {
-                if (!string.IsNullOrEmpty(ArticleRefs))
+                if (!string.IsNullOrEmpty(References))
                 {
-                    ArticleRefs += "|" + artref;
+                    References += "|" + artref;
                 }
                 else
                 {
-                    ArticleRefs += artref;
+                    References += artref;
                 }
             }
         }
@@ -427,17 +427,17 @@ namespace GameTree
         /// <returns></returns>
         public bool RemoveArticleReference(string artref)
         {
-            if (string.IsNullOrEmpty(ArticleRefs) || string.IsNullOrEmpty(artref))
+            if (string.IsNullOrEmpty(References) || string.IsNullOrEmpty(artref))
             {
                 return false;
             }
 
-            int pos = ArticleRefs.IndexOf(artref);
+            int pos = References.IndexOf(artref);
             if (pos >= 0)
             {
-                ArticleRefs = ArticleRefs.Remove(pos, artref.Length);
+                References = References.Remove(pos, artref.Length);
                 // there may be double separation signs after the removal
-                ArticleRefs = ArticleRefs.Replace("||", "|");
+                References = References.Replace("||", "|");
                 return true;
             }
             else

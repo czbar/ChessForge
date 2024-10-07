@@ -717,7 +717,7 @@ namespace ChessForge
                         throw new Exception(Properties.Resources.ErrNoTextReceived);
                     }
 
-                    FinalizeLichessDownload(chapter, tree, gameId, ActiveTab);
+                    FinalizeLichessDownload(chapter, tree, gameId, ActiveTab, null);
                 }
             }
             catch (Exception ex)
@@ -734,7 +734,8 @@ namespace ChessForge
         /// <param name="lichessGameId"></param>
         /// <param name="activeTabOnEntry"></param>
         /// <returns></returns>
-        public static bool FinalizeLichessDownload(Chapter chapter, VariationTree tree, string lichessGameId, TabViewType activeTabOnEntry)
+        public static bool FinalizeLichessDownload(Chapter chapter, VariationTree tree, string lichessGameId, 
+                                                   TabViewType activeTabOnEntry, VariationTreeView activeViewOnEntry)
         {
             bool added = false;
 
@@ -753,24 +754,20 @@ namespace ChessForge
                 chapter.ActiveModelGameIndex = chapter.GetModelGameCount() - 1;
                 string guid = tree.Header.GetGuid(out _);
 
-                // if the current active tree is Study Tree, add reference
-                if (activeTabOnEntry == TabViewType.STUDY)
+                if (activeViewOnEntry != null)
                 {
-                    TreeNode nd = chapter.StudyTree.Tree.SelectedNode;
+                    TreeNode nd = activeViewOnEntry.GetSelectedNode();
                     if (nd != null)
                     {
                         nd.AddArticleReference(guid);
-                        if (MainWin.StudyTreeView != null)
-                        {
-                            MainWin.StudyTreeView.InsertOrDeleteReferenceRun(nd);
-                        }
+                        nd.References = GuiUtilities.SortReferenceString(nd.References);
+                        activeViewOnEntry.InsertOrUpdateCommentRun(nd);
                     }
                 }
 
                 MainWin.ChaptersView.IsDirty = true;
                 IsDirty = true;
                 MainWin.SelectModelGame(chapter.ActiveModelGameIndex, true);
-
                 MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgGameImportSuccess, CommentBox.HintType.INFO);
             }
 
@@ -1204,6 +1201,8 @@ namespace ChessForge
                 bool isMate = IsCheckMateOrStalemate(lastClickedNodeId);
 
                 VariationTree tree = ActiveVariationTree;
+                TreeNode selectedNode = tree?.SelectedNode;
+
                 VariationTreeView view = AppState.MainWin.ActiveTreeView;
 
                 ConfigureBookmarkMenuOptions(MainWin.UiMnMarkBookmark, MainWin.UiMnStDeleteBookmark);
@@ -1234,6 +1233,9 @@ namespace ChessForge
                                 menuItem.IsEnabled = tree != null && tree.Nodes.Count > 1;
                                 break;
                             case "_mnStudyTree_MarkThumbnail":
+                                menuItem.IsEnabled = tree != null && tree.SelectedNode != null;
+                                SetMarkThumbnailMenuItemHeader(menuItem, selectedNode);
+                                break;
                             case "UiMnStudyInsertDiagram":
                                 menuItem.IsEnabled = tree != null && tree.SelectedNode != null;
                                 break;
@@ -1274,6 +1276,9 @@ namespace ChessForge
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                 int gameCount = chapter.GetModelGameCount();
                 int gameIndex = chapter.ActiveModelGameIndex;
+
+                VariationTree tree = ActiveVariationTree;
+                TreeNode selectedNode = tree?.SelectedNode;
 
                 VariationTreeView view = MainWin.ActiveTreeView;
 
@@ -1319,6 +1324,9 @@ namespace ChessForge
                                 menuItem.IsEnabled = gameIndex >= 0 && selectedNodeId > 0;
                                 break;
                             case "_mnGame_MarkThumbnail":
+                                menuItem.IsEnabled = gameIndex >= 0 && selectedNodeId > 0;
+                                SetMarkThumbnailMenuItemHeader(menuItem, selectedNode);
+                                break;
                             case "UiMnGameInsertDiagram":
                                 menuItem.IsEnabled = gameIndex >= 0 && selectedNodeId > 0;
                                 break;
@@ -1354,6 +1362,10 @@ namespace ChessForge
                 int exerciseIndex = chapter.ActiveExerciseIndex;
 
                 bool isTrainingOrSolving = TrainingSession.IsTrainingInProgress || IsUserSolving();
+
+                VariationTree tree = ActiveVariationTree;
+                TreeNode selectedNode = tree?.SelectedNode;
+
                 VariationTreeView view = AppState.MainWin.ActiveTreeView;
                 bool isSolutionShown = ActiveVariationTree == null ? false : ActiveVariationTree.ShowTreeLines;
 
@@ -1429,6 +1441,10 @@ namespace ChessForge
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
                             case "_mnExerc_MarkThumbnail":
+                                menuItem.IsEnabled = exerciseIndex >= 0 && selectedNodeId > 0 && isSolutionShown;
+                                menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
+                                SetMarkThumbnailMenuItemHeader(menuItem, selectedNode);
+                                break;
                             case "UiMnExerc_InsertDiagram":
                                 menuItem.IsEnabled = exerciseIndex >= 0 && selectedNodeId > 0 && isSolutionShown;
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
@@ -1477,6 +1493,24 @@ namespace ChessForge
             catch (Exception ex)
             {
                 AppLog.Message("EnableModelGamesMenus()", ex);
+            }
+        }
+
+        /// <summary>
+        /// Sets the text of the Mark/Delete Thumbnail menu item depending on the status of
+        /// the passed node.
+        /// </summary>
+        /// <param name="menuItem"></param>
+        /// <param name="nd"></param>
+        private static void SetMarkThumbnailMenuItemHeader(MenuItem menuItem, TreeNode nd)
+        {
+            if (nd != null && nd.IsThumbnail)
+            {
+                menuItem.Header = Resources.DeleteThumbnail;
+            }
+            else
+            {
+                menuItem.Header = Resources.MarkAsThumbnail;
             }
         }
 

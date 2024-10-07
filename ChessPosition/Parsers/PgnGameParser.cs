@@ -583,6 +583,12 @@ namespace GameTree
                 // extract comment text
                 comment = _remainingGameText.Substring(0, endPos);
 
+                if (comment.Contains(ChfCommands.CHESS_BASE_DIAGRAM))
+                {
+                    node.IsDiagram = true;
+                    comment = comment.Replace(ChfCommands.CHESS_BASE_DIAGRAM, "");
+                }
+
                 // check if this is a NAG disguised as comment
                 string nag = GetNagMascaradingAsComment(comment);
                 if (nag != null)

@@ -84,9 +84,7 @@ namespace ChessForge
 
             if (Configuration.ShowEvaluationChart)
             {
-                if (AppState.ActiveTab != TabViewType.STUDY 
-                    && AppState.ActiveTab != TabViewType.MODEL_GAME 
-                    && (AppState.ActiveTab != TabViewType.EXERCISE || AppState.IsUserSolving() || !AppState.ActiveVariationTree.ShowTreeLines))
+                if (!IsValidTabForEvalChart())
                 {
                     // report wrong tab
                     if (showReason)
@@ -126,6 +124,18 @@ namespace ChessForge
         public static bool IsEngineLinesTurnedOn()
         {
             return MainWin.UiImgEngineOn.Visibility == Visibility.Visible || MainWin.UiImgEngineOnGray.Visibility == Visibility.Visible;
+        }
+
+        /// <summary>
+        /// Checks if the current tab can show the Evaluation Chart.
+        /// It can if this is a study, a game or an exercise in the view mode with the soluttion shown.
+        /// </summary>
+        /// <returns></returns>
+        private static bool IsValidTabForEvalChart()
+        {
+            return AppState.ActiveTab == TabViewType.STUDY
+                || AppState.ActiveTab == TabViewType.MODEL_GAME
+                || (AppState.ActiveTab == TabViewType.EXERCISE && !AppState.IsUserSolving() && AppState.ActiveVariationTree != null && AppState.ActiveVariationTree.ShowTreeLines);
         }
 
         /// <summary>
@@ -175,7 +185,7 @@ namespace ChessForge
         /// the affected attributes accordingly.
         /// </summary>
         /// <param name="fullSize"></param>
-        public static void ResizeEngineLinesBox(bool fullSize)
+        private static void ResizeEngineLinesBox(bool fullSize)
         {
             if (fullSize)
             {

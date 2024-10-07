@@ -59,6 +59,9 @@ namespace ChessForge
                     UiTbText.Text = txt;
                 }
             }
+
+            UiTbText.Focus();
+            UiTbText.SelectAll();
         }
 
         /// <summary>

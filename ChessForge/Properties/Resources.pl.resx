@@ -324,6 +324,9 @@
   <data name="BestMove" xml:space="preserve">
     <value>najlepsze</value>
   </data>
+  <data name="ClickToEdit" xml:space="preserve">
+    <value>kliknij by edytować</value>
+  </data>
   <data name="EvaluatePosition" xml:space="preserve">
     <value>Oceń pozycję</value>
   </data>
@@ -368,6 +371,12 @@
   </data>
   <data name="GameExerciseReferences" xml:space="preserve">
     <value>Odsyłacze do partii i ćwiczeń</value>
+  </data>
+  <data name="ChapterReference" xml:space="preserve">
+    <value>Odsyłacze do rozdziałów</value>
+  </data>
+  <data name="References" xml:space="preserve">
+    <value>Odsyłacze</value>
   </data>
   <data name="OpenView" xml:space="preserve">
     <value>Otwórz widok</value>
@@ -1615,8 +1624,17 @@
   <data name="MarkAsThumbnail" xml:space="preserve">
     <value>Zaznacz jako Wizytówkę</value>
   </data>
+  <data name="DeleteThumbnail" xml:space="preserve">
+    <value>Usuń wizytówkę</value>
+  </data>
   <data name="ChapterThumbnail" xml:space="preserve">
-    <value>Wizytówka Rozdziału</value>
+    <value>Wizytówka rozdziału</value>
+  </data>
+  <data name="GameThumbnail" xml:space="preserve">
+    <value>Wizytówka partii</value>
+  </data>
+  <data name="ExerciseThumbnail" xml:space="preserve">
+    <value>Wizytówka ćwiczenia</value>
   </data>
   <data name="CopyMoves" xml:space="preserve">
     <value>Skopiuj ruchy</value>
@@ -2262,6 +2280,9 @@
   </data>
   <data name="SelectReferences" xml:space="preserve">
     <value>Wybierz Partie i Ćwiczenia do Odsyłacza</value>
+  </data>
+  <data name="SelectChapterReferences" xml:space="preserve">
+    <value>Wybierz Rozdział(y) do Odsyłacza</value>
   </data>
   <data name="MergeGamesAndCopy" xml:space="preserve">
     <value>Połącz Partie w Drzewo Wariantów i skopiuj je do sekcji Partii</value>

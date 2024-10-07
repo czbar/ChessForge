@@ -16,6 +16,8 @@ namespace ChessPosition.Utils
         URL,
         THUMBNAIL_SYMBOL,
         QUIZ_POINTS,
+        GAME_EXERCISE_REFERENCE,
+        CHAPTER_REFERENCE,
     }
 
     /// <summary>
@@ -34,14 +36,20 @@ namespace ChessPosition.Utils
         public string Text;
 
         /// <summary>
+        /// Guid of the part if applicable.
+        /// </summary>
+        public string Guid;
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="type"></param>
         /// <param name="text"></param>
-        public CommentPart(CommentPartType type, string text)
+        public CommentPart(CommentPartType type, string text, string guid = null)
         {
             Type = type;
             Text = text;
+            Guid = guid;
         }
     }
 }

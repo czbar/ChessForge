@@ -324,6 +324,9 @@
   <data name="BestMove" xml:space="preserve">
     <value>best</value>
   </data>
+  <data name="ClickToEdit" xml:space="preserve">
+    <value>click to edit</value>
+  </data>
   <data name="EvaluatePosition" xml:space="preserve">
     <value>Evaluate Position</value>
   </data>
@@ -368,6 +371,12 @@
   </data>
   <data name="GameExerciseReferences" xml:space="preserve">
     <value>Game and Exercise References</value>
+  </data>
+  <data name="ChapterReference" xml:space="preserve">
+    <value>Chapter References</value>
+  </data>
+  <data name="References" xml:space="preserve">
+    <value>References</value>
   </data>
   <data name="OpenView" xml:space="preserve">
     <value>Open View</value>
@@ -1615,8 +1624,17 @@
   <data name="MarkAsThumbnail" xml:space="preserve">
     <value>Mark as Thumbnail</value>
   </data>
+  <data name="DeleteThumbnail" xml:space="preserve">
+    <value>Remove Thumbnail</value>
+  </data>
   <data name="ChapterThumbnail" xml:space="preserve">
-    <value>Thumbnail for Chapters View</value>
+    <value>Chapter Thumbnail</value>
+  </data>
+  <data name="GameThumbnail" xml:space="preserve">
+    <value>Game Thumbnail</value>
+  </data>
+  <data name="ExerciseThumbnail" xml:space="preserve">
+    <value>Exercise Thumbnail</value>
   </data>
   <data name="CopyMoves" xml:space="preserve">
     <value>Copy Moves</value>
@@ -2263,6 +2281,9 @@
   </data>
   <data name="SelectReferences" xml:space="preserve">
     <value>Select Reference Games and/or Exercises</value>
+  </data>
+  <data name="SelectChapterReferences" xml:space="preserve">
+    <value>Select Chapter References</value>
   </data>
   <data name="MergeGamesAndCopy" xml:space="preserve">
     <value>Merge Games into the Study Tree and Copy them into the Games section.</value>

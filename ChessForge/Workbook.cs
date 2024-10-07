@@ -35,10 +35,13 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// The training side.
+        /// The training side as configured.
         /// </summary>
         public PieceColor TrainingSideConfig = PieceColor.None;
 
+        /// <summary>
+        /// The current training side.
+        /// </summary>
         public PieceColor TrainingSideCurrent = PieceColor.None;
 
         private PieceColor _studyBoardOrientationConfig = PieceColor.None;
@@ -343,7 +346,7 @@ namespace ChessForge
         /// <param name="articleIndex"></param>
         /// <returns></returns>
         /// 
-        public Article GetArticleByGuid(string guid, out int chapterIndex, out int articleIndex)
+        public Article GetArticleByGuid(string guid, out int chapterIndex, out int articleIndex, bool includeStudy = false)
         {
             chapterIndex = -1;
             articleIndex = -1;
@@ -367,6 +370,15 @@ namespace ChessForge
                         chapterIndex = i;
                         articleIndex = j;
                         return Chapters[i].Exercises[j];
+                    }
+                }
+
+                if (includeStudy)
+                {
+                    if (Chapters[i].StudyTree.Tree.Header.GetGuid(out _) == guid)
+                    {
+                        chapterIndex = Chapters[i].Index;
+                        return Chapters[i].StudyTree;
                     }
                 }
             }

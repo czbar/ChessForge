@@ -157,6 +157,8 @@ namespace ChessForge
 
             StringBuilder plainText = new StringBuilder("");
 
+            Hyperlink lastHyperlink = null;
+
             while (position.CompareTo(end) < 0)
             {
                 switch (position.GetPointerContext(LogicalDirection.Forward))
@@ -203,6 +205,16 @@ namespace ChessForge
                                 currParagraph = position.Parent as Paragraph;
                             }
                         }
+                        else if (position.Parent is Hyperlink hl && hl != lastHyperlink)
+                        {
+                            lastHyperlink = hl;
+                            Hyperlink hlCopy = RichTextBoxUtilities.CopyHyperlink(hl);
+                            if (!plainTextOnly)
+                            {
+                                IntroViewClipboard.AddHyperlink(hlCopy);
+                            }
+                            plainText.Append(RichTextBoxUtilities.GetHyperlinkPlainText(hlCopy));
+                        }
                         break;
                     case TextPointerContext.EmbeddedElement:
                         if (position.Parent is TextElement)
@@ -222,27 +234,31 @@ namespace ChessForge
                         break;
                     case TextPointerContext.Text:
                         Run run = (Run)position.Parent;
-                        Thickness? margins = null;
-                        if (run.Parent is Paragraph para)
-                        {
-                            margins = para.Margin;
-                        }
 
-                        TextPointer textEnd = run.ElementEnd;
-                        if (run.ElementEnd.CompareTo(end) > 0)
+                        // if Run's parent is hyperlink do nothing as it will be handled within the hyperlink
+                        if (!(run.Parent is Hyperlink))
                         {
-                            textEnd = end;
-                        }
+                            Thickness? margins = null;
+                            if (run.Parent is Paragraph para)
+                            {
+                                margins = para.Margin;
+                            }
 
-                        TextRange tr = new TextRange(position, textEnd);
-                        Run runCopy = RichTextBoxUtilities.CopyRun(run);
-                        runCopy.Text = tr.Text;
-                        if (!plainTextOnly)
-                        {
-                            IntroViewClipboard.AddRun(runCopy, margins);
-                        }
-                        plainText.Append(RichTextBoxUtilities.GetRunPlainText(runCopy));
+                            TextPointer textEnd = run.ElementEnd;
+                            if (run.ElementEnd.CompareTo(end) > 0)
+                            {
+                                textEnd = end;
+                            }
 
+                            TextRange tr = new TextRange(position, textEnd);
+                            Run runCopy = RichTextBoxUtilities.CopyRun(run);
+                            runCopy.Text = tr.Text;
+                            if (!plainTextOnly)
+                            {
+                                IntroViewClipboard.AddRun(runCopy, margins);
+                            }
+                            plainText.Append(RichTextBoxUtilities.GetRunPlainText(runCopy));
+                        }
                         break;
                 }
 
@@ -276,21 +292,6 @@ namespace ChessForge
                 _rtb.Document.Blocks.Add(para);
             }
             return para.ContentEnd;
-        }
-
-        /// <summary>
-        /// Creats a new diagram paragraph and inserts it.
-        /// </summary>
-        /// <param name="diagPara"></param>
-        private void InsertDiagramFromClipboard(TreeNode nodeForDiag, bool isFlipped)
-        {
-            TreeNode nd = nodeForDiag.CloneMe(true);
-            if (nd != null)
-            {
-                Paragraph para = InsertDiagram(nd, isFlipped);
-                _rtb.CaretPosition = para.ElementEnd;
-                _rtb.CaretPosition = _rtb.CaretPosition.GetNextContextPosition(LogicalDirection.Forward);
-            }
         }
 
         /// <summary>
@@ -366,6 +367,9 @@ namespace ChessForge
                         Thickness? thick = element.GetThickness();
                         InsertRunFromClipboard(element.CreateRun(), isFirstElem ? thick : null, out _);
                         break;
+                    case IntroViewClipboard.ElementType.Hyperlink:
+                        InsertHyperlinkFromClipboard(element.CreateHyperlink(), out _);
+                        break;
                     case IntroViewClipboard.ElementType.Move:
                         InsertMoveFromClipboard(element.Node);
                         break;
@@ -388,6 +392,21 @@ namespace ChessForge
             {
                 TreeNode ndToInsert = node.CloneMe(true);
                 InsertMove(ndToInsert);
+            }
+        }
+
+        /// <summary>
+        /// Creats a new diagram paragraph and inserts it.
+        /// </summary>
+        /// <param name="diagPara"></param>
+        private void InsertDiagramFromClipboard(TreeNode nodeForDiag, bool isFlipped)
+        {
+            TreeNode nd = nodeForDiag.CloneMe(true);
+            if (nd != null)
+            {
+                Paragraph para = InsertDiagram(nd, isFlipped);
+                _rtb.CaretPosition = para.ElementEnd;
+                _rtb.CaretPosition = _rtb.CaretPosition.GetNextContextPosition(LogicalDirection.Forward);
             }
         }
 
@@ -417,6 +436,32 @@ namespace ChessForge
                 }
 
                 _rtb.CaretPosition = run.ElementEnd;
+            }
+        }
+
+        /// <summary>
+        /// If parent is a run, split the run and insert the hyperlink in between.
+        /// If parent is a Paragraph and it is not a diagram paragraph, insert it at the caret point.
+        /// </summary>
+        /// <param name="run"></param>
+        private void InsertHyperlinkFromClipboard(Hyperlink hlToInsert, out double fontSize)
+        {
+            RichTextBoxUtilities.GetMoveInsertionPlace(_rtb, out Paragraph para, out Inline insertBefore, out fontSize);
+            if (para != null)
+            {
+                Hyperlink hl = RichTextBoxUtilities.CopyHyperlink(hlToInsert);
+                SetupHyperlink(hl, hl.NavigateUri.ToString());
+                if (insertBefore == null)
+                {
+                    para.Inlines.Add(hl);
+                }
+                else
+                {
+                    para.Inlines.InsertBefore(insertBefore, hl);
+                }
+
+                _rtb.CaretPosition = hl.ElementEnd;
+                _rtb.CaretPosition = _rtb.CaretPosition.GetNextContextPosition(LogicalDirection.Forward);
             }
         }
 

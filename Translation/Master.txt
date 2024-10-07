@@ -225,6 +225,9 @@ Elo=Elo
 #Best move
 BestMove=best
 
+#Click to edit
+ClickToEdit= click to edit
+
 #Request to evaluate a position
 EvaluatePosition=Evaluate Position
 
@@ -270,6 +273,12 @@ Stalemate=stalemate
 
 #Game and Exercise References
 GameExerciseReferences=Game and Exercise References
+
+#Chapter Reference
+ChapterReference=Chapter References
+
+#References
+References=References
 
 #Open a view
 OpenView=Open View
@@ -1791,8 +1800,17 @@ BookmarkAllOptionsHere=Bookmark All Options Here
 #Mark the current position as a thumbnail
 MarkAsThumbnail=Mark as Thumbnail
 
+#Removes the thumbnail mark from the current position
+DeleteThumbnail=Remove Thumbnail
+
 #ChapterThumbnail
-ChapterThumbnail=Thumbnail for Chapters View
+ChapterThumbnail=Chapter Thumbnail
+
+#GameThumbnail
+GameThumbnail=Game Thumbnail
+
+#ExerciseThumbnail
+ExerciseThumbnail=Exercise Thumbnail
 
 #Copy selected moves
 CopyMoves=Copy Moves
@@ -2517,6 +2535,9 @@ SelectGameAndExercises=Select Games and/or Exercises
 #Select Reference Games/Exercises (dialog title)
 SelectReferences=Select Reference Games and/or Exercises
 
+
+#Select Chapter references
+SelectChapterReferences=Select Chapter References
 
 #Merge games and copy
 MergeGamesAndCopy=Merge Games into the Study Tree and Copy them into the Games section.

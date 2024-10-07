@@ -67,6 +67,11 @@ namespace ChessForge
         public string Text;
 
         /// <summary>
+        /// Uri to use with the Hyperlink type.
+        /// </summary>
+        public Uri Uri;
+
+        /// <summary>
         /// A boolean value to use for the elements that require it.
         /// </summary>
         public bool? BoolState;
@@ -102,6 +107,27 @@ namespace ChessForge
             Text = run.Text;
             IsFontWeightBold = run.FontWeight == FontWeights.Bold;
             FontSize = run.FontSize;
+        }
+
+        /// <summary>
+        /// Configures the current object as a Hyperlink.
+        /// </summary>
+        /// <param name="hl"></param>
+        public void SetAsHyperlink(Hyperlink hl)
+        {
+            Type = IntroViewClipboard.ElementType.Hyperlink;
+            Uri = hl.NavigateUri;
+
+            if (hl.Inlines.Count > 0 && hl.Inlines.FirstInline is Run run)
+            {
+                Text = run.Text;
+                IsFontWeightBold = run.FontWeight == FontWeights.Bold;
+                FontSize = run.FontSize;
+            }
+            else
+            {
+                Text = "???";
+            }
         }
 
         /// <summary>
@@ -148,6 +174,22 @@ namespace ChessForge
             run.FontSize = FontSize;
 
             return run;
+        }
+
+        /// <summary>
+        /// Creates a Hyperlink object from the values stored in this object.
+        /// </summary>
+        /// <returns></returns>
+        public Hyperlink CreateHyperlink()
+        {
+            Run run = CreateRun();
+
+            Hyperlink hl = new Hyperlink(run);
+            hl.NavigateUri = Uri;
+            hl.ToolTip = Uri.ToString();
+            hl.Foreground = ChessForgeColors.CurrentTheme.HyperlinkForeground;
+
+            return hl;
         }
 
         /// <summary>

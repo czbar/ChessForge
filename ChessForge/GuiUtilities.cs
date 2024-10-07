@@ -1,17 +1,17 @@
-﻿using System;
+﻿using ChessPosition;
+using ChessPosition.Utils;
+using EngineService;
+using GameTree;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Linq;
-using ChessPosition;
-using ChessPosition.Utils;
-using EngineService;
-using GameTree;
 
 namespace ChessForge
 {
@@ -31,6 +31,119 @@ namespace ChessForge
             Constants.CHAR_REFERENCE_MARK,
             Constants.CHAR_SQUARED_SQUARE,
           };
+
+        /// <summary>
+        /// Gets a string with reference GUIDs, splits them into 
+        /// Game/Exercise and Chapter GUID strings.
+        /// and separate for Chapter refs.
+        /// </summary>
+        /// <param name="refGuids"></param>
+        public static void SplitReferencesString(string refGuids, out string gameExerciseRefGuids, out string chapterRefGuids)
+        {
+            StringBuilder sbGameExerciseRefs = new StringBuilder();
+            StringBuilder sbChapterRefs = new StringBuilder();
+
+            List<Article> lstRefs = BuildReferencedArticlesList(refGuids);
+            if (lstRefs != null && lstRefs.Count > 0)
+            {
+                bool firstArticle = true;
+                bool firstChapter = true;
+
+                foreach (Article article in lstRefs)
+                {
+                    if (article.ContentType == GameData.ContentType.MODEL_GAME || article.ContentType == GameData.ContentType.EXERCISE)
+                    {
+                        if (!firstArticle)
+                        {
+                            sbGameExerciseRefs.Append("|");
+                        }
+                        sbGameExerciseRefs.Append(article.Guid);
+                        firstArticle = false;
+                    }
+                    else if (article.ContentType == GameData.ContentType.STUDY_TREE)
+                    {
+                        if (!firstChapter)
+                        {
+                            sbChapterRefs.Append("|");
+                        }
+                        sbChapterRefs.Append(article.Guid);
+                        firstChapter = false;
+                    }
+                }
+            }
+            gameExerciseRefGuids = sbGameExerciseRefs.ToString();
+            chapterRefGuids = sbChapterRefs.ToString();
+        }
+
+        /// <summary>
+        /// Splits a '|' separated list of references into Game/Exercise refs
+        /// and Chapter refs.
+        /// </summary>
+        /// <param name="refGuids"></param>
+        public static void GetReferencesTextByType(string refGuids, out string gameExerciseRefsText, out string chapterRefsText)
+        {
+            StringBuilder sbGameExerciseRefs = new StringBuilder();
+            StringBuilder sbChapterRefs = new StringBuilder();
+
+            List<Article> lstRefs = BuildReferencedArticlesList(refGuids);
+            if (lstRefs != null && lstRefs.Count > 0)
+            {
+                bool firstArticle = true;
+                bool firstChapter = true;
+
+                foreach (Article article in lstRefs)
+                {
+                    if (article.ContentType == GameData.ContentType.MODEL_GAME || article.ContentType == GameData.ContentType.EXERCISE)
+                    {
+                        if (!firstArticle)
+                        {
+                            sbGameExerciseRefs.Append("; ");
+                        }
+                        sbGameExerciseRefs.Append(article.Tree.Header.BuildGameReferenceTitle(true));
+                        firstArticle = false;
+                    }
+                    else if (article.ContentType == GameData.ContentType.STUDY_TREE)
+                    {
+                        if (!firstChapter)
+                        {
+                            sbChapterRefs.Append("; ");
+                        }
+                        Chapter chapter = AppState.Workbook.GetChapterByGuid(article.Guid, out int index);
+                        sbChapterRefs.Append(chapter.TitleWithNumber);
+                        firstChapter = false;
+                    }
+                }
+            }
+            gameExerciseRefsText = sbGameExerciseRefs.ToString();
+            chapterRefsText = sbChapterRefs.ToString();
+        }
+
+        /// <summary>
+        /// Combines the GameExercise and Chapter reference guid strings into one.
+        /// </summary>
+        public static string CombineReferences(string refsGuids1, string refsGuids2)
+        {
+            string references = refsGuids1 ?? "";
+            if (refsGuids1.Length > 0 && (refsGuids2 ?? "").Length > 0)
+            {
+                references += "|";
+            }
+            references += refsGuids2;
+            
+            return references;
+        }
+
+        /// <summary>
+        /// Sorts the reference GUIDs string so that game/exercise refs are first,
+        /// then followed by chapter refs.
+        /// </summary>
+        /// <param name="refGuids"></param>
+        /// <returns></returns>
+        public static string SortReferenceString(string refGuids)
+        {
+            SplitReferencesString(refGuids, out string gameExerciseRefGuids, out string chapterRefGuids);
+            return CombineReferences(gameExerciseRefGuids, chapterRefGuids);
+        }
 
         /// <summary>
         /// Removes characters not intended for text output from the passed string.
@@ -74,6 +187,31 @@ namespace ChessForge
             sb.Append("] ");
 
             return sb.ToString();
+        }
+
+        /// <summary>
+        /// Builds a list of articles from a list of references.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        public static List<Article> BuildReferencedArticlesList(string articleRefs)
+        {
+            List<Article> articles = new List<Article>();
+
+            if (!string.IsNullOrEmpty(articleRefs))
+            {
+                string[] refs = articleRefs.Split('|');
+                foreach (string guid in refs)
+                {
+                    Article article = WorkbookManager.SessionWorkbook.GetArticleByGuid(guid, out _, out _, true);
+                    if (article != null)
+                    {
+                        articles.Add(article);
+                    }
+                }
+            }
+
+            return articles;
         }
 
         /// <summary>
@@ -131,6 +269,33 @@ namespace ChessForge
             {
                 AppState.MainWin.UiRtbBoardComment.Visibility = Visibility.Hidden;
             }
+        }
+
+        /// <summary>
+        /// Returns the TabViewType corresponding to the passed ContentType.
+        /// </summary>
+        /// <param name="contentType"></param>
+        /// <returns></returns>
+        public static TabViewType ContentTypeToTabView(GameData.ContentType contentType)
+        {
+            TabViewType viewType = TabViewType.NONE;
+            switch (contentType)
+            {
+                case GameData.ContentType.STUDY_TREE:
+                    viewType = TabViewType.STUDY;
+                    break;
+                case GameData.ContentType.MODEL_GAME:
+                    viewType = TabViewType.MODEL_GAME;
+                    break;
+                case GameData.ContentType.EXERCISE:
+                    viewType = TabViewType.EXERCISE;
+                    break;
+                case GameData.ContentType.INTRO:
+                    viewType = TabViewType.INTRO;
+                    break;
+            }
+
+            return viewType;
         }
 
         /// <summary>

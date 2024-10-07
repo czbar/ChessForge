@@ -612,6 +612,8 @@ namespace ChessForge
             bool collapsed = false;
             for (int i = 0; i < sector.Nodes.Count; i++)
             {
+                bool diagram = false;
+
                 if (sector.IsCollapsed)
                 {
                     // mark as collapsed and let this iteration complete to insert the first Run
@@ -635,7 +637,7 @@ namespace ChessForge
                     {
                         includeNumber = true;
                     }
-                    Run r = BuildNodeTextAndAddToPara(nd, includeNumber, para, sector.DisplayLevel, !collapsed);
+                    Run r = BuildNodeTextAndAddToPara(nd, includeNumber, para, out diagram, sector.DisplayLevel, !collapsed);
                     if (r.FontWeight == FontWeights.Bold)
                     {
                         r.FontWeight = FontWeights.DemiBold;
@@ -656,7 +658,7 @@ namespace ChessForge
                         ColorLastNode(sector, r, nd, levelGroup);
                     }
                 }
-                includeNumber = false;
+                includeNumber = diagram;
 
                 if (collapsed)
                 {

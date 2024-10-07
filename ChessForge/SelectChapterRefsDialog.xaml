@@ -1,0 +1,17 @@
+﻿<Window x:Class="ChessForge.SelectChapterRefsDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:p="clr-namespace:ChessForge.Properties"
+        xmlns:local="clr-namespace:ChessForge"
+        mc:Ignorable="d"
+        Title="{x:Static p:Resources.SelectChapterReferences}" Height="300" Width="400">
+    <Grid>
+        <ListBox x:Name="UiLbChapters" ItemsSource="{Binding}" SelectionMode="Multiple" 
+                 DisplayMemberPath="TitleWithNumber"
+                 Margin="15,10,15,60"/>
+        <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Ok}" IsDefault="True" HorizontalAlignment="Center" Margin="-100,0,0,20" Width="80" VerticalAlignment="Bottom" Click="UiBtnOk_Click"/>
+        <Button x:Name="UiBtnCancel" Content="{x:Static p:Resources.Cancel}" IsCancel="True" HorizontalAlignment="Center" Margin="100,0,0,20" Width="80" VerticalAlignment="Bottom" Click="UiBtnCancel_Click"/>
+    </Grid>
+</Window>

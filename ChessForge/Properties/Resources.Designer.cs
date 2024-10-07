@@ -863,6 +863,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chapter References.
+        /// </summary>
+        public static string ChapterReference {
+            get {
+                return ResourceManager.GetString("ChapterReference", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chapters.
         /// </summary>
         public static string Chapters {
@@ -881,7 +890,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Thumbnail for Chapters View.
+        ///   Looks up a localized string similar to Chapter Thumbnail.
         /// </summary>
         public static string ChapterThumbnail {
             get {
@@ -1057,6 +1066,15 @@ namespace ChessForge.Properties {
         public static string ClearBoard {
             get {
                 return ResourceManager.GetString("ClearBoard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to click to edit.
+        /// </summary>
+        public static string ClickToEdit {
+            get {
+                return ResourceManager.GetString("ClickToEdit", resourceCulture);
             }
         }
         
@@ -1786,6 +1804,15 @@ namespace ChessForge.Properties {
         public static string DeleteThisGame {
             get {
                 return ResourceManager.GetString("DeleteThisGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Thumbnail.
+        /// </summary>
+        public static string DeleteThumbnail {
+            get {
+                return ResourceManager.GetString("DeleteThumbnail", resourceCulture);
             }
         }
         
@@ -2870,6 +2897,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exercise Thumbnail.
+        /// </summary>
+        public static string ExerciseThumbnail {
+            get {
+                return ResourceManager.GetString("ExerciseThumbnail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exercise View.
         /// </summary>
         public static string ExerciseViewConfig {
@@ -3532,6 +3568,15 @@ namespace ChessForge.Properties {
         public static string GameText {
             get {
                 return ResourceManager.GetString("GameText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game Thumbnail.
+        /// </summary>
+        public static string GameThumbnail {
+            get {
+                return ResourceManager.GetString("GameThumbnail", resourceCulture);
             }
         }
         
@@ -5841,6 +5886,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to References.
+        /// </summary>
+        public static string References {
+            get {
+                return ResourceManager.GetString("References", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Referenced games not found..
         /// </summary>
         public static string RefGamesNotFound {
@@ -6206,6 +6260,15 @@ namespace ChessForge.Properties {
         public static string SelectChapter {
             get {
                 return ResourceManager.GetString("SelectChapter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Chapter References.
+        /// </summary>
+        public static string SelectChapterReferences {
+            get {
+                return ResourceManager.GetString("SelectChapterReferences", resourceCulture);
             }
         }
         

@@ -552,6 +552,38 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Assumes the input string in the form "_run_comment_article_ref_<nodeId>_<articleRef>"
+        /// Splits the input string by '_' and processes the last 2 tokens.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="articleRef"></param>
+        /// <returns></returns>
+        public static int GetNodeIdAndArticleRefFromPrefixedString(string str, out string articleRef)
+        {
+            int nodeId = -1;
+            articleRef = null;
+
+            if (!string.IsNullOrEmpty(str))
+            {
+                string[] tokens = str.Split('_');
+                int len = tokens.Length;
+                if (len >= 3)
+                {
+                    if (!int.TryParse(tokens[len-2], out nodeId))
+                    {
+                        nodeId = -1;
+                    }
+                    else
+                    {
+                        articleRef = tokens[len-1];
+                    }
+                }
+            }
+
+            return nodeId;
+        }
+
+        /// <summary>
         /// Returns the PieceColor value corresponding to the passed string.
         /// </summary>
         /// <param name="color"></param>

@@ -21,6 +21,7 @@ namespace GameTree
             SAVE_TRAINING_MOVES,
             INSERT_DIAGRAM,
             DELETE_DIAGRAM,
+            MARK_THUMBNAIL,
         }
 
         /// <summary>

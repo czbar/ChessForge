@@ -487,7 +487,7 @@ namespace GameTree
                     case ChfCommands.Command.ARTICLE_REFS:
                         if (tokens.Length > 1)
                         {
-                            nd.ArticleRefs = tokens[1];
+                            nd.References = tokens[1];
                         }
                         break;
                     case ChfCommands.Command.ENGINE_EVALUATION:
@@ -867,21 +867,6 @@ namespace GameTree
             }
 
             return idx;
-        }
-
-        /// <summary>
-        /// Sets Article Refererences on the Node.
-        /// </summary>
-        /// <param name="nd"></param>
-        /// <param name="refGuids"></param>
-        public void SetArticleRefs(TreeNode nd, List<String> refGuids)
-        {
-            TreeNode node = GetNodeFromNodeId(nd.NodeId);
-            node.ArticleRefs = string.Empty;
-            foreach (string s in refGuids)
-            {
-                node.AddArticleReference(s);
-            }
         }
 
         /// <summary>
@@ -1699,6 +1684,24 @@ namespace GameTree
             }
             catch
             {
+            }
+        }
+
+        /// <summary>
+        /// Removes the current thumbnail and restores the previous one.
+        /// </summary>
+        /// <param name=""></param>
+        /// <param name=""></param>
+        public void UndoMarkThumbnail(object currThumb, object prevThumb)
+        {
+            if (currThumb != null && currThumb is TreeNode currNode)
+            {
+                ClearThumbnail(currNode);
+            }
+
+            if (prevThumb != null && prevThumb is TreeNode prevNode)
+            {
+                SetThumbnail(prevNode);
             }
         }
 

@@ -21,7 +21,8 @@ namespace ChessForge
             Paragraph,
             Run,
             Move,
-            Diagram
+            Diagram,
+            Hyperlink
         }
 
         /// <summary>
@@ -52,6 +53,21 @@ namespace ChessForge
             // make a copy of the run
             Run runToAdd = RichTextBoxUtilities.CopyRun(run);
             element.SetAsRun(runToAdd);
+
+            Elements.Add(element);
+        }
+
+        /// <summary>
+        /// Adds a Hyperlink element to the list.
+        /// </summary>
+        /// <param name="hl"></param>
+        public static void AddHyperlink(Hyperlink hl)
+        {
+            IntroViewElement element = new IntroViewElement(ElementType.Hyperlink);
+
+            // make a copy of the hyperlink
+            Hyperlink hlToAdd = RichTextBoxUtilities.CopyHyperlink(hl);
+            element.SetAsHyperlink(hlToAdd);
 
             Elements.Add(element);
         }
