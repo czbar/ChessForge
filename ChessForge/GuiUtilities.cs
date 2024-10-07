@@ -33,16 +33,17 @@ namespace ChessForge
           };
 
         /// <summary>
-        /// Get text for Reference labels, separate for Gaqme/Exercise
+        /// Gets a string with reference GUIDs, splits them into 
+        /// Game/Exercise and Chapter GUID strings.
         /// and separate for Chapter refs.
         /// </summary>
-        /// <param name="refs"></param>
-        public static void SplitReferencesString(string refs, out string gameExerciseRefs, out string chapterRefs)
+        /// <param name="refGuids"></param>
+        public static void SplitReferencesString(string refGuids, out string gameExerciseRefGuids, out string chapterRefGuids)
         {
             StringBuilder sbGameExerciseRefs = new StringBuilder();
             StringBuilder sbChapterRefs = new StringBuilder();
 
-            List<Article> lstRefs = BuildReferencedArticlesList(refs);
+            List<Article> lstRefs = BuildReferencedArticlesList(refGuids);
             if (lstRefs != null && lstRefs.Count > 0)
             {
                 bool firstArticle = true;
@@ -70,21 +71,21 @@ namespace ChessForge
                     }
                 }
             }
-            gameExerciseRefs = sbGameExerciseRefs.ToString();
-            chapterRefs = sbChapterRefs.ToString();
+            gameExerciseRefGuids = sbGameExerciseRefs.ToString();
+            chapterRefGuids = sbChapterRefs.ToString();
         }
 
         /// <summary>
         /// Splits a '|' separated list of references into Game/Exercise refs
         /// and Chapter refs.
         /// </summary>
-        /// <param name="refs"></param>
-        public static void GetReferencesTextByType(string refs, out string gameExerciseRefs, out string chapterRefs)
+        /// <param name="refGuids"></param>
+        public static void GetReferencesTextByType(string refGuids, out string gameExerciseRefsText, out string chapterRefsText)
         {
             StringBuilder sbGameExerciseRefs = new StringBuilder();
             StringBuilder sbChapterRefs = new StringBuilder();
 
-            List<Article> lstRefs = GuiUtilities.BuildReferencedArticlesList(refs);
+            List<Article> lstRefs = BuildReferencedArticlesList(refGuids);
             if (lstRefs != null && lstRefs.Count > 0)
             {
                 bool firstArticle = true;
@@ -113,34 +114,35 @@ namespace ChessForge
                     }
                 }
             }
-            gameExerciseRefs = sbGameExerciseRefs.ToString();
-            chapterRefs = sbChapterRefs.ToString();
+            gameExerciseRefsText = sbGameExerciseRefs.ToString();
+            chapterRefsText = sbChapterRefs.ToString();
         }
 
         /// <summary>
-        /// Combines the GameExercise and Chapter references strings.
+        /// Combines the GameExercise and Chapter reference guid strings into one.
         /// </summary>
-        public static string CombineReferences(string refs1, string refs2)
+        public static string CombineReferences(string refsGuids1, string refsGuids2)
         {
-            string references = refs1 ?? "";
-            if (refs1.Length > 0 && (refs2 ?? "").Length > 0)
+            string references = refsGuids1 ?? "";
+            if (refsGuids1.Length > 0 && (refsGuids2 ?? "").Length > 0)
             {
                 references += "|";
             }
-            references += refs2;
+            references += refsGuids2;
             
             return references;
         }
 
         /// <summary>
-        /// Sorts the reference string so that game/exercise refs are first followed by chapter refs.
+        /// Sorts the reference GUIDs string so that game/exercise refs are first,
+        /// then followed by chapter refs.
         /// </summary>
-        /// <param name="refs"></param>
+        /// <param name="refGuids"></param>
         /// <returns></returns>
-        public static string SortReferenceString(string refs)
+        public static string SortReferenceString(string refGuids)
         {
-            SplitReferencesString(refs, out string gameExerciseRefs, out string chapterRefs);
-            return CombineReferences(gameExerciseRefs, chapterRefs);
+            SplitReferencesString(refGuids, out string gameExerciseRefGuids, out string chapterRefGuids);
+            return CombineReferences(gameExerciseRefGuids, chapterRefGuids);
         }
 
         /// <summary>
