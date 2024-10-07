@@ -91,55 +91,12 @@ namespace ChessForge
                 MoveButtonHporizontally(UiBtnHelp, -50);
             }
 
-            SplitReferencesString(_node.References);
+            GuiUtilities.GetReferencesTextByType(_node.References, out _gameExerciseRefs, out _chapterRefs);
 
             SetRefsLabelContent(_gameExerciseRefs, UiLblGameExerciseRefs);
             SetRefsLabelContent(_chapterRefs, UiLblGameExerciseRefs);
 
             UiTbComment.Focus();
-        }
-
-        /// <summary>
-        /// Splits a '|' separated list of references into Game/Exercise refs
-        /// and Chapter refs.
-        /// </summary>
-        /// <param name="refs"></param>
-        private void SplitReferencesString(string refs)
-        {
-            StringBuilder sbGameExerciseRefs = new StringBuilder();
-            StringBuilder sbChapterRefs = new StringBuilder();
-
-            List<Article> lstRefs = GuiUtilities.BuildReferencedArticlesList(refs);
-            if (lstRefs != null && lstRefs.Count > 0)
-            {
-                bool firstArticle = true;
-                bool firstChapter = true;
-
-                foreach (Article article in lstRefs)
-                {
-                    if (article.ContentType == GameData.ContentType.MODEL_GAME || article.ContentType == GameData.ContentType.EXERCISE)
-                    {
-                        if (!firstArticle)
-                        {
-                            sbGameExerciseRefs.Append("; ");
-                        }
-                        sbGameExerciseRefs.Append(article.Tree.Header.BuildGameReferenceTitle(true));
-                        firstArticle = false;
-                    }
-                    else if (article.ContentType == GameData.ContentType.STUDY_TREE)
-                    {
-                        if (!firstChapter)
-                        {
-                            sbChapterRefs.Append("; ");
-                        }
-                        Chapter chapter = AppState.Workbook.GetChapterByGuid(article.Guid, out int index);
-                        sbChapterRefs.Append(chapter.TitleWithNumber);
-                        firstChapter = false;
-                    }
-                }
-            }
-            _gameExerciseRefs = sbGameExerciseRefs.ToString();
-            _chapterRefs = sbChapterRefs.ToString();
         }
 
         /// <summary>
@@ -502,19 +459,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Combines the GameExercise and Chapter references strings.
-        /// </summary>
-        private void CombineRefs()
-        {
-            References = _gameExerciseRefs;
-            if (_gameExerciseRefs.Length > 0 && _chapterRefs.Length > 0)
-            {
-                References += "|";
-            }
-            References += _chapterRefs;
-        }
-
-        /// <summary>
         /// Closes the dialog after user pushed the OK button.
         /// </summary>
         /// <param name="sender"></param>
@@ -522,7 +466,7 @@ namespace ChessForge
         private void UiBtnOk_Click(object sender, RoutedEventArgs e)
         {
             Comment = UiTbComment.Text;
-            CombineRefs();
+            References = GuiUtilities.CombineReferences(_gameExerciseRefs, _chapterRefs);
             if (_isExerciseEditing)
             {
                 QuizPoints = ParseQuizPoints(UiTbQuizPoints.Text);
