@@ -1,6 +1,4 @@
 ﻿using GameTree;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -17,19 +15,29 @@ namespace ChessForge
         public string Comment { get; set; }
 
         /// <summary>
-        /// Combined References
+        /// Combined Reference Guids
         /// </summary>
-        public string References { get; set; }
+        public string ReferenceGuids { get; set; }
 
         /// <summary>
-        /// Game/Exercise References
+        /// Game/Exercise References GUIDs string
         /// </summary>
-        private string _gameExerciseRefs = "";
+        private string _gameExerciseRefGuids = "";
 
         /// <summary>
-        /// Chapter References
+        /// Chapter References GUIDs string
         /// </summary>
-        private string _chapterRefs = "";
+        private string _chapterRefGuids = "";
+
+        /// <summary>
+        /// Game/Exercise References text for the GUI
+        /// </summary>
+        private string _gameExerciseRefsText = "";
+
+        /// <summary>
+        /// Chapter References text for the GUI
+        /// </summary>
+        private string _chapterRefsText = "";
 
         /// <summary>
         /// Quiz points
@@ -91,47 +99,13 @@ namespace ChessForge
                 MoveButtonHporizontally(UiBtnHelp, -50);
             }
 
-            GuiUtilities.GetReferencesTextByType(_node.References, out _gameExerciseRefs, out _chapterRefs);
+            GuiUtilities.SplitReferencesString(_node.References, out _gameExerciseRefGuids, out _chapterRefGuids);
 
-            SetRefsLabelContent(_gameExerciseRefs, UiLblGameExerciseRefs);
-            SetRefsLabelContent(_chapterRefs, UiLblGameExerciseRefs);
+            GuiUtilities.GetReferencesTextByType(_node.References, out _gameExerciseRefsText, out _chapterRefsText);
+            UiLblGameExerciseRefs.Content = _gameExerciseRefsText;
+            UiLblChapterRefs.Content = _chapterRefsText;
 
             UiTbComment.Focus();
-        }
-
-        /// <summary>
-        /// Sets the text for a reference label
-        /// </summary>
-        private void SetRefsLabelContent(string refs, Label lblRefs)
-        {
-            StringBuilder sbRefs = new StringBuilder();
-
-            List<Article> lstRefs = GuiUtilities.BuildReferencedArticlesList(refs);
-            if (lstRefs != null && lstRefs.Count > 0)
-            {
-                bool firstArticle = true;
-
-                foreach (Article article in lstRefs)
-                {
-                    if (!firstArticle)
-                    {
-                        sbRefs.Append("; ");
-                    }
-
-                    if (article.ContentType == GameData.ContentType.STUDY_TREE)
-                    {
-                        Chapter chapter = AppState.Workbook.GetChapterByGuid(article.Guid, out int index);
-                        sbRefs.Append(chapter.TitleWithNumber);
-                    }
-                    else
-                    {
-                        sbRefs.Append(article.Tree.Header.BuildGameReferenceTitle(true));
-                    }
-
-                    firstArticle = false;
-                }
-            }
-            lblRefs.Content = sbRefs.ToString();
         }
 
         /// <summary>
@@ -404,15 +378,16 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiLblChapter_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void UiLblChapterRefs_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            var dlg = new SelectChapterRefsDialog(_chapterRefs);
+            var dlg = new SelectChapterRefsDialog(_chapterRefsText);
             GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
             if (dlg.ShowDialog() == true)
             {
-                _chapterRefs = dlg.ChapterRefs ?? "";
-                SetRefsLabelContent(_chapterRefs, UiLblChapterRefs);
+                _chapterRefGuids = dlg.ChapterRefGuids ?? "";
+                GuiUtilities.GetReferencesTextByType(_chapterRefGuids, out _, out _chapterRefsText);
+                UiLblChapterRefs.Content = _chapterRefsText;
             }
 
             e.Handled = true;
@@ -423,15 +398,16 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiLblReferences_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void UiLblGameExerciseRefs_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             var dlg = new SelectArticleRefsDialog(_node);
             GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
             if (dlg.ShowDialog() == true)
             {
-                _gameExerciseRefs = dlg.GameExerciseRefs ?? "";
-                SetRefsLabelContent(_gameExerciseRefs, UiLblGameExerciseRefs);
+                _gameExerciseRefGuids = dlg.GameExerciseRefGuids ?? "";
+                GuiUtilities.GetReferencesTextByType(_gameExerciseRefGuids, out _gameExerciseRefsText, out _);
+                UiLblGameExerciseRefs.Content = _gameExerciseRefsText;
             }
 
             e.Handled = true;
@@ -445,7 +421,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiGbReferences_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            UiLblReferences_MouseLeftButtonDown(sender, e);
+            UiLblGameExerciseRefs_MouseLeftButtonDown(sender, e);
         }
 
         /// <summary>
@@ -455,7 +431,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiGbSeeChapter_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            UiLblChapter_MouseLeftButtonDown(sender, e);
+            UiLblChapterRefs_MouseLeftButtonDown(sender, e);
         }
 
         /// <summary>
@@ -466,7 +442,7 @@ namespace ChessForge
         private void UiBtnOk_Click(object sender, RoutedEventArgs e)
         {
             Comment = UiTbComment.Text;
-            References = GuiUtilities.CombineReferences(_gameExerciseRefs, _chapterRefs);
+            ReferenceGuids = GuiUtilities.CombineReferences(_gameExerciseRefGuids, _chapterRefGuids);
             if (_isExerciseEditing)
             {
                 QuizPoints = ParseQuizPoints(UiTbQuizPoints.Text);

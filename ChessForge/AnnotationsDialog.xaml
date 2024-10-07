@@ -14,10 +14,10 @@
                 <TextBox x:Name="UiTbComment" HorizontalAlignment="Left" Margin="10,10" TextWrapping="Wrap" Text="" Width="338" Height="107" VerticalAlignment="Top" PreviewKeyDown="UiTbComment_PreviewKeyDown" />
             </GroupBox>
             <GroupBox x:Name="UiGbReferences" Header="{x:Static p:Resources.GameExerciseReferences}" Margin="201,170,0,0" Width="370" Height="50" HorizontalAlignment="Left" VerticalAlignment="Top" MouseLeftButtonDown="UiGbReferences_MouseLeftButtonDown">
-                <Label x:Name="UiLblGameExerciseRefs" FontStyle="Italic" Content="" Margin="10,0 14, 0" MouseLeftButtonDown="UiLblReferences_MouseLeftButtonDown"  />
+                <Label x:Name="UiLblGameExerciseRefs" FontStyle="Italic" Content="" Margin="10,0 14, 0" MouseLeftButtonDown="UiLblGameExerciseRefs_MouseLeftButtonDown"  />
             </GroupBox>
             <GroupBox x:Name="UiGbSeeChapter" Header="{x:Static p:Resources.ChapterReference}" Margin="201,225,0,0" Width="370" Height="50" HorizontalAlignment="Left" VerticalAlignment="Top" MouseLeftButtonDown="UiGbSeeChapter_MouseLeftButtonDown">
-                <Label x:Name="UiLblChapterRefs"  FontStyle="Italic" Content="" Margin="10,0 14, 0" MouseLeftButtonDown="UiLblChapter_MouseLeftButtonDown"  />
+                <Label x:Name="UiLblChapterRefs"  FontStyle="Italic" Content="" Margin="10,0 14, 0" MouseLeftButtonDown="UiLblChapterRefs_MouseLeftButtonDown"  />
             </GroupBox>
             <GroupBox x:Name="UiGbMove" Header="{x:Static p:Resources.Move}" Margin="28,15" Width="65" Height="260" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <StackPanel Margin="0,0,0,0" HorizontalAlignment="Center" >
