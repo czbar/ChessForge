@@ -717,7 +717,7 @@ namespace ChessForge
                         throw new Exception(Properties.Resources.ErrNoTextReceived);
                     }
 
-                    FinalizeLichessDownload(chapter, tree, gameId, ActiveTab);
+                    FinalizeLichessDownload(chapter, tree, gameId, ActiveTab, null);
                 }
             }
             catch (Exception ex)
@@ -734,7 +734,7 @@ namespace ChessForge
         /// <param name="lichessGameId"></param>
         /// <param name="activeTabOnEntry"></param>
         /// <returns></returns>
-        public static bool FinalizeLichessDownload(Chapter chapter, VariationTree tree, string lichessGameId, TabViewType activeTabOnEntry)
+        public static bool FinalizeLichessDownload(Chapter chapter, VariationTree tree, string lichessGameId, TabViewType activeTabOnEntry, VariationTreeView activeViewOnEntry)
         {
             bool added = false;
 
@@ -753,13 +753,14 @@ namespace ChessForge
                 chapter.ActiveModelGameIndex = chapter.GetModelGameCount() - 1;
                 string guid = tree.Header.GetGuid(out _);
 
-                // if the current active tree is Study Tree, add reference
-                if (activeTabOnEntry == TabViewType.STUDY)
+                if (activeViewOnEntry != null)
                 {
-                    TreeNode nd = chapter.StudyTree.Tree.SelectedNode;
+                    TreeNode nd = activeViewOnEntry.GetSelectedNode();
                     if (nd != null)
                     {
                         nd.AddArticleReference(guid);
+                        nd.References = GuiUtilities.SortReferenceString(nd.References);
+                        activeViewOnEntry.InsertOrUpdateCommentRun(nd);
                     }
                 }
 
@@ -1278,7 +1279,7 @@ namespace ChessForge
 
                 VariationTree tree = ActiveVariationTree;
                 TreeNode selectedNode = tree?.SelectedNode;
-                
+
                 VariationTreeView view = MainWin.ActiveTreeView;
 
                 ConfigureBookmarkMenuOptions(MainWin.UiMnGameMarkBookmark, MainWin.UiMnGameDeleteBookmark);
