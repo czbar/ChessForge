@@ -37,7 +37,7 @@ namespace ChessForge
         /// <param name="gameIdList"></param>
         /// <param name="games"></param>
         public SingleGamePreviewDialog(List<string> gameIdList, List<Article> games)
-            : base(null, gameIdList)
+            : base(null, gameIdList, null, -1)
         {
             if (games.Count > 0)
             {
