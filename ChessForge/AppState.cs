@@ -734,7 +734,8 @@ namespace ChessForge
         /// <param name="lichessGameId"></param>
         /// <param name="activeTabOnEntry"></param>
         /// <returns></returns>
-        public static bool FinalizeLichessDownload(Chapter chapter, VariationTree tree, string lichessGameId, TabViewType activeTabOnEntry, VariationTreeView activeViewOnEntry)
+        public static bool FinalizeLichessDownload(Chapter chapter, VariationTree tree, string lichessGameId, 
+                                                   TabViewType activeTabOnEntry, VariationTreeView activeViewOnEntry)
         {
             bool added = false;
 
@@ -767,7 +768,6 @@ namespace ChessForge
                 MainWin.ChaptersView.IsDirty = true;
                 IsDirty = true;
                 MainWin.SelectModelGame(chapter.ActiveModelGameIndex, true);
-
                 MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgGameImportSuccess, CommentBox.HintType.INFO);
             }
 
