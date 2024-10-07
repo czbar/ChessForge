@@ -80,13 +80,22 @@ namespace ChessForge
         /// </summary>
         public bool GoToGamesOnExit = false;
 
+        // active view when entering the dialog
+        protected VariationTreeView _activeViewOnEntry;
+
+        // active article index when entering the dialog 
+        protected int _activeArticleIndexOnEntry;
+
         /// <summary>
         /// Creates the dialog for previewing games from a list.
         /// </summary>
         /// <param name="gameId"></param>
-        public GamePreviewDialog(string gameId, List<string> gameIdList, bool exitOptions = false)
+        public GamePreviewDialog(string gameId, List<string> gameIdList, VariationTreeView activeTreeView, int activeArticleIndex, bool exitOptions = false)
         {
             InitializeComponent();
+
+            _activeViewOnEntry = activeTreeView;
+            _activeArticleIndexOnEntry = activeArticleIndex;
 
             if (exitOptions)
             {
@@ -551,6 +560,14 @@ namespace ChessForge
         private void UiBtnExit_Click(object sender, RoutedEventArgs e)
         {
             _isExiting = true;
+            if (_activeViewOnEntry?.ContentType == GameData.ContentType.MODEL_GAME)
+            {
+                AppState.MainWin.SelectModelGame(_activeArticleIndexOnEntry, true);
+            }
+            else if (_activeViewOnEntry?.ContentType == GameData.ContentType.EXERCISE)
+            {
+                AppState.MainWin.SelectExercise(_activeArticleIndexOnEntry, true);
+            }
             Close();
         }
 
