@@ -309,20 +309,23 @@ namespace ChessForge
                     bool first = true;
                     foreach (Article article in articles)
                     {
+                        CommentPartType cpt;
                         string title;
                         if (article.ContentType == GameData.ContentType.STUDY_TREE)
                         {
                             title = Properties.Resources.Chapter + " " + article.Tree.Header.GetChapterTitle();
+                            cpt = CommentPartType.CHAPTER_REFERENCE;
                         }
                         else
                         {
                             title = article.Tree.Header.BuildGameReferenceTitle(false);
+                            cpt = CommentPartType.GAME_EXERCISE_REFERENCE;
                         }
                         if (!first)
                         {
                             title = "; " + title;
                         }
-                        parts.Add(new CommentPart(CommentPartType.REFERENCE, " " + title, article.Guid));
+                        parts.Add(new CommentPart(cpt, " " + title, article.Guid));
                         first = false;
                     }
                 }
@@ -448,14 +451,17 @@ namespace ChessForge
                     inl.Foreground = ChessForgeColors.CurrentTheme.HyperlinkForeground;
                     inl.Cursor = Cursors.Hand;
                     break;
-                case CommentPartType.REFERENCE:
+                case CommentPartType.GAME_EXERCISE_REFERENCE:
+                case CommentPartType.CHAPTER_REFERENCE:
                     inl = new Run(part.Text);
                     inl.FontWeight = FontWeights.Normal;
                     inl.Name = _run_comment_article_ref + nd.NodeId.ToString() + "_" + (part.Guid ?? "");
+                    inl.Tag = part.Type;
                     inl.PreviewMouseDown += EventReferenceMouseButtonDown;
                     inl.MouseEnter += EventReferenceMouseEnter;
                     inl.MouseLeave += EventReferenceMouseLeave;
-                    inl.Foreground = ChessForgeColors.CurrentTheme.ReferenceForeground;
+                    inl.Foreground = part.Type == CommentPartType.GAME_EXERCISE_REFERENCE  ? 
+                        ChessForgeColors.CurrentTheme.GameExerciseRefForeground : ChessForgeColors.CurrentTheme.ChapterRefForeground;
                     inl.Cursor = Cursors.Hand;
                     break;
                 default:
