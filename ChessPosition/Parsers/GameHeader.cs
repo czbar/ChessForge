@@ -291,7 +291,15 @@ namespace GameTree
                 }
                 else
                 {
-                    sb.Append("NN");
+                    string sEvent = GetEventName(out _);
+                    if (string.IsNullOrEmpty(sEvent))
+                    {
+                        sb.Append("NN");
+                    }
+                    else
+                    {
+                        sb.Append(sEvent);
+                    }
                 }
             }
             else
