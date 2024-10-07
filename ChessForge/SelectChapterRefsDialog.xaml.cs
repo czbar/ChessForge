@@ -11,7 +11,7 @@ namespace ChessForge
         /// <summary>
         /// A '|' separated list of selected reference GUID.
         /// </summary>
-        public string ChapterRefs;
+        public string ChapterRefGuids;
 
         /// <summary>
         /// Creates the dialog.
@@ -24,7 +24,7 @@ namespace ChessForge
 
             UiLbChapters.ItemsSource = WorkbookManager.SessionWorkbook.Chapters;
 
-            ChapterRefs = chapterRefs;
+            ChapterRefGuids = chapterRefs;
             string[] tokens = chapterRefs.Split('|');
 
             if (AppState.Workbook != null)
@@ -61,7 +61,7 @@ namespace ChessForge
                     sb.Append(chapter.Guid);
                     first = false;
 
-                    ChapterRefs = sb.ToString();
+                    ChapterRefGuids = sb.ToString();
                 }
             }
 
