@@ -1,4 +1,5 @@
 ﻿using ChessPosition;
+using ChessPosition.Utils;
 using GameTree;
 using System;
 using System.Collections.Generic;
@@ -2308,7 +2309,11 @@ namespace ChessForge
         {
             if (sender is Inline inl)
             {
-                inl.Foreground = ChessForgeColors.CurrentTheme.ReferenceHoveredForeground;
+                inl.Foreground = ChessForgeColors.CurrentTheme.GameExerciseRefHoveredForeground;
+                if (inl.Tag is CommentPartType cpt && cpt == CommentPartType.CHAPTER_REFERENCE)
+                {
+                    inl.Foreground = ChessForgeColors.CurrentTheme.ChapterRefHoveredForeground;
+                }
                 e.Handled = true;
             }
         }
@@ -2322,7 +2327,11 @@ namespace ChessForge
         {
             if (sender is Inline inl)
             {
-                inl.Foreground = ChessForgeColors.CurrentTheme.ReferenceForeground;
+                inl.Foreground = ChessForgeColors.CurrentTheme.GameExerciseRefForeground;
+                if (inl.Tag is CommentPartType cpt && cpt == CommentPartType.CHAPTER_REFERENCE)
+                {
+                    inl.Foreground = ChessForgeColors.CurrentTheme.ChapterRefForeground;
+                }
                 e.Handled = true;
             }
         }
