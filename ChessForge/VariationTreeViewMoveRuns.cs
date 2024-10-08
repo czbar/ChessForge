@@ -319,6 +319,10 @@ namespace ChessForge
                         else
                         {
                             title = article.Tree.Header.BuildGameReferenceTitle(false);
+                            if (article.ContentType == GameData.ContentType.EXERCISE)
+                            {
+                                title = Properties.Resources.Exercise + ": " + title;
+                            }
                             cpt = CommentPartType.GAME_EXERCISE_REFERENCE;
                         }
                         if (!first)
