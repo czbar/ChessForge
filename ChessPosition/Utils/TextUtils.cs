@@ -23,7 +23,7 @@ namespace ChessPosition
         {
             if (!string.IsNullOrEmpty(comment))
             {
-                comment.Replace("\r\n", " ");
+                comment = comment.Replace("\r\n", " ");
             }
 
             return comment;
