@@ -4016,5 +4016,5 @@ IllegalCastling=
 #
 
 #description: Workbook info
-#english: AboutWorkbook=This PGN Workbook is optimized for viewing in Chess Forge https://sourceforge.net/projects/chessforge/ \nChess Forge is a Free and Open Source Windows application.
+#english: AboutWorkbook=This PGN Workbook is optimized for viewing in Chess Forge https://sourceforge.net/projects/chessforge/.   Chess Forge is a Free and Open Source Windows application.
 AboutWorkbook=

@@ -3125,4 +3125,4 @@ IllegalCastling=Illegal castling attempted
 #
 
 #Workbook info
-AboutWorkbook=This PGN Workbook is optimized for viewing in Chess Forge https://sourceforge.net/projects/chessforge/ \nChess Forge is a Free and Open Source Windows application.
+AboutWorkbook=This PGN Workbook is optimized for viewing in Chess Forge https://sourceforge.net/projects/chessforge/.   Chess Forge is a Free and Open Source Windows application.

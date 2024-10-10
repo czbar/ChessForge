@@ -2792,7 +2792,6 @@
     <value>Niedozwolona roszada.</value>
   </data>
   <data name="AboutWorkbook" xml:space="preserve">
-    <value>Ten podręcznik PGN najlepiej oglądać w programie Chess Forge https://sourceforge.net/projects/chessforge/ 
-Chess Forge to Wolne i Otwarte Oprogramowanie do systemu Windows.</value>
+    <value>Ten podręcznik PGN najlepiej oglądać w programie Chess Forge https://sourceforge.net/projects/chessforge/.   Chess Forge to Wolne i Otwarte Oprogramowanie do systemu Windows.</value>
   </data>
 </root>
