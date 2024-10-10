@@ -380,7 +380,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiLblChapterRefs_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            var dlg = new SelectChapterRefsDialog(_chapterRefsText);
+            var dlg = new SelectChapterRefsDialog(_chapterRefGuids);
             GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
             if (dlg.ShowDialog() == true)
