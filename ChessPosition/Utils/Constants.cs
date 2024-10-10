@@ -221,6 +221,11 @@ namespace ChessPosition
         public static string EXCEPTION = "Exception";
 
         /// <summary>
+        /// Text for a null move in the algebraic notation.
+        /// </summary>
+        public static string NULL_MOVE_NOTATION = "---";
+
+        /// <summary>
         /// Name to use for lichess in configuration for selecting a web site
         /// </summary>
         public static string LichessNameId = "lichess.org";
