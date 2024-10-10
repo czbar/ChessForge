@@ -313,7 +313,8 @@ namespace ChessForge
                         string title;
                         if (article.ContentType == GameData.ContentType.STUDY_TREE)
                         {
-                            title = Properties.Resources.Chapter + " " + article.Tree.Header.GetChapterTitle();
+                            AppState.Workbook.GetChapterByGuid(article.Guid, out int chapterIndex);
+                            title = Properties.Resources.Chapter + " " + (chapterIndex + 1).ToString() + ": " + article.Tree.Header.GetChapterTitle();
                             cpt = CommentPartType.CHAPTER_REFERENCE;
                         }
                         else
