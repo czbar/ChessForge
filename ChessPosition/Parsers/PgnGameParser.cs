@@ -602,9 +602,7 @@ namespace GameTree
                     {
                         if (!preserveCRLF)
                         {
-                            // remove CRLF
-                            comment = comment.Replace("\r", "");
-                            comment = comment.Replace("\n", "");
+                            comment = TextUtils.ReplaceCrLfInComment(comment);
                         }
 
                         if (node != null)
