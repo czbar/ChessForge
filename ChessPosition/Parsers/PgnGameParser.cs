@@ -726,7 +726,7 @@ namespace GameTree
             {
                 gtt = PgnTokenType.MoveNumber;
             }
-            else if (char.IsLetter(c) || c == '0')
+            else if (char.IsLetter(c) || c == '0' || c == '-')
             {
                 gtt = PgnTokenType.Move;
             }
