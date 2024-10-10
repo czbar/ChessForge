@@ -13,6 +13,23 @@ namespace ChessPosition
     public class TextUtils
     {
         /// <summary>
+        /// If the comment contains CR/LF replace it with a space.
+        /// This is for example due to ChessBase export formatting when they insert CRLF without
+        /// preserving space.
+        /// </summary>
+        /// <param name="comment"></param>
+        /// <returns></returns>
+        public static string ReplaceCrLfInComment(string comment)
+        {
+            if (!string.IsNullOrEmpty(comment))
+            {
+                comment.Replace("\r\n", " ");
+            }
+
+            return comment;
+        }
+
+        /// <summary>
         /// Returns all urls found in the passed text.
         /// </summary>
         /// <param name="text"></param>
