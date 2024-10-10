@@ -180,6 +180,12 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Whether the last move was a null move 
+        /// i.e. the position does not change but the turn does.
+        /// </summary>
+        public bool IsNullMove = false;
+
+        /// <summary>
         /// Whether a position from this node is used as a thumbnail.
         /// </summary>
         public bool IsThumbnail = false;
