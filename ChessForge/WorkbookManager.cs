@@ -546,6 +546,47 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Replaces the old style GUID with the new one.
+        /// </summary>
+        /// <param name="oldGuid"></param>
+        /// <returns></returns>
+        public static string UpdateGuid(string oldGuid)
+        {
+            string guid = TextUtils.ConvertOldGuid(oldGuid);
+
+            foreach (var chapter in SessionWorkbook.Chapters)
+            {
+                if (chapter.Guid == oldGuid)
+                {
+                    chapter.Guid = guid;
+                }
+
+                if (chapter.StudyTree.Guid == oldGuid)
+                {
+                    chapter.StudyTree.Guid = guid;
+                }
+
+                foreach (Article game in chapter.ModelGames)
+                {
+                    if (game.Guid == oldGuid)
+                    {
+                        game.Guid = guid;
+                    }
+                }
+
+                foreach (Article exercise in chapter.Exercises)
+                {
+                    if (exercise.Guid == oldGuid)
+                    {
+                        exercise.Guid = guid;
+                    }
+                }
+            }
+
+            return guid;
+        }
+
+        /// <summary>
         /// Sets up visibility of Model Game related menu items in the Chapters context menu.
         /// </summary>
         /// <param name="cmn"></param>
@@ -825,85 +866,6 @@ namespace ChessForge
             return success;
         }
 
-#if false
-        /// <summary>
-        /// Walks the list of games and exercises, creating a new chapter
-        /// for every encountered game if multiChapter is true.
-        /// If multiChapter is false we assume createStudy is false too (this method should
-        /// not have been called if multiChapter was false createStudy was true).
-        /// </summary>
-        /// <param name="chapter"></param>
-        /// <param name="copyGames"></param>
-        /// <param name="games"></param>
-        public static void CreateChaptersFromSelectedItems(Chapter chapter, bool multiChapter, bool createStudy, bool copyGames, ObservableCollection<GameData> games)
-        {
-            StringBuilder sbErrors = new StringBuilder();
-            bool firstChapter = true;
-
-            string errorString = "";
-            int errorCount = 0;
-            int chapterIndex = 0;
-            int itemIndex = 0;
-
-            foreach (GameData gd in games)
-            {
-                if (gd.IsSelected)
-                {
-                    GameData.ContentType contentType = gd.GetContentType(true);
-                    if (contentType == GameData.ContentType.MODEL_GAME)
-                    {
-                        if (!firstChapter && multiChapter)
-                        {
-                            chapter = SessionWorkbook.CreateNewChapter();
-                            chapterIndex++;
-                        }
-
-                        if (createStudy)
-                        {
-                            chapter.AddArticle(gd, GameData.ContentType.STUDY_TREE, out errorString, GameData.ContentType.STUDY_TREE);
-                            chapter.StudyTree.Tree.ContentType = GameData.ContentType.STUDY_TREE;
-                            if (!string.IsNullOrEmpty(errorString))
-                            {
-                                if (multiChapter)
-                                {
-                                    sbErrors.AppendLine(Properties.Resources.Chapter + " " + (chapterIndex - 1).ToString() + ": ");
-                                }
-                                sbErrors.AppendLine(Properties.Resources.Study + ": " + errorString);
-                                errorCount++;
-                            }
-                        }
-
-                        if (copyGames)
-                        {
-                            chapter.AddArticle(gd, GameData.ContentType.MODEL_GAME, out errorString, GameData.ContentType.MODEL_GAME);
-                            if (!string.IsNullOrEmpty(errorString))
-                            {
-                                sbErrors.AppendLine(BuildGameParseErrorText(chapter, itemIndex + 1, gd, errorString));
-                                errorCount++;
-                            }
-                        }
-                        firstChapter = false;
-                    }
-                    else if (contentType == GameData.ContentType.EXERCISE)
-                    {
-                        chapter.AddArticle(gd, GameData.ContentType.EXERCISE, out errorString, GameData.ContentType.EXERCISE);
-                        if (!string.IsNullOrEmpty(errorString))
-                        {
-                            sbErrors.AppendLine(BuildGameParseErrorText(chapter, itemIndex + 1, gd, errorString));
-                            errorCount++;
-                        }
-                    }
-                    itemIndex++;
-                }
-            }
-
-            if (errorCount > 0)
-            {
-                ShowPgnProcessingErrors(Properties.Resources.DlgParseErrors, ref sbErrors);
-            }
-        }
-#endif
-
         /// <summary>
         /// Processes the list games in the background.
         /// First, creates a list of unprocessed articles,
@@ -916,67 +878,6 @@ namespace ChessForge
             List<Article> outArticles = workbook.CreateArticlePlaceholders(rawPgnArticles, chapter);
             workbook.GamesManager.Execute(rawPgnArticles, outArticles);
         }
-
-#if false
-        /// <summary>
-        /// Processes all games in the file creating chapters as required.
-        /// </summary>
-        private static void ProcessGames(ref ObservableCollection<GameData> GameList, ref Workbook workbook)
-        {
-            Chapter chapter = null;
-
-            StringBuilder sbErrors = new StringBuilder();
-            int errorCount = 0;
-
-            for (int i = 1; i < GameList.Count; i++)
-            {
-                GameData gm = GameList[i];
-
-                if (gm.GetContentType(true) == GameData.ContentType.STUDY_TREE)
-                {
-                    chapter = workbook.CreateNewChapter();
-                    chapter.SetTitle(gm.Header.GetChapterTitle());
-                    chapter.Guid = gm.Header.GetOrGenerateGuid(out bool generated);
-                    if (generated)
-                    {
-                        AppState.IsDirty = true;
-                    }
-                }
-
-                try
-                {
-                    // force creation of GUID if absent
-                    gm.Header.GetGuid(out _);
-                    chapter.AddArticle(gm, GameData.ContentType.GENERIC, out string error);
-                    if (!string.IsNullOrEmpty(error))
-                    {
-                        errorCount++;
-                        sbErrors.AppendLine(BuildGameParseErrorText(chapter, i + 1, GameList[i], error));
-                    }
-                }
-                catch (Exception ex)
-                {
-                    errorCount++;
-                    string message;
-
-                    if (ex is ParserException)
-                    {
-                        message = GuiUtilities.TranslateParseException(ex as ParserException);
-                    }
-                    else
-                    {
-                        message = ex.Message;
-                    }
-                    sbErrors.AppendLine(BuildGameParseErrorText(chapter, i + 1, GameList[i], message));
-                }
-            }
-
-            if (errorCount > 0)
-            {
-                ShowPgnProcessingErrors(Properties.Resources.DlgMergeErrors, ref sbErrors);
-            }
-        }
-#endif
 
         /// <summary>
         /// Merges the selected games from the passed list into a single Variation Tree.
