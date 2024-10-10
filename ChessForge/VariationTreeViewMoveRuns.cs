@@ -459,6 +459,13 @@ namespace ChessForge
                 case CommentPartType.CHAPTER_REFERENCE:
                     inl = new Run(part.Text);
                     inl.FontWeight = FontWeights.Normal;
+                    // check for legacy GUIDs as they would break inl.Name
+                    if ((part.Guid ?? "").Contains("-"))
+                    {
+                        string oldGuid = part.Guid;
+                        part.Guid = WorkbookManager.UpdateGuid(oldGuid);
+                        nd.References = (nd.References ?? "").Replace(oldGuid, part.Guid);
+                    }
                     inl.Name = _run_comment_article_ref + nd.NodeId.ToString() + "_" + (part.Guid ?? "");
                     inl.Tag = part.Type;
                     inl.PreviewMouseDown += EventReferenceMouseButtonDown;
