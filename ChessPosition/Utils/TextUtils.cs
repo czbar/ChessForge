@@ -653,5 +653,22 @@ namespace ChessPosition
         {
             return "R" + Guid.NewGuid().ToString("N");
         }
+
+        /// <summary>
+        /// Changes an old GUID to the new format.
+        /// The dashes in the old GUID are breaking.
+        /// </summary>
+        /// <returns></returns>
+        public static string ConvertOldGuid(string oldGuid)
+        {
+            if (!string.IsNullOrEmpty(oldGuid))
+            {
+                return "R" + oldGuid.Replace("-", "");
+            }
+            else
+            {
+                return "";
+            }
+        }
     }
 }
