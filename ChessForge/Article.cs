@@ -61,6 +61,7 @@ namespace ChessForge
         public string Guid
         {
             get => Tree.Header.GetGuid(out _);
+            set => Tree.Header.SetHeaderValue(PgnHeaders.KEY_GUID, value);
         }
 
         /// <summary>
