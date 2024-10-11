@@ -3157,7 +3157,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnExerc_PromoteLine_Click(object sender, RoutedEventArgs e)
         {
-            ActiveTreeView.PromoteCurrentLine();
+            ActiveTreeView?.PromoteCurrentLine();
         }
 
         /// <summary>
@@ -3167,7 +3167,17 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnGame_PromoteLine_Click(object sender, RoutedEventArgs e)
         {
-            ActiveTreeView.PromoteCurrentLine();
+            ActiveTreeView?.PromoteCurrentLine();
+        }
+
+        /// <summary>
+        /// The user requested that a null move be added.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnEnterNullMove_Click(object sender, RoutedEventArgs e)
+        {
+            ActiveTreeView?.EnterNullMove();
         }
 
         /// <summary>
