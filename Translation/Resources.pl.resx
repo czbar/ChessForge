@@ -1612,6 +1612,9 @@
   <data name="PromoteLine" xml:space="preserve">
     <value>Promuj Wariant</value>
   </data>
+  <data name="EnterNullMove" xml:space="preserve">
+    <value>Wprowadź pusty ruch</value>
+  </data>
   <data name="DeleteMovesFromHere" xml:space="preserve">
     <value>Usuń zaznaczony ruch i wszystkie dalsze posunięcia</value>
   </data>

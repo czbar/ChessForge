@@ -2286,6 +2286,11 @@ MnGameExerciseReferences=Edytuj Odsyłacz do Partii i Ćwiczeń...
 #english: PromoteLine=Promote Line
 PromoteLine=Promuj Wariant
 
+#description: Enter null move
+#english: EnterNullMove=Enter Null Move
+EnterNullMove=Wprowadź pusty ruch
+
+
 #description: Delete the line starting from the current position
 #english: DeleteMovesFromHere=Delete the Selected Move and All Moves that Follow
 DeleteMovesFromHere=Usuń zaznaczony ruch i wszystkie dalsze posunięcia

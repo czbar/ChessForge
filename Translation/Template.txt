@@ -2286,6 +2286,11 @@ MnGameExerciseReferences=
 #english: PromoteLine=Promote Line
 PromoteLine=
 
+#description: Enter null move
+#english: EnterNullMove=Enter Null Move
+EnterNullMove=
+
+
 #description: Delete the line starting from the current position
 #english: DeleteMovesFromHere=Delete the Selected Move and All Moves that Follow
 DeleteMovesFromHere=

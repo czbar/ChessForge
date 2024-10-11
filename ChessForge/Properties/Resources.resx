@@ -1612,6 +1612,9 @@
   <data name="PromoteLine" xml:space="preserve">
     <value>Promote Line</value>
   </data>
+  <data name="EnterNullMove" xml:space="preserve">
+    <value>Enter Null Move</value>
+  </data>
   <data name="DeleteMovesFromHere" xml:space="preserve">
     <value>Delete the Selected Move and All Moves that Follow</value>
   </data>
