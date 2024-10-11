@@ -2157,6 +2157,11 @@ namespace ChessForge
                     TreeUtils.RemoveOpeningInfo(tree);
                     tree.MoveNumberOffset = moveNumberOffset;
 
+                    // remove any comments from the first move
+                    tree.RootNode.Comment = "";
+                    tree.RootNode.CommentBeforeMove = "";
+                    tree.RootNode.Nags = "";
+
                     Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                     CopyHeaderFromGame(tree, ActiveVariationTree.Header, false);
                     if (!string.IsNullOrEmpty(firstNodeEco))
