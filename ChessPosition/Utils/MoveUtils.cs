@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ChessPosition.Utils;
+﻿using ChessPosition.Utils;
 using GameTree;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace ChessPosition
 {
@@ -159,16 +158,32 @@ namespace ChessPosition
             }
             else
             {
-                newNode.IsNullMove = true;
-                newNode.Position.EnPassantSquare = 0;
-                newNode.Position.HalfMove50Clock += 1;
+                CleanupNullMove(newNode);
             }
 
             return newNode;
         }
 
         /// <summary>
-        /// Checks if 2 algebraic notations are identincal (having removed any check or mate signs)
+        /// Resets certain attributes as appropriate for the null move.
+        /// </summary>
+        /// <param name="nd"></param>
+        public static void CleanupNullMove(TreeNode nd)
+        {
+            if (nd != null && nd.IsNullMove)
+            {
+                nd.LastMoveAlgebraicNotation = Constants.NULL_MOVE_NOTATION;
+                nd.LastMoveEngineNotation = "";
+                nd.Position.InheritedEnPassantSquare = 0;
+                nd.Position.EnPassantSquare = 0;
+                nd.Position.IsCheck = false;
+                nd.Position.IsCheckmate = false;
+                nd.Position.HalfMove50Clock += 1;
+            }
+        }
+
+        /// <summary>
+        /// Checks if 2 algebraic notations are identical (having removed any check or mate signs)
         /// </summary>
         /// <param name="move1"></param>
         /// <param name="move2"></param>
