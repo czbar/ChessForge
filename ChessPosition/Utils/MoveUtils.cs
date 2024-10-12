@@ -158,7 +158,7 @@ namespace ChessPosition
             }
             else
             {
-                CleanupNullMove(newNode);
+                CleanupNullMove(ref newNode);
             }
 
             return newNode;
@@ -168,9 +168,9 @@ namespace ChessPosition
         /// Resets certain attributes as appropriate for the null move.
         /// </summary>
         /// <param name="nd"></param>
-        public static void CleanupNullMove(TreeNode nd)
+        public static void CleanupNullMove(ref TreeNode nd)
         {
-            if (nd != null && nd.IsNullMove)
+            if (nd != null)
             {
                 nd.LastMoveAlgebraicNotation = Constants.NULL_MOVE_NOTATION;
                 nd.LastMoveEngineNotation = "";
