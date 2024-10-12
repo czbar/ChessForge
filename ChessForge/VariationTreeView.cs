@@ -557,7 +557,6 @@ namespace ChessForge
                 TreeNode nd = GetSelectedNode();
                 // make sure there is no check/stalemate in the current position, otherwise any move after
                 // the null move would be illegal.
-                // TODO: reflect by disabling the menu item
                 if (nd != null && !nd.Position.IsCheck && !nd.Position.IsCheckmate && !nd.Position.IsStalemate)
                 {
                     TreeNode nullNd = ShownVariationTree.CreateNewChildNode(nd);
@@ -574,6 +573,8 @@ namespace ChessForge
                     SelectNode(nullNd);
                     int nodeIndex = _mainWin.ActiveLine.GetIndexForNode(nullNd.NodeId);
                     _mainWin.SelectLineAndMoveInWorkbookViews(this, nd.LineId, nodeIndex, false);
+
+                    PulseManager.BringSelectedRunIntoView();                    
                     AppState.IsDirty = true;
                 }
             }
