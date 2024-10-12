@@ -548,6 +548,39 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Inserts a null move after the currently selected one.
+        /// </summary>
+        public void EnterNullMove()
+        {
+            try
+            {
+                TreeNode nd = GetSelectedNode();
+                if (nd != null)
+                {
+                    TreeNode nullNd = ShownVariationTree.CreateNewChildNode(nd);
+                    nullNd.Position.ColorToMove = MoveUtils.ReverseColor(nullNd.Position.ColorToMove);
+                    nullNd.MoveNumber = nullNd.Position.ColorToMove == PieceColor.White ? nullNd.MoveNumber : nullNd.MoveNumber += 1;
+                    MoveUtils.CleanupNullMove(nullNd);
+
+                    ShownVariationTree.AddNodeToParent(nullNd);
+                    ShownVariationTree.BuildLines();
+
+                    _mainWin.SetActiveLine(nullNd.LineId, nullNd.NodeId);
+                    BuildFlowDocumentForVariationTree();
+                    ShownVariationTree.SetSelectedNodeId(nullNd.NodeId);
+                    SelectNode(nullNd);
+                    int nodeIndex = _mainWin.ActiveLine.GetIndexForNode(nullNd.NodeId);
+                    _mainWin.SelectLineAndMoveInWorkbookViews(this, nd.LineId, nodeIndex, false);
+                    AppState.IsDirty = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("PromoteCurrentLine()", ex);
+            }
+        }
+
+        /// <summary>
         /// Copies FEN of the selected position to the clipboard.
         /// </summary>
         public void CopyFenToClipboard()

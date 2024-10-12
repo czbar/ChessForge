@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ChessPosition.Utils;
+﻿using ChessPosition.Utils;
 using GameTree;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace ChessPosition
 {
@@ -103,49 +102,88 @@ namespace ChessPosition
         {
             PieceColor parentSideToMove = parentNode.ColorToMove;
 
-            // check for bad PGN with '0-0' instead of 'O-O' castling
-            if (algMove.Length > 1 && algMove[0] == '0')
-            {
-                algMove = algMove.Replace('0', 'O');
-            }
+            MoveData move;
+            bool nullMove = false;
 
-            PgnMoveParser pmp = new PgnMoveParser();
-            int suffixLen = pmp.ParseAlgebraic(algMove, parentSideToMove);
-            // remove suffix from algMove
-            algMove = algMove.Substring(0, algMove.Length - suffixLen);
-            MoveData move = pmp.Move;
-            algMove = TextUtils.StripCheckOrMateChar(algMove);
+            if (algMove == "Z0" || algMove == Constants.NULL_MOVE_NOTATION)
+            {
+                algMove = Constants.NULL_MOVE_NOTATION;
+                move = new MoveData();
+                move.Color = parentSideToMove;
+                nullMove = true;
+            }
+            else
+            {
+                // check for bad PGN with '0-0' instead of 'O-O' castling
+                if (algMove.Length > 1 && algMove[0] == '0')
+                {
+                    algMove = algMove.Replace('0', 'O');
+                }
+
+                PgnMoveParser pmp = new PgnMoveParser();
+                int suffixLen = pmp.ParseAlgebraic(algMove, parentSideToMove);
+                // remove suffix from algMove
+                algMove = algMove.Substring(0, algMove.Length - suffixLen);
+                move = pmp.Move;
+                algMove = TextUtils.StripCheckOrMateChar(algMove);
+            }
 
             // create a new node
             TreeNode newNode = CreateNewNode(algMove, move, parentNode, parentSideToMove, nodeId);
-            if (move.IsCheckmate)
-            {
-                newNode.Position.IsCheckmate = true;
-            }
-            else if (move.IsCheck)
-            {
-                newNode.Position.IsCheck = true;
-            }
 
-            try
+            if (!nullMove)
             {
-                // Make the move on it
-                MakeMove(newNode.Position, move);
-            }
-            catch
-            {
-                throw new Exception(TextUtils.BuildErrortext(newNode, algMove));
-            }
+                if (move.IsCheckmate)
+                {
+                    newNode.Position.IsCheckmate = true;
+                }
+                else if (move.IsCheck)
+                {
+                    newNode.Position.IsCheck = true;
+                }
 
-            // do the postprocessing
-            PositionUtils.UpdateCastlingRights(ref newNode.Position, move, false);
-            PositionUtils.SetEnpassantSquare(ref newNode.Position, move);
+                try
+                {
+                    // Make the move on it
+                    MakeMove(newNode.Position, move);
+                }
+                catch
+                {
+                    throw new Exception(TextUtils.BuildErrortext(newNode, algMove));
+                }
+
+                // do the postprocessing
+                PositionUtils.UpdateCastlingRights(ref newNode.Position, move, false);
+                PositionUtils.SetEnpassantSquare(ref newNode.Position, move);
+            }
+            else
+            {
+                CleanupNullMove(newNode);
+            }
 
             return newNode;
         }
 
         /// <summary>
-        /// Checks if 2 algebraic notations are identincal (having removed any check or mate signs)
+        /// Resets certain attributes as appropriate for the null move.
+        /// </summary>
+        /// <param name="nd"></param>
+        public static void CleanupNullMove(TreeNode nd)
+        {
+            if (nd != null && nd.IsNullMove)
+            {
+                nd.LastMoveAlgebraicNotation = Constants.NULL_MOVE_NOTATION;
+                nd.LastMoveEngineNotation = "";
+                nd.Position.InheritedEnPassantSquare = 0;
+                nd.Position.EnPassantSquare = 0;
+                nd.Position.IsCheck = false;
+                nd.Position.IsCheckmate = false;
+                nd.Position.HalfMove50Clock += 1;
+            }
+        }
+
+        /// <summary>
+        /// Checks if 2 algebraic notations are identical (having removed any check or mate signs)
         /// </summary>
         /// <param name="move1"></param>
         /// <param name="move2"></param>
@@ -155,13 +193,13 @@ namespace ChessPosition
             return TextUtils.StripCheckOrMateChar(move1) == TextUtils.StripCheckOrMateChar(move2);
         }
 
-    /// <summary>
-    /// Makes the passed move on the supplied Position after
-    /// verifying that it is legal and not ambiguous.
-    /// </summary>
-    /// <param name="position"></param>
-    /// <returns></returns>
-    public static void MakeMove(BoardPosition position, MoveData move)
+        /// <summary>
+        /// Makes the passed move on the supplied Position after
+        /// verifying that it is legal and not ambiguous.
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        public static void MakeMove(BoardPosition position, MoveData move)
         {
             // for each piece, that can potentially move, verify the legality of the move
             List<SquareCoords> goodOrigins = new List<SquareCoords>();

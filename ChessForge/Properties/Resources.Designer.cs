@@ -70,8 +70,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This PGN Workbook is optimized for viewing in Chess Forge https://sourceforge.net/projects/chessforge/ 
-        ///Chess Forge is a Free and Open Source Windows application..
+        ///   Looks up a localized string similar to This PGN Workbook is optimized for viewing in Chess Forge https://sourceforge.net/projects/chessforge/.   Chess Forge is a Free and Open Source Windows application..
         /// </summary>
         public static string AboutWorkbook {
             get {
@@ -2479,6 +2478,15 @@ namespace ChessForge.Properties {
         public static string EnterAnalysis {
             get {
                 return ResourceManager.GetString("EnterAnalysis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter Null Move.
+        /// </summary>
+        public static string EnterNullMove {
+            get {
+                return ResourceManager.GetString("EnterNullMove", resourceCulture);
             }
         }
         

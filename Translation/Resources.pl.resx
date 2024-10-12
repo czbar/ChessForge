@@ -1612,6 +1612,9 @@
   <data name="PromoteLine" xml:space="preserve">
     <value>Promuj Wariant</value>
   </data>
+  <data name="EnterNullMove" xml:space="preserve">
+    <value>Wprowadź pusty ruch</value>
+  </data>
   <data name="DeleteMovesFromHere" xml:space="preserve">
     <value>Usuń zaznaczony ruch i wszystkie dalsze posunięcia</value>
   </data>
@@ -2792,7 +2795,6 @@
     <value>Niedozwolona roszada.</value>
   </data>
   <data name="AboutWorkbook" xml:space="preserve">
-    <value>Ten podręcznik PGN najlepiej oglądać w programie Chess Forge https://sourceforge.net/projects/chessforge/ 
-Chess Forge to Wolne i Otwarte Oprogramowanie do systemu Windows.</value>
+    <value>Ten podręcznik PGN najlepiej oglądać w programie Chess Forge https://sourceforge.net/projects/chessforge/.   Chess Forge to Wolne i Otwarte Oprogramowanie do systemu Windows.</value>
   </data>
 </root>

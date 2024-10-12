@@ -1788,6 +1788,10 @@ MnGameExerciseReferences=Game/Exercise References...
 #Promote a line
 PromoteLine=Promote Line
 
+#Enter null move
+EnterNullMove=Enter Null Move
+
+
 #Delete the line starting from the current position
 DeleteMovesFromHere=Delete the Selected Move and All Moves that Follow
 
@@ -3125,4 +3129,4 @@ IllegalCastling=Illegal castling attempted
 #
 
 #Workbook info
-AboutWorkbook=This PGN Workbook is optimized for viewing in Chess Forge https://sourceforge.net/projects/chessforge/ \nChess Forge is a Free and Open Source Windows application.
+AboutWorkbook=This PGN Workbook is optimized for viewing in Chess Forge https://sourceforge.net/projects/chessforge/.   Chess Forge is a Free and Open Source Windows application.

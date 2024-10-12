@@ -313,12 +313,17 @@ namespace ChessForge
                         string title;
                         if (article.ContentType == GameData.ContentType.STUDY_TREE)
                         {
-                            title = Properties.Resources.Chapter + " " + article.Tree.Header.GetChapterTitle();
+                            AppState.Workbook.GetChapterByGuid(article.Guid, out int chapterIndex);
+                            title = Properties.Resources.Chapter + " " + (chapterIndex + 1).ToString() + ": " + article.Tree.Header.GetChapterTitle();
                             cpt = CommentPartType.CHAPTER_REFERENCE;
                         }
                         else
                         {
                             title = article.Tree.Header.BuildGameReferenceTitle(false);
+                            if (article.ContentType == GameData.ContentType.EXERCISE)
+                            {
+                                title = Properties.Resources.Exercise + ": " + title;
+                            }
                             cpt = CommentPartType.GAME_EXERCISE_REFERENCE;
                         }
                         if (!first)
@@ -455,6 +460,13 @@ namespace ChessForge
                 case CommentPartType.CHAPTER_REFERENCE:
                     inl = new Run(part.Text);
                     inl.FontWeight = FontWeights.Normal;
+                    // check for legacy GUIDs as they would break inl.Name
+                    if ((part.Guid ?? "").Contains("-"))
+                    {
+                        string oldGuid = part.Guid;
+                        part.Guid = WorkbookManager.UpdateGuid(oldGuid);
+                        nd.References = (nd.References ?? "").Replace(oldGuid, part.Guid);
+                    }
                     inl.Name = _run_comment_article_ref + nd.NodeId.ToString() + "_" + (part.Guid ?? "");
                     inl.Tag = part.Type;
                     inl.PreviewMouseDown += EventReferenceMouseButtonDown;

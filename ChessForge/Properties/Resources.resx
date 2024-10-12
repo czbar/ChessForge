@@ -1612,6 +1612,9 @@
   <data name="PromoteLine" xml:space="preserve">
     <value>Promote Line</value>
   </data>
+  <data name="EnterNullMove" xml:space="preserve">
+    <value>Enter Null Move</value>
+  </data>
   <data name="DeleteMovesFromHere" xml:space="preserve">
     <value>Delete the Selected Move and All Moves that Follow</value>
   </data>
@@ -2793,7 +2796,6 @@
     <value>Illegal castling attempted</value>
   </data>
   <data name="AboutWorkbook" xml:space="preserve">
-    <value>This PGN Workbook is optimized for viewing in Chess Forge https://sourceforge.net/projects/chessforge/ 
-Chess Forge is a Free and Open Source Windows application.</value>
+    <value>This PGN Workbook is optimized for viewing in Chess Forge https://sourceforge.net/projects/chessforge/.   Chess Forge is a Free and Open Source Windows application.</value>
   </data>
 </root>

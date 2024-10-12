@@ -1,10 +1,6 @@
-﻿using System;
+﻿using ChessPosition;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
-using System.Threading.Tasks;
-using ChessPosition;
 
 namespace GameTree
 {
@@ -178,6 +174,12 @@ namespace GameTree
             _engEval = eval;
             return ChfCommands.Assessment.NONE;
         }
+
+        /// <summary>
+        /// Whether the last move was a null move 
+        /// i.e. the position does not change but the turn does.
+        /// </summary>
+        public bool IsNullMove = false;
 
         /// <summary>
         /// Whether a position from this node is used as a thumbnail.
@@ -464,6 +466,10 @@ namespace GameTree
             get
             {
                 return Position.LastMove.GetEngineNotation();
+            }
+            set
+            {
+                // only use this for null moves
             }
         }
 

@@ -50,6 +50,7 @@ namespace ChessForge
 
             // build the reference string
             bool first = true;
+            ChapterRefGuids = "";
             foreach (var item in UiLbChapters.SelectedItems)
             {
                 if (item is Chapter chapter)

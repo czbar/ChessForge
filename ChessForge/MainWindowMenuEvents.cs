@@ -2157,6 +2157,11 @@ namespace ChessForge
                     TreeUtils.RemoveOpeningInfo(tree);
                     tree.MoveNumberOffset = moveNumberOffset;
 
+                    // remove any comments from the first move
+                    tree.RootNode.Comment = "";
+                    tree.RootNode.CommentBeforeMove = "";
+                    tree.RootNode.Nags = "";
+
                     Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                     CopyHeaderFromGame(tree, ActiveVariationTree.Header, false);
                     if (!string.IsNullOrEmpty(firstNodeEco))
@@ -2170,7 +2175,15 @@ namespace ChessForge
 
                         ChapterUtils.ClearStudyTreeHeader(tree);
                     }
+
+                    // remember the currently active because the next call will change it
+                    VariationTreeView startView = ActiveTreeView;    
                     CreateNewExerciseFromTree(tree);
+
+                    // now SortReferenceString will find the just created exercise so we can go ahead and update refs
+                    nd.AddArticleReference(tree.Header.GetGuid(out _));
+                    nd.References = GuiUtilities.SortReferenceString(nd.References);
+                    startView.InsertOrUpdateCommentRun(nd);
                 }
             }
             catch (Exception ex)
@@ -3144,7 +3157,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnExerc_PromoteLine_Click(object sender, RoutedEventArgs e)
         {
-            ActiveTreeView.PromoteCurrentLine();
+            ActiveTreeView?.PromoteCurrentLine();
         }
 
         /// <summary>
@@ -3154,7 +3167,17 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnGame_PromoteLine_Click(object sender, RoutedEventArgs e)
         {
-            ActiveTreeView.PromoteCurrentLine();
+            ActiveTreeView?.PromoteCurrentLine();
+        }
+
+        /// <summary>
+        /// The user requested that a null move be added.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnEnterNullMove_Click(object sender, RoutedEventArgs e)
+        {
+            ActiveTreeView?.EnterNullMove();
         }
 
         /// <summary>
