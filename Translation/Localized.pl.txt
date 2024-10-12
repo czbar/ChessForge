@@ -2286,6 +2286,11 @@ MnGameExerciseReferences=Edytuj Odsyłacz do Partii i Ćwiczeń...
 #english: PromoteLine=Promote Line
 PromoteLine=Promuj Wariant
 
+#description: Enter null move
+#english: EnterNullMove=Enter Null Move
+EnterNullMove=Wprowadź pusty ruch
+
+
 #description: Delete the line starting from the current position
 #english: DeleteMovesFromHere=Delete the Selected Move and All Moves that Follow
 DeleteMovesFromHere=Usuń zaznaczony ruch i wszystkie dalsze posunięcia
@@ -4016,8 +4021,5 @@ IllegalCastling=Niedozwolona roszada.
 #
 
 #description: Workbook info
-#english: AboutWorkbook=This PGN Workbook is optimized for viewing in Chess Forge https://sourceforge.net/projects/chessforge/ \nChess Forge is a Free and Open Source Windows application.
+#english: AboutWorkbook=This PGN Workbook is optimized for viewing in Chess Forge https://sourceforge.net/projects/chessforge/.   Chess Forge is a Free and Open Source Windows application.
 AboutWorkbook=Ten podręcznik PGN najlepiej oglądać w programie Chess Forge https://sourceforge.net/projects/chessforge/.   Chess Forge to Wolne i Otwarte Oprogramowanie do systemu Windows.
-
-
-EnterNullMove=Wprowadź pusty ruch
