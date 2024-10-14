@@ -59,6 +59,10 @@ namespace ChessForge
                 {
                     Canvas baseCanvas = SetupDiagramCanvas(CHESSBOARD_IMAGE_SIDE_LENGTH);
                     Image imgChessBoard = CreateChessBoard(baseCanvas, out chessboard);
+                    if (nd.IsDiagramFlipped)
+                    {
+                        chessboard.FlipBoard();
+                    }
                     baseCanvas.Children.Add(imgChessBoard);
                     
                     Viewbox viewBox = SetupDiagramViewbox(baseCanvas, largeDiagram);
