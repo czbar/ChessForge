@@ -1328,9 +1328,6 @@ namespace ChessForge
                                 menuItem.IsEnabled = gameIndex >= 0 && selectedNodeId > 0;
                                 SetMarkThumbnailMenuItemHeader(menuItem, selectedNode);
                                 break;
-                            case "UiMnGameInsertDiagram":
-                                menuItem.IsEnabled = gameIndex >= 0 && selectedNodeId > 0;
-                                break;
                             case "UiMnGameCopyMoves":
                             case "UiMnGameCutMoves":
                                 menuItem.IsEnabled = view != null && view.HasMovesSelectedForCopy;
@@ -1447,8 +1444,13 @@ namespace ChessForge
                                 SetMarkThumbnailMenuItemHeader(menuItem, selectedNode);
                                 break;
                             case "UiMnExerc_InsertDiagram":
-                                menuItem.IsEnabled = exerciseIndex >= 0 && selectedNodeId > 0 && isSolutionShown;
-                                menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
+                                // the call to ConfigureDiagramMenuOptions() may have set this item to visible
+                                // yet perhaps it should not be
+                                if (menuItem.Visibility == Visibility.Visible)
+                                {
+                                    menuItem.IsEnabled = exerciseIndex >= 0 && selectedNodeId > 0 && isSolutionShown;
+                                    menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
+                                }
                                 break;
                             case "UiMnExercCopyMoves":
                             case "UiMnExercCutMoves":
