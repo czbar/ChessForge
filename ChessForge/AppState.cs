@@ -1206,7 +1206,7 @@ namespace ChessForge
                 VariationTreeView view = AppState.MainWin.ActiveTreeView;
 
                 ConfigureBookmarkMenuOptions(MainWin.UiMnMarkBookmark, MainWin.UiMnStDeleteBookmark);
-                ConfigureDiagramMenuOptions(MainWin.UiMnStudyInsertDiagram, MainWin.UiMnStudyDeleteDiagram);
+                ConfigureDiagramMenuOptions(MainWin.UiMnStudyInsertDiagram, MainWin.UiMnStudyDeleteDiagram, MainWin.UiMnStudyInvertDiagram);
 
                 foreach (var item in MainWin.UiMncStudyTree.Items)
                 {
@@ -1284,7 +1284,7 @@ namespace ChessForge
                 VariationTreeView view = MainWin.ActiveTreeView;
 
                 ConfigureBookmarkMenuOptions(MainWin.UiMnGameMarkBookmark, MainWin.UiMnGameDeleteBookmark);
-                ConfigureDiagramMenuOptions(MainWin.UiMnGame_InsertDiagram, MainWin.UiMnGame_DeleteDiagram);
+                ConfigureDiagramMenuOptions(MainWin.UiMnGame_InsertDiagram, MainWin.UiMnGame_DeleteDiagram, MainWin.UiMnGameInvertDiagram);
 
                 foreach (var item in MainWin.UiMncModelGames.Items)
                 {
@@ -1378,7 +1378,7 @@ namespace ChessForge
                 else
                 {
                     ConfigureBookmarkMenuOptions(MainWin.UiMnExercMarkBookmark, MainWin.UiMnExercDeleteBookmark);
-                    ConfigureDiagramMenuOptions(MainWin.UiMnExerc_InsertDiagram, MainWin.UiMnExerc_DeleteDiagram);
+                    ConfigureDiagramMenuOptions(MainWin.UiMnExerc_InsertDiagram, MainWin.UiMnExerc_DeleteDiagram, MainWin.UiMnExercInvertDiagram);
                 }
 
                 foreach (var item in MainWin.UiMncExercises.Items)
@@ -1974,7 +1974,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="addBookmark"></param>
         /// <param name="deleteBookmark"></param>
-        private static void ConfigureDiagramMenuOptions(MenuItem insertDiagram, MenuItem removeDiagram)
+        private static void ConfigureDiagramMenuOptions(MenuItem insertDiagram, MenuItem removeDiagram, MenuItem invertDiagram)
         {
             TreeNode nd = AppState.GetCurrentNode();
 
@@ -1984,6 +1984,7 @@ namespace ChessForge
                 insertDiagram.IsEnabled = false;
 
                 removeDiagram.Visibility = Visibility.Collapsed;
+                invertDiagram.Visibility = Visibility.Collapsed;
             }
             else
             {
@@ -1993,6 +1994,9 @@ namespace ChessForge
 
                 removeDiagram.Visibility = hasDiagram ? Visibility.Visible : Visibility.Collapsed;
                 removeDiagram.IsEnabled = hasDiagram;
+
+                invertDiagram.Visibility = hasDiagram ? Visibility.Visible : Visibility.Collapsed;
+                invertDiagram.IsEnabled = hasDiagram;
             }
         }
 
