@@ -4023,3 +4023,6 @@ IllegalCastling=Niedozwolona roszada.
 #description: Workbook info
 #english: AboutWorkbook=This PGN Workbook is optimized for viewing in Chess Forge https://sourceforge.net/projects/chessforge/.   Chess Forge is a Free and Open Source Windows application.
 AboutWorkbook=Ten podręcznik PGN najlepiej oglądać w programie Chess Forge https://sourceforge.net/projects/chessforge/.   Chess Forge to Wolne i Otwarte Oprogramowanie do systemu Windows.
+
+#Cut
+Cut=Wytnij

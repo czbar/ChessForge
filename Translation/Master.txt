@@ -140,6 +140,9 @@ Bookmarks=Bookmarks
 #Copy
 Copy=Copy
 
+#Cut
+Cut=Cut
+
 #Paste
 Paste=Paste
 

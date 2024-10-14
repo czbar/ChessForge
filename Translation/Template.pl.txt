@@ -181,6 +181,10 @@ Bookmarks=Zakładki
 #english: Copy=Copy
 Copy=Kopiuj
 
+#description: Cut
+#english: Cut=Cut
+Cut=Wytnij
+
 #description: Paste
 #english: Paste=Paste
 Paste=Wkleić

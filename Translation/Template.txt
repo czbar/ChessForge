@@ -181,6 +181,10 @@ Bookmarks=
 #english: Copy=Copy
 Copy=
 
+#description: Cut
+#english: Cut=Cut
+Cut=
+
 #description: Paste
 #english: Paste=Paste
 Paste=
