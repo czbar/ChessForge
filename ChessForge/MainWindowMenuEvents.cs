@@ -2057,6 +2057,33 @@ namespace ChessForge
             }
         }
 
+
+        /// <summary>
+        /// Invert the diagram.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void UiMn_InvertDiagram_Click(object sender, RoutedEventArgs e)
+        {
+            if (AppState.MainWin.ActiveTreeView != null)
+            {
+                TreeNode nd = AppState.MainWin.ActiveTreeView.GetSelectedNode();
+                if (nd != null)
+                {
+                    string lineId = AppState.MainWin.ActiveVariationTree.SelectedLineId;
+                    if (nd.IsDiagram)
+                    {
+                        nd.IsDiagramFlipped = !nd.IsDiagramFlipped;
+                        AppState.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
+                        AppState.MainWin.ActiveTreeView.SelectLineAndMove(lineId, nd.NodeId);
+
+                        AppState.IsDirty = true;
+                    }
+                }
+            }
+        }
+
+
         /// <summary>
         /// Marks the current node as a Thumbnail for the current tree.
         /// </summary>
@@ -2166,7 +2193,7 @@ namespace ChessForge
                     }
 
                     // remember the currently active because the next call will change it
-                    VariationTreeView startView = ActiveTreeView;    
+                    VariationTreeView startView = ActiveTreeView;
                     CreateNewExerciseFromTree(tree);
 
                     // now SortReferenceString will find the just created exercise so we can go ahead and update refs
