@@ -925,7 +925,6 @@ namespace ChessForge
         /// <param name="e"></param>
         public void EngineToggleOn_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-
             UiImgEngineOff.Visibility = Visibility.Visible;
             UiImgEngineOn.Visibility = Visibility.Collapsed;
             UiImgEngineOnGray.Visibility = Visibility.Collapsed;
@@ -1013,6 +1012,21 @@ namespace ChessForge
                 e.Handled = true;
             }
         }
+
+        /// <summary>
+        /// Clicking on the greyed out engine button re-allows evals
+        /// and turns the engine on.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void EngineToggleGray_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            SetDontSaveEvalsMenuItems(false);
+            BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgUpdatePositionEvalOn, CommentBox.HintType.INFO);
+
+            EngineToggleOff_OnPreviewMouseLeftButtonDown(sender, e);
+        }
+
 
         //**************************************************************
         //
