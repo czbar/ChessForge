@@ -725,7 +725,7 @@ namespace ChessForge
                                 e.Handled = true;
                                 break;
                             case Key.X:
-                                _mainWin.UiMnCutMoves_Click(null, null);
+                                _mainWin.UiMnMainCut_Click(null, null);
                                 e.Handled = true;
                                 break;
                             case Key.V:

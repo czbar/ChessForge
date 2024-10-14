@@ -877,7 +877,7 @@ namespace ChessForge
                 MainWin.UiRtbStudyTreeView.IsEnabled = true;
 
                 MainWin.UiMnAnnotations.IsEnabled = false;
-                MainWin.UiMnPaste.IsEnabled = false;
+                MainWin.UiMnMainPaste.IsEnabled = false;
                 MainWin.UiMnCommentBeforeMove.IsEnabled = false;
                 MainWin.UiMnMergeChapters.IsEnabled = false;
 
@@ -1239,11 +1239,12 @@ namespace ChessForge
                             case "UiMnStudyInsertDiagram":
                                 menuItem.IsEnabled = tree != null && tree.SelectedNode != null;
                                 break;
-                            case "UiMnStCopyMoves":
-                            case "UiMnStCutMoves":
+                            case "UiMnMainCopy":
+                            case "UiMnMainCut":
+                                //TODO: moved to main menu
                                 menuItem.IsEnabled = view != null && view.HasMovesSelectedForCopy;
                                 break;
-                            case "UiMnStPasteMoves":
+                            case "UiMnMainPaste":
                                 menuItem.IsEnabled = SystemClipboard.HasSerializedData() || !string.IsNullOrEmpty(SystemClipboard.GetText());
                                 break;
                             case "UiMnPromoteLine":
@@ -1740,7 +1741,7 @@ namespace ChessForge
 
 
                     MainWin.UiMnAnnotations.IsEnabled = IsTreeViewTabActive();
-                    MainWin.UiMnPaste.IsEnabled = !string.IsNullOrEmpty(SystemClipboard.GetText());
+                    MainWin.UiMnMainPaste.IsEnabled = !string.IsNullOrEmpty(SystemClipboard.GetText());
                     MainWin.UiMnCommentBeforeMove.IsEnabled = IsTreeViewTabActive();
                     MainWin.UiMnMergeChapters.IsEnabled = WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.GetChapterCount() > 1;
 
@@ -1800,7 +1801,7 @@ namespace ChessForge
             _mainWin.Dispatcher.Invoke(() =>
             {
                 MainWin.UiMnAnnotations.IsEnabled = false;
-                MainWin.UiMnPaste.IsEnabled = false;
+                MainWin.UiMnMainPaste.IsEnabled = false;
                 MainWin.UiMnCommentBeforeMove.IsEnabled = false;
                 MainWin.UiMnMergeChapters.IsEnabled = false;
 
