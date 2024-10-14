@@ -477,17 +477,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Paste content of clipboard into the view or workbook
-        /// if possible.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnPaste_Click(object sender, RoutedEventArgs e)
-        {
-            CopyPasteMoves.PasteMoveList();
-        }
-
-        /// <summary>
         /// The user requested Undo. 
         /// If the active view is Chapters then this is a workbook/chapter operation that needs undoing.
         /// If we are in Study, Game or Exercise view, it could be a tree operation
@@ -3235,35 +3224,53 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiMnCopyMoves_Click(object sender, RoutedEventArgs e)
+        private void UiMnMainCopy_Click(object sender, RoutedEventArgs e)
         {
-            ActiveTreeView?.PlaceSelectedForCopyInClipboard();
+            if (AppState.IsTreeViewTabActive())
+            {
+                ActiveTreeView?.PlaceSelectedForCopyInClipboard();
+            }
+            else if (AppState.ActiveTab == TabViewType.INTRO)
+            {
+                IntroViewCopy_Click(sender, e);
+            }
         }
 
         /// <summary>
-        /// Cuts the selected moves i.e. removes the selected moves
-        /// and places them in the clipboard.
+        /// Cuts the selected content moves 
+        /// i.e. removes it from the clipboard.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void UiMnCutMoves_Click(object sender, RoutedEventArgs e)
+        public void UiMnMainCut_Click(object sender, RoutedEventArgs e)
         {
-            if (ActiveTreeView != null)
+            if (AppState.IsTreeViewTabActive())
             {
                 ActiveTreeView.PlaceSelectedForCopyInClipboard();
                 ActiveTreeView.DeleteRemainingMoves();
                 BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgCopiedMoves, CommentBox.HintType.INFO);
             }
+            else if (AppState.ActiveTab == TabViewType.INTRO)
+            {
+                IntroViewCut_Click(sender, e);
+            }
         }
 
         /// <summary>
-        /// Pastes moves from the Clipboard in the view
+        /// Pastes content of the Clipboard in the view
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiMnPasteMoves_Click(object sender, RoutedEventArgs e)
+        private void UiMnPaste_Click(object sender, RoutedEventArgs e)
         {
-            CopyPasteMoves.PasteMoveList();
+            if (AppState.IsTreeViewTabActive())
+            {
+                CopyPasteMoves.PasteMoveList();
+            }
+            else if (AppState.ActiveTab == TabViewType.INTRO)
+            {
+                IntroViewPaste_Click(sender, e);
+            }
         }
 
         /// <summary>
