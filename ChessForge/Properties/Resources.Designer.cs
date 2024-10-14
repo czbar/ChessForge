@@ -3805,6 +3805,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Import from PGN.
+        /// </summary>
+        public static string ImportFromPgn {
+            get {
+                return ResourceManager.GetString("ImportFromPgn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Import Games from PGN.
         /// </summary>
         public static string ImportGames {
@@ -4026,6 +4035,15 @@ namespace ChessForge.Properties {
         public static string InvalidPositionSetup {
             get {
                 return ResourceManager.GetString("InvalidPositionSetup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invert Diagram.
+        /// </summary>
+        public static string InvertDiagram {
+            get {
+                return ResourceManager.GetString("InvertDiagram", resourceCulture);
             }
         }
         

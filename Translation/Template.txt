@@ -2128,6 +2128,10 @@ ImportNewChapter=
 #english: CreateNewGame=Create New Game
 CreateNewGame=
 
+#description: Import games and exercises from PGN
+#english: ImportFromPgn=Import from PGN
+ImportFromPgn=
+
 #description: Import a new game
 #english: ImportGames=Import Games from PGN
 ImportGames=
@@ -2250,7 +2254,7 @@ DeleteSelectedExercise=
 ConfirmDeleteExercise=
 
 #
-# Header: CONTEXT MENU for Intro Tab
+# Header: CONTEXT MENU for Intro Tab and diagrams elsewhere
 #
 
 #description: Insert a diagram
@@ -2260,6 +2264,10 @@ InsertDiagram=
 #description: Remove the diagram
 #english: RemoveDiagram=Remove Diagram
 RemoveDiagram=
+
+#description: Invert the diagram
+#english: InvertDiagram=Invert Diagram
+InvertDiagram=
 
 #description: Edit a diagram
 #english: EditDiagram=Edit Diagram

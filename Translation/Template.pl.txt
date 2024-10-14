@@ -2128,9 +2128,13 @@ ImportNewChapter=Importuj Nowy Rozdział
 #english: CreateNewGame=Create New Game
 CreateNewGame=Utwórz Nową Partię
 
+#description: Import games and exercises from PGN
+#english: ImportFromPgn=Import from PGN
+ImportFromPgn=Importuj z pliku PGN
+
 #description: Import a new game
 #english: ImportGames=Import Games from PGN
-ImportGames=Importuj Partie z Pliku PGN
+ImportGames=Importuj Partie z pliku PGN
 
 #description: Create a new exercise
 #english: CreateNewExercise=Create New Exercise
@@ -2138,7 +2142,7 @@ CreateNewExercise=Utwórz Nowe Ćwiczenie
 
 #description: Import Exercise
 #english: ImportExercises=Import Exercises from PGN
-ImportExercises=Importuj Ćwiczenia z Pliku PGN
+ImportExercises=Importuj Ćwiczenia z pliku PGN
 
 #description: Open the selected chapter
 #english: OpenSelectedChapter=Open Selected Chapter
@@ -2250,7 +2254,7 @@ DeleteSelectedExercise=Usuń Wybrane ćwiczenie
 ConfirmDeleteExercise=Usunąć ćwiczenie
 
 #
-# Header: CONTEXT MENU for Intro Tab
+# Header: CONTEXT MENU for Intro Tab and diagrams elsewhere
 #
 
 #description: Insert a diagram
@@ -2260,6 +2264,10 @@ InsertDiagram=Wstaw Diagram
 #description: Remove the diagram
 #english: RemoveDiagram=Remove Diagram
 RemoveDiagram=Usuń Diagram
+
+#description: Invert the diagram
+#english: InvertDiagram=Invert Diagram
+InvertDiagram=Odwróć Diagram
 
 #description: Edit a diagram
 #english: EditDiagram=Edit Diagram

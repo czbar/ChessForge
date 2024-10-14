@@ -1501,6 +1501,9 @@
   <data name="CreateNewGame" xml:space="preserve">
     <value>Create New Game</value>
   </data>
+  <data name="ImportFromPgn" xml:space="preserve">
+    <value>Import from PGN</value>
+  </data>
   <data name="ImportGames" xml:space="preserve">
     <value>Import Games from PGN</value>
   </data>
@@ -1596,6 +1599,9 @@
   </data>
   <data name="RemoveDiagram" xml:space="preserve">
     <value>Remove Diagram</value>
+  </data>
+  <data name="InvertDiagram" xml:space="preserve">
+    <value>Invert Diagram</value>
   </data>
   <data name="EditDiagram" xml:space="preserve">
     <value>Edit Diagram</value>

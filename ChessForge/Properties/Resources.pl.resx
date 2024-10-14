@@ -1501,14 +1501,17 @@
   <data name="CreateNewGame" xml:space="preserve">
     <value>Utwórz Nową Partię</value>
   </data>
+  <data name="ImportFromPgn" xml:space="preserve">
+    <value>Importuj z pliku PGN</value>
+  </data>
   <data name="ImportGames" xml:space="preserve">
-    <value>Importuj Partie z Pliku PGN</value>
+    <value>Importuj Partie z pliku PGN</value>
   </data>
   <data name="CreateNewExercise" xml:space="preserve">
     <value>Utwórz Nowe Ćwiczenie</value>
   </data>
   <data name="ImportExercises" xml:space="preserve">
-    <value>Importuj Ćwiczenia z Pliku PGN</value>
+    <value>Importuj Ćwiczenia z pliku PGN</value>
   </data>
   <data name="OpenSelectedChapter" xml:space="preserve">
     <value>Otwórz Wybrany Rozdział</value>
@@ -1596,6 +1599,9 @@
   </data>
   <data name="RemoveDiagram" xml:space="preserve">
     <value>Usuń Diagram</value>
+  </data>
+  <data name="InvertDiagram" xml:space="preserve">
+    <value>Odwróć Diagram</value>
   </data>
   <data name="EditDiagram" xml:space="preserve">
     <value>Edytuj Diagram</value>

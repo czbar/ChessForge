@@ -1667,6 +1667,9 @@ ImportNewChapter=Import New Chapter
 #Cretae a new game
 CreateNewGame=Create New Game
 
+#Import games and exercises from PGN
+ImportFromPgn=Import from PGN
+
 #Import a new game
 ImportGames=Import Games from PGN
 
@@ -1759,7 +1762,7 @@ DeleteSelectedExercise=Delete Selected Exercise
 ConfirmDeleteExercise=Delete Exercise
 
 #
-# Header: CONTEXT MENU for Intro Tab
+# Header: CONTEXT MENU for Intro Tab and diagrams elsewhere
 #
 
 #Insert a diagram
@@ -1767,6 +1770,9 @@ InsertDiagram=Insert Diagram
 
 #Remove the diagram
 RemoveDiagram=Remove Diagram
+
+#Invert the diagram
+InvertDiagram=Invert Diagram
 
 #Edit a diagram
 EditDiagram=Edit Diagram
