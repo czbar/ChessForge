@@ -1445,7 +1445,7 @@ namespace ChessForge
                                 break;
                             case "UiMnExerc_InsertDiagram":
                                 // the call to ConfigureDiagramMenuOptions() may have set this item to visible
-                                // yet perhaps it should not be
+
                                 if (menuItem.Visibility == Visibility.Visible)
                                 {
                                     menuItem.IsEnabled = exerciseIndex >= 0 && selectedNodeId > 0 && isSolutionShown;
