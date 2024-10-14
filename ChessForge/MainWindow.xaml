@@ -111,7 +111,13 @@
                         <MenuItem x:Name="UiMnAnnotations" Header="{x:Static p:Resources.Annotations}" Click="UiMnAnnotationsDialog_Click" />
                         <MenuItem x:Name="UiMnCommentBeforeMove" Header="{x:Static p:Resources.CommentBeforeMove}" Click="UiMnCommentBeforeMoveDialog_Click" />
                         <Separator />
-                        <MenuItem x:Name="UiMnPaste" Header="{x:Static p:Resources.PasteFromClipboard}" Click="UiMnPaste_Click" InputGestureText="Ctrl+V" />
+                        <MenuItem x:Name="UiMnMainCopy" Header="{x:Static p:Resources.Copy}"  InputGestureText="Ctrl+C" Click="UiMnMainCopy_Click" />
+                        <MenuItem x:Name="UiMnMainCut" Header="{x:Static p:Resources.Cut}"  InputGestureText="Ctrl+X" Click="UiMnMainCut_Click" />
+                        <MenuItem x:Name="UiMnMainPaste" Header="{x:Static p:Resources.Paste}"  InputGestureText="Ctrl+V" Click="UiMnPaste_Click" />
+                        <Separator />
+                        <MenuItem x:Name="UiMnStSelectHighlighted" Header="{x:Static p:Resources.CopyHighlightedLine}"  InputGestureText="Ctrl+L" Click="UiMnSelectHighlighted_Click" />
+                        <MenuItem x:Name="UiMnStSelectSubtree" Header="{x:Static p:Resources.CopySubtree}" InputGestureText="Ctrl+A" Click="UiMnSelectSubtree_Click" />
+                        <MenuItem x:Name="UiMnCopyFen" Header="{x:Static p:Resources.CopyFENtoClipboard}" Click="UiMnCopyFen_Click" InputGestureText="Ctrl+E" />
                         <Separator />
                         <MenuItem x:Name="UiMnUndo" Header="{x:Static p:Resources.Undo}" Click="UiMnUndo_Click" InputGestureText="Ctrl+Z" />
                     </MenuItem>
@@ -219,7 +225,7 @@
                     <Image x:Name="UiImgExplorersOff" Grid.Column="4" ToolTip="{x:Static p:Resources.TurnExplorersOn}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0"  Height="40" Width="40" Source="Resources/Images/ToggleOff.png" Visibility="Visible" PreviewMouseDown="ExplorersToggleOff_PreviewMouseDown" />
                     <Label x:Name="UiLblEngine" Grid.Column="5"  Content="{x:Static p:Resources.Engine}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="30,2,0,0" Height="28"   />
                     <Image x:Name="UiImgEngineOn" Cursor="Hand" ToolTip="{x:Static p:Resources.TurnEngineOff}" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0"  Height="22" Width="40" Source="Resources/Images/ToggleOn.png" Visibility="Collapsed" PreviewMouseLeftButtonDown="EngineToggleOn_OnPreviewMouseLeftButtonDown" />
-                    <Image x:Name="UiImgEngineOnGray" Cursor="Hand" ToolTip="{x:Static p:Resources.TtAllowEvalUpdate}" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0"  Height="22" Width="40" Source="Resources/Images/ToggleOnGray.png" Visibility="Collapsed" PreviewMouseLeftButtonDown="EngineToggleOn_OnPreviewMouseLeftButtonDown" />
+                    <Image x:Name="UiImgEngineOnGray" Cursor="Hand" ToolTip="{x:Static p:Resources.TtAllowEvalUpdate}" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0"  Height="22" Width="40" Source="Resources/Images/ToggleOnGray.png" Visibility="Collapsed" PreviewMouseLeftButtonDown="EngineToggleGray_OnPreviewMouseLeftButtonDown" />
                     <Image x:Name="UiImgEngineOff" Cursor="Hand" ToolTip="{x:Static p:Resources.TurnEngineOn}" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0"  Height="22" Width="40" Source="Resources/Images/ToggleOff.png" Visibility="Visible"  PreviewMouseLeftButtonDown="EngineToggleOff_OnPreviewMouseLeftButtonDown" />
                     <Label x:Name="UiLblChart" Grid.Column="7"  Content="{x:Static p:Resources.Chart}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="30,2,0,0" Height="28"   />
                     <Image x:Name="UiImgChartOn" Cursor="Hand" ToolTip="{x:Static p:Resources.HideEvaluationChart}" Grid.Column="8" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0"  Height="22" Width="40" Source="Resources/Images/ToggleOn.png" Visibility="Collapsed" PreviewMouseLeftButtonDown="EvaluationChartToggleOn" />
@@ -588,14 +594,6 @@
                                     <MenuItem x:Name="UiMnDeleteMovesFromHere" Header="{x:Static p:Resources.DeleteMovesFromHere}" Click="UiMnDeleteMovesFromHere_Click" InputGestureText="Del" />
                                     <MenuItem x:Name="UiMnCreateChapterFromLine" Header="{x:Static p:Resources.CreateNewChapterFromLine}" Click="UiMnCreateChapterFromLine_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="UiMnStCopyMoves" Header="{x:Static p:Resources.CopyMoves}"  InputGestureText="Ctrl+C" Click="UiMnCopyMoves_Click" />
-                                    <MenuItem x:Name="UiMnStCutMoves" Header="{x:Static p:Resources.CutMoves}"  InputGestureText="Ctrl+X" Click="UiMnCutMoves_Click" />
-                                    <MenuItem x:Name="UiMnStPasteMoves" Header="{x:Static p:Resources.PasteMoves}"  InputGestureText="Ctrl+V" Click="UiMnPasteMoves_Click" />
-                                    <Separator />
-                                    <MenuItem x:Name="UiMnStSelectHighlighted" Header="{x:Static p:Resources.CopyHighlightedLine}"  InputGestureText="Ctrl+L" Click="UiMnSelectHighlighted_Click" />
-                                    <MenuItem x:Name="UiMnStSelectSubtree" Header="{x:Static p:Resources.CopySubtree}" InputGestureText="Ctrl+A" Click="UiMnSelectSubtree_Click" />
-                                    <MenuItem x:Name="UiMnCopyFen" Header="{x:Static p:Resources.CopyFENtoClipboard}" Click="UiMnCopyFen_Click" InputGestureText="Ctrl+E" />
-                                    <Separator />
                                     <MenuItem x:Name="UiMnStudyWorkbookEvalMove" Header="{x:Static p:Resources.EvaluatePosition}"  Click="UiMnEvaluatePosition_Click" />
                                     <MenuItem x:Name="UiMnStudyDontSaveEvals" Header="{x:Static p:Resources.DoNotUpdatePositionEval}" IsCheckable="True" Click="UiMnDontSaveEvals_Click" InputGestureText="Ctrl+K" />
                                     <Separator x:Name="UiMnStudySepar_EvalPos" />
@@ -683,14 +681,6 @@
                                     <MenuItem x:Name="UiMnGameEnterNullMove" Header="{x:Static p:Resources.EnterNullMove}" Click="UiMnEnterNullMove_Click" />
                                     <Separator />
                                     <MenuItem x:Name="_mnGame_DeleteMovesFromHere" Header="{x:Static p:Resources.DeleteMovesFromHere}" Click="UiMnGame_DeleteMovesFromHere_Click" InputGestureText="Del" />
-                                    <Separator />
-                                    <MenuItem x:Name="UiMnGameCopyMoves" Header="{x:Static p:Resources.CopyMoves}"  InputGestureText="Ctrl+C" Click="UiMnCopyMoves_Click" />
-                                    <MenuItem x:Name="UiMnGameCutMoves" Header="{x:Static p:Resources.CutMoves}"  InputGestureText="Ctrl+X" Click="UiMnCutMoves_Click" />
-                                    <MenuItem x:Name="UiMnGamePasteMoves" Header="{x:Static p:Resources.PasteMoves}"  InputGestureText="Ctrl+V" Click="UiMnPasteMoves_Click" />
-                                    <Separator />
-                                    <MenuItem x:Name="UiMnGameSelectHighlighted" Header="{x:Static p:Resources.CopyHighlightedLine}"  InputGestureText="Ctrl+L" Click="UiMnSelectHighlighted_Click" />
-                                    <MenuItem x:Name="UiMnGameSelectSubtree" Header="{x:Static p:Resources.CopySubtree}" InputGestureText="Ctrl+A" Click="UiMnSelectSubtree_Click" />
-                                    <MenuItem x:Name="_mnGame_CopyFen" Header="{x:Static p:Resources.CopyFENtoClipboard}" Click="UiMnGame_CopyFen_Click" InputGestureText="Ctrl+E" />
                                     <Separator />
                                     <MenuItem x:Name="UiMnGame_EvalMove" Header="{x:Static p:Resources.EvaluatePosition}"  Click="UiMnEvaluatePosition_Click" />
                                     <MenuItem x:Name="UiMnGameDontSaveEvals" Header="{x:Static p:Resources.DoNotUpdatePositionEval}" IsCheckable="True" Click="UiMnDontSaveEvals_Click" InputGestureText="Ctrl+K" />
@@ -798,14 +788,6 @@
                                     <Separator />
                                     <MenuItem x:Name="_mnExerc_DeleteMovesFromHere" Header="{x:Static p:Resources.DeleteMovesFromHere}" Click="UiMnExerc_DeleteMovesFromHere_Click" InputGestureText="Del" />
                                     <Separator x:Name="UiMnExerc_Separator_2"/>
-                                    <MenuItem x:Name="UiMnExercCopyMoves" Header="{x:Static p:Resources.CopyMoves}"  InputGestureText="Ctrl+C" Click="UiMnCopyMoves_Click" />
-                                    <MenuItem x:Name="UiMnExercCutMoves" Header="{x:Static p:Resources.CutMoves}"  InputGestureText="Ctrl+X" Click="UiMnCutMoves_Click" />
-                                    <MenuItem x:Name="UiMnExercPasteMoves" Header="{x:Static p:Resources.PasteMoves}"  InputGestureText="Ctrl+V" Click="UiMnPasteMoves_Click" />
-                                    <Separator x:Name="UiMnExerc_Separator_3"/>
-                                    <MenuItem x:Name="UiMnExercSelectHighlighted" Header="{x:Static p:Resources.CopyHighlightedLine}"  InputGestureText="Ctrl+L" Click="UiMnSelectHighlighted_Click" />
-                                    <MenuItem x:Name="UiMnExercSelectSubtree" Header="{x:Static p:Resources.CopySubtree}" InputGestureText="Ctrl+A" Click="UiMnSelectSubtree_Click" />
-                                    <MenuItem x:Name="_mnExerc_CopyFen" Header="{x:Static p:Resources.CopyFENtoClipboard}" Click="UiMnExerc_CopyFen_Click" InputGestureText="Ctrl+E" />
-                                    <Separator x:Name="UiMnExerc_Separator_5"/>
                                     <MenuItem x:Name="UiMnExerc_EvalMove" Header="{x:Static p:Resources.EvaluatePosition}"  Click="UiMnEvaluatePosition_Click" />
                                     <MenuItem x:Name="UiMnExercDontSaveEvals" Header="{x:Static p:Resources.DoNotUpdatePositionEval}" IsCheckable="True" Click="UiMnDontSaveEvals_Click" InputGestureText="Ctrl+K" />
                                     <Separator x:Name="UiMnExercSepar_EvalPos" />
