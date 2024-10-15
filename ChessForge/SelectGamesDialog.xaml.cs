@@ -1,13 +1,9 @@
-﻿using ChessPosition.GameTree;
-using System;
+﻿using GameTree;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using GameTree;
 
 namespace ChessForge
 {
@@ -95,10 +91,6 @@ namespace ChessForge
             if (_exerciseCount > 0)
             {
                 sb.Append(Properties.Resources.ExerciseCount + " = " + _exerciseCount.ToString());
-                if (_exerciseCount > 0)
-                {
-                    sb.Append(" / ");
-                }
             }
 
             return sb.ToString();
