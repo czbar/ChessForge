@@ -1447,7 +1447,7 @@ namespace ChessForge
                 {
                     if (gd.GetContentType(false) == GameData.ContentType.EXERCISE)
                     {
-                        if (PgnArticleUtils.AddArticle(chapter, gd, GameData.ContentType.EXERCISE, out error, GameData.ContentType.EXERCISE) >= 0)
+                        if (PgnArticleUtils.AddArticle(chapter, gd, GameData.ContentType.EXERCISE, out error, out _, GameData.ContentType.EXERCISE) >= 0)
                         {
                             copiedCount++;
                             copiedExercises++;
@@ -1456,7 +1456,7 @@ namespace ChessForge
                     }
                     else if (copyGames && (gd.GetContentType(false) == GameData.ContentType.GENERIC || gd.GetContentType(false) == GameData.ContentType.MODEL_GAME))
                     {
-                        if (PgnArticleUtils.AddArticle(chapter, gd, GameData.ContentType.MODEL_GAME, out error, GameData.ContentType.MODEL_GAME) >= 0)
+                        if (PgnArticleUtils.AddArticle(chapter, gd, GameData.ContentType.MODEL_GAME, out error, out _, GameData.ContentType.MODEL_GAME) >= 0)
                         {
                             copiedCount++;
                         }
@@ -1780,11 +1780,11 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnImportModelGames_Click(object sender, RoutedEventArgs e)
         {
-            int count = ImportGamesFromPgn(GameData.ContentType.GENERIC, GameData.ContentType.MODEL_GAME);
-            if (count > 0)
+            ImportArticlesFromPgn(GameData.ContentType.GENERIC, GameData.ContentType.MODEL_GAME, out int gameCount, out _);
+            if (gameCount > 0)
             {
                 AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(
-                    Properties.Resources.FlMsgGamesImported + " (" + count.ToString() + ")", CommentBox.HintType.INFO);
+                    Properties.Resources.FlMsgGamesImported + " (" + gameCount.ToString() + ")", CommentBox.HintType.INFO);
             }
         }
 
@@ -1805,12 +1805,12 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnImportExercises_Click(object sender, RoutedEventArgs e)
         {
-            int count = ImportGamesFromPgn(GameData.ContentType.EXERCISE, GameData.ContentType.EXERCISE);
+            ImportArticlesFromPgn(GameData.ContentType.EXERCISE, GameData.ContentType.EXERCISE, out _, out int exerciseCount);
 
-            if (count > 0)
+            if (exerciseCount > 0)
             {
                 AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(
-                    Properties.Resources.FlMsgExercisesImported + " (" + count.ToString() + ")", CommentBox.HintType.INFO);
+                    Properties.Resources.FlMsgExercisesImported + " (" + exerciseCount.ToString() + ")", CommentBox.HintType.INFO);
             }
         }
 
@@ -1818,13 +1818,16 @@ namespace ChessForge
         /// Imports Model Games or Exercises from a PGN file.
         /// </summary>
         /// <param name="contentType"></param>
-        private int ImportGamesFromPgn(GameData.ContentType contentType, GameData.ContentType targetcontentType)
+        private int ImportArticlesFromPgn(GameData.ContentType contentType, GameData.ContentType targetcontentType, out int gameCount, out int exerciseCount)
         {
-            int gameCount;
-            int importedGames = 0;
+            gameCount = 0;
+            exerciseCount = 0;
+
             int skippedDueToType = 0;
             int firstImportedGameIndex = -1;
-            if ((contentType == GameData.ContentType.GENERIC || contentType == GameData.ContentType.MODEL_GAME || contentType == GameData.ContentType.EXERCISE)
+            if ((contentType == GameData.ContentType.GENERIC
+                || contentType == GameData.ContentType.MODEL_GAME
+                || contentType == GameData.ContentType.EXERCISE)
                 && WorkbookManager.SessionWorkbook.ActiveChapter != null)
             {
                 string fileName = SelectPgnFile();
@@ -1859,20 +1862,7 @@ namespace ChessForge
                                 Chapter targetChapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(chapterIndex);
                                 if (newChapter)
                                 {
-                                    ChapterTitleDialog dlg = new ChapterTitleDialog(targetChapter);
-                                    GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
-                                    if (dlg.ShowDialog() == true)
-                                    {
-                                        targetChapter.SetTitle(dlg.ChapterTitle);
-                                        targetChapter.SetAuthor(dlg.Author);
-                                        AppState.Workbook.ActiveChapter = targetChapter;
-                                    }
-                                    else
-                                    {
-                                        AppState.Workbook.Chapters.Remove(targetChapter);
-                                        AppState.Workbook.ActiveChapter = activeChapter;
-                                        proceed = false;
-                                    }
+                                    proceed = ChapterUtils.NameNeWChapter(targetChapter, activeChapter);
                                 }
                                 else
                                 {
@@ -1889,9 +1879,10 @@ namespace ChessForge
                                         {
                                             if (games[i].IsSelected)
                                             {
+                                                Article article = null;
                                                 try
                                                 {
-                                                    int index = PgnArticleUtils.AddArticle(targetChapter, games[i], contentType, out string error, targetcontentType);
+                                                    int index = PgnArticleUtils.AddArticle(targetChapter, games[i], contentType, out string error, out article, targetcontentType);
                                                     if (index < 0)
                                                     {
                                                         if (string.IsNullOrEmpty(error))
@@ -1901,7 +1892,7 @@ namespace ChessForge
                                                     }
                                                     else
                                                     {
-                                                        undoItem = new ArticleListItem(targetChapter, targetChapter.Index, targetChapter.GetArticleAtIndex(targetcontentType, index), index);
+                                                        undoItem = new ArticleListItem(targetChapter, targetChapter.Index, targetChapter.GetArticleAtIndex(article.ContentType, index), index);
                                                         if (undoItem.Article != null)
                                                         {
                                                             undoArticleList.Add(undoItem);
@@ -1919,7 +1910,14 @@ namespace ChessForge
                                                         errorCount++;
                                                         sbErrors.Append(GuiUtilities.BuildGameProcessingErrorText(games[i], i + 1, error));
                                                     }
-                                                    importedGames++;
+                                                    if (article?.ContentType == GameData.ContentType.MODEL_GAME)
+                                                    {
+                                                        gameCount++;
+                                                    }
+                                                    else if (article?.ContentType == GameData.ContentType.EXERCISE)
+                                                    {
+                                                        exerciseCount++;
+                                                    }
                                                 }
                                                 catch (Exception ex)
                                                 {
@@ -1949,7 +1947,7 @@ namespace ChessForge
                         else
                         {
                             gameCount = 0;
-                            importedGames = 0;
+                            exerciseCount = 0;
                         }
                     }
                     else
@@ -1971,7 +1969,7 @@ namespace ChessForge
                     }
                 }
             }
-            return importedGames;
+            return gameCount + exerciseCount;
         }
 
 
@@ -3018,29 +3016,44 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiMnGame_ImportGames_Click(object sender, RoutedEventArgs e)
+        private void UiMnMainImportFromPgn_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                int count = chapter.GetModelGameCount();
-                int importedGames = ImportGamesFromPgn(GameData.ContentType.GENERIC, GameData.ContentType.MODEL_GAME);
-                if (importedGames > 0)
+                Chapter startChapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                int origGameCount = startChapter.GetModelGameCount();
+                int origExerciseCount = startChapter.GetExerciseCount();
+
+                int importedArticles = ImportArticlesFromPgn(GameData.ContentType.GENERIC, GameData.ContentType.ANY, out _, out _);
+                if (importedArticles > 0)
                 {
-                    if (count > 0)
+                    AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(
+                        Properties.Resources.FlMsgArticlesImported + " (" + importedArticles.ToString() + ")", CommentBox.HintType.INFO);
+
+                    Chapter currChapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+
+                    // if we did not create a new chapter, adjust index to the first
+                    // imported game.
+                    if (currChapter == startChapter)
                     {
-                        AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(
-                            Properties.Resources.FlMsgGamesImported + " (" + importedGames.ToString() + ")", CommentBox.HintType.INFO);
+                        if (startChapter.GetModelGameCount() > origGameCount)
+                        {
+                            startChapter.ActiveModelGameIndex = origGameCount;
+                        }
+                        if (startChapter.GetExerciseCount() > origExerciseCount)
+                        {
+                            startChapter.ActiveExerciseIndex = origExerciseCount;
+                        }
+
+                        if (AppState.ActiveTab == TabViewType.MODEL_GAME)
+                        {
+                            SelectModelGame(startChapter.ActiveModelGameIndex, false);
+                        }
+                        else if (AppState.ActiveTab == TabViewType.EXERCISE)
+                        {
+                            SelectExercise(startChapter.ActiveExerciseIndex, false);
+                        }
                     }
-                    if (chapter.GetModelGameCount() > count)
-                    {
-                        chapter.ActiveModelGameIndex = count;
-                    }
-                    else
-                    {
-                        chapter.ActiveModelGameIndex = count - 1;
-                    }
-                    SelectModelGame(chapter.ActiveModelGameIndex, false);
                 }
             }
             catch
@@ -3060,7 +3073,7 @@ namespace ChessForge
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                 int count = chapter.GetExerciseCount();
 
-                int importedExercises = ImportGamesFromPgn(GameData.ContentType.EXERCISE, GameData.ContentType.EXERCISE);
+                int importedExercises = ImportArticlesFromPgn(GameData.ContentType.EXERCISE, GameData.ContentType.EXERCISE, out _, out _);
                 if (importedExercises > 0)
                 {
                     AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(
