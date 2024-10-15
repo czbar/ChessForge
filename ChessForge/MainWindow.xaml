@@ -166,11 +166,11 @@
                         <MenuItem x:Name="UiMnMergeChapters" Header="{x:Static p:Resources.MergeChapters}" Click="UiMnMergeChapters_Click" />
                     </MenuItem>
                     <MenuItem Header="{x:Static p:Resources.Tools}" Margin="0,0,0,0">
-                        <MenuItem x:Name="UiMnCopyArticles" Header="{x:Static p:Resources.CopyArticlesToChapter}" Click="UiMnCopyArticles_Click" />
-                        <MenuItem x:Name="UiMnMoveArticles" Header="{x:Static p:Resources.MoveArticlesToChapter}" Click="UiMnMoveArticles_Click" />
-                        <Separator />
                         <MenuItem x:Name="UiMnMainImportFromPgn" Header="{x:Static p:Resources.ImportFromPgn}" Click="UiMnMainImportFromPgn_Click"  />
                         <MenuItem x:Name="UiMnDownloadWebGames" Header="{x:Static p:Resources.DownloadGamesFromWeb}" Click="UiMnDownloadWebGames_Click" />
+                        <Separator />
+                        <MenuItem x:Name="UiMnCopyArticles" Header="{x:Static p:Resources.CopyArticlesToChapter}" Click="UiMnCopyArticles_Click" />
+                        <MenuItem x:Name="UiMnMoveArticles" Header="{x:Static p:Resources.MoveArticlesToChapter}" Click="UiMnMoveArticles_Click" />
                         <Separator />
                         <MenuItem x:Name="UiMnDeleteComments" Header="{x:Static p:Resources.StripComments}" Click="UiDeleteComments_Click" />
                         <MenuItem x:Name="UiMnDeleteEngineEvals" Header="{x:Static p:Resources.DeleteEngineEvals}" Click="UiDeleteEngineEvals_Click" />
@@ -664,12 +664,15 @@
                             </Grid.ColumnDefinitions>
                             <Grid.ContextMenu>
                                 <ContextMenu x:Name="UiMncModelGames">
-                                    <MenuItem x:Name="_mnGame_ImportGames" Header="{x:Static p:Resources.ImportGames}" Click="UiMnMainImportFromPgn_Click"  />
-                                    <MenuItem x:Name="_mnGame_CreateModelGame" Header="{x:Static p:Resources.CreateNewGame}" Click="UiMnGame_CreateModelGame_Click" />
-                                    <MenuItem x:Name="_mnGame_EditHeader" Header="{x:Static p:Resources.EditGameHeader}" Click="UiMnGame_EditHeader_Click" />
-                                    <MenuItem x:Name="UiMnGameMoveToChapter" Header="{x:Static p:Resources.MoveGameToChapter}" Click="UiMnMoveGameToChapter_Click" />
-                                    <Separator />
-                                    <MenuItem x:Name="_mnGame_DeleteModelGame" Header="{x:Static p:Resources.DeleteThisGame}" Click="UiMnGame_DeleteModelGame_Click" />
+                                    <MenuItem x:Name="UiMnGamesGame" Header="{x:Static p:Resources.Game}">
+                                        <MenuItem x:Name="_mnGame_CreateModelGame" Header="{x:Static p:Resources.CreateNewGame}" Click="UiMnGame_CreateModelGame_Click" />
+                                        <MenuItem x:Name="_mnGame_EditHeader" Header="{x:Static p:Resources.EditGameHeader}" Click="UiMnGame_EditHeader_Click" />
+                                        <MenuItem x:Name="UiMnGameMoveToChapter" Header="{x:Static p:Resources.MoveGameToChapter}" Click="UiMnMoveGameToChapter_Click" />
+                                        <Separator />
+                                        <MenuItem x:Name="_mnGame_DeleteModelGame" Header="{x:Static p:Resources.DeleteThisGame}" Click="UiMnGame_DeleteModelGame_Click" />
+                                        <Separator />
+                                        <MenuItem x:Name="_mnGame_ImportGames" Header="{x:Static p:Resources.ImportGames}" Click="UiMnMainImportFromPgn_Click"  />
+                                    </MenuItem>
                                     <Separator />
                                     <MenuItem x:Name="_mnGame_StartTrainingFromHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere_Click" InputGestureText="T" />
                                     <MenuItem x:Name="_mnGame_CreateExercise" Header="{x:Static p:Resources.CreateExerciseFromHere}" Click="UiMnGame_CreateExercise_Click" />
@@ -767,15 +770,18 @@
                             </Grid.ColumnDefinitions>
                             <Grid.ContextMenu>
                                 <ContextMenu x:Name="UiMncExercises">
-                                    <MenuItem x:Name="UiMnExerc_ImportExercises" Header="{x:Static p:Resources.ImportExercises}" Click="UiMnExerc_ImportExercises_Click"  />
-                                    <MenuItem x:Name="_mnExerc_CreateExercise" Header="{x:Static p:Resources.CreateNewExercise}" Click="UiMnExerc_CreateExercise_Click" />
-                                    <MenuItem x:Name="_mnExerc_EditHeader" Header="{x:Static p:Resources.EditExerciseHeader}" Click="UiMnExerc_EditHeader_Click" />
-                                    <MenuItem x:Name="_mnExerc_EditPosition" Header="{x:Static p:Resources.EditStartingPosition}" Click="UiMnExerc_EditPosition_Click" />
-                                    <MenuItem x:Name="UiMnMoveExerciseToChapter" Header="{x:Static p:Resources.MoveExerciseToChapter}"  Click="UiMnMoveExerciseToChapter_Click" />
-                                    <MenuItem x:Name="UiMnExercExitSolving" Header="{x:Static p:Resources.ExitSolvingMode}" Click="UiMnExercExitSolving_Click" />
-                                    <Separator x:Name="UiMnExerc_Separator_1"/>
-                                    <MenuItem x:Name="_mnExerc_DeleteThisExercise" Header="{x:Static p:Resources.DeleteThisExercise}" Click="UiMnExerc_DeleteExercise_Click" />
-                                    <Separator x:Name="UiMnExerc_Separator_6"/>
+                                    <MenuItem x:Name="UiMnExercisesExercise" Header="{x:Static p:Resources.Exercise}">
+                                        <MenuItem x:Name="_mnExerc_CreateExercise" Header="{x:Static p:Resources.CreateNewExercise}" Click="UiMnExerc_CreateExercise_Click" />
+                                        <MenuItem x:Name="_mnExerc_EditHeader" Header="{x:Static p:Resources.EditExerciseHeader}" Click="UiMnExerc_EditHeader_Click" />
+                                        <MenuItem x:Name="_mnExerc_EditPosition" Header="{x:Static p:Resources.EditStartingPosition}" Click="UiMnExerc_EditPosition_Click" />
+                                        <MenuItem x:Name="UiMnMoveExerciseToChapter" Header="{x:Static p:Resources.MoveExerciseToChapter}"  Click="UiMnMoveExerciseToChapter_Click" />
+                                        <MenuItem x:Name="UiMnExercExitSolving" Header="{x:Static p:Resources.ExitSolvingMode}" Click="UiMnExercExitSolving_Click" />
+                                        <Separator x:Name="UiMnExerc_Separator_1"/>
+                                        <MenuItem x:Name="_mnExerc_DeleteThisExercise" Header="{x:Static p:Resources.DeleteThisExercise}" Click="UiMnExerc_DeleteExercise_Click" />
+                                        <Separator x:Name="UiMnExerc_Separator_6"/>
+                                        <MenuItem x:Name="UiMnExerc_ImportExercises" Header="{x:Static p:Resources.ImportExercises}" Click="UiMnExerc_ImportExercises_Click"  />
+                                    </MenuItem>
+                                    <Separator />
                                     <MenuItem x:Name="UiMnExerc_ShowAllSolutions" Header="{x:Static p:Resources.ShowSolutionsInChapter}" Click="UiMnExerc_ShowSolutions_Click" />
                                     <MenuItem x:Name="UiMnExerc_HideAllSolutions" Header="{x:Static p:Resources.HideSolutionsInChapter}" Click="UiMnExerc_HideSolutions_Click" />
                                     <Separator x:Name="UiMnExerc_Separator_8"/>
