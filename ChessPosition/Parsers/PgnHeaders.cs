@@ -249,11 +249,14 @@ namespace GameTree
             if (line.Length > 0 && line[0] == '[' && line[line.Length - 1] == ']')
             {
                 line = line.Substring(1, line.Length - 2);
-                string[] tokens = line.Split('\"');
-                if (tokens.Length >= 2)
+                // now the line is of the format Key "value",
+                // however, value may contain a quotation char too
+                int posFirstQuot = line.IndexOf('"');
+                int posLastQuot = line.LastIndexOf('"');
+                if (posFirstQuot > 0 && posLastQuot > posFirstQuot)
                 {
-                    header = tokens[0].Trim();
-                    val = tokens[1].Trim();
+                    header = line.Substring(0, posFirstQuot).Trim();
+                    val = line.Substring(posFirstQuot + 1, (posLastQuot - posFirstQuot) - 1);
                 }
             }
 
