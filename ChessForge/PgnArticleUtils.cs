@@ -16,8 +16,14 @@ namespace ChessForge
         /// The caller must handle errors if returned index is -1.
         /// </summary>
         /// <param name="gm"></param>
-        public static int AddArticle(Chapter chapter, GameData gm, GameData.ContentType typ, out string errorText, GameData.ContentType targetcontentType = GameData.ContentType.GENERIC)
+        public static int AddArticle(Chapter chapter, 
+                                    GameData gm, 
+                                    GameData.ContentType typ, 
+                                    out string errorText, 
+                                    out Article article, 
+                                    GameData.ContentType targetcontentType = GameData.ContentType.GENERIC)
         {
+            article = null; 
             if (!gm.Header.IsStandardChess())
             {
                 errorText = Properties.Resources.ErrNotStandardChessVariant;
@@ -27,7 +33,7 @@ namespace ChessForge
             int index = -1;
             errorText = string.Empty;
 
-            Article article = new Article(typ);
+            article = new Article(typ);
             try
             {
                 string fen = gm.Header.GetFenString();
@@ -55,7 +61,9 @@ namespace ChessForge
                         chapter.Intro = article;
                         break;
                     case GameData.ContentType.MODEL_GAME:
-                        if (targetcontentType == GameData.ContentType.GENERIC || targetcontentType == GameData.ContentType.MODEL_GAME)
+                        if (targetcontentType == GameData.ContentType.GENERIC 
+                            || targetcontentType == GameData.ContentType.ANY
+                            || targetcontentType == GameData.ContentType.MODEL_GAME)
                         {
                             chapter.ModelGames.Add(article);
                             index = chapter.ModelGames.Count - 1;
@@ -66,7 +74,9 @@ namespace ChessForge
                         }
                         break;
                     case GameData.ContentType.EXERCISE:
-                        if (targetcontentType == GameData.ContentType.GENERIC || targetcontentType == GameData.ContentType.EXERCISE)
+                        if (targetcontentType == GameData.ContentType.GENERIC
+                            || targetcontentType == GameData.ContentType.ANY
+                            || targetcontentType == GameData.ContentType.EXERCISE)
                         {
                             TreeUtils.RestartMoveNumbering(article.Tree);
                             chapter.Exercises.Add(article);
