@@ -1496,7 +1496,7 @@
     <value>Utwórz Nowy Rozdział</value>
   </data>
   <data name="ImportNewChapter" xml:space="preserve">
-    <value>Importuj Nowy Rozdział</value>
+    <value>Importuj Rozdział</value>
   </data>
   <data name="CreateNewGame" xml:space="preserve">
     <value>Utwórz Nową Partię</value>
@@ -1878,6 +1878,9 @@
   </data>
   <data name="FlMsgItemsRemoved" xml:space="preserve">
     <value>Usunięto wybrane pozycje </value>
+  </data>
+  <data name="FlMsgArticlesImported" xml:space="preserve">
+    <value>Elementy zostały zaimportowane </value>
   </data>
   <data name="FlMsgGamesImported" xml:space="preserve">
     <value>Partie zostały zaimportowane </value>

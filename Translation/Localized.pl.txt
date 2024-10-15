@@ -2121,8 +2121,8 @@ TrnRightClickMove=Prawy przycisk myszki wywoła menu.
 CreateNewChapter=Utwórz Nowy Rozdział
 
 #description: Import a new chapter
-#english: ImportNewChapter=Import New Chapter
-ImportNewChapter=Importuj Nowy Rozdział
+#english: ImportNewChapter=Import Chapter
+ImportNewChapter=Importuj Rozdział
 
 #description: Cretae a new game
 #english: CreateNewGame=Create New Game
@@ -2702,6 +2702,10 @@ FlMsgShiftToSkipFast=Wciśnij SHIFT i lewy klawisz aby szybko przeskakiwać
 #description: Flash message: Items removed.
 #english: FlMsgItemsRemoved=Items Removed 
 FlMsgItemsRemoved=Usunięto wybrane pozycje 
+
+#description: Flash message: Articles Imported
+#english: FlMsgArticlesImported=Items Imported 
+FlMsgArticlesImported=Elementy zostały zaimportowane 
 
 #description: Flash message: Games Imported
 #english: FlMsgGamesImported=Games Imported 

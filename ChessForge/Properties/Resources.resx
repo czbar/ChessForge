@@ -1496,7 +1496,7 @@
     <value>Create New Chapter</value>
   </data>
   <data name="ImportNewChapter" xml:space="preserve">
-    <value>Import New Chapter</value>
+    <value>Import Chapter</value>
   </data>
   <data name="CreateNewGame" xml:space="preserve">
     <value>Create New Game</value>
@@ -1878,6 +1878,9 @@
   </data>
   <data name="FlMsgItemsRemoved" xml:space="preserve">
     <value>Items Removed </value>
+  </data>
+  <data name="FlMsgArticlesImported" xml:space="preserve">
+    <value>Items Imported </value>
   </data>
   <data name="FlMsgGamesImported" xml:space="preserve">
     <value>Games Imported </value>

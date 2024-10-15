@@ -3220,6 +3220,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Items Imported .
+        /// </summary>
+        public static string FlMsgArticlesImported {
+            get {
+                return ResourceManager.GetString("FlMsgArticlesImported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Items Imported into New Chapter.
         /// </summary>
         public static string FlMsgChapterImported {
@@ -3841,7 +3850,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Import New Chapter.
+        ///   Looks up a localized string similar to Import Chapter.
         /// </summary>
         public static string ImportNewChapter {
             get {

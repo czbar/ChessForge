@@ -1662,7 +1662,7 @@ TrnRightClickMove=Right click to open the context menu.
 CreateNewChapter=Create New Chapter
 
 #Import a new chapter
-ImportNewChapter=Import New Chapter
+ImportNewChapter=Import Chapter
 
 #Cretae a new game
 CreateNewGame=Create New Game
@@ -2115,6 +2115,9 @@ FlMsgShiftToSkipFast=Hold SHIFT + Left Button to skip fast
 
 #Flash message: Items removed.
 FlMsgItemsRemoved=Items Removed 
+
+#Flash message: Articles Imported
+FlMsgArticlesImported=Items Imported 
 
 #Flash message: Games Imported
 FlMsgGamesImported=Games Imported 
