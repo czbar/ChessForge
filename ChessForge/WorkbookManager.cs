@@ -269,7 +269,8 @@ namespace ChessForge
                     }
                 }
 
-                if (contentType != GameData.ContentType.GENERIC || targetContentType != GameData.ContentType.NONE)
+                if (contentType != GameData.ContentType.GENERIC
+                    || (targetContentType != GameData.ContentType.NONE && targetContentType != GameData.ContentType.ANY))
                 {
                     RemoveGamesOfWrongType(ref games, contentType, targetContentType);
                 }
@@ -313,7 +314,7 @@ namespace ChessForge
                     undoItem = new ArticleListItem(currChapter);
                     undoArticleList.Add(undoItem);
 
-                    PgnArticleUtils.AddArticle(currChapter, game, GameData.ContentType.STUDY_TREE, out _);
+                    PgnArticleUtils.AddArticle(currChapter, game, GameData.ContentType.STUDY_TREE, out _, out _);
                     if (firstAddedType == GameData.ContentType.NONE)
                     {
                         firstAddedType = GameData.ContentType.STUDY_TREE;
@@ -338,7 +339,7 @@ namespace ChessForge
                     undoItem = new ArticleListItem(currChapter);
                     undoArticleList.Add(undoItem);
 
-                    PgnArticleUtils.AddArticle(currChapter, game, GameData.ContentType.INTRO, out _);
+                    PgnArticleUtils.AddArticle(currChapter, game, GameData.ContentType.INTRO, out _, out _);
                     hasStudyBeforeIntro = false;
 
                     undoItem = new ArticleListItem(currChapter, currChapter.Index, currChapter.Intro, -1);
@@ -350,7 +351,7 @@ namespace ChessForge
                     GameData.ContentType contentType = game.GetContentType(true);
                     if (game.GetWorkbookTitle() == null)
                     {
-                        index = PgnArticleUtils.AddArticle(currChapter, game, contentType, out _);
+                        index = PgnArticleUtils.AddArticle(currChapter, game, contentType, out _, out _ );
                         if (firstAddedType == GameData.ContentType.NONE)
                         {
                             firstAddedType = game.GetContentType(false);
