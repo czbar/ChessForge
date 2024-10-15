@@ -1729,7 +1729,7 @@ namespace ChessForge
 
                     MainWin.UiMnEvaluateGames.IsEnabled = AppState.Workbook != null && Workbook.HasAnyModelGames;
                     MainWin.UiMnFindGames.IsEnabled = AppState.Workbook != null && Workbook.IsReady;
-                    MainWin.UiMnImportGames.IsEnabled = AppState.Workbook != null && Workbook.IsReady;
+                    MainWin.UiMnMainImportFromPgn.IsEnabled = AppState.Workbook != null && Workbook.IsReady;
                     MainWin.UiMnDeleteComments.IsEnabled = WorkbookManager.SessionWorkbook != null;
                     MainWin.UiMnDeleteEngineEvals.IsEnabled = WorkbookManager.SessionWorkbook != null;
                     MainWin.UiMnAssignECO.IsEnabled = WorkbookManager.SessionWorkbook != null;
