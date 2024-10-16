@@ -341,7 +341,8 @@ namespace ChessForge
                     return;
                 }
 
-                CommentPart startPart = new CommentPart(CommentPartType.TEXT, " ");
+                // do not insert a space if this is comment for the 0 (invisible) move
+                CommentPart startPart = new CommentPart(CommentPartType.TEXT, nd.Parent == null ? "" : " ");
                 parts.Insert(0, startPart);
 
                 CommentPart endPart = new CommentPart(CommentPartType.TEXT, " ");
