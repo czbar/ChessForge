@@ -1253,6 +1253,9 @@ namespace ChessForge
                             case "UiMnReorderLines":
                                 menuItem.IsEnabled = tree.SelectedNode != null && tree.SelectedNode.Parent != null && tree.SelectedNode.Parent.Children.Count > 1;
                                 break;
+                            case "UiMnEnterNullMove":
+                                menuItem.IsEnabled = PositionUtils.IsNullMoveAllowed(tree.SelectedNode);
+                                break;
                         }
                     }
                 }
@@ -1312,9 +1315,6 @@ namespace ChessForge
                             case "_mnGame_CreateExercise":
                                 menuItem.IsEnabled = gameIndex >= 0 && selectedNodeId > 0 && !isMate;
                                 break;
-                            case "_mnGame_PromoteLine":
-                                menuItem.IsEnabled = gameIndex >= 0 && selectedNodeId > 0;
-                                break;
                             case "_mnGame_DeleteMovesFromHere":
                                 menuItem.IsEnabled = gameIndex >= 0 && selectedNodeId > 0;
                                 break;
@@ -1334,6 +1334,15 @@ namespace ChessForge
                                 break;
                             case "UiMnGamePasteMoves":
                                 menuItem.IsEnabled = SystemClipboard.HasSerializedData() || !string.IsNullOrEmpty(SystemClipboard.GetText());
+                                break;
+                            case "UiMnGamePromoteLine":
+                                menuItem.IsEnabled = gameIndex >= 0 && selectedNodeId > 0;
+                                break;
+                            case "UiMnGameReorderLines":
+                                menuItem.IsEnabled = gameIndex >= 0 && selectedNode != null && selectedNode.Parent != null && selectedNode.Parent.Children.Count > 1;
+                                break;
+                            case "UiMnGameEnterNullMove":
+                                menuItem.IsEnabled = PositionUtils.IsNullMoveAllowed(selectedNode);
                                 break;
                         }
                     }
@@ -1411,10 +1420,6 @@ namespace ChessForge
                             case "_mnExerc_CopyFen":
                                 menuItem.IsEnabled = exerciseIndex >= 0 && ActiveVariationTree != null && isSolutionShown;
                                 break;
-                            case "_mnExerc_PromoteLine":
-                                menuItem.IsEnabled = exerciseIndex >= 0 && selectedNodeId > 0 && isSolutionShown;
-                                menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
-                                break;
                             case "_mnExerc_DeleteMovesFromHere":
                             case "UiMnExerc_EvalLine":
                             case "UiMnExerc_EvalMove":
@@ -1470,6 +1475,16 @@ namespace ChessForge
                             case "UiMnExercFindPositions":
                                 menuItem.IsEnabled = isSolutionShown;
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
+                                break;
+                            case "UiMnExercPromoteLine":
+                                menuItem.IsEnabled = exerciseIndex >= 0 && selectedNodeId > 0 && isSolutionShown;
+                                menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
+                                break;
+                            case "UiMnExercReorderLines":
+                                menuItem.IsEnabled = selectedNode != null && selectedNode.Parent != null && selectedNode.Parent.Children.Count > 1;
+                                break;
+                            case "UiMnExercEnterNullMove":
+                                menuItem.IsEnabled = PositionUtils.IsNullMoveAllowed(selectedNode);
                                 break;
                         }
                     }
