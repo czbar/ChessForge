@@ -1296,35 +1296,29 @@ namespace ChessForge
                         MenuItem menuItem = item as MenuItem;
                         switch (menuItem.Name)
                         {
-                            case "_mnGame_EditHeader":
+                            case "UiMnGameEditHeader":
                             case "UiMnGameMoveToChapter":
                                 menuItem.IsEnabled = gameIndex >= 0;
                                 break;
-                            case "_mnGame_CreateModelGame":
+                            case "UiMnGameCreateModelGame":
                                 menuItem.IsEnabled = true;
                                 break;
-                            case "_mnGame_StartTrainingFromHere":
+                            case "UiMnGameStartTrainingFromHere":
                                 menuItem.IsEnabled = gameIndex >= 0 && !isMate;
                                 break;
-                            case "_mnGame_MergeToStudy":
-                                menuItem.IsEnabled = gameIndex >= 0 && selectedNodeId >= 0;
-                                break;
-                            case "_mnGame_CopyFen":
-                                menuItem.IsEnabled = gameIndex >= 0 && ActiveVariationTree != null;
-                                break;
-                            case "_mnGame_CreateExercise":
+                            case "UiMnGameCreateExercise":
                                 menuItem.IsEnabled = gameIndex >= 0 && selectedNodeId > 0 && !isMate;
                                 break;
-                            case "_mnGame_DeleteMovesFromHere":
+                            case "UiMnGameDeleteMovesFromHere":
                                 menuItem.IsEnabled = gameIndex >= 0 && selectedNodeId > 0;
                                 break;
-                            case "_mnGame_DeleteModelGame":
+                            case "UiMnGameDeleteModelGame":
                                 menuItem.IsEnabled = gameIndex >= 0;
                                 break;
                             case "UiMnGameMarkBookmark":
                                 menuItem.IsEnabled = gameIndex >= 0 && selectedNodeId > 0;
                                 break;
-                            case "_mnGame_MarkThumbnail":
+                            case "UiMnGameMarkThumbnail":
                                 menuItem.IsEnabled = gameIndex >= 0 && selectedNodeId > 0;
                                 SetMarkThumbnailMenuItemHeader(menuItem, selectedNode);
                                 break;

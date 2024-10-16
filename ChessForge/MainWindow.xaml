@@ -665,18 +665,18 @@
                             <Grid.ContextMenu>
                                 <ContextMenu x:Name="UiMncModelGames">
                                     <MenuItem x:Name="UiMnGamesGame" Header="{x:Static p:Resources.Game}">
-                                        <MenuItem x:Name="_mnGame_CreateModelGame" Header="{x:Static p:Resources.CreateNewGame}" Click="UiMnGame_CreateModelGame_Click" />
-                                        <MenuItem x:Name="_mnGame_EditHeader" Header="{x:Static p:Resources.EditGameHeader}" Click="UiMnGame_EditHeader_Click" />
+                                        <MenuItem x:Name="UiMnGameCreateModelGame" Header="{x:Static p:Resources.CreateNewGame}" Click="UiMnGame_CreateModelGame_Click" />
+                                        <MenuItem x:Name="UiMnGameEditHeader" Header="{x:Static p:Resources.EditGameHeader}" Click="UiMnGame_EditHeader_Click" />
                                         <MenuItem x:Name="UiMnGameMoveToChapter" Header="{x:Static p:Resources.MoveGameToChapter}" Click="UiMnMoveGameToChapter_Click" />
                                         <Separator />
-                                        <MenuItem x:Name="_mnGame_DeleteModelGame" Header="{x:Static p:Resources.DeleteThisGame}" Click="UiMnGame_DeleteModelGame_Click" />
+                                        <MenuItem x:Name="UiMnGameDeleteModelGame" Header="{x:Static p:Resources.DeleteThisGame}" Click="UiMnGame_DeleteModelGame_Click" />
                                         <Separator />
                                         <MenuItem x:Name="_mnGame_ImportGames" Header="{x:Static p:Resources.ImportGames}" Click="UiMnMainImportFromPgn_Click"  />
                                     </MenuItem>
                                     <Separator />
-                                    <MenuItem x:Name="_mnGame_StartTrainingFromHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere_Click" InputGestureText="T" />
-                                    <MenuItem x:Name="_mnGame_CreateExercise" Header="{x:Static p:Resources.CreateExerciseFromHere}" Click="UiMnGame_CreateExercise_Click" />
-                                    <MenuItem x:Name="_mnGame_MarkThumbnail" Header="{x:Static p:Resources.MarkAsThumbnail}" Click="UiMn_MarkThumbnail_Click" InputGestureText="Ctrl+T" />
+                                    <MenuItem x:Name="UiMnGameStartTrainingFromHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere_Click" InputGestureText="T" />
+                                    <MenuItem x:Name="UiMnGameCreateExercise" Header="{x:Static p:Resources.CreateExerciseFromHere}" Click="UiMnGame_CreateExercise_Click" />
+                                    <MenuItem x:Name="UiMnGameMarkThumbnail" Header="{x:Static p:Resources.MarkAsThumbnail}" Click="UiMn_MarkThumbnail_Click" InputGestureText="Ctrl+T" />
                                     <MenuItem x:Name="UiMnGame_InsertDiagram" Header="{x:Static p:Resources.InsertDiagram}" Click="UiMn_ToggleDiagramFlag_Click" InputGestureText="Ctrl+I" />
                                     <MenuItem x:Name="UiMnGame_DeleteDiagram" Visibility="Collapsed" Header="{x:Static p:Resources.RemoveDiagram}" Click="UiMn_ToggleDiagramFlag_Click" InputGestureText="Ctrl+I" />
                                     <MenuItem x:Name="UiMnGameInvertDiagram" Header="{x:Static p:Resources.InvertDiagram}"  Click="UiMn_InvertDiagram_Click" />
@@ -685,7 +685,7 @@
                                     <MenuItem x:Name="UiMnGameReorderLines" Header="{x:Static p:Resources.ReorderLines}" Click="UiMnReorderLines_Click" />
                                     <MenuItem x:Name="UiMnGameEnterNullMove" Header="{x:Static p:Resources.EnterNullMove}" Click="UiMnEnterNullMove_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="_mnGame_DeleteMovesFromHere" Header="{x:Static p:Resources.DeleteMovesFromHere}" Click="UiMnGame_DeleteMovesFromHere_Click" InputGestureText="Del" />
+                                    <MenuItem x:Name="UiMnGameDeleteMovesFromHere" Header="{x:Static p:Resources.DeleteMovesFromHere}" Click="UiMnGame_DeleteMovesFromHere_Click" InputGestureText="Del" />
                                     <Separator />
                                     <MenuItem x:Name="UiMnGame_EvalMove" Header="{x:Static p:Resources.EvaluatePosition}"  Click="UiMnEvaluatePosition_Click" />
                                     <MenuItem x:Name="UiMnGameDontSaveEvals" Header="{x:Static p:Resources.DoNotUpdatePositionEval}" IsCheckable="True" Click="UiMnDontSaveEvals_Click" InputGestureText="Ctrl+K" />
