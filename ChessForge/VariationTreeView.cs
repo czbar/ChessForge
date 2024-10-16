@@ -555,9 +555,8 @@ namespace ChessForge
             try
             {
                 TreeNode nd = GetSelectedNode();
-                // make sure there is no check/stalemate in the current position, otherwise any move after
-                // the null move would be illegal.
-                if (nd != null && !nd.Position.IsCheck && !nd.Position.IsCheckmate && !nd.Position.IsStalemate)
+
+                if (PositionUtils.IsNullMoveAllowed(nd))
                 {
                     TreeNode nullNd = ShownVariationTree.CreateNewChildNode(nd);
                     nullNd.Position.ColorToMove = MoveUtils.ReverseColor(nullNd.Position.ColorToMove);
