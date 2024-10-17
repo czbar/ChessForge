@@ -964,6 +964,9 @@
   <data name="SoundOn" xml:space="preserve">
     <value>Sound On</value>
   </data>
+  <data name="ParaForComment" xml:space="preserve">
+    <value>Paragraph for Comment</value>
+  </data>
   <data name="ShowMovesAtFork" xml:space="preserve">
     <value>Show Moves at Fork</value>
   </data>

@@ -1280,6 +1280,10 @@ UseFigurines=
 #english: SoundOn=Sound On
 SoundOn=
 
+#description: Whether to place main line comments in a separate paragraph
+#english: ParaForComment=Paragraph for Comment
+ParaForComment=
+
 #description: Whether to show inline table with move options at a fork
 #english: ShowMovesAtFork=Show Moves at Fork
 ShowMovesAtFork=

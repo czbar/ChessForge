@@ -5507,6 +5507,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Paragraph for Comment.
+        /// </summary>
+        public static string ParaForComment {
+            get {
+                return ResourceManager.GetString("ParaForComment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Paste.
         /// </summary>
         public static string Paste {

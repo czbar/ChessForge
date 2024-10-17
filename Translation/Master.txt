@@ -998,6 +998,9 @@ UseFigurines=Use Figurines
 #Whether sound for the moves is turned on
 SoundOn=Sound On
 
+#Whether to place main line comments in a separate paragraph
+ParaForComment=Paragraph for Comment
+
 #Whether to show inline table with move options at a fork
 ShowMovesAtFork=Show Moves at Fork
 
