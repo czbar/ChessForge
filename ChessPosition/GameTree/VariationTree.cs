@@ -483,6 +483,14 @@ namespace GameTree
                         break;
                     case ChfCommands.Command.DIAGRAM:
                         nd.IsDiagram = true;
+                        if (tokens.Length > 1 && tokens[1] == "1")
+                        {
+                            nd.IsDiagramFlipped = true;
+                        }
+                        else
+                        {
+                            nd.IsDiagramFlipped = false;
+                        }
                         break;
                     case ChfCommands.Command.ARTICLE_REFS:
                         if (tokens.Length > 1)

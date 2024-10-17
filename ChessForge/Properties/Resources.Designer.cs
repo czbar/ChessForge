@@ -1537,6 +1537,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cut.
+        /// </summary>
+        public static string Cut {
+            get {
+                return ResourceManager.GetString("Cut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cut Moves.
         /// </summary>
         public static string CutMoves {
@@ -3211,6 +3220,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Items Imported .
+        /// </summary>
+        public static string FlMsgArticlesImported {
+            get {
+                return ResourceManager.GetString("FlMsgArticlesImported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Items Imported into New Chapter.
         /// </summary>
         public static string FlMsgChapterImported {
@@ -3796,6 +3814,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Import from PGN.
+        /// </summary>
+        public static string ImportFromPgn {
+            get {
+                return ResourceManager.GetString("ImportFromPgn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Import Games from PGN.
         /// </summary>
         public static string ImportGames {
@@ -3823,7 +3850,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Import New Chapter.
+        ///   Looks up a localized string similar to Import Chapter.
         /// </summary>
         public static string ImportNewChapter {
             get {
@@ -4017,6 +4044,15 @@ namespace ChessForge.Properties {
         public static string InvalidPositionSetup {
             get {
                 return ResourceManager.GetString("InvalidPositionSetup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invert Diagram.
+        /// </summary>
+        public static string InvertDiagram {
+            get {
+                return ResourceManager.GetString("InvertDiagram", resourceCulture);
             }
         }
         
@@ -5467,6 +5503,15 @@ namespace ChessForge.Properties {
         public static string Page0of0 {
             get {
                 return ResourceManager.GetString("Page0of0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paragraph for Comment.
+        /// </summary>
+        public static string ParaForComment {
+            get {
+                return ResourceManager.GetString("ParaForComment", resourceCulture);
             }
         }
         

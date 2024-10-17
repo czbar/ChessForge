@@ -140,6 +140,9 @@ Bookmarks=Bookmarks
 #Copy
 Copy=Copy
 
+#Cut
+Cut=Cut
+
 #Paste
 Paste=Paste
 
@@ -995,6 +998,9 @@ UseFigurines=Use Figurines
 #Whether sound for the moves is turned on
 SoundOn=Sound On
 
+#Whether to place main line comments in a separate paragraph
+ParaForComment=Paragraph for Comment
+
 #Whether to show inline table with move options at a fork
 ShowMovesAtFork=Show Moves at Fork
 
@@ -1659,10 +1665,13 @@ TrnRightClickMove=Right click to open the context menu.
 CreateNewChapter=Create New Chapter
 
 #Import a new chapter
-ImportNewChapter=Import New Chapter
+ImportNewChapter=Import Chapter
 
 #Cretae a new game
 CreateNewGame=Create New Game
+
+#Import games and exercises from PGN
+ImportFromPgn=Import from PGN
 
 #Import a new game
 ImportGames=Import Games from PGN
@@ -1756,7 +1765,7 @@ DeleteSelectedExercise=Delete Selected Exercise
 ConfirmDeleteExercise=Delete Exercise
 
 #
-# Header: CONTEXT MENU for Intro Tab
+# Header: CONTEXT MENU for Intro Tab and diagrams elsewhere
 #
 
 #Insert a diagram
@@ -1764,6 +1773,9 @@ InsertDiagram=Insert Diagram
 
 #Remove the diagram
 RemoveDiagram=Remove Diagram
+
+#Invert the diagram
+InvertDiagram=Invert Diagram
 
 #Edit a diagram
 EditDiagram=Edit Diagram
@@ -2106,6 +2118,9 @@ FlMsgShiftToSkipFast=Hold SHIFT + Left Button to skip fast
 
 #Flash message: Items removed.
 FlMsgItemsRemoved=Items Removed 
+
+#Flash message: Articles Imported
+FlMsgArticlesImported=Items Imported 
 
 #Flash message: Games Imported
 FlMsgGamesImported=Games Imported 

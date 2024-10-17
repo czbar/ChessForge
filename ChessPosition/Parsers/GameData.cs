@@ -1,13 +1,8 @@
 ﻿using ChessPosition;
 using ChessPosition.Utils;
 using System;
-using System.CodeDom;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameTree
 {
@@ -32,6 +27,7 @@ namespace GameTree
             EXERCISE,
             INTRO,
             UNKNOWN,
+            ANY             // special to use when want to handle both GAMES and EXCERCISES
         }
 
         // whether this game is selected in the GUI

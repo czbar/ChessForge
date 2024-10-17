@@ -181,6 +181,10 @@ Bookmarks=
 #english: Copy=Copy
 Copy=
 
+#description: Cut
+#english: Cut=Cut
+Cut=
+
 #description: Paste
 #english: Paste=Paste
 Paste=
@@ -1276,6 +1280,10 @@ UseFigurines=
 #english: SoundOn=Sound On
 SoundOn=
 
+#description: Whether to place main line comments in a separate paragraph
+#english: ParaForComment=Paragraph for Comment
+ParaForComment=
+
 #description: Whether to show inline table with move options at a fork
 #english: ShowMovesAtFork=Show Moves at Fork
 ShowMovesAtFork=
@@ -2117,12 +2125,16 @@ TrnRightClickMove=
 CreateNewChapter=
 
 #description: Import a new chapter
-#english: ImportNewChapter=Import New Chapter
+#english: ImportNewChapter=Import Chapter
 ImportNewChapter=
 
 #description: Cretae a new game
 #english: CreateNewGame=Create New Game
 CreateNewGame=
+
+#description: Import games and exercises from PGN
+#english: ImportFromPgn=Import from PGN
+ImportFromPgn=
 
 #description: Import a new game
 #english: ImportGames=Import Games from PGN
@@ -2246,7 +2258,7 @@ DeleteSelectedExercise=
 ConfirmDeleteExercise=
 
 #
-# Header: CONTEXT MENU for Intro Tab
+# Header: CONTEXT MENU for Intro Tab and diagrams elsewhere
 #
 
 #description: Insert a diagram
@@ -2256,6 +2268,10 @@ InsertDiagram=
 #description: Remove the diagram
 #english: RemoveDiagram=Remove Diagram
 RemoveDiagram=
+
+#description: Invert the diagram
+#english: InvertDiagram=Invert Diagram
+InvertDiagram=
 
 #description: Edit a diagram
 #english: EditDiagram=Edit Diagram
@@ -2690,6 +2706,10 @@ FlMsgShiftToSkipFast=
 #description: Flash message: Items removed.
 #english: FlMsgItemsRemoved=Items Removed 
 FlMsgItemsRemoved=
+
+#description: Flash message: Articles Imported
+#english: FlMsgArticlesImported=Items Imported 
+FlMsgArticlesImported=
 
 #description: Flash message: Games Imported
 #english: FlMsgGamesImported=Games Imported 

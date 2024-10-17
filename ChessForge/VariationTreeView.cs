@@ -429,10 +429,48 @@ namespace ChessForge
 
                 // add dummy para so that the last row can be comfortable viewed
                 Document.Blocks.Add(BuildDummyPararaph());
+                ClearSpuriousNewLines();
             }
             catch (Exception ex)
             {
                 AppLog.Message("BuildFlowDocumentForVariationTree()", ex);
+            }
+        }
+
+        /// <summary>
+        /// Looks for the last runs in each paragraph that may contain
+        /// LF char which is not necessary if a new paragraph follows.
+        /// Removes all found.
+        /// </summary>
+        private void ClearSpuriousNewLines(Paragraph paragraph = null)
+        {
+            foreach (Block block in Document.Blocks)
+            {
+                if (block is Paragraph para)
+                {
+                    ClearSpuriousNewLinesInPara(para);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Looks for the last run in the passed paragraph that may contain
+        /// LF char which is not necessary if a new paragraph follows.
+        /// Removes if found.
+        /// </summary>
+        /// <param name="para"></param>
+        private void ClearSpuriousNewLinesInPara(Paragraph para)
+        {
+            if (para != null)
+            {
+                Inline inl = para.Inlines.Last();
+                if (inl is Run run)
+                {
+                    if (!string.IsNullOrEmpty(inl.Name)) // && inl.Name.StartsWith(_run_end_comment))
+                    {
+                        run.Text = run.Text.Replace("\n", "");
+                    }
+                }
             }
         }
 
@@ -555,12 +593,13 @@ namespace ChessForge
             try
             {
                 TreeNode nd = GetSelectedNode();
-                if (nd != null)
+
+                if (PositionUtils.IsNullMoveAllowed(nd))
                 {
                     TreeNode nullNd = ShownVariationTree.CreateNewChildNode(nd);
                     nullNd.Position.ColorToMove = MoveUtils.ReverseColor(nullNd.Position.ColorToMove);
                     nullNd.MoveNumber = nullNd.Position.ColorToMove == PieceColor.White ? nullNd.MoveNumber : nullNd.MoveNumber += 1;
-                    MoveUtils.CleanupNullMove(nullNd);
+                    MoveUtils.CleanupNullMove(ref nullNd);
 
                     ShownVariationTree.AddNodeToParent(nullNd);
                     ShownVariationTree.BuildLines();
@@ -571,6 +610,8 @@ namespace ChessForge
                     SelectNode(nullNd);
                     int nodeIndex = _mainWin.ActiveLine.GetIndexForNode(nullNd.NodeId);
                     _mainWin.SelectLineAndMoveInWorkbookViews(this, nd.LineId, nodeIndex, false);
+
+                    PulseManager.BringSelectedRunIntoView();                    
                     AppState.IsDirty = true;
                 }
             }
@@ -1984,7 +2025,12 @@ namespace ChessForge
                     if (found)
                     {
                         HighlightSelectedForCopy();
-                        PlaceSelectedForCopyInClipboard();
+
+                        // Commented out as we do not want the "automatic selection" but want to 
+                        // act only after CTRL+C.
+                        // Not sure why it was done like this in the first place.
+                        //
+                        //PlaceSelectedForCopyInClipboard();
                     }
                     else
                     {

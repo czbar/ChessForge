@@ -16,6 +16,36 @@ namespace ChessForge
     public class ChapterUtils
     {
         /// <summary>
+        /// Invoked when a new chapter was created and needs a name.
+        /// Calls the Chapter Title dialog and lets the user edit the name/author attributes.
+        /// If the user cancels, discards the new dialog and restore the status quo.
+        /// </summary>
+        /// <param name="targetChapter"></param>
+        /// <param name="activeChapter"></param>
+        /// <returns></returns>
+        public static bool NameNeWChapter(Chapter targetChapter, Chapter activeChapter)
+        {
+            bool proceed = true;
+
+            ChapterTitleDialog dlg = new ChapterTitleDialog(targetChapter);
+            GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
+            if (dlg.ShowDialog() == true)
+            {
+                targetChapter.SetTitle(dlg.ChapterTitle);
+                targetChapter.SetAuthor(dlg.Author);
+                AppState.Workbook.ActiveChapter = targetChapter;
+            }
+            else
+            {
+                AppState.Workbook.Chapters.Remove(targetChapter);
+                AppState.Workbook.ActiveChapter = activeChapter;
+                proceed = false;
+            }
+
+            return proceed;
+        }
+
+        /// <summary>
         /// Through some loose programming we may end up with some garbage in the Study Tree header
         /// (e.g. after regenerating) which in turn may affect things like the title of an exercise
         /// when created from a position in the Study.

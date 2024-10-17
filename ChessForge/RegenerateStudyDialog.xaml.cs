@@ -29,6 +29,9 @@ namespace ChessForge
             {
                 UiTbLastTreeMoveNo.Text = Configuration.AutogenTreeDepth.ToString();
             }
+
+            UiTbLastTreeMoveNo.Focus();
+            UiTbLastTreeMoveNo.SelectAll();
         }
 
         /// <summary>

@@ -22,6 +22,17 @@ namespace ChessPosition
         public static Random GlobalRnd = new Random();
 
         /// <summary>
+        /// The null move is allowed if there is no check/stalemate in the current position, 
+        /// otherwise any move after the null move would be illegal.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        public static bool IsNullMoveAllowed(TreeNode nd)
+        {
+            return nd != null && !nd.Position.IsCheck && !nd.Position.IsCheckmate && !nd.Position.IsStalemate;
+        }
+
+        /// <summary>
         /// Counts the number of pieces on the board.
         /// </summary>
         public static int GetPieceCount(BoardPosition position)

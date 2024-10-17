@@ -240,6 +240,9 @@
   <data name="Copy" xml:space="preserve">
     <value>Copy</value>
   </data>
+  <data name="Cut" xml:space="preserve">
+    <value>Cut</value>
+  </data>
   <data name="Paste" xml:space="preserve">
     <value>Paste</value>
   </data>
@@ -961,6 +964,9 @@
   <data name="SoundOn" xml:space="preserve">
     <value>Sound On</value>
   </data>
+  <data name="ParaForComment" xml:space="preserve">
+    <value>Paragraph for Comment</value>
+  </data>
   <data name="ShowMovesAtFork" xml:space="preserve">
     <value>Show Moves at Fork</value>
   </data>
@@ -1493,10 +1499,13 @@
     <value>Create New Chapter</value>
   </data>
   <data name="ImportNewChapter" xml:space="preserve">
-    <value>Import New Chapter</value>
+    <value>Import Chapter</value>
   </data>
   <data name="CreateNewGame" xml:space="preserve">
     <value>Create New Game</value>
+  </data>
+  <data name="ImportFromPgn" xml:space="preserve">
+    <value>Import from PGN</value>
   </data>
   <data name="ImportGames" xml:space="preserve">
     <value>Import Games from PGN</value>
@@ -1593,6 +1602,9 @@
   </data>
   <data name="RemoveDiagram" xml:space="preserve">
     <value>Remove Diagram</value>
+  </data>
+  <data name="InvertDiagram" xml:space="preserve">
+    <value>Invert Diagram</value>
   </data>
   <data name="EditDiagram" xml:space="preserve">
     <value>Edit Diagram</value>
@@ -1869,6 +1881,9 @@
   </data>
   <data name="FlMsgItemsRemoved" xml:space="preserve">
     <value>Items Removed </value>
+  </data>
+  <data name="FlMsgArticlesImported" xml:space="preserve">
+    <value>Items Imported </value>
   </data>
   <data name="FlMsgGamesImported" xml:space="preserve">
     <value>Games Imported </value>

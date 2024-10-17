@@ -181,6 +181,10 @@ Bookmarks=Zakładki
 #english: Copy=Copy
 Copy=Kopiuj
 
+#description: Cut
+#english: Cut=Cut
+Cut=Wytnij
+
 #description: Paste
 #english: Paste=Paste
 Paste=Wkleić
@@ -1276,6 +1280,10 @@ UseFigurines=Używaj figurek
 #english: SoundOn=Sound On
 SoundOn=Włącz dźwięk
 
+#description: Whether to place main line comments in a separate paragraph
+#english: ParaForComment=Paragraph for Comment
+ParaForComment=Akapit na komentarz
+
 #description: Whether to show inline table with move options at a fork
 #english: ShowMovesAtFork=Show Moves at Fork
 ShowMovesAtFork=Tabelka przy rozgałęzieniu
@@ -2117,16 +2125,20 @@ TrnRightClickMove=Prawy przycisk myszki wywoła menu.
 CreateNewChapter=Utwórz Nowy Rozdział
 
 #description: Import a new chapter
-#english: ImportNewChapter=Import New Chapter
-ImportNewChapter=Importuj Nowy Rozdział
+#english: ImportNewChapter=Import Chapter
+ImportNewChapter=Importuj Rozdział
 
 #description: Cretae a new game
 #english: CreateNewGame=Create New Game
 CreateNewGame=Utwórz Nową Partię
 
+#description: Import games and exercises from PGN
+#english: ImportFromPgn=Import from PGN
+ImportFromPgn=Importuj z pliku PGN
+
 #description: Import a new game
 #english: ImportGames=Import Games from PGN
-ImportGames=Importuj Partie z Pliku PGN
+ImportGames=Importuj Partie z pliku PGN
 
 #description: Create a new exercise
 #english: CreateNewExercise=Create New Exercise
@@ -2134,7 +2146,7 @@ CreateNewExercise=Utwórz Nowe Ćwiczenie
 
 #description: Import Exercise
 #english: ImportExercises=Import Exercises from PGN
-ImportExercises=Importuj Ćwiczenia z Pliku PGN
+ImportExercises=Importuj Ćwiczenia z pliku PGN
 
 #description: Open the selected chapter
 #english: OpenSelectedChapter=Open Selected Chapter
@@ -2246,7 +2258,7 @@ DeleteSelectedExercise=Usuń Wybrane ćwiczenie
 ConfirmDeleteExercise=Usunąć ćwiczenie
 
 #
-# Header: CONTEXT MENU for Intro Tab
+# Header: CONTEXT MENU for Intro Tab and diagrams elsewhere
 #
 
 #description: Insert a diagram
@@ -2256,6 +2268,10 @@ InsertDiagram=Wstaw Diagram
 #description: Remove the diagram
 #english: RemoveDiagram=Remove Diagram
 RemoveDiagram=Usuń Diagram
+
+#description: Invert the diagram
+#english: InvertDiagram=Invert Diagram
+InvertDiagram=Odwróć Diagram
 
 #description: Edit a diagram
 #english: EditDiagram=Edit Diagram
@@ -2285,6 +2301,11 @@ MnGameExerciseReferences=Edytuj Odsyłacz do Partii i Ćwiczeń...
 #description: Promote a line
 #english: PromoteLine=Promote Line
 PromoteLine=Promuj Wariant
+
+#description: Enter null move
+#english: EnterNullMove=Enter Null Move
+EnterNullMove=Wprowadź pusty ruch
+
 
 #description: Delete the line starting from the current position
 #english: DeleteMovesFromHere=Delete the Selected Move and All Moves that Follow
@@ -2685,6 +2706,10 @@ FlMsgShiftToSkipFast=Wciśnij SHIFT i lewy klawisz aby szybko przeskakiwać
 #description: Flash message: Items removed.
 #english: FlMsgItemsRemoved=Items Removed 
 FlMsgItemsRemoved=Usunięto wybrane pozycje 
+
+#description: Flash message: Articles Imported
+#english: FlMsgArticlesImported=Items Imported 
+FlMsgArticlesImported=Elementy zostały zaimportowane 
 
 #description: Flash message: Games Imported
 #english: FlMsgGamesImported=Games Imported 
@@ -4016,8 +4041,5 @@ IllegalCastling=Niedozwolona roszada.
 #
 
 #description: Workbook info
-#english: AboutWorkbook=This PGN Workbook is optimized for viewing in Chess Forge https://sourceforge.net/projects/chessforge/ \nChess Forge is a Free and Open Source Windows application.
+#english: AboutWorkbook=This PGN Workbook is optimized for viewing in Chess Forge https://sourceforge.net/projects/chessforge/.   Chess Forge is a Free and Open Source Windows application.
 AboutWorkbook=Ten podręcznik PGN najlepiej oglądać w programie Chess Forge https://sourceforge.net/projects/chessforge/.   Chess Forge to Wolne i Otwarte Oprogramowanie do systemu Windows.
-
-
-EnterNullMove=Wprowadź pusty ruch

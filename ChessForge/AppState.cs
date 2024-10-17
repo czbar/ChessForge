@@ -877,7 +877,7 @@ namespace ChessForge
                 MainWin.UiRtbStudyTreeView.IsEnabled = true;
 
                 MainWin.UiMnAnnotations.IsEnabled = false;
-                MainWin.UiMnPaste.IsEnabled = false;
+                MainWin.UiMnMainPaste.IsEnabled = false;
                 MainWin.UiMnCommentBeforeMove.IsEnabled = false;
                 MainWin.UiMnMergeChapters.IsEnabled = false;
 
@@ -1206,7 +1206,7 @@ namespace ChessForge
                 VariationTreeView view = AppState.MainWin.ActiveTreeView;
 
                 ConfigureBookmarkMenuOptions(MainWin.UiMnMarkBookmark, MainWin.UiMnStDeleteBookmark);
-                ConfigureDiagramMenuOptions(MainWin.UiMnStudyInsertDiagram, MainWin.UiMnStudyDeleteDiagram);
+                ConfigureDiagramMenuOptions(MainWin.UiMnStudyInsertDiagram, MainWin.UiMnStudyDeleteDiagram, MainWin.UiMnStudyInvertDiagram);
 
                 foreach (var item in MainWin.UiMncStudyTree.Items)
                 {
@@ -1239,11 +1239,12 @@ namespace ChessForge
                             case "UiMnStudyInsertDiagram":
                                 menuItem.IsEnabled = tree != null && tree.SelectedNode != null;
                                 break;
-                            case "UiMnStCopyMoves":
-                            case "UiMnStCutMoves":
+                            case "UiMnMainCopy":
+                            case "UiMnMainCut":
+                                //TODO: moved to main menu
                                 menuItem.IsEnabled = view != null && view.HasMovesSelectedForCopy;
                                 break;
-                            case "UiMnStPasteMoves":
+                            case "UiMnMainPaste":
                                 menuItem.IsEnabled = SystemClipboard.HasSerializedData() || !string.IsNullOrEmpty(SystemClipboard.GetText());
                                 break;
                             case "UiMnPromoteLine":
@@ -1251,6 +1252,9 @@ namespace ChessForge
                                 break;
                             case "UiMnReorderLines":
                                 menuItem.IsEnabled = tree.SelectedNode != null && tree.SelectedNode.Parent != null && tree.SelectedNode.Parent.Children.Count > 1;
+                                break;
+                            case "UiMnEnterNullMove":
+                                menuItem.IsEnabled = PositionUtils.IsNullMoveAllowed(tree.SelectedNode);
                                 break;
                         }
                     }
@@ -1283,7 +1287,7 @@ namespace ChessForge
                 VariationTreeView view = MainWin.ActiveTreeView;
 
                 ConfigureBookmarkMenuOptions(MainWin.UiMnGameMarkBookmark, MainWin.UiMnGameDeleteBookmark);
-                ConfigureDiagramMenuOptions(MainWin.UiMnGame_InsertDiagram, MainWin.UiMnGame_DeleteDiagram);
+                ConfigureDiagramMenuOptions(MainWin.UiMnGame_InsertDiagram, MainWin.UiMnGame_DeleteDiagram, MainWin.UiMnGameInvertDiagram);
 
                 foreach (var item in MainWin.UiMncModelGames.Items)
                 {
@@ -1292,43 +1296,31 @@ namespace ChessForge
                         MenuItem menuItem = item as MenuItem;
                         switch (menuItem.Name)
                         {
-                            case "_mnGame_EditHeader":
+                            case "UiMnGameEditHeader":
                             case "UiMnGameMoveToChapter":
                                 menuItem.IsEnabled = gameIndex >= 0;
                                 break;
-                            case "_mnGame_CreateModelGame":
+                            case "UiMnGameCreateModelGame":
                                 menuItem.IsEnabled = true;
                                 break;
-                            case "_mnGame_StartTrainingFromHere":
+                            case "UiMnGameStartTrainingFromHere":
                                 menuItem.IsEnabled = gameIndex >= 0 && !isMate;
                                 break;
-                            case "_mnGame_MergeToStudy":
-                                menuItem.IsEnabled = gameIndex >= 0 && selectedNodeId >= 0;
-                                break;
-                            case "_mnGame_CopyFen":
-                                menuItem.IsEnabled = gameIndex >= 0 && ActiveVariationTree != null;
-                                break;
-                            case "_mnGame_CreateExercise":
+                            case "UiMnGameCreateExercise":
                                 menuItem.IsEnabled = gameIndex >= 0 && selectedNodeId > 0 && !isMate;
                                 break;
-                            case "_mnGame_PromoteLine":
+                            case "UiMnGameDeleteMovesFromHere":
                                 menuItem.IsEnabled = gameIndex >= 0 && selectedNodeId > 0;
                                 break;
-                            case "_mnGame_DeleteMovesFromHere":
-                                menuItem.IsEnabled = gameIndex >= 0 && selectedNodeId > 0;
-                                break;
-                            case "_mnGame_DeleteModelGame":
+                            case "UiMnGameDeleteModelGame":
                                 menuItem.IsEnabled = gameIndex >= 0;
                                 break;
                             case "UiMnGameMarkBookmark":
                                 menuItem.IsEnabled = gameIndex >= 0 && selectedNodeId > 0;
                                 break;
-                            case "_mnGame_MarkThumbnail":
+                            case "UiMnGameMarkThumbnail":
                                 menuItem.IsEnabled = gameIndex >= 0 && selectedNodeId > 0;
                                 SetMarkThumbnailMenuItemHeader(menuItem, selectedNode);
-                                break;
-                            case "UiMnGameInsertDiagram":
-                                menuItem.IsEnabled = gameIndex >= 0 && selectedNodeId > 0;
                                 break;
                             case "UiMnGameCopyMoves":
                             case "UiMnGameCutMoves":
@@ -1336,6 +1328,15 @@ namespace ChessForge
                                 break;
                             case "UiMnGamePasteMoves":
                                 menuItem.IsEnabled = SystemClipboard.HasSerializedData() || !string.IsNullOrEmpty(SystemClipboard.GetText());
+                                break;
+                            case "UiMnGamePromoteLine":
+                                menuItem.IsEnabled = gameIndex >= 0 && selectedNodeId > 0;
+                                break;
+                            case "UiMnGameReorderLines":
+                                menuItem.IsEnabled = gameIndex >= 0 && selectedNode != null && selectedNode.Parent != null && selectedNode.Parent.Children.Count > 1;
+                                break;
+                            case "UiMnGameEnterNullMove":
+                                menuItem.IsEnabled = PositionUtils.IsNullMoveAllowed(selectedNode);
                                 break;
                         }
                     }
@@ -1377,7 +1378,7 @@ namespace ChessForge
                 else
                 {
                     ConfigureBookmarkMenuOptions(MainWin.UiMnExercMarkBookmark, MainWin.UiMnExercDeleteBookmark);
-                    ConfigureDiagramMenuOptions(MainWin.UiMnExerc_InsertDiagram, MainWin.UiMnExerc_DeleteDiagram);
+                    ConfigureDiagramMenuOptions(MainWin.UiMnExerc_InsertDiagram, MainWin.UiMnExerc_DeleteDiagram, MainWin.UiMnExercInvertDiagram);
                 }
 
                 foreach (var item in MainWin.UiMncExercises.Items)
@@ -1413,10 +1414,6 @@ namespace ChessForge
                             case "_mnExerc_CopyFen":
                                 menuItem.IsEnabled = exerciseIndex >= 0 && ActiveVariationTree != null && isSolutionShown;
                                 break;
-                            case "_mnExerc_PromoteLine":
-                                menuItem.IsEnabled = exerciseIndex >= 0 && selectedNodeId > 0 && isSolutionShown;
-                                menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
-                                break;
                             case "_mnExerc_DeleteMovesFromHere":
                             case "UiMnExerc_EvalLine":
                             case "UiMnExerc_EvalMove":
@@ -1446,8 +1443,13 @@ namespace ChessForge
                                 SetMarkThumbnailMenuItemHeader(menuItem, selectedNode);
                                 break;
                             case "UiMnExerc_InsertDiagram":
-                                menuItem.IsEnabled = exerciseIndex >= 0 && selectedNodeId > 0 && isSolutionShown;
-                                menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
+                                // the call to ConfigureDiagramMenuOptions() may have set this item to visible
+
+                                if (menuItem.Visibility == Visibility.Visible)
+                                {
+                                    menuItem.IsEnabled = exerciseIndex >= 0 && selectedNodeId > 0 && isSolutionShown;
+                                    menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
+                                }
                                 break;
                             case "UiMnExercCopyMoves":
                             case "UiMnExercCutMoves":
@@ -1467,6 +1469,16 @@ namespace ChessForge
                             case "UiMnExercFindPositions":
                                 menuItem.IsEnabled = isSolutionShown;
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
+                                break;
+                            case "UiMnExercPromoteLine":
+                                menuItem.IsEnabled = exerciseIndex >= 0 && selectedNodeId > 0 && isSolutionShown;
+                                menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
+                                break;
+                            case "UiMnExercReorderLines":
+                                menuItem.IsEnabled = selectedNode != null && selectedNode.Parent != null && selectedNode.Parent.Children.Count > 1;
+                                break;
+                            case "UiMnExercEnterNullMove":
+                                menuItem.IsEnabled = PositionUtils.IsNullMoveAllowed(selectedNode);
                                 break;
                         }
                     }
@@ -1726,7 +1738,7 @@ namespace ChessForge
 
                     MainWin.UiMnEvaluateGames.IsEnabled = AppState.Workbook != null && Workbook.HasAnyModelGames;
                     MainWin.UiMnFindGames.IsEnabled = AppState.Workbook != null && Workbook.IsReady;
-                    MainWin.UiMnImportGames.IsEnabled = AppState.Workbook != null && Workbook.IsReady;
+                    MainWin.UiMnMainImportFromPgn.IsEnabled = AppState.Workbook != null && Workbook.IsReady;
                     MainWin.UiMnDeleteComments.IsEnabled = WorkbookManager.SessionWorkbook != null;
                     MainWin.UiMnDeleteEngineEvals.IsEnabled = WorkbookManager.SessionWorkbook != null;
                     MainWin.UiMnAssignECO.IsEnabled = WorkbookManager.SessionWorkbook != null;
@@ -1740,7 +1752,7 @@ namespace ChessForge
 
 
                     MainWin.UiMnAnnotations.IsEnabled = IsTreeViewTabActive();
-                    MainWin.UiMnPaste.IsEnabled = !string.IsNullOrEmpty(SystemClipboard.GetText());
+                    MainWin.UiMnMainPaste.IsEnabled = !string.IsNullOrEmpty(SystemClipboard.GetText());
                     MainWin.UiMnCommentBeforeMove.IsEnabled = IsTreeViewTabActive();
                     MainWin.UiMnMergeChapters.IsEnabled = WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.GetChapterCount() > 1;
 
@@ -1800,7 +1812,7 @@ namespace ChessForge
             _mainWin.Dispatcher.Invoke(() =>
             {
                 MainWin.UiMnAnnotations.IsEnabled = false;
-                MainWin.UiMnPaste.IsEnabled = false;
+                MainWin.UiMnMainPaste.IsEnabled = false;
                 MainWin.UiMnCommentBeforeMove.IsEnabled = false;
                 MainWin.UiMnMergeChapters.IsEnabled = false;
 
@@ -1973,7 +1985,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="addBookmark"></param>
         /// <param name="deleteBookmark"></param>
-        private static void ConfigureDiagramMenuOptions(MenuItem insertDiagram, MenuItem removeDiagram)
+        private static void ConfigureDiagramMenuOptions(MenuItem insertDiagram, MenuItem removeDiagram, MenuItem invertDiagram)
         {
             TreeNode nd = AppState.GetCurrentNode();
 
@@ -1983,6 +1995,7 @@ namespace ChessForge
                 insertDiagram.IsEnabled = false;
 
                 removeDiagram.Visibility = Visibility.Collapsed;
+                invertDiagram.Visibility = Visibility.Collapsed;
             }
             else
             {
@@ -1992,6 +2005,9 @@ namespace ChessForge
 
                 removeDiagram.Visibility = hasDiagram ? Visibility.Visible : Visibility.Collapsed;
                 removeDiagram.IsEnabled = hasDiagram;
+
+                invertDiagram.Visibility = hasDiagram ? Visibility.Visible : Visibility.Collapsed;
+                invertDiagram.IsEnabled = hasDiagram;
             }
         }
 

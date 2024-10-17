@@ -192,6 +192,12 @@ namespace GameTree
         public bool IsDiagram = false;
 
         /// <summary>
+        /// Whether the diagram is to be shown with black at the bottom.
+        /// Only matters if IsDiagram is true..
+        /// </summary>
+        public bool IsDiagramFlipped = false;
+
+        /// <summary>
         /// References to Games, Exercises or Chapters
         /// in the form of GUID|GUID|...|GUID
         /// </summary>
