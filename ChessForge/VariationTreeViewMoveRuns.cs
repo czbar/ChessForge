@@ -69,6 +69,7 @@ namespace ChessForge
                     {
                         TextUtils.RemoveBlunderNagFromText(r);
                     }
+                    ClearSpuriousNewLinesInPara(para);
                 }
 
                 // the next move in para may need to be redrawn if it was black on move
@@ -341,11 +342,10 @@ namespace ChessForge
                     return;
                 }
 
-                // do not insert a space if this is comment for the 0 (invisible) move
-                CommentPart startPart = new CommentPart(CommentPartType.TEXT, nd.Parent == null ? "" : " ");
+                CommentPart startPart = new CommentPart(CommentPartType.TEXT, BuildTextForStartPart(nd));
                 parts.Insert(0, startPart);
 
-                CommentPart endPart = new CommentPart(CommentPartType.TEXT, " ");
+                CommentPart endPart = new CommentPart(CommentPartType.TEXT, BuildTextForEndPart(nd));
                 parts.Add(endPart);
 
                 if (HandleBlunders && nd.Assessment != (uint)ChfCommands.Assessment.NONE && nd.IsMainLine())
@@ -473,7 +473,7 @@ namespace ChessForge
                     inl.PreviewMouseDown += EventReferenceMouseButtonDown;
                     inl.MouseEnter += EventReferenceMouseEnter;
                     inl.MouseLeave += EventReferenceMouseLeave;
-                    inl.Foreground = part.Type == CommentPartType.GAME_EXERCISE_REFERENCE  ? 
+                    inl.Foreground = part.Type == CommentPartType.GAME_EXERCISE_REFERENCE ?
                         ChessForgeColors.CurrentTheme.GameExerciseRefForeground : ChessForgeColors.CurrentTheme.ChapterRefForeground;
                     inl.Cursor = Cursors.Hand;
                     break;
@@ -487,6 +487,67 @@ namespace ChessForge
             }
 
             return inl;
+        }
+
+        /// <summary>
+        /// Builds text for the for the Start part of the comment.
+        /// For a sideline comment it will be just a single space.
+        /// For a main line comment, assuming certain additional criteria,
+        /// it will be NewLines instead.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        private string BuildTextForStartPart(TreeNode nd)
+        {
+            string text = string.Empty;
+
+            // if this is mainline in Game or Exercise, and the comment is non-empty
+            // and it is not on move 0, add newline. 
+            if (Configuration.MainLineCommentLF
+                && (ContentType == GameData.ContentType.MODEL_GAME || ContentType == GameData.ContentType.EXERCISE)
+                && nd.IsMainLine()
+                && nd.Parent != null
+                && !string.IsNullOrEmpty(nd.Comment))
+            {
+                text = "\n\n";
+            }
+            else
+            {
+                // TODO: do not insert if this is after a diagram, i.e. in a new line
+                if (nd.Parent != null)
+                {
+                    text = " ";
+                }
+            }
+
+            return text;
+        }
+
+        /// <summary>
+        /// Builds the end part of the comment.
+        /// It will be NewLines if we are on main line 
+        /// or a space if we are not.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        private string BuildTextForEndPart(TreeNode nd)
+        {
+            string text = string.Empty;
+
+            // if the comment is on the main line
+            if (Configuration.MainLineCommentLF 
+                && (ContentType == GameData.ContentType.MODEL_GAME || ContentType == GameData.ContentType.EXERCISE)
+                && nd.IsMainLine()
+                && !string.IsNullOrEmpty(nd.Comment))
+            {
+                text += "\n\n";
+            }
+            else
+            {
+                text += " ";
+            }
+
+            return text;
         }
 
         /// <summary>
