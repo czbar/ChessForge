@@ -1206,7 +1206,7 @@ namespace ChessForge
                 VariationTreeView view = AppState.MainWin.ActiveTreeView;
 
                 ConfigureBookmarkMenuOptions(MainWin.UiMnMarkBookmark, MainWin.UiMnStDeleteBookmark);
-                ConfigureDiagramMenuOptions(MainWin.UiMnStudyInsertDiagram, MainWin.UiMnStudyDeleteDiagram, MainWin.UiMnStudyInvertDiagram);
+                ConfigureDiagramMenuOptions(MainWin.UiMnStudyInsertDiagramPreComment, MainWin.UiMnStudyInsertDiagramPostComment, MainWin.UiMnStudyDeleteDiagram, MainWin.UiMnStudyInvertDiagram);
 
                 foreach (var item in MainWin.UiMncStudyTree.Items)
                 {
@@ -1236,7 +1236,7 @@ namespace ChessForge
                                 menuItem.IsEnabled = tree != null && tree.SelectedNode != null;
                                 SetMarkThumbnailMenuItemHeader(menuItem, selectedNode);
                                 break;
-                            case "UiMnStudyInsertDiagram":
+                            case "UiMnStudyInsertDiagramPostComment":
                                 menuItem.IsEnabled = tree != null && tree.SelectedNode != null;
                                 break;
                             case "UiMnMainCopy":
@@ -1287,7 +1287,7 @@ namespace ChessForge
                 VariationTreeView view = MainWin.ActiveTreeView;
 
                 ConfigureBookmarkMenuOptions(MainWin.UiMnGameMarkBookmark, MainWin.UiMnGameDeleteBookmark);
-                ConfigureDiagramMenuOptions(MainWin.UiMnGame_InsertDiagram, MainWin.UiMnGame_DeleteDiagram, MainWin.UiMnGameInvertDiagram);
+                ConfigureDiagramMenuOptions(MainWin.UiMnGameInsertDiagramPreComment, MainWin.UiMnGameInsertDiagramPostComment, MainWin.UiMnGame_DeleteDiagram, MainWin.UiMnGameInvertDiagram);
 
                 foreach (var item in MainWin.UiMncModelGames.Items)
                 {
@@ -1378,7 +1378,7 @@ namespace ChessForge
                 else
                 {
                     ConfigureBookmarkMenuOptions(MainWin.UiMnExercMarkBookmark, MainWin.UiMnExercDeleteBookmark);
-                    ConfigureDiagramMenuOptions(MainWin.UiMnExerc_InsertDiagram, MainWin.UiMnExerc_DeleteDiagram, MainWin.UiMnExercInvertDiagram);
+                    ConfigureDiagramMenuOptions(MainWin.UiMnExercInsertDiagramPreComment, MainWin.UiMnExercInsertDiagramPostComment, MainWin.UiMnExerc_DeleteDiagram, MainWin.UiMnExercInvertDiagram);
                 }
 
                 foreach (var item in MainWin.UiMncExercises.Items)
@@ -1442,9 +1442,8 @@ namespace ChessForge
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 SetMarkThumbnailMenuItemHeader(menuItem, selectedNode);
                                 break;
-                            case "UiMnExerc_InsertDiagram":
+                            case "UiMnExercInsertDiagramPostComment":
                                 // the call to ConfigureDiagramMenuOptions() may have set this item to visible
-
                                 if (menuItem.Visibility == Visibility.Visible)
                                 {
                                     menuItem.IsEnabled = exerciseIndex >= 0 && selectedNodeId > 0 && isSolutionShown;
@@ -1985,14 +1984,17 @@ namespace ChessForge
         /// </summary>
         /// <param name="addBookmark"></param>
         /// <param name="deleteBookmark"></param>
-        private static void ConfigureDiagramMenuOptions(MenuItem insertDiagram, MenuItem removeDiagram, MenuItem invertDiagram)
+        private static void ConfigureDiagramMenuOptions(MenuItem insertDiagramPreComment, MenuItem insertDiagramPostComment, MenuItem removeDiagram, MenuItem invertDiagram)
         {
             TreeNode nd = AppState.GetCurrentNode();
 
             if (nd == null)
             {
-                insertDiagram.Visibility = Visibility.Visible;
-                insertDiagram.IsEnabled = false;
+                insertDiagramPreComment.Visibility = Visibility.Visible;
+                insertDiagramPreComment.IsEnabled = false;
+
+                insertDiagramPostComment.Visibility = Visibility.Visible;
+                insertDiagramPostComment.IsEnabled = false;
 
                 removeDiagram.Visibility = Visibility.Collapsed;
                 invertDiagram.Visibility = Visibility.Collapsed;
@@ -2000,8 +2002,11 @@ namespace ChessForge
             else
             {
                 bool hasDiagram = nd.IsDiagram;
-                insertDiagram.Visibility = hasDiagram ? Visibility.Collapsed : Visibility.Visible;
-                insertDiagram.IsEnabled = !hasDiagram;
+                insertDiagramPreComment.Visibility = hasDiagram ? Visibility.Collapsed : Visibility.Visible;
+                insertDiagramPreComment.IsEnabled = !hasDiagram;
+
+                insertDiagramPostComment.Visibility = hasDiagram ? Visibility.Collapsed : Visibility.Visible;
+                insertDiagramPostComment.IsEnabled = !hasDiagram;
 
                 removeDiagram.Visibility = hasDiagram ? Visibility.Visible : Visibility.Collapsed;
                 removeDiagram.IsEnabled = hasDiagram;
