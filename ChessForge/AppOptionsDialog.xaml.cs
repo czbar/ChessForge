@@ -25,6 +25,9 @@ namespace ChessForge
         // hash table size on entry
         private long _currentEngineHashSize;
 
+        // MainLineCommentLF on entry
+        private bool _currentMainLineCommentLF;
+
         // LargeMenuFont on entry
         private bool _currentLargeMenuFont;
 
@@ -55,6 +58,12 @@ namespace ChessForge
         /// Set on Exit to indicate whether LargeMenuFont param changed
         /// </summary>
         public bool LargeMenuFontChanged = false;
+
+        /// <summary>
+        /// Set on Exit to indicate whether the MainLineCommentLF
+        /// differs from the one configured before the dialog was opened
+        /// </summary>
+        public bool MainLineCommentLFChanged = false;
 
         /// <summary>
         /// Configured path to the engine's executable.
@@ -105,6 +114,11 @@ namespace ChessForge
         public bool AllowMouseWheel;
 
         /// <summary>
+        /// Whether main line comments should be in a separate paragraph.
+        /// </summary>
+        public bool MainLineCommentLF;
+
+        /// <summary>
         /// Whether "fork tables" are shown.
         /// </summary>
         public bool ShowMovesAtFork;
@@ -145,6 +159,7 @@ namespace ChessForge
             EngineThreads = (int)Configuration.EngineThreads;
             EngineHashSize = (long)Configuration.EngineHashSize;
             AllowMouseWheel = Configuration.AllowMouseWheelForMoves;
+            MainLineCommentLF = Configuration.MainLineCommentLF;
             ShowMovesAtFork = Configuration.ShowMovesAtFork;
             SoundOn = Configuration.SoundOn;
             LargeMenuFont = Configuration.LargeMenuFont;
@@ -152,12 +167,14 @@ namespace ChessForge
             _currentUseFigurines = Configuration.UseFigurines;
             _currentEngineThreads = Configuration.EngineThreads;
             _currentEngineHashSize = Configuration.EngineHashSize;
+            _currentMainLineCommentLF = Configuration.MainLineCommentLF;
             _currentLargeMenuFont = Configuration.LargeMenuFont;
 
             UiTbIndexDepth.Text = Configuration.DefaultIndexDepth.ToString();
 
             UiTbReplaySpeed.Text = ReplaySpeed.ToString("F1");
             UiCbAllowWheel.IsChecked = (AllowMouseWheel == true);
+            UiCbMainLineCommentLF.IsChecked = MainLineCommentLF == true;
             UiCbShowForkMoves.IsChecked = (ShowMovesAtFork == true);
             UiCbSoundOn.IsChecked = (SoundOn == true);
             UiCbLargeMenuFont.IsChecked = (LargeMenuFont == true);
@@ -205,11 +222,13 @@ namespace ChessForge
             }
 
             Configuration.AllowMouseWheelForMoves = (UiCbAllowWheel.IsChecked == true);
+            Configuration.MainLineCommentLF = (UiCbMainLineCommentLF.IsChecked == true);
             Configuration.ShowMovesAtFork = (UiCbShowForkMoves.IsChecked == true);
             Configuration.SoundOn = (UiCbSoundOn.IsChecked == true);
             Configuration.LargeMenuFont = (UiCbLargeMenuFont.IsChecked == true);
             Configuration.UseFigurines = (UiCbFigurines.IsChecked == true);
 
+            MainLineCommentLFChanged = Configuration.MainLineCommentLF != _currentMainLineCommentLF;
             LargeMenuFontChanged = Configuration.LargeMenuFont != _currentLargeMenuFont;
 
             if (UiLbLanguages.SelectedItem != null)

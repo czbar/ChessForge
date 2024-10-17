@@ -2890,6 +2890,11 @@ namespace ChessForge
                     }
                     catch { }
                 }
+                else if (dlg.MainLineCommentLFChanged)
+                {
+                    AppState.MainWin.RebuildActiveTreeView();
+                    AppState.MainWin.RefreshSelectedActiveLineAndNode();
+                }
 
                 if (dlg.ChangedEnginePath)
                 {
