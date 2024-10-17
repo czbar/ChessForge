@@ -193,9 +193,16 @@ namespace GameTree
 
         /// <summary>
         /// Whether the diagram is to be shown with black at the bottom.
-        /// Only matters if IsDiagram is true..
+        /// Only applies if IsDiagram is true.
         /// </summary>
         public bool IsDiagramFlipped = false;
+
+        /// <summary>
+        /// Whether the diagram is to be shown before or after
+        /// the comment.
+        /// Only applies if IsDiagram is true.
+        /// </summary>
+        public bool IsDiagramPreComment = false;
 
         /// <summary>
         /// References to Games, Exercises or Chapters
