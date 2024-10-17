@@ -582,8 +582,10 @@
                                     <MenuItem x:Name="UiMnStudyStartTrainingHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere_Click" InputGestureText="T" />
                                     <MenuItem x:Name="UiMnStudy_CreateExercise" Header="{x:Static p:Resources.CreateExerciseFromHere}" Click="UiMn_CreateExercise_Click"  />
                                     <MenuItem x:Name="_mnStudyTree_MarkThumbnail" Header="{x:Static p:Resources.MarkAsThumbnail}" Click="UiMn_MarkThumbnail_Click" InputGestureText="Ctrl+T" />
-                                    <MenuItem x:Name="UiMnStudyInsertDiagram" Header="{x:Static p:Resources.InsertDiagram}"  Click="UiMn_ToggleDiagramFlag_Click" InputGestureText="Ctrl+I" />
-                                    <MenuItem x:Name="UiMnStudyDeleteDiagram" Visibility="Collapsed" Header="{x:Static p:Resources.RemoveDiagram}" Click="UiMn_ToggleDiagramFlag_Click" InputGestureText="Ctrl+I" />
+                                    <Separator />
+                                    <MenuItem x:Name="UiMnStudyInsertDiagramPreComment" Header="{x:Static p:Resources.InsertDiagramPreComment}"  Click="UiMn_InsertPreCommentDiagram_Click" InputGestureText="Ctrl+I" />
+                                    <MenuItem x:Name="UiMnStudyInsertDiagramPostComment" Header="{x:Static p:Resources.InsertDiagramPostComment}"  Click="UiMn_InsertPostCommentDiagram_Click" InputGestureText="Ctrl+J" />
+                                    <MenuItem x:Name="UiMnStudyDeleteDiagram" Visibility="Collapsed" Header="{x:Static p:Resources.RemoveDiagram}" Click="UiMn_DeleteDiagram_Click" InputGestureText="Ctrl+I" />
                                     <MenuItem x:Name="UiMnStudyInvertDiagram" Header="{x:Static p:Resources.InvertDiagram}"  Click="UiMn_InvertDiagram_Click" />
                                     <Separator />
                                     <MenuItem x:Name="UiMnPromoteLine" Header="{x:Static p:Resources.PromoteLine}" Click="UiMnPromoteLine_Click" InputGestureText="P" />
@@ -677,8 +679,10 @@
                                     <MenuItem x:Name="UiMnGameStartTrainingFromHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere_Click" InputGestureText="T" />
                                     <MenuItem x:Name="UiMnGameCreateExercise" Header="{x:Static p:Resources.CreateExerciseFromHere}" Click="UiMnGame_CreateExercise_Click" />
                                     <MenuItem x:Name="UiMnGameMarkThumbnail" Header="{x:Static p:Resources.MarkAsThumbnail}" Click="UiMn_MarkThumbnail_Click" InputGestureText="Ctrl+T" />
-                                    <MenuItem x:Name="UiMnGame_InsertDiagram" Header="{x:Static p:Resources.InsertDiagram}" Click="UiMn_ToggleDiagramFlag_Click" InputGestureText="Ctrl+I" />
-                                    <MenuItem x:Name="UiMnGame_DeleteDiagram" Visibility="Collapsed" Header="{x:Static p:Resources.RemoveDiagram}" Click="UiMn_ToggleDiagramFlag_Click" InputGestureText="Ctrl+I" />
+                                    <Separator />
+                                    <MenuItem x:Name="UiMnGameInsertDiagramPreComment" Header="{x:Static p:Resources.InsertDiagramPreComment}" Click="UiMn_InsertPreCommentDiagram_Click" InputGestureText="Ctrl+I" />
+                                    <MenuItem x:Name="UiMnGameInsertDiagramPostComment" Header="{x:Static p:Resources.InsertDiagramPostComment}" Click="UiMn_InsertPostCommentDiagram_Click" InputGestureText="Ctrl+J" />
+                                    <MenuItem x:Name="UiMnGame_DeleteDiagram" Visibility="Collapsed" Header="{x:Static p:Resources.RemoveDiagram}" Click="UiMn_DeleteDiagram_Click" InputGestureText="Ctrl+I" />
                                     <MenuItem x:Name="UiMnGameInvertDiagram" Header="{x:Static p:Resources.InvertDiagram}"  Click="UiMn_InvertDiagram_Click" />
                                     <Separator />
                                     <MenuItem x:Name="UiMnGamePromoteLine" Header="{x:Static p:Resources.PromoteLine}" Click="UiMnGame_PromoteLine_Click" InputGestureText="P"  />
@@ -787,8 +791,10 @@
                                     <Separator x:Name="UiMnExerc_Separator_8"/>
                                     <MenuItem x:Name="_mnExerc_StartTrainingFromHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere_Click" InputGestureText="T" />
                                     <MenuItem x:Name="_mnExerc_MarkThumbnail" Header="{x:Static p:Resources.MarkAsThumbnail}" Click="UiMn_ExerciseMarkThumbnail_Click" InputGestureText="Ctrl+T" />
-                                    <MenuItem x:Name="UiMnExerc_InsertDiagram" Header="{x:Static p:Resources.InsertDiagram}" Click="UiMn_ToggleDiagramFlag_Click" InputGestureText="Ctrl+I" />
-                                    <MenuItem x:Name="UiMnExerc_DeleteDiagram" Visibility="Collapsed" Header="{x:Static p:Resources.RemoveDiagram}" Click="UiMn_ToggleDiagramFlag_Click" InputGestureText="Ctrl+I" />
+                                    <Separator />
+                                    <MenuItem x:Name="UiMnExercInsertDiagramPreComment" Header="{x:Static p:Resources.InsertDiagramPreComment}" Click="UiMn_InsertPreCommentDiagram_Click" InputGestureText="Ctrl+I" />
+                                    <MenuItem x:Name="UiMnExercInsertDiagramPostComment" Header="{x:Static p:Resources.InsertDiagramPostComment}" Click="UiMn_InsertPostCommentDiagram_Click" InputGestureText="Ctrl+J" />
+                                    <MenuItem x:Name="UiMnExerc_DeleteDiagram" Visibility="Collapsed" Header="{x:Static p:Resources.RemoveDiagram}" Click="UiMn_DeleteDiagram_Click" InputGestureText="Ctrl+I" />
                                     <MenuItem x:Name="UiMnExercInvertDiagram" Header="{x:Static p:Resources.InvertDiagram}"  Click="UiMn_InvertDiagram_Click" />
                                     <Separator x:Name="UiMnExerc_Separator_4"/>
                                     <MenuItem x:Name="UiMnExercPromoteLine" Header="{x:Static p:Resources.PromoteLine}" Click="UiMnExerc_PromoteLine_Click" InputGestureText="P"  />
