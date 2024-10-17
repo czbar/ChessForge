@@ -2036,17 +2036,51 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Toggles the Diagram flag on the currently selected node.
+        /// Toggles the Post Comment Diagram flag on the currently selected node.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void UiMn_ToggleDiagramFlag_Click(object sender, RoutedEventArgs e)
+        public void UiMn_InsertPreCommentDiagram_Click(object sender, RoutedEventArgs e)
+        {
+            InsertOrDeleteDiagram(true, true);
+        }
+
+        /// <summary>
+        /// Toggles the Post Comment Diagram flag on the currently selected node.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void UiMn_InsertPostCommentDiagram_Click(object sender, RoutedEventArgs e)
+        {
+            InsertOrDeleteDiagram(false, true);
+        }
+
+        /// <summary>
+        /// Deletes the diagram. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMn_DeleteDiagram_Click(object sender, RoutedEventArgs e)
+        {
+            InsertOrDeleteDiagram(false, false);
+        }
+
+        /// <summary>
+        /// Inserts or removes a diagram.
+        /// </summary>
+        /// <param name="insertOrDelete"></param>
+        /// <param name="preComment"></param>
+        public void InsertOrDeleteDiagram(bool preComment, bool? insertOrDelete)
         {
             if (AppState.MainWin.ActiveTreeView != null)
             {
                 TreeNode nd = AppState.MainWin.ActiveTreeView.GetSelectedNode();
+                if (insertOrDelete == null)
+                {
+                    insertOrDelete = !nd.IsDiagram;
+                }
                 string lineId = AppState.MainWin.ActiveVariationTree.SelectedLineId;
-                ActiveTreeView?.ToggleDiagramFlag();
+                ActiveTreeView?.ToggleDiagramFlag(insertOrDelete == true, true);
                 AppState.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
                 if (nd != null)
                 {
@@ -2054,7 +2088,6 @@ namespace ChessForge
                 }
             }
         }
-
 
         /// <summary>
         /// Invert the diagram.
@@ -2080,7 +2113,6 @@ namespace ChessForge
                 }
             }
         }
-
 
         /// <summary>
         /// Marks the current node as a Thumbnail for the current tree.
