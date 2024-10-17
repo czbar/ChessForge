@@ -429,10 +429,48 @@ namespace ChessForge
 
                 // add dummy para so that the last row can be comfortable viewed
                 Document.Blocks.Add(BuildDummyPararaph());
+                ClearSpuriousNewLines();
             }
             catch (Exception ex)
             {
                 AppLog.Message("BuildFlowDocumentForVariationTree()", ex);
+            }
+        }
+
+        /// <summary>
+        /// Looks for the last runs in each paragraph that may contain
+        /// LF char which is not necessary if a new paragraph follows.
+        /// Removes all found.
+        /// </summary>
+        private void ClearSpuriousNewLines(Paragraph paragraph = null)
+        {
+            foreach (Block block in Document.Blocks)
+            {
+                if (block is Paragraph para)
+                {
+                    ClearSpuriousNewLinesInPara(para);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Looks for the last run in the passed paragraph that may contain
+        /// LF char which is not necessary if a new paragraph follows.
+        /// Removes if found.
+        /// </summary>
+        /// <param name="para"></param>
+        private void ClearSpuriousNewLinesInPara(Paragraph para)
+        {
+            if (para != null)
+            {
+                Inline inl = para.Inlines.Last();
+                if (inl is Run run)
+                {
+                    if (!string.IsNullOrEmpty(inl.Name)) // && inl.Name.StartsWith(_run_end_comment))
+                    {
+                        run.Text = run.Text.Replace("\n", "");
+                    }
+                }
             }
         }
 
