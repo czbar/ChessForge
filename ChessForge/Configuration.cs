@@ -453,6 +453,12 @@ namespace ChessForge
         public static bool UseFixedFont = true;
 
         /// <summary>
+        /// Whether new lines should be inserted before and after comments
+        /// on the main line.
+        /// </summary>
+        public static bool MainLineCommentLF = true;
+
+        /// <summary>
         /// Whether to allow replaying moves with the mouse wheel. 
         /// </summary>
         public static bool AllowMouseWheelForMoves = false;
@@ -585,6 +591,7 @@ namespace ChessForge
         private const string CFG_LARGE_MENU_FONT = "LargeMenuFont";
         private const string CFG_USE_FIGURINES = "UseFigurines";
         private const string CFG_USE_FIXED_FONT = "UseFixedFont";
+        private const string CFG_MAIN_LINE_COMMENT_LF = "MainLineCommentLn";
         private const string CFG_SHOW_MOVES_AT_FORK = "ShowMovesAtFork";
         private const string CFG_SHOW_EXPLORERS = "ShowExplorers";
         private const string CFG_SHOW_EVALUATION_CHART = "ShowEvaluationChart";
@@ -772,6 +779,7 @@ namespace ChessForge
                 sb.Append(CFG_LARGE_MENU_FONT + "=" + (LargeMenuFont ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_USE_FIGURINES + "=" + (UseFigurines ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_USE_FIXED_FONT + "=" + (UseFixedFont ? "1" : "0") + Environment.NewLine);
+                sb.Append(CFG_MAIN_LINE_COMMENT_LF + "=" + (MainLineCommentLF ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_SHOW_MOVES_AT_FORK + "=" + (ShowMovesAtFork ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_SHOW_EXPLORERS + "=" + (ShowExplorers ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_SHOW_EVALUATION_CHART + "=" + (ShowEvaluationChart? "1" : "0") + Environment.NewLine);
@@ -1169,6 +1177,9 @@ namespace ChessForge
                             break;
                         case CFG_USE_FIXED_FONT:
                             UseFixedFont = value != "0" ? true : false;
+                            break;
+                        case CFG_MAIN_LINE_COMMENT_LF:
+                            MainLineCommentLF = value != "0" ? true : false;
                             break;
                         case CFG_ALLOW_MOUSE_WHEEL_FOR_MOVES:
                             AllowMouseWheelForMoves = value != "0" ? true : false;
