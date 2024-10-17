@@ -695,14 +695,15 @@ namespace ChessForge
         /// <summary>
         /// Toggles the diagram flag on the currently selected node.
         /// </summary>
-        public void ToggleDiagramFlag()
+        public void ToggleDiagramFlag(bool insertOrDelete, bool isPreOrPost)
         {
             try
             {
                 TreeNode nd = GetSelectedNode();
                 if (nd != null)
                 {
-                    nd.IsDiagram = !nd.IsDiagram;
+                    nd.IsDiagram = insertOrDelete;
+                    nd.IsDiagramPreComment = isPreOrPost;
 
                     EditOperation.EditType typ = nd.IsDiagram ? EditOperation.EditType.INSERT_DIAGRAM : EditOperation.EditType.DELETE_DIAGRAM;
                     EditOperation op = new EditOperation(typ, nd);
