@@ -3985,6 +3985,24 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Insert Diagram After Comment.
+        /// </summary>
+        public static string InsertDiagramPostComment {
+            get {
+                return ResourceManager.GetString("InsertDiagramPostComment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insert Diagram Before Comment.
+        /// </summary>
+        public static string InsertDiagramPreComment {
+            get {
+                return ResourceManager.GetString("InsertDiagramPreComment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Insert Hyperlink.
         /// </summary>
         public static string InsertHyperlink {
