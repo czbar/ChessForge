@@ -108,5 +108,51 @@ namespace GameTree
             return _dictCommands.FirstOrDefault(x => x.Value == cmd).Key;
         }
 
+        /// <summary>
+        /// The LSB determines if the diagram is flipped.
+        /// The second bit determines if the diagram is placed
+        /// before the comment.
+        /// </summary>
+        /// <param name="attrs"></param>
+        /// <param name="isFlipped"></param>
+        /// <param name="isPreComment"></param>
+        public static void DecodeDiagramAttrs(uint attrs, out bool isFlipped, out bool isPreComment)
+        {
+            isFlipped = false;
+            isPreComment = false;
+
+            if ((attrs & 0x01) != 0)
+            {
+                isFlipped = true;
+            }
+            if ((attrs & 0x02) != 0)
+            {
+                isPreComment = true;
+            }
+        }
+
+        /// <summary>
+        /// The LSB determines if the diagram is flipped.
+        /// The second bit determines if the diagram is placed
+        /// before the comment.
+        /// </summary>
+        /// <param name="attrs"></param>
+        /// <param name="isFlipped"></param>
+        /// <param name="isPreComment"></param>
+        public static uint CodeDiagramAttrs(bool isFlipped, bool isPreComment)
+        {
+            uint coded = 0;
+
+            if (isFlipped)
+            {
+                coded |= 0x01;
+            }
+            if (isPreComment)
+            {
+                coded |= 0x02;
+            }
+
+            return coded;
+        }
     }
 }
