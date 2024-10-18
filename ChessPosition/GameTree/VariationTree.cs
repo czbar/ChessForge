@@ -297,7 +297,7 @@ namespace GameTree
 
                 if (!string.IsNullOrEmpty(nd.BestResponse))
                 {
-                    nd.BestResponse= string.Empty;
+                    nd.BestResponse = string.Empty;
                 }
             }
         }
@@ -483,9 +483,12 @@ namespace GameTree
                         break;
                     case ChfCommands.Command.DIAGRAM:
                         nd.IsDiagram = true;
-                        if (tokens.Length > 1 && tokens[1] == "1")
+                        if (tokens.Length > 1)
                         {
-                            nd.IsDiagramFlipped = true;
+                            if (uint.TryParse(tokens[1], out uint attrs))
+                            {
+                                ChfCommands.DecodeDiagramAttrs(attrs, out nd.IsDiagramFlipped, out nd.IsDiagramPreComment);
+                            }
                         }
                         else
                         {

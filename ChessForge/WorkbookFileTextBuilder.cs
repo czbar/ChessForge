@@ -792,7 +792,8 @@ namespace ChessForge
                 // Process a Diagram command
                 if (nd.IsDiagram)
                 {
-                    string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.DIAGRAM) + " " + (nd.IsDiagramFlipped ? "1" : "0");
+                    string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.DIAGRAM) + " " 
+                        + ChfCommands.CodeDiagramAttrs(nd.IsDiagramFlipped, nd.IsDiagramPreComment).ToString();
                     sb.Append("[" + sCmd + "]");
                 }
 
