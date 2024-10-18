@@ -304,39 +304,10 @@ namespace ChessForge
                     parts.Insert(0, thumb);
                 }
 
-                if (!string.IsNullOrEmpty(nd.References))
-                {
-                    List<Article> articles = GuiUtilities.BuildReferencedArticlesList(nd.References);
-                    bool first = true;
-                    foreach (Article article in articles)
-                    {
-                        CommentPartType cpt;
-                        string title;
-                        if (article.ContentType == GameData.ContentType.STUDY_TREE)
-                        {
-                            AppState.Workbook.GetChapterByGuid(article.Guid, out int chapterIndex);
-                            title = Properties.Resources.Chapter + " " + (chapterIndex + 1).ToString() + ": " + article.Tree.Header.GetChapterTitle();
-                            cpt = CommentPartType.CHAPTER_REFERENCE;
-                        }
-                        else
-                        {
-                            title = article.Tree.Header.BuildGameReferenceTitle(false);
-                            if (article.ContentType == GameData.ContentType.EXERCISE)
-                            {
-                                title = Properties.Resources.Exercise + ": " + title;
-                            }
-                            cpt = CommentPartType.GAME_EXERCISE_REFERENCE;
-                        }
-                        if (!first)
-                        {
-                            title = "; " + title;
-                        }
-                        parts.Add(new CommentPart(cpt, " " + title, article.Guid));
-                        first = false;
-                    }
-                }
+                CreateReferenceCommentParts(nd, parts);
 
                 // check only here as we may have quiz points
+                // TODO: surely parts cannot be null here??
                 if (parts == null)
                 {
                     return;
@@ -363,41 +334,7 @@ namespace ChessForge
                     parts.Insert(0, ass);
                 }
 
-
-                Inline inlPrevious = null;
-                for (int i = 0; i < parts.Count; i++)
-                {
-                    CommentPart part = parts[i];
-                    if (part.Type == CommentPartType.ASSESSMENT)
-                    {
-                        isAssessmentBlunderShown = true;
-                    }
-
-                    Inline inl = CreateInlineForCommentPart(part, nd, i, parts.Count);
-
-                    // the above may or may not have set the name.
-                    if (string.IsNullOrEmpty(inl.Name))
-                    {
-                        inl.Name = _run_comment_ + nd.NodeId.ToString();
-                    }
-
-                    if (inlPrevious == null)
-                    {
-                        // insert after the reference run or immediately after the move run if no reference run
-                        Run rNode;
-                        rNode = _dictNodeToRun[nd.NodeId];
-                        para.Inlines.InsertAfter(rNode, inl);
-
-                        _dictNodeToCommentRun[nd.NodeId] = inl;
-                        _dictCommentRunToParagraph[inl] = para;
-                    }
-                    else
-                    {
-                        para.Inlines.InsertAfter(inlPrevious, inl);
-                    }
-
-                    inlPrevious = inl;
-                }
+                PlaceCommentPartsIntoParagraph(para, nd, parts, ref isAssessmentBlunderShown);
             }
             catch (Exception ex)
             {
@@ -487,6 +424,92 @@ namespace ChessForge
             }
 
             return inl;
+        }
+
+        /// <summary>
+        /// Creates inlines for comment parts and inserts them in the appropriate order 
+        /// into the paragraph.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <param name="nd"></param>
+        /// <param name="parts"></param>
+        /// <param name="isAssessmentBlunderShown"></param>
+        private void PlaceCommentPartsIntoParagraph(Paragraph para, TreeNode nd, List<CommentPart> parts, ref bool isAssessmentBlunderShown)
+        {
+            Inline inlPrevious = null;
+            for (int i = 0; i < parts.Count; i++)
+            {
+                CommentPart part = parts[i];
+                if (part.Type == CommentPartType.ASSESSMENT)
+                {
+                    isAssessmentBlunderShown = true;
+                }
+
+                Inline inl = CreateInlineForCommentPart(part, nd, i, parts.Count);
+
+                // the above may or may not have set the name.
+                if (string.IsNullOrEmpty(inl.Name))
+                {
+                    inl.Name = _run_comment_ + nd.NodeId.ToString();
+                }
+
+                if (inlPrevious == null)
+                {
+                    // insert after the move run
+                    Run rNode;
+                    rNode = _dictNodeToRun[nd.NodeId];
+                    para.Inlines.InsertAfter(rNode, inl);
+
+                    _dictNodeToCommentRun[nd.NodeId] = inl;
+                    _dictCommentRunToParagraph[inl] = para;
+                }
+                else
+                {
+                    para.Inlines.InsertAfter(inlPrevious, inl);
+                }
+
+                inlPrevious = inl;
+            }
+        }
+
+        /// <summary>
+        /// Create reference rund for the node.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="parts"></param>
+        private void CreateReferenceCommentParts(TreeNode nd, List<CommentPart> parts)
+        {
+            if (!string.IsNullOrEmpty(nd.References))
+            {
+                List<Article> articles = GuiUtilities.BuildReferencedArticlesList(nd.References);
+                bool first = true;
+                foreach (Article article in articles)
+                {
+                    CommentPartType cpt;
+                    string title;
+                    if (article.ContentType == GameData.ContentType.STUDY_TREE)
+                    {
+                        AppState.Workbook.GetChapterByGuid(article.Guid, out int chapterIndex);
+                        title = Properties.Resources.Chapter + " " + (chapterIndex + 1).ToString() + ": " + article.Tree.Header.GetChapterTitle();
+                        cpt = CommentPartType.CHAPTER_REFERENCE;
+                    }
+                    else
+                    {
+                        title = article.Tree.Header.BuildGameReferenceTitle(false);
+                        if (article.ContentType == GameData.ContentType.EXERCISE)
+                        {
+                            title = Properties.Resources.Exercise + ": " + title;
+                        }
+                        cpt = CommentPartType.GAME_EXERCISE_REFERENCE;
+                    }
+                    if (!first)
+                    {
+                        title = "; " + title;
+                    }
+                    parts.Add(new CommentPart(cpt, " " + title, article.Guid));
+                    first = false;
+                }
+            }
         }
 
         /// <summary>
