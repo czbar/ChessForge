@@ -1788,11 +1788,7 @@ namespace ChessForge
             {
                 // must use Insert... because cannot Add... before rMove is created.
                 InsertOrUpdateCommentBeforeMoveRun(nd, includeNumber);
-                AddCommentRunsToParagraph(nd, para, out bool isBlunder);
-                if (AddDiagramToParagraph(nd, para))
-                {
-                    diagram = true;
-                }
+                AddCommentRunsToParagraph(nd, para, out bool isBlunder, out diagram);
                 if (isBlunder)
                 {
                     TextUtils.RemoveBlunderNagFromText(rMove);
@@ -1853,7 +1849,7 @@ namespace ChessForge
             if (nd != null)
             {
                 Run r = AddRunToParagraph(nd, para, "", Brushes.White);
-                AddCommentRunsToParagraph(nd, para, out bool isBlunder);
+                AddCommentRunsToParagraph(nd, para, out bool isBlunder, out _);
                 if (isBlunder)
                 {
                     TextUtils.RemoveBlunderNagFromText(r);
