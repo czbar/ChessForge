@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ChessPosition.Utils
+﻿namespace ChessPosition.Utils
 {
     /// <summary>
     /// Types of comment parts
@@ -18,6 +12,7 @@ namespace ChessPosition.Utils
         QUIZ_POINTS,
         GAME_EXERCISE_REFERENCE,
         CHAPTER_REFERENCE,
+        DIAGRAM,
     }
 
     /// <summary>
