@@ -2075,16 +2075,19 @@ namespace ChessForge
             if (AppState.MainWin.ActiveTreeView != null)
             {
                 TreeNode nd = AppState.MainWin.ActiveTreeView.GetSelectedNode();
-                if (insertOrDelete == null)
-                {
-                    insertOrDelete = !nd.IsDiagram;
-                }
-                string lineId = AppState.MainWin.ActiveVariationTree.SelectedLineId;
-                ActiveTreeView?.ToggleDiagramFlag(insertOrDelete == true, true);
-                AppState.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
                 if (nd != null)
                 {
-                    AppState.MainWin.ActiveTreeView.SelectLineAndMove(lineId, nd.NodeId);
+                    if (insertOrDelete == null)
+                    {
+                        insertOrDelete = !nd.IsDiagram;
+                    }
+                    string lineId = AppState.MainWin.ActiveVariationTree.SelectedLineId;
+                    ActiveTreeView?.ToggleDiagramFlag(insertOrDelete == true, preComment);
+                    AppState.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
+                    if (nd != null)
+                    {
+                        AppState.MainWin.ActiveTreeView.SelectLineAndMove(lineId, nd.NodeId);
+                    }
                 }
             }
         }
