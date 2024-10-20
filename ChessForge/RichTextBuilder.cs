@@ -368,24 +368,45 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Removes all inlines with the same name as the passed inline.
-        /// This applies to parts of the comment for a given node.
+        /// Removes all parts of the comment for a given node.
+        /// These are identified by prefixes and nodeIds coded in the name of the inline.
+        /// The prefixes identify text and URL  parts of the comment and the thumbnail sign ("run_comment_"),
+        /// references ("_run_comment_article_ref_")
+        /// and a diagram releated components ("run_preinl_diag_", "run_postinl_diag_", "iuc_inl_diag_")
         /// </summary>
-        /// <param name="inlComment"></param>
-        public void RemoveCommentRunsFromHostingParagraph(Inline inlComment, int nodeId)
+        /// <param name="block"></param>
+        public void RemoveCommentRunsFromHostingParagraph(Inline inline, int nodeId)
         {
-            if (inlComment == null)
+            if (inline == null)
             {
                 return;
             }
 
-            Paragraph parent = inlComment.Parent as Paragraph;
+            Paragraph parent = inline.Parent as Paragraph;
+            if (parent == null)
+            {
+                return;
+            }
+
+            string commentTextName = _run_comment_ + nodeId.ToString();
+            string preDiagTextName = RichTextBoxUtilities.PreInlineDiagramRunPrefix + nodeId.ToString();
+            string postDiagTextName = RichTextBoxUtilities.PostInlineDiagramRunPrefix + nodeId.ToString();
+            string iucDiagramName = RichTextBoxUtilities.InlineDiagramIucPrefix + nodeId.ToString();
 
             string articleRefPrefix = _run_comment_article_ref + nodeId.ToString() + "_";
+
             List<Inline> inlinesToRemove = new List<Inline>();
+            // where appropriate we need to match the full name e.g. "run_comment_45"
+            // (so that we don't match the above for node id 4)
+            // and in the case of refs the first 2 parts ending with '_'.
             foreach (Inline inl in parent.Inlines)
             {
-                if (inl.Name != null && (inl.Name == inlComment.Name || inl.Name.StartsWith(articleRefPrefix)))
+                if (inl.Name == commentTextName 
+                    || inl.Name == preDiagTextName
+                    || inl.Name == postDiagTextName
+                    || inl.Name == iucDiagramName
+                    || inl.Name.StartsWith(articleRefPrefix)
+                    )
                 {
                     inlinesToRemove.Add(inl);
                 }
