@@ -588,6 +588,7 @@
                                     <MenuItem x:Name="UiMnStudyInsertDiagramPreComment" Header="{x:Static p:Resources.InsertDiagramPreComment}"  Click="UiMn_InsertPreCommentDiagram_Click" InputGestureText="Ctrl+I" />
                                     <MenuItem x:Name="UiMnStudyInsertDiagramPostComment" Header="{x:Static p:Resources.InsertDiagramPostComment}"  Click="UiMn_InsertPostCommentDiagram_Click" InputGestureText="Ctrl+J" />
                                     <MenuItem x:Name="UiMnStudyDeleteDiagram" Visibility="Collapsed" Header="{x:Static p:Resources.RemoveDiagram}" Click="UiMn_DeleteDiagram_Click" InputGestureText="Ctrl+I" />
+                                    <MenuItem x:Name="UiMnStudySwapDiagramComment" Visibility="Collapsed" Header="{x:Static p:Resources.SwapDiagramComment}" Click="UiMn_SwapDiagramComment_Click" />
                                     <MenuItem x:Name="UiMnStudyInvertDiagram" Header="{x:Static p:Resources.InvertDiagram}"  Click="UiMn_InvertDiagram_Click" />
                                     <Separator />
                                     <MenuItem x:Name="UiMnPromoteLine" Header="{x:Static p:Resources.PromoteLine}" Click="UiMnPromoteLine_Click" InputGestureText="P" />
@@ -684,6 +685,7 @@
                                     <MenuItem x:Name="UiMnGameInsertDiagramPreComment" Header="{x:Static p:Resources.InsertDiagramPreComment}" Click="UiMn_InsertPreCommentDiagram_Click" InputGestureText="Ctrl+I" />
                                     <MenuItem x:Name="UiMnGameInsertDiagramPostComment" Header="{x:Static p:Resources.InsertDiagramPostComment}" Click="UiMn_InsertPostCommentDiagram_Click" InputGestureText="Ctrl+J" />
                                     <MenuItem x:Name="UiMnGame_DeleteDiagram" Visibility="Collapsed" Header="{x:Static p:Resources.RemoveDiagram}" Click="UiMn_DeleteDiagram_Click" InputGestureText="Ctrl+I" />
+                                    <MenuItem x:Name="UiMnGameSwapDiagramComment" Visibility="Collapsed" Header="{x:Static p:Resources.SwapDiagramComment}" Click="UiMn_SwapDiagramComment_Click" />
                                     <MenuItem x:Name="UiMnGameInvertDiagram" Header="{x:Static p:Resources.InvertDiagram}"  Click="UiMn_InvertDiagram_Click" />
                                     <Separator />
                                     <MenuItem x:Name="UiMnGamePromoteLine" Header="{x:Static p:Resources.PromoteLine}" Click="UiMnGame_PromoteLine_Click" InputGestureText="P"  />
@@ -795,6 +797,7 @@
                                     <MenuItem x:Name="UiMnExercInsertDiagramPreComment" Header="{x:Static p:Resources.InsertDiagramPreComment}" Click="UiMn_InsertPreCommentDiagram_Click" InputGestureText="Ctrl+I" />
                                     <MenuItem x:Name="UiMnExercInsertDiagramPostComment" Header="{x:Static p:Resources.InsertDiagramPostComment}" Click="UiMn_InsertPostCommentDiagram_Click" InputGestureText="Ctrl+J" />
                                     <MenuItem x:Name="UiMnExerc_DeleteDiagram" Visibility="Collapsed" Header="{x:Static p:Resources.RemoveDiagram}" Click="UiMn_DeleteDiagram_Click" InputGestureText="Ctrl+I" />
+                                    <MenuItem x:Name="UiMnExercSwapDiagramComment" Visibility="Collapsed" Header="{x:Static p:Resources.SwapDiagramComment}" Click="UiMn_SwapDiagramComment_Click" />
                                     <MenuItem x:Name="UiMnExercInvertDiagram" Header="{x:Static p:Resources.InvertDiagram}"  Click="UiMn_InvertDiagram_Click" />
                                     <Separator x:Name="UiMnExerc_Separator_4"/>
                                     <MenuItem x:Name="UiMnExercPromoteLine" Header="{x:Static p:Resources.PromoteLine}" Click="UiMnExerc_PromoteLine_Click" InputGestureText="P"  />
