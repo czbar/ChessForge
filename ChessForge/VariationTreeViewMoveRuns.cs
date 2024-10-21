@@ -308,7 +308,7 @@ namespace ChessForge
 
                 CreateReferenceCommentParts(nd, parts);
 
-                // if the node has a diagram, insert it at the beginningc(PreComment) or end (PostComment)
+                // if the node has a diagram, insert it at the beginning(PreComment) or end (PostComment)
                 if (nd.IsDiagram)
                 {
                     diagram = true;
@@ -325,7 +325,7 @@ namespace ChessForge
 
                 CommentPart startPart = new CommentPart(CommentPartType.TEXT, BuildTextForStartPart(nd));
                 parts.Insert(0, startPart);
-                    
+
                 CommentPart endPart = new CommentPart(CommentPartType.TEXT, BuildTextForEndPart(nd));
                 parts.Add(endPart);
 
@@ -558,13 +558,13 @@ namespace ChessForge
                 && (ContentType == GameData.ContentType.MODEL_GAME || ContentType == GameData.ContentType.EXERCISE)
                 && nd.IsMainLine()
                 && nd.Parent != null
-                && !string.IsNullOrEmpty(nd.Comment))
+                && !string.IsNullOrEmpty(nd.Comment)
+                && (!nd.IsDiagram || !nd.IsDiagramPreComment))
             {
-                text = "\n\n";
+                text = "\n";
             }
             else
             {
-                // TODO: do not insert if this is after a diagram, i.e. in a new line
                 if (nd.Parent != null)
                 {
                     text = " ";
@@ -586,12 +586,13 @@ namespace ChessForge
             string text = string.Empty;
 
             // if the comment is on the main line
-            if (Configuration.MainLineCommentLF 
+            if (Configuration.MainLineCommentLF
                 && (ContentType == GameData.ContentType.MODEL_GAME || ContentType == GameData.ContentType.EXERCISE)
                 && nd.IsMainLine()
-                && !string.IsNullOrEmpty(nd.Comment))
+                && !string.IsNullOrEmpty(nd.Comment)
+                && (!nd.IsDiagram || nd.IsDiagramPreComment))
             {
-                text += "\n\n";
+                text += "\n";
             }
             else
             {
