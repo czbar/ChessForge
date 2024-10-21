@@ -79,6 +79,9 @@ namespace GameTree
                     case EditOperation.EditType.DELETE_DIAGRAM:
                         _owningTree.UndoDeleteDiagram(op.Node);
                         break;
+                    case EditOperation.EditType.SWAP_DIAGRAM_COMMENT:
+                        _owningTree.UndoSwapDiagramComment(op.Node);
+                        break;
                     case EditOperation.EditType.MARK_THUMBNAIL:
                         _owningTree.UndoMarkThumbnail(op.OpData_1, op.OpData_2);
                         break;
