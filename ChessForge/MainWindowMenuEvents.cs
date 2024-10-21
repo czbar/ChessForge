@@ -2066,6 +2066,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Swaps the comment with the diagram. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMn_SwapDiagramComment_Click(object sender, RoutedEventArgs e)
+        {
+            SwapCommentWithDiagram();
+        }
+
+        /// <summary>
         /// Inserts or removes a diagram.
         /// </summary>
         /// <param name="insertOrDelete"></param>
@@ -2083,6 +2093,28 @@ namespace ChessForge
                     }
                     string lineId = AppState.MainWin.ActiveVariationTree.SelectedLineId;
                     ActiveTreeView?.ToggleDiagramFlag(insertOrDelete == true, preComment);
+                    AppState.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
+                    if (nd != null)
+                    {
+                        AppState.MainWin.ActiveTreeView.SelectLineAndMove(lineId, nd.NodeId);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Swaps the position of the diagram versus the comment's text
+        /// (i.e. before the diagram or after)
+        /// </summary>
+        public void SwapCommentWithDiagram()
+        {
+            if (AppState.MainWin.ActiveTreeView != null)
+            {
+                TreeNode nd = AppState.MainWin.ActiveTreeView.GetSelectedNode();
+                if (nd != null && nd.IsDiagram)
+                {
+                    string lineId = AppState.MainWin.ActiveVariationTree.SelectedLineId;
+                    ActiveTreeView.SwapCommentWithDiagram(nd);
                     AppState.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
                     if (nd != null)
                     {
