@@ -574,6 +574,10 @@ namespace GameTree
                             _remainingGameText = _remainingGameText.Substring(commandEnd + 1);
                             endPos = endPos - (commandEnd + 1);
                         }
+                        else
+                        {
+                            _remainingGameText = _remainingGameText.Substring(commandStart + 1);
+                        }
                     }
                 }
 
