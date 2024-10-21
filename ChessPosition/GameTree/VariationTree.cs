@@ -1677,6 +1677,18 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Swaps diagram with comment.
+        /// </summary>
+        /// <param name="nd"></param>
+        public void UndoSwapDiagramComment(TreeNode nd)
+        {
+            if (nd != null)
+            {
+                nd.IsDiagramPreComment = !nd.IsDiagramPreComment;
+            }
+        }
+
+        /// <summary>
         /// Restores stripped comments and nags.
         /// </summary>
         /// <param name="opData"></param>
