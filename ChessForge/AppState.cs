@@ -1229,10 +1229,10 @@ namespace ChessForge
                             case "UiMnStudyWorkbookEvalMove":
                                 menuItem.IsEnabled = tree != null && tree.SelectedNode != null;
                                 break;
-                            case "_mnWorkbookEvalLine":
+                            case "UiMnStudyEvalLine":
                                 menuItem.IsEnabled = tree != null && tree.Nodes.Count > 1;
                                 break;
-                            case "_mnStudyTree_MarkThumbnail":
+                            case "UiMnStudyMarkThumbnail":
                                 menuItem.IsEnabled = tree != null && tree.SelectedNode != null;
                                 SetMarkThumbnailMenuItemHeader(menuItem, selectedNode);
                                 break;
@@ -1391,11 +1391,11 @@ namespace ChessForge
                             case "UiMnExercExitSolving":
                                 menuItem.Visibility = AppState.IsUserSolving() ? Visibility.Visible : Visibility.Collapsed;
                                 break;
-                            case "_mnExerc_EditHeader":
+                            case "UiMnExercEditHeader":
                                 menuItem.IsEnabled = exerciseIndex >= 0;
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
-                            case "_mnExerc_EditPosition":
+                            case "UiMnExercEditPosition":
                                 menuItem.IsEnabled = exerciseIndex >= 0;
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
@@ -1403,25 +1403,22 @@ namespace ChessForge
                                 menuItem.IsEnabled = exerciseIndex >= 0 && WorkbookManager.SessionWorkbook.GetChapterCount() > 1;
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
-                            case "_mnExerc_StartTrainingFromHere":
+                            case "UiMnExercStartTrainingFromHere":
                                 menuItem.IsEnabled = exerciseIndex >= 0 && !isMate;
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
-                            case "_mnExerc_CreateExercise":
+                            case "UiMnExercCreateExercise":
                                 menuItem.IsEnabled = !isMate;
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
-                            case "_mnExerc_CopyFen":
-                                menuItem.IsEnabled = exerciseIndex >= 0 && ActiveVariationTree != null && isSolutionShown;
-                                break;
-                            case "_mnExerc_DeleteMovesFromHere":
+                            case "UiMnExercDeleteMovesFromHere":
                             case "UiMnExerc_EvalLine":
                             case "UiMnExerc_EvalMove":
                             case "UiMnExercDontSaveEvals":
                                 menuItem.IsEnabled = exerciseIndex >= 0 && selectedNodeId > 0 && isSolutionShown;
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
-                            case "_mnExerc_DeleteThisExercise":
+                            case "UiMnExercDeleteThisExercise":
                                 menuItem.IsEnabled = exerciseIndex >= 0;
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
@@ -1491,7 +1488,6 @@ namespace ChessForge
                             case "UiMnExerc_Separator_4":
                             case "UiMnExerc_Separator_5":
                             case "UiMnExerc_Separator_6":
-                            case "UiMnExerc_Separator_7":
                             case "UiMnExerc_Separator_8":
                             case "UiMnStudyExercSepar_EvalPos":
                             case "UiMnStudyExercSepar_EvalLine":
