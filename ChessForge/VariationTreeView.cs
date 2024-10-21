@@ -717,6 +717,30 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Swaps the position of the diagram versus the comment's text
+        /// (i.e. before the diagram or after)
+        /// </summary>
+        /// <param name="nd"></param>
+        public void SwapCommentWithDiagram(TreeNode nd)
+        {
+            try
+            {
+                if (nd != null)
+                {
+                    nd.IsDiagramPreComment = !nd.IsDiagramPreComment;
+
+                    EditOperation.EditType typ = EditOperation.EditType.SWAP_DIAGRAM_COMMENT;
+                    EditOperation op = new EditOperation(typ, nd);
+                    AppState.ActiveVariationTree?.OpsManager.PushOperation(op);
+                    AppState.IsDirty = true;
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
         /// The thumbnail Node has changed. Remove any thumbnail icon
         /// that may be set and place it on the current thumbnail.
         /// </summary>
