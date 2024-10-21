@@ -2277,6 +2277,10 @@ InsertDiagramPostComment=
 #english: RemoveDiagram=Remove Diagram
 RemoveDiagram=
 
+#description: Swap Diagram and Content
+#english: SwapDiagramComment=Swap Diagram and Content
+SwapDiagramComment=
+
 #description: Invert the diagram
 #english: InvertDiagram=Invert Diagram
 InvertDiagram=

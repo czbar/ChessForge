@@ -2277,6 +2277,10 @@ InsertDiagramPostComment=Wstaw Diagram po komentarzu
 #english: RemoveDiagram=Remove Diagram
 RemoveDiagram=Usuń Diagram
 
+#description: Swap Diagram and Content
+#english: SwapDiagramComment=Swap Diagram and Content
+SwapDiagramComment=Przestaw diagram z komentarzem 
+
 #description: Invert the diagram
 #english: InvertDiagram=Invert Diagram
 InvertDiagram=Odwróć Diagram

@@ -7010,6 +7010,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Swap Diagram and Content.
+        /// </summary>
+        public static string SwapDiagramComment {
+            get {
+                return ResourceManager.GetString("SwapDiagramComment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tablebases.
         /// </summary>
         public static string Tablebases {

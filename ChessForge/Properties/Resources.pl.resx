@@ -1609,6 +1609,9 @@
   <data name="RemoveDiagram" xml:space="preserve">
     <value>Usuń Diagram</value>
   </data>
+  <data name="SwapDiagramComment" xml:space="preserve">
+    <value>Przestaw diagram z komentarzem </value>
+  </data>
   <data name="InvertDiagram" xml:space="preserve">
     <value>Odwróć Diagram</value>
   </data>
