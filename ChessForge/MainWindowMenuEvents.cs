@@ -2093,11 +2093,7 @@ namespace ChessForge
                     }
                     string lineId = AppState.MainWin.ActiveVariationTree.SelectedLineId;
                     ActiveTreeView?.ToggleDiagramFlag(insertOrDelete == true, preComment);
-                    AppState.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
-                    if (nd != null)
-                    {
-                        AppState.MainWin.ActiveTreeView.SelectLineAndMove(lineId, nd.NodeId);
-                    }
+                    ActiveTreeView.InsertOrUpdateCommentRun(nd);
                 }
             }
         }
