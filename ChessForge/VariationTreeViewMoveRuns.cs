@@ -555,7 +555,7 @@ namespace ChessForge
             // if this is mainline in Game or Exercise, and the comment is non-empty
             // and it is not on move 0, add newline. 
             if (Configuration.MainLineCommentLF
-                && (ContentType == GameData.ContentType.MODEL_GAME || ContentType == GameData.ContentType.EXERCISE)
+                && (ContentType == GameData.ContentType.MODEL_GAME || ContentType == GameData.ContentType.EXERCISE && !AppState.IsUserSolving())
                 && nd.IsMainLine()
                 && nd.Parent != null
                 && !string.IsNullOrEmpty(nd.Comment)
@@ -587,7 +587,7 @@ namespace ChessForge
 
             // if the comment is on the main line
             if (Configuration.MainLineCommentLF
-                && (ContentType == GameData.ContentType.MODEL_GAME || ContentType == GameData.ContentType.EXERCISE)
+                && (ContentType == GameData.ContentType.MODEL_GAME || ContentType == GameData.ContentType.EXERCISE && !AppState.IsUserSolving())
                 && nd.IsMainLine()
                 && !string.IsNullOrEmpty(nd.Comment)
                 && (!nd.IsDiagram || nd.IsDiagramPreComment))
