@@ -48,6 +48,16 @@ namespace ChessForge
                 _mainWin.ActiveArticle.Solver.IsGuessingFinished = false;
             }
 
+            // Show scoresheet only in editing mode
+            if (mode == VariationTree.SolvingMode.EDITING)
+            {
+                _mainWin.ResizeTabControl(_mainWin.UiTabCtrlManualReview, TabControlSizeMode.SHOW_ACTIVE_LINE);
+            }
+            else
+            {
+                _mainWin.ResizeTabControl(_mainWin.UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
+            }
+
             AppState.EnableNagBar();
             _mainWin.BoardCommentBox.ShowTabHints();
         }

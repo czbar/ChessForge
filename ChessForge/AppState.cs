@@ -1544,7 +1544,9 @@ namespace ChessForge
 
                 if (AppState.ActiveContentType == GameData.ContentType.STUDY_TREE && WorkbookManager.ActiveTab == TabViewType.STUDY
                    || WorkbookManager.ActiveTab == TabViewType.MODEL_GAME
-                   || WorkbookManager.ActiveTab == TabViewType.EXERCISE && ActiveVariationTree != null && ActiveVariationTree.ShowTreeLines)
+                   || WorkbookManager.ActiveTab == TabViewType.EXERCISE 
+                      && ActiveVariationTree != null && ActiveVariationTree.ShowTreeLines
+                      && CurrentSolvingMode == VariationTree.SolvingMode.EDITING)
                 {
                     _mainWin.UiDgActiveLine.Visibility = Visibility.Visible;
                     _mainWin.UiLblScoresheet.Visibility = Visibility.Visible;
