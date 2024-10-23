@@ -118,6 +118,19 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Sets text of the chapter title label and its tooltip.
+        /// It is public because it is called after the user has edited the chapter's name.
+        /// </summary>
+        /// <param name="lblTitle"></param>
+        public static void SetChapterTitleLabel(Label lblTitle)
+        {
+            string fullTitle = AppState.ActiveChapter == null ? "" : AppState.ActiveChapter.GetTitle();
+            string titleForLabel = GuiUtilities.AdjustTextToFit(lblTitle, fullTitle);
+            lblTitle.Content = titleForLabel;
+            lblTitle.ToolTip = fullTitle;
+        }
+
+        /// <summary>
         /// Set up values and visibility of the GUI elements
         /// </summary>
         /// <param name="imgLeftArrow"></param>
@@ -134,11 +147,7 @@ namespace ChessForge
                                           int itemIndex,
                                           int itemCount)
         {
-            string fullTitle = AppState.ActiveChapter == null ? "" : AppState.ActiveChapter.GetTitle();
-            string titleForLabel = GuiUtilities.AdjustTextToFit(lblTitle, fullTitle);
-            lblTitle.Content = titleForLabel;
-            lblTitle.ToolTip = fullTitle;
-            lblCounter.ToolTip = fullTitle;
+            SetChapterTitleLabel(lblTitle);
 
             if (itemCount > 0)
             {
