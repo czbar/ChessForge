@@ -945,8 +945,13 @@ namespace GameTree
         /// </summary>
         /// <param name="nodeToInsertAt"></param>
         /// <param name="extSubtreeRoot"></param>
-        public void InsertSubtree(TreeNode nodeToInsertAt, TreeNode extSubtreeRoot)
+        public void InsertSubtree(TreeNode nodeToInsertAt, TreeNode extSubtreeRoot, uint maxDepth = 0)
         {
+            if (maxDepth > 0 && nodeToInsertAt.MoveNumber > maxDepth)
+            {
+                return;
+            }
+
             for (int i = 0; i < extSubtreeRoot.Children.Count; i++)
             {
                 TreeNode subtreeNode = extSubtreeRoot.Children[i];
@@ -957,7 +962,7 @@ namespace GameTree
                 nodeToInsertAt.AddChild(newNode);
                 AddNode(newNode);
 
-                InsertSubtree(newNode, subtreeNode);
+                InsertSubtree(newNode, subtreeNode, maxDepth);
             }
         }
 
