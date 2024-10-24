@@ -50,6 +50,12 @@ namespace GameTree
         public string Data;
 
         /// <summary>
+        /// FEN of this position.
+        /// It will be null or Empty if not calculated. 
+        /// </summary>
+        public string Fen;
+
+        /// <summary>
         /// Child nodes.
         /// </summary>
         public List<TreeNode> Children = new List<TreeNode>();
