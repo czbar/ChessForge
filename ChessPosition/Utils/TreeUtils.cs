@@ -3,12 +3,22 @@ using GameTree;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace ChessPosition
 {
     public class TreeUtils
     {
+        /// <summary>
+        /// Finds a node with a given FEN in a tree.
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <param name="fen"></param>
+        /// <returns></returns>
+        public static TreeNode FindTreeNodeByFen(VariationTree tree, string fen)
+        {
+            return tree.Nodes.Find(x => x.Fen == fen);
+        }
+
         /// <summary>
         /// Checks if the first passed node has the second node as its ancestor (at any lavel).
         /// </summary>
