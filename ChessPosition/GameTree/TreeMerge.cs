@@ -1,8 +1,5 @@
 ﻿using GameTree;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace ChessPosition.GameTree
 {
@@ -16,6 +13,108 @@ namespace ChessPosition.GameTree
 
         // depth to which we track position frequency
         private static int FREQ_TRACK_DEPTH = 15;
+
+
+        /// <summary>
+        /// Merges a list of trees into one and returns a deep copy.
+        /// To start with makes a copy of the first Tree in the list and then
+        /// merges copies of the rest.
+        /// </summary>
+        /// <param name="treeList"></param>
+        /// <returns></returns>
+        public static VariationTree MergeVariationTreeListEx(List<VariationTree> treeList, uint maxDepth, bool reorderLines)
+        {
+            Dictionary<string, int> fenCounts = new Dictionary<string, int>();
+
+            // calculate FENs for all nodes in al trees.
+            foreach (VariationTree tree in treeList)
+            {
+                foreach (TreeNode nd in tree.Nodes)
+                {
+                    if (nd.MoveNumber <= maxDepth + 1)
+                    {
+                        nd.Fen = FenParser.GenerateFenFromPosition(nd.Position);
+                        if (fenCounts.ContainsKey(nd.Fen))
+                        {
+                            fenCounts[nd.Fen]++;
+                        }
+                        else
+                        {
+                            fenCounts[nd.Fen] = 1;
+                        }
+                    }
+                }
+            }
+
+            VariationTree mergedTree = null;
+            if (treeList != null && treeList.Count != 0)
+            {
+                // make a deep copy of the first tree up to the maxDepth level. 
+                mergedTree = TreeUtils.CopyVariationTree(treeList[0], maxDepth);
+                if (treeList.Count > 1)
+                {
+                    for (int i = 1; i < treeList.Count; i++)
+                    {
+                        MergeVariationTreesEx(mergedTree, treeList[i], maxDepth);
+                    }
+
+                    if (fenCounts != null && reorderLines)
+                    {
+                        OrderChildrenByOccurence(mergedTree, fenCounts);
+                    }
+
+                }
+            }
+            return mergedTree;
+        }
+
+        /// <summary>
+        /// Starting at the root node, calls MergeNodeIntoTree
+        /// recursively on the tree.
+        /// </summary>
+        /// <param name="mergedTree"></param>
+        /// <param name="secondTree"></param>
+        /// <param name="maxDepth"></param>
+        public static void MergeVariationTreesEx(VariationTree mergedTree, VariationTree secondTree, uint maxDepth)
+        {
+            TreeNode nd = secondTree.RootNode;
+            MergeNodeIntoTree(mergedTree, nd, maxDepth);
+        }
+
+        /// <summary>
+        /// The merging method that is called recursively
+        /// </summary>
+        /// <param name="mergedTree"></param>
+        /// <param name="secondTreeNode"></param>
+        private static void MergeNodeIntoTree(VariationTree mergedTree, TreeNode secondTreeNode, uint maxDepth)
+        {
+            if (secondTreeNode.MoveNumber > maxDepth)
+            {
+                return;
+            }
+
+            // find out if secondTreeNode is a dupe i.e. an "original" node in the mergedTree.
+            TreeNode orig = TreeUtils.FindTreeNodeByFen(mergedTree, secondTreeNode.Fen);
+            if (orig != null)
+            {
+                // this is a dupe so insert nothing and keep iterating if there are any children
+                foreach (TreeNode child in secondTreeNode.Children)
+                {
+                    if (!string.IsNullOrEmpty(secondTreeNode.Comment))
+                    {
+                        orig.Comment += ("; " + secondTreeNode.Comment);
+                    }
+                    MergeNodeIntoTree(mergedTree, child, maxDepth);
+                }
+            }
+            else
+            {
+                // this is no duplicate so find the "original" of the parent in the mergedtree
+                // and insert the subtree starting from secondTreeNode.
+                var origParent = TreeUtils.FindTreeNodeByFen(mergedTree, secondTreeNode.Parent.Fen);
+                mergedTree.InsertSubtree(origParent, secondTreeNode.Parent, maxDepth);
+            }
+        }
 
         /// <summary>
         /// Merges a list of trees into one and returns a deep copy
