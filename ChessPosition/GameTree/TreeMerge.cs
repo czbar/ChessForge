@@ -117,45 +117,8 @@ namespace ChessPosition.GameTree
         }
 
         /// <summary>
-        /// Merges a list of trees into one and returns a deep copy
-        /// of the merged product.
-        /// </summary>
-        /// <param name="treeList"></param>
-        /// <returns></returns>
-        public static VariationTree MergeVariationTreeList(List<VariationTree> treeList, uint maxDepth, bool reorderLines)
-        {
-            VariationTree returnTree = null;
-
-            if (treeList != null && treeList.Count != 0)   
-            {
-                returnTree = TreeUtils.CopyVariationTree(treeList[0], maxDepth);
-                if (treeList.Count > 1)
-                {
-                    Dictionary<string, int> fenCounts = null;
-                    if (reorderLines)
-                    {
-                        fenCounts = new Dictionary<string, int>();
-                        // add the first tree to the Counts directory
-                        CountFenOccurences(returnTree, fenCounts);
-                    }
-                    for (int i = 1; i < treeList.Count; i++)
-                    {
-                        returnTree = MergeVariationTrees(returnTree, treeList[i], maxDepth, fenCounts);
-                    }
-
-                    if (fenCounts != null)
-                    {
-                        OrderChildrenByOccurence(returnTree, fenCounts);
-                    }
-
-                }
-            }
-
-            return returnTree;
-        }
-
-        /// <summary>
         /// Performs merging of 2 Variation Trees returns a new, merged tree as the result.
+        /// TODO: Replace with MergeVariationTreesEx (just test to be sure)
         /// </summary>
         /// <param name="tree1"></param>
         /// <param name="tree2"></param>
