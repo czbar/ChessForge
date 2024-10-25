@@ -89,11 +89,12 @@ namespace GameTree
         /// <summary>
         /// Constructor for PROMOTE_LINE.
         /// </summary>
-        public EditOperation(EditType tp, TreeNode promotionRoot, int originalChildIndex) : base()
+        public EditOperation(EditType tp, TreeNode promotionRoot, int originalChildIndex, TreeNode selectedNode) : base()
         {
             _opType = tp;
             _node = promotionRoot;
             _childIndex = originalChildIndex;
+            _opData_1 = selectedNode;
         }
 
         /// <summary>
