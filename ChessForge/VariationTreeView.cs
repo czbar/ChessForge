@@ -577,6 +577,7 @@ namespace ChessForge
                 _mainWin.SetActiveLine(nd.LineId, nd.NodeId);
                 BuildFlowDocumentForVariationTree();
                 _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, nd.LineId, _mainWin.ActiveLine.GetSelectedPlyNodeIndex(false), false);
+                PulseManager.BringSelectedRunIntoView();
                 AppState.IsDirty = true;
             }
             catch (Exception ex)
