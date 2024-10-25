@@ -896,6 +896,8 @@ namespace ChessForge
             try
             {
                 // merge workbooks
+                List<VariationTree> treeList = new List<VariationTree>();
+
                 for (int i = 0; i < games.Count; i++)
                 {
                     // check if this is a game, not an exercise
@@ -908,7 +910,8 @@ namespace ChessForge
                                 // special treatment for the first one
                                 GameHeader gh = WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree.Header.CloneMe(true);
                                 PgnGameParser pgp = new PgnGameParser(games[i].GameText, WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree, null);
-                                WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree.Header = gh;
+                                SessionWorkbook.ActiveChapter.StudyTree.Tree.Header = gh;
+                                treeList.Add(SessionWorkbook.ActiveChapter.StudyTree.Tree);
                             }
                             catch (Exception ex)
                             {
@@ -938,11 +941,14 @@ namespace ChessForge
                                 }
                                 sbErrors.AppendLine(BuildGameParseErrorText(null, i + 1, games[i], message));
                             }
-                            tree = TreeMerge.MergeVariationTrees(tree, workbook2);
+                            treeList.Add(workbook2);
                             mergedCount++;
                         }
                     }
                 }
+
+                tree = TreeMerge.MergeVariationTreeListEx(treeList, 0, true);
+
                 if (errorCount > 0)
                 {
                     ShowPgnProcessingErrors(Properties.Resources.DlgMergeErrors, ref sbErrors);

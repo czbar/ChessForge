@@ -404,18 +404,15 @@ namespace ChessForge
                 VariationTree merged = null;
                 string title = "";
 
+                List<VariationTree> treeList = new List<VariationTree>();
                 foreach (SelectedChapter ch in dlg.ChapterList)
                 {
                     if (ch.IsSelected)
                     {
+                        treeList.Add(ch.Chapter.StudyTree.Tree);
                         if (mergedCount == 0)
                         {
                             title = ch.Chapter.Title;
-                            merged = ch.Chapter.StudyTree.Tree;
-                        }
-                        else
-                        {
-                            merged = TreeMerge.MergeVariationTrees(merged, ch.Chapter.StudyTree.Tree);
                         }
                         mergedCount++;
                     }
@@ -423,6 +420,8 @@ namespace ChessForge
 
                 if (mergedCount > 1 && _chaptersView != null)
                 {
+                    merged = TreeMerge.MergeVariationTreeListEx(treeList, 0, true);
+
                     List<Chapter> sourceChapters = new List<Chapter>();
                     foreach (SelectedChapter ch in dlg.ChapterList)
                     {
