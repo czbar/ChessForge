@@ -1436,6 +1436,7 @@ namespace GameTree
             {
                 if (currNode.Parent.Children[0].NodeId != currNode.NodeId)
                 {
+                    childIndex = GetChildIndex(currNode);
                     bool onthemove = false;
                     for (int i = currNode.Parent.Children.Count - 1; i > 0; i--)
                     {
@@ -1453,7 +1454,7 @@ namespace GameTree
             }
 
             // Store info about this promotion for a possible undo
-            EditOperation op = new EditOperation(EditOperation.EditType.PROMOTE_LINE, nd, childIndex);
+            EditOperation op = new EditOperation(EditOperation.EditType.PROMOTE_LINE, currNode, childIndex, nd);
             OpsManager.PushOperation(op);
 
             if (changed)
