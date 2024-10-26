@@ -1788,7 +1788,10 @@ namespace ChessForge
             diagram = false;
 
             // check if we must set includeNumber to true
-            if (!includeNumber && (inclComment && IsLastRunComment(para, nd) || !string.IsNullOrEmpty(nd.CommentBeforeMove)))
+            if (!includeNumber && (inclComment && IsLastRunComment(para, nd) 
+                                    || !string.IsNullOrEmpty(nd.CommentBeforeMove)
+                                    || (nd.Parent != null && nd.Parent.IsDiagram))
+                                    )
             {
                 includeNumber = true;
             }
