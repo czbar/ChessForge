@@ -660,7 +660,9 @@ namespace ChessForge
                 _dictCommentBeforeMoveRunToParagraph[run] = para;
 
                 Run rNode = _dictNodeToRun[nd.NodeId];
-                if (RichTextBoxUtilities.IsFirstNonEmptyRunInPara(rNode, para))
+                if (RichTextBoxUtilities.IsFirstNonEmptyRunInPara(rNode, para)
+                   || (Configuration.MainLineCommentLF && nd.Parent != null && (!string.IsNullOrEmpty(nd.Parent.Comment) || nd.Parent.IsDiagram))
+                   )
                 {
                     // if this is the first run in the para remove leading space to eliminate spurious indent.
                     run.Text = run.Text.Substring(1);
