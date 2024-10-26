@@ -168,7 +168,7 @@ namespace ChessForge
 
         /// <summary>
         /// Builds text for the Intro section.
-        /// Intro is optional so if there is no content, it wil lbe skipped.
+        /// Intro is optional so if there is no content, it will be skipped.
         /// </summary>
         /// <param name="chapter"></param>
         /// <returns></returns>
