@@ -279,6 +279,7 @@ namespace GameTree
                     nd.Nags = string.Empty;
                     nd.SetNags(string.Empty);
                 }
+                nd.IsDiagram = false;
             }
         }
 
