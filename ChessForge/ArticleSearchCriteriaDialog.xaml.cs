@@ -43,6 +43,7 @@ namespace ChessForge
             InitializeComponent();
             RestoreLastValues();
             UiTbWhite.Focus();
+            UiTbWhite.SelectAll();
         }
 
         /// <summary>
