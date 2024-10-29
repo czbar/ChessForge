@@ -28,10 +28,17 @@ Description: Partie z turniejów i meczów.
       Description: Mistrzostwa Świata w Grze Szybkiej Kobiet 2023, Samarkanda, grudzień 2023.
       File:Tournaments/World Rapid Chess Championship Women 2023.pgn
 	  
-Bookcase:Strategiczne Kąski
-Description:Przyczynkowe opracowania o strategii.
+Bookcase:Strategia
+Description:Opracowania o strategii różnych faz gry.
 
-    Shelf:
+    Shelf:Struktury Pionkowe
+    Description: 
+    
+	  Book:Struktura Maroczy'ego Idee w praktyce
+      Description: Głębsze spojrzenie na strategiczne i taktyczne idee w strukturze Maroczy'ego. Wymaga ChessForge'a wersji 1.10.1 lub wyższej.
+      File: Strategy/Maroczy Idee w praktyce.pgn
+
+    Shelf:Szczególne Idee
     Description: 
     
 	  Book:Królem na linię ognia (jęz. ang.)

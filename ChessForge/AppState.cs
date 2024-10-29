@@ -1100,14 +1100,13 @@ namespace ChessForge
                     _mainWin.UiMnWorkbookSave.IsEnabled = false;
                 }
 
+                _mainWin.UiMnWorkbookSaveAs.IsEnabled = true;
                 if (!string.IsNullOrEmpty(filePath))
                 {
-                    _mainWin.UiMnWorkbookSaveAs.IsEnabled = true;
                     _mainWin.UiMnBackupVersion.IsEnabled = true;
                 }
                 else
                 {
-                    _mainWin.UiMnWorkbookSaveAs.IsEnabled = false;
                     _mainWin.UiMnBackupVersion.IsEnabled = false;
                 }
 

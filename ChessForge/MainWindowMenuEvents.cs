@@ -269,6 +269,7 @@ namespace ChessForge
                                 else
                                 {
                                     SetupGuiForNewSession("", true, null);
+                                    AppState.SetupGuiForCurrentStates();
                                 }
                             }
                         }
