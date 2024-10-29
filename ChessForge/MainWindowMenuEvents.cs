@@ -404,18 +404,15 @@ namespace ChessForge
                 VariationTree merged = null;
                 string title = "";
 
+                List<VariationTree> treeList = new List<VariationTree>();
                 foreach (SelectedChapter ch in dlg.ChapterList)
                 {
                     if (ch.IsSelected)
                     {
+                        treeList.Add(ch.Chapter.StudyTree.Tree);
                         if (mergedCount == 0)
                         {
                             title = ch.Chapter.Title;
-                            merged = ch.Chapter.StudyTree.Tree;
-                        }
-                        else
-                        {
-                            merged = TreeMerge.MergeVariationTrees(merged, ch.Chapter.StudyTree.Tree);
                         }
                         mergedCount++;
                     }
@@ -423,6 +420,8 @@ namespace ChessForge
 
                 if (mergedCount > 1 && _chaptersView != null)
                 {
+                    merged = TreeMerge.MergeVariationTreeListEx(treeList, 0, true);
+
                     List<Chapter> sourceChapters = new List<Chapter>();
                     foreach (SelectedChapter ch in dlg.ChapterList)
                     {
@@ -578,7 +577,7 @@ namespace ChessForge
                 AppState.MainWin.ActiveTreeView.SelectLineAndMove(selectedLineId, selectedNodeId);
             }
 
-            AppState.MainWin.ActiveTreeView.BringSelectedRunIntoView();
+            PulseManager.BringSelectedRunIntoView();
 
             AppState.IsDirty = true;
 
@@ -2036,25 +2035,89 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Toggles the Diagram flag on the currently selected node.
+        /// Toggles the Post Comment Diagram flag on the currently selected node.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void UiMn_ToggleDiagramFlag_Click(object sender, RoutedEventArgs e)
+        public void UiMn_InsertPreCommentDiagram_Click(object sender, RoutedEventArgs e)
+        {
+            InsertOrDeleteDiagram(true, true);
+        }
+
+        /// <summary>
+        /// Toggles the Post Comment Diagram flag on the currently selected node.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void UiMn_InsertPostCommentDiagram_Click(object sender, RoutedEventArgs e)
+        {
+            InsertOrDeleteDiagram(false, true);
+        }
+
+        /// <summary>
+        /// Deletes the diagram. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMn_DeleteDiagram_Click(object sender, RoutedEventArgs e)
+        {
+            InsertOrDeleteDiagram(false, false);
+        }
+
+        /// <summary>
+        /// Swaps the comment with the diagram. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMn_SwapDiagramComment_Click(object sender, RoutedEventArgs e)
+        {
+            SwapCommentWithDiagram();
+        }
+
+        /// <summary>
+        /// Inserts or removes a diagram.
+        /// </summary>
+        /// <param name="insertOrDelete"></param>
+        /// <param name="preComment"></param>
+        public void InsertOrDeleteDiagram(bool preComment, bool? insertOrDelete)
         {
             if (AppState.MainWin.ActiveTreeView != null)
             {
                 TreeNode nd = AppState.MainWin.ActiveTreeView.GetSelectedNode();
-                string lineId = AppState.MainWin.ActiveVariationTree.SelectedLineId;
-                ActiveTreeView?.ToggleDiagramFlag();
-                AppState.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
                 if (nd != null)
                 {
-                    AppState.MainWin.ActiveTreeView.SelectLineAndMove(lineId, nd.NodeId);
+                    if (insertOrDelete == null)
+                    {
+                        insertOrDelete = !nd.IsDiagram;
+                    }
+                    string lineId = AppState.MainWin.ActiveVariationTree.SelectedLineId;
+                    ActiveTreeView?.ToggleDiagramFlag(insertOrDelete == true, preComment);
+                    ActiveTreeView.InsertOrUpdateCommentRun(nd);
                 }
             }
         }
 
+        /// <summary>
+        /// Swaps the position of the diagram versus the comment's text
+        /// (i.e. before the diagram or after)
+        /// </summary>
+        public void SwapCommentWithDiagram()
+        {
+            if (AppState.MainWin.ActiveTreeView != null)
+            {
+                TreeNode nd = AppState.MainWin.ActiveTreeView.GetSelectedNode();
+                if (nd != null && nd.IsDiagram)
+                {
+                    string lineId = AppState.MainWin.ActiveVariationTree.SelectedLineId;
+                    ActiveTreeView.SwapCommentWithDiagram(nd);
+                    AppState.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
+                    if (nd != null)
+                    {
+                        AppState.MainWin.ActiveTreeView.SelectLineAndMove(lineId, nd.NodeId);
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Invert the diagram.
@@ -2080,7 +2143,6 @@ namespace ChessForge
                 }
             }
         }
-
 
         /// <summary>
         /// Marks the current node as a Thumbnail for the current tree.

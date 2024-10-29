@@ -574,6 +574,10 @@ namespace GameTree
                             _remainingGameText = _remainingGameText.Substring(commandEnd + 1);
                             endPos = endPos - (commandEnd + 1);
                         }
+                        else
+                        {
+                            _remainingGameText = _remainingGameText.Substring(commandStart + 1);
+                        }
                     }
                 }
 
@@ -583,9 +587,17 @@ namespace GameTree
                 // extract comment text
                 comment = _remainingGameText.Substring(0, endPos);
 
-                if (comment.Contains(ChfCommands.CHESS_BASE_DIAGRAM))
+                // first must check for the longer version
+                if (comment.Contains(ChfCommands.CHESS_BASE_DIAGRAM_LONG))
                 {
                     node.IsDiagram = true;
+                    node.IsDiagramPreComment = comment.StartsWith(ChfCommands.CHESS_BASE_DIAGRAM_LONG);
+                    comment = comment.Replace(ChfCommands.CHESS_BASE_DIAGRAM_LONG, "");
+                }
+                else if (comment.Contains(ChfCommands.CHESS_BASE_DIAGRAM))
+                {
+                    node.IsDiagram = true;
+                    node.IsDiagramPreComment = comment.StartsWith(ChfCommands.CHESS_BASE_DIAGRAM);
                     comment = comment.Replace(ChfCommands.CHESS_BASE_DIAGRAM, "");
                 }
 

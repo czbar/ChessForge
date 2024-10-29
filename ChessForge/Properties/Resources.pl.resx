@@ -1600,8 +1600,17 @@
   <data name="InsertDiagram" xml:space="preserve">
     <value>Wstaw Diagram</value>
   </data>
+  <data name="InsertDiagramPreComment" xml:space="preserve">
+    <value>Wstaw Diagram przed komentarzem</value>
+  </data>
+  <data name="InsertDiagramPostComment" xml:space="preserve">
+    <value>Wstaw Diagram po komentarzu</value>
+  </data>
   <data name="RemoveDiagram" xml:space="preserve">
     <value>Usuń Diagram</value>
+  </data>
+  <data name="SwapDiagramComment" xml:space="preserve">
+    <value>Przestaw diagram z komentarzem </value>
   </data>
   <data name="InvertDiagram" xml:space="preserve">
     <value>Odwróć Diagram</value>

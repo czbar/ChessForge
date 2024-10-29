@@ -1768,11 +1768,20 @@ ConfirmDeleteExercise=Delete Exercise
 # Header: CONTEXT MENU for Intro Tab and diagrams elsewhere
 #
 
-#Insert a diagram
+#Insert a diagram in Intro
 InsertDiagram=Insert Diagram
+
+#Insert a diagram after comment
+InsertDiagramPreComment=Insert Diagram Before Comment
+
+#Insert a diagram after comment
+InsertDiagramPostComment=Insert Diagram After Comment
 
 #Remove the diagram
 RemoveDiagram=Remove Diagram
+
+#Swap Diagram and Content
+SwapDiagramComment=Swap Diagram and Content
 
 #Invert the diagram
 InvertDiagram=Invert Diagram

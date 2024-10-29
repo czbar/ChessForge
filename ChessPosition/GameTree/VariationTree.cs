@@ -279,6 +279,8 @@ namespace GameTree
                     nd.Nags = string.Empty;
                     nd.SetNags(string.Empty);
                 }
+                nd.IsDiagram = false;
+                nd.References = string.Empty;
             }
         }
 
@@ -297,7 +299,7 @@ namespace GameTree
 
                 if (!string.IsNullOrEmpty(nd.BestResponse))
                 {
-                    nd.BestResponse= string.Empty;
+                    nd.BestResponse = string.Empty;
                 }
             }
         }
@@ -483,9 +485,12 @@ namespace GameTree
                         break;
                     case ChfCommands.Command.DIAGRAM:
                         nd.IsDiagram = true;
-                        if (tokens.Length > 1 && tokens[1] == "1")
+                        if (tokens.Length > 1)
                         {
-                            nd.IsDiagramFlipped = true;
+                            if (uint.TryParse(tokens[1], out uint attrs))
+                            {
+                                ChfCommands.DecodeDiagramAttrs(attrs, out nd.IsDiagramFlipped, out nd.IsDiagramPreComment);
+                            }
                         }
                         else
                         {
@@ -942,8 +947,13 @@ namespace GameTree
         /// </summary>
         /// <param name="nodeToInsertAt"></param>
         /// <param name="extSubtreeRoot"></param>
-        public void InsertSubtree(TreeNode nodeToInsertAt, TreeNode extSubtreeRoot)
+        public void InsertSubtree(TreeNode nodeToInsertAt, TreeNode extSubtreeRoot, uint maxDepth = 0)
         {
+            if (maxDepth > 0 && nodeToInsertAt.MoveNumber > maxDepth)
+            {
+                return;
+            }
+
             for (int i = 0; i < extSubtreeRoot.Children.Count; i++)
             {
                 TreeNode subtreeNode = extSubtreeRoot.Children[i];
@@ -954,7 +964,7 @@ namespace GameTree
                 nodeToInsertAt.AddChild(newNode);
                 AddNode(newNode);
 
-                InsertSubtree(newNode, subtreeNode);
+                InsertSubtree(newNode, subtreeNode, maxDepth);
             }
         }
 
@@ -1428,6 +1438,7 @@ namespace GameTree
             {
                 if (currNode.Parent.Children[0].NodeId != currNode.NodeId)
                 {
+                    childIndex = GetChildIndex(currNode);
                     bool onthemove = false;
                     for (int i = currNode.Parent.Children.Count - 1; i > 0; i--)
                     {
@@ -1445,7 +1456,7 @@ namespace GameTree
             }
 
             // Store info about this promotion for a possible undo
-            EditOperation op = new EditOperation(EditOperation.EditType.PROMOTE_LINE, nd, childIndex);
+            EditOperation op = new EditOperation(EditOperation.EditType.PROMOTE_LINE, currNode, childIndex, nd);
             OpsManager.PushOperation(op);
 
             if (changed)
@@ -1670,6 +1681,18 @@ namespace GameTree
             if (nd != null)
             {
                 nd.IsDiagram = true;
+            }
+        }
+
+        /// <summary>
+        /// Swaps diagram with comment.
+        /// </summary>
+        /// <param name="nd"></param>
+        public void UndoSwapDiagramComment(TreeNode nd)
+        {
+            if (nd != null)
+            {
+                nd.IsDiagramPreComment = !nd.IsDiagramPreComment;
             }
         }
 

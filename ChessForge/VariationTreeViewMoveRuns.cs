@@ -64,7 +64,7 @@ namespace ChessForge
                     RemoveCommentRunsFromHostingParagraph(inlComment, nd.NodeId);
 
                     Paragraph para = r.Parent as Paragraph;
-                    AddCommentRunsToParagraph(nd, para, out bool isBlunder);
+                    AddCommentRunsToParagraph(nd, para, out bool isBlunder, out _);
                     if (isBlunder)
                     {
                         TextUtils.RemoveBlunderNagFromText(r);
@@ -169,7 +169,10 @@ namespace ChessForge
                 if (nextNode != null)
                 {
                     // take care of the special case where node 0 may have a comment
-                    bool includeNumber = currNode.NodeId == 0 || !string.IsNullOrWhiteSpace(currNode.Comment) || !string.IsNullOrEmpty(nextNode.CommentBeforeMove);
+                    bool includeNumber = currNode.NodeId == 0 
+                        || !string.IsNullOrWhiteSpace(currNode.Comment) 
+                        || !string.IsNullOrEmpty(nextNode.CommentBeforeMove)
+                        || currNode.IsDiagram;
                     UpdateRunText(nextMoveRun, nextNode, includeNumber);
                 }
             }
@@ -234,13 +237,13 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Inserts a position diagram (if flagged on the node in the paragraph).  
+        /// Creates a list of inlines for a diagrm.  
         /// </summary>
         /// <param name="nd"></param>
         /// <param name="para"></param>
-        private bool AddDiagramToParagraph(TreeNode nd, Paragraph para)
+        private List<Inline> CreateInlinesForDiagram(TreeNode nd)
         {
-            bool diagramInserted = false;
+            List<Inline> inlines = new List<Inline>();
 
             if (nd.IsDiagram)
             {
@@ -249,29 +252,29 @@ namespace ChessForge
                 {
                     Run preDiagRun = new Run("\n");
                     preDiagRun.Name = RichTextBoxUtilities.PreInlineDiagramRunPrefix + nd.NodeId.ToString();
-                    para.Inlines.Add(preDiagRun);
+                    inlines.Add(preDiagRun);
 
-                    para.Inlines.Add(iuc);
                     iuc.MouseDown += EventRunClicked;
+                    inlines.Add(iuc);
 
                     // TODO: the following needs resolving in some other way.
                     // e.g. perhaps always add the post diag run and remove in post-processing
                     // if it is found to be the last run in a paragraph.
+                    // NOTE: it might have already been resolved by removing the last new line in paras.
 
                     // if there are moves further in the same para, insert a new line.
-                    if (nd.Children.Count <= 1 || nd.Parent.Children.Count <= 1) // || nd.Parent.Children[nd.Parent.Children.Count - 1] != nd)
+                    //if (nd.Children.Count <= 1 || nd.Parent.Children.Count <= 1) // || nd.Parent.Children[nd.Parent.Children.Count - 1] != nd)
                     {
                         Run postDiagRun = new Run("\n");
                         postDiagRun.Name = RichTextBoxUtilities.PostInlineDiagramRunPrefix + nd.NodeId.ToString();
-                        para.Inlines.Add(postDiagRun);
+                        inlines.Add(postDiagRun);
                     }
 
                     chessboard.DisplayPosition(nd, false);
-                    diagramInserted = true;
                 }
             }
 
-            return diagramInserted;
+            return inlines;
         }
 
         /// <summary>
@@ -280,8 +283,10 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd"></param>
         /// <param name="para"></param>
-        private void AddCommentRunsToParagraph(TreeNode nd, Paragraph para, out bool isAssessmentBlunderShown)
+        private void AddCommentRunsToParagraph(TreeNode nd, Paragraph para, out bool isAssessmentBlunderShown, out bool diagram)
         {
+            diagram = false;
+
             isAssessmentBlunderShown = false;
 
             if (!IsCommentRunToShow(nd))
@@ -304,42 +309,21 @@ namespace ChessForge
                     parts.Insert(0, thumb);
                 }
 
-                if (!string.IsNullOrEmpty(nd.References))
-                {
-                    List<Article> articles = GuiUtilities.BuildReferencedArticlesList(nd.References);
-                    bool first = true;
-                    foreach (Article article in articles)
-                    {
-                        CommentPartType cpt;
-                        string title;
-                        if (article.ContentType == GameData.ContentType.STUDY_TREE)
-                        {
-                            AppState.Workbook.GetChapterByGuid(article.Guid, out int chapterIndex);
-                            title = Properties.Resources.Chapter + " " + (chapterIndex + 1).ToString() + ": " + article.Tree.Header.GetChapterTitle();
-                            cpt = CommentPartType.CHAPTER_REFERENCE;
-                        }
-                        else
-                        {
-                            title = article.Tree.Header.BuildGameReferenceTitle(false);
-                            if (article.ContentType == GameData.ContentType.EXERCISE)
-                            {
-                                title = Properties.Resources.Exercise + ": " + title;
-                            }
-                            cpt = CommentPartType.GAME_EXERCISE_REFERENCE;
-                        }
-                        if (!first)
-                        {
-                            title = "; " + title;
-                        }
-                        parts.Add(new CommentPart(cpt, " " + title, article.Guid));
-                        first = false;
-                    }
-                }
+                CreateReferenceCommentParts(nd, parts);
 
-                // check only here as we may have quiz points
-                if (parts == null)
+                // if the node has a diagram, insert it at the beginning(PreComment) or end (PostComment)
+                if (nd.IsDiagram)
                 {
-                    return;
+                    diagram = true;
+                    CommentPart diag = new CommentPart(CommentPartType.DIAGRAM, "");
+                    if (nd.IsDiagramPreComment)
+                    {
+                        parts.Insert(0, diag);
+                    }
+                    else
+                    {
+                        parts.Add(diag);
+                    }
                 }
 
                 CommentPart startPart = new CommentPart(CommentPartType.TEXT, BuildTextForStartPart(nd));
@@ -363,41 +347,7 @@ namespace ChessForge
                     parts.Insert(0, ass);
                 }
 
-
-                Inline inlPrevious = null;
-                for (int i = 0; i < parts.Count; i++)
-                {
-                    CommentPart part = parts[i];
-                    if (part.Type == CommentPartType.ASSESSMENT)
-                    {
-                        isAssessmentBlunderShown = true;
-                    }
-
-                    Inline inl = CreateInlineForCommentPart(part, nd, i, parts.Count);
-
-                    // the above may or may not have set the name.
-                    if (string.IsNullOrEmpty(inl.Name))
-                    {
-                        inl.Name = _run_comment_ + nd.NodeId.ToString();
-                    }
-
-                    if (inlPrevious == null)
-                    {
-                        // insert after the reference run or immediately after the move run if no reference run
-                        Run rNode;
-                        rNode = _dictNodeToRun[nd.NodeId];
-                        para.Inlines.InsertAfter(rNode, inl);
-
-                        _dictNodeToCommentRun[nd.NodeId] = inl;
-                        _dictCommentRunToParagraph[inl] = para;
-                    }
-                    else
-                    {
-                        para.Inlines.InsertAfter(inlPrevious, inl);
-                    }
-
-                    inlPrevious = inl;
-                }
+                PlaceCommentPartsIntoParagraph(para, nd, parts, ref isAssessmentBlunderShown);
             }
             catch (Exception ex)
             {
@@ -413,12 +363,17 @@ namespace ChessForge
         /// <param name="i"></param>
         /// <param name="partsCount"></param>
         /// <returns></returns>
-        private Inline CreateInlineForCommentPart(CommentPart part, TreeNode nd, int i, int partsCount)
+        private List<Inline> CreateInlineForCommentPart(CommentPart part, TreeNode nd, int i, int partsCount)
         {
+            List<Inline> inlines = new List<Inline>();
             Inline inl;
 
             switch (part.Type)
             {
+                case CommentPartType.DIAGRAM:
+                    inlines = CreateInlinesForDiagram(nd);
+                    inl = inlines.Last();
+                    break;
                 case CommentPartType.ASSESSMENT:
                     string assString = GuiUtilities.BuildAssessmentComment(nd);
                     inl = new Run(assString);
@@ -426,6 +381,7 @@ namespace ChessForge
                     inl.FontStyle = FontStyles.Normal;
                     inl.FontWeight = FontWeights.Normal;
                     inl.PreviewMouseDown += EventCommentRunClicked;
+                    inlines.Add(inl);
                     break;
                 case CommentPartType.THUMBNAIL_SYMBOL:
                     // if this is not the second last part, insert extra space
@@ -446,6 +402,7 @@ namespace ChessForge
                     inl.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
                     inl.FontWeight = FontWeights.Normal;
                     inl.PreviewMouseDown += EventCommentRunClicked;
+                    inlines.Add(inl);
                     break;
                 case CommentPartType.URL:
                     inl = new Hyperlink(new Run(part.Text));
@@ -456,6 +413,7 @@ namespace ChessForge
                     inl.MouseLeave += EventHyperlinkMouseLeave;
                     inl.Foreground = ChessForgeColors.CurrentTheme.HyperlinkForeground;
                     inl.Cursor = Cursors.Hand;
+                    inlines.Add(inl);
                     break;
                 case CommentPartType.GAME_EXERCISE_REFERENCE:
                 case CommentPartType.CHAPTER_REFERENCE:
@@ -476,6 +434,7 @@ namespace ChessForge
                     inl.Foreground = part.Type == CommentPartType.GAME_EXERCISE_REFERENCE ?
                         ChessForgeColors.CurrentTheme.GameExerciseRefForeground : ChessForgeColors.CurrentTheme.ChapterRefForeground;
                     inl.Cursor = Cursors.Hand;
+                    inlines.Add(inl);
                     break;
                 default:
                     inl = new Run(part.Text);
@@ -483,10 +442,105 @@ namespace ChessForge
                     inl.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
                     inl.FontWeight = FontWeights.Normal;
                     inl.PreviewMouseDown += EventCommentRunClicked;
+                    inlines.Add(inl);
                     break;
             }
 
-            return inl;
+            return inlines;
+        }
+
+        /// <summary>
+        /// Creates inlines for comment parts and inserts them in the appropriate order 
+        /// into the paragraph.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <param name="nd"></param>
+        /// <param name="parts"></param>
+        /// <param name="isAssessmentBlunderShown"></param>
+        private void PlaceCommentPartsIntoParagraph(Paragraph para, TreeNode nd, List<CommentPart> parts, ref bool isAssessmentBlunderShown)
+        {
+            Inline inlPrevious = null;
+            for (int i = 0; i < parts.Count; i++)
+            {
+                CommentPart part = parts[i];
+                if (part.Type == CommentPartType.ASSESSMENT)
+                {
+                    isAssessmentBlunderShown = true;
+                }
+
+                List<Inline> inlines = CreateInlineForCommentPart(part, nd, i, parts.Count);
+
+                // the above may or may not have set the name.
+                foreach (Inline inl in inlines)
+                {
+                    if (string.IsNullOrEmpty(inl.Name))
+                    {
+                        inl.Name = _run_comment_ + nd.NodeId.ToString();
+                    }
+                }
+
+                if (inlPrevious == null)
+                {
+                    // this is the first comment inline which is a single inline
+                    // because only multiple ones are from the diagram and it will be always preceded
+                    // by at least START. 
+                    Run rNode;
+                    rNode = _dictNodeToRun[nd.NodeId];
+                    para.Inlines.InsertAfter(rNode, inlines[0]);
+                    inlPrevious = inlines[0];
+
+                    _dictNodeToCommentRun[nd.NodeId] = inlines[0];
+                    _dictCommentRunToParagraph[inlines[0]] = para;
+                }
+                else
+                {
+                    foreach (Inline inline in inlines)
+                    {
+                        para.Inlines.InsertAfter(inlPrevious, inline);
+                        inlPrevious = inline;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Create reference run for the node.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="parts"></param>
+        private void CreateReferenceCommentParts(TreeNode nd, List<CommentPart> parts)
+        {
+            if (!string.IsNullOrEmpty(nd.References))
+            {
+                List<Article> articles = GuiUtilities.BuildReferencedArticlesList(nd.References);
+                bool first = true;
+                foreach (Article article in articles)
+                {
+                    CommentPartType cpt;
+                    string title;
+                    if (article.ContentType == GameData.ContentType.STUDY_TREE)
+                    {
+                        AppState.Workbook.GetChapterByGuid(article.Guid, out int chapterIndex);
+                        title = Properties.Resources.Chapter + " " + (chapterIndex + 1).ToString() + ": " + article.Tree.Header.GetChapterTitle();
+                        cpt = CommentPartType.CHAPTER_REFERENCE;
+                    }
+                    else
+                    {
+                        title = article.Tree.Header.BuildGameReferenceTitle(false);
+                        if (article.ContentType == GameData.ContentType.EXERCISE)
+                        {
+                            title = Properties.Resources.Exercise + ": " + title;
+                        }
+                        cpt = CommentPartType.GAME_EXERCISE_REFERENCE;
+                    }
+                    if (!first)
+                    {
+                        title = "; " + title;
+                    }
+                    parts.Add(new CommentPart(cpt, " " + title, article.Guid));
+                    first = false;
+                }
+            }
         }
 
         /// <summary>
@@ -504,16 +558,16 @@ namespace ChessForge
             // if this is mainline in Game or Exercise, and the comment is non-empty
             // and it is not on move 0, add newline. 
             if (Configuration.MainLineCommentLF
-                && (ContentType == GameData.ContentType.MODEL_GAME || ContentType == GameData.ContentType.EXERCISE)
+                && (ContentType == GameData.ContentType.MODEL_GAME || ContentType == GameData.ContentType.EXERCISE && !AppState.IsUserSolving())
                 && nd.IsMainLine()
                 && nd.Parent != null
-                && !string.IsNullOrEmpty(nd.Comment))
+                && !string.IsNullOrEmpty(nd.Comment)
+                && (!nd.IsDiagram || !nd.IsDiagramPreComment))
             {
-                text = "\n\n";
+                text = "\n";
             }
             else
             {
-                // TODO: do not insert if this is after a diagram, i.e. in a new line
                 if (nd.Parent != null)
                 {
                     text = " ";
@@ -535,12 +589,13 @@ namespace ChessForge
             string text = string.Empty;
 
             // if the comment is on the main line
-            if (Configuration.MainLineCommentLF 
-                && (ContentType == GameData.ContentType.MODEL_GAME || ContentType == GameData.ContentType.EXERCISE)
+            if (Configuration.MainLineCommentLF
+                && (ContentType == GameData.ContentType.MODEL_GAME || ContentType == GameData.ContentType.EXERCISE && !AppState.IsUserSolving())
                 && nd.IsMainLine()
-                && !string.IsNullOrEmpty(nd.Comment))
+                && !string.IsNullOrEmpty(nd.Comment)
+                && (!nd.IsDiagram || nd.IsDiagramPreComment))
             {
-                text += "\n\n";
+                text += "\n";
             }
             else
             {
@@ -608,7 +663,9 @@ namespace ChessForge
                 _dictCommentBeforeMoveRunToParagraph[run] = para;
 
                 Run rNode = _dictNodeToRun[nd.NodeId];
-                if (RichTextBoxUtilities.IsFirstNonEmptyRunInPara(rNode, para))
+                if (RichTextBoxUtilities.IsFirstNonEmptyRunInPara(rNode, para)
+                   || (Configuration.MainLineCommentLF && nd.Parent != null && (!string.IsNullOrEmpty(nd.Parent.Comment) || nd.Parent.IsDiagram))
+                   )
                 {
                     // if this is the first run in the para remove leading space to eliminate spurious indent.
                     run.Text = run.Text.Substring(1);
@@ -658,6 +715,7 @@ namespace ChessForge
         {
             return !string.IsNullOrEmpty(nd.Comment)
                    || !string.IsNullOrEmpty(nd.References)
+                   || nd.IsDiagram
                    || (nd.IsThumbnail && !_isPrinting)
                    || HandleBlunders && nd.Assessment != 0 && nd.IsMainLine()
                    || (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.EDITING && nd.QuizPoints != 0);

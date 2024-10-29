@@ -50,6 +50,12 @@ namespace GameTree
         public string Data;
 
         /// <summary>
+        /// FEN of this position.
+        /// It will be null or Empty if not calculated. 
+        /// </summary>
+        public string Fen;
+
+        /// <summary>
         /// Child nodes.
         /// </summary>
         public List<TreeNode> Children = new List<TreeNode>();
@@ -193,9 +199,16 @@ namespace GameTree
 
         /// <summary>
         /// Whether the diagram is to be shown with black at the bottom.
-        /// Only matters if IsDiagram is true..
+        /// Only applies if IsDiagram is true.
         /// </summary>
         public bool IsDiagramFlipped = false;
+
+        /// <summary>
+        /// Whether the diagram is to be shown before or after
+        /// the comment.
+        /// Only applies if IsDiagram is true.
+        /// </summary>
+        public bool IsDiagramPreComment = false;
 
         /// <summary>
         /// References to Games, Exercises or Chapters

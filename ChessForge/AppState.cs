@@ -1206,7 +1206,8 @@ namespace ChessForge
                 VariationTreeView view = AppState.MainWin.ActiveTreeView;
 
                 ConfigureBookmarkMenuOptions(MainWin.UiMnMarkBookmark, MainWin.UiMnStDeleteBookmark);
-                ConfigureDiagramMenuOptions(MainWin.UiMnStudyInsertDiagram, MainWin.UiMnStudyDeleteDiagram, MainWin.UiMnStudyInvertDiagram);
+                ConfigureDiagramMenuOptions(MainWin.UiMnStudyInsertDiagramPreComment, MainWin.UiMnStudyInsertDiagramPostComment
+                    , MainWin.UiMnStudyDeleteDiagram, MainWin.UiMnStudyInvertDiagram, MainWin.UiMnStudySwapDiagramComment);
 
                 foreach (var item in MainWin.UiMncStudyTree.Items)
                 {
@@ -1229,14 +1230,14 @@ namespace ChessForge
                             case "UiMnStudyWorkbookEvalMove":
                                 menuItem.IsEnabled = tree != null && tree.SelectedNode != null;
                                 break;
-                            case "_mnWorkbookEvalLine":
+                            case "UiMnStudyEvalLine":
                                 menuItem.IsEnabled = tree != null && tree.Nodes.Count > 1;
                                 break;
-                            case "_mnStudyTree_MarkThumbnail":
+                            case "UiMnStudyMarkThumbnail":
                                 menuItem.IsEnabled = tree != null && tree.SelectedNode != null;
                                 SetMarkThumbnailMenuItemHeader(menuItem, selectedNode);
                                 break;
-                            case "UiMnStudyInsertDiagram":
+                            case "UiMnStudyInsertDiagramPostComment":
                                 menuItem.IsEnabled = tree != null && tree.SelectedNode != null;
                                 break;
                             case "UiMnMainCopy":
@@ -1287,7 +1288,8 @@ namespace ChessForge
                 VariationTreeView view = MainWin.ActiveTreeView;
 
                 ConfigureBookmarkMenuOptions(MainWin.UiMnGameMarkBookmark, MainWin.UiMnGameDeleteBookmark);
-                ConfigureDiagramMenuOptions(MainWin.UiMnGame_InsertDiagram, MainWin.UiMnGame_DeleteDiagram, MainWin.UiMnGameInvertDiagram);
+                ConfigureDiagramMenuOptions(MainWin.UiMnGameInsertDiagramPreComment, MainWin.UiMnGameInsertDiagramPostComment
+                    , MainWin.UiMnGame_DeleteDiagram, MainWin.UiMnGameInvertDiagram, MainWin.UiMnGameSwapDiagramComment);
 
                 foreach (var item in MainWin.UiMncModelGames.Items)
                 {
@@ -1378,7 +1380,8 @@ namespace ChessForge
                 else
                 {
                     ConfigureBookmarkMenuOptions(MainWin.UiMnExercMarkBookmark, MainWin.UiMnExercDeleteBookmark);
-                    ConfigureDiagramMenuOptions(MainWin.UiMnExerc_InsertDiagram, MainWin.UiMnExerc_DeleteDiagram, MainWin.UiMnExercInvertDiagram);
+                    ConfigureDiagramMenuOptions(MainWin.UiMnExercInsertDiagramPreComment, MainWin.UiMnExercInsertDiagramPostComment
+                        , MainWin.UiMnExerc_DeleteDiagram, MainWin.UiMnExercInvertDiagram, MainWin.UiMnExercSwapDiagramComment);
                 }
 
                 foreach (var item in MainWin.UiMncExercises.Items)
@@ -1391,11 +1394,11 @@ namespace ChessForge
                             case "UiMnExercExitSolving":
                                 menuItem.Visibility = AppState.IsUserSolving() ? Visibility.Visible : Visibility.Collapsed;
                                 break;
-                            case "_mnExerc_EditHeader":
+                            case "UiMnExercEditHeader":
                                 menuItem.IsEnabled = exerciseIndex >= 0;
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
-                            case "_mnExerc_EditPosition":
+                            case "UiMnExercEditPosition":
                                 menuItem.IsEnabled = exerciseIndex >= 0;
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
@@ -1403,25 +1406,22 @@ namespace ChessForge
                                 menuItem.IsEnabled = exerciseIndex >= 0 && WorkbookManager.SessionWorkbook.GetChapterCount() > 1;
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
-                            case "_mnExerc_StartTrainingFromHere":
+                            case "UiMnExercStartTrainingFromHere":
                                 menuItem.IsEnabled = exerciseIndex >= 0 && !isMate;
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
-                            case "_mnExerc_CreateExercise":
+                            case "UiMnExercCreateExercise":
                                 menuItem.IsEnabled = !isMate;
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
-                            case "_mnExerc_CopyFen":
-                                menuItem.IsEnabled = exerciseIndex >= 0 && ActiveVariationTree != null && isSolutionShown;
-                                break;
-                            case "_mnExerc_DeleteMovesFromHere":
+                            case "UiMnExercDeleteMovesFromHere":
                             case "UiMnExerc_EvalLine":
                             case "UiMnExerc_EvalMove":
                             case "UiMnExercDontSaveEvals":
                                 menuItem.IsEnabled = exerciseIndex >= 0 && selectedNodeId > 0 && isSolutionShown;
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
-                            case "_mnExerc_DeleteThisExercise":
+                            case "UiMnExercDeleteThisExercise":
                                 menuItem.IsEnabled = exerciseIndex >= 0;
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;
@@ -1442,9 +1442,8 @@ namespace ChessForge
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 SetMarkThumbnailMenuItemHeader(menuItem, selectedNode);
                                 break;
-                            case "UiMnExerc_InsertDiagram":
+                            case "UiMnExercInsertDiagramPostComment":
                                 // the call to ConfigureDiagramMenuOptions() may have set this item to visible
-
                                 if (menuItem.Visibility == Visibility.Visible)
                                 {
                                     menuItem.IsEnabled = exerciseIndex >= 0 && selectedNodeId > 0 && isSolutionShown;
@@ -1492,7 +1491,6 @@ namespace ChessForge
                             case "UiMnExerc_Separator_4":
                             case "UiMnExerc_Separator_5":
                             case "UiMnExerc_Separator_6":
-                            case "UiMnExerc_Separator_7":
                             case "UiMnExerc_Separator_8":
                             case "UiMnStudyExercSepar_EvalPos":
                             case "UiMnStudyExercSepar_EvalLine":
@@ -1546,7 +1544,9 @@ namespace ChessForge
 
                 if (AppState.ActiveContentType == GameData.ContentType.STUDY_TREE && WorkbookManager.ActiveTab == TabViewType.STUDY
                    || WorkbookManager.ActiveTab == TabViewType.MODEL_GAME
-                   || WorkbookManager.ActiveTab == TabViewType.EXERCISE && ActiveVariationTree != null && ActiveVariationTree.ShowTreeLines)
+                   || WorkbookManager.ActiveTab == TabViewType.EXERCISE 
+                      && ActiveVariationTree != null && ActiveVariationTree.ShowTreeLines
+                      && CurrentSolvingMode == VariationTree.SolvingMode.EDITING)
                 {
                     _mainWin.UiDgActiveLine.Visibility = Visibility.Visible;
                     _mainWin.UiLblScoresheet.Visibility = Visibility.Visible;
@@ -1985,26 +1985,37 @@ namespace ChessForge
         /// </summary>
         /// <param name="addBookmark"></param>
         /// <param name="deleteBookmark"></param>
-        private static void ConfigureDiagramMenuOptions(MenuItem insertDiagram, MenuItem removeDiagram, MenuItem invertDiagram)
+        private static void ConfigureDiagramMenuOptions(MenuItem insertDiagramPreComment, MenuItem insertDiagramPostComment
+                                    , MenuItem removeDiagram, MenuItem invertDiagram, MenuItem swapDiagramComment)
         {
             TreeNode nd = AppState.GetCurrentNode();
 
             if (nd == null)
             {
-                insertDiagram.Visibility = Visibility.Visible;
-                insertDiagram.IsEnabled = false;
+                insertDiagramPreComment.Visibility = Visibility.Visible;
+                insertDiagramPreComment.IsEnabled = false;
+
+                insertDiagramPostComment.Visibility = Visibility.Visible;
+                insertDiagramPostComment.IsEnabled = false;
 
                 removeDiagram.Visibility = Visibility.Collapsed;
+                swapDiagramComment.Visibility = Visibility.Collapsed;
                 invertDiagram.Visibility = Visibility.Collapsed;
             }
             else
             {
                 bool hasDiagram = nd.IsDiagram;
-                insertDiagram.Visibility = hasDiagram ? Visibility.Collapsed : Visibility.Visible;
-                insertDiagram.IsEnabled = !hasDiagram;
+                insertDiagramPreComment.Visibility = hasDiagram ? Visibility.Collapsed : Visibility.Visible;
+                insertDiagramPreComment.IsEnabled = !hasDiagram;
+
+                insertDiagramPostComment.Visibility = hasDiagram ? Visibility.Collapsed : Visibility.Visible;
+                insertDiagramPostComment.IsEnabled = !hasDiagram;
 
                 removeDiagram.Visibility = hasDiagram ? Visibility.Visible : Visibility.Collapsed;
                 removeDiagram.IsEnabled = hasDiagram;
+
+                swapDiagramComment.Visibility = hasDiagram ? Visibility.Visible : Visibility.Collapsed;
+                swapDiagramComment.IsEnabled = hasDiagram;
 
                 invertDiagram.Visibility = hasDiagram ? Visibility.Visible : Visibility.Collapsed;
                 invertDiagram.IsEnabled = hasDiagram;

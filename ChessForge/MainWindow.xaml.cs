@@ -2961,6 +2961,10 @@ namespace ChessForge
                     _studyTreeView.UpdateChapterTitle();
                 }
 
+                PreviousNextViewBars.SetChapterTitleLabel(UiStudyLblChapterTitle);
+                PreviousNextViewBars.SetChapterTitleLabel(UiGamesLblChapterTitle);
+                PreviousNextViewBars.SetChapterTitleLabel(UiExerciseLblChapterTitle);
+
                 AppState.IsDirty = true;
                 return true;
             }

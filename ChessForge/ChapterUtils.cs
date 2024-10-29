@@ -1091,7 +1091,7 @@ namespace ChessForge
                         trees.Add(game.Tree);
                     }
 
-                    VariationTree tree = TreeMerge.MergeVariationTreeList(trees, Configuration.AutogenTreeDepth, true);
+                    VariationTree tree = TreeMerge.MergeVariationTreeListEx(trees, Configuration.AutogenTreeDepth, true);
                     if (tree != null)
                     {
                         TreeUtils.TrimTree(ref tree, Configuration.AutogenTreeDepth, PieceColor.Black);

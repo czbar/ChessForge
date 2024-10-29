@@ -1811,6 +1811,10 @@ namespace ChessForge
                             _rtb.ScrollToEnd();
                             e.Handled = true;
                             break;
+                        case Key.G:
+                            AppState.MainWin.UiMnFindGames_Click(null, null);
+                            e.Handled = true;
+                            break;
                     }
                 }
                 catch

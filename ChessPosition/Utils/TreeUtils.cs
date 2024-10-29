@@ -3,12 +3,22 @@ using GameTree;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace ChessPosition
 {
     public class TreeUtils
     {
+        /// <summary>
+        /// Finds a node with a given FEN in a tree.
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <param name="fen"></param>
+        /// <returns></returns>
+        public static TreeNode FindTreeNodeByFen(VariationTree tree, string fen)
+        {
+            return tree.Nodes.Find(x => x.Fen == fen);
+        }
+
         /// <summary>
         /// Checks if the first passed node has the second node as its ancestor (at any lavel).
         /// </summary>
@@ -597,6 +607,10 @@ namespace ChessPosition
                     nd.Comment = attrs.Comment;
                     nd.CommentBeforeMove = attrs.CommentBeforeMove;
                     nd.Nags = attrs.Nags;
+                    nd.References = attrs.References;
+                    nd.IsDiagram = attrs.IsDiagram;
+                    nd.IsDiagramFlipped = attrs.IsDiagramFlipped;
+                    nd.IsDiagramPreComment = attrs.IsDiagramPreComment;
                 }
             }
         }
@@ -809,9 +823,14 @@ namespace ChessPosition
 
             foreach (TreeNode nd in tree.Nodes)
             {
-                if (!string.IsNullOrEmpty(nd.Comment) || !string.IsNullOrEmpty(nd.CommentBeforeMove) || !string.IsNullOrEmpty(nd.Nags))
+                if (!string.IsNullOrEmpty(nd.Comment) 
+                    || !string.IsNullOrEmpty(nd.CommentBeforeMove) 
+                    || !string.IsNullOrEmpty(nd.Nags)
+                    || !string.IsNullOrEmpty(nd.References)
+                    || nd.IsDiagram
+                    )
                 {
-                    lst.Add(new MoveAttributes(nd.NodeId, nd.Comment, nd.CommentBeforeMove, nd.Nags));
+                    lst.Add(new MoveAttributes(nd.NodeId, nd.Comment, nd.CommentBeforeMove, nd.Nags, nd.References, nd.IsDiagram, nd.IsDiagramFlipped, nd.IsDiagramPreComment));
                 }
             }
 

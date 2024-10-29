@@ -2261,13 +2261,25 @@ ConfirmDeleteExercise=Usunąć ćwiczenie
 # Header: CONTEXT MENU for Intro Tab and diagrams elsewhere
 #
 
-#description: Insert a diagram
+#description: Insert a diagram in Intro
 #english: InsertDiagram=Insert Diagram
 InsertDiagram=Wstaw Diagram
+
+#description: Insert a diagram after comment
+#english: InsertDiagramPreComment=Insert Diagram Before Comment
+InsertDiagramPreComment=Wstaw Diagram przed komentarzem
+
+#description: Insert a diagram after comment
+#english: InsertDiagramPostComment=Insert Diagram After Comment
+InsertDiagramPostComment=Wstaw Diagram po komentarzu
 
 #description: Remove the diagram
 #english: RemoveDiagram=Remove Diagram
 RemoveDiagram=Usuń Diagram
+
+#description: Swap Diagram and Content
+#english: SwapDiagramComment=Swap Diagram and Content
+SwapDiagramComment=Przestaw diagram z komentarzem 
 
 #description: Invert the diagram
 #english: InvertDiagram=Invert Diagram

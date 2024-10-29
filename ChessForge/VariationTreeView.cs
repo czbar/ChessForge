@@ -577,6 +577,7 @@ namespace ChessForge
                 _mainWin.SetActiveLine(nd.LineId, nd.NodeId);
                 BuildFlowDocumentForVariationTree();
                 _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, nd.LineId, _mainWin.ActiveLine.GetSelectedPlyNodeIndex(false), false);
+                PulseManager.BringSelectedRunIntoView();
                 AppState.IsDirty = true;
             }
             catch (Exception ex)
@@ -695,16 +696,41 @@ namespace ChessForge
         /// <summary>
         /// Toggles the diagram flag on the currently selected node.
         /// </summary>
-        public void ToggleDiagramFlag()
+        public void ToggleDiagramFlag(bool insertOrDelete, bool isPreOrPost)
         {
             try
             {
                 TreeNode nd = GetSelectedNode();
                 if (nd != null)
                 {
-                    nd.IsDiagram = !nd.IsDiagram;
+                    nd.IsDiagram = insertOrDelete;
+                    nd.IsDiagramPreComment = isPreOrPost;
 
                     EditOperation.EditType typ = nd.IsDiagram ? EditOperation.EditType.INSERT_DIAGRAM : EditOperation.EditType.DELETE_DIAGRAM;
+                    EditOperation op = new EditOperation(typ, nd);
+                    AppState.ActiveVariationTree?.OpsManager.PushOperation(op);
+                    AppState.IsDirty = true;
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// Swaps the position of the diagram versus the comment's text
+        /// (i.e. before the diagram or after)
+        /// </summary>
+        /// <param name="nd"></param>
+        public void SwapCommentWithDiagram(TreeNode nd)
+        {
+            try
+            {
+                if (nd != null)
+                {
+                    nd.IsDiagramPreComment = !nd.IsDiagramPreComment;
+
+                    EditOperation.EditType typ = EditOperation.EditType.SWAP_DIAGRAM_COMMENT;
                     EditOperation op = new EditOperation(typ, nd);
                     AppState.ActiveVariationTree?.OpsManager.PushOperation(op);
                     AppState.IsDirty = true;
@@ -1762,7 +1788,10 @@ namespace ChessForge
             diagram = false;
 
             // check if we must set includeNumber to true
-            if (!includeNumber && (inclComment && IsLastRunComment(para, nd) || !string.IsNullOrEmpty(nd.CommentBeforeMove)))
+            if (!includeNumber && (inclComment && IsLastRunComment(para, nd) 
+                                    || !string.IsNullOrEmpty(nd.CommentBeforeMove)
+                                    || (nd.Parent != null && nd.Parent.IsDiagram))
+                                    )
             {
                 includeNumber = true;
             }
@@ -1787,11 +1816,7 @@ namespace ChessForge
             {
                 // must use Insert... because cannot Add... before rMove is created.
                 InsertOrUpdateCommentBeforeMoveRun(nd, includeNumber);
-                AddCommentRunsToParagraph(nd, para, out bool isBlunder);
-                if (AddDiagramToParagraph(nd, para))
-                {
-                    diagram = true;
-                }
+                AddCommentRunsToParagraph(nd, para, out bool isBlunder, out diagram);
                 if (isBlunder)
                 {
                     TextUtils.RemoveBlunderNagFromText(rMove);
@@ -1852,7 +1877,7 @@ namespace ChessForge
             if (nd != null)
             {
                 Run r = AddRunToParagraph(nd, para, "", Brushes.White);
-                AddCommentRunsToParagraph(nd, para, out bool isBlunder);
+                AddCommentRunsToParagraph(nd, para, out bool isBlunder, out _);
                 if (isBlunder)
                 {
                     TextUtils.RemoveBlunderNagFromText(r);

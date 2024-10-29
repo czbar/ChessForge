@@ -65,6 +65,10 @@ namespace ChessForge
                 UiTbFirstMoveNumber.Visibility = Visibility.Visible;
                 UiLblFirstMoveNumber.Visibility = Visibility.Visible;
             }
+
+            UiTbWhite.Focus();
+            UiTbWhite.SelectAll();
+
         }
 
         /// <summary>

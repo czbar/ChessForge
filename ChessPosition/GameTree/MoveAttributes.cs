@@ -25,12 +25,20 @@ namespace GameTree
         /// <param name="nodeId"></param>
         /// <param name="comment"></param>
         /// <param name="nags"></param>
-        public MoveAttributes(int nodeId, string comment, string commentBeforeMove, string nags) 
+        /// <param name="references"></param>
+        /// <param name="isDiagram"></param>
+        /// <param name="isDiagramFlipped"></param>
+        /// <param name="isDiagramPreComment"></param>
+        public MoveAttributes(int nodeId, string comment, string commentBeforeMove, string nags, string references, bool isDiagram, bool isDiagramFlipped, bool isDiagramPreComment) 
         { 
             NodeId = nodeId;
             Comment = comment;
             CommentBeforeMove = commentBeforeMove;
             Nags = nags;
+            References = references;
+            IsDiagram = isDiagram;
+            IsDiagramFlipped = isDiagramFlipped;
+            IsDiagramPreComment = isDiagramPreComment;
         }
 
         /// <summary>
@@ -66,6 +74,27 @@ namespace GameTree
         /// Nags string.
         /// </summary>
         public string Nags;
+
+        /// <summary>
+        /// Refernces string
+        /// </summary>
+        public string References;
+
+        /// <summary>
+        /// The IsDiagram flag.
+        /// </summary>
+        public bool IsDiagram;
+
+        /// <summary>
+        /// The diagram flipped flag.
+        /// </summary>
+        public bool IsDiagramFlipped;
+
+        /// <summary>
+        /// If IsDiagram==true, whether the diagram
+        /// comes before the comment.
+        /// </summary>
+        public bool IsDiagramPreComment;
 
         /// <summary>
         /// Engine Evaluation.
