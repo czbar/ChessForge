@@ -1610,7 +1610,7 @@
     <value>Remove Diagram</value>
   </data>
   <data name="SwapDiagramComment" xml:space="preserve">
-    <value>Swap Diagram and Content</value>
+    <value>Swap Diagram and Comment</value>
   </data>
   <data name="InvertDiagram" xml:space="preserve">
     <value>Flip Diagram</value>
