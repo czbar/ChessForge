@@ -2111,11 +2111,7 @@ namespace ChessForge
                 {
                     string lineId = AppState.MainWin.ActiveVariationTree.SelectedLineId;
                     ActiveTreeView.SwapCommentWithDiagram(nd);
-                    AppState.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
-                    if (nd != null)
-                    {
-                        AppState.MainWin.ActiveTreeView.SelectLineAndMove(lineId, nd.NodeId);
-                    }
+                    ActiveTreeView.InsertOrUpdateCommentRun(nd);
                 }
             }
         }
@@ -2136,9 +2132,7 @@ namespace ChessForge
                     if (nd.IsDiagram)
                     {
                         nd.IsDiagramFlipped = !nd.IsDiagramFlipped;
-                        AppState.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
-                        AppState.MainWin.ActiveTreeView.SelectLineAndMove(lineId, nd.NodeId);
-
+                        ActiveTreeView.InsertOrUpdateCommentRun(nd);
                         AppState.IsDirty = true;
                     }
                 }
