@@ -965,7 +965,7 @@
     <value>Włącz dźwięk</value>
   </data>
   <data name="ParaForComment" xml:space="preserve">
-    <value>Akapit na komentarz</value>
+    <value>Nowy akapit dla komentarza</value>
   </data>
   <data name="ShowMovesAtFork" xml:space="preserve">
     <value>Tabelka przy rozgałęzieniu</value>

@@ -4066,7 +4066,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invert Diagram.
+        ///   Looks up a localized string similar to Flip Diagram.
         /// </summary>
         public static string InvertDiagram {
             get {
@@ -5525,7 +5525,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Paragraph for Comment.
+        ///   Looks up a localized string similar to Line break before comment.
         /// </summary>
         public static string ParaForComment {
             get {

@@ -1281,7 +1281,7 @@ UseFigurines=
 SoundOn=
 
 #description: Whether to place main line comments in a separate paragraph
-#english: ParaForComment=Paragraph for Comment
+#english: ParaForComment=Line break before comment
 ParaForComment=
 
 #description: Whether to show inline table with move options at a fork
@@ -2282,7 +2282,7 @@ RemoveDiagram=
 SwapDiagramComment=
 
 #description: Invert the diagram
-#english: InvertDiagram=Invert Diagram
+#english: InvertDiagram=Flip Diagram
 InvertDiagram=
 
 #description: Edit a diagram

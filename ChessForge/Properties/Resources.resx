@@ -965,7 +965,7 @@
     <value>Sound On</value>
   </data>
   <data name="ParaForComment" xml:space="preserve">
-    <value>Paragraph for Comment</value>
+    <value>Line break before comment</value>
   </data>
   <data name="ShowMovesAtFork" xml:space="preserve">
     <value>Show Moves at Fork</value>
@@ -1613,7 +1613,7 @@
     <value>Swap Diagram and Content</value>
   </data>
   <data name="InvertDiagram" xml:space="preserve">
-    <value>Invert Diagram</value>
+    <value>Flip Diagram</value>
   </data>
   <data name="EditDiagram" xml:space="preserve">
     <value>Edit Diagram</value>

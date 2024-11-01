@@ -1281,8 +1281,8 @@ UseFigurines=Używaj figurek
 SoundOn=Włącz dźwięk
 
 #description: Whether to place main line comments in a separate paragraph
-#english: ParaForComment=Paragraph for Comment
-ParaForComment=Akapit na komentarz
+#english: ParaForComment=Line break before comment
+ParaForComment=Nowy akapit dla komentarza
 
 #description: Whether to show inline table with move options at a fork
 #english: ShowMovesAtFork=Show Moves at Fork
@@ -2282,7 +2282,7 @@ RemoveDiagram=Usuń Diagram
 SwapDiagramComment=Przestaw diagram z komentarzem 
 
 #description: Invert the diagram
-#english: InvertDiagram=Invert Diagram
+#english: InvertDiagram=Flip Diagram
 InvertDiagram=Odwróć Diagram
 
 #description: Edit a diagram
