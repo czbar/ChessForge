@@ -777,12 +777,6 @@ namespace ChessForge
                         chapter.SetTitle(Properties.Resources.Chapter + " " + (chapter.Index + 1).ToString() + ": " + MoveUtils.BuildSingleMoveText(nd, true, true, newTree.MoveNumberOffset));
 
                         ChapterFromLineDialog dlg = new ChapterFromLineDialog(chapter);
-                        //{
-                        //    Left = _mainWin.ChessForgeMain.Left + 100,
-                        //    Top = _mainWin.ChessForgeMain.Top + 100,
-                        //    Topmost = false,
-                        //    Owner = _mainWin
-                        //};
                         GuiUtilities.PositionDialog(dlg, _mainWin, 100);
                         dlg.ShowDialog();
                         if (dlg.ExitOK)
