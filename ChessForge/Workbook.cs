@@ -436,7 +436,21 @@ namespace ChessForge
 
             for (int i = 0; i < _chapters.Count; i++)
             {
-                Chapters[i].StudyTree.Tree.RemoveArticleReferences(guid, ref nodes);
+                Chapter chapter = _chapters[i];
+                chapter.StudyTree.Tree.RemoveArticleReferences(guid, ref nodes);
+                foreach (Article game in chapter.ModelGames)
+                {
+                    game.Tree.RemoveArticleReferences(guid, ref nodes);
+                }
+                foreach (Article exercise in chapter.Exercises)
+                {
+                    exercise.Tree.RemoveArticleReferences(guid, ref nodes);
+                }
+            }
+
+            if (nodes.Count > 0)
+            {
+                AppState.MainWin.RebuildAllTreeViews();
             }
 
             return nodes;
