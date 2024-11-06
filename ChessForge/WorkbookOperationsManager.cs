@@ -144,7 +144,11 @@ namespace ChessForge
                         selectedArticleIndex = op.Chapter.AdjustActiveArticleIndex((op.OpData_1 as Article).ContentType);
                         break;
                     case WorkbookOperationType.DELETE_MODEL_GAME:
-                        WorkbookManager.SessionWorkbook.UndoDeleteModelGame(op.Chapter, op.Article, op.ArticleIndex);
+                        WorkbookManager.SessionWorkbook.UndoDeleteModelGame(op.Chapter, op.Article, op.ArticleIndex, op.OpData_1);
+                        if (op.OpData_1 is List<FullNodeId> gameNodeIds && gameNodeIds.Count > 0)
+                        {
+                            AppState.MainWin.RebuildAllTreeViews();
+                        }
                         selectedArticleIndex = op.ArticleIndex;
                         WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
                         break;
@@ -154,7 +158,11 @@ namespace ChessForge
                         WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
                         break;
                     case WorkbookOperationType.DELETE_EXERCISE:
-                        WorkbookManager.SessionWorkbook.UndoDeleteExercise(op.Chapter, op.Article, op.ArticleIndex);
+                        WorkbookManager.SessionWorkbook.UndoDeleteExercise(op.Chapter, op.Article, op.ArticleIndex, op.OpData_1);
+                        if (op.OpData_1 is List<FullNodeId> exercNodeIds && exercNodeIds.Count > 0)
+                        {
+                            AppState.MainWin.RebuildAllTreeViews();
+                        }
                         selectedArticleIndex = op.ArticleIndex;
                         WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
                         break;
