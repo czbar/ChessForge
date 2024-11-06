@@ -134,12 +134,6 @@ namespace ChessForge
                     if (reportErrors && !string.IsNullOrEmpty(error))
                     {
                         TextBoxDialog tbDlg = new TextBoxDialog(Properties.Resources.PgnErrors, error);
-                        //{
-                        //    Left = AppState.MainWin.ChessForgeMain.Left + 100,
-                        //    Top = AppState.MainWin.ChessForgeMain.Top + 100,
-                        //    Topmost = false,
-                        //    Owner = AppState.MainWin
-                        //};
                         GuiUtilities.PositionDialog(tbDlg, AppState.MainWin, 100);
                         tbDlg.ShowDialog();
                     }
