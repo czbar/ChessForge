@@ -3837,13 +3837,8 @@ namespace ChessForge
         {
             try
             {
-                PositionSetupDialog dlgPosSetup = new PositionSetupDialog(null)
-                {
-                    Left = ChessForgeMain.Left + 100,
-                    Top = ChessForgeMain.Top + 100,
-                    Topmost = false,
-                    Owner = this
-                };
+                PositionSetupDialog dlgPosSetup = new PositionSetupDialog(null);
+                GuiUtilities.PositionDialog(dlgPosSetup, AppState.MainWin, 100);
                 dlgPosSetup.ShowDialog();
 
                 if (dlgPosSetup.ExitOK)
@@ -3853,13 +3848,8 @@ namespace ChessForge
                     VariationTree tree = new VariationTree(GameData.ContentType.EXERCISE);
                     tree.CreateNew(pos);
 
-                    GameHeaderDialog dlgHeader = new GameHeaderDialog(tree, Properties.Resources.ResourceManager.GetString("ExerciseHeader"))
-                    {
-                        Left = ChessForgeMain.Left + 100,
-                        Top = ChessForgeMain.Top + 100,
-                        Topmost = false,
-                        Owner = this
-                    };
+                    GameHeaderDialog dlgHeader = new GameHeaderDialog(tree, Properties.Resources.ResourceManager.GetString("ExerciseHeader"));
+                    GuiUtilities.PositionDialog(dlgHeader, AppState.MainWin, 100);
 
                     dlgHeader.ShowDialog();
                     if (dlgHeader.ExitOK)
@@ -4011,6 +4001,7 @@ namespace ChessForge
                     WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.DELETE_MODEL_GAME, chapter, article, index);
                     chapter.ModelGames.RemoveAt(index);
                     List<FullNodeId> affectedNodes = WorkbookManager.RemoveArticleReferences(guid);
+                    op.OpData_1 = affectedNodes;
                     WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
                     AppState.IsDirty = true;
                 }
@@ -4038,6 +4029,7 @@ namespace ChessForge
                     chapter.Exercises.RemoveAt(index);
                     List<FullNodeId> affectedNodes = WorkbookManager.RemoveArticleReferences(guid);
                     WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
+                    op.OpData_1 = affectedNodes;
                     AppState.IsDirty = true;
                 }
             }
@@ -4057,12 +4049,6 @@ namespace ChessForge
 
                 VariationTree game = WorkbookManager.SessionWorkbook.ActiveChapter.ModelGames[chapter.ActiveModelGameIndex].Tree;
                 var dlg = new GameHeaderDialog(game, Properties.Resources.GameHeader);
-                //{
-                //    Left = ChessForgeMain.Left + 100,
-                //    Top = ChessForgeMain.Top + 100,
-                //    Topmost = false,
-                //    Owner = this
-                //};
                 GuiUtilities.PositionDialog(dlg, this, 100);
                 dlg.ShowDialog();
                 if (dlg.ExitOK)
@@ -4096,12 +4082,6 @@ namespace ChessForge
 
                 VariationTree game = WorkbookManager.SessionWorkbook.ActiveChapter.Exercises[chapter.ActiveExerciseIndex].Tree;
                 var dlg = new GameHeaderDialog(game, Properties.Resources.ExerciseHeader);
-                //{
-                //    Left = ChessForgeMain.Left + 100,
-                //    Top = ChessForgeMain.Top + 100,
-                //    Topmost = false,
-                //    Owner = this
-                //};
                 GuiUtilities.PositionDialog(dlg, this, 100);
                 dlg.ShowDialog();
                 if (dlg.ExitOK)
