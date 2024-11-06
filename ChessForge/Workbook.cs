@@ -957,12 +957,16 @@ namespace ChessForge
         /// <param name="chapter"></param>
         /// <param name="article"></param>
         /// <param name="index"></param>
-        public void UndoDeleteModelGame(Chapter chapter, Article article, int index)
+        public void UndoDeleteModelGame(Chapter chapter, Article article, int index, object nodeTreeIdList)
         {
             try
             {
                 chapter.InsertModelGame(article, index);
                 chapter.ActiveModelGameIndex = index;
+                if (nodeTreeIdList is List<FullNodeId> nodeTreeIds)
+                {
+                    RestoreReferences(article.Guid, nodeTreeIds);
+                }
             }
             catch
             {
@@ -999,12 +1003,16 @@ namespace ChessForge
         /// <param name="chapter"></param>
         /// <param name="article"></param>
         /// <param name="index"></param>
-        public void UndoDeleteExercise(Chapter chapter, Article article, int index)
+        public void UndoDeleteExercise(Chapter chapter, Article article, int index, object nodeTreeIdList)
         {
             try
             {
                 chapter.InsertExercise(article, index);
                 chapter.ActiveExerciseIndex = index;
+                if (nodeTreeIdList is List<FullNodeId> nodeTreeIds)
+                {
+                    RestoreReferences(article.Guid, nodeTreeIds);
+                }
             }
             catch
             {
@@ -1066,6 +1074,27 @@ namespace ChessForge
             }
             catch
             {
+            }
+        }
+
+        /// <summary>
+        /// Restore references to the passed guid in the nodes from the passed list.
+        /// </summary>
+        /// <param name="guidToRestore"></param>
+        /// <param name="nodeTreeIds"></param>
+        public void RestoreReferences(string guidToRestore, List<FullNodeId> nodeTreeIds)
+        {
+            foreach (FullNodeId fullId in nodeTreeIds)
+            {
+                var tree = GetTreeByTreeId(fullId.TreeId);
+                if (tree != null)
+                {
+                    TreeNode nd = tree.GetNodeFromNodeId(fullId.NodeId);
+                    if (nd != null)
+                    {
+                        nd.AddArticleReference(guidToRestore);
+                    }
+                }
             }
         }
 
