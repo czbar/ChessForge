@@ -1,10 +1,4 @@
 ﻿using GameTree;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static GameTree.EditOperation;
 
 namespace ChessForge
 {
@@ -134,13 +128,14 @@ namespace ChessForge
         /// <param name="articleIndex"></param>
         /// <param name="data1">List<Articles> list of Articles to undelete</param>
         /// <param name="data2">List<int> original indices of the deleted articles </param>
-        public WorkbookOperation(WorkbookOperationType tp, Chapter ch, int articleIndex, object data1, object data2) : base()
+        public WorkbookOperation(WorkbookOperationType tp, Chapter ch, int articleIndex, object data1, object data2, object data3) : base()
         {
             _opType = tp;
             _chapter = ch;
             _articleIndex = articleIndex;
             _opData_1 = data1;
             _opData_2 = data2;
+            _opData_3 = data3;
         }
 
         /// <summary>

@@ -42,6 +42,15 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Returns Operation's data.
+        /// </summary>
+        public object OpData_3
+        {
+            get { return _opData_3; }
+            set { _opData_3 = value; }
+        }
+
+        /// <summary>
         /// Operation's data
         /// </summary>
         protected object _opData_1;
@@ -50,6 +59,11 @@ namespace GameTree
         /// Operation's data
         /// </summary>
         protected object _opData_2;
+
+        /// <summary>
+        /// Operation's data
+        /// </summary>
+        protected object _opData_3;
 
         /// <summary>
         /// Sets the timestamp

@@ -1253,7 +1253,7 @@ namespace ChessForge
                     Chapters.Remove(chapter);
                 }
 
-                WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.DELETE_CHAPTERS, null, -1, chapters, indices);
+                WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.DELETE_CHAPTERS, null, -1, chapters, indices, null);
                 WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
                 AppState.ConfigureMenusForManualReview();
             }
@@ -1286,7 +1286,7 @@ namespace ChessForge
                 Chapters.Remove(ch);
             }
 
-            WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.MERGE_CHAPTERS, mergedChapter, -1, sourceChapters, indices);
+            WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.MERGE_CHAPTERS, mergedChapter, -1, sourceChapters, indices, null);
             WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
             AppState.ConfigureMenusForManualReview();
         }

@@ -127,7 +127,7 @@ namespace ChessForge
                         wot = WorkbookOperationType.DELETE_ARTICLES;
                         break;
                 }
-                WorkbookOperation op = new WorkbookOperation(wot, null, -1, deletedArticles, deletedIndices);
+                WorkbookOperation op = new WorkbookOperation(wot, null, -1, deletedArticles, deletedIndices, null);
                 WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
 
                 AppState.MainWin.ChaptersView.IsDirty = true;
