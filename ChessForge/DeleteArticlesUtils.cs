@@ -1,9 +1,7 @@
 ﻿using ChessPosition;
 using GameTree;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace ChessForge
 {
@@ -12,6 +10,60 @@ namespace ChessForge
     /// </summary>
     public class DeleteArticlesUtils
     {
+        /// <summary>
+        /// Deletes the Game at the requested index from the list of games.
+        /// </summary>
+        /// <param name="index"></param>
+        public static void DeleteModelGame(int index)
+        {
+            try
+            {
+                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                int gameCount = chapter.GetModelGameCount();
+                if (index >= 0 && index < gameCount)
+                {
+                    Article article = chapter.GetModelGameAtIndex(index);
+                    string guid = article.Tree.Header.GetGuid(out _);
+                    WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.DELETE_MODEL_GAME, chapter, article, index);
+                    chapter.ModelGames.RemoveAt(index);
+                    List<FullNodeId> affectedNodes = WorkbookManager.RemoveArticleReferences(guid);
+                    op.OpData_1 = affectedNodes;
+                    WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
+                    AppState.IsDirty = true;
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// Deletes the Exercise at the requested index from the list of games.
+        /// </summary>
+        /// <param name="index"></param>
+        public static void DeleteExercise(int index)
+        {
+            try
+            {
+                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                int exerciseCount = chapter.GetExerciseCount();
+                if (index >= 0 && index < exerciseCount)
+                {
+                    Article article = chapter.GetExerciseAtIndex(index);
+                    string guid = article.Tree.Header.GetGuid(out _);
+                    WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.DELETE_EXERCISE, chapter, article, index);
+                    chapter.Exercises.RemoveAt(index);
+                    List<FullNodeId> affectedNodes = WorkbookManager.RemoveArticleReferences(guid);
+                    WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
+                    op.OpData_1 = affectedNodes;
+                    AppState.IsDirty = true;
+                }
+            }
+            catch
+            {
+            }
+        }
+
         /// <summary>
         /// Deletes a list of articles of type MODEL_GAME or EXERCISE.
         /// Creates an Undo operation.

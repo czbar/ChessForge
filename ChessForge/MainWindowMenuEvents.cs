@@ -3905,7 +3905,7 @@ namespace ChessForge
                     string gameTitle = chapter.ModelGames[chapter.ActiveModelGameIndex].Tree.Header.BuildGameHeaderLine(true);
                     if (MessageBox.Show(Properties.Resources.ConfirmDeleteGame + "?\n\n  " + gameTitle, Properties.Resources.DeleteGame, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
-                        DeleteModelGame(chapter.ActiveModelGameIndex);
+                        DeleteArticlesUtils.DeleteModelGame(chapter.ActiveModelGameIndex);
 
                         int gameCount = chapter.GetModelGameCount();
                         if (chapter.GetModelGameCount() == 0)
@@ -3951,7 +3951,7 @@ namespace ChessForge
                     string exerciseTitle = chapter.Exercises[chapter.ActiveExerciseIndex].Tree.Header.BuildGameHeaderLine(true);
                     if (MessageBox.Show(Properties.Resources.ConfirmDeleteExercise + "?\n\n  " + exerciseTitle, Properties.Resources.DeleteExercise, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
-                        DeleteExercise(chapter.ActiveExerciseIndex);
+                        DeleteArticlesUtils.DeleteExercise(chapter.ActiveExerciseIndex);
 
                         int exerciseCount = chapter.GetExerciseCount();
                         if (exerciseCount == 0)
@@ -3981,60 +3981,6 @@ namespace ChessForge
             catch (Exception ex)
             {
                 AppLog.Message("DeleteExercise()", ex);
-            }
-        }
-
-        /// <summary>
-        /// Deletes the Game at the requested index from the list of games.
-        /// </summary>
-        /// <param name="index"></param>
-        private void DeleteModelGame(int index)
-        {
-            try
-            {
-                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                int gameCount = chapter.GetModelGameCount();
-                if (index >= 0 && index < gameCount)
-                {
-                    Article article = chapter.GetModelGameAtIndex(index);
-                    string guid = article.Tree.Header.GetGuid(out _);
-                    WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.DELETE_MODEL_GAME, chapter, article, index);
-                    chapter.ModelGames.RemoveAt(index);
-                    List<FullNodeId> affectedNodes = WorkbookManager.RemoveArticleReferences(guid);
-                    op.OpData_1 = affectedNodes;
-                    WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
-                    AppState.IsDirty = true;
-                }
-            }
-            catch
-            {
-            }
-        }
-
-        /// <summary>
-        /// Deletes the Exercise at the requested index from the list of games.
-        /// </summary>
-        /// <param name="index"></param>
-        private void DeleteExercise(int index)
-        {
-            try
-            {
-                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                int exerciseCount = chapter.GetExerciseCount();
-                if (index >= 0 && index < exerciseCount)
-                {
-                    Article article = chapter.GetExerciseAtIndex(index);
-                    string guid = article.Tree.Header.GetGuid(out _);
-                    WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.DELETE_EXERCISE, chapter, article, index);
-                    chapter.Exercises.RemoveAt(index);
-                    List<FullNodeId> affectedNodes = WorkbookManager.RemoveArticleReferences(guid);
-                    WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
-                    op.OpData_1 = affectedNodes;
-                    AppState.IsDirty = true;
-                }
-            }
-            catch
-            {
             }
         }
 
