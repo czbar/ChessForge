@@ -67,27 +67,23 @@ namespace ChessForge
         /// <summary>
         /// Deletes a list of articles of type MODEL_GAME or EXERCISE.
         /// Creates an Undo operation.
-        /// 
-        /// TODO: articleType is not needed here as DELETE_ARTICLES
-        /// provides a method for deletions and undo of both kinds
-        /// automatically. Same goes for Undo.
         /// </summary>
         /// <param name="articleList"></param>
         /// <param name="articleType"></param>
-        public static void DeleteArticles(ObservableCollection<ArticleListItem> articleList, GameData.ContentType articleType = GameData.ContentType.GENERIC)
+        public static void DeleteArticleListItems(ObservableCollection<ArticleListItem> articleList, GameData.ContentType articleType = GameData.ContentType.GENERIC)
         {
-            List<ArticleListItem> articlesToDelete = new List<ArticleListItem>();
-            foreach (ArticleListItem item in articleList)
-            {
-                if (item.IsSelected && item.Article != null)
-                {
-                    articlesToDelete.Add(item);
-                }
-            }
+            List<ArticleListItem> articlesToDelete = GetArticlesToDelete(articleList);
+            DeleteArticles(articlesToDelete, articleType);
+        }
 
-            // sort "normally" as in some scenarios the sorting would have been messed up (e.g. Remove Duplicates)
-            articlesToDelete.Sort(CompareArticlesNormal);
-
+        /// <summary>
+        /// Deletes a list of articles of type MODEL_GAME or EXERCISE.
+        /// Creates an Undo operation.
+        /// </summary>
+        /// <param name="articleList"></param>
+        /// <param name="articleType"></param>
+        public static void DeleteArticles(List<ArticleListItem> articlesToDelete, GameData.ContentType articleType = GameData.ContentType.GENERIC)
+        {
             List<int> indicesToDelete = new List<int>();
             foreach (ArticleListItem item in articlesToDelete)
             {
@@ -96,6 +92,7 @@ namespace ChessForge
 
             List<ArticleListItem> deletedArticles = new List<ArticleListItem>();
             List<int> deletedIndices = new List<int>();
+            List<List<FullNodeId>> refNodes = new List<List<FullNodeId>>();
             for (int i = 0; i < articlesToDelete.Count; i++)
             {
                 ArticleListItem item = articlesToDelete[i];
@@ -107,27 +104,15 @@ namespace ChessForge
                     {
                         deletedArticles.Add(item);
                         deletedIndices.Add(indicesToDelete[i]);
+                        refNodes.Add(WorkbookManager.RemoveArticleReferences(item.Article.Guid));
                     }
                 }
             }
 
             if (deletedArticles.Count > 0)
             {
-                WorkbookOperationType wot;
-
-                switch (articleType)
-                {
-                    case GameData.ContentType.MODEL_GAME:
-                        wot = WorkbookOperationType.DELETE_MODEL_GAMES;
-                        break;
-                    case GameData.ContentType.EXERCISE:
-                        wot = WorkbookOperationType.DELETE_EXERCISES;
-                        break;
-                    default:
-                        wot = WorkbookOperationType.DELETE_ARTICLES;
-                        break;
-                }
-                WorkbookOperation op = new WorkbookOperation(wot, null, -1, deletedArticles, deletedIndices, null);
+                WorkbookOperationType wot = GetDeleteOpType(articleType);
+                WorkbookOperation op = new WorkbookOperation(wot, null, -1, deletedArticles, deletedIndices, refNodes);
                 WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
 
                 AppState.MainWin.ChaptersView.IsDirty = true;
@@ -165,7 +150,7 @@ namespace ChessForge
         /// Overloaded method for deleting articles given a list of DuplicateListItem.
         /// </summary>
         /// <param name="dupeList"></param>
-        public static void DeleteArticles(ObservableCollection<DuplicateListItem> dupeList)
+        public static void DeleteDupeArticles(ObservableCollection<DuplicateListItem> dupeList)
         {
             ObservableCollection<ArticleListItem> articleList = new ObservableCollection<ArticleListItem>();
 
@@ -173,11 +158,58 @@ namespace ChessForge
             {
                 if (item.ArticleItem != null)
                 {
-                    articleList.Add(item.ArticleItem);  
+                    articleList.Add(item.ArticleItem);
                 }
             }
 
-            DeleteArticles(articleList);
+            DeleteArticleListItems(articleList);
+        }
+
+        /// <summary>
+        /// Build a "clean" list of articles to delete from the supplied list of ArticleListItems
+        /// </summary>
+        /// <param name="articleList"></param>
+        /// <returns></returns>
+        private static List<ArticleListItem> GetArticlesToDelete(ObservableCollection<ArticleListItem> articleList)
+        {
+            List<ArticleListItem> articlesToDelete = new List<ArticleListItem>();
+            foreach (ArticleListItem item in articleList)
+            {
+                if (item.IsSelected && item.Article != null)
+                {
+                    articlesToDelete.Add(item);
+                }
+            }
+
+            // sort "normally" as in some scenarios the sorting would have been messed up (e.g. Remove Duplicates)
+            articlesToDelete.Sort(CompareArticlesNormal);
+
+            return articlesToDelete;
+        }
+
+        /// <summary>
+        /// Converts content Type to Delete operation type.
+        /// </summary>
+        /// <param name="contentType"></param>
+        /// <returns></returns>
+        private static WorkbookOperationType GetDeleteOpType(GameData.ContentType contentType)
+        {
+            WorkbookOperationType wot;
+
+            switch (contentType)
+            {
+                case GameData.ContentType.MODEL_GAME:
+                    wot = WorkbookOperationType.DELETE_MODEL_GAMES;
+                    break;
+                case GameData.ContentType.EXERCISE:
+                    wot = WorkbookOperationType.DELETE_EXERCISES;
+                    break;
+                default:
+                    wot = WorkbookOperationType.DELETE_ARTICLES;
+                    break;
+            }
+
+            return wot;
         }
 
         /// <summary>
@@ -206,7 +238,7 @@ namespace ChessForge
             if (item1.ChapterIndex != item2.ChapterIndex)
             {
                 res = item1.ChapterIndex - item2.ChapterIndex;
-            } 
+            }
             else if (item1.ContentType == GameData.ContentType.MODEL_GAME && item2.ContentType != GameData.ContentType.MODEL_GAME)
             {
                 res = -1;
