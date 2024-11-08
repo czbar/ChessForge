@@ -152,11 +152,6 @@ namespace ChessForge
                         selectedArticleIndex = op.ArticleIndex;
                         WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
                         break;
-                    case WorkbookOperationType.DELETE_MODEL_GAMES:
-                        WorkbookManager.SessionWorkbook.UndoDeleteModelGames(op.OpData_1, op.OpData_2);
-                        selectedArticleIndex = op.ArticleIndex;
-                        WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
-                        break;
                     case WorkbookOperationType.DELETE_EXERCISE:
                         WorkbookManager.SessionWorkbook.UndoDeleteExercise(op.Chapter, op.Article, op.ArticleIndex, op.OpData_1);
                         if (op.OpData_1 is List<FullNodeId> exercNodeIds && exercNodeIds.Count > 0)
@@ -166,13 +161,10 @@ namespace ChessForge
                         selectedArticleIndex = op.ArticleIndex;
                         WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
                         break;
+                    case WorkbookOperationType.DELETE_MODEL_GAMES:
                     case WorkbookOperationType.DELETE_EXERCISES:
-                        WorkbookManager.SessionWorkbook.UndoDeleteExercises(op.OpData_1, op.OpData_2);
-                        selectedArticleIndex = op.ArticleIndex;
-                        WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
-                        break;
                     case WorkbookOperationType.DELETE_ARTICLES:
-                        WorkbookManager.SessionWorkbook.UndoDeleteArticles(op.OpData_1, op.OpData_2);
+                        WorkbookManager.SessionWorkbook.UndoDeleteArticles(op.OpData_1, op.OpData_2, op.OpData_3);
                         selectedArticleIndex = op.ArticleIndex;
                         WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
                         break;
