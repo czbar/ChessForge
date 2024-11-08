@@ -73,7 +73,7 @@ namespace ChessForge
             GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
             if (dlg.ShowDialog() == true)
             {
-                DeleteArticlesUtils.DeleteArticles(dlg.DuplicateList);
+                DeleteArticlesUtils.DeleteDupeArticles(dlg.DuplicateList);
                 AppState.MainWin.ChaptersView.IsDirty = true;
                 AppState.MainWin.UiTabChapters.Focus();
             }

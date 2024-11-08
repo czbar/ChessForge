@@ -397,7 +397,7 @@ namespace ChessForge
                 GuiUtilities.PositionDialog(dlg, this, 100);
                 if (dlg.ShowDialog() == true)
                 {
-                    DeleteArticlesUtils.DeleteArticles(articleList, articleType);
+                    DeleteArticlesUtils.DeleteArticleListItems(articleList, articleType);
                 }
             }
             catch { }
