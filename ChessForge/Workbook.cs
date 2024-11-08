@@ -974,30 +974,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Undo deletion of multiple model games
-        /// </summary>
-        /// <param name="objArticleList"></param>
-        /// <param name="objIndices"></param>
-        public void UndoDeleteModelGames(object objArticleList, object objIndexList)
-        {
-            try
-            {
-                List<ArticleListItem> articleList = objArticleList as List<ArticleListItem>;
-                List<int> indexList = objIndexList as List<int>;
-                // undo in the same order as supplied (undo is created with the same order as in the workbook) so the undo indices exist. 
-                for (int i = 0; i < articleList.Count; i++)
-                {
-                    Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(articleList[i].ChapterIndex);
-                    chapter.InsertModelGame(articleList[i].Article, indexList[i]);
-                    chapter.ActiveModelGameIndex = indexList[i];
-                }
-            }
-            catch
-            {
-            }
-        }
-
-        /// <summary>
         /// Undo deletion of a Model Game
         /// </summary>
         /// <param name="chapter"></param>
@@ -1020,42 +996,18 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Undo deletion of multiple exercises.
-        /// </summary>
-        /// <param name="chapter"></param>
-        /// <param name="index"></param>
-        /// <param name="objArticleList"></param>
-        /// <param name="objIndices"></param>
-        public void UndoDeleteExercises(object objArticleList, object objIndexList)
-        {
-            try
-            {
-                List<ArticleListItem> articleList = objArticleList as List<ArticleListItem>;
-                List<int> indexList = objIndexList as List<int>;
-                // undo in the same order as supplied (undo is created with the same order as in the workbook) so the undo indices exist. 
-                for (int i = 0; i < articleList.Count; i++)
-                {
-                    Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(articleList[i].ChapterIndex);
-                    chapter.InsertExercise(articleList[i].Article, indexList[i]);
-                    chapter.ActiveExerciseIndex = indexList[i];
-                }
-            }
-            catch
-            {
-            }
-        }
-
-        /// <summary>
         /// Undo deletion of multiple articles (games or exercises)
         /// </summary>
         /// <param name="objArticleList"></param>
         /// <param name="objIndices"></param>
-        public void UndoDeleteArticles(object objArticleList, object objIndexList)
+        public void UndoDeleteArticles(object objArticleList, object objIndexList, object objRefNodesList)
         {
             try
             {
                 List<ArticleListItem> articleList = objArticleList as List<ArticleListItem>;
                 List<int> indexList = objIndexList as List<int>;
+                List<List<FullNodeId>> refNodesList = objRefNodesList as List<List<FullNodeId>>;
+
                 // undo in the reverse order to how they were deleted
                 for (int i = articleList.Count - 1; i >= 0; i--)
                 {
@@ -1069,6 +1021,11 @@ namespace ChessForge
                     {
                         chapter.InsertExercise(articleList[i].Article, indexList[i]);
                         chapter.ActiveExerciseIndex = indexList[i];
+                    }
+
+                    if (refNodesList != null)
+                    {
+                        RestoreReferences(articleList[i].Article.Guid, refNodesList[i]);
                     }
                 }
             }
