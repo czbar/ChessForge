@@ -23,13 +23,9 @@ namespace ChessForge
                 if (index >= 0 && index < gameCount)
                 {
                     Article article = chapter.GetModelGameAtIndex(index);
-                    string guid = article.Tree.Header.GetGuid(out _);
-                    WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.DELETE_MODEL_GAME, chapter, article, index);
-                    chapter.ModelGames.RemoveAt(index);
-                    List<FullNodeId> affectedNodes = WorkbookManager.RemoveArticleReferences(guid);
-                    op.OpData_1 = affectedNodes;
-                    WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
-                    AppState.IsDirty = true;
+                    var itemList = new List<ArticleListItem>();
+                    itemList.Add(new ArticleListItem(chapter, chapter.Index, article, index));
+                    DeleteArticles(itemList, GameData.ContentType.MODEL_GAME);
                 }
             }
             catch
@@ -50,30 +46,14 @@ namespace ChessForge
                 if (index >= 0 && index < exerciseCount)
                 {
                     Article article = chapter.GetExerciseAtIndex(index);
-                    string guid = article.Tree.Header.GetGuid(out _);
-                    WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.DELETE_EXERCISE, chapter, article, index);
-                    chapter.Exercises.RemoveAt(index);
-                    List<FullNodeId> affectedNodes = WorkbookManager.RemoveArticleReferences(guid);
-                    WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
-                    op.OpData_1 = affectedNodes;
-                    AppState.IsDirty = true;
+                    var itemList = new List<ArticleListItem>();
+                    itemList.Add(new ArticleListItem(chapter, chapter.Index, article, index));
+                    DeleteArticles(itemList, GameData.ContentType.EXERCISE);
                 }
             }
             catch
             {
             }
-        }
-
-        /// <summary>
-        /// Deletes a list of articles of type MODEL_GAME or EXERCISE.
-        /// Creates an Undo operation.
-        /// </summary>
-        /// <param name="articleList"></param>
-        /// <param name="articleType"></param>
-        public static void DeleteArticleListItems(ObservableCollection<ArticleListItem> articleList, GameData.ContentType articleType = GameData.ContentType.GENERIC)
-        {
-            List<ArticleListItem> articlesToDelete = GetArticlesToDelete(articleList);
-            DeleteArticles(articlesToDelete, articleType);
         }
 
         /// <summary>
@@ -99,11 +79,15 @@ namespace ChessForge
                 Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(item.ChapterIndex);
                 if (chapter != null && item.Article != null)
                 {
+                    // NOTE: we only calculate the index here, after the previous item was deleted.
+                    // That way in the UNDO the games will be restored to their correct places 
+                    // as in the undo we insert them in the reverse order/
+                    int index = chapter.GetArticleIndex(item.Article);
                     bool res = chapter.DeleteArticle(item.Article);
                     if (res)
                     {
                         deletedArticles.Add(item);
-                        deletedIndices.Add(indicesToDelete[i]);
+                        deletedIndices.Add(index);
                         refNodes.Add(WorkbookManager.RemoveArticleReferences(item.Article.Guid));
                     }
                 }
@@ -115,35 +99,20 @@ namespace ChessForge
                 WorkbookOperation op = new WorkbookOperation(wot, null, -1, deletedArticles, deletedIndices, refNodes);
                 WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
 
-                AppState.MainWin.ChaptersView.IsDirty = true;
-                AppState.IsDirty = true;
-
-                if (AppState.ActiveVariationTree == null || AppState.CurrentEvaluationMode != EvaluationManager.Mode.CONTINUOUS)
-                {
-                    AppState.MainWin.StopEvaluation(true);
-                    AppState.MainWin.BoardCommentBox.ShowTabHints();
-                }
-
-                // don't call it earlier so that ShowTabHints() above doesn't overrite the announcement
-                AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(
-                    Properties.Resources.FlMsgItemsRemoved + " (" + deletedArticles.Count.ToString() + ")", CommentBox.HintType.INFO);
-
-                AppState.MainWin.ChaptersView.IsDirty = true;
-                if (AppState.ActiveTab == TabViewType.CHAPTERS)
-                {
-                    GuiUtilities.RefreshChaptersView(null);
-                    AppState.SetupGuiForCurrentStates();
-                    AppState.MainWin.UiTabChapters.Focus();
-                }
-                else if (AppState.ActiveTab == TabViewType.MODEL_GAME)
-                {
-                    ChapterUtils.UpdateModelGamesView(AppState.Workbook.ActiveChapter);
-                }
-                else if (AppState.ActiveTab == TabViewType.EXERCISE)
-                {
-                    ChapterUtils.UpdateExercisesView(AppState.Workbook.ActiveChapter);
-                }
+                PostArticleDeleteSetup(deletedArticles.Count);
             }
+        }
+
+        /// <summary>
+        /// Deletes a list of articles of type MODEL_GAME or EXERCISE.
+        /// Creates an Undo operation.
+        /// </summary>
+        /// <param name="articleList"></param>
+        /// <param name="articleType"></param>
+        public static void DeleteArticleListItems(ObservableCollection<ArticleListItem> articleList, GameData.ContentType articleType = GameData.ContentType.GENERIC)
+        {
+            List<ArticleListItem> articlesToDelete = GetArticlesToDelete(articleList);
+            DeleteArticles(articlesToDelete, articleType);
         }
 
         /// <summary>
@@ -163,6 +132,42 @@ namespace ChessForge
             }
 
             DeleteArticleListItems(articleList);
+        }
+
+        /// <summary>
+        /// Update the GUI appropriately after the deletion.
+        /// </summary>
+        /// <param name="deletedCount"></param>
+        private static void PostArticleDeleteSetup(int deletedCount)
+        {
+            AppState.MainWin.ChaptersView.IsDirty = true;
+            AppState.IsDirty = true;
+
+            if (AppState.ActiveVariationTree == null || AppState.CurrentEvaluationMode != EvaluationManager.Mode.CONTINUOUS)
+            {
+                AppState.MainWin.StopEvaluation(true);
+                AppState.MainWin.BoardCommentBox.ShowTabHints();
+            }
+
+            // don't call it earlier so that ShowTabHints() above doesn't overrite the announcement
+            AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(
+                Properties.Resources.FlMsgItemsRemoved + " (" + deletedCount.ToString() + ")", CommentBox.HintType.INFO);
+
+            AppState.MainWin.ChaptersView.IsDirty = true;
+            if (AppState.ActiveTab == TabViewType.CHAPTERS)
+            {
+                GuiUtilities.RefreshChaptersView(null);
+                AppState.SetupGuiForCurrentStates();
+                AppState.MainWin.UiTabChapters.Focus();
+            }
+            else if (AppState.ActiveTab == TabViewType.MODEL_GAME)
+            {
+                ChapterUtils.UpdateModelGamesView(AppState.Workbook.ActiveChapter);
+            }
+            else if (AppState.ActiveTab == TabViewType.EXERCISE)
+            {
+                ChapterUtils.UpdateExercisesView(AppState.Workbook.ActiveChapter);
+            }
         }
 
         /// <summary>
