@@ -628,20 +628,16 @@ namespace ChessForge
                                         SelectModelGame(selectedArticleIndex, true);
                                     }
                                     break;
-                                case WorkbookOperationType.DELETE_MODEL_GAME:
                                 case WorkbookOperationType.DELETE_MODEL_GAMES:
+                                case WorkbookOperationType.DELETE_EXERCISES:
                                 case WorkbookOperationType.DELETE_ARTICLES:
+                                    break;
                                 case WorkbookOperationType.DELETE_CHAPTERS:
                                 case WorkbookOperationType.MERGE_CHAPTERS:
                                 case WorkbookOperationType.SPLIT_CHAPTER:
                                     AppState.MainWin.ChaptersView.IsDirty = true;
                                     GuiUtilities.RefreshChaptersView(null);
                                     AppState.MainWin.UiTabChapters.Focus();
-                                    break;
-                                case WorkbookOperationType.DELETE_EXERCISE:
-                                case WorkbookOperationType.DELETE_EXERCISES:
-                                    _chaptersView.BuildFlowDocumentForChaptersView();
-                                    SelectExercise(selectedArticleIndex, AppState.ActiveTab != TabViewType.CHAPTERS);
                                     break;
                                 case WorkbookOperationType.COPY_ARTICLES:
                                 case WorkbookOperationType.INSERT_ARTICLES:
@@ -3906,29 +3902,6 @@ namespace ChessForge
                     if (MessageBox.Show(Properties.Resources.ConfirmDeleteGame + "?\n\n  " + gameTitle, Properties.Resources.DeleteGame, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
                         DeleteArticlesUtils.DeleteModelGame(chapter.ActiveModelGameIndex);
-
-                        int gameCount = chapter.GetModelGameCount();
-                        if (chapter.GetModelGameCount() == 0)
-                        {
-                            chapter.ActiveModelGameIndex = -1;
-                            DisplayPosition(PositionUtils.SetupStartingPosition());
-                        }
-                        else if (chapter.ActiveModelGameIndex >= gameCount - 1)
-                        {
-                            chapter.ActiveModelGameIndex = gameCount - 1;
-                        }
-
-                        _chaptersView.RebuildChapterParagraph(WorkbookManager.SessionWorkbook.ActiveChapter);
-                        if (WorkbookManager.ActiveTab == TabViewType.MODEL_GAME)
-                        {
-                            SelectModelGame(chapter.ActiveModelGameIndex, false);
-                        }
-                        AppState.SetupGuiForCurrentStates();
-                        if (ActiveVariationTree == null || AppState.CurrentEvaluationMode != EvaluationManager.Mode.CONTINUOUS)
-                        {
-                            StopEvaluation(true);
-                            BoardCommentBox.ShowTabHints();
-                        }
                     }
                 }
             }
@@ -3952,29 +3925,6 @@ namespace ChessForge
                     if (MessageBox.Show(Properties.Resources.ConfirmDeleteExercise + "?\n\n  " + exerciseTitle, Properties.Resources.DeleteExercise, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
                         DeleteArticlesUtils.DeleteExercise(chapter.ActiveExerciseIndex);
-
-                        int exerciseCount = chapter.GetExerciseCount();
-                        if (exerciseCount == 0)
-                        {
-                            chapter.ActiveExerciseIndex = -1;
-                            DisplayPosition(PositionUtils.SetupStartingPosition());
-                        }
-                        else if (chapter.ActiveExerciseIndex >= exerciseCount - 1)
-                        {
-                            chapter.ActiveExerciseIndex = exerciseCount - 1;
-                        }
-
-                        _chaptersView.RebuildChapterParagraph(WorkbookManager.SessionWorkbook.ActiveChapter);
-                        AppState.SetupGuiForCurrentStates();
-                        if (WorkbookManager.ActiveTab == TabViewType.EXERCISE)
-                        {
-                            SelectExercise(chapter.ActiveExerciseIndex, false);
-                        }
-                    }
-                    if (ActiveVariationTree == null || AppState.CurrentEvaluationMode != EvaluationManager.Mode.CONTINUOUS)
-                    {
-                        StopEvaluation(true);
-                        BoardCommentBox.ShowTabHints();
                     }
                 }
             }
