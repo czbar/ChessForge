@@ -239,7 +239,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Parsers the text set in the pgn text box and sets the Date Picker accordingly.
+        /// Parses the text set in the pgn text box and sets the Date Picker accordingly.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -300,7 +300,24 @@ namespace ChessForge
         {
             UiTbPgnDate.Text = TextUtils.BuildPgnDateString(UiDatePicker.SelectedDate, UiCbIgnoreMonthDay.IsChecked == true, UiCbIgnoreDay.IsChecked == true);
             DateTime? dt = TextUtils.GetDateFromPgnString(UiTbPgnDate.Text);
-            UiDatePicker.SelectedDate = dt;
+
+            int year = dt.Value.Year;
+            int month = dt.Value.Month;
+            int day = dt.Value.Day;
+
+            if (UiCbIgnoreMonthDay.IsChecked == true)
+            {
+                // if month got "ignored", preserve it
+                month = UiDatePicker.SelectedDate.Value.Month;
+                day = UiDatePicker.SelectedDate.Value.Day;
+            }
+            else if (UiCbIgnoreDay.IsChecked == true)
+            {
+                // if day got "ignored" day, preserve it
+                day = UiDatePicker.SelectedDate.Value.Day;
+            }
+
+            UiDatePicker.SelectedDate = new DateTime(year, month, day);
         }
 
         /// <summary>
