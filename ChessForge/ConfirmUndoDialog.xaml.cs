@@ -131,8 +131,6 @@ namespace ChessForge
                             }
                         }
                         break;
-                    case WorkbookOperationType.DELETE_MODEL_GAME:
-                    case WorkbookOperationType.DELETE_EXERCISE:
                     case WorkbookOperationType.EDIT_MODEL_GAME_HEADER:
                     case WorkbookOperationType.EDIT_EXERCISE_HEADER:
                     case WorkbookOperationType.CREATE_ARTICLE:
@@ -173,9 +171,7 @@ namespace ChessForge
             _dictOpTypeToTitle[WorkbookOperationType.CREATE_CHAPTER] = Properties.Resources.OpCreateChapter;
             _dictOpTypeToTitle[WorkbookOperationType.RENAME_CHAPTER] = Properties.Resources.OpCreateArticle;
             _dictOpTypeToTitle[WorkbookOperationType.CREATE_ARTICLE] = Properties.Resources.OpCreateArticle;
-            _dictOpTypeToTitle[WorkbookOperationType.DELETE_MODEL_GAME] = Properties.Resources.OpDeleteGame;
             _dictOpTypeToTitle[WorkbookOperationType.DELETE_MODEL_GAMES] = Properties.Resources.OpDeleteGames;
-            _dictOpTypeToTitle[WorkbookOperationType.DELETE_EXERCISE] = Properties.Resources.OpDeleteExercise;
             _dictOpTypeToTitle[WorkbookOperationType.DELETE_EXERCISES] = Properties.Resources.OpDeleteExercises;
             _dictOpTypeToTitle[WorkbookOperationType.DELETE_ARTICLES] = Properties.Resources.OpDeleteArticles;
             _dictOpTypeToTitle[WorkbookOperationType.EDIT_MODEL_GAME_HEADER] = Properties.Resources.OpEditGameHeader;
