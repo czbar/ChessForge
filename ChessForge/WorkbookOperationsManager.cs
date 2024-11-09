@@ -143,30 +143,12 @@ namespace ChessForge
                         WorkbookManager.SessionWorkbook.UndoCreateArticle(op.Chapter, op.OpData_1 as Article);
                         selectedArticleIndex = op.Chapter.AdjustActiveArticleIndex((op.OpData_1 as Article).ContentType);
                         break;
-                    case WorkbookOperationType.DELETE_MODEL_GAME:
-                        WorkbookManager.SessionWorkbook.UndoDeleteModelGame(op.Chapter, op.Article, op.ArticleIndex, op.OpData_1);
-                        if (op.OpData_1 is List<FullNodeId> gameNodeIds && gameNodeIds.Count > 0)
-                        {
-                            AppState.MainWin.RebuildAllTreeViews();
-                        }
-                        selectedArticleIndex = op.ArticleIndex;
-                        WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
-                        break;
-                    case WorkbookOperationType.DELETE_EXERCISE:
-                        WorkbookManager.SessionWorkbook.UndoDeleteExercise(op.Chapter, op.Article, op.ArticleIndex, op.OpData_1);
-                        if (op.OpData_1 is List<FullNodeId> exercNodeIds && exercNodeIds.Count > 0)
-                        {
-                            AppState.MainWin.RebuildAllTreeViews();
-                        }
-                        selectedArticleIndex = op.ArticleIndex;
-                        WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
-                        break;
                     case WorkbookOperationType.DELETE_MODEL_GAMES:
                     case WorkbookOperationType.DELETE_EXERCISES:
                     case WorkbookOperationType.DELETE_ARTICLES:
                         WorkbookManager.SessionWorkbook.UndoDeleteArticles(op.OpData_1, op.OpData_2, op.OpData_3);
-                        selectedArticleIndex = op.ArticleIndex;
-                        WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
+                        SetActiveArticlePostArticlesUndelete(op.OpData_1);
+                        AppState.MainWin.RebuildAllTreeViews();
                         break;
                     case WorkbookOperationType.COPY_ARTICLES:
                         ChapterUtils.UndoCopyArticles(op.Chapter, op.OpData_1);
@@ -201,6 +183,52 @@ namespace ChessForge
             AppState.SetupGuiForCurrentStates();
 
             return done;
+        }
+
+        /// <summary>
+        /// After undelete, set the active article index for chapters into which
+        /// we were inserting.
+        /// In particular if there was just one item, it is the one we want to set.
+        /// </summary>
+        /// <param name="objArticleList"></param>
+        private void SetActiveArticlePostArticlesUndelete(object objArticleList)
+        {
+            try
+            {
+                if (objArticleList is List<ArticleListItem> lstItems && lstItems.Count > 0)
+                {
+                    int articleIndex = -1;
+                    int chapterIndex = -1;
+
+                    Chapter activeChapter = AppState.ActiveChapter;
+                    foreach (var item in lstItems)
+                    {
+                        AppState.Workbook.GetArticleByGuid(item.Article.Guid, out chapterIndex, out articleIndex);
+                        if (chapterIndex >= 0 && articleIndex >= 0)
+                        {
+                            if (item.Article.ContentType == GameData.ContentType.MODEL_GAME)
+                            {
+                                AppState.Workbook.Chapters[chapterIndex].ActiveModelGameIndex = articleIndex;
+                                if (AppState.Workbook.Chapters[chapterIndex] == activeChapter)
+                                {
+                                    AppState.Workbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.MODEL_GAME, articleIndex);
+                                }
+                            }
+                            else if (item.Article.ContentType == GameData.ContentType.EXERCISE)
+                            {
+                                AppState.Workbook.Chapters[chapterIndex].ActiveExerciseIndex = articleIndex;
+                                if (AppState.Workbook.Chapters[chapterIndex] == activeChapter)
+                                {
+                                    AppState.Workbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.EXERCISE, articleIndex);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch
+            {
+            }
         }
 
     }
