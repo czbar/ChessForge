@@ -1442,7 +1442,7 @@
     <value>Ruchy z Podręcznika to</value>
   </data>
   <data name="TrnGameResponse" xml:space="preserve">
-    <value>Opowiedź z Partii</value>
+    <value>Odpowiedź z Partii</value>
   </data>
   <data name="TrnGameMoveNotInSource" xml:space="preserve">
     <value>Tego ruchu nie ma w Partii</value>
@@ -1454,7 +1454,7 @@
     <value>Ruchy w Partii to</value>
   </data>
   <data name="TrnExerciseResponse" xml:space="preserve">
-    <value>Opowiedź z Ćwiczenia</value>
+    <value>Odpowiedź z Ćwiczenia</value>
   </data>
   <data name="TrnExerciseMoveNotInSource" xml:space="preserve">
     <value>Tego ruchu nie ma w Ćwiczeniu</value>

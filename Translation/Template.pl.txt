@@ -2039,7 +2039,7 @@ TrnStudySourceMoves=Ruchy z Podręcznika to
 
 #description: Response 
 #english: TrnGameResponse=Response from the Game
-TrnGameResponse=Opowiedź z Partii
+TrnGameResponse=Odpowiedź z Partii
 
 #description: Not in the source 
 #english: TrnGameMoveNotInSource=This is not in the Game
@@ -2058,7 +2058,7 @@ TrnGameSourceMoves=Ruchy w Partii to
 
 #description: Response 
 #english: TrnExerciseResponse=Response from the Exercise
-TrnExerciseResponse=Opowiedź z Ćwiczenia
+TrnExerciseResponse=Odpowiedź z Ćwiczenia
 
 #description: Not in the source 
 #english: TrnExerciseMoveNotInSource=This is not in the Exercise
