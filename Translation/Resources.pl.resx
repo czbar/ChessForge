@@ -184,7 +184,7 @@
     <value>Teoria</value>
   </data>
   <data name="VariationIndex" xml:space="preserve">
-    <value>Wykaz Wariantów</value>
+    <value>Indeks Wariantów</value>
   </data>
   <data name="Game" xml:space="preserve">
     <value>Partia</value>
@@ -902,10 +902,10 @@
     <value>Spis Treści</value>
   </data>
   <data name="GameIndex" xml:space="preserve">
-    <value>Wykaz Partii</value>
+    <value>Indeks Partii</value>
   </data>
   <data name="ExerciseIndex" xml:space="preserve">
-    <value>Wykaz Ćwiczeń</value>
+    <value>Indeks Ćwiczeń</value>
   </data>
   <data name="WorkbookItems" xml:space="preserve">
     <value>Elementy Podręcznika</value>
@@ -2147,13 +2147,13 @@
     <value>Wybierz elementy do utworzenia nowego Podręcznika:</value>
   </data>
   <data name="SelectItemsToMove" xml:space="preserve">
-    <value>Wybierz Pozycje do Przeniesienia</value>
+    <value>Wybierz Obiekty do Przeniesienia</value>
   </data>
   <data name="SelectItemsToCopy" xml:space="preserve">
-    <value>Wybierz Pozycje do Skopiowania</value>
+    <value>Wybierz Obiekty do Skopiowania</value>
   </data>
   <data name="SelectItemsToCopyOrMove" xml:space="preserve">
-    <value>Wybierz Pozycje do Skopiowania lub Przeniesienia</value>
+    <value>Wybierz Obiekty do Skopiowania lub Przeniesienia</value>
   </data>
   <data name="SelectGames" xml:space="preserve">
     <value>Wybierz Partie</value>
@@ -2180,7 +2180,7 @@
     <value>Liczba partii</value>
   </data>
   <data name="QuizPoints" xml:space="preserve">
-    <value>Punktacja do Quizu</value>
+    <value>Quiz</value>
   </data>
   <data name="LostQuizPoints" xml:space="preserve">
     <value>Punkty stracone</value>

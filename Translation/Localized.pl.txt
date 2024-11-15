@@ -107,7 +107,7 @@ Studies=Teoria
 
 #description: Variation Index
 #english: VariationIndex=Variation Index
-VariationIndex=Wykaz Wariantów
+VariationIndex=Indeks Wariantów
 
 #description: Game
 #english: Game=Game
@@ -1182,11 +1182,11 @@ Contents=Spis Treści
 
 #description: Game Index
 #english: GameIndex=Game Index
-GameIndex=Wykaz Partii
+GameIndex=Indeks Partii
 
 #description: Exercise Index
 #english: ExerciseIndex=Exercise Index
-ExerciseIndex=Wykaz Ćwiczeń
+ExerciseIndex=Indeks Ćwiczeń
 
 #description: Workbook items
 #english: WorkbookItems=Workbook Items
@@ -3078,15 +3078,15 @@ SelectItemsforWorkbook=Wybierz elementy do utworzenia nowego Podręcznika:
 
 #description: Select items to move
 #english: SelectItemsToMove=Select Items to Move
-SelectItemsToMove=Wybierz Pozycje do Przeniesienia
+SelectItemsToMove=Wybierz Obiekty do Przeniesienia
 
 #description: Select items to copy
 #english: SelectItemsToCopy=Select Items to Copy
-SelectItemsToCopy=Wybierz Pozycje do Skopiowania
+SelectItemsToCopy=Wybierz Obiekty do Skopiowania
 
 #description: Select items to copy or move
 #english: SelectItemsToCopyOrMove=Select Items to Copy or Move
-SelectItemsToCopyOrMove=Wybierz Pozycje do Skopiowania lub Przeniesienia
+SelectItemsToCopyOrMove=Wybierz Obiekty do Skopiowania lub Przeniesienia
 
 #description: Select Games
 #english: SelectGames=Select Games
@@ -3122,7 +3122,7 @@ NumberOfGames=Liczba partii
 
 #description: Quiz points
 #english: QuizPoints=Quiz points
-QuizPoints=Punktacja do Quizu
+QuizPoints=Quiz
 
 #description: Lost quiz points
 #english: LostQuizPoints=Lost quiz points
