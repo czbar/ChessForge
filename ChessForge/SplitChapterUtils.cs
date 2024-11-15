@@ -88,10 +88,10 @@ namespace ChessForge
         /// <returns></returns>
         public static int CompareRoundNo(string sRoundNo1, string sRoundNo2)
         {
-            int res;
+            double res;
 
-            bool isInt1 = int.TryParse(sRoundNo1, out int intRoundNo1);
-            bool isInt2 = int.TryParse(sRoundNo2, out int intRoundNo2);
+            bool isInt1 = double.TryParse(sRoundNo1, out double intRoundNo1);
+            bool isInt2 = double.TryParse(sRoundNo2, out double intRoundNo2);
 
             if (isInt1 && isInt2)
             {
@@ -106,7 +106,17 @@ namespace ChessForge
                 res = isInt1 ? -1 : 1;
             }
 
-            return res;
+            int intRes = 0;
+            if (res > 0)
+            {
+                return 1;
+            }
+            else if (res < 0)
+            {
+                return -1;
+            }
+
+            return intRes;
         }
 
 

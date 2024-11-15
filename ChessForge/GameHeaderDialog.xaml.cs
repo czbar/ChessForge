@@ -144,9 +144,9 @@ namespace ChessForge
 
             _tree.Header.SetHeaderValue(PgnHeaders.KEY_DATE, TextUtils.AdjustPgnDateString(UiTbPgnDate.Text, out _, out _));
 
-            if (int.TryParse(UiTbRound.Text, out int round))
+            if (double.TryParse(UiTbRound.Text, out double round))
             {
-                _tree.Header.SetHeaderValue(PgnHeaders.KEY_ROUND, round.ToString());
+                _tree.Header.SetHeaderValue(PgnHeaders.KEY_ROUND, round.ToString("0.#####"));
             }
             else
             {
