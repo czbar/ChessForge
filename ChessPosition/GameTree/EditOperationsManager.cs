@@ -92,7 +92,10 @@ namespace GameTree
                         break;
                     case EditOperation.EditType.MARK_THUMBNAIL:
                         _owningTree.UndoMarkThumbnail(op.OpData_1, op.OpData_2);
-                        selectedNodeId = op.Node.NodeId;
+                        if (op.OpData_1 is TreeNode tnNode)
+                        {
+                            selectedNodeId = tnNode.NodeId;
+                        }
                         break;
                 }
             }
