@@ -3940,6 +3940,10 @@ OpDeleteExercises=
 OpDeleteArticles=
 
 #description: Operation
+#english: OpRegenerateStudies=Regenerate Studies
+OpRegenerateStudies=
+
+#description: Operation
 #english: OpEditGameHeader=Edit Game Header 
 OpEditGameHeader=
 

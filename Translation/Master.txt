@@ -3064,6 +3064,9 @@ OpDeleteExercises=Delete Exercises
 OpDeleteArticles=Delete Games/Exercises
 
 #Operation
+OpRegenerateStudies=Regenerate Studies
+
+#Operation
 OpEditGameHeader=Edit Game Header 
 
 #Operation

@@ -2747,6 +2747,9 @@
   <data name="OpDeleteArticles" xml:space="preserve">
     <value>Delete Games/Exercises</value>
   </data>
+  <data name="OpRegenerateStudies" xml:space="preserve">
+    <value>Regenerate Studies</value>
+  </data>
   <data name="OpEditGameHeader" xml:space="preserve">
     <value>Edit Game Header </value>
   </data>

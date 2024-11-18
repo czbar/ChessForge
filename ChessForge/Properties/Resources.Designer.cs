@@ -5462,6 +5462,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Regenerate Studies.
+        /// </summary>
+        public static string OpRegenerateStudies {
+            get {
+                return ResourceManager.GetString("OpRegenerateStudies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rename Chapter.
         /// </summary>
         public static string OpRenameChapter {
@@ -7010,7 +7019,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Swap Diagram and Content.
+        ///   Looks up a localized string similar to Swap Diagram and Comment.
         /// </summary>
         public static string SwapDiagramComment {
             get {

@@ -2746,6 +2746,9 @@
   <data name="OpDeleteArticles" xml:space="preserve">
     <value>Usuń Partie/Ćwiczenia</value>
   </data>
+  <data name="OpRegenerateStudies" xml:space="preserve">
+    <value>Generowanie Teorii</value>
+  </data>
   <data name="OpEditGameHeader" xml:space="preserve">
     <value>Zmień Nagłówek Partii </value>
   </data>

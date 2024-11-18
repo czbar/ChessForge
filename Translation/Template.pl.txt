@@ -3940,6 +3940,10 @@ OpDeleteExercises=Usuń Ćwiczenia
 OpDeleteArticles=Usuń Partie/Ćwiczenia
 
 #description: Operation
+#english: OpRegenerateStudies=Regenerate Studies
+OpRegenerateStudies=Generowanie Teorii
+
+#description: Operation
 #english: OpEditGameHeader=Edit Game Header 
 OpEditGameHeader=Zmień Nagłówek Partii 
 
