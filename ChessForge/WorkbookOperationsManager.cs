@@ -150,6 +150,11 @@ namespace ChessForge
                         SetActiveArticlePostArticlesUndelete(op.OpData_1);
                         AppState.MainWin.RebuildAllTreeViews();
                         break;
+                    case WorkbookOperationType.REGENERATE_STUDIES:
+                        WorkbookManager.SessionWorkbook.UndoRegenerateStudies(op.OpData_1, op.OpData_2);
+                        AppState.MainWin.StudyTreeView.BuildFlowDocumentForVariationTree();
+                        AppState.MainWin.UiTabStudyTree.Focus();
+                        break;
                     case WorkbookOperationType.COPY_ARTICLES:
                         ChapterUtils.UndoCopyArticles(op.Chapter, op.OpData_1);
                         break;
