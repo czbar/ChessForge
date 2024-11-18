@@ -122,12 +122,13 @@ namespace ChessForge
                         break;
                     case WorkbookOperationType.DELETE_CHAPTERS:
                     case WorkbookOperationType.MERGE_CHAPTERS:
+                    case WorkbookOperationType.REGENERATE_STUDIES:
                         UiTbDetails.TextWrapping = TextWrapping.NoWrap;
                         if (_operation.OpData_1 is List<Chapter> chapters)
                         {
                             foreach (Chapter chapter in chapters)
                             {
-                                sb.Append(chapter.Title + '\n');
+                                sb.Append(Properties.Resources.Chapter + ": " + chapter.Title + '\n');
                             }
                         }
                         break;
@@ -174,6 +175,7 @@ namespace ChessForge
             _dictOpTypeToTitle[WorkbookOperationType.DELETE_MODEL_GAMES] = Properties.Resources.OpDeleteGames;
             _dictOpTypeToTitle[WorkbookOperationType.DELETE_EXERCISES] = Properties.Resources.OpDeleteExercises;
             _dictOpTypeToTitle[WorkbookOperationType.DELETE_ARTICLES] = Properties.Resources.OpDeleteArticles;
+            _dictOpTypeToTitle[WorkbookOperationType.REGENERATE_STUDIES] = Properties.Resources.OpRegenerateStudies;
             _dictOpTypeToTitle[WorkbookOperationType.EDIT_MODEL_GAME_HEADER] = Properties.Resources.OpEditGameHeader;
             _dictOpTypeToTitle[WorkbookOperationType.EDIT_EXERCISE_HEADER] = Properties.Resources.OpEditExerciseHeader;
             _dictOpTypeToTitle[WorkbookOperationType.MOVE_ARTICLES_MULTI_CHAPTER] = Properties.Resources.OpMoveArticles;
