@@ -1035,6 +1035,26 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Restores previous versions of the study trees.
+        /// </summary>
+        /// <param name="objChapterList"></param>
+        /// <param name="ReplacedTreesList"></param>
+        public void UndoRegenerateStudies(object objChapterList, object objReplacedTreesList)
+        {
+            try
+            {
+                if (objChapterList is List<Chapter> chapters && objReplacedTreesList is List<VariationTree> trees)
+                {
+                    for (int i = 0; i < chapters.Count; i++)
+                    {
+                        chapters[i].StudyTree.Tree = trees[i];
+                    }
+                }
+            }
+            catch { }
+        }
+
+        /// <summary>
         /// Restore references to the passed guid in the nodes from the passed list.
         /// </summary>
         /// <param name="guidToRestore"></param>
