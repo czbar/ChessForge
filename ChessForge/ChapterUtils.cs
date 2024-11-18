@@ -1030,17 +1030,22 @@ namespace ChessForge
             bool overwriteWarningIssued = false;
 
             Mouse.SetCursor(Cursors.Wait);
+
+            List<Chapter> chapters = new List<Chapter>();
+            List<VariationTree> replacedTrees = new List<VariationTree>();
+
             try
             {
+
                 if (chapter != null)
                 {
-                    done = RegenerateChapterStudy(chapter, ref overwriteWarningIssued);
+                    done = RegenerateChapterStudy(chapter, ref overwriteWarningIssued, chapters, replacedTrees);
                 }
                 else
                 {
                     foreach (Chapter ch in AppState.Workbook.Chapters)
                     {
-                        bool cont = RegenerateChapterStudy(ch, ref overwriteWarningIssued);
+                        bool cont = RegenerateChapterStudy(ch, ref overwriteWarningIssued, chapters, replacedTrees);
                         if (!cont)
                         {
                             break;
@@ -1051,6 +1056,13 @@ namespace ChessForge
                         }
                     }
                 }
+                if (replacedTrees.Count > 0)
+                {
+                    WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.REGENERATE_STUDIES, null, -1, chapters, replacedTrees, null);
+                    WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
+                }
+
+
             }
             catch (Exception ex)
             {
@@ -1065,7 +1077,7 @@ namespace ChessForge
         /// Regenerates the Study Tree in a single chapter.
         /// </summary>
         /// <param name="chapter"></param>
-        private static bool RegenerateChapterStudy(Chapter chapter, ref bool overwriteWarningIssued)
+        private static bool RegenerateChapterStudy(Chapter chapter, ref bool overwriteWarningIssued, List<Chapter> chapters, List<VariationTree> replacedTrees)
         {
             if (chapter.StudyTree.Tree.Nodes.Count > 1 && !overwriteWarningIssued)
             {
@@ -1094,10 +1106,14 @@ namespace ChessForge
                     VariationTree tree = TreeMerge.MergeVariationTreeListEx(trees, Configuration.AutogenTreeDepth, true);
                     if (tree != null)
                     {
+                        // data for Undo
+                        chapters.Add(chapter);
+                        replacedTrees.Add(chapter.StudyTree.Tree);
+
                         TreeUtils.TrimTree(ref tree, Configuration.AutogenTreeDepth, PieceColor.Black);
                         tree.ContentType = GameData.ContentType.STUDY_TREE;
                         tree.BuildLines();
-                        ChapterUtils.ClearStudyTreeHeader(tree);
+                        ClearStudyTreeHeader(tree);
                         chapter.StudyTree.Tree = tree;
 
                         // if we are in the study tab, must set the new tree as active tree (does not happen automatically)
