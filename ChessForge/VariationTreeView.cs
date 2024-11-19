@@ -476,7 +476,7 @@ namespace ChessForge
                                 run = prevRun;
                             }
                         }
-                        if (!string.IsNullOrEmpty(inl.Name))
+                        if (!string.IsNullOrEmpty(run.Name))
                         {
                             run.Text = run.Text.Replace("\n", "");
                         }
