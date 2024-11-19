@@ -69,7 +69,7 @@ namespace ChessForge
                     {
                         TextUtils.RemoveBlunderNagFromText(r);
                     }
-                    ClearSpuriousNewLinesInPara(para);
+                    RemoveTrailingNewLinesInPara(para);
                 }
 
                 // the next move in para may need to be redrawn if it was black on move
