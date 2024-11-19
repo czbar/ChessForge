@@ -429,7 +429,7 @@ namespace ChessForge
 
                 // add dummy para so that the last row can be comfortable viewed
                 Document.Blocks.Add(BuildDummyPararaph());
-                ClearSpuriousNewLines();
+                RemoveTrailingNewLines();
             }
             catch (Exception ex)
             {
@@ -442,35 +442,47 @@ namespace ChessForge
         /// LF char which is not necessary if a new paragraph follows.
         /// Removes all found.
         /// </summary>
-        private void ClearSpuriousNewLines(Paragraph paragraph = null)
+        protected void RemoveTrailingNewLines(Paragraph paragraph = null)
         {
             foreach (Block block in Document.Blocks)
             {
                 if (block is Paragraph para)
                 {
-                    ClearSpuriousNewLinesInPara(para);
+                    RemoveTrailingNewLinesInPara(para);
                 }
             }
         }
 
         /// <summary>
-        /// Looks for the last run in the passed paragraph that may contain
+        /// Checks if the last non-empty Run in the passed paragraph that may contain
         /// LF char which is not necessary if a new paragraph follows.
-        /// Removes if found.
+        /// Removes the LF char if found.
         /// </summary>
         /// <param name="para"></param>
-        private void ClearSpuriousNewLinesInPara(Paragraph para)
+        protected void RemoveTrailingNewLinesInPara(Paragraph para)
         {
             if (para != null)
             {
-                Inline inl = para.Inlines.Last();
-                if (inl is Run run)
+                try
                 {
-                    if (!string.IsNullOrEmpty(inl.Name)) // && inl.Name.StartsWith(_run_end_comment))
+                    Inline inl = para.Inlines.Last();
+                    if (inl is Run run)
                     {
-                        run.Text = run.Text.Replace("\n", "");
+                        if (string.IsNullOrWhiteSpace(run.Text))
+                        {
+                            inl = run.PreviousInline;
+                            if (inl is Run prevRun)
+                            {
+                                run = prevRun;
+                            }
+                        }
+                        if (!string.IsNullOrEmpty(inl.Name))
+                        {
+                            run.Text = run.Text.Replace("\n", "");
+                        }
                     }
                 }
+                catch { }
             }
         }
 
