@@ -565,6 +565,8 @@ namespace ChessForge
 
                     BuildSectorRuns(sector, para, levelGroup, doNotShow);
                     sector.HostPara = para;
+
+                    RemoveTrailingNewLinesInPara(para);
                     Document.Blocks.Add(para);
                 }
                 catch
