@@ -470,10 +470,14 @@ namespace ChessForge
                     {
                         if (string.IsNullOrWhiteSpace(run.Text))
                         {
-                            inl = run.PreviousInline;
-                            if (inl is Run prevRun)
+                            // white space includes '\n' too so avoid here
+                            if (run.Text == null || !run.Text.Contains('\n'))
                             {
-                                run = prevRun;
+                                inl = run.PreviousInline;
+                                if (inl is Run prevRun)
+                                {
+                                    run = prevRun;
+                                }
                             }
                         }
                         if (!string.IsNullOrEmpty(run.Name))
