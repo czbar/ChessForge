@@ -1,12 +1,11 @@
-﻿using System;
+﻿using ChessPosition;
+using GameTree;
+using System;
 using System.Collections.Generic;
+using System.Text;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
-using System.Timers;
-using System.Text;
-using ChessPosition;
-using GameTree;
-using System.Windows.Shapes;
 
 namespace ChessForge
 {
@@ -69,7 +68,8 @@ namespace ChessForge
         public static void ShowEngineLines(object source, ElapsedEventArgs e, bool force = false)
         {
             // prevent "choking"
-            if (AppState.MainWin.ProcessingMouseUp || (!force && _isShowEngineLinesRunning && (source == null || source is Timer)))
+            // TODO: checking for ProcessingMouseUp has been removed as it blocks important updates. VERIFY if all is good afterwwards.
+            if ((!force && _isShowEngineLinesRunning && (source == null || source is Timer)))
             {
                 return;
             }
@@ -96,11 +96,13 @@ namespace ChessForge
         public static void ShowEngineLinesEx(object source, ElapsedEventArgs e)
         {
             // check if we are paused.
-            if (AppState.MainWin.ProcessingMouseUp || _pauseCount > 0)
+            // TODO: We removed ProcessingMouseUp from the check as it was blocking importanyt updates. VERIFY that all is good afterwards.
+            if (_pauseCount > 0)
             {
                 _pauseCount--;
                 return;
             }
+
 
             try
             {

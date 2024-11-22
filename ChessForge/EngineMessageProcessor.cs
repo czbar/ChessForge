@@ -811,10 +811,8 @@ namespace ChessForge
                         }
                         if (message.StartsWith(UciCommands.ENG_INFO))
                         {
-                            if (!AppState.MainWin.ProcessingMouseUp)
-                            {
-                                ProcessInfoMessage(message, evalNode);
-                            }
+                            // TODO: verify that removing the check for ProcessingMouseUp dod not mess up anything.
+                            ProcessInfoMessage(message, evalNode);
                         }
                         else if (message.StartsWith(UciCommands.ENG_BEST_MOVE))
                         {
