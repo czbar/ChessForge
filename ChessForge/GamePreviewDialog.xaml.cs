@@ -1,13 +1,11 @@
-﻿using GameTree;
+﻿using ChessPosition;
+using GameTree;
 using System;
 using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Input;
 using System.Collections.ObjectModel;
-using WebAccess;
-using System.Text;
-using ChessPosition;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace ChessForge
 {
@@ -187,6 +185,7 @@ namespace ChessForge
             if (moveIndex > 0 && moveIndex < _mainLine.Count)
             {
                 _animator.AnimateMove(_mainLine[moveIndex]);
+                UiLblMoveText.Content = MoveUtils.BuildSingleMoveText(_mainLine[moveIndex], true, false, 0);
                 _isAnimating = true;
             }
             else
@@ -385,6 +384,7 @@ namespace ChessForge
             {
                 ShowPlayPauseButtons();
                 _chessBoard.DisplayPosition(_mainLine[_currentNodeMoveIndex], false);
+                UiLblMoveText.Content = MoveUtils.BuildSingleMoveText(_mainLine[_currentNodeMoveIndex], true, false, 0);
             }
         }
 
@@ -409,6 +409,7 @@ namespace ChessForge
                 {
                     _currentNodeMoveIndex++;
                     RequestMoveAnimation(_currentNodeMoveIndex);
+                    UiLblMoveText.Content = MoveUtils.BuildSingleMoveText(_mainLine[_currentNodeMoveIndex], true, false, 0);
                 }
             }
         }
@@ -430,6 +431,7 @@ namespace ChessForge
                 _queuedOperation = QueuedOperation.NONE;
                 _currentNodeMoveIndex = 0;
                 _chessBoard.DisplayPosition(_mainLine[_currentNodeMoveIndex], false);
+                UiLblMoveText.Content = MoveUtils.BuildSingleMoveText(_mainLine[_currentNodeMoveIndex], true, false, 0);
             }
 
             ShowMoveControls(true);
@@ -455,6 +457,7 @@ namespace ChessForge
                 {
                     _currentNodeMoveIndex--;
                     _chessBoard.DisplayPosition(_mainLine[_currentNodeMoveIndex], false);
+                    UiLblMoveText.Content = MoveUtils.BuildSingleMoveText(_mainLine[_currentNodeMoveIndex], true, false, 0);
                 }
             }
             ShowMoveControls(true);
@@ -479,6 +482,7 @@ namespace ChessForge
                 {
                     _currentNodeMoveIndex++;
                     _chessBoard.DisplayPosition(_mainLine[_currentNodeMoveIndex], false);
+                    UiLblMoveText.Content = MoveUtils.BuildSingleMoveText(_mainLine[_currentNodeMoveIndex], true, false, 0);
                 }
             }
             ShowMoveControls(true);
@@ -501,6 +505,7 @@ namespace ChessForge
                 _queuedOperation = QueuedOperation.NONE;
                 _currentNodeMoveIndex = _mainLine.Count - 1;
                 _chessBoard.DisplayPosition(_mainLine[_currentNodeMoveIndex], false);
+                UiLblMoveText.Content = MoveUtils.BuildSingleMoveText(_mainLine[_currentNodeMoveIndex], true, false, 0);
             }
             ShowMoveControls(true);
         }

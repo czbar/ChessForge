@@ -14,17 +14,18 @@
                 <Image x:Name="UiImgChessBoard" HorizontalAlignment="Left" Height="240" VerticalAlignment="Top" Width="240" Source="/Resources/Images/ChessBoardGreySmall.png"  />
             </Canvas>
         </Canvas>
-        <Image x:Name="UiImgFirstMove" Cursor="Hand" Width="24" Height="24" HorizontalAlignment="Left" Margin="63,361,0,0" VerticalAlignment="Top"
+        <Label x:Name="UiLblMoveText" FontWeight="Bold" Content="" HorizontalAlignment="Left" Margin="86,345,0,0" Width="180" VerticalAlignment="Top" HorizontalContentAlignment="Center" />
+        <Image x:Name="UiImgFirstMove" Cursor="Hand" Width="24" Height="24" HorizontalAlignment="Left" Margin="63,371,0,0" VerticalAlignment="Top"
                Source="Resources/Images/FirstMove.png" MouseDown="UiImgFirstMove_MouseDown" ></Image>
-        <Image x:Name="UiImgPreviousMove" Cursor="Hand" Width="24" Height="24" HorizontalAlignment="Left" Margin="111,361,0,0" VerticalAlignment="Top"
+        <Image x:Name="UiImgPreviousMove" Cursor="Hand" Width="24" Height="24" HorizontalAlignment="Left" Margin="111,371,0,0" VerticalAlignment="Top"
                Source="Resources/Images/PreviousMove.png" MouseDown="UiImgPreviousMove_MouseDown" ></Image>
-        <Image x:Name="UiImgPlay" Cursor="Hand" Width="24" Height="24" HorizontalAlignment="Left" Margin="161,361,0,0" VerticalAlignment="Top"
+        <Image x:Name="UiImgPlay" Cursor="Hand" Width="24" Height="24" HorizontalAlignment="Left" Margin="161,371,0,0" VerticalAlignment="Top"
                Source="Resources/Images/Play.png" Visibility="Collapsed" MouseDown="UiImgPlay_MouseDown"></Image>
-        <Image x:Name="UiImgPause" Cursor="Hand" Width="24" Height="24" HorizontalAlignment="Left" Margin="161,361,0,0" VerticalAlignment="Top"
+        <Image x:Name="UiImgPause" Cursor="Hand" Width="24" Height="24" HorizontalAlignment="Left" Margin="161,371,0,0" VerticalAlignment="Top"
                Source="Resources/Images/Pause.png" MouseDown="UiImgPause_MouseDown" ></Image>
-        <Image x:Name="UiImgNextMove" Cursor="Hand" Width="24" Height="24" HorizontalAlignment="Left" Margin="211,361,0,0" VerticalAlignment="Top"
+        <Image x:Name="UiImgNextMove" Cursor="Hand" Width="24" Height="24" HorizontalAlignment="Left" Margin="211,371,0,0" VerticalAlignment="Top"
                Source="Resources/Images/NextMove.png" MouseDown="UiImgNextMove_MouseDown" ></Image>
-        <Image x:Name="UiImgLastMove" Cursor="Hand" Width="24" Height="24" HorizontalAlignment="Left" Margin="263,361,0,0" VerticalAlignment="Top"
+        <Image x:Name="UiImgLastMove" Cursor="Hand" Width="24" Height="24" HorizontalAlignment="Left" Margin="263,371,0,0" VerticalAlignment="Top"
                Source="Resources/Images/LastMove.png" MouseDown="UiImgLastMove_MouseDown" ></Image>
 
 
@@ -39,8 +40,8 @@
         <Label x:Name="UiLblPrevGame" Cursor="Hand" Content="{x:Static p:Resources.PreviousGame}" HorizontalAlignment="Left" Margin="340,6,0,0" VerticalAlignment="Top" MouseLeftButtonDown="UiPreviousGame_Click"/>
         <Label x:Name="UiLblNextGame" Cursor="Hand" Content="{x:Static p:Resources.NextGame}" HorizontalAlignment="Left" Margin="340,30,0,0" VerticalAlignment="Top" MouseLeftButtonDown="UiNextGame_Click"/>
         <Button x:Name="UiBtnViewGame" Visibility="Collapsed" Content="{x:Static p:Resources.FullView}" HorizontalAlignment="Left" Width="120" Margin="342,125,0,0" VerticalAlignment="Top" Click="UiBtnViewGame_Click"  />
-        <Button x:Name="UiBtnGoToGames" Content="{x:Static p:Resources.ViewImportedGames}" HorizontalAlignment="Left" Width="120" Margin="342,338,0,0" Visibility="Collapsed" VerticalAlignment="Top" Click="UiBtnGoToGames_Click" />
-        <Button x:Name="UiBtnExit" IsCancel="True" Content="{x:Static p:Resources.Return}" HorizontalAlignment="Left" Width="120" Margin="342,358,0,0" VerticalAlignment="Top" Click="UiBtnExit_Click" />
+        <Button x:Name="UiBtnGoToGames" Content="{x:Static p:Resources.ViewImportedGames}" HorizontalAlignment="Left" Width="120" Margin="342,0,0,48" Visibility="Collapsed" VerticalAlignment="Bottom" Click="UiBtnGoToGames_Click" />
+        <Button x:Name="UiBtnExit" IsCancel="True" Content="{x:Static p:Resources.Return}" HorizontalAlignment="Left" Width="120" Margin="342,0,0,18" VerticalAlignment="Bottom" Click="UiBtnExit_Click" />
         <Label x:Name="UiLblDownloadError" Visibility="Collapsed" FontSize="14"  FontWeight="Bold" Foreground="red" Content="{x:Static p:Resources.GameDownloadError}" HorizontalAlignment="Center" Margin="0,105,0,0" VerticalAlignment="Top"/>
         <Label x:Name="UiLblLoading" Background="Blue" Foreground="White" FontSize="16" FontWeight="Bold" Content="{x:Static p:Resources.DownloadingGameFromLichess}" HorizontalAlignment="Center" Margin="0,182,0,0" VerticalAlignment="Top" Panel.ZIndex="1"/>
         <TextBox x:Name="UiTbError" Visibility="Collapsed" HorizontalAlignment="Center" Margin="0,191,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="220" Height="64" BorderThickness="0" IsEnabled="False"/>
@@ -58,7 +59,7 @@
         <Label x:Name="UiLblBlack" Content="" HorizontalAlignment="Left" Margin="65,22,0,0" Width="170" VerticalAlignment="Top"/>
 
         <Label x:Name="UiLblEvent" Content="" HorizontalAlignment="Left" Margin="45,42,0,0" VerticalAlignment="Top"/>
-        <RichTextBox x:Name="UiRtbGames" Margin="500,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="260" Height="378"
+        <RichTextBox x:Name="UiRtbGames" Margin="500,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="260" Height="388"
                      VerticalScrollBarVisibility="Auto" IsReadOnly="True" >
             <FlowDocument>
                 <Paragraph>
@@ -67,7 +68,7 @@
             </FlowDocument>
         </RichTextBox>
         <ListBox x:Name="UiLbGames" Visibility="Collapsed" HorizontalAlignment="Left" Margin="340,2,0,0" Width="300" VerticalAlignment="Top" Height="100" SelectionChanged="UiLbGames_SelectionChanged"/>
-        <Label x:Name="UiLblResult" Content="" HorizontalAlignment="Left" Margin="245,14,0,0" Width="60" VerticalAlignment="Top"/>
+        <Label x:Name="UiLblResult" Content="" HorizontalAlignment="Left" Margin="250,14,0,0" Width="60" VerticalAlignment="Top" HorizontalContentAlignment="Center" />
         <Canvas x:Name="UiCnvPlayers" HorizontalAlignment="Left" Margin="42,2,0,0" Width="268" Height="66" Background="LightGray" VerticalAlignment="Top"
                 Panel.ZIndex="-1"></Canvas>
 
