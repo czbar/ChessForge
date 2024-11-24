@@ -49,20 +49,23 @@ namespace ChessForge
         {
             try
             {
-                StringBuilder sb = new StringBuilder();
-                sb.AppendLine(TextUtils.BuildKeyValueLine(ACTIVE_TAB, AppState.ActiveTab));
-                sb.AppendLine(TextUtils.BuildKeyValueLine(ACTIVE_CHAPTER_INDEX, _workbook.ActiveChapterIndex));
-                sb.AppendLine();
-
-                for (int i = 0; i < _workbook.Chapters.Count; i++)
+                if (_workbook != null)
                 {
-                    sb.AppendLine(TextUtils.BuildKeyValueLine(CHAPTER_INDEX, i));
-                    ChapterViewState cvs = new ChapterViewState(_workbook.Chapters[i], i == _workbook.ActiveChapterIndex);
-                    sb.AppendLine(cvs.ToString());
-                }
+                    StringBuilder sb = new StringBuilder();
+                    sb.AppendLine(TextUtils.BuildKeyValueLine(ACTIVE_TAB, AppState.ActiveTab));
+                    sb.AppendLine(TextUtils.BuildKeyValueLine(ACTIVE_CHAPTER_INDEX, _workbook.ActiveChapterIndex));
+                    sb.AppendLine();
 
-                string filePath = BuildViewConfigFilePath();
-                File.WriteAllText(filePath, sb.ToString());
+                    for (int i = 0; i < _workbook.Chapters.Count; i++)
+                    {
+                        sb.AppendLine(TextUtils.BuildKeyValueLine(CHAPTER_INDEX, i));
+                        ChapterViewState cvs = new ChapterViewState(_workbook.Chapters[i], i == _workbook.ActiveChapterIndex);
+                        sb.AppendLine(cvs.ToString());
+                    }
+
+                    string filePath = BuildViewConfigFilePath();
+                    File.WriteAllText(filePath, sb.ToString());
+                }
             }
             catch (Exception ex)
             {
