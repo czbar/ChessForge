@@ -107,7 +107,7 @@ Studies=Teoria
 
 #description: Variation Index
 #english: VariationIndex=Variation Index
-VariationIndex=Wykaz Wariantów
+VariationIndex=Indeks Wariantów
 
 #description: Game
 #english: Game=Game
@@ -1182,11 +1182,11 @@ Contents=Spis Treści
 
 #description: Game Index
 #english: GameIndex=Game Index
-GameIndex=Wykaz Partii
+GameIndex=Indeks Partii
 
 #description: Exercise Index
 #english: ExerciseIndex=Exercise Index
-ExerciseIndex=Wykaz Ćwiczeń
+ExerciseIndex=Indeks Ćwiczeń
 
 #description: Workbook items
 #english: WorkbookItems=Workbook Items
@@ -1281,8 +1281,8 @@ UseFigurines=Używaj figurek
 SoundOn=Włącz dźwięk
 
 #description: Whether to place main line comments in a separate paragraph
-#english: ParaForComment=Paragraph for Comment
-ParaForComment=Akapit na komentarz
+#english: ParaForComment=Line break before comment
+ParaForComment=Nowy akapit dla komentarza
 
 #description: Whether to show inline table with move options at a fork
 #english: ShowMovesAtFork=Show Moves at Fork
@@ -2039,7 +2039,7 @@ TrnStudySourceMoves=Ruchy z Podręcznika to
 
 #description: Response 
 #english: TrnGameResponse=Response from the Game
-TrnGameResponse=Opowiedź z Partii
+TrnGameResponse=Odpowiedź z Partii
 
 #description: Not in the source 
 #english: TrnGameMoveNotInSource=This is not in the Game
@@ -2058,7 +2058,7 @@ TrnGameSourceMoves=Ruchy w Partii to
 
 #description: Response 
 #english: TrnExerciseResponse=Response from the Exercise
-TrnExerciseResponse=Opowiedź z Ćwiczenia
+TrnExerciseResponse=Odpowiedź z Ćwiczenia
 
 #description: Not in the source 
 #english: TrnExerciseMoveNotInSource=This is not in the Exercise
@@ -2277,12 +2277,12 @@ InsertDiagramPostComment=Wstaw Diagram po komentarzu
 #english: RemoveDiagram=Remove Diagram
 RemoveDiagram=Usuń Diagram
 
-#description: Swap Diagram and Content
-#english: SwapDiagramComment=Swap Diagram and Content
+#description: Swap Diagram and Comment
+#english: SwapDiagramComment=Swap Diagram and Comment
 SwapDiagramComment=Przestaw diagram z komentarzem 
 
 #description: Invert the diagram
-#english: InvertDiagram=Invert Diagram
+#english: InvertDiagram=Flip Diagram
 InvertDiagram=Odwróć Diagram
 
 #description: Edit a diagram
@@ -3078,15 +3078,15 @@ SelectItemsforWorkbook=Wybierz elementy do utworzenia nowego Podręcznika:
 
 #description: Select items to move
 #english: SelectItemsToMove=Select Items to Move
-SelectItemsToMove=Wybierz Pozycje do Przeniesienia
+SelectItemsToMove=Wybierz Obiekty do Przeniesienia
 
 #description: Select items to copy
 #english: SelectItemsToCopy=Select Items to Copy
-SelectItemsToCopy=Wybierz Pozycje do Skopiowania
+SelectItemsToCopy=Wybierz Obiekty do Skopiowania
 
 #description: Select items to copy or move
 #english: SelectItemsToCopyOrMove=Select Items to Copy or Move
-SelectItemsToCopyOrMove=Wybierz Pozycje do Skopiowania lub Przeniesienia
+SelectItemsToCopyOrMove=Wybierz Obiekty do Skopiowania lub Przeniesienia
 
 #description: Select Games
 #english: SelectGames=Select Games
@@ -3122,7 +3122,7 @@ NumberOfGames=Liczba partii
 
 #description: Quiz points
 #english: QuizPoints=Quiz points
-QuizPoints=Punktacja do Quizu
+QuizPoints=Quiz
 
 #description: Lost quiz points
 #english: LostQuizPoints=Lost quiz points
@@ -3938,6 +3938,10 @@ OpDeleteExercises=Usuń Ćwiczenia
 #description: Operation
 #english: OpDeleteArticles=Delete Games/Exercises
 OpDeleteArticles=Usuń Partie/Ćwiczenia
+
+#description: Operation
+#english: OpRegenerateStudies=Regenerate Studies
+OpRegenerateStudies=Generowanie Teorii
 
 #description: Operation
 #english: OpEditGameHeader=Edit Game Header 

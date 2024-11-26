@@ -999,12 +999,6 @@ namespace ChessForge
         public static void ShowPgnProcessingErrors(string dlgTitle, ref StringBuilder sb)
         {
             TextBoxDialog dlg = new TextBoxDialog(dlgTitle, sb.ToString());
-            //{
-            //    Left = AppState.MainWin.ChessForgeMain.Left + 100,
-            //    Top = AppState.MainWin.ChessForgeMain.Top + 100,
-            //    Topmost = false,
-            //    Owner = AppState.MainWin
-            //};
             GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
             dlg.ShowDialog();
         }

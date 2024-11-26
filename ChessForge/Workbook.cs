@@ -436,7 +436,21 @@ namespace ChessForge
 
             for (int i = 0; i < _chapters.Count; i++)
             {
-                Chapters[i].StudyTree.Tree.RemoveArticleReferences(guid, ref nodes);
+                Chapter chapter = _chapters[i];
+                chapter.StudyTree.Tree.RemoveArticleReferences(guid, ref nodes);
+                foreach (Article game in chapter.ModelGames)
+                {
+                    game.Tree.RemoveArticleReferences(guid, ref nodes);
+                }
+                foreach (Article exercise in chapter.Exercises)
+                {
+                    exercise.Tree.RemoveArticleReferences(guid, ref nodes);
+                }
+            }
+
+            if (nodes.Count > 0)
+            {
+                AppState.MainWin.RebuildAllTreeViews();
             }
 
             return nodes;
@@ -943,35 +957,15 @@ namespace ChessForge
         /// <param name="chapter"></param>
         /// <param name="article"></param>
         /// <param name="index"></param>
-        public void UndoDeleteModelGame(Chapter chapter, Article article, int index)
+        public void UndoDeleteModelGame(Chapter chapter, Article article, int index, object nodeTreeIdList)
         {
             try
             {
                 chapter.InsertModelGame(article, index);
                 chapter.ActiveModelGameIndex = index;
-            }
-            catch
-            {
-            }
-        }
-
-        /// <summary>
-        /// Undo deletion of multiple model games
-        /// </summary>
-        /// <param name="objArticleList"></param>
-        /// <param name="objIndices"></param>
-        public void UndoDeleteModelGames(object objArticleList, object objIndexList)
-        {
-            try
-            {
-                List<ArticleListItem> articleList = objArticleList as List<ArticleListItem>;
-                List<int> indexList = objIndexList as List<int>;
-                // undo in the same order as supplied (undo is created with the same order as in the workbook) so the undo indices exist. 
-                for (int i = 0; i < articleList.Count; i++)
+                if (nodeTreeIdList is List<FullNodeId> nodeTreeIds)
                 {
-                    Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(articleList[i].ChapterIndex);
-                    chapter.InsertModelGame(articleList[i].Article, indexList[i]);
-                    chapter.ActiveModelGameIndex = indexList[i];
+                    RestoreReferences(article.Guid, nodeTreeIds);
                 }
             }
             catch
@@ -985,37 +979,15 @@ namespace ChessForge
         /// <param name="chapter"></param>
         /// <param name="article"></param>
         /// <param name="index"></param>
-        public void UndoDeleteExercise(Chapter chapter, Article article, int index)
+        public void UndoDeleteExercise(Chapter chapter, Article article, int index, object nodeTreeIdList)
         {
             try
             {
                 chapter.InsertExercise(article, index);
                 chapter.ActiveExerciseIndex = index;
-            }
-            catch
-            {
-            }
-        }
-
-        /// <summary>
-        /// Undo deletion of multiple exercises.
-        /// </summary>
-        /// <param name="chapter"></param>
-        /// <param name="index"></param>
-        /// <param name="objArticleList"></param>
-        /// <param name="objIndices"></param>
-        public void UndoDeleteExercises(object objArticleList, object objIndexList)
-        {
-            try
-            {
-                List<ArticleListItem> articleList = objArticleList as List<ArticleListItem>;
-                List<int> indexList = objIndexList as List<int>;
-                // undo in the same order as supplied (undo is created with the same order as in the workbook) so the undo indices exist. 
-                for (int i = 0; i < articleList.Count; i++)
+                if (nodeTreeIdList is List<FullNodeId> nodeTreeIds)
                 {
-                    Chapter chapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(articleList[i].ChapterIndex);
-                    chapter.InsertExercise(articleList[i].Article, indexList[i]);
-                    chapter.ActiveExerciseIndex = indexList[i];
+                    RestoreReferences(article.Guid, nodeTreeIds);
                 }
             }
             catch
@@ -1028,12 +1000,14 @@ namespace ChessForge
         /// </summary>
         /// <param name="objArticleList"></param>
         /// <param name="objIndices"></param>
-        public void UndoDeleteArticles(object objArticleList, object objIndexList)
+        public void UndoDeleteArticles(object objArticleList, object objIndexList, object objRefNodesList)
         {
             try
             {
                 List<ArticleListItem> articleList = objArticleList as List<ArticleListItem>;
                 List<int> indexList = objIndexList as List<int>;
+                List<List<FullNodeId>> refNodesList = objRefNodesList as List<List<FullNodeId>>;
+
                 // undo in the reverse order to how they were deleted
                 for (int i = articleList.Count - 1; i >= 0; i--)
                 {
@@ -1048,10 +1022,56 @@ namespace ChessForge
                         chapter.InsertExercise(articleList[i].Article, indexList[i]);
                         chapter.ActiveExerciseIndex = indexList[i];
                     }
+
+                    if (refNodesList != null)
+                    {
+                        RestoreReferences(articleList[i].Article.Guid, refNodesList[i]);
+                    }
                 }
             }
             catch
             {
+            }
+        }
+
+        /// <summary>
+        /// Restores previous versions of the study trees.
+        /// </summary>
+        /// <param name="objChapterList"></param>
+        /// <param name="ReplacedTreesList"></param>
+        public void UndoRegenerateStudies(object objChapterList, object objReplacedTreesList)
+        {
+            try
+            {
+                if (objChapterList is List<Chapter> chapters && objReplacedTreesList is List<VariationTree> trees)
+                {
+                    for (int i = 0; i < chapters.Count; i++)
+                    {
+                        chapters[i].StudyTree.Tree = trees[i];
+                    }
+                }
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// Restore references to the passed guid in the nodes from the passed list.
+        /// </summary>
+        /// <param name="guidToRestore"></param>
+        /// <param name="nodeTreeIds"></param>
+        public void RestoreReferences(string guidToRestore, List<FullNodeId> nodeTreeIds)
+        {
+            foreach (FullNodeId fullId in nodeTreeIds)
+            {
+                var tree = GetTreeByTreeId(fullId.TreeId);
+                if (tree != null)
+                {
+                    TreeNode nd = tree.GetNodeFromNodeId(fullId.NodeId);
+                    if (nd != null)
+                    {
+                        nd.AddArticleReference(guidToRestore);
+                    }
+                }
             }
         }
 
@@ -1210,7 +1230,7 @@ namespace ChessForge
                     Chapters.Remove(chapter);
                 }
 
-                WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.DELETE_CHAPTERS, null, -1, chapters, indices);
+                WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.DELETE_CHAPTERS, null, -1, chapters, indices, null);
                 WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
                 AppState.ConfigureMenusForManualReview();
             }
@@ -1243,7 +1263,7 @@ namespace ChessForge
                 Chapters.Remove(ch);
             }
 
-            WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.MERGE_CHAPTERS, mergedChapter, -1, sourceChapters, indices);
+            WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.MERGE_CHAPTERS, mergedChapter, -1, sourceChapters, indices, null);
             WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
             AppState.ConfigureMenusForManualReview();
         }

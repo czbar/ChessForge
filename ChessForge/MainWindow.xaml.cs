@@ -2909,12 +2909,6 @@ namespace ChessForge
         public void ShowEngineOptionsDialog()
         {
             EngineOptionsDialog dlg = new EngineOptionsDialog();
-            //{
-            //    Left = ChessForgeMain.Left + 100,
-            //    Top = ChessForgeMain.Top + 100,
-            //    Topmost = false,
-            //    Owner = this
-            //};
             GuiUtilities.PositionDialog(dlg, this, 100);
             dlg.ShowDialog();
 

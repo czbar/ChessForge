@@ -4066,7 +4066,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invert Diagram.
+        ///   Looks up a localized string similar to Flip Diagram.
         /// </summary>
         public static string InvertDiagram {
             get {
@@ -5462,6 +5462,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Regenerate Studies.
+        /// </summary>
+        public static string OpRegenerateStudies {
+            get {
+                return ResourceManager.GetString("OpRegenerateStudies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rename Chapter.
         /// </summary>
         public static string OpRenameChapter {
@@ -5525,7 +5534,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Paragraph for Comment.
+        ///   Looks up a localized string similar to Line break before comment.
         /// </summary>
         public static string ParaForComment {
             get {
@@ -7010,7 +7019,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Swap Diagram and Content.
+        ///   Looks up a localized string similar to Swap Diagram and Comment.
         /// </summary>
         public static string SwapDiagramComment {
             get {

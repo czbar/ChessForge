@@ -628,20 +628,17 @@ namespace ChessForge
                                         SelectModelGame(selectedArticleIndex, true);
                                     }
                                     break;
-                                case WorkbookOperationType.DELETE_MODEL_GAME:
                                 case WorkbookOperationType.DELETE_MODEL_GAMES:
+                                case WorkbookOperationType.DELETE_EXERCISES:
                                 case WorkbookOperationType.DELETE_ARTICLES:
+                                case WorkbookOperationType.REGENERATE_STUDIES:
+                                    break;
                                 case WorkbookOperationType.DELETE_CHAPTERS:
                                 case WorkbookOperationType.MERGE_CHAPTERS:
                                 case WorkbookOperationType.SPLIT_CHAPTER:
                                     AppState.MainWin.ChaptersView.IsDirty = true;
                                     GuiUtilities.RefreshChaptersView(null);
                                     AppState.MainWin.UiTabChapters.Focus();
-                                    break;
-                                case WorkbookOperationType.DELETE_EXERCISE:
-                                case WorkbookOperationType.DELETE_EXERCISES:
-                                    _chaptersView.BuildFlowDocumentForChaptersView();
-                                    SelectExercise(selectedArticleIndex, AppState.ActiveTab != TabViewType.CHAPTERS);
                                     break;
                                 case WorkbookOperationType.COPY_ARTICLES:
                                 case WorkbookOperationType.INSERT_ARTICLES:
@@ -2111,11 +2108,7 @@ namespace ChessForge
                 {
                     string lineId = AppState.MainWin.ActiveVariationTree.SelectedLineId;
                     ActiveTreeView.SwapCommentWithDiagram(nd);
-                    AppState.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
-                    if (nd != null)
-                    {
-                        AppState.MainWin.ActiveTreeView.SelectLineAndMove(lineId, nd.NodeId);
-                    }
+                    ActiveTreeView.InsertOrUpdateCommentRun(nd);
                 }
             }
         }
@@ -2136,9 +2129,7 @@ namespace ChessForge
                     if (nd.IsDiagram)
                     {
                         nd.IsDiagramFlipped = !nd.IsDiagramFlipped;
-                        AppState.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
-                        AppState.MainWin.ActiveTreeView.SelectLineAndMove(lineId, nd.NodeId);
-
+                        ActiveTreeView.InsertOrUpdateCommentRun(nd);
                         AppState.IsDirty = true;
                     }
                 }
@@ -3843,13 +3834,8 @@ namespace ChessForge
         {
             try
             {
-                PositionSetupDialog dlgPosSetup = new PositionSetupDialog(null)
-                {
-                    Left = ChessForgeMain.Left + 100,
-                    Top = ChessForgeMain.Top + 100,
-                    Topmost = false,
-                    Owner = this
-                };
+                PositionSetupDialog dlgPosSetup = new PositionSetupDialog(null);
+                GuiUtilities.PositionDialog(dlgPosSetup, AppState.MainWin, 100);
                 dlgPosSetup.ShowDialog();
 
                 if (dlgPosSetup.ExitOK)
@@ -3859,13 +3845,8 @@ namespace ChessForge
                     VariationTree tree = new VariationTree(GameData.ContentType.EXERCISE);
                     tree.CreateNew(pos);
 
-                    GameHeaderDialog dlgHeader = new GameHeaderDialog(tree, Properties.Resources.ResourceManager.GetString("ExerciseHeader"))
-                    {
-                        Left = ChessForgeMain.Left + 100,
-                        Top = ChessForgeMain.Top + 100,
-                        Topmost = false,
-                        Owner = this
-                    };
+                    GameHeaderDialog dlgHeader = new GameHeaderDialog(tree, Properties.Resources.ResourceManager.GetString("ExerciseHeader"));
+                    GuiUtilities.PositionDialog(dlgHeader, AppState.MainWin, 100);
 
                     dlgHeader.ShowDialog();
                     if (dlgHeader.ExitOK)
@@ -3921,30 +3902,7 @@ namespace ChessForge
                     string gameTitle = chapter.ModelGames[chapter.ActiveModelGameIndex].Tree.Header.BuildGameHeaderLine(true);
                     if (MessageBox.Show(Properties.Resources.ConfirmDeleteGame + "?\n\n  " + gameTitle, Properties.Resources.DeleteGame, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
-                        DeleteModelGame(chapter.ActiveModelGameIndex);
-
-                        int gameCount = chapter.GetModelGameCount();
-                        if (chapter.GetModelGameCount() == 0)
-                        {
-                            chapter.ActiveModelGameIndex = -1;
-                            DisplayPosition(PositionUtils.SetupStartingPosition());
-                        }
-                        else if (chapter.ActiveModelGameIndex >= gameCount - 1)
-                        {
-                            chapter.ActiveModelGameIndex = gameCount - 1;
-                        }
-
-                        _chaptersView.RebuildChapterParagraph(WorkbookManager.SessionWorkbook.ActiveChapter);
-                        if (WorkbookManager.ActiveTab == TabViewType.MODEL_GAME)
-                        {
-                            SelectModelGame(chapter.ActiveModelGameIndex, false);
-                        }
-                        AppState.SetupGuiForCurrentStates();
-                        if (ActiveVariationTree == null || AppState.CurrentEvaluationMode != EvaluationManager.Mode.CONTINUOUS)
-                        {
-                            StopEvaluation(true);
-                            BoardCommentBox.ShowTabHints();
-                        }
+                        DeleteArticlesUtils.DeleteModelGame(chapter.ActiveModelGameIndex);
                     }
                 }
             }
@@ -3967,88 +3925,13 @@ namespace ChessForge
                     string exerciseTitle = chapter.Exercises[chapter.ActiveExerciseIndex].Tree.Header.BuildGameHeaderLine(true);
                     if (MessageBox.Show(Properties.Resources.ConfirmDeleteExercise + "?\n\n  " + exerciseTitle, Properties.Resources.DeleteExercise, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
-                        DeleteExercise(chapter.ActiveExerciseIndex);
-
-                        int exerciseCount = chapter.GetExerciseCount();
-                        if (exerciseCount == 0)
-                        {
-                            chapter.ActiveExerciseIndex = -1;
-                            DisplayPosition(PositionUtils.SetupStartingPosition());
-                        }
-                        else if (chapter.ActiveExerciseIndex >= exerciseCount - 1)
-                        {
-                            chapter.ActiveExerciseIndex = exerciseCount - 1;
-                        }
-
-                        _chaptersView.RebuildChapterParagraph(WorkbookManager.SessionWorkbook.ActiveChapter);
-                        AppState.SetupGuiForCurrentStates();
-                        if (WorkbookManager.ActiveTab == TabViewType.EXERCISE)
-                        {
-                            SelectExercise(chapter.ActiveExerciseIndex, false);
-                        }
-                    }
-                    if (ActiveVariationTree == null || AppState.CurrentEvaluationMode != EvaluationManager.Mode.CONTINUOUS)
-                    {
-                        StopEvaluation(true);
-                        BoardCommentBox.ShowTabHints();
+                        DeleteArticlesUtils.DeleteExercise(chapter.ActiveExerciseIndex);
                     }
                 }
             }
             catch (Exception ex)
             {
                 AppLog.Message("DeleteExercise()", ex);
-            }
-        }
-
-        /// <summary>
-        /// Deletes the Game at the requested index from the list of games.
-        /// </summary>
-        /// <param name="index"></param>
-        private void DeleteModelGame(int index)
-        {
-            try
-            {
-                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                int gameCount = chapter.GetModelGameCount();
-                if (index >= 0 && index < gameCount)
-                {
-                    Article article = chapter.GetModelGameAtIndex(index);
-                    string guid = article.Tree.Header.GetGuid(out _);
-                    WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.DELETE_MODEL_GAME, chapter, article, index);
-                    chapter.ModelGames.RemoveAt(index);
-                    List<FullNodeId> affectedNodes = WorkbookManager.RemoveArticleReferences(guid);
-                    WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
-                    AppState.IsDirty = true;
-                }
-            }
-            catch
-            {
-            }
-        }
-
-        /// <summary>
-        /// Deletes the Exercise at the requested index from the list of games.
-        /// </summary>
-        /// <param name="index"></param>
-        private void DeleteExercise(int index)
-        {
-            try
-            {
-                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                int exerciseCount = chapter.GetExerciseCount();
-                if (index >= 0 && index < exerciseCount)
-                {
-                    Article article = chapter.GetExerciseAtIndex(index);
-                    string guid = article.Tree.Header.GetGuid(out _);
-                    WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.DELETE_EXERCISE, chapter, article, index);
-                    chapter.Exercises.RemoveAt(index);
-                    List<FullNodeId> affectedNodes = WorkbookManager.RemoveArticleReferences(guid);
-                    WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
-                    AppState.IsDirty = true;
-                }
-            }
-            catch
-            {
             }
         }
 
@@ -4063,12 +3946,6 @@ namespace ChessForge
 
                 VariationTree game = WorkbookManager.SessionWorkbook.ActiveChapter.ModelGames[chapter.ActiveModelGameIndex].Tree;
                 var dlg = new GameHeaderDialog(game, Properties.Resources.GameHeader);
-                //{
-                //    Left = ChessForgeMain.Left + 100,
-                //    Top = ChessForgeMain.Top + 100,
-                //    Topmost = false,
-                //    Owner = this
-                //};
                 GuiUtilities.PositionDialog(dlg, this, 100);
                 dlg.ShowDialog();
                 if (dlg.ExitOK)
@@ -4102,12 +3979,6 @@ namespace ChessForge
 
                 VariationTree game = WorkbookManager.SessionWorkbook.ActiveChapter.Exercises[chapter.ActiveExerciseIndex].Tree;
                 var dlg = new GameHeaderDialog(game, Properties.Resources.ExerciseHeader);
-                //{
-                //    Left = ChessForgeMain.Left + 100,
-                //    Top = ChessForgeMain.Top + 100,
-                //    Topmost = false,
-                //    Owner = this
-                //};
                 GuiUtilities.PositionDialog(dlg, this, 100);
                 dlg.ShowDialog();
                 if (dlg.ExitOK)

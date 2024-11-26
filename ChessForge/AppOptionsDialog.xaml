@@ -7,16 +7,16 @@
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
         ShowInTaskbar="True"
-        Title="{x:Static p:Resources.DlgTitleApplicationOptions}" Height="440" Width="420">
+        Title="{x:Static p:Resources.DlgTitleApplicationOptions}" Height="440" Width="430">
     <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"  >
-        <GroupBox x:Name="UiGbLanguage" Margin="15,15,0,0" Height="130" Width="190" Header="{x:Static p:Resources.LanguageNotation}" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <GroupBox x:Name="UiGbLanguage" Margin="15,15,0,0" Height="130" Width="200" Header="{x:Static p:Resources.LanguageNotation}" HorizontalAlignment="Left" VerticalAlignment="Top">
             <StackPanel>
                 <ListBox x:Name="UiLbLanguages" Margin="10,10,10,0" Height="60" />
                 <CheckBox x:Name="UiCbFigurines" Content="{x:Static p:Resources.UseFigurines}" HorizontalAlignment="Left" Margin="15,10,0,0" VerticalAlignment="Top"/>
             </StackPanel>
         </GroupBox>
         <Button x:Name="UiBtnEngine" Content="{x:Static p:Resources.EngineOptions}" HorizontalAlignment="Left" Margin="236,62,0,0" VerticalAlignment="Top" Width="135" Height="22" Click="UiBtnEngine_Click"/>
-        <GroupBox x:Name="UiGbViews" Header="{x:Static p:Resources.Views}" HorizontalAlignment="Left" Height="180" Margin="15,160,0,0" VerticalAlignment="Top" Width="190">
+        <GroupBox x:Name="UiGbViews" Header="{x:Static p:Resources.Views}" HorizontalAlignment="Left" Height="180" Margin="15,160,0,0" VerticalAlignment="Top" Width="200">
             <StackPanel>
                 <CheckBox x:Name="UiCbMainLineCommentLF" Content="{x:Static p:Resources.ParaForComment}" HorizontalAlignment="Left" Margin="5,12,10,0" VerticalAlignment="Top"/>
                 <CheckBox x:Name="UiCbShowForkMoves" Content="{x:Static p:Resources.ShowMovesAtFork}" HorizontalAlignment="Left" Margin="5,12,10,0" VerticalAlignment="Top"/>

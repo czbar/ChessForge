@@ -537,6 +537,15 @@ namespace EngineService
                     while (_strmReader != null)
                     {
                         message = _strmReader.ReadLine();
+                        
+                        // TODO: switch to the kind of processing where we read multiple INFOs at once
+                        //       and process them outside this loop
+                        //
+                        //while (_strmReader.Peek() >= 0 && message.Contains("info depth"))
+                        //{
+                        //    message += _strmReader.ReadLine();
+                        //}
+
                         if (message != null && !message.Contains("currmove"))
                         {
                             EngineLog.Message(message);

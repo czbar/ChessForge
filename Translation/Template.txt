@@ -1281,7 +1281,7 @@ UseFigurines=
 SoundOn=
 
 #description: Whether to place main line comments in a separate paragraph
-#english: ParaForComment=Paragraph for Comment
+#english: ParaForComment=Line break before comment
 ParaForComment=
 
 #description: Whether to show inline table with move options at a fork
@@ -2277,12 +2277,12 @@ InsertDiagramPostComment=
 #english: RemoveDiagram=Remove Diagram
 RemoveDiagram=
 
-#description: Swap Diagram and Content
-#english: SwapDiagramComment=Swap Diagram and Content
+#description: Swap Diagram and Comment
+#english: SwapDiagramComment=Swap Diagram and Comment
 SwapDiagramComment=
 
 #description: Invert the diagram
-#english: InvertDiagram=Invert Diagram
+#english: InvertDiagram=Flip Diagram
 InvertDiagram=
 
 #description: Edit a diagram
@@ -3938,6 +3938,10 @@ OpDeleteExercises=
 #description: Operation
 #english: OpDeleteArticles=Delete Games/Exercises
 OpDeleteArticles=
+
+#description: Operation
+#english: OpRegenerateStudies=Regenerate Studies
+OpRegenerateStudies=
 
 #description: Operation
 #english: OpEditGameHeader=Edit Game Header 

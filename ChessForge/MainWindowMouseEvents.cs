@@ -236,7 +236,7 @@ namespace ChessForge
                 {
                     AppState.DoEvents();
                     // it is possible that since the check above ActiveTreeView was set to null! Hence the try block.
-                    AppState.MainWin.ActiveTreeView.BringSelectedRunIntoView();
+                    PulseManager.BringSelectedRunIntoView();
                 }
                 catch
                 {

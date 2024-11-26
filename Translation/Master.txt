@@ -999,7 +999,7 @@ UseFigurines=Use Figurines
 SoundOn=Sound On
 
 #Whether to place main line comments in a separate paragraph
-ParaForComment=Paragraph for Comment
+ParaForComment=Line break before comment
 
 #Whether to show inline table with move options at a fork
 ShowMovesAtFork=Show Moves at Fork
@@ -1780,11 +1780,11 @@ InsertDiagramPostComment=Insert Diagram After Comment
 #Remove the diagram
 RemoveDiagram=Remove Diagram
 
-#Swap Diagram and Content
-SwapDiagramComment=Swap Diagram and Content
+#Swap Diagram and Comment
+SwapDiagramComment=Swap Diagram and Comment
 
 #Invert the diagram
-InvertDiagram=Invert Diagram
+InvertDiagram=Flip Diagram
 
 #Edit a diagram
 EditDiagram=Edit Diagram
@@ -3062,6 +3062,9 @@ OpDeleteExercises=Delete Exercises
 
 #Operation
 OpDeleteArticles=Delete Games/Exercises
+
+#Operation
+OpRegenerateStudies=Regenerate Studies
 
 #Operation
 OpEditGameHeader=Edit Game Header 
