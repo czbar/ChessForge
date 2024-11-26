@@ -826,8 +826,8 @@
                                     <RowDefinition Height="Auto "/>
                                 </Grid.RowDefinitions>
                                 <Image x:Name="UiImgExerciseLeftArrow" Grid.Column="0" Cursor="Hand"  HorizontalAlignment="Left"  Margin="10,0,0,0" Source="Resources/Images/LeftArrow.png" PreviewMouseLeftButtonDown="UiImgExerciseLeftArrow_PreviewMouseLeftButtonDown"  />
-                                <Label x:Name="UiLblExerciseCounter" Grid.Column="1" Content="" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="10,-3,0,0" FontWeight="Bold"/>
-                                <Image x:Name="UiImgExerciseRightArrow" Grid.Column="2" Cursor="Hand"  HorizontalAlignment="Right" Margin="10,0,0,0" Source="Resources/Images/RightArrow.png" PreviewMouseLeftButtonDown="UiImgExerciseRightArrow_PreviewMouseLeftButtonDown"  />
+                                <Label x:Name="UiLblExerciseCounter" Grid.Column="1" Content="" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="5,-3,0,0" FontWeight="Bold"/>
+                                <Image x:Name="UiImgExerciseRightArrow" Grid.Column="2" Cursor="Hand"  HorizontalAlignment="Right" Margin="5,0,0,0" Source="Resources/Images/RightArrow.png" PreviewMouseLeftButtonDown="UiImgExerciseRightArrow_PreviewMouseLeftButtonDown"  />
                             </Grid>
                             <Label x:Name="UiExerciseLblChapterTitle" Grid.Column="0" Height="30" Content="" MaxWidth="220" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,-3,10,0" FontWeight="Normal" FontStyle="Normal" MouseDoubleClick="UiExerciseLblChapterTitle_MouseDoubleClick"  />
                             <Grid x:Name="UiGridExercisePrevNextChapter" Panel.ZIndex="1" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Visible" >
