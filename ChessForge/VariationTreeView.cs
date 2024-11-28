@@ -442,14 +442,21 @@ namespace ChessForge
         /// LF char which is not necessary if a new paragraph follows.
         /// Removes all found.
         /// </summary>
-        protected void RemoveTrailingNewLines(Paragraph paragraph = null)
+        protected void RemoveTrailingNewLines()
         {
+            List<Run> runsToUpdate = new List<Run>();
+
             foreach (Block block in Document.Blocks)
             {
                 if (block is Paragraph para)
                 {
-                    RemoveTrailingNewLinesInPara(para);
+                    RemoveTrailingNewLinesInPara(para, runsToUpdate);
                 }
+            }
+
+            foreach (Run run in runsToUpdate)
+            {
+                run.Text = run.Text.Replace("\n", "");
             }
         }
 
@@ -459,7 +466,7 @@ namespace ChessForge
         /// Removes the LF char if found.
         /// </summary>
         /// <param name="para"></param>
-        protected void RemoveTrailingNewLinesInPara(Paragraph para)
+        protected void RemoveTrailingNewLinesInPara(Paragraph para, List<Run> runsToUpdate = null)
         {
             if (para != null)
             {
@@ -482,7 +489,14 @@ namespace ChessForge
                         }
                         if (!string.IsNullOrEmpty(run.Name))
                         {
-                            run.Text = run.Text.Replace("\n", "");
+                            if (runsToUpdate == null)
+                            {
+                                run.Text = run.Text.Replace("\n", "");
+                            }
+                            else
+                            {
+                                runsToUpdate.Add(run);
+                            }
                         }
                     }
                 }
