@@ -237,6 +237,10 @@ namespace EngineService
 
                 _currentState = State.NOT_READY;
                 _activeEvaluationMode = GoFenCommand.EvaluationMode.NONE;
+
+                _engineProcess.Kill();
+                _engineProcess.Dispose();
+
                 EngineLog.Message("Engine stopped.");
             }
             catch (Exception ex)
@@ -580,7 +584,7 @@ namespace EngineService
                         if (message == null)
                         {
                             // null message can be received during initialization or when there is an engine error.
-                            // if the former, we need to esixt the loop and allow regular processing,
+                            // if the former, we need to exit the loop and allow regular processing,
                             // if the latter, we need to handle error situation
                             _badMessageCount++;
                             if (_isEngineReady)
