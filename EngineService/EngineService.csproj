@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EngineLog.cs" />
+    <Compile Include="EngineProcessMessages.cs" />
     <Compile Include="GoFenCommand.cs" />
     <Compile Include="IEngineService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
