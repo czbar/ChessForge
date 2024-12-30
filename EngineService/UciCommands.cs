@@ -22,6 +22,8 @@
         public const string ENG_READY_OK = "readyok";
         public const string ENG_BEST_MOVE = "bestmove";
         public const string ENG_INFO = "info";
+        public const string ENG_MULTIPV_1 = "multipv 1";
+        public const string ENG_CURRMOVE = "currmove";
         public const string ENG_BESTMOVE_NONE = "none";
         public const string ENG_BESTMOVE_NONE_LEILA = "a1a1";
 
