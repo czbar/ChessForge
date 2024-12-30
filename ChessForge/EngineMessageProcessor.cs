@@ -71,6 +71,7 @@ namespace ChessForge
 
             ChessEngineService = new EngineService.EngineProcess();
             ChessEngineService.EngineMessage += EngineMessageReceived;
+            ChessEngineService.EngineInfoMessages += EngineInfoMessagesReceived;
             ChessEngineService.Multipv = Configuration.EngineMpv;
         }
 
@@ -850,6 +851,42 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Handles a list of received INFO messages
+        /// in response to the EngineInfoMessages event.
+        /// </summary>
+        /// <param name="messages"></param>
+        private static void EngineInfoMessagesReceived(List<string> messages)
+        {
+            try
+            {
+                // Info messages begin with TreeId
+                int treeId = -1;
+                int nodeId = -1;
+
+                for (int i = 0; i < messages.Count; i++)
+                {
+                    messages[i] = ParseMessagePrefix(messages[i], out treeId, out nodeId, out bool delayed, out GoFenCommand.EvaluationMode mode);
+                }
+
+                TreeNode evalNode = AppState.GetNodeByIds(treeId, nodeId);
+
+                if ((LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME) || evalNode != null)
+                {
+                    if (evalNode == null)
+                    {
+                        AppLog.Message("null evalNode in EngineMessageReceived()");
+                    }
+                    ProcessBulkInfoMessages(messages, evalNode);
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("ERROR: processing bulk info messages: " + ex.Message);
+                DebugUtils.ShowDebugMessage("Error processing bulk info message: " + ex.Message);
+            }
+        }
+
+        /// <summary>
         /// Checks if the message comes with the prefix containing IDs
         /// and if so gets their values and removes from the message.
         /// </summary>
@@ -1155,6 +1192,17 @@ namespace ChessForge
             {
                 IsInfoMessageProcessing = false;
             }
+        }
+
+        /// <summary>
+        /// Processes a list of INFO messages.
+        /// The first message is guaranteed to have multipv value of 1. 
+        /// </summary>
+        /// <param name="messages"></param>
+        /// <param name="evalNode"></param>
+        private static void ProcessBulkInfoMessages(List<string> messages, TreeNode evalNode)
+        {
+            //TODO: IMPLEMENT
         }
 
         /// <summary>
