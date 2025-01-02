@@ -6,16 +6,17 @@ namespace EngineService
     public partial class EngineProcess
     {
         /// <summary>
+        /// This is V2 of the message processing loop.
         /// Runs an infinite loop waiting and reading messages from the engine.
-        /// to check on messages from the engine.
-        /// Invokes the message handler to process the info.
-        /// The message handler is EngineMessageProcessor.EngineMessageReceived(string)
+        /// Invokes either the message handler for a single message EngineMessage?.Invoke()
+        /// or a list of messages EngineInfoMessages?.Invoke().
+        /// (The previous version was only doing the former thus being less peformant). 
+        /// The message handler EngineMessage is EngineMessageProcessor.EngineMessageReceived()
+        /// while for EngineInfoMessages it is EngineMessageProcessor.EngineInfoMessagesReceived().
         /// </summary>
         /// <param name="source"></param>
         /// <param name="e"></param>
-#pragma warning disable IDE0051 // Remove unused private members
         private void ReadEngineMessagesV2()
-#pragma warning restore IDE0051 // Remove unused private members
         {
             _isMessageRxLoopRunning = true;
 
@@ -23,6 +24,7 @@ namespace EngineService
 
             lock (_lockEngineMessage)
             {
+                // bail out if the stream reader is null
                 if (_strmReader == null)
                 {
                     _isMessageRxLoopRunning = false;
@@ -35,7 +37,10 @@ namespace EngineService
                     {
                         messages.Clear();
 
-                        // the first read must be without checking Peek() so we don't get block when in fact we cab get a message
+                        // There is an important trick to do with how ReadLine is implemented in C#.
+                        // The first read must be performed without checking Peek()
+                        // as we may get -1 while ReadLine will actually return a message.
+                        // We need therefore to ensure that we read at least the first message or risk being stuck.
                         string msg = _strmReader.ReadLine();
 
                         // special case for the null message.
@@ -43,8 +48,8 @@ namespace EngineService
                         {
                             if (ProcessNullMessage())
                             {
-                                // if the engine is not ready, we need to exit the loop
-                                // otherwise we will continue to read messages
+                                // if returned true, it means the engine is not ready,
+                                // so we need to exit the loop.
                                 break;
                             }
                         }
@@ -52,13 +57,15 @@ namespace EngineService
                         {
                             _badMessageCount = 0;
 
-                            // we will not process messages that contain "currmove"
+                            // we are not looking for anything in messages that contain "currmove"
+                            // so ignore them 
                             if (!msg.Contains(UciCommands.ENG_CURRMOVE))
                             {
                                 messages.Add(msg);
                             }
 
-                            // now we will read all messages that are available, checking Peek() to avoid blocking when all was read 
+                            // now we will read all messages that are available,
+                            // checking Peek() to avoid blocking when all was read 
                             while (_strmReader.Peek() >= 0)
                             {
                                 msg = _strmReader.ReadLine();
@@ -66,6 +73,7 @@ namespace EngineService
                                 {
                                     if (ProcessNullMessage())
                                     {
+                                        // this should never happen here so just being defensive.
                                         break;
                                     }
                                 }
@@ -96,17 +104,19 @@ namespace EngineService
         /// If there are consecutive INFO messages the last sequence starting with multipv==1
         /// is only processed.
         /// The BEST MOVE message and any other message types are processed individually.
-        /// Messages that contain "currmove" are ignored.
         /// </summary>
-        /// <param name="messages"></param>
-        private void ProcessMessagesList(List<string> messages)
+        /// <param name="rawMessages"></param>
+        private void ProcessMessagesList(List<string> rawMessages)
         {
             int index = 0;
-            while (index < messages.Count)
-            {
-                bool noBulkProcessing = false;
 
-                string rawMsg = messages[index];
+            // the flag to set if we find that there is no INFO message with multipv==1,
+            // and need to process the messages the "old way", one by one.
+            bool noBulkProcessing = false;
+
+            while (index < rawMessages.Count)
+            {
+                string rawMsg = rawMessages[index];
                 EngineLog.Message(rawMsg);
                 if (rawMsg.StartsWith(UciCommands.ENG_READY_OK))
                 {
@@ -115,6 +125,7 @@ namespace EngineService
                 }
                 else
                 {
+                    // insert prefixes needed for the message processing
                     string message = InsertIdPrefixes(rawMsg);
                     if (message.Contains(UciCommands.ENG_BEST_MOVE))
                     {
@@ -145,11 +156,27 @@ namespace EngineService
                             }
                             else
                             {
-                                List<string> infoMessages = GetInfoMessagesSequence(messages, ref index, ref noBulkProcessing);
+                                EngineLog.Message("INFO messages sequence count: " + rawMessages.Count);
+                                List<string> infoMessages = GetInfoMessagesSequence(rawMessages, ref index, ref noBulkProcessing);
+
                                 // the above call will set index to the last processed message
-                                index++;
-                                EngineInfoMessages?.Invoke(infoMessages);
+                                if (infoMessages != null)
+                                {
+                                    index++;
+                                    EngineLog.Message("INFO BULK count: " + infoMessages.Count);
+                                    EngineInfoMessages?.Invoke(infoMessages);
+                                }
+                                else
+                                {
+                                    index++;
+                                    EngineMessage?.Invoke(message);
+                                }
                             }
+                        }
+                        else
+                        {
+                            index++;
+                            EngineMessage?.Invoke(message);
                         }
                     }
                 }
@@ -160,23 +187,24 @@ namespace EngineService
         /// Extracts a sequence of consecutive INFO messages starting with multipv 1
         /// from the supplied list.
         /// </summary>
-        /// <param name="messages"></param>
+        /// <param name="rawMessages"></param>
         /// <param name="index"></param>
         /// <param name="noBulkProcessing"></param>
         /// <returns></returns>
-        private List<string> GetInfoMessagesSequence(List<string> messages, ref int index, ref bool noBulkProcessing)
+        private List<string> GetInfoMessagesSequence(List<string> rawMessages, ref int index, ref bool noBulkProcessing)
         {
+            int startIndex = index;
             int lastMultiPv_1_Index = -1;
 
-            for (int i = index; i < messages.Count; i++)
+            for (int i = index; i < rawMessages.Count; i++)
             {
-                if (!messages[i].Contains(UciCommands.ENG_INFO))
+                if (!rawMessages[i].StartsWith(UciCommands.ENG_INFO))
                 {
                     break;
                 }
                 index = i;
 
-                if (messages[i].Contains(UciCommands.ENG_MULTIPV_1))
+                if (rawMessages[i].Contains(UciCommands.ENG_MULTIPV_1))
                 {
                     lastMultiPv_1_Index = i;
                 }
@@ -184,6 +212,8 @@ namespace EngineService
 
             if (lastMultiPv_1_Index < 0)
             {
+                // reset index that will be returned to the caller, as we won't be bulk processing
+                index = startIndex;
                 noBulkProcessing = true;
                 return null;
             }
@@ -193,8 +223,9 @@ namespace EngineService
                 List<string> infoMessages = new List<string>();
                 for (int i = lastMultiPv_1_Index; i <= index; i++)
                 {
-                    infoMessages.Add(messages[i]);
-                    EngineLog.Message("INFO messages list item: " + messages[i]);
+                    string message = InsertIdPrefixes(rawMessages[i]);
+                    infoMessages.Add(message);
+                    EngineLog.Message("INFO messages list item: " + rawMessages[i]);
                 }
                 return infoMessages;
             }
