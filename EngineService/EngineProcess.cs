@@ -453,7 +453,9 @@ namespace EngineService
             if (_isEngineRunning && !_isMessageRxLoopRunning)
             {
                 EngineLog.Message("WARNING: ReadEngineMessages() was not running. Restarting...");
-                ReadEngineMessages();
+                // NOTE: this replaced the original call to the previous version of the message loop
+                // ReadEngineMessages()
+                ReadEngineMessagesV2();
             }
         }
 
