@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Timers;
-using System.Text;
-using GameTree;
+﻿using ChessForge.Properties;
 using ChessPosition;
-using System.IO;
-using EngineService;
-using System.Windows;
-using ChessForge.Properties;
 using ChessPosition.Utils;
+using EngineService;
+using GameTree;
+using System;
+using System.Collections.Generic;
+using System.Windows;
 
 namespace ChessForge
 {
@@ -71,6 +68,7 @@ namespace ChessForge
 
             ChessEngineService = new EngineService.EngineProcess();
             ChessEngineService.EngineMessage += EngineMessageReceived;
+            ChessEngineService.EngineInfoMessages += EngineInfoMessagesReceived;
             ChessEngineService.Multipv = Configuration.EngineMpv;
         }
 
@@ -850,6 +848,42 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Handles a list of received INFO messages
+        /// in response to the EngineInfoMessages event.
+        /// </summary>
+        /// <param name="messages"></param>
+        private static void EngineInfoMessagesReceived(List<string> messages)
+        {
+            try
+            {
+                // Info messages begin with TreeId
+                int treeId = -1;
+                int nodeId = -1;
+
+                for (int i = 0; i < messages.Count; i++)
+                {
+                    messages[i] = ParseMessagePrefix(messages[i], out treeId, out nodeId, out bool delayed, out GoFenCommand.EvaluationMode mode);
+                }
+
+                TreeNode evalNode = AppState.GetNodeByIds(treeId, nodeId);
+
+                if ((LearningMode.CurrentMode == LearningMode.Mode.ENGINE_GAME) || evalNode != null)
+                {
+                    if (evalNode == null)
+                    {
+                        AppLog.Message("null evalNode in EngineMessageReceived()");
+                    }
+                    ProcessBulkInfoMessages(messages, evalNode);
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("ERROR: processing bulk info messages: " + ex.Message);
+                DebugUtils.ShowDebugMessage("Error processing bulk info message: " + ex.Message);
+            }
+        }
+
+        /// <summary>
         /// Checks if the message comes with the prefix containing IDs
         /// and if so gets their values and removes from the message.
         /// </summary>
@@ -1065,6 +1099,9 @@ namespace ChessForge
 
             try
             {
+                //TODO: once bulk processing is proven to work, replace the below with
+                // ParseInfoMessage(message, out string moves, out int? multipv, out int? score, out int? movesToMate);
+                // UpdateMoveCandidates(evalNode, moves, multipv, score, movesToMate);
                 string[] tokens = message.Split(' ');
 
                 int idx = 0;
@@ -1154,6 +1191,125 @@ namespace ChessForge
             lock (InfoMessageProcessLock)
             {
                 IsInfoMessageProcessing = false;
+            }
+        }
+
+        /// <summary>
+        /// Processes a list of INFO messages.
+        /// The first message is guaranteed to have multipv value of 1. 
+        /// </summary>
+        /// <param name="messages"></param>
+        /// <param name="evalNode"></param>
+        private static void ProcessBulkInfoMessages(List<string> messages, TreeNode evalNode)
+        {
+            lock (MoveCandidatesLock)
+            {
+                EngineMoveCandidates.Clear();
+                foreach (string message in messages)
+                {
+                    ParseInfoMessage(message, out string moves, out int? multipv, out int? score, out int? movesToMate);
+                    UpdateMoveCandidates(evalNode, moves, multipv, score, movesToMate);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Parses a single INFO message and extracts the relevant values.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="moves"></param>
+        /// <param name="multipv"></param>
+        /// <param name="score"></param>
+        /// <param name="movesToMate"></param>
+        private static void ParseInfoMessage(string message, out string moves, out int? multipv, out int? score, out int? movesToMate)
+        {
+            string[] tokens = message.Split(' ');
+
+            int idx = 0;
+
+            multipv = null;
+            score = null;
+            movesToMate = null;
+            moves = "";
+
+            string STRING_PV = " pv ";
+
+            while (idx < tokens.Length)
+            {
+                switch (tokens[idx])
+                {
+                    case "multipv":
+                        idx++;
+                        multipv = int.Parse(tokens[idx]);
+                        break;
+                    case "score":
+                        // next token can be "cp" or "mate" followed by an int value
+                        ProcessScoreTokens(tokens[idx + 1], tokens[idx + 2], out score, out movesToMate);
+                        idx += 2;
+                        break;
+                    case "pv":
+                        int pvIndex = message.IndexOf(STRING_PV);
+                        moves = message.Substring(pvIndex + STRING_PV.Length);
+
+                        // force loop exit
+                        idx = tokens.Length;
+                        break;
+                }
+                idx++;
+            }
+        }
+
+        /// <summary>
+        /// Updates the MoveCandidates object with the values extracted from the INFO message.
+        /// </summary>
+        /// <param name="evalNode"></param>
+        /// <param name="moves"></param>
+        /// <param name="multipv"></param>
+        /// <param name="score"></param>
+        /// <param name="movesToMate"></param>
+        private static void UpdateMoveCandidates(TreeNode evalNode, string moves, int? multipv, int? score, int? movesToMate)
+        {
+            if (multipv != null && (score != null || movesToMate != null))
+            {
+                EngineMoveCandidates.EvalNode = evalNode;
+
+                // we have updated evaluation
+                // make sure we have the object to set
+                while (EngineMoveCandidates.Lines.Count < multipv)
+                {
+                    EngineMoveCandidates.AddEvaluation(new MoveEvaluation());
+                }
+
+                EngineMoveCandidates.Lines[multipv.Value - 1].Line = moves;
+                if (score != null)
+                {
+                    EngineMoveCandidates.Lines[multipv.Value - 1].ScoreCp = score.Value;
+                    EngineMoveCandidates.Lines[multipv.Value - 1].IsMateDetected = false;
+                }
+                else
+                {
+                    EngineMoveCandidates.Lines[multipv.Value - 1].IsMateDetected = true;
+                    EngineMoveCandidates.Lines[multipv.Value - 1].MovesToMate = movesToMate.Value;
+                }
+            }
+            else if (multipv == null && movesToMate == 0) // special case where we have a check mate position
+            {
+                if (EngineMoveCandidates.Lines.Count == 0)
+                {
+                    EngineMoveCandidates.AddEvaluation(new MoveEvaluation());
+                }
+                EngineMoveCandidates.Lines[0].IsMateDetected = true;
+                EngineMoveCandidates.Lines[0].MovesToMate = 0;
+            }
+            else if (multipv == null && score == 0) // special case where we have a stalemate
+            {
+                if (EngineMoveCandidates.Lines.Count == 0)
+                {
+                    EngineMoveCandidates.AddEvaluation(new MoveEvaluation());
+                }
+                EngineMoveCandidates.Lines[0].ScoreCp = score.Value;
+                EngineMoveCandidates.Lines[0].IsMateDetected = false;
+                EngineMoveCandidates.Lines[0].MovesToMate = 0;
             }
         }
 

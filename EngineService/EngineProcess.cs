@@ -11,7 +11,7 @@ namespace EngineService
     /// communicating with it.
     /// It is built as a DLL so that it can be easily tested independent of the main program.
     /// </summary>
-    public class EngineProcess
+    public partial class EngineProcess
     {
         /// <summary>
         /// Once the engine process has started and "readyok" was received, the engine will be
@@ -83,6 +83,12 @@ namespace EngineService
         /// It is defined in EngineMessageProcessor as EngineMessageReceived().
         /// </summary>
         public event Action<string> EngineMessage;
+
+        /// <summary>
+        /// Action invoked by ProcessMessagesList().
+        /// It is defined in EngineMessageProcessor as EngineInfoMessagesReceived().
+        /// </summary>
+        public event Action<List<string>> EngineInfoMessages;
 
         // path to the engine executable
         private string _enginePath;
@@ -237,6 +243,10 @@ namespace EngineService
 
                 _currentState = State.NOT_READY;
                 _activeEvaluationMode = GoFenCommand.EvaluationMode.NONE;
+
+                _engineProcess.Kill();
+                _engineProcess.Dispose();
+
                 EngineLog.Message("Engine stopped.");
             }
             catch (Exception ex)
@@ -443,7 +453,9 @@ namespace EngineService
             if (_isEngineRunning && !_isMessageRxLoopRunning)
             {
                 EngineLog.Message("WARNING: ReadEngineMessages() was not running. Restarting...");
-                ReadEngineMessages();
+                // NOTE: this replaced the original call to the previous version of the message loop
+                // ReadEngineMessages()
+                ReadEngineMessagesV2();
             }
         }
 
@@ -538,14 +550,6 @@ namespace EngineService
                     {
                         message = _strmReader.ReadLine();
                         
-                        // TODO: switch to the kind of processing where we read multiple INFOs at once
-                        //       and process them outside this loop
-                        //
-                        //while (_strmReader.Peek() >= 0 && message.Contains("info depth"))
-                        //{
-                        //    message += _strmReader.ReadLine();
-                        //}
-
                         if (message != null && !message.Contains("currmove"))
                         {
                             EngineLog.Message(message);
@@ -580,7 +584,7 @@ namespace EngineService
                         if (message == null)
                         {
                             // null message can be received during initialization or when there is an engine error.
-                            // if the former, we need to esixt the loop and allow regular processing,
+                            // if the former, we need to exit the loop and allow regular processing,
                             // if the latter, we need to handle error situation
                             _badMessageCount++;
                             if (_isEngineReady)
