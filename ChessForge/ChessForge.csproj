@@ -283,6 +283,7 @@
     <Compile Include="SearchPositionDialog.xaml.cs">
       <DependentUpon>SearchPositionDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SearchUtils.cs" />
     <Compile Include="SelectArticleRefsDialog.xaml.cs">
       <DependentUpon>SelectArticleRefsDialog.xaml</DependentUpon>
     </Compile>
