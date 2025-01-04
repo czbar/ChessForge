@@ -226,6 +226,7 @@
     <Compile Include="MainWindowMoveAnimation.cs" />
     <Compile Include="GuiUtilities.cs" />
     <Compile Include="ActiveLineManager.cs" />
+    <Compile Include="ContextMenus.cs" />
     <Compile Include="MainWindowToolsMenu.cs" />
     <Compile Include="MainWindowTrainingActions.cs" />
     <Compile Include="ManualReviewState.cs" />
