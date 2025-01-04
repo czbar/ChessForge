@@ -47,5 +47,26 @@ namespace ChessForge
             }
             catch { }
         }
+
+        /// <summary>
+        /// Sets the font size of the context menus
+        /// </summary>
+        /// <param name="size"></param>
+        public static void SetMenuFontSize(double size)
+        {
+            ContextMenu expCollapse = AppState.MainWin.Resources["CmIndexExpandCollapse"] as ContextMenu;
+            if (expCollapse != null)
+            {
+                expCollapse.FontSize = size;
+            }
+
+            ContextMenu cmRefs = AppState.MainWin.Resources["CmReferences"] as ContextMenu;
+            if (cmRefs != null)
+            {
+                cmRefs.FontSize = size;
+            }
+        }
+
+
     }
 }
