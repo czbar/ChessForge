@@ -39,6 +39,12 @@ namespace ChessForge
                 expCollapse.FontSize = size;
             }
 
+            ContextMenu cmRefs = Resources["CmReferences"] as ContextMenu;
+            if (cmRefs != null)
+            {
+                cmRefs.FontSize = size;
+            }
+
             UiLblAutoSave.FontSize = size;
             UiLblExplorers.FontSize = size;
             UiLblEngine.FontSize = size;
