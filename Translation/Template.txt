@@ -1031,6 +1031,24 @@ NotNamed=
 
 ###########################
 #
+# Header: CONTEXT MENU for References
+#
+
+#description: Remove reference
+#english: RemoveReference=Remove Reference
+RemoveReference=
+
+#description: Automatically place this reference in the optimal place
+#english: AutoPlaceReference=Auto-place this Reference
+AutoPlaceReference=
+
+#description: Automatically place all references in the optimal places
+#english: AutoPlaceAllReferences=Auto-place all References
+AutoPlaceAllReferences=
+
+
+###########################
+#
 # Header: Self-indexing view
 #
 
