@@ -1095,10 +1095,14 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnciRemoveReference_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: undo
+            int nodeId = ReferenceUtils.LastClickedReferenceNodeId;
+            string refGuid = ReferenceUtils.LastClickedReference;
+            TreeNode node = ActiveVariationTree.GetNodeFromNodeId(nodeId);
 
-            TreeNode node = ActiveVariationTree.GetNodeFromNodeId(ReferenceUtils.LastClickedReferenceNodeId);
-            ReferenceUtils.RemoveReferenceFromNode(node, ReferenceUtils.LastClickedReference);
+            EditOperation editOp = new EditOperation(EditOperation.EditType.DELETE_REFERENCE, node, refGuid);
+            ActiveVariationTree.OpsManager.PushOperation(editOp);
+
+            ReferenceUtils.RemoveReferenceFromNode(node, refGuid);
             ActiveTreeView.InsertOrUpdateCommentRun(node);
             AppState.IsDirty = true;
         }
@@ -1110,12 +1114,8 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnciAutoPlaceReference_Click(object sender, RoutedEventArgs e)
         {
-            TreeNode originalNode = ActiveVariationTree.GetNodeFromNodeId(ReferenceUtils.LastClickedReferenceNodeId);
-            TreeNode optimalNode = SearchUtils.RepositionReference(ActiveVariationTree, originalNode, ReferenceUtils.LastClickedReference);
-            if (originalNode != optimalNode)
-            {
-                RefreshReferencesInComments(new List<TreeNode> { optimalNode }, new List<TreeNode> { originalNode });
-            }
+            TreeNode referencingNode = ActiveVariationTree.GetNodeFromNodeId(ReferenceUtils.LastClickedReferenceNodeId);
+            ReferenceUtils.RepositionReferences(ActiveVariationTree, referencingNode, ReferenceUtils.LastClickedReference);
         }
 
         /// <summary>
@@ -1125,8 +1125,8 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnciAutoPlaceMoveReferences_Click(object sender, RoutedEventArgs e)
         {
-            TreeNode originalNode = ActiveVariationTree.GetNodeFromNodeId(ReferenceUtils.LastClickedReferenceNodeId);
-            RepositionReferences(ActiveVariationTree, originalNode);
+            TreeNode referencingNode = ActiveVariationTree.GetNodeFromNodeId(ReferenceUtils.LastClickedReferenceNodeId);
+            ReferenceUtils.RepositionReferences(ActiveVariationTree, referencingNode);
         }
 
         /// <summary>
@@ -1136,56 +1136,9 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnciAutoPlaceAllReferences_Click(object sender, RoutedEventArgs e)
         {
-            RepositionReferences(ActiveVariationTree, null);
+            ReferenceUtils.RepositionReferences(ActiveVariationTree, null);
         }
 
-        /// <summary>
-        /// Moves all references from either a single node or the entire tree 
-        /// to their optimal location.
-        /// </summary>
-        /// <param name="tree"></param>
-        /// <param name="currentNode"></param>
-        private void RepositionReferences(VariationTree tree, TreeNode currentNode)
-        {
-            List<TreeNode> optimalNodes = 
-                SearchUtils.RepositionReferences(currentNode != null ? ActiveVariationTree : null, 
-                                                 currentNode, out List<TreeNode> hostReferencingNodes);
-
-            if (!SearchUtils.AreListsIdentical(hostReferencingNodes, optimalNodes))
-            {
-                RefreshReferencesInComments(optimalNodes, hostReferencingNodes);
-            }
-        }
-
-        /// <summary>
-        /// Refreshes the references in the comments.
-        /// Both the optimal nodes and the host referencing nodes are refreshed.
-        /// Some references would have been moved from the latter to the former.
-        /// </summary>
-        /// <param name="optimalNodes"></param>
-        /// <param name="hostReferencingNodes"></param>
-        private void RefreshReferencesInComments(List<TreeNode> optimalNodes, List<TreeNode> hostReferencingNodes)
-        {
-            // TODO: prepare undo
-            foreach (TreeNode node in optimalNodes)
-            {
-                ActiveTreeView.InsertOrUpdateCommentRun(node);
-            }
-
-            foreach (TreeNode node in hostReferencingNodes)
-            {
-                ActiveTreeView.InsertOrUpdateCommentRun(node);
-            }
-
-            if (optimalNodes.Count > 0)
-            {
-                SetActiveLine(optimalNodes[0].LineId, optimalNodes[0].NodeId);
-                ActiveTreeView.SelectNode(optimalNodes[0]);
-                PulseManager.BringSelectedRunIntoView();
-            }
-
-            AppState.IsDirty = true;
-        }
 
 
         //**************************************************************
