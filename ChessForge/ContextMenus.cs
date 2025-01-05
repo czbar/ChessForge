@@ -8,18 +8,24 @@ namespace ChessForge
     public partial class ContextMenus
     {
         /// <summary>
-        /// Enables or disables the menu items in the References context menu
+        /// Enables or disables the menu items in the References context menu.
+        /// The state of the menu items depends on how many references of different types are
+        /// there on the clicked node and the article overall.
         /// </summary>
         /// <param name="cm"></param>
-        /// <param name="article"></param>
-        /// <param name="gameExerciseRefCount"></param>
-        /// <param name="chapterRefCount"></param>
-        public static void EnableReferencesMenuItems(ContextMenu cm, Article article, int gameExerciseRefCount, int chapterRefCount)
+        /// <param name="clickedArticleRef"></param>
+        /// <param name="treeGameExerciseRefCount"></param>
+        /// <param name="treeChapterRefCount"></param>
+        /// <param name="nodeGameExerciseRefCount"></param>
+        /// <param name="nodeChapterRefCount"></param>
+        public static void EnableReferencesMenuItems(ContextMenu cm, Article clickedArticleRef,
+                                                        int treeGameExerciseRefCount, int treeChapterRefCount,
+                                                        int nodeGameExerciseRefCount, int nodeChapterRefCount)
         {
             try
             {
                 bool isGameExerciseRef = false;
-                if (article.ContentType == GameTree.GameData.ContentType.MODEL_GAME || article.ContentType == GameTree.GameData.ContentType.EXERCISE)
+                if (clickedArticleRef.ContentType == GameTree.GameData.ContentType.MODEL_GAME || clickedArticleRef.ContentType == GameTree.GameData.ContentType.EXERCISE)
                 {
                     isGameExerciseRef = true;
                 }
@@ -37,9 +43,13 @@ namespace ChessForge
                                 // enabled if we clicked the game or exercise references
                                 menuItem.IsEnabled = isGameExerciseRef;
                                 break;
+                            case "UiMnciAutoPlaceMoveReferences":
+                                // enabled if there is more than one game or exercise reference on the clicked node
+                                menuItem.IsEnabled = nodeGameExerciseRefCount > 1;
+                                break;
                             case "UiMnciAutoPlaceAllReferences":
                                 // enabled if there is more than one game or exercise reference
-                                menuItem.IsEnabled = gameExerciseRefCount > 1;
+                                menuItem.IsEnabled = treeGameExerciseRefCount > 1;
                                 break;
                         }
                     }
