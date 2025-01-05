@@ -76,47 +76,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Gets the counts of all references found in the nodes of the passed tree.
-        /// </summary>
-        /// <param name="tree"></param>
-        /// <param name="gameRefCount"></param>
-        /// <param name="exerciseRefCount"></param>
-        /// <param name="chapterRefCount"></param>
-        public static void GetReferenceCountsByType(VariationTree tree, out int gameRefCount, out int exerciseRefCount, out int chapterRefCount)
-        {
-            gameRefCount = 0;
-            exerciseRefCount = 0;
-            chapterRefCount = 0;
-
-            foreach(TreeNode node in tree.Nodes)
-            {
-                if (!string.IsNullOrEmpty(node.References))
-                {
-                    string[] refs = node.References.Split('|');
-                    foreach(string guid in refs)
-                    {
-                        Article article = WorkbookManager.SessionWorkbook.GetArticleByGuid(guid, out _, out _, true);
-                        if (article != null)
-                        {
-                            if (article.ContentType == GameData.ContentType.MODEL_GAME)
-                            {
-                                gameRefCount++;
-                            }
-                            else if (article.ContentType == GameData.ContentType.EXERCISE)
-                            {
-                                exerciseRefCount++;
-                            }
-                            else if (article.ContentType == GameData.ContentType.STUDY_TREE)
-                            {
-                                chapterRefCount++;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        /// <summary>
         /// Splits a '|' separated list of references into Game/Exercise refs
         /// and Chapter refs.
         /// </summary>
@@ -170,7 +129,7 @@ namespace ChessForge
                 references += "|";
             }
             references += refsGuids2;
-            
+
             return references;
         }
 
