@@ -1,4 +1,6 @@
-﻿using GameTree;
+﻿using ChessPosition;
+using GameTree;
+using System.Collections.Generic;
 
 namespace ChessForge
 {
@@ -119,5 +121,279 @@ namespace ChessForge
 
             GetReferenceCountsByType(tree, out gameRefCount, out exerciseRefCount, out chapterRefCount);
         }
+
+        /// <summary>
+        /// Moves all references from either a single node or the entire tree 
+        /// to their optimal location.
+        /// It has to handle 3 cases:
+        /// 1. currentNode is null, then the entire tree is repositioned
+        /// 2. currentNode is not null but giidRef is null, then only the references in the currentNode are repositioned
+        /// 3. currentNode is not null and guidRef is not null, then only the reference with the guidRef at the currentNode is repositioned.
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <param name="currNode"></param>
+        public static void RepositionReferences(VariationTree tree, TreeNode currNode, string guidRef = null)
+        {
+            // build the lists of referencing nodes and referenced articles, and identify the optimal nodes
+            List<TreeNode> optimalNodes =
+                IdentifyOptimalReferenceNodes(tree, currNode, guidRef, out List<TreeNode> origNodes, out List<Article> refArticles);
+
+            if (!TreeUtils.AreNodeListsIdentical(origNodes, optimalNodes))
+            {
+                // undo data must be create here before changes are made
+                CreateReferenceUndoOp(optimalNodes, origNodes);
+                // perform the actual repositioning
+                UpdateOptimalNodesReferences(optimalNodes, origNodes, refArticles);
+                // refresh the GUI
+                RefreshReferencesInComments(optimalNodes, origNodes);
+            }
+        }
+
+        /// <summary>
+        /// Identifies the optimal referencing node for the referenced article.
+        /// </summary>
+        /// <param name="optimalNodes"></param>
+        /// <param name="origNodes"></param>
+        /// <param name="refArticles"></param>
+        private static void UpdateOptimalNodesReferences(List<TreeNode> optimalNodes, List<TreeNode> origNodes, List<Article> refArticles)
+        {
+            // clear the references from the host nodes and the proposed nodes.
+            // note that optimal nodes have all the necessary references as we created entries for the unchanged ones too
+            ClearReferences(origNodes);
+            ClearReferences(optimalNodes);
+
+            // build reference strings for the proposed nodes
+            for (int i = 0; i < optimalNodes.Count; i++)
+            {
+                AddReferenceToNode(optimalNodes[i], refArticles[i].Guid);
+            }
+        }
+
+        /// <summary>
+        /// Identifies the optimal referencing nodes for all referenced articles in the host article.
+        /// Does not modify any nodes here.
+        /// </summary>
+        /// <param name="hostArticle"></param>
+        private static List<TreeNode> IdentifyOptimalReferenceNodes(
+                                            VariationTree tree,
+                                            TreeNode node,
+                                            string guidRef,
+                                            out List<TreeNode> origNodes,
+                                            out List<Article> refArticles)
+        {
+            BuildReferencingLists(tree, node, out origNodes, out refArticles);
+            List<TreeNode> optimalNodes = FindBestReferencingNodes(tree, guidRef, origNodes, refArticles);
+
+            return optimalNodes;
+        }
+
+        /// <summary>
+        /// Creates an EditOperation for repositioning references before the actual
+        /// repositioning was done.
+        /// The Undo operation will clear the references in the optimal nodes 
+        /// and set the references as per the hostReferencingNodes.
+        /// </summary>
+        /// <param name="optimalNodes"></param>
+        /// <param name="hostReferencingNodes"></param>
+        private static void CreateReferenceUndoOp(List<TreeNode> optimalNodes, List<TreeNode> hostReferencingNodes)
+        {
+            // for Undo create 2 lists of MoveAttributes and populate them with node and refs ids.
+            List<MoveAttributes> optimalMoveAttributes = new List<MoveAttributes>();
+            List<MoveAttributes> hostReferencingMoveAttributes = new List<MoveAttributes>();
+            foreach (TreeNode node in optimalNodes)
+            {
+                optimalMoveAttributes.Add(new MoveAttributes(node.NodeId, node.References));
+            }
+            foreach (TreeNode node in hostReferencingNodes)
+            {
+                hostReferencingMoveAttributes.Add(new MoveAttributes(node.NodeId, node.References));
+            }
+            EditOperation editOp = new EditOperation(EditOperation.EditType.REPOSITION_REFERENCES, optimalMoveAttributes, hostReferencingMoveAttributes);
+            AppState.ActiveVariationTree.OpsManager.PushOperation(editOp);
+        }
+
+        /// <summary>
+        /// Refreshes the references in the comments.
+        /// Both the optimal nodes and the host referencing nodes are refreshed.
+        /// No nodes data is manipulated here. It all should have been done before.
+        /// </summary>
+        /// <param name="optimalNodes"></param>
+        /// <param name="hostReferencingNodes"></param>
+        private static void RefreshReferencesInComments(List<TreeNode> optimalNodes, List<TreeNode> hostReferencingNodes)
+        {
+
+            foreach (TreeNode node in optimalNodes)
+            {
+                AppState.MainWin.ActiveTreeView.InsertOrUpdateCommentRun(node);
+            }
+
+            foreach (TreeNode node in hostReferencingNodes)
+            {
+                AppState.MainWin.ActiveTreeView.InsertOrUpdateCommentRun(node);
+            }
+
+            if (optimalNodes.Count > 0)
+            {
+                AppState.MainWin.SetActiveLine(optimalNodes[0].LineId, optimalNodes[0].NodeId);
+                AppState.MainWin.ActiveTreeView.SelectNode(optimalNodes[0]);
+                PulseManager.BringSelectedRunIntoView();
+            }
+
+            AppState.IsDirty = true;
+        }
+
+        /// <summary>
+        /// Finds the optimal node in the referenced article.
+        /// </summary>
+        /// <param name="article"></param>
+        /// <param name="fenSet"></param>
+        /// <returns></returns>
+        private static string GetOptimalNode(Article article, HashSet<string> fenSet)
+        {
+            string lastFen = null;
+            TreeNode lastNode = null;
+
+            foreach (TreeNode node in article.Tree.Nodes)
+            {
+                node.Fen = FenParser.GenerateShortFen(node.Position);
+                if (fenSet.Contains(node.Fen))
+                {
+                    if (lastNode == null
+                        || node.MoveNumber > lastNode.MoveNumber
+                        || node.MoveNumber == lastNode.MoveNumber && node.ColorToMove == ChessPosition.PieceColor.White)
+                    {
+                        lastNode = node;
+                        lastFen = node.Fen;
+                    }
+                }
+            }
+
+            return lastFen;
+        }
+
+        /// <summary>
+        /// Builds a hash set of FENs for all nodes in the host article.
+        /// </summary>
+        /// <param name="hostArticle"></param>
+        /// <param name="fenSet"></param>
+        private static Dictionary<string, TreeNode> BuildFenHashSet(VariationTree tree, out HashSet<string> fenSet)
+        {
+            Dictionary<string, TreeNode> fenToNode = new Dictionary<string, TreeNode>();
+
+            List<string> hostFens = new List<string>();
+            foreach (TreeNode node in tree.Nodes)
+            {
+                node.Fen = FenParser.GenerateShortFen(node.Position);
+                hostFens.Add(node.Fen);
+                fenToNode[node.Fen] = node;
+            }
+
+            // place them in a hash set for faster lookup
+            fenSet = new HashSet<string>(hostFens);
+
+            return fenToNode;
+        }
+
+        /// <summary>
+        /// Identifies the optimal referencing nodes for the referenced articles. 
+        /// The optimal node is one representing a position found in the referenced article 
+        /// that is closest to the end of the game.
+        /// Note that the size of hostReferencingNodes and referencedArticles is the same.
+        /// Same node will appear multiple times in the hostReferencingNodes list if it had multiple refernces.
+        /// The returned list will have the same size as the hostReferencingNodes and referencedArticles lists.
+        /// 
+        /// The references to chapters will not be changed. 
+        /// </summary>
+        /// <param name="hostArticle"></param>
+        /// <param name="hostReferencingNodes"></param>
+        /// <param name="referencedArticles"></param>
+        /// <returns></returns>
+        private static List<TreeNode> FindBestReferencingNodes(VariationTree tree, string guidRef, List<TreeNode> hostReferencingNodes, List<Article> referencedArticles)
+        {
+            // generate FENs for all nodes in the source list
+            Dictionary<string, TreeNode> fenToNode = BuildFenHashSet(tree, out HashSet<string> fenSet);
+
+            // create a list of updated referencing nodes,
+            // it will have the same size as the hostReferencingNodes and referencedArticles lists as there is a 1:1 correspondence
+            List<TreeNode> updatedReferencingNodes = new List<TreeNode>();
+            for (int i = 0; i < referencedArticles.Count; i++)
+            {
+                Article article = referencedArticles[i];
+
+                if (article.ContentType == GameData.ContentType.STUDY_TREE || (guidRef != null && article.Guid != guidRef))
+                {
+                    // this a chapter reference or not a guid we are after so just keep it.
+                    updatedReferencingNodes.Add(hostReferencingNodes[i]);
+                }
+                else
+                {
+                    string fen = GetOptimalNode(article, fenSet);
+                    updatedReferencingNodes.Add(fenToNode[fen]);
+                }
+            }
+
+            return updatedReferencingNodes;
+        }
+
+        /// <summary>
+        /// Builds the list of referencing nodes and referenced articles.
+        /// If the node is not null, the list will contain only that node
+        /// otherwise we will use the list of all nodes from the passed tree.
+        /// </summary>
+        /// <param name="hostArticle"></param>
+        /// <param name="origNodes"></param>
+        /// <param name="refArticles"></param>
+        private static void BuildReferencingLists(VariationTree tree, TreeNode node, out List<TreeNode> origNodes, out List<Article> refArticles)
+        {
+            origNodes = new List<TreeNode>();
+            refArticles = new List<Article>();
+
+            List<TreeNode> nodes;
+            if (node != null)
+            {
+                // if node is not null, we will only handle references from that node
+                nodes = new List<TreeNode>
+                {
+                    node
+                };
+            }
+            else
+            {
+                nodes = tree.Nodes;
+            }
+
+            // build lists of referencing nodes and referenced articles
+            foreach (TreeNode nd in nodes)
+            {
+                if (!string.IsNullOrEmpty(nd.References))
+                {
+                    List<Article> articles = GuiUtilities.BuildReferencedArticlesList(nd.References);
+                    if (articles.Count > 0)
+                    {
+                        foreach (Article article in articles)
+                        {
+                            if (article.Tree != null)
+                            {
+                                refArticles.Add(article);
+                                origNodes.Add(nd);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Clears the references from the nodes.
+        /// </summary>
+        /// <param name="nodes"></param>
+        private static void ClearReferences(List<TreeNode> nodes)
+        {
+            foreach (TreeNode node in nodes)
+            {
+                node.References = null;
+            }
+        }
+
     }
 }
