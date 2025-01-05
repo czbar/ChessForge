@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GameTree
+﻿namespace GameTree
 {
     public class EditOperationsManager : OperationsManager
     {
@@ -101,7 +95,7 @@ namespace GameTree
                         selectedNodeId = _owningTree.UndoDeleteReference(op.OpData_1, op.OpData_2);
                         break;
                     case EditOperation.EditType.REPOSITION_REFERENCES:
-                        selectedNodeId =  _owningTree.UndoRepositionReferences(op.OpData_1, op.OpData_2);
+                        selectedNodeId =  _owningTree.UndoRepositionReferences(op.NodeId, op.OpData_1, op.OpData_2);
                         break;
                 }
             }
