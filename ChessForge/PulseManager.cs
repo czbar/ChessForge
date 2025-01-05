@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.PerformanceData;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GameTree;
 using System.Timers;
-using System.Windows.Threading;
-using GameTree;
 
 namespace ChessForge
 {
