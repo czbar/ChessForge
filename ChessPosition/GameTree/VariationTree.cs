@@ -1758,6 +1758,52 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Restores deleted reference.
+        /// </summary>
+        /// <param name="oNode"></param>
+        /// <param name="oRefGuid"></param>
+        /// <returns></returns>
+        public int UndoDeleteReference(object oNode, object oRefGuid)
+        {
+            int nodeId = -1;
+            if (oNode is TreeNode node && oRefGuid is string refGuid)
+            {
+                node.AddArticleReference(refGuid);
+                nodeId = node.NodeId;
+            }
+
+            return nodeId;
+        }
+
+        /// <summary>
+        /// Restores original positions of references.
+        /// </summary>
+        /// <param name="oOptimalNodes"></param>
+        /// <param name="oOrigNodes"></param>
+        /// <returns></returns>
+        public int UndoRepositionReferences(int selectNodeId, object oOptimalNodes, object oOrigNodes)
+        {
+            if (oOptimalNodes is List<MoveAttributes> optimalNodes && oOrigNodes is List<MoveAttributes> origNodes)
+            {
+                // first clear what is there now
+                foreach (MoveAttributes nac in optimalNodes)
+                {
+                    TreeNode nd = GetNodeFromNodeId(nac.NodeId);
+                    nd.RemoveArticleReference(nac.References);
+                }
+
+                // replace with the original content
+                foreach (MoveAttributes nac in origNodes)
+                {
+                    TreeNode nd = GetNodeFromNodeId(nac.NodeId);
+                    nd.AddArticleReference(nac.References);
+                }
+
+            }
+            return selectNodeId;
+        }
+
+        /// <summary>
         /// Builds a list of Nodes belonging to a subtree
         /// identified by the passed node.
         /// </summary>
