@@ -97,6 +97,12 @@ namespace GameTree
                             selectedNodeId = tnNode.NodeId;
                         }
                         break;
+                    case EditOperation.EditType.DELETE_REFERENCE:
+                        selectedNodeId = _owningTree.UndoDeleteReference(op.OpData_1, op.OpData_2);
+                        break;
+                    case EditOperation.EditType.REPOSITION_REFERENCES:
+                        selectedNodeId =  _owningTree.UndoRepositionReferences(op.OpData_1, op.OpData_2);
+                        break;
                 }
             }
             catch
