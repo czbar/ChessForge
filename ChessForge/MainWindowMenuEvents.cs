@@ -1095,16 +1095,20 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnciRemoveReference_Click(object sender, RoutedEventArgs e)
         {
-            int nodeId = ReferenceUtils.LastClickedReferenceNodeId;
-            string refGuid = ReferenceUtils.LastClickedReference;
-            TreeNode node = ActiveVariationTree.GetNodeFromNodeId(nodeId);
+            try
+            {
+                int nodeId = ReferenceUtils.LastClickedReferenceNodeId;
+                string refGuid = ReferenceUtils.LastClickedReference;
+                TreeNode node = ActiveVariationTree.GetNodeFromNodeId(nodeId);
 
-            EditOperation editOp = new EditOperation(EditOperation.EditType.DELETE_REFERENCE, node, refGuid);
-            ActiveVariationTree.OpsManager.PushOperation(editOp);
+                EditOperation editOp = new EditOperation(EditOperation.EditType.DELETE_REFERENCE, node, refGuid);
+                ActiveVariationTree.OpsManager.PushOperation(editOp);
 
-            ReferenceUtils.RemoveReferenceFromNode(node, refGuid);
-            ActiveTreeView.InsertOrUpdateCommentRun(node);
-            AppState.IsDirty = true;
+                ReferenceUtils.RemoveReferenceFromNode(node, refGuid);
+                ActiveTreeView.InsertOrUpdateCommentRun(node);
+                AppState.IsDirty = true;
+            }
+            catch { }
         }
 
         /// <summary>
@@ -1114,8 +1118,12 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnciAutoPlaceReference_Click(object sender, RoutedEventArgs e)
         {
-            TreeNode referencingNode = ActiveVariationTree.GetNodeFromNodeId(ReferenceUtils.LastClickedReferenceNodeId);
-            ReferenceUtils.RepositionReferences(ActiveVariationTree, referencingNode, ReferenceUtils.LastClickedReference);
+            try
+            {
+                TreeNode referencingNode = ActiveVariationTree.GetNodeFromNodeId(ReferenceUtils.LastClickedReferenceNodeId);
+                ReferenceUtils.RepositionReferences(ActiveVariationTree, referencingNode, ReferenceUtils.LastClickedReference);
+            }
+            catch { }
         }
 
         /// <summary>
@@ -1125,8 +1133,12 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnciAutoPlaceMoveReferences_Click(object sender, RoutedEventArgs e)
         {
-            TreeNode referencingNode = ActiveVariationTree.GetNodeFromNodeId(ReferenceUtils.LastClickedReferenceNodeId);
-            ReferenceUtils.RepositionReferences(ActiveVariationTree, referencingNode);
+            try
+            {
+                TreeNode referencingNode = ActiveVariationTree.GetNodeFromNodeId(ReferenceUtils.LastClickedReferenceNodeId);
+                ReferenceUtils.RepositionReferences(ActiveVariationTree, referencingNode);
+            }
+            catch { }
         }
 
         /// <summary>
@@ -1136,7 +1148,11 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnciAutoPlaceAllReferences_Click(object sender, RoutedEventArgs e)
         {
-            ReferenceUtils.RepositionReferences(ActiveVariationTree, null);
+            try
+            {
+                ReferenceUtils.RepositionReferences(ActiveVariationTree, null);
+            }
+            catch { }
         }
 
 
