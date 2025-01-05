@@ -2402,7 +2402,12 @@ namespace ChessForge
                 if (sender is Inline inl)
                 {
                     int nodeId = TextUtils.GetNodeIdAndArticleRefFromPrefixedString(inl.Name, out string articleRef);
+                    TreeNode node = _mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId);
+
                     Article article = AppState.Workbook.GetArticleByGuid(articleRef, out int chapterIndex, out int articleIndex, true);
+                    
+                    ReferenceUtils.LastClickedReference = articleRef;
+                    ReferenceUtils.LastClickedReferenceNodeId = nodeId;
 
                     if (e.ChangedButton == MouseButton.Left)
                     {
@@ -2430,8 +2435,11 @@ namespace ChessForge
                             // configure and show the context menu
                             ContextMenu cmReferences = _mainWin.Resources["CmReferences"] as ContextMenu;
 
-                            GuiUtilities.GetReferenceCountsByType(_mainVariationTree, out int gameRefCount, out int exerciseRefCount, out int chapterRefCount);
-                            ContextMenus.EnableReferencesMenuItems(cmReferences, article, gameRefCount + exerciseRefCount, chapterRefCount);
+                            ReferenceUtils.GetReferenceCountsByType(node, out int nodeGameRefCount, out int nodeExerciseRefCount, out int nodeChapterRefCount);
+                            ReferenceUtils.GetReferenceCountsByType(_mainVariationTree, out int treeGameRefCount, out int treeExerciseRefCount, out int treeChapterRefCount);
+                            ContextMenus.EnableReferencesMenuItems(cmReferences, article,
+                                treeGameRefCount + treeExerciseRefCount, treeChapterRefCount,
+                                nodeGameRefCount + nodeExerciseRefCount, nodeChapterRefCount);
 
                             if (cmReferences != null)
                             {
