@@ -1114,17 +1114,7 @@ namespace ChessForge
             TreeNode optimalNode = SearchUtils.RepositionReference(ActiveVariationTree, originalNode, ReferenceUtils.LastClickedReference);
             if (originalNode != optimalNode)
             {
-                // TODO: undo
-
-                ActiveTreeView.InsertOrUpdateCommentRun(originalNode);
-                ActiveTreeView.InsertOrUpdateCommentRun(optimalNode);
-
-                SetActiveLine(optimalNode.LineId, optimalNode.NodeId);
-                ActiveTreeView.SelectNode(optimalNode);
-                PulseManager.BringSelectedRunIntoView();
-
-                AppState.IsDirty = true;
-
+                RefreshReferencesInComments(new List<TreeNode> { optimalNode }, new List<TreeNode> { originalNode });
             }
         }
 
@@ -1138,7 +1128,6 @@ namespace ChessForge
             TreeNode originalNode = ActiveVariationTree.GetNodeFromNodeId(ReferenceUtils.LastClickedReferenceNodeId);
             RepositionReferences(ActiveVariationTree, originalNode);
         }
-
 
         /// <summary>
         /// Moves all references in the ActiveTree to their optimal location.
