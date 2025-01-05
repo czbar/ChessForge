@@ -1039,11 +1039,15 @@ NotNamed=
 RemoveReference=
 
 #description: Automatically place this reference in the optimal place
-#english: AutoPlaceReference=Auto-place this Reference
+#english: AutoPlaceReference=Adjust This Reference's Position
 AutoPlaceReference=
 
+#description: Automatically place this reference in the optimal place
+#english: AutoPlaceMoveReferences=Adjust Move's References' Positions
+AutoPlaceMoveReferences=
+
 #description: Automatically place all references in the optimal places
-#english: AutoPlaceAllReferences=Auto-place all References
+#english: AutoPlaceAllReferences=Adjust All References' Positions
 AutoPlaceAllReferences=
 
 

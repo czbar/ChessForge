@@ -1040,12 +1040,13 @@ RemoveReference=Usuń odsyłacz
 
 #description: Automatically place this reference in the optimal place
 #english: AutoPlaceReference=Auto-place this Reference
-AutoPlaceReference=Przenieś odsyłacz w optymalne miejsce
+AutoPlaceReference=Popraw pozycję odsyłacza
 
 #description: Automatically place all references in the optimal places
 #english: AutoPlaceAllReferences=Auto-place all References
-AutoPlaceAllReferences=Przenieś wszystkie odsyłacze w optymalne miejsca
+AutoPlaceAllReferences=Popraw pozycje wszystkich odsyłaczy
 
+AutoPlaceMoveReferences=Popraw pozycje odsyłaczy w tym ruchu
 
 ###########################
 #

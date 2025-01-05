@@ -232,7 +232,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Auto-place all References.
+        ///   Looks up a localized string similar to Adjust All References&apos; Positions.
         /// </summary>
         public static string AutoPlaceAllReferences {
             get {
@@ -241,7 +241,16 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Auto-place this Reference.
+        ///   Looks up a localized string similar to Adjust Move&apos;s References&apos; Positions.
+        /// </summary>
+        public static string AutoPlaceMoveReferences {
+            get {
+                return ResourceManager.GetString("AutoPlaceMoveReferences", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adjust This Reference&apos;s Position.
         /// </summary>
         public static string AutoPlaceReference {
             get {

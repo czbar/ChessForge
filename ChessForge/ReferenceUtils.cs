@@ -8,6 +8,16 @@ namespace ChessForge
     public class ReferenceUtils
     {
         /// <summary>
+        /// The last clicked reference.
+        /// </summary>
+        public static string LastClickedReference;
+
+        /// <summary>
+        /// The id of the node of the last clicked reference.
+        /// </summary>
+        public static int LastClickedReferenceNodeId;
+
+        /// <summary>
         /// Adds a reference to the given node.
         /// TODO: refactor: replace calls to TreeNode.AddArticleReference with this one.
         /// </summary>
@@ -42,6 +52,7 @@ namespace ChessForge
                 string[] tokens = node.References.Split('|');
 
                 // re-form the references string without the articleRef
+                node.References = null;
                 foreach (string token in tokens)
                 {
                     if (token != articleRef)

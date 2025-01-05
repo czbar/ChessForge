@@ -818,10 +818,13 @@
     <value>Remove Reference</value>
   </data>
   <data name="AutoPlaceReference" xml:space="preserve">
-    <value>Auto-place this Reference</value>
+    <value>Adjust This Reference's Position</value>
+  </data>
+  <data name="AutoPlaceMoveReferences" xml:space="preserve">
+    <value>Adjust Move's References' Positions</value>
   </data>
   <data name="AutoPlaceAllReferences" xml:space="preserve">
-    <value>Auto-place all References</value>
+    <value>Adjust All References' Positions</value>
   </data>
   <data name="TtClickToExpandCollapse" xml:space="preserve">
     <value>Click to Expand/Collapse</value>

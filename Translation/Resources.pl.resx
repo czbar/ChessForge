@@ -818,10 +818,13 @@
     <value>Usuń odsyłacz</value>
   </data>
   <data name="AutoPlaceReference" xml:space="preserve">
-    <value>Przenieś odsyłacz w optymalne miejsce</value>
+    <value>Popraw pozycję odsyłacza</value>
+  </data>
+  <data name="AutoPlaceMoveReferences" xml:space="preserve">
+    <value>Popraw pozycje odsyłaczy w tym ruchu</value>
   </data>
   <data name="AutoPlaceAllReferences" xml:space="preserve">
-    <value>Przenieś wszystkie odsyłacze w optymalne miejsca</value>
+    <value>Popraw pozycje wszystkich odsyłaczy</value>
   </data>
   <data name="TtClickToExpandCollapse" xml:space="preserve">
     <value>Kliknij by zwinąć/rozwinąć</value>

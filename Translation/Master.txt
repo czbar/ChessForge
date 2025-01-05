@@ -806,10 +806,13 @@ NotNamed=[not named]
 RemoveReference=Remove Reference
 
 #Automatically place this reference in the optimal place
-AutoPlaceReference=Auto-place this Reference
+AutoPlaceReference=Adjust This Reference's Position
+
+#Automatically place this reference in the optimal place
+AutoPlaceMoveReferences=Adjust Move's References' Positions
 
 #Automatically place all references in the optimal places
-AutoPlaceAllReferences=Auto-place all References
+AutoPlaceAllReferences=Adjust All References' Positions
 
 
 ###########################
