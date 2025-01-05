@@ -23,6 +23,8 @@ namespace GameTree
             DELETE_DIAGRAM,
             SWAP_DIAGRAM_COMMENT,
             MARK_THUMBNAIL,
+            DELETE_REFERENCE,
+            REPOSITION_REFERENCES,
         }
 
         /// <summary>
