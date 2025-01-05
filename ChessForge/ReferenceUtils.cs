@@ -141,7 +141,7 @@ namespace ChessForge
             if (!TreeUtils.AreNodeListsIdentical(origNodes, optimalNodes))
             {
                 // undo data must be create here before changes are made
-                CreateReferenceUndoOp(optimalNodes, origNodes);
+                CreateReferenceUndoOp(optimalNodes, origNodes, refArticles);
                 // perform the actual repositioning
                 UpdateOptimalNodesReferences(optimalNodes, origNodes, refArticles);
                 // refresh the GUI
@@ -194,21 +194,21 @@ namespace ChessForge
         /// and set the references as per the hostReferencingNodes.
         /// </summary>
         /// <param name="optimalNodes"></param>
-        /// <param name="hostReferencingNodes"></param>
-        private static void CreateReferenceUndoOp(List<TreeNode> optimalNodes, List<TreeNode> hostReferencingNodes)
+        /// <param name="origNodes"></param>
+        private static void CreateReferenceUndoOp(List<TreeNode> optimalNodes, List<TreeNode> origNodes, List<Article> refArticles)
         {
             // for Undo create 2 lists of MoveAttributes and populate them with node and refs ids.
             List<MoveAttributes> optimalMoveAttributes = new List<MoveAttributes>();
-            List<MoveAttributes> hostReferencingMoveAttributes = new List<MoveAttributes>();
-            foreach (TreeNode node in optimalNodes)
+            List<MoveAttributes> origMoveAttributes = new List<MoveAttributes>();
+
+            for (int i = 0; i < optimalNodes.Count; i++)
             {
-                optimalMoveAttributes.Add(new MoveAttributes(node.NodeId, node.References));
+                optimalMoveAttributes.Add(new MoveAttributes(optimalNodes[i].NodeId, refArticles[i].Guid));
+                origMoveAttributes.Add(new MoveAttributes(origNodes[i].NodeId, refArticles[i].Guid));
             }
-            foreach (TreeNode node in hostReferencingNodes)
-            {
-                hostReferencingMoveAttributes.Add(new MoveAttributes(node.NodeId, node.References));
-            }
-            EditOperation editOp = new EditOperation(EditOperation.EditType.REPOSITION_REFERENCES, optimalMoveAttributes, hostReferencingMoveAttributes);
+
+            EditOperation editOp =
+                new EditOperation(EditOperation.EditType.REPOSITION_REFERENCES, origMoveAttributes[0].NodeId, optimalMoveAttributes, origMoveAttributes); 
             AppState.ActiveVariationTree.OpsManager.PushOperation(editOp);
         }
 
