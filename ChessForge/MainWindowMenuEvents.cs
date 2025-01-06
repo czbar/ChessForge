@@ -535,52 +535,84 @@ namespace ChessForge
                 return false;
             }
 
-            AppState.ActiveVariationTree.OpsManager.Undo(out EditOperation.EditType opType, out string selectedLineId, out int selectedNodeId);
+            AppState.ActiveVariationTree.OpsManager.Undo(out EditOperation.EditType opType,
+                                                         out string selectedLineId,
+                                                         out int selectedNodeId, 
+                                                         out HashSet<int> nodesToUpdate);
 
-            TreeNode selectedNode = AppState.ActiveVariationTree.GetNodeFromNodeId(selectedNodeId);
-            ActiveLine.UpdateMoveText(selectedNode);
-
-            MultiTextBoxManager.ShowEvaluationChart(true);
-
-            if (selectedNode == null)
+            try
             {
-                selectedNodeId = 0;
-                selectedLineId = "1";
-                MainChessBoard.DisplayPosition(AppState.ActiveVariationTree.RootNode, true);
-            }
+                // we fully rebuild the view only if nodesToUpdate is null,
+                // otherwise we just update the nodes in the list
+                bool fullRebuild = nodesToUpdate == null;
 
-            AppState.ActiveVariationTree.BuildLines();
-            if (!string.IsNullOrEmpty(selectedLineId))
-            {
-                AppState.MainWin.SetActiveLine(selectedLineId, selectedNodeId);
-            }
-            else if (selectedNodeId >= 0)
-            {
-                if (selectedNode != null)
+                TreeNode selectedNode = AppState.ActiveVariationTree.GetNodeFromNodeId(selectedNodeId);
+                ActiveLine.UpdateMoveText(selectedNode);
+
+                MultiTextBoxManager.ShowEvaluationChart(true);
+
+                if (selectedNode == null)
                 {
-                    selectedLineId = selectedNode.LineId;
+                    selectedNodeId = 0;
+                    selectedLineId = "1";
+                    MainChessBoard.DisplayPosition(AppState.ActiveVariationTree.RootNode, true);
+                }
+
+                if (fullRebuild)
+                {
+                    AppState.ActiveVariationTree.BuildLines();
+                }
+
+                if (!string.IsNullOrEmpty(selectedLineId))
+                {
+                    AppState.MainWin.ActiveTreeView.SelectNode(selectedNode);
                     AppState.MainWin.SetActiveLine(selectedLineId, selectedNodeId);
                 }
-            }
+                else if (selectedNodeId >= 0)
+                {
+                    if (selectedNode != null)
+                    {
+                        selectedLineId = selectedNode.LineId;
+                        AppState.MainWin.ActiveTreeView.SelectNode(selectedNode);
+                        AppState.MainWin.SetActiveLine(selectedLineId, selectedNodeId);
+                    }
+                }
 
-            AppState.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
-            if (opType == EditOperation.EditType.UPDATE_ANNOTATION)
+                if (fullRebuild)
+                {
+                    AppState.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
+                }
+                else
+                {
+                    foreach (int nodeId in nodesToUpdate)
+                    {
+                        TreeNode node = AppState.ActiveVariationTree.GetNodeFromNodeId(nodeId);
+                        AppState.MainWin.ActiveTreeView.InsertOrUpdateCommentRun(node);
+                    }
+                }
+
+                if (opType == EditOperation.EditType.UPDATE_ANNOTATION)
+                {
+                    AppState.MainWin.ActiveTreeView.InsertOrUpdateCommentRun(selectedNode);
+                }
+                else if (opType == EditOperation.EditType.UPDATE_COMMENT_BEFORE_MOVE)
+                {
+                    AppState.MainWin.ActiveTreeView.InsertOrUpdateCommentBeforeMoveRun(selectedNode);
+                }
+
+                if (!string.IsNullOrEmpty(selectedLineId))
+                {
+                    AppState.MainWin.ActiveTreeView.SelectLineAndMove(selectedLineId, selectedNodeId);
+                }
+
+                PulseManager.BringSelectedRunIntoView();
+
+                AppState.IsDirty = true;
+            }
+            catch (Exception ex)
             {
-                AppState.MainWin.ActiveTreeView.InsertOrUpdateCommentRun(selectedNode);
+                AppLog.Message("UndoTreeEditOperation()", ex);
             }
-            else if (opType == EditOperation.EditType.UPDATE_COMMENT_BEFORE_MOVE)
-            {
-                AppState.MainWin.ActiveTreeView.InsertOrUpdateCommentBeforeMoveRun(selectedNode);
-            }
-
-            if (!string.IsNullOrEmpty(selectedLineId))
-            {
-                AppState.MainWin.ActiveTreeView.SelectLineAndMove(selectedLineId, selectedNodeId);
-            }
-
-            PulseManager.BringSelectedRunIntoView();
-
-            AppState.IsDirty = true;
 
             return true;
         }
