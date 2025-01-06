@@ -1763,13 +1763,16 @@ namespace GameTree
         /// <param name="oNode"></param>
         /// <param name="oRefGuid"></param>
         /// <returns></returns>
-        public int UndoDeleteReference(object oNode, object oRefGuid)
+        public int UndoDeleteReference(object oNode, object oRefGuid, out HashSet<int> nodesToUpdate)
         {
+            nodesToUpdate = new HashSet<int>();
+
             int nodeId = -1;
             if (oNode is TreeNode node && oRefGuid is string refGuid)
             {
                 node.AddArticleReference(refGuid);
                 nodeId = node.NodeId;
+                nodesToUpdate.Add(nodeId);
             }
 
             return nodeId;
@@ -1781,8 +1784,10 @@ namespace GameTree
         /// <param name="oOptimalNodes"></param>
         /// <param name="oOrigNodes"></param>
         /// <returns></returns>
-        public int UndoRepositionReferences(int selectNodeId, object oOptimalNodes, object oOrigNodes)
+        public int UndoRepositionReferences(int selectNodeId, object oOptimalNodes, object oOrigNodes, out HashSet<int> nodesToUpdate)
         {
+            nodesToUpdate = new HashSet<int>();
+
             if (oOptimalNodes is List<MoveAttributes> optimalNodes && oOrigNodes is List<MoveAttributes> origNodes)
             {
                 // first clear what is there now
@@ -1790,6 +1795,7 @@ namespace GameTree
                 {
                     TreeNode nd = GetNodeFromNodeId(nac.NodeId);
                     nd.RemoveArticleReference(nac.References);
+                    nodesToUpdate.Add(nac.NodeId);
                 }
 
                 // replace with the original content
@@ -1797,6 +1803,7 @@ namespace GameTree
                 {
                     TreeNode nd = GetNodeFromNodeId(nac.NodeId);
                     nd.AddArticleReference(nac.References);
+                    nodesToUpdate.Add(nac.NodeId);
                 }
 
             }
