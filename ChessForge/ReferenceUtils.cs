@@ -234,8 +234,8 @@ namespace ChessForge
 
             if (optimalNodes.Count > 0)
             {
-                AppState.MainWin.SetActiveLine(optimalNodes[0].LineId, optimalNodes[0].NodeId);
                 AppState.MainWin.ActiveTreeView.SelectNode(optimalNodes[0]);
+                AppState.MainWin.SetActiveLine(optimalNodes[0].LineId, optimalNodes[0].NodeId);
                 PulseManager.BringSelectedRunIntoView();
             }
 
