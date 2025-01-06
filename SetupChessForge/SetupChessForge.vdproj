@@ -15,18 +15,6 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_070F20AEE4156FF8A1EDCB6F32B33AB5"
-        "OwnerKey" = "8:_0B816B9828BC4414A662D7186EC23E8C"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_070F20AEE4156FF8A1EDCB6F32B33AB5"
-        "OwnerKey" = "8:_B31923E79F360E25A9908EEE60355755"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_0B816B9828BC4414A662D7186EC23E8C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -40,7 +28,7 @@
         "Entry"
         {
         "MsmKey" = "8:_141BD59E5BD35C4DA1EEFA2B8334EEBE"
-        "OwnerKey" = "8:_B31923E79F360E25A9908EEE60355755"
+        "OwnerKey" = "8:_6E6BB6421D92411DB785E1508210A5D1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -52,7 +40,7 @@
         "Entry"
         {
         "MsmKey" = "8:_1A25FFA80898053D472B1E2FEA13F6FD"
-        "OwnerKey" = "8:_B31923E79F360E25A9908EEE60355755"
+        "OwnerKey" = "8:_6E6BB6421D92411DB785E1508210A5D1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -63,8 +51,20 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_3A481BA820F80DDB75A02811800AC4B3"
+        "MsmKey" = "8:_285CAB6BDDA418CA7D3102167BDE9809"
         "OwnerKey" = "8:_0B816B9828BC4414A662D7186EC23E8C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_38B54FF529574FC487FA98804E607F6D"
+        "OwnerKey" = "8:_0B816B9828BC4414A662D7186EC23E8C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_38B54FF529574FC487FA98804E607F6D"
+        "OwnerKey" = "8:_6E6BB6421D92411DB785E1508210A5D1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -89,6 +89,12 @@
         {
         "MsmKey" = "8:_6A5A5117B0984F118D25D426332386D8"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_6E6BB6421D92411DB785E1508210A5D1"
+        "OwnerKey" = "8:_0B816B9828BC4414A662D7186EC23E8C"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -137,12 +143,6 @@
         {
         "MsmKey" = "8:_ABF23757970C4E7AB202399B303E0D70"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_B31923E79F360E25A9908EEE60355755"
-        "OwnerKey" = "8:_0B816B9828BC4414A662D7186EC23E8C"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -202,7 +202,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B31923E79F360E25A9908EEE60355755"
+        "OwnerKey" = "8:_6E6BB6421D92411DB785E1508210A5D1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -214,13 +214,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_3A481BA820F80DDB75A02811800AC4B3"
+        "OwnerKey" = "8:_285CAB6BDDA418CA7D3102167BDE9809"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_070F20AEE4156FF8A1EDCB6F32B33AB5"
+        "OwnerKey" = "8:_38B54FF529574FC487FA98804E607F6D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -324,37 +324,6 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_070F20AEE4156FF8A1EDCB6F32B33AB5"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:ChessPosition, Version=1.10.5.0, Culture=neutral, processorArchitecture=AMD64"
-                "ScatterAssemblies"
-                {
-                    "_070F20AEE4156FF8A1EDCB6F32B33AB5"
-                    {
-                    "Name" = "8:ChessPosition.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:ChessPosition.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_76196FC40D204F0E9D2F09E6D29AAF54"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_141BD59E5BD35C4DA1EEFA2B8334EEBE"
             {
             "AssemblyRegister" = "3:1"
@@ -437,20 +406,51 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3A481BA820F80DDB75A02811800AC4B3"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_285CAB6BDDA418CA7D3102167BDE9809"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:EngineService, Version=1.10.5.0, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
-                    "_3A481BA820F80DDB75A02811800AC4B3"
+                    "_285CAB6BDDA418CA7D3102167BDE9809"
                     {
                     "Name" = "8:EngineService.dll"
                     "Attributes" = "3:512"
                     }
                 }
             "SourcePath" = "8:EngineService.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_76196FC40D204F0E9D2F09E6D29AAF54"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_38B54FF529574FC487FA98804E607F6D"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:ChessPosition, Version=1.10.5.0, Culture=neutral, processorArchitecture=AMD64"
+                "ScatterAssemblies"
+                {
+                    "_38B54FF529574FC487FA98804E607F6D"
+                    {
+                    "Name" = "8:ChessPosition.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:ChessPosition.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_76196FC40D204F0E9D2F09E6D29AAF54"
@@ -546,6 +546,37 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_6E6BB6421D92411DB785E1508210A5D1"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:WebAccess, Version=1.10.5.0, Culture=neutral, processorArchitecture=AMD64"
+                "ScatterAssemblies"
+                {
+                    "_6E6BB6421D92411DB785E1508210A5D1"
+                    {
+                    "Name" = "8:WebAccess.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:WebAccess.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_76196FC40D204F0E9D2F09E6D29AAF54"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7269021437CF4398B5AD0BEF5D242C11"
@@ -706,37 +737,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B31923E79F360E25A9908EEE60355755"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:WebAccess, Version=1.10.5.0, Culture=neutral, processorArchitecture=AMD64"
-                "ScatterAssemblies"
-                {
-                    "_B31923E79F360E25A9908EEE60355755"
-                    {
-                    "Name" = "8:WebAccess.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:WebAccess.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_76196FC40D204F0E9D2F09E6D29AAF54"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BD11FA20DF6540DCA25E0E7D29167290"
@@ -999,15 +999,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Chess Forge"
-        "ProductCode" = "8:{EEADE556-B47B-47FD-93E8-22D97F6BBFA4}"
-        "PackageCode" = "8:{BCA64E3E-266A-4C53-8EFD-996C4F0AD3C1}"
+        "ProductCode" = "8:{C745B28E-6830-4478-B9A5-AB51A32EAE61}"
+        "PackageCode" = "8:{5E812401-A2DA-496B-8FC6-AE12B611C105}"
         "UpgradeCode" = "8:{8FBE368E-7FA2-4112-9D18-7A5CD1CE504C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:FALSE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.10.5"
+        "ProductVersion" = "8:1.10.6"
         "Manufacturer" = "8:Mindrose Pty Ltd"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1549,7 +1549,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_0B816B9828BC4414A662D7186EC23E8C"
             {
-            "SourcePath" = "8:..\\ChessForge\\obj\\Release\\ChessForge.exe"
+            "SourcePath" = "8:..\\ChessForge\\obj\\Debug\\ChessForge.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_76196FC40D204F0E9D2F09E6D29AAF54"
