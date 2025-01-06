@@ -814,6 +814,18 @@
   <data name="NotNamed" xml:space="preserve">
     <value>brak nazwy</value>
   </data>
+  <data name="RemoveReference" xml:space="preserve">
+    <value>Usuń odsyłacz</value>
+  </data>
+  <data name="AutoPlaceReference" xml:space="preserve">
+    <value>Popraw pozycję odsyłacza</value>
+  </data>
+  <data name="AutoPlaceMoveReferences" xml:space="preserve">
+    <value>Popraw pozycje odsyłaczy w tym ruchu</value>
+  </data>
+  <data name="AutoPlaceAllReferences" xml:space="preserve">
+    <value>Popraw pozycje wszystkich odsyłaczy</value>
+  </data>
   <data name="TtClickToExpandCollapse" xml:space="preserve">
     <value>Kliknij by zwinąć/rozwinąć</value>
   </data>

@@ -232,6 +232,33 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Adjust All References&apos; Positions.
+        /// </summary>
+        public static string AutoPlaceAllReferences {
+            get {
+                return ResourceManager.GetString("AutoPlaceAllReferences", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adjust Move&apos;s References&apos; Positions.
+        /// </summary>
+        public static string AutoPlaceMoveReferences {
+            get {
+                return ResourceManager.GetString("AutoPlaceMoveReferences", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adjust This Reference&apos;s Position.
+        /// </summary>
+        public static string AutoPlaceReference {
+            get {
+                return ResourceManager.GetString("AutoPlaceReference", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Auto Speed (s).
         /// </summary>
         public static string AutoReplaySpeed {
@@ -6007,6 +6034,15 @@ namespace ChessForge.Properties {
         public static string RemoveDuplicates {
             get {
                 return ResourceManager.GetString("RemoveDuplicates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Reference.
+        /// </summary>
+        public static string RemoveReference {
+            get {
+                return ResourceManager.GetString("RemoveReference", resourceCulture);
             }
         }
         

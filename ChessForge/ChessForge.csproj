@@ -226,6 +226,7 @@
     <Compile Include="MainWindowMoveAnimation.cs" />
     <Compile Include="GuiUtilities.cs" />
     <Compile Include="ActiveLineManager.cs" />
+    <Compile Include="ContextMenus.cs" />
     <Compile Include="MainWindowToolsMenu.cs" />
     <Compile Include="MainWindowTrainingActions.cs" />
     <Compile Include="ManualReviewState.cs" />
@@ -264,6 +265,7 @@
     </Compile>
     <Compile Include="PulseManager.cs" />
     <Compile Include="ReferenceGamePreviewDialog.cs" />
+    <Compile Include="ReferenceUtils.cs" />
     <Compile Include="RegenerateStudyDialog.xaml.cs">
       <DependentUpon>RegenerateStudyDialog.xaml</DependentUpon>
     </Compile>

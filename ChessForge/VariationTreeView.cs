@@ -2402,26 +2402,51 @@ namespace ChessForge
                 if (sender is Inline inl)
                 {
                     int nodeId = TextUtils.GetNodeIdAndArticleRefFromPrefixedString(inl.Name, out string articleRef);
+                    TreeNode node = _mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId);
 
-                    if (_dictNodeToRun.ContainsKey(nodeId))
-                    {
-                        SelectRun(_dictNodeToRun[nodeId], 1, MouseButton.Left);
-                    }
+                    Article article = AppState.Workbook.GetArticleByGuid(articleRef, out int chapterIndex, out int articleIndex, true);
+                    
+                    ReferenceUtils.LastClickedReference = articleRef;
+                    ReferenceUtils.LastClickedReferenceNodeId = nodeId;
 
                     if (e.ChangedButton == MouseButton.Left)
                     {
-                        Article art = AppState.Workbook.GetArticleByGuid(articleRef, out int chapterIndex, out int articleIndex, true);
-                        if (art != null)
+                        if (_dictNodeToRun.ContainsKey(nodeId))
                         {
-                            if (art.ContentType == GameData.ContentType.MODEL_GAME || art.ContentType == GameData.ContentType.EXERCISE)
+                            SelectRun(_dictNodeToRun[nodeId], 1, MouseButton.Left);
+                        }
+
+                        if (article != null)
+                        {
+                            if (article.ContentType == GameData.ContentType.MODEL_GAME || article.ContentType == GameData.ContentType.EXERCISE)
                             {
-                                _mainWin.SelectArticle(chapterIndex, art.ContentType, articleIndex);
+                                _mainWin.SelectArticle(chapterIndex, article.ContentType, articleIndex);
                             }
                             else
                             {
                                 _mainWin.SelectChapterByIndex(chapterIndex, true);
                             }
                         }
+                    }
+                    else if (e.ChangedButton == MouseButton.Right && article != null)
+                    {
+                        try
+                        {
+                            // configure and show the context menu
+                            ContextMenu cmReferences = _mainWin.Resources["CmReferences"] as ContextMenu;
+
+                            ReferenceUtils.GetReferenceCountsByType(node, out int nodeGameRefCount, out int nodeExerciseRefCount, out int nodeChapterRefCount);
+                            ReferenceUtils.GetReferenceCountsByType(_mainVariationTree, out int treeGameRefCount, out int treeExerciseRefCount, out int treeChapterRefCount);
+                            ContextMenus.EnableReferencesMenuItems(cmReferences, article,
+                                treeGameRefCount + treeExerciseRefCount, treeChapterRefCount,
+                                nodeGameRefCount + nodeExerciseRefCount, nodeChapterRefCount);
+
+                            if (cmReferences != null)
+                            {
+                                cmReferences.IsOpen = true;
+                            }
+                        }
+                        catch { }
                     }
                 }
             }

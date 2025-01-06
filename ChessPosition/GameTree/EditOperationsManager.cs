@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace GameTree
 {
@@ -23,8 +19,10 @@ namespace GameTree
         /// <summary>
         /// Performs the undo of the Operation in the queue.
         /// </summary>
-        public void Undo(out EditOperation.EditType tp, out string selectedLineId, out int selectedNodeId)
+        public void Undo(out EditOperation.EditType tp, out string selectedLineId, out int selectedNodeId, out HashSet<int> nodesToUpdate)
         {
+            nodesToUpdate = null;
+
             tp = EditOperation.EditType.NONE;
             selectedLineId = "";
             selectedNodeId = -1;
@@ -96,6 +94,12 @@ namespace GameTree
                         {
                             selectedNodeId = tnNode.NodeId;
                         }
+                        break;
+                    case EditOperation.EditType.DELETE_REFERENCE:
+                        selectedNodeId = _owningTree.UndoDeleteReference(op.OpData_1, op.OpData_2, out nodesToUpdate);
+                        break;
+                    case EditOperation.EditType.REPOSITION_REFERENCES:
+                        selectedNodeId =  _owningTree.UndoRepositionReferences(op.NodeId, op.OpData_1, op.OpData_2, out nodesToUpdate);
                         break;
                 }
             }

@@ -1031,6 +1031,28 @@ NotNamed=brak nazwy
 
 ###########################
 #
+# Header: CONTEXT MENU for References
+#
+
+#description: Remove reference
+#english: RemoveReference=Remove Reference
+RemoveReference=Usuń odsyłacz
+
+#description: Automatically place this reference in the optimal place
+#english: AutoPlaceReference=Adjust This Reference's Position
+AutoPlaceReference=Popraw pozycję odsyłacza
+
+#description: Automatically place this reference in the optimal place
+#english: AutoPlaceMoveReferences=Adjust Move's References' Positions
+AutoPlaceMoveReferences=Popraw pozycje odsyłaczy w tym ruchu
+
+#description: Automatically place all references in the optimal places
+#english: AutoPlaceAllReferences=Adjust All References' Positions
+AutoPlaceAllReferences=Popraw pozycje wszystkich odsyłaczy
+
+
+###########################
+#
 # Header: Self-indexing view
 #
 

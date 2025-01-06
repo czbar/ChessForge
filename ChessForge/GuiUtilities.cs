@@ -129,7 +129,7 @@ namespace ChessForge
                 references += "|";
             }
             references += refsGuids2;
-            
+
             return references;
         }
 

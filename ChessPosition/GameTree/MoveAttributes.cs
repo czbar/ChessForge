@@ -56,6 +56,17 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Constructor setting the references property.
+        /// </summary>
+        /// <param name="nodeId"></param>
+        /// <param name="references"></param>
+        public MoveAttributes(int nodeId, string references)
+        {
+            NodeId = nodeId;
+            References = references;
+        }
+
+        /// <summary>
         /// Node id.
         /// </summary>
         public int NodeId;

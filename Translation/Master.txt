@@ -799,6 +799,24 @@ NotNamed=[not named]
 
 ###########################
 #
+# Header: CONTEXT MENU for References
+#
+
+#Remove reference
+RemoveReference=Remove Reference
+
+#Automatically place this reference in the optimal place
+AutoPlaceReference=Adjust This Reference's Position
+
+#Automatically place this reference in the optimal place
+AutoPlaceMoveReferences=Adjust Move's References' Positions
+
+#Automatically place all references in the optimal places
+AutoPlaceAllReferences=Adjust All References' Positions
+
+
+###########################
+#
 # Header: Self-indexing view
 #
 

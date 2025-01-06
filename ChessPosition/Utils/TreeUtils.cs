@@ -880,6 +880,31 @@ namespace ChessPosition
             return fixedTree;
         }
 
+
+        /// <summary>
+        /// Checks if two lists of TreeNodes are identical.
+        /// The nodes must be in the same order in both lists.
+        /// </summary>
+        /// <param name="list1"></param>
+        /// <param name="list2"></param>
+        /// <returns></returns>
+        public static bool AreNodeListsIdentical(List<TreeNode> list1, List<TreeNode> list2)
+        {
+            // in our case, the lists will always have the same size so this is only a defensive check
+            if (list1.Count != list2.Count)
+            {
+                return false;
+            }
+            for (int i = 0; i < list1.Count; i++)
+            {
+                if (list1[i] != list2[i])
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         /// <summary>
         /// Recursively validates the passed tree.
         /// </summary>

@@ -1,0 +1,19 @@
+Code Signing Steps
+
+Having installed Certum's middleware.
+
+1. cd C:\Program Files (x86)\Windows Kits\10\bin\10.0.22000.0\x64
+2. signtool sign /tr http://timestamp.certum.pl /td SHA256 /fd SHA256 /a "C:\Users\rober\Documents\ChessForge\SetupChessForge\Release\ChessForge.msi"
+3. Generate token on the SimplySign app on the phone
+
+
+Link for MS Store https://chessforge.sourceforge.io/Releases/1.10.3/ChessForge.msi
+Link to the latest for testing  https://chessforge.sourceforge.io/Releases/latest/ChessForge.msi
+
+MS AppStore submission:
+
+URL: https://chessforge.sourceforge.io/Releases/1.10.3/ChessForge.msi
+x64
+/qn
+Languages English/Polish
+MSI

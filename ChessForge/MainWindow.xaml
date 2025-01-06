@@ -23,6 +23,14 @@
             <MenuItem x:Name="UiMnciExpandThisOne" Header="{x:Static p:Resources.CmExpandThisOnly}" Click="UiMnciExpandThisOne_Click"/>
         </ContextMenu>
 
+        <ContextMenu x:Name="UiCmReferences" x:Key="CmReferences">
+            <MenuItem x:Name="UiMnciRemoveReference" Header="{x:Static p:Resources.RemoveReference}" Click="UiMnciRemoveReference_Click" />
+            <Separator />
+            <MenuItem x:Name="UiMnciAutoPlaceReference" Header="{x:Static p:Resources.AutoPlaceReference}" Click="UiMnciAutoPlaceReference_Click" />
+            <MenuItem x:Name="UiMnciAutoPlaceMoveReferences" Header="{x:Static p:Resources.AutoPlaceMoveReferences}" Click="UiMnciAutoPlaceMoveReferences_Click" />
+            <MenuItem x:Name="UiMnciAutoPlaceAllReferences" Header="{x:Static p:Resources.AutoPlaceAllReferences}" Click="UiMnciAutoPlaceAllReferences_Click" />
+        </ContextMenu>
+
         <Style  x:Key="RoundedBorder" TargetType="Label">
             <Setter Property="Template">
                 <Setter.Value>
