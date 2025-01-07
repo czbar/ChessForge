@@ -135,37 +135,28 @@ namespace ChessForge
         public static void RepositionReferences(VariationTree tree, TreeNode currNode, string guidRef = null)
         {
             // build the lists of referencing nodes and referenced articles, and identify the optimal nodes
-            List<TreeNode> optimalNodes =
-                IdentifyOptimalReferenceNodes(tree, currNode, guidRef, out List<TreeNode> origNodes, out List<Article> refArticles);
+            List<TreeNode> postOpNodes =
+                IdentifyOptimalReferenceNodes(tree, currNode, guidRef, out List<TreeNode> preOpNodes, out List<Article> refArticles);
 
-            if (!TreeUtils.AreNodeListsIdentical(origNodes, optimalNodes))
+            if (!TreeUtils.AreNodeListsIdentical(preOpNodes, postOpNodes))
             {
-                // undo data must be create here before changes are made
-                CreateReferenceUndoOp(optimalNodes, origNodes, refArticles);
+                // get the deduplicated list of affected nodes
+                List<TreeNode> affectedNodes = SelectUniqueNodes(preOpNodes, postOpNodes);
+                
+                // get the references from the affected nodes before the repositioning
+                List<MoveAttributes> preOpReferences = GetNodeReferences(affectedNodes);
+                
                 // perform the actual repositioning
-                UpdateOptimalNodesReferences(optimalNodes, origNodes, refArticles);
+                UpdateOptimalNodesReferences(preOpNodes, postOpNodes, refArticles);
+                
+                // get the references from the affected nodes after the repositioning
+                List<MoveAttributes> postOpReferences = GetNodeReferences(affectedNodes);
+
+                // create the undo operation
+                CreateReferenceUndoOp(preOpReferences, postOpReferences);
+
                 // refresh the GUI
-                RefreshReferencesInComments(optimalNodes, origNodes);
-            }
-        }
-
-        /// <summary>
-        /// Identifies the optimal referencing node for the referenced article.
-        /// </summary>
-        /// <param name="optimalNodes"></param>
-        /// <param name="origNodes"></param>
-        /// <param name="refArticles"></param>
-        private static void UpdateOptimalNodesReferences(List<TreeNode> optimalNodes, List<TreeNode> origNodes, List<Article> refArticles)
-        {
-            // clear the references from the host nodes and the proposed nodes.
-            // note that optimal nodes have all the necessary references as we created entries for the unchanged ones too
-            ClearReferences(origNodes);
-            ClearReferences(optimalNodes);
-
-            // build reference strings for the proposed nodes
-            for (int i = 0; i < optimalNodes.Count; i++)
-            {
-                AddReferenceToNode(optimalNodes[i], refArticles[i].Guid);
+                RefreshReferencesInComments(preOpNodes, postOpNodes);
             }
         }
 
@@ -192,23 +183,15 @@ namespace ChessForge
         /// repositioning was done.
         /// The Undo operation will clear the references in the optimal nodes 
         /// and set the references as per the hostReferencingNodes.
+        /// Strictly speaking, only the preOpNodes info is needed for the undo operation.
+        /// However, in the future we may need postOpNodes if we implement Redo()
         /// </summary>
-        /// <param name="optimalNodes"></param>
-        /// <param name="origNodes"></param>
-        private static void CreateReferenceUndoOp(List<TreeNode> optimalNodes, List<TreeNode> origNodes, List<Article> refArticles)
+        /// <param name="postOpNodes"></param>
+        /// <param name="preOpNodes"></param>
+        private static void CreateReferenceUndoOp(List<MoveAttributes> preOpNodes, List<MoveAttributes> postOpNodes)
         {
-            // for Undo create 2 lists of MoveAttributes and populate them with node and refs ids.
-            List<MoveAttributes> optimalMoveAttributes = new List<MoveAttributes>();
-            List<MoveAttributes> origMoveAttributes = new List<MoveAttributes>();
-
-            for (int i = 0; i < optimalNodes.Count; i++)
-            {
-                optimalMoveAttributes.Add(new MoveAttributes(optimalNodes[i].NodeId, refArticles[i].Guid));
-                origMoveAttributes.Add(new MoveAttributes(origNodes[i].NodeId, refArticles[i].Guid));
-            }
-
             EditOperation editOp =
-                new EditOperation(EditOperation.EditType.REPOSITION_REFERENCES, origMoveAttributes[0].NodeId, optimalMoveAttributes, origMoveAttributes); 
+                new EditOperation(EditOperation.EditType.REPOSITION_REFERENCES, preOpNodes, postOpNodes); 
             AppState.ActiveVariationTree.OpsManager.PushOperation(editOp);
         }
 
@@ -219,7 +202,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="optimalNodes"></param>
         /// <param name="hostReferencingNodes"></param>
-        private static void RefreshReferencesInComments(List<TreeNode> optimalNodes, List<TreeNode> hostReferencingNodes)
+        private static void RefreshReferencesInComments(List<TreeNode> hostReferencingNodes, List<TreeNode> optimalNodes)
         {
 
             foreach (TreeNode node in optimalNodes)
@@ -380,6 +363,71 @@ namespace ChessForge
                         }
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Builds a list of MoveAttributes with NodeIds and References from a list of TreeNodes.
+        /// </summary>
+        /// <param name="nodes"></param>
+        /// <returns></returns>
+        private static List<MoveAttributes> GetNodeReferences(List<TreeNode> nodes)
+        {
+            List<MoveAttributes> refs = new List<MoveAttributes>();
+
+            foreach (var item in nodes)
+            {
+                refs.Add(new MoveAttributes(item.NodeId, item.References));
+            }
+
+            return refs;
+        }
+
+        /// <summary>
+        /// Given 2 lists of TreeNodes, returns a combined list of unique nodes.
+        /// </summary>
+        /// <param name="list_1"></param>
+        /// <param name="list_2"></param>
+        /// <returns></returns>
+        private static List<TreeNode> SelectUniqueNodes(List<TreeNode> list_1, List<TreeNode> list_2)
+        {
+            HashSet<TreeNode> hsNodes = new HashSet<TreeNode>();
+
+            foreach (TreeNode node in list_1)
+            {
+                hsNodes.Add(node);
+            }
+            foreach (TreeNode node in list_2)
+            {
+                hsNodes.Add(node);
+            }
+
+            List<TreeNode> lstNodes = new List<TreeNode>();
+            foreach (TreeNode node in hsNodes)
+            {
+                lstNodes.Add(node);
+            }
+
+            return lstNodes;
+        }
+
+        /// <summary>
+        /// Identifies the optimal referencing node for the referenced article.
+        /// </summary>
+        /// <param name="optimalNodes"></param>
+        /// <param name="origNodes"></param>
+        /// <param name="refArticles"></param>
+        private static void UpdateOptimalNodesReferences(List<TreeNode> origNodes, List<TreeNode> optimalNodes, List<Article> refArticles)
+        {
+            // clear the references from the host nodes and the proposed nodes.
+            // note that optimal nodes have all the necessary references as we created entries for the unchanged ones too
+            ClearReferences(origNodes);
+            ClearReferences(optimalNodes);
+
+            // build reference strings for the proposed nodes
+            for (int i = 0; i < optimalNodes.Count; i++)
+            {
+                AddReferenceToNode(optimalNodes[i], refArticles[i].Guid);
             }
         }
 
