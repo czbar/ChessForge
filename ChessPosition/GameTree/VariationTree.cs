@@ -1782,33 +1782,27 @@ namespace GameTree
         /// <summary>
         /// Restores original positions of references.
         /// </summary>
-        /// <param name="oOptimalNodes"></param>
-        /// <param name="oOrigNodes"></param>
+        /// <param name="oPreOpNodes">a list of node id / references to restore</param>
+        /// <param name="nodesToUpdate">returns list of nodes that were affected.</param>
         /// <returns></returns>
-        public int UndoRepositionReferences(int selectNodeId, object oOptimalNodes, object oOrigNodes, out HashSet<int> nodesToUpdate)
+        public int UndoRepositionReferences(object oPreOpNodes, out HashSet<int> nodesToUpdate)
         {
+            int selectedNodeId = -1;
+
             nodesToUpdate = new HashSet<int>();
-
-            if (oOptimalNodes is List<MoveAttributes> optimalNodes && oOrigNodes is List<MoveAttributes> origNodes)
+            if (oPreOpNodes is List<MoveAttributes> preOpNodes)
             {
-                // first clear what is there now
-                foreach (MoveAttributes nac in optimalNodes)
+                selectedNodeId = preOpNodes[0].NodeId;
+                foreach (MoveAttributes nac in preOpNodes)
                 {
                     TreeNode nd = GetNodeFromNodeId(nac.NodeId);
-                    nd.RemoveArticleReference(nac.References);
-                    nodesToUpdate.Add(nac.NodeId);
-                }
-
-                // replace with the original content
-                foreach (MoveAttributes nac in origNodes)
-                {
-                    TreeNode nd = GetNodeFromNodeId(nac.NodeId);
-                    nd.AddArticleReference(nac.References);
+                    nd.References = nac.References;
                     nodesToUpdate.Add(nac.NodeId);
                 }
 
             }
-            return selectNodeId;
+
+            return selectedNodeId;
         }
 
         /// <summary>
