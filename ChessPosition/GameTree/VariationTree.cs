@@ -1598,6 +1598,7 @@ namespace GameTree
                 nd.QuizPoints = dummyNode.QuizPoints;
                 nd.Assessment = dummyNode.Assessment;
                 nd.BestResponse = dummyNode.BestResponse;
+                nd.References = dummyNode.References;
             }
             catch
             {
