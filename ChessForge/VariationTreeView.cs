@@ -2587,23 +2587,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Builds text for the Reference Run
-        /// </summary>
-        /// <param name="nd"></param>
-        /// <returns></returns>
-        private string BuildReferenceRunText(TreeNode nd)
-        {
-            if (string.IsNullOrEmpty(nd.References))
-            {
-                return "";
-            }
-            else
-            {
-                return Constants.CHAR_REFERENCE_MARK.ToString();
-            }
-        }
-
-        /// <summary>
         /// Colors the last run in the paragraph with the color of the next (lower level)
         /// paragraph's first char.
         /// The idea is to provide a more obvious visual hint as to where the fork is.
