@@ -1201,15 +1201,12 @@ namespace GameTree
         /// </summary>
         /// <param name="lineId"></param>
         /// <returns></returns>
-        public ObservableCollection<TreeNode> SelectLine(string lineId)
+        public ObservableCollection<TreeNode> SelectLineDEPRECATED(string lineId)
         {
             var singleLine = new ObservableCollection<TreeNode>();
 
             try
             {
-                // TODO
-                // this seems to be an absurd method??!!
-                // why not just walk the tree?
                 foreach (TreeNode nd in Nodes)
                 {
                     if (TreeUtils.LineIdStartsWith(lineId, nd.LineId))
@@ -1243,6 +1240,60 @@ namespace GameTree
                         {
                             singleLine.Add(nd);
                         }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("SelectLine()", ex);
+            }
+
+            return singleLine;
+        }
+
+        /// <summary>
+        /// Returns the line identified by the passed id prefix.
+        /// Once the nodes' line ids go beyond the length of the prefix
+        /// the first child of every subsequent node will be selected.
+        /// </summary>
+        /// <param name="lineId"></param>
+        /// <returns></returns>
+        public ObservableCollection<TreeNode> SelectLine(string lineId)
+        {
+            var singleLine = new ObservableCollection<TreeNode>();
+
+            try
+            {
+                string[] tokens = lineId.Split('.');
+                int[] childAtFork = new int[tokens.Length];
+                for (int i = 0; i < tokens.Length; i++)
+                {
+                    childAtFork[i] = int.Parse(tokens[i]);
+                }
+                
+                int levelCount = childAtFork.Length;
+                int currLevel = 0;
+
+                TreeNode currNode = Nodes[0];
+                singleLine.Add(currNode);
+
+                while (true)
+                {
+                    if (currNode.Children.Count == 0)
+                    {
+                        break;
+                    }
+                    if (currNode.Children.Count == 1 || currLevel >= levelCount - 1)
+                    {
+                        currNode = currNode.Children[0];
+                        singleLine.Add(currNode);
+                    }
+                    else
+                    {
+                        currLevel++;
+                        int selChild = childAtFork[currLevel];
+                        currNode = currNode.Children[selChild - 1];
+                        singleLine.Add(currNode);
                     }
                 }
             }
