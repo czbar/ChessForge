@@ -277,8 +277,6 @@ namespace ChessForge
         /// Selected (clicked) run.
         /// </summary>
         private Run _selectedRun;
-        private SolidColorBrush _selectedRunFore;
-        private SolidColorBrush _selectedRunBkg;
 
         /// <summary>
         /// Type of nodes that can be encountered in the Workbook tree.
@@ -642,7 +640,7 @@ namespace ChessForge
                     int nodeIndex = _mainWin.ActiveLine.GetIndexForNode(nullNd.NodeId);
                     _mainWin.SelectLineAndMoveInWorkbookViews(this, nd.LineId, nodeIndex, false);
 
-                    PulseManager.BringSelectedRunIntoView();                    
+                    PulseManager.BringSelectedRunIntoView();
                     AppState.IsDirty = true;
                 }
             }
@@ -998,9 +996,6 @@ namespace ChessForge
         }
 
         // counter to prevent too many debug messages in debug mode
-        private static int _debugRegularBkgMsgCount = 0;
-
-        // counter to prevent too many debug messages in debug mode
         private static int _debugSelectedBkgMsgCount = 0;
 
         /// <summary>
@@ -1056,9 +1051,10 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Selects the move and the line in this view on a request from another view (as opposed
-        /// to a user request).
+        /// Selects the move and the line in this view. 
+        /// It will be called e.g. when the user clicks on a move in the Scoresheet.
         /// Therefore it does not request other views to follow the selection.
+        /// Changes the background of the runs in the selected line and of the selected run.
         /// </summary>
         /// <param name="nodeId"></param>
         /// <param name="lineId"></param>
@@ -1080,33 +1076,7 @@ namespace ChessForge
                 {
                     BuildForkTable(nodeId);
 
-                    if (_selectedRun != null)
-                    {
-                        _selectedRun.Background = _selectedRunBkg;
-                        _selectedRun.Foreground = _selectedRunFore;
-                    }
-
                     ObservableCollection<TreeNode> lineToSelect = ShownVariationTree.SelectLine(lineId);
-                    foreach (TreeNode nd in lineToSelect)
-                    {
-                        if (nd.NodeId != 0)
-                        {
-                            if (_dictNodeToRun.ContainsKey(nd.NodeId))
-                            {
-                                _dictNodeToRun[nd.NodeId].Background = ChessForgeColors.CurrentTheme.RtbBackground;
-                            }
-                            else if (Configuration.DebugLevel != 0)
-                            {
-                                //we should always have this key, so show debug message if not
-                                if (_debugRegularBkgMsgCount < 2)
-                                {
-                                    DebugUtils.ShowDebugMessage("WorkbookView:SelectLineAndMove()-brushRegularBkg nodeId=" + nd.NodeId.ToString() + " not in _dictNodeToRun");
-                                    _debugRegularBkgMsgCount++;
-                                }
-                                AppLog.Message("WorkbookView:SelectLineAndMove()-brushRegularBkg nodeId=" + nd.NodeId.ToString() + " not in _dictNodeToRun");
-                            }
-                        }
-                    }
 
                     _selectedRun = null;
                     _dictNodeToRun.TryGetValue(nodeId, out _selectedRun);
@@ -1117,14 +1087,22 @@ namespace ChessForge
                         {
                             if (nd.NodeId != 0)
                             {
-                                //we should always have this key, so allow crash in the debug mode
+                                //we should always have this key, so report in the debug mode if not
                                 if (_dictNodeToRun.ContainsKey(nd.NodeId))
                                 {
-                                    _dictNodeToRun[nd.NodeId].Background = ChessForgeColors.CurrentTheme.RtbSelectLineBackground;
+                                    Run run = _dictNodeToRun[nd.NodeId];
+                                    if (run.Background != ChessForgeColors.CurrentTheme.RtbSelectLineBackground)
+                                    {
+                                        run.Background = ChessForgeColors.CurrentTheme.RtbSelectLineBackground;
+                                    }
+                                    if (run.Foreground != ChessForgeColors.CurrentTheme.RtbSelectLineForeground)
+                                    {
+                                        run.Foreground = ChessForgeColors.CurrentTheme.RtbSelectLineForeground;
+                                    }
                                 }
                                 else if (Configuration.DebugLevel != 0)
                                 {
-                                    //we should always have this key, so show deubug message if not
+                                    //we should always have this key, so show debug message if not
                                     if (_debugSelectedBkgMsgCount < 2)
                                     {
                                         DebugUtils.ShowDebugMessage("WorkbookView:SelectLineAndMove()-BrushSelectedBkg nodeId=" + nd.NodeId.ToString() + " not in _dictNodeToRun");
@@ -1138,9 +1116,6 @@ namespace ChessForge
 
                     if (_selectedRun != null)
                     {
-                        _selectedRunBkg = (SolidColorBrush)_selectedRun.Background;
-                        _selectedRunFore = (SolidColorBrush)_selectedRun.Foreground;
-
                         _selectedRun.Background = ChessForgeColors.CurrentTheme.RtbSelectRunBackground;
                         _selectedRun.Foreground = ChessForgeColors.CurrentTheme.RtbSelectRunForeground;
 
@@ -1812,7 +1787,7 @@ namespace ChessForge
             diagram = false;
 
             // check if we must set includeNumber to true
-            if (!includeNumber && (inclComment && IsLastRunComment(para, nd) 
+            if (!includeNumber && (inclComment && IsLastRunComment(para, nd)
                                     || !string.IsNullOrEmpty(nd.CommentBeforeMove)
                                     || (nd.Parent != null && nd.Parent.IsDiagram))
                                     )
@@ -2154,12 +2129,12 @@ namespace ChessForge
         /// <summary>
         /// Select a Run.
         /// </summary>
-        /// <param name="r"></param>
+        /// <param name="runToSelect"></param>
         /// <param name="clickCount"></param>
         /// <param name="changedButton"></param>
-        protected void SelectRun(Run r, int clickCount, MouseButton changedButton)
+        protected void SelectRun(Run runToSelect, int clickCount, MouseButton changedButton)
         {
-            if (!IsSelectionEnabled() || r == null)
+            if (!IsSelectionEnabled() || runToSelect == null)
             {
                 return;
             }
@@ -2171,23 +2146,24 @@ namespace ChessForge
                     ClearCopySelect();
                 }
 
+                // restore colors of the currently selected Run that will be unselected below.
+                _selectedRun.Background = ChessForgeColors.CurrentTheme.RtbBackground;
+                _selectedRun.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
+
                 if (clickCount == 2)
                 {
-                    if (r != null)
+                    int nodeId = TextUtils.GetIdFromPrefixedString(runToSelect.Name);
+                    TreeNode nd = ShownVariationTree.GetNodeFromNodeId(nodeId);
+                    if (_mainWin.InvokeAnnotationsDialog(nd))
                     {
-                        int nodeId = TextUtils.GetIdFromPrefixedString(r.Name);
-                        TreeNode nd = ShownVariationTree.GetNodeFromNodeId(nodeId);
-                        if (_mainWin.InvokeAnnotationsDialog(nd))
-                        {
-                            InsertOrUpdateCommentRun(nd);
-                        }
+                        InsertOrUpdateCommentRun(nd);
                     }
                 }
                 else
                 {
                     if (changedButton == MouseButton.Left && (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift)))
                     {
-                        SetCopySelect(r);
+                        SetCopySelect(runToSelect);
                     }
                     else
                     {
@@ -2197,12 +2173,7 @@ namespace ChessForge
                             AppState.SwapCommentBoxForEngineLines(false);
                         }
 
-                        if (_selectedRun != null)
-                        {
-                            _selectedRun.Background = _selectedRunBkg;
-                            _selectedRun.Foreground = _selectedRunFore;
-                        }
-
+                        // unhighlight current line
                         foreach (TreeNode nd in _mainWin.ActiveLine.Line.NodeList)
                         {
                             if (nd.NodeId != 0)
@@ -2216,15 +2187,15 @@ namespace ChessForge
                             }
                         }
 
-                        _selectedRun = r;
+                        _selectedRun = runToSelect;
 
-                        int idd = TextUtils.GetIdFromPrefixedString(r.Name);
+                        int idd = TextUtils.GetIdFromPrefixedString(runToSelect.Name);
                         BuildForkTable(idd);
 
                         int nodeId = -1;
-                        if (r.Name != null && r.Name.StartsWith(_run_))
+                        if (runToSelect.Name != null && runToSelect.Name.StartsWith(_run_))
                         {
-                            nodeId = TextUtils.GetIdFromPrefixedString(r.Name);
+                            nodeId = TextUtils.GetIdFromPrefixedString(runToSelect.Name);
 
                             // This should never be needed but protect against unexpected timoing issue with sync/async processing
                             if (!ShownVariationTree.HasLinesCalculated())
@@ -2238,11 +2209,8 @@ namespace ChessForge
                             LearningMode.ActiveLineId = lineId;
                         }
 
-                        _selectedRunBkg = (SolidColorBrush)r.Background;
-                        _selectedRunFore = (SolidColorBrush)r.Foreground;
-
-                        r.Background = ChessForgeColors.CurrentTheme.RtbSelectRunBackground;
-                        r.Foreground = ChessForgeColors.CurrentTheme.RtbSelectRunForeground;
+                        _selectedRun.Background = ChessForgeColors.CurrentTheme.RtbSelectRunBackground;
+                        _selectedRun.Foreground = ChessForgeColors.CurrentTheme.RtbSelectRunForeground;
 
                         // this is a right click offer the context menu
                         if (changedButton == MouseButton.Right)
@@ -2295,6 +2263,7 @@ namespace ChessForge
         /// </summary>
         private void HighlightActiveLine()
         {
+            // TODO: duplicates functionality of HighlightLineAndMove
             try
             {
                 ObservableCollection<TreeNode> line = _mainWin.GetActiveLine();
@@ -2405,7 +2374,7 @@ namespace ChessForge
                     TreeNode node = _mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId);
 
                     Article article = AppState.Workbook.GetArticleByGuid(articleRef, out int chapterIndex, out int articleIndex, true);
-                    
+
                     ReferenceUtils.LastClickedReference = articleRef;
                     ReferenceUtils.LastClickedReferenceNodeId = nodeId;
 
