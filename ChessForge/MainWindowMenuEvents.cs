@@ -602,7 +602,7 @@ namespace ChessForge
 
                 if (!string.IsNullOrEmpty(selectedLineId))
                 {
-                    AppState.MainWin.ActiveTreeView.SelectLineAndMove(selectedLineId, selectedNodeId);
+                    AppState.MainWin.ActiveTreeView.HighlightLineAndMove(selectedLineId, selectedNodeId);
                 }
 
                 PulseManager.BringSelectedRunIntoView();

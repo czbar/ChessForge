@@ -1484,7 +1484,7 @@ namespace ChessForge
                                 int nodeId = 0;
                                 ObservableCollection<TreeNode> lineToSelect = _studyTreeView.ShownVariationTree.SelectLine(lineId);
                                 SetActiveLine(lineToSelect, nodeId);
-                                _studyTreeView.SelectLineAndMove(lineId, nodeId);
+                                _studyTreeView.HighlightLineAndMove(lineId, nodeId);
                             }
                             else
                             {

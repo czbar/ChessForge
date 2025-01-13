@@ -542,7 +542,7 @@ namespace ChessForge
                             break;
                     }
                     AppState.MainWin.SetActiveLine(SelectedBookmarkNode.LineId, SelectedBookmarkNode.NodeId);
-                    AppState.MainWin.ActiveTreeView.SelectLineAndMove(SelectedBookmarkNode.LineId, SelectedBookmarkNode.NodeId);
+                    AppState.MainWin.ActiveTreeView.HighlightLineAndMove(SelectedBookmarkNode.LineId, SelectedBookmarkNode.NodeId);
                 }
             }
         }

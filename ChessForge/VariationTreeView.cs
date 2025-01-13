@@ -1008,7 +1008,7 @@ namespace ChessForge
             TreeNode node = ShownVariationTree.GetNodeFromNodeId(nodeId);
             if (node != null)
             {
-                SelectLineAndMove(node.LineId, nodeId);
+                HighlightLineAndMove(node.LineId, nodeId);
             }
         }
 
@@ -1051,14 +1051,12 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Selects the move and the line in this view. 
-        /// It will be called e.g. when the user clicks on a move in the Scoresheet.
-        /// Therefore it does not request other views to follow the selection.
-        /// Changes the background of the runs in the selected line and of the selected run.
+        /// Highlights the line with the passed lineId and the Move with the passed nodeId. 
+        /// Does not touch or reset colors of any other nodes.
         /// </summary>
         /// <param name="nodeId"></param>
         /// <param name="lineId"></param>
-        public void SelectLineAndMove(string lineId, int nodeId)
+        public void HighlightLineAndMove(string lineId, int nodeId)
         {
             if (!IsSelectionEnabled())
             {
@@ -1423,7 +1421,7 @@ namespace ChessForge
             try
             {
                 _mainWin.SetActiveLine("1", 0);
-                SelectLineAndMove("1", 0);
+                HighlightLineAndMove("1", 0);
                 _mainWin.DisplayPosition(_mainVariationTree.Nodes[0]);
             }
             catch

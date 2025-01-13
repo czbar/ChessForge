@@ -211,7 +211,7 @@ namespace ChessForge
             {
                 string lineId = tree.SelectedLineId == "" ? "1" : tree.SelectedLineId;
                 int nodeId = tree.SelectedNodeId < 0 ? 0 : tree.SelectedNodeId;
-                ActiveTreeView.SelectLineAndMove(lineId, nodeId);
+                ActiveTreeView.HighlightLineAndMove(lineId, nodeId);
 
                 ObservableCollection<TreeNode> lineToSelect = tree.SelectLine(lineId);
                 SetActiveLine(lineToSelect, nodeId);
@@ -2035,7 +2035,7 @@ namespace ChessForge
                 if (nd != null && WorkbookManager.SessionWorkbook.ActiveVariationTree != null)
                 {
                     WorkbookManager.SessionWorkbook.ActiveVariationTree.SetSelectedLineAndMove(lineId, nd.NodeId);
-                    view.SelectLineAndMove(lineId, nd.NodeId);
+                    view.HighlightLineAndMove(lineId, nd.NodeId);
                     if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS && AppState.ActiveTab != TabViewType.CHAPTERS)
                     {
                         EvaluateActiveLineSelectedPosition(nd);

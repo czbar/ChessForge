@@ -1173,7 +1173,7 @@ namespace ChessForge
                     }
                 }
                 BuildFlowDocumentForVariationTree();
-                SelectLineAndMove(_mainVariationTree.SelectedLineId, _mainVariationTree.SelectedNodeId);
+                HighlightLineAndMove(_mainVariationTree.SelectedLineId, _mainVariationTree.SelectedNodeId);
             }
             e.Handled = true;
         }
@@ -1197,7 +1197,7 @@ namespace ChessForge
                     }
                 }
                 BuildFlowDocumentForVariationTree();
-                SelectLineAndMove(_mainVariationTree.SelectedLineId, _mainVariationTree.SelectedNodeId);
+                HighlightLineAndMove(_mainVariationTree.SelectedLineId, _mainVariationTree.SelectedNodeId);
             }
             e.Handled = true;
         }

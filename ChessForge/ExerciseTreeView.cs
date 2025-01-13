@@ -830,7 +830,7 @@ namespace ChessForge
                     {
                         nodeId = 0;
                     }
-                    SelectLineAndMove(lineId, nodeId);
+                    HighlightLineAndMove(lineId, nodeId);
 
                     ObservableCollection<TreeNode> lineToSelect = ShownVariationTree.SelectLine(lineId);
                     _mainWin.SetActiveLine(lineToSelect, nodeId);
@@ -863,7 +863,7 @@ namespace ChessForge
 
                 _mainVariationTree.SetSelectedNodeId(0);
                 int nodeId = 0;
-                SelectLineAndMove(lineId, nodeId);
+                HighlightLineAndMove(lineId, nodeId);
 
                 ObservableCollection<TreeNode> lineToSelect = _mainVariationTree.SelectLine(lineId);
                 _mainWin.SetActiveLine(lineToSelect, nodeId);
