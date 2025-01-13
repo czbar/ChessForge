@@ -244,53 +244,87 @@ namespace ChessForge
 
             LightMode.RtbForeground = Brushes.Black;
             LightMode.RtbBackground = Brushes.White;
+            LightMode.RtbForeground.Freeze();
+            LightMode.RtbBackground.Freeze();
 
             LightMode.RtbSelectRunForeground = Brushes.White;
             LightMode.RtbSelectRunBackground = Brushes.Black;
+            LightMode.RtbSelectRunForeground.Freeze();
+            LightMode.RtbSelectRunBackground.Freeze();
 
             LightMode.RtbSelectLineForeground = Brushes.Black;
             LightMode.RtbSelectLineBackground = new SolidColorBrush(Color.FromRgb(255, 255, 206));
+            LightMode.RtbSelectLineForeground.Freeze();
+            LightMode.RtbSelectLineBackground.Freeze();
 
             LightMode.IntroMoveForeground = Brushes.Blue;
             LightMode.IntroDiagBackground = Brushes.Black;
             LightMode.IntroDiagSideCanvasBackground = Brushes.White;
+            LightMode.IntroMoveForeground.Freeze();
+            LightMode.IntroDiagBackground.Freeze();
+            LightMode.IntroDiagSideCanvasBackground.Freeze();
 
             LightMode.IndexPrefixForeground = new SolidColorBrush(Color.FromRgb(18, 55, 97));
+            LightMode.IndexPrefixForeground.Freeze();
 
             LightMode.ModuloColor_0 = Brushes.Blue;
             LightMode.ModuloColor_1 = Brushes.Green;
             LightMode.ModuloColor_2 = Brushes.Magenta;
             LightMode.ModuloColor_3 = Brushes.Firebrick;
+            LightMode.ModuloColor_0.Freeze();
+            LightMode.ModuloColor_1.Freeze();
+            LightMode.ModuloColor_2.Freeze();
+            LightMode.ModuloColor_3.Freeze();
 
             LightMode.BorderBrush = Brushes.Black;
+            LightMode.BorderBrush.Freeze();
 
             LightMode.EngineLinesBackground = new SolidColorBrush(Color.FromRgb(0xF2, 0xF5, 0xF3));
+            LightMode.EngineLinesBackground.Freeze();
 
             LightMode.DarkShadeOpacity = 0;
 
             LightMode.HintErrorForeground = Brushes.Red;
             LightMode.HintInfoForeground = Brushes.Green;
             LightMode.HintProgressForeground = Brushes.Blue;
+            LightMode.HintErrorForeground.Freeze();
+            LightMode.HintInfoForeground.Freeze();
+            LightMode.HintProgressForeground.Freeze();
 
             LightMode.RtbSelectMoveWhileCopyForeground = Brushes.White;
             LightMode.RtbSelectMoveWhileCopyBackground = Brushes.Blue;
             LightMode.RtbSelectMovesForCopyBackground = Brushes.LightBlue;
+            LightMode.RtbSelectMoveWhileCopyBackground.Freeze();
+            LightMode.RtbSelectMoveWhileCopyBackground.Freeze();
+            LightMode.RtbSelectMovesForCopyBackground.Freeze();
 
             LightMode.TrainingCheckmateForeground = Brushes.Navy;
             LightMode.TrainingTakebackForeground = Brushes.DarkOrange;
             LightMode.TrainingEngineGameForeground = Brushes.Brown;
+            LightMode.TrainingCheckmateForeground.Freeze();
+            LightMode.TrainingTakebackForeground.Freeze();
+            LightMode.TrainingEngineGameForeground.Freeze();
 
             LightMode.ChaptersCreateIntroForeground = Brushes.Gray;
+            LightMode.ChaptersCreateIntroForeground.Freeze();
+
             LightMode.BookmarksBackground = new SolidColorBrush(Color.FromRgb(229, 229, 229));
+            LightMode.BookmarksBackground.Freeze();
 
             LightMode.HyperlinkForeground = new SolidColorBrush(Color.FromRgb(0, 153, 213));
             LightMode.HyperlinkHoveredForeground = new SolidColorBrush(Color.FromRgb(79, 102, 165));
+            LightMode.HyperlinkForeground.Freeze();
+            LightMode.HyperlinkHoveredForeground.Freeze();
 
             LightMode.GameExerciseRefForeground = new SolidColorBrush(Color.FromRgb(0, 132, 132));
             LightMode.GameExerciseRefHoveredForeground = new SolidColorBrush(Color.FromRgb(0, 106, 106));
+            LightMode.GameExerciseRefForeground.Freeze();
+            LightMode.GameExerciseRefHoveredForeground.Freeze();
 
             LightMode.ChapterRefForeground = new SolidColorBrush(Color.FromRgb(191, 0, 96));
             LightMode.ChapterRefHoveredForeground = new SolidColorBrush(Color.FromRgb(157, 0, 79));
+            LightMode.ChapterRefForeground.Freeze();
+            LightMode.ChapterRefHoveredForeground.Freeze();
         }
 
         /// <summary>
@@ -306,53 +340,86 @@ namespace ChessForge
 
             DarkMode.RtbForeground = Brushes.White;
             DarkMode.RtbBackground = new SolidColorBrush(Color.FromRgb(0x44, 0x44, 0x44));
+            DarkMode.RtbForeground.Freeze();
+            DarkMode.RtbBackground.Freeze();
 
             DarkMode.RtbSelectRunForeground = Brushes.Black;
             DarkMode.RtbSelectRunBackground = Brushes.White;
+            DarkMode.RtbSelectRunForeground.Freeze();
+            DarkMode.RtbSelectRunBackground.Freeze();
 
             DarkMode.RtbSelectLineForeground = Brushes.White;
             DarkMode.RtbSelectLineBackground = new SolidColorBrush(Color.FromRgb(100, 100, 0));
+            DarkMode.RtbSelectLineForeground.Freeze();
+            DarkMode.RtbSelectLineBackground.Freeze();
 
             DarkMode.IntroMoveForeground = Brushes.LightBlue;
             DarkMode.IntroDiagBackground = Brushes.Black;
             DarkMode.IntroDiagSideCanvasBackground = DarkMode.RtbBackground;
+            DarkMode.IntroMoveForeground.Freeze();
+            DarkMode.IntroDiagBackground.Freeze();
+            DarkMode.IntroDiagSideCanvasBackground.Freeze();
 
-            DarkMode.IndexPrefixForeground = Brushes.LightBlue;
+            DarkMode.IndexPrefixForeground = Brushes.LightBlue; 
+            DarkMode.IndexPrefixForeground.Freeze();
 
             DarkMode.ModuloColor_0 = Brushes.LightCyan;
             DarkMode.ModuloColor_1 = Brushes.LightGreen;
             DarkMode.ModuloColor_2 = Brushes.LightPink;
             DarkMode.ModuloColor_3 = Brushes.Yellow;
+            DarkMode.ModuloColor_0.Freeze();
+            DarkMode.ModuloColor_1.Freeze();
+            DarkMode.ModuloColor_2.Freeze();
+            DarkMode.ModuloColor_3.Freeze();
 
             DarkMode.BorderBrush = Brushes.White;
+            DarkMode.BorderBrush.Freeze();
 
             DarkMode.EngineLinesBackground = DarkMode.RtbBackground;
+            DarkMode.EngineLinesBackground.Freeze();
 
             DarkMode.DarkShadeOpacity = 0.1;
 
             DarkMode.HintErrorForeground = Brushes.OrangeRed;
             DarkMode.HintInfoForeground = Brushes.LightGreen;
             DarkMode.HintProgressForeground = Brushes.LightBlue;
+            DarkMode.HintErrorForeground.Freeze();
+            DarkMode.HintInfoForeground.Freeze();
+            DarkMode.HintProgressForeground.Freeze();
 
             DarkMode.RtbSelectMoveWhileCopyForeground = Brushes.Black;
             DarkMode.RtbSelectMoveWhileCopyBackground = Brushes.LightBlue;
             DarkMode.RtbSelectMovesForCopyBackground = Brushes.Blue;
+            DarkMode.RtbSelectMoveWhileCopyForeground.Freeze();
+            DarkMode.RtbSelectMoveWhileCopyBackground.Freeze();
+            DarkMode.RtbSelectMovesForCopyBackground.Freeze();
 
             DarkMode.TrainingCheckmateForeground = Brushes.LightBlue;
             DarkMode.TrainingTakebackForeground = Brushes.Yellow;
             DarkMode.TrainingEngineGameForeground = Brushes.Gold;
+            DarkMode.TrainingCheckmateForeground.Freeze();
+            DarkMode.TrainingTakebackForeground.Freeze();
+            DarkMode.TrainingEngineGameForeground.Freeze();
 
             DarkMode.ChaptersCreateIntroForeground = Brushes.LightGray;
             DarkMode.BookmarksBackground = DarkMode.RtbBackground;
+            DarkMode.ChaptersCreateIntroForeground.Freeze();
+            DarkMode.BookmarksBackground.Freeze();
 
             DarkMode.HyperlinkForeground = new SolidColorBrush(Color.FromRgb(9, 147, 189));
             DarkMode.HyperlinkHoveredForeground = new SolidColorBrush(Color.FromRgb(0, 244, 255));
+            DarkMode.HyperlinkForeground.Freeze();
+            DarkMode.HyperlinkHoveredForeground.Freeze();
 
             DarkMode.GameExerciseRefForeground = new SolidColorBrush(Color.FromRgb(29, 167, 209));
             DarkMode.GameExerciseRefHoveredForeground = new SolidColorBrush(Color.FromRgb(0, 244, 255));
+            DarkMode.GameExerciseRefForeground.Freeze();
+            DarkMode.GameExerciseRefHoveredForeground.Freeze();
 
             DarkMode.ChapterRefForeground = new SolidColorBrush(Color.FromRgb(255, 98, 176));
             DarkMode.ChapterRefHoveredForeground = new SolidColorBrush(Color.FromRgb(255, 147, 201));
+            DarkMode.ChapterRefForeground.Freeze();
+            DarkMode.ChapterRefHoveredForeground.Freeze();
         }
     }
 }
