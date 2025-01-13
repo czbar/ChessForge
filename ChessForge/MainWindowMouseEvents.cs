@@ -5,7 +5,6 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -1354,9 +1353,12 @@ namespace ChessForge
 
 
             WorkbookManager.ActiveTab = TabViewType.STUDY;
+            bool restoreLine = true;
             if (_studyTreeView == null || _studyTreeView.Document == null || _studyTreeView.Document.Blocks.Count == 0)
             {
                 SetupGuiForActiveStudyTree(true);
+                // set restoreLine so that we do not restore the line in the call to SetStudyStateOnFocus() below
+                restoreLine = false;
             }
             UiRtbStudyTreeView.Focus();
 
@@ -1371,7 +1373,7 @@ namespace ChessForge
             BoardCommentBox.ShowTabHints();
             try
             {
-                SetStudyStateOnFocus();
+                SetStudyStateOnFocus(restoreLine);
                 AppState.ConfigureMainBoardContextMenu();
                 if (WorkbookManager.SessionWorkbook != null)
                 {
@@ -1454,7 +1456,7 @@ namespace ChessForge
         /// Sets the board orientation and active line according
         /// the last StudyTree state.
         /// </summary>
-        private void SetStudyStateOnFocus()
+        private void SetStudyStateOnFocus(bool restoreLine)
         {
             try
             {
@@ -1486,7 +1488,10 @@ namespace ChessForge
                             }
                             else
                             {
-                                RestoreSelectedLineAndMoveInActiveView();
+                                if (restoreLine)
+                                {
+                                    RestoreSelectedLineAndMoveInActiveView();
+                                }
                             }
                         }
                         MainChessBoard.FlipBoard(EffectiveBoardOrientation(WorkbookManager.ItemType.STUDY));
