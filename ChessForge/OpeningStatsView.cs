@@ -2,15 +2,12 @@
 using GameTree;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Xml.Linq;
 using WebAccess;
 
 namespace ChessForge
@@ -69,8 +66,8 @@ namespace ChessForge
         /// <summary>
         /// Creates the view and registers a listener with WebAccess
         /// </summary>
-        /// <param name="doc"></param>
-        public OpeningStatsView(FlowDocument doc) : base(doc)
+        /// <param name="rtb"></param>
+        public OpeningStatsView(RichTextBox rtb) : base(rtb)
         {
             // listen to Data Received Errors events
             OpeningExplorer.OpeningStatsErrorReceived += OpeningStatsErrorReceived;
@@ -372,12 +369,14 @@ namespace ChessForge
         /// </summary>
         private void BuildFlowDocument(DataMode mode, LichessOpeningsStats openingStats, string errorMessage = "")
         {
+            FlowDocument doc = new FlowDocument();
+
             _lastDataMode = mode;
             _lastOpeningStats = openingStats;
             _lasterrorMessage = errorMessage;
 
-            Document.Blocks.Clear();
-            Document.PageWidth = 590;
+            doc.Blocks.Clear();
+            doc.PageWidth = 590;
 
             if (_node != null)
             {
@@ -387,10 +386,10 @@ namespace ChessForge
                         BuildOpeningNameTable();
                         if (_openingNameTable != null)
                         {
-                            Document.Blocks.Add(_openingNameTable);
+                            doc.Blocks.Add(_openingNameTable);
                         }
                         BuildOpeningStatsTable(openingStats);
-                        Document.Blocks.Add(_openingStatsTable);
+                        doc.Blocks.Add(_openingStatsTable);
                         break;
                     case DataMode.TABLEBASE:
                         if (_node.ColorToMove == PieceColor.White)
@@ -412,12 +411,14 @@ namespace ChessForge
                         BuildOpeningNameTable();
                         if (_openingNameTable != null)
                         {
-                            Document.Blocks.Add(_openingNameTable);
+                            doc.Blocks.Add(_openingNameTable);
                         }
-                        Document.Blocks.Add(BuildErrorMessagePara(errorMessage));
+                        doc.Blocks.Add(BuildErrorMessagePara(errorMessage));
                         break;
                 }
             }
+
+            HostRtb.Document = doc;
         }
 
         /// <summary>
@@ -800,8 +801,8 @@ namespace ChessForge
             Table moves = BuildTablebaseCategoryMoves(category);
             if (moves.RowGroups[0].Rows.Count > 0)
             {
-                Document.Blocks.Add(header);
-                Document.Blocks.Add(moves);
+                HostRtb.Document.Blocks.Add(header);
+                HostRtb.Document.Blocks.Add(moves);
             }
         }
 
