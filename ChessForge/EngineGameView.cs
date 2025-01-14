@@ -49,8 +49,8 @@ namespace ChessForge
         /// Creates an instance of this class and sets reference 
         /// to the FlowDocument managed by the object.
         /// </summary>
-        /// <param name="doc"></param>
-        public EngineGameView(FlowDocument doc) : base(doc)
+        /// <param name="rtb"></param>
+        public EngineGameView(RichTextBox rtb) : base(rtb)
         {
         }
 
@@ -83,8 +83,8 @@ namespace ChessForge
         /// </summary>
         public void BuildFlowDocumentForGameLine(PieceColor colorForUser)
         {
-            Document.Blocks.Clear();
-            Document.Blocks.Add(BuildDummyPararaph());
+            HostRtb.Document.Blocks.Clear();
+            HostRtb.Document.Blocks.Add(BuildDummyPararaph());
 
             UpdateIntroParagraph(colorForUser);
             UpdateEngineOptionsParagraph();
@@ -98,12 +98,12 @@ namespace ChessForge
         /// <param name="nd"></param>
         public void AddMove(TreeNode nd)
         {
-            Paragraph para = FindParagraphByName(_para_gamemoves_, false);
+            Paragraph para = FindParagraphByName(HostRtb.Document, _para_gamemoves_, false);
             if (para == null)
             {
                 para = CreateParagraph(STYLE_GAME_MOVES, true);
                 para.Name = _para_gamemoves_;
-                Document.Blocks.Add(para);
+                HostRtb.Document.Blocks.Add(para);
             }
 
             BuildNodeTextAndAddToPara(nd, false, para);
@@ -117,12 +117,12 @@ namespace ChessForge
         /// <returns></returns>
         public Paragraph UpdateIntroParagraph(PieceColor colorForUser)
         {
-            Paragraph para = FindParagraphByName(_para_intro_, false);
+            Paragraph para = FindParagraphByName(HostRtb.Document, _para_intro_, false);
             if (para == null)
             {
                 para = CreateParagraph(STYLE_INTRO, true);
                 para.Name = _para_intro_;
-                Document.Blocks.Add(para);
+                HostRtb.Document.Blocks.Add(para);
             }
 
             para.Inlines.Clear();
@@ -144,12 +144,12 @@ namespace ChessForge
         /// <returns></returns>
         public Paragraph UpdateEngineOptionsParagraph()
         {
-            Paragraph para = FindParagraphByName(_para_engineoptions_, false);
+            Paragraph para = FindParagraphByName(HostRtb.Document, _para_engineoptions_, false);
             if (para == null)
             {
                 para = CreateParagraph(STYLE_ENGINE_OPTIONS, true);
                 para.Name = _para_engineoptions_;
-                Document.Blocks.Add(para);
+                HostRtb.Document.Blocks.Add(para);
             }
 
             para.Inlines.Clear();
@@ -169,12 +169,12 @@ namespace ChessForge
         /// <returns></returns>
         public Paragraph UpdateMovePromptParagraph(bool userToMove)
         {
-            Paragraph para = FindParagraphByName(_para_moveprompt_, false);
+            Paragraph para = FindParagraphByName(HostRtb.Document, _para_moveprompt_, false);
             if (para == null)
             {
                 para = CreateParagraph(STYLE_MOVE_PROMPT, true);
                 para.Name = _para_moveprompt_;
-                Document.Blocks.Add(para);
+                HostRtb.Document.Blocks.Add(para);
             }
 
             para.Inlines.Clear();
@@ -191,7 +191,7 @@ namespace ChessForge
         /// </summary>
         public void ClearMovePromptParagraph()
         {
-            Paragraph para = FindParagraphByName(_para_moveprompt_, false);
+            Paragraph para = FindParagraphByName(HostRtb.Document, _para_moveprompt_, false);
             if (para != null)
             {
                 para.Inlines.Clear();
@@ -367,12 +367,12 @@ namespace ChessForge
         /// <returns></returns>
         private Paragraph UpdateGameMovesParagraph()
         {
-            Paragraph para = FindParagraphByName(_para_gamemoves_, false);
+            Paragraph para = FindParagraphByName(HostRtb.Document, _para_gamemoves_, false);
             if (para == null)
             {
                 para = CreateParagraph(STYLE_GAME_MOVES, true);
                 para.Name = _para_gamemoves_;
-                Document.Blocks.Add(para);
+                HostRtb.Document.Blocks.Add(para);
             }
 
             para.Inlines.Clear();

@@ -169,7 +169,7 @@ namespace ChessForge
                         if (lastNode != null)
                         {
                             SetActiveLine(lastNode.LineId, lastNode.NodeId);
-                            ActiveTreeView.HighlightLineAndMove(lastNode.LineId, lastNode.NodeId);
+                            ActiveTreeView.HighlightLineAndMove(AppState.MainWin.ActiveTreeView.HostRtb.Document, lastNode.LineId, lastNode.NodeId);
                         }
                     }
                 }

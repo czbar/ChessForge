@@ -16,12 +16,12 @@ namespace ChessForge
         /// TODO: this should not be necessary, replace with a call to SelectNode(TreeNode);
         /// </summary>
         /// <param name="nodeId"></param>
-        public void SelectNode(int nodeId)
+        public void SelectNode(FlowDocument doc, int nodeId)
         {
             TreeNode node = ShownVariationTree.GetNodeFromNodeId(nodeId);
             if (node != null)
             {
-                HighlightLineAndMove(node.LineId, nodeId);
+                HighlightLineAndMove(doc, node.LineId, nodeId);
             }
         }
 
@@ -69,7 +69,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="nodeId"></param>
         /// <param name="lineId"></param>
-        public void HighlightLineAndMove(string lineId, int nodeId)
+        public void HighlightLineAndMove(FlowDocument doc, string lineId, int nodeId)
         {
             if (!IsSelectionEnabled())
             {
@@ -80,12 +80,12 @@ namespace ChessForge
             {
                 if (nodeId == 0)
                 {
-                    RichTextBoxControl.ScrollToHome();
+                    HostRtb.ScrollToHome();
                 }
 
                 try
                 {
-                    BuildForkTable(nodeId);
+                    BuildForkTable(doc, nodeId);
 
                     ObservableCollection<TreeNode> lineToSelect = ShownVariationTree.SelectLine(lineId);
 
@@ -389,8 +389,11 @@ namespace ChessForge
                 }
 
                 // restore colors of the currently selected Run that will be unselected below.
-                _selectedRun.Background = ChessForgeColors.CurrentTheme.RtbBackground;
-                _selectedRun.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
+                if (runToSelect != _selectedRun)
+                {
+                    _selectedRun.Background = ChessForgeColors.CurrentTheme.RtbBackground;
+                    _selectedRun.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
+                }
 
                 if (clickCount == 2)
                 {
@@ -432,7 +435,7 @@ namespace ChessForge
                         _selectedRun = runToSelect;
 
                         int idd = TextUtils.GetIdFromPrefixedString(runToSelect.Name);
-                        BuildForkTable(idd);
+                        BuildForkTable(HostRtb.Document, idd);
 
                         int nodeId = -1;
                         if (runToSelect.Name != null && runToSelect.Name.StartsWith(_run_))

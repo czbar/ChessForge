@@ -1220,18 +1220,18 @@ namespace ChessForge
             // we may need to show/hide Intro headers if something has changed
             if (_chaptersView == null || AppState.Workbook == null)
             {
-                _chaptersView = new ChaptersView(UiRtbChaptersView.Document, this);
+                _chaptersView = new ChaptersView(UiRtbChaptersView, this);
                 _chaptersView.IsDirty = true;
             }
             else
             {
                 if (_chaptersView.IsDirty)
                 {
-                    _chaptersView.BuildFlowDocumentForChaptersView();
+                    _chaptersView.BuildFlowDocumentForChaptersView(false);
                 }
-                _chaptersView.HighlightActiveChapter();
+                _chaptersView.HighlightActiveChapter(_chaptersView.HostRtb.Document);
                 _chaptersView.BringActiveChapterIntoView();
-                _chaptersView.UpdateIntroHeaders();
+                _chaptersView.UpdateIntroHeaders(_chaptersView.HostRtb.Document);
             }
 
             AppState.ConfigureMenusForManualReview();
@@ -1278,7 +1278,7 @@ namespace ChessForge
                 }
 
                 WorkbookManager.ActiveTab = TabViewType.INTRO;
-                if (_introView == null || _introView.Document == null || _introView.Document.Blocks.Count == 0)
+                if (_introView == null || _introView.HostRtb.Document == null || _introView.HostRtb.Document.Blocks.Count == 0)
                 {
                     SetupGuiForIntro(true);
                 }
@@ -1314,7 +1314,7 @@ namespace ChessForge
             {
                 UiRtbIntroView.IsDocumentEnabled = true;
                 UiRtbIntroView.AllowDrop = false;
-                _introView = new IntroView(UiRtbIntroView.Document, WorkbookManager.SessionWorkbook.ActiveChapter);
+                _introView = new IntroView(UiRtbIntroView, WorkbookManager.SessionWorkbook.ActiveChapter);
             }
             DisplayPosition(_introView.SelectedNode);
 
@@ -1354,7 +1354,7 @@ namespace ChessForge
 
             WorkbookManager.ActiveTab = TabViewType.STUDY;
             bool restoreLine = true;
-            if (_studyTreeView == null || _studyTreeView.Document == null || _studyTreeView.Document.Blocks.Count == 0)
+            if (_studyTreeView == null || _studyTreeView.HostRtb.Document == null || _studyTreeView.HostRtb.Document.Blocks.Count == 0)
             {
                 SetupGuiForActiveStudyTree(true);
                 // set restoreLine so that we do not restore the line in the call to SetStudyStateOnFocus() below
@@ -1479,12 +1479,12 @@ namespace ChessForge
                             {
                                 // TODO we should not have to do all this here: can we prevent the special circumstances where
                                 // this is not in ActiveChapter when we are calling ApplyStates() ??
-                                _studyTreeView.BuildFlowDocumentForVariationTree();
+                                _studyTreeView.BuildFlowDocumentForVariationTree(false);
                                 string lineId = "1";
                                 int nodeId = 0;
                                 ObservableCollection<TreeNode> lineToSelect = _studyTreeView.ShownVariationTree.SelectLine(lineId);
                                 SetActiveLine(lineToSelect, nodeId);
-                                _studyTreeView.HighlightLineAndMove(lineId, nodeId);
+                                _studyTreeView.HighlightLineAndMove(_studyTreeView.HostRtb.Document, lineId, nodeId);
                             }
                             else
                             {

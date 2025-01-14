@@ -79,7 +79,7 @@ namespace ChessForge
         /// Creates the view and registers a listener with WebAccess
         /// </summary>
         /// <param name="doc"></param>
-        public TopGamesView(FlowDocument doc, bool mainWin) : base(doc)
+        public TopGamesView(RichTextBox doc, bool mainWin) : base(doc)
         {
             _isMainWin = mainWin;
             // listen to Data Received Errors events
@@ -172,11 +172,11 @@ namespace ChessForge
         /// </summary>
         public void BuildFlowDocument(LichessOpeningsStats openingStats)
         {
-            Document.Blocks.Clear();
-            Document.PageWidth = 590;
+            HostRtb.Document.Blocks.Clear();
+            HostRtb.Document.PageWidth = 590;
 
-            Document.Blocks.Add(BuildHeaderLabel());
-            Document.Blocks.Add(BuildTopGamesTableEx(openingStats));
+            HostRtb.Document.Blocks.Add(BuildHeaderLabel());
+            HostRtb.Document.Blocks.Add(BuildTopGamesTableEx(openingStats));
         }
 
         /// <summary>
@@ -222,7 +222,7 @@ namespace ChessForge
         /// </summary>
         public void ClearDocument()
         {
-            Document.Blocks.Clear();
+            HostRtb.Document.Blocks.Clear();
         }
 
         /// <summary>

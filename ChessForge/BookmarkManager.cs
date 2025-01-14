@@ -537,12 +537,12 @@ namespace ChessForge
                             if (SelectedBookmarkNode.NodeId != 0 && !AppState.MainWin.ActiveVariationTree.ShowTreeLines)
                             {
                                 AppState.MainWin.ActiveVariationTree.ShowTreeLines = true;
-                                AppState.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
+                                AppState.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree(false);
                             }
                             break;
                     }
                     AppState.MainWin.SetActiveLine(SelectedBookmarkNode.LineId, SelectedBookmarkNode.NodeId);
-                    AppState.MainWin.ActiveTreeView.HighlightLineAndMove(SelectedBookmarkNode.LineId, SelectedBookmarkNode.NodeId);
+                    AppState.MainWin.ActiveTreeView.HighlightLineAndMove(AppState.MainWin.ActiveTreeView.HostRtb.Document, SelectedBookmarkNode.LineId, SelectedBookmarkNode.NodeId);
                 }
             }
         }

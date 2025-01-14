@@ -152,7 +152,7 @@ namespace ChessForge
                         break;
                     case WorkbookOperationType.REGENERATE_STUDIES:
                         WorkbookManager.SessionWorkbook.UndoRegenerateStudies(op.OpData_1, op.OpData_2);
-                        AppState.MainWin.StudyTreeView.BuildFlowDocumentForVariationTree();
+                        AppState.MainWin.StudyTreeView.BuildFlowDocumentForVariationTree(false);
                         AppState.MainWin.UiTabStudyTree.Focus();
                         break;
                     case WorkbookOperationType.COPY_ARTICLES:

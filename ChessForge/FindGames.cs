@@ -146,7 +146,7 @@ namespace ChessForge
                                     if (AppState.ActiveVariationTree != null && AppState.MainWin.ActiveTreeView != null)
                                     {
                                         AppState.MainWin.SetActiveLine("1", 0);
-                                        AppState.MainWin.ActiveTreeView.HighlightLineAndMove("1", 0);
+                                        AppState.MainWin.ActiveTreeView.HighlightLineAndMove(AppState.MainWin.ActiveTreeView.HostRtb.Document, "1", 0);
                                     }
                                 }
                             }

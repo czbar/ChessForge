@@ -133,10 +133,10 @@ namespace ChessForge
         {
             if (_studyTreeView != null)
             {
-                _studyTreeView.Clear(GameData.ContentType.STUDY_TREE);
+                _studyTreeView.Clear(_studyTreeView.HostRtb.Document, GameData.ContentType.STUDY_TREE);
                 if (rebuild && AppState.Workbook != null)
                 {
-                    _studyTreeView.BuildFlowDocumentForVariationTree();
+                    _studyTreeView.BuildFlowDocumentForVariationTree(false);
                 }
             }
             else
@@ -146,10 +146,10 @@ namespace ChessForge
 
             if (_modelGameTreeView != null)
             {
-                _modelGameTreeView.Clear(GameData.ContentType.MODEL_GAME);
+                _modelGameTreeView.Clear(_modelGameTreeView.HostRtb.Document, GameData.ContentType.MODEL_GAME);
                 if (rebuild)
                 {
-                    _modelGameTreeView.BuildFlowDocumentForVariationTree();
+                    _modelGameTreeView.BuildFlowDocumentForVariationTree(false);
                 }
             }
             else
@@ -159,10 +159,10 @@ namespace ChessForge
 
             if (_exerciseTreeView != null)
             {
-                _exerciseTreeView.Clear(GameData.ContentType.EXERCISE);
+                _exerciseTreeView.Clear(_exerciseTreeView.HostRtb.Document, GameData.ContentType.EXERCISE);
                 if (rebuild)
                 {
-                    _exerciseTreeView.BuildFlowDocumentForVariationTree();
+                    _exerciseTreeView.BuildFlowDocumentForVariationTree(false);
                 }
             }
             else
@@ -185,13 +185,13 @@ namespace ChessForge
             switch (contentType)
             {
                 case GameData.ContentType.STUDY_TREE:
-                    _studyTreeView.ClearForQuickSkip();
+                    _studyTreeView.ClearForQuickSkip(_studyTreeView.HostRtb.Document);
                     break;
                 case GameData.ContentType.MODEL_GAME:
-                    _modelGameTreeView.ClearForQuickSkip();
+                    _modelGameTreeView.ClearForQuickSkip(_modelGameTreeView.HostRtb.Document);
                     break;
                 case GameData.ContentType.EXERCISE:
-                    _exerciseTreeView.ClearForQuickSkip();
+                    _exerciseTreeView.ClearForQuickSkip(_exerciseTreeView.HostRtb.Document);
                     break;
             }
         }
@@ -211,7 +211,7 @@ namespace ChessForge
             {
                 string lineId = tree.SelectedLineId == "" ? "1" : tree.SelectedLineId;
                 int nodeId = tree.SelectedNodeId < 0 ? 0 : tree.SelectedNodeId;
-                ActiveTreeView.HighlightLineAndMove(lineId, nodeId);
+                ActiveTreeView.HighlightLineAndMove(ActiveTreeView.HostRtb.Document, lineId, nodeId);
 
                 ObservableCollection<TreeNode> lineToSelect = tree.SelectLine(lineId);
                 SetActiveLine(lineToSelect, nodeId);
@@ -434,7 +434,7 @@ namespace ChessForge
 
             SetDontSaveEvalsMenuItems(Configuration.DontSavePositionEvals);
 
-            BoardCommentBox = new CommentBox(UiRtbBoardComment.Document, this);
+            BoardCommentBox = new CommentBox(UiRtbBoardComment, this);
             ActiveLine = new ActiveLineManager(UiDgActiveLine, this);
 
             EngineLinesBox.Initialize(this, UiTbEngineLines, UiPbEngineThinking);
@@ -505,8 +505,8 @@ namespace ChessForge
             UiBtnExitTraining.Background = ChessForgeColors.ExitButtonLinearBrush;
             UiBtnShowExplorer.Background = ChessForgeColors.ShowExplorerLinearBrush;
 
-            _openingStatsView = new OpeningStatsView(UiRtbOpenings.Document);
-            _topGamesView = new TopGamesView(UiRtbTopGames.Document, true);
+            _openingStatsView = new OpeningStatsView(UiRtbOpenings);
+            _topGamesView = new TopGamesView(UiRtbTopGames, true);
             UiRtbStudyTreeView.IsDocumentEnabled = true;
             UiRtbTopGames.IsDocumentEnabled = true;
             UiRtbOpenings.IsDocumentEnabled = true;
@@ -916,7 +916,7 @@ namespace ChessForge
                 WorkbookManager.SessionWorkbook.SetActiveChapterTreeByIndex(chapterIndex, GameData.ContentType.STUDY_TREE, 0, focusOnStudyTree);
                 if (AppState.ActiveTab == TabViewType.CHAPTERS)
                 {
-                    _chaptersView.HighlightActiveChapter();
+                    _chaptersView.HighlightActiveChapter(_chaptersView.HostRtb.Document);
                 }
 
                 if (rebuild)
@@ -942,7 +942,7 @@ namespace ChessForge
                 {
                     WorkbookManager.SessionWorkbook.ActiveChapter.IsExercisesListExpanded = true;
                 }
-                _chaptersView.BuildFlowDocumentForChaptersView();
+                _chaptersView.BuildFlowDocumentForChaptersView(false);
             }
             catch { }
         }
@@ -965,7 +965,7 @@ namespace ChessForge
         {
             if (view != null)
             {
-                view.Clear(contentType);
+                view.Clear(null, contentType);
             }
             else
             {
@@ -1006,7 +1006,7 @@ namespace ChessForge
                 {
                     if (_modelGameTreeView != null)
                     {
-                        _modelGameTreeView.Clear(GameData.ContentType.MODEL_GAME);
+                        _modelGameTreeView.Clear(_modelGameTreeView.HostRtb.Document, GameData.ContentType.MODEL_GAME);
                         activeChapter.SetActiveVariationTree(GameData.ContentType.NONE);
                         AppState.MainWin.UiTabModelGames.Focus();
                     }
@@ -1107,7 +1107,7 @@ namespace ChessForge
                 {
                     if (_exerciseTreeView != null)
                     {
-                        _exerciseTreeView.Clear(GameData.ContentType.EXERCISE);
+                        _exerciseTreeView.Clear(_exerciseTreeView.HostRtb.Document, GameData.ContentType.EXERCISE);
                         activeChapter.SetActiveVariationTree(GameData.ContentType.NONE);
                     }
                     PreviousNextViewBars.BuildPreviousNextBar(GameData.ContentType.EXERCISE);
@@ -1662,7 +1662,7 @@ namespace ChessForge
                 }
                 else
                 {
-                    _chaptersView = new ChaptersView(UiRtbChaptersView.Document, this);
+                    _chaptersView = new ChaptersView(UiRtbChaptersView, this);
                     _chaptersView.IsDirty = true;
                 }
 
@@ -1773,7 +1773,7 @@ namespace ChessForge
                 // may have to be set explicitly in some cases
                 studyTree.ContentType = GameData.ContentType.STUDY_TREE;
 
-                _studyTreeView.BuildFlowDocumentForVariationTree();
+                _studyTreeView.BuildFlowDocumentForVariationTree(false);
 
                 string startLineId;
                 int startNodeId = 0;
@@ -1837,7 +1837,7 @@ namespace ChessForge
                     ActiveVariationTree.BuildLines();
                 }
 
-                _modelGameTreeView.BuildFlowDocumentForVariationTree();
+                _modelGameTreeView.BuildFlowDocumentForVariationTree(false);
 
                 string startLineId;
                 int startNodeId = 0;
@@ -1910,7 +1910,7 @@ namespace ChessForge
                     ActiveVariationTree.BuildLines();
                 }
 
-                _exerciseTreeView.BuildFlowDocumentForVariationTree();
+                _exerciseTreeView.BuildFlowDocumentForVariationTree(false);
                 if (_exerciseTreeView.IsMainVariationTreeEmpty && !_exerciseTreeView.AreLinesShown)
                 {
                     _exerciseTreeView.EventShowHideButtonClicked(null, null);
@@ -1964,7 +1964,7 @@ namespace ChessForge
         /// </summary>
         private void InitializeChaptersView()
         {
-            _chaptersView = new ChaptersView(UiRtbChaptersView.Document, this);
+            _chaptersView = new ChaptersView(UiRtbChaptersView, this);
 
             // if this is very big, make sure the view is collapsed
             // to speed up initial reading
@@ -1974,9 +1974,9 @@ namespace ChessForge
             //    ExpandCollapseChaptersView(false, true);
             //}
 
-            _chaptersView.BuildFlowDocumentForChaptersView();
+            _chaptersView.BuildFlowDocumentForChaptersView(false);
             AppState.DoEvents();
-            _chaptersView.BringChapterIntoView(WorkbookManager.SessionWorkbook.ActiveChapterIndex);
+            _chaptersView.BringChapterIntoView(_chaptersView.HostRtb.Document, WorkbookManager.SessionWorkbook.ActiveChapterIndex);
         }
 
         /// <summary>
@@ -1986,7 +1986,7 @@ namespace ChessForge
         {
             if (ActiveTreeView != null)
             {
-                ActiveTreeView.BuildFlowDocumentForVariationTree();
+                ActiveTreeView.BuildFlowDocumentForVariationTree(false);
             }
         }
 
@@ -2035,7 +2035,7 @@ namespace ChessForge
                 if (nd != null && WorkbookManager.SessionWorkbook.ActiveVariationTree != null)
                 {
                     WorkbookManager.SessionWorkbook.ActiveVariationTree.SetSelectedLineAndMove(lineId, nd.NodeId);
-                    view.HighlightLineAndMove(lineId, nd.NodeId);
+                    view.HighlightLineAndMove(view.HostRtb.Document, lineId, nd.NodeId);
                     if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS && AppState.ActiveTab != TabViewType.CHAPTERS)
                     {
                         EvaluateActiveLineSelectedPosition(nd);
@@ -2323,7 +2323,7 @@ namespace ChessForge
             if (!TrainingSession.IsTrainingInProgress)
             {
                 BoardCommentBox.EngineGameStart();
-                _engineGameView = new EngineGameView(UiRtbEngineGame.Document);
+                _engineGameView = new EngineGameView(UiRtbEngineGame);
                 _engineGameView.BuildFlowDocumentForGameLine(startNode.ColorToMove);
                 EngineGame.SwitchToAwaitUserMove(startNode);
                 EngineGame.EngineColor = MoveUtils.ReverseColor(startNode.ColorToMove);
@@ -2642,7 +2642,7 @@ namespace ChessForge
             LearningMode.TrainingSideCurrent = startNode.ColorToMove;
             MainChessBoard.DisplayPosition(startNode, true);
 
-            UiTrainingView = new TrainingView(UiRtbTrainingProgress.Document, this);
+            UiTrainingView = new TrainingView(UiRtbTrainingProgress, this);
             UiTrainingView.Initialize(startNode, ActiveVariationTree.ContentType);
             UiTrainingView.RemoveTrainingMoves(startNode);
 
@@ -2826,7 +2826,7 @@ namespace ChessForge
 
                 if (_chaptersView != null)
                 {
-                    _chaptersView.BuildFlowDocumentForChaptersView();
+                    _chaptersView.BuildFlowDocumentForChaptersView(false);
                 }
 
                 return true;
@@ -2943,12 +2943,12 @@ namespace ChessForge
             {
                 chapter.SetTitle(dlg.ChapterTitle);
                 chapter.SetAuthor(dlg.Author);
-                _chaptersView.BuildFlowDocumentForChaptersView();
+                _chaptersView.BuildFlowDocumentForChaptersView(false);
                 // study tree also shows title so update it there
                 if (_studyTreeView == null)
                 {
                     _studyTreeView = new StudyTreeView(UiRtbStudyTreeView, GameData.ContentType.STUDY_TREE);
-                    _studyTreeView.BuildFlowDocumentForVariationTree();
+                    _studyTreeView.BuildFlowDocumentForVariationTree(false);
                 }
                 else
                 {

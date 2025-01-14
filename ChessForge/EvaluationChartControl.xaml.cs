@@ -1113,7 +1113,7 @@ namespace ChessForge
                 {
                     if (view.UncollapseMove(node))
                     {
-                        view.BuildFlowDocumentForVariationTree();
+                        view.BuildFlowDocumentForVariationTree(false);
                     }
                 }
 

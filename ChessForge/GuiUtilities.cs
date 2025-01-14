@@ -533,7 +533,7 @@ namespace ChessForge
         {
             if (AppState.ActiveTab == TabViewType.CHAPTERS || AppState.MainWin.UiTabChapters.IsFocused)
             {
-                AppState.MainWin.ChaptersView.BuildFlowDocumentForChaptersView();
+                AppState.MainWin.ChaptersView.BuildFlowDocumentForChaptersView(false);
                 if (chapterToView != null)
                 {
                     PulseManager.ChapterIndexToBringIntoView = chapterToView.Index;
@@ -552,7 +552,7 @@ namespace ChessForge
         {
             if (AppState.ActiveTab == TabViewType.CHAPTERS || AppState.MainWin.UiTabChapters.IsFocused)
             {
-                AppState.MainWin.ChaptersView.BuildFlowDocumentForChaptersView();
+                AppState.MainWin.ChaptersView.BuildFlowDocumentForChaptersView(false);
                 if (chapterToView != null && articleToView != null)
                 {
                     PulseManager.SetArticleToBringIntoView(chapterToView.Index, articleToView.ContentType, articleToViewIndex);

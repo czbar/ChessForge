@@ -352,18 +352,18 @@ namespace ChessForge
         /// Build Exercise specific Paragraphs 
         /// and adds them to the Document.
         /// </summary>
-        override protected void BuildExerciseParagraphs()
+        override protected void BuildExerciseParagraphs(FlowDocument doc)
         {
             Paragraph boardPara = BuildExercisesChessboardParagraph();
             if (boardPara != null)
             {
-                Document.Blocks.Add(boardPara);
+                doc.Blocks.Add(boardPara);
             }
 
             Paragraph buttonShowHide = BuildExerciseBoardControls();
             if (buttonShowHide != null)
             {
-                Document.Blocks.Add(buttonShowHide);
+                doc.Blocks.Add(buttonShowHide);
             }
         }
 
@@ -830,13 +830,13 @@ namespace ChessForge
                     {
                         nodeId = 0;
                     }
-                    HighlightLineAndMove(lineId, nodeId);
+                    HighlightLineAndMove(HostRtb.Document, lineId, nodeId);
 
                     ObservableCollection<TreeNode> lineToSelect = ShownVariationTree.SelectLine(lineId);
                     _mainWin.SetActiveLine(lineToSelect, nodeId);
 
                     SetupGuiForSolvingMode(mode);
-                    BuildFlowDocumentForVariationTree();
+                    BuildFlowDocumentForVariationTree(false);
                 }
                 catch
                 {
@@ -863,13 +863,13 @@ namespace ChessForge
 
                 _mainVariationTree.SetSelectedNodeId(0);
                 int nodeId = 0;
-                HighlightLineAndMove(lineId, nodeId);
+                HighlightLineAndMove(HostRtb.Document, lineId, nodeId);
 
                 ObservableCollection<TreeNode> lineToSelect = _mainVariationTree.SelectLine(lineId);
                 _mainWin.SetActiveLine(lineToSelect, nodeId);
 
                 SetupGuiForSolvingMode(mode);
-                BuildFlowDocumentForVariationTree();
+                BuildFlowDocumentForVariationTree(false);
 
                 _mainWin.UpdateExplorersToggleState();
                 _mainWin.BoardCommentBox.ShowTabHints();
@@ -951,7 +951,7 @@ namespace ChessForge
             _mainWin.ActiveArticle.Solver.IsAnalysisSubmitted = true;
             _mainWin.ActiveArticle.Solver.PointsScored = pointsScored;
 
-            BuildFlowDocumentForVariationTree();
+            BuildFlowDocumentForVariationTree(false);
         }
 
         /// <summary>

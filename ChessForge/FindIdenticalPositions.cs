@@ -135,7 +135,7 @@ namespace ChessForge
                     {
                         if (view.UncollapseMove(item.Node))
                         {
-                            view.BuildFlowDocumentForVariationTree();
+                            view.BuildFlowDocumentForVariationTree(false);
                         }
                     }
                     AppState.MainWin.SelectLineAndMoveInWorkbookViews(AppState.MainWin.ActiveTreeView, item.Node.LineId,

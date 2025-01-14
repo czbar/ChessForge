@@ -133,11 +133,11 @@ namespace ChessForge
                     switch (attrType)
                     {
                         case MoveAttribute.COMMENT_AND_NAGS:
-                            ActiveTreeView.BuildFlowDocumentForVariationTree();
+                            ActiveTreeView.BuildFlowDocumentForVariationTree(false);
                             break;
                         case MoveAttribute.ENGINE_EVALUATION:
                             // there may have been "assessments" so need to refresh this
-                            ActiveTreeView.BuildFlowDocumentForVariationTree();
+                            ActiveTreeView.BuildFlowDocumentForVariationTree(false);
                             ActiveLine.RefreshNodeList(true);
                             break;
                     }
