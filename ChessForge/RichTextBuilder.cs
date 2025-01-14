@@ -16,7 +16,7 @@ namespace ChessForge
         /// The Flow Document this object is working with.
         /// This object will be typically associated with a RichTextBox control
         /// </summary>
-        internal FlowDocument Document;
+        internal RichTextBox HostRtb;
 
         /// <summary>
         /// Styles for the document's paragraphs.
@@ -34,9 +34,9 @@ namespace ChessForge
         /// Constructs the object and sets pointer to its associated FlowDocument.
         /// </summary>
         /// <param name="doc"></param>
-        public RichTextBuilder(FlowDocument doc)
+        public RichTextBuilder(RichTextBox rtbBox)
         {
-            Document = doc;
+            HostRtb = rtbBox;
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        public void MoveDocument(ref FlowDocument source, ref FlowDocument target)
+        public void MoveDocument(FlowDocument source, FlowDocument target)
         {
             target.Blocks.Clear();
             var blockList = source.Blocks.ToList();
@@ -231,16 +231,16 @@ namespace ChessForge
         /// <param name="style"></param>
         /// <param name="text"></param>
         /// <returns></returns>
-        public Paragraph AddNewParagraphToDoc(string style, string text, Paragraph insertAfter = null)
+        public Paragraph AddNewParagraphToDoc(FlowDocument doc, string style, string text, Paragraph insertAfter = null)
         {
             Paragraph para = CreateParagraphWithText(style, text, false);
             if (insertAfter == null)
             {
-                Document.Blocks.Add(para);
+                doc.Blocks.Add(para);
             }
             else
             {
-                Document.Blocks.InsertAfter(insertAfter, para);
+                doc.Blocks.InsertAfter(insertAfter, para);
             }
 
             return para;
@@ -251,11 +251,11 @@ namespace ChessForge
         /// with emoty text, we consider it empty.
         /// </summary>
         /// <returns></returns>
-        public bool IsDocumentEmpty()
+        public bool IsDocumentEmpty(FlowDocument doc)
         {
             bool empty = true;
             
-            foreach (var para in Document.Blocks)
+            foreach (var para in doc.Blocks)
             {
                 if (para is Paragraph paragraph)
                 {
@@ -274,11 +274,11 @@ namespace ChessForge
         /// Removes empty paragraphs that get created when building the document
         /// or left behind after deletions.
         /// </summary>
-        public void RemoveEmptyParagraphs()
+        public void RemoveEmptyParagraphs(FlowDocument doc)
         {
             List<Paragraph> parasToRemove = new List<Paragraph>();
 
-            foreach (var para in Document.Blocks)
+            foreach (var para in doc.Blocks)
             {
                 if (para is Paragraph paragraph)
                 {
@@ -291,7 +291,7 @@ namespace ChessForge
 
             foreach (Paragraph para in parasToRemove)
             {
-                Document.Blocks.Remove(para);
+                doc.Blocks.Remove(para);
             }
         }
 
@@ -299,9 +299,9 @@ namespace ChessForge
         /// Removes a Block object from the Document
         /// </summary>
         /// <param name="block"></param>
-        public void RemoveBlock(Block block)
+        public void RemoveBlock(FlowDocument doc, Block block)
         {
-            Document.Blocks.Remove(block);
+            doc.Blocks.Remove(block);
         }
 
 
@@ -435,11 +435,11 @@ namespace ChessForge
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public Paragraph FindParagraphByName(string name, bool partialName)
+        public Paragraph FindParagraphByName(FlowDocument doc, string name, bool partialName)
         {
             Paragraph para = null;
 
-            foreach (Block block in Document.Blocks)
+            foreach (Block block in doc.Blocks)
             {
                 if (block is Paragraph && (block as Paragraph).Name != null)
                 {
@@ -506,10 +506,10 @@ namespace ChessForge
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public Inline FindInlineByName(string name)
+        public Inline FindInlineByName(FlowDocument doc, string name)
         {
             Inline inl = null;
-            foreach (Block block in Document.Blocks)
+            foreach (Block block in doc.Blocks)
             {
                 if (block is Paragraph)
                 {
@@ -530,9 +530,9 @@ namespace ChessForge
         /// NodeId.
         /// </summary>
         /// <returns></returns>
-        public Run GetRunForNodeId(int nodeId)
+        public Run GetRunForNodeId(FlowDocument doc, int nodeId)
         {
-            foreach (Block block in Document.Blocks)
+            foreach (Block block in doc.Blocks)
             {
                 if (block is Paragraph)
                 {
