@@ -118,20 +118,17 @@ namespace ChessForge
         // whether the view is built for display or print/export
         protected bool _isPrinting = false;
 
-        // the RichTextBox control underlying this view.
-        public RichTextBox RichTextBoxControl;
-
         /// <summary>
         /// Constructor. Sets a reference to the 
         /// FlowDocument for the RichTextBox control, via
         /// a call to the base class's constructor.
         /// </summary>
         /// <param name="doc"></param>
-        public VariationTreeView(RichTextBox rtb, GameData.ContentType contentType) : base(rtb.Document)
+        public VariationTreeView(RichTextBox rtb, GameData.ContentType contentType) : base(rtb)
         {
             _mainWin = AppState.MainWin;
             _contentType = contentType;
-            RichTextBoxControl = rtb;
+            HostRtb = rtb;
         }
 
         /// <summary>
@@ -140,11 +137,11 @@ namespace ChessForge
         /// </summary>
         /// <param name="contentType"></param>
         /// <param name="entityIndex"></param>
-        public VariationTreeView(FlowDocument doc, GameData.ContentType contentType) : base(doc)
+        public VariationTreeView(FlowDocument doc, GameData.ContentType contentType) : base(null)
         {
             _mainWin = AppState.MainWin;
             _contentType = contentType;
-            RichTextBoxControl = null;
+            HostRtb = null;
 
             // this constructors is only called when printing (RTF exporting)
             _isPrinting = true;
@@ -292,8 +289,18 @@ namespace ChessForge
         /// Builds the FlowDocument from the entire Variation Tree for the RichTextBox to display.
         /// Inserts dummy (no text) run for the starting position (NodeId == 0)
         /// </summary>
-        public void BuildFlowDocumentForVariationTree(VariationTree treeForPrint = null, int rootNodeId = 0, bool includeStem = true)
+        public void BuildFlowDocumentForVariationTree(bool opBehind, VariationTree treeForPrint = null, int rootNodeId = 0, bool includeStem = true)
         {
+            FlowDocument doc;
+            if (opBehind)
+            {
+                doc = new FlowDocument();
+            }
+            else
+            {
+                doc = HostRtb.Document;
+            }
+
             try
             {
                 GameData.ContentType contentType = GameData.ContentType.NONE;
@@ -331,14 +338,14 @@ namespace ChessForge
 
                 contentType = _mainVariationTree.Header.GetContentType(out _);
 
-                Clear(GameData.ContentType.GENERIC);
+                Clear(doc, GameData.ContentType.GENERIC);
 
                 if (treeForPrint == null)
                 {
                     PreviousNextViewBars.BuildPreviousNextBar(contentType);
                 }
 
-                Document.Blocks.Add(BuildDummyPararaph());
+                doc.Blocks.Add(BuildDummyPararaph());
 
                 // do not print page header if this is RTF export (print) and the view is Study
                 // NOTE: first, it is redundant; second, it will print the title of the active chapter
@@ -347,16 +354,16 @@ namespace ChessForge
                     _pageHeaderParagraph = BuildPageHeader(_mainVariationTree, contentType);
                     if (_pageHeaderParagraph != null)
                     {
-                        Document.Blocks.Add(_pageHeaderParagraph);
+                        doc.Blocks.Add(_pageHeaderParagraph);
                     }
                 }
 
-                BuildExerciseParagraphs();
+                BuildExerciseParagraphs(doc);
 
                 Paragraph preamblePara = BuildPreamble();
                 if (preamblePara != null)
                 {
-                    Document.Blocks.Add(preamblePara);
+                    doc.Blocks.Add(preamblePara);
                 }
 
                 if (treeForPrint == null)
@@ -364,13 +371,13 @@ namespace ChessForge
                     Paragraph quizInfoPara = BuildQuizInfoPara();
                     if (quizInfoPara != null)
                     {
-                        Document.Blocks.Add(quizInfoPara);
+                        doc.Blocks.Add(quizInfoPara);
                     }
 
                     Paragraph movePromptPara = BuildYourMovePrompt();
                     if (movePromptPara != null)
                     {
-                        Document.Blocks.Add(movePromptPara);
+                        doc.Blocks.Add(movePromptPara);
                     }
                 }
 
@@ -392,25 +399,25 @@ namespace ChessForge
                         if (includeStem)
                         {
                             Paragraph paraStem = BuildWorkbookStemLine(root, true);
-                            Document.Blocks.Add(paraStem);
+                            doc.Blocks.Add(paraStem);
                         }
                     }
 
                     // start by creating a level 1 paragraph.
                     Paragraph para = CreateParagraph("0", true);
-                    Document.Blocks.Add(para);
+                    doc.Blocks.Add(para);
 
                     CreateRunForStartingNode(para, root);
 
                     // if we have a stem (e.g. this is Browse view in training, we need to request a number printed too
-                    BuildTreeLineText(root, para, includeStem);
+                    BuildTreeLineText(doc, root, para, includeStem);
 
                     if (contentType == GameData.ContentType.MODEL_GAME || contentType == GameData.ContentType.EXERCISE)
                     {
                         Paragraph resultPara = BuildResultPara();
                         if (resultPara != null)
                         {
-                            Document.Blocks.Add(resultPara);
+                            doc.Blocks.Add(resultPara);
                         }
                     }
                 }
@@ -419,17 +426,22 @@ namespace ChessForge
                 {
                     if (guessFinished != null)
                     {
-                        Document.Blocks.Add(guessFinished);
+                        doc.Blocks.Add(guessFinished);
                     }
                 }
 
                 // add dummy para so that the last row can be comfortable viewed
-                Document.Blocks.Add(BuildDummyPararaph());
-                RemoveTrailingNewLines();
+                doc.Blocks.Add(BuildDummyPararaph());
+                RemoveTrailingNewLines(doc);
             }
             catch (Exception ex)
             {
-                AppLog.Message("BuildFlowDocumentForVariationTree()", ex);
+                AppLog.Message("BuildFlowDocumentForVariationTree(false)", ex);
+            }
+
+            if (opBehind)
+            {
+                HostRtb.Document = doc;
             }
         }
 
@@ -438,11 +450,11 @@ namespace ChessForge
         /// LF char which is not necessary if a new paragraph follows.
         /// Removes all found.
         /// </summary>
-        protected void RemoveTrailingNewLines()
+        protected void RemoveTrailingNewLines(FlowDocument doc)
         {
             List<Run> runsToUpdate = new List<Run>();
 
-            foreach (Block block in Document.Blocks)
+            foreach (Block block in doc.Blocks)
             {
                 if (block is Paragraph para)
                 {
@@ -601,7 +613,7 @@ namespace ChessForge
                 // move to promote the line, so the end result wouldn't change. But it may if we change that other logic.
                 ShownVariationTree.PromoteLine(nd);
                 _mainWin.SetActiveLine(nd.LineId, nd.NodeId);
-                BuildFlowDocumentForVariationTree();
+                BuildFlowDocumentForVariationTree(false);
                 _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, nd.LineId, _mainWin.ActiveLine.GetSelectedPlyNodeIndex(false), false);
                 PulseManager.BringSelectedRunIntoView();
                 AppState.IsDirty = true;
@@ -632,7 +644,7 @@ namespace ChessForge
                     ShownVariationTree.BuildLines();
 
                     _mainWin.SetActiveLine(nullNd.LineId, nullNd.NodeId);
-                    BuildFlowDocumentForVariationTree();
+                    BuildFlowDocumentForVariationTree(false);
                     ShownVariationTree.SetSelectedNodeId(nullNd.NodeId);
                     SelectNode(nullNd);
                     int nodeIndex = _mainWin.ActiveLine.GetIndexForNode(nullNd.NodeId);
@@ -822,7 +834,7 @@ namespace ChessForge
                             }
                             if (!viewRebuilt)
                             {
-                                BuildFlowDocumentForVariationTree();
+                                BuildFlowDocumentForVariationTree(false);
                             }
 
                             AppState.IsDirty = true;
@@ -866,7 +878,7 @@ namespace ChessForge
                 ShownVariationTree.DeleteRemainingMoves(nd);
                 ShownVariationTree.BuildLines();
                 _mainWin.SetActiveLine(parent.LineId, parent.NodeId);
-                BuildFlowDocumentForVariationTree();
+                BuildFlowDocumentForVariationTree(false);
                 _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, parent.LineId, _mainWin.ActiveLine.GetSelectedPlyNodeIndex(true), false);
                 AppState.IsDirty = true;
 
@@ -1000,11 +1012,15 @@ namespace ChessForge
         /// <summary>
         /// Clears the document and relevant structrue.
         /// </summary>
-        public void Clear(GameData.ContentType contentType)
+        public void Clear(FlowDocument doc, GameData.ContentType contentType)
         {
+            if (doc == null)
+            {
+                doc = HostRtb.Document;
+            }
             try
             {
-                Document.Blocks.Clear();
+                doc.Blocks.Clear();
 
                 PreviousNextViewBars.BuildPreviousNextBar(contentType);
 
@@ -1026,11 +1042,11 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Clears the document and displays the "quick skip messgae".
+        /// Clears the document and displays the "quick skip message".
         /// </summary>
-        public void ClearForQuickSkip()
+        public void ClearForQuickSkip(FlowDocument doc)
         {
-            Clear(GameData.ContentType.GENERIC);
+            Clear(doc, GameData.ContentType.GENERIC);
         }
 
         /// <summary>
@@ -1100,14 +1116,14 @@ namespace ChessForge
         /// <param name="style"></param>
         /// <param name="contentType"></param>
         /// <returns></returns>
-        private Table BuildForkTable(int nodeId)
+        private Table BuildForkTable(FlowDocument doc, int nodeId)
         {
             if (!Configuration.ShowMovesAtFork)
             {
                 return null;
             }
 
-            Document.Blocks.Remove(_forkTable);
+            doc.Blocks.Remove(_forkTable);
             _forkTable = null;
 
             TreeNode node = ShownVariationTree.GetNodeFromNodeId(nodeId);
@@ -1193,7 +1209,7 @@ namespace ChessForge
                         row.Cells.Add(cell);
                     }
 
-                    Document.Blocks.InsertAfter(para, _forkTable);
+                    doc.Blocks.InsertAfter(para, _forkTable);
 
                 }
             }
@@ -1263,7 +1279,7 @@ namespace ChessForge
         /// To be overridden in the Exercise view
         /// </summary>
         /// <returns></returns>
-        virtual protected void BuildExerciseParagraphs()
+        virtual protected void BuildExerciseParagraphs(FlowDocument doc)
         {
         }
 
@@ -1288,7 +1304,7 @@ namespace ChessForge
             try
             {
                 _mainWin.SetActiveLine("1", 0);
-                HighlightLineAndMove("1", 0);
+                HighlightLineAndMove(HostRtb.Document, "1", 0);
                 _mainWin.DisplayPosition(_mainVariationTree.Nodes[0]);
             }
             catch
@@ -1333,7 +1349,7 @@ namespace ChessForge
             }
 
             AppState.ShowExplorers(AppState.AreExplorersOn, true);
-            BuildFlowDocumentForVariationTree();
+            BuildFlowDocumentForVariationTree(false);
             _mainWin.BoardCommentBox.ShowTabHints();
         }
 
@@ -1521,7 +1537,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd"></param>
         /// <param name="includeNumber"></param>
-        virtual protected void BuildTreeLineText(TreeNode nd, Paragraph para, bool includeNumber)
+        virtual protected void BuildTreeLineText(FlowDocument doc, TreeNode nd, Paragraph para, bool includeNumber)
         {
             while (true)
             {
@@ -1539,7 +1555,7 @@ namespace ChessForge
                 {
                     TreeNode child = nd.Children[0];
                     BuildNodeTextAndAddToPara(child, includeNumber, para, out diagram);
-                    BuildTreeLineText(child, para, diagram);
+                    BuildTreeLineText(doc, child, para, diagram);
                     return;
                 }
 
@@ -1583,7 +1599,7 @@ namespace ChessForge
                                 para2 = CreateParagraph(_currParagraphLevel.ToString(), true);
                                 para2.Margin = new Thickness(para.Margin.Left, 0, 0, 5);
                             }
-                            Document.Blocks.Add(para2);
+                            doc.Blocks.Add(para2);
                         }
                         else
                         {
@@ -1596,13 +1612,13 @@ namespace ChessForge
                         }
 
                         BuildNodeTextAndAddToPara(nd.Children[i], true, para2, out diagram);
-                        BuildTreeLineText(nd.Children[i], para2, diagram);
+                        BuildTreeLineText(doc, nd.Children[i], para2, diagram);
 
                         if (multi && i == nd.Children.Count - 1)
                         {
                             _currParagraphLevel--;
                             para = CreateParagraph(_currParagraphLevel.ToString(), true);
-                            Document.Blocks.Add(para);
+                            doc.Blocks.Add(para);
                         }
                         else
                         {
@@ -1629,12 +1645,12 @@ namespace ChessForge
                     {
                         _currParagraphLevel--;
                         Paragraph spec = CreateParagraph(_currParagraphLevel.ToString(), true);
-                        Document.Blocks.Add(spec);
-                        BuildTreeLineText(nd.Children[0], spec, true);
+                        doc.Blocks.Add(spec);
+                        BuildTreeLineText(doc, nd.Children[0], spec, true);
                     }
                     else
                     {
-                        BuildTreeLineText(nd.Children[0], para, true);
+                        BuildTreeLineText(doc, nd.Children[0], para, true);
                     }
                     return;
                 }
