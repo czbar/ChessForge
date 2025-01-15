@@ -869,14 +869,14 @@ namespace ChessForge
             {
                 case ParserException.ParseErrorType.PGN_GAME_EXPECTED_MOVE_NUMBER:
                     sb.Append(Properties.Resources.ErrFound
-                        + " " + ex.CurrentToken
-                        + " " + Properties.Resources.ErrInsteadOfMoveNumber
+                        + " \"" + ex.CurrentToken
+                        + "\" " + Properties.Resources.ErrInsteadOfMoveNumber
                         + ", " + Properties.Resources.ErrAfterMove + " " + ex.PreviousMove);
                     break;
                 case ParserException.ParseErrorType.PGN_INVALID_MOVE:
                     sb.Append(Properties.Resources.PgnParsingError
                         + ": " + Properties.Resources.InvalidMove + " "
-                        + ex.CurrentToken);
+                        + "\"" + ex.CurrentToken + "\"");
                     break;
                 default:
                     return ex.Message;
