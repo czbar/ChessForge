@@ -256,7 +256,7 @@ namespace ChessPosition
             {
                 sb.Append(".");
             }
-            sb.Append(algMove);
+            sb.Append(algMove ?? "???");
             return sb.ToString();
         }
 
