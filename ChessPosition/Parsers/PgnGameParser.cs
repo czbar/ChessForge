@@ -318,16 +318,23 @@ namespace GameTree
                             throw ex;
                         }
 
-                        if (!hasMove && !string.IsNullOrEmpty(comment))
+                        // NOTE: newNode can be null if the text proved to be garbage rather than invalid move
+                        // in which case the excpetion would have been thrown above.
+                        // If we encountered something that looks like garbage we want to ignore it in case
+                        // the PGN is corrupt but we still want to process the rest of the game.
+                        if (newNode != null)
                         {
-                            newNode.CommentBeforeMove = comment;
+                            if (!hasMove && !string.IsNullOrEmpty(comment))
+                            {
+                                newNode.CommentBeforeMove = comment;
+                            }
+                            hasMove = true;
+                            _runningNodeId++;
+                            parentNode.AddChild(newNode);
+                            previousNode = parentNode;
+                            parentNode = newNode;
+                            tree.AddNode(parentNode);
                         }
-                        hasMove = true;
-                        _runningNodeId++;
-                        parentNode.AddChild(newNode);
-                        previousNode = parentNode;
-                        parentNode = newNode;
-                        tree.AddNode(parentNode);
                         break;
                     case PgnTokenType.MoveNumber:
                         TreeNode adjustedParent = ProcessMoveNumber(token, parentNode);
