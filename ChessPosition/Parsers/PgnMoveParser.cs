@@ -48,20 +48,34 @@ namespace GameTree
             // If missing, this is a pawn move
             // (since we already checked for O-O and O-O-O above)
             string subStringToProcess = GetPieceType(alg, color);
-            
-            // check if there is a capture symbol ('x'),
-            // if so, mark the move as a capture and remove 'x'
-            // so we can process the rest as normal
-            subStringToProcess = CheckForAndRemoveCapture(subStringToProcess);
 
-            // get the destination Xcoord and any origin hints, if present
-            subStringToProcess = CheckForOriginAndDestinationXcoord(subStringToProcess);
+            if (Move.MovingPiece != PieceType.None)
+            {
+                // check if there is a capture symbol ('x'),
+                // if so, mark the move as a capture and remove 'x'
+                // so we can process the rest as normal
+                subStringToProcess = CheckForAndRemoveCapture(subStringToProcess);
 
-            // Now we may be left with a digit representing the target Ycoord
-            // and/or suffixes (check, mate, promotions, ?, ! etc.)
-            subStringToProcess = GetDestinationYcoord(subStringToProcess);
+                // get the destination Xcoord and any origin hints, if present
+                subStringToProcess = CheckForOriginAndDestinationXcoord(subStringToProcess);
 
-            return ProcessSuffixes(subStringToProcess);
+                // Now we may be left with a digit representing the target Ycoord
+                // and/or suffixes (check, mate, promotions, ?, ! etc.)
+                subStringToProcess = GetDestinationYcoord(subStringToProcess);
+
+                if (Move.Destination.Xcoord >= 0 || Move.Destination.Ycoord >= 0)
+                {
+                    return ProcessSuffixes(subStringToProcess);
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+            else
+            {
+                return -1;
+            }
         }
 
 
@@ -283,7 +297,7 @@ namespace GameTree
                 }
                 catch
                 {
-                    throw new Exception("Could not identify piece from move notation: \"" + alg + "\"");
+                    Move.MovingPiece = PieceType.None;
                 }
             }
 
