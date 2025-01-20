@@ -97,13 +97,13 @@ namespace ChessPosition
         /// <param name="parentNode"></param>
         /// <param name="nodeId"></param>
         /// <returns></returns>
-        /// <exception cref="Exception"></exception>
         public static TreeNode ProcessAlgMove(string algMove, TreeNode parentNode, int nodeId)
         {
             PieceColor parentSideToMove = parentNode.ColorToMove;
 
             MoveData move;
             bool nullMove = false;
+            bool proceed = true;
 
             if (algMove == "Z0" || algMove == Constants.NULL_MOVE_NOTATION)
             {
@@ -121,27 +121,41 @@ namespace ChessPosition
                 }
 
                 PgnMoveParser pmp = new PgnMoveParser();
-                //TODO: if garbage text do not except but return null
                 int suffixLen = pmp.ParseAlgebraic(algMove, parentSideToMove);
-                // remove suffix from algMove
-                algMove = algMove.Substring(0, algMove.Length - suffixLen);
-                move = pmp.Move;
-                algMove = TextUtils.StripCheckOrMateChar(algMove);
+                if (suffixLen < 0)
+                {
+                    proceed = false;
+                    move = null;
+                }
+                else
+                {
+                    // remove suffix from algMove
+                    algMove = algMove.Substring(0, algMove.Length - suffixLen);
+                    move = pmp.Move;
+                    algMove = TextUtils.StripCheckOrMateChar(algMove);
+                }
             }
 
-            // create a new node
-            TreeNode newNode = CreateNewNode(algMove, move, parentNode, parentSideToMove, nodeId);
-
-            if (!nullMove)
+            if (proceed)
             {
-                SetDynamicAttrs(move, newNode);
+                // create a new node
+                TreeNode newNode = CreateNewNode(algMove, move, parentNode, parentSideToMove, nodeId);
+
+                if (!nullMove)
+                {
+                    SetDynamicAttrs(move, newNode);
+                }
+                else
+                {
+                    CleanupNullMove(ref newNode);
+                }
+
+                return newNode;
             }
             else
             {
-                CleanupNullMove(ref newNode);
+                return null;
             }
-
-            return newNode;
         }
 
         /// <summary>
