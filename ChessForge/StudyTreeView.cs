@@ -287,7 +287,7 @@ namespace ChessForge
                 if (depth > chapter.VariationIndexDepth)
                 {
                     chapter.VariationIndexDepth = depth;
-                    AppState.IsIndexDepthDirty = true;   
+                    AppState.IsIndexDepthDirty = true;
                 }
             }
         }
@@ -441,9 +441,9 @@ namespace ChessForge
                                 {
                                     //if (i < firstSkip || i > lastSkip)
                                     //{
-                                        TreeNode nd = sector.Nodes[i];
-                                        BuildIndexNodeAndAddToPara(nd, firstMove, para);
-                                        firstMove = false;
+                                    TreeNode nd = sector.Nodes[i];
+                                    BuildIndexNodeAndAddToPara(nd, firstMove, para);
+                                    firstMove = false;
                                     //}
                                     //else if (i == firstSkip)
                                     //{
@@ -1262,14 +1262,25 @@ namespace ChessForge
                 {
                     if (i == 1)
                     {
-                        sb.Append((char)(tokens[1][0] - '1' + 'A'));
+                        if (int.TryParse(tokens[1], out int branchNo))
+                        {
+                            if (branchNo <= 26) // 'A' - 'Z'
+                            {
+                                sb.Append((char)((branchNo - 1) + 'A'));
+                            }
+                            else
+                            {
+                                sb.Append(BuildSectionIdTitlePart(tokens[i]));
+                            }
+                        }
+                        else
+                        {
+                            sb.Append('@');
+                        }
                     }
                     else
                     {
-                        //if (i > 2)
-                        {
-                            sb.Append('.');
-                        }
+                        sb.Append('.');
                         sb.Append(tokens[i]);
                     }
                 }
@@ -1279,6 +1290,34 @@ namespace ChessForge
             }
 
             return r;
+        }
+
+        /// <summary>
+        /// Invoked when we have to name a branch that is greater than 26th on a given fork.
+        /// We have no more single letters so we will name it as A1, A2, ... , A356, A357 etc.
+        /// It is highly unlikely that it will ever needed but we have to cover all possibilities.
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        private string BuildSectionIdTitlePart(string token)
+        {
+            string partName = "@";
+
+            if (int.TryParse(token, out int branchNo))
+            {
+                // if branchNo is between 1 and 90 we map a capital letter to it
+                if (branchNo <= 26) // 'A' - 'Z' (65 - 90)
+                {
+                    partName = ((char)((branchNo - 1) + 'A')).ToString();
+                }
+                else
+                {
+                    int secondNo = branchNo - 26;
+                    partName = "A" + secondNo.ToString();
+                }
+            }
+
+            return partName;
         }
     }
 }
