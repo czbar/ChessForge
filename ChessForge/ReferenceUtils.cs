@@ -31,7 +31,10 @@ namespace ChessForge
             {
                 if (!string.IsNullOrEmpty(node.References))
                 {
-                    node.References += "|" + articleRef;
+                    if (!node.References.Contains(articleRef))
+                    {
+                        node.References += "|" + articleRef;
+                    }
                 }
                 else
                 {
@@ -127,7 +130,7 @@ namespace ChessForge
         /// to their optimal location.
         /// It has to handle 3 cases:
         /// 1. currentNode is null, then the entire tree is repositioned
-        /// 2. currentNode is not null but giidRef is null, then only the references in the currentNode are repositioned
+        /// 2. currentNode is not null but guidRef is null, then only the references in the currentNode are repositioned
         /// 3. currentNode is not null and guidRef is not null, then only the reference with the guidRef at the currentNode is repositioned.
         /// </summary>
         /// <param name="tree"></param>
@@ -282,7 +285,7 @@ namespace ChessForge
         /// The optimal node is one representing a position found in the referenced article 
         /// that is closest to the end of the game.
         /// Note that the size of hostReferencingNodes and referencedArticles is the same.
-        /// Same node will appear multiple times in the hostReferencingNodes list if it had multiple refernces.
+        /// Same node will appear multiple times in the hostReferencingNodes list if it had multiple references.
         /// The returned list will have the same size as the hostReferencingNodes and referencedArticles lists.
         /// 
         /// The references to chapters will not be changed. 
@@ -419,12 +422,13 @@ namespace ChessForge
         /// <param name="refArticles"></param>
         private static void UpdateOptimalNodesReferences(List<TreeNode> origNodes, List<TreeNode> optimalNodes, List<Article> refArticles)
         {
-            // clear the references from the host nodes and the proposed nodes.
-            // note that optimal nodes have all the necessary references as we created entries for the unchanged ones too
-            ClearReferences(origNodes);
-            ClearReferences(optimalNodes);
+            // remove references to the articles being moved.
+            for (int i = 0; i < origNodes.Count; i++)
+            {
+                RemoveReferenceFromNode(origNodes[i], refArticles[i].Guid);
+            }
 
-            // build reference strings for the proposed nodes
+            // note that the optimal nodes have all the necessary references as we created entries for the unchanged ones too
             for (int i = 0; i < optimalNodes.Count; i++)
             {
                 AddReferenceToNode(optimalNodes[i], refArticles[i].Guid);
