@@ -1069,7 +1069,7 @@ namespace ChessForge
                     TreeNode nd = tree.GetNodeFromNodeId(fullId.NodeId);
                     if (nd != null)
                     {
-                        nd.AddArticleReference(guidToRestore);
+                        ReferenceUtils.AddReferenceToNode(nd, guidToRestore);
                     }
                 }
             }
