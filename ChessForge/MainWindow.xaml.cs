@@ -420,7 +420,7 @@ namespace ChessForge
             InitializeConfiguration();
 
             // initialize GUI theme
-            if (Configuration.IsDarkMode) 
+            if (Configuration.IsDarkMode)
             {
                 ChessForgeColors.Initialize(ColorThemes.DARK_MODE);
                 _modeUpdatesBlocked = true;
@@ -491,6 +491,15 @@ namespace ChessForge
             else
             {
                 DefaultMenuFontSize = UiMainMenu.FontSize;
+            }
+
+            if (Configuration.WideScrollbar)
+            {
+                GuiUtilities.SetWideScrollbar();
+            }
+            else
+            {
+                GuiUtilities.SetNarrowScrollbar();
             }
 
             if (Configuration.IsMainWinMaximized())
@@ -2799,7 +2808,7 @@ namespace ChessForge
             if (dlg.ExitOK)
             {
                 SessionWorkbook.Title = dlg.WorkbookTitle;
-                SessionWorkbook.Author= dlg.Author;
+                SessionWorkbook.Author = dlg.Author;
                 SessionWorkbook.TrainingSideConfig = dlg.TrainingSide;
                 SessionWorkbook.TrainingSideCurrent = dlg.TrainingSide;
 
@@ -2853,6 +2862,18 @@ namespace ChessForge
                     Configuration.CultureName = dlg.ExitLanguage;
                     Languages.SetSessionLanguage(dlg.ExitLanguage);
                     MessageBox.Show(Properties.Resources.ChangeLanguageNote, Properties.Resources.Language, MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+
+                if (dlg.WideScrollbarChanged)
+                {
+                    if (Configuration.WideScrollbar)
+                    {
+                        GuiUtilities.SetWideScrollbar();
+                    }
+                    else
+                    {
+                        GuiUtilities.SetNarrowScrollbar();
+                    }
                 }
 
                 if (dlg.LargeMenuFontChanged)
@@ -3020,7 +3041,7 @@ namespace ChessForge
 
                 AnnotationsDialog dlg = new AnnotationsDialog(nd);
                 GuiUtilities.PositionDialog(dlg, this, 100);
-                
+
                 if (dlg.ShowDialog() == true)
                 {
                     if (nd.Comment != dlg.Comment || nd.Nags != dlg.Nags || nd.QuizPoints != dlg.QuizPoints || nd.References != dlg.ReferenceGuids)
