@@ -1,7 +1,6 @@
 ﻿using ChessPosition;
 using GameTree;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows;
@@ -16,14 +15,14 @@ namespace ChessForge
         /// The caller must handle errors if returned index is -1.
         /// </summary>
         /// <param name="gm"></param>
-        public static int AddArticle(Chapter chapter, 
-                                    GameData gm, 
-                                    GameData.ContentType typ, 
-                                    out string errorText, 
-                                    out Article article, 
+        public static int AddArticle(Chapter chapter,
+                                    GameData gm,
+                                    GameData.ContentType typ,
+                                    out string errorText,
+                                    out Article article,
                                     GameData.ContentType targetcontentType = GameData.ContentType.GENERIC)
         {
-            article = null; 
+            article = null;
             if (!gm.Header.IsStandardChess())
             {
                 errorText = Properties.Resources.ErrNotStandardChessVariant;
@@ -42,51 +41,9 @@ namespace ChessForge
                     fen = null;
                 }
 
-                PgnGameParser pp = new PgnGameParser(gm.GameText, article.Tree, fen);
-
-                article.Tree.Header = gm.Header.CloneMe(true);
-
-                if (typ == GameData.ContentType.GENERIC)
+                if (ParseArticleTree(gm.GameText, fen, article.Tree, ref errorText))
                 {
-                    typ = gm.GetContentType(true);
-                }
-                article.Tree.ContentType = typ;
-
-                switch (typ)
-                {
-                    case GameData.ContentType.STUDY_TREE:
-                        chapter.StudyTree = article;
-                        break;
-                    case GameData.ContentType.INTRO:
-                        chapter.Intro = article;
-                        break;
-                    case GameData.ContentType.MODEL_GAME:
-                        if (targetcontentType == GameData.ContentType.GENERIC 
-                            || targetcontentType == GameData.ContentType.ANY
-                            || targetcontentType == GameData.ContentType.MODEL_GAME)
-                        {
-                            chapter.ModelGames.Add(article);
-                            index = chapter.ModelGames.Count - 1;
-                        }
-                        else
-                        {
-                            index = -1;
-                        }
-                        break;
-                    case GameData.ContentType.EXERCISE:
-                        if (targetcontentType == GameData.ContentType.GENERIC
-                            || targetcontentType == GameData.ContentType.ANY
-                            || targetcontentType == GameData.ContentType.EXERCISE)
-                        {
-                            TreeUtils.RestartMoveNumbering(article.Tree);
-                            chapter.Exercises.Add(article);
-                            index = chapter.Exercises.Count - 1;
-                        }
-                        else
-                        {
-                            index = -1;
-                        }
-                        break;
+                    index = AppendArticle(chapter, gm, typ, ref article, targetcontentType);
                 }
             }
             catch (Exception ex)
@@ -167,6 +124,107 @@ namespace ChessForge
             }
 
             return articleCount;
+        }
+
+        /// <summary>
+        /// Parses the passed PGN text and builds a VariationTree content.
+        /// </summary>
+        /// <param name="gameText"></param>
+        /// <param name="fen"></param>
+        /// <param name="tree"></param>
+        /// <param name="errorText"></param>
+        /// <returns></returns>
+        private static bool ParseArticleTree(string gameText, string fen, VariationTree tree, ref string errorText)
+        {
+            bool success = true;
+
+            try
+            {
+                PgnGameParser pp = new PgnGameParser(gameText, tree, fen);
+            }
+            catch (Exception ex)
+            {
+                errorText = ex.Message;
+                if (ex is ParserException)
+                {
+                    errorText = GuiUtilities.TranslateParseException(ex as ParserException);
+                }
+                AppLog.Message("ParseArticleTree()", ex);
+
+                // if we have 2 nodes or more let's pass it on better to return partial game than nothing
+                if (tree == null || tree.Nodes.Count < 2)
+                {
+                    success = false;
+                }
+            }
+
+            return success;
+        }
+
+        /// <summary>
+        /// Given article details, appends it
+        /// to the appropriate list in the chapter.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="gm"></param>
+        /// <param name="typ"></param>
+        /// <param name="article"></param>
+        /// <param name="targetcontentType"></param>
+        /// <returns></returns>
+        private static int AppendArticle(Chapter chapter,
+                                    GameData gm,
+                                    GameData.ContentType typ,
+                                    ref Article article,
+                                    GameData.ContentType targetcontentType)
+        {
+            int index = -1;
+
+            article.Tree.Header = gm.Header.CloneMe(true);
+
+            if (typ == GameData.ContentType.GENERIC)
+            {
+                typ = gm.GetContentType(true);
+            }
+            article.Tree.ContentType = typ;
+
+            switch (typ)
+            {
+                case GameData.ContentType.STUDY_TREE:
+                    chapter.StudyTree = article;
+                    break;
+                case GameData.ContentType.INTRO:
+                    chapter.Intro = article;
+                    break;
+                case GameData.ContentType.MODEL_GAME:
+                    if (targetcontentType == GameData.ContentType.GENERIC
+                        || targetcontentType == GameData.ContentType.ANY
+                        || targetcontentType == GameData.ContentType.MODEL_GAME)
+                    {
+                        chapter.ModelGames.Add(article);
+                        index = chapter.ModelGames.Count - 1;
+                    }
+                    else
+                    {
+                        index = -1;
+                    }
+                    break;
+                case GameData.ContentType.EXERCISE:
+                    if (targetcontentType == GameData.ContentType.GENERIC
+                        || targetcontentType == GameData.ContentType.ANY
+                        || targetcontentType == GameData.ContentType.EXERCISE)
+                    {
+                        TreeUtils.RestartMoveNumbering(article.Tree);
+                        chapter.Exercises.Add(article);
+                        index = chapter.Exercises.Count - 1;
+                    }
+                    else
+                    {
+                        index = -1;
+                    }
+                    break;
+            }
+
+            return index;
         }
 
         /// <summary>

@@ -200,12 +200,12 @@ namespace ChessForge
                     else
                     {
                         // delete if exists
-                        Paragraph oldPara = FindParagraphByName(_par_game_moves_, false);
+                        Paragraph oldPara = FindParagraphByName(HostRtb.Document, _par_game_moves_, false);
                         if (oldPara != null)
                         {
-                            Document.Blocks.Remove(oldPara);
+                            HostRtb.Document.Blocks.Remove(oldPara);
                         }
-                        _paraCurrentEngineGame = AddNewParagraphToDoc(STYLE_ENGINE_GAME, "");
+                        _paraCurrentEngineGame = AddNewParagraphToDoc(HostRtb.Document, STYLE_ENGINE_GAME, "");
                         _paraCurrentEngineGame.Name = _par_game_moves_;
                         if (foundMove != null)
                         {
@@ -359,7 +359,7 @@ namespace ChessForge
                     {
                         EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.LINE, true, EvaluationManager.LineSource.TRAINING_LINE);
                         SetMainLineRunsToEvaluate(paraName, _lastClickedRun);
-                        Paragraph gamePara = FindParagraphByName(_par_game_moves_, true);
+                        Paragraph gamePara = FindParagraphByName(HostRtb.Document, _par_game_moves_, true);
                         if (gamePara != null)
                         {
                             SetGameRunsToEvaluate(gamePara, null);

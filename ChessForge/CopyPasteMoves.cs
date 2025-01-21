@@ -71,10 +71,10 @@ namespace ChessForge
                         if (insertedNewNodes.Count > 0)
                         {
                             targetTree.BuildLines();
-                            targetView.BuildFlowDocumentForVariationTree();
+                            targetView.BuildFlowDocumentForVariationTree(false);
                             TreeNode insertedRoot = targetTree.GetNodeFromNodeId(firstInserted.NodeId);
                             AppState.MainWin.SetActiveLine(insertedRoot.LineId, insertedRoot.NodeId);
-                            targetView.SelectNode(firstInserted.NodeId);
+                            targetView.SelectNode(targetView.HostRtb.Document, firstInserted.NodeId);
 
                             string msg = Properties.Resources.FlMsgPastedMovesCount + ": " + insertedNewNodes.Count;
                             AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(msg, CommentBox.HintType.INFO, 14);

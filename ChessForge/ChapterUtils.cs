@@ -874,7 +874,7 @@ namespace ChessForge
 
                 if (AppState.ActiveTab == TabViewType.CHAPTERS)
                 {
-                    AppState.MainWin.ChaptersView.BuildFlowDocumentForChaptersView();
+                    AppState.MainWin.ChaptersView.BuildFlowDocumentForChaptersView(false);
                 }
 
                 AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgGamesSorted, CommentBox.HintType.INFO);

@@ -209,8 +209,8 @@ namespace ChessForge
         /// Creates an instance of this class and sets reference 
         /// to the FlowDocument managed by the object.
         /// </summary>
-        /// <param name="doc"></param>
-        public TrainingView(FlowDocument doc, MainWindow mainWin) : base(doc)
+        /// <param name="rtb"></param>
+        public TrainingView(RichTextBox rtb, MainWindow mainWin) : base(rtb)
         {
             _mainWin = mainWin;
         }
@@ -293,7 +293,7 @@ namespace ChessForge
 
             _startingNode = node;
             TrainingSession.ResetTrainingLine(node);
-            Document.Blocks.Clear();
+            HostRtb.Document.Blocks.Clear();
             InitParaDictionary();
             _moveNumberOffset = _mainWin.ActiveVariationTree.MoveNumberOffset;
             BuildIntroText(node);
@@ -316,7 +316,7 @@ namespace ChessForge
         {
             if (increase != null)
             {
-                foreach (var block in Document.Blocks)
+                foreach (var block in HostRtb.Document.Blocks)
                 {
                     if (block is Paragraph)
                     {
@@ -355,7 +355,7 @@ namespace ChessForge
             _dictColors[_run_wb_comment_] = _workbookBrush;
             _dictColors[_run_wb_ended_] = ChessForgeColors.CurrentTheme.RtbForeground;
 
-            foreach (var block in Document.Blocks)
+            foreach (var block in HostRtb.Document.Blocks)
             {
                 if (block is Paragraph b)
                 {
@@ -564,7 +564,7 @@ namespace ChessForge
             // we need to remove all paras after INSTRUCTIONS (we will not find a separate para for this move)
             bool isStartingNode = move.NodeId == _startingNode.NodeId;
             bool found = false;
-            foreach (var block in Document.Blocks)
+            foreach (var block in HostRtb.Document.Blocks)
             {
                 if (found)
                 {
@@ -594,7 +594,7 @@ namespace ChessForge
 
             foreach (var block in parasToRemove)
             {
-                Document.Blocks.Remove(block);
+                HostRtb.Document.Blocks.Remove(block);
             }
 
             // if anything was removed then the position was indeed rolled back
@@ -613,7 +613,7 @@ namespace ChessForge
         {
             Paragraph paraToRemove = null;
 
-            foreach (var block in Document.Blocks)
+            foreach (var block in HostRtb.Document.Blocks)
             {
                 if (block is Paragraph)
                 {
@@ -627,7 +627,7 @@ namespace ChessForge
 
             if (paraToRemove != null)
             {
-                Document.Blocks.Remove(paraToRemove);
+                HostRtb.Document.Blocks.Remove(paraToRemove);
             }
         }
 
@@ -638,7 +638,7 @@ namespace ChessForge
         {
             Paragraph paraToRemove = null;
 
-            foreach (var block in Document.Blocks)
+            foreach (var block in HostRtb.Document.Blocks)
             {
                 if (block is Paragraph)
                 {
@@ -652,7 +652,7 @@ namespace ChessForge
 
             if (paraToRemove != null)
             {
-                Document.Blocks.Remove(paraToRemove);
+                HostRtb.Document.Blocks.Remove(paraToRemove);
             }
         }
 
@@ -675,7 +675,7 @@ namespace ChessForge
             if (_paraCurrentEngineGame == null)
             {
                 // should never be null here so this is just defensive
-                _paraCurrentEngineGame = AddNewParagraphToDoc(STYLE_ENGINE_GAME, "");
+                _paraCurrentEngineGame = AddNewParagraphToDoc(HostRtb.Document, STYLE_ENGINE_GAME, "");
             }
 
             string text = "";
@@ -700,7 +700,7 @@ namespace ChessForge
             Run gm = CreateButtonRun(text, _run_engine_game_move_ + nd.NodeId.ToString(), moveColor);
             _paraCurrentEngineGame.Inlines.Add(gm);
 
-            Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
+            HostRtb.Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
             _dictParas[ParaType.PROMPT_TO_MOVE] = null;
 
             if (nd.Position.IsCheckmate)
@@ -715,12 +715,12 @@ namespace ChessForge
             {
                 if (nd.ColorToMove == TrainingSession.TrainingSide)
                 {
-                    _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc(STYLE_SECOND_PROMPT, "\n   " + Properties.Resources.YourTurn + "...");
+                    _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc(HostRtb.Document, STYLE_SECOND_PROMPT, "\n   " + Properties.Resources.YourTurn + "...");
                     _dictParas[ParaType.PROMPT_TO_MOVE].Foreground = ChessForgeColors.GetHintForeground(CommentBox.HintType.INFO);
                 }
                 else
                 {
-                    _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc(STYLE_SECOND_PROMPT, "\n   " + Properties.Resources.WaitForEngineResponse);
+                    _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc(HostRtb.Document, STYLE_SECOND_PROMPT, "\n   " + Properties.Resources.WaitForEngineResponse);
                     _dictParas[ParaType.PROMPT_TO_MOVE].Foreground = ChessForgeColors.GetHintForeground(CommentBox.HintType.INFO);
                 }
             }
@@ -759,7 +759,7 @@ namespace ChessForge
         {
             if (_paraCurrentEngineGame == null)
             {
-                _paraCurrentEngineGame = AddNewParagraphToDoc(STYLE_ENGINE_GAME, "");
+                _paraCurrentEngineGame = AddNewParagraphToDoc(HostRtb.Document, STYLE_ENGINE_GAME, "");
             }
 
             Dictionary<int, Run> dictEvalRunsToKeep = new Dictionary<int, Run>();
@@ -878,7 +878,7 @@ namespace ChessForge
         {
             _mainWin.Dispatcher.Invoke(() =>
             {
-                Run runEvaluated = GetRunForNodeId(nd.NodeId);
+                Run runEvaluated = GetRunForNodeId(HostRtb.Document, nd.NodeId);
                 if (runEvaluated == null)
                 {
                     return;
@@ -930,9 +930,9 @@ namespace ChessForge
             string runName = _run_line_move_ + nd.NodeId.ToString();
 
             // check if already exists. Due to timing issues it may be called multiple times
-            if (FindParagraphByName(paraName, false) == null)
+            if (FindParagraphByName(HostRtb.Document, paraName, false) == null)
             {
-                Paragraph para = AddNewParagraphToDoc(STYLE_MOVES_MAIN, "");
+                Paragraph para = AddNewParagraphToDoc(HostRtb.Document, STYLE_MOVES_MAIN, "");
                 para.Name = paraName;
 
                 Run r_prefix = new Run();
@@ -983,7 +983,7 @@ namespace ChessForge
         {
             string paraName = _par_checkmate_;
 
-            Paragraph para = AddNewParagraphToDoc(STYLE_CHECKMATE, "");
+            Paragraph para = AddNewParagraphToDoc(HostRtb.Document, STYLE_CHECKMATE, "");
             para.Foreground = ChessForgeColors.CurrentTheme.TrainingCheckmateForeground;
             para.Name = paraName;
 
@@ -1010,7 +1010,7 @@ namespace ChessForge
             _dictParas.TryGetValue(ParaType.TAKEBACK, out Paragraph para);
             if (para == null)
             {
-                para = AddNewParagraphToDoc(STYLE_TAKEBACK, "");
+                para = AddNewParagraphToDoc(HostRtb.Document, STYLE_TAKEBACK, "");
                 _dictParas[ParaType.TAKEBACK] = para;
                 para.MouseDown += EventTakebackParaClicked;
                 para.Cursor = Cursors.Hand;
@@ -1039,7 +1039,7 @@ namespace ChessForge
         {
             if (_dictParas[ParaType.TAKEBACK] != null)
             {
-                Document.Blocks.Remove(_dictParas[ParaType.TAKEBACK]);
+                HostRtb.Document.Blocks.Remove(_dictParas[ParaType.TAKEBACK]);
                 _dictParas[ParaType.TAKEBACK] = null;
             }
         }
@@ -1052,7 +1052,7 @@ namespace ChessForge
         {
             string paraName = _par_stalemate_;
 
-            Paragraph para = AddNewParagraphToDoc(STYLE_CHECKMATE, "");
+            Paragraph para = AddNewParagraphToDoc(HostRtb.Document, STYLE_CHECKMATE, "");
             para.Foreground = ChessForgeColors.CurrentTheme.TrainingCheckmateForeground;
             para.Name = paraName;
 
@@ -1070,7 +1070,7 @@ namespace ChessForge
         /// <param name="node"></param>
         private void CreateStemParagraph(TreeNode node)
         {
-            _dictParas[ParaType.STEM] = AddNewParagraphToDoc(STYLE_STEM_LINE, null);
+            _dictParas[ParaType.STEM] = AddNewParagraphToDoc(HostRtb.Document, STYLE_STEM_LINE, null);
 
             string sPrefix;
             if (node.NodeId != 0)
@@ -1146,9 +1146,9 @@ namespace ChessForge
             sbInstruction.AppendLine(Properties.Resources.TrnClickMoveBelow);
             sbInstruction.AppendLine(Properties.Resources.TrnRightClickMove);
 
-            _dictParas[ParaType.INSTRUCTIONS] = AddNewParagraphToDoc(STYLE_INTRO, sbInstruction.ToString());
+            _dictParas[ParaType.INSTRUCTIONS] = AddNewParagraphToDoc(HostRtb.Document, STYLE_INTRO, sbInstruction.ToString());
 
-            _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc(STYLE_FIRST_PROMPT, Properties.Resources.TrnMakeFirstMove);
+            _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc(HostRtb.Document, STYLE_FIRST_PROMPT, Properties.Resources.TrnMakeFirstMove);
             _dictParas[ParaType.PROMPT_TO_MOVE].Foreground = ChessForgeColors.GetHintForeground(CommentBox.HintType.INFO);
         }
 
@@ -1172,14 +1172,14 @@ namespace ChessForge
             {
                 BuildMoveParagraph(nd, false);
                 BuildCheckmateParagraph(nd, false);
-                Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
+                HostRtb.Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
                 _mainWin.BoardCommentBox.ReportCheckmate(false);
             }
             else if (isStalemate)
             {
                 BuildMoveParagraph(nd, false);
                 BuildStalemateParagraph(nd);
-                Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
+                HostRtb.Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
                 _mainWin.BoardCommentBox.ReportStalemate();
             }
             else
@@ -1189,8 +1189,8 @@ namespace ChessForge
                     BuildMoveParagraph(nd, false);
                 }
 
-                Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
-                _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc(STYLE_SECOND_PROMPT, "\n   " + Properties.Resources.YourTurn + "...");
+                HostRtb.Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
+                _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc(HostRtb.Document, STYLE_SECOND_PROMPT, "\n   " + Properties.Resources.YourTurn + "...");
                 _dictParas[ParaType.PROMPT_TO_MOVE].Foreground = ChessForgeColors.GetHintForeground(CommentBox.HintType.INFO);
 
                 _mainWin.BoardCommentBox.GameMoveMade(nd, false);
@@ -1447,7 +1447,7 @@ namespace ChessForge
         private Paragraph FindUserMoveParagraph(TreeNode nd)
         {
             string paraName = _par_line_moves_ + nd.NodeId.ToString();
-            return FindParagraphByName(paraName, false);
+            return FindParagraphByName(HostRtb.Document, paraName, false);
         }
 
 
@@ -1591,7 +1591,7 @@ namespace ChessForge
         {
             bool started = false;
 
-            foreach (var block in Document.Blocks)
+            foreach (var block in HostRtb.Document.Blocks)
             {
                 if (block is Paragraph)
                 {
@@ -1801,11 +1801,11 @@ namespace ChessForge
                 _mainWin.BoardCommentBox.GameEngineReplacementToMake(nd);
 
                 // takeback paragraph may exist and could be confusing to the user
-                Document.Blocks.Remove(_dictParas[ParaType.TAKEBACK]);
+                HostRtb.Document.Blocks.Remove(_dictParas[ParaType.TAKEBACK]);
                 _dictParas[ParaType.TAKEBACK] = null;
 
-                Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
-                _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc(STYLE_SECOND_PROMPT, "\n   " + Properties.Resources.ReplacingEngineMove
+                HostRtb.Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
+                _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc(HostRtb.Document, STYLE_SECOND_PROMPT, "\n   " + Properties.Resources.ReplacingEngineMove
                     + "\n   " + Properties.Resources.MakeMoveForEngine);
                 _dictParas[ParaType.PROMPT_TO_MOVE].Foreground = ChessForgeColors.GetHintForeground(CommentBox.HintType.ERROR);
             }
@@ -2121,7 +2121,7 @@ namespace ChessForge
         /// </summary>
         private void RemoveIntroParas()
         {
-            Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
+            HostRtb.Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
             _dictParas[ParaType.PROMPT_TO_MOVE] = null;
         }
     }

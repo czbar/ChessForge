@@ -110,15 +110,17 @@ namespace ChessForge
         /// a call to the base class's constructor.
         /// </summary>
         /// <param name="doc"></param>
-        public ChaptersView(FlowDocument doc, MainWindow mainWin) : base(doc)
+        public ChaptersView(RichTextBox rtb, MainWindow mainWin) : base(rtb)
         {
             _mainWin = mainWin;
             _mainWin.UiRtbChaptersView.AllowDrop = false;
             _mainWin.UiRtbChaptersView.IsReadOnly = true;
 
             _richTextBox = AppState.MainWin.UiRtbChaptersView;
-            _richTextBox.Document.PageWidth = 1000;
+
+            SetRtbPageWidth(_richTextBox.Document);
         }
+
         /// <summary>
         /// Flags whether the view needs refreshing
         /// </summary>
@@ -131,30 +133,47 @@ namespace ChessForge
         /// <summary>
         /// Builds a list of paragraphs to show the chapters in this Workbook and their content.
         /// </summary>
-        public void BuildFlowDocumentForChaptersView()
+        public void BuildFlowDocumentForChaptersView(bool opBehind)
         {
+            FlowDocument doc;
+            if (opBehind)
+            {
+                doc = new FlowDocument();
+            }
+            else
+            {
+                doc = HostRtb.Document;
+            }
+
+            SetRtbPageWidth(doc);
+
             try
             {
-                Document.Blocks.Clear();
+                doc.Blocks.Clear();
                 _dictChapterParas.Clear();
 
-                Paragraph paraWorkbookTitle = AddNewParagraphToDoc(STYLE_WORKBOOK_TITLE, WorkbookManager.SessionWorkbook.Title);
+                Paragraph paraWorkbookTitle = AddNewParagraphToDoc(doc, STYLE_WORKBOOK_TITLE, WorkbookManager.SessionWorkbook.Title);
                 paraWorkbookTitle.MouseDown += EventWorkbookTitleClicked;
 
                 foreach (Chapter chapter in WorkbookManager.SessionWorkbook.Chapters)
                 {
-                    Paragraph para = BuildChapterParagraph(chapter);
-                    Document.Blocks.Add(para);
+                    Paragraph para = BuildChapterParagraph(doc, chapter);
+                    doc.Blocks.Add(para);
                     _dictChapterParas[chapter.Index] = para;
                 }
 
-                HighlightActiveChapter();
+                HighlightActiveChapter(doc);
 
                 IsDirty = false;
             }
             catch (Exception ex)
             {
-                AppLog.Message("BuildFlowDocumentForChaptersView()", ex);
+                AppLog.Message("BuildFlowDocumentForChaptersView(false)", ex);
+            }
+
+            if (opBehind)
+            {
+                HostRtb.Document = doc;
             }
         }
 
@@ -219,11 +238,11 @@ namespace ChessForge
         /// <param name="chapter"></param>
         /// <param name="sourceIndex"></param>
         /// <param name="targetIndex"></param>
-        public bool SwapModelGames(Chapter chapter, int sourceIndex, int targetIndex)
+        public bool SwapModelGames(FlowDocument doc, Chapter chapter, int sourceIndex, int targetIndex)
         {
             bool res = false;
 
-            Paragraph para = FindChapterParagraph(chapter.Index);
+            Paragraph para = FindChapterParagraph(doc, chapter.Index);
             if (para != null)
             {
                 Run first = FindArticleRunInParagraph(para, GameData.ContentType.MODEL_GAME, sourceIndex);
@@ -253,11 +272,11 @@ namespace ChessForge
         /// <param name="chapter"></param>
         /// <param name="sourceIndex"></param>
         /// <param name="targetIndex"></param>
-        public bool SwapExercises(Chapter chapter, int sourceIndex, int targetIndex)
+        public bool SwapExercises(FlowDocument doc, Chapter chapter, int sourceIndex, int targetIndex)
         {
             bool res = false;
 
-            Paragraph para = FindChapterParagraph(chapter.Index);
+            Paragraph para = FindChapterParagraph(doc, chapter.Index);
             if (para != null)
             {
                 Run first = FindArticleRunInParagraph(para, GameData.ContentType.EXERCISE, sourceIndex);
@@ -283,11 +302,11 @@ namespace ChessForge
         /// <summary>
         /// Show/Hide intro headers per the current status
         /// </summary>
-        public void UpdateIntroHeaders()
+        public void UpdateIntroHeaders(FlowDocument doc)
         {
             List<IntroRunsToModify> lstRuns = new List<IntroRunsToModify>();
 
-            foreach (Block block in Document.Blocks)
+            foreach (Block block in doc.Blocks)
             {
                 if (block is Paragraph)
                 {
@@ -324,6 +343,21 @@ namespace ChessForge
             foreach (IntroRunsToModify r in lstRuns)
             {
                 HandleIntroRun(r.Para, r.IntroRun, r.StudyRun);
+            }
+        }
+
+        /// <summary>
+        /// Sets the page width of the FlowDocument.
+        /// It has to be reasonably large because we do not want 
+        /// chapter titles wrapping but rather to have them on a single line 
+        /// with a scroll bar if needed.
+        /// </summary>
+        /// <param name="doc"></param>
+        private void SetRtbPageWidth(FlowDocument doc)
+        {
+            if (doc != null)
+            {
+                doc.PageWidth = 1000;
             }
         }
 
@@ -391,11 +425,11 @@ namespace ChessForge
         /// Brings the title line of the chapter into view.
         /// </summary>
         /// <param name="chapterIndex"></param>
-        public void BringChapterIntoView(int chapterIndex)
+        public void BringChapterIntoView(FlowDocument doc, int chapterIndex)
         {
             try
             {
-                Run rChapter = FindChapterTitleRun(chapterIndex);
+                Run rChapter = FindChapterTitleRun(doc, chapterIndex);
                 rChapter?.BringIntoView();
             }
             catch { }
@@ -421,11 +455,11 @@ namespace ChessForge
         /// Brings the title line of the chapter into view.
         /// </summary>
         /// <param name="chapterIndex"></param>
-        public void BringChapterIntoViewByIndex(int chapterIndex)
+        public void BringChapterIntoViewByIndex(FlowDocument doc, int chapterIndex)
         {
             _mainWin.Dispatcher.Invoke(() =>
               {
-                  Run rChapter = FindChapterTitleRun(chapterIndex);
+                  Run rChapter = FindChapterTitleRun(doc, chapterIndex);
                   rChapter?.BringIntoView();
               });
         }
@@ -436,11 +470,11 @@ namespace ChessForge
         /// <param name="chapterIndex"></param>
         /// <param name="contentType"></param>
         /// <param name="index"></param>
-        public void BringArticleIntoView(int chapterIndex, GameData.ContentType contentType, int index)
+        public void BringArticleIntoView(FlowDocument doc, int chapterIndex, GameData.ContentType contentType, int index)
         {
             _mainWin.Dispatcher.Invoke(() =>
             {
-                Paragraph paraChapter = FindChapterParagraph(chapterIndex);
+                Paragraph paraChapter = FindChapterParagraph(doc, chapterIndex);
                 if (paraChapter != null)
                 {
                     Run r = FindArticleRunInParagraph(paraChapter, contentType, index);
@@ -452,7 +486,7 @@ namespace ChessForge
         /// <summary>
         /// Highlights the title of the ActiveChapter.
         /// </summary>
-        public void HighlightActiveChapter()
+        public void HighlightActiveChapter(FlowDocument doc)
         {
             Run runToSelect = null;
             Run runToClear = null;
@@ -463,7 +497,7 @@ namespace ChessForge
             {
                 int activeChapterIndex = WorkbookManager.SessionWorkbook.ActiveChapter.Index;
                 // iterate over the runs with chapter name and marks selection on the active one
-                foreach (Block block in Document.Blocks)
+                foreach (Block block in doc.Blocks)
                 {
                     if (block is Paragraph)
                     {
@@ -521,12 +555,12 @@ namespace ChessForge
         /// </summary>
         /// <param name="chapter"></param>
         /// <returns></returns>
-        public Paragraph RebuildChapterParagraph(Chapter chapter)
+        public Paragraph RebuildChapterParagraph(FlowDocument doc, Chapter chapter)
         {
             Paragraph para = null; ;
             int chapterIndex = chapter.Index;
 
-            foreach (Block b in Document.Blocks)
+            foreach (Block b in doc.Blocks)
             {
                 if (b is Paragraph)
                 {
@@ -539,7 +573,7 @@ namespace ChessForge
                 }
             }
 
-            return BuildChapterParagraph(chapter, para);
+            return BuildChapterParagraph(doc, chapter, para);
         }
 
         /// <summary>
@@ -548,7 +582,7 @@ namespace ChessForge
         /// <param name="chapter"></param>
         /// <param name="para"></param>
         /// <returns></returns>
-        private Paragraph BuildChapterParagraph(Chapter chapter, Paragraph para = null)
+        private Paragraph BuildChapterParagraph(FlowDocument doc, Chapter chapter, Paragraph para = null)
         {
             if (chapter == null)
             {
@@ -559,7 +593,7 @@ namespace ChessForge
             {
                 if (para == null)
                 {
-                    para = AddNewParagraphToDoc(STYLE_CHAPTER_TITLE, "");
+                    para = AddNewParagraphToDoc(doc, STYLE_CHAPTER_TITLE, "");
                     _dictChapterParas[chapter.Index] = para;
                 }
                 else
@@ -609,11 +643,11 @@ namespace ChessForge
         /// </summary>
         /// <param name="chapterIndex"></param>
         /// <returns></returns>
-        private Paragraph FindChapterParagraph(int chapterIndex)
+        private Paragraph FindChapterParagraph(FlowDocument doc, int chapterIndex)
         {
             Paragraph paraChapter = null;
             string paraName = _par_chapter_ + chapterIndex.ToString();
-            foreach (Block block in Document.Blocks)
+            foreach (Block block in doc.Blocks)
             {
                 if (block is Paragraph)
                 {
@@ -666,11 +700,11 @@ namespace ChessForge
         /// </summary>
         /// <param name="chapterIndex"></param>
         /// <returns></returns>
-        private Run FindChapterTitleRun(int chapterIndex)
+        private Run FindChapterTitleRun(FlowDocument doc, int chapterIndex)
         {
             Run rChapter = null;
             string runName = _run_chapter_title_ + chapterIndex.ToString();
-            foreach (Block block in Document.Blocks)
+            foreach (Block block in HostRtb.Document.Blocks)
             {
                 if (block is Paragraph)
                 {
@@ -930,7 +964,7 @@ namespace ChessForge
         /// on its current state.
         /// </summary>
         /// <param name="chapter"></param>
-        private void ExpandChapterList(Chapter chapter, bool forceExpand)
+        private void ExpandChapterList(FlowDocument doc, Chapter chapter, bool forceExpand)
         {
             if (forceExpand)
             {
@@ -950,7 +984,7 @@ namespace ChessForge
                 }
             }
 
-            BuildChapterParagraph(chapter, _dictChapterParas[chapter.Index]);
+            BuildChapterParagraph(doc, chapter, _dictChapterParas[chapter.Index]);
         }
 
         /// <summary>
@@ -958,7 +992,7 @@ namespace ChessForge
         /// on its current state.
         /// </summary>
         /// <param name="chapter"></param>
-        private void ExpandModelGamesList(Chapter chapter)
+        private void ExpandModelGamesList(FlowDocument doc, Chapter chapter)
         {
             bool? isExpanded = chapter.IsModelGamesListExpanded;
 
@@ -972,7 +1006,7 @@ namespace ChessForge
                 _runToBringToView = new ChaptersViewRunAttrs(chapter.Index, GameData.ContentType.MODEL_GAME);
             }
 
-            BuildChapterParagraph(chapter, _dictChapterParas[chapter.Index]);
+            BuildChapterParagraph(doc, chapter, _dictChapterParas[chapter.Index]);
         }
 
         /// <summary>
@@ -980,7 +1014,7 @@ namespace ChessForge
         /// on its current state.
         /// </summary>
         /// <param name="chapter"></param>
-        private void ExpandExercisesList(Chapter chapter)
+        private void ExpandExercisesList(FlowDocument doc, Chapter chapter)
         {
             bool? isExpanded = chapter.IsExercisesListExpanded;
 
@@ -994,7 +1028,7 @@ namespace ChessForge
                 _runToBringToView = new ChaptersViewRunAttrs(chapter.Index, GameData.ContentType.EXERCISE);
             }
 
-            BuildChapterParagraph(chapter, _dictChapterParas[chapter.Index]);
+            BuildChapterParagraph(doc, chapter, _dictChapterParas[chapter.Index]);
         }
 
         /// <summary>
@@ -1076,8 +1110,8 @@ namespace ChessForge
                 newChapter.IsViewExpanded = true;
             }
 
-            RebuildChapterParagraph(newChapter);
-            RebuildChapterParagraph(oldChapter);
+            RebuildChapterParagraph(HostRtb.Document, newChapter);
+            RebuildChapterParagraph(HostRtb.Document, oldChapter);
         }
 
         /// <summary>
@@ -1367,7 +1401,7 @@ namespace ChessForge
         private Paragraph GetParagraph(int chapterIndex)
         {
             Paragraph para = null;
-            foreach (Block block in Document.Blocks)
+            foreach (Block block in HostRtb.Document.Blocks)
             {
                 if (block is Paragraph)
                 {
@@ -1496,7 +1530,7 @@ namespace ChessForge
         /// <param name="para"></param>
         private void HighlightChapterSelections(Chapter chapter)
         {
-            Paragraph para = GetParagraphForChapter(chapter);
+            Paragraph para = GetParagraphForChapter(HostRtb.Document, chapter);
             if (para == null)
             {
                 return;
@@ -1608,13 +1642,13 @@ namespace ChessForge
         /// </summary>
         /// <param name="chapter"></param>
         /// <returns></returns>
-        private Paragraph GetParagraphForChapter(Chapter chapter)
+        private Paragraph GetParagraphForChapter(FlowDocument doc, Chapter chapter)
         {
             Paragraph para = null;
 
             if (chapter != null)
             {
-                foreach (Block b in Document.Blocks)
+                foreach (Block b in doc.Blocks)
                 {
                     if (b is Paragraph)
                     {

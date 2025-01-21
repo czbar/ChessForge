@@ -919,6 +919,10 @@ namespace ChessPosition
                 if (nd.NodeId != 0)
                 {
                     TreeNode newNode = MoveUtils.ProcessAlgMove(nd.LastMoveAlgebraicNotation, nd.Parent, nd.NodeId);
+                    if (newNode == null)
+                    {
+                        throw new Exception("Invalid move");
+                    }
                     nd.Position = new BoardPosition(newNode.Position);
                 }
                 foreach (TreeNode child in nd.Children)
@@ -992,13 +996,16 @@ namespace ChessPosition
                 {
                     int nodeId = targetTree.GetNewNodeId();
                     retNode = MoveUtils.ProcessAlgMove(algMove, insertAtNode, nodeId);
-                    // copy some fields from the original one to the one created here
-                    retNode.Comment = nodeToInsert.Comment;
-                    retNode.CommentBeforeMove = nodeToInsert.CommentBeforeMove;
-                    retNode.Nags = nodeToInsert.Nags;
-                    retNode.LastMoveAlgebraicNotationWithNag = nodeToInsert.LastMoveAlgebraicNotationWithNag;
-                    retNode.Position.IsCheckmate = PositionUtils.IsCheckmate(retNode.Position, out bool isCheck);
-                    retNode.Position.IsCheck = isCheck;
+                    if (retNode != null)
+                    {
+                        // copy some fields from the original one to the one created here
+                        retNode.Comment = nodeToInsert.Comment;
+                        retNode.CommentBeforeMove = nodeToInsert.CommentBeforeMove;
+                        retNode.Nags = nodeToInsert.Nags;
+                        retNode.LastMoveAlgebraicNotationWithNag = nodeToInsert.LastMoveAlgebraicNotationWithNag;
+                        retNode.Position.IsCheckmate = PositionUtils.IsCheckmate(retNode.Position, out bool isCheck);
+                        retNode.Position.IsCheck = isCheck;
+                    }
                 }
                 catch
                 {

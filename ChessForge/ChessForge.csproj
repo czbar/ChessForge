@@ -335,6 +335,7 @@
     <Compile Include="VariationTreeViewBuild.cs" />
     <Compile Include="VariationTreeViewDiagram.cs" />
     <Compile Include="VariationTreeViewMoveRuns.cs" />
+    <Compile Include="VariationTreeViewSelections.cs" />
     <Compile Include="WorkbookLocation.cs" />
     <Compile Include="WorkbookLocationNavigator.cs" />
     <Compile Include="WorkbookOperation.cs" />

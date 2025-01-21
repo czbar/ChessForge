@@ -88,7 +88,7 @@ namespace ChessForge
         /// Constructor. Builds the content if not empty.
         /// Initializes data structures.
         /// </summary>
-        public IntroView(FlowDocument doc, Chapter parentChapter, RichTextBox printRtb = null) : base(doc)
+        public IntroView(RichTextBox rtb, Chapter parentChapter, RichTextBox printRtb = null) : base(rtb)
         {
             bool isAppDirty = AppState.IsDirty;
 
@@ -103,7 +103,7 @@ namespace ChessForge
                 _rtb = AppState.MainWin.UiRtbIntroView;
             }
 
-            Document.Blocks.Clear();
+            HostRtb.Document.Blocks.Clear();
 
             ParentChapter = parentChapter;
 
@@ -167,7 +167,7 @@ namespace ChessForge
         /// </summary>
         public void Clear()
         {
-            Document.Blocks.Clear();
+            HostRtb.Document.Blocks.Clear();
         }
 
         /// <summary>
@@ -215,7 +215,7 @@ namespace ChessForge
                     _rtb.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff;                    
                 }
                 StringToFlowDocument(xaml);
-                _rtb.Document = Document;
+                _rtb.Document = HostRtb.Document;
                 _maxRunId = GetHighestId();
             }
         }
@@ -232,14 +232,14 @@ namespace ChessForge
                 AppState.MainWin.Dispatcher.Invoke(() =>
                 {
                     RemoveDuplicateNames();
-                    if (cleanup && IsDocumentEmpty())
+                    if (cleanup && IsDocumentEmpty(HostRtb.Document))
                     {
                         Nodes[0].Data = "";
                         Nodes[0].Comment = "";
                     }
                     else
                     {
-                        string xamlText = XamlWriter.Save(Document);
+                        string xamlText = XamlWriter.Save(HostRtb.Document);
                         Nodes[0].Data = EncodingUtils.Base64Encode(xamlText);
                         Nodes[0].Comment = CopySelectionToClipboard(true);
                         RemoveUnusedNodes();
@@ -436,7 +436,7 @@ namespace ChessForge
         {
             List<string> names = new List<string>();
 
-            foreach (Block block in Document.Blocks)
+            foreach (Block block in HostRtb.Document.Blocks)
             {
                 if (block is Paragraph)
                 {
@@ -518,7 +518,7 @@ namespace ChessForge
         {
             int maxId = 0;
 
-            foreach (Block block in Document.Blocks)
+            foreach (Block block in HostRtb.Document.Blocks)
             {
                 if (block is Paragraph para)
                 {
@@ -546,7 +546,7 @@ namespace ChessForge
             List<int> activeNodes = new List<int>();
 
             // get all active node ids
-            foreach (Block block in Document.Blocks)
+            foreach (Block block in HostRtb.Document.Blocks)
             {
                 if (block is Paragraph)
                 {
@@ -629,7 +629,7 @@ namespace ChessForge
             try
             {
                 string uicName = RichTextBoxUtilities.UicMovePrefix + SelectedNode.NodeId.ToString();
-                Inline inlClicked = FindInlineByName(uicName);
+                Inline inlClicked = FindInlineByName(HostRtb.Document, uicName);
 
                 TextBlock tb = (inlClicked as InlineUIContainer).Child as TextBlock;
 
@@ -817,7 +817,7 @@ namespace ChessForge
             {
                 _selectedNode = nd;
                 string uicName = RichTextBoxUtilities.UicMovePrefix + nodeId.ToString();
-                Inline inlClicked = FindInlineByName(uicName);
+                Inline inlClicked = FindInlineByName(HostRtb.Document, uicName);
                 if (adjustCaret)
                 {
                     _rtb.CaretPosition = inlClicked.ElementEnd;
@@ -920,7 +920,7 @@ namespace ChessForge
 
             Paragraph para = null;
 
-            foreach (Block block in Document.Blocks)
+            foreach (Block block in HostRtb.Document.Blocks)
             {
                 if (block is Paragraph)
                 {
@@ -954,7 +954,7 @@ namespace ChessForge
         {
             try
             {
-                foreach (Block block in Document.Blocks)
+                foreach (Block block in HostRtb.Document.Blocks)
                 {
                     if (block is Paragraph para)
                     {
@@ -1032,7 +1032,7 @@ namespace ChessForge
 
             try
             {
-                foreach (Block block in Document.Blocks)
+                foreach (Block block in HostRtb.Document.Blocks)
                 {
                     if (done)
                     {
@@ -1161,7 +1161,7 @@ namespace ChessForge
             }
             DiagramList.Add(diag);
 
-            Document.Blocks.InsertBefore(nextPara, para);
+            HostRtb.Document.Blocks.InsertBefore(nextPara, para);
 
             SetInlineUIContainerEventHandlers(para);
 
@@ -1687,13 +1687,13 @@ namespace ChessForge
 
             try
             {
-                Document = XamlToDocument(xamlString);
+                HostRtb.Document = XamlToDocument(xamlString);
                 success = true;
             }
             catch (Exception ex)
             {
                 success = false;
-                Document = new FlowDocument();
+                HostRtb.Document = new FlowDocument();
                 AppLog.Message("StringToFlowDocument() first attempt", ex);
             }
 
@@ -1703,17 +1703,17 @@ namespace ChessForge
                 xamlString = DedupeXamlString(xamlString);
                 try
                 {
-                    Document = XamlToDocument(xamlString);
+                    HostRtb.Document = XamlToDocument(xamlString);
                 }
                 catch (Exception ex)
                 {
-                    Document = new FlowDocument();
+                    HostRtb.Document = new FlowDocument();
                     AppLog.Message("StringToFlowDocument() second attempt", ex);
                     MessageBox.Show(Properties.Resources.ErrorParsingIntro, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
 
-            return Document;
+            return HostRtb. Document;
         }
 
         /// <summary>

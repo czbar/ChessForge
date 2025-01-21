@@ -1039,14 +1039,17 @@ NotNamed=brak nazwy
 RemoveReference=Usuń odsyłacz
 
 #description: Automatically place this reference in the optimal place
-#english: AutoPlaceReference=Auto-place this Reference
+#english: AutoPlaceReference=Adjust This Reference's Position
 AutoPlaceReference=Popraw pozycję odsyłacza
 
+#description: Automatically place this reference in the optimal place
+#english: AutoPlaceMoveReferences=Adjust Move's References' Positions
+AutoPlaceMoveReferences=Popraw pozycje odsyłaczy w tym ruchu
+
 #description: Automatically place all references in the optimal places
-#english: AutoPlaceAllReferences=Auto-place all References
+#english: AutoPlaceAllReferences=Adjust All References' Positions
 AutoPlaceAllReferences=Popraw pozycje wszystkich odsyłaczy
 
-AutoPlaceMoveReferences=Popraw pozycje odsyłaczy w tym ruchu
 
 ###########################
 #
@@ -1306,6 +1309,10 @@ ParaForComment=Nowy akapit dla komentarza
 #description: Whether to show inline table with move options at a fork
 #english: ShowMovesAtFork=Show Moves at Fork
 ShowMovesAtFork=Tabelka przy rozgałęzieniu
+
+#description: Wide scrollbar
+#english: WideScrollbar=Wide Scrollbar
+WideScrollbar=Szeroki pasek przewijania
 
 #description: Large menu font
 #english: LargeMenuFont=Large Menu Font

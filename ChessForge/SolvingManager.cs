@@ -199,7 +199,7 @@ namespace ChessForge
                     //TODO: optimize as we only need to update solution paragraph
                     AppState.MainWin.Dispatcher.Invoke(() =>
                     {
-                        AppState.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
+                        AppState.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree(false);
                     });
                 }
             }

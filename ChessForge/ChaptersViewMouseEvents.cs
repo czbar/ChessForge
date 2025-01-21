@@ -246,7 +246,7 @@ namespace ChessForge
                     {
                         if (chapter.GetModelGameCount() > 0)
                         {
-                            ExpandModelGamesList(chapter);
+                            ExpandModelGamesList(HostRtb.Document, chapter);
                         }
                         else
                         {
@@ -303,7 +303,7 @@ namespace ChessForge
                     {
                         if (chapter.GetExerciseCount() > 0)
                         {
-                            ExpandExercisesList(chapter);
+                            ExpandExercisesList(HostRtb.Document, chapter);
                         }
                         else
                         {
@@ -473,7 +473,7 @@ namespace ChessForge
                 if (chapterIndex >= 0)
                 {
                     Chapter chapter = WorkbookManager.SessionWorkbook.Chapters[chapterIndex];
-                    ExpandChapterList(chapter, false);
+                    ExpandChapterList(HostRtb.Document, chapter, false);
                 }
             }
             catch
@@ -505,7 +505,7 @@ namespace ChessForge
                     SelectChapter(chapterIndex, false);
                 }
                 chapter.IsModelGamesListExpanded = !chapter.IsModelGamesListExpanded;
-                BuildChapterParagraph(chapter, _dictChapterParas[chapter.Index]);
+                BuildChapterParagraph(HostRtb.Document, chapter, _dictChapterParas[chapter.Index]);
             }
             catch (Exception ex)
             {
@@ -537,7 +537,7 @@ namespace ChessForge
                     SelectChapter(chapterIndex, false);
                 }
                 chapter.IsExercisesListExpanded = !chapter.IsExercisesListExpanded;
-                BuildChapterParagraph(chapter, _dictChapterParas[chapter.Index]);
+                BuildChapterParagraph(HostRtb.Document, chapter, _dictChapterParas[chapter.Index]);
             }
             catch (Exception ex)
             {
@@ -891,7 +891,7 @@ namespace ChessForge
                             }
                             else if (DraggedArticle.ContentType == GameData.ContentType.MODEL_GAME || DraggedArticle.ContentType == GameData.ContentType.EXERCISE)
                             {
-                                MoveArticle(targetChapterIndex, 0);
+                                MoveArticle(HostRtb.Document, targetChapterIndex, 0);
                             }
                         }
                     }
@@ -944,7 +944,7 @@ namespace ChessForge
                         if (DraggedArticle.IsDragInProgress && DraggedArticle.ContentType == GameData.ContentType.MODEL_GAME)
                         {
                             int targetChapterIndex = GetChapterIndexFromChildRun(run);
-                            MoveArticle(targetChapterIndex, 0);
+                            MoveArticle(HostRtb.Document, targetChapterIndex, 0);
                         }
                     }
                     catch { }
@@ -976,7 +976,7 @@ namespace ChessForge
                         if (DraggedArticle.IsDragInProgress && DraggedArticle.ContentType == GameData.ContentType.EXERCISE)
                         {
                             int targetChapterIndex = GetChapterIndexFromChildRun(run);
-                            MoveArticle(targetChapterIndex, 0);
+                            MoveArticle(HostRtb.Document, targetChapterIndex, 0);
                         }
                     }
                     catch { }
@@ -1028,7 +1028,7 @@ namespace ChessForge
 
                             if (DraggedArticle.ChapterIndex != targetChapterIndex || DraggedArticle.ArticleIndex != targetGameIndex)
                             {
-                                MoveArticle(targetChapterIndex, targetGameIndex);
+                                MoveArticle(HostRtb.Document, targetChapterIndex, targetGameIndex);
                             }
                         }
                     }
@@ -1081,7 +1081,7 @@ namespace ChessForge
 
                             if (DraggedArticle.ChapterIndex != targetChapterIndex || DraggedArticle.ArticleIndex != targetExerciseIndex)
                             {
-                                MoveArticle(targetChapterIndex, targetExerciseIndex);
+                                MoveArticle(HostRtb.Document, targetChapterIndex, targetExerciseIndex);
                             }
                         }
                     }
@@ -1100,18 +1100,18 @@ namespace ChessForge
         /// </summary>
         /// <param name="targetChapterIndex"></param>
         /// <param name="articleIndex"></param>
-        private void MoveArticle(int targetChapterIndex, int articleIndex)
+        private void MoveArticle(FlowDocument doc, int targetChapterIndex, int articleIndex)
         {
             Chapter targetChapter = AppState.Workbook.Chapters[targetChapterIndex];
             AppState.Workbook.MoveArticle(DraggedArticle.ContentType, DraggedArticle.ChapterIndex, DraggedArticle.ArticleIndex, targetChapterIndex, articleIndex);
             AppState.IsDirty = true;
 
-            RebuildChapterParagraph(AppState.Workbook.Chapters[DraggedArticle.ChapterIndex]);
+            RebuildChapterParagraph(doc, AppState.Workbook.Chapters[DraggedArticle.ChapterIndex]);
             if (DraggedArticle.ChapterIndex != articleIndex)
             {
-                RebuildChapterParagraph(targetChapter);
+                RebuildChapterParagraph(doc, targetChapter);
             }
-            HighlightActiveChapter();
+            HighlightActiveChapter(doc);
         }
 
         /// <summary>
@@ -1123,7 +1123,7 @@ namespace ChessForge
         {
             if (AppState.Workbook.MoveChapter(sourceIndex, targetIndex))
             {
-                BuildFlowDocumentForChaptersView();
+                BuildFlowDocumentForChaptersView(false);
 
                 AppState.MainWin.SelectChapterByIndex(targetIndex, false, false);
                 PulseManager.ChapterIndexToBringIntoView = targetIndex;

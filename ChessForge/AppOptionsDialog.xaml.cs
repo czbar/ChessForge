@@ -28,6 +28,9 @@ namespace ChessForge
         // MainLineCommentLF on entry
         private bool _currentMainLineCommentLF;
 
+        // WideScrollbar on entry
+        private bool _currentWideScrollbar;
+
         // LargeMenuFont on entry
         private bool _currentLargeMenuFont;
 
@@ -53,6 +56,11 @@ namespace ChessForge
         /// that require updating engine options.
         /// </summary>
         public bool EngineParamsChanged = false;
+
+        /// <summary>
+        /// Set on Exit to indicate whether WideScrollbar param changed
+        /// </summary>
+        public bool WideScrollbarChanged = false;
 
         /// <summary>
         /// Set on Exit to indicate whether LargeMenuFont param changed
@@ -129,6 +137,11 @@ namespace ChessForge
         public bool SoundOn;
 
         /// <summary>
+        /// Whether to use wide the scrollbar
+        /// </summary>
+        public bool WideScrollbar;
+
+        /// <summary>
         /// Whether to use larger font in the menus
         /// </summary>
         public bool LargeMenuFont;
@@ -162,12 +175,14 @@ namespace ChessForge
             MainLineCommentLF = Configuration.MainLineCommentLF;
             ShowMovesAtFork = Configuration.ShowMovesAtFork;
             SoundOn = Configuration.SoundOn;
+            WideScrollbar = Configuration.WideScrollbar;
             LargeMenuFont = Configuration.LargeMenuFont;
 
             _currentUseFigurines = Configuration.UseFigurines;
             _currentEngineThreads = Configuration.EngineThreads;
             _currentEngineHashSize = Configuration.EngineHashSize;
             _currentMainLineCommentLF = Configuration.MainLineCommentLF;
+            _currentWideScrollbar = Configuration.WideScrollbar;
             _currentLargeMenuFont = Configuration.LargeMenuFont;
 
             UiTbIndexDepth.Text = Configuration.DefaultIndexDepth.ToString();
@@ -177,6 +192,7 @@ namespace ChessForge
             UiCbMainLineCommentLF.IsChecked = MainLineCommentLF == true;
             UiCbShowForkMoves.IsChecked = (ShowMovesAtFork == true);
             UiCbSoundOn.IsChecked = (SoundOn == true);
+            UiCbWideScrollbar.IsChecked = (WideScrollbar == true);
             UiCbLargeMenuFont.IsChecked = (LargeMenuFont == true);
             UiCbFigurines.IsChecked = (Configuration.UseFigurines == true);
 
@@ -225,10 +241,12 @@ namespace ChessForge
             Configuration.MainLineCommentLF = (UiCbMainLineCommentLF.IsChecked == true);
             Configuration.ShowMovesAtFork = (UiCbShowForkMoves.IsChecked == true);
             Configuration.SoundOn = (UiCbSoundOn.IsChecked == true);
+            Configuration.WideScrollbar = (UiCbWideScrollbar.IsChecked == true);
             Configuration.LargeMenuFont = (UiCbLargeMenuFont.IsChecked == true);
             Configuration.UseFigurines = (UiCbFigurines.IsChecked == true);
 
             MainLineCommentLFChanged = Configuration.MainLineCommentLF != _currentMainLineCommentLF;
+            WideScrollbarChanged = Configuration.WideScrollbar != _currentWideScrollbar;
             LargeMenuFontChanged = Configuration.LargeMenuFont != _currentLargeMenuFont;
 
             if (UiLbLanguages.SelectedItem != null)

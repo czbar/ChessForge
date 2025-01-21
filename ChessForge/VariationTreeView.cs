@@ -3,7 +3,6 @@ using ChessPosition.Utils;
 using GameTree;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -12,7 +11,6 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using static ChessForge.CommentBox;
 
 namespace ChessForge
 {
@@ -120,20 +118,17 @@ namespace ChessForge
         // whether the view is built for display or print/export
         protected bool _isPrinting = false;
 
-        // the RichTextBox control underlying this view.
-        public RichTextBox RichTextBoxControl;
-
         /// <summary>
         /// Constructor. Sets a reference to the 
         /// FlowDocument for the RichTextBox control, via
         /// a call to the base class's constructor.
         /// </summary>
         /// <param name="doc"></param>
-        public VariationTreeView(RichTextBox rtb, GameData.ContentType contentType) : base(rtb.Document)
+        public VariationTreeView(RichTextBox rtb, GameData.ContentType contentType) : base(rtb)
         {
             _mainWin = AppState.MainWin;
             _contentType = contentType;
-            RichTextBoxControl = rtb;
+            HostRtb = rtb;
         }
 
         /// <summary>
@@ -142,11 +137,11 @@ namespace ChessForge
         /// </summary>
         /// <param name="contentType"></param>
         /// <param name="entityIndex"></param>
-        public VariationTreeView(FlowDocument doc, GameData.ContentType contentType) : base(doc)
+        public VariationTreeView(FlowDocument doc, GameData.ContentType contentType) : base(null)
         {
             _mainWin = AppState.MainWin;
             _contentType = contentType;
-            RichTextBoxControl = null;
+            HostRtb = null;
 
             // this constructors is only called when printing (RTF exporting)
             _isPrinting = true;
@@ -277,8 +272,6 @@ namespace ChessForge
         /// Selected (clicked) run.
         /// </summary>
         private Run _selectedRun;
-        private SolidColorBrush _selectedRunFore;
-        private SolidColorBrush _selectedRunBkg;
 
         /// <summary>
         /// Type of nodes that can be encountered in the Workbook tree.
@@ -296,8 +289,18 @@ namespace ChessForge
         /// Builds the FlowDocument from the entire Variation Tree for the RichTextBox to display.
         /// Inserts dummy (no text) run for the starting position (NodeId == 0)
         /// </summary>
-        public void BuildFlowDocumentForVariationTree(VariationTree treeForPrint = null, int rootNodeId = 0, bool includeStem = true)
+        public void BuildFlowDocumentForVariationTree(bool opBehind, VariationTree treeForPrint = null, int rootNodeId = 0, bool includeStem = true)
         {
+            FlowDocument doc;
+            if (opBehind)
+            {
+                doc = new FlowDocument();
+            }
+            else
+            {
+                doc = HostRtb.Document;
+            }
+
             try
             {
                 GameData.ContentType contentType = GameData.ContentType.NONE;
@@ -335,14 +338,14 @@ namespace ChessForge
 
                 contentType = _mainVariationTree.Header.GetContentType(out _);
 
-                Clear(GameData.ContentType.GENERIC);
+                Clear(doc, GameData.ContentType.GENERIC);
 
                 if (treeForPrint == null)
                 {
                     PreviousNextViewBars.BuildPreviousNextBar(contentType);
                 }
 
-                Document.Blocks.Add(BuildDummyPararaph());
+                doc.Blocks.Add(BuildDummyPararaph());
 
                 // do not print page header if this is RTF export (print) and the view is Study
                 // NOTE: first, it is redundant; second, it will print the title of the active chapter
@@ -351,16 +354,16 @@ namespace ChessForge
                     _pageHeaderParagraph = BuildPageHeader(_mainVariationTree, contentType);
                     if (_pageHeaderParagraph != null)
                     {
-                        Document.Blocks.Add(_pageHeaderParagraph);
+                        doc.Blocks.Add(_pageHeaderParagraph);
                     }
                 }
 
-                BuildExerciseParagraphs();
+                BuildExerciseParagraphs(doc);
 
                 Paragraph preamblePara = BuildPreamble();
                 if (preamblePara != null)
                 {
-                    Document.Blocks.Add(preamblePara);
+                    doc.Blocks.Add(preamblePara);
                 }
 
                 if (treeForPrint == null)
@@ -368,13 +371,13 @@ namespace ChessForge
                     Paragraph quizInfoPara = BuildQuizInfoPara();
                     if (quizInfoPara != null)
                     {
-                        Document.Blocks.Add(quizInfoPara);
+                        doc.Blocks.Add(quizInfoPara);
                     }
 
                     Paragraph movePromptPara = BuildYourMovePrompt();
                     if (movePromptPara != null)
                     {
-                        Document.Blocks.Add(movePromptPara);
+                        doc.Blocks.Add(movePromptPara);
                     }
                 }
 
@@ -396,25 +399,25 @@ namespace ChessForge
                         if (includeStem)
                         {
                             Paragraph paraStem = BuildWorkbookStemLine(root, true);
-                            Document.Blocks.Add(paraStem);
+                            doc.Blocks.Add(paraStem);
                         }
                     }
 
                     // start by creating a level 1 paragraph.
                     Paragraph para = CreateParagraph("0", true);
-                    Document.Blocks.Add(para);
+                    doc.Blocks.Add(para);
 
                     CreateRunForStartingNode(para, root);
 
                     // if we have a stem (e.g. this is Browse view in training, we need to request a number printed too
-                    BuildTreeLineText(root, para, includeStem);
+                    BuildTreeLineText(doc, root, para, includeStem);
 
                     if (contentType == GameData.ContentType.MODEL_GAME || contentType == GameData.ContentType.EXERCISE)
                     {
                         Paragraph resultPara = BuildResultPara();
                         if (resultPara != null)
                         {
-                            Document.Blocks.Add(resultPara);
+                            doc.Blocks.Add(resultPara);
                         }
                     }
                 }
@@ -423,17 +426,22 @@ namespace ChessForge
                 {
                     if (guessFinished != null)
                     {
-                        Document.Blocks.Add(guessFinished);
+                        doc.Blocks.Add(guessFinished);
                     }
                 }
 
                 // add dummy para so that the last row can be comfortable viewed
-                Document.Blocks.Add(BuildDummyPararaph());
-                RemoveTrailingNewLines();
+                doc.Blocks.Add(BuildDummyPararaph());
+                RemoveTrailingNewLines(doc);
             }
             catch (Exception ex)
             {
-                AppLog.Message("BuildFlowDocumentForVariationTree()", ex);
+                AppLog.Message("BuildFlowDocumentForVariationTree(false)", ex);
+            }
+
+            if (opBehind)
+            {
+                HostRtb.Document = doc;
             }
         }
 
@@ -442,11 +450,11 @@ namespace ChessForge
         /// LF char which is not necessary if a new paragraph follows.
         /// Removes all found.
         /// </summary>
-        protected void RemoveTrailingNewLines()
+        protected void RemoveTrailingNewLines(FlowDocument doc)
         {
             List<Run> runsToUpdate = new List<Run>();
 
-            foreach (Block block in Document.Blocks)
+            foreach (Block block in doc.Blocks)
             {
                 if (block is Paragraph para)
                 {
@@ -605,7 +613,7 @@ namespace ChessForge
                 // move to promote the line, so the end result wouldn't change. But it may if we change that other logic.
                 ShownVariationTree.PromoteLine(nd);
                 _mainWin.SetActiveLine(nd.LineId, nd.NodeId);
-                BuildFlowDocumentForVariationTree();
+                BuildFlowDocumentForVariationTree(false);
                 _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, nd.LineId, _mainWin.ActiveLine.GetSelectedPlyNodeIndex(false), false);
                 PulseManager.BringSelectedRunIntoView();
                 AppState.IsDirty = true;
@@ -636,13 +644,13 @@ namespace ChessForge
                     ShownVariationTree.BuildLines();
 
                     _mainWin.SetActiveLine(nullNd.LineId, nullNd.NodeId);
-                    BuildFlowDocumentForVariationTree();
+                    BuildFlowDocumentForVariationTree(false);
                     ShownVariationTree.SetSelectedNodeId(nullNd.NodeId);
                     SelectNode(nullNd);
                     int nodeIndex = _mainWin.ActiveLine.GetIndexForNode(nullNd.NodeId);
                     _mainWin.SelectLineAndMoveInWorkbookViews(this, nd.LineId, nodeIndex, false);
 
-                    PulseManager.BringSelectedRunIntoView();                    
+                    PulseManager.BringSelectedRunIntoView();
                     AppState.IsDirty = true;
                 }
             }
@@ -826,7 +834,7 @@ namespace ChessForge
                             }
                             if (!viewRebuilt)
                             {
-                                BuildFlowDocumentForVariationTree();
+                                BuildFlowDocumentForVariationTree(false);
                             }
 
                             AppState.IsDirty = true;
@@ -870,7 +878,7 @@ namespace ChessForge
                 ShownVariationTree.DeleteRemainingMoves(nd);
                 ShownVariationTree.BuildLines();
                 _mainWin.SetActiveLine(parent.LineId, parent.NodeId);
-                BuildFlowDocumentForVariationTree();
+                BuildFlowDocumentForVariationTree(false);
                 _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, parent.LineId, _mainWin.ActiveLine.GetSelectedPlyNodeIndex(true), false);
                 AppState.IsDirty = true;
 
@@ -998,173 +1006,21 @@ namespace ChessForge
         }
 
         // counter to prevent too many debug messages in debug mode
-        private static int _debugRegularBkgMsgCount = 0;
-
-        // counter to prevent too many debug messages in debug mode
         private static int _debugSelectedBkgMsgCount = 0;
 
-        /// <summary>
-        /// Selects the passed node along with its line id.
-        /// TODO: this should not be necessary, replace with a call to SelectNode(TreeNode);
-        /// </summary>
-        /// <param name="nodeId"></param>
-        public void SelectNode(int nodeId)
-        {
-            TreeNode node = ShownVariationTree.GetNodeFromNodeId(nodeId);
-            if (node != null)
-            {
-                SelectLineAndMove(node.LineId, nodeId);
-            }
-        }
-
-        /// <summary>
-        /// Selects a line for the next/prev sibling if we are at fork.
-        /// </summary>
-        /// <param name="prevNext"></param>
-        /// <returns></returns>
-        public TreeNode SelectParallelLine(bool prevNext)
-        {
-            TreeNode node = null;
-
-            try
-            {
-                TreeNode currNode = GetSelectedNode();
-                node = TreeUtils.GetNextSibling(currNode, prevNext, true);
-            }
-            catch { }
-
-            if (node != null)
-            {
-                SelectNode(node);
-            }
-
-            return node;
-        }
-
-        /// <summary>
-        /// Selects the passed node.
-        /// Selects the move, its line and the line in ActiveLine.
-        /// </summary>
-        /// <param name="node"></param>
-        public void SelectNode(TreeNode node)
-        {
-            try
-            {
-                SelectRun(_dictNodeToRun[node.NodeId], 1, MouseButton.Left);
-            }
-            catch { }
-        }
-
-        /// <summary>
-        /// Selects the move and the line in this view on a request from another view (as opposed
-        /// to a user request).
-        /// Therefore it does not request other views to follow the selection.
-        /// </summary>
-        /// <param name="nodeId"></param>
-        /// <param name="lineId"></param>
-        public void SelectLineAndMove(string lineId, int nodeId)
-        {
-            if (!IsSelectionEnabled())
-            {
-                return;
-            }
-
-            if (ShownVariationTree.ShowTreeLines)
-            {
-                if (nodeId == 0)
-                {
-                    RichTextBoxControl.ScrollToHome();
-                }
-
-                try
-                {
-                    BuildForkTable(nodeId);
-
-                    if (_selectedRun != null)
-                    {
-                        _selectedRun.Background = _selectedRunBkg;
-                        _selectedRun.Foreground = _selectedRunFore;
-                    }
-
-                    ObservableCollection<TreeNode> lineToSelect = ShownVariationTree.SelectLine(lineId);
-                    foreach (TreeNode nd in lineToSelect)
-                    {
-                        if (nd.NodeId != 0)
-                        {
-                            if (_dictNodeToRun.ContainsKey(nd.NodeId))
-                            {
-                                _dictNodeToRun[nd.NodeId].Background = ChessForgeColors.CurrentTheme.RtbBackground;
-                            }
-                            else if (Configuration.DebugLevel != 0)
-                            {
-                                //we should always have this key, so show debug message if not
-                                if (_debugRegularBkgMsgCount < 2)
-                                {
-                                    DebugUtils.ShowDebugMessage("WorkbookView:SelectLineAndMove()-brushRegularBkg nodeId=" + nd.NodeId.ToString() + " not in _dictNodeToRun");
-                                    _debugRegularBkgMsgCount++;
-                                }
-                                AppLog.Message("WorkbookView:SelectLineAndMove()-brushRegularBkg nodeId=" + nd.NodeId.ToString() + " not in _dictNodeToRun");
-                            }
-                        }
-                    }
-
-                    _selectedRun = null;
-                    _dictNodeToRun.TryGetValue(nodeId, out _selectedRun);
-
-                    if (!string.IsNullOrEmpty(lineId))
-                    {
-                        foreach (TreeNode nd in lineToSelect)
-                        {
-                            if (nd.NodeId != 0)
-                            {
-                                //we should always have this key, so allow crash in the debug mode
-                                if (_dictNodeToRun.ContainsKey(nd.NodeId))
-                                {
-                                    _dictNodeToRun[nd.NodeId].Background = ChessForgeColors.CurrentTheme.RtbSelectLineBackground;
-                                }
-                                else if (Configuration.DebugLevel != 0)
-                                {
-                                    //we should always have this key, so show deubug message if not
-                                    if (_debugSelectedBkgMsgCount < 2)
-                                    {
-                                        DebugUtils.ShowDebugMessage("WorkbookView:SelectLineAndMove()-BrushSelectedBkg nodeId=" + nd.NodeId.ToString() + " not in _dictNodeToRun");
-                                        _debugSelectedBkgMsgCount++;
-                                    }
-                                    AppLog.Message("WorkbookView:SelectLineAndMove()-BrushSelectedBkg nodeId=" + nd.NodeId.ToString() + " not in _dictNodeToRun");
-                                }
-                            }
-                        }
-                    }
-
-                    if (_selectedRun != null)
-                    {
-                        _selectedRunBkg = (SolidColorBrush)_selectedRun.Background;
-                        _selectedRunFore = (SolidColorBrush)_selectedRun.Foreground;
-
-                        _selectedRun.Background = ChessForgeColors.CurrentTheme.RtbSelectRunBackground;
-                        _selectedRun.Foreground = ChessForgeColors.CurrentTheme.RtbSelectRunForeground;
-
-                        if (nodeId != 0)
-                        {
-                            _selectedRun.BringIntoView();
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    AppLog.Message("SelectLineAndMove()", ex);
-                }
-            }
-        }
 
         /// <summary>
         /// Clears the document and relevant structrue.
         /// </summary>
-        public void Clear(GameData.ContentType contentType)
+        public void Clear(FlowDocument doc, GameData.ContentType contentType)
         {
+            if (doc == null)
+            {
+                doc = HostRtb.Document;
+            }
             try
             {
-                Document.Blocks.Clear();
+                doc.Blocks.Clear();
 
                 PreviousNextViewBars.BuildPreviousNextBar(contentType);
 
@@ -1186,11 +1042,11 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Clears the document and displays the "quick skip messgae".
+        /// Clears the document and displays the "quick skip message".
         /// </summary>
-        public void ClearForQuickSkip()
+        public void ClearForQuickSkip(FlowDocument doc)
         {
-            Clear(GameData.ContentType.GENERIC);
+            Clear(doc, GameData.ContentType.GENERIC);
         }
 
         /// <summary>
@@ -1260,14 +1116,14 @@ namespace ChessForge
         /// <param name="style"></param>
         /// <param name="contentType"></param>
         /// <returns></returns>
-        private Table BuildForkTable(int nodeId)
+        private Table BuildForkTable(FlowDocument doc, int nodeId)
         {
             if (!Configuration.ShowMovesAtFork)
             {
                 return null;
             }
 
-            Document.Blocks.Remove(_forkTable);
+            doc.Blocks.Remove(_forkTable);
             _forkTable = null;
 
             TreeNode node = ShownVariationTree.GetNodeFromNodeId(nodeId);
@@ -1353,7 +1209,7 @@ namespace ChessForge
                         row.Cells.Add(cell);
                     }
 
-                    Document.Blocks.InsertAfter(para, _forkTable);
+                    doc.Blocks.InsertAfter(para, _forkTable);
 
                 }
             }
@@ -1423,7 +1279,7 @@ namespace ChessForge
         /// To be overridden in the Exercise view
         /// </summary>
         /// <returns></returns>
-        virtual protected void BuildExerciseParagraphs()
+        virtual protected void BuildExerciseParagraphs(FlowDocument doc)
         {
         }
 
@@ -1448,7 +1304,7 @@ namespace ChessForge
             try
             {
                 _mainWin.SetActiveLine("1", 0);
-                SelectLineAndMove("1", 0);
+                HighlightLineAndMove(HostRtb.Document, "1", 0);
                 _mainWin.DisplayPosition(_mainVariationTree.Nodes[0]);
             }
             catch
@@ -1493,7 +1349,7 @@ namespace ChessForge
             }
 
             AppState.ShowExplorers(AppState.AreExplorersOn, true);
-            BuildFlowDocumentForVariationTree();
+            BuildFlowDocumentForVariationTree(false);
             _mainWin.BoardCommentBox.ShowTabHints();
         }
 
@@ -1681,7 +1537,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd"></param>
         /// <param name="includeNumber"></param>
-        virtual protected void BuildTreeLineText(TreeNode nd, Paragraph para, bool includeNumber)
+        virtual protected void BuildTreeLineText(FlowDocument doc, TreeNode nd, Paragraph para, bool includeNumber)
         {
             while (true)
             {
@@ -1699,7 +1555,7 @@ namespace ChessForge
                 {
                     TreeNode child = nd.Children[0];
                     BuildNodeTextAndAddToPara(child, includeNumber, para, out diagram);
-                    BuildTreeLineText(child, para, diagram);
+                    BuildTreeLineText(doc, child, para, diagram);
                     return;
                 }
 
@@ -1743,7 +1599,7 @@ namespace ChessForge
                                 para2 = CreateParagraph(_currParagraphLevel.ToString(), true);
                                 para2.Margin = new Thickness(para.Margin.Left, 0, 0, 5);
                             }
-                            Document.Blocks.Add(para2);
+                            doc.Blocks.Add(para2);
                         }
                         else
                         {
@@ -1756,13 +1612,13 @@ namespace ChessForge
                         }
 
                         BuildNodeTextAndAddToPara(nd.Children[i], true, para2, out diagram);
-                        BuildTreeLineText(nd.Children[i], para2, diagram);
+                        BuildTreeLineText(doc, nd.Children[i], para2, diagram);
 
                         if (multi && i == nd.Children.Count - 1)
                         {
                             _currParagraphLevel--;
                             para = CreateParagraph(_currParagraphLevel.ToString(), true);
-                            Document.Blocks.Add(para);
+                            doc.Blocks.Add(para);
                         }
                         else
                         {
@@ -1789,12 +1645,12 @@ namespace ChessForge
                     {
                         _currParagraphLevel--;
                         Paragraph spec = CreateParagraph(_currParagraphLevel.ToString(), true);
-                        Document.Blocks.Add(spec);
-                        BuildTreeLineText(nd.Children[0], spec, true);
+                        doc.Blocks.Add(spec);
+                        BuildTreeLineText(doc, nd.Children[0], spec, true);
                     }
                     else
                     {
-                        BuildTreeLineText(nd.Children[0], para, true);
+                        BuildTreeLineText(doc, nd.Children[0], para, true);
                     }
                     return;
                 }
@@ -1812,7 +1668,7 @@ namespace ChessForge
             diagram = false;
 
             // check if we must set includeNumber to true
-            if (!includeNumber && (inclComment && IsLastRunComment(para, nd) 
+            if (!includeNumber && (inclComment && IsLastRunComment(para, nd)
                                     || !string.IsNullOrEmpty(nd.CommentBeforeMove)
                                     || (nd.Parent != null && nd.Parent.IsDiagram))
                                     )
@@ -1974,345 +1830,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Places a deep copy of the "selected for copy" nodes in the clipboard
-        /// </summary>
-        public void PlaceSelectedForCopyInClipboard()
-        {
-            if (_selectedForCopy.Count == 0)
-            {
-                TreeNode nd = GetSelectedNode();
-                if (nd != null && nd.NodeId != 0)
-                {
-                    _selectedForCopy.Add(nd);
-                }
-            }
-
-            if (_selectedForCopy.Count > 0)
-            {
-                List<TreeNode> lstNodes = TreeUtils.CopyNodeList(_selectedForCopy);
-                SystemClipboard.CopyMoveList(lstNodes, ShownVariationTree.MoveNumberOffset);
-                _mainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgCopiedMoves, HintType.INFO);
-            }
-        }
-
-        /// <summary>
-        /// Selects the entire subtree under the currently selected node.
-        /// </summary>
-        public void SelectSubtreeForCopy()
-        {
-            ClearCopySelect();
-
-            TreeNode selectedNode = GetSelectedNode();
-            if (selectedNode != null)
-            {
-                List<TreeNode> lstNodes = ShownVariationTree.BuildSubTreeNodeList(selectedNode, false);
-                _selectedForCopy.AddRange(lstNodes);
-                HighlightSelectedForCopy();
-            }
-        }
-
-        /// <summary>
-        /// Selects for copy the currently highlighted line.
-        /// </summary>
-        public void SelectActiveLineForCopy()
-        {
-            ClearCopySelect();
-
-            ObservableCollection<TreeNode> lstNodes = _mainWin.GetActiveLine();
-            _selectedForCopy.AddRange(lstNodes);
-            HighlightSelectedForCopy();
-        }
-
-        /// <summary>
-        /// Change background to the "Copy Select" color
-        /// for all nodes between the selected node to the passed one. 
-        /// </summary>
-        /// <param name="r"></param>
-        private void SetCopySelect(Run r)
-        {
-            try
-            {
-                if (_selectedForCopy.Count > 0)
-                {
-                    HighlightActiveLine();
-                }
-
-                _selectedForCopy.Clear();
-
-                TreeNode currSelected = GetSelectedNode();
-                TreeNode shiftClicked = null;
-                if (r.Name != null && r.Name.StartsWith(_run_))
-                {
-                    int nodeId = TextUtils.GetIdFromPrefixedString(r.Name);
-                    shiftClicked = ShownVariationTree.GetNodeFromNodeId(nodeId);
-                }
-
-                if (currSelected != null && shiftClicked != null)
-                {
-                    // check if there is a branch between the 2
-                    TreeNode node_1 = shiftClicked;
-                    TreeNode node_2 = currSelected;
-
-                    if (currSelected.MoveNumber < shiftClicked.MoveNumber || currSelected.MoveNumber == shiftClicked.MoveNumber && currSelected.ColorToMove == PieceColor.Black)
-                    {
-                        node_1 = currSelected;
-                        node_2 = shiftClicked;
-                    }
-
-                    bool found = false;
-                    while (node_2.Parent != null && node_1.MoveNumber <= node_2.MoveNumber)
-                    {
-                        _selectedForCopy.Insert(0, node_2);
-                        if (node_2.NodeId == node_1.NodeId)
-                        {
-                            found = true;
-                            break;
-                        }
-                        node_2 = node_2.Parent;
-                    }
-
-                    if (found)
-                    {
-                        HighlightSelectedForCopy();
-
-                        // Commented out as we do not want the "automatic selection" but want to 
-                        // act only after CTRL+C.
-                        // Not sure why it was done like this in the first place.
-                        //
-                        //PlaceSelectedForCopyInClipboard();
-                    }
-                    else
-                    {
-                        _selectedForCopy.Clear();
-                    }
-                }
-            }
-            catch
-            {
-            }
-        }
-
-        /// <summary>
-        /// Highlights the nodes selected for copy.
-        /// </summary>
-        private void HighlightSelectedForCopy()
-        {
-            try
-            {
-                TreeNode selectedNode = GetSelectedNode();
-                foreach (TreeNode nd in _selectedForCopy)
-                {
-                    if (nd == selectedNode)
-                    {
-                        _dictNodeToRun[nd.NodeId].Foreground = ChessForgeColors.CurrentTheme.RtbSelectMoveWhileCopyForeground;
-                        _dictNodeToRun[nd.NodeId].Background = ChessForgeColors.CurrentTheme.RtbSelectMoveWhileCopyBackground;
-                    }
-                    else
-                    {
-                        _dictNodeToRun[nd.NodeId].Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
-                        _dictNodeToRun[nd.NodeId].Background = ChessForgeColors.CurrentTheme.RtbSelectMovesForCopyBackground;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                AppLog.Message("HighlightSelectedForCopy()", ex);
-            }
-        }
-
-        /// <summary>
-        /// Clears the "for Copy" selection.
-        /// </summary>
-        protected void ClearCopySelect()
-        {
-            try
-            {
-                // reset copy selection if any
-                if (_selectedForCopy.Count > 0)
-                {
-                    HighlightActiveLine();
-
-                    TreeNode selectedNode = GetSelectedNode();
-                    foreach (TreeNode nd in _selectedForCopy)
-                    {
-                        _dictNodeToRun[nd.NodeId].Background = ChessForgeColors.CurrentTheme.RtbBackground; ;
-                    }
-                    HighlightActiveLine();
-                    if (selectedNode != null)
-                    {
-                        _dictNodeToRun[selectedNode.NodeId].Foreground = ChessForgeColors.CurrentTheme.RtbSelectRunForeground;
-                        _dictNodeToRun[selectedNode.NodeId].Background = ChessForgeColors.CurrentTheme.RtbSelectRunBackground;
-                    }
-                    _selectedForCopy.Clear();
-                }
-            }
-            catch
-            {
-            }
-        }
-
-        /// <summary>
-        /// Select a Run.
-        /// </summary>
-        /// <param name="r"></param>
-        /// <param name="clickCount"></param>
-        /// <param name="changedButton"></param>
-        protected void SelectRun(Run r, int clickCount, MouseButton changedButton)
-        {
-            if (!IsSelectionEnabled() || r == null)
-            {
-                return;
-            }
-
-            try
-            {
-                if (changedButton == MouseButton.Left)
-                {
-                    ClearCopySelect();
-                }
-
-                if (clickCount == 2)
-                {
-                    if (r != null)
-                    {
-                        int nodeId = TextUtils.GetIdFromPrefixedString(r.Name);
-                        TreeNode nd = ShownVariationTree.GetNodeFromNodeId(nodeId);
-                        if (_mainWin.InvokeAnnotationsDialog(nd))
-                        {
-                            InsertOrUpdateCommentRun(nd);
-                        }
-                    }
-                }
-                else
-                {
-                    if (changedButton == MouseButton.Left && (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift)))
-                    {
-                        SetCopySelect(r);
-                    }
-                    else
-                    {
-                        if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
-                        {
-                            _mainWin.StopEvaluation(true);
-                            AppState.SwapCommentBoxForEngineLines(false);
-                        }
-
-                        if (_selectedRun != null)
-                        {
-                            _selectedRun.Background = _selectedRunBkg;
-                            _selectedRun.Foreground = _selectedRunFore;
-                        }
-
-                        foreach (TreeNode nd in _mainWin.ActiveLine.Line.NodeList)
-                        {
-                            if (nd.NodeId != 0)
-                            {
-                                Run run;
-                                // if we are dealing with a subtree, we may not have all nodes from the line.
-                                if (_dictNodeToRun.TryGetValue(nd.NodeId, out run))
-                                {
-                                    run.Background = ChessForgeColors.CurrentTheme.RtbBackground;
-                                }
-                            }
-                        }
-
-                        _selectedRun = r;
-
-                        int idd = TextUtils.GetIdFromPrefixedString(r.Name);
-                        BuildForkTable(idd);
-
-                        int nodeId = -1;
-                        if (r.Name != null && r.Name.StartsWith(_run_))
-                        {
-                            nodeId = TextUtils.GetIdFromPrefixedString(r.Name);
-
-                            // This should never be needed but protect against unexpected timoing issue with sync/async processing
-                            if (!ShownVariationTree.HasLinesCalculated())
-                            {
-                                ShownVariationTree.BuildLines();
-                            }
-
-                            string lineId = ShownVariationTree.GetDefaultLineIdForNode(nodeId);
-
-                            SelectAndHighlightLine(lineId, nodeId);
-                            LearningMode.ActiveLineId = lineId;
-                        }
-
-                        _selectedRunBkg = (SolidColorBrush)r.Background;
-                        _selectedRunFore = (SolidColorBrush)r.Foreground;
-
-                        r.Background = ChessForgeColors.CurrentTheme.RtbSelectRunBackground;
-                        r.Foreground = ChessForgeColors.CurrentTheme.RtbSelectRunForeground;
-
-                        // this is a right click offer the context menu
-                        if (changedButton == MouseButton.Right)
-                        {
-                            _lastClickedNodeId = nodeId;
-                            EnableActiveTreeViewMenus(changedButton, true);
-                        }
-                        else
-                        {
-                            _lastClickedNodeId = nodeId;
-                        }
-
-                        if (changedButton != MouseButton.Left)
-                        {
-                            // restore selection for copy
-                            HighlightSelectedForCopy();
-                        }
-                    }
-                }
-            }
-            catch { }
-        }
-
-        /// <summary>
-        /// Sets background for all moves in the currently selected line.
-        /// </summary>
-        /// <param name="lineId"></param>
-        /// <param name="nodeId"></param>
-        public void SelectAndHighlightLine(string lineId, int nodeId)
-        {
-            // TODO: do not select line and therefore repaint everything if the clicked line is already selected
-            // UNLESS there is "copy select" active
-            ObservableCollection<TreeNode> lineToSelect = ShownVariationTree.SelectLine(lineId);
-            WorkbookManager.SessionWorkbook.ActiveVariationTree.SetSelectedLineAndMove(lineId, nodeId);
-            foreach (TreeNode nd in lineToSelect)
-            {
-                if (nd.NodeId != 0)
-                {
-                    if (_dictNodeToRun.TryGetValue(nd.NodeId, out Run run))
-                    {
-                        run.Background = ChessForgeColors.CurrentTheme.RtbSelectLineBackground;
-                    }
-                }
-            }
-            _mainWin.SetActiveLine(lineToSelect, nodeId);
-        }
-
-        /// <summary>
-        /// Highlights the active line.
-        /// </summary>
-        private void HighlightActiveLine()
-        {
-            try
-            {
-                ObservableCollection<TreeNode> line = _mainWin.GetActiveLine();
-                foreach (TreeNode nd in line)
-                {
-                    if (nd.NodeId != 0)
-                    {
-                        if (_dictNodeToRun.TryGetValue(nd.NodeId, out Run run))
-                        {
-                            run.Background = ChessForgeColors.CurrentTheme.RtbSelectLineBackground;
-                        }
-                    }
-                }
-            }
-            catch { }
-        }
-
-        /// <summary>
         /// Event handler invoked when a Run was clicked.
         /// In response, we highlight the line to which this Run belongs
         /// (selecting the top branch for the part of the line beyond
@@ -2405,7 +1922,7 @@ namespace ChessForge
                     TreeNode node = _mainWin.ActiveVariationTree.GetNodeFromNodeId(nodeId);
 
                     Article article = AppState.Workbook.GetArticleByGuid(articleRef, out int chapterIndex, out int articleIndex, true);
-                    
+
                     ReferenceUtils.LastClickedReference = articleRef;
                     ReferenceUtils.LastClickedReferenceNodeId = nodeId;
 
@@ -2617,23 +2134,6 @@ namespace ChessForge
             }
 
             return Char.IsDigit(txt.Trim()[0]);
-        }
-
-        /// <summary>
-        /// Builds text for the Reference Run
-        /// </summary>
-        /// <param name="nd"></param>
-        /// <returns></returns>
-        private string BuildReferenceRunText(TreeNode nd)
-        {
-            if (string.IsNullOrEmpty(nd.References))
-            {
-                return "";
-            }
-            else
-            {
-                return Constants.CHAR_REFERENCE_MARK.ToString();
-            }
         }
 
         /// <summary>

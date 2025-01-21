@@ -69,7 +69,7 @@ namespace ChessForge
         /// <param name="root"></param>
         /// <param name="para"></param>
         /// <param name="includeNumber"></param>
-        override protected void BuildTreeLineText(TreeNode root, Paragraph para, bool includeNumber)
+        override protected void BuildTreeLineText(FlowDocument doc, TreeNode root, Paragraph para, bool includeNumber)
         {
             DisplayLevelAttrs.ResetLastMoveBrush();
             LineManager.BuildLineSectors(root);
@@ -77,8 +77,8 @@ namespace ChessForge
             // it could be that a new move was made and it is "hidden" under a collapsed root
             UncollapseMove(_mainWin.ActiveLine.GetSelectedTreeNode());
 
-            CreateVariationIndexPara();
-            CreateParagraphs(para);
+            CreateVariationIndexPara(doc);
+            CreateParagraphs(doc, para);
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace ChessForge
             {
                 nd.IsCollapsed = false;
             }
-            BuildFlowDocumentForVariationTree();
+            BuildFlowDocumentForVariationTree(false);
 
             TreeNode selNode = GetSelectedNode();
             if (selNode != null && _dictNodeToRun.ContainsKey(selNode.NodeId))
@@ -178,7 +178,7 @@ namespace ChessForge
 
                 TreeNode selNode = stemLine.Nodes[nodeCount - 1];
                 AppState.MainWin.SetActiveLine("1", selNode.NodeId, false);
-                BuildFlowDocumentForVariationTree();
+                BuildFlowDocumentForVariationTree(false);
 
                 if (selNode != null && _dictNodeToRun.ContainsKey(selNode.NodeId))
                 {
@@ -287,7 +287,7 @@ namespace ChessForge
                 if (depth > chapter.VariationIndexDepth)
                 {
                     chapter.VariationIndexDepth = depth;
-                    AppState.IsIndexDepthDirty = true;   
+                    AppState.IsIndexDepthDirty = true;
                 }
             }
         }
@@ -341,7 +341,7 @@ namespace ChessForge
         /// <summary>
         /// Creates a paragraph for the "Variation Index" title and the depth arrows.
         /// </summary>
-        private void CreateVariationIndexHeader()
+        private void CreateVariationIndexHeader(FlowDocument doc)
         {
             Paragraph para = new Paragraph
             {
@@ -353,13 +353,13 @@ namespace ChessForge
             para.FontWeight = FontWeights.DemiBold;
 
             InsertArrowRuns(para);
-            Document.Blocks.Add(para);
+            doc.Blocks.Add(para);
         }
 
         /// <summary>
         /// Creates the Index paragraph.
         /// </summary>
-        private void CreateVariationIndexPara()
+        private void CreateVariationIndexPara(FlowDocument doc)
         {
             if (EffectiveIndexDepth >= 0)
             {
@@ -384,7 +384,7 @@ namespace ChessForge
                     {
                         if (first)
                         {
-                            CreateVariationIndexHeader();
+                            CreateVariationIndexHeader(doc);
                             first = false;
                         }
 
@@ -441,9 +441,9 @@ namespace ChessForge
                                 {
                                     //if (i < firstSkip || i > lastSkip)
                                     //{
-                                        TreeNode nd = sector.Nodes[i];
-                                        BuildIndexNodeAndAddToPara(nd, firstMove, para);
-                                        firstMove = false;
+                                    TreeNode nd = sector.Nodes[i];
+                                    BuildIndexNodeAndAddToPara(nd, firstMove, para);
+                                    firstMove = false;
                                     //}
                                     //else if (i == firstSkip)
                                     //{
@@ -460,7 +460,7 @@ namespace ChessForge
                         }
                     }
                 }
-                Document.Blocks.Add(para);
+                doc.Blocks.Add(para);
             }
             else if (_pageHeaderParagraph != null)
             {
@@ -472,14 +472,14 @@ namespace ChessForge
         /// Creates paragraphs from the LineSectors.
         /// </summary>
         /// <param name="firstPara"></param>
-        private void CreateParagraphs(Paragraph firstPara)
+        private void CreateParagraphs(FlowDocument doc, Paragraph firstPara)
         {
             // sectors that are under a collapsed sector
             List<LineSector> doNotShow = new List<LineSector>();
 
             // TODO: redo so that we used the "firstPara" for VariationIndex.
             // Be aware it already contains a Run for the root node!
-            Document.Blocks.Remove(firstPara);
+            doc.Blocks.Remove(firstPara);
 
             int levelGroup = 0;
             bool firstAtIndexLevel2 = true;
@@ -565,7 +565,7 @@ namespace ChessForge
                     sector.HostPara = para;
 
                     RemoveTrailingNewLinesInPara(para);
-                    Document.Blocks.Add(para);
+                    doc.Blocks.Add(para);
                 }
                 catch
                 {
@@ -794,7 +794,7 @@ namespace ChessForge
 
                             _mainWin.Dispatcher.Invoke(() =>
                             {
-                                BuildFlowDocumentForVariationTree();
+                                BuildFlowDocumentForVariationTree(false);
                             });
 
                             e.Handled = true;
@@ -838,7 +838,7 @@ namespace ChessForge
                     TreeNode nd = _mainVariationTree.GetNodeFromNodeId(nodeId);
                     if (UncollapseMove(nd))
                     {
-                        BuildFlowDocumentForVariationTree();
+                        BuildFlowDocumentForVariationTree(false);
                         Run target = _dictNodeToRun[nodeId];
                         SelectRun(target, 1, e.ChangedButton);
                         BringSelectedRunIntoView();
@@ -1062,7 +1062,7 @@ namespace ChessForge
                 }
 
 
-                BuildFlowDocumentForVariationTree();
+                BuildFlowDocumentForVariationTree(false);
                 TreeNode selNode = GetSelectedNode();
                 if (selNode != null && _dictNodeToRun.ContainsKey(selNode.NodeId))
                 {
@@ -1107,7 +1107,7 @@ namespace ChessForge
                 {
                     AppState.MainWin.SetActiveLine(adjustedSelection.LineId, adjustedSelection.NodeId, false);
                 }
-                BuildFlowDocumentForVariationTree();
+                BuildFlowDocumentForVariationTree(false);
 
                 if (adjustedSelection == null)
                 {
@@ -1172,8 +1172,8 @@ namespace ChessForge
                         DecrementVariationIndexDepth();
                     }
                 }
-                BuildFlowDocumentForVariationTree();
-                SelectLineAndMove(_mainVariationTree.SelectedLineId, _mainVariationTree.SelectedNodeId);
+                BuildFlowDocumentForVariationTree(false);
+                HighlightLineAndMove(HostRtb.Document, _mainVariationTree.SelectedLineId, _mainVariationTree.SelectedNodeId);
             }
             e.Handled = true;
         }
@@ -1196,8 +1196,8 @@ namespace ChessForge
                         IncrementVariationIndexDepth();
                     }
                 }
-                BuildFlowDocumentForVariationTree();
-                SelectLineAndMove(_mainVariationTree.SelectedLineId, _mainVariationTree.SelectedNodeId);
+                BuildFlowDocumentForVariationTree(false);
+                HighlightLineAndMove(HostRtb.Document, _mainVariationTree.SelectedLineId, _mainVariationTree.SelectedNodeId);
             }
             e.Handled = true;
         }
@@ -1262,14 +1262,25 @@ namespace ChessForge
                 {
                     if (i == 1)
                     {
-                        sb.Append((char)(tokens[1][0] - '1' + 'A'));
+                        if (int.TryParse(tokens[1], out int branchNo))
+                        {
+                            if (branchNo <= 26) // 'A' - 'Z'
+                            {
+                                sb.Append((char)((branchNo - 1) + 'A'));
+                            }
+                            else
+                            {
+                                sb.Append(BuildSectionIdTitlePart(tokens[i]));
+                            }
+                        }
+                        else
+                        {
+                            sb.Append('@');
+                        }
                     }
                     else
                     {
-                        //if (i > 2)
-                        {
-                            sb.Append('.');
-                        }
+                        sb.Append('.');
                         sb.Append(tokens[i]);
                     }
                 }
@@ -1279,6 +1290,34 @@ namespace ChessForge
             }
 
             return r;
+        }
+
+        /// <summary>
+        /// Invoked when we have to name a branch that is greater than 26th on a given fork.
+        /// We have no more single letters so we will name it as A1, A2, ... , A356, A357 etc.
+        /// It is highly unlikely that it will ever needed but we have to cover all possibilities.
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        private string BuildSectionIdTitlePart(string token)
+        {
+            string partName = "@";
+
+            if (int.TryParse(token, out int branchNo))
+            {
+                // if branchNo is between 1 and 90 we map a capital letter to it
+                if (branchNo <= 26) // 'A' - 'Z' (65 - 90)
+                {
+                    partName = ((char)((branchNo - 1) + 'A')).ToString();
+                }
+                else
+                {
+                    int secondNo = branchNo - 26;
+                    partName = "A" + secondNo.ToString();
+                }
+            }
+
+            return partName;
         }
     }
 }

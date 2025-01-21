@@ -499,10 +499,15 @@ namespace GameTree
         /// <returns></returns>
         public bool IsMainLine()
         {
+            char prevC = ' ';
             foreach (char c in LineId)
             {
-                if (c != '.' && c != '1')
+                //FIX: added extra condition to check for previous char so that 1.11 is not considered main line
+                if (c != '.' && c != '1' || c == '1' && prevC == '1')
+                {
                     return false;
+                }
+                prevC = c;
             }
 
             return true;

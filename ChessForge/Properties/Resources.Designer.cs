@@ -8082,6 +8082,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Wide Scrollbar.
+        /// </summary>
+        public static string WideScrollbar {
+            get {
+                return ResourceManager.GetString("WideScrollbar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Wiki.
         /// </summary>
         public static string Wiki {

@@ -982,6 +982,9 @@
   <data name="ShowMovesAtFork" xml:space="preserve">
     <value>Tabelka przy rozgałęzieniu</value>
   </data>
+  <data name="WideScrollbar" xml:space="preserve">
+    <value>Szeroki pasek przewijania</value>
+  </data>
   <data name="LargeMenuFont" xml:space="preserve">
     <value>Większa czcionka w menu</value>
   </data>

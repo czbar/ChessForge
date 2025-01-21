@@ -141,7 +141,7 @@ namespace ChessForge
         /// </summary>
         private void ConfigureTopGamesView()
         {
-            _topGamesView = new TopGamesView(UiRtbGames.Document, false);
+            _topGamesView = new TopGamesView(UiRtbGames, false);
             UiRtbGames.IsDocumentEnabled = true;
             lock (_lockOpeningData)
             {

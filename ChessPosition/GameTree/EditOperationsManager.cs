@@ -99,7 +99,7 @@ namespace GameTree
                         selectedNodeId = _owningTree.UndoDeleteReference(op.OpData_1, op.OpData_2, out nodesToUpdate);
                         break;
                     case EditOperation.EditType.REPOSITION_REFERENCES:
-                        selectedNodeId =  _owningTree.UndoRepositionReferences(op.NodeId, op.OpData_1, op.OpData_2, out nodesToUpdate);
+                        selectedNodeId =  _owningTree.UndoRepositionReferences(op.OpData_1, out nodesToUpdate);
                         break;
                 }
             }

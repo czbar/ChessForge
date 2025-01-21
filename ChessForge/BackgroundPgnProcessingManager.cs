@@ -192,7 +192,10 @@ namespace ChessForge
                             Paragraph para = new Paragraph();
                             Run run = new Run(Properties.Resources.PrepareLargeView);
                             para.Inlines.Add(run);
-                            AppState.MainWin.UiRtbStudyTreeView.Document.Blocks.Add(para);
+
+                            FlowDocument waitInfoDoc = new FlowDocument();
+                            waitInfoDoc.Blocks.Add(para);
+                            AppState.MainWin.UiRtbStudyTreeView.Document = waitInfoDoc;
 
                             Mouse.SetCursor(Cursors.Wait);
                         }

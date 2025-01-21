@@ -52,9 +52,9 @@ namespace ChessForge
         /// Instantiates the object. Sets references to the main application
         /// window and the Flow Document.
         /// </summary>
-        /// <param name="doc"></param>
+        /// <param name="rtb"></param>
         /// <param name="mainWin"></param>
-        public CommentBox(FlowDocument doc, MainWindow mainWin) : base(doc)
+        public CommentBox(RichTextBox rtb, MainWindow mainWin) : base(rtb)
         {
             _mainWin = mainWin;
         }
@@ -90,7 +90,7 @@ namespace ChessForge
         /// </summary>
         public void UpdateColorTheme()
         {
-            foreach (Block block in Document.Blocks)
+            foreach (Block block in HostRtb.Document.Blocks)
             {
                 if (block is Paragraph para)
                 {
@@ -114,45 +114,45 @@ namespace ChessForge
         /// <param name="nd"></param>
         public void GameMoveMade(TreeNode nd, bool userMove)
         {
-            Document.Blocks.Clear();
-            AddNewParagraphToDoc("dummy", "");
+            HostRtb.Document.Blocks.Clear();
+            AddNewParagraphToDoc(HostRtb.Document,"dummy", "");
 
             // user moved and it was not user replacing the last engine move in Training
             if (userMove && (!TrainingSession.IsTrainingInProgress || nd.ColorToMove != TrainingSession.TrainingSide))
             {
-                AddNewParagraphToDoc("normal", Properties.Resources.YourMoveWas + ":");
+                AddNewParagraphToDoc(HostRtb.Document, "normal", Properties.Resources.YourMoveWas + ":");
                 uint moveNumberOffset = 0;
                 if (AppState.ActiveVariationTree != null)
                 {
                     moveNumberOffset = AppState.ActiveVariationTree.MoveNumberOffset;
                 }
-                AddNewParagraphToDoc("bold_prompt", MoveUtils.BuildSingleMoveText(nd, true, false, moveNumberOffset));
+                AddNewParagraphToDoc(HostRtb.Document, "bold_prompt", MoveUtils.BuildSingleMoveText(nd, true, false, moveNumberOffset));
                 if (AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
                 {
-                    AddNewParagraphToDoc("normal", Properties.Resources.WaitForEngineResponse);
+                    AddNewParagraphToDoc(HostRtb.Document, "normal", Properties.Resources.WaitForEngineResponse);
                 }
                 else if (TrainingSession.IsTrainingInProgress)
                 {
-                    AddNewParagraphToDoc("normal", Properties.Resources.WaitForResponse);
+                    AddNewParagraphToDoc(HostRtb.Document, "normal", Properties.Resources.WaitForResponse);
                 }
             }
             else // engine or "coach" moved
             {
                 if (AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
                 {
-                    AddNewParagraphToDoc("normal", Properties.Resources.EnginePlayed + ":");
+                    AddNewParagraphToDoc(HostRtb.Document, "normal", Properties.Resources.EnginePlayed + ":");
                 }
                 else
                 {
-                    AddNewParagraphToDoc("normal", Properties.Resources.CoachPlayed + ":");
+                    AddNewParagraphToDoc(HostRtb.Document, "normal", Properties.Resources.CoachPlayed + ":");
                 }
                 uint moveNumberOffset = 0;
                 if (AppState.ActiveVariationTree != null)
                 {
                     moveNumberOffset = AppState.ActiveVariationTree.MoveNumberOffset;
                 }
-                AddNewParagraphToDoc("bold_16", MoveUtils.BuildSingleMoveText(nd, true, false, moveNumberOffset));
-                AddNewParagraphToDoc("normal", Properties.Resources.YourTurn);
+                AddNewParagraphToDoc(HostRtb.Document, "bold_16", MoveUtils.BuildSingleMoveText(nd, true, false, moveNumberOffset));
+                AddNewParagraphToDoc(HostRtb.Document, "normal", Properties.Resources.YourTurn);
             }
         }
 
@@ -162,8 +162,8 @@ namespace ChessForge
         /// <param name="nd"></param>
         public void GameEngineReplacementToMake(TreeNode nd)
         {
-            Document.Blocks.Clear();
-            AddNewParagraphToDoc("dummy", "");
+            HostRtb.Document.Blocks.Clear();
+            AddNewParagraphToDoc(HostRtb.Document, "dummy", "");
 
             try
             {
@@ -172,7 +172,7 @@ namespace ChessForge
                 {
                     moveNumberOffset = AppState.ActiveVariationTree.MoveNumberOffset;
                 }
-                AddNewParagraphToDoc("bold_16", Properties.Resources.MakeMoveForEngine);
+                AddNewParagraphToDoc(HostRtb.Document, "bold_16", Properties.Resources.MakeMoveForEngine);
             }
             catch { }
         }
@@ -248,17 +248,17 @@ namespace ChessForge
                     _flashAnnouncementShown = true;
                     _engineLinesVisible = _mainWin.UiTbEngineLines.Visibility == Visibility.Visible;
 
-                    MoveDocument(ref Document, ref _docOnHold);
+                    MoveDocument(HostRtb.Document, _docOnHold);
 
                     Paragraph dummy = CreateParagraphWithText("dummy", "", false);
-                    Document.Blocks.Add(dummy);
+                    HostRtb.Document.Blocks.Add(dummy);
 
                     Paragraph para = CreateParagraphWithText("big_red", txt, false);
                     if (fontSize > 0)
                     {
                         para.FontSize = fontSize;
                     }
-                    Document.Blocks.Add(para);
+                    HostRtb.Document.Blocks.Add(para);
                     para.Foreground = ChessForgeColors.GetHintForeground(typ);
 
                     _mainWin.Timers.Start(AppTimers.TimerId.FLASH_ANNOUNCEMENT);
@@ -276,7 +276,7 @@ namespace ChessForge
         {
             _mainWin.Dispatcher.Invoke(() =>
             {
-                MoveDocument(ref _docOnHold, ref Document);
+                MoveDocument(_docOnHold, HostRtb.Document);
                 _mainWin.Timers.Stop(AppTimers.TimerId.FLASH_ANNOUNCEMENT);
                 Panel.SetZIndex(_mainWin.UiRtbBoardComment, 0);
 
@@ -305,7 +305,7 @@ namespace ChessForge
 
             _mainWin.Dispatcher.Invoke(() =>
             {
-                Document.Blocks.Clear();
+                HostRtb.Document.Blocks.Clear();
 
                 if (_mainWin.SessionWorkbook != null)
                 {
@@ -316,8 +316,8 @@ namespace ChessForge
                         {
                             title = Properties.Resources.UntitledWorkbook;
                         }
-                        AddNewParagraphToDoc("title", title);
-                        AddNewParagraphToDoc("bold_prompt", Properties.Resources.cbActions);
+                        AddNewParagraphToDoc(HostRtb.Document, "title", title);
+                        AddNewParagraphToDoc(HostRtb.Document, "bold_prompt", Properties.Resources.cbActions);
                         string commentText = "";
                         if (viewType == TabViewType.NONE)
                         {
@@ -371,7 +371,7 @@ namespace ChessForge
                                 }
                                 break;
                         }
-                        AddNewParagraphToDoc("normal", commentText);
+                        AddNewParagraphToDoc(HostRtb.Document, "normal", commentText);
                     }
                     catch { }
                 }
@@ -400,8 +400,8 @@ namespace ChessForge
         {
             _mainWin.Dispatcher.Invoke(() =>
             {
-                AddNewParagraphToDoc("bold_prompt", Resources.cbIdenticalPositionFound).Foreground = Brushes.Green;
-                AddNewParagraphToDoc("normal_14", Resources.cbInvestigateIdenticalPositions).Foreground = Brushes.Green;
+                AddNewParagraphToDoc(HostRtb.Document, "bold_prompt", Resources.cbIdenticalPositionFound).Foreground = Brushes.Green;
+                AddNewParagraphToDoc(HostRtb.Document, "normal_14", Resources.cbInvestigateIdenticalPositions).Foreground = Brushes.Green;
             });
         }
 
@@ -411,11 +411,11 @@ namespace ChessForge
         /// </summary>
         public void GameReplayStart()
         {
-            Document.Blocks.Clear();
+            HostRtb.Document.Blocks.Clear();
 
-            AddNewParagraphToDoc("dummy", "");
-            AddNewParagraphToDoc("bold_18", Resources.cbAutoReplayInProgress);
-            AddNewParagraphToDoc("normal", Resources.cbClickToStop);
+            AddNewParagraphToDoc(HostRtb.Document, "dummy", "");
+            AddNewParagraphToDoc(HostRtb.Document, "bold_18", Resources.cbAutoReplayInProgress);
+            AddNewParagraphToDoc(HostRtb.Document, "normal", Resources.cbClickToStop);
         }
 
         /// <summary>
@@ -423,10 +423,10 @@ namespace ChessForge
         /// </summary>
         public void TrainingSessionStart()
         {
-            Document.Blocks.Clear();
-            AddNewParagraphToDoc("dummy", "");
-            AddNewParagraphToDoc("bold_16", Resources.cbTrainingStarted);
-            AddNewParagraphToDoc("normal_14", Resources.cbMakeMoveAndWatch);
+            HostRtb.Document.Blocks.Clear();
+            AddNewParagraphToDoc(HostRtb.Document, "dummy", "");
+            AddNewParagraphToDoc(HostRtb.Document, "bold_16", Resources.cbTrainingStarted);
+            AddNewParagraphToDoc(HostRtb.Document, "normal_14", Resources.cbMakeMoveAndWatch);
         }
 
         /// <summary>
@@ -434,9 +434,9 @@ namespace ChessForge
         /// </summary>
         public void EngineGameStart()
         {
-            Document.Blocks.Clear();
-            AddNewParagraphToDoc("dummy", "");
-            AddNewParagraphToDoc("bold_16", Resources.EngGameStarted);
+            HostRtb.Document.Blocks.Clear();
+            AddNewParagraphToDoc(HostRtb.Document, "dummy", "");
+            AddNewParagraphToDoc(HostRtb.Document, "bold_16", Resources.EngGameStarted);
         }
 
         /// <summary>
@@ -447,10 +447,10 @@ namespace ChessForge
         {
             _mainWin.Dispatcher.Invoke(() =>
             {
-                Document.Blocks.Clear();
+                HostRtb.Document.Blocks.Clear();
 
                 Paragraph dummy = CreateParagraphWithText("dummy", "", false);
-                Document.Blocks.Add(dummy);
+                HostRtb.Document.Blocks.Add(dummy);
 
                 string txt;
                 if (userMade)
@@ -474,7 +474,7 @@ namespace ChessForge
                 }
 
                 Paragraph para = CreateParagraphWithText("end_of_game", txt, false);
-                Document.Blocks.Add(para);
+                HostRtb.Document.Blocks.Add(para);
                 para.Foreground = Brushes.Red;
             });
         }
@@ -486,15 +486,15 @@ namespace ChessForge
         {
             _mainWin.Dispatcher.Invoke(() =>
             {
-                Document.Blocks.Clear();
+                HostRtb.Document.Blocks.Clear();
 
                 Paragraph dummy = CreateParagraphWithText("dummy", "", false);
-                Document.Blocks.Add(dummy);
+                HostRtb.Document.Blocks.Add(dummy);
 
                 string txt = Resources.cbStalemateAndDraw;
 
                 Paragraph para = CreateParagraphWithText("end_of_game", txt, false);
-                Document.Blocks.Add(para);
+                HostRtb.Document.Blocks.Add(para);
                 para.Foreground = Brushes.Red;
             });
         }
@@ -520,13 +520,13 @@ namespace ChessForge
         {
             _mainWin.Dispatcher.Invoke(() =>
             {
-                Document.Blocks.Clear();
+                HostRtb.Document.Blocks.Clear();
 
                 Paragraph dummy = CreateParagraphWithText("dummy", "", false);
-                Document.Blocks.Add(dummy);
+                HostRtb.Document.Blocks.Add(dummy);
 
                 Paragraph para = CreateParagraphWithText("user_wait", txt, false);
-                Document.Blocks.Add(para);
+                HostRtb.Document.Blocks.Add(para);
                 para.Foreground = ChessForgeColors.GetHintForeground(typ);
 
                 if (subLines != null)

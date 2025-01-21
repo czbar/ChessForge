@@ -1201,15 +1201,12 @@ namespace GameTree
         /// </summary>
         /// <param name="lineId"></param>
         /// <returns></returns>
-        public ObservableCollection<TreeNode> SelectLine(string lineId)
+        public ObservableCollection<TreeNode> SelectLineDEPRECATED(string lineId)
         {
             var singleLine = new ObservableCollection<TreeNode>();
 
             try
             {
-                // TODO
-                // this seems to be an absurd method??!!
-                // why not just walk the tree?
                 foreach (TreeNode nd in Nodes)
                 {
                     if (TreeUtils.LineIdStartsWith(lineId, nd.LineId))
@@ -1243,6 +1240,60 @@ namespace GameTree
                         {
                             singleLine.Add(nd);
                         }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("SelectLine()", ex);
+            }
+
+            return singleLine;
+        }
+
+        /// <summary>
+        /// Returns the line identified by the passed id prefix.
+        /// Once the nodes' line ids go beyond the length of the prefix
+        /// the first child of every subsequent node will be selected.
+        /// </summary>
+        /// <param name="lineId"></param>
+        /// <returns></returns>
+        public ObservableCollection<TreeNode> SelectLine(string lineId)
+        {
+            var singleLine = new ObservableCollection<TreeNode>();
+
+            try
+            {
+                string[] tokens = lineId.Split('.');
+                int[] childAtFork = new int[tokens.Length];
+                for (int i = 0; i < tokens.Length; i++)
+                {
+                    childAtFork[i] = int.Parse(tokens[i]);
+                }
+                
+                int levelCount = childAtFork.Length;
+                int currLevel = 0;
+
+                TreeNode currNode = Nodes[0];
+                singleLine.Add(currNode);
+
+                while (true)
+                {
+                    if (currNode.Children.Count == 0)
+                    {
+                        break;
+                    }
+                    if (currNode.Children.Count == 1 || currLevel >= levelCount - 1)
+                    {
+                        currNode = currNode.Children[0];
+                        singleLine.Add(currNode);
+                    }
+                    else
+                    {
+                        currLevel++;
+                        int selChild = childAtFork[currLevel];
+                        currNode = currNode.Children[selChild - 1];
+                        singleLine.Add(currNode);
                     }
                 }
             }
@@ -1598,6 +1649,7 @@ namespace GameTree
                 nd.QuizPoints = dummyNode.QuizPoints;
                 nd.Assessment = dummyNode.Assessment;
                 nd.BestResponse = dummyNode.BestResponse;
+                nd.References = dummyNode.References;
             }
             catch
             {
@@ -1781,33 +1833,27 @@ namespace GameTree
         /// <summary>
         /// Restores original positions of references.
         /// </summary>
-        /// <param name="oOptimalNodes"></param>
-        /// <param name="oOrigNodes"></param>
+        /// <param name="oPreOpNodes">a list of node id / references to restore</param>
+        /// <param name="nodesToUpdate">returns list of nodes that were affected.</param>
         /// <returns></returns>
-        public int UndoRepositionReferences(int selectNodeId, object oOptimalNodes, object oOrigNodes, out HashSet<int> nodesToUpdate)
+        public int UndoRepositionReferences(object oPreOpNodes, out HashSet<int> nodesToUpdate)
         {
+            int selectedNodeId = -1;
+
             nodesToUpdate = new HashSet<int>();
-
-            if (oOptimalNodes is List<MoveAttributes> optimalNodes && oOrigNodes is List<MoveAttributes> origNodes)
+            if (oPreOpNodes is List<MoveAttributes> preOpNodes)
             {
-                // first clear what is there now
-                foreach (MoveAttributes nac in optimalNodes)
+                selectedNodeId = preOpNodes[0].NodeId;
+                foreach (MoveAttributes nac in preOpNodes)
                 {
                     TreeNode nd = GetNodeFromNodeId(nac.NodeId);
-                    nd.RemoveArticleReference(nac.References);
-                    nodesToUpdate.Add(nac.NodeId);
-                }
-
-                // replace with the original content
-                foreach (MoveAttributes nac in origNodes)
-                {
-                    TreeNode nd = GetNodeFromNodeId(nac.NodeId);
-                    nd.AddArticleReference(nac.References);
+                    nd.References = nac.References;
                     nodesToUpdate.Add(nac.NodeId);
                 }
 
             }
-            return selectNodeId;
+
+            return selectedNodeId;
         }
 
         /// <summary>

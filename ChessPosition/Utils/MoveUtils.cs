@@ -97,13 +97,13 @@ namespace ChessPosition
         /// <param name="parentNode"></param>
         /// <param name="nodeId"></param>
         /// <returns></returns>
-        /// <exception cref="Exception"></exception>
         public static TreeNode ProcessAlgMove(string algMove, TreeNode parentNode, int nodeId)
         {
             PieceColor parentSideToMove = parentNode.ColorToMove;
 
             MoveData move;
             bool nullMove = false;
+            bool proceed = true;
 
             if (algMove == "Z0" || algMove == Constants.NULL_MOVE_NOTATION)
             {
@@ -122,46 +122,73 @@ namespace ChessPosition
 
                 PgnMoveParser pmp = new PgnMoveParser();
                 int suffixLen = pmp.ParseAlgebraic(algMove, parentSideToMove);
-                // remove suffix from algMove
-                algMove = algMove.Substring(0, algMove.Length - suffixLen);
-                move = pmp.Move;
-                algMove = TextUtils.StripCheckOrMateChar(algMove);
+                if (suffixLen < 0)
+                {
+                    proceed = false;
+                    move = null;
+                }
+                else
+                {
+                    // remove suffix from algMove
+                    algMove = algMove.Substring(0, algMove.Length - suffixLen);
+                    move = pmp.Move;
+                    algMove = TextUtils.StripCheckOrMateChar(algMove);
+                }
             }
 
-            // create a new node
-            TreeNode newNode = CreateNewNode(algMove, move, parentNode, parentSideToMove, nodeId);
-
-            if (!nullMove)
+            if (proceed)
             {
-                if (move.IsCheckmate)
+                // create a new node
+                TreeNode newNode = CreateNewNode(algMove, move, parentNode, parentSideToMove, nodeId);
+
+                if (!nullMove)
                 {
-                    newNode.Position.IsCheckmate = true;
+                    SetDynamicAttrs(move, newNode);
                 }
-                else if (move.IsCheck)
+                else
                 {
-                    newNode.Position.IsCheck = true;
+                    CleanupNullMove(ref newNode);
                 }
 
-                try
-                {
-                    // Make the move on it
-                    MakeMove(newNode.Position, move);
-                }
-                catch
-                {
-                    throw new Exception(TextUtils.BuildErrortext(newNode, algMove));
-                }
-
-                // do the postprocessing
-                PositionUtils.UpdateCastlingRights(ref newNode.Position, move, false);
-                PositionUtils.SetEnpassantSquare(ref newNode.Position, move);
+                return newNode;
             }
             else
             {
-                CleanupNullMove(ref newNode);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Sets the dynamic attributes of the position after the move has been made.
+        /// Updates the position by performing the move on the board.
+        /// </summary>
+        /// <param name="move"></param>
+        /// <param name="node"></param>
+        /// <exception cref="Exception"></exception>
+        private static void SetDynamicAttrs(MoveData move, TreeNode node)
+        {
+            if (move.IsCheckmate)
+            {
+                node.Position.IsCheckmate = true;
+            }
+            else if (move.IsCheck)
+            {
+                node.Position.IsCheck = true;
             }
 
-            return newNode;
+            try
+            {
+                // Make the move on it
+                MakeMove(node.Position, move);
+            }
+            catch
+            {
+                throw new Exception(TextUtils.BuildErrortext(node, node.LastMoveAlgebraicNotation));
+            }
+
+            // do the postprocessing
+            PositionUtils.UpdateCastlingRights(ref node.Position, move, false);
+            PositionUtils.SetEnpassantSquare(ref node.Position, move);
         }
 
         /// <summary>

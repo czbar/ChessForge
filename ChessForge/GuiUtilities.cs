@@ -272,6 +272,40 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Sets the application's scrollbars to "narrow".
+        /// </summary>
+        public static void SetNarrowScrollbar()
+        {
+            SetScrollbarWidth((double)5);
+        }
+
+        /// <summary>
+        /// Sets the application's scrollbars to "wide".
+        /// </summary>
+        public static void SetWideScrollbar()
+        {
+            SetScrollbarWidth((double)15);
+        }
+
+        /// <summary>
+        /// Sets the width of the application's vertical scroll bar.
+        /// </summary>
+        /// <param name="width"></param>
+        public static void SetScrollbarWidth(double width)
+        {
+            if (Application.Current.Resources.Contains(SystemParameters.VerticalScrollBarWidthKey))
+            {
+                // Update the resource value
+                Application.Current.Resources[SystemParameters.VerticalScrollBarWidthKey] = (double)width;
+            }
+            else
+            {
+                // Add the resource if it doesn't exist
+                Application.Current.Resources.Add(SystemParameters.VerticalScrollBarWidthKey, (double)width);
+            }
+        }
+
+        /// <summary>
         /// Returns the TabViewType corresponding to the passed ContentType.
         /// </summary>
         /// <param name="contentType"></param>
@@ -533,7 +567,7 @@ namespace ChessForge
         {
             if (AppState.ActiveTab == TabViewType.CHAPTERS || AppState.MainWin.UiTabChapters.IsFocused)
             {
-                AppState.MainWin.ChaptersView.BuildFlowDocumentForChaptersView();
+                AppState.MainWin.ChaptersView.BuildFlowDocumentForChaptersView(false);
                 if (chapterToView != null)
                 {
                     PulseManager.ChapterIndexToBringIntoView = chapterToView.Index;
@@ -552,7 +586,7 @@ namespace ChessForge
         {
             if (AppState.ActiveTab == TabViewType.CHAPTERS || AppState.MainWin.UiTabChapters.IsFocused)
             {
-                AppState.MainWin.ChaptersView.BuildFlowDocumentForChaptersView();
+                AppState.MainWin.ChaptersView.BuildFlowDocumentForChaptersView(false);
                 if (chapterToView != null && articleToView != null)
                 {
                     PulseManager.SetArticleToBringIntoView(chapterToView.Index, articleToView.ContentType, articleToViewIndex);
@@ -869,14 +903,14 @@ namespace ChessForge
             {
                 case ParserException.ParseErrorType.PGN_GAME_EXPECTED_MOVE_NUMBER:
                     sb.Append(Properties.Resources.ErrFound
-                        + " " + ex.CurrentToken
-                        + " " + Properties.Resources.ErrInsteadOfMoveNumber
+                        + " \"" + ex.CurrentToken
+                        + "\" " + Properties.Resources.ErrInsteadOfMoveNumber
                         + ", " + Properties.Resources.ErrAfterMove + " " + ex.PreviousMove);
                     break;
                 case ParserException.ParseErrorType.PGN_INVALID_MOVE:
                     sb.Append(Properties.Resources.PgnParsingError
                         + ": " + Properties.Resources.InvalidMove + " "
-                        + ex.CurrentToken);
+                        + "\"" + ex.CurrentToken + "\"");
                     break;
                 default:
                     return ex.Message;

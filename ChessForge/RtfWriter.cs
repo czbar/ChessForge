@@ -775,7 +775,7 @@ namespace ChessForge
         private static FlowDocument PrintIntro(Chapter chapter)
         {
             RichTextBox rtb = new RichTextBox();
-            IntroView introView = new IntroView(new FlowDocument(), chapter, rtb);
+            IntroView introView = new IntroView(new RichTextBox(), chapter, rtb);
 
             // the user may have placed an empty line at the start.
             // we don't want it in print so remove it
@@ -814,7 +814,7 @@ namespace ChessForge
         {
             RichTextBox rtbStudy = new RichTextBox();
             StudyTreeView studyView = new StudyTreeView(rtbStudy, GameData.ContentType.STUDY_TREE, true);
-            studyView.BuildFlowDocumentForVariationTree(chapter.StudyTree.Tree);
+            studyView.BuildFlowDocumentForVariationTree(false, chapter.StudyTree.Tree);
 
             Paragraph paraIndex = null;
             foreach (Block block in rtbStudy.Document.Blocks)
@@ -894,7 +894,7 @@ namespace ChessForge
             }
 
             VariationTreeView gameView = new VariationTreeView(doc, GameData.ContentType.MODEL_GAME);
-            gameView.BuildFlowDocumentForVariationTree(game.Tree);
+            gameView.BuildFlowDocumentForVariationTree(false, game.Tree);
 
             // if part of "current view" print set the "two-column format, if so configured.
             // if chapter/workbook view then this is set up before/after first/last game.
@@ -955,7 +955,7 @@ namespace ChessForge
             }
 
             VariationTreeView exerciseView = new ExerciseTreeView(doc, GameData.ContentType.EXERCISE);
-            exerciseView.BuildFlowDocumentForVariationTree(exercise.Tree);
+            exerciseView.BuildFlowDocumentForVariationTree(false, exercise.Tree);
 
             // if part of "current view" print set the "two-column format, if so configured.
             // if chapter/workbook view then this is set up before/after first/last exercise.

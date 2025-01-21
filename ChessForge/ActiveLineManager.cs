@@ -624,11 +624,11 @@ namespace ChessForge
                         e.Handled = true;
                         break;
                     case Key.PageUp:
-                        _mainWin.ActiveTreeView?.RichTextBoxControl.PageUp();
+                        _mainWin.ActiveTreeView?.HostRtb.PageUp();
                         e.Handled = true;
                         break;
                     case Key.PageDown:
-                        _mainWin.ActiveTreeView?.RichTextBoxControl.PageDown();
+                        _mainWin.ActiveTreeView?.HostRtb.PageDown();
                         e.Handled = true;
                         break;
                     case Key.P:
@@ -693,11 +693,11 @@ namespace ChessForge
                         switch (e.Key)
                         {
                             case Key.Home:
-                                _mainWin.ActiveTreeView?.RichTextBoxControl.ScrollToHome();
+                                _mainWin.ActiveTreeView?.HostRtb.ScrollToHome();
                                 e.Handled = true;
                                 break;
                             case Key.End:
-                                _mainWin.ActiveTreeView?.RichTextBoxControl.ScrollToEnd();
+                                _mainWin.ActiveTreeView?.HostRtb.ScrollToEnd();
                                 e.Handled = true;
                                 break;
                             case Key.U:
@@ -915,7 +915,7 @@ namespace ChessForge
                         {
                             if (view.UncollapseMove(nd))
                             {
-                                _mainWin.ActiveTreeView.BuildFlowDocumentForVariationTree();
+                                _mainWin.ActiveTreeView.BuildFlowDocumentForVariationTree(false);
                             }
                         }
                         _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, Line.GetLineId(), plyIndex, true);
@@ -1024,7 +1024,7 @@ namespace ChessForge
                         break;
                     case Key.Home:
                         postKeyDownRow = -1;
-                        _mainWin.ActiveTreeView?.RichTextBoxControl.ScrollToHome();
+                        _mainWin.ActiveTreeView?.HostRtb.ScrollToHome();
                         break;
                     case Key.End:
                         GotoLastMove(out postKeyDownRow, out postKeyDownColumn);
