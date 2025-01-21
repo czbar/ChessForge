@@ -437,6 +437,11 @@ namespace ChessForge
         public static bool SoundOn = true;
 
         /// <summary>
+        /// Whether to use the wider scrollbar in the views
+        /// </summary>
+        public static bool WideScrollbar = false;
+
+        /// <summary>
         /// Whether to use large font in the menus
         /// </summary>
         public static bool LargeMenuFont = false;
@@ -587,6 +592,7 @@ namespace ChessForge
 
         private const string CFG_AUTO_SAVE = "AutoSave";
         private const string CFG_SOUND_ON = "SoundOn";
+        private const string CFG_WIDE_SCROLLBAR = "WideScrollbar";
         private const string CFG_LARGE_MENU_FONT = "LargeMenuFont";
         private const string CFG_USE_FIGURINES = "UseFigurines";
         private const string CFG_USE_FIXED_FONT = "UseFixedFont";
@@ -775,6 +781,7 @@ namespace ChessForge
 
                 sb.Append(CFG_AUTO_SAVE + "=" + (AutoSave ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_SOUND_ON + "=" + (SoundOn ? "1" : "0") + Environment.NewLine);
+                sb.Append(CFG_WIDE_SCROLLBAR + "=" + (WideScrollbar ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_LARGE_MENU_FONT + "=" + (LargeMenuFont ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_USE_FIGURINES + "=" + (UseFigurines ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_USE_FIXED_FONT + "=" + (UseFixedFont ? "1" : "0") + Environment.NewLine);
@@ -1167,6 +1174,9 @@ namespace ChessForge
                             break;
                         case CFG_SOUND_ON:
                             SoundOn = value != "0" ? true : false;
+                            break;
+                        case CFG_WIDE_SCROLLBAR:
+                            WideScrollbar = value != "0" ? true : false;
                             break;
                         case CFG_LARGE_MENU_FONT:
                             LargeMenuFont = value != "0" ? true : false;
