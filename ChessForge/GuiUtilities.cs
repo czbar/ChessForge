@@ -272,6 +272,24 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Sets the width of the application's vertical scroll bar.
+        /// </summary>
+        /// <param name="width"></param>
+        public static void SetScrollbarWidth(double width)
+        {
+            if (Application.Current.Resources.Contains(SystemParameters.VerticalScrollBarWidthKey))
+            {
+                // Update the resource value
+                Application.Current.Resources[SystemParameters.VerticalScrollBarWidthKey] = (double)15;
+            }
+            else
+            {
+                // Add the resource if it doesn't exist
+                Application.Current.Resources.Add(SystemParameters.VerticalScrollBarWidthKey, (double)15);
+            }
+        }
+
+        /// <summary>
         /// Returns the TabViewType corresponding to the passed ContentType.
         /// </summary>
         /// <param name="contentType"></param>
