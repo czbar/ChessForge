@@ -272,6 +272,22 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Sets the application's scrollbars to "narrow".
+        /// </summary>
+        public static void SetNarrowScrollbar()
+        {
+            SetScrollbarWidth((double)5);
+        }
+
+        /// <summary>
+        /// Sets the application's scrollbars to "wide".
+        /// </summary>
+        public static void SetWideScrollbar()
+        {
+            SetScrollbarWidth((double)15);
+        }
+
+        /// <summary>
         /// Sets the width of the application's vertical scroll bar.
         /// </summary>
         /// <param name="width"></param>
@@ -280,12 +296,12 @@ namespace ChessForge
             if (Application.Current.Resources.Contains(SystemParameters.VerticalScrollBarWidthKey))
             {
                 // Update the resource value
-                Application.Current.Resources[SystemParameters.VerticalScrollBarWidthKey] = (double)15;
+                Application.Current.Resources[SystemParameters.VerticalScrollBarWidthKey] = (double)width;
             }
             else
             {
                 // Add the resource if it doesn't exist
-                Application.Current.Resources.Add(SystemParameters.VerticalScrollBarWidthKey, (double)15);
+                Application.Current.Resources.Add(SystemParameters.VerticalScrollBarWidthKey, (double)width);
             }
         }
 
