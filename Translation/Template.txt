@@ -1310,6 +1310,10 @@ ParaForComment=
 #english: ShowMovesAtFork=Show Moves at Fork
 ShowMovesAtFork=
 
+#description: Wide scrollbar
+#english: WideScrollbar=Wide Scrollbar
+WideScrollbar=
+
 #description: Large menu font
 #english: LargeMenuFont=Large Menu Font
 LargeMenuFont=

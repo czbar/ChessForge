@@ -982,6 +982,9 @@
   <data name="ShowMovesAtFork" xml:space="preserve">
     <value>Show Moves at Fork</value>
   </data>
+  <data name="WideScrollbar" xml:space="preserve">
+    <value>Wide Scrollbar</value>
+  </data>
   <data name="LargeMenuFont" xml:space="preserve">
     <value>Large Menu Font</value>
   </data>

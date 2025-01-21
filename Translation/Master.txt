@@ -1022,6 +1022,9 @@ ParaForComment=Line break before comment
 #Whether to show inline table with move options at a fork
 ShowMovesAtFork=Show Moves at Fork
 
+#Wide scrollbar
+WideScrollbar=Wide Scrollbar
+
 #Large menu font
 LargeMenuFont=Large Menu Font
 

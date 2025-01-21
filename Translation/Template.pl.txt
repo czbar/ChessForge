@@ -1310,6 +1310,10 @@ ParaForComment=Nowy akapit dla komentarza
 #english: ShowMovesAtFork=Show Moves at Fork
 ShowMovesAtFork=Tabelka przy rozgałęzieniu
 
+#description: Wide scrollbar
+#english: WideScrollbar=Wide Scrollbar
+WideScrollbar=Szeroki pasek przewijania
+
 #description: Large menu font
 #english: LargeMenuFont=Large Menu Font
 LargeMenuFont=Większa czcionka w menu
