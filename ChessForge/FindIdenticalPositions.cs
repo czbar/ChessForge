@@ -130,6 +130,10 @@ namespace ChessForge
                     {
                         AppState.MainWin.SetupGuiForActiveStudyTree(true);
                     }
+                    if (AppState.MainWin.ActiveTreeView != null)
+                    {
+                        AppState.MainWin.ActiveTreeView.UnhighlightActiveLine();
+                    }
                     AppState.MainWin.SetActiveLine(item.Node.LineId, item.Node.NodeId);
                     if (AppState.MainWin.ActiveTreeView is StudyTreeView view)
                     {
