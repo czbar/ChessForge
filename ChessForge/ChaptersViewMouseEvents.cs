@@ -1,10 +1,9 @@
 ﻿using ChessPosition;
 using GameTree;
 using System;
-using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows;
 
 namespace ChessForge
 {
@@ -1014,14 +1013,7 @@ namespace ChessForge
 
                             // figure out if we hit the upper or the lower half of the Run
                             Point ptMousePos = e.GetPosition(_mainWin.UiRtbChaptersView);
-                            TextPointer tpMousePos = _mainWin.UiRtbChaptersView.GetPositionFromPoint(ptMousePos, true);
-
-                            // if we move down by half the font size, is it still the same the same TextPointer
-                            Point ptBelow = new Point(ptMousePos.X, ptMousePos.Y);
-                            ptBelow.Y += run.FontSize / 2;
-
-                            TextPointer tpBelow = _mainWin.UiRtbChaptersView.GetPositionFromPoint(ptBelow, true);
-                            if (tpMousePos.CompareTo(tpBelow) != 0)
+                            if (!RichTextBoxUtilities.IsUpperPartClicked(run, ptMousePos, _mainWin.UiRtbChaptersView))
                             {
                                 targetGameIndex++;
                             }
