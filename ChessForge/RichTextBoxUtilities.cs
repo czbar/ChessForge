@@ -1,14 +1,10 @@
-﻿using ChessForge;
-using ChessPosition;
+﻿using ChessPosition;
 using GameTree;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
-using System.Xml.Linq;
 
 namespace ChessForge
 {
@@ -66,6 +62,31 @@ namespace ChessForge
         /// Prefix for the Run with the reference symbol
         /// </summary>
         public static readonly string ReferenceRunPrefix = "run_reference_";
+
+        /// <summary>
+        /// Determines wheter the upper or lower part of the passed Inline object was clicked.
+        /// Gets the position of the mouse click and the position of the Inline object
+        /// and checks if the position of he click minus half the font size would still be
+        /// within the same Inline.
+        /// </summary>
+        /// <param name="inline"></param>
+        /// <param name="ptMouse"></param>
+        /// <param name="rtb"></param>
+        /// <returns></returns>
+        public static bool IsUpperPartClicked(Inline inline, Point ptMouse, RichTextBox rtb)
+        {
+            // get the TextPointer of the mouse click
+            TextPointer tpMousePos = rtb.GetPositionFromPoint(ptMouse, true);
+
+            // calculate a point half the font size below
+            Point ptBelow = new Point(ptMouse.X, ptMouse.Y + inline.FontSize / 2);
+
+            // get the TextPointer of the point below
+            TextPointer tpBelow = rtb.GetPositionFromPoint(ptBelow, true);
+
+            // if it is still the same TextPointer, we clicked the upper half
+            return tpMousePos.CompareTo(tpBelow) == 0;
+        }
 
         /// <summary>
         /// Returns true if the passed paragraph contains no inlines
