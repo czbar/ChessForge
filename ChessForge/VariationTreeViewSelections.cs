@@ -160,11 +160,44 @@ namespace ChessForge
                 {
                     if (_dictNodeToRun.TryGetValue(nd.NodeId, out Run run))
                     {
-                        run.Background = ChessForgeColors.CurrentTheme.RtbSelectLineBackground;
+                        if (run.Background != ChessForgeColors.CurrentTheme.RtbSelectLineBackground)
+                        {
+                            run.Background = ChessForgeColors.CurrentTheme.RtbSelectLineBackground;
+                        }
                     }
                 }
             }
             _mainWin.SetActiveLine(lineToSelect, nodeId);
+        }
+
+        /// <summary>
+        /// Unhighlights the active line including the selected run.
+        /// </summary>
+        public void UnhighlightActiveLine()
+        {
+            try
+            {
+                ObservableCollection<TreeNode> line = AppState.MainWin.GetActiveLine();
+                foreach (TreeNode nd in line)
+                {
+                    if (nd.NodeId != 0)
+                    {
+                        if (_dictNodeToRun.TryGetValue(nd.NodeId, out Run run))
+                        {
+                            if (run.Background != ChessForgeColors.CurrentTheme.RtbBackground)
+                            {
+                                run.Background = ChessForgeColors.CurrentTheme.RtbBackground;
+                            }
+                            
+                            if (run.Foreground != ChessForgeColors.CurrentTheme.RtbForeground)
+                            {
+                                run.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
+                            }
+                        }
+                    }
+                }                
+            }
+            catch { }
         }
 
         /// <summary>
