@@ -173,6 +173,16 @@ namespace ChessPosition
         public static double LARGE_MENU_FONT_SIZE = 14;
 
         /// <summary>
+        /// Width of the narrow scrollbar
+        /// </summary>
+        public static double NARROW_SCROLLBAR_WIDTH = 5;
+
+        /// <summary>
+        /// Width of the wide scrollbar
+        /// </summary>
+        public static double WIDE_SCROLLBAR_WIDTH = 10;
+
+        /// <summary>
         /// Min id of the move NAG
         /// </summary>
         public static int MinMoveNagId = 1;
