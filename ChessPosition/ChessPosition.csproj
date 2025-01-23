@@ -59,6 +59,7 @@
     <Compile Include="GameTree\OperationsManager.cs" />
     <Compile Include="GameTree\TreeManager.cs" />
     <Compile Include="GameTree\Operation.cs" />
+    <Compile Include="Parsers\EngineLineParser.cs" />
     <Compile Include="Parsers\GameHeader.cs" />
     <Compile Include="GameTree\PlyForTreeView.cs" />
     <Compile Include="GameTree\VariationTree.cs" />
