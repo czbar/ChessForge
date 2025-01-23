@@ -195,6 +195,7 @@
     <Compile Include="DownloadWebGamesDialog.xaml.cs">
       <DependentUpon>DownloadWebGamesDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MainWindowEngineLines.cs" />
     <Compile Include="MainWindowEvalButtons.cs" />
     <Compile Include="IntroMoveDialog.xaml.cs">
       <DependentUpon>IntroMoveDialog.xaml</DependentUpon>
