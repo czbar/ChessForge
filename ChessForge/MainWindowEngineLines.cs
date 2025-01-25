@@ -39,57 +39,71 @@ namespace ChessForge
         {
             try
             {
-                BuildEngineLines(singleLine, out List<List<TreeNode>> treeNodeLines, out List<string> algebraicLines);
-
-                bool proceed = true;
-                if (!singleLine && algebraicLines.Count > 0)
+                // only proceed if we are in manual review mode and not in line evaluation mode
+                if (AppState.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW 
+                    && AppState.CurrentEvaluationMode != EvaluationManager.Mode.LINE)
                 {
-                    if (!UserLineSelection(algebraicLines, treeNodeLines))
+                    BuildEngineLines(singleLine, out List<List<TreeNode>> treeNodeLines, out List<string> algebraicLines);
+
+                    bool proceed = true;
+                    if (!singleLine && algebraicLines.Count > 0)
                     {
-                        proceed = false;
-                    }
-                }
-
-                if (proceed)
-                {
-                    List<TreeNode> insertedNewNodes = new List<TreeNode>();
-                    List<TreeNode> failedInsertions = new List<TreeNode>();
-
-                    VariationTreeView targetView = AppState.MainWin.ActiveTreeView;
-                    TreeNode insertAtNode = targetView.GetSelectedNode();
-                    TreeNode firstInserted = PasteEngineLines(AppState.ActiveVariationTree, insertAtNode, treeNodeLines,
-                                     insertedNewNodes, failedInsertions);
-
-                    targetView.BuildFlowDocumentForVariationTree(false);
-                    AppState.MainWin.SetActiveLine(firstInserted.LineId, firstInserted.NodeId);
-                    targetView.SelectNode(firstInserted);
-                    targetView.HighlightLineAndMove(null, firstInserted.LineId, firstInserted.NodeId);
-
-                    if (insertedNewNodes.Count > 0)
-                    {
-                        string msg = Properties.Resources.FlMsgPastedMovesCount + ": " + insertedNewNodes.Count;
-                        if (failedInsertions.Count > 0)
+                        if (!UserLineSelection(algebraicLines, treeNodeLines))
                         {
-                            msg += " (" + Properties.Resources.FlMsgFailedInsertions + ": " + failedInsertions.Count + ")";
+                            proceed = false;
                         }
-                        BoardCommentBox.ShowFlashAnnouncement(msg, CommentBox.HintType.INFO, 14);
                     }
-                    else
+
+                    if (proceed)
                     {
-                        if (failedInsertions.Count > 0)
+                        List<TreeNode> insertedNewNodes = new List<TreeNode>();
+                        List<TreeNode> failedInsertions = new List<TreeNode>();
+
+                        VariationTreeView targetView = AppState.MainWin.ActiveTreeView;
+                        TreeNode insertAtNode = targetView.GetSelectedNode();
+                        TreeNode firstInserted = PasteEngineLines(AppState.ActiveVariationTree, insertAtNode, treeNodeLines,
+                                         insertedNewNodes, failedInsertions);
+
+                        targetView.BuildFlowDocumentForVariationTree(false);
+                        AppState.MainWin.SetActiveLine(firstInserted.LineId, firstInserted.NodeId);
+                        targetView.SelectNode(firstInserted);
+                        targetView.HighlightLineAndMove(null, firstInserted.LineId, firstInserted.NodeId);
+
+                        if (insertedNewNodes.Count > 0)
                         {
-                            string msg = Properties.Resources.ErrClipboardLinePaste + " ("
-                                + MoveUtils.BuildSingleMoveText(failedInsertions[0], true, false, AppState.ActiveVariationTree.MoveNumberOffset) + ")";
-                            AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(msg, CommentBox.HintType.ERROR, 14);
+                            string msg = Properties.Resources.FlMsgPastedMovesCount + ": " + insertedNewNodes.Count;
+                            if (failedInsertions.Count > 0)
+                            {
+                                msg += " (" + Properties.Resources.FlMsgFailedInsertions + ": " + failedInsertions.Count + ")";
+                            }
+                            BoardCommentBox.ShowFlashAnnouncement(msg, CommentBox.HintType.INFO, 14);
+
+                            // Prepare info for Undo
+                            List<int> nodeIds = new List<int>();
+                            foreach (TreeNode nd in insertedNewNodes)
+                            {
+                                nodeIds.Add(nd.NodeId);
+                            }
+                            EditOperation op = new EditOperation(EditOperation.EditType.PASTE_LINES, insertAtNode.NodeId, nodeIds, null);
+                            AppState.ActiveVariationTree.OpsManager.PushOperation(op);
                         }
                         else
                         {
-                            AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.VariationAlreadyExists, CommentBox.HintType.ERROR, 14);
+                            if (failedInsertions.Count > 0)
+                            {
+                                string msg = Properties.Resources.ErrClipboardLinePaste + " ("
+                                    + MoveUtils.BuildSingleMoveText(failedInsertions[0], true, false, AppState.ActiveVariationTree.MoveNumberOffset) + ")";
+                                AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(msg, CommentBox.HintType.ERROR, 14);
+                            }
+                            else
+                            {
+                                AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.VariationAlreadyExists, CommentBox.HintType.ERROR, 14);
+                            }
                         }
-                    }
 
-                    // we seem to be losing focus in this procedure, so we need to restore it
-                    targetView.HostRtb.Focus();
+                        // we seem to be losing focus in this procedure, so we need to restore it
+                        targetView.HostRtb.Focus();
+                    }
                 }
             }
             catch
