@@ -295,6 +295,9 @@
     <Compile Include="SelectDuplicatesDialog.xaml.cs">
       <DependentUpon>SelectDuplicatesDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SelectEngineLinesDialog.xaml.cs">
+      <DependentUpon>SelectEngineLinesDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SelectLibraryDialog.xaml.cs">
       <DependentUpon>SelectLibraryDialog.xaml</DependentUpon>
     </Compile>
@@ -559,6 +562,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SelectDuplicatesDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SelectEngineLinesDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
