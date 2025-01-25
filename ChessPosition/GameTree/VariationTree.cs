@@ -1692,6 +1692,25 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Undoes the pasting of multiple lines (from the engine).
+        /// The passed argument is the list of of nodes that the 
+        /// original tree had.
+        /// We remove all added nodes with children and from the parent's list
+        /// </summary>
+        /// <param name="opData"></param>
+        public void UndoAddedLines(object opData)
+        {
+            try
+            {
+                List<int> nodeIds = opData as List<int>;
+                RemoveNodesFromTree(nodeIds);
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
         /// Removes the passed node from the Tree.
         /// In case of some issues with the Undo system, only removes
         /// the node if there are no children.
