@@ -12,18 +12,18 @@ namespace GameTree
         /// <param name="parentEx"></param>
         /// <param name="engineLine"></param>
         /// <returns></returns>
-        public static List<TreeNode> ParseEngineLine(VariationTree tree, TreeNode parentEx, string engineLine)
+        public static List<TreeNode> ParseEngineLine(VariationTree tree, TreeNode insertAtNode, string engineLine)
         {
             List<TreeNode> nodeList = new List<TreeNode>();
 
-            TreeNode parent = parentEx.CloneJustMe();
-            int nodeId = tree.GetNewNodeId();
-
+            TreeNode parent = insertAtNode;
             string[] moves = engineLine.Split(' ');
+            bool firstMove = true;
             foreach (string move in moves)
             {
-                TreeNode node = new TreeNode(parent, "", nodeId);
-                nodeId++;
+                // create a new node, pass nodeId as -1 as it does not matter, it will be set later on in the process
+                TreeNode node = new TreeNode(parent, "", -1);
+
                 node.Position.Board = (byte[,])parent.Position.Board.Clone();
 
                 node.LastMoveAlgebraicNotation = MoveUtils.EngineNotationToAlgebraic(move, ref node.Position, out _);
@@ -31,7 +31,17 @@ namespace GameTree
 
                 node.Position.ColorToMove = parent.ColorToMove == PieceColor.White ? PieceColor.Black : PieceColor.White;
                 node.Position.MoveNumber = parent.ColorToMove == PieceColor.Black ? parent.MoveNumber : (parent.MoveNumber + 1);
-                parent.Children.Add(node);
+
+                // !do not add the child if the parent is the insertaAtNode!
+                // it will be done later in the insertion process
+                if (!firstMove)
+                {
+                    parent.Children.Add(node);
+                }
+                else
+                {
+                    firstMove = false;
+                }
 
                 nodeList.Add(node);
                 parent = node;
