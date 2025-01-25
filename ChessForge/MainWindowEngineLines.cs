@@ -17,17 +17,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTbEngineLines_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-            try
-            {
-                BuildEngineLines(false, out List<List<TreeNode>> treeNodeLines, out List<string> algebraicLines);
-                
-                VariationTreeView targetView = AppState.MainWin.ActiveTreeView;
-                PasteEngineLines(treeNodeLines, targetView);
-                targetView.BuildFlowDocumentForVariationTree(false);
-            }
-            catch
-            {
-            }
+            ProcessAndPasteEngineLines(false);
         }
 
         /// <summary>
@@ -37,13 +27,42 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiTbEngineLines_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            ProcessAndPasteEngineLines(true);
+        }
+
+        /// <summary>
+        /// Prepares the engine lines and pastes them into the current view.
+        /// </summary>
+        /// <param name="singleLine"></param>
+        private void ProcessAndPasteEngineLines(bool singleLine)
+        {
             try
             {
-                BuildEngineLines(true, out List<List<TreeNode>> treeNodeLines, out _);
-                
+                BuildEngineLines(singleLine, out List<List<TreeNode>> treeNodeLines, out List<string> algebraicLines);
+
                 VariationTreeView targetView = AppState.MainWin.ActiveTreeView;
-                PasteEngineLines(treeNodeLines, targetView);
+                TreeNode insertAtNode = targetView.GetSelectedNode();
+                TreeNode firstInserted = PasteEngineLines(AppState.ActiveVariationTree, insertAtNode, treeNodeLines,
+                                 out int insertedNodesCount, out int failedInsertionsCount);
+                
                 targetView.BuildFlowDocumentForVariationTree(false);
+                AppState.MainWin.SetActiveLine(firstInserted.LineId, firstInserted.NodeId);
+                targetView.SelectNode(firstInserted);
+                targetView.HighlightLineAndMove(null, firstInserted.LineId, firstInserted.NodeId);
+
+                if (insertedNodesCount > 0)
+                {
+                    string msg = Properties.Resources.FlMsgPastedMovesCount + ": " + insertedNodesCount;
+                    BoardCommentBox.ShowFlashAnnouncement(msg, CommentBox.HintType.INFO, 14);
+                }
+                else
+                {
+                    AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.VariationAlreadyExists, CommentBox.HintType.ERROR, 14);
+                }
+
+                // we seem to be losing focus in this procedure, so we need to restore it
+                targetView.HostRtb.Focus();
+
             }
             catch
             {
@@ -151,21 +170,26 @@ namespace ChessForge
         /// Inserts the passed engine lines into the current view.
         /// </summary>
         /// <param name="treeNodeLines"></param>
-        private void PasteEngineLines(List<List<TreeNode>> treeNodeLines, VariationTreeView targetView)
+        private TreeNode PasteEngineLines(VariationTree targetTree, TreeNode insertAtNode, List<List<TreeNode>> treeNodeLines
+                                      , out int insertedNodesCount, out int failedInsertionsCount)
         {
-            VariationTree targetTree = AppState.MainWin.ActiveVariationTree;
+            TreeNode firstInserted = null;
 
-            int insertedNodesCount = 0;
-            int failedInsertionsCount = 0;
+            insertedNodesCount = 0;
+            failedInsertionsCount = 0;
 
             foreach (List<TreeNode> nodeList in treeNodeLines)
             {
-                PasteOneEngineLine(nodeList, targetTree, targetView, out int insertions, out int failures);
+                TreeNode first = PasteOneEngineLine(targetTree, insertAtNode, nodeList, out int insertions, out int failures);
+                if (firstInserted == null)
+                {
+                    firstInserted = first;
+                }
                 insertedNodesCount += insertions;
                 failedInsertionsCount += failures;
             }
 
-            targetView.BuildFlowDocumentForVariationTree(false);
+            return firstInserted;
         }
 
         /// <summary>
@@ -176,15 +200,23 @@ namespace ChessForge
         /// <param name="targetView"></param>
         /// <param name="insertionCount"></param>
         /// <param name="failureCount"></param>
-        private void PasteOneEngineLine(List<TreeNode> line, 
-                                        VariationTree targetTree, VariationTreeView targetView,
+        private TreeNode PasteOneEngineLine(VariationTree targetTree, TreeNode insertAtNode, List<TreeNode> line,
                                         out int insertionCount, out int failureCount)
         {
             List<TreeNode> insertedNewNodes = new List<TreeNode>();
             List<TreeNode> failedInsertions = new List<TreeNode>();
 
-            //TODO: replace with TreeUtils.InsertSubtree
-            TreeNode firstInserted = targetView.InsertSubtree(line, ref insertedNewNodes, ref failedInsertions);
+            TreeNode lastSharedNode = TreeUtils.GetLastSharedNode(insertAtNode, line, out int index);
+            if (lastSharedNode != null)
+            {
+                insertAtNode = lastSharedNode;
+                for (int i = 0; i <= index; i++)
+                {
+                    line.RemoveAt(0);
+                }
+            }
+
+            TreeNode firstInserted = TreeUtils.InsertSubtreeMovesIntoTree(AppState.ActiveVariationTree, insertAtNode, line, ref insertedNewNodes, ref failedInsertions);
 
             insertionCount = insertedNewNodes.Count;
             failureCount = failedInsertions.Count;
@@ -194,10 +226,12 @@ namespace ChessForge
             {
                 // build lines to prepare for the next insertion
                 targetTree.BuildLines();
-                
-                TreeNode insertedRoot = targetTree.GetNodeFromNodeId(firstInserted.NodeId);
-                insertedRoot.CommentBeforeMove = AppState.EngineName + ": ";
+
+                //TreeNode insertedRoot = targetTree.GetNodeFromNodeId(firstInserted.NodeId);
+                firstInserted.CommentBeforeMove = AppState.EngineName + ": ";
             }
+
+            return firstInserted;
         }
 
     }
