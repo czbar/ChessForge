@@ -1064,6 +1064,18 @@ Calculating=Calculating...
 
 #######################################
 #
+# Header: DIALOG Select Engine Lines
+#
+
+#Select Engine Lines dialog title
+DlgSelectEngineLines=Select Engine Lines to Paste
+
+#Lines in a variation tree
+Lines=Lines
+
+
+#######################################
+#
 # Header: DIALOG PostCopyMoveDialog
 #
 
@@ -2139,6 +2151,9 @@ FlMsgCopiedMoves=Moves Copied to Clipboard
 
 #Flash message: Number of moves pasted.
 FlMsgPastedMovesCount=Number of Pasted New Moves
+
+#Flash message: Number of failed insertions.
+FlMsgFailedInsertions=Number of Failed Inertions
 
 #Flash message: Games sorted.
 FlMsgGamesSorted=Games have been sorted

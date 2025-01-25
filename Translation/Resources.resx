@@ -1009,6 +1009,12 @@
   <data name="Calculating" xml:space="preserve">
     <value>Calculating...</value>
   </data>
+  <data name="DlgSelectEngineLines" xml:space="preserve">
+    <value>Select Engine Lines to Paste</value>
+  </data>
+  <data name="Lines" xml:space="preserve">
+    <value>Lines</value>
+  </data>
   <data name="TargetChapter" xml:space="preserve">
     <value>Target Chapter</value>
   </data>
@@ -1896,6 +1902,9 @@
   </data>
   <data name="FlMsgPastedMovesCount" xml:space="preserve">
     <value>Number of Pasted New Moves</value>
+  </data>
+  <data name="FlMsgFailedInsertions" xml:space="preserve">
+    <value>Number of Failed Inertions</value>
   </data>
   <data name="FlMsgGamesSorted" xml:space="preserve">
     <value>Games have been sorted</value>

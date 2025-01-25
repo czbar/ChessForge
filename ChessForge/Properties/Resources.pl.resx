@@ -1009,6 +1009,12 @@
   <data name="Calculating" xml:space="preserve">
     <value>Obliczanie...</value>
   </data>
+  <data name="DlgSelectEngineLines" xml:space="preserve">
+    <value>Wybierz warianty silnika do wklejenia</value>
+  </data>
+  <data name="Lines" xml:space="preserve">
+    <value>Warianty</value>
+  </data>
   <data name="TargetChapter" xml:space="preserve">
     <value>Docelowy Rozdział</value>
   </data>
@@ -1896,6 +1902,9 @@
   </data>
   <data name="FlMsgPastedMovesCount" xml:space="preserve">
     <value>Liczba nowych wklejonych posunięć</value>
+  </data>
+  <data name="FlMsgFailedInsertions" xml:space="preserve">
+    <value>Liczba nieudanych wklejeń</value>
   </data>
   <data name="FlMsgGamesSorted" xml:space="preserve">
     <value>Partie zostały posortowane</value>

@@ -1942,6 +1942,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select Engine Lines to Paste.
+        /// </summary>
+        public static string DlgSelectEngineLines {
+            get {
+                return ResourceManager.GetString("DlgSelectEngineLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Application Options.
         /// </summary>
         public static string DlgTitleApplicationOptions {
@@ -3319,6 +3328,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Number of Failed Inertions.
+        /// </summary>
+        public static string FlMsgFailedInsertions {
+            get {
+                return ResourceManager.GetString("FlMsgFailedInsertions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Game Imported Successfully..
         /// </summary>
         public static string FlMsgGameImportSuccess {
@@ -4296,6 +4314,15 @@ namespace ChessForge.Properties {
         public static string Line {
             get {
                 return ResourceManager.GetString("Line", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lines.
+        /// </summary>
+        public static string Lines {
+            get {
+                return ResourceManager.GetString("Lines", resourceCulture);
             }
         }
         
