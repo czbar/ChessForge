@@ -78,6 +78,11 @@ namespace ChessForge
 
             if (ShownVariationTree.ShowTreeLines)
             {
+                if (doc == null)
+                {
+                    doc = HostRtb.Document;
+                }
+
                 if (nodeId == 0)
                 {
                     HostRtb.ScrollToHome();
