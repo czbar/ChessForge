@@ -1,6 +1,7 @@
 ﻿using ChessPosition;
 using GameTree;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
@@ -10,7 +11,7 @@ namespace ChessForge
     public partial class MainWindow : Window
     {
         /// <summary>
-        /// After a right click, prsent a dialog where the user can choose the lines
+        /// After a right click, present a dialog where the user can choose the lines
         /// to insert into the view.
         /// </summary>
         /// <param name="sender"></param>
@@ -40,32 +41,101 @@ namespace ChessForge
             {
                 BuildEngineLines(singleLine, out List<List<TreeNode>> treeNodeLines, out List<string> algebraicLines);
 
-                VariationTreeView targetView = AppState.MainWin.ActiveTreeView;
-                TreeNode insertAtNode = targetView.GetSelectedNode();
-                TreeNode firstInserted = PasteEngineLines(AppState.ActiveVariationTree, insertAtNode, treeNodeLines,
-                                 out int insertedNodesCount, out int failedInsertionsCount);
-                
-                targetView.BuildFlowDocumentForVariationTree(false);
-                AppState.MainWin.SetActiveLine(firstInserted.LineId, firstInserted.NodeId);
-                targetView.SelectNode(firstInserted);
-                targetView.HighlightLineAndMove(null, firstInserted.LineId, firstInserted.NodeId);
-
-                if (insertedNodesCount > 0)
+                bool proceed = true;
+                if (!singleLine && algebraicLines.Count > 0)
                 {
-                    string msg = Properties.Resources.FlMsgPastedMovesCount + ": " + insertedNodesCount;
-                    BoardCommentBox.ShowFlashAnnouncement(msg, CommentBox.HintType.INFO, 14);
-                }
-                else
-                {
-                    AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.VariationAlreadyExists, CommentBox.HintType.ERROR, 14);
+                    if (!UserLineSelection(algebraicLines, treeNodeLines))
+                    {
+                        proceed = false;
+                    }
                 }
 
-                // we seem to be losing focus in this procedure, so we need to restore it
-                targetView.HostRtb.Focus();
+                if (proceed)
+                {
+                    List<TreeNode> insertedNewNodes = new List<TreeNode>();
+                    List<TreeNode> failedInsertions = new List<TreeNode>();
 
+                    VariationTreeView targetView = AppState.MainWin.ActiveTreeView;
+                    TreeNode insertAtNode = targetView.GetSelectedNode();
+                    TreeNode firstInserted = PasteEngineLines(AppState.ActiveVariationTree, insertAtNode, treeNodeLines,
+                                     insertedNewNodes, failedInsertions);
+
+                    targetView.BuildFlowDocumentForVariationTree(false);
+                    AppState.MainWin.SetActiveLine(firstInserted.LineId, firstInserted.NodeId);
+                    targetView.SelectNode(firstInserted);
+                    targetView.HighlightLineAndMove(null, firstInserted.LineId, firstInserted.NodeId);
+
+                    if (insertedNewNodes.Count > 0)
+                    {
+                        string msg = Properties.Resources.FlMsgPastedMovesCount + ": " + insertedNewNodes.Count;
+                        if (failedInsertions.Count > 0)
+                        {
+                            msg += " (" + Properties.Resources.FlMsgFailedInsertions + ": " + failedInsertions.Count + ")";
+                        }
+                        BoardCommentBox.ShowFlashAnnouncement(msg, CommentBox.HintType.INFO, 14);
+                    }
+                    else
+                    {
+                        if (failedInsertions.Count > 0)
+                        {
+                            string msg = Properties.Resources.ErrClipboardLinePaste + " ("
+                                + MoveUtils.BuildSingleMoveText(failedInsertions[0], true, false, AppState.ActiveVariationTree.MoveNumberOffset) + ")";
+                            AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(msg, CommentBox.HintType.ERROR, 14);
+                        }
+                        else
+                        {
+                            AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.VariationAlreadyExists, CommentBox.HintType.ERROR, 14);
+                        }
+                    }
+
+                    // we seem to be losing focus in this procedure, so we need to restore it
+                    targetView.HostRtb.Focus();
+                }
             }
             catch
             {
+            }
+        }
+
+        /// <summary>
+        /// Invokes the dialog to select the engine lines to insert into the view.
+        /// </summary>
+        /// <param name="algebraicLines"></param>
+        /// <param name="treeNodeLines"></param>
+        /// <returns></returns>
+        private bool UserLineSelection(List<string> algebraicLines, List<List<TreeNode>> treeNodeLines)
+        {
+            List<int> indicesToRemove = new List<int>();
+
+            ObservableCollection<SelectableString> lineList = new ObservableCollection<SelectableString>();
+            foreach (var item in algebraicLines)
+            {
+                lineList.Add(new SelectableString(item, false));
+            }
+
+            SelectEngineLinesDialog dlg = new SelectEngineLinesDialog(lineList);
+            GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
+
+            if (dlg.ShowDialog() == true)
+            {
+                for (int i = 0; i < lineList.Count; i++)
+                {
+                    if (!lineList[i].IsSelected)
+                    {
+                        indicesToRemove.Add(i);
+                    }
+                }
+
+                for (int i = indicesToRemove.Count - 1; i >= 0; i--)
+                {
+                    treeNodeLines.RemoveAt(indicesToRemove[i]);
+                }
+
+                return treeNodeLines.Count > 0;
+            }
+            else
+            {
+                return false;
             }
         }
 
@@ -171,22 +241,17 @@ namespace ChessForge
         /// </summary>
         /// <param name="treeNodeLines"></param>
         private TreeNode PasteEngineLines(VariationTree targetTree, TreeNode insertAtNode, List<List<TreeNode>> treeNodeLines
-                                      , out int insertedNodesCount, out int failedInsertionsCount)
+                                      , List<TreeNode> insertedNewNodes, List<TreeNode> failedInsertions)
         {
             TreeNode firstInserted = null;
 
-            insertedNodesCount = 0;
-            failedInsertionsCount = 0;
-
             foreach (List<TreeNode> nodeList in treeNodeLines)
             {
-                TreeNode first = PasteOneEngineLine(targetTree, insertAtNode, nodeList, out int insertions, out int failures);
+                TreeNode first = PasteOneEngineLine(targetTree, insertAtNode, nodeList, insertedNewNodes, failedInsertions);
                 if (firstInserted == null)
                 {
                     firstInserted = first;
                 }
-                insertedNodesCount += insertions;
-                failedInsertionsCount += failures;
             }
 
             return firstInserted;
@@ -201,11 +266,8 @@ namespace ChessForge
         /// <param name="insertionCount"></param>
         /// <param name="failureCount"></param>
         private TreeNode PasteOneEngineLine(VariationTree targetTree, TreeNode insertAtNode, List<TreeNode> line,
-                                        out int insertionCount, out int failureCount)
+                                        List<TreeNode> insertedNewNodes, List<TreeNode> failedInsertions)
         {
-            List<TreeNode> insertedNewNodes = new List<TreeNode>();
-            List<TreeNode> failedInsertions = new List<TreeNode>();
-
             TreeNode lastSharedNode = TreeUtils.GetLastSharedNode(insertAtNode, line, out int index);
             if (lastSharedNode != null)
             {
@@ -217,9 +279,6 @@ namespace ChessForge
             }
 
             TreeNode firstInserted = TreeUtils.InsertSubtreeMovesIntoTree(AppState.ActiveVariationTree, insertAtNode, line, ref insertedNewNodes, ref failedInsertions);
-
-            insertionCount = insertedNewNodes.Count;
-            failureCount = failedInsertions.Count;
 
             // if we inserted an already existing line, do nothing
             if (insertedNewNodes.Count > 0)
@@ -233,6 +292,5 @@ namespace ChessForge
 
             return firstInserted;
         }
-
     }
 }
