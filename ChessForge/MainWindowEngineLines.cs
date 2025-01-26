@@ -32,6 +32,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Call from the main menu is an equivalent to the right click in the EngineLines TextBox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnPasteEngineLines_Click(object sender, RoutedEventArgs e)
+        {
+            ProcessAndPasteEngineLines(false);
+        }
+
+        /// <summary>
         /// Prepares the engine lines and pastes them into the current view.
         /// </summary>
         /// <param name="singleLine"></param>
@@ -41,7 +51,7 @@ namespace ChessForge
             {
                 // only proceed if we are in manual review mode and not in line evaluation mode
                 if (AppState.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW 
-                    && AppState.CurrentEvaluationMode != EvaluationManager.Mode.LINE)
+                    && AppState.CurrentEvaluationMode == EvaluationManager.Mode.CONTINUOUS)
                 {
                     BuildEngineLines(singleLine, out List<List<TreeNode>> treeNodeLines, out List<string> algebraicLines);
 
