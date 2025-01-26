@@ -1749,6 +1749,9 @@ namespace ChessForge
                     MainWin.UiMnExerciseViewConfig.IsEnabled = AppState.ActiveChapter != null;
                     MainWin.UiMnSplitChapter.IsEnabled = AppState.ActiveChapter != null;
 
+                    MainWin.UiMnPasteEngineLines.IsEnabled = Workbook != null 
+                        && CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW 
+                        && CurrentEvaluationMode == EvaluationManager.Mode.CONTINUOUS;
 
                     MainWin.UiMnAnnotations.IsEnabled = IsTreeViewTabActive();
                     MainWin.UiMnMainPaste.IsEnabled = !string.IsNullOrEmpty(SystemClipboard.GetText());
