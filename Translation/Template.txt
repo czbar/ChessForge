@@ -853,6 +853,18 @@ RestoreFontDefaults=
 #english: Tools=Tools
 Tools=
 
+#description: Copy articles to another chapter
+#english: CopyArticlesToChapter=Copy Games and Exercises Between Chapters...
+CopyArticlesToChapter=
+
+#description: Move articles to another chapter
+#english: MoveArticlesToChapter=Move Games and Exercises Between Chapters...
+MoveArticlesToChapter=
+
+#description: Copy engine lines into view
+#english: PasteEngineLines=Paste Engine Lines...
+PasteEngineLines=
+
 #description: Evaluate Games
 #english: MnEvaluateGames=Evaluate Games
 MnEvaluateGames=
@@ -2247,14 +2259,6 @@ MoveExerciseDown=
 #description: Move exercise to another chapter
 #english: MoveExerciseToChapter=Move Exercise To Chapter...
 MoveExerciseToChapter=
-
-#description: Copy articles to another chapter
-#english: CopyArticlesToChapter=Copy Games and Exercises Between Chapters...
-CopyArticlesToChapter=
-
-#description: Move articles to another chapter
-#english: MoveArticlesToChapter=Move Games and Exercises Between Chapters...
-MoveArticlesToChapter=
 
 #description: Deleted selected chapter
 #english: DeleteSelectedChapter=Delete Selected Chapter

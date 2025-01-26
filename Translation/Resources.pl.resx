@@ -699,6 +699,15 @@
   <data name="Tools" xml:space="preserve">
     <value>Narzędzia</value>
   </data>
+  <data name="CopyArticlesToChapter" xml:space="preserve">
+    <value>Skopiuj Partie i Ćwiczenia do Rozdziału...</value>
+  </data>
+  <data name="MoveArticlesToChapter" xml:space="preserve">
+    <value>Przenieś Partie i Ćwiczenia do Rozdziału...</value>
+  </data>
+  <data name="PasteEngineLines" xml:space="preserve">
+    <value>Wklej warianty silnika...</value>
+  </data>
   <data name="MnEvaluateGames" xml:space="preserve">
     <value>Oceń partie</value>
   </data>
@@ -1581,12 +1590,6 @@
   </data>
   <data name="MoveExerciseToChapter" xml:space="preserve">
     <value>Przenieś Ćwiczenie do Rozdziału</value>
-  </data>
-  <data name="CopyArticlesToChapter" xml:space="preserve">
-    <value>Skopiuj Partie i Ćwiczenia do Rozdziału...</value>
-  </data>
-  <data name="MoveArticlesToChapter" xml:space="preserve">
-    <value>Przenieś Partie i Ćwiczenia do Rozdziału...</value>
   </data>
   <data name="DeleteSelectedChapter" xml:space="preserve">
     <value>Usuń Wybrany Rozdział</value>

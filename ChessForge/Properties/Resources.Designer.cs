@@ -5606,6 +5606,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Paste Engine Lines....
+        /// </summary>
+        public static string PasteEngineLines {
+            get {
+                return ResourceManager.GetString("PasteEngineLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Paste from Clipboard.
         /// </summary>
         public static string PasteFromClipboard {
