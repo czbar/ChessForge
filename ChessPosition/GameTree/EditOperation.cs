@@ -18,6 +18,7 @@ namespace GameTree
             UPDATE_COMMENT_BEFORE_MOVE,
             MERGE_TREE,
             PASTE_MOVES,
+            PASTE_LINES,
             SAVE_TRAINING_MOVES,
             INSERT_DIAGRAM,
             DELETE_DIAGRAM,

@@ -68,6 +68,10 @@ namespace GameTree
                         _owningTree.UndoAddedNodeList(op.OpData_1);
                         selectedNodeId = op.NodeId;
                         break;
+                    case EditOperation.EditType.PASTE_LINES:
+                        _owningTree.UndoAddedLines(op.OpData_1);
+                        selectedNodeId = op.NodeId;
+                        break;
                     case EditOperation.EditType.SAVE_TRAINING_MOVES:
                         _owningTree.UndoAddedNodeList(op.OpData_1);
                         break;

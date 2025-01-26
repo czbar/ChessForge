@@ -276,7 +276,7 @@ namespace ChessForge
         /// </summary>
         public static void SetNarrowScrollbar()
         {
-            SetScrollbarWidth((double)5);
+            SetScrollbarWidth(Constants.NARROW_SCROLLBAR_WIDTH);
         }
 
         /// <summary>
@@ -284,7 +284,7 @@ namespace ChessForge
         /// </summary>
         public static void SetWideScrollbar()
         {
-            SetScrollbarWidth((double)15);
+            SetScrollbarWidth(Constants.WIDE_SCROLLBAR_WIDTH);
         }
 
         /// <summary>

@@ -853,6 +853,18 @@ RestoreFontDefaults=
 #english: Tools=Tools
 Tools=
 
+#description: Copy articles to another chapter
+#english: CopyArticlesToChapter=Copy Games and Exercises Between Chapters...
+CopyArticlesToChapter=
+
+#description: Move articles to another chapter
+#english: MoveArticlesToChapter=Move Games and Exercises Between Chapters...
+MoveArticlesToChapter=
+
+#description: Copy engine lines into view
+#english: PasteEngineLines=Paste Engine Lines...
+PasteEngineLines=
+
 #description: Evaluate Games
 #english: MnEvaluateGames=Evaluate Games
 MnEvaluateGames=
@@ -1357,6 +1369,20 @@ Defaults=
 #description: Calculating notification
 #english: Calculating=Calculating...
 Calculating=
+
+
+#######################################
+#
+# Header: DIALOG Select Engine Lines
+#
+
+#description: Select Engine Lines dialog title
+#english: DlgSelectEngineLines=Select Engine Lines to Paste
+DlgSelectEngineLines=
+
+#description: Lines in a variation tree
+#english: Lines=Lines
+Lines=
 
 
 #######################################
@@ -2234,14 +2260,6 @@ MoveExerciseDown=
 #english: MoveExerciseToChapter=Move Exercise To Chapter...
 MoveExerciseToChapter=
 
-#description: Copy articles to another chapter
-#english: CopyArticlesToChapter=Copy Games and Exercises Between Chapters...
-CopyArticlesToChapter=
-
-#description: Move articles to another chapter
-#english: MoveArticlesToChapter=Move Games and Exercises Between Chapters...
-MoveArticlesToChapter=
-
 #description: Deleted selected chapter
 #english: DeleteSelectedChapter=Delete Selected Chapter
 DeleteSelectedChapter=
@@ -2732,6 +2750,10 @@ FlMsgCopiedMoves=
 #description: Flash message: Number of moves pasted.
 #english: FlMsgPastedMovesCount=Number of Pasted New Moves
 FlMsgPastedMovesCount=
+
+#description: Flash message: Number of failed insertions.
+#english: FlMsgFailedInsertions=Number of Failed Inertions
+FlMsgFailedInsertions=
 
 #description: Flash message: Games sorted.
 #english: FlMsgGamesSorted=Games have been sorted

@@ -1,10 +1,9 @@
 ﻿using ChessPosition;
 using GameTree;
 using System;
-using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows;
 
 namespace ChessForge
 {
@@ -644,7 +643,7 @@ namespace ChessForge
 
                 if (e.LeftButton == MouseButtonState.Pressed && DraggedArticle.IsDragInProgress)
                 {
-                    if (DraggedArticle.ContentType == GameData.ContentType.MODEL_GAME)
+                    if (DraggedArticle.ContentType == GameData.ContentType.MODEL_GAME || DraggedArticle.IsChapterDragged())
                     {
                         _mainWin.UiRtbChaptersView.Cursor = DragAndDropCursors.GetAllowDropCursor();
                     }
@@ -677,7 +676,7 @@ namespace ChessForge
 
                 if (e.LeftButton == MouseButtonState.Pressed && DraggedArticle.IsDragInProgress)
                 {
-                    if (DraggedArticle.ContentType == GameData.ContentType.EXERCISE)
+                    if (DraggedArticle.ContentType == GameData.ContentType.EXERCISE || DraggedArticle.IsChapterDragged())
                     {
                         _mainWin.UiRtbChaptersView.Cursor = DragAndDropCursors.GetAllowDropCursor();
                     }
@@ -724,7 +723,7 @@ namespace ChessForge
                         DraggedArticle.StartDragOperation(chapter.Index, gameIndex, GameData.ContentType.MODEL_GAME);
                     }
                     // drag in progress; set appropriate cursor
-                    if (DraggedArticle.ContentType == GameData.ContentType.MODEL_GAME)
+                    if (DraggedArticle.ContentType == GameData.ContentType.MODEL_GAME || DraggedArticle.IsChapterDragged())
                     {
                         _mainWin.UiRtbChaptersView.Cursor = DragAndDropCursors.GetAllowDropCursor();
                     }
@@ -776,7 +775,7 @@ namespace ChessForge
                         DraggedArticle.StartDragOperation(chapter.Index, exerciseIndex, GameData.ContentType.EXERCISE);
                     }
                     // drag in progress; set appropriate cursor
-                    if (DraggedArticle.ContentType == GameData.ContentType.EXERCISE)
+                    if (DraggedArticle.ContentType == GameData.ContentType.EXERCISE || DraggedArticle.IsChapterDragged())
                     {
                         _mainWin.UiRtbChaptersView.Cursor = DragAndDropCursors.GetAllowDropCursor();
                     }
@@ -887,6 +886,14 @@ namespace ChessForge
                             int targetChapterIndex = GetChapterIndexFromChildRun(run);
                             if (DraggedArticle.IsChapterDragged())
                             {
+                                // if the click was not a chapter header
+                                // or it was on the lower half of the header
+                                // we are inserting after the target
+                                if(!run.Name.StartsWith( _run_chapter_title_) ||
+                                  (!RichTextBoxUtilities.IsUpperPartClicked(run, e.GetPosition(HostRtb), HostRtb)))
+                                {
+                                    targetChapterIndex++;
+                                }
                                 MoveChapter(DraggedArticle.ChapterIndex, targetChapterIndex);
                             }
                             else if (DraggedArticle.ContentType == GameData.ContentType.MODEL_GAME || DraggedArticle.ContentType == GameData.ContentType.EXERCISE)
@@ -941,10 +948,17 @@ namespace ChessForge
                 {
                     try
                     {
-                        if (DraggedArticle.IsDragInProgress && DraggedArticle.ContentType == GameData.ContentType.MODEL_GAME)
+                        if (DraggedArticle.IsDragInProgress)
                         {
-                            int targetChapterIndex = GetChapterIndexFromChildRun(run);
-                            MoveArticle(HostRtb.Document, targetChapterIndex, 0);
+                            if (DraggedArticle.ContentType == GameData.ContentType.MODEL_GAME)
+                            {
+                                int targetChapterIndex = GetChapterIndexFromChildRun(run);
+                                MoveArticle(HostRtb.Document, targetChapterIndex, 0);
+                            }
+                            else if (DraggedArticle.IsChapterDragged())
+                            {
+                                EventChapterHeaderDrop(sender, e);
+                            }
                         }
                     }
                     catch { }
@@ -973,10 +987,17 @@ namespace ChessForge
                 {
                     try
                     {
-                        if (DraggedArticle.IsDragInProgress && DraggedArticle.ContentType == GameData.ContentType.EXERCISE)
+                        if (DraggedArticle.IsDragInProgress)
                         {
-                            int targetChapterIndex = GetChapterIndexFromChildRun(run);
-                            MoveArticle(HostRtb.Document, targetChapterIndex, 0);
+                            if (DraggedArticle.ContentType == GameData.ContentType.EXERCISE)
+                            {
+                                int targetChapterIndex = GetChapterIndexFromChildRun(run);
+                                MoveArticle(HostRtb.Document, targetChapterIndex, 0);
+                            }
+                            else if (DraggedArticle.IsChapterDragged())
+                            {
+                                EventChapterHeaderDrop(sender, e);
+                            }
                         }
                     }
                     catch { }
@@ -1005,30 +1026,30 @@ namespace ChessForge
                 {
                     try
                     {
-                        if (DraggedArticle.IsDragInProgress && DraggedArticle.ContentType == GameData.ContentType.MODEL_GAME)
+                        if (DraggedArticle.IsDragInProgress)
                         {
-                            _mainWin.UiRtbChaptersView.Cursor = Cursors.Arrow;
-
-                            int targetChapterIndex = GetChapterIndexFromChildRun(run);
-                            int targetGameIndex = TextUtils.GetIdFromPrefixedString(run.Name);
-
-                            // figure out if we hit the upper or the lower half of the Run
-                            Point ptMousePos = e.GetPosition(_mainWin.UiRtbChaptersView);
-                            TextPointer tpMousePos = _mainWin.UiRtbChaptersView.GetPositionFromPoint(ptMousePos, true);
-
-                            // if we move down by half the font size, is it still the same the same TextPointer
-                            Point ptBelow = new Point(ptMousePos.X, ptMousePos.Y);
-                            ptBelow.Y += run.FontSize / 2;
-
-                            TextPointer tpBelow = _mainWin.UiRtbChaptersView.GetPositionFromPoint(ptBelow, true);
-                            if (tpMousePos.CompareTo(tpBelow) != 0)
+                            if (DraggedArticle.ContentType == GameData.ContentType.MODEL_GAME)
                             {
-                                targetGameIndex++;
+                                _mainWin.UiRtbChaptersView.Cursor = Cursors.Arrow;
+
+                                int targetChapterIndex = GetChapterIndexFromChildRun(run);
+                                int targetGameIndex = TextUtils.GetIdFromPrefixedString(run.Name);
+
+                                // figure out if we hit the upper or the lower half of the Run
+                                Point ptMousePos = e.GetPosition(_mainWin.UiRtbChaptersView);
+                                if (!RichTextBoxUtilities.IsUpperPartClicked(run, ptMousePos, _mainWin.UiRtbChaptersView))
+                                {
+                                    targetGameIndex++;
+                                }
+
+                                if (DraggedArticle.ChapterIndex != targetChapterIndex || DraggedArticle.ArticleIndex != targetGameIndex)
+                                {
+                                    MoveArticle(HostRtb.Document, targetChapterIndex, targetGameIndex);
+                                }
                             }
-
-                            if (DraggedArticle.ChapterIndex != targetChapterIndex || DraggedArticle.ArticleIndex != targetGameIndex)
+                            else if (DraggedArticle.IsChapterDragged())
                             {
-                                MoveArticle(HostRtb.Document, targetChapterIndex, targetGameIndex);
+                                EventChapterHeaderDrop(sender, e);
                             }
                         }
                     }
@@ -1058,30 +1079,37 @@ namespace ChessForge
                 {
                     try
                     {
-                        if (DraggedArticle.IsDragInProgress && DraggedArticle.ContentType == GameData.ContentType.EXERCISE)
+                        if (DraggedArticle.IsDragInProgress)
                         {
-                            _mainWin.UiRtbChaptersView.Cursor = Cursors.Arrow;
-
-                            int targetChapterIndex = GetChapterIndexFromChildRun(run);
-                            int targetExerciseIndex = TextUtils.GetIdFromPrefixedString(run.Name);
-
-                            // figure out if we hit the upper or the lower half of the Run
-                            Point ptMousePos = e.GetPosition(_mainWin.UiRtbChaptersView);
-                            TextPointer tpMousePos = _mainWin.UiRtbChaptersView.GetPositionFromPoint(ptMousePos, true);
-
-                            // if we move down by half the font size, is it still the same the same TextPointer
-                            Point ptBelow = new Point(ptMousePos.X, ptMousePos.Y);
-                            ptBelow.Y += run.FontSize / 2;
-
-                            TextPointer tpBelow = _mainWin.UiRtbChaptersView.GetPositionFromPoint(ptBelow, true);
-                            if (tpMousePos.CompareTo(tpBelow) != 0)
+                            if (DraggedArticle.ContentType == GameData.ContentType.EXERCISE)
                             {
-                                targetExerciseIndex++;
+                                _mainWin.UiRtbChaptersView.Cursor = Cursors.Arrow;
+
+                                int targetChapterIndex = GetChapterIndexFromChildRun(run);
+                                int targetExerciseIndex = TextUtils.GetIdFromPrefixedString(run.Name);
+
+                                // figure out if we hit the upper or the lower half of the Run
+                                Point ptMousePos = e.GetPosition(_mainWin.UiRtbChaptersView);
+                                TextPointer tpMousePos = _mainWin.UiRtbChaptersView.GetPositionFromPoint(ptMousePos, true);
+
+                                // if we move down by half the font size, is it still the same the same TextPointer
+                                Point ptBelow = new Point(ptMousePos.X, ptMousePos.Y);
+                                ptBelow.Y += run.FontSize / 2;
+
+                                TextPointer tpBelow = _mainWin.UiRtbChaptersView.GetPositionFromPoint(ptBelow, true);
+                                if (tpMousePos.CompareTo(tpBelow) != 0)
+                                {
+                                    targetExerciseIndex++;
+                                }
+
+                                if (DraggedArticle.ChapterIndex != targetChapterIndex || DraggedArticle.ArticleIndex != targetExerciseIndex)
+                                {
+                                    MoveArticle(HostRtb.Document, targetChapterIndex, targetExerciseIndex);
+                                }
                             }
-
-                            if (DraggedArticle.ChapterIndex != targetChapterIndex || DraggedArticle.ArticleIndex != targetExerciseIndex)
+                            else if (DraggedArticle.IsChapterDragged())
                             {
-                                MoveArticle(HostRtb.Document, targetChapterIndex, targetExerciseIndex);
+                                EventChapterHeaderDrop(sender, e);
                             }
                         }
                     }

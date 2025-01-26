@@ -659,6 +659,15 @@ RestoreFontDefaults=Restore Font Defaults
 #Tools
 Tools=Tools
 
+#Copy articles to another chapter
+CopyArticlesToChapter=Copy Games and Exercises Between Chapters...
+
+#Move articles to another chapter
+MoveArticlesToChapter=Move Games and Exercises Between Chapters...
+
+#Copy engine lines into view
+PasteEngineLines=Paste Engine Lines...
+
 #Evaluate Games
 MnEvaluateGames=Evaluate Games
 
@@ -1060,6 +1069,18 @@ Defaults=Defaults
 
 #Calculating notification
 Calculating=Calculating...
+
+
+#######################################
+#
+# Header: DIALOG Select Engine Lines
+#
+
+#Select Engine Lines dialog title
+DlgSelectEngineLines=Select Engine Lines to Paste
+
+#Lines in a variation tree
+Lines=Lines
 
 
 #######################################
@@ -1748,12 +1769,6 @@ MoveExerciseDown=Move Exercise Down
 #Move exercise to another chapter
 MoveExerciseToChapter=Move Exercise To Chapter...
 
-#Copy articles to another chapter
-CopyArticlesToChapter=Copy Games and Exercises Between Chapters...
-
-#Move articles to another chapter
-MoveArticlesToChapter=Move Games and Exercises Between Chapters...
-
 #Deleted selected chapter
 DeleteSelectedChapter=Delete Selected Chapter
 
@@ -2139,6 +2154,9 @@ FlMsgCopiedMoves=Moves Copied to Clipboard
 
 #Flash message: Number of moves pasted.
 FlMsgPastedMovesCount=Number of Pasted New Moves
+
+#Flash message: Number of failed insertions.
+FlMsgFailedInsertions=Number of Failed Inertions
 
 #Flash message: Games sorted.
 FlMsgGamesSorted=Games have been sorted

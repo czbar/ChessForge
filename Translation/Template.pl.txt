@@ -853,6 +853,18 @@ RestoreFontDefaults=Przywróć Domyślne Wartości
 #english: Tools=Tools
 Tools=Narzędzia
 
+#description: Copy articles to another chapter
+#english: CopyArticlesToChapter=Copy Games and Exercises Between Chapters...
+CopyArticlesToChapter=Skopiuj Partie i Ćwiczenia do Rozdziału...
+
+#description: Move articles to another chapter
+#english: MoveArticlesToChapter=Move Games and Exercises Between Chapters...
+MoveArticlesToChapter=Przenieś Partie i Ćwiczenia do Rozdziału...
+
+#description: Copy engine lines into view
+#english: PasteEngineLines=Paste Engine Lines...
+PasteEngineLines=Wklej warianty silnika...
+
 #description: Evaluate Games
 #english: MnEvaluateGames=Evaluate Games
 MnEvaluateGames=Oceń partie
@@ -1357,6 +1369,20 @@ Defaults=Domyślne
 #description: Calculating notification
 #english: Calculating=Calculating...
 Calculating=Obliczanie...
+
+
+#######################################
+#
+# Header: DIALOG Select Engine Lines
+#
+
+#description: Select Engine Lines dialog title
+#english: DlgSelectEngineLines=Select Engine Lines to Paste
+DlgSelectEngineLines=Wybierz warianty silnika do wklejenia
+
+#description: Lines in a variation tree
+#english: Lines=Lines
+Lines=Warianty
 
 
 #######################################
@@ -2234,14 +2260,6 @@ MoveExerciseDown=Przesuń Ćwiczenie na Dół
 #english: MoveExerciseToChapter=Move Exercise To Chapter...
 MoveExerciseToChapter=Przenieś Ćwiczenie do Rozdziału
 
-#description: Copy articles to another chapter
-#english: CopyArticlesToChapter=Copy Games and Exercises Between Chapters...
-CopyArticlesToChapter=Skopiuj Partie i Ćwiczenia do Rozdziału...
-
-#description: Move articles to another chapter
-#english: MoveArticlesToChapter=Move Games and Exercises Between Chapters...
-MoveArticlesToChapter=Przenieś Partie i Ćwiczenia do Rozdziału...
-
 #description: Deleted selected chapter
 #english: DeleteSelectedChapter=Delete Selected Chapter
 DeleteSelectedChapter=Usuń Wybrany Rozdział
@@ -2732,6 +2750,10 @@ FlMsgCopiedMoves=Posunięcia skopiowane do schowka
 #description: Flash message: Number of moves pasted.
 #english: FlMsgPastedMovesCount=Number of Pasted New Moves
 FlMsgPastedMovesCount=Liczba nowych wklejonych posunięć
+
+#description: Flash message: Number of failed insertions.
+#english: FlMsgFailedInsertions=Number of Failed Inertions
+FlMsgFailedInsertions=Liczba nieudanych wklejeń
 
 #description: Flash message: Games sorted.
 #english: FlMsgGamesSorted=Games have been sorted

@@ -174,6 +174,10 @@ namespace ChessForge
                 {
                     Chapter hold = WorkbookManager.SessionWorkbook.Chapters[sourceIndex];
                     AppState.Workbook.Chapters.Remove(hold);
+                    if (sourceIndex < targetIndex)
+                    {
+                        targetIndex--;
+                    }
                     AppState.Workbook.Chapters.Insert(targetIndex, hold);
                     AppState.IsDirty = true;
                 }

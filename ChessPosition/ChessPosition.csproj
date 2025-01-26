@@ -59,6 +59,7 @@
     <Compile Include="GameTree\OperationsManager.cs" />
     <Compile Include="GameTree\TreeManager.cs" />
     <Compile Include="GameTree\Operation.cs" />
+    <Compile Include="Parsers\EngineLineParser.cs" />
     <Compile Include="Parsers\GameHeader.cs" />
     <Compile Include="GameTree\PlyForTreeView.cs" />
     <Compile Include="GameTree\VariationTree.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="Parsers\PgnMoveParser.cs" />
     <Compile Include="Parsers\PgnMultiGameParser.cs" />
     <Compile Include="Utils\AppLog.cs" />
+    <Compile Include="Utils\SelectableString.cs" />
     <Compile Include="Utils\CommentPart.cs" />
     <Compile Include="Utils\CommentProcessor.cs" />
     <Compile Include="Utils\Constants.cs" />

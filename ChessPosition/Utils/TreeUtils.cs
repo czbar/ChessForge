@@ -125,6 +125,45 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Returns the last node in the line that matches a node 
+        /// in the subtree under insertAtNode.
+        /// We are looking for matches at the same level only i.e.
+        /// children for line[0], grandchildren for line[1] etc.
+        /// This is how we find the "real" insertion point when pasting a line.
+        /// </summary>
+        /// <param name="insertAtNode"></param>
+        /// <param name="line"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public static TreeNode GetLastSharedNode(TreeNode insertAtNode, List<TreeNode> line, out int index)
+        {
+            index = -1;
+            TreeNode lastSharedNode = null;
+
+            if (insertAtNode != null && line != null && line.Count > 0)
+            {
+                TreeNode node = insertAtNode;
+                for ( int i = 0; i < line.Count; i++)
+                {
+                    TreeNode matchedChild = GetChildMatchingNode(node, line[i]);
+                    if (matchedChild != null)
+                    {
+                        // continue checking for matches at further levels.
+                        node = matchedChild;
+                        lastSharedNode = node;
+                        index = i;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+
+            return lastSharedNode;
+        }
+
+        /// <summary>
         /// Makes a deep copy of the passed variation tree.
         /// </summary>
         /// <param name="source">VariationTree to copy</param>
@@ -903,6 +942,26 @@ namespace ChessPosition
                 }
             }
             return true;
+        }
+
+        /// <summary>
+        /// Returns the child of the passed parent that has the same move as the passed node.
+        /// This is useful e.g. when we want to insert a subtree into a tree and we want to find
+        /// the "real" insertion point.
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        private static TreeNode GetChildMatchingNode(TreeNode parent, TreeNode node)
+        {
+            foreach (TreeNode child in parent.Children)
+            {
+                if (MoveUtils.AreAlgMovesIdentical(child.LastMoveAlgebraicNotation, node.LastMoveAlgebraicNotation))
+                {
+                    return child;
+                }
+            }
+            return null;
         }
 
         /// <summary>

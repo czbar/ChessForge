@@ -699,6 +699,15 @@
   <data name="Tools" xml:space="preserve">
     <value>Tools</value>
   </data>
+  <data name="CopyArticlesToChapter" xml:space="preserve">
+    <value>Copy Games and Exercises Between Chapters...</value>
+  </data>
+  <data name="MoveArticlesToChapter" xml:space="preserve">
+    <value>Move Games and Exercises Between Chapters...</value>
+  </data>
+  <data name="PasteEngineLines" xml:space="preserve">
+    <value>Paste Engine Lines...</value>
+  </data>
   <data name="MnEvaluateGames" xml:space="preserve">
     <value>Evaluate Games</value>
   </data>
@@ -1008,6 +1017,12 @@
   </data>
   <data name="Calculating" xml:space="preserve">
     <value>Calculating...</value>
+  </data>
+  <data name="DlgSelectEngineLines" xml:space="preserve">
+    <value>Select Engine Lines to Paste</value>
+  </data>
+  <data name="Lines" xml:space="preserve">
+    <value>Lines</value>
   </data>
   <data name="TargetChapter" xml:space="preserve">
     <value>Target Chapter</value>
@@ -1576,12 +1591,6 @@
   <data name="MoveExerciseToChapter" xml:space="preserve">
     <value>Move Exercise To Chapter...</value>
   </data>
-  <data name="CopyArticlesToChapter" xml:space="preserve">
-    <value>Copy Games and Exercises Between Chapters...</value>
-  </data>
-  <data name="MoveArticlesToChapter" xml:space="preserve">
-    <value>Move Games and Exercises Between Chapters...</value>
-  </data>
   <data name="DeleteSelectedChapter" xml:space="preserve">
     <value>Delete Selected Chapter</value>
   </data>
@@ -1896,6 +1905,9 @@
   </data>
   <data name="FlMsgPastedMovesCount" xml:space="preserve">
     <value>Number of Pasted New Moves</value>
+  </data>
+  <data name="FlMsgFailedInsertions" xml:space="preserve">
+    <value>Number of Failed Inertions</value>
   </data>
   <data name="FlMsgGamesSorted" xml:space="preserve">
     <value>Games have been sorted</value>
