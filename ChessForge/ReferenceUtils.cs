@@ -231,25 +231,29 @@ namespace ChessForge
         /// <summary>
         /// Finds the optimal node in the referenced article.
         /// </summary>
+        /// <param name="fenSet">FEN hashset of Nodes from the hosting article</param>
         /// <param name="article"></param>
-        /// <param name="fenSet"></param>
+        /// <param name="mainLineOnly"></param>
         /// <returns></returns>
-        private static string GetOptimalNode(Article article, HashSet<string> fenSet)
+        private static string GetOptimalNode(HashSet<string> fenSet, Article article, bool mainLineOnly)
         {
             string lastFen = null;
             TreeNode lastNode = null;
 
             foreach (TreeNode node in article.Tree.Nodes)
             {
-                node.Fen = FenParser.GenerateShortFen(node.Position);
-                if (fenSet.Contains(node.Fen))
+                if (!mainLineOnly || node.IsMainLine())
                 {
-                    if (lastNode == null
-                        || node.MoveNumber > lastNode.MoveNumber
-                        || node.MoveNumber == lastNode.MoveNumber && node.ColorToMove == ChessPosition.PieceColor.White)
+                    node.Fen = FenParser.GenerateShortFen(node.Position);
+                    if (fenSet.Contains(node.Fen))
                     {
-                        lastNode = node;
-                        lastFen = node.Fen;
+                        if (lastNode == null
+                            || node.MoveNumber > lastNode.MoveNumber
+                            || node.MoveNumber == lastNode.MoveNumber && node.ColorToMove == ChessPosition.PieceColor.White)
+                        {
+                            lastNode = node;
+                            lastFen = node.Fen;
+                        }
                     }
                 }
             }
@@ -313,7 +317,11 @@ namespace ChessForge
                 }
                 else
                 {
-                    string fen = GetOptimalNode(article, fenSet);
+                    string fen = GetOptimalNode(fenSet, article, true);
+                    if (fen == null)
+                    {
+                        fen = GetOptimalNode(fenSet, article, false);
+                    }
                     updatedReferencingNodes.Add(fenToNode[fen]);
                 }
             }
