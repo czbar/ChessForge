@@ -1258,7 +1258,7 @@ namespace GameTree
         /// </summary>
         /// <param name="lineId"></param>
         /// <returns></returns>
-        public ObservableCollection<TreeNode> SelectLine(string lineId)
+        public ObservableCollection<TreeNode> GetNodesForLine(string lineId)
         {
             var singleLine = new ObservableCollection<TreeNode>();
 

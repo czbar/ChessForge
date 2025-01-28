@@ -832,7 +832,7 @@ namespace ChessForge
                     }
                     HighlightLineAndMove(HostRtb.Document, lineId, nodeId);
 
-                    ObservableCollection<TreeNode> lineToSelect = ShownVariationTree.SelectLine(lineId);
+                    ObservableCollection<TreeNode> lineToSelect = ShownVariationTree.GetNodesForLine(lineId);
                     _mainWin.SetActiveLine(lineToSelect, nodeId);
 
                     SetupGuiForSolvingMode(mode);
@@ -865,7 +865,7 @@ namespace ChessForge
                 int nodeId = 0;
                 HighlightLineAndMove(HostRtb.Document, lineId, nodeId);
 
-                ObservableCollection<TreeNode> lineToSelect = _mainVariationTree.SelectLine(lineId);
+                ObservableCollection<TreeNode> lineToSelect = _mainVariationTree.GetNodesForLine(lineId);
                 _mainWin.SetActiveLine(lineToSelect, nodeId);
 
                 SetupGuiForSolvingMode(mode);

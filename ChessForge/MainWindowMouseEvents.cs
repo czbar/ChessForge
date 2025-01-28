@@ -1482,7 +1482,7 @@ namespace ChessForge
                                 _studyTreeView.BuildFlowDocumentForVariationTree(false);
                                 string lineId = "1";
                                 int nodeId = 0;
-                                ObservableCollection<TreeNode> lineToSelect = _studyTreeView.ShownVariationTree.SelectLine(lineId);
+                                ObservableCollection<TreeNode> lineToSelect = _studyTreeView.ShownVariationTree.GetNodesForLine(lineId);
                                 SetActiveLine(lineToSelect, nodeId);
                                 _studyTreeView.HighlightLineAndMove(_studyTreeView.HostRtb.Document, lineId, nodeId);
                             }

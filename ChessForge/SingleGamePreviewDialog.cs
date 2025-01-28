@@ -73,7 +73,7 @@ namespace ChessForge
             _tree.BuildLines();
             PopulateHeaderLine(_tree);
             _chessBoard.DisplayStartingPosition();
-            _mainLine = _tree.SelectLine("1");
+            _mainLine = _tree.GetNodesForLine("1");
 
             _currentNodeMoveIndex = 1;
             RequestMoveAnimation(_currentNodeMoveIndex);

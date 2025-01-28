@@ -213,7 +213,7 @@ namespace ChessForge
                 int nodeId = tree.SelectedNodeId < 0 ? 0 : tree.SelectedNodeId;
                 ActiveTreeView.HighlightLineAndMove(ActiveTreeView.HostRtb.Document, lineId, nodeId);
 
-                ObservableCollection<TreeNode> lineToSelect = tree.SelectLine(lineId);
+                ObservableCollection<TreeNode> lineToSelect = tree.GetNodesForLine(lineId);
                 SetActiveLine(lineToSelect, nodeId);
 
                 if (tree.SelectedNode == null)
@@ -2079,7 +2079,7 @@ namespace ChessForge
         {
             if (ActiveVariationTree != null)
             {
-                ObservableCollection<TreeNode> line = ActiveVariationTree.SelectLine(lineId);
+                ObservableCollection<TreeNode> line = ActiveVariationTree.GetNodesForLine(lineId);
                 SetActiveLine(line, selectedNodeId, displayPosition);
             }
         }
@@ -2095,7 +2095,7 @@ namespace ChessForge
         {
             if (tree != null)
             {
-                ObservableCollection<TreeNode> line = tree.SelectLine(lineId);
+                ObservableCollection<TreeNode> line = tree.GetNodesForLine(lineId);
                 SetActiveLine(line, selectedNodeId, displayPosition);
             }
         }

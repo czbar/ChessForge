@@ -92,7 +92,7 @@ namespace ChessForge
                 {
                     BuildForkTable(doc, nodeId);
 
-                    ObservableCollection<TreeNode> lineToSelect = ShownVariationTree.SelectLine(lineId);
+                    ObservableCollection<TreeNode> lineToSelect = ShownVariationTree.GetNodesForLine(lineId);
 
                     _selectedRun = null;
                     _dictNodeToRun.TryGetValue(nodeId, out _selectedRun);
@@ -157,7 +157,7 @@ namespace ChessForge
         {
             // TODO: do not select line and therefore repaint everything if the clicked line is already selected
             // UNLESS there is "copy select" active
-            ObservableCollection<TreeNode> lineToSelect = ShownVariationTree.SelectLine(lineId);
+            ObservableCollection<TreeNode> lineToSelect = ShownVariationTree.GetNodesForLine(lineId);
             WorkbookManager.SessionWorkbook.ActiveVariationTree.SetSelectedLineAndMove(lineId, nodeId);
             foreach (TreeNode nd in lineToSelect)
             {

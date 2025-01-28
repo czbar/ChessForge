@@ -271,7 +271,7 @@ namespace ChessForge
         {
             ArticleListItem game = _games[gameIndex];
             AppState.MainWin.SelectArticle(game.ChapterIndex, GameData.ContentType.MODEL_GAME, game.ArticleIndex);
-            ObservableCollection<TreeNode> lineToSelect = game.Article.Tree.SelectLine("1");
+            ObservableCollection<TreeNode> lineToSelect = game.Article.Tree.GetNodesForLine("1");
             if (HasMovesToEvaluate(game))
             {
                 int firstNodeId = FirstNodeToEvaluate(lineToSelect);
@@ -295,7 +295,7 @@ namespace ChessForge
         /// <returns></returns>
         private static int CalculatePlyCount(ArticleListItem game)
         {
-            int plyCount = game.Article.Tree.SelectLine("1").Count - 1;
+            int plyCount = game.Article.Tree.GetNodesForLine("1").Count - 1;
             if (Configuration.EvalMoveRangeEnd > 0)
             {
                 plyCount = Math.Min(plyCount, Configuration.EvalMoveRangeEnd * 2);
