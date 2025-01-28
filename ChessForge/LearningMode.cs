@@ -117,12 +117,5 @@ namespace ChessForge
         /// Animation translation object.
         /// </summary>
         public static TranslateTransform CurrentTranslateTransform;
-
-        /// <summary>
-        /// Currently active (selected) line.
-        /// There can only be one (or none) line selected in the Workbook at any time
-        /// </summary>
-        public static string ActiveLineId;
-
     }
 }
