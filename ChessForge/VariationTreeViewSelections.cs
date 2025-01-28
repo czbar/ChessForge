@@ -433,10 +433,11 @@ namespace ChessForge
                     _selectedRun.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
                 }
 
+                int nodeId = TextUtils.GetIdFromPrefixedString(runToSelect.Name);
+                TreeNode nd = ShownVariationTree.GetNodeFromNodeId(nodeId);
+
                 if (clickCount == 2)
                 {
-                    int nodeId = TextUtils.GetIdFromPrefixedString(runToSelect.Name);
-                    TreeNode nd = ShownVariationTree.GetNodeFromNodeId(nodeId);
                     if (_mainWin.InvokeAnnotationsDialog(nd))
                     {
                         InsertOrUpdateCommentRun(nd);
@@ -456,30 +457,12 @@ namespace ChessForge
                             AppState.SwapCommentBoxForEngineLines(false);
                         }
 
-                        // unhighlight current line
-                        foreach (TreeNode nd in _mainWin.ActiveLine.Line.NodeList)
-                        {
-                            if (nd.NodeId != 0)
-                            {
-                                Run run;
-                                // if we are dealing with a subtree, we may not have all nodes from the line.
-                                if (_dictNodeToRun.TryGetValue(nd.NodeId, out run))
-                                {
-                                    run.Background = ChessForgeColors.CurrentTheme.RtbBackground;
-                                }
-                            }
-                        }
-
+                        UnhighlightActiveLine();
                         _selectedRun = runToSelect;
+                        BuildForkTable(HostRtb.Document, nodeId);
 
-                        int idd = TextUtils.GetIdFromPrefixedString(runToSelect.Name);
-                        BuildForkTable(HostRtb.Document, idd);
-
-                        int nodeId = -1;
                         if (runToSelect.Name != null && runToSelect.Name.StartsWith(_run_))
                         {
-                            nodeId = TextUtils.GetIdFromPrefixedString(runToSelect.Name);
-
                             // This should never be needed but protect against unexpected timoing issue with sync/async processing
                             if (!ShownVariationTree.HasLinesCalculated())
                             {
@@ -489,7 +472,6 @@ namespace ChessForge
                             string lineId = ShownVariationTree.GetDefaultLineIdForNode(nodeId);
 
                             SelectAndHighlightLine(lineId, nodeId);
-                            LearningMode.ActiveLineId = lineId;
                         }
 
                         _selectedRun.Background = ChessForgeColors.CurrentTheme.RtbSelectRunBackground;
