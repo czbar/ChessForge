@@ -153,26 +153,14 @@ namespace ChessForge
         /// </summary>
         /// <param name="lineId"></param>
         /// <param name="nodeId"></param>
-        public void SelectAndHighlightLine(string lineId, int nodeId)
+        public void SetAndSelectActiveLine(string lineId, int nodeId)
         {
             // TODO: do not select line and therefore repaint everything if the clicked line is already selected
             // UNLESS there is "copy select" active
             ObservableCollection<TreeNode> lineToSelect = ShownVariationTree.GetNodesForLine(lineId);
             WorkbookManager.SessionWorkbook.ActiveVariationTree.SetSelectedLineAndMove(lineId, nodeId);
-            foreach (TreeNode nd in lineToSelect)
-            {
-                if (nd.NodeId != 0)
-                {
-                    if (_dictNodeToRun.TryGetValue(nd.NodeId, out Run run))
-                    {
-                        if (run.Background != ChessForgeColors.CurrentTheme.RtbSelectLineBackground)
-                        {
-                            run.Background = ChessForgeColors.CurrentTheme.RtbSelectLineBackground;
-                        }
-                    }
-                }
-            }
             _mainWin.SetActiveLine(lineToSelect, nodeId);
+            HighlightActiveLine();
         }
 
         /// <summary>
@@ -220,7 +208,10 @@ namespace ChessForge
                     {
                         if (_dictNodeToRun.TryGetValue(nd.NodeId, out Run run))
                         {
-                            run.Background = ChessForgeColors.CurrentTheme.RtbSelectLineBackground;
+                            if (run.Background != ChessForgeColors.CurrentTheme.RtbSelectLineBackground)
+                            {
+                                run.Background = ChessForgeColors.CurrentTheme.RtbSelectLineBackground;
+                            }
                         }
                     }
                 }
@@ -471,7 +462,7 @@ namespace ChessForge
 
                             string lineId = ShownVariationTree.GetDefaultLineIdForNode(nodeId);
 
-                            SelectAndHighlightLine(lineId, nodeId);
+                            SetAndSelectActiveLine(lineId, nodeId);
                         }
 
                         _selectedRun.Background = ChessForgeColors.CurrentTheme.RtbSelectRunBackground;

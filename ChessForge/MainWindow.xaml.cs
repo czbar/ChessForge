@@ -2898,7 +2898,7 @@ namespace ChessForge
                         if (nd != null)
                         {
                             string lineId = ActiveVariationTree.GetDefaultLineIdForNode(nd.NodeId);
-                            ActiveTreeView.SelectAndHighlightLine(lineId, nd.NodeId);
+                            ActiveTreeView.SetAndSelectActiveLine(lineId, nd.NodeId);
                             RefreshSelectedActiveLineAndNode();
                         }
 
