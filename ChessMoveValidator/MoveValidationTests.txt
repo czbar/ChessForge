@@ -1,0 +1,12 @@
+rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1,e2e4,y,starting position
+rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1,g1h3,y,starting position
+rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1,b1c3,y,starting position
+rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1,e1g1,n,starting position (castle)
+
+r3k2r/pppppppp/8/8/8/8/PPPPPPPP/RN2K2R w KQkq - 0 1,e1g1,y,legal castle short 
+r3k2r/pppppppp/8/8/8/8/PPPPPPPP/RN2K2R w KQkq - 0 1,e1c1,n,castle illegal because of knight on b1
+r3k2r/pppppppp/8/8/8/8/PPPPPPPP/RN2K2R w KQkq - 0 1,e8g8,n,invalid because white on move
+r3k2r/pppppppp/8/8/8/8/PPPPPPPP/RN2K2R b KQkq - 0 1,e8g8,y,legal castle short black
+r3k2r/pppppppp/8/8/8/8/PPPPPPPP/RN2K2R b KQkq - 0 1,e8c8,y,legal castle long black
+
+rnbqkbnr/ppp1pppp/8/3pP3/8/8/PPPP1PPP/RNBQKBNR w KQkq d6 0 1, e5d6, y, en passant
