@@ -19,6 +19,8 @@ Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupChessForge", "SetupChe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenerateOpeningsDictionary", "GenerateOpeningsDictionary\GenerateOpeningsDictionary.csproj", "{A08DBC38-C466-42ED-A2DD-1B98B7F62A0D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessMoveValidator", "ChessMoveValidator\ChessMoveValidator.csproj", "{14B2B00E-92D0-4F58-9941-330B0C4207CF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{A08DBC38-C466-42ED-A2DD-1B98B7F62A0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A08DBC38-C466-42ED-A2DD-1B98B7F62A0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A08DBC38-C466-42ED-A2DD-1B98B7F62A0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14B2B00E-92D0-4F58-9941-330B0C4207CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14B2B00E-92D0-4F58-9941-330B0C4207CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14B2B00E-92D0-4F58-9941-330B0C4207CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14B2B00E-92D0-4F58-9941-330B0C4207CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
