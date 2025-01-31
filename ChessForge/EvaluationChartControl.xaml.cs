@@ -1117,7 +1117,7 @@ namespace ChessForge
                     }
                 }
 
-                AppState.MainWin.SelectLineAndMoveInWorkbookViews(AppState.MainWin.ActiveTreeView, lineId,
+                AppState.MainWin.ActiveTreeView.SelectLineAndMoveInWorkbookViews(lineId,
                     AppState.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false), true);
             }
         }

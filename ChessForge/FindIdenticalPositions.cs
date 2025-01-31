@@ -142,7 +142,7 @@ namespace ChessForge
                             view.BuildFlowDocumentForVariationTree(false);
                         }
                     }
-                    AppState.MainWin.SelectLineAndMoveInWorkbookViews(AppState.MainWin.ActiveTreeView, item.Node.LineId,
+                    AppState.MainWin.ActiveTreeView.SelectLineAndMoveInWorkbookViews(item.Node.LineId,
                         AppState.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false), true);
                     break;
             }

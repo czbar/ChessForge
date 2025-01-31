@@ -237,7 +237,7 @@ namespace ChessForge
             LastAnimatedMoveIndex = index + 1;
             if (LastAnimatedMoveIndex < _treeLineToAnimate.Count)
             {
-                _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, _mainWin.ActiveLine.GetLineId(), LastAnimatedMoveIndex, true);
+                _mainWin.ActiveTreeView.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveLine.GetLineId(), LastAnimatedMoveIndex, true);
                 RequestNodeAnimation(_treeLineToAnimate[LastAnimatedMoveIndex]);
             }
             else
@@ -255,7 +255,7 @@ namespace ChessForge
         {
             IsReplayActive = false;
             _commentBox.RestoreTitleMessage();
-            _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, _mainWin.ActiveLine.Line.GetLineId(), _treeLineToAnimate.Count - 1, true);
+            _mainWin.ActiveTreeView.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveLine.Line.GetLineId(), _treeLineToAnimate.Count - 1, true);
         }
 
         /// <summary>

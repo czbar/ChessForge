@@ -610,7 +610,7 @@ namespace ChessForge
                 if (AppState.CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW && EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
                 {
                     _mainWin.ActiveLine.SelectPly((int)nd.Parent.Position.MoveNumber, nd.Parent.Position.ColorToMove);
-                    _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, _mainWin.ActiveLine.GetLineId(), nodeIndex, true);
+                    _mainWin.ActiveTreeView.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveLine.GetLineId(), nodeIndex, true);
                 }
             });
 

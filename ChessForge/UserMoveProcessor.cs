@@ -353,12 +353,12 @@ namespace ChessForge
                         }
 #endif
                         AppState.MainWin.UiEvalChart.IsDirty = true;
-                        AppState.MainWin.SelectLineAndMoveInWorkbookViews(AppState.MainWin.ActiveTreeView, AppState.MainWin.ActiveLine.GetLineId(), AppState.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false), true);
+                        AppState.MainWin.ActiveTreeView.SelectLineAndMoveInWorkbookViews(AppState.MainWin.ActiveLine.GetLineId(), AppState.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false), true);
                     }
                     else
                     {
                         AppState.MainWin.SetActiveLine(nd.LineId, nd.NodeId, false);
-                        AppState.MainWin.SelectLineAndMoveInWorkbookViews(AppState.MainWin.ActiveTreeView, AppState.MainWin.ActiveLine.GetLineId(), AppState.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false), true);
+                        AppState.MainWin.ActiveTreeView.SelectLineAndMoveInWorkbookViews(AppState.MainWin.ActiveLine.GetLineId(), AppState.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false), true);
                     }
                 }
                 else
@@ -369,7 +369,7 @@ namespace ChessForge
                     AppState.MainWin.ActiveVariationTree.SetLineIdForNewNode(nd);
                     AppState.MainWin.SetActiveLine(nd.LineId, nd.NodeId, false);
                     AppState.MainWin.RebuildActiveTreeView();
-                    AppState.MainWin.SelectLineAndMoveInWorkbookViews(AppState.MainWin.ActiveTreeView, AppState.MainWin.ActiveLine.GetLineId(), AppState.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false), true);
+                    AppState.MainWin.ActiveTreeView.SelectLineAndMoveInWorkbookViews(AppState.MainWin.ActiveLine.GetLineId(), AppState.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false), true);
                 }
 
                 try

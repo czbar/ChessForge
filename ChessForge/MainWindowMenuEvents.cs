@@ -3322,7 +3322,7 @@ namespace ChessForge
 
                             ActiveVariationTree.BuildLines();
                             ActiveTreeView.BuildFlowDocumentForVariationTree(false);
-                            SelectLineAndMoveInWorkbookViews(ActiveTreeView, nd.LineId, ActiveLine.GetSelectedPlyNodeIndex(false), false);
+                            ActiveTreeView.SelectLineAndMoveInWorkbookViews(nd.LineId, ActiveLine.GetSelectedPlyNodeIndex(false), false);
                             PulseManager.BringSelectedRunIntoView();
                         }
                     }

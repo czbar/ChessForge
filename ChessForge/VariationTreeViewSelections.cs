@@ -11,6 +11,55 @@ namespace ChessForge
 {
     public partial class VariationTreeView : RichTextBuilder    
     {
+
+        /// <summary>
+        /// Sets a line and move in the VariationTree view.
+        /// This only sets and highlights the selected line and move, it does not update the ActiveLine.
+        /// It is called when left/right arrow or Home/End keys are pressed or when a move is clicked
+        /// in the Scoresheet or the Evaluation Chart (since those actions do not change the ActiveLine).
+        /// </summary>
+        /// <param name="lineId"></param>
+        /// <param name="index"></param>
+        public void SelectLineAndMoveInWorkbookViews(string lineId, int index, bool queryExplorer)
+        {
+            try
+            {
+                TreeNode nd = _mainWin.ActiveLine.GetNodeAtIndex(index);
+                if (nd == null)
+                {
+                    // try the node at index 0
+                    nd = _mainWin.ActiveLine.GetNodeAtIndex(0);
+                }
+
+                if (nd != null && WorkbookManager.SessionWorkbook.ActiveVariationTree != null)
+                {
+                    WorkbookManager.SessionWorkbook.ActiveVariationTree.SetSelectedLineAndMove(lineId, nd.NodeId);
+                    HighlightLineAndMove(HostRtb.Document, lineId, nd.NodeId);
+                    if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS && AppState.ActiveTab != TabViewType.CHAPTERS)
+                    {
+                        _mainWin.EvaluateActiveLineSelectedPosition(nd);
+                    }
+                    if (AppState.MainWin.UiEvalChart.Visibility == System.Windows.Visibility.Visible)
+                    {
+                        if (AppState.MainWin.UiEvalChart.IsDirty)
+                        {
+                            MultiTextBoxManager.ShowEvaluationChart(true);
+                        }
+                        AppState.MainWin.UiEvalChart.SelectMove(nd);
+                    }
+                    if (queryExplorer)
+                    {
+                        _mainWin.OpeningStatsView.SetOpeningName();
+                        WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, ShownVariationTree.SelectedNode);
+                    }
+                }
+            }
+            catch
+            {
+            }
+        }
+
+
         /// <summary>
         /// Selects the passed node along with its line id.
         /// TODO: this should not be necessary, replace with a call to SelectNode(TreeNode);
