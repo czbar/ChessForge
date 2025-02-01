@@ -338,12 +338,12 @@ namespace ChessForge
                     {
                         AppState.MainWin.AppendNodeToActiveLine(nd, false);
 
-                        AppState.MainWin.RebuildActiveTreeView();
-#if false
-                    //TODO: optimizations below did not quite work. Need a performance refactor
-
-                        // in exercise this can be the first move (nd.Parent.NodeId == 0) in which case we want to call a Rebuild so we get the move number
-                        if (nd.Parent == null || nd.Parent.NodeId == 0 || AppState.MainWin.ActiveVariationTree.NodeHasSiblings(nd.Parent.NodeId))
+                        // to improve performance we only need to rebuild the tree if the new move has siblings
+                        // or if the parent has siblings (in which there may be layout changes)
+                        // or in the exercise view, if this is the first move (nd.Parent.NodeId == 0)
+                        // in which case we want to call a Rebuild so we get the move number
+                        if (nd.Parent == null || nd.Parent.NodeId == 0 || nd.Parent.Children.Count > 1 
+                            || AppState.MainWin.ActiveVariationTree.NodeHasSiblings(nd.Parent.NodeId))
                         {
                             AppState.MainWin.RebuildActiveTreeView();
                         }
@@ -351,7 +351,7 @@ namespace ChessForge
                         {
                             AppState.MainWin.AddNewNodeToVariationTreeView(nd);
                         }
-#endif
+
                         AppState.MainWin.UiEvalChart.IsDirty = true;
                         AppState.MainWin.ActiveTreeView.SelectLineAndMoveInWorkbookViews(AppState.MainWin.ActiveLine.GetLineId(), AppState.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false), true);
                     }
