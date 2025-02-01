@@ -1476,10 +1476,10 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Finds the parent node of the passed node
-        /// and insert this node after it.
-        /// The caller needs to ensure that this is logically correct
-        /// e.g. that this is a new leaf in a line
+        /// Finds the parent node of the passed node and insert this node after it.
+        /// This is called when the user makes a move on the board and we ensured
+        /// that a simple insertion will do as it does not change the structure of the view.
+        /// The caller needs to ensure that this is logically correct.
         /// </summary>
         /// <param name="nd"></param>
         public void AddNewNodeToDocument(TreeNode nd)
@@ -1509,14 +1509,7 @@ namespace ChessForge
 
                 r.FontStyle = rParent.FontStyle;
                 r.FontSize = rParent.FontSize;
-                if (nd.IsMainLine())
-                {
-                    r.FontWeight = FontWeights.Bold;
-                }
-                else
-                {
-                    r.FontWeight = FontWeights.Normal;
-                }
+                r.FontWeight = rParent.FontWeight;
                 r.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
 
                 _dictNodeToRun[nd.NodeId] = r;
