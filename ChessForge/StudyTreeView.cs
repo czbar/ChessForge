@@ -39,15 +39,6 @@ namespace ChessForge
         public LineSectorManager LineManager;
 
         /// <summary>
-        /// Safe accessor to the chapter's variation index depth.
-        /// </summary>
-        /// <returns></returns>
-        public int VariationIndexDepth
-        {
-            get { return AppState.ActiveChapter == null ? Configuration.DefaultIndexDepth : AppState.ActiveChapter.VariationIndexDepth.Value; }
-        }
-
-        /// <summary>
         /// Instantiates the view.
         /// </summary>
         /// <param name="rtb"></param>
@@ -210,56 +201,12 @@ namespace ChessForge
             {
                 if (sector.Nodes.Count > 0)
                 {
-                    if (IsEffectiveIndexLevel(sector.BranchLevel) && sector.Nodes[0].LineId != "1")
+                    if (LineManager.IsEffectiveIndexLevel(sector.BranchLevel) && sector.Nodes[0].LineId != "1")
                     {
                         sector.Nodes[0].IsCollapsed = true;
                     }
                 }
             }
-        }
-
-        /// <summary>
-        /// Returns the value VariationIndexDepth that will be adjusted
-        /// if we currently do not have enough branch levels
-        /// </summary>
-        private int EffectiveIndexDepth
-        {
-            get
-            {
-                int depth = VariationIndexDepth;
-                if (depth > LineManager.MaxBranchLevel - 1)
-                {
-                    depth = LineManager.MaxBranchLevel - 1;
-                }
-                else if (VariationIndexDepth == 0 && !LineManager.HasIndexLevelZero())
-                {
-                    // we configured level 0 but there is no stem line to show
-                    depth = -1;
-                }
-                return depth;
-            }
-        }
-
-        /// <summary>
-        /// Checks if the passed branch level is within
-        /// the effective levels.
-        /// </summary>
-        /// <param name="branchLevel"></param>
-        /// <returns></returns>
-        private bool IsEffectiveIndexLevel(int branchLevel)
-        {
-            return branchLevel <= EffectiveIndexDepth + 1;
-        }
-
-        /// <summary>
-        /// Checks if the passed branch level is the
-        /// last within the effective levels.
-        /// </summary>
-        /// <param name="branchLevel"></param>
-        /// <returns></returns>
-        private bool IsLastEffectiveIndexLine(int branchLevel)
-        {
-            return branchLevel == EffectiveIndexDepth + 1;
         }
 
         /// <summary>
@@ -271,7 +218,7 @@ namespace ChessForge
             Chapter chapter = AppState.ActiveChapter;
             if (chapter != null)
             {
-                int depth = EffectiveIndexDepth;
+                int depth = LineManager.EffectiveIndexDepth;
                 if (depth == -1 && !LineManager.HasIndexLevelZero())
                 {
                     depth = 1;
@@ -302,7 +249,7 @@ namespace ChessForge
             Chapter chapter = AppState.ActiveChapter;
             if (chapter != null)
             {
-                int depth = EffectiveIndexDepth;
+                int depth = LineManager.EffectiveIndexDepth;
                 if (depth == 1 && !LineManager.HasIndexLevelZero())
                 {
                     depth = -1;
@@ -361,7 +308,7 @@ namespace ChessForge
         /// </summary>
         private void CreateVariationIndexPara(FlowDocument doc)
         {
-            if (EffectiveIndexDepth >= 0)
+            if (LineManager.EffectiveIndexDepth >= 0)
             {
                 Paragraph para = CreateParagraph("0", true);
                 para.Name = RichTextBoxUtilities.StudyIndexParagraphName;
@@ -380,7 +327,7 @@ namespace ChessForge
                     }
 
                     int level = sector.BranchLevel;
-                    if (IsEffectiveIndexLevel(level))
+                    if (LineManager.IsEffectiveIndexLevel(level))
                     {
                         if (first)
                         {
@@ -419,7 +366,7 @@ namespace ChessForge
 
                             Run rIdTitle = BuildSectionIdTitle(sector.Nodes[0].LineId);
                             para.Inlines.Add(rIdTitle);
-                            if (IsLastEffectiveIndexLine(level) || sector.Nodes[sector.Nodes.Count - 1].Children.Count == 0)
+                            if (LineManager.IsLastEffectiveIndexLine(level) || sector.Nodes[sector.Nodes.Count - 1].Children.Count == 0)
                             {
                                 BuildIndexNodeAndAddToPara(sector.Nodes[0], true, para);
                             }
@@ -512,7 +459,7 @@ namespace ChessForge
                     int topMarginExtra = 0;
                     int bottomMarginExtra = 0;
 
-                    if (!IsEffectiveIndexLevel(sector.BranchLevel))
+                    if (!LineManager.IsEffectiveIndexLevel(sector.BranchLevel))
                     {
                         // add extra room above/below first/last line in a block at the same level 
                         if (n > 0 && LineManager.LineSectors[n - 1].DisplayLevel < sector.DisplayLevel)
@@ -549,13 +496,13 @@ namespace ChessForge
                         para.FontWeight = FontWeights.Normal;
                     }
 
-                    if (IsEffectiveIndexLevel(sector.BranchLevel))
+                    if (LineManager.IsEffectiveIndexLevel(sector.BranchLevel))
                     {
                         InsertIndexPrefixRun(sector, para);
                     }
                     else
                     {
-                        if (IsLastEffectiveIndexLine(sector.DisplayLevel + 1))
+                        if (LineManager.IsLastEffectiveIndexLine(sector.DisplayLevel + 1))
                         {
                             para.FontWeight = FontWeights.DemiBold;
                         }
@@ -649,11 +596,11 @@ namespace ChessForge
                     r.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
                     parenthesis = false;
 
-                    if (i == 0 && sector.FirstNodeColor != null && !IsEffectiveIndexLevel(sector.BranchLevel))
+                    if (i == 0 && sector.FirstNodeColor != null && !LineManager.IsEffectiveIndexLevel(sector.BranchLevel))
                     {
                         r.Foreground = sector.FirstNodeColor;
                     }
-                    if (sector.Nodes.Count > 1 && i == sector.Nodes.Count - 1 && sector.BranchLevel >= EffectiveIndexDepth)
+                    if (sector.Nodes.Count > 1 && i == sector.Nodes.Count - 1 && sector.BranchLevel >= LineManager.EffectiveIndexDepth)
                     {
                         ColorLastNode(sector, r, nd, levelGroup);
                     }
@@ -724,7 +671,7 @@ namespace ChessForge
         {
             // do not color if this is an index level unless this is the last index level and is not the first node.
             //if (!LineManager.IsIndexLevel(sector.BranchLevel) || LineManager.IsLastIndexLine(sector.BranchLevel) && nd != sector.Nodes[0])
-            if (!IsEffectiveIndexLevel(sector.BranchLevel) || IsLastEffectiveIndexLine(sector.BranchLevel) && nd != sector.Nodes[0])
+            if (!LineManager.IsEffectiveIndexLevel(sector.BranchLevel) || LineManager.IsLastEffectiveIndexLine(sector.BranchLevel) && nd != sector.Nodes[0])
             {
                 if (sector.Nodes.Count > 0 && nd.Parent != null && nd.Parent.Children.Count > 1)
                 {
@@ -787,7 +734,7 @@ namespace ChessForge
                         // if new guid was generated, it means that there was a second click
                         if (guid == _clickPageHeaderGuid)
                         {
-                            if (VariationIndexDepth == -1)
+                            if (VariationTreeViewUtils.VariationIndexDepth == -1)
                             {
                                 IncrementVariationIndexDepth();
                             }
@@ -1004,7 +951,7 @@ namespace ChessForge
 
             foreach (LineSector sector in LineManager.LineSectors)
             {
-                if (!IsEffectiveIndexLevel(sector.BranchLevel))
+                if (!LineManager.IsEffectiveIndexLevel(sector.BranchLevel))
                 {
                     break;
                 }
@@ -1164,7 +1111,7 @@ namespace ChessForge
             Run r = e.Source as Run;
             if (r != null)
             {
-                if (EffectiveIndexDepth > -1)
+                if (LineManager.EffectiveIndexDepth > -1)
                 {
                     Chapter chapter = AppState.ActiveChapter;
                     if (chapter != null)
@@ -1188,7 +1135,7 @@ namespace ChessForge
             Run r = e.Source as Run;
             if (r != null)
             {
-                if (EffectiveIndexDepth < Configuration.MAX_INDEX_DEPTH && EffectiveIndexDepth < LineManager.MaxBranchLevel - 1)
+                if (LineManager.EffectiveIndexDepth < Configuration.MAX_INDEX_DEPTH && LineManager.EffectiveIndexDepth < LineManager.MaxBranchLevel - 1)
                 {
                     Chapter chapter = AppState.ActiveChapter;
                     if (chapter != null)

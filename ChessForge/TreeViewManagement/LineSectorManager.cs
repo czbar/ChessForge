@@ -1,8 +1,8 @@
 ﻿using ChessPosition;
 using GameTree;
-using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Windows;
+using System.Windows.Documents;
 
 namespace ChessForge
 {
@@ -85,7 +85,7 @@ namespace ChessForge
         /// <returns></returns>
         private bool IsIndexLevel(int branchLevel)
         {
-            return branchLevel <= (_studyView.VariationIndexDepth + 1);
+            return branchLevel <= (VariationTreeViewUtils.VariationIndexDepth + 1);
         }
 
         // hosting Study View
@@ -128,7 +128,7 @@ namespace ChessForge
         /// <returns></returns>
         private bool IsLastIndexLine(int branchLevel)
         {
-            return branchLevel == (_studyView.VariationIndexDepth + 1);
+            return branchLevel == (VariationTreeViewUtils.VariationIndexDepth + 1);
         }
 
         /// <summary>
@@ -148,6 +148,142 @@ namespace ChessForge
 
             CombineSiblingLineSectors();
             CombineTopLineSectors();
+
+            // Calculate the associated paragraph attributes for each sector
+            BuildParaAttrs();
+        }
+
+        private void BuildParaAttrs()
+        {
+            List<LineSector> doNotShow = new List<LineSector>();
+            int levelGroup = 0;
+            bool firstAtIndexLevel2 = true;
+
+            for (int n = 0; n < LineSectors.Count; n++)
+            {
+                LineSector sector = LineSectors[n];
+                //TODO:... handle collapsed sectors too!
+
+                if (doNotShow.Find(x => x == sector) != null)
+                {
+                    continue;
+                }
+
+                if (sector.Nodes.Count == 0 || sector.Nodes.Count == 1 && sector.Nodes[0].NodeId == 0 && string.IsNullOrEmpty(sector.Nodes[0].Comment))
+                {
+                    continue;
+                }
+                if (n > 0 && sector.DisplayLevel != LineSectors[n - 1].BranchLevel)
+                {
+                    levelGroup++;
+                }
+
+                try
+                {
+                    Paragraph para;
+                    if (sector.DisplayLevel < 0)
+                    {
+                        sector.DisplayLevel = 0;
+                    }
+
+                    int topMarginExtra = 0;
+                    int bottomMarginExtra = 0;
+
+                    if (!IsEffectiveIndexLevel(sector.BranchLevel))
+                    {
+                        // add extra room above/below first/last line in a block at the same level 
+                        if (n > 0 && LineSectors[n - 1].DisplayLevel < sector.DisplayLevel)
+                        {
+                            topMarginExtra = DisplayLevelAttrs.EXTRA_MARGIN;
+                        }
+                        if (n < LineSectors.Count - 1 && LineSectors[n + 1].DisplayLevel < sector.DisplayLevel)
+                        {
+                            bottomMarginExtra = DisplayLevelAttrs.EXTRA_MARGIN;
+                        }
+                        // also make sure that the sector outside the indexed range is not expanded!
+                        foreach (TreeNode node in sector.Nodes)
+                        {
+                            node.IsCollapsed = false; // TODO: do we need this here
+                        }
+
+                    }
+                    else
+                    {
+                        // add extra room above an index line, unless this is the first line at level 2
+                        if (sector.BranchLevel == 2 && firstAtIndexLevel2)
+                        {
+                            firstAtIndexLevel2 = false;
+                        }
+                        else
+                        {
+                            topMarginExtra = DisplayLevelAttrs.EXTRA_MARGIN;
+                        }
+                    }
+
+                    para = DisplayLevelAttrs.CreateStudyParagraph(sector.DisplayLevel, topMarginExtra, bottomMarginExtra);
+                    if (para.FontWeight == FontWeights.Bold)
+                    {
+                        para.FontWeight = FontWeights.Normal;
+                    }
+
+                    if (!IsEffectiveIndexLevel(sector.BranchLevel))
+                    {
+                        if (IsLastEffectiveIndexLine(sector.DisplayLevel + 1))
+                        {
+                            para.FontWeight = FontWeights.DemiBold;
+                        }
+                    }
+
+                }
+                catch
+                {
+                }
+            }
+        }
+
+        /// <summary>
+        /// Checks if the passed branch level is within
+        /// the effective levels.
+        /// </summary>
+        /// <param name="branchLevel"></param>
+        /// <returns></returns>
+        public bool IsEffectiveIndexLevel(int branchLevel)
+        {
+            return branchLevel <= EffectiveIndexDepth + 1;
+        }
+
+        /// <summary>
+        /// Checks if the passed branch level is the
+        /// last within the effective levels.
+        /// </summary>
+        /// <param name="branchLevel"></param>
+        /// <returns></returns>
+        public bool IsLastEffectiveIndexLine(int branchLevel)
+        {
+            return branchLevel == EffectiveIndexDepth + 1;
+        }
+
+
+        /// <summary>
+        /// Returns the value VariationIndexDepth that will be adjusted
+        /// if we currently do not have enough branch levels
+        /// </summary>
+        public int EffectiveIndexDepth
+        {
+            get
+            {
+                int depth = VariationTreeViewUtils.VariationIndexDepth;
+                if (depth > MaxBranchLevel - 1)
+                {
+                    depth = MaxBranchLevel - 1;
+                }
+                else if (VariationTreeViewUtils.VariationIndexDepth == 0 && !HasIndexLevelZero())
+                {
+                    // we configured level 0 but there is no stem line to show
+                    depth = -1;
+                }
+                return depth;
+            }
         }
 
         /// <summary>
