@@ -336,11 +336,13 @@
     <Compile Include="SystemClipboard.cs" />
     <Compile Include="TopGamesViewRow.cs" />
     <Compile Include="TrainingViewMoveHandlers.cs" />
+    <Compile Include="TreeViewManagement\SectorParaAttrs.cs" />
     <Compile Include="VariationTreeViewBuild.cs" />
     <Compile Include="VariationTreeViewDiagram.cs" />
     <Compile Include="VariationTreeViewEvents.cs" />
     <Compile Include="VariationTreeViewMoveRuns.cs" />
     <Compile Include="VariationTreeViewSelections.cs" />
+    <Compile Include="VariationTreeViewUtils.cs" />
     <Compile Include="WorkbookLocation.cs" />
     <Compile Include="WorkbookLocationNavigator.cs" />
     <Compile Include="WorkbookOperation.cs" />
