@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 
-namespace ChessForge.TreeViewManagement
+namespace GameTree
 {
     /// <summary>
     /// Attributes of a paragraph represented by the Sector.
@@ -27,7 +27,10 @@ namespace ChessForge.TreeViewManagement
         /// Foreground color of the paragraph.
         /// </summary>
         public Brush Foreground { get; set; }
-        
+
+        /// <summary>
+        /// Background color of the paragraph.
+        /// </summary>
         public string Background { get; set; }
 
         /// <summary>
