@@ -43,6 +43,11 @@ namespace GameTree
         private int _displayLevel = 0;
 
         /// <summary>
+        /// Attributes of the paragraph represented by the Sector.
+        /// </summary>
+        public SectorParaAttrs ParaAttrs;
+
+        /// <summary>
         /// Id of this LineSector.
         /// </summary>
         public int LineSectorId= 0;
