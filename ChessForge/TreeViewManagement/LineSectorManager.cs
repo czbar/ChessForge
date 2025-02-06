@@ -2,7 +2,6 @@
 using GameTree;
 using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Documents;
 
 namespace ChessForge
 {
@@ -153,6 +152,9 @@ namespace ChessForge
             BuildParaAttrs();
         }
 
+        /// <summary>
+        /// Builds the paragraph attributes for each sector.
+        /// </summary>
         private void BuildParaAttrs()
         {
             List<LineSector> doNotShow = new List<LineSector>();
@@ -162,7 +164,8 @@ namespace ChessForge
             for (int n = 0; n < LineSectors.Count; n++)
             {
                 LineSector sector = LineSectors[n];
-                //TODO:... handle collapsed sectors too!
+
+                //TODO:... handle collapsed sectors too! doNotShow
 
                 if (doNotShow.Find(x => x == sector) != null)
                 {
@@ -180,7 +183,6 @@ namespace ChessForge
 
                 try
                 {
-                    Paragraph para;
                     if (sector.DisplayLevel < 0)
                     {
                         sector.DisplayLevel = 0;
@@ -220,17 +222,17 @@ namespace ChessForge
                         }
                     }
 
-                    para = DisplayLevelAttrs.CreateStudyParagraph(sector.DisplayLevel, topMarginExtra, bottomMarginExtra);
-                    if (para.FontWeight == FontWeights.Bold)
+                    sector.ParaAttrs = DisplayLevelAttrs.CreateParagraphAttrs(sector.DisplayLevel, topMarginExtra, bottomMarginExtra);
+                    if (sector.ParaAttrs.FontWeight == FontWeights.Bold)
                     {
-                        para.FontWeight = FontWeights.Normal;
+                        sector.ParaAttrs.FontWeight = FontWeights.Normal;
                     }
 
                     if (!IsEffectiveIndexLevel(sector.BranchLevel))
                     {
                         if (IsLastEffectiveIndexLine(sector.DisplayLevel + 1))
                         {
-                            para.FontWeight = FontWeights.DemiBold;
+                            sector.ParaAttrs.FontWeight = FontWeights.DemiBold;
                         }
                     }
 
