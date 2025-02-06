@@ -1482,41 +1482,48 @@ namespace ChessForge
         /// The caller needs to ensure that this is logically correct.
         /// </summary>
         /// <param name="nd"></param>
-        public void AddNewNodeToDocument(TreeNode nd)
+        public void AppendNewMoveToBranch(TreeNode nd)
         {
             TreeNode parent = nd.Parent;
 
-            Inline rParent;
-            Paragraph para;
+            Run rParentMoveRun = _dictNodeToRun[parent.NodeId];
+            Paragraph para = _dictRunToParagraph[rParentMoveRun];
+
+            Inline rPreviousRun = rParentMoveRun;
 
             try
             {
                 if (_dictNodeToCommentRun.ContainsKey(parent.NodeId))
                 {
-                    rParent = _dictNodeToCommentRun[parent.NodeId];
-                    para = _dictCommentRunToParagraph[rParent];
+                    rPreviousRun = _dictNodeToCommentRun[parent.NodeId];
+                    // find the last run/part of the comment
+                    while (true)
+                    {
+                        if (rPreviousRun.NextInline == null || !rPreviousRun.NextInline.Name.StartsWith(_run_comment_))
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            rPreviousRun = rPreviousRun.NextInline;
+                        }
+                    }
                 }
-                else
-                {
-                    rParent = _dictNodeToRun[parent.NodeId];
-                    para = _dictRunToParagraph[rParent as Run];
-                }
 
+                Run runMove = new Run(MoveUtils.BuildSingleMoveText(nd, false, false, ShownVariationTree.MoveNumberOffset) + " ");
+                runMove.Name = _run_ + nd.NodeId.ToString();
+                runMove.PreviewMouseDown += EventRunClicked;
 
-                Run r = new Run(" " + MoveUtils.BuildSingleMoveText(nd, false, false, ShownVariationTree.MoveNumberOffset));
-                r.Name = _run_ + nd.NodeId.ToString();
-                r.PreviewMouseDown += EventRunClicked;
+                runMove.FontStyle = rParentMoveRun.FontStyle;
+                runMove.FontSize = rParentMoveRun.FontSize;
+                runMove.FontWeight = rParentMoveRun.FontWeight;
+                runMove.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
 
-                r.FontStyle = rParent.FontStyle;
-                r.FontSize = rParent.FontSize;
-                r.FontWeight = rParent.FontWeight;
-                r.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
+                _dictNodeToRun[nd.NodeId] = runMove;
+                _dictRunToParagraph[runMove] = para;
 
-                _dictNodeToRun[nd.NodeId] = r;
-                _dictRunToParagraph[r] = para;
-
-                para.Inlines.InsertAfter(rParent, r);
-                _lastAddedRun = r;
+                para.Inlines.InsertAfter(rPreviousRun, runMove);
+                _lastAddedRun = runMove;
             }
             catch { }
         }
