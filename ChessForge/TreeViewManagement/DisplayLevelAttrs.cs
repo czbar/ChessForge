@@ -1,4 +1,5 @@
 ﻿using ChessPosition;
+using GameTree;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
@@ -44,6 +45,36 @@ namespace ChessForge
             };
 
             return para;
+        }
+
+        /// <summary>
+        /// Creates a SectorParagraphAttributes object for a Sector.
+        /// </summary>
+        /// <param name="displayLevel"></param>
+        /// <param name="topMarginExtra"></param>
+        /// <param name="bottomMarginExtra"></param>
+        /// <returns></returns>
+        public static SectorParaAttrs CreateParagraphAttrs(int displayLevel, int topMarginExtra = 0, int bottomMarginExtra = 0)
+        {
+            int fontSize = Constants.BASE_FIXED_FONT_SIZE;
+            if (!Configuration.UseFixedFont)
+            {
+                fontSize = GetVariableFontSizeForLevel(displayLevel);
+            }
+            fontSize = GuiUtilities.AdjustFontSize(fontSize);
+
+            SectorParaAttrs attrs = new SectorParaAttrs
+            {
+                FontSize = fontSize,
+                FontWeight = displayLevel == 0 ? FontWeights.DemiBold : FontWeights.Normal,
+                TextAlignment = TextAlignment.Left,
+                Foreground = ChessForgeColors.CurrentTheme.RtbForeground,
+                Margin = new Thickness(20 * displayLevel, topMarginExtra, 0, 5 + bottomMarginExtra),
+                TopMarginExtra = topMarginExtra,
+                BottomMarginExtra = bottomMarginExtra
+            };
+
+            return attrs;
         }
 
         /// <summary>
