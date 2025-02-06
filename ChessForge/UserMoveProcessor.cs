@@ -349,7 +349,7 @@ namespace ChessForge
                         }
                         else
                         {
-                            AppState.MainWin.AddNewNodeToVariationTreeView(nd);
+                            AppState.MainWin.AppendNewMoveToTreeBranch(nd);
                         }
 
                         AppState.MainWin.UiEvalChart.IsDirty = true;

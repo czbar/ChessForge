@@ -2012,16 +2012,15 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Adds a new Node to the Workbook View,
-        /// avoiding the full rebuild (performance).
-        /// This can only be done "safely" if we are adding a move to a leaf.
+        /// Adds a new move to the active view, avoiding the full rebuild (performance!).
+        /// This can only be done "safely" if we are adding a move to a leaf at the end of a branch.
         /// </summary>
         /// <param name="nd"></param>
-        public void AddNewNodeToVariationTreeView(TreeNode nd)
+        public void AppendNewMoveToTreeBranch(TreeNode nd)
         {
             if (ActiveVariationTree != null && ActiveVariationTree.ShowTreeLines)
             {
-                ActiveTreeView.AddNewNodeToDocument(nd);
+                ActiveTreeView.AppendNewMoveToBranch(nd);
             }
         }
 
