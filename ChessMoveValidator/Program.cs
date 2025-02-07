@@ -32,26 +32,42 @@ namespace ChessMoveValidator
 
             foreach (string line in lines)
             {
-                bool? result;
-                output.AppendLine(ProcessTestLine(line, out result));
-                if (result.HasValue)
+                if (line.Length == 0 || line[0] == '#')
                 {
-                    if (result.Value)
+                    output.AppendLine(line);
+                    Console.WriteLine(line);
+                }
+                else
+                {
+                    bool? result;
+
+                    string outputLine = ProcessTestLine(line, out result);
+                    output.AppendLine(outputLine);
+                    Console.WriteLine(outputLine);
+
+                    if (result.HasValue)
                     {
-                        passCount++;
-                    }
-                    else
-                    {
-                        failCount++;
+                        if (result.Value)
+                        {
+                            passCount++;
+                        }
+                        else
+                        {
+                            failCount++;
+                        }
                     }
                 }
             }
 
             File.WriteAllText(outputFile, output.ToString());
-            
+
+            Console.WriteLine("");
+            Console.WriteLine("***************");
+            Console.WriteLine("");
             Console.WriteLine("Tests complete. Results written to " + outputFile);
             Console.WriteLine("Pass count: " + passCount);
             Console.WriteLine("Fail count: " + failCount);
+            Console.ReadLine();
         }
 
         /// <summary>
@@ -60,12 +76,11 @@ namespace ChessMoveValidator
         /// <param name="line"></param>
         /// <param name="result"></param>
         /// <returns></returns>
-        static string ProcessTestLine(string line ,out bool? result)
+        static string ProcessTestLine(string line ,out bool? isPass)
         {
-            result = null;
+            isPass = null;
 
             StringBuilder sb = new StringBuilder();
-
             string[] parts = line.Split(',');
             if (parts.Length >= 3)
             {
@@ -78,20 +93,42 @@ namespace ChessMoveValidator
                     comment = parts[3].Trim();
                 }
 
-                bool isValid = ChessMoveValidator.ValidateChessMove(fen, move);
+                bool? isValid = false;
+                try
+                {
+                    isValid = ChessMoveValidator.ValidateChessMove(fen, move);
+                }
+                catch
+                {
+                    isValid = null;
+                }
 
-                bool isPass = isValid == expectedResult;
-                result = isPass;
+                isPass = isValid == expectedResult;
+                if (!isValid.HasValue)
+                {
+                    sb.Append("ERROR: ");
+                }
+                else
+                {
+                    sb.Append(isPass == true ? "PASS: " : "FAIL: ");
+                }
 
-                sb.Append(isValid == isPass ? "PASS: " : "FAIL: ");
                 sb.Append("fen=" + fen);
                 sb.Append(", move=" + move);
-                sb.Append(", expected result=" + (expectedResult ? "valid" : "invalid"));
-                sb.Append(", actual=" + (isValid ? "valid" : "invalid"));
+
+                if (isValid.HasValue)
+                {
+                    sb.Append(", expected result=" + (expectedResult ? "valid" : "invalid"));
+                    sb.Append(", actual=" + (isValid == true ? "valid" : "invalid"));
+                }
                 if (!string.IsNullOrEmpty(comment))
                 {
                     sb.Append(", comment=" + comment);
                 }
+            }
+            else
+            {
+                sb.Append("ERROR: Invalid test line format");
             }
 
             return sb.ToString();
