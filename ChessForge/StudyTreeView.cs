@@ -490,7 +490,8 @@ namespace ChessForge
                         }
                     }
 
-                    para = DisplayLevelAttrs.CreateStudyParagraph(sector.DisplayLevel, topMarginExtra, bottomMarginExtra);
+                    //para = DisplayLevelAttrs.CreateStudyParagraph(sector.DisplayLevel, topMarginExtra, bottomMarginExtra);
+                    para = DisplayLevelAttrs.CreateStudyParagraph(sector.ParaAttrs);
                     if (para.FontWeight == FontWeights.Bold)
                     {
                         para.FontWeight = FontWeights.Normal;
@@ -596,13 +597,17 @@ namespace ChessForge
                     r.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
                     parenthesis = false;
 
-                    if (i == 0 && sector.FirstNodeColor != null && !LineManager.IsEffectiveIndexLevel(sector.BranchLevel))
+                    if (i == 0 && sector.ParaAttrs.FirstNodeColor != null && !LineManager.IsEffectiveIndexLevel(sector.BranchLevel))
                     {
-                        r.Foreground = sector.FirstNodeColor;
+                        r.Foreground = sector.ParaAttrs.FirstNodeColor;
                     }
                     if (sector.Nodes.Count > 1 && i == sector.Nodes.Count - 1 && sector.BranchLevel >= LineManager.EffectiveIndexDepth)
                     {
-                        ColorLastNode(sector, r, nd, levelGroup);
+                        if (sector.ParaAttrs.LastNodeColor != null)
+                        {
+                            r.Foreground = sector.ParaAttrs.LastNodeColor;
+                        }
+                        //ColorLastNode(sector, r, nd, levelGroup);
                     }
                 }
                 includeNumber = diagram;
@@ -683,7 +688,7 @@ namespace ChessForge
                 {
                     if (nd.Children.Count == 0 || ls.Nodes[0] != nd.Children[0])
                     {
-                        ls.FirstNodeColor = DisplayLevelAttrs.GetBrushForLastMove(sector.DisplayLevel, levelGroup);
+                        ls.ParaAttrs.FirstNodeColor = DisplayLevelAttrs.GetBrushForLastMove(sector.DisplayLevel, levelGroup);
                     }
                 }
             }
