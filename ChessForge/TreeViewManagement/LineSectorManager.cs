@@ -164,11 +164,14 @@ namespace ChessForge
             for (int n = 0; n < LineSectors.Count; n++)
             {
                 LineSector sector = LineSectors[n];
-
-                //TODO:... handle collapsed sectors too! doNotShow
-
                 if (doNotShow.Find(x => x == sector) != null)
                 {
+                    continue;
+                }
+
+                if (sector.IsCollapsed)
+                {
+                    GetSubTree(sector, doNotShow);
                     continue;
                 }
 
@@ -222,7 +225,7 @@ namespace ChessForge
                         }
                     }
 
-                    sector.ParaAttrs = DisplayLevelAttrs.CreateParagraphAttrs(sector.DisplayLevel, topMarginExtra, bottomMarginExtra);
+                    DisplayLevelAttrs.CreateParagraphAttrs(sector.ParaAttrs, sector.DisplayLevel, topMarginExtra, bottomMarginExtra);
                     if (sector.ParaAttrs.FontWeight == FontWeights.Bold)
                     {
                         sector.ParaAttrs.FontWeight = FontWeights.Normal;
@@ -236,11 +239,50 @@ namespace ChessForge
                         }
                     }
 
+                    SetFirstLastNodeColors(n, levelGroup);
+
                 }
                 catch
                 {
                 }
             }
+        }
+
+        /// <summary>
+        /// Sets the colors for the last node and the first nodes of child sectors.
+        /// </summary>
+        /// <param name="sectorIndex"></param>
+        /// <param name="levelGroup"></param>
+        private void SetFirstLastNodeColors(int sectorIndex, int levelGroup)
+        {
+            LineSector sector = LineSectors[sectorIndex];
+
+            TreeNode nd = null;
+            int i = sector.Nodes.Count - 1;
+
+            if (i >= 0)
+            {
+                nd = sector.Nodes[i];
+            }
+
+            // do not color if this is an index level unless this is the last index level and is not the first node.
+            if (nd != null && !IsEffectiveIndexLevel(sector.BranchLevel) || IsLastEffectiveIndexLine(sector.BranchLevel) && nd != sector.Nodes[0])
+            {
+                if (sector.Nodes.Count > 0 && nd.Parent != null && nd.Parent.Children.Count > 1)
+                {
+                    sector.ParaAttrs.LastNodeColor = DisplayLevelAttrs.GetBrushForLastMove(sector.DisplayLevel, levelGroup);
+                }
+
+                // except the first child as it will be the continuation of the top line
+                foreach (LineSector ls in sector.Children)
+                {
+                    if (nd.Children.Count == 0 || ls.Nodes[0] != nd.Children[0])
+                    {
+                        ls.ParaAttrs.FirstNodeColor = DisplayLevelAttrs.GetBrushForLastMove(sector.DisplayLevel, levelGroup);
+                    }
+                }
+            }
+
         }
 
         /// <summary>
