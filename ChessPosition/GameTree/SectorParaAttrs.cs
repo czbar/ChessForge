@@ -8,6 +8,12 @@ namespace GameTree
     /// </summary>
     public class SectorParaAttrs
     {
+
+        /// <summary>
+        /// Display level of the paragraph.
+        /// </summary>
+        public int DisplayLevel { get; set; }
+
         /// <summary>
         /// Font size of the paragraph.
         /// </summary>
@@ -32,6 +38,16 @@ namespace GameTree
         /// Background color of the paragraph.
         /// </summary>
         public string Background { get; set; }
+
+        /// <summary>
+        /// Color to use for the first node in the sector, if any
+        /// </summary>
+        public Brush FirstNodeColor { get; set; }
+
+        /// <summary>
+        /// Color to use for the last node in the sector, if any
+        /// </summary>
+        public Brush LastNodeColor { get; set; }
 
         /// <summary>
         /// Margin of the paragraph.
