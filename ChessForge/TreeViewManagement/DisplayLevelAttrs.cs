@@ -19,6 +19,7 @@ namespace ChessForge
 
         /// <summary>
         /// Creates a paragraph for the main Study View area.
+        /// TODO: this to be DEPRECATED as we will be creating paragraphs using SectorParaAttrs.
         /// </summary>
         /// <param name="displayLevel"></param>
         /// <param name="topMarginExtra"></param>
@@ -48,13 +49,33 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Creates a paragraph for the main Study View area.
+        /// </summary>
+        /// <param name="attrs"></param>
+        /// <returns></returns>
+        public static Paragraph CreateStudyParagraph(SectorParaAttrs attrs)
+        {
+            // create the paragraph.
+            Paragraph para = new Paragraph
+            {
+                Margin = new Thickness(20 * attrs.DisplayLevel, attrs.TopMarginExtra, 0, 5 + attrs.BottomMarginExtra),
+                FontSize = attrs.FontSize,
+                FontWeight = attrs.DisplayLevel == 0 ? FontWeights.DemiBold : FontWeights.Normal,
+                TextAlignment = TextAlignment.Left,
+                Foreground = ChessForgeColors.CurrentTheme.RtbForeground
+            };
+
+            return para;
+        }
+
+        /// <summary>
         /// Creates a SectorParagraphAttributes object for a Sector.
         /// </summary>
         /// <param name="displayLevel"></param>
         /// <param name="topMarginExtra"></param>
         /// <param name="bottomMarginExtra"></param>
         /// <returns></returns>
-        public static SectorParaAttrs CreateParagraphAttrs(int displayLevel, int topMarginExtra = 0, int bottomMarginExtra = 0)
+        public static void CreateParagraphAttrs(SectorParaAttrs attrs, int displayLevel, int topMarginExtra = 0, int bottomMarginExtra = 0)
         {
             int fontSize = Constants.BASE_FIXED_FONT_SIZE;
             if (!Configuration.UseFixedFont)
@@ -63,18 +84,14 @@ namespace ChessForge
             }
             fontSize = GuiUtilities.AdjustFontSize(fontSize);
 
-            SectorParaAttrs attrs = new SectorParaAttrs
-            {
-                FontSize = fontSize,
-                FontWeight = displayLevel == 0 ? FontWeights.DemiBold : FontWeights.Normal,
-                TextAlignment = TextAlignment.Left,
-                Foreground = ChessForgeColors.CurrentTheme.RtbForeground,
-                Margin = new Thickness(20 * displayLevel, topMarginExtra, 0, 5 + bottomMarginExtra),
-                TopMarginExtra = topMarginExtra,
-                BottomMarginExtra = bottomMarginExtra
-            };
-
-            return attrs;
+            attrs.DisplayLevel = displayLevel;
+            attrs.FontSize = fontSize;
+            attrs.FontWeight = displayLevel == 0 ? FontWeights.DemiBold : FontWeights.Normal;
+            attrs.TextAlignment = TextAlignment.Left;
+            attrs.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
+            attrs.Margin = new Thickness(20 * displayLevel, topMarginExtra, 0, 5 + bottomMarginExtra);
+            attrs.TopMarginExtra = topMarginExtra;
+            attrs.BottomMarginExtra = bottomMarginExtra;
         }
 
         /// <summary>
