@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Windows.Documents;
-using System.Windows.Media;
 
 namespace GameTree
 {
@@ -28,24 +25,19 @@ namespace GameTree
     /// </summary>
     public class LineSector
     {
-        /// <summary>
-        /// Color to use for the first node in the sector, if any
-        /// </summary>
-        public Brush FirstNodeColor = null;
-
         // the list of nodes forming a single linear path.
         private List<TreeNode> _nodes = new List<TreeNode>();
 
         // branch depth at which the sector is placed
         private int _branchLevel = 0;
 
-        // display level at whihc to show the sector
+        // display level at which to show the sector
         private int _displayLevel = 0;
 
         /// <summary>
         /// Attributes of the paragraph represented by the Sector.
         /// </summary>
-        public SectorParaAttrs ParaAttrs;
+        public SectorParaAttrs ParaAttrs = new SectorParaAttrs();
 
         /// <summary>
         /// Id of this LineSector.
