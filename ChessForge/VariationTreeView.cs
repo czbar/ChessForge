@@ -1489,28 +1489,29 @@ namespace ChessForge
             Run rParentMoveRun = _dictNodeToRun[parent.NodeId];
             Paragraph para = _dictRunToParagraph[rParentMoveRun];
 
-            Inline rPreviousRun = rParentMoveRun;
+            Inline rPreviousInline = rParentMoveRun;
 
             try
             {
-                if (_dictNodeToCommentRun.ContainsKey(parent.NodeId))
+                bool hasDiagram = false;
+
+                while (rPreviousInline.NextInline != null && !string.IsNullOrEmpty(rPreviousInline.NextInline.Name))
                 {
-                    rPreviousRun = _dictNodeToCommentRun[parent.NodeId];
-                    // find the last run/part of the comment
-                    while (true)
+                    rPreviousInline = rPreviousInline.NextInline;
+                    if (rPreviousInline.Name !=  null && rPreviousInline.Name.StartsWith(RichTextBoxUtilities.InlineDiagramIucPrefix))
                     {
-                        if (rPreviousRun.NextInline == null || !rPreviousRun.NextInline.Name.StartsWith(_run_comment_))
-                        {
-                            break;
-                        }
-                        else
-                        {
-                            rPreviousRun = rPreviousRun.NextInline;
-                        }
+                        hasDiagram = true;
                     }
                 }
 
-                Run runMove = new Run(MoveUtils.BuildSingleMoveText(nd, false, false, ShownVariationTree.MoveNumberOffset) + " ");
+                if (hasDiagram)
+                {
+                    Run postDiagRun = CreatePostDiagramRun(nd);
+                    para.Inlines.Add(postDiagRun);
+                    rPreviousInline = postDiagRun;
+                }
+
+                Run runMove = new Run(MoveUtils.BuildSingleMoveText(nd, hasDiagram, false, ShownVariationTree.MoveNumberOffset) + " ");
                 runMove.Name = _run_ + nd.NodeId.ToString();
                 runMove.PreviewMouseDown += EventRunClicked;
 
@@ -1522,7 +1523,7 @@ namespace ChessForge
                 _dictNodeToRun[nd.NodeId] = runMove;
                 _dictRunToParagraph[runMove] = para;
 
-                para.Inlines.InsertAfter(rPreviousRun, runMove);
+                para.Inlines.InsertAfter(rPreviousInline, runMove);
                 _lastAddedRun = runMove;
             }
             catch { }
