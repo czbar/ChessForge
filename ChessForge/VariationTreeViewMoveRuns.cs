@@ -169,8 +169,8 @@ namespace ChessForge
                 if (nextNode != null)
                 {
                     // take care of the special case where node 0 may have a comment
-                    bool includeNumber = currNode.NodeId == 0 
-                        || !string.IsNullOrWhiteSpace(currNode.Comment) 
+                    bool includeNumber = currNode.NodeId == 0
+                        || !string.IsNullOrWhiteSpace(currNode.Comment)
                         || !string.IsNullOrEmpty(nextNode.CommentBeforeMove)
                         || currNode.IsDiagram;
                     UpdateRunText(nextMoveRun, nextNode, includeNumber);
@@ -261,20 +261,26 @@ namespace ChessForge
                     // e.g. perhaps always add the post diag run and remove in post-processing
                     // if it is found to be the last run in a paragraph.
                     // NOTE: it might have already been resolved by removing the last new line in paras.
-
-                    // if there are moves further in the same para, insert a new line.
-                    //if (nd.Children.Count <= 1 || nd.Parent.Children.Count <= 1) // || nd.Parent.Children[nd.Parent.Children.Count - 1] != nd)
-                    {
-                        Run postDiagRun = new Run("\n");
-                        postDiagRun.Name = RichTextBoxUtilities.PostInlineDiagramRunPrefix + nd.NodeId.ToString();
-                        inlines.Add(postDiagRun);
-                    }
+                    inlines.Add(CreatePostDiagramRun(nd));
 
                     chessboard.DisplayPosition(nd, false);
                 }
             }
 
             return inlines;
+        }
+
+        /// <summary>
+        /// Creates a Run to insert after the diagram.
+        /// It has a unique name and contains just a new line 
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        private Run CreatePostDiagramRun(TreeNode nd)
+        {
+            Run postDiagRun = new Run("\n");
+            postDiagRun.Name = RichTextBoxUtilities.PostInlineDiagramRunPrefix + nd.NodeId.ToString();
+            return postDiagRun;
         }
 
         /// <summary>
