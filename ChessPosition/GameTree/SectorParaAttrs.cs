@@ -8,6 +8,10 @@ namespace GameTree
     /// </summary>
     public class SectorParaAttrs
     {
+        /// <summary>
+        /// Extra margin to add to the top/bottom for the first/last paragraph at a given level
+        /// </summary>
+        public static int EXTRA_MARGIN = 10;
 
         /// <summary>
         /// Display level of the paragraph.
@@ -70,5 +74,36 @@ namespace GameTree
         public SectorParaAttrs()
         {
         }
+
+        /// <summary>
+        /// Returns the font size for a given display level
+        /// (if using variable font size).
+        /// </summary>
+        /// <param name="displayLevel"></param>
+        /// <returns></returns>
+        public static int GetVariableFontSizeForLevel(int displayLevel)
+        {
+            int fontSize;
+
+            if (displayLevel <= 1)
+            {
+                fontSize = 16;
+            }
+            else if (displayLevel == 2)
+            {
+                fontSize = 14;
+            }
+            else if (displayLevel <= 4)
+            {
+                fontSize = 14;
+            }
+            else
+            {
+                fontSize = 11;
+            }
+
+            return fontSize;
+        }
+
     }
 }

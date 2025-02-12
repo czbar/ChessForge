@@ -2,6 +2,7 @@
 using GameTree;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Documents;
 
 namespace ChessForge
 {
@@ -131,6 +132,26 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Creates a paragraph for the main Study View area.
+        /// </summary>
+        /// <param name="attrs"></param>
+        /// <returns></returns>
+        public static Paragraph CreateStudyParagraph(SectorParaAttrs attrs)
+        {
+            // create the paragraph.
+            Paragraph para = new Paragraph
+            {
+                Margin = new Thickness(20 * attrs.DisplayLevel, attrs.TopMarginExtra, 0, 5 + attrs.BottomMarginExtra),
+                FontSize = attrs.FontSize,
+                FontWeight = attrs.DisplayLevel == 0 ? FontWeights.DemiBold : FontWeights.Normal,
+                TextAlignment = TextAlignment.Left,
+                Foreground = ChessForgeColors.CurrentTheme.RtbForeground
+            };
+
+            return para;
+        }
+
+        /// <summary>
         /// Separates lines out of the tree, sets line Ids on the nodes
         /// and places the lines in the list.
         /// </summary>
@@ -199,11 +220,11 @@ namespace ChessForge
                         // add extra room above/below first/last line in a block at the same level 
                         if (n > 0 && LineSectors[n - 1].DisplayLevel < sector.DisplayLevel)
                         {
-                            topMarginExtra = DisplayLevelAttrs.EXTRA_MARGIN;
+                            topMarginExtra = SectorParaAttrs.EXTRA_MARGIN;
                         }
                         if (n < LineSectors.Count - 1 && LineSectors[n + 1].DisplayLevel < sector.DisplayLevel)
                         {
-                            bottomMarginExtra = DisplayLevelAttrs.EXTRA_MARGIN;
+                            bottomMarginExtra = SectorParaAttrs.EXTRA_MARGIN;
                         }
                         // also make sure that the sector outside the indexed range is not expanded!
                         foreach (TreeNode node in sector.Nodes)
@@ -221,11 +242,11 @@ namespace ChessForge
                         }
                         else
                         {
-                            topMarginExtra = DisplayLevelAttrs.EXTRA_MARGIN;
+                            topMarginExtra = SectorParaAttrs.EXTRA_MARGIN;
                         }
                     }
 
-                    DisplayLevelAttrs.CreateParagraphAttrs(sector.ParaAttrs, sector.DisplayLevel, topMarginExtra, bottomMarginExtra);
+                    CreateParagraphAttrs(sector.ParaAttrs, sector.DisplayLevel, topMarginExtra, bottomMarginExtra);
                     if (sector.ParaAttrs.FontWeight == FontWeights.Bold)
                     {
                         sector.ParaAttrs.FontWeight = FontWeights.Normal;
@@ -246,6 +267,32 @@ namespace ChessForge
                 {
                 }
             }
+        }
+
+        /// <summary>
+        /// Creates a SectorParagraphAttributes object for a Sector.
+        /// </summary>
+        /// <param name="displayLevel"></param>
+        /// <param name="topMarginExtra"></param>
+        /// <param name="bottomMarginExtra"></param>
+        /// <returns></returns>
+        private void CreateParagraphAttrs(SectorParaAttrs attrs, int displayLevel, int topMarginExtra = 0, int bottomMarginExtra = 0)
+        {
+            int fontSize = Constants.BASE_FIXED_FONT_SIZE;
+            if (!Configuration.UseFixedFont)
+            {
+                fontSize = SectorParaAttrs.GetVariableFontSizeForLevel(displayLevel);
+            }
+            fontSize = GuiUtilities.AdjustFontSize(fontSize);
+
+            attrs.DisplayLevel = displayLevel;
+            attrs.FontSize = fontSize;
+            attrs.FontWeight = displayLevel == 0 ? FontWeights.DemiBold : FontWeights.Normal;
+            attrs.TextAlignment = TextAlignment.Left;
+            attrs.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
+            attrs.Margin = new Thickness(20 * displayLevel, topMarginExtra, 0, 5 + bottomMarginExtra);
+            attrs.TopMarginExtra = topMarginExtra;
+            attrs.BottomMarginExtra = bottomMarginExtra;
         }
 
         /// <summary>
@@ -270,7 +317,7 @@ namespace ChessForge
             {
                 if (sector.Nodes.Count > 0 && nd.Parent != null && nd.Parent.Children.Count > 1)
                 {
-                    sector.ParaAttrs.LastNodeColor = DisplayLevelAttrs.GetBrushForLastMove(sector.DisplayLevel, levelGroup);
+                    sector.ParaAttrs.LastNodeColor = LineSectorRunColors.GetBrushForLastMove(sector.DisplayLevel, levelGroup);
                 }
 
                 // except the first child as it will be the continuation of the top line
@@ -278,7 +325,7 @@ namespace ChessForge
                 {
                     if (nd.Children.Count == 0 || ls.Nodes[0] != nd.Children[0])
                     {
-                        ls.ParaAttrs.FirstNodeColor = DisplayLevelAttrs.GetBrushForLastMove(sector.DisplayLevel, levelGroup);
+                        ls.ParaAttrs.FirstNodeColor = LineSectorRunColors.GetBrushForLastMove(sector.DisplayLevel, levelGroup);
                     }
                 }
             }

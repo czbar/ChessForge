@@ -62,7 +62,7 @@ namespace ChessForge
         /// <param name="includeNumber"></param>
         override protected void BuildTreeLineText(FlowDocument doc, TreeNode root, Paragraph para, bool includeNumber)
         {
-            DisplayLevelAttrs.ResetLastMoveBrush();
+            LineSectorRunColors.ResetLastMoveBrush();
             LineManager.BuildLineSectors(root);
 
             // it could be that a new move was made and it is "hidden" under a collapsed root
@@ -464,11 +464,11 @@ namespace ChessForge
                         // add extra room above/below first/last line in a block at the same level 
                         if (n > 0 && LineManager.LineSectors[n - 1].DisplayLevel < sector.DisplayLevel)
                         {
-                            topMarginExtra = DisplayLevelAttrs.EXTRA_MARGIN;
+                            topMarginExtra = SectorParaAttrs.EXTRA_MARGIN;
                         }
                         if (n < LineManager.LineSectors.Count - 1 && LineManager.LineSectors[n + 1].DisplayLevel < sector.DisplayLevel)
                         {
-                            bottomMarginExtra = DisplayLevelAttrs.EXTRA_MARGIN;
+                            bottomMarginExtra = SectorParaAttrs.EXTRA_MARGIN;
                         }
                         // also make sure that the sector outside the indexed range is not expanded!
                         foreach (TreeNode node in sector.Nodes)
@@ -486,12 +486,12 @@ namespace ChessForge
                         }
                         else
                         {
-                            topMarginExtra = DisplayLevelAttrs.EXTRA_MARGIN;
+                            topMarginExtra = SectorParaAttrs.EXTRA_MARGIN;
                         }
                     }
 
                     //para = DisplayLevelAttrs.CreateStudyParagraph(sector.DisplayLevel, topMarginExtra, bottomMarginExtra);
-                    para = DisplayLevelAttrs.CreateStudyParagraph(sector.ParaAttrs);
+                    para = LineSectorManager.CreateStudyParagraph(sector.ParaAttrs);
                     if (para.FontWeight == FontWeights.Bold)
                     {
                         para.FontWeight = FontWeights.Normal;
@@ -680,7 +680,7 @@ namespace ChessForge
             {
                 if (sector.Nodes.Count > 0 && nd.Parent != null && nd.Parent.Children.Count > 1)
                 {
-                    r.Foreground = DisplayLevelAttrs.GetBrushForLastMove(sector.DisplayLevel, levelGroup);
+                    r.Foreground = LineSectorRunColors.GetBrushForLastMove(sector.DisplayLevel, levelGroup);
                 }
 
                 // except the first child as it will be the continuation of the top line
@@ -688,7 +688,7 @@ namespace ChessForge
                 {
                     if (nd.Children.Count == 0 || ls.Nodes[0] != nd.Children[0])
                     {
-                        ls.ParaAttrs.FirstNodeColor = DisplayLevelAttrs.GetBrushForLastMove(sector.DisplayLevel, levelGroup);
+                        ls.ParaAttrs.FirstNodeColor = LineSectorRunColors.GetBrushForLastMove(sector.DisplayLevel, levelGroup);
                     }
                 }
             }
