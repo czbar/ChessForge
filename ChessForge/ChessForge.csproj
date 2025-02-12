@@ -324,7 +324,7 @@
     <Compile Include="TrainingSessionControl.xaml.cs">
       <DependentUpon>TrainingSessionControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TreeViewManagement\DisplayLevelAttrs.cs" />
+    <Compile Include="TreeViewManagement\LineSectorRunColors.cs" />
     <Compile Include="TreeViewManagement\LineSectorManager.cs" />
     <Compile Include="SelectArticlesDialog.xaml.cs">
       <DependentUpon>SelectArticlesDialog.xaml</DependentUpon>
