@@ -386,19 +386,9 @@ namespace ChessForge
 
                                 for (int i = 0; i < sector.Nodes.Count; i++)
                                 {
-                                    //if (i < firstSkip || i > lastSkip)
-                                    //{
                                     TreeNode nd = sector.Nodes[i];
                                     BuildIndexNodeAndAddToPara(nd, firstMove, para);
                                     firstMove = false;
-                                    //}
-                                    //else if (i == firstSkip)
-                                    //{
-                                    //    Run rElipsis = new Run(" [...] ");
-                                    //    rElipsis.FontWeight = FontWeights.Normal;
-                                    //    para.Inlines.Add(rElipsis);
-                                    //    firstMove = true;
-                                    //}
                                 }
                             }
                             rIdTitle.FontWeight = FontWeights.DemiBold;
@@ -428,7 +418,6 @@ namespace ChessForge
             // Be aware it already contains a Run for the root node!
             doc.Blocks.Remove(firstPara);
 
-            int levelGroup = 0;
             bool firstAtIndexLevel2 = true;
 
             for (int n = 0; n < LineManager.LineSectors.Count; n++)
@@ -443,10 +432,6 @@ namespace ChessForge
                 {
                     continue;
                 }
-                if (n > 0 && sector.DisplayLevel != LineManager.LineSectors[n - 1].BranchLevel)
-                {
-                    levelGroup++;
-                }
 
                 try
                 {
@@ -456,20 +441,8 @@ namespace ChessForge
                         sector.DisplayLevel = 0;
                     }
 
-                    int topMarginExtra = 0;
-                    int bottomMarginExtra = 0;
-
                     if (!LineManager.IsEffectiveIndexLevel(sector.BranchLevel))
                     {
-                        // add extra room above/below first/last line in a block at the same level 
-                        if (n > 0 && LineManager.LineSectors[n - 1].DisplayLevel < sector.DisplayLevel)
-                        {
-                            topMarginExtra = SectorParaAttrs.EXTRA_MARGIN;
-                        }
-                        if (n < LineManager.LineSectors.Count - 1 && LineManager.LineSectors[n + 1].DisplayLevel < sector.DisplayLevel)
-                        {
-                            bottomMarginExtra = SectorParaAttrs.EXTRA_MARGIN;
-                        }
                         // also make sure that the sector outside the indexed range is not expanded!
                         foreach (TreeNode node in sector.Nodes)
                         {
@@ -484,13 +457,8 @@ namespace ChessForge
                         {
                             firstAtIndexLevel2 = false;
                         }
-                        else
-                        {
-                            topMarginExtra = SectorParaAttrs.EXTRA_MARGIN;
-                        }
                     }
 
-                    //para = DisplayLevelAttrs.CreateStudyParagraph(sector.DisplayLevel, topMarginExtra, bottomMarginExtra);
                     para = LineSectorManager.CreateStudyParagraph(sector.ParaAttrs);
                     if (para.FontWeight == FontWeights.Bold)
                     {
@@ -509,9 +477,8 @@ namespace ChessForge
                         }
                     }
 
-                    BuildSectorRuns(sector, para, levelGroup, doNotShow);
+                    BuildSectorRuns(sector, para, doNotShow);
                     sector.HostPara = para;
-
                     RemoveTrailingNewLinesInPara(para);
                     doc.Blocks.Add(para);
                 }
@@ -552,7 +519,7 @@ namespace ChessForge
         /// <param name="sector"></param>
         /// <param name="para"></param>
         /// <param name="levelGroup"></param>
-        private void BuildSectorRuns(LineSector sector, Paragraph para, int levelGroup, List<LineSector> doNotShow)
+        public void BuildSectorRuns(LineSector sector, Paragraph para, List<LineSector> doNotShow)
         {
             bool includeNumber = true;
             bool parenthesis = false;
@@ -607,7 +574,6 @@ namespace ChessForge
                         {
                             r.Foreground = sector.ParaAttrs.LastNodeColor;
                         }
-                        //ColorLastNode(sector, r, nd, levelGroup);
                     }
                 }
                 includeNumber = diagram;
@@ -661,37 +627,6 @@ namespace ChessForge
             LineManager.GetSubTree(sector, doNotShow);
 
             return elipsis;
-        }
-
-        /// <summary>
-        /// Sets the foreground color for the passed Run.
-        /// If this is within the index levels do not set the color
-        /// but set FirstMoveColor on the child sectors that are
-        /// at the lower level
-        /// </summary>
-        /// <param name="sector"></param>
-        /// <param name="r"></param>
-        /// <param name="nd"></param>
-        private void ColorLastNode(LineSector sector, Run r, TreeNode nd, int levelGroup)
-        {
-            // do not color if this is an index level unless this is the last index level and is not the first node.
-            //if (!LineManager.IsIndexLevel(sector.BranchLevel) || LineManager.IsLastIndexLine(sector.BranchLevel) && nd != sector.Nodes[0])
-            if (!LineManager.IsEffectiveIndexLevel(sector.BranchLevel) || LineManager.IsLastEffectiveIndexLine(sector.BranchLevel) && nd != sector.Nodes[0])
-            {
-                if (sector.Nodes.Count > 0 && nd.Parent != null && nd.Parent.Children.Count > 1)
-                {
-                    r.Foreground = LineSectorRunColors.GetBrushForLastMove(sector.DisplayLevel, levelGroup);
-                }
-
-                // except the first child as it will be the continuation of the top line
-                foreach (LineSector ls in sector.Children)
-                {
-                    if (nd.Children.Count == 0 || ls.Nodes[0] != nd.Children[0])
-                    {
-                        ls.ParaAttrs.FirstNodeColor = LineSectorRunColors.GetBrushForLastMove(sector.DisplayLevel, levelGroup);
-                    }
-                }
-            }
         }
 
         /// <summary>
