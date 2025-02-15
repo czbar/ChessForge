@@ -19,6 +19,11 @@ namespace GameTree
         public int DisplayLevel { get; set; }
 
         /// <summary>
+        /// Level group of the paragraph.
+        /// </summary>
+        public int LevelGroup { get; set; }
+
+        /// <summary>
         /// Font size of the paragraph.
         /// </summary>
         public double FontSize { get; set; }
