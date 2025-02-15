@@ -174,7 +174,10 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// This is called after the list of LineSectors has been created.
         /// Builds the paragraph attributes for each sector.
+        /// They will then be used when creating the paragraphs an when
+        /// comparing different layouts.
         /// </summary>
         private void BuildParaAttrs()
         {
@@ -182,9 +185,12 @@ namespace ChessForge
             int levelGroup = 0;
             bool firstAtIndexLevel2 = true;
 
-            for (int n = 0; n < LineSectors.Count; n++)
+            for (int idx = 0; idx < LineSectors.Count; idx++)
             {
-                LineSector sector = LineSectors[n];
+                LineSector sector = LineSectors[idx];
+                sector.ParaAttrs.LevelGroup = levelGroup;
+
+                // do not show the sector if it is marked as hidden (because an ancestor is collapsed)
                 if (doNotShow.Find(x => x == sector) != null)
                 {
                     continue;
@@ -192,17 +198,21 @@ namespace ChessForge
 
                 if (sector.IsCollapsed)
                 {
+                    // put all children in the doNotShow list
                     GetSubTree(sector, doNotShow);
-                    continue;
                 }
 
+                // skip the sector for the 0 move unless it has a comment
                 if (sector.Nodes.Count == 0 || sector.Nodes.Count == 1 && sector.Nodes[0].NodeId == 0 && string.IsNullOrEmpty(sector.Nodes[0].Comment))
                 {
                     continue;
                 }
-                if (n > 0 && sector.DisplayLevel != LineSectors[n - 1].BranchLevel)
+
+                // if the sector is at a different level than the previous one, increment the level group
+                if (idx > 0 && sector.DisplayLevel != LineSectors[idx - 1].BranchLevel)
                 {
                     levelGroup++;
+                    sector.ParaAttrs.LevelGroup = levelGroup;
                 }
 
                 try
@@ -218,11 +228,11 @@ namespace ChessForge
                     if (!IsEffectiveIndexLevel(sector.BranchLevel))
                     {
                         // add extra room above/below first/last line in a block at the same level 
-                        if (n > 0 && LineSectors[n - 1].DisplayLevel < sector.DisplayLevel)
+                        if (idx > 0 && LineSectors[idx - 1].DisplayLevel < sector.DisplayLevel)
                         {
                             topMarginExtra = SectorParaAttrs.EXTRA_MARGIN;
                         }
-                        if (n < LineSectors.Count - 1 && LineSectors[n + 1].DisplayLevel < sector.DisplayLevel)
+                        if (idx < LineSectors.Count - 1 && LineSectors[idx + 1].DisplayLevel < sector.DisplayLevel)
                         {
                             bottomMarginExtra = SectorParaAttrs.EXTRA_MARGIN;
                         }
@@ -260,7 +270,7 @@ namespace ChessForge
                         }
                     }
 
-                    SetFirstLastNodeColors(n, levelGroup);
+                    SetFirstLastNodeColors(idx, levelGroup);
 
                 }
                 catch
