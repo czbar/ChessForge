@@ -11,17 +11,17 @@ namespace ChessForge
         /// <summary>
         /// Resets the last move color selection.
         /// </summary>
-        public static void ResetLastMoveBrush()
+        public void ResetLastMoveBrush()
         {
             _lastMoveBrushIndex = -1;
             _lastLevelCombo = 0;
         }
 
         // last move color selection index
-        private static int _lastMoveBrushIndex = -1;
+        private int _lastMoveBrushIndex = -1;
 
         // last level + levelGroup combination for which color was requested
-        private static int _lastLevelCombo = 0;
+        private int _lastLevelCombo = 0;
 
         /// <summary>
         /// Color for the last node at the given level. 
@@ -29,7 +29,7 @@ namespace ChessForge
         /// <param name="level"></param>
         /// <param name="levelGroup"></param>
         /// <returns></returns>
-        public static Brush GetBrushForLastMove(int level, int levelGroup)
+        public Brush GetBrushForLastMove(int level, int levelGroup)
         {
             Brush brush;
 

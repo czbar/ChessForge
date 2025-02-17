@@ -47,6 +47,19 @@ namespace ChessForge
         private int _maxBranchLevel = -1;
 
         /// <summary>
+        /// manages colors for the last node of a sector at a given level.
+        /// </summary>
+        private LineSectorRunColors _runColors = new LineSectorRunColors();
+
+        /// <summary>
+        /// Resets the last move color selection.
+        /// </summary>
+        public void ResetLastMoveBrush()
+        {
+            _runColors.ResetLastMoveBrush();
+        }
+
+        /// <summary>
         // Accessor tp the highest branch level value in the view
         /// </summary>
         public int MaxBranchLevel
@@ -327,7 +340,7 @@ namespace ChessForge
             {
                 if (sector.Nodes.Count > 0 && nd.Parent != null && nd.Parent.Children.Count > 1)
                 {
-                    sector.ParaAttrs.LastNodeColor = LineSectorRunColors.GetBrushForLastMove(sector.DisplayLevel, levelGroup);
+                    sector.ParaAttrs.LastNodeColor = _runColors.GetBrushForLastMove(sector.DisplayLevel, levelGroup);
                 }
 
                 // except the first child as it will be the continuation of the top line
@@ -335,7 +348,7 @@ namespace ChessForge
                 {
                     if (nd.Children.Count == 0 || ls.Nodes[0] != nd.Children[0])
                     {
-                        ls.ParaAttrs.FirstNodeColor = LineSectorRunColors.GetBrushForLastMove(sector.DisplayLevel, levelGroup);
+                        ls.ParaAttrs.FirstNodeColor = _runColors.GetBrushForLastMove(sector.DisplayLevel, levelGroup);
                     }
                 }
             }

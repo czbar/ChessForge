@@ -62,7 +62,7 @@ namespace ChessForge
         /// <param name="includeNumber"></param>
         override protected void BuildTreeLineText(FlowDocument doc, TreeNode root, Paragraph para, bool includeNumber)
         {
-            LineSectorRunColors.ResetLastMoveBrush();
+            LineManager.ResetLastMoveBrush();
             LineManager.BuildLineSectors(root);
 
             // it could be that a new move was made and it is "hidden" under a collapsed root
