@@ -55,9 +55,9 @@ namespace ChessForge
         /// <param name="view"></param>
         public void MoveAdded()
         {
-            // Identified the added and modified sectors.
-            // Insert the added ones in the current LineSectorManager
-            // and update the modified ones.
+            // Identifies the added and modified sectors.
+            // Inserts the added ones in the current LineSectorManager
+            // and updates the modified ones.
             try
             {
                 for (int i = 0; i < _updatedManager.LineSectors.Count; i++)
@@ -68,20 +68,26 @@ namespace ChessForge
                     if (updatedNode == currentNode)
                     {
                         // update the existing sector if needed
-                        UpdateSectorParagraph(_currentManager.LineSectors[i], _updatedManager.LineSectors[i]);
+                        bool needsupdate = UpdateSectorParagraph(_currentManager.LineSectors[i], _updatedManager.LineSectors[i]);
+                        if (needsupdate)
+                        {
+                            _currentManager.LineSectors[i].ParaAttrs = _updatedManager.LineSectors[i].ParaAttrs;
+                            _currentManager.LineSectors[i].Nodes = _updatedManager.LineSectors[i].Nodes;
+                            _view.BuildSectorRuns(_currentManager.LineSectors[i]);
+                        }
                     }
                     else
                     {
                         // insert the new sector
                         LineSector newSector = _updatedManager.LineSectors[i];
                         _currentManager.LineSectors.Insert(i, newSector);
-                        InsertSectorParagraph(newSector);
+                        CreateSectorParagraph(newSector);
+                        _view.BuildSectorRuns(newSector);
                     }
                 }
             }
             catch (Exception ex)
             {
-                // log the exception
                 AppLog.Message("TreeViewUpdater.MoveAdded()", ex);
             }
         }
@@ -93,27 +99,164 @@ namespace ChessForge
         /// </summary>
         /// <param name="currentSector"></param>
         /// <param name="updatedSector"></param>
-        private void UpdateSectorParagraph(LineSector currentSector, LineSector updatedSector)
+        private bool UpdateSectorParagraph(LineSector currentSector, LineSector updatedSector)
         {
             // update the paragraph attributes
-            currentSector.ParaAttrs = updatedSector.ParaAttrs;
-            // update the paragraph runs
-            // this is a bit more complicated because the runs could be different
-            // in number and content.
-            // We will need to compare the runs and update the current paragraph
-            // with the updated runs.
+            bool needsUpdate = UpdateParagraphAttrs(currentSector, updatedSector);
+
+            if (!needsUpdate)
+            {
+                bool isOneSubsetOfOther = CompareNodeList(currentSector, updatedSector, out int commonNodes, out int extraNodes);
+                if (isOneSubsetOfOther)
+                {
+                    needsUpdate = extraNodes != 0;
+                    //TODO: now we return and the para will be repainted if needsUpdate is true
+                    //      in the future, we may optimize by adding or deleting just the appropariate runs.
+                }
+                else
+                {
+                    needsUpdate = true;
+                }
+            }
+
+            return needsUpdate;
         }
 
         /// <summary>
-        /// Creates a paragraph for the new sector,
-        /// builds its Runs and inserts it in the view.
+        /// Creates a paragraph for the new sector.
         /// </summary>
         /// <param name="newSector"></param>
-        private void InsertSectorParagraph(LineSector newSector)
+        private void CreateSectorParagraph(LineSector newSector)
         {
             // insert the new sector
-            Paragraph para = LineSectorManager.CreateStudyParagraph(newSector.ParaAttrs);
-            _view.BuildSectorRuns(newSector, para, null);
+            Paragraph para = LineSectorManager.CreateStudyParagraph(newSector.ParaAttrs, newSector.DisplayLevel);
+            newSector.HostPara = para;
+        }
+
+        /// <summary>
+        /// Compares the lists of nodes of the two sectors.
+        /// If one list is a subset of the other, retruns true,
+        /// and the number of common nodes as well as the number extra nodes.
+        /// If the updated sector has more nodes, the extra nodes will be positive
+        /// otherwise negative.
+        /// </summary>
+        /// <param name="currentSector"></param>
+        /// <param name="updatedSector"></param>
+        /// <param name="commonNodes"></param>
+        /// <param name="extraNodes"></param>
+        /// <returns></returns>
+        private bool CompareNodeList(LineSector currentSector, LineSector updatedSector, out int commonNodes, out int extraNodes)
+        {
+            bool isOneSubsetOfOther = true;
+
+            extraNodes = 0;
+            commonNodes = 0;
+
+            int commonCount = Math.Min(currentSector.Nodes.Count, updatedSector.Nodes.Count);
+
+            for (int i = 0; i < commonCount; i++)
+            {
+                if (currentSector.Nodes[i] != updatedSector.Nodes[i])
+                {
+                    isOneSubsetOfOther = false;
+                    break;
+                }
+            }
+
+            if (isOneSubsetOfOther)
+            {
+                extraNodes = updatedSector.Nodes.Count - currentSector.Nodes.Count;
+            }
+
+            return isOneSubsetOfOther;
+        }
+
+        /// <summary>
+        /// Update only those attributes of the paragraph that have changed.
+        /// We believe it may have some performance benefit. 
+        /// </summary>
+        /// <param name="currPara"></param>
+        /// <param name="updatePara"></param>
+        private bool UpdateParagraphAttrs(LineSector currentSector, LineSector updatedSector)
+        {
+            bool needsUpdate = false;
+
+            SectorParaAttrs currAttrs = currentSector.ParaAttrs;
+            SectorParaAttrs updatedAttrs = updatedSector.ParaAttrs;
+
+            if (currentSector.BranchLevel != updatedSector.BranchLevel)
+            {
+                currentSector.BranchLevel = updatedSector.BranchLevel;
+                needsUpdate = true;
+            }
+
+            if (currentSector.DisplayLevel != updatedSector.DisplayLevel)
+            {
+                currentSector.DisplayLevel = updatedSector.DisplayLevel;
+                needsUpdate = true;
+            }
+
+            if (currAttrs.LevelGroup != updatedAttrs.LevelGroup)
+            {
+                currAttrs.LevelGroup = updatedAttrs.LevelGroup;
+                needsUpdate = true;
+            }
+
+            if (currAttrs.FontSize != updatedAttrs.FontSize)
+            {
+                currAttrs.FontSize = updatedAttrs.FontSize;
+                needsUpdate = true;
+            }
+
+            if (currAttrs.FontWeight != updatedAttrs.FontWeight)
+            {
+                currAttrs.FontWeight = updatedAttrs.FontWeight;
+                needsUpdate = true;
+            }
+
+            if (currAttrs.FirstNodeColor != updatedAttrs.FirstNodeColor)
+            {
+                currAttrs.FirstNodeColor = updatedAttrs.FirstNodeColor;
+                needsUpdate = true;
+            }
+
+            if (currAttrs.LastNodeColor != updatedAttrs.LastNodeColor)
+            {
+                currAttrs.LastNodeColor = updatedAttrs.LastNodeColor;
+                needsUpdate = true;
+            }
+
+            if (currAttrs.Margin != updatedAttrs.Margin)
+            {
+                currAttrs.Margin = updatedAttrs.Margin;
+                needsUpdate = true;
+            }
+
+            if (currAttrs.TopMarginExtra != updatedAttrs.TopMarginExtra)
+            {
+                currAttrs.TopMarginExtra = updatedAttrs.TopMarginExtra;
+                needsUpdate = true;
+            }
+
+            if (currAttrs.BottomMarginExtra != updatedAttrs.BottomMarginExtra)
+            {
+                currAttrs.BottomMarginExtra = updatedAttrs.BottomMarginExtra;
+                needsUpdate = true;
+            }
+
+            if (currAttrs.Foreground != updatedAttrs.Foreground)
+            {
+                currAttrs.Foreground = updatedAttrs.Foreground;
+                needsUpdate = true;
+            }
+
+            if (currAttrs.Background != updatedAttrs.Background)
+            {
+                currAttrs.Background = updatedAttrs.Background;
+                needsUpdate = true;
+            }
+
+            return needsUpdate;
         }
     }
 }
