@@ -115,6 +115,12 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Whether this sector should be shown.
+        /// It won't be shown if it is a child sector of a collapsed sector.
+        /// </summary>
+        public bool IsShown { get; set; } = true;
+
+        /// <summary>
         /// NodeId code for open parenthesis
         /// </summary>
         public static readonly int OPEN_BRACKET = -100;
