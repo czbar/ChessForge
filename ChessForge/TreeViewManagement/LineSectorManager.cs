@@ -149,14 +149,14 @@ namespace ChessForge
         /// </summary>
         /// <param name="attrs"></param>
         /// <returns></returns>
-        public static Paragraph CreateStudyParagraph(SectorParaAttrs attrs)
+        public static Paragraph CreateStudyParagraph(SectorParaAttrs attrs, int displayLevel)
         {
             // create the paragraph.
             Paragraph para = new Paragraph
             {
-                Margin = new Thickness(20 * attrs.DisplayLevel, attrs.TopMarginExtra, 0, 5 + attrs.BottomMarginExtra),
+                Margin = new Thickness(20 * displayLevel, attrs.TopMarginExtra, 0, 5 + attrs.BottomMarginExtra),
                 FontSize = attrs.FontSize,
-                FontWeight = attrs.DisplayLevel == 0 ? FontWeights.DemiBold : FontWeights.Normal,
+                FontWeight = displayLevel == 0 ? FontWeights.DemiBold : FontWeights.Normal,
                 TextAlignment = TextAlignment.Left,
                 Foreground = ChessForgeColors.CurrentTheme.RtbForeground
             };
@@ -206,6 +206,7 @@ namespace ChessForge
                 // do not show the sector if it is marked as hidden (because an ancestor is collapsed)
                 if (doNotShow.Find(x => x == sector) != null)
                 {
+                    sector.IsShown = false;
                     continue;
                 }
 
@@ -308,7 +309,6 @@ namespace ChessForge
             }
             fontSize = GuiUtilities.AdjustFontSize(fontSize);
 
-            attrs.DisplayLevel = displayLevel;
             attrs.FontSize = fontSize;
             attrs.FontWeight = displayLevel == 0 ? FontWeights.DemiBold : FontWeights.Normal;
             attrs.TextAlignment = TextAlignment.Left;
