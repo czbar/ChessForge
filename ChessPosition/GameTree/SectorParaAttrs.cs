@@ -14,11 +14,6 @@ namespace GameTree
         public static int EXTRA_MARGIN = 10;
 
         /// <summary>
-        /// Display level of the paragraph.
-        /// </summary>
-        public int DisplayLevel { get; set; }
-
-        /// <summary>
         /// Level group of the paragraph.
         /// </summary>
         public int LevelGroup { get; set; }
