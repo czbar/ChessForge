@@ -68,12 +68,26 @@ namespace ChessForge
             // it could be that a new move was made and it is "hidden" under a collapsed root
             UncollapseMove(_mainWin.ActiveLine.GetSelectedTreeNode());
 
-            CreateVariationIndexPara(doc);
+            if (LineManager.EffectiveIndexDepth >= 0)
+            {
+                LineManager.CreateIndexHeaderPara();
+                PopulateIndexHeaderPara(LineManager.IndexHeaderPara);
+                doc.Blocks.Add(LineManager.IndexHeaderPara);
+
+                LineManager.CreateIndexContentPara();
+                PopulateIndexContentPara(LineManager.IndexContentPara);
+                doc.Blocks.Add(LineManager.IndexContentPara);
+            }
+            else if (_pageHeaderParagraph != null)
+            {
+                _pageHeaderParagraph.ToolTip = Properties.Resources.ShowIndex;
+            }
+
             CreateParagraphs(doc, para);
         }
 
         /// <summary>
-        /// Whether diagram inerted here should be large or small.
+        /// Whether diagram inserted here should be large or small.
         /// </summary>
         /// <param name="nd"></param>
         /// <returns></returns>
@@ -82,6 +96,17 @@ namespace ChessForge
             return true;
         }
 
+        /// <summary>
+        /// Updates the layout after a move was added.
+        /// </summary>
+        public void UpdateLayoutOnAddedMove()
+        {
+            LineSectorManager updateLineManger = new LineSectorManager(null);
+            updateLineManger.BuildLineSectors(ShownVariationTree.Nodes[0]);
+
+            TreeViewUpdater updater = new TreeViewUpdater(LineManager, updateLineManger, this);
+            updater.MoveAdded();
+        }
 
         /// <summary>
         /// Finds out if the move has a collapsed ancestor
@@ -286,122 +311,98 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Creates a paragraph for the "Variation Index" title and the depth arrows.
+        /// Populates the passed paragraph with the Variation Index header. 
         /// </summary>
-        private void CreateVariationIndexHeader(FlowDocument doc)
+        /// <param name="para"></param>
+        private void PopulateIndexHeaderPara(Paragraph para)
         {
-            Paragraph para = new Paragraph
-            {
-                Margin = new Thickness(0, 0, 0, 6),
-            };
+            para.Inlines.Clear();
 
-            Run r = new Run(Properties.Resources.VariationIndex + "  ");
-            para.Inlines.Add(r);
+            Run run = new Run(Properties.Resources.VariationIndex + "  ");
+            para.Inlines.Add(run);
             para.FontWeight = FontWeights.DemiBold;
 
             InsertArrowRuns(para);
-            doc.Blocks.Add(para);
         }
 
         /// <summary>
-        /// Creates the Index paragraph.
+        /// Populates the passed paragraph with the Variation Index content. 
         /// </summary>
-        private void CreateVariationIndexPara(FlowDocument doc)
+        private void PopulateIndexContentPara(Paragraph para)
         {
-            if (LineManager.EffectiveIndexDepth >= 0)
+            para.Inlines.Clear();
+
+            foreach (LineSector sector in LineManager.LineSectors)
             {
-                Paragraph para = CreateParagraph("0", true);
-                para.Name = RichTextBoxUtilities.StudyIndexParagraphName;
-                para.Foreground = ChessForgeColors.CurrentTheme.IndexPrefixForeground;
-                para.FontWeight = FontWeights.Normal;
-                para.FontSize = para.FontSize - 1;
-                para.Margin = new Thickness(0, 0, 0, 0);
-
-
-                bool first = true;
-                foreach (LineSector sector in LineManager.LineSectors)
+                if (sector.Nodes.Count == 0)
                 {
-                    if (sector.Nodes.Count == 0)
-                    {
-                        continue;
-                    }
+                    continue;
+                }
 
-                    int level = sector.BranchLevel;
-                    if (LineManager.IsEffectiveIndexLevel(level))
+                int level = sector.BranchLevel;
+                if (LineManager.IsEffectiveIndexLevel(level))
+                {
+                    if (sector.Nodes[0].LineId == "1")
                     {
-                        if (first)
+                        // Build the stem line
+                        // Note we don't want an indent here 'coz if the stem line is long it will wrap ugly
+                        bool validMove = false;
+                        foreach (TreeNode nd in sector.Nodes)
                         {
-                            CreateVariationIndexHeader(doc);
-                            first = false;
+                            Run rMove = BuildIndexNodeAndAddToPara(nd, false, para);
+                            rMove.TextDecorations = TextDecorations.Underline;
+                            rMove.FontWeight = FontWeights.DemiBold;
+                            if (nd.NodeId != 0)
+                            {
+                                validMove = true;
+                            }
                         }
 
-                        if (sector.Nodes[0].LineId == "1")
+                        if (validMove)
                         {
-                            // Build the stem line
-                            // Note we don't want an indent here 'coz if the stem line is long it will wrap ugly
-                            bool validMove = false;
-                            foreach (TreeNode nd in sector.Nodes)
-                            {
-                                Run rMove = BuildIndexNodeAndAddToPara(nd, false, para);
-                                rMove.TextDecorations = TextDecorations.Underline;
-                                rMove.FontWeight = FontWeights.DemiBold;
-                                if (nd.NodeId != 0)
-                                {
-                                    validMove = true;
-                                }
-                            }
-
-                            if (validMove)
-                            {
-                                para.Inlines.Add(new Run("\n"));
-                            }
-                        }
-                        else
-                        {
-                            for (int i = 0; i < level; i++)
-                            {
-                                Run r = new Run(_indent);
-                                para.Inlines.Add(r);
-                            }
-
-                            Run rIdTitle = BuildSectionIdTitle(sector.Nodes[0].LineId);
-                            para.Inlines.Add(rIdTitle);
-                            if (LineManager.IsLastEffectiveIndexLine(level) || sector.Nodes[sector.Nodes.Count - 1].Children.Count == 0)
-                            {
-                                BuildIndexNodeAndAddToPara(sector.Nodes[0], true, para);
-                            }
-                            else
-                            {
-                                bool firstMove = true;
-
-                                int nodeCount = sector.Nodes.Count;
-                                int firstSkip = nodeCount;
-                                int lastSkip = -1;
-
-                                if (nodeCount >= 5)
-                                {
-                                    firstSkip = 2;
-                                    lastSkip = nodeCount - 3;
-                                }
-
-                                for (int i = 0; i < sector.Nodes.Count; i++)
-                                {
-                                    TreeNode nd = sector.Nodes[i];
-                                    BuildIndexNodeAndAddToPara(nd, firstMove, para);
-                                    firstMove = false;
-                                }
-                            }
-                            rIdTitle.FontWeight = FontWeights.DemiBold;
-
                             para.Inlines.Add(new Run("\n"));
                         }
                     }
+                    else
+                    {
+                        for (int i = 0; i < level; i++)
+                        {
+                            Run r = new Run(_indent);
+                            para.Inlines.Add(r);
+                        }
+
+                        Run rIdTitle = BuildSectionIdTitle(sector.Nodes[0].LineId);
+                        para.Inlines.Add(rIdTitle);
+                        if (LineManager.IsLastEffectiveIndexLine(level) || sector.Nodes[sector.Nodes.Count - 1].Children.Count == 0)
+                        {
+                            BuildIndexNodeAndAddToPara(sector.Nodes[0], true, para);
+                        }
+                        else
+                        {
+                            bool firstMove = true;
+
+                            int nodeCount = sector.Nodes.Count;
+                            int firstSkip = nodeCount;
+                            int lastSkip = -1;
+
+                            if (nodeCount >= 5)
+                            {
+                                firstSkip = 2;
+                                lastSkip = nodeCount - 3;
+                            }
+
+                            for (int i = 0; i < sector.Nodes.Count; i++)
+                            {
+                                TreeNode nd = sector.Nodes[i];
+                                BuildIndexNodeAndAddToPara(nd, firstMove, para);
+                                firstMove = false;
+                            }
+                        }
+                        rIdTitle.FontWeight = FontWeights.DemiBold;
+
+                        para.Inlines.Add(new Run("\n"));
+                    }
                 }
-                doc.Blocks.Add(para);
-            }
-            else if (_pageHeaderParagraph != null)
-            {
-                _pageHeaderParagraph.ToolTip = Properties.Resources.ShowIndex;
             }
         }
 
@@ -423,10 +424,15 @@ namespace ChessForge
             for (int n = 0; n < LineManager.LineSectors.Count; n++)
             {
                 LineSector sector = LineManager.LineSectors[n];
-                if (doNotShow.Find(x => x == sector) != null)
+                if (!sector.IsShown)
                 {
                     continue;
                 }
+
+                //if (doNotShow.Find(x => x == sector) != null)
+                //{
+                //    continue;
+                //}
 
                 if (sector.Nodes.Count == 0 || sector.Nodes.Count == 1 && sector.Nodes[0].NodeId == 0 && string.IsNullOrEmpty(sector.Nodes[0].Comment))
                 {
@@ -459,26 +465,26 @@ namespace ChessForge
                         }
                     }
 
-                    para = LineSectorManager.CreateStudyParagraph(sector.ParaAttrs);
+                    para = LineSectorManager.CreateStudyParagraph(sector.ParaAttrs, sector.DisplayLevel);
                     if (para.FontWeight == FontWeights.Bold)
                     {
                         para.FontWeight = FontWeights.Normal;
                     }
 
-                    if (LineManager.IsEffectiveIndexLevel(sector.BranchLevel))
-                    {
-                        InsertIndexPrefixRun(sector, para);
-                    }
-                    else
-                    {
-                        if (LineManager.IsLastEffectiveIndexLine(sector.DisplayLevel + 1))
-                        {
-                            para.FontWeight = FontWeights.DemiBold;
-                        }
-                    }
+                    //if (LineManager.IsEffectiveIndexLevel(sector.BranchLevel))
+                    //{
+                    //    InsertIndexPrefixRun(sector, para);
+                    //}
+                    //else
+                    //{
+                    //    if (LineManager.IsLastEffectiveIndexLine(sector.DisplayLevel + 1))
+                    //    {
+                    //        para.FontWeight = FontWeights.DemiBold;
+                    //    }
+                    //}
 
-                    BuildSectorRuns(sector, para, doNotShow);
                     sector.HostPara = para;
+                    BuildSectorRuns(sector);
                     RemoveTrailingNewLinesInPara(para);
                     doc.Blocks.Add(para);
                 }
@@ -519,12 +525,19 @@ namespace ChessForge
         /// <param name="sector"></param>
         /// <param name="para"></param>
         /// <param name="levelGroup"></param>
-        public void BuildSectorRuns(LineSector sector, Paragraph para, List<LineSector> doNotShow)
+        public void BuildSectorRuns(LineSector sector)
         {
             bool includeNumber = true;
             bool parenthesis = false;
 
             bool collapsed = false;
+            Paragraph para = sector.HostPara;
+
+            if (LineManager.IsEffectiveIndexLevel(sector.BranchLevel))
+            {
+                InsertIndexPrefixRun(sector, para);
+            }
+
             for (int i = 0; i < sector.Nodes.Count; i++)
             {
                 bool diagram = false;
@@ -581,7 +594,7 @@ namespace ChessForge
                 if (collapsed)
                 {
                     // insert the elipsis Run and exit
-                    InsertCollapseElipsisRun(para, nd, sector, doNotShow);
+                    InsertCollapseElipsisRun(para, nd, sector);
                     break;
                 }
             }
@@ -616,7 +629,7 @@ namespace ChessForge
         /// <param name="sector"></param>
         /// <param name="doNotShow"></param>
         /// <returns></returns>
-        private Run InsertCollapseElipsisRun(Paragraph para, TreeNode nd, LineSector sector, List<LineSector> doNotShow)
+        private Run InsertCollapseElipsisRun(Paragraph para, TreeNode nd, LineSector sector)
         {
             Run elipsis = new Run(" [...]");
 
@@ -624,7 +637,7 @@ namespace ChessForge
             elipsis.PreviewMouseDown += EventIdxPrefixRunClicked;
             elipsis.ToolTip = Properties.Resources.TtClickToExpand;
             para.Inlines.Add(elipsis);
-            LineManager.GetSubTree(sector, doNotShow);
+            //LineManager.GetSubTree(sector, doNotShow);
 
             return elipsis;
         }
