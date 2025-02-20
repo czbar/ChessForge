@@ -73,6 +73,41 @@ namespace ChessForge
         public List<LineSector> LineSectors;
 
         /// <summary>
+        /// The paragraph that contains the index header.
+        /// </summary>
+        public Paragraph IndexHeaderPara;
+
+        /// <summary>
+        /// The paragraph that contains the index content.
+        /// </summary>
+        public Paragraph IndexContentPara;
+
+        /// <summary>
+        /// Creates a paragraph for the "Variation Index" title and the depth arrows.
+        /// </summary>
+        public void CreateIndexHeaderPara()
+        {
+            IndexHeaderPara = new Paragraph
+            {
+                Margin = new Thickness(0, 0, 0, 6),
+            };
+        }
+
+        /// <summary>
+        /// Creates a paragraph for the "Variation Index" content.
+        /// </summary>
+        public void CreateIndexContentPara()
+        {
+            IndexContentPara = _studyView.CreateParagraph("0", true);
+            IndexContentPara.Name = RichTextBoxUtilities.StudyIndexParagraphName;
+            IndexContentPara.Foreground = ChessForgeColors.CurrentTheme.IndexPrefixForeground;
+            IndexContentPara.FontWeight = FontWeights.Normal;
+            IndexContentPara.FontSize = IndexContentPara.FontSize - 1;
+            IndexContentPara.Margin = new Thickness(0, 0, 0, 0);
+        }
+
+
+        /// <summary>
         /// Gets the list of all sectors in the subtree
         /// of LineSectors starting at sector.
         /// The passed sector is not included.
