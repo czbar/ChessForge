@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ChessPosition;
+﻿using ChessPosition;
+using System;
 
 namespace ChessForge
 {
@@ -24,6 +20,16 @@ namespace ChessForge
         /// It is not valid if IsMateDetected == true. 
         /// </summary>
         public int ScoreCp;
+
+        /// <summary>
+        /// Depth of the search in plies.
+        /// </summary>
+        public int Depth;
+
+        /// <summary>
+        /// Selective depth of the search in plies.
+        /// </summary>
+        public int SelDepth;
 
         /// <summary>
         /// True if the evaluation is checkmate
@@ -72,6 +78,8 @@ namespace ChessForge
             this.Line = string.Copy(moveEval.Line);
             this.MoveNumber = moveEval.MoveNumber;
             this.ScoreCp = moveEval.ScoreCp;
+            this.Depth = moveEval.Depth;
+            this.SelDepth = moveEval.SelDepth;
             this.IsMateDetected = moveEval.IsMateDetected;
             this.MovesToMate = moveEval.MovesToMate;
         }
