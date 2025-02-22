@@ -331,6 +331,9 @@ namespace ChessForge
                     nd.LineId = nd.Parent.LineId;
                 }
 
+                // TODO: while testing use this variable to switch between the old and new (performant) layout
+                bool useNewLayout = true;
+
                 // if we have LineId we are done
                 if (!string.IsNullOrEmpty(nd.LineId))
                 {
@@ -338,18 +341,26 @@ namespace ChessForge
                     {
                         AppState.MainWin.AppendNodeToActiveLine(nd, false);
 
-                        // to improve performance we only need to rebuild the tree if the new move has siblings
-                        // or if the parent has siblings (in which there may be layout changes)
-                        // or in the exercise view, if this is the first move (nd.Parent.NodeId == 0)
-                        // in which case we want to call a Rebuild so we get the move number
-                        if (nd.Parent == null || nd.Parent.NodeId == 0 || nd.Parent.Children.Count > 1 
-                            || AppState.MainWin.ActiveVariationTree.NodeHasSiblings(nd.Parent.NodeId))
+                        if (useNewLayout && AppState.MainWin.ActiveTreeView is StudyTreeView studyView)
                         {
-                            AppState.MainWin.RebuildActiveTreeView();
+                            studyView.UpdateLayoutOnAddedMove();
                         }
                         else
                         {
-                            AppState.MainWin.AppendNewMoveToTreeBranch(nd);
+
+                            // to improve performance we only need to rebuild the tree if the new move has siblings
+                            // or if the parent has siblings (in which there may be layout changes)
+                            // or in the exercise view, if this is the first move (nd.Parent.NodeId == 0)
+                            // in which case we want to call a Rebuild so we get the move number
+                            if (nd.Parent == null || nd.Parent.NodeId == 0 || nd.Parent.Children.Count > 1
+                                || AppState.MainWin.ActiveVariationTree.NodeHasSiblings(nd.Parent.NodeId))
+                            {
+                                AppState.MainWin.RebuildActiveTreeView();
+                            }
+                            else
+                            {
+                                AppState.MainWin.AppendNewMoveToTreeBranch(nd);
+                            }
                         }
 
                         AppState.MainWin.UiEvalChart.IsDirty = true;
@@ -368,7 +379,15 @@ namespace ChessForge
                     // Workbook view will need a full update unless TODO this node AND its parent have no siblings
                     AppState.MainWin.ActiveVariationTree.SetLineIdForNewNode(nd);
                     AppState.MainWin.SetActiveLine(nd.LineId, nd.NodeId, false);
-                    AppState.MainWin.RebuildActiveTreeView();
+                    
+                    if (useNewLayout && AppState.MainWin.ActiveTreeView is StudyTreeView studyView)
+                    {
+                        studyView.UpdateLayoutOnAddedMove();
+                    }
+                    else
+                    {
+                        AppState.MainWin.RebuildActiveTreeView();
+                    }
                     AppState.MainWin.ActiveTreeView.SelectLineAndMoveInWorkbookViews(AppState.MainWin.ActiveLine.GetLineId(), AppState.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false), true);
                 }
 
@@ -387,11 +406,6 @@ namespace ChessForge
                 if (!preExist)
                 {
                     ChessForgeEventArgs args = new ChessForgeEventArgs();
-                    // TODO
-                    // commented out for peformance reasons
-                    // needs to be performed in a background task and not in Solving or training modes
-                    //
-                    //reportDupe = FindIdenticalPositions.Search(nd, FindIdenticalPositions.Mode.CHECK_IF_ANY);
                     reportDupe = false;
                 }
                 return true;
