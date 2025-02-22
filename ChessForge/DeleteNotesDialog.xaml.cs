@@ -38,12 +38,9 @@ namespace ChessForge
         /// and checks the controls as per the current state
         /// of the application.
         /// </summary>
-        /// <param name="title"></param>
-        public DeleteNotesDialog(string title)
+        public DeleteNotesDialog()
         {
             InitializeComponent();
-
-            this.Title = title;
 
             UiCbStudy.IsChecked = true;
             UiCbGames.IsChecked = false;
