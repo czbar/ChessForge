@@ -139,6 +139,9 @@
     <Compile Include="CustomCommands.cs" />
     <Compile Include="DebugDumps.cs" />
     <Compile Include="DeleteArticlesUtils.cs" />
+    <Compile Include="DeleteNotesDialog.xaml.cs">
+      <DependentUpon>DeleteNotesDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DiagramSetupDialog.xaml.cs">
       <DependentUpon>DiagramSetupDialog.xaml</DependentUpon>
     </Compile>
@@ -440,6 +443,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ConfirmUndoDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DeleteNotesDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
