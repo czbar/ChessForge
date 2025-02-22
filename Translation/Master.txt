@@ -671,6 +671,10 @@ PasteEngineLines=Paste Engine Lines...
 #Evaluate Games
 MnEvaluateGames=Evaluate Games
 
+#Delete notes
+MenuDeleteNotes=Delete Notes...
+
+
 #Strip all comments
 StripComments=Delete Comments...
 

@@ -711,6 +711,9 @@
   <data name="MnEvaluateGames" xml:space="preserve">
     <value>Oceń partie</value>
   </data>
+  <data name="MenuDeleteNotes" xml:space="preserve">
+    <value>Usuń notatki...</value>
+  </data>
   <data name="StripComments" xml:space="preserve">
     <value>Usuń komentarze...</value>
   </data>
@@ -944,7 +947,7 @@
     <value>Kolejność Wariantów</value>
   </data>
   <data name="DeleteNotes" xml:space="preserve">
-    <value>Delete Notes</value>
+    <value>Usuń Notatki</value>
   </data>
   <data name="ItemsToDelete" xml:space="preserve">
     <value>Elementy do Usunięcia</value>

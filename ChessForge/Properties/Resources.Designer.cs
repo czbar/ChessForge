@@ -4444,6 +4444,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete Notes....
+        /// </summary>
+        public static string MenuDeleteNotes {
+            get {
+                return ResourceManager.GetString("MenuDeleteNotes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Merge Chapters.
         /// </summary>
         public static string MergeChapters {

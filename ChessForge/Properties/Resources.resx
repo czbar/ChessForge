@@ -711,6 +711,9 @@
   <data name="MnEvaluateGames" xml:space="preserve">
     <value>Evaluate Games</value>
   </data>
+  <data name="MenuDeleteNotes" xml:space="preserve">
+    <value>Delete Notes...</value>
+  </data>
   <data name="StripComments" xml:space="preserve">
     <value>Delete Comments...</value>
   </data>

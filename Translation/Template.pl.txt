@@ -869,6 +869,11 @@ PasteEngineLines=Wklej warianty silnika...
 #english: MnEvaluateGames=Evaluate Games
 MnEvaluateGames=Oceń partie
 
+#description: Delete notes
+#english: MenuDeleteNotes=Delete Notes...
+MenuDeleteNotes=Usuń notatki...
+
+
 #description: Strip all comments
 #english: StripComments=Delete Comments...
 StripComments=Usuń komentarze...
@@ -1255,7 +1260,7 @@ ReorderLines=Kolejność Wariantów
 
 #description: Delete Notes
 #english: DeleteNotes = Delete Notes
-DeleteNotes = Delete Notes
+DeleteNotes = Usuń Notatki
 
 #description: Items to delete
 #english: ItemsToDelete=Items to Delete

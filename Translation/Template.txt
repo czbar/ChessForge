@@ -869,6 +869,11 @@ PasteEngineLines=
 #english: MnEvaluateGames=Evaluate Games
 MnEvaluateGames=
 
+#description: Delete notes
+#english: MenuDeleteNotes=Delete Notes...
+MenuDeleteNotes=
+
+
 #description: Strip all comments
 #english: StripComments=Delete Comments...
 StripComments=
