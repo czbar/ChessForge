@@ -975,6 +975,29 @@ ReorderLines=Reorder Lines
 
 #######################################
 #
+# Header: DIALOG Delete Notes
+#
+
+#Delete Notes
+DeleteNotes = Delete Notes
+
+#Items to delete
+ItemsToDelete=Items to Delete
+
+#Comments
+Comments=Comments
+
+#Engine Evaluations
+EngineEvaluations=Engine Evaluations
+
+#Sidelines
+Sidelines=Sidelines
+
+#ViewsToDeleteIn
+ViewsTypeToApplyTo=Views to Apply to
+
+#######################################
+#
 # Header: DIALOG Select Libraries
 #
 

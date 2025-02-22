@@ -1250,6 +1250,35 @@ ReorderLines=Kolejność Wariantów
 
 #######################################
 #
+# Header: DIALOG Delete Notes
+#
+
+#description: Delete Notes
+#english: DeleteNotes = Delete Notes
+DeleteNotes = Delete Notes
+
+#description: Items to delete
+#english: ItemsToDelete=Items to Delete
+ItemsToDelete=Elementy do Usunięcia
+
+#description: Comments
+#english: Comments=Comments
+Comments=Komentarze
+
+#description: Engine Evaluations
+#english: EngineEvaluations=Engine Evaluations
+EngineEvaluations=Oceny Silnika
+
+#description: Sidelines
+#english: Sidelines=Sidelines
+Sidelines=Boczne Warianty
+
+#description: ViewsToDeleteIn
+#english: ViewsTypeToApplyTo=Views to Apply to
+ViewsTypeToApplyTo=Zastosuj do Widoków
+
+#######################################
+#
 # Header: DIALOG Select Libraries
 #
 

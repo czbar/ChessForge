@@ -943,6 +943,24 @@
   <data name="ReorderLines" xml:space="preserve">
     <value>Kolejność Wariantów</value>
   </data>
+  <data name="DeleteNotes" xml:space="preserve">
+    <value>Delete Notes</value>
+  </data>
+  <data name="ItemsToDelete" xml:space="preserve">
+    <value>Elementy do Usunięcia</value>
+  </data>
+  <data name="Comments" xml:space="preserve">
+    <value>Komentarze</value>
+  </data>
+  <data name="EngineEvaluations" xml:space="preserve">
+    <value>Oceny Silnika</value>
+  </data>
+  <data name="Sidelines" xml:space="preserve">
+    <value>Boczne Warianty</value>
+  </data>
+  <data name="ViewsTypeToApplyTo" xml:space="preserve">
+    <value>Zastosuj do Widoków</value>
+  </data>
   <data name="Libraries" xml:space="preserve">
     <value>Biblioteki</value>
   </data>
