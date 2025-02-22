@@ -17,6 +17,34 @@ namespace ChessForge
     public partial class VariationTreeView : RichTextBuilder
     {
         /// <summary>
+        /// Removes Runs/Inlines associated with the passed node from dictionaries.
+        /// </summary>
+        /// <param name="nd"></param>
+        public void RemoveNodeFromDictionaries(TreeNode nd)
+        {
+            if (_dictNodeToRun.Keys.Contains(nd.NodeId))
+            {
+                Run run = _dictNodeToRun[nd.NodeId];
+                _dictNodeToRun.Remove(nd.NodeId);
+                _dictRunToParagraph.Remove(run);
+
+                if (_dictNodeToCommentRun.Keys.Contains(nd.NodeId))
+                {
+                    Inline commentRun = _dictNodeToCommentRun[nd.NodeId];
+                    _dictNodeToCommentRun.Remove(nd.NodeId);
+                    _dictCommentRunToParagraph.Remove(commentRun);
+                }
+
+                if (_dictNodeToCommentBeforeMoveRun.Keys.Contains(nd.NodeId))
+                {
+                    Inline commentBeforeMoveRun = _dictNodeToCommentBeforeMoveRun[nd.NodeId];
+                    _dictNodeToCommentBeforeMoveRun.Remove(nd.NodeId);
+                    _dictCommentBeforeMoveRunToParagraph.Remove(commentBeforeMoveRun);
+                }
+            }
+        }
+
+        /// <summary>
         /// If the Comment run for the passed node already exists, it will be updated.
         /// If it does not exist, it will be created.
         /// This also updates the run's text itself and move NAGs may have changed
