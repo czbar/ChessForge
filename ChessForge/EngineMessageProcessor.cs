@@ -1207,8 +1207,8 @@ namespace ChessForge
                 EngineMoveCandidates.Clear();
                 foreach (string message in messages)
                 {
-                    ParseInfoMessage(message, out string moves, out int? multipv, out int? score, out int? movesToMate);
-                    UpdateMoveCandidates(evalNode, moves, multipv, score, movesToMate);
+                    ParseInfoMessage(message, out string moves, out int? multipv, out int? depth, out int? seldepth, out int? score, out int? movesToMate);
+                    UpdateMoveCandidates(evalNode, moves, multipv, depth, seldepth, score, movesToMate);
                 }
             }
         }
@@ -1221,13 +1221,15 @@ namespace ChessForge
         /// <param name="multipv"></param>
         /// <param name="score"></param>
         /// <param name="movesToMate"></param>
-        private static void ParseInfoMessage(string message, out string moves, out int? multipv, out int? score, out int? movesToMate)
+        private static void ParseInfoMessage(string message, out string moves, out int? multipv, out int? depth, out int? seldepth, out int? score, out int? movesToMate)
         {
             string[] tokens = message.Split(' ');
 
             int idx = 0;
 
             multipv = null;
+            depth = null;
+            seldepth = null;
             score = null;
             movesToMate = null;
             moves = "";
@@ -1241,6 +1243,14 @@ namespace ChessForge
                     case "multipv":
                         idx++;
                         multipv = int.Parse(tokens[idx]);
+                        break;
+                    case "depth":
+                        idx++;
+                        depth = int.Parse(tokens[idx]);
+                        break;
+                    case "seldepth":
+                        idx++;
+                        seldepth = int.Parse(tokens[idx]);
                         break;
                     case "score":
                         // next token can be "cp" or "mate" followed by an int value
@@ -1267,7 +1277,7 @@ namespace ChessForge
         /// <param name="multipv"></param>
         /// <param name="score"></param>
         /// <param name="movesToMate"></param>
-        private static void UpdateMoveCandidates(TreeNode evalNode, string moves, int? multipv, int? score, int? movesToMate)
+        private static void UpdateMoveCandidates(TreeNode evalNode, string moves, int? multipv, int? depth, int? seldepth, int? score, int? movesToMate)
         {
             if (multipv != null && (score != null || movesToMate != null))
             {
@@ -1285,6 +1295,8 @@ namespace ChessForge
                 {
                     EngineMoveCandidates.Lines[multipv.Value - 1].ScoreCp = score.Value;
                     EngineMoveCandidates.Lines[multipv.Value - 1].IsMateDetected = false;
+                    EngineMoveCandidates.Lines[multipv.Value - 1].Depth = depth == null ? 0 : depth.Value;
+                    EngineMoveCandidates.Lines[multipv.Value - 1].SelDepth = seldepth == null ? 0 : seldepth.Value;
                 }
                 else
                 {
