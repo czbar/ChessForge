@@ -73,6 +73,12 @@ namespace ChessForge
                         {
                             _currentManager.LineSectors[i].ParaAttrs = _updatedManager.LineSectors[i].ParaAttrs;
                             _currentManager.LineSectors[i].Nodes = _updatedManager.LineSectors[i].Nodes;
+
+                            foreach (TreeNode node in _currentManager.LineSectors[i].Nodes)
+                            {
+                                _view.RemoveNodeFromDictionaries(node);
+                            }
+
                             _view.BuildSectorRuns(_currentManager.LineSectors[i]);
                         }
                     }
@@ -82,7 +88,21 @@ namespace ChessForge
                         LineSector newSector = _updatedManager.LineSectors[i];
                         _currentManager.LineSectors.Insert(i, newSector);
                         CreateSectorParagraph(newSector);
+
+                        foreach (TreeNode node in newSector.Nodes)
+                        {
+                            _view.RemoveNodeFromDictionaries(node);
+                        }
                         _view.BuildSectorRuns(newSector);
+
+                        if (i > 0)
+                        {
+                            _view.HostRtb.Document.Blocks.InsertAfter(_currentManager.LineSectors[i - 1].HostPara, newSector.HostPara);
+                        }
+                        else
+                        {
+                            _view.HostRtb.Document.Blocks.Add(newSector.HostPara);
+                        }
                     }
                 }
             }
