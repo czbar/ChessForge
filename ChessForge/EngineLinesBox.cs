@@ -334,7 +334,8 @@ namespace ChessForge
                     }
                     else
                     {
-                        return (lineNo + 1).ToString() + ". (" + eval + "): "
+                        return (lineNo + 1).ToString() + ". " + eval + ""
+                            + " (" + line.Depth.ToString() + "/" + line.SelDepth.ToString() + "): "
                             + sMoveNo
                             + moveSeq;
                     }
