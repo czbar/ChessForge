@@ -52,23 +52,13 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Deletes all comments and NAGs in the scope that the user will select. 
+        /// Deletes user-selected items: comments, engine evaluations, sidelines. 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiDeleteComments_Click(object sender, RoutedEventArgs e)
+        private void UiDeleteNotes_Click(object sender, RoutedEventArgs e)
         {
-            UiDeleteMoveAttributes(sender, e, MoveAttribute.COMMENT_AND_NAGS);
-        }
-
-        /// <summary>
-        /// Deletes all engine evaluations in the scope that the user will select. 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiDeleteEngineEvals_Click(object sender, RoutedEventArgs e)
-        {
-            UiDeleteMoveAttributes(sender, e, MoveAttribute.ENGINE_EVALUATION);
+            UiDeleteNotes(sender, e);
         }
 
         /// <summary>
@@ -82,26 +72,18 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Deletes all comments from the currently shown tree. 
+        /// Invokes a dialog allowing the user to select the scope 
+        /// and type of notes to delete.
+        /// The "notes" can be comments (before and after moves), engine evaluations
+        /// and sidelines.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiDeleteMoveAttributes(object sender, RoutedEventArgs e, MoveAttribute attrType)
+        private void UiDeleteNotes(object sender, RoutedEventArgs e)
         {
-            string dlgTitle = "";
-            switch (attrType)
-            {
-                case MoveAttribute.COMMENT_AND_NAGS:
-                    dlgTitle = Properties.Resources.ScopeForDeleteComments;
-                    break;
-                case MoveAttribute.ENGINE_EVALUATION:
-                    dlgTitle = Properties.Resources.ScopeForDeleteEvals;
-                    break;
-            }
-
-            OperationScopeDialog dlg = new OperationScopeDialog(dlgTitle, OperationScopeDialog.ScopedAction.DEFAULT);
+            DeleteNotesDialog dlg = new DeleteNotesDialog();
             GuiUtilities.PositionDialog(dlg, this, 100);
-            if (dlg.ShowDialog() == true)
+            if (dlg.ShowDialog() == true && dlg.ApplyToAttributes != 0)
             {
                 Dictionary<Article, List<MoveAttributes>> dictUndoData = new Dictionary<Article, List<MoveAttributes>>();
 
@@ -109,7 +91,7 @@ namespace ChessForge
                 {
                     if (ActiveTreeView != null && AppState.IsTreeViewTabActive() && AppState.Workbook.ActiveArticle != null)
                     {
-                        var list = DeleteMoveAttributesInArticle(AppState.Workbook.ActiveArticle, attrType);
+                        var list = DeleteMoveAttributesInArticle(AppState.Workbook.ActiveArticle, dlg.ApplyToAttributes);
                         if (list.Count > 0)
                         {
                             dictUndoData[AppState.Workbook.ActiveArticle] = list;
@@ -118,43 +100,30 @@ namespace ChessForge
                 }
                 else if (dlg.ApplyScope == OperationScope.CHAPTER)
                 {
-                    DeleteMoveAttributesInChapter(attrType, AppState.ActiveChapter, dlg.ApplyToStudies, dlg.ApplyToGames, dlg.ApplyToExercises, dictUndoData);
+                    DeleteMoveAttributesInChapter(dlg.ApplyToAttributes, AppState.ActiveChapter, dlg.ApplyToStudies, dlg.ApplyToGames, dlg.ApplyToExercises, dictUndoData);
                 }
                 else if (dlg.ApplyScope == OperationScope.WORKBOOK)
                 {
                     foreach (Chapter chapter in AppState.Workbook.Chapters)
                     {
-                        DeleteMoveAttributesInChapter(attrType, chapter, dlg.ApplyToStudies, dlg.ApplyToGames, dlg.ApplyToExercises, dictUndoData);
+                        DeleteMoveAttributesInChapter(dlg.ApplyToAttributes, chapter, dlg.ApplyToStudies, dlg.ApplyToGames, dlg.ApplyToExercises, dictUndoData);
                     }
                 }
 
                 if (ActiveTreeView != null && AppState.IsTreeViewTabActive())
                 {
-                    switch (attrType)
+                    ActiveTreeView.BuildFlowDocumentForVariationTree(false);
+                    if ((dlg.ApplyToAttributes & (int)MoveAttribute.ENGINE_EVALUATION) != 0)
                     {
-                        case MoveAttribute.COMMENT_AND_NAGS:
-                            ActiveTreeView.BuildFlowDocumentForVariationTree(false);
-                            break;
-                        case MoveAttribute.ENGINE_EVALUATION:
-                            // there may have been "assessments" so need to refresh this
-                            ActiveTreeView.BuildFlowDocumentForVariationTree(false);
-                            ActiveLine.RefreshNodeList(true);
-                            break;
+                        // there may have been "assessments" so need to refresh this
+                        ActiveLine.RefreshNodeList(true);
                     }
                 }
 
                 if (dictUndoData.Keys.Count > 0)
                 {
-                    WorkbookOperationType wot = WorkbookOperationType.NONE;
-                    switch (attrType)
-                    {
-                        case MoveAttribute.COMMENT_AND_NAGS:
-                            wot = WorkbookOperationType.DELETE_COMMENTS;    
-                            break;
-                        case MoveAttribute.ENGINE_EVALUATION:
-                            wot = WorkbookOperationType.DELETE_ENGINE_EVALS;
-                            break;
-                    }
+                    WorkbookOperationType wot = WorkbookOperationType.DELETE_NOTES;
+
                     WorkbookOperation op = new WorkbookOperation(wot, dictUndoData);
                     AppState.Workbook.OpsManager.PushOperation(op);
 
@@ -169,20 +138,33 @@ namespace ChessForge
         /// </summary>
         /// <param name="article"></param>
         /// <returns></returns>
-        private List<MoveAttributes> DeleteMoveAttributesInArticle(Article article, MoveAttribute attrType)
+        private List<MoveAttributes> DeleteMoveAttributesInArticle(Article article, int attrTypes)
         {
             List<MoveAttributes> attrsList = new List<MoveAttributes>();
 
-            switch (attrType)
+            attrsList = TreeUtils.BuildAttributesList(article.Tree, (int)attrTypes);
+            if ((attrTypes & (int)MoveAttribute.COMMENT_AND_NAGS) != 0)
             {
-                case MoveAttribute.COMMENT_AND_NAGS:
-                    attrsList = TreeUtils.BuildNagsAndCommentsList(article.Tree);
-                    article.Tree.DeleteCommentsAndNags();
-                    break;
-                case MoveAttribute.ENGINE_EVALUATION:
-                    attrsList = TreeUtils.BuildEngineEvalList(article.Tree);
-                    article.Tree.DeleteEvalsAndAssessments();
-                    break;
+                article.Tree.DeleteCommentsAndNags();
+            }
+
+            if ((attrTypes & (int)MoveAttribute.ENGINE_EVALUATION) != 0)
+            {
+                article.Tree.DeleteEvalsAndAssessments();
+            }
+
+            if ((attrTypes & (int)MoveAttribute.SIDELINE) != 0)
+            {
+                List<TreeNode> toDelete = new List<TreeNode>();
+                foreach(MoveAttributes attrs in attrsList)
+                {
+                    if (attrs.IsDeleted)
+                    {
+                        toDelete.Add(attrs.Node);
+                    }
+                }
+                article.Tree.DeleteNodes(toDelete);
+                BookmarkManager.ResyncBookmarks(1);
             }
 
             return attrsList;
@@ -195,18 +177,18 @@ namespace ChessForge
         /// <param name="study"></param>
         /// <param name="games"></param>
         /// <param name="exercises"></param>
-        private void DeleteMoveAttributesInChapter(MoveAttribute attrType, 
-            Chapter chapter, 
-            bool study, 
-            bool games, 
-            bool exercises, 
+        private void DeleteMoveAttributesInChapter(int attrTypes,
+            Chapter chapter,
+            bool study,
+            bool games,
+            bool exercises,
             Dictionary<Article, List<MoveAttributes>> dict)
         {
             if (chapter != null)
             {
                 if (study)
                 {
-                    var list = DeleteMoveAttributesInArticle(chapter.StudyTree, attrType);
+                    var list = DeleteMoveAttributesInArticle(chapter.StudyTree, attrTypes);
                     if (list.Count > 0)
                     {
                         dict[chapter.StudyTree] = list;
@@ -216,7 +198,7 @@ namespace ChessForge
                 {
                     foreach (Article game in chapter.ModelGames)
                     {
-                        var list = DeleteMoveAttributesInArticle(game, attrType);
+                        var list = DeleteMoveAttributesInArticle(game, attrTypes);
                         if (list.Count > 0)
                         {
                             dict[game] = list;
@@ -227,7 +209,7 @@ namespace ChessForge
                 {
                     foreach (Article exercise in chapter.Exercises)
                     {
-                        var list = DeleteMoveAttributesInArticle(exercise, attrType);
+                        var list = DeleteMoveAttributesInArticle(exercise, attrTypes);
                         if (list.Count > 0)
                         {
                             dict[exercise] = list;
