@@ -1,11 +1,9 @@
-﻿using System;
+﻿using ChessPosition;
+using GameTree;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
-using System.Windows.Media;
-using ChessPosition;
-using ChessPosition.GameTree;
-using GameTree;
+using System.Linq;
 
 namespace ChessForge
 {
@@ -1086,10 +1084,66 @@ namespace ChessForge
         public void UndoDeleteComments(object dictMoveAttributes)
         {
             Dictionary<Article, List<MoveAttributes>> dictUndoData = dictMoveAttributes as Dictionary<Article, List<MoveAttributes>>;
+            foreach (Article article in dictUndoData.Keys)
+            {
+                TreeUtils.InsertCommentsAndNags(article.Tree, dictUndoData[article]);
+            }
+        }
+
+        /// <summary>
+        /// Notes can be comments, NAGs, engine evaluation or nodes.
+        /// First the nodes must be restored, then then added to their parents children list
+        /// and then notes and evals can be added.
+        /// </summary>
+        /// <param name="dictMoveAttributes"></param>
+        public void UndoDeleteNotes(object dictMoveAttributes)
+        {
+            Dictionary<Article, List<MoveAttributes>> dictUndoData = dictMoveAttributes as Dictionary<Article, List<MoveAttributes>>;
+
+            foreach (Article article in dictUndoData.Keys)
+            {
+                List<MoveAttributes> toRestore = new List<MoveAttributes>();
+
+                List<MoveAttributes> moveAttrs = dictUndoData[article];
+                foreach (var item in moveAttrs)
+                {
+                    if (item.IsDeleted && item.Node != null)
+                    {
+                        article.Tree.AddNode(item.Node);
+                        toRestore.Add(item);
+                    }
+                }
+
+                // the toRestore list must be sorted by ChildIndexInParent (ascending),
+                // so that the nodes are inserted in the correct order
+                toRestore.OrderBy(x => x.ChildIndexInParent);
+                for (int i = 0; i < toRestore.Count; i++)
+                {
+                    MoveAttributes attrs = toRestore[i];
+                    TreeNode parent = article.Tree.GetNodeFromNodeId(attrs.ParentId);
+
+                    // perform some defensive checks
+                    if (parent != null)
+                    {
+                        if (parent.Children.Count > attrs.ChildIndexInParent)
+                        {
+                            parent.Children.Insert(attrs.ChildIndexInParent, attrs.Node);
+                        }
+                        else
+                        {
+                            parent.Children.Add(attrs.Node);
+                        }
+                    }
+                }
+
+                TreeUtils.InsertCommentsAndNags(article.Tree, dictUndoData[article]);
+                TreeUtils.InsertEngineEvals(article.Tree, dictUndoData[article]);
+            }
 
             foreach (Article article in dictUndoData.Keys)
             {
                 TreeUtils.InsertCommentsAndNags(article.Tree, dictUndoData[article]);
+                TreeUtils.InsertEngineEvals(article.Tree, dictUndoData[article]);
             }
         }
 
