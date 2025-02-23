@@ -1854,6 +1854,10 @@ ThinkTimeEvaluationPerMove=
 #english: MultipleLines=Top Lines to Show
 MultipleLines=
 
+#description: Whether to show the engine's analysis depth in the Engine Lines window
+#english: ShowEngineDepth=Show Analysis Depth
+ShowEngineDepth=
+
 #description: Allows diff from best move when selecting game moves
 #english: MoveSelectionAccuracy=Centipawn Range
 MoveSelectionAccuracy=

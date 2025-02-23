@@ -6740,6 +6740,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show Analysis Depth.
+        /// </summary>
+        public static string ShowEngineDepth {
+            get {
+                return ResourceManager.GetString("ShowEngineDepth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show Evaluation Chart.
         /// </summary>
         public static string ShowEvaluationChart {

@@ -980,11 +980,11 @@ TtAllowEvalUpdate=Wyłącz silnik\n(Oceny nie są uaktualniane. Włącz przez Ct
 
 #description: Tool tip for hiding Eval Chart
 #english: HideEvaluationChart=Hide Evaluation Chart
-HideEvaluationChart=Pokaż wykres ocen silnika
+HideEvaluationChart=Ukryj wykres ocen silnika
 
 #description: Tool tip for showing evaluation chart
 #english: ShowEvaluationChart=Show Evaluation Chart
-ShowEvaluationChart=Ukryj wykres ocen silnika
+ShowEvaluationChart=Pokaż wykres ocen silnika
 
 
 #description: Top Games box title
@@ -1853,6 +1853,10 @@ ThinkTimeEvaluationPerMove=Czas na ewaluację ruchu (s)
 #description: Multiple lines (MultiPV)
 #english: MultipleLines=Top Lines to Show
 MultipleLines=Liczba pokazywanych linii
+
+#description: Whether to show the engine's analysis depth in the Engine Lines window
+#english: ShowEngineDepth=Show Analysis Depth
+ShowEngineDepth=Pokaż głębokość analizy
 
 #description: Allows diff from best move when selecting game moves
 #english: MoveSelectionAccuracy=Centipawn Range

@@ -1455,6 +1455,9 @@ ThinkTimeEvaluationPerMove=Evaluation Time per Move(s)
 #Multiple lines (MultiPV)
 MultipleLines=Top Lines to Show
 
+#Whether to show the engine's analysis depth in the Engine Lines window
+ShowEngineDepth=Show Analysis Depth
+
 #Allows diff from best move when selecting game moves
 MoveSelectionAccuracy=Centipawn Range
 

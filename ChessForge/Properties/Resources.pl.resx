@@ -782,10 +782,10 @@
 (Oceny nie są uaktualniane. Włącz przez Ctrl+K.)</value>
   </data>
   <data name="HideEvaluationChart" xml:space="preserve">
-    <value>Pokaż wykres ocen silnika</value>
+    <value>Ukryj wykres ocen silnika</value>
   </data>
   <data name="ShowEvaluationChart" xml:space="preserve">
-    <value>Ukryj wykres ocen silnika</value>
+    <value>Pokaż wykres ocen silnika</value>
   </data>
   <data name="TopGames" xml:space="preserve">
     <value>Partie Mistrzowskie</value>
@@ -1314,6 +1314,9 @@
   </data>
   <data name="MultipleLines" xml:space="preserve">
     <value>Liczba pokazywanych linii</value>
+  </data>
+  <data name="ShowEngineDepth" xml:space="preserve">
+    <value>Pokaż głębokość analizy</value>
   </data>
   <data name="MoveSelectionAccuracy" xml:space="preserve">
     <value>Zakres w centypionach</value>

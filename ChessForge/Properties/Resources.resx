@@ -1315,6 +1315,9 @@
   <data name="MultipleLines" xml:space="preserve">
     <value>Top Lines to Show</value>
   </data>
+  <data name="ShowEngineDepth" xml:space="preserve">
+    <value>Show Analysis Depth</value>
+  </data>
   <data name="MoveSelectionAccuracy" xml:space="preserve">
     <value>Centipawn Range</value>
   </data>
