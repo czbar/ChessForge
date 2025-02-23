@@ -4070,6 +4070,10 @@ OpMoveExercises=
 OpCopyExercises=
 
 #description: Operation
+#english: OpDeleteNotes=Delete Notes
+OpDeleteNotes=
+
+#description: Operation
 #english: OpDeleteComments=Delete Comments
 OpDeleteComments=
 

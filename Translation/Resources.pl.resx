@@ -2830,6 +2830,9 @@
   <data name="OpCopyExercises" xml:space="preserve">
     <value>Kopiuj Ćwiczenia</value>
   </data>
+  <data name="OpDeleteNotes" xml:space="preserve">
+    <value>Usuń Notatki</value>
+  </data>
   <data name="OpDeleteComments" xml:space="preserve">
     <value>Usuń Komentarze</value>
   </data>

@@ -5390,6 +5390,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete Notes.
+        /// </summary>
+        public static string OpDeleteNotes {
+            get {
+                return ResourceManager.GetString("OpDeleteNotes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit Exercise Header.
         /// </summary>
         public static string OpEditExerciseHeader {
