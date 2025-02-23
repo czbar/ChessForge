@@ -69,8 +69,9 @@ namespace ChessPosition
     /// </summary>
     public enum MoveAttribute
     {
-        COMMENT_AND_NAGS,
-        ENGINE_EVALUATION
+        COMMENT_AND_NAGS  = 0x01,
+        ENGINE_EVALUATION = 0x02,
+        SIDELINE = 0x04,
     };
 
     /// <summary>
