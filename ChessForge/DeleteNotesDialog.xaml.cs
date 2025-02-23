@@ -26,6 +26,11 @@ namespace ChessForge
         public bool ApplyToGames { get; set; }
 
         /// <summary>
+        /// Set of move attribute flags to be set on exit.
+        /// </summary>
+        public int ApplyToAttributes{ get; set; }
+
+        /// <summary>
         /// Whether to apply the operation to Exercises.
         /// </summary>
         public bool ApplyToExercises { get; set; }
@@ -224,6 +229,19 @@ namespace ChessForge
             if (UiCbExercises.IsChecked == true)
             {
                 ApplyToExercises = true;
+            }
+
+            if (UiCbComments.IsChecked == true)
+            {
+                ApplyToAttributes |= (int)MoveAttribute.COMMENT_AND_NAGS;
+            }
+            if (UiCbEngineEvals.IsChecked == true)
+            {
+                ApplyToAttributes |= (int)MoveAttribute.ENGINE_EVALUATION;
+            }
+            if (UiCbSideLines.IsChecked == true)
+            {
+                ApplyToAttributes |= (int)MoveAttribute.SIDELINE;
             }
 
             DialogResult = true;
