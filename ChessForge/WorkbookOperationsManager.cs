@@ -176,6 +176,9 @@ namespace ChessForge
                     case WorkbookOperationType.DELETE_ENGINE_EVALS:
                         AppState.Workbook.UndoDeleteEngineEvals(op.OpData_1);
                         break;
+                    case WorkbookOperationType.DELETE_NOTES:
+                        AppState.Workbook.UndoDeleteNotes(op.OpData_1);
+                        break;
                     case WorkbookOperationType.ASSIGN_ECO:
                         Tools.UndoAssignEco(op.OpData_1);
                         break;

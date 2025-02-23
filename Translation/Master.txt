@@ -671,6 +671,10 @@ PasteEngineLines=Paste Engine Lines...
 #Evaluate Games
 MnEvaluateGames=Evaluate Games
 
+#Delete notes
+MenuDeleteNotes=Delete Notes...
+
+
 #Strip all comments
 StripComments=Delete Comments...
 
@@ -972,6 +976,29 @@ CustomTerms=Custom Headers
 
 #ReorderLines
 ReorderLines=Reorder Lines
+
+#######################################
+#
+# Header: DIALOG Delete Notes
+#
+
+#Delete Notes
+DeleteNotes = Delete Notes
+
+#Items to delete
+ItemsToDelete=Items to Delete
+
+#Comments
+Comments=Comments
+
+#Engine Evaluations
+EngineEvaluations=Engine Evaluations
+
+#Sidelines
+Sidelines=Sidelines
+
+#ViewsToDeleteIn
+ViewsTypeToApplyTo=Views to Apply to
 
 #######################################
 #
@@ -1427,6 +1454,9 @@ ThinkTimeEvaluationPerMove=Evaluation Time per Move(s)
 
 #Multiple lines (MultiPV)
 MultipleLines=Top Lines to Show
+
+#Whether to show the engine's analysis depth in the Engine Lines window
+ShowEngineDepth=Show Analysis Depth
 
 #Allows diff from best move when selecting game moves
 MoveSelectionAccuracy=Centipawn Range
@@ -3137,6 +3167,9 @@ OpMoveExercises=Move Exercises
 
 #Operation
 OpCopyExercises=Copy Exercises
+
+#Operation
+OpDeleteNotes=Delete Notes
 
 #Operation
 OpDeleteComments=Delete Comments

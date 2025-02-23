@@ -11,6 +11,55 @@ namespace ChessForge
 {
     public partial class VariationTreeView : RichTextBuilder    
     {
+
+        /// <summary>
+        /// Sets a line and move in the VariationTree view.
+        /// This only sets and highlights the selected line and move, it does not update the ActiveLine.
+        /// It is called when left/right arrow or Home/End keys are pressed or when a move is clicked
+        /// in the Scoresheet or the Evaluation Chart (since those actions do not change the ActiveLine).
+        /// </summary>
+        /// <param name="lineId"></param>
+        /// <param name="index"></param>
+        public void SelectLineAndMoveInWorkbookViews(string lineId, int index, bool queryExplorer)
+        {
+            try
+            {
+                TreeNode nd = _mainWin.ActiveLine.GetNodeAtIndex(index);
+                if (nd == null)
+                {
+                    // try the node at index 0
+                    nd = _mainWin.ActiveLine.GetNodeAtIndex(0);
+                }
+
+                if (nd != null && WorkbookManager.SessionWorkbook.ActiveVariationTree != null)
+                {
+                    WorkbookManager.SessionWorkbook.ActiveVariationTree.SetSelectedLineAndMove(lineId, nd.NodeId);
+                    HighlightLineAndMove(HostRtb.Document, lineId, nd.NodeId);
+                    if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS && AppState.ActiveTab != TabViewType.CHAPTERS)
+                    {
+                        _mainWin.EvaluateActiveLineSelectedPosition(nd);
+                    }
+                    if (AppState.MainWin.UiEvalChart.Visibility == System.Windows.Visibility.Visible)
+                    {
+                        if (AppState.MainWin.UiEvalChart.IsDirty)
+                        {
+                            MultiTextBoxManager.ShowEvaluationChart(true);
+                        }
+                        AppState.MainWin.UiEvalChart.SelectMove(nd);
+                    }
+                    if (queryExplorer)
+                    {
+                        _mainWin.OpeningStatsView.SetOpeningName();
+                        WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, ShownVariationTree.SelectedNode);
+                    }
+                }
+            }
+            catch
+            {
+            }
+        }
+
+
         /// <summary>
         /// Selects the passed node along with its line id.
         /// TODO: this should not be necessary, replace with a call to SelectNode(TreeNode);
@@ -92,7 +141,7 @@ namespace ChessForge
                 {
                     BuildForkTable(doc, nodeId);
 
-                    ObservableCollection<TreeNode> lineToSelect = ShownVariationTree.SelectLine(lineId);
+                    ObservableCollection<TreeNode> lineToSelect = ShownVariationTree.GetNodesForLine(lineId);
 
                     _selectedRun = null;
                     _dictNodeToRun.TryGetValue(nodeId, out _selectedRun);
@@ -153,26 +202,14 @@ namespace ChessForge
         /// </summary>
         /// <param name="lineId"></param>
         /// <param name="nodeId"></param>
-        public void SelectAndHighlightLine(string lineId, int nodeId)
+        public void SetAndSelectActiveLine(string lineId, int nodeId)
         {
             // TODO: do not select line and therefore repaint everything if the clicked line is already selected
             // UNLESS there is "copy select" active
-            ObservableCollection<TreeNode> lineToSelect = ShownVariationTree.SelectLine(lineId);
+            ObservableCollection<TreeNode> lineToSelect = ShownVariationTree.GetNodesForLine(lineId);
             WorkbookManager.SessionWorkbook.ActiveVariationTree.SetSelectedLineAndMove(lineId, nodeId);
-            foreach (TreeNode nd in lineToSelect)
-            {
-                if (nd.NodeId != 0)
-                {
-                    if (_dictNodeToRun.TryGetValue(nd.NodeId, out Run run))
-                    {
-                        if (run.Background != ChessForgeColors.CurrentTheme.RtbSelectLineBackground)
-                        {
-                            run.Background = ChessForgeColors.CurrentTheme.RtbSelectLineBackground;
-                        }
-                    }
-                }
-            }
             _mainWin.SetActiveLine(lineToSelect, nodeId);
+            HighlightActiveLine();
         }
 
         /// <summary>
@@ -220,7 +257,10 @@ namespace ChessForge
                     {
                         if (_dictNodeToRun.TryGetValue(nd.NodeId, out Run run))
                         {
-                            run.Background = ChessForgeColors.CurrentTheme.RtbSelectLineBackground;
+                            if (run.Background != ChessForgeColors.CurrentTheme.RtbSelectLineBackground)
+                            {
+                                run.Background = ChessForgeColors.CurrentTheme.RtbSelectLineBackground;
+                            }
                         }
                     }
                 }
@@ -433,10 +473,11 @@ namespace ChessForge
                     _selectedRun.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
                 }
 
+                int nodeId = TextUtils.GetIdFromPrefixedString(runToSelect.Name);
+                TreeNode nd = ShownVariationTree.GetNodeFromNodeId(nodeId);
+
                 if (clickCount == 2)
                 {
-                    int nodeId = TextUtils.GetIdFromPrefixedString(runToSelect.Name);
-                    TreeNode nd = ShownVariationTree.GetNodeFromNodeId(nodeId);
                     if (_mainWin.InvokeAnnotationsDialog(nd))
                     {
                         InsertOrUpdateCommentRun(nd);
@@ -456,30 +497,12 @@ namespace ChessForge
                             AppState.SwapCommentBoxForEngineLines(false);
                         }
 
-                        // unhighlight current line
-                        foreach (TreeNode nd in _mainWin.ActiveLine.Line.NodeList)
-                        {
-                            if (nd.NodeId != 0)
-                            {
-                                Run run;
-                                // if we are dealing with a subtree, we may not have all nodes from the line.
-                                if (_dictNodeToRun.TryGetValue(nd.NodeId, out run))
-                                {
-                                    run.Background = ChessForgeColors.CurrentTheme.RtbBackground;
-                                }
-                            }
-                        }
-
+                        UnhighlightActiveLine();
                         _selectedRun = runToSelect;
+                        BuildForkTable(HostRtb.Document, nodeId);
 
-                        int idd = TextUtils.GetIdFromPrefixedString(runToSelect.Name);
-                        BuildForkTable(HostRtb.Document, idd);
-
-                        int nodeId = -1;
                         if (runToSelect.Name != null && runToSelect.Name.StartsWith(_run_))
                         {
-                            nodeId = TextUtils.GetIdFromPrefixedString(runToSelect.Name);
-
                             // This should never be needed but protect against unexpected timoing issue with sync/async processing
                             if (!ShownVariationTree.HasLinesCalculated())
                             {
@@ -488,8 +511,7 @@ namespace ChessForge
 
                             string lineId = ShownVariationTree.GetDefaultLineIdForNode(nodeId);
 
-                            SelectAndHighlightLine(lineId, nodeId);
-                            LearningMode.ActiveLineId = lineId;
+                            SetAndSelectActiveLine(lineId, nodeId);
                         }
 
                         _selectedRun.Background = ChessForgeColors.CurrentTheme.RtbSelectRunBackground;

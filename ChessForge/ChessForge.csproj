@@ -139,6 +139,9 @@
     <Compile Include="CustomCommands.cs" />
     <Compile Include="DebugDumps.cs" />
     <Compile Include="DeleteArticlesUtils.cs" />
+    <Compile Include="DeleteNotesDialog.xaml.cs">
+      <DependentUpon>DeleteNotesDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DiagramSetupDialog.xaml.cs">
       <DependentUpon>DiagramSetupDialog.xaml</DependentUpon>
     </Compile>
@@ -324,7 +327,7 @@
     <Compile Include="TrainingSessionControl.xaml.cs">
       <DependentUpon>TrainingSessionControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TreeViewManagement\DisplayLevelAttrs.cs" />
+    <Compile Include="TreeViewManagement\LineSectorRunColors.cs" />
     <Compile Include="TreeViewManagement\LineSectorManager.cs" />
     <Compile Include="SelectArticlesDialog.xaml.cs">
       <DependentUpon>SelectArticlesDialog.xaml</DependentUpon>
@@ -336,11 +339,13 @@
     <Compile Include="SystemClipboard.cs" />
     <Compile Include="TopGamesViewRow.cs" />
     <Compile Include="TrainingViewMoveHandlers.cs" />
+    <Compile Include="TreeViewManagement\TreeViewUpdater.cs" />
     <Compile Include="VariationTreeViewBuild.cs" />
     <Compile Include="VariationTreeViewDiagram.cs" />
     <Compile Include="VariationTreeViewEvents.cs" />
     <Compile Include="VariationTreeViewMoveRuns.cs" />
     <Compile Include="VariationTreeViewSelections.cs" />
+    <Compile Include="VariationTreeViewUtils.cs" />
     <Compile Include="WorkbookLocation.cs" />
     <Compile Include="WorkbookLocationNavigator.cs" />
     <Compile Include="WorkbookOperation.cs" />
@@ -438,6 +443,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ConfirmUndoDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DeleteNotesDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GameTree
+﻿namespace GameTree
 {
     /// <summary>
     /// Holds node Id along with some move attribures..
@@ -70,7 +64,12 @@ namespace GameTree
         /// Node id.
         /// </summary>
         public int NodeId;
-        
+
+        /// <summary>
+        /// IsDeleted flag.
+        /// </summary>
+        public bool IsDeleted;
+
         /// <summary>
         /// Comment.
         /// </summary>
@@ -121,5 +120,23 @@ namespace GameTree
         /// Coded move assessment (e.g. BLUNDER).
         /// </summary>
         public uint Assessment;
+
+        /// <summary>
+        /// This is only set when we need a node for an undo delete operation.
+        /// </summary>
+        public TreeNode Node { get; set; }
+
+        /// <summary>
+        /// Parent id.
+        /// This is only set when we need a node for an undo delete operation.
+        /// </summary>
+        public int ParentId;
+
+        /// <summary>
+        /// Index on the child list in the parent.
+        /// This is only set when we need a node for an undo delete operation.
+        /// </summary>
+        public int ChildIndexInParent;
+
     }
 }

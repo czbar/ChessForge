@@ -57,6 +57,7 @@
     <Compile Include="GameTree\LineSectorsTree.cs" />
     <Compile Include="GameTree\MoveAttributes.cs" />
     <Compile Include="GameTree\OperationsManager.cs" />
+    <Compile Include="GameTree\SectorParaAttrs.cs" />
     <Compile Include="GameTree\TreeManager.cs" />
     <Compile Include="GameTree\Operation.cs" />
     <Compile Include="Parsers\EngineLineParser.cs" />

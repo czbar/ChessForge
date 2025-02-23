@@ -1,0 +1,32 @@
+#EDYSIA'a
+
+r1b1kb1r/ppqp1ppp/2n1p3/8/2B1P1n1/2N2N1P/PP2QPP1/R1B2RK1 b kq - 0 9,c7g2,n,illegal Queen Move
+r1b1kb1r/ppqp1ppp/2n1p3/8/2B1P1n1/2N2N1P/PP2QPP1/R1B2RK1 b kq - 0 9,c7h2,y,legal check mate
+
+r1bqkbnr/pp1p1ppp/2n1p3/8/4P3/2N2N2/PP3PPP/R1BQKB1R w KQkq - 0 6,e1g1,n,illegal castle short as White King jumps over White Bishop
+
+r3kbnr/ppqb1ppp/2n1p3/3p2B1/3P4/3B1N2/PPPN1PPP/R2Q1RK1 b kq - 7 8,e8c8,n,illegal castle long as Black King goes through Bishop attacked field
+
+r3kbnr/ppqb1ppp/2n1p3/3p2B1/3P4/3B1N2/PPPQ1PPP/RN2K2R w KQkq - 6 8,e1c1,n,illegal castle long as White Rook jumps over White Night
+
+r3kb1r/p1qb1pp1/2n1pn1p/Pp1p2B1/3P4/3B1N2/1PPN1PPP/R2Q1RK1 w kq b6 0 11,a5b6,y,legal en passant
+
+
+# ROBERT'S
+
+# From Starting Position
+
+rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1,e2e4,y,starting position
+rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1,g1h3,y,starting position
+rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1,b1c3,y,starting position
+rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1,e1g1,n,starting position (castle)
+
+#Castling
+
+r3k2r/pppppppp/8/8/8/8/PPPPPPPP/RN2K2R w KQkq - 0 1,e1g1,y,legal castle short 
+r3k2r/pppppppp/8/8/8/8/PPPPPPPP/RN2K2R w KQkq - 0 1,e1c1,n,castle illegal because of knight on b1
+r3k2r/pppppppp/8/8/8/8/PPPPPPPP/RN2K2R w KQkq - 0 1,e8g8,n,invalid because white on move
+r3k2r/pppppppp/8/8/8/8/PPPPPPPP/RN2K2R b KQkq - 0 1,e8g8,y,legal castle short black
+r3k2r/pppppppp/8/8/8/8/PPPPPPPP/RN2K2R b KQkq - 0 1,e8c8,y,legal castle long black
+
+rnbqkbnr/ppp1pppp/8/3pP3/8/8/PPPP1PPP/RNBQKBNR w KQkq d6 0 1, e5d6, y, en passant

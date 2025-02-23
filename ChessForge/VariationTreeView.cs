@@ -612,7 +612,7 @@ namespace ChessForge
                 ShownVariationTree.PromoteLine(nd);
                 _mainWin.SetActiveLine(nd.LineId, nd.NodeId);
                 BuildFlowDocumentForVariationTree(false);
-                _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, nd.LineId, _mainWin.ActiveLine.GetSelectedPlyNodeIndex(false), false);
+                _mainWin.ActiveTreeView.SelectLineAndMoveInWorkbookViews(nd.LineId, _mainWin.ActiveLine.GetSelectedPlyNodeIndex(false), false);
                 PulseManager.BringSelectedRunIntoView();
                 AppState.IsDirty = true;
             }
@@ -646,7 +646,7 @@ namespace ChessForge
                     ShownVariationTree.SetSelectedNodeId(nullNd.NodeId);
                     SelectNode(nullNd);
                     int nodeIndex = _mainWin.ActiveLine.GetIndexForNode(nullNd.NodeId);
-                    _mainWin.SelectLineAndMoveInWorkbookViews(this, nd.LineId, nodeIndex, false);
+                    SelectLineAndMoveInWorkbookViews(nd.LineId, nodeIndex, false);
 
                     PulseManager.BringSelectedRunIntoView();
                     AppState.IsDirty = true;
@@ -877,7 +877,7 @@ namespace ChessForge
                 ShownVariationTree.BuildLines();
                 _mainWin.SetActiveLine(parent.LineId, parent.NodeId);
                 BuildFlowDocumentForVariationTree(false);
-                _mainWin.SelectLineAndMoveInWorkbookViews(_mainWin.ActiveTreeView, parent.LineId, _mainWin.ActiveLine.GetSelectedPlyNodeIndex(true), false);
+                _mainWin.ActiveTreeView.SelectLineAndMoveInWorkbookViews(parent.LineId, _mainWin.ActiveLine.GetSelectedPlyNodeIndex(true), false);
                 AppState.IsDirty = true;
 
                 BookmarkManager.ResyncBookmarks(1);
@@ -1476,54 +1476,55 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Finds the parent node of the passed node
-        /// and insert this node after it.
-        /// The caller needs to ensure that this is logically correct
-        /// e.g. that this is a new leaf in a line
+        /// Finds the parent node of the passed node and insert this node after it.
+        /// This is called when the user makes a move on the board and we ensured
+        /// that a simple insertion will do as it does not change the structure of the view.
+        /// The caller needs to ensure that this is logically correct.
         /// </summary>
         /// <param name="nd"></param>
-        public void AddNewNodeToDocument(TreeNode nd)
+        public void AppendNewMoveToBranch(TreeNode nd)
         {
             TreeNode parent = nd.Parent;
 
-            Inline rParent;
-            Paragraph para;
+            Run rParentMoveRun = _dictNodeToRun[parent.NodeId];
+            Paragraph para = _dictRunToParagraph[rParentMoveRun];
+
+            Inline rPreviousInline = rParentMoveRun;
 
             try
             {
-                if (_dictNodeToCommentRun.ContainsKey(parent.NodeId))
+                bool hasDiagram = false;
+
+                while (rPreviousInline.NextInline != null && !string.IsNullOrEmpty(rPreviousInline.NextInline.Name))
                 {
-                    rParent = _dictNodeToCommentRun[parent.NodeId];
-                    para = _dictCommentRunToParagraph[rParent];
+                    rPreviousInline = rPreviousInline.NextInline;
+                    if (rPreviousInline.Name !=  null && rPreviousInline.Name.StartsWith(RichTextBoxUtilities.InlineDiagramIucPrefix))
+                    {
+                        hasDiagram = true;
+                    }
                 }
-                else
+
+                if (hasDiagram)
                 {
-                    rParent = _dictNodeToRun[parent.NodeId];
-                    para = _dictRunToParagraph[rParent as Run];
+                    Run postDiagRun = CreatePostDiagramRun(nd);
+                    para.Inlines.Add(postDiagRun);
+                    rPreviousInline = postDiagRun;
                 }
 
+                Run runMove = new Run(MoveUtils.BuildSingleMoveText(nd, hasDiagram, false, ShownVariationTree.MoveNumberOffset) + " ");
+                runMove.Name = _run_ + nd.NodeId.ToString();
+                runMove.PreviewMouseDown += EventRunClicked;
 
-                Run r = new Run(" " + MoveUtils.BuildSingleMoveText(nd, false, false, ShownVariationTree.MoveNumberOffset));
-                r.Name = _run_ + nd.NodeId.ToString();
-                r.PreviewMouseDown += EventRunClicked;
+                runMove.FontStyle = rParentMoveRun.FontStyle;
+                runMove.FontSize = rParentMoveRun.FontSize;
+                runMove.FontWeight = rParentMoveRun.FontWeight;
+                runMove.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
 
-                r.FontStyle = rParent.FontStyle;
-                r.FontSize = rParent.FontSize;
-                if (nd.IsMainLine())
-                {
-                    r.FontWeight = FontWeights.Bold;
-                }
-                else
-                {
-                    r.FontWeight = FontWeights.Normal;
-                }
-                r.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
+                _dictNodeToRun[nd.NodeId] = runMove;
+                _dictRunToParagraph[runMove] = para;
 
-                _dictNodeToRun[nd.NodeId] = r;
-                _dictRunToParagraph[r] = para;
-
-                para.Inlines.InsertAfter(rParent, r);
-                _lastAddedRun = r;
+                para.Inlines.InsertAfter(rPreviousInline, runMove);
+                _lastAddedRun = runMove;
             }
             catch { }
         }

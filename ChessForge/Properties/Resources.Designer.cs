@@ -1240,6 +1240,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Comments.
+        /// </summary>
+        public static string Comments {
+            get {
+                return ResourceManager.GetString("Comments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirm.
         /// </summary>
         public static string Confirm {
@@ -1776,6 +1785,15 @@ namespace ChessForge.Properties {
         public static string DeleteMovesFromHere {
             get {
                 return ResourceManager.GetString("DeleteMovesFromHere", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Notes.
+        /// </summary>
+        public static string DeleteNotes {
+            get {
+                return ResourceManager.GetString("DeleteNotes", resourceCulture);
             }
         }
         
@@ -2415,6 +2433,15 @@ namespace ChessForge.Properties {
         public static string Engine {
             get {
                 return ResourceManager.GetString("Engine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Engine Evaluations.
+        /// </summary>
+        public static string EngineEvaluations {
+            get {
+                return ResourceManager.GetString("EngineEvaluations", resourceCulture);
             }
         }
         
@@ -4138,6 +4165,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Items to Delete.
+        /// </summary>
+        public static string ItemsToDelete {
+            get {
+                return ResourceManager.GetString("ItemsToDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Items Type.
         /// </summary>
         public static string ItemsType {
@@ -4404,6 +4440,15 @@ namespace ChessForge.Properties {
         public static string Medium {
             get {
                 return ResourceManager.GetString("Medium", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Notes....
+        /// </summary>
+        public static string MenuDeleteNotes {
+            get {
+                return ResourceManager.GetString("MenuDeleteNotes", resourceCulture);
             }
         }
         
@@ -5341,6 +5386,15 @@ namespace ChessForge.Properties {
         public static string OpDeleteGames {
             get {
                 return ResourceManager.GetString("OpDeleteGames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Notes.
+        /// </summary>
+        public static string OpDeleteNotes {
+            get {
+                return ResourceManager.GetString("OpDeleteNotes", resourceCulture);
             }
         }
         
@@ -6686,6 +6740,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show Analysis Depth.
+        /// </summary>
+        public static string ShowEngineDepth {
+            get {
+                return ResourceManager.GetString("ShowEngineDepth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show Evaluation Chart.
         /// </summary>
         public static string ShowEvaluationChart {
@@ -6763,6 +6826,15 @@ namespace ChessForge.Properties {
         public static string SideLine {
             get {
                 return ResourceManager.GetString("SideLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sidelines.
+        /// </summary>
+        public static string Sidelines {
+            get {
+                return ResourceManager.GetString("Sidelines", resourceCulture);
             }
         }
         
@@ -8033,6 +8105,15 @@ namespace ChessForge.Properties {
         public static string Views {
             get {
                 return ResourceManager.GetString("Views", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Views to Apply to.
+        /// </summary>
+        public static string ViewsTypeToApplyTo {
+            get {
+                return ResourceManager.GetString("ViewsTypeToApplyTo", resourceCulture);
             }
         }
         

@@ -17,6 +17,34 @@ namespace ChessForge
     public partial class VariationTreeView : RichTextBuilder
     {
         /// <summary>
+        /// Removes Runs/Inlines associated with the passed node from dictionaries.
+        /// </summary>
+        /// <param name="nd"></param>
+        public void RemoveNodeFromDictionaries(TreeNode nd)
+        {
+            if (_dictNodeToRun.Keys.Contains(nd.NodeId))
+            {
+                Run run = _dictNodeToRun[nd.NodeId];
+                _dictNodeToRun.Remove(nd.NodeId);
+                _dictRunToParagraph.Remove(run);
+
+                if (_dictNodeToCommentRun.Keys.Contains(nd.NodeId))
+                {
+                    Inline commentRun = _dictNodeToCommentRun[nd.NodeId];
+                    _dictNodeToCommentRun.Remove(nd.NodeId);
+                    _dictCommentRunToParagraph.Remove(commentRun);
+                }
+
+                if (_dictNodeToCommentBeforeMoveRun.Keys.Contains(nd.NodeId))
+                {
+                    Inline commentBeforeMoveRun = _dictNodeToCommentBeforeMoveRun[nd.NodeId];
+                    _dictNodeToCommentBeforeMoveRun.Remove(nd.NodeId);
+                    _dictCommentBeforeMoveRunToParagraph.Remove(commentBeforeMoveRun);
+                }
+            }
+        }
+
+        /// <summary>
         /// If the Comment run for the passed node already exists, it will be updated.
         /// If it does not exist, it will be created.
         /// This also updates the run's text itself and move NAGs may have changed
@@ -169,8 +197,8 @@ namespace ChessForge
                 if (nextNode != null)
                 {
                     // take care of the special case where node 0 may have a comment
-                    bool includeNumber = currNode.NodeId == 0 
-                        || !string.IsNullOrWhiteSpace(currNode.Comment) 
+                    bool includeNumber = currNode.NodeId == 0
+                        || !string.IsNullOrWhiteSpace(currNode.Comment)
                         || !string.IsNullOrEmpty(nextNode.CommentBeforeMove)
                         || currNode.IsDiagram;
                     UpdateRunText(nextMoveRun, nextNode, includeNumber);
@@ -261,20 +289,26 @@ namespace ChessForge
                     // e.g. perhaps always add the post diag run and remove in post-processing
                     // if it is found to be the last run in a paragraph.
                     // NOTE: it might have already been resolved by removing the last new line in paras.
-
-                    // if there are moves further in the same para, insert a new line.
-                    //if (nd.Children.Count <= 1 || nd.Parent.Children.Count <= 1) // || nd.Parent.Children[nd.Parent.Children.Count - 1] != nd)
-                    {
-                        Run postDiagRun = new Run("\n");
-                        postDiagRun.Name = RichTextBoxUtilities.PostInlineDiagramRunPrefix + nd.NodeId.ToString();
-                        inlines.Add(postDiagRun);
-                    }
+                    inlines.Add(CreatePostDiagramRun(nd));
 
                     chessboard.DisplayPosition(nd, false);
                 }
             }
 
             return inlines;
+        }
+
+        /// <summary>
+        /// Creates a Run to insert after the diagram.
+        /// It has a unique name and contains just a new line 
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        private Run CreatePostDiagramRun(TreeNode nd)
+        {
+            Run postDiagRun = new Run("\n");
+            postDiagRun.Name = RichTextBoxUtilities.PostInlineDiagramRunPrefix + nd.NodeId.ToString();
+            return postDiagRun;
         }
 
         /// <summary>

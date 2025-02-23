@@ -176,6 +176,11 @@ namespace ChessForge
         public static bool EnableBadMoveDetection = true;
 
         /// <summary>
+        /// Whether to show the engine analysis depth in the engine lines window.
+        /// </summary>
+        public static bool ShowEngineAnalysisDepth = true;
+
+        /// <summary>
         /// Determines the default navigation ("stay here" or Chapters list) 
         /// target after a Copy/Move action.
         /// </summary>
@@ -576,6 +581,7 @@ namespace ChessForge
         private const string CFG_MISTAKE_DET_EVAL_DROP = "MistakeDetEvalDrop";
         private const string CFG_MISTAKE_NO_DET_THRESH = "MistakeNoDetThresh";
         private const string CFG_BAD_MOVE_DETECTION = "BadMoveDetection";
+        private const string CFG_SHOW_ENGINE_ANALYSIS_DEPTH = "ShowEngineAnalysisDepth";
 
         private const string CFG_IS_DARK_MODE = "IsDarkMode";
         private const string CFG_DONT_SAVE_EVALS = "DontSavePositionEvals";
@@ -772,6 +778,7 @@ namespace ChessForge
                 sb.Append(CFG_MISTAKE_DET_EVAL_DROP + "=" + MistakeDetectEvalDrop.ToString() + Environment.NewLine);
                 sb.Append(CFG_MISTAKE_NO_DET_THRESH + "=" + MistakeNoDetectThresh.ToString() + Environment.NewLine);
                 sb.AppendLine(CFG_BAD_MOVE_DETECTION + "=" + (EnableBadMoveDetection ? "1" : "0"));
+                sb.AppendLine(CFG_SHOW_ENGINE_ANALYSIS_DEPTH + "=" + (ShowEngineAnalysisDepth ? "1" : "0"));
 
                 sb.AppendLine(CFG_IS_DARK_MODE + "=" + (IsDarkMode ? "1" : "0"));
                 sb.AppendLine(CFG_DONT_SAVE_EVALS + "=" + (DontSavePositionEvals ? "1" : "0"));
@@ -1121,6 +1128,9 @@ namespace ChessForge
                             break;
                         case CFG_BAD_MOVE_DETECTION:
                             EnableBadMoveDetection = value != "0" ? true : false;
+                            break;
+                        case CFG_SHOW_ENGINE_ANALYSIS_DEPTH:
+                            ShowEngineAnalysisDepth = value != "0" ? true : false;
                             break;
                         case CFG_IS_DARK_MODE:
                             IsDarkMode = value != "0" ? true : false;

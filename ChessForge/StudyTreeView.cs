@@ -27,9 +27,6 @@ namespace ChessForge
         // prefix for expand elipsis runs
         private readonly string _expelipsis_ = "expelipsis_";
 
-        // indent between levels in the index paragraph.
-        private readonly string _indent = "    ";
-
         // id of the first node in the sector for which index prefix was last clicked 
         private int _lastClickedIndexPrefix = -1;
 
@@ -37,15 +34,6 @@ namespace ChessForge
         /// Object managing the layout for this view
         /// </summary>
         public LineSectorManager LineManager;
-
-        /// <summary>
-        /// Safe accessor to the chapter's variation index depth.
-        /// </summary>
-        /// <returns></returns>
-        public int VariationIndexDepth
-        {
-            get { return AppState.ActiveChapter == null ? Configuration.DefaultIndexDepth : AppState.ActiveChapter.VariationIndexDepth.Value; }
-        }
 
         /// <summary>
         /// Instantiates the view.
@@ -71,18 +59,32 @@ namespace ChessForge
         /// <param name="includeNumber"></param>
         override protected void BuildTreeLineText(FlowDocument doc, TreeNode root, Paragraph para, bool includeNumber)
         {
-            DisplayLevelAttrs.ResetLastMoveBrush();
+            LineManager.ResetLastMoveBrush();
             LineManager.BuildLineSectors(root);
 
             // it could be that a new move was made and it is "hidden" under a collapsed root
             UncollapseMove(_mainWin.ActiveLine.GetSelectedTreeNode());
 
-            CreateVariationIndexPara(doc);
+            if (LineManager.EffectiveIndexDepth >= 0)
+            {
+                LineManager.CreateIndexHeaderPara();
+                LineManager.PopulateIndexHeaderPara();
+                doc.Blocks.Add(LineManager.IndexHeaderPara);
+
+                LineManager.CreateIndexContentPara();
+                LineManager.PopulateIndexContentPara();
+                doc.Blocks.Add(LineManager.IndexContentPara);
+            }
+            else if (_pageHeaderParagraph != null)
+            {
+                _pageHeaderParagraph.ToolTip = Properties.Resources.ShowIndex;
+            }
+
             CreateParagraphs(doc, para);
         }
 
         /// <summary>
-        /// Whether diagram inerted here should be large or small.
+        /// Whether diagram inserted here should be large or small.
         /// </summary>
         /// <param name="nd"></param>
         /// <returns></returns>
@@ -91,6 +93,31 @@ namespace ChessForge
             return true;
         }
 
+        /// <summary>
+        /// Updates the layout after a move was added.
+        /// Creates a new LineSectorManager instance,
+        /// calculates the new set LineSectors, and the index paragraphs,
+        /// then updates the paragraphs where there are differences.
+        /// </summary>
+        public void UpdateLayoutOnAddedMove()
+        {
+            LineSectorManager updateLineManger = new LineSectorManager(null);
+            updateLineManger.BuildLineSectors(ShownVariationTree.Nodes[0]);
+
+            // TODO: this is a temporary solution, we need to identify
+            // and update only the changed sectors/runs.
+            //
+            //updateLineManger.CreateIndexHeaderPara();
+            //updateLineManger.PopulateIndexHeaderPara();
+            LineManager.PopulateIndexHeaderPara();
+
+            //updateLineManger.CreateIndexContentPara();
+            //updateLineManger.PopulateIndexContentPara();
+            LineManager.PopulateIndexContentPara();
+
+            TreeViewUpdater updater = new TreeViewUpdater(LineManager, updateLineManger, this);
+            updater.MoveAdded();
+        }
 
         /// <summary>
         /// Finds out if the move has a collapsed ancestor
@@ -210,56 +237,12 @@ namespace ChessForge
             {
                 if (sector.Nodes.Count > 0)
                 {
-                    if (IsEffectiveIndexLevel(sector.BranchLevel) && sector.Nodes[0].LineId != "1")
+                    if (LineManager.IsEffectiveIndexLevel(sector.BranchLevel) && sector.Nodes[0].LineId != "1")
                     {
                         sector.Nodes[0].IsCollapsed = true;
                     }
                 }
             }
-        }
-
-        /// <summary>
-        /// Returns the value VariationIndexDepth that will be adjusted
-        /// if we currently do not have enough branch levels
-        /// </summary>
-        private int EffectiveIndexDepth
-        {
-            get
-            {
-                int depth = VariationIndexDepth;
-                if (depth > LineManager.MaxBranchLevel - 1)
-                {
-                    depth = LineManager.MaxBranchLevel - 1;
-                }
-                else if (VariationIndexDepth == 0 && !LineManager.HasIndexLevelZero())
-                {
-                    // we configured level 0 but there is no stem line to show
-                    depth = -1;
-                }
-                return depth;
-            }
-        }
-
-        /// <summary>
-        /// Checks if the passed branch level is within
-        /// the effective levels.
-        /// </summary>
-        /// <param name="branchLevel"></param>
-        /// <returns></returns>
-        private bool IsEffectiveIndexLevel(int branchLevel)
-        {
-            return branchLevel <= EffectiveIndexDepth + 1;
-        }
-
-        /// <summary>
-        /// Checks if the passed branch level is the
-        /// last within the effective levels.
-        /// </summary>
-        /// <param name="branchLevel"></param>
-        /// <returns></returns>
-        private bool IsLastEffectiveIndexLine(int branchLevel)
-        {
-            return branchLevel == EffectiveIndexDepth + 1;
         }
 
         /// <summary>
@@ -271,7 +254,7 @@ namespace ChessForge
             Chapter chapter = AppState.ActiveChapter;
             if (chapter != null)
             {
-                int depth = EffectiveIndexDepth;
+                int depth = LineManager.EffectiveIndexDepth;
                 if (depth == -1 && !LineManager.HasIndexLevelZero())
                 {
                     depth = 1;
@@ -302,7 +285,7 @@ namespace ChessForge
             Chapter chapter = AppState.ActiveChapter;
             if (chapter != null)
             {
-                int depth = EffectiveIndexDepth;
+                int depth = LineManager.EffectiveIndexDepth;
                 if (depth == 1 && !LineManager.HasIndexLevelZero())
                 {
                     depth = -1;
@@ -339,136 +322,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Creates a paragraph for the "Variation Index" title and the depth arrows.
-        /// </summary>
-        private void CreateVariationIndexHeader(FlowDocument doc)
-        {
-            Paragraph para = new Paragraph
-            {
-                Margin = new Thickness(0, 0, 0, 6),
-            };
-
-            Run r = new Run(Properties.Resources.VariationIndex + "  ");
-            para.Inlines.Add(r);
-            para.FontWeight = FontWeights.DemiBold;
-
-            InsertArrowRuns(para);
-            doc.Blocks.Add(para);
-        }
-
-        /// <summary>
-        /// Creates the Index paragraph.
-        /// </summary>
-        private void CreateVariationIndexPara(FlowDocument doc)
-        {
-            if (EffectiveIndexDepth >= 0)
-            {
-                Paragraph para = CreateParagraph("0", true);
-                para.Name = RichTextBoxUtilities.StudyIndexParagraphName;
-                para.Foreground = ChessForgeColors.CurrentTheme.IndexPrefixForeground;
-                para.FontWeight = FontWeights.Normal;
-                para.FontSize = para.FontSize - 1;
-                para.Margin = new Thickness(0, 0, 0, 0);
-
-
-                bool first = true;
-                foreach (LineSector sector in LineManager.LineSectors)
-                {
-                    if (sector.Nodes.Count == 0)
-                    {
-                        continue;
-                    }
-
-                    int level = sector.BranchLevel;
-                    if (IsEffectiveIndexLevel(level))
-                    {
-                        if (first)
-                        {
-                            CreateVariationIndexHeader(doc);
-                            first = false;
-                        }
-
-                        if (sector.Nodes[0].LineId == "1")
-                        {
-                            // Build the stem line
-                            // Note we don't want an indent here 'coz if the stem line is long it will wrap ugly
-                            bool validMove = false;
-                            foreach (TreeNode nd in sector.Nodes)
-                            {
-                                Run rMove = BuildIndexNodeAndAddToPara(nd, false, para);
-                                rMove.TextDecorations = TextDecorations.Underline;
-                                rMove.FontWeight = FontWeights.DemiBold;
-                                if (nd.NodeId != 0)
-                                {
-                                    validMove = true;
-                                }
-                            }
-
-                            if (validMove)
-                            {
-                                para.Inlines.Add(new Run("\n"));
-                            }
-                        }
-                        else
-                        {
-                            for (int i = 0; i < level; i++)
-                            {
-                                Run r = new Run(_indent);
-                                para.Inlines.Add(r);
-                            }
-
-                            Run rIdTitle = BuildSectionIdTitle(sector.Nodes[0].LineId);
-                            para.Inlines.Add(rIdTitle);
-                            if (IsLastEffectiveIndexLine(level) || sector.Nodes[sector.Nodes.Count - 1].Children.Count == 0)
-                            {
-                                BuildIndexNodeAndAddToPara(sector.Nodes[0], true, para);
-                            }
-                            else
-                            {
-                                bool firstMove = true;
-
-                                int nodeCount = sector.Nodes.Count;
-                                int firstSkip = nodeCount;
-                                int lastSkip = -1;
-
-                                if (nodeCount >= 5)
-                                {
-                                    firstSkip = 2;
-                                    lastSkip = nodeCount - 3;
-                                }
-
-                                for (int i = 0; i < sector.Nodes.Count; i++)
-                                {
-                                    //if (i < firstSkip || i > lastSkip)
-                                    //{
-                                    TreeNode nd = sector.Nodes[i];
-                                    BuildIndexNodeAndAddToPara(nd, firstMove, para);
-                                    firstMove = false;
-                                    //}
-                                    //else if (i == firstSkip)
-                                    //{
-                                    //    Run rElipsis = new Run(" [...] ");
-                                    //    rElipsis.FontWeight = FontWeights.Normal;
-                                    //    para.Inlines.Add(rElipsis);
-                                    //    firstMove = true;
-                                    //}
-                                }
-                            }
-                            rIdTitle.FontWeight = FontWeights.DemiBold;
-
-                            para.Inlines.Add(new Run("\n"));
-                        }
-                    }
-                }
-                doc.Blocks.Add(para);
-            }
-            else if (_pageHeaderParagraph != null)
-            {
-                _pageHeaderParagraph.ToolTip = Properties.Resources.ShowIndex;
-            }
-        }
-
-        /// <summary>
         /// Creates paragraphs from the LineSectors.
         /// </summary>
         /// <param name="firstPara"></param>
@@ -481,24 +334,24 @@ namespace ChessForge
             // Be aware it already contains a Run for the root node!
             doc.Blocks.Remove(firstPara);
 
-            int levelGroup = 0;
             bool firstAtIndexLevel2 = true;
 
             for (int n = 0; n < LineManager.LineSectors.Count; n++)
             {
                 LineSector sector = LineManager.LineSectors[n];
-                if (doNotShow.Find(x => x == sector) != null)
+                if (!sector.IsShown)
                 {
                     continue;
                 }
 
+                //if (doNotShow.Find(x => x == sector) != null)
+                //{
+                //    continue;
+                //}
+
                 if (sector.Nodes.Count == 0 || sector.Nodes.Count == 1 && sector.Nodes[0].NodeId == 0 && string.IsNullOrEmpty(sector.Nodes[0].Comment))
                 {
                     continue;
-                }
-                if (n > 0 && sector.DisplayLevel != LineManager.LineSectors[n - 1].BranchLevel)
-                {
-                    levelGroup++;
                 }
 
                 try
@@ -509,20 +362,8 @@ namespace ChessForge
                         sector.DisplayLevel = 0;
                     }
 
-                    int topMarginExtra = 0;
-                    int bottomMarginExtra = 0;
-
-                    if (!IsEffectiveIndexLevel(sector.BranchLevel))
+                    if (!LineManager.IsEffectiveIndexLevel(sector.BranchLevel))
                     {
-                        // add extra room above/below first/last line in a block at the same level 
-                        if (n > 0 && LineManager.LineSectors[n - 1].DisplayLevel < sector.DisplayLevel)
-                        {
-                            topMarginExtra = DisplayLevelAttrs.EXTRA_MARGIN;
-                        }
-                        if (n < LineManager.LineSectors.Count - 1 && LineManager.LineSectors[n + 1].DisplayLevel < sector.DisplayLevel)
-                        {
-                            bottomMarginExtra = DisplayLevelAttrs.EXTRA_MARGIN;
-                        }
                         // also make sure that the sector outside the indexed range is not expanded!
                         foreach (TreeNode node in sector.Nodes)
                         {
@@ -537,33 +378,28 @@ namespace ChessForge
                         {
                             firstAtIndexLevel2 = false;
                         }
-                        else
-                        {
-                            topMarginExtra = DisplayLevelAttrs.EXTRA_MARGIN;
-                        }
                     }
 
-                    para = DisplayLevelAttrs.CreateStudyParagraph(sector.DisplayLevel, topMarginExtra, bottomMarginExtra);
+                    para = LineSectorManager.CreateStudyParagraph(sector.ParaAttrs, sector.DisplayLevel);
                     if (para.FontWeight == FontWeights.Bold)
                     {
                         para.FontWeight = FontWeights.Normal;
                     }
 
-                    if (IsEffectiveIndexLevel(sector.BranchLevel))
-                    {
-                        InsertIndexPrefixRun(sector, para);
-                    }
-                    else
-                    {
-                        if (IsLastEffectiveIndexLine(sector.DisplayLevel + 1))
-                        {
-                            para.FontWeight = FontWeights.DemiBold;
-                        }
-                    }
+                    //if (LineManager.IsEffectiveIndexLevel(sector.BranchLevel))
+                    //{
+                    //    InsertIndexPrefixRun(sector, para);
+                    //}
+                    //else
+                    //{
+                    //    if (LineManager.IsLastEffectiveIndexLine(sector.DisplayLevel + 1))
+                    //    {
+                    //        para.FontWeight = FontWeights.DemiBold;
+                    //    }
+                    //}
 
-                    BuildSectorRuns(sector, para, levelGroup, doNotShow);
                     sector.HostPara = para;
-
+                    BuildSectorRuns(sector);
                     RemoveTrailingNewLinesInPara(para);
                     doc.Blocks.Add(para);
                 }
@@ -578,7 +414,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="para"></param>
         /// <param name="downOnly"></param>
-        private void InsertArrowRuns(Paragraph para, bool downOnly = false)
+        public void InsertArrowRuns(Paragraph para, bool downOnly = false)
         {
             Run rPlus = new Run(Constants.CHAR_DOWN_ARROW.ToString());
             rPlus.FontWeight = FontWeights.Normal;
@@ -604,12 +440,20 @@ namespace ChessForge
         /// <param name="sector"></param>
         /// <param name="para"></param>
         /// <param name="levelGroup"></param>
-        private void BuildSectorRuns(LineSector sector, Paragraph para, int levelGroup, List<LineSector> doNotShow)
+        public void BuildSectorRuns(LineSector sector)
         {
             bool includeNumber = true;
             bool parenthesis = false;
 
             bool collapsed = false;
+            Paragraph para = sector.HostPara;
+            para.Inlines.Clear();
+
+            if (LineManager.IsEffectiveIndexLevel(sector.BranchLevel))
+            {
+                InsertIndexPrefixRun(sector, para);
+            }
+
             for (int i = 0; i < sector.Nodes.Count; i++)
             {
                 bool diagram = false;
@@ -649,13 +493,16 @@ namespace ChessForge
                     r.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
                     parenthesis = false;
 
-                    if (i == 0 && sector.FirstNodeColor != null && !IsEffectiveIndexLevel(sector.BranchLevel))
+                    if (i == 0 && sector.ParaAttrs.FirstNodeColor != null && !LineManager.IsEffectiveIndexLevel(sector.BranchLevel))
                     {
-                        r.Foreground = sector.FirstNodeColor;
+                        r.Foreground = sector.ParaAttrs.FirstNodeColor;
                     }
-                    if (sector.Nodes.Count > 1 && i == sector.Nodes.Count - 1 && sector.BranchLevel >= EffectiveIndexDepth)
+                    if (sector.Nodes.Count > 1 && i == sector.Nodes.Count - 1 && sector.BranchLevel >= LineManager.EffectiveIndexDepth)
                     {
-                        ColorLastNode(sector, r, nd, levelGroup);
+                        if (sector.ParaAttrs.LastNodeColor != null)
+                        {
+                            r.Foreground = sector.ParaAttrs.LastNodeColor;
+                        }
                     }
                 }
                 includeNumber = diagram;
@@ -663,7 +510,7 @@ namespace ChessForge
                 if (collapsed)
                 {
                     // insert the elipsis Run and exit
-                    InsertCollapseElipsisRun(para, nd, sector, doNotShow);
+                    InsertCollapseElipsisRun(para, nd, sector);
                     break;
                 }
             }
@@ -698,7 +545,7 @@ namespace ChessForge
         /// <param name="sector"></param>
         /// <param name="doNotShow"></param>
         /// <returns></returns>
-        private Run InsertCollapseElipsisRun(Paragraph para, TreeNode nd, LineSector sector, List<LineSector> doNotShow)
+        private Run InsertCollapseElipsisRun(Paragraph para, TreeNode nd, LineSector sector)
         {
             Run elipsis = new Run(" [...]");
 
@@ -706,40 +553,8 @@ namespace ChessForge
             elipsis.PreviewMouseDown += EventIdxPrefixRunClicked;
             elipsis.ToolTip = Properties.Resources.TtClickToExpand;
             para.Inlines.Add(elipsis);
-            LineManager.GetSubTree(sector, doNotShow);
 
             return elipsis;
-        }
-
-        /// <summary>
-        /// Sets the foreground color for the passed Run.
-        /// If this is within the index levels do not set the color
-        /// but set FirstMoveColor on the child sectors that are
-        /// at the lower level
-        /// </summary>
-        /// <param name="sector"></param>
-        /// <param name="r"></param>
-        /// <param name="nd"></param>
-        private void ColorLastNode(LineSector sector, Run r, TreeNode nd, int levelGroup)
-        {
-            // do not color if this is an index level unless this is the last index level and is not the first node.
-            //if (!LineManager.IsIndexLevel(sector.BranchLevel) || LineManager.IsLastIndexLine(sector.BranchLevel) && nd != sector.Nodes[0])
-            if (!IsEffectiveIndexLevel(sector.BranchLevel) || IsLastEffectiveIndexLine(sector.BranchLevel) && nd != sector.Nodes[0])
-            {
-                if (sector.Nodes.Count > 0 && nd.Parent != null && nd.Parent.Children.Count > 1)
-                {
-                    r.Foreground = DisplayLevelAttrs.GetBrushForLastMove(sector.DisplayLevel, levelGroup);
-                }
-
-                // except the first child as it will be the continuation of the top line
-                foreach (LineSector ls in sector.Children)
-                {
-                    if (nd.Children.Count == 0 || ls.Nodes[0] != nd.Children[0])
-                    {
-                        ls.FirstNodeColor = DisplayLevelAttrs.GetBrushForLastMove(sector.DisplayLevel, levelGroup);
-                    }
-                }
-            }
         }
 
         /// <summary>
@@ -749,7 +564,7 @@ namespace ChessForge
         /// <param name="includeNumber"></param>
         /// <param name="para"></param>
         /// <returns></returns>
-        protected Run BuildIndexNodeAndAddToPara(TreeNode nd, bool includeNumber, Paragraph para)
+        public Run BuildIndexNodeAndAddToPara(TreeNode nd, bool includeNumber, Paragraph para)
         {
             string nodeText = BuildNodeText(nd, includeNumber);
 
@@ -787,7 +602,7 @@ namespace ChessForge
                         // if new guid was generated, it means that there was a second click
                         if (guid == _clickPageHeaderGuid)
                         {
-                            if (VariationIndexDepth == -1)
+                            if (VariationTreeViewUtils.VariationIndexDepth == -1)
                             {
                                 IncrementVariationIndexDepth();
                             }
@@ -1004,7 +819,7 @@ namespace ChessForge
 
             foreach (LineSector sector in LineManager.LineSectors)
             {
-                if (!IsEffectiveIndexLevel(sector.BranchLevel))
+                if (!LineManager.IsEffectiveIndexLevel(sector.BranchLevel))
                 {
                     break;
                 }
@@ -1164,7 +979,7 @@ namespace ChessForge
             Run r = e.Source as Run;
             if (r != null)
             {
-                if (EffectiveIndexDepth > -1)
+                if (LineManager.EffectiveIndexDepth > -1)
                 {
                     Chapter chapter = AppState.ActiveChapter;
                     if (chapter != null)
@@ -1188,7 +1003,7 @@ namespace ChessForge
             Run r = e.Source as Run;
             if (r != null)
             {
-                if (EffectiveIndexDepth < Configuration.MAX_INDEX_DEPTH && EffectiveIndexDepth < LineManager.MaxBranchLevel - 1)
+                if (LineManager.EffectiveIndexDepth < Configuration.MAX_INDEX_DEPTH && LineManager.EffectiveIndexDepth < LineManager.MaxBranchLevel - 1)
                 {
                     Chapter chapter = AppState.ActiveChapter;
                     if (chapter != null)
@@ -1250,7 +1065,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="lineId"></param>
         /// <returns></returns>
-        private Run BuildSectionIdTitle(string lineId)
+        public Run BuildSectionIdTitle(string lineId)
         {
             Run r = new Run();
 

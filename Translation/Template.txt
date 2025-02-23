@@ -869,6 +869,11 @@ PasteEngineLines=
 #english: MnEvaluateGames=Evaluate Games
 MnEvaluateGames=
 
+#description: Delete notes
+#english: MenuDeleteNotes=Delete Notes...
+MenuDeleteNotes=
+
+
 #description: Strip all comments
 #english: StripComments=Delete Comments...
 StripComments=
@@ -1247,6 +1252,35 @@ CustomTerms=
 #description: ReorderLines
 #english: ReorderLines=Reorder Lines
 ReorderLines=
+
+#######################################
+#
+# Header: DIALOG Delete Notes
+#
+
+#description: Delete Notes
+#english: DeleteNotes = Delete Notes
+DeleteNotes =
+
+#description: Items to delete
+#english: ItemsToDelete=Items to Delete
+ItemsToDelete=
+
+#description: Comments
+#english: Comments=Comments
+Comments=
+
+#description: Engine Evaluations
+#english: EngineEvaluations=Engine Evaluations
+EngineEvaluations=
+
+#description: Sidelines
+#english: Sidelines=Sidelines
+Sidelines=
+
+#description: ViewsToDeleteIn
+#english: ViewsTypeToApplyTo=Views to Apply to
+ViewsTypeToApplyTo=
 
 #######################################
 #
@@ -1819,6 +1853,10 @@ ThinkTimeEvaluationPerMove=
 #description: Multiple lines (MultiPV)
 #english: MultipleLines=Top Lines to Show
 MultipleLines=
+
+#description: Whether to show the engine's analysis depth in the Engine Lines window
+#english: ShowEngineDepth=Show Analysis Depth
+ShowEngineDepth=
 
 #description: Allows diff from best move when selecting game moves
 #english: MoveSelectionAccuracy=Centipawn Range
@@ -4034,6 +4072,10 @@ OpMoveExercises=
 #description: Operation
 #english: OpCopyExercises=Copy Exercises
 OpCopyExercises=
+
+#description: Operation
+#english: OpDeleteNotes=Delete Notes
+OpDeleteNotes=
 
 #description: Operation
 #english: OpDeleteComments=Delete Comments

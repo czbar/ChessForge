@@ -213,7 +213,7 @@ namespace ChessForge
                 int nodeId = tree.SelectedNodeId < 0 ? 0 : tree.SelectedNodeId;
                 ActiveTreeView.HighlightLineAndMove(ActiveTreeView.HostRtb.Document, lineId, nodeId);
 
-                ObservableCollection<TreeNode> lineToSelect = tree.SelectLine(lineId);
+                ObservableCollection<TreeNode> lineToSelect = tree.GetNodesForLine(lineId);
                 SetActiveLine(lineToSelect, nodeId);
 
                 if (tree.SelectedNode == null)
@@ -1811,7 +1811,7 @@ namespace ChessForge
                 BookmarkManager.IsDirty = true;
 
                 int nodeIndex = ActiveLine.GetIndexForNode(startNodeId);
-                SelectLineAndMoveInWorkbookViews(_studyTreeView, startLineId, nodeIndex, false);
+                _studyTreeView.SelectLineAndMoveInWorkbookViews(startLineId, nodeIndex, false);
             }
             catch (Exception ex)
             {
@@ -1878,7 +1878,7 @@ namespace ChessForge
                 }
 
                 int nodeIndex = ActiveLine.GetIndexForNode(startNodeId);
-                SelectLineAndMoveInWorkbookViews(_modelGameTreeView, startLineId, nodeIndex, false);
+                _modelGameTreeView.SelectLineAndMoveInWorkbookViews(startLineId, nodeIndex, false);
             }
             catch (Exception ex)
             {
@@ -1955,7 +1955,7 @@ namespace ChessForge
                 }
 
                 int nodeIndex = ActiveLine.GetIndexForNode(startNodeId);
-                SelectLineAndMoveInWorkbookViews(_exerciseTreeView, startLineId, nodeIndex, false);
+                _exerciseTreeView.SelectLineAndMoveInWorkbookViews(startLineId, nodeIndex, false);
 
                 if (!ActiveVariationTree.ShowTreeLines)
                 {
@@ -2008,64 +2008,19 @@ namespace ChessForge
         public void RefreshSelectedActiveLineAndNode()
         {
             string lineId = ActiveLine.GetLineId();
-            SelectLineAndMoveInWorkbookViews(ActiveTreeView, lineId, ActiveLine.GetSelectedPlyNodeIndex(true), true);
+            ActiveTreeView.SelectLineAndMoveInWorkbookViews(lineId, ActiveLine.GetSelectedPlyNodeIndex(true), true);
         }
 
         /// <summary>
-        /// Adds a new Node to the Workbook View,
-        /// avoiding the full rebuild (performance).
-        /// This can only be done "safely" if we are adding a move to a leaf.
+        /// Adds a new move to the active view, avoiding the full rebuild (performance!).
+        /// This can only be done "safely" if we are adding a move to a leaf at the end of a branch.
         /// </summary>
         /// <param name="nd"></param>
-        public void AddNewNodeToVariationTreeView(TreeNode nd)
+        public void AppendNewMoveToTreeBranch(TreeNode nd)
         {
             if (ActiveVariationTree != null && ActiveVariationTree.ShowTreeLines)
             {
-                ActiveTreeView.AddNewNodeToDocument(nd);
-            }
-        }
-
-        /// <summary>
-        /// Selects a line and move in the VariationTree view.
-        /// </summary>
-        /// <param name="lineId"></param>
-        /// <param name="index"></param>
-        public void SelectLineAndMoveInWorkbookViews(VariationTreeView view, string lineId, int index, bool queryExplorer)
-        {
-            try
-            {
-                TreeNode nd = ActiveLine.GetNodeAtIndex(index);
-                if (nd == null)
-                {
-                    // try the node at index 0
-                    nd = ActiveLine.GetNodeAtIndex(0);
-                }
-
-                if (nd != null && WorkbookManager.SessionWorkbook.ActiveVariationTree != null)
-                {
-                    WorkbookManager.SessionWorkbook.ActiveVariationTree.SetSelectedLineAndMove(lineId, nd.NodeId);
-                    view.HighlightLineAndMove(view.HostRtb.Document, lineId, nd.NodeId);
-                    if (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS && AppState.ActiveTab != TabViewType.CHAPTERS)
-                    {
-                        EvaluateActiveLineSelectedPosition(nd);
-                    }
-                    if (AppState.MainWin.UiEvalChart.Visibility == System.Windows.Visibility.Visible)
-                    {
-                        if (AppState.MainWin.UiEvalChart.IsDirty)
-                        {
-                            MultiTextBoxManager.ShowEvaluationChart(true);
-                        }
-                        AppState.MainWin.UiEvalChart.SelectMove(nd);
-                    }
-                    if (queryExplorer)// && !GamesEvaluationManager.IsEvaluationInProgress)
-                    {
-                        _openingStatsView.SetOpeningName();
-                        WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, ActiveVariationTree.SelectedNode);
-                    }
-                }
-            }
-            catch
-            {
+                ActiveTreeView.AppendNewMoveToBranch(nd);
             }
         }
 
@@ -2079,7 +2034,7 @@ namespace ChessForge
         {
             if (ActiveVariationTree != null)
             {
-                ObservableCollection<TreeNode> line = ActiveVariationTree.SelectLine(lineId);
+                ObservableCollection<TreeNode> line = ActiveVariationTree.GetNodesForLine(lineId);
                 SetActiveLine(line, selectedNodeId, displayPosition);
             }
         }
@@ -2095,7 +2050,7 @@ namespace ChessForge
         {
             if (tree != null)
             {
-                ObservableCollection<TreeNode> line = tree.SelectLine(lineId);
+                ObservableCollection<TreeNode> line = tree.GetNodesForLine(lineId);
                 SetActiveLine(line, selectedNodeId, displayPosition);
             }
         }
@@ -2259,7 +2214,7 @@ namespace ChessForge
             EngineMessageProcessor.RequestPositionEvaluation(nd, ActiveVariationTreeId, Configuration.EngineMpv, 0);
         }
 
-        private void EvaluateActiveLineSelectedPosition(TreeNode nd)
+        public void EvaluateActiveLineSelectedPosition(TreeNode nd)
         {
             EvaluationManager.SetSingleNodeToEvaluate(nd);
             EngineMessageProcessor.RequestPositionEvaluation(nd, ActiveVariationTreeId, Configuration.EngineMpv, 0);
@@ -2898,7 +2853,7 @@ namespace ChessForge
                         if (nd != null)
                         {
                             string lineId = ActiveVariationTree.GetDefaultLineIdForNode(nd.NodeId);
-                            ActiveTreeView.SelectAndHighlightLine(lineId, nd.NodeId);
+                            ActiveTreeView.SetAndSelectActiveLine(lineId, nd.NodeId);
                             RefreshSelectedActiveLineAndNode();
                         }
 

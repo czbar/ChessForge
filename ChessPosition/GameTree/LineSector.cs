@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Windows.Documents;
-using System.Windows.Media;
 
 namespace GameTree
 {
@@ -28,19 +25,19 @@ namespace GameTree
     /// </summary>
     public class LineSector
     {
-        /// <summary>
-        /// Color to use for the first node in the sector, if any
-        /// </summary>
-        public Brush FirstNodeColor = null;
-
         // the list of nodes forming a single linear path.
         private List<TreeNode> _nodes = new List<TreeNode>();
 
         // branch depth at which the sector is placed
         private int _branchLevel = 0;
 
-        // display level at whihc to show the sector
+        // display level at which to show the sector
         private int _displayLevel = 0;
+
+        /// <summary>
+        /// Attributes of the paragraph represented by the Sector.
+        /// </summary>
+        public SectorParaAttrs ParaAttrs = new SectorParaAttrs();
 
         /// <summary>
         /// Id of this LineSector.
@@ -116,6 +113,12 @@ namespace GameTree
                 return (Nodes.Count > 0 && Nodes[0].IsCollapsed);
             }
         }
+
+        /// <summary>
+        /// Whether this sector should be shown.
+        /// It won't be shown if it is a child sector of a collapsed sector.
+        /// </summary>
+        public bool IsShown { get; set; } = true;
 
         /// <summary>
         /// NodeId code for open parenthesis

@@ -869,6 +869,11 @@ PasteEngineLines=Wklej warianty silnika...
 #english: MnEvaluateGames=Evaluate Games
 MnEvaluateGames=Oceń partie
 
+#description: Delete notes
+#english: MenuDeleteNotes=Delete Notes...
+MenuDeleteNotes=Usuń notatki...
+
+
 #description: Strip all comments
 #english: StripComments=Delete Comments...
 StripComments=Usuń komentarze...
@@ -975,11 +980,11 @@ TtAllowEvalUpdate=Wyłącz silnik\n(Oceny nie są uaktualniane. Włącz przez Ct
 
 #description: Tool tip for hiding Eval Chart
 #english: HideEvaluationChart=Hide Evaluation Chart
-HideEvaluationChart=Pokaż wykres ocen silnika
+HideEvaluationChart=Ukryj wykres ocen silnika
 
 #description: Tool tip for showing evaluation chart
 #english: ShowEvaluationChart=Show Evaluation Chart
-ShowEvaluationChart=Ukryj wykres ocen silnika
+ShowEvaluationChart=Pokaż wykres ocen silnika
 
 
 #description: Top Games box title
@@ -1247,6 +1252,35 @@ CustomTerms=Niestandardowe Nagłówki
 #description: ReorderLines
 #english: ReorderLines=Reorder Lines
 ReorderLines=Kolejność Wariantów
+
+#######################################
+#
+# Header: DIALOG Delete Notes
+#
+
+#description: Delete Notes
+#english: DeleteNotes = Delete Notes
+DeleteNotes = Usuń Notatki
+
+#description: Items to delete
+#english: ItemsToDelete=Items to Delete
+ItemsToDelete=Elementy do Usunięcia
+
+#description: Comments
+#english: Comments=Comments
+Comments=Komentarze
+
+#description: Engine Evaluations
+#english: EngineEvaluations=Engine Evaluations
+EngineEvaluations=Oceny Silnika
+
+#description: Sidelines
+#english: Sidelines=Sidelines
+Sidelines=Boczne Warianty
+
+#description: ViewsToDeleteIn
+#english: ViewsTypeToApplyTo=Views to Apply to
+ViewsTypeToApplyTo=Zastosuj do Widoków
 
 #######################################
 #
@@ -1819,6 +1853,10 @@ ThinkTimeEvaluationPerMove=Czas na ewaluację ruchu (s)
 #description: Multiple lines (MultiPV)
 #english: MultipleLines=Top Lines to Show
 MultipleLines=Liczba pokazywanych linii
+
+#description: Whether to show the engine's analysis depth in the Engine Lines window
+#english: ShowEngineDepth=Show Analysis Depth
+ShowEngineDepth=Pokaż głębokość analizy
 
 #description: Allows diff from best move when selecting game moves
 #english: MoveSelectionAccuracy=Centipawn Range
@@ -4034,6 +4072,10 @@ OpMoveExercises=Przesuń Ćwiczenia
 #description: Operation
 #english: OpCopyExercises=Copy Exercises
 OpCopyExercises=Kopiuj Ćwiczenia
+
+#description: Operation
+#english: OpDeleteNotes=Delete Notes
+OpDeleteNotes=Usuń Notatki
 
 #description: Operation
 #english: OpDeleteComments=Delete Comments

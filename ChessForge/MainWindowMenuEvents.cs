@@ -684,6 +684,7 @@ namespace ChessForge
                                     AppState.MainWin.ActiveTreeView?.BuildFlowDocumentForVariationTree(false);
                                     break;
                                 case WorkbookOperationType.DELETE_ENGINE_EVALS:
+                                case WorkbookOperationType.DELETE_NOTES:
                                     AppState.MainWin.ActiveTreeView?.BuildFlowDocumentForVariationTree(false);
                                     ActiveLine.RefreshNodeList(true);
                                     break;
@@ -3322,7 +3323,7 @@ namespace ChessForge
 
                             ActiveVariationTree.BuildLines();
                             ActiveTreeView.BuildFlowDocumentForVariationTree(false);
-                            SelectLineAndMoveInWorkbookViews(ActiveTreeView, nd.LineId, ActiveLine.GetSelectedPlyNodeIndex(false), false);
+                            ActiveTreeView.SelectLineAndMoveInWorkbookViews(nd.LineId, ActiveLine.GetSelectedPlyNodeIndex(false), false);
                             PulseManager.BringSelectedRunIntoView();
                         }
                     }

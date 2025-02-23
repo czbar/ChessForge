@@ -182,8 +182,7 @@
                         <Separator />
                         <MenuItem x:Name="UiMnPasteEngineLines" Header="{x:Static p:Resources.PasteEngineLines}" Click="UiMnPasteEngineLines_Click"  />
                         <Separator />
-                        <MenuItem x:Name="UiMnDeleteComments" Header="{x:Static p:Resources.StripComments}" Click="UiDeleteComments_Click" />
-                        <MenuItem x:Name="UiMnDeleteEngineEvals" Header="{x:Static p:Resources.DeleteEngineEvals}" Click="UiDeleteEngineEvals_Click" />
+                        <MenuItem x:Name="UiMnDeleteNotes" Header="{x:Static p:Resources.MenuDeleteNotes}" Click="UiDeleteNotes_Click" />
                         <MenuItem x:Name="UiMnMainDeleteGames" Header="{x:Static p:Resources.DeleteGames}" Click="UiMnToolsDeleteGames_Click" />
                         <MenuItem x:Name="UiMnMainDeleteExercises" Header="{x:Static p:Resources.DeleteExercises}" Click="UiMnToolsDeleteExercises_Click"  />
                         <MenuItem x:Name="UiMnRemoveDuplicates" Header="{x:Static p:Resources.RemoveDuplicates}" Click="UiMnRemoveDuplicates_Click"  />
