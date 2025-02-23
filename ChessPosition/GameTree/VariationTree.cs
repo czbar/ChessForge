@@ -260,6 +260,32 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Deletes Nodes from the supplied list.
+        /// Removes them from the parants' children lists
+        /// and the bookmarks list.
+        /// </summary>
+        public void DeleteNodes(List<TreeNode> toDelete)
+        {
+            if (toDelete != null)
+            {
+                for (int i = 0; i < toDelete.Count; i++)
+                {
+                    TreeNode nd = toDelete[i];
+                    if (nd.Parent != null)
+                    {
+                        nd.Parent.Children.Remove(nd);
+                        DeleteBookmark(nd);
+                    }
+                }
+
+                for (int i = 0; i < toDelete.Count; i++)
+                {
+                    Nodes.Remove(toDelete[i]);
+                }
+            }
+        }
+
+        /// <summary>
         /// Removes comments and nags from all nodes.
         /// </summary>
         public void DeleteCommentsAndNags()
