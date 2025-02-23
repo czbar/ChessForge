@@ -139,6 +139,7 @@ namespace ChessForge
                         break;
                     case WorkbookOperationType.DELETE_COMMENTS:
                     case WorkbookOperationType.DELETE_ENGINE_EVALS:
+                    case WorkbookOperationType.DELETE_NOTES:
                         if (_operation.OpData_1 is Dictionary<Article, List<MoveAttributes>> dictUndoData)
                         {
                             int count = 0;
@@ -185,6 +186,7 @@ namespace ChessForge
             _dictOpTypeToTitle[WorkbookOperationType.IMPORT_CHAPTERS] = Properties.Resources.OpImportChapters;
             _dictOpTypeToTitle[WorkbookOperationType.DELETE_COMMENTS] = Properties.Resources.OpDeleteComments;
             _dictOpTypeToTitle[WorkbookOperationType.DELETE_ENGINE_EVALS] = Properties.Resources.OpDeleteEngineEvals;
+            _dictOpTypeToTitle[WorkbookOperationType.DELETE_NOTES] = Properties.Resources.OpDeleteNotes;
         }
 
         /// <summary>
