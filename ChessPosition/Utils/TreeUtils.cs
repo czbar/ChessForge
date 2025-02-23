@@ -143,7 +143,7 @@ namespace ChessPosition
             if (insertAtNode != null && line != null && line.Count > 0)
             {
                 TreeNode node = insertAtNode;
-                for ( int i = 0; i < line.Count; i++)
+                for (int i = 0; i < line.Count; i++)
                 {
                     TreeNode matchedChild = GetChildMatchingNode(node, line[i]);
                     if (matchedChild != null)
@@ -851,25 +851,50 @@ namespace ChessPosition
         }
 
         /// <summary>
-        /// Builds a list of NagsAndComments.
-        /// Only includes those that have non empty Nags and Comments.
+        /// Builds a list of Nodes' attributes of the type passed in attrTypes.
+        /// Only includes those that any of the specified attributes.
         /// </summary>
         /// <param name="tree"></param>
         /// <returns></returns>
-        public static List<MoveAttributes> BuildNagsAndCommentsList(VariationTree tree)
+        public static List<MoveAttributes> BuildAttributesList(VariationTree tree, int attrTypes)
         {
             List<MoveAttributes> lst = new List<MoveAttributes>();
 
             foreach (TreeNode nd in tree.Nodes)
             {
-                if (!string.IsNullOrEmpty(nd.Comment) 
-                    || !string.IsNullOrEmpty(nd.CommentBeforeMove) 
-                    || !string.IsNullOrEmpty(nd.Nags)
-                    || !string.IsNullOrEmpty(nd.References)
-                    || nd.IsDiagram
+                if ((attrTypes & (int)MoveAttribute.COMMENT_AND_NAGS) != 0 &&
+                        (!string.IsNullOrEmpty(nd.Comment)
+                        || !string.IsNullOrEmpty(nd.CommentBeforeMove)
+                        || !string.IsNullOrEmpty(nd.Nags)
+                        || !string.IsNullOrEmpty(nd.References)
+                        || nd.IsDiagram
+                        )
+                    ||
+                        (attrTypes & (int)MoveAttribute.ENGINE_EVALUATION) != 0 &&
+                        (!string.IsNullOrEmpty(nd.EngineEvaluation)
+                        || nd.Assessment > 0
+                        )
+                    ||
+                        (attrTypes & (int)MoveAttribute.SIDELINE) != 0 &&
+                        nd.IsMainLine() == false
                     )
                 {
-                    lst.Add(new MoveAttributes(nd.NodeId, nd.Comment, nd.CommentBeforeMove, nd.Nags, nd.References, nd.IsDiagram, nd.IsDiagramFlipped, nd.IsDiagramPreComment));
+
+                    MoveAttributes moveAttrs = new MoveAttributes(nd.NodeId, nd.Comment, nd.CommentBeforeMove, nd.Nags, nd.References, nd.IsDiagram, nd.IsDiagramFlipped, nd.IsDiagramPreComment);
+
+                    bool isDeleted = (attrTypes & (int)MoveAttribute.SIDELINE) != 0 && nd.IsMainLine() == false;
+                    if (isDeleted)
+                    {
+                        moveAttrs.IsDeleted = true;
+                        moveAttrs.Node = nd;
+                        if (nd.Parent != null)
+                        {
+                            moveAttrs.ParentId = nd.Parent.NodeId;
+                            moveAttrs.ChildIndexInParent = nd.Parent.Children.IndexOf(nd);
+                        }
+                    }
+
+                    lst.Add(moveAttrs);
                 }
             }
 
