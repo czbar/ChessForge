@@ -7,17 +7,17 @@
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
         ShowInTaskbar="True"
-        Title="{x:Static p:Resources.DlgTitleEngineOptions}" Height="376" SizeToContent="Width">
+        Title="{x:Static p:Resources.DlgTitleEngineOptions}" Height="396" SizeToContent="Width">
     <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"  >
         <Label x:Name="UiLblEngineExe" Content="{x:Static p:Resources.EngineExecutable}" HorizontalAlignment="Left" Margin="17,31,0,0" VerticalAlignment="Top"/>
         <Button x:Name="UiBtnLocateEngine" Content=". . ." HorizontalAlignment="Left" Margin="536,34,15,0" VerticalAlignment="Top" Width="28" Click="UiBtnLocateEngine_Click"/>
         <TextBox x:Name="UiTbEngineExe" IsEnabled="False" HorizontalAlignment="Left" Margin="132,36,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="387"/>
 
-        <GroupBox x:Name="UiGbGameParams" Header="{x:Static p:Resources.InEngineGame}" Margin="300,80,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="195" Width="250">
+        <GroupBox x:Name="UiGbGameParams" Header="{x:Static p:Resources.InEngineGame}" Margin="300,80,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="215" Width="250">
             <StackPanel HorizontalAlignment="Center" Margin="0,0,0,0" Width="240">
-                <Label x:Name="UiLblThinkTimeInGame" Content="{x:Static p:Resources.ThinkTimeInGame}" HorizontalAlignment="Left" Margin="5,10,0,0" VerticalAlignment="Top" />
+                <Label x:Name="UiLblThinkTimeInGame" Content="{x:Static p:Resources.ThinkTimeInGame}" HorizontalAlignment="Left" Margin="5,15,0,0" VerticalAlignment="Top" />
                 <TextBox x:Name="UiTbEngTimeInGame" HorizontalAlignment="Left" HorizontalContentAlignment="Center"  Margin="158,-22,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="40"/>
-                <Label x:Name="UiLblAccuracy" Content="{x:Static p:Resources.TopMoveSelectionAccuracy}" Margin="0,30,0,0" Width="200" VerticalAlignment="Top" HorizontalContentAlignment="Center"/>
+                <Label x:Name="UiLblAccuracy" Content="{x:Static p:Resources.TopMoveSelectionAccuracy}" Margin="0,35,0,0" Width="200" VerticalAlignment="Top" HorizontalContentAlignment="Center"/>
                 <Slider x:Name="UiSldAccuracy" HorizontalAlignment="Center" VerticalAlignment="Top" Width="140" Margin="0,0,0,0" ValueChanged="UiSldAccuracy_ValueChanged" />
                 <Label x:Name="UiLbl0pct" Content="0%" HorizontalAlignment="Left" Margin="10,-20,0,0" VerticalAlignment="Top"/>
                 <Label x:Name="UiLbl100pct" Content="100%" HorizontalAlignment="Right" Margin="0,-25,10,0" VerticalAlignment="Top"/>
@@ -26,16 +26,17 @@
             </StackPanel>
         </GroupBox>
 
-        <GroupBox x:Name="UiGbEngParameters" HorizontalAlignment="Left" Height="90" Header="{x:Static p:Resources.InEvaluation}" Margin="15,80,0,0" VerticalAlignment="Top" Width="248">
+        <GroupBox x:Name="UiGbEngParameters" HorizontalAlignment="Left" Height="115" Header="{x:Static p:Resources.InEvaluation}" Margin="15,80,0,0" VerticalAlignment="Top" Width="248">
             <StackPanel>
-                <Label x:Name="UiLblEvalTime" Content="{x:Static p:Resources.ThinkTimeEvaluation}" HorizontalAlignment="Left" Margin="5,10,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="UiLblEvalTime" Content="{x:Static p:Resources.ThinkTimeEvaluation}" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top"/>
                 <TextBox x:Name="UiTbEngEvalTime" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="158,-22,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="40"/>
                 <Label x:Name="UiLblMultiPv" Content="{x:Static p:Resources.MultipleLines}" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Top"/>
                 <TextBox x:Name="UiTbMultiPv" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="158,-22,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="40"/>
+                <CheckBox x:Name="UiCbShowDepth" Content="{x:Static p:Resources.ShowEngineDepth}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
             </StackPanel>
         </GroupBox>
 
-        <GroupBox x:Name="UiGbProcess" Header="{x:Static p:Resources.ProcessParameters}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="248" Height="95" Margin="15,180,0,0">
+        <GroupBox x:Name="UiGbProcess" Header="{x:Static p:Resources.ProcessParameters}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="248" Height="95" Margin="15,200,0,0">
             <StackPanel>
                 <Label x:Name="UiLblThreads" Content="{x:Static p:Resources.EngineThreads}" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top"/>
                 <TextBox x:Name="UiTbThreads" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="158,-20,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="40"/>
@@ -43,9 +44,9 @@
                 <TextBox x:Name="UiTbHashSize" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="143,-20,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="55"/>
             </StackPanel>
         </GroupBox>
-        <Button x:Name="UiBtnSave" IsDefault="True" Content="{x:Static p:Resources.Save}" HorizontalAlignment="Center" Margin="-280,300,0,0" VerticalAlignment="Top" Width="100" Height="22"  Visibility="Visible" Click="UiBtnSave_Click"/>
-        <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="0,300,0,0" VerticalAlignment="Top" Width="100" Height="22"  Visibility="Visible" Click="UiBtnCancel_Click" />
-        <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Center" Margin="280,300,0,0" VerticalAlignment="Top" Width="100" Height="22"  Visibility="Visible" Click="UiBtnHelp_Click" />
+        <Button x:Name="UiBtnSave" IsDefault="True" Content="{x:Static p:Resources.Save}" HorizontalAlignment="Center" Margin="-280,320,0,0" VerticalAlignment="Top" Width="100" Height="22"  Visibility="Visible" Click="UiBtnSave_Click"/>
+        <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="0,320,0,0" VerticalAlignment="Top" Width="100" Height="22"  Visibility="Visible" Click="UiBtnCancel_Click" />
+        <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Center" Margin="280,320,0,0" VerticalAlignment="Top" Width="100" Height="22"  Visibility="Visible" Click="UiBtnHelp_Click" />
 
     </Grid>
 </Window>

@@ -52,6 +52,11 @@ namespace ChessForge
         public double EngineMpv;
 
         /// <summary>
+        /// Whether to show engine analysis depth in the engine lines window.
+        /// </summary>
+        public bool EngineShowAnalysisDepth;
+
+        /// <summary>
         /// Tolerance of engine move selection in centipawns
         /// while evaluating.
         /// </summary>
@@ -91,6 +96,7 @@ namespace ChessForge
             EngineTimePerMoveInGame = (double)Configuration.EngineMoveTime / 1000.0;
             EngineTimePerMoveInEvaluation = (double)Configuration.EngineEvaluationTime / 1000.0;
             EngineMpv = Configuration.EngineMpv;
+            EngineShowAnalysisDepth = Configuration.ShowEngineAnalysisDepth;
             EngineMoveAccuracy = (int)Configuration.ViableMoveCpDiff;
             EngineThreads = (int)Configuration.EngineThreads;
             EngineHashSize = (long)Configuration.EngineHashSize;
@@ -102,6 +108,7 @@ namespace ChessForge
             UiTbEngTimeInGame.Text = EngineTimePerMoveInGame.ToString("F1");
             UiTbEngEvalTime.Text = EngineTimePerMoveInEvaluation.ToString("F1");
             UiTbMultiPv.Text = EngineMpv.ToString();
+            UiCbShowDepth.IsChecked = EngineShowAnalysisDepth;
             UiTbMoveAcc.Text = EngineMoveAccuracy.ToString();
             UiTbThreads.Text = EngineThreads.ToString();
             UiTbHashSize.Text = EngineHashSize.ToString();
@@ -175,6 +182,8 @@ namespace ChessForge
             {
                 Configuration.EngineMpv = iVal;
             }
+
+            Configuration.ShowEngineAnalysisDepth = UiCbShowDepth.IsChecked == true;
 
             if (int.TryParse(UiTbMoveAcc.Text, out iVal))
             {
