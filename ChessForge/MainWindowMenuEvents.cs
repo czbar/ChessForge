@@ -1404,72 +1404,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnImportChapter_Click(object sender, RoutedEventArgs e)
         {
-            string[] fileNames = ImportFromPgn.SelectPgnFile(false);
-            string fileName = null;
-            if (fileNames.Length == 1)
-            {
-                fileName = fileNames[0];
-            }
-            if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
-            {
-                ObservableCollection<GameData> games = new ObservableCollection<GameData>();
-
-                int gamesCount = WorkbookManager.ReadPgnFile(fileName, ref games, GameData.ContentType.GENERIC, GameData.ContentType.NONE);
-
-                // if this is a ChessForge Workbook, list the chapters and allow the user to copy them over
-                if (WorkbookManager.IsChessForgeWorkbook(ref games))
-                {
-                    Workbook workbook = new Workbook();
-                    WorkbookManager.CreateWorkbookFromGameList(ref workbook, ref games);
-                    SelectChaptersDialog dlg = new SelectChaptersDialog(workbook);
-                    GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
-
-                    dlg.ShowDialog();
-                    if (dlg.ExitOK)
-                    {
-                        List<ArticleListItem> undoArticleList = new List<ArticleListItem>();
-
-                        int importedChapters = 0;
-
-                        foreach (SelectedChapter ch in dlg.ChapterList)
-                        {
-                            if (ch.IsSelected)
-                            {
-                                WorkbookManager.SessionWorkbook.Chapters.Add(ch.Chapter);
-                                undoArticleList.Add(new ArticleListItem(ch.Chapter));
-
-                                importedChapters++;
-
-                                if (_chaptersView != null)
-                                {
-                                    _chaptersView.BuildFlowDocumentForChaptersView(false);
-                                    PulseManager.ChapterIndexToBringIntoView = WorkbookManager.SessionWorkbook.GetChapterCount() - 1;
-                                }
-                                AppState.IsDirty = true;
-
-                                if (undoArticleList.Count > 0)
-                                {
-                                    WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.IMPORT_CHAPTERS, (object)undoArticleList);
-                                    WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
-                                }
-                            }
-                        }
-
-                        if (importedChapters > 0)
-                        {
-                            AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(
-                                Properties.Resources.FlMsgChaptersImported + " (" + importedChapters.ToString() + ")", CommentBox.HintType.INFO);
-                        }
-
-                    }
-                }
-                else
-                {
-                    CreateChapterFromNewGames(gamesCount, ref games, fileName);
-                    AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(
-                        Properties.Resources.FlMsgChapterImported, CommentBox.HintType.INFO);
-                }
-            }
+            ImportFromPgn.ImportChapter();
         }
 
         /// <summary>
@@ -1490,7 +1425,7 @@ namespace ChessForge
         /// <param name="gamesCount"></param>
         /// <param name="games"></param>
         /// <param name="fileName"></param>
-        private void CreateChapterFromNewGames(int gamesCount, ref ObservableCollection<GameData> games, string fileName)
+        public void CreateChapterFromNewGames(int gamesCount, ref ObservableCollection<GameData> games, string fileName)
         {
             try
             {
