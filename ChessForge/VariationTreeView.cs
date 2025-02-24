@@ -198,10 +198,6 @@ namespace ChessForge
             ["preamble"] = new RichTextPara(40, 10, 16, FontWeights.Normal, TextAlignment.Left),
         };
 
-        // prefixes for run names
-        private readonly string _run_fork_move_ = "_run_fork_move_";
-        private readonly string _run_ = "run_";
-
         /// <summary>
         /// Most recent clicked node.
         /// This allows the context menu to reference the correct move.
@@ -1181,14 +1177,14 @@ namespace ChessForge
                         if (i < moveCount)
                         {
                             Run rCell = new Run(MoveUtils.BuildSingleMoveText(node.Children[i], true, true, ShownVariationTree.MoveNumberOffset));
-                            rCell.Name = _run_fork_move_ + node.Children[i].NodeId.ToString();
+                            rCell.Name = RichTextBoxUtilities.RunForkMovePrefix + node.Children[i].NodeId.ToString();
                             rCell.MouseDown += EventForkChildClicked;
 
                             cell = new TableCell(new Paragraph(rCell));
                             // click on the Cell to have the same effect as click on the Run
                             cell.MouseDown += EventForkChildClicked;
                             cell.Cursor = Cursors.Hand;
-                            cell.Blocks.First().Name = _run_fork_move_ + node.Children[i].NodeId.ToString();
+                            cell.Blocks.First().Name = RichTextBoxUtilities.RunForkMovePrefix + node.Children[i].NodeId.ToString();
                         }
                         else
                         {
@@ -1514,7 +1510,7 @@ namespace ChessForge
                 }
 
                 Run runMove = new Run(MoveUtils.BuildSingleMoveText(nd, hasDiagram, false, ShownVariationTree.MoveNumberOffset) + " ");
-                runMove.Name = _run_ + nd.NodeId.ToString();
+                runMove.Name = RichTextBoxUtilities.RunMovePrefix + nd.NodeId.ToString();
                 runMove.PreviewMouseDown += EventRunClicked;
 
                 runMove.FontStyle = rParentMoveRun.FontStyle;
@@ -1780,7 +1776,7 @@ namespace ChessForge
             try
             {
                 r = new Run(text.ToString());
-                r.Name = _run_ + nd.NodeId.ToString();
+                r.Name = RichTextBoxUtilities.RunMovePrefix + nd.NodeId.ToString();
                 r.PreviewMouseDown += EventRunClicked;
 
                 if (_isIntraFork)

@@ -40,8 +40,6 @@ namespace ChessForge
         private readonly string _para_gamemoves_ = "para_gamemoves_";
         private readonly string _para_moveprompt_ = "para_moveprompt_";
 
-        private readonly string _run_ = "run_";
-
         // id of the last node clicked
         private int _lastClickedNodeId = -1;
 
@@ -412,7 +410,7 @@ namespace ChessForge
             try
             {
                 run = new Run(text.ToString());
-                run.Name = _run_ + nd.NodeId.ToString();
+                run.Name = RichTextBoxUtilities.RunMovePrefix + nd.NodeId.ToString();
                 run.PreviewMouseDown += EventMoveRunClicked;
                 para.Inlines.Add(run);
 
