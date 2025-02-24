@@ -47,6 +47,11 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// The paragraph containg the page header which could a game/exercise header or a chapter title.
+        /// </summary>
+        public Paragraph PageHeaderParagraph = null;
+
+        /// <summary>
         /// Whether to show blunder assessments.
         /// </summary>
         public bool HandleBlunders
@@ -79,9 +84,6 @@ namespace ChessForge
                 }
             }
         }
-
-        // Page Header paragraph
-        protected Paragraph _pageHeaderParagraph = null;
 
         // flags freshness of the view
         private bool _isFresh = false;
@@ -349,10 +351,10 @@ namespace ChessForge
                 // NOTE: first, it is redundant; second, it will print the title of the active chapter
                 if (treeForPrint == null || contentType != GameData.ContentType.STUDY_TREE)
                 {
-                    _pageHeaderParagraph = BuildPageHeader(_mainVariationTree, contentType);
-                    if (_pageHeaderParagraph != null)
+                    PageHeaderParagraph = BuildPageHeader(_mainVariationTree, contentType);
+                    if (PageHeaderParagraph != null)
                     {
-                        doc.Blocks.Add(_pageHeaderParagraph);
+                        doc.Blocks.Add(PageHeaderParagraph);
                     }
                 }
 
@@ -518,28 +520,28 @@ namespace ChessForge
             Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
             if (chapter != null)
             {
-                if (_pageHeaderParagraph == null)
+                if (PageHeaderParagraph == null)
                 {
-                    _pageHeaderParagraph = CreateParagraph("0", true);
-                    _pageHeaderParagraph.MouseLeftButtonDown += EventPageHeaderClicked;
+                    PageHeaderParagraph = CreateParagraph("0", true);
+                    PageHeaderParagraph.MouseLeftButtonDown += EventPageHeaderClicked;
                 }
 
-                _pageHeaderParagraph.Inlines.Clear();
+                PageHeaderParagraph.Inlines.Clear();
 
                 Run rTitle = new Run(chapter.GetTitle());
                 rTitle.TextDecorations = TextDecorations.Underline;
-                _pageHeaderParagraph.Inlines.Add(rTitle);
+                PageHeaderParagraph.Inlines.Add(rTitle);
 
                 if (!string.IsNullOrWhiteSpace(chapter.GetAuthor()))
                 {
                     Run rAuthor = new Run("\n    " + Properties.Resources.Author + ": " + chapter.GetAuthor());
                     rAuthor.FontWeight = FontWeights.Normal;
                     rAuthor.FontSize = GuiUtilities.AdjustFontSize(Constants.BASE_FIXED_FONT_SIZE) - 2;
-                    _pageHeaderParagraph.Inlines.Add(rAuthor);
+                    PageHeaderParagraph.Inlines.Add(rAuthor);
                 }
             }
 
-            return _pageHeaderParagraph;
+            return PageHeaderParagraph;
         }
 
 
