@@ -64,6 +64,66 @@ namespace ChessForge
         public static readonly string ReferenceRunPrefix = "run_reference_";
 
         /// <summary>
+        /// Prefix for naming runs representing a move in a fork table.
+        /// </summary>
+        public static readonly string RunForkMovePrefix = "_run_fork_move_";
+
+        /// <summary>
+        /// Prefix for naming runs representing a move.
+        /// </summary>
+        public static readonly string RunMovePrefix = "run_move_";
+
+        /// <summary>
+        /// Finds the first Run representing a move in the paragraph.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        public static Run FindFirstMoveRunInParagraph(Paragraph para)
+        {
+            Run run = null;
+
+            if (para != null)
+            {
+                foreach (Inline inl in para.Inlines)
+                {
+                    if (inl is Run r && r.Name != null && r.Name.StartsWith(RichTextBoxUtilities.RunForkMovePrefix))
+                    {
+                        run = r;
+                        break;
+                    }
+                }
+            }
+
+            return run;
+        }
+
+        /// <summary>
+        /// Finds the last Run representing a move in the paragraph.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        public static Run FindLastMoveRunInParagraph(Paragraph para)
+        {
+            Run run = null;
+
+            if (para != null)
+            {
+                Inline inl = para.Inlines.LastInline;
+
+                while (inl != null)
+                {
+                    if (inl is Run r && r.Name != null && r.Name.StartsWith(RichTextBoxUtilities.RunForkMovePrefix))
+                    {
+                        run = r;
+                    }
+                    inl = inl.PreviousInline;
+                }
+            }
+
+            return run;
+        }
+
+        /// <summary>
         /// Determines wheter the upper or lower part of the passed Inline object was clicked.
         /// Gets the position of the mouse click and the position of the Inline object
         /// and checks if the position of he click minus half the font size would still be
