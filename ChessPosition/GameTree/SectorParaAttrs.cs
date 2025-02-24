@@ -41,7 +41,7 @@ namespace GameTree
         /// <summary>
         /// Background color of the paragraph.
         /// </summary>
-        public string Background { get; set; }
+        public Brush Background { get; set; }
 
         /// <summary>
         /// Color to use for the first node in the sector, if any
