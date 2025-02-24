@@ -79,6 +79,10 @@ namespace ChessForge
                                 _view.RemoveNodeFromDictionaries(node);
                             }
 
+                            if (_currentManager.LineSectors[i].HostPara == null)
+                            {
+                                CreateParagraphForNewSector(i);
+                            }
                             _view.BuildSectorRuns(_currentManager.LineSectors[i]);
                         }
                     }
@@ -113,6 +117,35 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Creates a Paragraph for sector that does not have one yet.
+        /// </summary>
+        /// <param name="index"></param>
+        private void CreateParagraphForNewSector(int index)
+        {
+            LineSector newSector = _currentManager.LineSectors[index];
+            CreateSectorParagraph(newSector);
+            if (index > 0)
+            {
+                // insert after the paragraph of the previous sector
+                LineSector prevSector = _currentManager.LineSectors[index - 1];
+                _view.HostRtb.Document.Blocks.InsertAfter(prevSector.HostPara, newSector.HostPara);
+            }
+            else
+            {
+                // if the index paragraphs have been created, insert the new paragraph after them,
+                // otherwise insert it after the header paragraph (which is always created earlier).
+                if (_currentManager.IndexContentPara != null)
+                {
+                    _view.HostRtb.Document.Blocks.InsertAfter(_currentManager.IndexContentPara, _currentManager.LineSectors[index].HostPara);
+                }
+                else
+                {
+                    _view.HostRtb.Document.Blocks.InsertAfter(_view.PageHeaderParagraph, _currentManager.LineSectors[index].HostPara);
+                }
+            }
+        }
+
+        /// <summary>
         /// Checks if the sectors are identical in terms of content (nodes) and attributes.
         /// If they are not, the current sector is updated with the new sector's attributes
         /// and any runs with changed attributes are updated too.
@@ -130,8 +163,6 @@ namespace ChessForge
                 if (isOneSubsetOfOther)
                 {
                     needsUpdate = extraNodes != 0;
-                    //TODO: now we return and the para will be repainted if needsUpdate is true
-                    //      in the future, we may optimize by adding or deleting just the appropariate runs.
                 }
                 else
                 {
