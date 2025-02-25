@@ -1,5 +1,6 @@
 ﻿using ChessPosition;
 using GameTree;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Documents;
@@ -304,6 +305,58 @@ namespace ChessForge
             };
 
             return para;
+        }
+
+        /// <summary>
+        /// Updates the paragraph attributes for a Study View paragraph.
+        /// It will be invoked to update the attributes of a paragraph 
+        /// in the currently active LineSectorManager with those of the
+        /// "updated" one.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <param name="attrs"></param>
+        /// <param name="displayLevel"></param>
+        public static void UpdateStudyParagraphAttrs(Paragraph para, SectorParaAttrs attrs, int displayLevel)
+        {
+            if (para == null)
+            {
+                return;
+            }
+
+            try
+            {
+                Thickness margin = new Thickness(20 * displayLevel, attrs.TopMarginExtra, 0, 5 + attrs.BottomMarginExtra);
+                FontWeight fontWeight = displayLevel == 0 ? FontWeights.DemiBold : FontWeights.Normal;
+
+                if (para.Margin != margin)
+                {
+                    para.Margin = margin;
+                }
+                if (para.FontSize != attrs.FontSize)
+                {
+                    para.FontSize = attrs.FontSize;
+                }
+                if (para.FontWeight != fontWeight)
+                {
+                    para.FontWeight = fontWeight;
+                }
+                if (para.TextAlignment != attrs.TextAlignment)
+                {
+                    para.TextAlignment = attrs.TextAlignment;
+                }
+                if (para.Foreground != attrs.Foreground)
+                {
+                    para.Foreground = attrs.Foreground;
+                }
+                if (para.Background != attrs.Background)
+                {
+                    para.Background = attrs.Background;
+                }
+            }
+            catch(Exception ex)
+            {
+                AppLog.Message("UpdateStudyParagraphAttrs()", ex);
+            }
         }
 
         /// <summary>
