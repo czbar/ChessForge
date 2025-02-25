@@ -1216,7 +1216,11 @@ namespace ChessForge
             {
                 WorkbookManager.LastClickedChapterIndex = -1;
             }
-            WorkbookManager.EnableChaptersContextMenuItems(UiMncChapters, WorkbookManager.LastClickedChapterIndex >= 0, GameData.ContentType.GENERIC);
+
+            if (e.ChangedButton == MouseButton.Right)
+            {
+                WorkbookManager.EnableChaptersContextMenuItems(UiMncChapters, WorkbookManager.LastClickedChapterIndex >= 0, GameData.ContentType.GENERIC);
+            }
         }
 
         /// <summary>
@@ -1819,48 +1823,6 @@ namespace ChessForge
             }
         }
 
-        /// <summary>
-        /// Requests import of Model Games from a PGN file
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnImportModelGames_Click(object sender, RoutedEventArgs e)
-        {
-            ImportFromPgn.ImportArticlesFromPgn(GameData.ContentType.GENERIC, GameData.ContentType.MODEL_GAME, out int gameCount, out _);
-            if (gameCount > 0)
-            {
-                AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(
-                    Properties.Resources.FlMsgGamesImported + " (" + gameCount.ToString() + ")", CommentBox.HintType.INFO);
-            }
-        }
-
-        /// <summary>
-        /// Requests import of Model Games from a PGN file
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnImportGame_Click(object sender, RoutedEventArgs e)
-        {
-            UiMnImportModelGames_Click(sender, e);
-        }
-
-        /// <summary>
-        /// Requests import of Exercises from a PGN file
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnImportExercises_Click(object sender, RoutedEventArgs e)
-        {
-            ImportFromPgn.ImportArticlesFromPgn(GameData.ContentType.EXERCISE, GameData.ContentType.EXERCISE, out _, out int exerciseCount);
-
-            if (exerciseCount > 0)
-            {
-                AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(
-                    Properties.Resources.FlMsgExercisesImported + " (" + exerciseCount.ToString() + ")", CommentBox.HintType.INFO);
-            }
-        }
-
-
         //*****************************************************************************
         //
         //   TOP GAMES EXPLORER
@@ -2440,31 +2402,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Sets the list in the Chapters View in the correct Expand/Collapse state.
-        /// Rebuilds the Paragraph for the chapter.
-        /// </summary>
-        /// <param name="contentType"></param>
-        /// <param name="chapter"></param>
-        public void RefreshChaptersViewAfterImport(GameData.ContentType contentType, Chapter chapter, int gameUinitIndex)
-        {
-            chapter.IsViewExpanded = true;
-            switch (contentType)
-            {
-                case GameData.ContentType.MODEL_GAME:
-                    chapter.IsModelGamesListExpanded = true;
-                    chapter.ActiveModelGameIndex = gameUinitIndex;
-                    break;
-                case GameData.ContentType.EXERCISE:
-                    chapter.IsExercisesListExpanded = true;
-                    chapter.ActiveExerciseIndex = gameUinitIndex;
-                    break;
-            }
-
-            _chaptersView.BuildFlowDocumentForChaptersView(false);
-            _chaptersView.BringArticleIntoView(_chaptersView.HostRtb.Document, chapter.Index, contentType, gameUinitIndex);
-        }
-
-        /// <summary>
         /// Show the Select Games dialog.
         /// </summary>
         /// <param name="contentType"></param>
@@ -2888,90 +2825,6 @@ namespace ChessForge
         //  TREE OPERATIONS
         // 
         //**********************
-
-        /// <summary>
-        /// Handles Game import from the Games context menu
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnMainImportFromPgn_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Chapter startChapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                int origGameCount = startChapter.GetModelGameCount();
-                int origExerciseCount = startChapter.GetExerciseCount();
-
-                int importedArticles = ImportFromPgn.ImportArticlesFromPgn(GameData.ContentType.GENERIC, GameData.ContentType.ANY, out _, out _);
-                if (importedArticles > 0)
-                {
-                    AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(
-                        Properties.Resources.FlMsgArticlesImported + " (" + importedArticles.ToString() + ")", CommentBox.HintType.INFO);
-
-                    Chapter currChapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-
-                    // if we did not create a new chapter, adjust index to the first
-                    // imported game.
-                    if (currChapter == startChapter)
-                    {
-                        if (startChapter.GetModelGameCount() > origGameCount)
-                        {
-                            startChapter.ActiveModelGameIndex = origGameCount;
-                        }
-                        if (startChapter.GetExerciseCount() > origExerciseCount)
-                        {
-                            startChapter.ActiveExerciseIndex = origExerciseCount;
-                        }
-
-                        if (AppState.ActiveTab == TabViewType.MODEL_GAME)
-                        {
-                            SelectModelGame(startChapter.ActiveModelGameIndex, false);
-                        }
-                        else if (AppState.ActiveTab == TabViewType.EXERCISE)
-                        {
-                            SelectExercise(startChapter.ActiveExerciseIndex, false);
-                        }
-                    }
-                }
-            }
-            catch
-            {
-            }
-        }
-
-        /// <summary>
-        /// Handles Exercise import from the Exercises context menu
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnExerc_ImportExercises_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                int count = chapter.GetExerciseCount();
-
-                int importedExercises = ImportFromPgn.ImportArticlesFromPgn(GameData.ContentType.EXERCISE, GameData.ContentType.EXERCISE, out _, out _);
-                if (importedExercises > 0)
-                {
-                    AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(
-                        Properties.Resources.FlMsgExercisesImported + " (" + importedExercises.ToString() + ")", CommentBox.HintType.INFO);
-                    if (chapter.GetExerciseCount() > count)
-                    {
-                        chapter.ActiveExerciseIndex = count;
-                    }
-                    else
-                    {
-                        chapter.ActiveExerciseIndex = count - 1;
-                    }
-                    SelectExercise(chapter.ActiveExerciseIndex, false);
-                }
-            }
-            catch
-            {
-            }
-        }
-
 
         /// <summary>
         /// Copies FEN of the selected move to Clipboard
