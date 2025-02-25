@@ -40,6 +40,16 @@ namespace ChessForge
         public VariationTreeView StudyTreeView { get => _studyTreeView; }
 
         /// <summary>
+        /// Public reference to ModelGameTreeView
+        /// </summary>
+        public VariationTreeView ModelGameTreeView { get => _modelGameTreeView; }
+
+        /// <summary>
+        /// Public reference to ExerciseTreeView
+        /// </summary>
+        public VariationTreeView ExerciseTreeView { get => _exerciseTreeView; }
+
+        /// <summary>
         /// Public reference to EngineGameView 
         /// </summary>
         public EngineGameView EngineGameView { get => _engineGameView; }
@@ -2919,6 +2929,8 @@ namespace ChessForge
             {
                 chapter.SetTitle(dlg.ChapterTitle);
                 chapter.SetAuthor(dlg.Author);
+                ReferenceUtils.UpdateReferenceText(chapter.Guid);
+
                 _chaptersView.BuildFlowDocumentForChaptersView(false);
                 // study tree also shows title so update it there
                 if (_studyTreeView == null)
