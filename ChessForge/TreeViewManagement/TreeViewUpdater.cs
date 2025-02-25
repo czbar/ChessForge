@@ -67,8 +67,13 @@ namespace ChessForge
 
                     if (updatedNode == currentNode)
                     {
+                        Paragraph currHostPara = _currentManager.LineSectors[i].HostPara;
+                        _currentManager.LineSectors[i].DisplayLevel = _updatedManager.LineSectors[i].DisplayLevel;
+
                         // update the existing sector if needed
-                        bool needsupdate = UpdateSectorParagraph(_currentManager.LineSectors[i], _updatedManager.LineSectors[i]);
+                        LineSectorManager.UpdateStudyParagraphAttrs(currHostPara, _updatedManager.LineSectors[i].ParaAttrs, _updatedManager.LineSectors[i].DisplayLevel);
+
+                        bool needsupdate = CompareSectorNodeList(_currentManager.LineSectors[i], _updatedManager.LineSectors[i]);
                         if (needsupdate)
                         {
                             _currentManager.LineSectors[i].ParaAttrs = _updatedManager.LineSectors[i].ParaAttrs;
@@ -83,7 +88,9 @@ namespace ChessForge
                             {
                                 CreateParagraphForNewSector(i);
                             }
+                            
                             _view.BuildSectorRuns(_currentManager.LineSectors[i]);
+                            SetFirstLastMoveColors(i);
                         }
                     }
                     else
@@ -113,6 +120,25 @@ namespace ChessForge
             catch (Exception ex)
             {
                 AppLog.Message("TreeViewUpdater.MoveAdded()", ex);
+            }
+        }
+
+        /// <summary>
+        /// Sets the foreground color for the first and last move in the sector.
+        /// </summary>
+        /// <param name="index"></param>
+        private void SetFirstLastMoveColors(int index)
+        {
+            Run lastRun = RichTextBoxUtilities.FindLastMoveRunInParagraph(_currentManager.LineSectors[index].HostPara);
+            if (lastRun != null)
+            {
+                lastRun.Foreground = _updatedManager.LineSectors[index].ParaAttrs.LastNodeColor;
+            }
+
+            Run firstRun = RichTextBoxUtilities.FindFirstMoveRunInParagraph(_currentManager.LineSectors[index].HostPara);
+            if (firstRun != null)
+            {
+                firstRun.Foreground = _updatedManager.LineSectors[index].ParaAttrs.FirstNodeColor;
             }
         }
 
@@ -147,30 +173,24 @@ namespace ChessForge
 
         /// <summary>
         /// Checks if the sectors are identical in terms of content (nodes) and attributes.
-        /// If they are not, the current sector is updated with the new sector's attributes
-        /// and any runs with changed attributes are updated too.
         /// </summary>
         /// <param name="currentSector"></param>
         /// <param name="updatedSector"></param>
-        private bool UpdateSectorParagraph(LineSector currentSector, LineSector updatedSector)
+        private bool CompareSectorNodeList(LineSector currentSector, LineSector updatedSector)
         {
-            // update the paragraph attributes
-            bool needsUpdate = UpdateParagraphAttrs(currentSector, updatedSector);
+            bool areDifferent = false;
 
-            if (!needsUpdate)
+            bool isOneSubsetOfOther = CompareNodeList(currentSector, updatedSector, out int commonNodes, out int extraNodes);
+            if (isOneSubsetOfOther)
             {
-                bool isOneSubsetOfOther = CompareNodeList(currentSector, updatedSector, out int commonNodes, out int extraNodes);
-                if (isOneSubsetOfOther)
-                {
-                    needsUpdate = extraNodes != 0;
-                }
-                else
-                {
-                    needsUpdate = true;
-                }
+                areDifferent = extraNodes != 0;
+            }
+            else
+            {
+                areDifferent = true;
             }
 
-            return needsUpdate;
+            return areDifferent;
         }
 
         /// <summary>
