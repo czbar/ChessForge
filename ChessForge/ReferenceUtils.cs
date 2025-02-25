@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace ChessForge
 {
     /// <summary>
-    /// Utilities for handling Areticle References in TreeNodes
+    /// Utilities for handling Article References in TreeNodes
     /// </summary>
     public class ReferenceUtils
     {
@@ -18,6 +18,38 @@ namespace ChessForge
         /// The id of the node of the last clicked reference.
         /// </summary>
         public static int LastClickedReferenceNodeId;
+
+        /// <summary>
+        /// Calls UpdateReferenceTextInView() for all views that may contain the reference.
+        /// </summary>
+        /// <param name="guid"></param>
+        public static void UpdateReferenceText(string guid)
+        {
+            UpdateReferenceTextInView(guid, AppState.MainWin.StudyTreeView);
+            UpdateReferenceTextInView(guid, AppState.MainWin.ModelGameTreeView);
+            UpdateReferenceTextInView(guid, AppState.MainWin.ExerciseTreeView);
+        }
+
+        /// <summary>
+        /// Updates the reference text in the given view.
+        /// Finds all nodes that reference the given guid and updates the text
+        /// of the comment with the reference's text/title.
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <param name="view"></param>
+        private static void UpdateReferenceTextInView(string guid, VariationTreeView view)
+        {
+            if (view != null && view.MainVariationTree != null)
+            {
+                foreach (TreeNode node in view.MainVariationTree.Nodes)
+                {
+                    if (node.References != null && node.References.Contains(guid))
+                    {
+                        AppState.MainWin.ActiveTreeView.InsertOrUpdateCommentRun(node);
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Adds a reference to the given node.
