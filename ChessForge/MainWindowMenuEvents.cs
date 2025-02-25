@@ -3621,13 +3621,16 @@ namespace ChessForge
             {
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
 
-                VariationTree game = WorkbookManager.SessionWorkbook.ActiveChapter.ModelGames[chapter.ActiveModelGameIndex].Tree;
-                var dlg = new GameHeaderDialog(game, Properties.Resources.GameHeader);
+                Article game = chapter.ModelGames[chapter.ActiveModelGameIndex];
+                VariationTree tree = game.Tree;
+                var dlg = new GameHeaderDialog(tree, Properties.Resources.GameHeader);
                 GuiUtilities.PositionDialog(dlg, this, 100);
                 dlg.ShowDialog();
                 if (dlg.ExitOK)
                 {
                     AppState.IsDirty = true;
+                    ReferenceUtils.UpdateReferenceText(game.Guid);
+
                     _chaptersView.BuildFlowDocumentForChaptersView(false);
                     if (WorkbookManager.ActiveTab == TabViewType.MODEL_GAME)
                     {
@@ -3654,13 +3657,16 @@ namespace ChessForge
             {
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
 
-                VariationTree game = WorkbookManager.SessionWorkbook.ActiveChapter.Exercises[chapter.ActiveExerciseIndex].Tree;
-                var dlg = new GameHeaderDialog(game, Properties.Resources.ExerciseHeader);
+                Article exercise = chapter.ModelGames[chapter.ActiveExerciseIndex];
+                VariationTree tree = exercise.Tree;
+                var dlg = new GameHeaderDialog(tree, Properties.Resources.ExerciseHeader);
                 GuiUtilities.PositionDialog(dlg, this, 100);
                 dlg.ShowDialog();
                 if (dlg.ExitOK)
                 {
                     AppState.IsDirty = true;
+                    ReferenceUtils.UpdateReferenceText(exercise.Guid);
+
                     _chaptersView.BuildFlowDocumentForChaptersView(false);
                     if (WorkbookManager.ActiveTab == TabViewType.EXERCISE)
                     {
