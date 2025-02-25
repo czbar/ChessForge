@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Documents;
-using System.Windows.Input;
-using ChessPosition;
+﻿using ChessPosition;
 using GameTree;
+using System;
+using System.Windows;
+using System.Windows.Input;
 
 namespace ChessForge
 {
     /// <summary>
-    /// Interaction logic for GameExerciseOptions.xaml
+    /// Interaction logic for GameHeaderDialog.xaml
     /// </summary>
     public partial class GameHeaderDialog : Window
     {
