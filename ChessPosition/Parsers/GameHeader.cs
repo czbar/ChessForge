@@ -312,7 +312,7 @@ namespace GameTree
             if (!minimal)
             {
                 string result = GetResult(out _);
-                if (!string.IsNullOrEmpty(result))
+                if (!string.IsNullOrEmpty(result) && result != Constants.PGN_NO_RESULT)
                 {
                     sb.Append(' ' + result);
                 }
