@@ -682,6 +682,7 @@ namespace ChessForge
         public void SetTitle(string title)
         {
             _title = title;
+            StudyTree.Tree.Header.SetHeaderValue(PgnHeaders.KEY_CHAPTER_TITLE, title);
         }
 
         /// <summary>
