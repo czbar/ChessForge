@@ -255,7 +255,6 @@ namespace ChessForge
                                         }
                                     }
                                 }
-                                AppState.MainWin.RefreshChaptersViewAfterImport(targetcontentType, targetChapter, firstImportedGameIndex);
                             }
                             catch { }
 
