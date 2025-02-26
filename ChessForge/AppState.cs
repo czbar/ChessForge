@@ -722,6 +722,7 @@ namespace ChessForge
             }
             catch (Exception ex)
             {
+                GameDownload.RemoveFromCache(gameId);
                 MessageBox.Show(Properties.Resources.CouldNotImportGame + ": " + ex.Message, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }

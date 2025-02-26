@@ -133,6 +133,7 @@ namespace ChessForge
             {
                 ShowControls(false, true);
                 MessageBox.Show(Properties.Resources.GameDownloadError + ": " + ex.Message, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
+                GameDownload.RemoveFromCache(_currentGameId);
             }
         }
 
