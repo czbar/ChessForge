@@ -65,7 +65,7 @@ namespace ChessForge
             // it could be that a new move was made and it is "hidden" under a collapsed root
             UncollapseMove(_mainWin.ActiveLine.GetSelectedTreeNode());
 
-            if (LineManager.EffectiveIndexDepth >= 0 && LineManager.IndexHeaderPara == null)
+            if (LineManager.EffectiveIndexDepth >= 0)
             {
                 LineManager.CreateIndexHeaderPara();
                 LineManager.PopulateIndexHeaderPara();
@@ -112,6 +112,9 @@ namespace ChessForge
                 LineManager.CreateIndexContentPara();
                 HostRtb.Document.Blocks.InsertAfter(LineManager.IndexHeaderPara, LineManager.IndexContentPara);
             }
+
+            // NOTE: on added move we don't need to worry to worry about removing index paragraphs
+            // in case updateLineManger.EffectiveIndexDepth <= 0 as they are not present in the first place. 
 
             LineManager.MaxBranchLevel = updateLineManger.MaxBranchLevel;
             LineManager.PopulateIndexHeaderPara();
