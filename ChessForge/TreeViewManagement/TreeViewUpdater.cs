@@ -84,6 +84,7 @@ namespace ChessForge
                                 _view.RemoveNodeFromDictionaries(node);
                             }
 
+                            // NOTE: this was added to address the bug where moves in a new workbook could not be shown  
                             if (_currentManager.LineSectors[i].HostPara == null)
                             {
                                 CreateParagraphForNewSector(i);
