@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Documents;
 
 namespace ChessForge
@@ -85,7 +82,7 @@ namespace ChessForge
                 }
                 catch
                 {
-                    MessageBox.Show(Properties.Resources.MsgNeedValidUrlOrEmpty, Properties.Resources.Information, MessageBoxButton.OK, MessageBoxImage.Stop);
+                    MessageBox.Show(Properties.Resources.MsgNeedValidUrlOrEmpty, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Stop);
                     exit = false;
                 }
             }

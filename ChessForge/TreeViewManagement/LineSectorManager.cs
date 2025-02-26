@@ -1,5 +1,6 @@
 ﻿using ChessPosition;
 using GameTree;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Documents;
@@ -68,6 +69,7 @@ namespace ChessForge
         public int MaxBranchLevel
         {
             get { return _maxBranchLevel; }
+            set { _maxBranchLevel = value; }
         }
 
         /// <summary>
@@ -115,13 +117,16 @@ namespace ChessForge
         /// <param name="para"></param>
         public void PopulateIndexHeaderPara()
         {
-            IndexHeaderPara.Inlines.Clear();
+            if (IndexHeaderPara != null)
+            {
+                IndexHeaderPara.Inlines.Clear();
 
-            Run run = new Run(Properties.Resources.VariationIndex + "  ");
-            IndexHeaderPara.Inlines.Add(run);
-            IndexHeaderPara.FontWeight = FontWeights.DemiBold;
+                Run run = new Run(Properties.Resources.VariationIndex + "  ");
+                IndexHeaderPara.Inlines.Add(run);
+                IndexHeaderPara.FontWeight = FontWeights.DemiBold;
 
-            _studyView.InsertArrowRuns(IndexHeaderPara);
+                _studyView.InsertArrowRuns(IndexHeaderPara);
+            }
         }
 
         /// <summary>
@@ -129,78 +134,81 @@ namespace ChessForge
         /// </summary>
         public void PopulateIndexContentPara()
         {
-            Paragraph para = IndexContentPara;
-            para.Inlines.Clear();
-
-            foreach (LineSector sector in LineSectors)
+            if (IndexContentPara != null)
             {
-                if (sector.Nodes.Count == 0)
-                {
-                    continue;
-                }
+                Paragraph para = IndexContentPara;
+                para.Inlines.Clear();
 
-                int level = sector.BranchLevel;
-                if (IsEffectiveIndexLevel(level))
+                foreach (LineSector sector in LineSectors)
                 {
-                    if (sector.Nodes[0].LineId == "1")
+                    if (sector.Nodes.Count == 0)
                     {
-                        // Build the stem line
-                        // Note we don't want an indent here 'coz if the stem line is long it will wrap ugly
-                        bool validMove = false;
-                        foreach (TreeNode nd in sector.Nodes)
-                        {
-                            Run rMove = _studyView.BuildIndexNodeAndAddToPara(nd, false, para);
-                            rMove.TextDecorations = TextDecorations.Underline;
-                            rMove.FontWeight = FontWeights.DemiBold;
-                            if (nd.NodeId != 0)
-                            {
-                                validMove = true;
-                            }
-                        }
-
-                        if (validMove)
-                        {
-                            para.Inlines.Add(new Run("\n"));
-                        }
+                        continue;
                     }
-                    else
-                    {
-                        for (int i = 0; i < level; i++)
-                        {
-                            Run r = new Run(_indent);
-                            para.Inlines.Add(r);
-                        }
 
-                        Run rIdTitle = _studyView.BuildSectionIdTitle(sector.Nodes[0].LineId);
-                        para.Inlines.Add(rIdTitle);
-                        if (IsLastEffectiveIndexLine(level) || sector.Nodes[sector.Nodes.Count - 1].Children.Count == 0)
+                    int level = sector.BranchLevel;
+                    if (IsEffectiveIndexLevel(level))
+                    {
+                        if (sector.Nodes[0].LineId == "1")
                         {
-                            _studyView.BuildIndexNodeAndAddToPara(sector.Nodes[0], true, para);
+                            // Build the stem line
+                            // Note we don't want an indent here 'coz if the stem line is long it will wrap ugly
+                            bool validMove = false;
+                            foreach (TreeNode nd in sector.Nodes)
+                            {
+                                Run rMove = _studyView.BuildIndexNodeAndAddToPara(nd, false, para);
+                                rMove.TextDecorations = TextDecorations.Underline;
+                                rMove.FontWeight = FontWeights.DemiBold;
+                                if (nd.NodeId != 0)
+                                {
+                                    validMove = true;
+                                }
+                            }
+
+                            if (validMove)
+                            {
+                                para.Inlines.Add(new Run("\n"));
+                            }
                         }
                         else
                         {
-                            bool firstMove = true;
-
-                            int nodeCount = sector.Nodes.Count;
-                            int firstSkip = nodeCount;
-                            int lastSkip = -1;
-
-                            if (nodeCount >= 5)
+                            for (int i = 0; i < level; i++)
                             {
-                                firstSkip = 2;
-                                lastSkip = nodeCount - 3;
+                                Run r = new Run(_indent);
+                                para.Inlines.Add(r);
                             }
 
-                            for (int i = 0; i < sector.Nodes.Count; i++)
+                            Run rIdTitle = _studyView.BuildSectionIdTitle(sector.Nodes[0].LineId);
+                            para.Inlines.Add(rIdTitle);
+                            if (IsLastEffectiveIndexLine(level) || sector.Nodes[sector.Nodes.Count - 1].Children.Count == 0)
                             {
-                                TreeNode nd = sector.Nodes[i];
-                                _studyView.BuildIndexNodeAndAddToPara(nd, firstMove, para);
-                                firstMove = false;
+                                _studyView.BuildIndexNodeAndAddToPara(sector.Nodes[0], true, para);
                             }
+                            else
+                            {
+                                bool firstMove = true;
+
+                                int nodeCount = sector.Nodes.Count;
+                                int firstSkip = nodeCount;
+                                int lastSkip = -1;
+
+                                if (nodeCount >= 5)
+                                {
+                                    firstSkip = 2;
+                                    lastSkip = nodeCount - 3;
+                                }
+
+                                for (int i = 0; i < sector.Nodes.Count; i++)
+                                {
+                                    TreeNode nd = sector.Nodes[i];
+                                    _studyView.BuildIndexNodeAndAddToPara(nd, firstMove, para);
+                                    firstMove = false;
+                                }
+                            }
+                            rIdTitle.FontWeight = FontWeights.DemiBold;
+
+                            para.Inlines.Add(new Run("\n"));
                         }
-                        rIdTitle.FontWeight = FontWeights.DemiBold;
-
-                        para.Inlines.Add(new Run("\n"));
                     }
                 }
             }
@@ -297,6 +305,58 @@ namespace ChessForge
             };
 
             return para;
+        }
+
+        /// <summary>
+        /// Updates the paragraph attributes for a Study View paragraph.
+        /// It will be invoked to update the attributes of a paragraph 
+        /// in the currently active LineSectorManager with those of the
+        /// "updated" one.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <param name="attrs"></param>
+        /// <param name="displayLevel"></param>
+        public static void UpdateStudyParagraphAttrs(Paragraph para, SectorParaAttrs attrs, int displayLevel)
+        {
+            if (para == null)
+            {
+                return;
+            }
+
+            try
+            {
+                Thickness margin = new Thickness(20 * displayLevel, attrs.TopMarginExtra, 0, 5 + attrs.BottomMarginExtra);
+                FontWeight fontWeight = displayLevel == 0 ? FontWeights.DemiBold : FontWeights.Normal;
+
+                if (para.Margin != margin)
+                {
+                    para.Margin = margin;
+                }
+                if (para.FontSize != attrs.FontSize)
+                {
+                    para.FontSize = attrs.FontSize;
+                }
+                if (para.FontWeight != fontWeight)
+                {
+                    para.FontWeight = fontWeight;
+                }
+                if (para.TextAlignment != attrs.TextAlignment)
+                {
+                    para.TextAlignment = attrs.TextAlignment;
+                }
+                if (para.Foreground != attrs.Foreground)
+                {
+                    para.Foreground = attrs.Foreground;
+                }
+                if (para.Background != attrs.Background)
+                {
+                    para.Background = attrs.Background;
+                }
+            }
+            catch(Exception ex)
+            {
+                AppLog.Message("UpdateStudyParagraphAttrs()", ex);
+            }
         }
 
         /// <summary>

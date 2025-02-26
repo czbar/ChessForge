@@ -537,7 +537,7 @@ namespace ChessForge
 
             AppState.ActiveVariationTree.OpsManager.Undo(out EditOperation.EditType opType,
                                                          out string selectedLineId,
-                                                         out int selectedNodeId, 
+                                                         out int selectedNodeId,
                                                          out HashSet<int> nodesToUpdate);
 
             try
@@ -1216,7 +1216,11 @@ namespace ChessForge
             {
                 WorkbookManager.LastClickedChapterIndex = -1;
             }
-            WorkbookManager.EnableChaptersContextMenuItems(UiMncChapters, WorkbookManager.LastClickedChapterIndex >= 0, GameData.ContentType.GENERIC);
+
+            if (e.ChangedButton == MouseButton.Right)
+            {
+                WorkbookManager.EnableChaptersContextMenuItems(UiMncChapters, WorkbookManager.LastClickedChapterIndex >= 0, GameData.ContentType.GENERIC);
+            }
         }
 
         /// <summary>
@@ -1404,67 +1408,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnImportChapter_Click(object sender, RoutedEventArgs e)
         {
-            string fileName = SelectPgnFile();
-            if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
-            {
-                ObservableCollection<GameData> games = new ObservableCollection<GameData>();
-
-                int gamesCount = WorkbookManager.ReadPgnFile(fileName, ref games, GameData.ContentType.GENERIC, GameData.ContentType.NONE);
-
-                // if this is a ChessForge Workbook, list the chapters and allow the user to copy them over
-                if (WorkbookManager.IsChessForgeWorkbook(ref games))
-                {
-                    Workbook workbook = new Workbook();
-                    WorkbookManager.CreateWorkbookFromGameList(ref workbook, ref games);
-                    SelectChaptersDialog dlg = new SelectChaptersDialog(workbook);
-                    GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
-
-                    dlg.ShowDialog();
-                    if (dlg.ExitOK)
-                    {
-                        List<ArticleListItem> undoArticleList = new List<ArticleListItem>();
-
-                        int importedChapters = 0;
-
-                        foreach (SelectedChapter ch in dlg.ChapterList)
-                        {
-                            if (ch.IsSelected)
-                            {
-                                WorkbookManager.SessionWorkbook.Chapters.Add(ch.Chapter);
-                                undoArticleList.Add(new ArticleListItem(ch.Chapter));
-
-                                importedChapters++;
-
-                                if (_chaptersView != null)
-                                {
-                                    _chaptersView.BuildFlowDocumentForChaptersView(false);
-                                    PulseManager.ChapterIndexToBringIntoView = WorkbookManager.SessionWorkbook.GetChapterCount() - 1;
-                                }
-                                AppState.IsDirty = true;
-
-                                if (undoArticleList.Count > 0)
-                                {
-                                    WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.IMPORT_CHAPTERS, (object)undoArticleList);
-                                    WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
-                                }
-                            }
-                        }
-
-                        if (importedChapters > 0)
-                        {
-                            AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(
-                                Properties.Resources.FlMsgChaptersImported + " (" + importedChapters.ToString() + ")", CommentBox.HintType.INFO);
-                        }
-
-                    }
-                }
-                else
-                {
-                    CreateChapterFromNewGames(gamesCount, ref games, fileName);
-                    AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(
-                        Properties.Resources.FlMsgChapterImported, CommentBox.HintType.INFO);
-                }
-            }
+            ImportFromPgn.ImportChapter();
         }
 
         /// <summary>
@@ -1485,7 +1429,7 @@ namespace ChessForge
         /// <param name="gamesCount"></param>
         /// <param name="games"></param>
         /// <param name="fileName"></param>
-        private void CreateChapterFromNewGames(int gamesCount, ref ObservableCollection<GameData> games, string fileName)
+        public void CreateChapterFromNewGames(int gamesCount, ref ObservableCollection<GameData> games, string fileName)
         {
             try
             {
@@ -1519,7 +1463,7 @@ namespace ChessForge
                 }
                 else
                 {
-                    ShowNoGamesError(GameData.ContentType.GENERIC, fileName);
+                    ImportFromPgn.ShowNoGamesError(GameData.ContentType.GENERIC, fileName);
 
                     // delete the above created chapter and activate the previously active one
                     WorkbookManager.SessionWorkbook.ActiveChapter = previousActiveChapter;
@@ -1878,206 +1822,6 @@ namespace ChessForge
                 ChapterUtils.ProcessCopyOrMoveArticles(null, articleList, ArticlesAction.MOVE);
             }
         }
-
-        /// <summary>
-        /// Requests import of Model Games from a PGN file
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnImportModelGames_Click(object sender, RoutedEventArgs e)
-        {
-            ImportArticlesFromPgn(GameData.ContentType.GENERIC, GameData.ContentType.MODEL_GAME, out int gameCount, out _);
-            if (gameCount > 0)
-            {
-                AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(
-                    Properties.Resources.FlMsgGamesImported + " (" + gameCount.ToString() + ")", CommentBox.HintType.INFO);
-            }
-        }
-
-        /// <summary>
-        /// Requests import of Model Games from a PGN file
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnImportGame_Click(object sender, RoutedEventArgs e)
-        {
-            UiMnImportModelGames_Click(sender, e);
-        }
-
-        /// <summary>
-        /// Requests import of Exercises from a PGN file
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnImportExercises_Click(object sender, RoutedEventArgs e)
-        {
-            ImportArticlesFromPgn(GameData.ContentType.EXERCISE, GameData.ContentType.EXERCISE, out _, out int exerciseCount);
-
-            if (exerciseCount > 0)
-            {
-                AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(
-                    Properties.Resources.FlMsgExercisesImported + " (" + exerciseCount.ToString() + ")", CommentBox.HintType.INFO);
-            }
-        }
-
-        /// <summary>
-        /// Imports Model Games or Exercises from a PGN file.
-        /// </summary>
-        /// <param name="contentType"></param>
-        private int ImportArticlesFromPgn(GameData.ContentType contentType, GameData.ContentType targetcontentType, out int gameCount, out int exerciseCount)
-        {
-            gameCount = 0;
-            exerciseCount = 0;
-
-            int skippedDueToType = 0;
-            int firstImportedGameIndex = -1;
-            if ((contentType == GameData.ContentType.GENERIC
-                || contentType == GameData.ContentType.MODEL_GAME
-                || contentType == GameData.ContentType.EXERCISE)
-                && WorkbookManager.SessionWorkbook.ActiveChapter != null)
-            {
-                string fileName = SelectPgnFile();
-                if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
-                {
-                    Chapter activeChapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                    ObservableCollection<GameData> games = new ObservableCollection<GameData>();
-                    gameCount = WorkbookManager.ReadPgnFile(fileName, ref games, contentType, targetcontentType);
-
-                    // clear the default selections
-                    foreach (GameData gd in games)
-                    {
-                        gd.IsSelected = false;
-                    }
-
-                    int errorCount = 0;
-                    StringBuilder sbErrors = new StringBuilder();
-
-                    ArticleListItem undoItem;
-                    List<ArticleListItem> undoArticleList = new List<ArticleListItem>();
-
-                    if (gameCount > 0)
-                    {
-                        if (ShowSelectGamesDialog(contentType, ref games))
-                        {
-                            int chapterIndex = ChapterUtils.InvokeSelectSingleChapterDialog(activeChapter.Index, out bool newChapter);
-
-                            bool proceed = true;
-
-                            if (chapterIndex >= 0)
-                            {
-                                Chapter targetChapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(chapterIndex);
-                                if (newChapter)
-                                {
-                                    proceed = ChapterUtils.NameNeWChapter(targetChapter, activeChapter);
-                                }
-                                else
-                                {
-                                    AppState.Workbook.ActiveChapter = targetChapter;
-                                }
-
-                                if (proceed)
-                                {
-                                    Mouse.SetCursor(Cursors.Wait);
-                                    try
-                                    {
-
-                                        for (int i = 0; i < games.Count; i++)
-                                        {
-                                            if (games[i].IsSelected)
-                                            {
-                                                Article article = null;
-                                                try
-                                                {
-                                                    int index = PgnArticleUtils.AddArticle(targetChapter, games[i], contentType, out string error, out article, targetcontentType);
-                                                    if (index < 0)
-                                                    {
-                                                        if (string.IsNullOrEmpty(error))
-                                                        {
-                                                            skippedDueToType++;
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        undoItem = new ArticleListItem(targetChapter, targetChapter.Index, targetChapter.GetArticleAtIndex(article.ContentType, index), index);
-                                                        if (undoItem.Article != null)
-                                                        {
-                                                            undoArticleList.Add(undoItem);
-                                                        }
-
-                                                        if (firstImportedGameIndex < 0)
-                                                        {
-                                                            firstImportedGameIndex = index;
-                                                        }
-                                                    }
-
-                                                    AppState.IsDirty = true;
-                                                    if (!string.IsNullOrEmpty(error))
-                                                    {
-                                                        errorCount++;
-                                                        sbErrors.Append(GuiUtilities.BuildGameProcessingErrorText(games[i], i + 1, error));
-                                                    }
-                                                    if (article?.ContentType == GameData.ContentType.MODEL_GAME)
-                                                    {
-                                                        gameCount++;
-                                                    }
-                                                    else if (article?.ContentType == GameData.ContentType.EXERCISE)
-                                                    {
-                                                        exerciseCount++;
-                                                    }
-                                                }
-                                                catch (Exception ex)
-                                                {
-                                                    errorCount++;
-                                                    sbErrors.Append(GuiUtilities.BuildGameProcessingErrorText(games[i], i + 1, ex.Message));
-                                                }
-                                            }
-                                        }
-                                        RefreshChaptersViewAfterImport(targetcontentType, targetChapter, firstImportedGameIndex);
-                                    }
-                                    catch { }
-
-                                    if (undoArticleList.Count > 0)
-                                    {
-                                        WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.INSERT_ARTICLES, (object)undoArticleList);
-                                        WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
-                                    }
-
-                                    if (AppState.ActiveTab == TabViewType.CHAPTERS)
-                                    {
-                                        ChaptersView.BringActiveChapterIntoView();
-                                    }
-                                    Mouse.SetCursor(Cursors.Arrow);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            gameCount = 0;
-                            exerciseCount = 0;
-                        }
-                    }
-                    else
-                    {
-                        ShowNoGamesError(contentType, fileName);
-                    }
-
-                    if (errorCount > 0 || skippedDueToType > 0)
-                    {
-                        if (skippedDueToType > 0)
-                        {
-                            string invalidEntities = Properties.Resources.WrongTypeEntitiesNotImported + ", ";
-                            invalidEntities += (Properties.Resources.Count + " " + skippedDueToType.ToString() + ".");
-                            sbErrors.AppendLine(invalidEntities);
-                        }
-                        TextBoxDialog tbDlg = new TextBoxDialog(Properties.Resources.PgnErrors, sbErrors.ToString());
-                        GuiUtilities.PositionDialog(tbDlg, this, 100);
-                        tbDlg.ShowDialog();
-                    }
-                }
-            }
-            return gameCount + exerciseCount;
-        }
-
 
         //*****************************************************************************
         //
@@ -2658,31 +2402,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Sets the list in the Chapters View in the correct Expand/Collapse state.
-        /// Rebuilds the Paragraph for the chapter.
-        /// </summary>
-        /// <param name="contentType"></param>
-        /// <param name="chapter"></param>
-        public void RefreshChaptersViewAfterImport(GameData.ContentType contentType, Chapter chapter, int gameUinitIndex)
-        {
-            chapter.IsViewExpanded = true;
-            switch (contentType)
-            {
-                case GameData.ContentType.MODEL_GAME:
-                    chapter.IsModelGamesListExpanded = true;
-                    chapter.ActiveModelGameIndex = gameUinitIndex;
-                    break;
-                case GameData.ContentType.EXERCISE:
-                    chapter.IsExercisesListExpanded = true;
-                    chapter.ActiveExerciseIndex = gameUinitIndex;
-                    break;
-            }
-
-            _chaptersView.BuildFlowDocumentForChaptersView(false);
-            _chaptersView.BringArticleIntoView(_chaptersView.HostRtb.Document, chapter.Index, contentType, gameUinitIndex);
-        }
-
-        /// <summary>
         /// Show the Select Games dialog.
         /// </summary>
         /// <param name="contentType"></param>
@@ -2712,73 +2431,6 @@ namespace ChessForge
             }
 
             return res;
-        }
-
-        /// <summary>
-        /// Show the error when no games were found in the file.
-        /// </summary>
-        /// <param name="contentType"></param>
-        /// <param name="fileName"></param>
-        private void ShowNoGamesError(GameData.ContentType contentType, string fileName)
-        {
-            string sError;
-            if (contentType == GameData.ContentType.EXERCISE)
-            {
-                sError = Properties.Resources.NoExerciseInFile + " ";
-            }
-            else
-            {
-                sError = Properties.Resources.NoGamesInFile + " ";
-            }
-            MessageBox.Show(sError + fileName, Properties.Resources.ImportPgn, MessageBoxButton.OK, MessageBoxImage.Information);
-        }
-
-        /// <summary>
-        /// Shows the OpenFileDialog to let the user
-        /// select a PGN file.
-        /// </summary>
-        /// <returns></returns>
-        private string SelectPgnFile()
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog
-            {
-                Multiselect = false,
-                Filter = Properties.Resources.PgnFile + " (*.pgn)|*.pgn;*.pgn|" + Properties.Resources.AllFiles + " (*.*)|*.*"
-            };
-
-            string initDir;
-            if (!string.IsNullOrEmpty(Configuration.LastImportDirectory))
-            {
-                initDir = Configuration.LastImportDirectory;
-            }
-            else
-            {
-                initDir = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            }
-
-            openFileDialog.InitialDirectory = initDir;
-
-            bool? result;
-
-            try
-            {
-                result = openFileDialog.ShowDialog();
-            }
-            catch
-            {
-                openFileDialog.InitialDirectory = "";
-                result = openFileDialog.ShowDialog();
-            };
-
-            if (result == true)
-            {
-                Configuration.LastImportDirectory = Path.GetDirectoryName(openFileDialog.FileName);
-                return openFileDialog.FileName;
-            }
-            else
-            {
-                return null;
-            }
         }
 
 
@@ -3173,90 +2825,6 @@ namespace ChessForge
         //  TREE OPERATIONS
         // 
         //**********************
-
-        /// <summary>
-        /// Handles Game import from the Games context menu
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnMainImportFromPgn_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Chapter startChapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                int origGameCount = startChapter.GetModelGameCount();
-                int origExerciseCount = startChapter.GetExerciseCount();
-
-                int importedArticles = ImportArticlesFromPgn(GameData.ContentType.GENERIC, GameData.ContentType.ANY, out _, out _);
-                if (importedArticles > 0)
-                {
-                    AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(
-                        Properties.Resources.FlMsgArticlesImported + " (" + importedArticles.ToString() + ")", CommentBox.HintType.INFO);
-
-                    Chapter currChapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-
-                    // if we did not create a new chapter, adjust index to the first
-                    // imported game.
-                    if (currChapter == startChapter)
-                    {
-                        if (startChapter.GetModelGameCount() > origGameCount)
-                        {
-                            startChapter.ActiveModelGameIndex = origGameCount;
-                        }
-                        if (startChapter.GetExerciseCount() > origExerciseCount)
-                        {
-                            startChapter.ActiveExerciseIndex = origExerciseCount;
-                        }
-
-                        if (AppState.ActiveTab == TabViewType.MODEL_GAME)
-                        {
-                            SelectModelGame(startChapter.ActiveModelGameIndex, false);
-                        }
-                        else if (AppState.ActiveTab == TabViewType.EXERCISE)
-                        {
-                            SelectExercise(startChapter.ActiveExerciseIndex, false);
-                        }
-                    }
-                }
-            }
-            catch
-            {
-            }
-        }
-
-        /// <summary>
-        /// Handles Exercise import from the Exercises context menu
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiMnExerc_ImportExercises_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-                int count = chapter.GetExerciseCount();
-
-                int importedExercises = ImportArticlesFromPgn(GameData.ContentType.EXERCISE, GameData.ContentType.EXERCISE, out _, out _);
-                if (importedExercises > 0)
-                {
-                    AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(
-                        Properties.Resources.FlMsgExercisesImported + " (" + importedExercises.ToString() + ")", CommentBox.HintType.INFO);
-                    if (chapter.GetExerciseCount() > count)
-                    {
-                        chapter.ActiveExerciseIndex = count;
-                    }
-                    else
-                    {
-                        chapter.ActiveExerciseIndex = count - 1;
-                    }
-                    SelectExercise(chapter.ActiveExerciseIndex, false);
-                }
-            }
-            catch
-            {
-            }
-        }
-
 
         /// <summary>
         /// Copies FEN of the selected move to Clipboard
@@ -4053,13 +3621,16 @@ namespace ChessForge
             {
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
 
-                VariationTree game = WorkbookManager.SessionWorkbook.ActiveChapter.ModelGames[chapter.ActiveModelGameIndex].Tree;
-                var dlg = new GameHeaderDialog(game, Properties.Resources.GameHeader);
+                Article game = chapter.ModelGames[chapter.ActiveModelGameIndex];
+                VariationTree tree = game.Tree;
+                var dlg = new GameHeaderDialog(tree, Properties.Resources.GameHeader);
                 GuiUtilities.PositionDialog(dlg, this, 100);
                 dlg.ShowDialog();
                 if (dlg.ExitOK)
                 {
                     AppState.IsDirty = true;
+                    ReferenceUtils.UpdateReferenceText(game.Guid);
+
                     _chaptersView.BuildFlowDocumentForChaptersView(false);
                     if (WorkbookManager.ActiveTab == TabViewType.MODEL_GAME)
                     {
@@ -4086,13 +3657,16 @@ namespace ChessForge
             {
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
 
-                VariationTree game = WorkbookManager.SessionWorkbook.ActiveChapter.Exercises[chapter.ActiveExerciseIndex].Tree;
-                var dlg = new GameHeaderDialog(game, Properties.Resources.ExerciseHeader);
+                Article exercise = chapter.ModelGames[chapter.ActiveExerciseIndex];
+                VariationTree tree = exercise.Tree;
+                var dlg = new GameHeaderDialog(tree, Properties.Resources.ExerciseHeader);
                 GuiUtilities.PositionDialog(dlg, this, 100);
                 dlg.ShowDialog();
                 if (dlg.ExitOK)
                 {
                     AppState.IsDirty = true;
+                    ReferenceUtils.UpdateReferenceText(exercise.Guid);
+
                     _chaptersView.BuildFlowDocumentForChaptersView(false);
                     if (WorkbookManager.ActiveTab == TabViewType.EXERCISE)
                     {

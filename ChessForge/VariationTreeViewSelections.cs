@@ -336,7 +336,7 @@ namespace ChessForge
 
                 TreeNode currSelected = GetSelectedNode();
                 TreeNode shiftClicked = null;
-                if (r.Name != null && r.Name.StartsWith(_run_))
+                if (r.Name != null && r.Name.StartsWith(RichTextBoxUtilities.RunMovePrefix))
                 {
                     int nodeId = TextUtils.GetIdFromPrefixedString(r.Name);
                     shiftClicked = ShownVariationTree.GetNodeFromNodeId(nodeId);
@@ -501,7 +501,7 @@ namespace ChessForge
                         _selectedRun = runToSelect;
                         BuildForkTable(HostRtb.Document, nodeId);
 
-                        if (runToSelect.Name != null && runToSelect.Name.StartsWith(_run_))
+                        if (runToSelect.Name != null && runToSelect.Name.StartsWith(RichTextBoxUtilities.RunMovePrefix))
                         {
                             // This should never be needed but protect against unexpected timoing issue with sync/async processing
                             if (!ShownVariationTree.HasLinesCalculated())

@@ -47,6 +47,11 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// The paragraph containg the page header which could a game/exercise header or a chapter title.
+        /// </summary>
+        public Paragraph PageHeaderParagraph = null;
+
+        /// <summary>
         /// Whether to show blunder assessments.
         /// </summary>
         public bool HandleBlunders
@@ -79,9 +84,6 @@ namespace ChessForge
                 }
             }
         }
-
-        // Page Header paragraph
-        protected Paragraph _pageHeaderParagraph = null;
 
         // flags freshness of the view
         private bool _isFresh = false;
@@ -195,10 +197,6 @@ namespace ChessForge
             ["default"] = new RichTextPara(140, 5, 11, FontWeights.Normal, TextAlignment.Left),
             ["preamble"] = new RichTextPara(40, 10, 16, FontWeights.Normal, TextAlignment.Left),
         };
-
-        // prefixes for run names
-        private readonly string _run_fork_move_ = "_run_fork_move_";
-        private readonly string _run_ = "run_";
 
         /// <summary>
         /// Most recent clicked node.
@@ -349,10 +347,10 @@ namespace ChessForge
                 // NOTE: first, it is redundant; second, it will print the title of the active chapter
                 if (treeForPrint == null || contentType != GameData.ContentType.STUDY_TREE)
                 {
-                    _pageHeaderParagraph = BuildPageHeader(_mainVariationTree, contentType);
-                    if (_pageHeaderParagraph != null)
+                    PageHeaderParagraph = BuildPageHeader(_mainVariationTree, contentType);
+                    if (PageHeaderParagraph != null)
                     {
-                        doc.Blocks.Add(_pageHeaderParagraph);
+                        doc.Blocks.Add(PageHeaderParagraph);
                     }
                 }
 
@@ -518,28 +516,28 @@ namespace ChessForge
             Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
             if (chapter != null)
             {
-                if (_pageHeaderParagraph == null)
+                if (PageHeaderParagraph == null)
                 {
-                    _pageHeaderParagraph = CreateParagraph("0", true);
-                    _pageHeaderParagraph.MouseLeftButtonDown += EventPageHeaderClicked;
+                    PageHeaderParagraph = CreateParagraph("0", true);
+                    PageHeaderParagraph.MouseLeftButtonDown += EventPageHeaderClicked;
                 }
 
-                _pageHeaderParagraph.Inlines.Clear();
+                PageHeaderParagraph.Inlines.Clear();
 
                 Run rTitle = new Run(chapter.GetTitle());
                 rTitle.TextDecorations = TextDecorations.Underline;
-                _pageHeaderParagraph.Inlines.Add(rTitle);
+                PageHeaderParagraph.Inlines.Add(rTitle);
 
                 if (!string.IsNullOrWhiteSpace(chapter.GetAuthor()))
                 {
                     Run rAuthor = new Run("\n    " + Properties.Resources.Author + ": " + chapter.GetAuthor());
                     rAuthor.FontWeight = FontWeights.Normal;
                     rAuthor.FontSize = GuiUtilities.AdjustFontSize(Constants.BASE_FIXED_FONT_SIZE) - 2;
-                    _pageHeaderParagraph.Inlines.Add(rAuthor);
+                    PageHeaderParagraph.Inlines.Add(rAuthor);
                 }
             }
 
-            return _pageHeaderParagraph;
+            return PageHeaderParagraph;
         }
 
 
@@ -1179,14 +1177,14 @@ namespace ChessForge
                         if (i < moveCount)
                         {
                             Run rCell = new Run(MoveUtils.BuildSingleMoveText(node.Children[i], true, true, ShownVariationTree.MoveNumberOffset));
-                            rCell.Name = _run_fork_move_ + node.Children[i].NodeId.ToString();
+                            rCell.Name = RichTextBoxUtilities.RunForkMovePrefix + node.Children[i].NodeId.ToString();
                             rCell.MouseDown += EventForkChildClicked;
 
                             cell = new TableCell(new Paragraph(rCell));
                             // click on the Cell to have the same effect as click on the Run
                             cell.MouseDown += EventForkChildClicked;
                             cell.Cursor = Cursors.Hand;
-                            cell.Blocks.First().Name = _run_fork_move_ + node.Children[i].NodeId.ToString();
+                            cell.Blocks.First().Name = RichTextBoxUtilities.RunForkMovePrefix + node.Children[i].NodeId.ToString();
                         }
                         else
                         {
@@ -1512,7 +1510,7 @@ namespace ChessForge
                 }
 
                 Run runMove = new Run(MoveUtils.BuildSingleMoveText(nd, hasDiagram, false, ShownVariationTree.MoveNumberOffset) + " ");
-                runMove.Name = _run_ + nd.NodeId.ToString();
+                runMove.Name = RichTextBoxUtilities.RunMovePrefix + nd.NodeId.ToString();
                 runMove.PreviewMouseDown += EventRunClicked;
 
                 runMove.FontStyle = rParentMoveRun.FontStyle;
@@ -1778,7 +1776,7 @@ namespace ChessForge
             try
             {
                 r = new Run(text.ToString());
-                r.Name = _run_ + nd.NodeId.ToString();
+                r.Name = RichTextBoxUtilities.RunMovePrefix + nd.NodeId.ToString();
                 r.PreviewMouseDown += EventRunClicked;
 
                 if (_isIntraFork)

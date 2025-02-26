@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
 using System.IO;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace WebAccess
 {
@@ -82,6 +79,45 @@ namespace WebAccess
                 eventArgs.Message = ex.Message;
                 GameReceived?.Invoke(null, eventArgs);
                 return "";
+            }
+        }
+
+        /// <summary>
+        /// Remove game from cache.
+        /// This is will be called when the downloaded was not successfully parsed
+        /// (which occasionally happens when corrupted data comes back from lichess).
+        /// We don't want such game in the cache so that next time, the download is attempted again.
+        /// </summary>
+        /// <param name="gameId"></param>
+        public static void RemoveFromCache(string gameId)
+        {
+            if (_dictCachedGames.ContainsKey(gameId))
+            {
+                _dictCachedGames.Remove(gameId);
+
+                List<string> dequeued = new List<string>();
+                try
+                {
+                    while (_queueGameIds.Count > 0)
+                    {
+                        string id = _queueGameIds.Dequeue();
+                        if (id == gameId || _queueGameIds.Count == 0)
+                        {
+                            foreach (string d in dequeued)
+                            {
+                                _queueGameIds.Enqueue(d);
+                            }
+                            break;
+                        }
+                        else
+                        {
+                            dequeued.Insert(0, id);
+                        }
+                    }
+                }
+                catch
+                {
+                }
             }
         }
 

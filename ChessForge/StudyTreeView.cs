@@ -65,7 +65,7 @@ namespace ChessForge
             // it could be that a new move was made and it is "hidden" under a collapsed root
             UncollapseMove(_mainWin.ActiveLine.GetSelectedTreeNode());
 
-            if (LineManager.EffectiveIndexDepth >= 0)
+            if (LineManager.EffectiveIndexDepth >= 0 && LineManager.IndexHeaderPara == null)
             {
                 LineManager.CreateIndexHeaderPara();
                 LineManager.PopulateIndexHeaderPara();
@@ -75,9 +75,9 @@ namespace ChessForge
                 LineManager.PopulateIndexContentPara();
                 doc.Blocks.Add(LineManager.IndexContentPara);
             }
-            else if (_pageHeaderParagraph != null)
+            else if (PageHeaderParagraph != null)
             {
-                _pageHeaderParagraph.ToolTip = Properties.Resources.ShowIndex;
+                PageHeaderParagraph.ToolTip = Properties.Resources.ShowIndex;
             }
 
             CreateParagraphs(doc, para);
@@ -104,19 +104,22 @@ namespace ChessForge
             LineSectorManager updateLineManger = new LineSectorManager(null);
             updateLineManger.BuildLineSectors(ShownVariationTree.Nodes[0]);
 
-            // TODO: this is a temporary solution, we need to identify
-            // and update only the changed sectors/runs.
-            //
-            //updateLineManger.CreateIndexHeaderPara();
-            //updateLineManger.PopulateIndexHeaderPara();
-            LineManager.PopulateIndexHeaderPara();
+            if (updateLineManger.EffectiveIndexDepth >= 0 && LineManager.IndexHeaderPara == null)
+            {
+                LineManager.CreateIndexHeaderPara();
+                HostRtb.Document.Blocks.InsertAfter(PageHeaderParagraph, LineManager.IndexHeaderPara);
 
-            //updateLineManger.CreateIndexContentPara();
-            //updateLineManger.PopulateIndexContentPara();
-            LineManager.PopulateIndexContentPara();
+                LineManager.CreateIndexContentPara();
+                HostRtb.Document.Blocks.InsertAfter(LineManager.IndexHeaderPara, LineManager.IndexContentPara);
+            }
+
+            LineManager.MaxBranchLevel = updateLineManger.MaxBranchLevel;
+            LineManager.PopulateIndexHeaderPara();
 
             TreeViewUpdater updater = new TreeViewUpdater(LineManager, updateLineManger, this);
             updater.MoveAdded();
+
+            LineManager.PopulateIndexContentPara();
         }
 
         /// <summary>
@@ -447,71 +450,75 @@ namespace ChessForge
 
             bool collapsed = false;
             Paragraph para = sector.HostPara;
-            para.Inlines.Clear();
 
-            if (LineManager.IsEffectiveIndexLevel(sector.BranchLevel))
+            if (para != null)
             {
-                InsertIndexPrefixRun(sector, para);
-            }
+                para.Inlines.Clear();
 
-            for (int i = 0; i < sector.Nodes.Count; i++)
-            {
-                bool diagram = false;
-
-                if (sector.IsCollapsed)
+                if (LineManager.IsEffectiveIndexLevel(sector.BranchLevel))
                 {
-                    // mark as collapsed and let this iteration complete to insert the first Run
-                    collapsed = true;
+                    InsertIndexPrefixRun(sector, para);
                 }
 
-                TreeNode nd = sector.Nodes[i];
-                if (nd.NodeId == LineSector.OPEN_BRACKET)
+                for (int i = 0; i < sector.Nodes.Count; i++)
                 {
-                    para.Inlines.Add(new Run("( "));
-                    parenthesis = true;
-                }
-                else if (nd.NodeId == LineSector.CLOSE_BRACKET)
-                {
-                    para.Inlines.Add(new Run(") "));
-                    parenthesis = true;
-                }
-                else
-                {
-                    if (parenthesis)
-                    {
-                        includeNumber = true;
-                    }
-                    Run r = BuildNodeTextAndAddToPara(nd, includeNumber, para, out diagram, sector.DisplayLevel, !collapsed);
-                    if (r.FontWeight == FontWeights.Bold)
-                    {
-                        r.FontWeight = FontWeights.DemiBold;
-                    }
-                    if (para.FontWeight == FontWeights.Normal)
-                    {
-                        r.FontWeight = FontWeights.Normal;
-                    }
-                    r.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
-                    parenthesis = false;
+                    bool diagram = false;
 
-                    if (i == 0 && sector.ParaAttrs.FirstNodeColor != null && !LineManager.IsEffectiveIndexLevel(sector.BranchLevel))
+                    if (sector.IsCollapsed)
                     {
-                        r.Foreground = sector.ParaAttrs.FirstNodeColor;
+                        // mark as collapsed and let this iteration complete to insert the first Run
+                        collapsed = true;
                     }
-                    if (sector.Nodes.Count > 1 && i == sector.Nodes.Count - 1 && sector.BranchLevel >= LineManager.EffectiveIndexDepth)
+
+                    TreeNode nd = sector.Nodes[i];
+                    if (nd.NodeId == LineSector.OPEN_BRACKET)
                     {
-                        if (sector.ParaAttrs.LastNodeColor != null)
+                        para.Inlines.Add(new Run("( "));
+                        parenthesis = true;
+                    }
+                    else if (nd.NodeId == LineSector.CLOSE_BRACKET)
+                    {
+                        para.Inlines.Add(new Run(") "));
+                        parenthesis = true;
+                    }
+                    else
+                    {
+                        if (parenthesis)
                         {
-                            r.Foreground = sector.ParaAttrs.LastNodeColor;
+                            includeNumber = true;
+                        }
+                        Run r = BuildNodeTextAndAddToPara(nd, includeNumber, para, out diagram, sector.DisplayLevel, !collapsed);
+                        if (r.FontWeight == FontWeights.Bold)
+                        {
+                            r.FontWeight = FontWeights.DemiBold;
+                        }
+                        if (para.FontWeight == FontWeights.Normal)
+                        {
+                            r.FontWeight = FontWeights.Normal;
+                        }
+                        r.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
+                        parenthesis = false;
+
+                        if (i == 0 && sector.ParaAttrs.FirstNodeColor != null && !LineManager.IsEffectiveIndexLevel(sector.BranchLevel))
+                        {
+                            r.Foreground = sector.ParaAttrs.FirstNodeColor;
+                        }
+                        if (sector.Nodes.Count > 1 && i == sector.Nodes.Count - 1 && sector.BranchLevel >= LineManager.EffectiveIndexDepth)
+                        {
+                            if (sector.ParaAttrs.LastNodeColor != null)
+                            {
+                                r.Foreground = sector.ParaAttrs.LastNodeColor;
+                            }
                         }
                     }
-                }
-                includeNumber = diagram;
+                    includeNumber = diagram;
 
-                if (collapsed)
-                {
-                    // insert the elipsis Run and exit
-                    InsertCollapseElipsisRun(para, nd, sector);
-                    break;
+                    if (collapsed)
+                    {
+                        // insert the elipsis Run and exit
+                        InsertCollapseElipsisRun(para, nd, sector);
+                        break;
+                    }
                 }
             }
         }

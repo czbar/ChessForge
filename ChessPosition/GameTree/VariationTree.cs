@@ -426,7 +426,7 @@ namespace GameTree
         }
 
         /// <summary>
-        /// References to bookmarked psoitions.
+        /// Bookmarked positions.
         /// </summary>
         public List<Bookmark> Bookmarks = new List<Bookmark>();
 

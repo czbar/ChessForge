@@ -222,7 +222,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Finds the Run follwoing the passed Run
+        /// Finds the Run following the passed Run
         /// in its parent paragraph.
         /// </summary>
         /// <param name="currRun"></param>
@@ -250,7 +250,7 @@ namespace ChessForge
                                 string[] tokens = r.Name.Split('_');
 
                                 // has to be exactly one '_' so we don't get 'run_coment_'!
-                                if (tokens.Length == 2 && (tokens[0] + "_") == _run_)
+                                if (tokens.Length == 2 && (tokens[0] + "_") == RichTextBoxUtilities.RunMovePrefix)
                                 {
                                     nextRun = (Run)inline;
                                     break;

@@ -198,6 +198,8 @@
     <Compile Include="DownloadWebGamesDialog.xaml.cs">
       <DependentUpon>DownloadWebGamesDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ImportFromPgn.cs" />
+    <Compile Include="ImportFromPgnMenuEvents.cs" />
     <Compile Include="MainWindowEngineLines.cs" />
     <Compile Include="MainWindowEvalButtons.cs" />
     <Compile Include="IntroMoveDialog.xaml.cs">

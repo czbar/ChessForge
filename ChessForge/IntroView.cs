@@ -212,7 +212,7 @@ namespace ChessForge
                     // if printing, font size directives must be removed.
                     xaml = RemoveFontSizes(xaml);
                     // now set the font size for the whole Intro
-                    _rtb.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff;                    
+                    _rtb.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff;
                 }
                 StringToFlowDocument(xaml);
                 _rtb.Document = HostRtb.Document;
@@ -282,38 +282,56 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Asks the user for the link and creates one if data is valid. 
+        /// Asks the user for the link and creates one if data is valid.
+        /// If an empty uri is entered in the dialog, this only replaces the selected text. 
         /// </summary>
         public void CreateHyperlink()
         {
             try
             {
                 string hlText = _rtb.Selection.Text;
+                
                 EditHyperlinkDialog dlg = new EditHyperlinkDialog(null, hlText);
                 GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
                 if (dlg.ShowDialog() == true)
                 {
-                    TextPointer tp = _rtb.CaretPosition;
-                    // clear selection
-                    _rtb.Selection.Text = "";
-                    // get insertion place
-                    RichTextBoxUtilities.GetMoveInsertionPlace(_rtb, out Paragraph para, out Inline insertBefore, out double fontSize);
-
-                    Run run = new Run(dlg.UiTbText.Text);
-                    //run.Cursor = Cursors.Hand;
-                    run.FontSize = fontSize;
-
+                    // if the dialog returned then the URL is valid or empty (if the latter, dlg.DeleteUrl is true)
                     hlText = dlg.UiTbUrl.Text;
-                    Hyperlink hyperlink = new Hyperlink(run);
-                    SetupHyperlink(hyperlink, hlText);
-                    if (insertBefore == null)
+                    if (dlg.DeleteUrl)
                     {
-                        para.Inlines.Add(hyperlink);
+                        // replace selection text and do nothing else
+                        _rtb.Selection.Text = dlg.UiTbText.Text;
                     }
                     else
                     {
-                        para.Inlines.InsertBefore(insertBefore, hyperlink);
+                        try // just defensive, there should be no exception here
+                        {
+                            TextPointer tp = _rtb.CaretPosition;
+                            // clear selection, it will be replaced by the hyperlink's text
+                            _rtb.Selection.Text = "";
+                            
+                            // get insertion place
+                            RichTextBoxUtilities.GetMoveInsertionPlace(_rtb, out Paragraph para, out Inline insertBefore, out double fontSize);
+
+                            Run run = new Run(dlg.UiTbText.Text);
+                            run.FontSize = fontSize;
+
+                            Hyperlink hyperlink = new Hyperlink(run);
+                            SetupHyperlink(hyperlink, hlText);
+                            if (insertBefore == null)
+                            {
+                                para.Inlines.Add(hyperlink);
+                            }
+                            else
+                            {
+                                para.Inlines.InsertBefore(insertBefore, hyperlink);
+                            }
+                        }
+                        catch
+                        {
+                            _rtb.Selection.Text = dlg.UiTbText.Text;
+                        }
                     }
                 }
             }
@@ -325,24 +343,37 @@ namespace ChessForge
 
         /// <summary>
         /// Configures colors and events for a hyperlink.
+        /// Returns false if URL is invalid.
         /// </summary>
         /// <param name="hyperlink"></param>
-        /// <param name="text"></param>
-        private void SetupHyperlink(Hyperlink hyperlink, string text)
+        /// <param name="url"></param>
+        private bool SetupHyperlink(Hyperlink hyperlink, string url)
         {
+            bool valid = false;
+
             if (hyperlink != null)
             {
-                hyperlink.NavigateUri = new Uri(text);
-                hyperlink.ToolTip = text;
-                hyperlink.MouseDown += EventHyperlinkClicked;
-                hyperlink.Foreground = ChessForgeColors.CurrentTheme.HyperlinkForeground;
-                hyperlink.MouseEnter += EventHyperlinkMouseEnter;
-                hyperlink.MouseLeave += EventHyperlinkMouseLeave;
-                if (hyperlink.Inlines.Count > 0)
+                try
                 {
-                    hyperlink.Inlines.FirstInline.Cursor = Cursors.Hand;
+                    hyperlink.NavigateUri = new Uri(url);
+                    hyperlink.ToolTip = url;
+                    hyperlink.MouseDown += EventHyperlinkClicked;
+                    hyperlink.Foreground = ChessForgeColors.CurrentTheme.HyperlinkForeground;
+                    hyperlink.MouseEnter += EventHyperlinkMouseEnter;
+                    hyperlink.MouseLeave += EventHyperlinkMouseLeave;
+                    if (hyperlink.Inlines.Count > 0)
+                    {
+                        hyperlink.Inlines.FirstInline.Cursor = Cursors.Hand;
+                    }
+                    valid = true;
+                }
+                catch
+                {
+                    valid = false;
                 }
             }
+
+            return valid;
         }
 
         /// <summary>
@@ -716,6 +747,7 @@ namespace ChessForge
 
         /// <summary>
         /// Allows the user to edit the clicked hyperlink.
+        /// If the uri is cleared, the hyperlink will be replaced by the text Run.
         /// </summary>
         public void EditHyperlink(object sender)
         {
@@ -739,6 +771,11 @@ namespace ChessForge
                         Paragraph para = _selectedHyperlink.Parent as Paragraph;
                         if (para != null)
                         {
+                            if (!string.IsNullOrWhiteSpace(text))
+                            {
+                                Run r = new Run(text);
+                                para.Inlines.InsertAfter(_selectedHyperlink, r);
+                            }
                             para.Inlines.Remove(_selectedHyperlink);
                         }
                     }
@@ -1713,7 +1750,7 @@ namespace ChessForge
                 }
             }
 
-            return HostRtb. Document;
+            return HostRtb.Document;
         }
 
         /// <summary>
@@ -1793,7 +1830,7 @@ namespace ChessForge
                 }
             }
 
-            if ((Keyboard.Modifiers & ModifierKeys.Control) > 0 && (Keyboard.Modifiers & ModifierKeys.Alt) == 0 )
+            if ((Keyboard.Modifiers & ModifierKeys.Control) > 0 && (Keyboard.Modifiers & ModifierKeys.Alt) == 0)
             {
                 try
                 {
