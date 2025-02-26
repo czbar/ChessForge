@@ -75,9 +75,16 @@ namespace ChessForge
                 LineManager.PopulateIndexContentPara();
                 doc.Blocks.Add(LineManager.IndexContentPara);
             }
-            else if (PageHeaderParagraph != null)
+            else
             {
-                PageHeaderParagraph.ToolTip = Properties.Resources.ShowIndex;
+                // set index paras to null as otherwise it will confuse UpdateLayout (exception when attempting to InsertAfter IndexPara
+                LineManager.IndexHeaderPara = null;
+                LineManager.IndexContentPara = null;
+
+                if (PageHeaderParagraph != null)
+                {
+                    PageHeaderParagraph.ToolTip = Properties.Resources.ShowIndex;
+                }
             }
 
             CreateParagraphs(doc, para);
