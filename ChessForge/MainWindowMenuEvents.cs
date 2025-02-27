@@ -3054,8 +3054,6 @@ namespace ChessForge
             if (ActiveTreeView != null)
             {
                 ActiveTreeView.SelectActiveLineForCopy();
-                ActiveTreeView.PlaceSelectedForCopyInClipboard();
-                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgCopiedLine, CommentBox.HintType.INFO);
             }
         }
 
@@ -3069,8 +3067,6 @@ namespace ChessForge
             if (ActiveTreeView != null)
             {
                 ActiveTreeView.SelectSubtreeForCopy();
-                ActiveTreeView.PlaceSelectedForCopyInClipboard();
-                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgCopiedTree, CommentBox.HintType.INFO);
             }
         }
 

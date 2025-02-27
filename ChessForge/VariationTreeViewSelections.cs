@@ -369,12 +369,6 @@ namespace ChessForge
                     if (found)
                     {
                         HighlightSelectedForCopy();
-
-                        // Commented out as we do not want the "automatic selection" but want to 
-                        // act only after CTRL+C.
-                        // Not sure why it was done like this in the first place.
-                        //
-                        //PlaceSelectedForCopyInClipboard();
                     }
                     else
                     {
