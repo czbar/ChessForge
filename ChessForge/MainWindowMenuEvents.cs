@@ -3000,6 +3000,7 @@ namespace ChessForge
             if (AppState.IsTreeViewTabActive())
             {
                 ActiveTreeView?.PlaceSelectedForCopyInClipboard();
+                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgCopiedMoves,CommentBox.HintType.INFO);
             }
             else if (AppState.ActiveTab == TabViewType.INTRO)
             {
@@ -3018,8 +3019,11 @@ namespace ChessForge
             if (AppState.IsTreeViewTabActive())
             {
                 ActiveTreeView.PlaceSelectedForCopyInClipboard();
-                ActiveTreeView.DeleteRemainingMoves();
-                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgCopiedMoves, CommentBox.HintType.INFO);
+                if (ActiveTreeView.HasMovesSelectedForCopy)
+                {
+                    ActiveTreeView.DeleteRemainingMoves();
+                    BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgCopiedMoves, CommentBox.HintType.INFO);
+                }
             }
             else if (AppState.ActiveTab == TabViewType.INTRO)
             {
