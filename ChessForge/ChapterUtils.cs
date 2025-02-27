@@ -142,7 +142,7 @@ namespace ChessForge
                 {
                     try
                     {
-                        if (dlg.ShowSolutionOnOpen != chapter.ShowSolutionsOnOpen)
+                        if (dlg.ShowSolutionOnOpen != chapter.ShowSolutionsOnOpen || dlg.ApplyToAllChapters)
                         {
                             chapter.ShowSolutionsOnOpen = dlg.ShowSolutionOnOpen;
                             UpdateShowSolutions(dlg.ApplyToAllChapters ? null : chapter, dlg.ShowSolutionOnOpen);
