@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Documents;
 using System.Windows.Input;
-using static ChessForge.CommentBox;
+using System.Windows.Media;
 
 namespace ChessForge
 {
@@ -233,7 +233,14 @@ namespace ChessForge
                             
                             if (run.Foreground != ChessForgeColors.CurrentTheme.RtbForeground)
                             {
-                                run.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
+                                if (run.Tag is Brush brush)
+                                {
+                                    run.Foreground = brush;
+                                }
+                                else
+                                {
+                                    run.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
+                                }
                             }
                         }
                     }
@@ -390,15 +397,18 @@ namespace ChessForge
                 TreeNode selectedNode = GetSelectedNode();
                 foreach (TreeNode nd in _selectedForCopy)
                 {
+                    Run run = _dictNodeToRun[nd.NodeId];
+
                     if (nd == selectedNode)
                     {
-                        _dictNodeToRun[nd.NodeId].Foreground = ChessForgeColors.CurrentTheme.RtbSelectMoveWhileCopyForeground;
-                        _dictNodeToRun[nd.NodeId].Background = ChessForgeColors.CurrentTheme.RtbSelectMoveWhileCopyBackground;
+                        // Tag would have been set when selecting Node.
+                        run.Foreground = ChessForgeColors.CurrentTheme.RtbSelectMoveWhileCopyForeground;
+                        run.Background = ChessForgeColors.CurrentTheme.RtbSelectMoveWhileCopyBackground;
                     }
                     else
                     {
-                        _dictNodeToRun[nd.NodeId].Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
-                        _dictNodeToRun[nd.NodeId].Background = ChessForgeColors.CurrentTheme.RtbSelectMovesForCopyBackground;
+                        run.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
+                        run.Background = ChessForgeColors.CurrentTheme.RtbSelectMovesForCopyBackground;
                     }
                 }
             }
@@ -423,13 +433,23 @@ namespace ChessForge
                     TreeNode selectedNode = GetSelectedNode();
                     foreach (TreeNode nd in _selectedForCopy)
                     {
-                        _dictNodeToRun[nd.NodeId].Background = ChessForgeColors.CurrentTheme.RtbBackground; ;
+                        Run run = _dictNodeToRun[nd.NodeId];
+                        run.Background = ChessForgeColors.CurrentTheme.RtbBackground;
+                        if (run.Tag is Brush brush)
+                        {
+                            run.Foreground = brush;
+                        }
+                        else
+                        {
+                            run.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
+                        }
                     }
                     HighlightActiveLine();
                     if (selectedNode != null)
                     {
-                        _dictNodeToRun[selectedNode.NodeId].Foreground = ChessForgeColors.CurrentTheme.RtbSelectRunForeground;
-                        _dictNodeToRun[selectedNode.NodeId].Background = ChessForgeColors.CurrentTheme.RtbSelectRunBackground;
+                        Run run = _dictNodeToRun[selectedNode.NodeId];
+                        run.Foreground = ChessForgeColors.CurrentTheme.RtbSelectRunForeground;
+                        run.Background = ChessForgeColors.CurrentTheme.RtbSelectRunBackground;
                     }
                     _selectedForCopy.Clear();
                 }
@@ -463,7 +483,15 @@ namespace ChessForge
                 if (runToSelect != _selectedRun)
                 {
                     _selectedRun.Background = ChessForgeColors.CurrentTheme.RtbBackground;
-                    _selectedRun.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
+
+                    if (_selectedRun.Tag is Brush brush)
+                    {
+                        _selectedRun.Foreground = brush;
+                    }
+                    else
+                    {
+                        _selectedRun.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
+                    }
                 }
 
                 int nodeId = TextUtils.GetIdFromPrefixedString(runToSelect.Name);
@@ -508,6 +536,10 @@ namespace ChessForge
                         }
 
                         _selectedRun.Background = ChessForgeColors.CurrentTheme.RtbSelectRunBackground;
+                        if (_selectedRun.Tag == null)
+                        {
+                            _selectedRun.Tag = _selectedRun.Foreground;
+                        }
                         _selectedRun.Foreground = ChessForgeColors.CurrentTheme.RtbSelectRunForeground;
 
                         // this is a right click offer the context menu

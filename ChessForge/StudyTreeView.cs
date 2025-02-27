@@ -495,12 +495,14 @@ namespace ChessForge
                         if (i == 0 && sector.ParaAttrs.FirstNodeColor != null && !LineManager.IsEffectiveIndexLevel(sector.BranchLevel))
                         {
                             r.Foreground = sector.ParaAttrs.FirstNodeColor;
+                            r.Tag = r.Foreground;
                         }
                         if (sector.Nodes.Count > 1 && i == sector.Nodes.Count - 1 && sector.BranchLevel >= LineManager.EffectiveIndexDepth)
                         {
                             if (sector.ParaAttrs.LastNodeColor != null)
                             {
                                 r.Foreground = sector.ParaAttrs.LastNodeColor;
+                                r.Tag = r.Foreground;
                             }
                         }
                     }

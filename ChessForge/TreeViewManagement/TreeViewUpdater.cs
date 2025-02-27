@@ -91,8 +91,9 @@ namespace ChessForge
                             }
                             
                             _view.BuildSectorRuns(_currentManager.LineSectors[i]);
-                            SetFirstLastMoveColors(i);
+                            _currentManager.LineSectors[i].ResetRunTags();
                         }
+                        SetFirstLastMoveColors(i);
                     }
                     else
                     {
@@ -134,12 +135,14 @@ namespace ChessForge
             if (lastRun != null)
             {
                 lastRun.Foreground = _updatedManager.LineSectors[index].ParaAttrs.LastNodeColor;
+                lastRun.Tag = lastRun.Foreground;
             }
 
             Run firstRun = RichTextBoxUtilities.FindFirstMoveRunInParagraph(_currentManager.LineSectors[index].HostPara);
             if (firstRun != null)
             {
                 firstRun.Foreground = _updatedManager.LineSectors[index].ParaAttrs.FirstNodeColor;
+                firstRun.Tag = firstRun.Foreground;
             }
         }
 
