@@ -1680,7 +1680,7 @@ ApplyToAllChapters=
 ExerciseViewConfig=
 
 #description: Solutions
-#english: ShowSolutions=Show Solutions
+#english: ShowSolutions=Show Exercise Solutions
 ShowSolutions=
 
 #description: Show/hide all solutions by default

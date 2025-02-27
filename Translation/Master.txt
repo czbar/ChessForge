@@ -1321,7 +1321,7 @@ ApplyToAllChapters=Apply to All Chapters
 ExerciseViewConfig=Exercise View
 
 #Solutions
-ShowSolutions=Show Solutions
+ShowSolutions=Show Exercise Solutions
 
 #Show/hide all solutions by default
 ShowSolutionsByDefault=Show on Open

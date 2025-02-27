@@ -1680,8 +1680,8 @@ ApplyToAllChapters=Zastosuj do wszystkich rozdziałów
 ExerciseViewConfig=Widok Ćwiczeń
 
 #description: Solutions
-#english: ShowSolutions=Show Solutions
-ShowSolutions=Pokaż Rozwiązania
+#english: ShowSolutions=Show Exercise Solutions
+ShowSolutions=Pokaż Rozwiązania Ćwiczeń
 
 #description: Show/hide all solutions by default
 #english: ShowSolutionsByDefault=Show on Open

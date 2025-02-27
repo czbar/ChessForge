@@ -1196,7 +1196,7 @@
     <value>Exercise View</value>
   </data>
   <data name="ShowSolutions" xml:space="preserve">
-    <value>Show Solutions</value>
+    <value>Show Exercise Solutions</value>
   </data>
   <data name="ShowSolutionsByDefault" xml:space="preserve">
     <value>Show on Open</value>
