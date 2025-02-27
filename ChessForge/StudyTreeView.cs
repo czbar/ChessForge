@@ -77,7 +77,7 @@ namespace ChessForge
             }
             else
             {
-                // set index paras to null as otherwise it will confuse UpdateLayout (exception when attempting to InsertAfter IndexPara
+                // set index paras to null as otherwise it will confuse UpdateLayout (exception when attempting to InsertAfter IndexPara)
                 LineManager.IndexHeaderPara = null;
                 LineManager.IndexContentPara = null;
 
@@ -357,11 +357,6 @@ namespace ChessForge
                     continue;
                 }
 
-                //if (doNotShow.Find(x => x == sector) != null)
-                //{
-                //    continue;
-                //}
-
                 if (sector.Nodes.Count == 0 || sector.Nodes.Count == 1 && sector.Nodes[0].NodeId == 0 && string.IsNullOrEmpty(sector.Nodes[0].Comment))
                 {
                     continue;
@@ -398,18 +393,6 @@ namespace ChessForge
                     {
                         para.FontWeight = FontWeights.Normal;
                     }
-
-                    //if (LineManager.IsEffectiveIndexLevel(sector.BranchLevel))
-                    //{
-                    //    InsertIndexPrefixRun(sector, para);
-                    //}
-                    //else
-                    //{
-                    //    if (LineManager.IsLastEffectiveIndexLine(sector.DisplayLevel + 1))
-                    //    {
-                    //        para.FontWeight = FontWeights.DemiBold;
-                    //    }
-                    //}
 
                     sector.HostPara = para;
                     BuildSectorRuns(sector);
