@@ -1026,6 +1026,7 @@ namespace ChessForge
                     if (_modelGameTreeView != null)
                     {
                         _modelGameTreeView.Clear(_modelGameTreeView.HostRtb.Document, GameData.ContentType.MODEL_GAME);
+                        DisplayPosition(PositionUtils.SetupStartingPosition());
                         activeChapter.SetActiveVariationTree(GameData.ContentType.NONE);
                         AppState.MainWin.UiTabModelGames.Focus();
                     }
@@ -1127,6 +1128,7 @@ namespace ChessForge
                     if (_exerciseTreeView != null)
                     {
                         _exerciseTreeView.Clear(_exerciseTreeView.HostRtb.Document, GameData.ContentType.EXERCISE);
+                        DisplayPosition(PositionUtils.SetupStartingPosition());
                         activeChapter.SetActiveVariationTree(GameData.ContentType.NONE);
                     }
                     PreviousNextViewBars.BuildPreviousNextBar(GameData.ContentType.EXERCISE);
