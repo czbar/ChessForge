@@ -156,5 +156,22 @@ namespace GameTree
             Nodes.Insert(index, node);
         }
 
+        /// <summary>
+        /// Resets Runs' tags to null.
+        /// We use them to store the original Foreground color of the Run.
+        /// </summary>
+        public void ResetRunTags()
+        {
+            if (HostPara != null)
+            {
+                foreach (Inline inl in HostPara.Inlines)
+                {
+                    if (inl is Run run)
+                    {
+                        run.Tag = null;
+                    }
+                }
+            }
+        }
     }
 }
