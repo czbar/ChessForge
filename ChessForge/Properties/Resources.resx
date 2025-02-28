@@ -712,7 +712,7 @@
     <value>Evaluate Games</value>
   </data>
   <data name="MenuDeleteNotes" xml:space="preserve">
-    <value>Delete Notes...</value>
+    <value>Clean Lines and Comments...</value>
   </data>
   <data name="StripComments" xml:space="preserve">
     <value>Delete Comments...</value>
@@ -947,7 +947,7 @@
     <value>Reorder Lines</value>
   </data>
   <data name="DeleteNotes" xml:space="preserve">
-    <value>Delete Notes</value>
+    <value>Clean Lines and Comments</value>
   </data>
   <data name="ItemsToDelete" xml:space="preserve">
     <value>Items to Delete</value>
@@ -1199,7 +1199,7 @@
     <value>Show Exercise Solutions</value>
   </data>
   <data name="ShowSolutionsByDefault" xml:space="preserve">
-    <value>Show on Open</value>
+    <value>Show by Default</value>
   </data>
   <data name="Solutions" xml:space="preserve">
     <value>Solutions</value>
@@ -2835,7 +2835,7 @@
     <value>Copy Exercises</value>
   </data>
   <data name="OpDeleteNotes" xml:space="preserve">
-    <value>Delete Notes</value>
+    <value>Clean Lines and Comments</value>
   </data>
   <data name="OpDeleteComments" xml:space="preserve">
     <value>Delete Comments</value>
