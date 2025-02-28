@@ -1336,17 +1336,26 @@ namespace ChessForge
             if (showHide)
             {
                 _mainVariationTree.CurrentSolvingMode = VariationTree.SolvingMode.EDITING;
-                AppState.MainWin.ResizeTabControl(AppState.MainWin.UiTabCtrlManualReview, TabControlSizeMode.SHOW_ACTIVE_LINE);
+                if (AppState.ActiveTab == TabViewType.EXERCISE)
+                {
+                    AppState.MainWin.ResizeTabControl(AppState.MainWin.UiTabCtrlManualReview, TabControlSizeMode.SHOW_ACTIVE_LINE);
+                }
             }
             else
             {
                 _mainVariationTree.CurrentSolvingMode = VariationTree.SolvingMode.NONE;
-                AppState.MainWin.ResizeTabControl(AppState.MainWin.UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
+                if (AppState.ActiveTab == TabViewType.EXERCISE)
+                {
+                    AppState.MainWin.ResizeTabControl(AppState.MainWin.UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
+                }
             }
 
-            AppState.ShowExplorers(AppState.AreExplorersOn, true);
             BuildFlowDocumentForVariationTree(false);
-            _mainWin.BoardCommentBox.ShowTabHints();
+            if (AppState.ActiveTab == TabViewType.EXERCISE)
+            {
+                AppState.ShowExplorers(AppState.AreExplorersOn, true);
+                _mainWin.BoardCommentBox.ShowTabHints();
+            }
         }
 
         /// <summary>
