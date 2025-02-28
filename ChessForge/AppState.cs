@@ -735,7 +735,7 @@ namespace ChessForge
         /// <param name="lichessGameId"></param>
         /// <param name="activeTabOnEntry"></param>
         /// <returns></returns>
-        public static bool FinalizeLichessDownload(Chapter chapter, VariationTree tree, string lichessGameId, 
+        public static bool FinalizeLichessDownload(Chapter chapter, VariationTree tree, string lichessGameId,
                                                    TabViewType activeTabOnEntry, VariationTreeView activeViewOnEntry)
         {
             bool added = false;
@@ -1544,7 +1544,7 @@ namespace ChessForge
 
                 if (AppState.ActiveContentType == GameData.ContentType.STUDY_TREE && WorkbookManager.ActiveTab == TabViewType.STUDY
                    || WorkbookManager.ActiveTab == TabViewType.MODEL_GAME
-                   || WorkbookManager.ActiveTab == TabViewType.EXERCISE 
+                   || WorkbookManager.ActiveTab == TabViewType.EXERCISE
                       && ActiveVariationTree != null && ActiveVariationTree.ShowTreeLines
                       && CurrentSolvingMode == VariationTree.SolvingMode.EDITING)
                 {
@@ -1746,11 +1746,14 @@ namespace ChessForge
 
                     MainWin.UiMnOrderGames.IsEnabled = AppState.ActiveChapter != null;
                     MainWin.UiMnSetThumbnails.IsEnabled = AppState.ActiveChapter != null;
+
                     MainWin.UiMnExerciseViewConfig.IsEnabled = AppState.ActiveChapter != null;
+                    GuiUtilities.SetShowSolutionsMenuCheckMark();
+
                     MainWin.UiMnSplitChapter.IsEnabled = AppState.ActiveChapter != null;
 
-                    MainWin.UiMnPasteEngineLines.IsEnabled = Workbook != null 
-                        && CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW 
+                    MainWin.UiMnPasteEngineLines.IsEnabled = Workbook != null
+                        && CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW
                         && CurrentEvaluationMode == EvaluationManager.Mode.CONTINUOUS;
 
                     MainWin.UiMnAnnotations.IsEnabled = IsTreeViewTabActive();
