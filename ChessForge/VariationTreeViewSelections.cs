@@ -160,6 +160,14 @@ namespace ChessForge
                                     {
                                         run.Background = ChessForgeColors.CurrentTheme.RtbSelectLineBackground;
                                     }
+                                    if (run.Tag != null)
+                                    {
+                                        run.Foreground = (Brush)run.Tag;
+                                    }
+                                    else if (run.Foreground != ChessForgeColors.CurrentTheme.RtbSelectLineForeground)
+                                    {
+                                        run.Foreground = ChessForgeColors.CurrentTheme.RtbSelectLineForeground;
+                                    }
                                 }
                                 else if (Configuration.DebugLevel != 0)
                                 {
