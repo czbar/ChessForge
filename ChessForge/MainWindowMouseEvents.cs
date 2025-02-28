@@ -989,12 +989,12 @@ namespace ChessForge
                 if (AppState.EngineEvaluationsUpdateble)
                 {
                     UiImgEngineOn.Visibility = Visibility.Visible;
-                    UiImgEngineOn.Visibility = Visibility.Collapsed;
+                    UiImgEngineOnGray.Visibility = Visibility.Collapsed;
                 }
                 else
                 {
                     UiImgEngineOn.Visibility = Visibility.Collapsed;
-                    UiImgEngineOn.Visibility = Visibility.Visible;
+                    UiImgEngineOnGray.Visibility = Visibility.Visible;
                 }
                 Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
                 EvaluateActiveLineSelectedPosition();
