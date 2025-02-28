@@ -9,7 +9,7 @@ using System.Windows.Media;
 
 namespace ChessForge
 {
-    public partial class VariationTreeView : RichTextBuilder    
+    public partial class VariationTreeView : RichTextBuilder
     {
 
         /// <summary>
@@ -160,10 +160,6 @@ namespace ChessForge
                                     {
                                         run.Background = ChessForgeColors.CurrentTheme.RtbSelectLineBackground;
                                     }
-                                    if (run.Foreground != ChessForgeColors.CurrentTheme.RtbSelectLineForeground)
-                                    {
-                                        run.Foreground = ChessForgeColors.CurrentTheme.RtbSelectLineForeground;
-                                    }
                                 }
                                 else if (Configuration.DebugLevel != 0)
                                 {
@@ -230,21 +226,18 @@ namespace ChessForge
                             {
                                 run.Background = ChessForgeColors.CurrentTheme.RtbBackground;
                             }
-                            
-                            if (run.Foreground != ChessForgeColors.CurrentTheme.RtbForeground)
+
+                            if (run.Tag is Brush brush)
                             {
-                                if (run.Tag is Brush brush)
-                                {
-                                    run.Foreground = brush;
-                                }
-                                else
-                                {
-                                    run.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
-                                }
+                                run.Foreground = brush;
+                            }
+                            else
+                            {
+                                run.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
                             }
                         }
                     }
-                }                
+                }
             }
             catch { }
         }
