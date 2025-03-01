@@ -103,7 +103,10 @@ namespace ChessForge
                 // the next move in para may need to be redrawn if it was black on move
                 if (nd.ColorToMove == PieceColor.Black)
                 {
-                    UpdateNextMoveText(r, nd);
+                    if (nd.Children.Count > 0)
+                    {
+                        UpdateNextMoveText(r, nd, nd.Children[0]);
+                    }
                 }
             }
             catch
@@ -187,21 +190,23 @@ namespace ChessForge
         /// depending on whether there is or isn't a comment in the current move.
         /// </summary>
         /// <param name="run"></param>
-        protected void UpdateNextMoveText(Run currRun, TreeNode currNode)
+        protected void UpdateNextMoveText(Run currRun, TreeNode currNode, TreeNode nextMoveNode)
         {
-            Run nextMoveRun = GetNextMoveRunInPara(currRun);
-            if (nextMoveRun != null)
+            if (_dictNodeToRun.TryGetValue(nextMoveNode.NodeId, out Run nextMoveRun))
             {
-                int nodeId = TextUtils.GetIdFromPrefixedString(nextMoveRun.Name);
-                TreeNode nextNode = ShownVariationTree.GetNodeFromNodeId(nodeId);
-                if (nextNode != null)
+                if (nextMoveRun != null)
                 {
-                    // take care of the special case where node 0 may have a comment
-                    bool includeNumber = currNode.NodeId == 0
-                        || !string.IsNullOrWhiteSpace(currNode.Comment)
-                        || !string.IsNullOrEmpty(nextNode.CommentBeforeMove)
-                        || currNode.IsDiagram;
-                    UpdateRunText(nextMoveRun, nextNode, includeNumber);
+                    int nodeId = TextUtils.GetIdFromPrefixedString(nextMoveRun.Name);
+                    TreeNode nextNode = ShownVariationTree.GetNodeFromNodeId(nodeId);
+                    if (nextNode != null)
+                    {
+                        // take care of the special case where node 0 may have a comment
+                        bool includeNumber = currNode.NodeId == 0
+                            || !string.IsNullOrWhiteSpace(currNode.Comment)
+                            || !string.IsNullOrEmpty(nextNode.CommentBeforeMove)
+                            || currNode.IsDiagram;
+                        UpdateRunText(nextMoveRun, nextNode, includeNumber);
+                    }
                 }
             }
         }
