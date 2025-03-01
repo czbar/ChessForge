@@ -326,7 +326,6 @@ namespace ChessForge
             try
             {
                 Thickness margin = new Thickness(20 * displayLevel, attrs.TopMarginExtra, 0, 5 + attrs.BottomMarginExtra);
-                FontWeight fontWeight = displayLevel == 0 ? FontWeights.DemiBold : FontWeights.Normal;
 
                 if (para.Margin != margin)
                 {
@@ -336,9 +335,9 @@ namespace ChessForge
                 {
                     para.FontSize = attrs.FontSize;
                 }
-                if (para.FontWeight != fontWeight)
+                if (para.FontWeight != attrs.FontWeight)
                 {
-                    para.FontWeight = fontWeight;
+                    para.FontWeight = attrs.FontWeight;
                 }
                 if (para.TextAlignment != attrs.TextAlignment)
                 {
@@ -471,7 +470,11 @@ namespace ChessForge
                         sector.ParaAttrs.FontWeight = FontWeights.Normal;
                     }
 
-                    if (!IsEffectiveIndexLevel(sector.BranchLevel))
+                    if (IsEffectiveIndexLevel(sector.BranchLevel))
+                    {
+                        sector.ParaAttrs.FontWeight = FontWeights.DemiBold;
+                    }
+                    else
                     {
                         if (IsLastEffectiveIndexLine(sector.DisplayLevel + 1))
                         {
