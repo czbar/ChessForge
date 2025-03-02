@@ -171,11 +171,15 @@ namespace ChessForge
                                 }
                                 else if (Configuration.DebugLevel != 0)
                                 {
-                                    //we should always have this key, so show debug message if not
+                                    // we should always have this key, unless this is on a collapsed line
+                                    // so show debug message if not
                                     if (_debugSelectedBkgMsgCount < 2)
                                     {
-                                        DebugUtils.ShowDebugMessage("WorkbookView:SelectLineAndMove()-BrushSelectedBkg nodeId=" + nd.NodeId.ToString() + " not in _dictNodeToRun");
-                                        _debugSelectedBkgMsgCount++;
+                                        if (VariationTreeViewUtils.FindCollapsedAncestor(nd) == null)
+                                        {
+                                            DebugUtils.ShowDebugMessage("WorkbookView:SelectLineAndMove()-BrushSelectedBkg nodeId=" + nd.NodeId.ToString() + " not in _dictNodeToRun");
+                                            _debugSelectedBkgMsgCount++;
+                                        }
                                     }
                                     AppLog.Message("WorkbookView:SelectLineAndMove()-BrushSelectedBkg nodeId=" + nd.NodeId.ToString() + " not in _dictNodeToRun");
                                 }
