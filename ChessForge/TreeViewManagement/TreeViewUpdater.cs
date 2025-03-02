@@ -1,5 +1,6 @@
 ﻿using GameTree;
 using System;
+using System.Collections.Generic;
 using System.Windows.Documents;
 
 namespace ChessForge
@@ -60,6 +61,7 @@ namespace ChessForge
             // and updates the modified ones.
             try
             {
+                List<LineSector> removedSectors = new List<LineSector>();
                 for (int i = 0; i < _updatedManager.LineSectors.Count; i++)
                 {
                     TreeNode updatedNode = null;
@@ -106,7 +108,15 @@ namespace ChessForge
                     }
                     else
                     {
-                        // insert the new sector
+                        // we are creating and inserting a new sector.
+                        // If there is a corresponding sector in the current manager, remove it.
+                        if (i < _currentManager.LineSectors.Count)
+                        {
+                            LineSector sectorToRemove = _currentManager.LineSectors[i];
+                            removedSectors.Add(sectorToRemove);
+                            _currentManager.LineSectors.Remove(sectorToRemove);
+                        }
+
                         LineSector newSector = _updatedManager.LineSectors[i];
                         _currentManager.LineSectors.Insert(i, newSector);
                         CreateSectorParagraph(newSector);
@@ -126,6 +136,12 @@ namespace ChessForge
                             _view.HostRtb.Document.Blocks.Add(newSector.HostPara);
                         }
                     }
+                }
+
+                // Remove the paragraphs from the removed sectors.
+                foreach (LineSector sector in removedSectors)
+                {
+                    _view.HostRtb.Document.Blocks.Remove(sector.HostPara);
                 }
             }
             catch (Exception ex)
@@ -255,92 +271,5 @@ namespace ChessForge
             return isOneSubsetOfOther;
         }
 
-        /// <summary>
-        /// Update only those attributes of the paragraph that have changed.
-        /// We believe it may have some performance benefit. 
-        /// </summary>
-        /// <param name="currPara"></param>
-        /// <param name="updatePara"></param>
-        private bool UpdateParagraphAttrs(LineSector currentSector, LineSector updatedSector)
-        {
-            bool needsUpdate = false;
-
-            SectorParaAttrs currAttrs = currentSector.ParaAttrs;
-            SectorParaAttrs updatedAttrs = updatedSector.ParaAttrs;
-
-            if (currentSector.BranchLevel != updatedSector.BranchLevel)
-            {
-                currentSector.BranchLevel = updatedSector.BranchLevel;
-                needsUpdate = true;
-            }
-
-            if (currentSector.DisplayLevel != updatedSector.DisplayLevel)
-            {
-                currentSector.DisplayLevel = updatedSector.DisplayLevel;
-                needsUpdate = true;
-            }
-
-            if (currAttrs.LevelGroup != updatedAttrs.LevelGroup)
-            {
-                currAttrs.LevelGroup = updatedAttrs.LevelGroup;
-                needsUpdate = true;
-            }
-
-            if (currAttrs.FontSize != updatedAttrs.FontSize)
-            {
-                currAttrs.FontSize = updatedAttrs.FontSize;
-                needsUpdate = true;
-            }
-
-            if (currAttrs.FontWeight != updatedAttrs.FontWeight)
-            {
-                currAttrs.FontWeight = updatedAttrs.FontWeight;
-                needsUpdate = true;
-            }
-
-            if (currAttrs.FirstNodeColor != updatedAttrs.FirstNodeColor)
-            {
-                currAttrs.FirstNodeColor = updatedAttrs.FirstNodeColor;
-                needsUpdate = true;
-            }
-
-            if (currAttrs.LastNodeColor != updatedAttrs.LastNodeColor)
-            {
-                currAttrs.LastNodeColor = updatedAttrs.LastNodeColor;
-                needsUpdate = true;
-            }
-
-            if (currAttrs.Margin != updatedAttrs.Margin)
-            {
-                currAttrs.Margin = updatedAttrs.Margin;
-                needsUpdate = true;
-            }
-
-            if (currAttrs.TopMarginExtra != updatedAttrs.TopMarginExtra)
-            {
-                currAttrs.TopMarginExtra = updatedAttrs.TopMarginExtra;
-                needsUpdate = true;
-            }
-
-            if (currAttrs.BottomMarginExtra != updatedAttrs.BottomMarginExtra)
-            {
-                currAttrs.BottomMarginExtra = updatedAttrs.BottomMarginExtra;
-                needsUpdate = true;
-            }
-
-            if (currAttrs.Foreground != updatedAttrs.Foreground)
-            {
-                currAttrs.Foreground = updatedAttrs.Foreground;
-                needsUpdate = true;
-            }
-
-            if (currAttrs.Background != updatedAttrs.Background)
-            {
-                currAttrs.Background = updatedAttrs.Background;
-                needsUpdate = true;
-            }
-
-            return needsUpdate;
-        }
     }
 }
