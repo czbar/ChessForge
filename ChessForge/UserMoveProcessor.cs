@@ -330,7 +330,7 @@ namespace ChessForge
 
                 // TODO: while testing use this variable to switch between the old and new (performant) layout
                 bool useNewLayout = true;
-                TreeNode collapsedAncestor = VariationTreeViewUtils.FindCollapseAncestor(nd);
+                TreeNode collapsedAncestor = VariationTreeViewUtils.FindCollapsedAncestor(nd);
                 if (collapsedAncestor != null)
                 {
                     // if the new move is on a collapsed branch, uncollapse it and use the "old" layout

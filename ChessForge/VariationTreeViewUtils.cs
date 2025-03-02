@@ -9,7 +9,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd"></param>
         /// <returns></returns>
-        public static TreeNode FindCollapseAncestor(TreeNode nd)
+        public static TreeNode FindCollapsedAncestor(TreeNode nd)
         {
             TreeNode collapsedAncestor = null;
 
