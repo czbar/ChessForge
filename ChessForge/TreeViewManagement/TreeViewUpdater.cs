@@ -62,8 +62,18 @@ namespace ChessForge
             {
                 for (int i = 0; i < _updatedManager.LineSectors.Count; i++)
                 {
-                    TreeNode updatedNode = _updatedManager.LineSectors[i].Nodes[0];
-                    TreeNode currentNode = i < _currentManager.LineSectors.Count ? _currentManager.LineSectors[i].Nodes[0] : null;
+                    TreeNode updatedNode = null;
+                    TreeNode currentNode = null;
+
+                    if (_updatedManager.LineSectors[i].Nodes.Count > 0)
+                    {
+                        updatedNode = _updatedManager.LineSectors[i].Nodes[0];
+                    }
+
+                    if (i < _currentManager.LineSectors.Count && _currentManager.LineSectors[i].Nodes.Count > 0)
+                    {
+                        currentNode = _currentManager.LineSectors[i].Nodes[0];
+                    }
 
                     if (updatedNode == currentNode)
                     {
@@ -89,7 +99,6 @@ namespace ChessForge
                             {
                                 CreateParagraphForNewSector(i);
                             }
-                            
                             _view.BuildSectorRuns(_currentManager.LineSectors[i]);
                             _currentManager.LineSectors[i].ResetRunTags();
                         }
