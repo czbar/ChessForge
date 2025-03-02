@@ -5,13 +5,13 @@ namespace ChessForge
     public class VariationTreeViewUtils
     {
         /// <summary>
-        /// Finds out if the move has a collapsed ancestor
+        /// Identifies the collapsed ancestor if any.
         /// </summary>
         /// <param name="nd"></param>
-        /// <returns>true if the uncollapse was required</returns>
-        public static bool HasCollapsedAncestor(TreeNode nd)
+        /// <returns></returns>
+        public static TreeNode FindCollapseAncestor(TreeNode nd)
         {
-            bool result = false;
+            TreeNode collapsedAncestor = null;
 
             if (nd != null)
             {
@@ -19,14 +19,14 @@ namespace ChessForge
                 {
                     if (nd.Parent.IsCollapsed)
                     {
-                        result = true;
+                        collapsedAncestor = nd.Parent;
                         break;
                     }
                     nd = nd.Parent;
                 }
             }
 
-            return result;
+            return collapsedAncestor;
         }
 
         /// <summary>
