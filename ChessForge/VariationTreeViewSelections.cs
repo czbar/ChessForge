@@ -485,7 +485,7 @@ namespace ChessForge
                 }
 
                 // restore colors of the currently selected Run that will be unselected below.
-                if (runToSelect != _selectedRun)
+                if (runToSelect != _selectedRun && _selectedRun != null)
                 {
                     _selectedRun.Background = ChessForgeColors.CurrentTheme.RtbBackground;
 
