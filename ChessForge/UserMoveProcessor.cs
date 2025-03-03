@@ -328,8 +328,9 @@ namespace ChessForge
                     nd.LineId = nd.Parent.LineId;
                 }
 
-                // TODO: while testing use this variable to switch between the old and new (performant) layout
-                bool useNewLayout = true;
+                // while testing set FastLayout to 1 in config,txt
+                bool useNewLayout = Configuration.FastLayout;
+                
                 TreeNode collapsedAncestor = VariationTreeViewUtils.FindCollapsedAncestor(nd);
                 if (collapsedAncestor != null)
                 {
@@ -347,7 +348,7 @@ namespace ChessForge
 
                         if (useNewLayout && AppState.MainWin.ActiveTreeView is StudyTreeView studyView)
                         {
-                            studyView.UpdateLayoutOnAddedMove();
+                            studyView.UpdateLayoutOnAddedMove(nd);
                         }
                         else
                         {
@@ -381,12 +382,13 @@ namespace ChessForge
                     // new move for which we need a new line id
                     // if it is new and has siblings, rebuild line ids
                     // Workbook view will need a full update unless TODO this node AND its parent have no siblings
+                    AppState.MainWin.ActiveTreeView.UnhighlightActiveLine();
                     AppState.MainWin.ActiveVariationTree.SetLineIdForNewNode(nd);
                     AppState.MainWin.SetActiveLine(nd.LineId, nd.NodeId, false);
                     
                     if (useNewLayout && AppState.MainWin.ActiveTreeView is StudyTreeView studyView)
                     {
-                        studyView.UpdateLayoutOnAddedMove();
+                        studyView.UpdateLayoutOnAddedMove(nd);
                     }
                     else
                     {
