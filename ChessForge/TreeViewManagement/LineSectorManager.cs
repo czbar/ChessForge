@@ -154,8 +154,19 @@ namespace ChessForge
                             // Build the stem line
                             // Note we don't want an indent here 'coz if the stem line is long it will wrap ugly
                             bool validMove = false;
-                            foreach (TreeNode nd in sector.Nodes)
+                            
+                            int stemRunCount = sector.Nodes.Count;
+                            // if there is nothing but the main line then we only want to show the first move
+                            // in the stem.
+                            // That means 2 nodes because the first one is the 0 move with emtpy text.
+                            if (sector.Nodes[stemRunCount -1].Children.Count == 0)
                             {
+                                stemRunCount = 2;
+                            }
+
+                            for (int i = 0; i < stemRunCount; i++)
+                            {
+                                TreeNode nd = sector.Nodes[i];
                                 Run rMove = _studyView.BuildIndexNodeAndAddToPara(nd, false, para);
                                 rMove.TextDecorations = TextDecorations.Underline;
                                 rMove.FontWeight = FontWeights.DemiBold;
