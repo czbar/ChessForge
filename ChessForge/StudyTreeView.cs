@@ -106,7 +106,7 @@ namespace ChessForge
         /// calculates the new set LineSectors, and the index paragraphs,
         /// then updates the paragraphs where there are differences.
         /// </summary>
-        public void UpdateLayoutOnAddedMove()
+        public void UpdateLayoutOnAddedMove(TreeNode nd)
         {
             LineSectorManager updateLineManger = new LineSectorManager(null);
             updateLineManger.BuildLineSectors(ShownVariationTree.Nodes[0]);
@@ -120,7 +120,7 @@ namespace ChessForge
                 HostRtb.Document.Blocks.InsertAfter(LineManager.IndexHeaderPara, LineManager.IndexContentPara);
             }
 
-            // NOTE: on added move we don't need to worry to worry about removing index paragraphs
+            // NOTE: on added move we don't need to worry about removing index paragraphs
             // in case updateLineManger.EffectiveIndexDepth <= 0 as they are not present in the first place. 
 
             LineManager.MaxBranchLevel = updateLineManger.MaxBranchLevel;
@@ -129,6 +129,7 @@ namespace ChessForge
             TreeViewUpdater updater = new TreeViewUpdater(LineManager, updateLineManger, this);
             updater.MoveAdded();
 
+            SelectNode(nd);
             LineManager.PopulateIndexContentPara();
         }
 
@@ -316,6 +317,26 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Checks if the sector is to be used for creating a paragraph.
+        /// </summary>
+        /// <param name="sector"></param>
+        /// <returns></returns>
+        public bool IsSectorToCreateParaFor(LineSector sector)
+        {
+            bool create = true;
+
+            if (sector == null
+                || sector.Nodes.Count == 0 
+                || sector.Nodes.Count == 1 && sector.Nodes[0].NodeId == 0 && string.IsNullOrEmpty(sector.Nodes[0].Comment)
+               )
+            {
+                create = false;
+            }
+
+            return create;
+        }
+
+        /// <summary>
         /// Finds sector with the passed node and ensures it is not collapsed
         /// </summary>
         /// <param name="nd"></param>
@@ -352,55 +373,48 @@ namespace ChessForge
             for (int n = 0; n < LineManager.LineSectors.Count; n++)
             {
                 LineSector sector = LineManager.LineSectors[n];
-                if (!sector.IsShown)
+                if (IsSectorToCreateParaFor(sector) && sector.IsShown)
                 {
-                    continue;
-                }
-
-                if (sector.Nodes.Count == 0 || sector.Nodes.Count == 1 && sector.Nodes[0].NodeId == 0 && string.IsNullOrEmpty(sector.Nodes[0].Comment))
-                {
-                    continue;
-                }
-
-                try
-                {
-                    Paragraph para;
-                    if (sector.DisplayLevel < 0)
+                    try
                     {
-                        sector.DisplayLevel = 0;
-                    }
-
-                    if (!LineManager.IsEffectiveIndexLevel(sector.BranchLevel))
-                    {
-                        // also make sure that the sector outside the indexed range is not expanded!
-                        foreach (TreeNode node in sector.Nodes)
+                        Paragraph para;
+                        if (sector.DisplayLevel < 0)
                         {
-                            node.IsCollapsed = false;
+                            sector.DisplayLevel = 0;
                         }
 
-                    }
-                    else
-                    {
-                        // add extra room above an index line, unless this is the first line at level 2
-                        if (sector.BranchLevel == 2 && firstAtIndexLevel2)
+                        if (!LineManager.IsEffectiveIndexLevel(sector.BranchLevel))
                         {
-                            firstAtIndexLevel2 = false;
+                            // also make sure that the sector outside the indexed range is not expanded!
+                            foreach (TreeNode node in sector.Nodes)
+                            {
+                                node.IsCollapsed = false;
+                            }
+
                         }
-                    }
+                        else
+                        {
+                            // add extra room above an index line, unless this is the first line at level 2
+                            if (sector.BranchLevel == 2 && firstAtIndexLevel2)
+                            {
+                                firstAtIndexLevel2 = false;
+                            }
+                        }
 
-                    para = LineSectorManager.CreateStudyParagraph(sector.ParaAttrs, sector.DisplayLevel);
-                    if (para.FontWeight == FontWeights.Bold)
+                        para = LineSectorManager.CreateStudyParagraph(sector.ParaAttrs, sector.DisplayLevel);
+                        if (para.FontWeight == FontWeights.Bold)
+                        {
+                            para.FontWeight = FontWeights.Normal;
+                        }
+
+                        sector.HostPara = para;
+                        BuildSectorRuns(sector);
+                        RemoveTrailingNewLinesInPara(para);
+                        doc.Blocks.Add(para);
+                    }
+                    catch
                     {
-                        para.FontWeight = FontWeights.Normal;
                     }
-
-                    sector.HostPara = para;
-                    BuildSectorRuns(sector);
-                    RemoveTrailingNewLinesInPara(para);
-                    doc.Blocks.Add(para);
-                }
-                catch
-                {
                 }
             }
         }
