@@ -78,37 +78,28 @@ namespace ChessForge
         // currently selected node
         private TreeNode _selectedNode;
 
-        // refrence to the RichTextBox of this view.
-        private static RichTextBox _rtb = AppState.MainWin.UiRtbIntroView;
+        // refrence to HostRtb.
+        private static RichTextBox _rtb;
 
         // flags if the view is in the "print" mode
-        private bool _isPrintMode;
+        private bool _isPrinting;
 
         /// <summary>
         /// Constructor. Builds the content if not empty.
         /// Initializes data structures.
         /// </summary>
-        public IntroView(RichTextBox rtb, Chapter parentChapter, RichTextBox printRtb = null) : base(rtb)
+        public IntroView(RichTextBox rtb, Chapter parentChapter, bool isPrinting = false) : base(rtb)
         {
             bool isAppDirty = AppState.IsDirty;
+            _isPrinting = isPrinting;
 
-            if (printRtb != null)
-            {
-                _isPrintMode = true;
-                _rtb = printRtb;
-            }
-            else
-            {
-                _isPrintMode = false;
-                _rtb = AppState.MainWin.UiRtbIntroView;
-            }
-
+            _rtb = HostRtb;
             HostRtb.Document.Blocks.Clear();
 
             ParentChapter = parentChapter;
 
             // set the event handler for text changes.
-            if (!_initialized && !_isPrintMode)
+            if (!_initialized && !_isPrinting)
             {
                 _rtb.TextChanged += UiRtbIntroView_TextChanged;
                 _initialized = true;
@@ -150,7 +141,7 @@ namespace ChessForge
 
             AppState.IsDirty = currDirty;
 
-            if (!_isPrintMode)
+            if (!_isPrinting)
             {
                 _selectedNode = Nodes[0];
                 if (AppState.ActiveVariationTree != null)
@@ -207,7 +198,7 @@ namespace ChessForge
             if (!string.IsNullOrEmpty(Intro.CodedContent))
             {
                 string xaml = EncodingUtils.Base64Decode(Intro.CodedContent);
-                if (_isPrintMode)
+                if (_isPrinting)
                 {
                     // if printing, font size directives must be removed.
                     xaml = RemoveFontSizes(xaml);
@@ -290,7 +281,7 @@ namespace ChessForge
             try
             {
                 string hlText = _rtb.Selection.Text;
-                
+
                 EditHyperlinkDialog dlg = new EditHyperlinkDialog(null, hlText);
                 GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
@@ -310,7 +301,7 @@ namespace ChessForge
                             TextPointer tp = _rtb.CaretPosition;
                             // clear selection, it will be replaced by the hyperlink's text
                             _rtb.Selection.Text = "";
-                            
+
                             // get insertion place
                             RichTextBoxUtilities.GetMoveInsertionPlace(_rtb, out Paragraph para, out Inline insertBefore, out double fontSize);
 
@@ -618,7 +609,7 @@ namespace ChessForge
         /// <returns></returns>
         public TextBlock InsertMove(TreeNode node, bool fromClipboard = false)
         {
-            if (!_isPrintMode)
+            if (!_isPrinting)
             {
                 AppState.MainWin.UiImgMainChessboard.Source = ChessBoards.ChessBoardBlue;
             }
@@ -639,7 +630,7 @@ namespace ChessForge
             rMove.FontWeight = FontWeights.Bold;
             rMove.FontSize = MOVE_FONT_SIZE;
 
-            if (!_isPrintMode)
+            if (!_isPrinting)
             {
                 WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, _selectedNode);
             }
@@ -1186,7 +1177,7 @@ namespace ChessForge
             IntroViewDiagram diag = new IntroViewDiagram();
             Paragraph para = BuildDiagramParagraph(diag, node, isFlipped);
 
-            if (!_isPrintMode)
+            if (!_isPrinting)
             {
                 diag.Chessboard.DisplayPosition(node, true);
                 diag.Node = node;
@@ -1231,7 +1222,7 @@ namespace ChessForge
             CreateDiagramElements(para, diag, nd, flipState);
             DiagramList.Add(diag);
 
-            if (!_isPrintMode)
+            if (!_isPrinting)
             {
                 SetInlineUIContainerEventHandlers(para);
                 diag.Chessboard.DisplayPosition(nd, true);
