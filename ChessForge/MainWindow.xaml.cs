@@ -1919,7 +1919,7 @@ namespace ChessForge
 
             try
             {
-                _exerciseTreeView = new ExerciseTreeView(GameData.ContentType.EXERCISE);
+                _exerciseTreeView = new ExerciseTreeView(UiRtbExercisesView, GameData.ContentType.EXERCISE);
                 UiRtbExercisesView.IsDocumentEnabled = true;
 
                 if (ActiveVariationTree.Nodes.Count == 0)
