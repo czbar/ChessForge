@@ -1107,6 +1107,8 @@ namespace ChessForge
                 int idx = 0;
 
                 int? multipv = null;
+                int? depth = null;
+                int? seldepth = null;
                 int? score = null;
                 int? movesToMate = null;
                 string moves = "";
@@ -1120,6 +1122,14 @@ namespace ChessForge
                         case "multipv":
                             idx++;
                             multipv = int.Parse(tokens[idx]);
+                            break;
+                        case "depth":
+                            idx++;
+                            depth = int.Parse(tokens[idx]);
+                            break;
+                        case "seldepth":
+                            idx++;
+                            seldepth = int.Parse(tokens[idx]);
                             break;
                         case "score":
                             // next token can be "cp" or "mate" followed by an int value
@@ -1151,6 +1161,11 @@ namespace ChessForge
                         }
 
                         EngineMoveCandidates.Lines[multipv.Value - 1].Line = moves;
+                        if (depth != null && seldepth != null)
+                        {
+                            EngineMoveCandidates.Lines[multipv.Value - 1].Depth = depth.Value;
+                            EngineMoveCandidates.Lines[multipv.Value - 1].SelDepth = seldepth.Value;
+                        }
                         if (score != null)
                         {
                             EngineMoveCandidates.Lines[multipv.Value - 1].ScoreCp = score.Value;
