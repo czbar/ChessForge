@@ -65,7 +65,7 @@ namespace ChessForge
             // it could be that a new move was made and it is "hidden" under a collapsed root
             UncollapseMove(_mainWin.ActiveLine.GetSelectedTreeNode());
 
-            if (LineManager.EffectiveIndexDepth >= 0 && LineManager.IndexHeaderPara == null)
+            if (LineManager.EffectiveIndexDepth >= 0)
             {
                 LineManager.CreateIndexHeaderPara();
                 LineManager.PopulateIndexHeaderPara();
@@ -75,9 +75,16 @@ namespace ChessForge
                 LineManager.PopulateIndexContentPara();
                 doc.Blocks.Add(LineManager.IndexContentPara);
             }
-            else if (PageHeaderParagraph != null)
+            else
             {
-                PageHeaderParagraph.ToolTip = Properties.Resources.ShowIndex;
+                // set index paras to null as otherwise it will confuse UpdateLayout (exception when attempting to InsertAfter IndexPara)
+                LineManager.IndexHeaderPara = null;
+                LineManager.IndexContentPara = null;
+
+                if (PageHeaderParagraph != null)
+                {
+                    PageHeaderParagraph.ToolTip = Properties.Resources.ShowIndex;
+                }
             }
 
             CreateParagraphs(doc, para);
@@ -99,7 +106,7 @@ namespace ChessForge
         /// calculates the new set LineSectors, and the index paragraphs,
         /// then updates the paragraphs where there are differences.
         /// </summary>
-        public void UpdateLayoutOnAddedMove()
+        public void UpdateLayoutOnAddedMove(TreeNode nd)
         {
             LineSectorManager updateLineManger = new LineSectorManager(null);
             updateLineManger.BuildLineSectors(ShownVariationTree.Nodes[0]);
@@ -113,12 +120,16 @@ namespace ChessForge
                 HostRtb.Document.Blocks.InsertAfter(LineManager.IndexHeaderPara, LineManager.IndexContentPara);
             }
 
+            // NOTE: on added move we don't need to worry about removing index paragraphs
+            // in case updateLineManger.EffectiveIndexDepth <= 0 as they are not present in the first place. 
+
             LineManager.MaxBranchLevel = updateLineManger.MaxBranchLevel;
             LineManager.PopulateIndexHeaderPara();
 
             TreeViewUpdater updater = new TreeViewUpdater(LineManager, updateLineManger, this);
             updater.MoveAdded();
 
+            SelectNode(nd);
             LineManager.PopulateIndexContentPara();
         }
 
@@ -306,6 +317,26 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Checks if the sector is to be used for creating a paragraph.
+        /// </summary>
+        /// <param name="sector"></param>
+        /// <returns></returns>
+        public bool IsSectorToCreateParaFor(LineSector sector)
+        {
+            bool create = true;
+
+            if (sector == null
+                || sector.Nodes.Count == 0 
+                || sector.Nodes.Count == 1 && sector.Nodes[0].NodeId == 0 && string.IsNullOrEmpty(sector.Nodes[0].Comment)
+               )
+            {
+                create = false;
+            }
+
+            return create;
+        }
+
+        /// <summary>
         /// Finds sector with the passed node and ensures it is not collapsed
         /// </summary>
         /// <param name="nd"></param>
@@ -342,72 +373,48 @@ namespace ChessForge
             for (int n = 0; n < LineManager.LineSectors.Count; n++)
             {
                 LineSector sector = LineManager.LineSectors[n];
-                if (!sector.IsShown)
+                if (IsSectorToCreateParaFor(sector) && sector.IsShown)
                 {
-                    continue;
-                }
-
-                //if (doNotShow.Find(x => x == sector) != null)
-                //{
-                //    continue;
-                //}
-
-                if (sector.Nodes.Count == 0 || sector.Nodes.Count == 1 && sector.Nodes[0].NodeId == 0 && string.IsNullOrEmpty(sector.Nodes[0].Comment))
-                {
-                    continue;
-                }
-
-                try
-                {
-                    Paragraph para;
-                    if (sector.DisplayLevel < 0)
+                    try
                     {
-                        sector.DisplayLevel = 0;
-                    }
-
-                    if (!LineManager.IsEffectiveIndexLevel(sector.BranchLevel))
-                    {
-                        // also make sure that the sector outside the indexed range is not expanded!
-                        foreach (TreeNode node in sector.Nodes)
+                        Paragraph para;
+                        if (sector.DisplayLevel < 0)
                         {
-                            node.IsCollapsed = false;
+                            sector.DisplayLevel = 0;
                         }
 
-                    }
-                    else
-                    {
-                        // add extra room above an index line, unless this is the first line at level 2
-                        if (sector.BranchLevel == 2 && firstAtIndexLevel2)
+                        if (!LineManager.IsEffectiveIndexLevel(sector.BranchLevel))
                         {
-                            firstAtIndexLevel2 = false;
+                            // also make sure that the sector outside the indexed range is not expanded!
+                            foreach (TreeNode node in sector.Nodes)
+                            {
+                                node.IsCollapsed = false;
+                            }
+
                         }
-                    }
+                        else
+                        {
+                            // add extra room above an index line, unless this is the first line at level 2
+                            if (sector.BranchLevel == 2 && firstAtIndexLevel2)
+                            {
+                                firstAtIndexLevel2 = false;
+                            }
+                        }
 
-                    para = LineSectorManager.CreateStudyParagraph(sector.ParaAttrs, sector.DisplayLevel);
-                    if (para.FontWeight == FontWeights.Bold)
+                        para = LineSectorManager.CreateStudyParagraph(sector.ParaAttrs, sector.DisplayLevel);
+                        if (para.FontWeight == FontWeights.Bold)
+                        {
+                            para.FontWeight = FontWeights.Normal;
+                        }
+
+                        sector.HostPara = para;
+                        BuildSectorRuns(sector);
+                        RemoveTrailingNewLinesInPara(para);
+                        doc.Blocks.Add(para);
+                    }
+                    catch
                     {
-                        para.FontWeight = FontWeights.Normal;
                     }
-
-                    //if (LineManager.IsEffectiveIndexLevel(sector.BranchLevel))
-                    //{
-                    //    InsertIndexPrefixRun(sector, para);
-                    //}
-                    //else
-                    //{
-                    //    if (LineManager.IsLastEffectiveIndexLine(sector.DisplayLevel + 1))
-                    //    {
-                    //        para.FontWeight = FontWeights.DemiBold;
-                    //    }
-                    //}
-
-                    sector.HostPara = para;
-                    BuildSectorRuns(sector);
-                    RemoveTrailingNewLinesInPara(para);
-                    doc.Blocks.Add(para);
-                }
-                catch
-                {
                 }
             }
         }
@@ -502,12 +509,14 @@ namespace ChessForge
                         if (i == 0 && sector.ParaAttrs.FirstNodeColor != null && !LineManager.IsEffectiveIndexLevel(sector.BranchLevel))
                         {
                             r.Foreground = sector.ParaAttrs.FirstNodeColor;
+                            r.Tag = r.Foreground;
                         }
                         if (sector.Nodes.Count > 1 && i == sector.Nodes.Count - 1 && sector.BranchLevel >= LineManager.EffectiveIndexDepth)
                         {
                             if (sector.ParaAttrs.LastNodeColor != null)
                             {
                                 r.Foreground = sector.ParaAttrs.LastNodeColor;
+                                r.Tag = r.Foreground;
                             }
                         }
                     }

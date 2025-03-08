@@ -6794,7 +6794,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Show Solutions.
+        ///   Looks up a localized string similar to Show Exercise Solutions.
         /// </summary>
         public static string ShowSolutions {
             get {

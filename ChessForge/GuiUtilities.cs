@@ -33,6 +33,14 @@ namespace ChessForge
           };
 
         /// <summary>
+        /// Sets the check mark for the Show Solutions menu item.
+        /// </summary>
+        public static void SetShowSolutionsMenuCheckMark()
+        {
+            AppState.MainWin.UiMnExerciseViewConfig.IsChecked = AppState.ActiveChapter != null && AppState.ActiveChapter.ShowSolutionsOnOpen;
+        }
+
+        /// <summary>
         /// Gets a string with reference GUIDs, splits them into 
         /// Game/Exercise and Chapter GUID strings.
         /// and separate for Chapter refs.

@@ -726,6 +726,7 @@ namespace ChessForge
                                 break;
                             case Key.C:
                                 _mainWin.ActiveTreeView.PlaceSelectedForCopyInClipboard();
+                                _mainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgCopiedMoves, CommentBox.HintType.INFO);
                                 e.Handled = true;
                                 break;
                             case Key.X:

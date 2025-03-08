@@ -1,5 +1,6 @@
 ﻿using GameTree;
 using System;
+using System.Collections.Generic;
 using System.Windows.Documents;
 
 namespace ChessForge
@@ -38,6 +39,12 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Reference to the last updated paragraph.
+        /// It is used to insert updated paragraphs in the right place.
+        /// </summary>
+        private Paragraph _lastUpdatedParagraph = null;
+
+        /// <summary>
         /// Performs an update of the TreeView GUI 
         /// after a move was added to the underlying Tree.
         /// This is a special case of the update where we can assume the following.
@@ -60,66 +67,172 @@ namespace ChessForge
             // and updates the modified ones.
             try
             {
+                List<LineSector> removedSectors = new List<LineSector>();
                 for (int i = 0; i < _updatedManager.LineSectors.Count; i++)
                 {
-                    TreeNode updatedNode = _updatedManager.LineSectors[i].Nodes[0];
-                    TreeNode currentNode = i < _currentManager.LineSectors.Count ? _currentManager.LineSectors[i].Nodes[0] : null;
+                    TreeNode updatedNode = null;
+                    TreeNode currentNode = null;
+
+                    LineSector currentSector = null;
+                    LineSector updatedSector = _updatedManager.LineSectors[i];
+
+                    if (_updatedManager.LineSectors[i].Nodes.Count > 0)
+                    {
+                        updatedNode = _updatedManager.LineSectors[i].Nodes[0];
+                    }
+
+                    if (i < _currentManager.LineSectors.Count)
+                    {
+                        currentSector = _currentManager.LineSectors[i];
+                        if (_currentManager.LineSectors[i].Nodes.Count > 0)
+                        {
+                            currentNode = _currentManager.LineSectors[i].Nodes[0];
+                        }
+                    }
 
                     if (updatedNode == currentNode)
                     {
-                        Paragraph currHostPara = _currentManager.LineSectors[i].HostPara;
-                        _currentManager.LineSectors[i].DisplayLevel = _updatedManager.LineSectors[i].DisplayLevel;
-
-                        // update the existing sector if needed
-                        LineSectorManager.UpdateStudyParagraphAttrs(currHostPara, _updatedManager.LineSectors[i].ParaAttrs, _updatedManager.LineSectors[i].DisplayLevel);
-
-                        bool needsupdate = CompareSectorNodeList(_currentManager.LineSectors[i], _updatedManager.LineSectors[i]);
-                        if (needsupdate)
+                        // NOTE: if both are null, we do not create anything
+                        if (currentNode != null)
                         {
-                            _currentManager.LineSectors[i].ParaAttrs = _updatedManager.LineSectors[i].ParaAttrs;
-                            _currentManager.LineSectors[i].Nodes = _updatedManager.LineSectors[i].Nodes;
-
-                            foreach (TreeNode node in _currentManager.LineSectors[i].Nodes)
-                            {
-                                _view.RemoveNodeFromDictionaries(node);
-                            }
-
-                            if (_currentManager.LineSectors[i].HostPara == null)
-                            {
-                                CreateParagraphForNewSector(i);
-                            }
-                            
-                            _view.BuildSectorRuns(_currentManager.LineSectors[i]);
-                            SetFirstLastMoveColors(i);
+                            UpdateSector(i, currentSector, updatedSector);
                         }
                     }
                     else
                     {
-                        // insert the new sector
-                        LineSector newSector = _updatedManager.LineSectors[i];
-                        _currentManager.LineSectors.Insert(i, newSector);
-                        CreateSectorParagraph(newSector);
-
-                        foreach (TreeNode node in newSector.Nodes)
-                        {
-                            _view.RemoveNodeFromDictionaries(node);
-                        }
-                        _view.BuildSectorRuns(newSector);
-
-                        if (i > 0)
-                        {
-                            _view.HostRtb.Document.Blocks.InsertAfter(_currentManager.LineSectors[i - 1].HostPara, newSector.HostPara);
-                        }
-                        else
-                        {
-                            _view.HostRtb.Document.Blocks.Add(newSector.HostPara);
-                        }
+                        ReplaceSector(i, currentSector, updatedSector, removedSectors);
                     }
+                }
+
+                // Remove the paragraphs from the removed sectors.
+                foreach (LineSector sector in removedSectors)
+                {
+                    _view.HostRtb.Document.Blocks.Remove(sector.HostPara);
                 }
             }
             catch (Exception ex)
             {
                 AppLog.Message("TreeViewUpdater.MoveAdded()", ex);
+            }
+        }
+
+        /// <summary>
+        /// Updates the sector at the given index with the updated sector.
+        /// NOTE: neither currentSector nor updatedSector will be passed as null.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="currentSector"></param>
+        /// <param name="updatedSector"></param>
+        private void UpdateSector(int index, LineSector currentSector, LineSector updatedSector)
+        {
+            Paragraph currHostPara = currentSector.HostPara;
+            currentSector.DisplayLevel = updatedSector.DisplayLevel;
+
+            // update the existing sector if needed
+            LineSectorManager.UpdateStudyParagraphAttrs(currHostPara, updatedSector.ParaAttrs, updatedSector.DisplayLevel);
+
+            bool needsupdate = CompareSectorNodeList(currentSector, updatedSector);
+            if (needsupdate)
+            {
+                currentSector.ParaAttrs = updatedSector.ParaAttrs;
+                currentSector.Nodes = updatedSector.Nodes;
+
+                foreach (TreeNode node in currentSector.Nodes)
+                {
+                    _view.RemoveNodeFromDictionaries(node);
+                }
+
+                if (!_view.IsSectorToCreateParaFor(updatedSector))
+                {
+                    _view.HostRtb.Document.Blocks.Remove(currentSector.HostPara);
+                }
+                else
+                {
+                    // NOTE: this was a bug fix for where moves in a new workbook could not be shown  
+                    if (currentSector.HostPara == null)
+                    {
+                        CreateParagraphForNewSector(index);
+                    }
+                    _lastUpdatedParagraph = currentSector.HostPara;
+                    _view.BuildSectorRuns(currentSector);
+                    currentSector.ResetRunTags();
+                }
+            }
+            else
+            {
+                if (currentSector.HostPara != null)
+                {
+                    _lastUpdatedParagraph = currentSector.HostPara;
+                }
+                SetFirstLastMoveColors(index);
+            }
+        }
+
+        /// <summary>
+        /// Replaces the sector at the given index with the updated sector.
+        /// NOTE: currentSector can be passed as null but updatedSector cannot.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="currentSector"></param>
+        /// <param name="updatedSector"></param>
+        /// <param name="removedSectors"></param>
+        private void ReplaceSector(int index, LineSector currentSector, LineSector updatedSector, List<LineSector> removedSectors)
+        {
+            // we are creating and inserting a new sector.
+            // If there is a corresponding sector in the current manager, remove it.
+            if (index < _currentManager.LineSectors.Count)
+            {
+                LineSector sectorToRemove = currentSector;
+                removedSectors.Add(sectorToRemove);
+                _currentManager.LineSectors.Remove(sectorToRemove);
+            }
+
+            LineSector newSector = updatedSector;
+            if (index < _currentManager.LineSectors.Count)
+            {
+                _currentManager.LineSectors.Insert(index, newSector);
+            }
+            else
+            {
+                _currentManager.LineSectors.Add(newSector);
+            }
+
+            if (_view.IsSectorToCreateParaFor(newSector))
+            {
+                CreateSectorParagraph(newSector);
+
+                foreach (TreeNode node in newSector.Nodes)
+                {
+                    _view.RemoveNodeFromDictionaries(node);
+                }
+                _view.BuildSectorRuns(newSector);
+
+                //if (index > 0 && index < _currentManager.LineSectors.Count)
+                //{
+                //    _view.HostRtb.Document.Blocks.InsertAfter(_currentManager.LineSectors[index - 1].HostPara, newSector.HostPara);
+                //}
+                // else 
+                if (_lastUpdatedParagraph != null)
+                {
+                    if (newSector.HostPara != null)
+                    {
+                        _view.HostRtb.Document.Blocks.InsertAfter(_lastUpdatedParagraph, newSector.HostPara);
+                        _lastUpdatedParagraph = newSector.HostPara;
+                    }
+                }
+                else
+                {
+                    if (_currentManager.IndexContentPara != null)
+                    {
+                        _view.HostRtb.Document.Blocks.InsertAfter(_currentManager.IndexContentPara, newSector.HostPara);
+                    }
+                    else
+                    {
+                        _view.HostRtb.Document.Blocks.InsertAfter(_view.PageHeaderParagraph, newSector.HostPara);
+                    }
+                }
+
+                _lastUpdatedParagraph = newSector.HostPara;
             }
         }
 
@@ -133,12 +246,14 @@ namespace ChessForge
             if (lastRun != null)
             {
                 lastRun.Foreground = _updatedManager.LineSectors[index].ParaAttrs.LastNodeColor;
+                lastRun.Tag = lastRun.Foreground;
             }
 
             Run firstRun = RichTextBoxUtilities.FindFirstMoveRunInParagraph(_currentManager.LineSectors[index].HostPara);
             if (firstRun != null)
             {
                 firstRun.Foreground = _updatedManager.LineSectors[index].ParaAttrs.FirstNodeColor;
+                firstRun.Tag = firstRun.Foreground;
             }
         }
 
@@ -242,92 +357,5 @@ namespace ChessForge
             return isOneSubsetOfOther;
         }
 
-        /// <summary>
-        /// Update only those attributes of the paragraph that have changed.
-        /// We believe it may have some performance benefit. 
-        /// </summary>
-        /// <param name="currPara"></param>
-        /// <param name="updatePara"></param>
-        private bool UpdateParagraphAttrs(LineSector currentSector, LineSector updatedSector)
-        {
-            bool needsUpdate = false;
-
-            SectorParaAttrs currAttrs = currentSector.ParaAttrs;
-            SectorParaAttrs updatedAttrs = updatedSector.ParaAttrs;
-
-            if (currentSector.BranchLevel != updatedSector.BranchLevel)
-            {
-                currentSector.BranchLevel = updatedSector.BranchLevel;
-                needsUpdate = true;
-            }
-
-            if (currentSector.DisplayLevel != updatedSector.DisplayLevel)
-            {
-                currentSector.DisplayLevel = updatedSector.DisplayLevel;
-                needsUpdate = true;
-            }
-
-            if (currAttrs.LevelGroup != updatedAttrs.LevelGroup)
-            {
-                currAttrs.LevelGroup = updatedAttrs.LevelGroup;
-                needsUpdate = true;
-            }
-
-            if (currAttrs.FontSize != updatedAttrs.FontSize)
-            {
-                currAttrs.FontSize = updatedAttrs.FontSize;
-                needsUpdate = true;
-            }
-
-            if (currAttrs.FontWeight != updatedAttrs.FontWeight)
-            {
-                currAttrs.FontWeight = updatedAttrs.FontWeight;
-                needsUpdate = true;
-            }
-
-            if (currAttrs.FirstNodeColor != updatedAttrs.FirstNodeColor)
-            {
-                currAttrs.FirstNodeColor = updatedAttrs.FirstNodeColor;
-                needsUpdate = true;
-            }
-
-            if (currAttrs.LastNodeColor != updatedAttrs.LastNodeColor)
-            {
-                currAttrs.LastNodeColor = updatedAttrs.LastNodeColor;
-                needsUpdate = true;
-            }
-
-            if (currAttrs.Margin != updatedAttrs.Margin)
-            {
-                currAttrs.Margin = updatedAttrs.Margin;
-                needsUpdate = true;
-            }
-
-            if (currAttrs.TopMarginExtra != updatedAttrs.TopMarginExtra)
-            {
-                currAttrs.TopMarginExtra = updatedAttrs.TopMarginExtra;
-                needsUpdate = true;
-            }
-
-            if (currAttrs.BottomMarginExtra != updatedAttrs.BottomMarginExtra)
-            {
-                currAttrs.BottomMarginExtra = updatedAttrs.BottomMarginExtra;
-                needsUpdate = true;
-            }
-
-            if (currAttrs.Foreground != updatedAttrs.Foreground)
-            {
-                currAttrs.Foreground = updatedAttrs.Foreground;
-                needsUpdate = true;
-            }
-
-            if (currAttrs.Background != updatedAttrs.Background)
-            {
-                currAttrs.Background = updatedAttrs.Background;
-                needsUpdate = true;
-            }
-
-            return needsUpdate;
-        }
     }
 }

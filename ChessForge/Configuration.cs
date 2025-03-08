@@ -110,6 +110,13 @@ namespace ChessForge
         public static string ChessboardColors = "";
 
         /// <summary>
+        /// When true it applies the experimental fast layout
+        /// that is supposed to speed up the GUI by reusing Paragraphs and Runs
+        /// upon changes in the Variation Tree.
+        /// </summary>
+        public static bool FastLayout = false;
+
+        /// <summary>
         /// Determines if the GUI is in dark mode
         /// </summary>
         public static bool IsDarkMode = false;
@@ -583,6 +590,7 @@ namespace ChessForge
         private const string CFG_BAD_MOVE_DETECTION = "BadMoveDetection";
         private const string CFG_SHOW_ENGINE_ANALYSIS_DEPTH = "ShowEngineAnalysisDepth";
 
+        private const string CFG_FAST_LAYOUT = "FastLayout";
         private const string CFG_IS_DARK_MODE = "IsDarkMode";
         private const string CFG_DONT_SAVE_EVALS = "DontSavePositionEvals";
 
@@ -780,6 +788,7 @@ namespace ChessForge
                 sb.AppendLine(CFG_BAD_MOVE_DETECTION + "=" + (EnableBadMoveDetection ? "1" : "0"));
                 sb.AppendLine(CFG_SHOW_ENGINE_ANALYSIS_DEPTH + "=" + (ShowEngineAnalysisDepth ? "1" : "0"));
 
+                sb.AppendLine(CFG_FAST_LAYOUT + "=" + (FastLayout ? "1" : "0"));
                 sb.AppendLine(CFG_IS_DARK_MODE + "=" + (IsDarkMode ? "1" : "0"));
                 sb.AppendLine(CFG_DONT_SAVE_EVALS + "=" + (DontSavePositionEvals ? "1" : "0"));
 
@@ -1131,6 +1140,9 @@ namespace ChessForge
                             break;
                         case CFG_SHOW_ENGINE_ANALYSIS_DEPTH:
                             ShowEngineAnalysisDepth = value != "0" ? true : false;
+                            break;
+                        case CFG_FAST_LAYOUT:
+                            FastLayout = value != "0" ? true : false;
                             break;
                         case CFG_IS_DARK_MODE:
                             IsDarkMode = value != "0" ? true : false;

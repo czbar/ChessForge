@@ -870,7 +870,7 @@ PasteEngineLines=
 MnEvaluateGames=
 
 #description: Delete notes
-#english: MenuDeleteNotes=Delete Notes...
+#english: MenuDeleteNotes=Clean Lines and Comments...
 MenuDeleteNotes=
 
 
@@ -1259,7 +1259,7 @@ ReorderLines=
 #
 
 #description: Delete Notes
-#english: DeleteNotes = Delete Notes
+#english: DeleteNotes = Clean Lines and Comments
 DeleteNotes =
 
 #description: Items to delete
@@ -1680,11 +1680,11 @@ ApplyToAllChapters=
 ExerciseViewConfig=
 
 #description: Solutions
-#english: ShowSolutions=Show Solutions
+#english: ShowSolutions=Show Exercise Solutions
 ShowSolutions=
 
 #description: Show/hide all solutions by default
-#english: ShowSolutionsByDefault=Show on Open
+#english: ShowSolutionsByDefault=Show by Default
 ShowSolutionsByDefault=
 
 #description: Solutions
@@ -4074,7 +4074,7 @@ OpMoveExercises=
 OpCopyExercises=
 
 #description: Operation
-#english: OpDeleteNotes=Delete Notes
+#english: OpDeleteNotes=Clean Lines and Comments
 OpDeleteNotes=
 
 #description: Operation

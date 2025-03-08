@@ -1427,6 +1427,7 @@ namespace ChessForge
         {
             _activeChapter = chapter;
             AppState.ShowIntroTab(_activeChapter);
+            GuiUtilities.SetShowSolutionsMenuCheckMark();
             return _activeChapter;
         }
     }

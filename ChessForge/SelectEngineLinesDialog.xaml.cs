@@ -75,5 +75,15 @@ namespace ChessForge
         {
             DialogResult = false;
         }
+
+        /// <summary>
+        /// Links to the relevant Wiki page.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Paste-Engine-Lines-Dialog");
+        }
     }
 }

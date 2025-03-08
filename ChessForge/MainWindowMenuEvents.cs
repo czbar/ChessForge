@@ -2597,6 +2597,7 @@ namespace ChessForge
         private void UiMnExerciseViewConfig_Click(object sender, RoutedEventArgs e)
         {
             ChapterUtils.InvokeExerciseViewConfigDialog(AppState.ActiveChapter);
+            UiMnExerciseViewConfig.IsChecked = AppState.ActiveChapter != null && AppState.ActiveChapter.ShowSolutionsOnOpen;
         }
 
         /// <summary>
@@ -3000,6 +3001,7 @@ namespace ChessForge
             if (AppState.IsTreeViewTabActive())
             {
                 ActiveTreeView?.PlaceSelectedForCopyInClipboard();
+                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgCopiedMoves,CommentBox.HintType.INFO);
             }
             else if (AppState.ActiveTab == TabViewType.INTRO)
             {
@@ -3018,8 +3020,11 @@ namespace ChessForge
             if (AppState.IsTreeViewTabActive())
             {
                 ActiveTreeView.PlaceSelectedForCopyInClipboard();
-                ActiveTreeView.DeleteRemainingMoves();
-                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgCopiedMoves, CommentBox.HintType.INFO);
+                if (ActiveTreeView.HasMovesSelectedForCopy)
+                {
+                    ActiveTreeView.DeleteRemainingMoves();
+                    BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgCopiedMoves, CommentBox.HintType.INFO);
+                }
             }
             else if (AppState.ActiveTab == TabViewType.INTRO)
             {
@@ -3054,8 +3059,6 @@ namespace ChessForge
             if (ActiveTreeView != null)
             {
                 ActiveTreeView.SelectActiveLineForCopy();
-                ActiveTreeView.PlaceSelectedForCopyInClipboard();
-                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgCopiedLine, CommentBox.HintType.INFO);
             }
         }
 
@@ -3069,8 +3072,6 @@ namespace ChessForge
             if (ActiveTreeView != null)
             {
                 ActiveTreeView.SelectSubtreeForCopy();
-                ActiveTreeView.PlaceSelectedForCopyInClipboard();
-                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgCopiedTree, CommentBox.HintType.INFO);
             }
         }
 

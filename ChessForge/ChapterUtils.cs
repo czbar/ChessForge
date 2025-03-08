@@ -142,10 +142,21 @@ namespace ChessForge
                 {
                     try
                     {
-                        if (dlg.ShowSolutionOnOpen != chapter.ShowSolutionsOnOpen)
+                        if (dlg.ShowSolutionOnOpen != chapter.ShowSolutionsOnOpen || dlg.ApplyToAllChapters)
                         {
-                            chapter.ShowSolutionsOnOpen = dlg.ShowSolutionOnOpen;
-                            UpdateShowSolutions(dlg.ApplyToAllChapters ? null : chapter, dlg.ShowSolutionOnOpen);
+                            if (dlg.ApplyToAllChapters)
+                            {
+                                foreach (Chapter ch in AppState.Workbook.Chapters)
+                                {
+                                    ch.ShowSolutionsOnOpen = dlg.ShowSolutionOnOpen;
+                                    UpdateShowSolutions(ch, dlg.ShowSolutionOnOpen);
+                                }
+                            }
+                            else
+                            {
+                                chapter.ShowSolutionsOnOpen = dlg.ShowSolutionOnOpen;
+                                UpdateShowSolutions(chapter, dlg.ShowSolutionOnOpen);
+                            }
                             AppState.MainWin.UpdateShowSolutionInExerciseView(dlg.ShowSolutionOnOpen);
                             AppState.IsDirty = true;
                         }

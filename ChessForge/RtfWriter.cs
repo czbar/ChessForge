@@ -232,91 +232,98 @@ namespace ChessForge
         {
             foreach (Chapter chapter in AppState.Workbook.Chapters)
             {
-                // if scope is CHAPTER, only act when we encounter the active chapter
-                if (_printScope == PrintScope.WORKBOOK || _printScope == PrintScope.CHAPTER && _chapterToPrint == chapter)
+                try
                 {
-                    FlowDocument chapterTitleDoc = PrintChapterTitle(chapter);
-                    if (!isFirstPrintPage)
+                    // if scope is CHAPTER, only act when we encounter the active chapter
+                    if (_printScope == PrintScope.WORKBOOK || _printScope == PrintScope.CHAPTER && _chapterToPrint == chapter)
                     {
-                        AddPageBreakPlaceholder(chapterTitleDoc);
-                    }
-                    else
-                    {
-                        isFirstPrintPage = false;
-                    }
-                    CreateDocumentForPrint(printDoc, chapterTitleDoc, null, ref diagrams);
-
-                    bool introPrinted = false;
-                    if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_INTRO))
-                    {
-                        if (!chapter.IsIntroEmpty())
+                        FlowDocument chapterTitleDoc = PrintChapterTitle(chapter);
+                        if (!isFirstPrintPage)
                         {
-                            PrintIntroToFlowDoc(printDoc, chapter, ref diagrams);
-                            introPrinted = true;
+                            AddPageBreakPlaceholder(chapterTitleDoc);
                         }
-                    }
-
-                    if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_STUDY))
-                    {
-                        if (!chapter.IsStudyEmpty())
+                        else
                         {
-                            PrintStudyToFlowDoc(printDoc, scope, chapter, introPrinted, ref diagrams);
+                            isFirstPrintPage = false;
                         }
-                    }
+                        CreateDocumentForPrint(printDoc, chapterTitleDoc, null, ref diagrams);
 
-                    if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_GAMES))
-                    {
-                        if (chapter.ModelGames.Count > 0)
+                        bool introPrinted = false;
+                        if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_INTRO))
                         {
-                            FlowDocument docGamesHeader = PrintGamesHeader();
-                            AddPageBreakPlaceholder(docGamesHeader);
-                            CreateDocumentForPrint(printDoc, docGamesHeader, null, ref diagrams);
-
-                            // if "two-column format" is set, place the start command before the first game
-                            // and the end command after the last one
-                            if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.TWO_COLUMN_GAMES))
+                            if (!chapter.IsIntroEmpty())
                             {
-                                printDoc.Blocks.Add(CreateTwoColumnBeginPara());
-                            }
-
-                            for (int i = 0; i < chapter.ModelGames.Count; i++)
-                            {
-                                PrintGameToFlowDoc(printDoc, chapter, i, ref diagrams);
-                            }
-
-                            if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.TWO_COLUMN_GAMES))
-                            {
-                                printDoc.Blocks.Add(CreateTwoColumnEndPara());
+                                PrintIntroToFlowDoc(printDoc, scope, chapter, ref diagrams);
+                                introPrinted = true;
                             }
                         }
-                    }
 
-                    if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_EXERCISES))
-                    {
-                        if (chapter.Exercises.Count > 0)
+                        if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_STUDY))
                         {
-                            FlowDocument docExercisesHeader = PrintExercisesHeader();
-                            AddPageBreakPlaceholder(docExercisesHeader);
-                            CreateDocumentForPrint(printDoc, docExercisesHeader, null, ref diagrams);
-
-                            // if "two-column format" is set, place the start command before the first exercise
-                            // and the end command after the last one
-                            if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.TWO_COLUMN_EXERCISES))
+                            if (!chapter.IsStudyEmpty())
                             {
-                                printDoc.Blocks.Add(CreateTwoColumnBeginPara());
+                                PrintStudyToFlowDoc(printDoc, scope, chapter, introPrinted, ref diagrams);
                             }
+                        }
 
-                            for (int i = 0; i < chapter.Exercises.Count; i++)
+                        if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_GAMES))
+                        {
+                            if (chapter.ModelGames.Count > 0)
                             {
-                                PrintExerciseToFlowDoc(printDoc, chapter, i, ref diagrams);
+                                FlowDocument docGamesHeader = PrintGamesHeader();
+                                AddPageBreakPlaceholder(docGamesHeader);
+                                CreateDocumentForPrint(printDoc, docGamesHeader, null, ref diagrams);
+
+                                // if "two-column format" is set, place the start command before the first game
+                                // and the end command after the last one
+                                if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.TWO_COLUMN_GAMES))
+                                {
+                                    printDoc.Blocks.Add(CreateTwoColumnBeginPara());
+                                }
+
+                                for (int i = 0; i < chapter.ModelGames.Count; i++)
+                                {
+                                    PrintGameToFlowDoc(printDoc, chapter, i, ref diagrams);
+                                }
+
+                                if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.TWO_COLUMN_GAMES))
+                                {
+                                    printDoc.Blocks.Add(CreateTwoColumnEndPara());
+                                }
                             }
+                        }
 
-                            if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.TWO_COLUMN_EXERCISES))
+                        if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_EXERCISES))
+                        {
+                            if (chapter.Exercises.Count > 0)
                             {
-                                printDoc.Blocks.Add(CreateTwoColumnEndPara());
+                                FlowDocument docExercisesHeader = PrintExercisesHeader();
+                                AddPageBreakPlaceholder(docExercisesHeader);
+                                CreateDocumentForPrint(printDoc, docExercisesHeader, null, ref diagrams);
+
+                                // if "two-column format" is set, place the start command before the first exercise
+                                // and the end command after the last one
+                                if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.TWO_COLUMN_EXERCISES))
+                                {
+                                    printDoc.Blocks.Add(CreateTwoColumnBeginPara());
+                                }
+
+                                for (int i = 0; i < chapter.Exercises.Count; i++)
+                                {
+                                    PrintExerciseToFlowDoc(printDoc, chapter, i, ref diagrams);
+                                }
+
+                                if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.TWO_COLUMN_EXERCISES))
+                                {
+                                    printDoc.Blocks.Add(CreateTwoColumnEndPara());
+                                }
                             }
                         }
                     }
+                }
+                catch (Exception ex)
+                {
+                    AppLog.Message("PrintChaptersToFlowDoc()" + "Chapter " + chapter.Index, ex);
                 }
             }
         }
@@ -338,7 +345,7 @@ namespace ChessForge
                 switch (AppState.Workbook.ActiveArticle.Tree.ContentType)
                 {
                     case GameData.ContentType.INTRO:
-                        PrintIntroToFlowDoc(printDoc, chapter, ref diagrams);
+                        PrintIntroToFlowDoc(printDoc, PrintScope.ARTICLE, chapter, ref diagrams);
                         break;
                     case GameData.ContentType.STUDY_TREE:
                         PrintStudyToFlowDoc(printDoc, PrintScope.ARTICLE, chapter, true, ref diagrams);
@@ -381,8 +388,14 @@ namespace ChessForge
         /// <param name="printDoc"></param>
         /// <param name="chapter"></param>
         /// <param name="diagrams"></param>
-        private static void PrintIntroToFlowDoc(FlowDocument printDoc, Chapter chapter, ref List<RtfDiagram> diagrams)
+        private static void PrintIntroToFlowDoc(FlowDocument printDoc, PrintScope scope, Chapter chapter, ref List<RtfDiagram> diagrams)
         {
+            if (scope == PrintScope.ARTICLE)
+            {
+                FlowDocument chapterTitleDoc = PrintChapterTitle(chapter);
+                CreateDocumentForPrint(printDoc, chapterTitleDoc, null, ref diagrams);
+            }
+
             FlowDocument doc = PrintIntro(chapter);
             CreateDocumentForPrint(printDoc, doc, chapter.Intro.Tree, ref diagrams);
         }
@@ -774,9 +787,10 @@ namespace ChessForge
         /// <returns></returns>
         private static FlowDocument PrintIntro(Chapter chapter)
         {
-            RichTextBox rtb = new RichTextBox();
-            IntroView introView = new IntroView(new RichTextBox(), chapter, rtb);
+            RichTextBox rtbIntro = new RichTextBox();
+            IntroView introView = new IntroView(rtbIntro, chapter, true);
 
+            RichTextBox rtb = introView.HostRtb;
             // the user may have placed an empty line at the start.
             // we don't want it in print so remove it
             Block first = rtb.Document.Blocks.FirstBlock;
@@ -798,7 +812,14 @@ namespace ChessForge
                 Run runEndCols2 = new Run(EndTwoColumns());
                 paraEndCols2.Inlines.Add(runEndCols2);
 
-                rtb.Document.Blocks.InsertBefore(rtb.Document.Blocks.FirstBlock, paraBeginCols2);
+                if (rtb.Document.Blocks.FirstBlock == null)
+                {
+                    rtb.Document.Blocks.Add(paraBeginCols2);
+                }
+                else
+                {
+                    rtb.Document.Blocks.InsertBefore(rtb.Document.Blocks.FirstBlock, paraBeginCols2);
+                }
                 rtb.Document.Blocks.Add(paraEndCols2);
             }
 
@@ -865,8 +886,6 @@ namespace ChessForge
             _currentGameNumber++;
             int gameNo = _continuousArticleNumbering ? _currentGameNumber : index + 1;
 
-            FlowDocument doc = new FlowDocument();
-
             Paragraph paraDummy1 = new Paragraph();
             paraDummy1.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff + 2;
 
@@ -893,8 +912,12 @@ namespace ChessForge
                 }
             }
 
-            VariationTreeView gameView = new VariationTreeView(doc, GameData.ContentType.MODEL_GAME);
+            RichTextBox rtbGame = new RichTextBox();
+
+            VariationTreeView gameView = new VariationTreeView(rtbGame, GameData.ContentType.MODEL_GAME, true);
             gameView.BuildFlowDocumentForVariationTree(false, game.Tree);
+
+            FlowDocument doc = rtbGame.Document;
 
             // if part of "current view" print set the "two-column format, if so configured.
             // if chapter/workbook view then this is set up before/after first/last game.
@@ -905,12 +928,26 @@ namespace ChessForge
 
             if (index != 0)
             {
-                doc.Blocks.InsertBefore(doc.Blocks.FirstBlock, paraDummy1);
+                if (doc.Blocks.FirstBlock == null)
+                {
+                    doc.Blocks.Add(paraDummy1);
+                }
+                else
+                {
+                    doc.Blocks.InsertBefore(doc.Blocks.FirstBlock, paraDummy1);
+                }
                 doc.Blocks.InsertAfter(paraDummy1, para);
             }
             else
             {
-                doc.Blocks.InsertBefore(doc.Blocks.FirstBlock, para);
+                if (doc.Blocks.FirstBlock == null)
+                {
+                    doc.Blocks.Add(para);
+                }
+                else
+                {
+                    doc.Blocks.InsertBefore(doc.Blocks.FirstBlock, para);
+                }
             }
 
             return doc;
@@ -926,8 +963,6 @@ namespace ChessForge
         {
             _currentExerciseNumber++;
             int exerciseNo = _continuousArticleNumbering ? _currentExerciseNumber : index + 1;
-
-            FlowDocument doc = new FlowDocument();
 
             Paragraph paraDummy1 = new Paragraph();
             paraDummy1.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff + 2;
@@ -954,8 +989,11 @@ namespace ChessForge
                 }
             }
 
-            VariationTreeView exerciseView = new ExerciseTreeView(doc, GameData.ContentType.EXERCISE);
+            RichTextBox rtbExercise = new RichTextBox();
+            VariationTreeView exerciseView = new ExerciseTreeView(rtbExercise, GameData.ContentType.EXERCISE, true);
             exerciseView.BuildFlowDocumentForVariationTree(false, exercise.Tree);
+
+            FlowDocument doc = rtbExercise.Document;
 
             // if part of "current view" print set the "two-column format, if so configured.
             // if chapter/workbook view then this is set up before/after first/last exercise.
@@ -966,12 +1004,27 @@ namespace ChessForge
 
             if (index != 0)
             {
-                doc.Blocks.InsertBefore(doc.Blocks.FirstBlock, paraDummy1);
+                if (doc.Blocks.FirstBlock == null)
+                {
+                    doc.Blocks.Add(paraDummy1);
+                }
+                else
+                {
+                    doc.Blocks.InsertBefore(doc.Blocks.FirstBlock, paraDummy1);
+                }
+
                 doc.Blocks.InsertAfter(paraDummy1, para);
             }
             else
             {
-                doc.Blocks.InsertBefore(doc.Blocks.FirstBlock, para);
+                if (doc.Blocks.FirstBlock == null)
+                {
+                    doc.Blocks.Add(para);
+                }
+                else
+                {
+                    doc.Blocks.InsertBefore(doc.Blocks.FirstBlock, para);
+                }
             }
 
             return doc;
@@ -1113,7 +1166,14 @@ namespace ChessForge
             Run runPageBreak = new Run(PageBreak());
             paraPageBreak.Inlines.Add(runPageBreak);
 
-            doc.Blocks.InsertBefore(doc.Blocks.FirstBlock, paraPageBreak);
+            if (doc.Blocks.FirstBlock == null)
+            {
+                doc.Blocks.Add(paraPageBreak);
+            }
+            else
+            {
+                doc.Blocks.InsertBefore(doc.Blocks.FirstBlock, paraPageBreak);
+            }
         }
 
         /// <summary>
@@ -1204,7 +1264,7 @@ namespace ChessForge
                                 else if (inl.Name.StartsWith(RichTextBoxUtilities.InlineDiagramIucPrefix))
                                 {
                                     printDoc.Blocks.Add(printPara);
-                                    printPara = CreateInlineDiagramForPrint(printDoc,  printPara, inl.Name, tree, ref diagrams);
+                                    printPara = CreateInlineDiagramForPrint(printDoc, printPara, inl.Name, tree, ref diagrams);
                                     lastRunWasIntroMove = false;
                                 }
                                 else

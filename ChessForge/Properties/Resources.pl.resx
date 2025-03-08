@@ -712,7 +712,7 @@
     <value>Oceń partie</value>
   </data>
   <data name="MenuDeleteNotes" xml:space="preserve">
-    <value>Usuń notatki...</value>
+    <value>Wyczyść Notatki i Warianty...</value>
   </data>
   <data name="StripComments" xml:space="preserve">
     <value>Usuń komentarze...</value>
@@ -947,7 +947,7 @@
     <value>Kolejność Wariantów</value>
   </data>
   <data name="DeleteNotes" xml:space="preserve">
-    <value>Usuń Notatki</value>
+    <value>Wyczyść Notatki i Warianty</value>
   </data>
   <data name="ItemsToDelete" xml:space="preserve">
     <value>Elementy do Usunięcia</value>
@@ -1196,10 +1196,10 @@
     <value>Widok Ćwiczeń</value>
   </data>
   <data name="ShowSolutions" xml:space="preserve">
-    <value>Pokaż Rozwiązania</value>
+    <value>Pokaż Rozwiązania Ćwiczeń</value>
   </data>
   <data name="ShowSolutionsByDefault" xml:space="preserve">
-    <value>Pokaż po otwarciu</value>
+    <value>Pokaż domyślnie</value>
   </data>
   <data name="Solutions" xml:space="preserve">
     <value>Rozwiązania</value>
@@ -2834,7 +2834,7 @@
     <value>Kopiuj Ćwiczenia</value>
   </data>
   <data name="OpDeleteNotes" xml:space="preserve">
-    <value>Usuń Notatki</value>
+    <value>Wyczyść Notatki i Warianty</value>
   </data>
   <data name="OpDeleteComments" xml:space="preserve">
     <value>Usuń Komentarze</value>

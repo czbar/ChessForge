@@ -672,7 +672,7 @@ PasteEngineLines=Paste Engine Lines...
 MnEvaluateGames=Evaluate Games
 
 #Delete notes
-MenuDeleteNotes=Delete Notes...
+MenuDeleteNotes=Clean Lines and Comments...
 
 
 #Strip all comments
@@ -983,7 +983,7 @@ ReorderLines=Reorder Lines
 #
 
 #Delete Notes
-DeleteNotes = Delete Notes
+DeleteNotes = Clean Lines and Comments
 
 #Items to delete
 ItemsToDelete=Items to Delete
@@ -1321,10 +1321,10 @@ ApplyToAllChapters=Apply to All Chapters
 ExerciseViewConfig=Exercise View
 
 #Solutions
-ShowSolutions=Show Solutions
+ShowSolutions=Show Exercise Solutions
 
 #Show/hide all solutions by default
-ShowSolutionsByDefault=Show on Open
+ShowSolutionsByDefault=Show by Default
 
 #Solutions
 Solutions=Solutions
@@ -3169,7 +3169,7 @@ OpMoveExercises=Move Exercises
 OpCopyExercises=Copy Exercises
 
 #Operation
-OpDeleteNotes=Delete Notes
+OpDeleteNotes=Clean Lines and Comments
 
 #Operation
 OpDeleteComments=Delete Comments

@@ -266,20 +266,10 @@ namespace ChessForge
         /// <param name="doc"></param>
         /// <param name="mainWin"></param>
         /// <param name="contentType"></param>
-        public ExerciseTreeView(GameData.ContentType contentType)
-            : base(AppState.MainWin.UiRtbExercisesView, contentType)
+        public ExerciseTreeView(RichTextBox rtb, GameData.ContentType contentType, bool isPrinting = false)
+            : base(rtb, contentType)
         {
-        }
-
-        /// <summary>
-        /// Constructor to use when exporting the view.  
-        /// The passed guiDoc will be built rather then RichTextBox's document.
-        /// </summary>
-        /// <param name="guiDoc"></param>
-        /// <param name="contentType"></param>
-        public ExerciseTreeView(FlowDocument guiDoc, GameData.ContentType contentType)
-            : base(guiDoc, contentType)
-        {
+            _isPrinting = isPrinting;
         }
 
         /// <summary>
