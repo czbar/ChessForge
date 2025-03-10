@@ -1739,7 +1739,7 @@ namespace ChessForge
                     MainWin.UiMnEvaluateGames.IsEnabled = AppState.Workbook != null && Workbook.HasAnyModelGames;
                     MainWin.UiMnFindGames.IsEnabled = AppState.Workbook != null && Workbook.IsReady;
                     MainWin.UiMnMainImportFromPgn.IsEnabled = AppState.Workbook != null && Workbook.IsReady;
-                    MainWin.UiMnDeleteNotes.IsEnabled = WorkbookManager.SessionWorkbook != null;
+                    MainWin.UiMnCleanLinesAndComments.IsEnabled = WorkbookManager.SessionWorkbook != null;
                     MainWin.UiMnAssignECO.IsEnabled = WorkbookManager.SessionWorkbook != null;
                     MainWin.UiMnCopyArticles.IsEnabled = WorkbookManager.SessionWorkbook != null;
                     MainWin.UiMnMoveArticles.IsEnabled = WorkbookManager.SessionWorkbook != null;
@@ -1786,7 +1786,7 @@ namespace ChessForge
 
                 _mainWin.UiMnciPlayEngine.IsEnabled = false;
 
-                _mainWin.UiMnDeleteNotes.IsEnabled = false;
+                _mainWin.UiMnCleanLinesAndComments.IsEnabled = false;
                 _mainWin.UiMnAssignECO.IsEnabled = false;
             });
         }
