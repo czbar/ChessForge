@@ -112,10 +112,6 @@ namespace ChessForge
             UiCbGames.Visibility = showHide ? Visibility.Visible : Visibility.Hidden;
             UiCbExercises.Visibility = showHide ? Visibility.Visible : Visibility.Hidden;
 
-            //UiCbStudy.IsEnabled = (showHide && _allowStudies) ? true : false;
-            //UiCbGames.IsEnabled = showHide ? true : false;
-            //UiCbExercises.IsEnabled = showHide ? true : false;
-
             UiCbGames.Content = plural ? Properties.Resources.Games : Properties.Resources.Game;
             UiCbExercises.Content = plural ? Properties.Resources.Exercises : Properties.Resources.Exercise;
         }
@@ -238,6 +234,10 @@ namespace ChessForge
             if (UiCbEngineEvals.IsChecked == true)
             {
                 ApplyToAttributes |= (int)MoveAttribute.ENGINE_EVALUATION;
+            }
+            if (UiCbBadMoveDetection.IsChecked == true)
+            {
+                ApplyToAttributes |= (int)MoveAttribute.BAD_MOVE_ASSESSMENT;
             }
             if (UiCbSideLines.IsChecked == true)
             {
