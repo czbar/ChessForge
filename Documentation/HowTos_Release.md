@@ -22,6 +22,8 @@
 
 # Microsoft App Store
 
+Before submitting, report the file as safe via Edge.
+
 Attributes to enter:
 1. Platform: x64
 2. Silent run: /qn
