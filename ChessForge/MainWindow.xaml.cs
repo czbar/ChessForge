@@ -3021,7 +3021,6 @@ namespace ChessForge
                             if (NagUtils.GetMoveEvalNagId(nd.Nags) != NagUtils.GetMoveEvalNagId(dlg.Nags))
                             {
                                 nd.Assessment = 0;
-                                nd.BestResponse = "";
                             }
                         }
 
