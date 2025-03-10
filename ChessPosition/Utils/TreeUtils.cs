@@ -871,9 +871,10 @@ namespace ChessPosition
                         )
                     ||
                         (attrTypes & (int)MoveAttribute.ENGINE_EVALUATION) != 0 &&
-                        (!string.IsNullOrEmpty(nd.EngineEvaluation)
-                        || nd.Assessment > 0
-                        )
+                        !string.IsNullOrEmpty(nd.EngineEvaluation)
+                    ||
+                        (attrTypes & (int)MoveAttribute.BAD_MOVE_ASSESSMENT) != 0 &&
+                        nd.Assessment > 0
                     ||
                         (attrTypes & (int)MoveAttribute.SIDELINE) != 0 &&
                         nd.IsMainLine() == false
@@ -926,7 +927,7 @@ namespace ChessPosition
         /// Copies the passed tree and cerifies validity of the .
         /// If not cuts the subtree off and reports the number of removed
         /// Nodes.
-        /// Returns a new Tree object contatining only the good nodes. 
+        /// Returns a new Tree object containing only the good nodes. 
         /// </summary>
         /// <param name="tree"></param>
         /// <returns></returns>
