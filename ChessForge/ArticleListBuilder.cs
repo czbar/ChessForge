@@ -46,7 +46,7 @@ namespace ChessForge
                     {
                         if (!excludePassedNode || node != nd)
                         {
-                            ArticleListItem ali = new ArticleListItem(null, chIndex, chapter.StudyTree, 0, node);
+                            ArticleListItem ali = new ArticleListItem(null, chIndex, chapter.StudyTree, -1, node);
                             uint moveNumberOffset = 0;
                             if (ali.Article != null && ali.Article.Tree != null)
                             {

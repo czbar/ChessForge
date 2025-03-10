@@ -270,7 +270,8 @@ namespace ChessForge
                 && loc1.ChapterGuid == loc2.ChapterGuid
                 && loc1.ViewType == loc2.ViewType
                 && loc1.ArticleGuid == loc2.ArticleGuid
-                && loc1.ArticleIndex == loc2.ArticleIndex)
+                && (loc1.ArticleIndex == loc2.ArticleIndex || loc1.ViewType == TabViewType.STUDY))
+            // the last condition is just in case we use a different (irrelevant!) article index for the Study tree.
             {
                 identical = true;
             }
