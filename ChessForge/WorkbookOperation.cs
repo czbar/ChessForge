@@ -28,7 +28,7 @@ namespace ChessForge
         INSERT_ARTICLES,
         DELETE_COMMENTS,
         DELETE_ENGINE_EVALS,
-        DELETE_NOTES,
+        CLEAN_LINES_AND_COMMENTS,
         ASSIGN_ECO,
     }
 

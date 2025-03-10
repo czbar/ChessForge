@@ -1096,7 +1096,7 @@ namespace ChessForge
         /// and then notes and evals can be added.
         /// </summary>
         /// <param name="dictMoveAttributes"></param>
-        public void UndoDeleteNotes(object dictMoveAttributes)
+        public void UndoCleanLinesAndComments(object dictMoveAttributes)
         {
             Dictionary<Article, List<MoveAttributes>> dictUndoData = dictMoveAttributes as Dictionary<Article, List<MoveAttributes>>;
 
