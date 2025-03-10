@@ -56,9 +56,9 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiDeleteNotes_Click(object sender, RoutedEventArgs e)
+        private void UiCleanLinesAndComments_Click(object sender, RoutedEventArgs e)
         {
-            UiDeleteNotes(sender, e);
+            UiCleanLinesAndComments(sender, e);
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiDeleteNotes(object sender, RoutedEventArgs e)
+        private void UiCleanLinesAndComments(object sender, RoutedEventArgs e)
         {
             DeleteNotesDialog dlg = new DeleteNotesDialog();
             GuiUtilities.PositionDialog(dlg, this, 100);
@@ -113,7 +113,7 @@ namespace ChessForge
                 if (ActiveTreeView != null && AppState.IsTreeViewTabActive())
                 {
                     ActiveTreeView.BuildFlowDocumentForVariationTree(false);
-                    if ((dlg.ApplyToAttributes & (int)MoveAttribute.ENGINE_EVALUATION) != 0)
+                    if ((dlg.ApplyToAttributes & ((int)MoveAttribute.ENGINE_EVALUATION) | (int)MoveAttribute.BAD_MOVE_ASSESSMENT) != 0)
                     {
                         // there may have been "assessments" so need to refresh this
                         ActiveLine.RefreshNodeList(true);
@@ -122,7 +122,7 @@ namespace ChessForge
 
                 if (dictUndoData.Keys.Count > 0)
                 {
-                    WorkbookOperationType wot = WorkbookOperationType.DELETE_NOTES;
+                    WorkbookOperationType wot = WorkbookOperationType.CLEAN_LINES_AND_COMMENTS;
 
                     WorkbookOperation op = new WorkbookOperation(wot, dictUndoData);
                     AppState.Workbook.OpsManager.PushOperation(op);
@@ -150,7 +150,12 @@ namespace ChessForge
 
             if ((attrTypes & (int)MoveAttribute.ENGINE_EVALUATION) != 0)
             {
-                article.Tree.DeleteEvalsAndAssessments();
+                article.Tree.DeleteEngineEvaluations();
+            }
+
+            if ((attrTypes & (int)MoveAttribute.BAD_MOVE_ASSESSMENT) != 0)
+            {
+                article.Tree.DeleteMoveAssessments();
             }
 
             if ((attrTypes & (int)MoveAttribute.SIDELINE) != 0)
