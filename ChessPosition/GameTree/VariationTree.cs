@@ -311,9 +311,9 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Removes engine evals and assessments from all nodes.
+        /// Removes engine evals.
         /// </summary>
-        public void DeleteEvalsAndAssessments()
+        public void DeleteEngineEvaluations()
         {
             foreach (TreeNode nd in Nodes)
             {
@@ -321,12 +321,17 @@ namespace GameTree
                 {
                     nd.SetEngineEvaluation(string.Empty);
                 }
-                nd.Assessment = 0;
+            }
+        }
 
-                if (!string.IsNullOrEmpty(nd.BestResponse))
-                {
-                    nd.BestResponse = string.Empty;
-                }
+        /// <summary>
+        /// Remove bad move detections.
+        /// </summary>
+        public void DeleteMoveAssessments()
+        {
+            foreach (TreeNode nd in Nodes)
+            {
+                nd.Assessment = 0;
             }
         }
 
