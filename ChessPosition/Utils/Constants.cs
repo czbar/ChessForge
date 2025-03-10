@@ -71,7 +71,8 @@ namespace ChessPosition
     {
         COMMENT_AND_NAGS  = 0x01,
         ENGINE_EVALUATION = 0x02,
-        SIDELINE = 0x04,
+        BAD_MOVE_ASSESSMENT = 0x04,
+        SIDELINE = 0x08,
     };
 
     /// <summary>
