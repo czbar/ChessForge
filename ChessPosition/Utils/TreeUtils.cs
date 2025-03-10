@@ -880,7 +880,7 @@ namespace ChessPosition
                     )
                 {
 
-                    MoveAttributes moveAttrs = new MoveAttributes(nd.NodeId, nd.Comment, nd.CommentBeforeMove, nd.Nags, nd.References, nd.IsDiagram, nd.IsDiagramFlipped, nd.IsDiagramPreComment);
+                    MoveAttributes moveAttrs = new MoveAttributes(nd);
 
                     bool isDeleted = (attrTypes & (int)MoveAttribute.SIDELINE) != 0 && nd.IsMainLine() == false;
                     if (isDeleted)
