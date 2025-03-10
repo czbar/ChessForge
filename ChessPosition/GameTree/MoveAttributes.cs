@@ -9,8 +9,19 @@
         /// <summary>
         /// Constructor.
         /// </summary>
-        public MoveAttributes() 
-        { 
+        public MoveAttributes(TreeNode nd) 
+        {
+            NodeId = nd.NodeId;
+            Comment = nd.Comment;
+            CommentBeforeMove = nd.CommentBeforeMove;
+            Nags = nd.Nags;
+            References = nd.References;
+            IsDiagram = nd.IsDiagram;
+            IsDiagramFlipped = nd.IsDiagramFlipped;
+            IsDiagramPreComment = nd.IsDiagramPreComment;
+            EngineEval = nd.EngineEvaluation;
+            Assessment = nd.Assessment;
+            BestResponse = nd.BestResponse;
         }
 
         /// <summary>
