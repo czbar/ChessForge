@@ -633,10 +633,11 @@ namespace ChessForge
                     {
                         if (WorkbookManager.SessionWorkbook.OpsManager.Undo(out WorkbookOperationType opType, out int selectedChapterIndex, out int selectedArticleIndex))
                         {
+                            VariationTreeView view = AppState.MainWin.ActiveTreeView;
                             switch (opType)
                             {
                                 case WorkbookOperationType.RENAME_CHAPTER:
-                                    AppState.MainWin.ActiveTreeView?.BuildFlowDocumentForVariationTree(false);
+                                    view?.BuildFlowDocumentForVariationTree(false);
                                     _chaptersView.BuildFlowDocumentForChaptersView(false);
                                     break;
                                 case WorkbookOperationType.DELETE_CHAPTER:
@@ -681,12 +682,19 @@ namespace ChessForge
                                     UiTabChapters.Focus();
                                     break;
                                 case WorkbookOperationType.DELETE_COMMENTS:
-                                    AppState.MainWin.ActiveTreeView?.BuildFlowDocumentForVariationTree(false);
+                                    view?.BuildFlowDocumentForVariationTree(false);
                                     break;
                                 case WorkbookOperationType.DELETE_ENGINE_EVALS:
                                 case WorkbookOperationType.CLEAN_LINES_AND_COMMENTS:
-                                    AppState.MainWin.ActiveTreeView?.BuildFlowDocumentForVariationTree(false);
+                                    view?.BuildFlowDocumentForVariationTree(false);
                                     ActiveLine.RefreshNodeList(true);
+                                    if (view != null)
+                                    {
+                                        TreeNode selNode = view.GetSelectedNode();
+                                        if (selNode != null)
+                                        {
+                                            view.RestoreSelectedLineAndNode();                                        }
+                                    }
                                     break;
                             }
 
