@@ -30,7 +30,8 @@
                 <RadioButton x:Name="UiRbWorkbook" Content="{x:Static p:Resources.EntireWorkbook}" HorizontalAlignment="Left" Margin="15,10,0,0" VerticalAlignment="Top" Checked="UiRbWorkbook_Checked"/>
             </StackPanel>
         </GroupBox>
-        <Button x:Name="UiBtnOk" Content="OK" IsDefault="True" HorizontalAlignment="Center" Margin="210,175,0,0" VerticalAlignment="Top" Width="100" Click="UiBtnOk_Click" />
-        <Button x:Name="UiBtnCancel" Content="Cancel" IsCancel="True" HorizontalAlignment="Center" Margin="210,204,0,0" VerticalAlignment="Top" Width="100"/>
+        <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Ok}" IsDefault="True" HorizontalAlignment="Center" Margin="210,162,0,0" VerticalAlignment="Top" Width="100" Click="UiBtnOk_Click" />
+        <Button x:Name="UiBtnCancel" Content="{x:Static p:Resources.Cancel}" IsCancel="True" HorizontalAlignment="Center" Margin="210,191,0,0" VerticalAlignment="Top" Width="100"/>
+        <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Center" Margin="210,222,0,0" VerticalAlignment="Top" Width="100" Click="UiBtnHelp_Click"/>
     </Grid>
 </Window>

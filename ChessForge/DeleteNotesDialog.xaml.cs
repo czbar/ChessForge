@@ -246,5 +246,15 @@ namespace ChessForge
 
             DialogResult = true;
         }
+
+        /// <summary>
+        /// Links to the relevant Wiki page.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Cleaning-Sidelines-And-Comments");
+        }
     }
 }
