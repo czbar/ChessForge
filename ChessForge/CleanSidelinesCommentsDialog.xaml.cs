@@ -8,7 +8,7 @@ namespace ChessForge
     /// <summary>
     /// Interaction logic for DeleteNotesDialog.xaml
     /// </summary>
-    public partial class DeleteNotesDialog : Window
+    public partial class CleanSidelinesCommentsDialog : Window
     {
         /// <summary>
         /// The scope selected by the user.
@@ -43,7 +43,7 @@ namespace ChessForge
         /// and checks the controls as per the current state
         /// of the application.
         /// </summary>
-        public DeleteNotesDialog()
+        public CleanSidelinesCommentsDialog()
         {
             InitializeComponent();
 

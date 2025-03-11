@@ -75,7 +75,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiCleanLinesAndComments(object sender, RoutedEventArgs e)
         {
-            DeleteNotesDialog dlg = new DeleteNotesDialog();
+            CleanSidelinesCommentsDialog dlg = new CleanSidelinesCommentsDialog();
             GuiUtilities.PositionDialog(dlg, this, 100);
             if (dlg.ShowDialog() == true && dlg.ApplyToAttributes != 0)
             {
