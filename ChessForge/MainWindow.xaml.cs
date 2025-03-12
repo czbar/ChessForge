@@ -37,7 +37,7 @@ namespace ChessForge
         /// <summary>
         /// Public reference to StudyTreeView 
         /// </summary>
-        public VariationTreeView StudyTreeView { get => _studyTreeView; }
+        public StudyTreeView StudyTreeView { get => _studyTreeView; }
 
         /// <summary>
         /// Public reference to ModelGameTreeView
@@ -2161,48 +2161,6 @@ namespace ChessForge
                     MainChessBoard.DisplayPosition(nd, true);
                 }
             }
-        }
-
-        /// <summary>
-        /// Writes out all logs.
-        /// If userRequested == true, this was requested via the menu
-        /// and we dump everything with distinct file names.
-        /// Otherwise we only dump app and engine logs, ovewriting previous
-        /// logs.
-        /// </summary>
-        /// <param name="userRequested"></param>
-        public void DumpDebugLogs(bool userRequested)
-        {
-            string distinct = null;
-            AppLog.LogAvailableThreadsCounts();
-
-            if (userRequested)
-            {
-                distinct = "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss");
-                AppLog.DumpVariationTree(DebugUtils.BuildLogFileName(App.AppPath, "wktree", distinct), ActiveVariationTree);
-                if (_studyTreeView != null)
-                {
-                    AppLog.DumpLineSectorTree(DebugUtils.BuildLogFileName(App.AppPath, "lstree", distinct), _studyTreeView.LineManager.LineSectors);
-                }
-                DebugDumps.DumpStatesAndTimers(DebugUtils.BuildLogFileName(App.AppPath, "timest", distinct));
-            }
-
-            try
-            {
-                AppLog.Dump(DebugUtils.BuildLogFileName(App.AppPath, "applog", distinct));
-                EngineLog.Dump(DebugUtils.BuildLogFileName(App.AppPath, "engine", distinct));
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Dump logs exception: " + ex.Message, "DEBUG", MessageBoxButton.OK, MessageBoxImage.Stop);
-            }
-        }
-
-
-        public void DumpDebugStates()
-        {
-            string distinct = "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss");
-            DebugDumps.DumpStatesAndTimers(DebugUtils.BuildLogFileName(App.AppPath, "timest", distinct));
         }
 
         /// <summary>

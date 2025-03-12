@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ChessPosition;
+using EngineService;
+using System;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.IO;
+using System.Text;
 using System.Windows;
-using GameTree;
 
 namespace ChessForge
 {
@@ -27,11 +26,58 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Writes out all logs.
+        /// If userRequested == true, this was requested via the menu
+        /// and we dump everything with distinct file names.
+        /// Otherwise we only dump app and engine logs, ovewriting previous
+        /// logs.
+        /// </summary>
+        /// <param name="userRequested"></param>
+        [Conditional("DEBUG")]
+        public static void DumpDebugLogs(bool userRequested)
+        {
+            string distinct = null;
+            AppLog.LogAvailableThreadsCounts();
+
+            if (userRequested)
+            {
+                distinct = "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss");
+                AppLog.DumpVariationTree(DebugUtils.BuildLogFileName(App.AppPath, "wktree", distinct), AppState.ActiveVariationTree);
+                if (AppState.MainWin.StudyTreeView != null)
+                {
+                    AppLog.DumpLineSectorTree(DebugUtils.BuildLogFileName(App.AppPath, "lstree", distinct), AppState.MainWin.StudyTreeView.LineManager.LineSectors);
+                }
+                DumpStatesAndTimers(DebugUtils.BuildLogFileName(App.AppPath, "timest", distinct));
+            }
+
+            try
+            {
+                AppLog.Dump(DebugUtils.BuildLogFileName(App.AppPath, "applog", distinct));
+                EngineLog.Dump(DebugUtils.BuildLogFileName(App.AppPath, "engine", distinct));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Dump logs exception: " + ex.Message, "DEBUG", MessageBoxButton.OK, MessageBoxImage.Stop);
+            }
+        }
+
+        /// <summary>
+        /// Creates the file name and writes out states and timers.
+        /// </summary>
+        [Conditional("DEBUG")]
+        public static void DumpDebugStates()
+        {
+            string distinct = "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss");
+            DumpStatesAndTimers(DebugUtils.BuildLogFileName(App.AppPath, "timest", distinct));
+        }
+
+
+        /// <summary>
         /// Writes out states and timers.
         /// </summary>
         /// <param name="filePath"></param>
         [Conditional("DEBUG")]
-        public static void DumpStatesAndTimers(string filePath)
+        private static void DumpStatesAndTimers(string filePath)
         {
             StringBuilder sb = new StringBuilder();
 
