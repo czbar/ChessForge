@@ -288,6 +288,7 @@
       <DependentUpon>RtfExportDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="RtfWriter.cs" />
+    <Compile Include="SearchPosition.cs" />
     <Compile Include="SearchPositionDialog.xaml.cs">
       <DependentUpon>SearchPositionDialog.xaml</DependentUpon>
     </Compile>
