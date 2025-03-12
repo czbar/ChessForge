@@ -716,7 +716,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnDebugDump_Click(object sender, RoutedEventArgs e)
         {
-            DumpDebugLogs(true);
+            DebugDumps.DumpDebugLogs(true);
         }
 
         /// <summary>
@@ -726,7 +726,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnDebugDumpStates_Click(object sender, RoutedEventArgs e)
         {
-            DumpDebugStates();
+            DebugDumps.DumpDebugStates();
         }
 
         /// <summary>
@@ -740,15 +740,15 @@ namespace ChessForge
         {
             AppLog.Message("Application Closing");
 
-            WorkbookViewState wvs = new WorkbookViewState(SessionWorkbook);
-            wvs.SaveState();
-
             if (AppState.CurrentLearningMode != LearningMode.Mode.IDLE
                 && (AppState.IsDirty || string.IsNullOrEmpty(AppState.WorkbookFilePath)) || (ActiveVariationTree != null && ActiveVariationTree.HasTrainingMoves()))
             {
                 try
                 {
-                    WorkbookManager.PromptAndSaveWorkbook(false, out _, true);
+                    if (!WorkbookManager.PromptAndSaveWorkbook(false, out _, true))
+                    {
+                        e.Cancel = true;
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -757,16 +757,19 @@ namespace ChessForge
                 }
             }
 
-            SoundPlayer.CloseAll();
-
             if (e.Cancel != true)
             {
+                WorkbookViewState wvs = new WorkbookViewState(SessionWorkbook);
+                wvs.SaveState();
+
+                SoundPlayer.CloseAll();
+
                 EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
                 EngineMessageProcessor.ChessEngineService.StopEngine();
 
                 Timers.StopAll();
 
-                DumpDebugLogs(false);
+                DebugDumps.DumpDebugLogs(false);
                 Configuration.WriteOutConfiguration();
             }
         }
