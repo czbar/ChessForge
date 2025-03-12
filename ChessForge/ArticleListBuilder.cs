@@ -38,7 +38,7 @@ namespace ChessForge
                 lstIdenticalPositions.Add(chapterLine);
                 int currentItemCount = lstIdenticalPositions.Count;
 
-                List<TreeNode> lstStudyNodes = TreeUtils.FindIdenticalNodes(chapter.StudyTree.Tree, nd, checkDynamic);
+                List<TreeNode> lstStudyNodes = SearchPosition.FindIdenticalNodes(chapter.StudyTree.Tree, nd, checkDynamic);
 
                 if (lstStudyNodes != null)
                 {
@@ -72,7 +72,7 @@ namespace ChessForge
                     for (int art = 0; art < chapter.ModelGames.Count; art++)
                     {
                         Article article = chapter.ModelGames[art];
-                        List<TreeNode> lstNodes = TreeUtils.FindIdenticalNodes(article.Tree, nd, checkDynamic);
+                        List<TreeNode> lstNodes = SearchPosition.FindIdenticalNodes(article.Tree, nd, checkDynamic);
                         if (lstNodes != null)
                         {
                             foreach (TreeNode node in lstNodes)
@@ -108,7 +108,7 @@ namespace ChessForge
                     for (int art = 0; art < chapter.Exercises.Count; art++)
                     {
                         Article article = chapter.Exercises[art];
-                        List<TreeNode> lstNodes = TreeUtils.FindIdenticalNodes(article.Tree, nd, checkDynamic);
+                        List<TreeNode> lstNodes = SearchPosition.FindIdenticalNodes(article.Tree, nd, checkDynamic);
                         if (lstNodes != null)
                         {
                             foreach (TreeNode node in lstNodes)
