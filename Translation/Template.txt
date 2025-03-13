@@ -1490,6 +1490,10 @@ SetupPositionToSearch=
 #english: MsgNoPositionsFound=Specified position has not been found.
 MsgNoPositionsFound=
 
+#description: Partial match only
+#english: PartialMatch=Partial Match
+PartialMatch=
+
 #######################################
 #
 # Header: DIALOG Duplicates

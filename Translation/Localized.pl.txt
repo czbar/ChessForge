@@ -870,7 +870,7 @@ PasteEngineLines=Wklej warianty silnika...
 MnEvaluateGames=Oceń partie
 
 #description: Delete notes
-#english: MenuDeleteNotes=Wyczyść Notatki i Warianty...
+#english: MenuDeleteNotes=Clean Lines and Comments...
 MenuDeleteNotes=Wyczyść Notatki i Warianty...
 
 
@@ -1259,7 +1259,7 @@ ReorderLines=Kolejność Wariantów
 #
 
 #description: Delete Notes
-#english: DeleteNotes = Delete Notes
+#english: DeleteNotes = Clean Lines and Comments
 DeleteNotes = Wyczyść Notatki i Warianty
 
 #description: Items to delete
@@ -1490,6 +1490,10 @@ SetupPositionToSearch=Ustaw szukaną pozycję
 #english: MsgNoPositionsFound=Specified position has not been found.
 MsgNoPositionsFound=Nie znaleziono takicj pozycji.
 
+#description: Partial match only
+#english: PartialMatch=Partial Match
+PartialMatch=Częściowa pozycja
+
 #######################################
 #
 # Header: DIALOG Duplicates
@@ -1684,7 +1688,7 @@ ExerciseViewConfig=Widok Ćwiczeń
 ShowSolutions=Pokaż Rozwiązania Ćwiczeń
 
 #description: Show/hide all solutions by default
-#english: ShowSolutionsByDefault=Show on Open
+#english: ShowSolutionsByDefault=Show by Default
 ShowSolutionsByDefault=Pokaż domyślnie
 
 #description: Solutions
@@ -4074,7 +4078,7 @@ OpMoveExercises=Przesuń Ćwiczenia
 OpCopyExercises=Kopiuj Ćwiczenia
 
 #description: Operation
-#english: OpDeleteNotes=Delete Notes
+#english: OpDeleteNotes=Clean Lines and Comments
 OpDeleteNotes=Wyczyść Notatki i Warianty
 
 #description: Operation
