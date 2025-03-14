@@ -3,8 +3,6 @@ using GameTree;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChessForge
 {
@@ -19,9 +17,16 @@ namespace ChessForge
         /// <param name="checkEnpassant"></param>
         /// <param name="checkCastleRights"></param>
         /// <returns></returns>
-        public static List<TreeNode> FindIdenticalNodes(VariationTree tree, TreeNode node, bool checkDynamic)
+        public static List<TreeNode> FindIdenticalNodes(VariationTree tree, bool partialSearch, TreeNode node, bool checkDynamic)
         {
-            return FindNodesWithPosition(tree, node.Position, checkDynamic, checkDynamic, checkDynamic);
+            if (partialSearch)
+            {
+                return FilterPositions(tree, node.Position, checkDynamic, checkDynamic, checkDynamic);
+            }
+            else
+            {
+                return FindNodesWithPosition(tree, node.Position, checkDynamic, checkDynamic, checkDynamic);
+            }
         }
 
         /// <summary>
@@ -108,8 +113,16 @@ namespace ChessForge
             {
                 for (int j = 0; j < 8; j++)
                 {
-                    if (filter[i, j] != 0 && filter[i, j] != position[i, j]
-                        || filter[i, j] == 0xFF && position[i, j] != 0)
+                    if (filter[i, j] == 0xFF)
+                    {
+                        if (position[i, j] != 0)
+                        {
+                            return false;
+                        }
+                    }
+                    else
+
+                    if (filter[i, j] != 0 && filter[i, j] != position[i, j])
                     {
                         return false;
                     }
