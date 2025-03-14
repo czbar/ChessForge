@@ -981,51 +981,60 @@ namespace ChessForge
 
             bool result = true;
 
-            PositionUtils.KingCount(out int whiteKings, out int blackKings, pos);
-            if (whiteKings != 1 || blackKings != 1)
+            try
             {
+                PositionUtils.KingCount(out int whiteKings, out int blackKings, pos);
+                if (whiteKings != 1 || blackKings != 1)
+                {
+                    result = false;
+                    if (whiteKings > 1)
+                    {
+                        sb.AppendLine(Properties.Resources.PosValTooManyWhiteKings);
+                    }
+                    else if (whiteKings == 0)
+                    {
+                        sb.AppendLine(Properties.Resources.PosValWhiteKingMissing);
+                    }
+
+                    if (blackKings > 1)
+                    {
+                        sb.AppendLine(Properties.Resources.PosValTooManyBlackKings);
+                    }
+                    else if (blackKings == 0)
+                    {
+                        sb.AppendLine(Properties.Resources.PosValBlackKingMissing);
+                    }
+                }
+
+                // only check if we know we have 1 king each side (otherwise we may get an exception)
+                if (result == true)
+                {
+                    if (pos.ColorToMove == PieceColor.White && PositionUtils.IsKingInCheck(pos, PieceColor.Black))
+                    {
+                        result = false;
+                        sb.AppendLine(Properties.Resources.PosValBlackKingInCheck);
+                    }
+                    if (pos.ColorToMove == PieceColor.Black && PositionUtils.IsKingInCheck(pos, PieceColor.White))
+                    {
+                        result = false;
+                        sb.AppendLine(Properties.Resources.PosValWhiteKingInCheck);
+                    }
+                }
+
+                // remove any incorrect castling rights if we are good so far
+                if (result)
+                {
+                    PositionUtils.CorrectCastlingRights(ref pos);
+                }
+
+                errorText = sb.ToString();
+            }
+            catch(Exception ex) 
+            {
+                errorText = ex.Message;
                 result = false;
-                if (whiteKings > 1)
-                {
-                    sb.AppendLine(Properties.Resources.PosValTooManyWhiteKings);
-                }
-                else if (whiteKings == 0)
-                {
-                    sb.AppendLine(Properties.Resources.PosValWhiteKingMissing);
-                }
-
-                if (blackKings > 1)
-                {
-                    sb.AppendLine(Properties.Resources.PosValTooManyBlackKings);
-                }
-                else if (blackKings == 0)
-                {
-                    sb.AppendLine(Properties.Resources.PosValBlackKingMissing);
-                }
             }
 
-            // only check if we know we have 1 king each side (otherwise we may get an exception)
-            if (result == true)
-            {
-                if (pos.ColorToMove == PieceColor.White && PositionUtils.IsKingInCheck(pos, PieceColor.Black))
-                {
-                    result = false;
-                    sb.AppendLine(Properties.Resources.PosValBlackKingInCheck);
-                }
-                if (pos.ColorToMove == PieceColor.Black && PositionUtils.IsKingInCheck(pos, PieceColor.White))
-                {
-                    result = false;
-                    sb.AppendLine(Properties.Resources.PosValWhiteKingInCheck);
-                }
-            }
-
-            // remove any incorrect castling rights if we are good so far
-            if (result)
-            {
-                PositionUtils.CorrectCastlingRights(ref pos);
-            }
-
-            errorText = sb.ToString();
             return result;
         }
 
