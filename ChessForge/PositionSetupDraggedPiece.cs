@@ -45,6 +45,12 @@ namespace ChessForge
         public PieceType Piece;
 
         /// <summary>
+        /// Whether the dragged image is that of an empty square.
+        /// If so then the Piece value must be None.
+        /// </summary>
+        public bool IsEmptySquare {get; set; }
+
+        /// <summary>
         /// The color of the piece being dragged.
         /// </summary>
         public PieceColor Color;
