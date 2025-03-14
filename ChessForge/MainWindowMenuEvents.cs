@@ -922,7 +922,7 @@ namespace ChessForge
                 TreeNode nd = ActiveVariationTree == null ? null : ActiveVariationTree.SelectedNode;
 
                 bool externalSearch = !AppState.IsTreeViewTabActive();
-                FindIdenticalPositions.Search(false, nd, FindIdenticalPositions.Mode.FIND_AND_REPORT, externalSearch, true, out _);
+                FindIdenticalPositions.Search(false, nd, false, FindIdenticalPositions.Mode.FIND_AND_REPORT, externalSearch, true, out _);
             }
             catch (Exception ex)
             {
@@ -980,7 +980,8 @@ namespace ChessForge
                         searchNode.Position = new BoardPosition(dlg.PositionSetup);
                         // store for another possible loop
                         position = searchNode.Position;
-                        stopSearch = FindIdenticalPositions.Search(true, searchNode, FindIdenticalPositions.Mode.FIND_AND_REPORT, true, false, out bool searchAgain);
+                        stopSearch = FindIdenticalPositions.Search(true, searchNode, Configuration.PartialSearch
+                                                                   , FindIdenticalPositions.Mode.FIND_AND_REPORT, true, false, out bool searchAgain);
                         if (searchAgain)
                         {
                             stopSearch = false;
