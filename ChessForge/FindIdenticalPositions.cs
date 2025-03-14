@@ -35,7 +35,7 @@ namespace ChessForge
         /// <param name="mode"></param>
         /// <param name="externalSearch">whether this was invoked from the view that is not subject to search e.g. INTRO</param>
         /// <returns></returns>
-        public static bool Search(bool editableSearch, TreeNode searchNode, Mode mode, bool externalSearch, bool reportNoFind, out bool searchAgain)
+        public static bool Search(bool editableSearch, TreeNode searchNode, bool partialSearch, Mode mode, bool externalSearch, bool reportNoFind, out bool searchAgain)
         {
             searchAgain = false;
 
@@ -44,13 +44,14 @@ namespace ChessForge
             try
             {
                 Mouse.SetCursor(Cursors.Wait);
-                lstIdenticalPositions = ArticleListBuilder.BuildIdenticalPositionsList(searchNode, mode == Mode.CHECK_IF_ANY, false, !externalSearch);
+                lstIdenticalPositions = ArticleListBuilder.BuildIdenticalPositionsList(searchNode, partialSearch, mode == Mode.CHECK_IF_ANY, false, !externalSearch);
 
                 anyFound = lstIdenticalPositions.Count > 0;
 
                 if (mode == Mode.FIND_AND_REPORT)
                 {
                     // if externalSearch, a single match is good (as it is not in the invoking view)
+                    // whereas otherwise, a single match would just be position from which we invoked the search.
                     if (!ChapterUtils.HasAtLeastNArticles(lstIdenticalPositions, externalSearch ? 1 : 2 ))
                     {
                         if (reportNoFind)
