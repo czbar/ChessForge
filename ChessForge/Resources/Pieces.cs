@@ -1,15 +1,13 @@
 ﻿using ChessPosition;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
 namespace ChessForge
 {
     public class Pieces
     {
+        public static BitmapImage EmptySquare = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/EmptySquare.png", UriKind.RelativeOrAbsolute));
+
         public static BitmapImage WhiteKing = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/WhiteKing.png", UriKind.RelativeOrAbsolute));
         public static BitmapImage WhiteQueen = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/WhiteQueen.png", UriKind.RelativeOrAbsolute));
         public static BitmapImage WhiteBishop = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/WhiteBishop.png", UriKind.RelativeOrAbsolute));
