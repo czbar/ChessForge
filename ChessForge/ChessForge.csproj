@@ -732,6 +732,7 @@
     <Resource Include="Resources\Images\ChapterDnArrowDarkMode.png" />
     <Resource Include="Resources\Images\ChapterUpArrowDarkMode.png" />
     <Resource Include="Resources\Images\ToggleOnGray.png" />
+    <Resource Include="Resources\Images\EmptySquare.png" />
     <Content Include="Resources\Sounds\Confirmation.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
