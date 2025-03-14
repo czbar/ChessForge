@@ -302,7 +302,7 @@ namespace GameTree
                 int emptyCount = 0;
                 for (int x = 0; x <= 7; x++)
                 {
-                    if (pos.Board[x, y] == 0)
+                    if (pos.Board[x, y] == 0 || pos.Board[x, y] == 0xFF)
                     {
                         emptyCount++;
                     }
