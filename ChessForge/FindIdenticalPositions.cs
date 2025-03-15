@@ -50,9 +50,11 @@ namespace ChessForge
 
                 if (mode == Mode.FIND_AND_REPORT)
                 {
-                    // if externalSearch, a single match is good (as it is not in the invoking view)
+                    // if externalSearch a single match is good (as it is not in the invoking view)
                     // whereas otherwise, a single match would just be position from which we invoked the search.
-                    if (!ChapterUtils.HasAtLeastNArticles(lstIdenticalPositions, externalSearch ? 1 : 2 ))
+                    // If partial search, a single match (even the current position) is good too.
+                    if (!partialSearch && !ChapterUtils.HasAtLeastNArticles(lstIdenticalPositions, externalSearch ? 1 : 2)
+                        || partialSearch && !anyFound)
                     {
                         if (reportNoFind)
                         {
