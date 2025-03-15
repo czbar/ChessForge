@@ -981,7 +981,7 @@ namespace ChessForge
                         // store for another possible loop
                         position = searchNode.Position;
                         stopSearch = FindIdenticalPositions.Search(true, searchNode, Configuration.PartialSearch
-                                                                   , FindIdenticalPositions.Mode.FIND_AND_REPORT, true, false, out bool searchAgain);
+                                                                   , FindIdenticalPositions.Mode.FIND_AND_REPORT, false, false, out bool searchAgain);
                         if (searchAgain)
                         {
                             stopSearch = false;
