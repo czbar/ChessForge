@@ -59,7 +59,7 @@ namespace ChessForge
                             ali.IsSelected = true;
                             lstIdenticalPositions.Add(ali);
                             found = true;
-                            if (firstOnly)
+                            if (firstOnly || partialSearch)
                             {
                                 break;
                             }
@@ -129,7 +129,7 @@ namespace ChessForge
                                     ali.IsSelected = true;
                                     lstIdenticalPositions.Add(ali);
                                     found = true;
-                                    if (firstOnly)
+                                    if (firstOnly || partialSearch)
                                     {
                                         break;
                                     }
