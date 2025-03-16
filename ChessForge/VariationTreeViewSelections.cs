@@ -580,8 +580,11 @@ namespace ChessForge
                                 ShownVariationTree.BuildLines();
                             }
 
-                            string lineId = ShownVariationTree.GetDefaultLineIdForNode(nodeId);
-
+                            string lineId = AppState.MainWin.ActiveLine.GetLineId();
+                            if (AppState.MainWin.ActiveLine.GetNodeFromId(nodeId) == null)
+                            {
+                                lineId = ShownVariationTree.GetDefaultLineIdForNode(nodeId);
+                            }
                             SetAndSelectActiveLine(lineId, nodeId);
                         }
 
