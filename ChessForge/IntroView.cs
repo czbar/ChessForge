@@ -1849,6 +1849,15 @@ namespace ChessForge
                 {
                 }
             }
+            else if ((Keyboard.Modifiers & ModifierKeys.Shift) > 0 && (Keyboard.Modifiers & (ModifierKeys.Alt | ModifierKeys.Control)) == 0)
+            {
+                switch (e.Key)
+                {
+                    case Key.F3:
+                        AppState.MainWin.UiMnFindPositions_Click(null, null);
+                        break;
+                }
+            }
             else if (e.Key == Key.Left || e.Key == Key.Right)
             {
                 e.Handled = ProcessArrowKey(e.Key);
