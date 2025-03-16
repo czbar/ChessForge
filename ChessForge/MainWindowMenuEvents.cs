@@ -911,8 +911,10 @@ namespace ChessForge
         public void UiMnFindIdenticalPosition_Click(object sender, RoutedEventArgs e)
         {
             bool isTrainingOrSolving = TrainingSession.IsTrainingInProgress || AppState.IsUserSolving();
-
-            if (isTrainingOrSolving || ActiveVariationTree == null || AppState.ActiveTab == TabViewType.CHAPTERS)
+            if (isTrainingOrSolving 
+                || ActiveVariationTree == null 
+                || AppState.ActiveTab == TabViewType.CHAPTERS
+                || !(AppState.IsTreeViewTabActive() || AppState.ActiveTab == TabViewType.INTRO))
             {
                 return;
             }
@@ -921,7 +923,7 @@ namespace ChessForge
             {
                 TreeNode nd = ActiveVariationTree == null ? null : ActiveVariationTree.SelectedNode;
 
-                bool externalSearch = !AppState.IsTreeViewTabActive();
+                bool externalSearch = false;
                 FindIdenticalPositions.Search(false, nd, false, FindIdenticalPositions.Mode.FIND_AND_REPORT, externalSearch, true, out _);
             }
             catch (Exception ex)
@@ -938,7 +940,6 @@ namespace ChessForge
         public void UiMnFindPositions_Click(object sender, RoutedEventArgs e)
         {
             bool isTrainingOrSolving = TrainingSession.IsTrainingInProgress || AppState.IsUserSolving();
-
             if (isTrainingOrSolving)
             {
                 return;
@@ -981,7 +982,7 @@ namespace ChessForge
                         // store for another possible loop
                         position = searchNode.Position;
                         stopSearch = FindIdenticalPositions.Search(true, searchNode, Configuration.PartialSearch
-                                                                   , FindIdenticalPositions.Mode.FIND_AND_REPORT, false, false, out bool searchAgain);
+                                                                   , FindIdenticalPositions.Mode.FIND_AND_REPORT, true, false, out bool searchAgain);
                         if (searchAgain)
                         {
                             stopSearch = false;
