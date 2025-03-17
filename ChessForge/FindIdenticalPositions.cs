@@ -44,11 +44,11 @@ namespace ChessForge
             {
                 Mouse.SetCursor(Cursors.Wait);
                 lstIdenticalPositions = ArticleListBuilder.BuildIdenticalPositionsList(crits);
+                // NOTE that the above never returns 1 item, it may be 0 or 2 or more (the first item will represent the chapter.
 
                 if (crits.FindMode == Mode.IDENTICAL)
                 {
-                    // in this mode we need at least 2 positions in the list because one is the position we are looking for matches for
-                    if (lstIdenticalPositions.Count >= 2)
+                    if (lstIdenticalPositions.Count > 0)
                     {
                         anyFound = true;
                         ShowFoundPositions(crits.SearchNode, lstIdenticalPositions, editableSearch, out searchAgain);
@@ -63,8 +63,7 @@ namespace ChessForge
                 }
                 else if (crits.FindMode == Mode.POSITION_MATCH)
                 {
-                    // in these modes we are looking to match a position that we have set up so a match on the starting position is still good
-                    if (lstIdenticalPositions.Count >= 1)
+                    if (lstIdenticalPositions.Count > 0)
                     {
                         anyFound = true;
                         ShowFoundPositions(crits.SearchNode, lstIdenticalPositions, editableSearch, out searchAgain);
