@@ -913,7 +913,6 @@ namespace ChessForge
             bool isTrainingOrSolving = TrainingSession.IsTrainingInProgress || AppState.IsUserSolving();
             if (isTrainingOrSolving 
                 || ActiveVariationTree == null 
-                || AppState.ActiveTab == TabViewType.CHAPTERS
                 || !(AppState.IsTreeViewTabActive() || AppState.ActiveTab == TabViewType.INTRO))
             {
                 return;
@@ -922,9 +921,15 @@ namespace ChessForge
             try
             {
                 TreeNode nd = ActiveVariationTree == null ? null : ActiveVariationTree.SelectedNode;
+                
+                SearchPositionCriteria crits = new SearchPositionCriteria(nd);
+                crits.FindMode = FindIdenticalPositions.Mode.IDENTICAL;
+                crits.IsPartialSearch = false;
+                crits.SetCheckDynamicAttrs(true);
+                crits.ExcludeCurrentNode = true;
+                crits.ReportNoFind = true;
 
-                bool externalSearch = false;
-                FindIdenticalPositions.Search(false, nd, false, FindIdenticalPositions.Mode.FIND_AND_REPORT, externalSearch, true, out _);
+                FindIdenticalPositions.Search(false, crits, out _);
             }
             catch (Exception ex)
             {
@@ -947,32 +952,10 @@ namespace ChessForge
 
             try
             {
-                BoardPosition position = null;
-                TreeNode nd = ActiveVariationTree == null ? null : ActiveVariationTree.SelectedNode;
-                if (nd == null)
-                {
-                    string fen = PositionUtils.GetFenFromClipboard();
-                    if (string.IsNullOrEmpty(fen))
-                    {
-                        try
-                        {
-                            FenParser.ParseFenIntoBoard(fen, ref position);
-                        }
-                        catch
-                        {
-                            position = null;
-                            position = PositionUtils.SetupStartingPosition();
-                        }
-                    }
-                }
-                else
-                {
-                    position = nd.Position;
-                }
-
+                BoardPosition position = PreparePositionForSearch();
                 TreeNode searchNode = new TreeNode(null, "", 1);
-                bool stopSearch = false;
-                while (!stopSearch)
+                bool searchAgain = true;
+                while (searchAgain)
                 {
                     SearchPositionDialog dlg = new SearchPositionDialog(position);
                     GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
@@ -981,30 +964,61 @@ namespace ChessForge
                         searchNode.Position = new BoardPosition(dlg.PositionSetup);
                         // store for another possible loop
                         position = searchNode.Position;
-                        stopSearch = FindIdenticalPositions.Search(true, searchNode, Configuration.PartialSearch
-                                                                   , FindIdenticalPositions.Mode.FIND_AND_REPORT, true, false, out bool searchAgain);
-                        if (searchAgain)
-                        {
-                            stopSearch = false;
-                        }
-                        else if (!stopSearch)
-                        {
-                            if (MessageBox.Show(Properties.Resources.MsgEditPositionSearch, Properties.Resources.MsgTitlePositionSearch, MessageBoxButton.YesNoCancel, MessageBoxImage.Question) != MessageBoxResult.Yes)
-                            {
-                                stopSearch = true;
-                            }
-                        }
+
+                        SearchPositionCriteria crits = new SearchPositionCriteria(searchNode);
+                        crits.FindMode = FindIdenticalPositions.Mode.POSITION_MATCH;
+                        crits.IsPartialSearch = Configuration.PartialSearch;
+                        crits.SetCheckDynamicAttrs(false);
+                        crits.ExcludeCurrentNode = false;
+                        crits.ReportNoFind = true;
+
+                        FindIdenticalPositions.Search(true, crits, out searchAgain);
                     }
                     else
                     {
-                        stopSearch = true;
+                        searchAgain = false;
                     }
                 }
             }
             catch (Exception ex)
             {
-                AppLog.Message("SearchByFen_Click()", ex);
+                AppLog.Message("UiMnFindPositions_Click()", ex);
             }
+        }
+
+        /// <summary>
+        /// Determines the position to use for search.
+        /// If there is a selected node its position will be used for search.
+        /// If not, the clipboard content will be tested if it contains a valid FEN.
+        /// If so, it will be used, otherwise we will set the starting position.
+        /// </summary>
+        /// <returns></returns>
+        private BoardPosition PreparePositionForSearch()
+        {
+            BoardPosition position = null;
+            TreeNode nd = ActiveVariationTree == null ? null : ActiveVariationTree.SelectedNode;
+            if (nd == null)
+            {
+                string fen = PositionUtils.GetFenFromClipboard();
+                if (string.IsNullOrEmpty(fen))
+                {
+                    try
+                    {
+                        FenParser.ParseFenIntoBoard(fen, ref position);
+                    }
+                    catch
+                    {
+                        position = null;
+                        position = PositionUtils.SetupStartingPosition();
+                    }
+                }
+            }
+            else
+            {
+                position = nd.Position;
+            }
+
+            return position;
         }
 
         //**********************
