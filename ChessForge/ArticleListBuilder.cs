@@ -10,10 +10,7 @@ namespace ChessForge
         /// <summary>
         /// Builds a list of nodes representing the exact same position as the passed node.
         /// </summary>
-        /// <param name="nd"></param>
-        /// <param name="firstOnly">whether to look for the first match only</param>
-        /// <param name="excludePassedNode"></param>
-        /// <param name="checkDynamic">whether to check the dynamic properties (castling rights, e.p. whose move)</param>
+        /// <param name="crits"></param>
         /// <returns></returns>
         public static ObservableCollection<ArticleListItem> BuildIdenticalPositionsList(SearchPositionCriteria crits)
         {
@@ -29,94 +26,100 @@ namespace ChessForge
                 }
 
                 Chapter chapter = WorkbookManager.SessionWorkbook.Chapters[chapterIndex];
-                // create a "chapter line" item that will be removed if nothing found in the chapter
-                ArticleListItem chapterLine = new ArticleListItem(chapter, chapterIndex);
-                chapterLine.IsSelected = true;
-
-                lstIdenticalPositions.Add(chapterLine);
-                int currentItemCount = lstIdenticalPositions.Count;
-
-                Article study = chapter.StudyTree;
-                List<TreeNode> lstStudyNodes = SearchPosition.FindIdenticalNodes(study.Tree, crits);
-                if (lstStudyNodes != null)
-                {
-                    foreach (TreeNode node in lstStudyNodes)
-                    {
-                        if (!crits.ExcludeCurrentNode || node != crits.SearchNode)
-                        {
-                            ArticleListItem ali = new ArticleListItem(null, chapterIndex, study, -1, node);
-                            SetItemForList(ali, node);
-                            lstIdenticalPositions.Add(ali);
-                            found = true;
-                            if (crits.FindFirstOnly || crits.IsPartialSearch)
-                            {
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                if (!found || !(crits.FindFirstOnly))
-                {
-                    for (int idx = 0; idx < chapter.ModelGames.Count; idx++)
-                    {
-                        Article article = chapter.ModelGames[idx];
-                        List<TreeNode> lstNodes = SearchPosition.FindIdenticalNodes(article.Tree, crits);
-                        if (lstNodes != null)
-                        {
-                            foreach (TreeNode node in lstNodes)
-                            {
-                                if (!crits.ExcludeCurrentNode || node != crits.SearchNode)
-                                {
-                                    ArticleListItem ali = new ArticleListItem(null, chapterIndex, article, idx, node);
-                                    SetItemForList(ali, node);
-                                    lstIdenticalPositions.Add(ali);
-                                    found = true;
-                                    if (crits.FindFirstOnly || crits.IsPartialSearch)
-                                    {
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                if (!found || !(crits.FindFirstOnly))
-                {
-                    for (int idx = 0; idx < chapter.Exercises.Count; idx++)
-                    {
-                        Article article = chapter.Exercises[idx];
-                        List<TreeNode> lstNodes = SearchPosition.FindIdenticalNodes(article.Tree, crits);
-                        if (lstNodes != null)
-                        {
-                            foreach (TreeNode node in lstNodes)
-                            {
-                                if (!crits.ExcludeCurrentNode || node != crits.SearchNode)
-                                {
-                                    ArticleListItem ali = new ArticleListItem(null, chapterIndex, article, idx, node);
-                                    SetItemForList(ali, node);
-                                    lstIdenticalPositions.Add(ali);
-                                    found = true;
-                                    if (crits.FindFirstOnly || crits.IsPartialSearch)
-                                    {
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                if (currentItemCount == lstIdenticalPositions.Count)
-                {
-                    // nothing added for this chapter so remove the chapter "line"
-                    lstIdenticalPositions.Remove(chapterLine);
-                }
-
+                found = SearchInChapter(chapter, chapterIndex, crits, lstIdenticalPositions);
             }
 
             return lstIdenticalPositions;
+        }
+
+        /// <summary>
+        /// Search for positions in a chapter.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="chapterIndex"></param>
+        /// <param name="crits"></param>
+        /// <param name="lstIdenticalPositions"></param>
+        /// <returns></returns>
+        private static bool SearchInChapter(Chapter chapter, 
+                                            int chapterIndex, 
+                                            SearchPositionCriteria crits,
+                                            ObservableCollection<ArticleListItem> lstIdenticalPositions)
+        {
+            bool found = false;
+
+            // create a "chapter line" item that will be removed if nothing found in the chapter
+            ArticleListItem chapterLine = new ArticleListItem(chapter, chapterIndex);
+            chapterLine.IsSelected = true;
+
+            lstIdenticalPositions.Add(chapterLine);
+            int currentItemCount = lstIdenticalPositions.Count;
+
+            found = SearchInArticle(chapter.StudyTree, chapterIndex, -1, crits, lstIdenticalPositions);
+
+            if (!found || !(crits.FindFirstOnly))
+            {
+                for (int articleIndex = 0; articleIndex < chapter.ModelGames.Count; articleIndex++)
+                {
+                    Article article = chapter.ModelGames[articleIndex];
+                    found = SearchInArticle(article, chapterIndex, articleIndex, crits, lstIdenticalPositions);
+                }
+            }
+
+            if (!found || !(crits.FindFirstOnly))
+            {
+                for (int articleIndex = 0; articleIndex < chapter.Exercises.Count; articleIndex++)
+                {
+                    Article article = chapter.Exercises[articleIndex];
+                    found = SearchInArticle(article, chapterIndex, articleIndex, crits, lstIdenticalPositions);
+                }
+            }
+
+            if (currentItemCount == lstIdenticalPositions.Count)
+            {
+                // nothing added for this chapter so remove the chapter "line"
+                lstIdenticalPositions.Remove(chapterLine);
+            }
+
+            return found;
+        }
+
+        /// <summary>
+        /// Searches for the position in a single article.
+        /// </summary>
+        /// <param name="article"></param>
+        /// <param name="chapterIndex"></param>
+        /// <param name="articleIndex"></param>
+        /// <param name="crits"></param>
+        /// <param name="lstIdenticalPositions"></param>
+        /// <returns></returns>
+        private static bool SearchInArticle(Article article,
+                                            int chapterIndex,
+                                            int articleIndex,
+                                            SearchPositionCriteria crits,
+                                            ObservableCollection<ArticleListItem> lstIdenticalPositions)
+        {
+            bool found = false;
+
+            List<TreeNode> lstNodes = SearchPosition.FindIdenticalNodes(article.Tree, crits);
+            if (lstNodes != null)
+            {
+                foreach (TreeNode node in lstNodes)
+                {
+                    if (!crits.ExcludeCurrentNode || node != crits.SearchNode)
+                    {
+                        ArticleListItem ali = new ArticleListItem(null, chapterIndex, article, articleIndex, node);
+                        SetItemForList(ali, node);
+                        lstIdenticalPositions.Add(ali);
+                        found = true;
+                        if (crits.FindFirstOnly || crits.IsPartialSearch)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return found;
         }
 
         /// <summary>
