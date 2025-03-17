@@ -44,13 +44,15 @@ namespace ChessForge
             {
                 Mouse.SetCursor(Cursors.Wait);
                 lstIdenticalPositions = ArticleListBuilder.BuildIdenticalPositionsList(crits);
-                // NOTE that the above never returns 1 item, it may be 0 or 2 or more (the first item will represent the chapter.
+
+                // the list may contain items for both chapters and articles
+                // so we need to call the special method rather than simply checking size. 
+                anyFound = ChapterUtils.HasAtLeastNArticles(lstIdenticalPositions, 1);
 
                 if (crits.FindMode == Mode.IDENTICAL)
                 {
-                    if (lstIdenticalPositions.Count > 0)
+                    if (anyFound)
                     {
-                        anyFound = true;
                         ShowFoundPositions(crits.SearchNode, lstIdenticalPositions, editableSearch, out searchAgain);
                     }
                     else
@@ -63,9 +65,8 @@ namespace ChessForge
                 }
                 else if (crits.FindMode == Mode.POSITION_MATCH)
                 {
-                    if (lstIdenticalPositions.Count > 0)
+                    if (anyFound)
                     {
-                        anyFound = true;
                         ShowFoundPositions(crits.SearchNode, lstIdenticalPositions, editableSearch, out searchAgain);
                     }
                     else
