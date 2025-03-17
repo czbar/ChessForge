@@ -17,15 +17,15 @@ namespace ChessForge
         /// <param name="checkEnpassant"></param>
         /// <param name="checkCastleRights"></param>
         /// <returns></returns>
-        public static List<TreeNode> FindIdenticalNodes(VariationTree tree, bool partialSearch, TreeNode node, bool checkDynamic)
+        public static List<TreeNode> FindIdenticalNodes(VariationTree tree, SearchPositionCriteria crits)
         {
-            if (partialSearch)
+            if (crits.IsPartialSearch)
             {
-                return FilterPositions(tree, node.Position, checkDynamic, checkDynamic, checkDynamic);
+                return FilterPositions(tree, crits);
             }
             else
             {
-                return FindNodesWithPosition(tree, node.Position, checkDynamic, checkDynamic, checkDynamic);
+                return FindNodesWithPosition(tree, crits);
             }
         }
 
@@ -33,22 +33,19 @@ namespace ChessForge
         /// Finds nodes featuring the passed Position.
         /// </summary>
         /// <param name="tree"></param>
-        /// <param name="refBoard"></param>
-        /// <param name="checkSideToMove"></param>
-        /// <param name="checkEnpassant"></param>
-        /// <param name="checkCastleRights"></param>
+        /// <param name="crits"></param>
         /// <returns></returns>
-        public static List<TreeNode> FindNodesWithPosition(VariationTree tree, BoardPosition refBoard, bool checkSideToMove, bool checkEnpassant, bool checkCastleRights)
+        public static List<TreeNode> FindNodesWithPosition(VariationTree tree, SearchPositionCriteria crits)
         {
             List<TreeNode> nodeList = new List<TreeNode>();
 
             foreach (TreeNode nd in tree.Nodes)
             {
-                if (refBoard.Board.Cast<byte>().SequenceEqual(nd.Position.Board.Cast<byte>()))
+                if (crits.SearchPosition.Board.Cast<byte>().SequenceEqual(nd.Position.Board.Cast<byte>()))
                 {
-                    if ((!checkEnpassant || IsSameEnpassantPossibilities(refBoard, nd.Position))
-                        && (!checkSideToMove || refBoard.ColorToMove == nd.Position.ColorToMove)
-                        && (!checkCastleRights || refBoard.CastlingRights == nd.Position.CastlingRights))
+                    if ((!crits.CheckEnpassant || IsSameEnpassantPossibilities(crits.SearchPosition, nd.Position))
+                        && (!crits.CheckSideToMove || crits.SearchPosition.ColorToMove == nd.Position.ColorToMove)
+                        && (!crits.CheckCastleRights || crits.SearchPosition.CastlingRights == nd.Position.CastlingRights))
                     {
                         if (nodeList == null)
                         {
@@ -66,22 +63,19 @@ namespace ChessForge
         /// Finds nodes matching the passed "filter" position.
         /// </summary>
         /// <param name="tree"></param>
-        /// <param name="filter"></param>
-        /// <param name="checkSideToMove"></param>
-        /// <param name="checkEnpassant"></param>
-        /// <param name="checkCastleRights"></param>
+        /// <param name="crits"></param>
         /// <returns></returns>
-        public static List<TreeNode> FilterPositions(VariationTree tree, BoardPosition filter, bool checkSideToMove, bool checkEnpassant, bool checkCastleRights)
+        public static List<TreeNode> FilterPositions(VariationTree tree, SearchPositionCriteria crits)
         {
             List<TreeNode> nodeList = new List<TreeNode>();
 
             foreach (TreeNode nd in tree.Nodes)
             {
-                if (CompareByteArrays(filter.Board, nd.Position.Board))
+                if (CompareByteArrays(crits.SearchPosition.Board, nd.Position.Board))
                 {
-                    if ((!checkEnpassant || IsSameEnpassantPossibilities(filter, nd.Position))
-                        && (!checkSideToMove || filter.ColorToMove == nd.Position.ColorToMove)
-                        && (!checkCastleRights || filter.CastlingRights == nd.Position.CastlingRights))
+                    if ((!crits.CheckEnpassant || IsSameEnpassantPossibilities(crits.SearchPosition, nd.Position))
+                        && (!crits.CheckSideToMove || crits.SearchPosition.ColorToMove == nd.Position.ColorToMove)
+                        && (!crits.CheckCastleRights || crits.SearchPosition.CastlingRights == nd.Position.CastlingRights))
                     {
                         if (nodeList == null)
                         {
