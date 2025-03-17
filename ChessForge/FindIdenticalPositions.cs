@@ -1,13 +1,9 @@
-﻿using ChessForge;
+﻿using ChessPosition;
 using GameTree;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
-using System.Text;
-using ChessPosition;
 using System.Windows.Input;
-using System.Windows.Shapes;
 
 namespace ChessForge
 {
@@ -21,8 +17,11 @@ namespace ChessForge
         /// </summary>
         public enum Mode
         {
-            FIND_AND_REPORT,
-            CHECK_IF_ANY,
+            // Finds positions identical to the passed one.
+            IDENTICAL,
+
+            // Finds postions fully matching the specified position.
+            POSITION_MATCH,
         }
 
         /// <summary>
@@ -35,7 +34,7 @@ namespace ChessForge
         /// <param name="mode"></param>
         /// <param name="externalSearch">whether this was invoked from the view that is not subject to search e.g. INTRO</param>
         /// <returns></returns>
-        public static bool Search(bool editableSearch, TreeNode searchNode, bool partialSearch, Mode mode, bool externalSearch, bool reportNoFind, out bool searchAgain)
+        public static bool Search(bool editableSearch, SearchPositionCriteria crits, out bool searchAgain)
         {
             searchAgain = false;
 
@@ -44,46 +43,41 @@ namespace ChessForge
             try
             {
                 Mouse.SetCursor(Cursors.Wait);
-                lstIdenticalPositions = ArticleListBuilder.BuildIdenticalPositionsList(searchNode, partialSearch, mode == Mode.CHECK_IF_ANY, false, !externalSearch);
+                lstIdenticalPositions = ArticleListBuilder.BuildIdenticalPositionsList(crits);
 
-                anyFound = lstIdenticalPositions.Count > 0;
-
-                if (mode == Mode.FIND_AND_REPORT)
+                if (crits.FindMode == Mode.IDENTICAL)
                 {
-                    // if externalSearch a single match is good (as it is not in the invoking view)
-                    // whereas otherwise, a single match would just be position from which we invoked the search.
-                    // If partial search, a single match (even the current position) is good too.
-                    if (!partialSearch && !ChapterUtils.HasAtLeastNArticles(lstIdenticalPositions, externalSearch ? 1 : 2)
-                        || partialSearch && !anyFound)
+                    // in this mode we need at least 2 positions in the list because one is the position we are looking for matches for
+                    if (lstIdenticalPositions.Count >= 2)
                     {
-                        if (reportNoFind)
-                        {
-                            // we only have 1 result which is the current position
-                            MessageBox.Show(Properties.Resources.MsgNoIdenticalPositions, Properties.Resources.ChessForge, MessageBoxButton.OK, MessageBoxImage.Information);
-                        }
+                        anyFound = true;
+                        ShowFoundPositions(crits.SearchNode, lstIdenticalPositions, editableSearch, out searchAgain);
                     }
                     else
                     {
-                        FoundArticlesDialog dlgEx = new FoundArticlesDialog(searchNode,
-                                                            FoundArticlesDialog.Mode.IDENTICAL_ARTICLES,
-                                                            ref lstIdenticalPositions,
-                                                            editableSearch);
-                        GuiUtilities.PositionDialog(dlgEx, AppState.MainWin, 100);
-
-                        if (dlgEx.ShowDialog() == true)
+                        if (crits.ReportNoFind)
                         {
-                            if (dlgEx.Request == FoundArticlesDialog.Action.CopyOrMoveArticles)
-                            {
-                                ChapterUtils.RequestCopyMoveArticles(searchNode, false, lstIdenticalPositions, ArticlesAction.COPY_OR_MOVE, true);
-                            }
-                            else if (dlgEx.ArticleIndexId >= 0 && dlgEx.ArticleIndexId < lstIdenticalPositions.Count)
-                            {
-                                ProcessSelectedPosition(lstIdenticalPositions, dlgEx.Request, dlgEx.ArticleIndexId);
-                            }
+                            MessageBox.Show(Properties.Resources.MsgNoIdenticalPositions, Properties.Resources.ChessForge, MessageBoxButton.OK, MessageBoxImage.Information);
                         }
-                        else
+                    }
+                }
+                else if (crits.FindMode == Mode.POSITION_MATCH)
+                {
+                    // in these modes we are looking to match a position that we have set up so a match on the starting position is still good
+                    if (lstIdenticalPositions.Count >= 1)
+                    {
+                        anyFound = true;
+                        ShowFoundPositions(crits.SearchNode, lstIdenticalPositions, editableSearch, out searchAgain);
+                    }
+                    else
+                    {
+                        if (crits.ReportNoFind)
                         {
-                            searchAgain = dlgEx.Request == FoundArticlesDialog.Action.SearchAgain;
+                            if (MessageBox.Show(Properties.Resources.MsgEditPositionSearch, Properties.Resources.MsgTitlePositionSearch, MessageBoxButton.YesNoCancel
+                                          , MessageBoxImage.Question) == MessageBoxResult.Yes)
+                            {
+                                searchAgain = true;
+                            }
                         }
                     }
                 }
@@ -94,6 +88,40 @@ namespace ChessForge
             }
 
             return anyFound;
+        }
+
+        /// <summary>
+        /// Shows the found positions in a dialog.
+        /// </summary>
+        /// <param name="searchNode"></param>
+        /// <param name="lstIdenticalPositions"></param>
+        /// <param name="editableSearch"></param>
+        /// <param name="searchAgain"></param>
+        private static void ShowFoundPositions(TreeNode searchNode, ObservableCollection<ArticleListItem> lstIdenticalPositions, bool editableSearch, out bool searchAgain)
+        {
+            searchAgain = false;
+
+            FoundArticlesDialog dlgEx = new FoundArticlesDialog(searchNode,
+                                                FoundArticlesDialog.Mode.IDENTICAL_ARTICLES,
+                                                ref lstIdenticalPositions,
+                                                editableSearch);
+            GuiUtilities.PositionDialog(dlgEx, AppState.MainWin, 100);
+
+            if (dlgEx.ShowDialog() == true)
+            {
+                if (dlgEx.Request == FoundArticlesDialog.Action.CopyOrMoveArticles)
+                {
+                    ChapterUtils.RequestCopyMoveArticles(searchNode, false, lstIdenticalPositions, ArticlesAction.COPY_OR_MOVE, true);
+                }
+                else if (dlgEx.ArticleIndexId >= 0 && dlgEx.ArticleIndexId < lstIdenticalPositions.Count)
+                {
+                    ProcessSelectedPosition(lstIdenticalPositions, dlgEx.Request, dlgEx.ArticleIndexId);
+                }
+            }
+            else
+            {
+                searchAgain = dlgEx.Request == FoundArticlesDialog.Action.SearchAgain;
+            }
         }
 
         /// <summary>
