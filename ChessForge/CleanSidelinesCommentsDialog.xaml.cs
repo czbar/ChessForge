@@ -28,7 +28,12 @@ namespace ChessForge
         /// <summary>
         /// Set of move attribute flags to be set on exit.
         /// </summary>
-        public int ApplyToAttributes{ get; set; }
+        public int ApplyToMoveAttributes{ get; set; }
+
+        /// <summary>
+        /// Set of article attribute flags to be set on exit.
+        /// </summary>
+        public int ApplyToArticleAttributes { get; set; }
 
         /// <summary>
         /// Whether to apply the operation to Exercises.
@@ -46,6 +51,7 @@ namespace ChessForge
         public CleanSidelinesCommentsDialog()
         {
             InitializeComponent();
+            UiCbAnnotator.Content = Properties.Resources.Annotator + " / " + Properties.Resources.Author; 
 
             UiCbStudy.IsChecked = true;
             UiCbGames.IsChecked = false;
@@ -229,19 +235,23 @@ namespace ChessForge
 
             if (UiCbComments.IsChecked == true)
             {
-                ApplyToAttributes |= (int)MoveAttribute.COMMENT_AND_NAGS;
+                ApplyToMoveAttributes |= (int)MoveAttribute.COMMENT_AND_NAGS;
+            }
+            if (UiCbAnnotator.IsChecked == true)
+            {
+                ApplyToArticleAttributes |= (int)ArticleAttribute.ANNOTATOR;
             }
             if (UiCbEngineEvals.IsChecked == true)
             {
-                ApplyToAttributes |= (int)MoveAttribute.ENGINE_EVALUATION;
+                ApplyToMoveAttributes |= (int)MoveAttribute.ENGINE_EVALUATION;
             }
             if (UiCbBadMoveDetection.IsChecked == true)
             {
-                ApplyToAttributes |= (int)MoveAttribute.BAD_MOVE_ASSESSMENT;
+                ApplyToMoveAttributes |= (int)MoveAttribute.BAD_MOVE_ASSESSMENT;
             }
             if (UiCbSideLines.IsChecked == true)
             {
-                ApplyToAttributes |= (int)MoveAttribute.SIDELINE;
+                ApplyToMoveAttributes |= (int)MoveAttribute.SIDELINE;
             }
 
             DialogResult = true;
