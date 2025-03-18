@@ -1738,6 +1738,10 @@ namespace ChessForge
 
                     MainWin.UiMnEvaluateGames.IsEnabled = AppState.Workbook != null && Workbook.HasAnyModelGames;
                     MainWin.UiMnFindGames.IsEnabled = AppState.Workbook != null && Workbook.IsReady;
+
+                    MainWin.UiMnFindIdentical.IsEnabled = IsTreeViewTabActive() || ActiveTab == TabViewType.INTRO;
+                    MainWin.UiMnciFindIdentical.IsEnabled = IsTreeViewTabActive() || ActiveTab == TabViewType.INTRO;
+
                     MainWin.UiMnMainImportFromPgn.IsEnabled = AppState.Workbook != null && Workbook.IsReady;
                     MainWin.UiMnCleanLinesAndComments.IsEnabled = WorkbookManager.SessionWorkbook != null;
                     MainWin.UiMnAssignECO.IsEnabled = WorkbookManager.SessionWorkbook != null;
@@ -1778,16 +1782,21 @@ namespace ChessForge
         /// </summary>
         private static void ConfigureMenusForTraining()
         {
-            _mainWin.Dispatcher.Invoke(() =>
+            MainWin.Dispatcher.Invoke(() =>
             {
-                _mainWin.UiMnStartTraining.IsEnabled = false;
-                _mainWin.UiMnRestartTraining.IsEnabled = true;
-                _mainWin.UiMnExitTraining.IsEnabled = true;
+                MainWin.UiMnStartTraining.IsEnabled = false;
+                MainWin.UiMnRestartTraining.IsEnabled = true;
+                MainWin.UiMnExitTraining.IsEnabled = true;
 
-                _mainWin.UiMnciPlayEngine.IsEnabled = false;
+                MainWin.UiMnciPlayEngine.IsEnabled = false;
 
-                _mainWin.UiMnCleanLinesAndComments.IsEnabled = false;
-                _mainWin.UiMnAssignECO.IsEnabled = false;
+                MainWin.UiMnFindIdentical.IsEnabled = false;
+                MainWin.UiMnciFindIdentical.IsEnabled = false;
+                MainWin.UiMnciFindPositions.IsEnabled = false;
+                MainWin.UiMnFindPositions.IsEnabled = false;
+
+                MainWin.UiMnCleanLinesAndComments.IsEnabled = false;
+                MainWin.UiMnAssignECO.IsEnabled = false;
             });
         }
 
