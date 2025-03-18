@@ -177,7 +177,7 @@ namespace ChessForge
                         AppState.Workbook.UndoDeleteEngineEvals(op.OpData_1);
                         break;
                     case WorkbookOperationType.CLEAN_LINES_AND_COMMENTS:
-                        AppState.Workbook.UndoCleanLinesAndComments(op.OpData_1);
+                        AppState.Workbook.UndoCleanLinesAndComments(op.OpData_1, op.OpData_2);
                         break;
                     case WorkbookOperationType.ASSIGN_ECO:
                         Tools.UndoAssignEco(op.OpData_1);
