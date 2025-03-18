@@ -108,40 +108,42 @@ namespace GameTree
         /// </summary>
         /// <param name="fen">FEN string</param>
         /// <param name="board">reference to the Board object being set up</param>
-        public static void ParseFenIntoBoard(string fen, ref BoardPosition board)
+        public static void ParseFenIntoBoard(string fen, ref BoardPosition board, bool positionOnly = false)
         {
             // parse the FEN string into 6 fields
             string[] fenFields = fen.Split(' ');
 
-            if (fenFields.Length < 6)
+            if (fenFields.Length < 6 && !positionOnly || fenFields.Length < 1)
             {
-                throw new Exception("Error: FEN string has fewer than 6 fields");
+                throw new Exception("Error: FEN string has too few fields");
             }
 
             // Field 1: locations of the pieces
             ParsePieceLocations(fenFields[0], ref board);
 
-            // Field 2: which side is to move
-            DetermineSideToMove(fenFields[1], ref board);
+            if (!positionOnly)
+            {
+                // Field 2: which side is to move
+                DetermineSideToMove(fenFields[1], ref board);
 
-            // Field 3: permitted castling
-            DetermineCastlingRights(fenFields[2], ref board);
+                // Field 3: permitted castling
+                DetermineCastlingRights(fenFields[2], ref board);
 
-            // Field 4: the en passant square
-//            SetInheritedEnpassantSquare(fenFields[3], ref board);
-            SetEnpassantSquare(fenFields[3], ref board);
+                // Field 4: the en passant square
+                SetEnpassantSquare(fenFields[3], ref board);
 
-            // Field 5: the half moves count since the last capture or a pawn move
-            SetHalfMove50Clock(fenFields[4], ref board);
+                // Field 5: the half moves count since the last capture or a pawn move
+                SetHalfMove50Clock(fenFields[4], ref board);
 
-            // Field 6: the number of the full move
-            SetMoveNumber(fenFields[5], ref board);
+                // Field 6: the number of the full move
+                SetMoveNumber(fenFields[5], ref board);
+            }
         }
 
         /// <summary>
         /// Generates a "short" version of fen to use when comparing positions
         /// for getting opening stats.
-        /// This is the same as "regular" FEN excpet for move counters. 
+        /// This is the same as "regular" FEN except for move counters. 
         /// </summary>
         /// <param name="pos"></param>
         /// <returns></returns>
