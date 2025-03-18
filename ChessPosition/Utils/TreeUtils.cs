@@ -747,7 +747,7 @@ namespace ChessPosition
         /// </summary>
         /// <param name="tree"></param>
         /// <returns></returns>
-        public static List<MoveAttributes> BuildAttributesList(VariationTree tree, int attrTypes)
+        public static List<MoveAttributes> BuildMoveAttributesList(VariationTree tree, int attrTypes)
         {
             List<MoveAttributes> lst = new List<MoveAttributes>();
 
