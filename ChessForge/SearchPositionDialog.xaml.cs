@@ -38,6 +38,15 @@ namespace ChessForge
         // top offset between the the Board Image and Setup Canvas
         private double _boardTopOffset;
 
+        // this may be different that the FEN shown as in partial search we only show the first part 
+        private string _currentFen;
+
+        /// <summary>
+        /// NOTE: currently we set it to false as we do not check dynamic attributes where
+        /// searching for positions.
+        /// In the future this may change.
+        /// </summary>
+        private bool _checkDynamicAttrs = false;
 
         /// <summary>
         /// Object representing the piece being dragged.
@@ -97,7 +106,16 @@ namespace ChessForge
         /// </summary>
         private void SetFen(bool checkEnpassant = true)
         {
-            UiTbFen.Text = FenParser.GenerateFenFromPosition(PositionSetup, 0);
+            _currentFen = FenParser.GenerateFenFromPosition(PositionSetup, 0);
+            
+            if (!_checkDynamicAttrs && _currentFen != null)
+            {
+                string[] tokens = _currentFen.Split(' ');
+                _currentFen = tokens[0];
+                UiTbFen.Text = tokens[0];
+            }
+
+            UiTbFen.Text = _currentFen;
         }
 
         /// <summary>
@@ -546,13 +564,25 @@ namespace ChessForge
         {
             try
             {
-                bool isDiff = DiffPositionSetupWithFenText(UiTbFen.Text, out bool position, out bool colorToMove, out bool castling, out bool enpassant);
-                if (isDiff)
+                if (_currentFen != UiTbFen.Text)
                 {
-                    if (position)
+                    _currentFen = UiTbFen.Text;
+                    if (!_checkDynamicAttrs && _currentFen != null)
                     {
-                        SetupImagesForPosition();
+                        string[] tokens = _currentFen.Split(' ');
+                        _currentFen = tokens[0];
                     }
+
+                    bool isDiff = DiffPositionSetupWithFenText(UiTbFen.Text, out bool position, out bool colorToMove, out bool castling, out bool enpassant);
+                    if (isDiff)
+                    {
+                        if (position)
+                        {
+                            SetupImagesForPosition();
+                        }
+                    }
+
+                    UiTbFen.Text = _currentFen;
                 }
             }
             catch
@@ -561,7 +591,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Identifies differences betwee 2 BoardPositions.
+        /// Identifies differences between 2 BoardPositions.
         /// </summary>
         /// <param name="fen"></param>
         /// <param name="position"></param>
@@ -571,13 +601,33 @@ namespace ChessForge
         /// <returns></returns>
         private bool DiffPositionSetupWithFenText(string fen, out bool position, out bool colorToMove, out bool castling, out bool enpassant)
         {
-            BoardPosition temp = new BoardPosition();
-            FenParser.ParseFenIntoBoard(UiTbFen.Text, ref temp);
+            bool isDiff = false;
 
-            bool isDiff = PositionChanges(temp, PositionSetup, out position, out colorToMove, out castling, out enpassant);
-            if (isDiff)
+            position = false;
+            colorToMove = false;
+            castling = false;
+            enpassant = false;
+
+            BoardPosition temp = new BoardPosition();
+            try
             {
-                PositionSetup = temp;
+                if (!_checkDynamicAttrs)
+                {
+                    FenParser.ParseFenIntoBoard(UiTbFen.Text, ref temp, true);
+                }
+                else
+                {
+                    FenParser.ParseFenIntoBoard(UiTbFen.Text, ref temp);
+                }
+
+                isDiff = PositionChanges(temp, PositionSetup, out position, out colorToMove, out castling, out enpassant);
+                if (isDiff)
+                {
+                    PositionSetup = temp;
+                }
+            }
+            catch
+            {
             }
 
             return isDiff;
@@ -632,7 +682,14 @@ namespace ChessForge
                 enpassant = false;
             }
 
-            return position | colorToMove | castling | enpassant;
+            if (!_checkDynamicAttrs)
+            {
+                return position;
+            }
+            else
+            {
+                return position | colorToMove | castling | enpassant;
+            }
         }
 
         /// <summary>
@@ -700,7 +757,7 @@ namespace ChessForge
             if (Configuration.PartialSearch)
             {
                 PositionUtils.KingCount(out int whiteKings, out int blackKings, PositionSetup);
-                if (whiteKings > 1) 
+                if (whiteKings > 1)
                 {
                     errorText = Properties.Resources.PosValTooManyWhiteKings;
                     result = false;
