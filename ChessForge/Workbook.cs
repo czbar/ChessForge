@@ -1096,15 +1096,27 @@ namespace ChessForge
         /// and then notes and evals can be added.
         /// </summary>
         /// <param name="dictMoveAttributes"></param>
-        public void UndoCleanLinesAndComments(object dictMoveAttributes)
+        public void UndoCleanLinesAndComments(object dictMoveAttributes, object lstArticleAttributes)
         {
-            Dictionary<Article, List<MoveAttributes>> dictUndoData = dictMoveAttributes as Dictionary<Article, List<MoveAttributes>>;
+            Dictionary<Article, List<MoveAttributes>> dictMoveAttrs = dictMoveAttributes as Dictionary<Article, List<MoveAttributes>>;
+            List<ArticleAttributes> lstArticleAttrs = lstArticleAttributes as List<ArticleAttributes>;
+            
+            // restore article attributes
+            foreach (ArticleAttributes attrs in lstArticleAttrs)
+            {
+                Article article = AppState.Workbook.GetArticleByGuid(attrs.Guid, out _, out _);
+                if (article != null)
+                {
+                    article.Tree.Header.SetHeaderValue(PgnHeaders.KEY_ANNOTATOR, attrs.Annotator);
+                }
+            }
 
-            foreach (Article article in dictUndoData.Keys)
+            // restore move attributes
+            foreach (Article article in dictMoveAttrs.Keys)
             {
                 List<MoveAttributes> toRestore = new List<MoveAttributes>();
 
-                List<MoveAttributes> moveAttrs = dictUndoData[article];
+                List<MoveAttributes> moveAttrs = dictMoveAttrs[article];
                 foreach (var item in moveAttrs)
                 {
                     if (item.IsDeleted && item.Node != null)
@@ -1136,14 +1148,14 @@ namespace ChessForge
                     }
                 }
 
-                TreeUtils.InsertCommentsAndNags(article.Tree, dictUndoData[article]);
-                TreeUtils.InsertEngineEvals(article.Tree, dictUndoData[article]);
+                TreeUtils.InsertCommentsAndNags(article.Tree, dictMoveAttrs[article]);
+                TreeUtils.InsertEngineEvals(article.Tree, dictMoveAttrs[article]);
             }
 
-            foreach (Article article in dictUndoData.Keys)
+            foreach (Article article in dictMoveAttrs.Keys)
             {
-                TreeUtils.InsertCommentsAndNags(article.Tree, dictUndoData[article]);
-                TreeUtils.InsertEngineEvals(article.Tree, dictUndoData[article]);
+                TreeUtils.InsertCommentsAndNags(article.Tree, dictMoveAttrs[article]);
+                TreeUtils.InsertEngineEvals(article.Tree, dictMoveAttrs[article]);
             }
         }
 
