@@ -78,9 +78,9 @@ namespace ChessForge
             CleanSidelinesCommentsDialog dlg = new CleanSidelinesCommentsDialog();
             GuiUtilities.PositionDialog(dlg, this, 100);
 
-            if (dlg.ShowDialog() == true && (dlg.ApplyToMoveAttributes != 0 || dlg.ApplyToArticleAttributes != 0))
+            if (dlg.ShowDialog() == true && (dlg.MoveAttrsFlags != 0 || dlg.ArticleAttrsFlags != 0))
             {
-                CleanSidelinesComments.CleanLinesAndComments(dlg.ApplyScope, dlg.ApplyToMoveAttributes, dlg.ApplyToArticleAttributes,
+                CleanSidelinesComments.CleanLinesAndComments(dlg.Scope, dlg.MoveAttrsFlags, dlg.ArticleAttrsFlags,
                                                              dlg.ApplyToStudies, dlg.ApplyToGames, dlg.ApplyToExercises);
             }
         }

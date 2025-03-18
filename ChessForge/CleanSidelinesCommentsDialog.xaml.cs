@@ -11,9 +11,19 @@ namespace ChessForge
     public partial class CleanSidelinesCommentsDialog : Window
     {
         /// <summary>
+        /// Set of move attribute flags to be set on exit.
+        /// </summary>
+        public int MoveAttrsFlags { get; set; }
+
+        /// <summary>
+        /// Set of article attribute flags to be set on exit.
+        /// </summary>
+        public int ArticleAttrsFlags { get; set; }
+
+        /// <summary>
         /// The scope selected by the user.
         /// </summary>
-        public OperationScope ApplyScope { get; set; }
+        public OperationScope Scope { get; set; }
 
         /// <summary>
         /// Whether to apply the operation to Study/Studies.
@@ -24,16 +34,6 @@ namespace ChessForge
         /// Whether to apply the operation to Model Games.
         /// </summary>
         public bool ApplyToGames { get; set; }
-
-        /// <summary>
-        /// Set of move attribute flags to be set on exit.
-        /// </summary>
-        public int ApplyToMoveAttributes{ get; set; }
-
-        /// <summary>
-        /// Set of article attribute flags to be set on exit.
-        /// </summary>
-        public int ApplyToArticleAttributes { get; set; }
 
         /// <summary>
         /// Whether to apply the operation to Exercises.
@@ -67,7 +67,7 @@ namespace ChessForge
                 UiRbCurrentItem.IsChecked = true;
             }
 
-            ApplyScope = OperationScope.NONE;
+            Scope = OperationScope.NONE;
         }
 
         /// <summary>
@@ -209,15 +209,15 @@ namespace ChessForge
         {
             if (UiRbCurrentItem.IsChecked == true)
             {
-                ApplyScope = OperationScope.ACTIVE_ITEM;
+                Scope = OperationScope.ACTIVE_ITEM;
             }
             else if (UiRbCurrentChapter.IsChecked == true)
             {
-                ApplyScope = OperationScope.CHAPTER;
+                Scope = OperationScope.CHAPTER;
             }
             else if (UiRbWorkbook.IsChecked == true)
             {
-                ApplyScope = OperationScope.WORKBOOK;
+                Scope = OperationScope.WORKBOOK;
             }
 
             if (UiCbStudy.IsChecked == true)
@@ -235,23 +235,23 @@ namespace ChessForge
 
             if (UiCbComments.IsChecked == true)
             {
-                ApplyToMoveAttributes |= (int)MoveAttribute.COMMENT_AND_NAGS;
+                MoveAttrsFlags |= (int)MoveAttribute.COMMENT_AND_NAGS;
             }
             if (UiCbAnnotator.IsChecked == true)
             {
-                ApplyToArticleAttributes |= (int)ArticleAttribute.ANNOTATOR;
+                ArticleAttrsFlags |= (int)ArticleAttribute.ANNOTATOR;
             }
             if (UiCbEngineEvals.IsChecked == true)
             {
-                ApplyToMoveAttributes |= (int)MoveAttribute.ENGINE_EVALUATION;
+                MoveAttrsFlags |= (int)MoveAttribute.ENGINE_EVALUATION;
             }
             if (UiCbBadMoveDetection.IsChecked == true)
             {
-                ApplyToMoveAttributes |= (int)MoveAttribute.BAD_MOVE_ASSESSMENT;
+                MoveAttrsFlags |= (int)MoveAttribute.BAD_MOVE_ASSESSMENT;
             }
             if (UiCbSideLines.IsChecked == true)
             {
-                ApplyToMoveAttributes |= (int)MoveAttribute.SIDELINE;
+                MoveAttrsFlags |= (int)MoveAttribute.SIDELINE;
             }
 
             DialogResult = true;
