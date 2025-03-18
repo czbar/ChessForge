@@ -88,6 +88,7 @@
     <Compile Include="AnnotationsDialog.xaml.cs">
       <DependentUpon>AnnotationsDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ArticleAttributes.cs" />
     <Compile Include="ArticleComparer.cs" />
     <Compile Include="ArticleListBuilder.cs" />
     <Compile Include="ArticleListItem.cs" />
@@ -127,6 +128,7 @@
     </Compile>
     <Compile Include="ChessBoardSmall.cs" />
     <Compile Include="ChessForgeEventArgs.cs" />
+    <Compile Include="CleanSidelinesComments.cs" />
     <Compile Include="CommentBeforeMoveDialog.xaml.cs">
       <DependentUpon>CommentBeforeMoveDialog.xaml</DependentUpon>
     </Compile>
