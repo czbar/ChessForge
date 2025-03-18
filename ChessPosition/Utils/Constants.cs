@@ -76,6 +76,14 @@ namespace ChessPosition
     };
 
     /// <summary>
+    /// Article attribute types.
+    /// </summary>
+    public enum ArticleAttribute
+    {
+        ANNOTATOR = 0x01,
+    };
+
+    /// <summary>
     /// Type of the tab control.
     /// </summary>
     public enum TabViewType
