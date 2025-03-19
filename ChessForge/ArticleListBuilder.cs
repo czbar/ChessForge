@@ -101,6 +101,20 @@ namespace ChessForge
             bool found = false;
 
             List<TreeNode> lstNodes = SearchPosition.FindIdenticalNodes(article.Tree, crits);
+            if (crits.IsPartialSearch)
+            {
+                TreeNode node = FindEarliestNode(lstNodes, crits.ExcludeCurrentNode, crits.SearchNode);
+                if (node == null)
+                {
+                    lstNodes = null;
+                }
+                else
+                {
+                    lstNodes.Clear();
+                    lstNodes.Add(node);
+                }
+            }
+
             if (lstNodes != null)
             {
                 foreach (TreeNode node in lstNodes)
@@ -111,7 +125,7 @@ namespace ChessForge
                         SetItemForList(ali, node);
                         lstIdenticalPositions.Add(ali);
                         found = true;
-                        if (crits.FindFirstOnly || crits.IsPartialSearch)
+                        if (crits.FindFirstOnly)
                         {
                             break;
                         }
@@ -120,6 +134,36 @@ namespace ChessForge
             }
 
             return found;
+        }
+
+        /// <summary>
+        /// Finds the earliest node in the list.
+        /// </summary>
+        /// <param name="nodes"></param>
+        /// <param name="excludeCurrentNode"></param>
+        /// <param name="searchNode"></param>
+        /// <returns></returns>
+        private static TreeNode FindEarliestNode(List<TreeNode> nodes, bool excludeCurrentNode, TreeNode searchNode)
+        {
+            TreeNode earliestNode = null;
+            if (nodes != null)
+            {
+                foreach (TreeNode node in nodes)
+                {
+                    if (!excludeCurrentNode || node != searchNode)
+                    {
+                        if (earliestNode == null
+                            || node.IsMainLine() && !earliestNode.IsMainLine()
+                            || node.IsMainLine() == earliestNode.IsMainLine()
+                            && (node.MoveNumber < earliestNode.MoveNumber
+                            || node.MoveNumber == earliestNode.MoveNumber && node.ColorToMove == PieceColor.Black && earliestNode.ColorToMove == PieceColor.White))
+                        {
+                            earliestNode = node;
+                        }
+                    }
+                }
+            }
+            return earliestNode;
         }
 
         /// <summary>
