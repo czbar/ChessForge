@@ -18,7 +18,7 @@ namespace ChessForge
         /// Generates a png image for the passed position
         /// </summary>
         /// <param name="nd"></param>
-        public static byte[] GenerateImage(RtfDiagram diag)
+        public static byte[] GenerateImage(TreeNode node, bool isFlipped)
         {
             byte[] bytes;
 
@@ -37,10 +37,10 @@ namespace ChessForge
             Canvas.SetTop(boardCanvas, 1);
 
             ChessBoardSmall chessBoard = new ChessBoardSmall(boardCanvas, imageChessboard, null, null, false, false);
-            chessBoard.EnableShapes(true, diag.Node);
-            chessBoard.DisplayPosition(diag.Node, true);
+            chessBoard.EnableShapes(true, node);
+            chessBoard.DisplayPosition(node, true);
 
-            if (diag.IsFlipped)
+            if (isFlipped)
             {
                 chessBoard.FlipBoard();
             }

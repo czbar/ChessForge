@@ -1186,7 +1186,7 @@ namespace ChessForge
             StringBuilder sb = new StringBuilder();
             if (diag.Node != null)
             {
-                byte[] diagram = PositionImageGenerator.GenerateImage(diag);
+                byte[] diagram = PositionImageGenerator.GenerateImage(diag.Node, diag.IsFlipped);
                 string rtfImage = GetImageRtf(diagram);
                 //string rtfImageTag = $@"{{\pict\pngblip\picw{ChessBoards.ChessBoardGreySmall.PixelWidth}\pich{ChessBoards.ChessBoardGreySmall.PixelHeight}\picwgoal{ChessBoards.ChessBoardGreySmall.PixelWidth * 15}\pichgoal{ChessBoards.ChessBoardGreySmall.PixelHeight * 15} {rtfImage}}}";
                 string rtfImageTag = @"{\pict\pngblip\picw" + "242" + @"\pich" + "242" +
