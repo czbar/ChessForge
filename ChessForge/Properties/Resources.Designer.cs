@@ -6326,6 +6326,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save as Picture....
+        /// </summary>
+        public static string SaveDiagramAsImage {
+            get {
+                return ResourceManager.GetString("SaveDiagramAsImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save Downloaded Games.
         /// </summary>
         public static string SaveDownloadedGames {

@@ -552,6 +552,9 @@
   <data name="SaveAs" xml:space="preserve">
     <value>Zapisz $0 jako ...</value>
   </data>
+  <data name="SaveDiagramAsImage" xml:space="preserve">
+    <value>Zapisz jako obraz...</value>
+  </data>
   <data name="Export" xml:space="preserve">
     <value>Eksportuj</value>
   </data>

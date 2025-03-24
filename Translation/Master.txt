@@ -485,6 +485,9 @@ Save=Save
 #Menu to save the currently open Workbook into a different file
 SaveAs=Save $0 As ...
 
+#Context menu to save a diagram as an image 
+SaveDiagramAsImage= Save as Picture...
+
 #Export
 Export=Export
 
