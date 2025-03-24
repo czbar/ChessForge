@@ -1168,6 +1168,9 @@ SetupPositionToSearch=Set up position to search for
 #Message: no positions found
 MsgNoPositionsFound=Specified position has not been found.
 
+#Partial match only
+PartialMatch=Partial Match
+
 #######################################
 #
 # Header: DIALOG Duplicates

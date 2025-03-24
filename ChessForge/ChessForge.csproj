@@ -88,6 +88,7 @@
     <Compile Include="AnnotationsDialog.xaml.cs">
       <DependentUpon>AnnotationsDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ArticleAttributes.cs" />
     <Compile Include="ArticleComparer.cs" />
     <Compile Include="ArticleListBuilder.cs" />
     <Compile Include="ArticleListItem.cs" />
@@ -127,6 +128,7 @@
     </Compile>
     <Compile Include="ChessBoardSmall.cs" />
     <Compile Include="ChessForgeEventArgs.cs" />
+    <Compile Include="CleanSidelinesComments.cs" />
     <Compile Include="CommentBeforeMoveDialog.xaml.cs">
       <DependentUpon>CommentBeforeMoveDialog.xaml</DependentUpon>
     </Compile>
@@ -139,8 +141,8 @@
     <Compile Include="CustomCommands.cs" />
     <Compile Include="DebugDumps.cs" />
     <Compile Include="DeleteArticlesUtils.cs" />
-    <Compile Include="DeleteNotesDialog.xaml.cs">
-      <DependentUpon>DeleteNotesDialog.xaml</DependentUpon>
+    <Compile Include="CleanSidelinesCommentsDialog.xaml.cs">
+      <DependentUpon>CleanSidelinesCommentsDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="DiagramSetupDialog.xaml.cs">
       <DependentUpon>DiagramSetupDialog.xaml</DependentUpon>
@@ -288,6 +290,8 @@
       <DependentUpon>RtfExportDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="RtfWriter.cs" />
+    <Compile Include="SearchPosition.cs" />
+    <Compile Include="SearchPositionCriteria.cs" />
     <Compile Include="SearchPositionDialog.xaml.cs">
       <DependentUpon>SearchPositionDialog.xaml</DependentUpon>
     </Compile>
@@ -448,7 +452,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DeleteNotesDialog.xaml">
+    <Page Include="CleanSidelinesCommentsDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -731,6 +735,7 @@
     <Resource Include="Resources\Images\ChapterDnArrowDarkMode.png" />
     <Resource Include="Resources\Images\ChapterUpArrowDarkMode.png" />
     <Resource Include="Resources\Images\ToggleOnGray.png" />
+    <Resource Include="Resources\Images\EmptySquare.png" />
     <Content Include="Resources\Sounds\Confirmation.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

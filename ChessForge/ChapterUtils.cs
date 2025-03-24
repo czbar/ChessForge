@@ -1132,6 +1132,7 @@ namespace ChessForge
                         {
                             AppState.Workbook.ActiveChapter.SetActiveVariationTree(GameData.ContentType.STUDY_TREE);
                         }
+                        chapter.SetAuthor("");
                         AppState.IsDirty = true;
                     }
                 }

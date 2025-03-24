@@ -1,14 +1,8 @@
 ﻿using ChessPosition;
 using GameTree;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Xml.Linq;
 
 namespace ChessForge
 {
@@ -56,9 +50,9 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiDeleteNotes_Click(object sender, RoutedEventArgs e)
+        private void UiCleanLinesAndComments_Click(object sender, RoutedEventArgs e)
         {
-            UiDeleteNotes(sender, e);
+            UiCleanLinesAndComments(sender, e);
         }
 
         /// <summary>
@@ -79,143 +73,15 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiDeleteNotes(object sender, RoutedEventArgs e)
+        private void UiCleanLinesAndComments(object sender, RoutedEventArgs e)
         {
-            DeleteNotesDialog dlg = new DeleteNotesDialog();
+            CleanSidelinesCommentsDialog dlg = new CleanSidelinesCommentsDialog();
             GuiUtilities.PositionDialog(dlg, this, 100);
-            if (dlg.ShowDialog() == true && dlg.ApplyToAttributes != 0)
+
+            if (dlg.ShowDialog() == true && (dlg.MoveAttrsFlags != 0 || dlg.ArticleAttrsFlags != 0))
             {
-                Dictionary<Article, List<MoveAttributes>> dictUndoData = new Dictionary<Article, List<MoveAttributes>>();
-
-                if (dlg.ApplyScope == OperationScope.ACTIVE_ITEM)
-                {
-                    if (ActiveTreeView != null && AppState.IsTreeViewTabActive() && AppState.Workbook.ActiveArticle != null)
-                    {
-                        var list = DeleteMoveAttributesInArticle(AppState.Workbook.ActiveArticle, dlg.ApplyToAttributes);
-                        if (list.Count > 0)
-                        {
-                            dictUndoData[AppState.Workbook.ActiveArticle] = list;
-                        }
-                    }
-                }
-                else if (dlg.ApplyScope == OperationScope.CHAPTER)
-                {
-                    DeleteMoveAttributesInChapter(dlg.ApplyToAttributes, AppState.ActiveChapter, dlg.ApplyToStudies, dlg.ApplyToGames, dlg.ApplyToExercises, dictUndoData);
-                }
-                else if (dlg.ApplyScope == OperationScope.WORKBOOK)
-                {
-                    foreach (Chapter chapter in AppState.Workbook.Chapters)
-                    {
-                        DeleteMoveAttributesInChapter(dlg.ApplyToAttributes, chapter, dlg.ApplyToStudies, dlg.ApplyToGames, dlg.ApplyToExercises, dictUndoData);
-                    }
-                }
-
-                if (ActiveTreeView != null && AppState.IsTreeViewTabActive())
-                {
-                    ActiveTreeView.BuildFlowDocumentForVariationTree(false);
-                    if ((dlg.ApplyToAttributes & (int)MoveAttribute.ENGINE_EVALUATION) != 0)
-                    {
-                        // there may have been "assessments" so need to refresh this
-                        ActiveLine.RefreshNodeList(true);
-                    }
-                }
-
-                if (dictUndoData.Keys.Count > 0)
-                {
-                    WorkbookOperationType wot = WorkbookOperationType.DELETE_NOTES;
-
-                    WorkbookOperation op = new WorkbookOperation(wot, dictUndoData);
-                    AppState.Workbook.OpsManager.PushOperation(op);
-
-                    AppState.IsDirty = true;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Deletes move attributes of the specified type from the Article.
-        /// Returns the list of removed comments for the Undo operation.
-        /// </summary>
-        /// <param name="article"></param>
-        /// <returns></returns>
-        private List<MoveAttributes> DeleteMoveAttributesInArticle(Article article, int attrTypes)
-        {
-            List<MoveAttributes> attrsList = new List<MoveAttributes>();
-
-            attrsList = TreeUtils.BuildAttributesList(article.Tree, (int)attrTypes);
-            if ((attrTypes & (int)MoveAttribute.COMMENT_AND_NAGS) != 0)
-            {
-                article.Tree.DeleteCommentsAndNags();
-            }
-
-            if ((attrTypes & (int)MoveAttribute.ENGINE_EVALUATION) != 0)
-            {
-                article.Tree.DeleteEvalsAndAssessments();
-            }
-
-            if ((attrTypes & (int)MoveAttribute.SIDELINE) != 0)
-            {
-                List<TreeNode> toDelete = new List<TreeNode>();
-                foreach(MoveAttributes attrs in attrsList)
-                {
-                    if (attrs.IsDeleted)
-                    {
-                        toDelete.Add(attrs.Node);
-                    }
-                }
-                article.Tree.DeleteNodes(toDelete);
-                BookmarkManager.ResyncBookmarks(1);
-            }
-
-            return attrsList;
-        }
-
-        /// <summary>
-        /// Deletes move attributes of the specified type from all articles in a chapter.
-        /// </summary>
-        /// <param name="chapter"></param>
-        /// <param name="study"></param>
-        /// <param name="games"></param>
-        /// <param name="exercises"></param>
-        private void DeleteMoveAttributesInChapter(int attrTypes,
-            Chapter chapter,
-            bool study,
-            bool games,
-            bool exercises,
-            Dictionary<Article, List<MoveAttributes>> dict)
-        {
-            if (chapter != null)
-            {
-                if (study)
-                {
-                    var list = DeleteMoveAttributesInArticle(chapter.StudyTree, attrTypes);
-                    if (list.Count > 0)
-                    {
-                        dict[chapter.StudyTree] = list;
-                    }
-                }
-                if (games)
-                {
-                    foreach (Article game in chapter.ModelGames)
-                    {
-                        var list = DeleteMoveAttributesInArticle(game, attrTypes);
-                        if (list.Count > 0)
-                        {
-                            dict[game] = list;
-                        }
-                    }
-                }
-                if (exercises)
-                {
-                    foreach (Article exercise in chapter.Exercises)
-                    {
-                        var list = DeleteMoveAttributesInArticle(exercise, attrTypes);
-                        if (list.Count > 0)
-                        {
-                            dict[exercise] = list;
-                        }
-                    }
-                }
+                CleanSidelinesComments.CleanLinesAndComments(dlg.Scope, dlg.MoveAttrsFlags, dlg.ArticleAttrsFlags,
+                                                             dlg.ApplyToStudies, dlg.ApplyToGames, dlg.ApplyToExercises);
             }
         }
 

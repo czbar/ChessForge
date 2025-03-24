@@ -181,7 +181,7 @@
                         <MenuItem x:Name="UiMnMoveArticles" Header="{x:Static p:Resources.MoveArticlesToChapter}" Click="UiMnMoveArticles_Click" />
                         <Separator />
                         <MenuItem x:Name="UiMnPasteEngineLines" Header="{x:Static p:Resources.PasteEngineLines}" Click="UiMnPasteEngineLines_Click"  />
-                        <MenuItem x:Name="UiMnDeleteNotes" Header="{x:Static p:Resources.MenuDeleteNotes}" Click="UiDeleteNotes_Click" />
+                        <MenuItem x:Name="UiMnCleanLinesAndComments" Header="{x:Static p:Resources.MenuDeleteNotes}" Click="UiCleanLinesAndComments_Click" />
                         <Separator />
                         <MenuItem x:Name="UiMnMainDeleteGames" Header="{x:Static p:Resources.DeleteGames}" Click="UiMnToolsDeleteGames_Click" />
                         <MenuItem x:Name="UiMnMainDeleteExercises" Header="{x:Static p:Resources.DeleteExercises}" Click="UiMnToolsDeleteExercises_Click"  />

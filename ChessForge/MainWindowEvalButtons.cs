@@ -57,7 +57,6 @@ namespace ChessForge
                         moveNag = nagId;
                     }
                     nd.Assessment = 0;
-                    nd.BestResponse = "";
                 }
 
                 // put the nags back together and update

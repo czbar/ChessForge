@@ -1789,7 +1789,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete Notes.
+        ///   Looks up a localized string similar to Clean Lines and Comments.
         /// </summary>
         public static string DeleteNotes {
             get {
@@ -4444,7 +4444,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete Notes....
+        ///   Looks up a localized string similar to Clean Lines and Comments....
         /// </summary>
         public static string MenuDeleteNotes {
             get {
@@ -5390,7 +5390,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete Notes.
+        ///   Looks up a localized string similar to Clean Lines and Comments.
         /// </summary>
         public static string OpDeleteNotes {
             get {
@@ -5647,6 +5647,15 @@ namespace ChessForge.Properties {
         public static string ParaForComment {
             get {
                 return ResourceManager.GetString("ParaForComment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Partial Match.
+        /// </summary>
+        public static string PartialMatch {
+            get {
+                return ResourceManager.GetString("PartialMatch", resourceCulture);
             }
         }
         
@@ -6803,7 +6812,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Show on Open.
+        ///   Looks up a localized string similar to Show by Default.
         /// </summary>
         public static string ShowSolutionsByDefault {
             get {

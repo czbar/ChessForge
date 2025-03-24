@@ -127,6 +127,13 @@ namespace ChessForge
         public static bool DontSavePositionEvals = false;
 
         /// <summary>
+        /// Whether the position search is partial or full.
+        /// Only persisted within a session.
+        /// Intended to reset to false on restart.
+        /// </summary>
+        public static bool PartialSearch = false;
+
+        /// <summary>
         /// Path to the engine executable
         /// </summary>
         public static string EngineExePath = "";

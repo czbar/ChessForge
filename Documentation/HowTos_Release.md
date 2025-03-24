@@ -19,3 +19,13 @@
  5. Create a new tag and a new release on GitHub.
  6. Include the above 2 zip files and remove other files added there by github.
  7. Import the release to SourceForge.org.  
+
+# Microsoft App Store
+
+Before submitting, report the file as safe via Edge.
+
+Attributes to enter:
+1. Platform: x64
+2. Silent run: /qn
+3. Languages: English Polish
+4. Package type: MSI

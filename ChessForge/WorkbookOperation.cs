@@ -28,7 +28,7 @@ namespace ChessForge
         INSERT_ARTICLES,
         DELETE_COMMENTS,
         DELETE_ENGINE_EVALS,
-        DELETE_NOTES,
+        CLEAN_LINES_AND_COMMENTS,
         ASSIGN_ECO,
     }
 
@@ -142,8 +142,7 @@ namespace ChessForge
         /// Constructor for actions:
         ///    DELETE_COMMENTS
         ///    DELETE_ENGINE_EVALS
-        /// The data parameter is a dictionary with Articles as keys
-        /// and deleted data as values.
+        /// The data parameter is a dictionary with Articles as keys and deleted data as values.
         /// </summary>
         /// <param name="tp"></param>
         /// <param name="data"></param>
@@ -151,6 +150,21 @@ namespace ChessForge
         {
             _opType = tp;
             _opData_1 = data;
+        }
+
+        /// <summary>
+        /// Constructor for action CLEAN_SIDELINES_AND_COMMENTS.
+        /// The first object is a dictionary with MoveAttributes
+        /// and second is a list with Article attributes
+        /// </summary>
+        /// <param name="tp"></param>
+        /// <param name="data_1"></param>
+        /// <param name="data_2"></param>
+        public WorkbookOperation(WorkbookOperationType tp, object data_1, object data_2) : base()
+        {
+            _opType = tp;
+            _opData_1 = data_1;
+            _opData_2 = data_2;
         }
     }
 }

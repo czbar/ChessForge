@@ -633,10 +633,11 @@ namespace ChessForge
                     {
                         if (WorkbookManager.SessionWorkbook.OpsManager.Undo(out WorkbookOperationType opType, out int selectedChapterIndex, out int selectedArticleIndex))
                         {
+                            VariationTreeView view = AppState.MainWin.ActiveTreeView;
                             switch (opType)
                             {
                                 case WorkbookOperationType.RENAME_CHAPTER:
-                                    AppState.MainWin.ActiveTreeView?.BuildFlowDocumentForVariationTree(false);
+                                    view?.BuildFlowDocumentForVariationTree(false);
                                     _chaptersView.BuildFlowDocumentForChaptersView(false);
                                     break;
                                 case WorkbookOperationType.DELETE_CHAPTER:
@@ -681,12 +682,19 @@ namespace ChessForge
                                     UiTabChapters.Focus();
                                     break;
                                 case WorkbookOperationType.DELETE_COMMENTS:
-                                    AppState.MainWin.ActiveTreeView?.BuildFlowDocumentForVariationTree(false);
+                                    view?.BuildFlowDocumentForVariationTree(false);
                                     break;
                                 case WorkbookOperationType.DELETE_ENGINE_EVALS:
-                                case WorkbookOperationType.DELETE_NOTES:
-                                    AppState.MainWin.ActiveTreeView?.BuildFlowDocumentForVariationTree(false);
+                                case WorkbookOperationType.CLEAN_LINES_AND_COMMENTS:
+                                    view?.BuildFlowDocumentForVariationTree(false);
                                     ActiveLine.RefreshNodeList(true);
+                                    if (view != null)
+                                    {
+                                        TreeNode selNode = view.GetSelectedNode();
+                                        if (selNode != null)
+                                        {
+                                            view.RestoreSelectedLineAndNode();                                        }
+                                    }
                                     break;
                             }
 
@@ -708,7 +716,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnDebugDump_Click(object sender, RoutedEventArgs e)
         {
-            DumpDebugLogs(true);
+            DebugDumps.DumpDebugLogs(true);
         }
 
         /// <summary>
@@ -718,7 +726,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnDebugDumpStates_Click(object sender, RoutedEventArgs e)
         {
-            DumpDebugStates();
+            DebugDumps.DumpDebugStates();
         }
 
         /// <summary>
@@ -732,15 +740,15 @@ namespace ChessForge
         {
             AppLog.Message("Application Closing");
 
-            WorkbookViewState wvs = new WorkbookViewState(SessionWorkbook);
-            wvs.SaveState();
-
             if (AppState.CurrentLearningMode != LearningMode.Mode.IDLE
                 && (AppState.IsDirty || string.IsNullOrEmpty(AppState.WorkbookFilePath)) || (ActiveVariationTree != null && ActiveVariationTree.HasTrainingMoves()))
             {
                 try
                 {
-                    WorkbookManager.PromptAndSaveWorkbook(false, out _, true);
+                    if (!WorkbookManager.PromptAndSaveWorkbook(false, out _, true))
+                    {
+                        e.Cancel = true;
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -749,16 +757,19 @@ namespace ChessForge
                 }
             }
 
-            SoundPlayer.CloseAll();
-
             if (e.Cancel != true)
             {
+                WorkbookViewState wvs = new WorkbookViewState(SessionWorkbook);
+                wvs.SaveState();
+
+                SoundPlayer.CloseAll();
+
                 EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
                 EngineMessageProcessor.ChessEngineService.StopEngine();
 
                 Timers.StopAll();
 
-                DumpDebugLogs(false);
+                DebugDumps.DumpDebugLogs(false);
                 Configuration.WriteOutConfiguration();
             }
         }
@@ -900,8 +911,9 @@ namespace ChessForge
         public void UiMnFindIdenticalPosition_Click(object sender, RoutedEventArgs e)
         {
             bool isTrainingOrSolving = TrainingSession.IsTrainingInProgress || AppState.IsUserSolving();
-
-            if (isTrainingOrSolving || ActiveVariationTree == null || AppState.ActiveTab == TabViewType.CHAPTERS)
+            if (isTrainingOrSolving 
+                || ActiveVariationTree == null 
+                || !(AppState.IsTreeViewTabActive() || AppState.ActiveTab == TabViewType.INTRO))
             {
                 return;
             }
@@ -909,9 +921,15 @@ namespace ChessForge
             try
             {
                 TreeNode nd = ActiveVariationTree == null ? null : ActiveVariationTree.SelectedNode;
+                
+                SearchPositionCriteria crits = new SearchPositionCriteria(nd);
+                crits.FindMode = FindIdenticalPositions.Mode.IDENTICAL;
+                crits.IsPartialSearch = false;
+                crits.SetCheckDynamicAttrs(true);
+                crits.ExcludeCurrentNode = true;
+                crits.ReportNoFind = true;
 
-                bool externalSearch = !AppState.IsTreeViewTabActive();
-                FindIdenticalPositions.Search(false, nd, FindIdenticalPositions.Mode.FIND_AND_REPORT, externalSearch, true, out _);
+                FindIdenticalPositions.Search(false, crits, out _);
             }
             catch (Exception ex)
             {
@@ -927,7 +945,6 @@ namespace ChessForge
         public void UiMnFindPositions_Click(object sender, RoutedEventArgs e)
         {
             bool isTrainingOrSolving = TrainingSession.IsTrainingInProgress || AppState.IsUserSolving();
-
             if (isTrainingOrSolving)
             {
                 return;
@@ -935,32 +952,10 @@ namespace ChessForge
 
             try
             {
-                BoardPosition position = null;
-                TreeNode nd = ActiveVariationTree == null ? null : ActiveVariationTree.SelectedNode;
-                if (nd == null)
-                {
-                    string fen = PositionUtils.GetFenFromClipboard();
-                    if (string.IsNullOrEmpty(fen))
-                    {
-                        try
-                        {
-                            FenParser.ParseFenIntoBoard(fen, ref position);
-                        }
-                        catch
-                        {
-                            position = null;
-                            position = PositionUtils.SetupStartingPosition();
-                        }
-                    }
-                }
-                else
-                {
-                    position = nd.Position;
-                }
-
+                BoardPosition position = PreparePositionForSearch();
                 TreeNode searchNode = new TreeNode(null, "", 1);
-                bool stopSearch = false;
-                while (!stopSearch)
+                bool searchAgain = true;
+                while (searchAgain)
                 {
                     SearchPositionDialog dlg = new SearchPositionDialog(position);
                     GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
@@ -969,29 +964,61 @@ namespace ChessForge
                         searchNode.Position = new BoardPosition(dlg.PositionSetup);
                         // store for another possible loop
                         position = searchNode.Position;
-                        stopSearch = FindIdenticalPositions.Search(true, searchNode, FindIdenticalPositions.Mode.FIND_AND_REPORT, true, false, out bool searchAgain);
-                        if (searchAgain)
-                        {
-                            stopSearch = false;
-                        }
-                        else if (!stopSearch)
-                        {
-                            if (MessageBox.Show(Properties.Resources.MsgEditPositionSearch, Properties.Resources.MsgTitlePositionSearch, MessageBoxButton.YesNoCancel, MessageBoxImage.Question) != MessageBoxResult.Yes)
-                            {
-                                stopSearch = true;
-                            }
-                        }
+
+                        SearchPositionCriteria crits = new SearchPositionCriteria(searchNode);
+                        crits.FindMode = FindIdenticalPositions.Mode.POSITION_MATCH;
+                        crits.IsPartialSearch = Configuration.PartialSearch;
+                        crits.SetCheckDynamicAttrs(false);
+                        crits.ExcludeCurrentNode = false;
+                        crits.ReportNoFind = true;
+
+                        FindIdenticalPositions.Search(true, crits, out searchAgain);
                     }
                     else
                     {
-                        stopSearch = true;
+                        searchAgain = false;
                     }
                 }
             }
             catch (Exception ex)
             {
-                AppLog.Message("SearchByFen_Click()", ex);
+                AppLog.Message("UiMnFindPositions_Click()", ex);
             }
+        }
+
+        /// <summary>
+        /// Determines the position to use for search.
+        /// If there is a selected node its position will be used for search.
+        /// If not, the clipboard content will be tested if it contains a valid FEN.
+        /// If so, it will be used, otherwise we will set the starting position.
+        /// </summary>
+        /// <returns></returns>
+        private BoardPosition PreparePositionForSearch()
+        {
+            BoardPosition position = null;
+            TreeNode nd = ActiveVariationTree == null ? null : ActiveVariationTree.SelectedNode;
+            if (nd == null)
+            {
+                string fen = PositionUtils.GetFenFromClipboard();
+                if (string.IsNullOrEmpty(fen))
+                {
+                    try
+                    {
+                        FenParser.ParseFenIntoBoard(fen, ref position);
+                    }
+                    catch
+                    {
+                        position = null;
+                        position = PositionUtils.SetupStartingPosition();
+                    }
+                }
+            }
+            else
+            {
+                position = nd.Position;
+            }
+
+            return position;
         }
 
         //**********************

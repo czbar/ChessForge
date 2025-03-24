@@ -1084,6 +1084,9 @@
   <data name="MsgNoPositionsFound" xml:space="preserve">
     <value>Specified position has not been found.</value>
   </data>
+  <data name="PartialMatch" xml:space="preserve">
+    <value>Partial Match</value>
+  </data>
   <data name="NumberOfDuplicatedItems" xml:space="preserve">
     <value>Number of duplicated items</value>
   </data>

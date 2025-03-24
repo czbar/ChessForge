@@ -112,6 +112,126 @@ namespace ChessForge
             catch { }
         }
 
+
+        /// <summary>
+        /// This will be called after some operation was performed on the tree
+        /// that may have changed its structure.
+        /// Therefore, we have to take care of a situation where the selected node
+        /// is no longer present or the line ids have chnaged.
+        /// </summary>
+        public void RestoreSelectedLineAndNode()
+        {
+            string lineId = ShownVariationTree.SelectedLineId;
+            int nodeId = ShownVariationTree.SelectedNodeId;
+            TreeNode selNode = ShownVariationTree.GetNodeFromNodeId(nodeId);
+
+            if (selNode == null)
+            {
+                selNode = ShownVariationTree.Nodes[0];
+                lineId = ShownVariationTree.GetDefaultLineIdForNode(selNode.NodeId);
+            }
+            else
+            {
+                ObservableCollection<TreeNode> line = ShownVariationTree.GetNodesForLine(lineId);
+                if (!line.Contains(selNode))
+                {
+                    lineId = ShownVariationTree.GetDefaultLineIdForNode(selNode.NodeId);
+                }
+            }
+
+            SetAndSelectActiveLine(lineId, selNode.NodeId);
+            HighlightNode(selNode.NodeId);
+        }
+
+        /// <summary>
+        /// Sets background for all moves in the currently selected line.
+        /// </summary>
+        /// <param name="lineId"></param>
+        /// <param name="nodeId"></param>
+        public void SetAndSelectActiveLine(string lineId, int nodeId)
+        {
+            // TODO: do not select line and therefore repaint everything if the clicked line is already selected
+            // UNLESS there is "copy select" active
+            ObservableCollection<TreeNode> lineToSelect = ShownVariationTree.GetNodesForLine(lineId);
+            WorkbookManager.SessionWorkbook.ActiveVariationTree.SetSelectedLineAndMove(lineId, nodeId);
+            _mainWin.SetActiveLine(lineToSelect, nodeId);
+            HighlightActiveLine();
+        }
+
+        /// <summary>
+        /// Unhighlights the active line including the selected run.
+        /// </summary>
+        public void UnhighlightActiveLine()
+        {
+            try
+            {
+                ObservableCollection<TreeNode> line = AppState.MainWin.GetActiveLine();
+                foreach (TreeNode nd in line)
+                {
+                    if (nd.NodeId != 0)
+                    {
+                        if (_dictNodeToRun.TryGetValue(nd.NodeId, out Run run))
+                        {
+                            if (run.Background != ChessForgeColors.CurrentTheme.RtbBackground)
+                            {
+                                run.Background = ChessForgeColors.CurrentTheme.RtbBackground;
+                            }
+
+                            if (run.Tag is Brush brush)
+                            {
+                                run.Foreground = brush;
+                            }
+                            else
+                            {
+                                run.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
+                            }
+                        }
+                    }
+                }
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// Highlights the Run with the passed nodeId as if it was selected.
+        /// NOTE: it does not actually select the node/run.
+        /// </summary>
+        /// <param name="nodeId"></param>
+        public void HighlightNode(int nodeId)
+        {
+            if (_dictNodeToRun.TryGetValue(nodeId, out Run run))
+            {
+                run.Foreground = ChessForgeColors.CurrentTheme.RtbSelectRunForeground;
+                run.Background = ChessForgeColors.CurrentTheme.RtbSelectRunBackground;
+            }
+        }
+
+        /// <summary>
+        /// Highlights the active line.
+        /// </summary>
+        private void HighlightActiveLine()
+        {
+            // TODO: duplicates functionality of HighlightLineAndMove
+            try
+            {
+                ObservableCollection<TreeNode> line = _mainWin.GetActiveLine();
+                foreach (TreeNode nd in line)
+                {
+                    if (nd.NodeId != 0)
+                    {
+                        if (_dictNodeToRun.TryGetValue(nd.NodeId, out Run run))
+                        {
+                            if (run.Background != ChessForgeColors.CurrentTheme.RtbSelectLineBackground)
+                            {
+                                run.Background = ChessForgeColors.CurrentTheme.RtbSelectLineBackground;
+                            }
+                        }
+                    }
+                }
+            }
+            catch { }
+        }
+
         /// <summary>
         /// Highlights the line with the passed lineId and the Move with the passed nodeId. 
         /// Does not touch or reset colors of any other nodes.
@@ -203,81 +323,6 @@ namespace ChessForge
                     AppLog.Message("SelectLineAndMove()", ex);
                 }
             }
-        }
-
-        /// <summary>
-        /// Sets background for all moves in the currently selected line.
-        /// </summary>
-        /// <param name="lineId"></param>
-        /// <param name="nodeId"></param>
-        public void SetAndSelectActiveLine(string lineId, int nodeId)
-        {
-            // TODO: do not select line and therefore repaint everything if the clicked line is already selected
-            // UNLESS there is "copy select" active
-            ObservableCollection<TreeNode> lineToSelect = ShownVariationTree.GetNodesForLine(lineId);
-            WorkbookManager.SessionWorkbook.ActiveVariationTree.SetSelectedLineAndMove(lineId, nodeId);
-            _mainWin.SetActiveLine(lineToSelect, nodeId);
-            HighlightActiveLine();
-        }
-
-        /// <summary>
-        /// Unhighlights the active line including the selected run.
-        /// </summary>
-        public void UnhighlightActiveLine()
-        {
-            try
-            {
-                ObservableCollection<TreeNode> line = AppState.MainWin.GetActiveLine();
-                foreach (TreeNode nd in line)
-                {
-                    if (nd.NodeId != 0)
-                    {
-                        if (_dictNodeToRun.TryGetValue(nd.NodeId, out Run run))
-                        {
-                            if (run.Background != ChessForgeColors.CurrentTheme.RtbBackground)
-                            {
-                                run.Background = ChessForgeColors.CurrentTheme.RtbBackground;
-                            }
-
-                            if (run.Tag is Brush brush)
-                            {
-                                run.Foreground = brush;
-                            }
-                            else
-                            {
-                                run.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
-                            }
-                        }
-                    }
-                }
-            }
-            catch { }
-        }
-
-        /// <summary>
-        /// Highlights the active line.
-        /// </summary>
-        private void HighlightActiveLine()
-        {
-            // TODO: duplicates functionality of HighlightLineAndMove
-            try
-            {
-                ObservableCollection<TreeNode> line = _mainWin.GetActiveLine();
-                foreach (TreeNode nd in line)
-                {
-                    if (nd.NodeId != 0)
-                    {
-                        if (_dictNodeToRun.TryGetValue(nd.NodeId, out Run run))
-                        {
-                            if (run.Background != ChessForgeColors.CurrentTheme.RtbSelectLineBackground)
-                            {
-                                run.Background = ChessForgeColors.CurrentTheme.RtbSelectLineBackground;
-                            }
-                        }
-                    }
-                }
-            }
-            catch { }
         }
 
         /// <summary>
@@ -535,8 +580,11 @@ namespace ChessForge
                                 ShownVariationTree.BuildLines();
                             }
 
-                            string lineId = ShownVariationTree.GetDefaultLineIdForNode(nodeId);
-
+                            string lineId = AppState.MainWin.ActiveLine.GetLineId();
+                            if (AppState.MainWin.ActiveLine.GetNodeFromId(nodeId) == null)
+                            {
+                                lineId = ShownVariationTree.GetDefaultLineIdForNode(nodeId);
+                            }
                             SetAndSelectActiveLine(lineId, nodeId);
                         }
 

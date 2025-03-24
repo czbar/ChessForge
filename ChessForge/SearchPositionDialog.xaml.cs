@@ -1,6 +1,5 @@
 ﻿using ChessPosition;
 using GameTree;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -15,6 +14,9 @@ namespace ChessForge
     {
         // square side's size
         private int _squareSize = 30;
+
+        // value representing a mandatory empty square in the search 
+        private byte _emptySquare = 0xFF;
 
         // left offset between the SetupCanvas and BoardCanvas
         private double _boardCanvasToSetupCanvasLeftOffset;
@@ -36,6 +38,15 @@ namespace ChessForge
         // top offset between the the Board Image and Setup Canvas
         private double _boardTopOffset;
 
+        // this may be different that the FEN shown as in partial search we only show the first part 
+        private string _currentFen;
+
+        /// <summary>
+        /// NOTE: currently we set it to false as we do not check dynamic attributes where
+        /// searching for positions.
+        /// In the future this may change.
+        /// </summary>
+        private bool _checkDynamicAttrs = false;
 
         /// <summary>
         /// Object representing the piece being dragged.
@@ -75,7 +86,8 @@ namespace ChessForge
             PositionSetup.HalfMove50Clock = 1;
             SetFen();
             UiTbFen.Focus();
-            UiTbFen.SelectAll();
+
+            SetPartialSearchControlsVisibility(Configuration.PartialSearch);
         }
 
         /// <summary>
@@ -94,7 +106,16 @@ namespace ChessForge
         /// </summary>
         private void SetFen(bool checkEnpassant = true)
         {
-            UiTbFen.Text = FenParser.GenerateFenFromPosition(PositionSetup, 0);
+            _currentFen = FenParser.GenerateFenFromPosition(PositionSetup, 0);
+            
+            if (!_checkDynamicAttrs && _currentFen != null)
+            {
+                string[] tokens = _currentFen.Split(' ');
+                _currentFen = tokens[0];
+                UiTbFen.Text = tokens[0];
+            }
+
+            UiTbFen.Text = _currentFen;
         }
 
         /// <summary>
@@ -159,13 +180,12 @@ namespace ChessForge
                 {
                     if (_draggedPiece.Piece == PieceType.Pawn && (sc.Ycoord == 0 || sc.Ycoord == 7))
                     {
-                        //RemovePieceFromBoard(sc);
                         UiCnvSetup.Children.Remove(_draggedPiece.ImageControl);
                         _draggedPiece.Clear();
                     }
                     else
                     {
-                        AddPieceToBoard(sc, _draggedPiece.Piece, _draggedPiece.Color, _draggedPiece.ImageControl);
+                        AddPieceToBoard(sc, _draggedPiece);
                         _draggedPiece.ImageControl = new Image();
                     }
                 }
@@ -262,10 +282,38 @@ namespace ChessForge
         /// <param name="piece"></param>
         /// <param name="color"></param>
         /// <param name="e"></param>
-        private void StartDrag(PieceType piece, PieceColor color, MouseButtonEventArgs e)
+        private void StartDragPiece(PieceType piece, PieceColor color, MouseButtonEventArgs e)
         {
             _draggedPiece.ImageControl = new Image();
             _draggedPiece.ImageControl.Source = Pieces.GetImageForPieceSmall(piece, color);
+            _draggedPiece.Piece = piece;
+            _draggedPiece.Color = color;
+            _draggedPiece.IsEmptySquare = false;
+
+            StartDragImage(e);
+        }
+
+        /// <summary>
+        /// Sets up the drag operation using an off-the-board symbol of the empty square.
+        /// </summary>
+        /// <param name="e"></param>
+        private void StartDragEmptySquare(MouseButtonEventArgs e)
+        {
+            _draggedPiece.ImageControl = new Image();
+            _draggedPiece.ImageControl.Source = Pieces.EmptySquare;
+            _draggedPiece.Piece = PieceType.None;
+            _draggedPiece.Color = PieceColor.None;
+            _draggedPiece.IsEmptySquare = true;
+
+            StartDragImage(e);
+        }
+
+        /// <summary>
+        /// Prepares a drag operation with a piece from off-the-board.
+        /// </summary>
+        /// <param name="e"></param>
+        private void StartDragImage(MouseButtonEventArgs e)
+        {
             UiCnvSetup.Children.Add(_draggedPiece.ImageControl);
 
             Point mousePoint = e.GetPosition(UiCnvSetup);
@@ -273,8 +321,6 @@ namespace ChessForge
             Canvas.SetLeft(_draggedPiece.ImageControl, mousePoint.X - _squareSize / 2);
             Canvas.SetTop(_draggedPiece.ImageControl, mousePoint.Y - _squareSize / 2);
 
-            _draggedPiece.Piece = piece;
-            _draggedPiece.Color = color;
             _draggedPiece.IsDragInProgress = true;
 
             e.Handled = true;
@@ -289,13 +335,30 @@ namespace ChessForge
         {
             if (sc != null && sc.IsValid())
             {
-                byte square = PositionSetup.Board[sc.Xcoord, sc.Ycoord];
-
-                _draggedPiece.Piece = PositionUtils.GetPieceType(square);
-                _draggedPiece.Color = PositionUtils.GetPieceColor(square);
-
                 _draggedPiece.ImageControl = new Image();
-                _draggedPiece.ImageControl.Source = Pieces.GetImageForPieceSmall(_draggedPiece.Piece, _draggedPiece.Color);
+
+                byte square = PositionSetup.Board[sc.Xcoord, sc.Ycoord];
+                if (square == _emptySquare)
+                {
+                    _draggedPiece.Piece = PieceType.None;
+                    _draggedPiece.Color = PieceColor.None;
+                    _draggedPiece.IsEmptySquare = true;
+                }
+                else
+                {
+                    _draggedPiece.Piece = PositionUtils.GetPieceType(square);
+                    _draggedPiece.Color = PositionUtils.GetPieceColor(square);
+                    _draggedPiece.IsEmptySquare = false;
+                }
+
+                if (_draggedPiece.IsEmptySquare)
+                {
+                    _draggedPiece.ImageControl.Source = Pieces.EmptySquare;
+                }
+                else
+                {
+                    _draggedPiece.ImageControl.Source = Pieces.GetImageForPieceSmall(_draggedPiece.Piece, _draggedPiece.Color);
+                }
                 UiCnvSetup.Children.Add(_draggedPiece.ImageControl);
 
                 RemovePieceFromBoard(sc);
@@ -352,11 +415,18 @@ namespace ChessForge
         /// <param name="piece"></param>
         /// <param name="color"></param>
         /// <param name="img"></param>
-        private void AddPieceToBoard(SquareCoords sc, PieceType piece, PieceColor color, Image img)
+        private void AddPieceToBoard(SquareCoords sc, PositionSetupDraggedPiece draggedPiece)
         {
             RemovePieceFromBoard(sc);
-            PositionUtils.PlacePieceOnBoard(piece, color, (byte)sc.Xcoord, (byte)sc.Ycoord, ref PositionSetup.Board);
-            _pieceImagesOnBoard[sc.Xcoord, sc.Ycoord] = img;
+            if (draggedPiece.IsEmptySquare)
+            {
+                PositionSetup.Board[(byte)sc.Xcoord, (byte)sc.Ycoord] = 0xFF;
+            }
+            else
+            {
+                PositionUtils.PlacePieceOnBoard(draggedPiece.Piece, draggedPiece.Color, (byte)sc.Xcoord, (byte)sc.Ycoord, ref PositionSetup.Board);
+            }
+            _pieceImagesOnBoard[sc.Xcoord, sc.Ycoord] = draggedPiece.ImageControl;
             PlacePieceOnSquare(sc, _pieceImagesOnBoard[sc.Xcoord, sc.Ycoord]);
         }
 
@@ -437,9 +507,16 @@ namespace ChessForge
                     if (square != 0)
                     {
                         Image img = new Image();
-                        PieceType piece = PositionUtils.GetPieceType(square);
-                        PieceColor color = PositionUtils.GetPieceColor(square);
-                        img.Source = Pieces.GetImageForPieceSmall(piece, color);
+                        if (square == _emptySquare)
+                        {
+                            img.Source = Pieces.EmptySquare;
+                        }
+                        else
+                        {
+                            PieceType piece = PositionUtils.GetPieceType(square);
+                            PieceColor color = PositionUtils.GetPieceColor(square);
+                            img.Source = Pieces.GetImageForPieceSmall(piece, color);
+                        }
                         PlacePieceOnSquare(new SquareCoords(x, y), img);
                         _pieceImagesOnBoard[x, y] = img;
                         UiCnvSetup.Children.Add(img);
@@ -487,13 +564,25 @@ namespace ChessForge
         {
             try
             {
-                bool isDiff = DiffPositionSetupWithFenText(UiTbFen.Text, out bool position, out bool colorToMove, out bool castling, out bool enpassant);
-                if (isDiff)
+                if (_currentFen != UiTbFen.Text)
                 {
-                    if (position)
+                    _currentFen = UiTbFen.Text;
+                    if (!_checkDynamicAttrs && _currentFen != null)
                     {
-                        SetupImagesForPosition();
+                        string[] tokens = _currentFen.Split(' ');
+                        _currentFen = tokens[0];
                     }
+
+                    bool isDiff = DiffPositionSetupWithFenText(UiTbFen.Text, out bool position, out bool colorToMove, out bool castling, out bool enpassant);
+                    if (isDiff)
+                    {
+                        if (position)
+                        {
+                            SetupImagesForPosition();
+                        }
+                    }
+
+                    UiTbFen.Text = _currentFen;
                 }
             }
             catch
@@ -502,7 +591,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Identifies differences betwee 2 BoardPositions.
+        /// Identifies differences between 2 BoardPositions.
         /// </summary>
         /// <param name="fen"></param>
         /// <param name="position"></param>
@@ -512,13 +601,33 @@ namespace ChessForge
         /// <returns></returns>
         private bool DiffPositionSetupWithFenText(string fen, out bool position, out bool colorToMove, out bool castling, out bool enpassant)
         {
-            BoardPosition temp = new BoardPosition();
-            FenParser.ParseFenIntoBoard(UiTbFen.Text, ref temp);
+            bool isDiff = false;
 
-            bool isDiff = PositionChanges(temp, PositionSetup, out position, out colorToMove, out castling, out enpassant);
-            if (isDiff)
+            position = false;
+            colorToMove = false;
+            castling = false;
+            enpassant = false;
+
+            BoardPosition temp = new BoardPosition();
+            try
             {
-                PositionSetup = temp;
+                if (!_checkDynamicAttrs)
+                {
+                    FenParser.ParseFenIntoBoard(UiTbFen.Text, ref temp, true);
+                }
+                else
+                {
+                    FenParser.ParseFenIntoBoard(UiTbFen.Text, ref temp);
+                }
+
+                isDiff = PositionChanges(temp, PositionSetup, out position, out colorToMove, out castling, out enpassant);
+                if (isDiff)
+                {
+                    PositionSetup = temp;
+                }
+            }
+            catch
+            {
             }
 
             return isDiff;
@@ -573,7 +682,14 @@ namespace ChessForge
                 enpassant = false;
             }
 
-            return position | colorToMove | castling | enpassant;
+            if (!_checkDynamicAttrs)
+            {
+                return position;
+            }
+            else
+            {
+                return position | colorToMove | castling | enpassant;
+            }
         }
 
         /// <summary>
@@ -616,7 +732,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnOk_Click(object sender, RoutedEventArgs e)
         {
-            if (GuiUtilities.ValidatePosition(ref PositionSetup, out string errorText))
+            if (CheckPosition(out string errorText))
             {
                 DialogResult = true;
             }
@@ -627,13 +743,47 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Checks of the position is valid.
+        /// If we are doing a partial search, we only check for the number of kings.
+        /// All other patterns are considered valid.
+        /// </summary>
+        /// <param name="errorText"></param>
+        /// <returns></returns>
+        private bool CheckPosition(out string errorText)
+        {
+            bool result = true;
+            errorText = string.Empty;
+
+            if (Configuration.PartialSearch)
+            {
+                PositionUtils.KingCount(out int whiteKings, out int blackKings, PositionSetup);
+                if (whiteKings > 1)
+                {
+                    errorText = Properties.Resources.PosValTooManyWhiteKings;
+                    result = false;
+                }
+                else if (blackKings > 1)
+                {
+                    errorText = Properties.Resources.PosValTooManyBlackKings;
+                    result = false;
+                }
+            }
+            else
+            {
+                result = GuiUtilities.ValidatePosition(ref PositionSetup, out errorText);
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Exists the dialog on user pressing the Cancel button.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void UiBtnCancel_Click(object sender, RoutedEventArgs e)
         {
-            DialogResult = false ;
+            DialogResult = false;
         }
 
         /// <summary>
@@ -659,7 +809,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiImgWhiteKing_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            StartDrag(PieceType.King, PieceColor.White, e);
+            StartDragPiece(PieceType.King, PieceColor.White, e);
         }
 
         /// <summary>
@@ -669,7 +819,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiImgWhiteQueen_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            StartDrag(PieceType.Queen, PieceColor.White, e);
+            StartDragPiece(PieceType.Queen, PieceColor.White, e);
         }
 
         /// <summary>
@@ -679,7 +829,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiImgWhiteRook_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            StartDrag(PieceType.Rook, PieceColor.White, e);
+            StartDragPiece(PieceType.Rook, PieceColor.White, e);
         }
 
         /// <summary>
@@ -689,7 +839,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiImgWhiteBishop_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            StartDrag(PieceType.Bishop, PieceColor.White, e);
+            StartDragPiece(PieceType.Bishop, PieceColor.White, e);
         }
 
         /// <summary>
@@ -699,7 +849,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiImgWhiteKnight_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            StartDrag(PieceType.Knight, PieceColor.White, e);
+            StartDragPiece(PieceType.Knight, PieceColor.White, e);
         }
 
         /// <summary>
@@ -709,7 +859,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiImgWhitePawn_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            StartDrag(PieceType.Pawn, PieceColor.White, e);
+            StartDragPiece(PieceType.Pawn, PieceColor.White, e);
         }
 
         /// <summary>
@@ -719,7 +869,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiImgBlackKing_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            StartDrag(PieceType.King, PieceColor.Black, e);
+            StartDragPiece(PieceType.King, PieceColor.Black, e);
         }
 
         /// <summary>
@@ -729,7 +879,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiImgBlackQueen_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            StartDrag(PieceType.Queen, PieceColor.Black, e);
+            StartDragPiece(PieceType.Queen, PieceColor.Black, e);
         }
 
         /// <summary>
@@ -739,7 +889,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiImgBlackRook_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            StartDrag(PieceType.Rook, PieceColor.Black, e);
+            StartDragPiece(PieceType.Rook, PieceColor.Black, e);
         }
 
         /// <summary>
@@ -749,7 +899,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiImgBlackBishop_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            StartDrag(PieceType.Bishop, PieceColor.Black, e);
+            StartDragPiece(PieceType.Bishop, PieceColor.Black, e);
         }
 
         /// <summary>
@@ -759,7 +909,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiImgBlackKnight_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            StartDrag(PieceType.Knight, PieceColor.Black, e);
+            StartDragPiece(PieceType.Knight, PieceColor.Black, e);
         }
 
         /// <summary>
@@ -769,7 +919,57 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiImgBlackPawn_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            StartDrag(PieceType.Pawn, PieceColor.Black, e);
+            StartDragPiece(PieceType.Pawn, PieceColor.Black, e);
+        }
+
+        /// <summary>
+        /// Off-the-board Empty Square image was clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiImgEmptySquare_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            StartDragEmptySquare(e);
+        }
+
+        /// <summary>
+        /// Responds to the user checking the Partial Match checkbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiCbPartialMatch_Checked(object sender, RoutedEventArgs e)
+        {
+            UiImgEmptySquare.Visibility = Visibility.Visible;
+            Configuration.PartialSearch = true;
+        }
+
+        /// <summary>
+        /// Responds to the user unchecking the Partial Match checkbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiCbPartialMatch_Unchecked(object sender, RoutedEventArgs e)
+        {
+            UiImgEmptySquare.Visibility = Visibility.Collapsed;
+            Configuration.PartialSearch = false;
+        }
+
+        /// <summary>
+        /// Sets the visibility of the Partial Match controls.
+        /// </summary>
+        /// <param name="partialSearch"></param>
+        private void SetPartialSearchControlsVisibility(bool partialSearch)
+        {
+            if (partialSearch)
+            {
+                UiCbPartialMatch.IsChecked = true;
+                UiImgEmptySquare.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                UiCbPartialMatch.IsChecked = false;
+                UiImgEmptySquare.Visibility = Visibility.Collapsed;
+            }
         }
     }
 }

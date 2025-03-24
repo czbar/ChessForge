@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
         ShowInTaskbar="True"
-        Title="{x:Static p:Resources.SetupPositionToSearch}" Height="521" Width="580" MouseUp="Window_MouseUp" MouseMove="Window_MouseMove" MouseLeave="Window_MouseLeave" >
+        Title="{x:Static p:Resources.SetupPositionToSearch}" Height="541" Width="580" MouseUp="Window_MouseUp" MouseMove="Window_MouseMove" MouseLeave="Window_MouseLeave" >
     <Grid x:Name="_grdDialog" >
         <Canvas x:Name="UiCnvSetup" Margin="63,10,0,0" Width="268" Height="368" HorizontalAlignment="Left" VerticalAlignment="Top" MouseDown="UiCnvSetup_MouseDown" >
             <Canvas x:Name="UiCnvBoard" Background="Black" Height="268" Width="268" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="0" Canvas.Top="50"  >
@@ -20,6 +20,7 @@
             <Image x:Name="UiImgBlackKnight" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="30" Source="/Resources/Images/BlackKnight.png" MouseDown="UiImgBlackKnight_MouseDown" Canvas.Left="168" Canvas.Top="12"/>
             <Image x:Name="UiImgBlackPawn" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="30" Source="/Resources/Images/BlackPawn.png" MouseDown="UiImgBlackPawn_MouseDown" Canvas.Left="198" Canvas.Top="12"/>
 
+            <Image x:Name="UiImgEmptySquare" HorizontalAlignment="Center" Height="30" VerticalAlignment="Top" Width="30" Source="/Resources/Images/EmptySquare.png" MouseDown="UiImgEmptySquare_MouseDown" Canvas.Left="0" Canvas.Top="323"/>
             <Image x:Name="UiImgWhiteKing" HorizontalAlignment="Center" Height="30" VerticalAlignment="Top" Width="30" Source="/Resources/Images/WhiteKing.png" MouseDown="UiImgWhiteKing_MouseDown" Canvas.Left="43" Canvas.Top="323"/>
             <Image x:Name="UiImgWhiteQueen" HorizontalAlignment="Center" Height="30" VerticalAlignment="Top" Width="30" Source="/Resources/Images/WhiteQueen.png" MouseDown="UiImgWhiteQueen_MouseDown" Canvas.Left="73" Canvas.Top="323"/>
             <Image x:Name="UiImgWhiteRook" HorizontalAlignment="Center" Height="30" VerticalAlignment="Top" Width="30" Source="/Resources/Images/WhiteRook.png" MouseDown="UiImgWhiteRook_MouseDown" Canvas.Left="103" Canvas.Top="323"/>
@@ -29,10 +30,11 @@
         </Canvas>
         <Button x:Name="UiBtnStartingPos" Content="{x:Static p:Resources.StartingPosition}" Width="160" HorizontalAlignment="Left" Margin="358,170,0,0" VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" Click="UiBtnStartingPos_Click"/>
         <Button x:Name="UiBtnClear" Content="{x:Static p:Resources.ClearBoard}" Width="160" HorizontalAlignment="Left" Margin="358,203,0,0" VerticalAlignment="Top"  Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" Click="UiBtnClear_Click" />
-        <TextBox x:Name="UiTbFen" Text="" TabIndex="1" HorizontalAlignment="Left"  HorizontalContentAlignment="Center" BorderThickness="1" BorderBrush="Black"  Margin="60,389,0,0" Width="460" Height="24" VerticalAlignment="Top" VerticalContentAlignment="Center" TextChanged="UiTbFen_TextChanged"/>
-        <Label x:Name="UiLblFenLabel" Content="{x:Static p:Resources.FEN}" HorizontalAlignment="Left" Margin="20,390,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Right" RenderTransformOrigin="0.356,-0.268"/>
-        <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Search}" Width="100" HorizontalAlignment="Center" Margin="-250,433,0,0" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
-        <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" Width="100"  HorizontalAlignment="Center" Margin="0,433,0,0" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
-        <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" Width="100"  HorizontalAlignment="Center" Margin="250,433,0,0" VerticalAlignment="Top" Click="UiBtnHelp_Click" />
+        <TextBox x:Name="UiTbFen" Text="" TabIndex="1" HorizontalAlignment="Left"  HorizontalContentAlignment="Center" BorderThickness="1" BorderBrush="Black"  Margin="60,409,0,0" Width="460" Height="24" VerticalAlignment="Top" VerticalContentAlignment="Center" TextChanged="UiTbFen_TextChanged"/>
+        <CheckBox x:Name="UiCbPartialMatch" Content="{x:Static p:Resources.PartialMatch}" HorizontalAlignment="Left" Margin="69,376,0,0" VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" Checked="UiCbPartialMatch_Checked" Unchecked="UiCbPartialMatch_Unchecked" />
+        <Label x:Name="UiLblFenLabel" Content="{x:Static p:Resources.FEN}" HorizontalAlignment="Left" Margin="20,410,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Right" RenderTransformOrigin="0.356,-0.268"/>
+        <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Search}" Width="100" HorizontalAlignment="Center" Margin="-250,453,0,0" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
+        <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" Width="100"  HorizontalAlignment="Center" Margin="0,453,0,0" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
+        <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" Width="100"  HorizontalAlignment="Center" Margin="250,453,0,0" VerticalAlignment="Top" Click="UiBtnHelp_Click" />
     </Grid>
 </Window>

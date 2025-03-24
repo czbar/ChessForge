@@ -71,7 +71,16 @@ namespace ChessPosition
     {
         COMMENT_AND_NAGS  = 0x01,
         ENGINE_EVALUATION = 0x02,
-        SIDELINE = 0x04,
+        BAD_MOVE_ASSESSMENT = 0x04,
+        SIDELINE = 0x08,
+    };
+
+    /// <summary>
+    /// Article attribute types.
+    /// </summary>
+    public enum ArticleAttribute
+    {
+        ANNOTATOR = 0x01,
     };
 
     /// <summary>
@@ -126,7 +135,10 @@ namespace ChessPosition
                 };
 
         /// <summary>
-        /// Binary flag to Piece Type mapping
+        /// Binary flag to Piece Type mapping.
+        /// The 0x7F and 0xFF are used for searches 
+        /// with mandatory empty squares, where mandatory space is coded as 0xFF.
+        /// The 0x7F is needed because GetPieceType() applies 0x7F mask.
         /// </summary>
         public static Dictionary<byte, PieceType> FlagToPiece
                 = new Dictionary<byte, PieceType>()
@@ -137,7 +149,9 @@ namespace ChessPosition
                     [0x04] = PieceType.Bishop,
                     [0x08] = PieceType.Rook,
                     [0x10] = PieceType.Queen,
-                    [0x20] = PieceType.King
+                    [0x20] = PieceType.King,
+                    [0x7F] = PieceType.None,
+                    [0xFF] = PieceType.None
                 };
 
         /// <summary>

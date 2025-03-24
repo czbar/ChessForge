@@ -351,7 +351,7 @@ namespace ChessForge
                     GameData.ContentType contentType = game.GetContentType(true);
                     if (game.GetWorkbookTitle() == null)
                     {
-                        index = PgnArticleUtils.AddArticle(currChapter, game, contentType, out _, out _ );
+                        index = PgnArticleUtils.AddArticle(currChapter, game, contentType, out _, out _);
                         if (firstAddedType == GameData.ContentType.NONE)
                         {
                             firstAddedType = game.GetContentType(false);
@@ -1050,8 +1050,8 @@ namespace ChessForge
                         // Ask, or proceed without asking of AutoSave is enabled
                         if (!Configuration.AutoSave)
                         {
-                            MessageBoxButton mbb = isAppClosing ? MessageBoxButton.YesNo : MessageBoxButton.YesNoCancel;
-                            res = MessageBox.Show(Properties.Resources.SaveWorkbook, Properties.Resources.WorkbookNotSaved, mbb, MessageBoxImage.Question);
+                            res = MessageBox.Show(Properties.Resources.SaveWorkbook, Properties.Resources.WorkbookNotSaved
+                                                  , MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
                         }
                         if (Configuration.AutoSave || res == MessageBoxResult.Yes)
                         {
@@ -1062,15 +1062,7 @@ namespace ChessForge
                             }
                             else
                             {
-                                if (isAppClosing)
-                                {
-                                    // if app is closing and we failed to save, alert the user via exception
-                                    throw new Exception("Failed to save on app exit.");
-                                }
-                                else
-                                {
-                                    res = MessageBoxResult.Cancel;
-                                }
+                                res = MessageBoxResult.Cancel;
                             }
                         }
                     }
@@ -1126,16 +1118,6 @@ namespace ChessForge
         {
             MessageBoxResult res;
 
-            MessageBoxButton buttons;
-            if (!isAppClosing)
-            {
-                buttons = MessageBoxButton.YesNoCancel;
-            }
-            else
-            {
-                buttons = MessageBoxButton.YesNo;
-            }
-
             string origin;
 
             switch (AppState.ActiveVariationTree.ContentType)
@@ -1157,7 +1139,7 @@ namespace ChessForge
             string message = Properties.Resources.MergeTrainingIntoStudy + " (" + origin + ")?";
 
             res = MessageBox.Show(message, Properties.Resources.SaveWorkbook,
-                buttons, MessageBoxImage.Question);
+                MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
             if (res == MessageBoxResult.Yes)
             {
                 MergeLineFromTraining(isAppClosing);
