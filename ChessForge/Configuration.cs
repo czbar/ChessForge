@@ -51,6 +51,60 @@ namespace ChessForge
         public static int CoreCount;
 
 
+
+        //*********************************
+        //
+        //   SESSION CONFIGURATION ITEMS
+        //
+        //   Values not preserved between sessions.
+        //   Reset to default upon app's restart.
+        //
+        //*********************************
+
+        /// <summary>
+        /// Whether the position search is partial or full.
+        /// Only persisted within a session.
+        /// Intended to reset to false on restart.
+        /// </summary>
+        public static bool PartialSearch = false;
+
+        /// <summary>
+        /// Last PNG file to which a diagram was exported.
+        /// Only persisted within a session.
+        /// </summary>
+        public static string LastPngFile = "";
+
+        /// <summary>
+        /// The size of the side of the diagram image in pixels.
+        /// </summary>
+        public static int DiagramImageSideSize = 240;
+
+        /// <summary>
+        /// Whether to ask for the diagram image side size.
+        /// </summary>
+        public static bool DoNotAskDiagramImageSideSize = false;
+
+        /// <summary>
+        /// Action to take when a file exists.
+        /// </summary>
+        enum FileExistsActions
+        {
+            Cancel = 0,
+            Append = 1,
+            Overwrite = 2,
+        }
+
+        /// <summary>
+        /// What action to take when a file exists.
+        /// </summary>
+        public uint FileExistsAction = 0;
+
+        /// <summary>
+        /// Whether to ask for the file exist action.
+        /// </summary>
+        public static bool DoNotAskFileExistAction = false;
+
+
         //*********************************
         //
         //   CONFIGURATION ITEMS
@@ -125,19 +179,6 @@ namespace ChessForge
         /// Determines whether position evaluations are saved
         /// </summary>
         public static bool DontSavePositionEvals = false;
-
-        /// <summary>
-        /// Whether the position search is partial or full.
-        /// Only persisted within a session.
-        /// Intended to reset to false on restart.
-        /// </summary>
-        public static bool PartialSearch = false;
-
-        /// <summary>
-        /// Last PNG file to which a diagram was exported.
-        /// Only persisted within a session.
-        /// </summary>
-        public static string LastPngFile = "";
 
         /// <summary>
         /// Path to the engine executable
