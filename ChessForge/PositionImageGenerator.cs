@@ -42,7 +42,7 @@ namespace ChessForge
         {
             BitmapEncoder encoder = EncodePositionAsImage(node, isFlipped, pixelSize, dpi);
 
-            using (FileStream fs = new FileStream(filePath, FileMode.Append))
+            using (FileStream fs = new FileStream(filePath, FileMode.Create))
             {
                 encoder.Save(fs);
             }
@@ -85,12 +85,46 @@ namespace ChessForge
             mainCanvas.Arrange(new Rect(new Size(242, 242)));
             mainCanvas.UpdateLayout();
 
-            RenderTargetBitmap bmp = new RenderTargetBitmap(242, 242, 96, 96, PixelFormats.Pbgra32);
-            bmp.Render(mainCanvas);
-            BitmapEncoder encoder = new PngBitmapEncoder();
-            encoder.Frames.Add(BitmapFrame.Create(bmp));
+            RenderTargetBitmap originalBitmap = new RenderTargetBitmap(242, 242, 96, 96, PixelFormats.Pbgra32);
+            originalBitmap.Render(mainCanvas);
 
+            double scale = (double)pixelSize / 240;
+            RenderTargetBitmap scaledBitmap = HighQualityScaleAndSave(originalBitmap, scale);
+
+            BitmapEncoder encoder = new PngBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(scaledBitmap));
             return encoder;
+        }
+
+        /// <summary>
+        /// Scales the original bitmap to the desired size.
+        /// </summary>
+        /// <param name="originalBitmap"></param>
+        /// <param name="scale"></param>
+        /// <returns></returns>
+        private static RenderTargetBitmap HighQualityScaleAndSave(BitmapSource originalBitmap, double scale)
+        {
+            var scaledBitmap = new RenderTargetBitmap(
+                (int)(originalBitmap.PixelWidth * scale), 
+                (int)(originalBitmap.PixelHeight * scale),
+                originalBitmap.DpiX,                      // Keep original DPI
+                originalBitmap.DpiY,
+                PixelFormats.Pbgra32);
+
+            // Create a drawing visual with the exact scale we want
+            var drawingVisual = new DrawingVisual();
+            RenderOptions.SetBitmapScalingMode(drawingVisual, BitmapScalingMode.HighQuality);
+            using (var drawingContext = drawingVisual.RenderOpen())
+            {
+                // Apply only one scale transform
+                drawingContext.PushTransform(new ScaleTransform(scale, scale));
+                drawingContext.DrawImage(originalBitmap,
+                    new Rect(0, 0, originalBitmap.PixelWidth, originalBitmap.PixelHeight));
+            }
+
+            // Render to the bitmap
+            scaledBitmap.Render(drawingVisual);
+            return scaledBitmap;
         }
     }
 }
