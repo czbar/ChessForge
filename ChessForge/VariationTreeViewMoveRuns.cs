@@ -551,7 +551,7 @@ namespace ChessForge
         {
             if (!string.IsNullOrEmpty(nd.References))
             {
-                List<Article> articles = GuiUtilities.BuildReferencedArticlesList(nd.References);
+                List<Article> articles = ReferenceUtils.BuildReferencedArticlesList(nd.References);
                 bool first = true;
                 foreach (Article article in articles)
                 {
