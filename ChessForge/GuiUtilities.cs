@@ -2,7 +2,6 @@
 using ChessPosition.Utils;
 using EngineService;
 using GameTree;
-using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -22,49 +21,6 @@ namespace ChessForge
     public class GuiUtilities
     {
         /// <summary>
-        /// Generates a png image for the passed position.
-        /// </summary>
-        /// <param name="node"></param>
-        /// <param name="isFlipped"></param>
-        /// <returns></returns>
-        public static bool SaveDiagramAsImage(TreeNode node, bool isFlipped)
-        {
-            SaveFileDialog saveDlg = new SaveFileDialog
-            {
-                //Filter = Properties.Resources.ImageFiles + " (*.png)|*.png"
-                Filter = " (*.png)|*.png"
-            };
-
-            saveDlg.Title = " " + Properties.Resources.SaveDiagramAsImage;
-            saveDlg.FileName = Configuration.LastPngFile;
-            saveDlg.OverwritePrompt = false;
-
-            if (saveDlg.ShowDialog() == true)
-            {
-                // ask about size
-                //
-                //
-
-                try
-                {
-                    string chfFileName = saveDlg.FileName;
-                    PositionImageGenerator.SaveDiagramAsImage(node, isFlipped, chfFileName);
-                    Configuration.LastPngFile = chfFileName;
-                    return true;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
-                    return false;
-                }
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
         /// List of chars that should be removed when processing a view for export 
         /// into a file. 
         /// </summary>
@@ -79,9 +35,9 @@ namespace ChessForge
         /// <summary>
         /// Sets the check mark for the Show Solutions menu item.
         /// </summary>
-        public static void SetShowSolutionsMenuCheckMark()
+        public static void SetShowSolutionsMenuCheckMark(Chapter chapter)
         {
-            AppState.MainWin.UiMnExerciseViewConfig.IsChecked = AppState.ActiveChapter != null && AppState.ActiveChapter.ShowSolutionsOnOpen;
+            AppState.MainWin.UiMnExerciseViewConfig.IsChecked = chapter != null && chapter.ShowSolutionsOnOpen;
         }
 
         /// <summary>
@@ -935,7 +891,7 @@ namespace ChessForge
 
                 errorText = sb.ToString();
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 errorText = ex.Message;
                 result = false;
