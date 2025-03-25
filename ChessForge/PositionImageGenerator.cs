@@ -1,6 +1,4 @@
 ﻿using GameTree;
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,8 +18,46 @@ namespace ChessForge
         /// <param name="nd"></param>
         public static byte[] GenerateImage(TreeNode node, bool isFlipped)
         {
-            byte[] bytes;
+            BitmapEncoder encoder = EncodePositionAsImage(node, isFlipped);
 
+            byte[] bytes;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                encoder.Save(ms);
+                bytes = ms.ToArray();
+            }
+
+            return bytes;
+        }
+
+        /// <summary>
+        /// Saves the diagram as an image file.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="isFlipped"></param>
+        /// <param name="filePath"></param>
+        /// <param name="pixelSize"></param>
+        /// <param name="dpi"></param>
+        public static void SaveDiagramAsImage(TreeNode node, bool isFlipped, string filePath, int pixelSize = 240, double dpi = 96)
+        {
+            BitmapEncoder encoder = EncodePositionAsImage(node, isFlipped, pixelSize, dpi);
+
+            using (FileStream fs = new FileStream(filePath, FileMode.Append))
+            {
+                encoder.Save(fs);
+            }
+        }
+
+        /// <summary>
+        /// Encodes the position as an image.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="isFlipped"></param>
+        /// <param name="pixelSize"></param>
+        /// <param name="dpi"></param>
+        /// <returns></returns>
+        private static BitmapEncoder EncodePositionAsImage(TreeNode node, bool isFlipped, int pixelSize = 240, double dpi = 96)
+        {
             // Load chessboard image
             Image imageChessboard = new Image();
             imageChessboard.Source = ChessBoards.ChessBoardGreySmall;
@@ -54,13 +90,7 @@ namespace ChessForge
             BitmapEncoder encoder = new PngBitmapEncoder();
             encoder.Frames.Add(BitmapFrame.Create(bmp));
 
-            using (MemoryStream ms = new MemoryStream())
-            {
-                encoder.Save(ms);
-                bytes = ms.ToArray();
-            }
-
-            return bytes;
+            return encoder;
         }
     }
 }
