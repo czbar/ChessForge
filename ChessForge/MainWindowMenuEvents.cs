@@ -2033,7 +2033,7 @@ namespace ChessForge
                     {
                         if (nd.IsDiagram)
                         {
-                            GuiUtilities.SaveDiagramAsImage(nd, nd.IsDiagramFlipped);
+                            SaveDiagram.SaveAsImage(nd, nd.IsDiagramFlipped);
                         }
                     }
                 }
