@@ -50,8 +50,14 @@ UntitledWorkbook=Untitled Workbook
 #Workbook files
 WorkbookFiles=Workbook files
 
+#Image files
+ImageFiles=Image files
+
 #RTF files
 RtfFiles=RTF files
+
+#File already exists
+FileExists=File Already Exists
 
 #Title
 Title=Title
@@ -61,6 +67,12 @@ WorkbookTitle=Workbook Title
 
 #User
 User=User
+
+#Append
+Append=Append
+
+#Overwrite
+Overwrite=Overwrite
 
 #Event
 Event=Event
@@ -486,7 +498,7 @@ Save=Save
 SaveAs=Save $0 As ...
 
 #Context menu to save a diagram as an image 
-SaveDiagramAsImage= Save as Picture...
+SaveDiagramAsImage= Save Diagram as Picture...
 
 #Export
 Export=Export
@@ -910,6 +922,24 @@ EgSelectionAccuracyLabel=Move selection accuracy is
 
 #Cenitpawn accuracy
 EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
+
+
+#######################################
+#
+# Header: DIALOG Save Diagram as Image
+#
+
+#Size of the diagram's side
+SideSize=Height and Width in Pixels
+
+
+#######################################
+#
+# Header: DIALOG File Already Exists
+#
+
+#File exists options
+FileExistActionsPrompt=Choose how to proceed.
 
 
 #######################################

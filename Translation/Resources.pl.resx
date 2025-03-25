@@ -150,8 +150,14 @@
   <data name="WorkbookFiles" xml:space="preserve">
     <value>Podręczniki</value>
   </data>
+  <data name="ImageFiles" xml:space="preserve">
+    <value>Obrazy</value>
+  </data>
   <data name="RtfFiles" xml:space="preserve">
     <value>Pliki RTF</value>
+  </data>
+  <data name="FileExists" xml:space="preserve">
+    <value>Plik już istnieje</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Tytuł</value>
@@ -161,6 +167,12 @@
   </data>
   <data name="User" xml:space="preserve">
     <value>Użytkownik</value>
+  </data>
+  <data name="Append" xml:space="preserve">
+    <value>Dołącz</value>
+  </data>
+  <data name="Overwrite" xml:space="preserve">
+    <value>Nadpisz</value>
   </data>
   <data name="Event" xml:space="preserve">
     <value>Miejsce</value>
@@ -553,7 +565,7 @@
     <value>Zapisz $0 jako ...</value>
   </data>
   <data name="SaveDiagramAsImage" xml:space="preserve">
-    <value>Zapisz jako obraz...</value>
+    <value>Zapisz diagram jako obraz...</value>
   </data>
   <data name="Export" xml:space="preserve">
     <value>Eksportuj</value>
@@ -897,6 +909,12 @@
   </data>
   <data name="EgCentipawnAccuracy" xml:space="preserve">
     <value>maksymalne odchylenie od najlepszego ruchu wynosi</value>
+  </data>
+  <data name="SideSize" xml:space="preserve">
+    <value>Wysokość i szerokość w pikselach</value>
+  </data>
+  <data name="FileExistActionsPrompt" xml:space="preserve">
+    <value>Wybierz jak kontynuować.</value>
   </data>
   <data name="DlgBlunderDetection" xml:space="preserve">
     <value>Detekcja Słabych Posunięć</value>

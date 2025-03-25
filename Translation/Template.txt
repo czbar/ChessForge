@@ -61,9 +61,17 @@ UntitledWorkbook=
 #english: WorkbookFiles=Workbook files
 WorkbookFiles=
 
+#description: Image files
+#english: ImageFiles=Image files
+ImageFiles=
+
 #description: RTF files
 #english: RtfFiles=RTF files
 RtfFiles=
+
+#description: File already exists
+#english: FileExists=File Already Exists
+FileExists=
 
 #description: Title
 #english: Title=Title
@@ -76,6 +84,14 @@ WorkbookTitle=
 #description: User
 #english: User=User
 User=
+
+#description: Append
+#english: Append=Append
+Append=
+
+#description: Overwrite
+#english: Overwrite=Overwrite
+Overwrite=
 
 #description: Event
 #english: Event=Event
@@ -631,7 +647,7 @@ Save=
 SaveAs=
 
 #description: Context menu to save a diagram as an image 
-#english: SaveDiagramAsImage= Save as Picture...
+#english: SaveDiagramAsImage= Save Diagram as Picture...
 SaveDiagramAsImage=
 
 #description: Export
@@ -1170,6 +1186,26 @@ EgSelectionAccuracyLabel=
 #description: Cenitpawn accuracy
 #english: EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
 EgCentipawnAccuracy=
+
+
+#######################################
+#
+# Header: DIALOG Save Diagram as Image
+#
+
+#description: Size of the diagram's side
+#english: SideSize=Height and Width in Pixels
+SideSize=
+
+
+#######################################
+#
+# Header: DIALOG File Already Exists
+#
+
+#description: File exists options
+#english: FileExistActionsPrompt=Choose how to proceed.
+FileExistActionsPrompt=
 
 
 #######################################
