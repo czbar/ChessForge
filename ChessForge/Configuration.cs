@@ -51,7 +51,6 @@ namespace ChessForge
         public static int CoreCount;
 
 
-
         //*********************************
         //
         //   SESSION CONFIGURATION ITEMS
@@ -83,26 +82,6 @@ namespace ChessForge
         /// Whether to ask for the diagram image side size.
         /// </summary>
         public static bool DoNotAskDiagramImageSideSize = false;
-
-        /// <summary>
-        /// Action to take when a file exists.
-        /// </summary>
-        enum FileExistsActions
-        {
-            Cancel = 0,
-            Append = 1,
-            Overwrite = 2,
-        }
-
-        /// <summary>
-        /// What action to take when a file exists.
-        /// </summary>
-        public uint FileExistsAction = 0;
-
-        /// <summary>
-        /// Whether to ask for the file exist action.
-        /// </summary>
-        public static bool DoNotAskFileExistAction = false;
 
 
         //*********************************
