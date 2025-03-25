@@ -13,6 +13,38 @@ namespace ChessPosition
     public class TextUtils
     {
         /// <summary>
+        /// Removes any trailing ellipsis from the passed string.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string RemoveTrailingElipsis(string str)
+        {
+            if (string.IsNullOrEmpty(str))
+            {
+                return str;
+            }
+
+            int trailingDotCount = 0;
+            for (int i = str.Length - 1; i > 0; i--)
+            {
+                if (str[i] == '.')
+                {
+                    trailingDotCount++;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            if (trailingDotCount > 0)
+            {
+                str = str.Substring(0, str.Length - trailingDotCount);
+            }
+
+            return str;
+        }
+
+        /// <summary>
         /// If the comment contains CR/LF replace it with a space.
         /// This is for example due to ChessBase export formatting when they insert CRLF without
         /// preserving space.
