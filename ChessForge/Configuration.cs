@@ -134,6 +134,12 @@ namespace ChessForge
         public static bool PartialSearch = false;
 
         /// <summary>
+        /// Last PNG file to which a diagram was exported.
+        /// Only persisted within a session.
+        /// </summary>
+        public static string LastPngFile = "";
+
+        /// <summary>
         /// Path to the engine executable
         /// </summary>
         public static string EngineExePath = "";
