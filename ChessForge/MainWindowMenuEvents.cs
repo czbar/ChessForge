@@ -2158,7 +2158,7 @@ namespace ChessForge
 
                     // now SortReferenceString will find the just created exercise so we can go ahead and update refs
                     nd.AddArticleReference(tree.Header.GetGuid(out _));
-                    nd.References = GuiUtilities.SortReferenceString(nd.References);
+                    nd.References = ReferenceUtils.SortReferenceString(nd.References);
                     startView.InsertOrUpdateCommentRun(nd);
                 }
             }

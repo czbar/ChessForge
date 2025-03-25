@@ -1,6 +1,7 @@
 ﻿using ChessPosition;
 using GameTree;
 using System.Collections.Generic;
+using System.Text;
 
 namespace ChessForge
 {
@@ -28,27 +29,6 @@ namespace ChessForge
             UpdateReferenceTextInView(guid, AppState.MainWin.StudyTreeView);
             UpdateReferenceTextInView(guid, AppState.MainWin.ModelGameTreeView);
             UpdateReferenceTextInView(guid, AppState.MainWin.ExerciseTreeView);
-        }
-
-        /// <summary>
-        /// Updates the reference text in the given view.
-        /// Finds all nodes that reference the given guid and updates the text
-        /// of the comment with the reference's text/title.
-        /// </summary>
-        /// <param name="guid"></param>
-        /// <param name="view"></param>
-        private static void UpdateReferenceTextInView(string guid, VariationTreeView view)
-        {
-            if (view != null && view.MainVariationTree != null)
-            {
-                foreach (TreeNode node in view.MainVariationTree.Nodes)
-                {
-                    if (node.References != null && node.References.Contains(guid))
-                    {
-                        AppState.MainWin.ActiveTreeView.InsertOrUpdateCommentRun(node);
-                    }
-                }
-            }
         }
 
         /// <summary>
@@ -192,6 +172,165 @@ namespace ChessForge
 
                 // refresh the GUI
                 RefreshReferencesInComments(preOpNodes, postOpNodes);
+            }
+        }
+
+        /// <summary>
+        /// Gets a string with reference GUIDs, splits them into 
+        /// Game/Exercise and Chapter GUID strings.
+        /// and separate for Chapter refs.
+        /// </summary>
+        /// <param name="refGuids"></param>
+        public static void SplitReferencesString(string refGuids, out string gameExerciseRefGuids, out string chapterRefGuids)
+        {
+            StringBuilder sbGameExerciseRefs = new StringBuilder();
+            StringBuilder sbChapterRefs = new StringBuilder();
+
+            List<Article> lstRefs = BuildReferencedArticlesList(refGuids);
+            if (lstRefs != null && lstRefs.Count > 0)
+            {
+                bool firstArticle = true;
+                bool firstChapter = true;
+
+                foreach (Article article in lstRefs)
+                {
+                    if (article.ContentType == GameData.ContentType.MODEL_GAME || article.ContentType == GameData.ContentType.EXERCISE)
+                    {
+                        if (!firstArticle)
+                        {
+                            sbGameExerciseRefs.Append("|");
+                        }
+                        sbGameExerciseRefs.Append(article.Guid);
+                        firstArticle = false;
+                    }
+                    else if (article.ContentType == GameData.ContentType.STUDY_TREE)
+                    {
+                        if (!firstChapter)
+                        {
+                            sbChapterRefs.Append("|");
+                        }
+                        sbChapterRefs.Append(article.Guid);
+                        firstChapter = false;
+                    }
+                }
+            }
+            gameExerciseRefGuids = sbGameExerciseRefs.ToString();
+            chapterRefGuids = sbChapterRefs.ToString();
+        }
+
+        /// <summary>
+        /// Builds a list of articles from a list of references.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        public static List<Article> BuildReferencedArticlesList(string articleRefs)
+        {
+            List<Article> articles = new List<Article>();
+
+            if (!string.IsNullOrEmpty(articleRefs))
+            {
+                string[] refs = articleRefs.Split('|');
+                foreach (string guid in refs)
+                {
+                    Article article = WorkbookManager.SessionWorkbook.GetArticleByGuid(guid, out _, out _, true);
+                    if (article != null)
+                    {
+                        articles.Add(article);
+                    }
+                }
+            }
+
+            return articles;
+        }
+
+        /// <summary>
+        /// Splits a '|' separated list of references into Game/Exercise refs
+        /// and Chapter refs.
+        /// </summary>
+        /// <param name="refGuids"></param>
+        public static void GetReferencesTextByType(string refGuids, out string gameExerciseRefsText, out string chapterRefsText)
+        {
+            StringBuilder sbGameExerciseRefs = new StringBuilder();
+            StringBuilder sbChapterRefs = new StringBuilder();
+
+            List<Article> lstRefs = BuildReferencedArticlesList(refGuids);
+            if (lstRefs != null && lstRefs.Count > 0)
+            {
+                bool firstArticle = true;
+                bool firstChapter = true;
+
+                foreach (Article article in lstRefs)
+                {
+                    if (article.ContentType == GameData.ContentType.MODEL_GAME || article.ContentType == GameData.ContentType.EXERCISE)
+                    {
+                        if (!firstArticle)
+                        {
+                            sbGameExerciseRefs.Append("; ");
+                        }
+                        sbGameExerciseRefs.Append(article.Tree.Header.BuildGameReferenceTitle(true));
+                        firstArticle = false;
+                    }
+                    else if (article.ContentType == GameData.ContentType.STUDY_TREE)
+                    {
+                        if (!firstChapter)
+                        {
+                            sbChapterRefs.Append("; ");
+                        }
+                        Chapter chapter = AppState.Workbook.GetChapterByGuid(article.Guid, out int index);
+                        sbChapterRefs.Append(chapter.TitleWithNumber);
+                        firstChapter = false;
+                    }
+                }
+            }
+            gameExerciseRefsText = sbGameExerciseRefs.ToString();
+            chapterRefsText = sbChapterRefs.ToString();
+        }
+
+        /// <summary>
+        /// Combines the GameExercise and Chapter reference guid strings into one.
+        /// </summary>
+        public static string CombineReferences(string refsGuids1, string refsGuids2)
+        {
+            string references = refsGuids1 ?? "";
+            if (refsGuids1.Length > 0 && (refsGuids2 ?? "").Length > 0)
+            {
+                references += "|";
+            }
+            references += refsGuids2;
+
+            return references;
+        }
+
+        /// <summary>
+        /// Sorts the reference GUIDs string so that game/exercise refs are first,
+        /// then followed by chapter refs.
+        /// </summary>
+        /// <param name="refGuids"></param>
+        /// <returns></returns>
+        public static string SortReferenceString(string refGuids)
+        {
+            SplitReferencesString(refGuids, out string gameExerciseRefGuids, out string chapterRefGuids);
+            return CombineReferences(gameExerciseRefGuids, chapterRefGuids);
+        }
+
+        /// <summary>
+        /// Updates the reference text in the given view.
+        /// Finds all nodes that reference the given guid and updates the text
+        /// of the comment with the reference's text/title.
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <param name="view"></param>
+        private static void UpdateReferenceTextInView(string guid, VariationTreeView view)
+        {
+            if (view != null && view.MainVariationTree != null)
+            {
+                foreach (TreeNode node in view.MainVariationTree.Nodes)
+                {
+                    if (node.References != null && node.References.Contains(guid))
+                    {
+                        AppState.MainWin.ActiveTreeView.InsertOrUpdateCommentRun(node);
+                    }
+                }
             }
         }
 
@@ -393,7 +532,7 @@ namespace ChessForge
             {
                 if (!string.IsNullOrEmpty(nd.References))
                 {
-                    List<Article> articles = GuiUtilities.BuildReferencedArticlesList(nd.References);
+                    List<Article> articles = ReferenceUtils.BuildReferencedArticlesList(nd.References);
                     if (articles.Count > 0)
                     {
                         foreach (Article article in articles)

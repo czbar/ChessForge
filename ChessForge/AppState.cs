@@ -761,7 +761,7 @@ namespace ChessForge
                     if (nd != null)
                     {
                         nd.AddArticleReference(guid);
-                        nd.References = GuiUtilities.SortReferenceString(nd.References);
+                        nd.References = ReferenceUtils.SortReferenceString(nd.References);
                         activeViewOnEntry.InsertOrUpdateCommentRun(nd);
                     }
                 }
