@@ -58,9 +58,16 @@ namespace ChessForge
         /// <returns></returns>
         private static BitmapEncoder EncodePositionAsImage(TreeNode node, bool isFlipped, int pixelSize = 240, double dpi = 96)
         {
+            const int maxSmallChessBoardSize = 240;
+
+            const int smallBoardBaseSize = 240;
+            const int largeBoardBaseSize = 640;
+
+            bool useSmallBoard = pixelSize <= maxSmallChessBoardSize;
+
             // Load chessboard image
             Image imageChessboard = new Image();
-            imageChessboard.Source = ChessBoards.ChessBoardGreySmall;
+            imageChessboard.Source = useSmallBoard ? ChessBoards.ChessBoardGreySmall : ChessBoards.ChessBoardGrey;
 
             Canvas mainCanvas = new Canvas();
             mainCanvas.Background = Brushes.Black;
@@ -72,7 +79,8 @@ namespace ChessForge
             Canvas.SetLeft(boardCanvas, 1);
             Canvas.SetTop(boardCanvas, 1);
 
-            ChessBoardSmall chessBoard = new ChessBoardSmall(boardCanvas, imageChessboard, null, null, false, false);
+            ChessBoard chessBoard = useSmallBoard ? new ChessBoardSmall(boardCanvas, imageChessboard, null, null, false, false)
+                                                  : new ChessBoard(false, boardCanvas, imageChessboard, null, false, false);
             chessBoard.EnableShapes(true, node);
             chessBoard.DisplayPosition(node, true);
 
@@ -81,14 +89,16 @@ namespace ChessForge
                 chessBoard.FlipBoard();
             }
 
-            mainCanvas.Measure(new Size(242, 242));
-            mainCanvas.Arrange(new Rect(new Size(242, 242)));
+            int sizeToUse = useSmallBoard ? smallBoardBaseSize : largeBoardBaseSize;
+            mainCanvas.Measure(new Size(sizeToUse + 2, sizeToUse + 2));
+            mainCanvas.Arrange(new Rect(new Size(sizeToUse + 2, sizeToUse + 2)));
+
             mainCanvas.UpdateLayout();
 
-            RenderTargetBitmap originalBitmap = new RenderTargetBitmap(242, 242, 96, 96, PixelFormats.Pbgra32);
+            RenderTargetBitmap originalBitmap = new RenderTargetBitmap(sizeToUse + 2, sizeToUse + 2, 96, 96, PixelFormats.Pbgra32);
             originalBitmap.Render(mainCanvas);
 
-            double scale = (double)pixelSize / 240;
+            double scale = (double)pixelSize / sizeToUse;
             RenderTargetBitmap scaledBitmap = HighQualityScaleAndSave(originalBitmap, scale);
 
             BitmapEncoder encoder = new PngBitmapEncoder();
@@ -105,7 +115,7 @@ namespace ChessForge
         private static RenderTargetBitmap HighQualityScaleAndSave(BitmapSource originalBitmap, double scale)
         {
             var scaledBitmap = new RenderTargetBitmap(
-                (int)(originalBitmap.PixelWidth * scale), 
+                (int)(originalBitmap.PixelWidth * scale),
                 (int)(originalBitmap.PixelHeight * scale),
                 originalBitmap.DpiX,                      // Keep original DPI
                 originalBitmap.DpiY,
