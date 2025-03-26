@@ -6,12 +6,13 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        Title="{x:Static p:Resources.SaveDiagramAsImage}" Height="200" Width="300">
+        Title="{x:Static p:Resources.SaveDiagramAsImage}" Height="215" Width="300">
     <Grid>
         <Label x:Name="UiLblSideSize" Content="{x:Static p:Resources.SideSize}" HorizontalAlignment="Center" Margin="0,15,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="UiTbSideSize" HorizontalAlignment="Center" Margin="0,45,0,0" HorizontalContentAlignment="Center" TextWrapping="Wrap" Text="9999" VerticalAlignment="Top" Width="40"/>
-        <CheckBox x:Name="UiCbDoNotAskAgain" Content="{x:Static p:Resources.CbDoNotAskInSession}" HorizontalAlignment="Center" Margin="0,90,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="UiBtnSave" Content="{x:Static p:Resources.Save}" IsDefault="True" HorizontalAlignment="Center" Margin="-100,125,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnSave_Click"/>
-        <Button x:Name="UiBtnCancel" Content="{x:Static p:Resources.Cancel}" IsCancel="True" HorizontalAlignment="Center" Margin="100,125,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
+        <TextBox x:Name="UiTbSideSize" HorizontalAlignment="Center" Margin="0,45,0,0" HorizontalContentAlignment="Center" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="40"/>
+        <Label x:Name="UiLblMinMax" Content="(min 120 - max 480)" HorizontalAlignment="Center" Margin="0,65,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="UiCbDoNotAskAgain" Content="{x:Static p:Resources.CbDoNotAskInSession}" HorizontalAlignment="Center" Margin="0,105,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="UiBtnSave" Content="{x:Static p:Resources.Save}" IsDefault="True" HorizontalAlignment="Left" Margin="60,140,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnSave_Click"/>
+        <Button x:Name="UiBtnCancel" Content="{x:Static p:Resources.Cancel}" IsCancel="True" HorizontalAlignment="Left" Margin="160,140,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
     </Grid>
 </Window>

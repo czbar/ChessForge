@@ -17,8 +17,10 @@ namespace ChessForge
             InitializeComponent();
 
             Title = TextUtils.RemoveTrailingElipsis(Title);
-            UiTbSideSize.Text = Configuration.DiagramImageSideSize.ToString();
-            UiCbDoNotAskAgain.IsChecked = Configuration.DoNotAskDiagramImageSideSize;
+            UiTbSideSize.Text = Configuration.DiagramImageSize.ToString();
+            UiCbDoNotAskAgain.IsChecked = Configuration.DoNotAskDiagramImageSize;
+            UiLblMinMax.Content = "(" + Properties.Resources.Min + " " + Constants.MIN_DIAGRAM_SIZE 
+                                    + " - " + Properties.Resources.Max + " " + Constants.MAX_DIAGRAM_SIZE + ")";
         }
 
         /// <summary>
@@ -29,11 +31,11 @@ namespace ChessForge
         private void UiBtnSave_Click(object sender, RoutedEventArgs e)
         {
             int.TryParse(UiTbSideSize.Text, out int sideSize);
-            sideSize = Math.Max(sideSize, 120);
-            sideSize = Math.Min(sideSize, 480);
+            sideSize = Math.Max(sideSize, Constants.MIN_DIAGRAM_SIZE);
+            sideSize = Math.Min(sideSize, Constants.MAX_DIAGRAM_SIZE);
             
-            Configuration.DiagramImageSideSize = sideSize;
-            Configuration.DoNotAskDiagramImageSideSize = UiCbDoNotAskAgain.IsChecked == true;
+            Configuration.DiagramImageSize = sideSize;
+            Configuration.DoNotAskDiagramImageSize = UiCbDoNotAskAgain.IsChecked == true;
             
             DialogResult = true;
         }
