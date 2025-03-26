@@ -1,4 +1,5 @@
 ﻿using GameTree;
+using ChessPosition;
 using Microsoft.Win32;
 using System;
 using System.IO;
@@ -60,8 +61,8 @@ namespace ChessForge
         /// <returns></returns>
         public static int VerifySideSize(int sideSize)
         {
-            sideSize = Math.Max(sideSize, 120);
-            sideSize = Math.Min(sideSize, 480);
+            sideSize = Math.Max(sideSize, Constants.MIN_DIAGRAM_SIZE);
+            sideSize = Math.Min(sideSize, Constants.MAX_DIAGRAM_SIZE);
             return sideSize;
         }
 
