@@ -53,6 +53,28 @@ namespace ChessForge
 
         //*********************************
         //
+        //   SESSION CONFIGURATION ITEMS
+        //
+        //   Values not preserved between sessions.
+        //   Reset to default upon app's restart.
+        //
+        //*********************************
+
+        /// <summary>
+        /// Whether the position search is partial or full.
+        /// Only persisted within a session.
+        /// Intended to reset to false on restart.
+        /// </summary>
+        public static bool PartialSearch = false;
+
+        /// <summary>
+        /// Whether to ask for the diagram image side size.
+        /// </summary>
+        public static bool DoNotAskDiagramImageSize = false;
+
+
+        //*********************************
+        //
         //   CONFIGURATION ITEMS
         //
         //*********************************
@@ -102,6 +124,11 @@ namespace ChessForge
         public static string LastWorkbookFile = "";
 
         /// <summary>
+        /// Last PNG file to which a diagram was exported.
+        /// </summary>
+        public static string LastPngFile = "";
+
+        /// <summary>
         /// Chessboard colors coded for the views in the form of
         /// ChessboardColors = "1,3,3,2" where the numbers correspond to the 
         /// values in ChessBoard.ColorSets and apply to Study, Games, Exercises
@@ -125,13 +152,6 @@ namespace ChessForge
         /// Determines whether position evaluations are saved
         /// </summary>
         public static bool DontSavePositionEvals = false;
-
-        /// <summary>
-        /// Whether the position search is partial or full.
-        /// Only persisted within a session.
-        /// Intended to reset to false on restart.
-        /// </summary>
-        public static bool PartialSearch = false;
 
         /// <summary>
         /// Path to the engine executable
@@ -212,6 +232,11 @@ namespace ChessForge
         /// (in seconds)
         /// </summary>
         public static int AutoSaveFrequency = 60;
+
+        /// <summary>
+        /// The size of the side of the diagram image in pixels.
+        /// </summary>
+        public static int DiagramImageSize = 240;
 
         /// <summary>
         /// Time given to the engine to evaluate a single move
@@ -566,6 +591,7 @@ namespace ChessForge
         private const string CFG_LAST_DIRECTORY = "LastDirectory";
         private const string CFG_LAST_IMPORT_DIRECTORY = "LastImportDirectory";
         private const string CFG_LAST_FILE = "LastFile";
+        private const string CFG_LAST_PNG_FILE = "LastPngFile";
         private const string CFG_RECENT_FILES = "RecentFiles";
         private const string CFG_LAST_PRIVATE_LIBRARY = "LastPrivateLibrary";
         private const string CFG_PRIVATE_LIBRARY = "PrivateLibrary";
@@ -603,6 +629,7 @@ namespace ChessForge
 
         private const string CFG_FONT_SIZE_DIFF = "FontSizeDiff";
         private const string CFG_AUTO_SAVE_FREQ = "AutoSaveFrequency";
+        private const string CFG_DIAGRAM_IMAGE_SIZE = "DiagramImageSize";
 
         /// <summary>
         /// PGN export configuration.
@@ -763,6 +790,7 @@ namespace ChessForge
                 sb.Append(CFG_LAST_DIRECTORY + "=" + (LastOpenDirectory ?? "").ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_IMPORT_DIRECTORY + "=" + (LastImportDirectory ?? "").ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_FILE + "=" + (LastWorkbookFile ?? "").ToString() + Environment.NewLine);
+                sb.Append(CFG_LAST_PNG_FILE + "=" + (LastPngFile ?? "").ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_PRIVATE_LIBRARY + "=" + (LastPrivateLibrary ?? "").ToString() + Environment.NewLine);
 
                 foreach (string privateLibrary in PrivateLibraries)
@@ -786,6 +814,7 @@ namespace ChessForge
 
                 sb.Append(CFG_FONT_SIZE_DIFF + "=" + FontSizeDiff.ToString() + Environment.NewLine);
                 sb.Append(CFG_AUTO_SAVE_FREQ + "=" + AutoSaveFrequency.ToString() + Environment.NewLine);
+                sb.Append(CFG_DIAGRAM_IMAGE_SIZE + "=" + DiagramImageSize.ToString() + Environment.NewLine);
 
                 sb.Append(CFG_VIABLE_MOVE_CP_DIFF + "=" + ViableMoveCpDiff.ToString() + Environment.NewLine);
                 sb.Append(CFG_BLUNDER_DET_EVAL_DROP + "=" + BlunderDetectEvalDrop.ToString() + Environment.NewLine);
@@ -1111,6 +1140,9 @@ namespace ChessForge
                         case CFG_LAST_FILE:
                             LastWorkbookFile = value;
                             break;
+                        case CFG_LAST_PNG_FILE:
+                            LastPngFile = value;
+                            break;
                         case CFG_ENGINE_EXE:
                             EngineExePath = value;
                             break;
@@ -1129,6 +1161,9 @@ namespace ChessForge
                             break;
                         case CFG_AUTO_SAVE_FREQ:
                             int.TryParse(value, out AutoSaveFrequency);
+                            break;
+                        case CFG_DIAGRAM_IMAGE_SIZE:
+                            int.TryParse(value, out DiagramImageSize);
                             break;
                         case CFG_BLUNDER_DET_EVAL_DROP:
                             uint.TryParse(value, out BlunderDetectEvalDrop);

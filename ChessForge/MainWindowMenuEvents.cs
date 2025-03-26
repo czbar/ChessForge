@@ -150,7 +150,8 @@ namespace ChessForge
                 {
                     openFileDialog.InitialDirectory = "";
                     result = openFileDialog.ShowDialog();
-                };
+                }
+                ;
 
                 if (result == true)
                 {
@@ -693,7 +694,8 @@ namespace ChessForge
                                         TreeNode selNode = view.GetSelectedNode();
                                         if (selNode != null)
                                         {
-                                            view.RestoreSelectedLineAndNode();                                        }
+                                            view.RestoreSelectedLineAndNode();
+                                        }
                                     }
                                     break;
                             }
@@ -911,8 +913,8 @@ namespace ChessForge
         public void UiMnFindIdenticalPosition_Click(object sender, RoutedEventArgs e)
         {
             bool isTrainingOrSolving = TrainingSession.IsTrainingInProgress || AppState.IsUserSolving();
-            if (isTrainingOrSolving 
-                || ActiveVariationTree == null 
+            if (isTrainingOrSolving
+                || ActiveVariationTree == null
                 || !(AppState.IsTreeViewTabActive() || AppState.ActiveTab == TabViewType.INTRO))
             {
                 return;
@@ -921,7 +923,7 @@ namespace ChessForge
             try
             {
                 TreeNode nd = ActiveVariationTree == null ? null : ActiveVariationTree.SelectedNode;
-                
+
                 SearchPositionCriteria crits = new SearchPositionCriteria(nd);
                 crits.FindMode = FindIdenticalPositions.Mode.IDENTICAL;
                 crits.IsPartialSearch = false;
@@ -2005,13 +2007,39 @@ namespace ChessForge
                 TreeNode nd = AppState.MainWin.ActiveTreeView.GetSelectedNode();
                 if (nd != null)
                 {
-                    string lineId = AppState.MainWin.ActiveVariationTree.SelectedLineId;
                     if (nd.IsDiagram)
                     {
                         nd.IsDiagramFlipped = !nd.IsDiagramFlipped;
                         ActiveTreeView.InsertOrUpdateCommentRun(nd);
                         AppState.IsDirty = true;
                     }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Saves the diagram as an image.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void UiMn_SaveDiagram_Click(object sender, RoutedEventArgs e)
+        {
+            if (AppState.MainWin.ActiveTreeView != null)
+            {
+                try
+                {
+                    TreeNode nd = AppState.MainWin.ActiveTreeView.GetSelectedNode();
+                    if (nd != null)
+                    {
+                        if (nd.IsDiagram)
+                        {
+                            SaveDiagram.SaveAsImage(nd, nd.IsDiagramFlipped);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    AppLog.Message("UiMn_SaveDiagram_Click()", ex);
                 }
             }
         }
@@ -2130,7 +2158,7 @@ namespace ChessForge
 
                     // now SortReferenceString will find the just created exercise so we can go ahead and update refs
                     nd.AddArticleReference(tree.Header.GetGuid(out _));
-                    nd.References = GuiUtilities.SortReferenceString(nd.References);
+                    nd.References = ReferenceUtils.SortReferenceString(nd.References);
                     startView.InsertOrUpdateCommentRun(nd);
                 }
             }
@@ -3028,7 +3056,7 @@ namespace ChessForge
             if (AppState.IsTreeViewTabActive())
             {
                 ActiveTreeView?.PlaceSelectedForCopyInClipboard();
-                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgCopiedMoves,CommentBox.HintType.INFO);
+                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgCopiedMoves, CommentBox.HintType.INFO);
             }
             else if (AppState.ActiveTab == TabViewType.INTRO)
             {

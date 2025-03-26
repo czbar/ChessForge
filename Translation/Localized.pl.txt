@@ -61,9 +61,17 @@ UntitledWorkbook=Podręcznik bez Tytułu
 #english: WorkbookFiles=Workbook files
 WorkbookFiles=Podręczniki
 
+#description: Image files
+#english: ImageFiles=Image files
+ImageFiles=Obrazy
+
 #description: RTF files
 #english: RtfFiles=RTF files
 RtfFiles=Pliki RTF
+
+#description: File already exists
+#english: FileExists=File Already Exists
+FileExists=Plik już istnieje
 
 #description: Title
 #english: Title=Title
@@ -76,6 +84,22 @@ WorkbookTitle=Tytuł Podręcznika
 #description: User
 #english: User=User
 User=Użytkownik
+
+#description: Append
+#english: Append=Append
+Append=Dołącz
+
+#description: Min
+#english: Min=Min
+Min=Min
+
+#description: Max
+#english: Max=Max
+Max=Maks
+
+#description: Overwrite
+#english: Overwrite=Overwrite
+Overwrite=Nadpisz
 
 #description: Event
 #english: Event=Event
@@ -630,6 +654,10 @@ Save=Zapisz
 #english: SaveAs=Save $0 As ...
 SaveAs=Zapisz $0 jako ...
 
+#description: Context menu to save a diagram as an image 
+#english: SaveDiagramAsImage= Save Diagram as Picture...
+SaveDiagramAsImage= Zapisz diagram jako obraz...
+
 #description: Export
 #english: Export=Export
 Export=Eksportuj
@@ -1166,6 +1194,26 @@ EgSelectionAccuracyLabel=Dokładność wyboru ruchów wynosi
 #description: Cenitpawn accuracy
 #english: EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
 EgCentipawnAccuracy=maksymalne odchylenie od najlepszego ruchu wynosi
+
+
+#######################################
+#
+# Header: DIALOG Save Diagram as Image
+#
+
+#description: Size of the diagram's side
+#english: SideSize=Height and Width in Pixels
+SideSize=Wysokość i szerokość w pikselach
+
+
+#######################################
+#
+# Header: DIALOG File Already Exists
+#
+
+#description: File exists options
+#english: FileExistActionsPrompt=Choose how to proceed.
+FileExistActionsPrompt=Wybierz jak kontynuować.
 
 
 #######################################
@@ -2764,6 +2812,10 @@ MbtTitleCopyPasteError=Błąd w Kopiuj/Wklej
 #
 # Header: FLASH ANNOUNCEMENETS
 #
+
+#description: Flash message: Diagram image saved to a file.
+#english: FlMsgDiagramImageSaved=Diagram image saved to a file.
+FlMsgDiagramImageSaved=Obraz diagramu został zapisany do pliku
 
 #description: Flash message: Game Imported Successfully.
 #english: FlMsgGameImportSuccess=Game Imported Successfully.

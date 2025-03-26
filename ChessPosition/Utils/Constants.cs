@@ -178,6 +178,16 @@ namespace ChessPosition
                 };
 
         /// <summary>
+        /// Minimum size of the diagram image.
+        /// </summary>
+        public static int MIN_DIAGRAM_SIZE = 120;
+
+        /// <summary>
+        /// Maximum size of the diagram image.
+        /// </summary>
+        public static int MAX_DIAGRAM_SIZE = 480;
+
+        /// <summary>
         /// Normal menu fony size
         /// </summary>
         public static double DEAFULT_MENU_FONT_SIZE = 12;

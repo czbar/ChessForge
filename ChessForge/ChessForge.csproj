@@ -290,6 +290,10 @@
       <DependentUpon>RtfExportDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="RtfWriter.cs" />
+    <Compile Include="SaveDiagram.cs" />
+    <Compile Include="DiagramImageSizeDialog.xaml.cs">
+      <DependentUpon>DiagramImageSizeDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SearchPosition.cs" />
     <Compile Include="SearchPositionCriteria.cs" />
     <Compile Include="SearchPositionDialog.xaml.cs">
@@ -553,6 +557,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="RtfExportDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DiagramImageSizeDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

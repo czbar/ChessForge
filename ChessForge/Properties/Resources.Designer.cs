@@ -187,6 +187,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Append.
+        /// </summary>
+        public static string Append {
+            get {
+                return ResourceManager.GetString("Append", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Application Options.
         /// </summary>
         public static string ApplicationOptions {
@@ -3229,6 +3238,24 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Choose how to proceed..
+        /// </summary>
+        public static string FileExistActionsPrompt {
+            get {
+                return ResourceManager.GetString("FileExistActionsPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File Already Exists.
+        /// </summary>
+        public static string FileExists {
+            get {
+                return ResourceManager.GetString("FileExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File $0 could not be found..
         /// </summary>
         public static string FileNotFound {
@@ -3342,6 +3369,15 @@ namespace ChessForge.Properties {
         public static string FlMsgCopiedTree {
             get {
                 return ResourceManager.GetString("FlMsgCopiedTree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Diagram image saved to a file..
+        /// </summary>
+        public static string FlMsgDiagramImageSaved {
+            get {
+                return ResourceManager.GetString("FlMsgDiagramImageSaved", resourceCulture);
             }
         }
         
@@ -3873,6 +3909,15 @@ namespace ChessForge.Properties {
         public static string IllegalCastling {
             get {
                 return ResourceManager.GetString("IllegalCastling", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image files.
+        /// </summary>
+        public static string ImageFiles {
+            get {
+                return ResourceManager.GetString("ImageFiles", resourceCulture);
             }
         }
         
@@ -4426,6 +4471,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Max.
+        /// </summary>
+        public static string Max {
+            get {
+                return ResourceManager.GetString("Max", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Copy/Paste Error.
         /// </summary>
         public static string MbtTitleCopyPasteError {
@@ -4503,6 +4557,15 @@ namespace ChessForge.Properties {
         public static string MicrosoftAppStore {
             get {
                 return ResourceManager.GetString("MicrosoftAppStore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Min.
+        /// </summary>
+        public static string Min {
+            get {
+                return ResourceManager.GetString("Min", resourceCulture);
             }
         }
         
@@ -5624,6 +5687,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Overwrite.
+        /// </summary>
+        public static string Overwrite {
+            get {
+                return ResourceManager.GetString("Overwrite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Overwrite Existing.
         /// </summary>
         public static string OverwriteExisting {
@@ -6326,6 +6398,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save Diagram as Picture....
+        /// </summary>
+        public static string SaveDiagramAsImage {
+            get {
+                return ResourceManager.GetString("SaveDiagramAsImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save Downloaded Games.
         /// </summary>
         public static string SaveDownloadedGames {
@@ -6844,6 +6925,15 @@ namespace ChessForge.Properties {
         public static string Sidelines {
             get {
                 return ResourceManager.GetString("Sidelines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Height and Width in Pixels.
+        /// </summary>
+        public static string SideSize {
+            get {
+                return ResourceManager.GetString("SideSize", resourceCulture);
             }
         }
         

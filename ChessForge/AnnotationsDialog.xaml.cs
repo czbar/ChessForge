@@ -99,9 +99,9 @@ namespace ChessForge
                 MoveButtonHporizontally(UiBtnHelp, -50);
             }
 
-            GuiUtilities.SplitReferencesString(_node.References, out _gameExerciseRefGuids, out _chapterRefGuids);
+            ReferenceUtils.SplitReferencesString(_node.References, out _gameExerciseRefGuids, out _chapterRefGuids);
 
-            GuiUtilities.GetReferencesTextByType(_node.References, out _gameExerciseRefsText, out _chapterRefsText);
+            ReferenceUtils.GetReferencesTextByType(_node.References, out _gameExerciseRefsText, out _chapterRefsText);
             UiLblGameExerciseRefs.Content = _gameExerciseRefsText;
             UiLblChapterRefs.Content = _chapterRefsText;
 
@@ -386,7 +386,7 @@ namespace ChessForge
             if (dlg.ShowDialog() == true)
             {
                 _chapterRefGuids = dlg.ChapterRefGuids ?? "";
-                GuiUtilities.GetReferencesTextByType(_chapterRefGuids, out _, out _chapterRefsText);
+                ReferenceUtils.GetReferencesTextByType(_chapterRefGuids, out _, out _chapterRefsText);
                 UiLblChapterRefs.Content = _chapterRefsText;
             }
 
@@ -406,7 +406,7 @@ namespace ChessForge
             if (dlg.ShowDialog() == true)
             {
                 _gameExerciseRefGuids = dlg.GameExerciseRefGuids ?? "";
-                GuiUtilities.GetReferencesTextByType(_gameExerciseRefGuids, out _gameExerciseRefsText, out _);
+                ReferenceUtils.GetReferencesTextByType(_gameExerciseRefGuids, out _gameExerciseRefsText, out _);
                 UiLblGameExerciseRefs.Content = _gameExerciseRefsText;
             }
 
@@ -442,7 +442,7 @@ namespace ChessForge
         private void UiBtnOk_Click(object sender, RoutedEventArgs e)
         {
             Comment = UiTbComment.Text;
-            ReferenceGuids = GuiUtilities.CombineReferences(_gameExerciseRefGuids, _chapterRefGuids);
+            ReferenceGuids = ReferenceUtils.CombineReferences(_gameExerciseRefGuids, _chapterRefGuids);
             if (_isExerciseEditing)
             {
                 QuizPoints = ParseQuizPoints(UiTbQuizPoints.Text);
