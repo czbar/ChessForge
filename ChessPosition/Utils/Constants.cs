@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace ChessPosition
 {
@@ -185,7 +183,7 @@ namespace ChessPosition
         /// <summary>
         /// Maximum size of the diagram image.
         /// </summary>
-        public static int MAX_DIAGRAM_SIZE = 480;
+        public static int MAX_DIAGRAM_SIZE = 960;
 
         /// <summary>
         /// Normal menu fony size
