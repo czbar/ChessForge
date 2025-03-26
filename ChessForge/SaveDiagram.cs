@@ -35,10 +35,12 @@ namespace ChessForge
                     if (!cancel)
                     {
                         sideSize = VerifySideSize(sideSize);
-                        Configuration.DiagramImageSideSize = sideSize;
+                        Configuration.DiagramImageSize = sideSize;
                         
                         // at this point we have all we need in the Configuration class
-                        PositionImageGenerator.SaveDiagramAsImage(node, isFlipped, Configuration.LastPngFile, Configuration.DiagramImageSideSize);
+                        PositionImageGenerator.SaveDiagramAsImage(node, isFlipped, Configuration.LastPngFile, Configuration.DiagramImageSize);
+                        AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgDiagramImageSaved + " " 
+                                                                               + Path.GetFileName(Configuration.LastPngFile), CommentBox.HintType.INFO);
                     }
                 }
             }
@@ -112,7 +114,7 @@ namespace ChessForge
         {
             cancel = false;
 
-            if (!Configuration.DoNotAskDiagramImageSideSize)
+            if (!Configuration.DoNotAskDiagramImageSize)
             {
                 DiagramImageSize dlg = new DiagramImageSize();
                 GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
@@ -123,7 +125,7 @@ namespace ChessForge
                 }
             }
 
-            return Configuration.DiagramImageSideSize;
+            return Configuration.DiagramImageSize;
         }
 
         /// <summary>
