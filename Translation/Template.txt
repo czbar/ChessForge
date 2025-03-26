@@ -89,6 +89,14 @@ User=
 #english: Append=Append
 Append=
 
+#description: Min
+#english: Min=Min
+Min=
+
+#description: Max
+#english: Max=Max
+Max=
+
 #description: Overwrite
 #english: Overwrite=Overwrite
 Overwrite=
@@ -2804,6 +2812,10 @@ MbtTitleCopyPasteError=
 #
 # Header: FLASH ANNOUNCEMENETS
 #
+
+#description: Flash message: Diagram image saved to a file.
+#english: FlMsgDiagramImageSaved=Diagram image saved to
+FlMsgDiagramImageSaved=
 
 #description: Flash message: Game Imported Successfully.
 #english: FlMsgGameImportSuccess=Game Imported Successfully.

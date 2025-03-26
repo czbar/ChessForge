@@ -71,6 +71,12 @@ User=User
 #Append
 Append=Append
 
+#Min
+Min=Min
+
+#Max
+Max=Max
+
 #Overwrite
 Overwrite=Overwrite
 
@@ -2199,6 +2205,9 @@ MbtTitleCopyPasteError=Copy/Paste Error
 #
 # Header: FLASH ANNOUNCEMENETS
 #
+
+#Flash message: Diagram image saved to a file.
+FlMsgDiagramImageSaved=Diagram image saved to
 
 #Flash message: Game Imported Successfully.
 FlMsgGameImportSuccess=Game Imported Successfully.

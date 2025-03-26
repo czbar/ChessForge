@@ -171,6 +171,12 @@
   <data name="Append" xml:space="preserve">
     <value>Dołącz</value>
   </data>
+  <data name="Min" xml:space="preserve">
+    <value>Min</value>
+  </data>
+  <data name="Max" xml:space="preserve">
+    <value>Maks</value>
+  </data>
   <data name="Overwrite" xml:space="preserve">
     <value>Nadpisz</value>
   </data>
@@ -1932,6 +1938,9 @@
   </data>
   <data name="MbtTitleCopyPasteError" xml:space="preserve">
     <value>Błąd w Kopiuj/Wklej</value>
+  </data>
+  <data name="FlMsgDiagramImageSaved" xml:space="preserve">
+    <value>Obraz diagramu został zapisany do pliku</value>
   </data>
   <data name="FlMsgGameImportSuccess" xml:space="preserve">
     <value>Partia Została Zaimportowana.</value>

@@ -3373,6 +3373,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Diagram image saved to a file..
+        /// </summary>
+        public static string FlMsgDiagramImageSaved {
+            get {
+                return ResourceManager.GetString("FlMsgDiagramImageSaved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exercises Imported .
         /// </summary>
         public static string FlMsgExercisesImported {
@@ -4462,6 +4471,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Max.
+        /// </summary>
+        public static string Max {
+            get {
+                return ResourceManager.GetString("Max", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Copy/Paste Error.
         /// </summary>
         public static string MbtTitleCopyPasteError {
@@ -4539,6 +4557,15 @@ namespace ChessForge.Properties {
         public static string MicrosoftAppStore {
             get {
                 return ResourceManager.GetString("MicrosoftAppStore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Min.
+        /// </summary>
+        public static string Min {
+            get {
+                return ResourceManager.GetString("Min", resourceCulture);
             }
         }
         
