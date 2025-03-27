@@ -49,80 +49,80 @@ namespace ChessForge
         //
 
         // 60x60
-        public static BitmapImage WhiteKing_60 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/WhiteKing_60.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage WhiteQueen_60 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/WhiteQueen_60.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage WhiteBishop_60 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/WhiteBishop_60.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage WhiteKnight_60 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/WhiteKnight_60.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage WhiteRook_60 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/WhiteRook_60.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage WhitePawn_60 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/WhitePawn_60.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage WhiteKing_60 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/WhiteKing_60.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage WhiteQueen_60 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/WhiteQueen_60.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage WhiteBishop_60 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/WhiteBishop_60.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage WhiteKnight_60 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/WhiteKnight_60.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage WhiteRook_60 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/WhiteRook_60.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage WhitePawn_60 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/WhitePawn_60.png", UriKind.RelativeOrAbsolute));
 
-        public static BitmapImage BlackKing_60 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/BlackKing_60.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage BlackQueen_60 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/BlackQueen_60.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage BlackBishop_60 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/BlackBishop_60.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage BlackKnight_60 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/BlackKnight_60.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage BlackRook_60 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/BlackRook_60.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage BlackPawn_60 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/BlackPawn_60.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage BlackKing_60 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/BlackKing_60.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage BlackQueen_60 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/BlackQueen_60.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage BlackBishop_60 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/BlackBishop_60.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage BlackKnight_60 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/BlackKnight_60.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage BlackRook_60 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/BlackRook_60.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage BlackPawn_60 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/BlackPawn_60.png", UriKind.RelativeOrAbsolute));
 
 
         // 45x45
-        public static BitmapImage WhiteKing_45 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/WhiteKing_45.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage WhiteQueen_45 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/WhiteQueen_45.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage WhiteBishop_45 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/WhiteBishop_45.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage WhiteKnight_45 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/WhiteKnight_45.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage WhiteRook_45 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/WhiteRook_45.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage WhitePawn_45 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/WhitePawn_45.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage WhiteKing_45 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/WhiteKing_45.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage WhiteQueen_45 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/WhiteQueen_45.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage WhiteBishop_45 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/WhiteBishop_45.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage WhiteKnight_45 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/WhiteKnight_45.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage WhiteRook_45 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/WhiteRook_45.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage WhitePawn_45 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/WhitePawn_45.png", UriKind.RelativeOrAbsolute));
 
-        public static BitmapImage BlackKing_45 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/BlackKing_45.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage BlackQueen_45 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/BlackQueen_45.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage BlackBishop_45 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/BlackBishop_45.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage BlackKnight_45 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/BlackKnight_45.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage BlackRook_45 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/BlackRook_45.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage BlackPawn_45 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/BlackPawn_45.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage BlackKing_45 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/BlackKing_45.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage BlackQueen_45 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/BlackQueen_45.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage BlackBishop_45 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/BlackBishop_45.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage BlackKnight_45 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/BlackKnight_45.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage BlackRook_45 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/BlackRook_45.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage BlackPawn_45 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/BlackPawn_45.png", UriKind.RelativeOrAbsolute));
 
         // 20x20
-        public static BitmapImage WhiteKing_20 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/WhiteKing_20.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage WhiteQueen_20 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/WhiteQueen_20.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage WhiteBishop_20 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/WhiteBishop_20.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage WhiteKnight_20 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/WhiteKnight_20.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage WhiteRook_20 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/WhiteRook_20.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage WhitePawn_20 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/WhitePawn_20.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage WhiteKing_20 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/WhiteKing_20.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage WhiteQueen_20 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/WhiteQueen_20.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage WhiteBishop_20 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/WhiteBishop_20.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage WhiteKnight_20 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/WhiteKnight_20.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage WhiteRook_20 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/WhiteRook_20.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage WhitePawn_20 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/WhitePawn_20.png", UriKind.RelativeOrAbsolute));
 
-        public static BitmapImage BlackKing_20 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/BlackKing_20.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage BlackQueen_20 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/BlackQueen_20.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage BlackBishop_20 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/BlackBishop_20.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage BlackKnight_20 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/BlackKnight_20.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage BlackRook_20 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/BlackRook_20.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage BlackPawn_20 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/BlackPawn_20.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage BlackKing_20 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/BlackKing_20.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage BlackQueen_20 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/BlackQueen_20.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage BlackBishop_20 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/BlackBishop_20.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage BlackKnight_20 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/BlackKnight_20.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage BlackRook_20 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/BlackRook_20.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage BlackPawn_20 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/BlackPawn_20.png", UriKind.RelativeOrAbsolute));
 
         // 18x18
-        public static BitmapImage WhiteKing_18 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/WhiteKing_18.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage WhiteQueen_18 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/WhiteQueen_18.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage WhiteBishop_18 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/WhiteBishop_18.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage WhiteKnight_18 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/WhiteKnight_18.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage WhiteRook_18 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/WhiteRook_18.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage WhitePawn_18 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/WhitePawn_18.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage WhiteKing_18 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/WhiteKing_18.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage WhiteQueen_18 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/WhiteQueen_18.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage WhiteBishop_18 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/WhiteBishop_18.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage WhiteKnight_18 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/WhiteKnight_18.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage WhiteRook_18 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/WhiteRook_18.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage WhitePawn_18 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/WhitePawn_18.png", UriKind.RelativeOrAbsolute));
 
-        public static BitmapImage BlackKing_18 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/BlackKing_18.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage BlackQueen_18 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/BlackQueen_18.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage BlackBishop_18 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/BlackBishop_18.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage BlackKnight_18 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/BlackKnight_18.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage BlackRook_18 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/BlackRook_18.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage BlackPawn_18 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/BlackPawn_18.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage BlackKing_18 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/BlackKing_18.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage BlackQueen_18 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/BlackQueen_18.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage BlackBishop_18 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/BlackBishop_18.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage BlackKnight_18 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/BlackKnight_18.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage BlackRook_18 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/BlackRook_18.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage BlackPawn_18 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/BlackPawn_18.png", UriKind.RelativeOrAbsolute));
 
         // 15x15
-        public static BitmapImage WhiteKing_15 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/WhiteKing_15.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage WhiteQueen_15 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/WhiteQueen_15.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage WhiteBishop_15 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/WhiteBishop_15.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage WhiteKnight_15 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/WhiteKnight_15.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage WhiteRook_15 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/WhiteRook_15.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage WhitePawn_15 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/WhitePawn_15.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage WhiteKing_15 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/WhiteKing_15.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage WhiteQueen_15 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/WhiteQueen_15.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage WhiteBishop_15 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/WhiteBishop_15.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage WhiteKnight_15 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/WhiteKnight_15.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage WhiteRook_15 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/WhiteRook_15.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage WhitePawn_15 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/WhitePawn_15.png", UriKind.RelativeOrAbsolute));
 
-        public static BitmapImage BlackKing_15 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/BlackKing_15.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage BlackQueen_15 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/BlackQueen_15.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage BlackBishop_15 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/BlackBishop_15.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage BlackKnight_15 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/BlackKnight_15.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage BlackRook_15 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/BlackRook_15.png", UriKind.RelativeOrAbsolute));
-        public static BitmapImage BlackPawn_15 = new BitmapImage(new Uri("pack://application:,,,/Resources/PiecesOtherSizes/Images/BlackPawn_15.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage BlackKing_15 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/BlackKing_15.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage BlackQueen_15 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/BlackQueen_15.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage BlackBishop_15 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/BlackBishop_15.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage BlackKnight_15 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/BlackKnight_15.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage BlackRook_15 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/BlackRook_15.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage BlackPawn_15 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/PiecesOtherSizes/BlackPawn_15.png", UriKind.RelativeOrAbsolute));
 
 
         public static BitmapImage YellowOverlay = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/YellowOverlay.png", UriKind.RelativeOrAbsolute));
