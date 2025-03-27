@@ -1,4 +1,4 @@
-"C:\Program Files\Inkscape\bin\inkscape" l.svg --export-filename=l_%1.png --export-width=%1 --export-height=%1
+"C:\Program Files\Inkscape\bin\inkscape" l.svg --export-filename=WhiteCircle_%1.png --export-width=%1 --export-height=%1
 "C:\Program Files\Inkscape\bin\inkscape" r.svg --export-filename=WhiteRook_%1.png --export-width=%1 --export-height=%1
 "C:\Program Files\Inkscape\bin\inkscape" n.svg --export-filename=WhiteKnight_%1.png --export-width=%1 --export-height=%1
 "C:\Program Files\Inkscape\bin\inkscape" b.svg --export-filename=WhiteBishop_%1.png --export-width=%1 --export-height=%1
