@@ -1,9 +1,5 @@
 ﻿using ChessPosition;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -13,7 +9,7 @@ namespace ChessForge
     public class ChessBoardSmall : ChessBoard
     {
         // size of an individual square in pixels
-        private const int _squareSize = 30;
+        protected int _squareSize = 30;
 
         /// <summary>
         /// Label showing above the "regular" lable.
