@@ -126,6 +126,7 @@
     <Compile Include="ChessboardColorsDialog.xaml.cs">
       <DependentUpon>ChessboardColorsDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ChessBoardOtherSize.cs" />
     <Compile Include="ChessBoardSmall.cs" />
     <Compile Include="ChessForgeEventArgs.cs" />
     <Compile Include="CleanSidelinesComments.cs" />
@@ -814,6 +815,8 @@
     <Resource Include="Resources\Images\PiecesOtherSizes\WhiteRook_20.png" />
     <Resource Include="Resources\Images\PiecesOtherSizes\WhiteRook_45.png" />
     <Resource Include="Resources\Images\PiecesOtherSizes\WhiteRook_60.png" />
+    <Resource Include="Resources\Images\ChessboardsOtherSizes\ChessBoardGrey_144.png" />
+    <Resource Include="Resources\Images\ChessboardsOtherSizes\ChessBoardGrey_160.png" />
     <Content Include="Resources\Sounds\Confirmation.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -54,6 +54,8 @@ namespace ChessForge
 
         public static BitmapImage ChessBoardGrey = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessBoardGrey.png", UriKind.RelativeOrAbsolute));
         public static BitmapImage ChessBoardGreySmall = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessBoardGreySmall.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage ChessBoardGrey_160 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessboardsOtherSizes/ChessBoardGrey_160.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage ChessBoardGrey_144 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessboardsOtherSizes/ChessBoardGrey_144.png", UriKind.RelativeOrAbsolute));
         public static BitmapImage ChessBoardGreyIcon = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessBoardGreyIcon.png", UriKind.RelativeOrAbsolute));
 
         public static BitmapImage ChessBoardGreen = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessBoardGreen.png", UriKind.RelativeOrAbsolute));
