@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using static ChessForge.ChessBoards;
 
@@ -28,6 +24,20 @@ namespace ChessForge
             BROWN = 6,
             ORANGE_SHADES = 7,
             GREY = 8
+        }
+
+        /// <summary>
+        /// Supported chessboard sizes define by the square size.
+        /// </summary>
+        public enum SquareSize
+        {
+            SIZE_15 = 15,
+            SIZE_18 = 18,
+            SIZE_20 = 20,
+            SIZE_30 = 30,
+            SIZE_45 = 45,
+            SIZE_60 = 60,
+            SIZE_80 = 80,
         }
 
         public static BitmapImage ChessBoardBlue = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessBoardBlue.png", UriKind.RelativeOrAbsolute));
