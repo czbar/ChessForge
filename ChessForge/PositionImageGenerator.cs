@@ -14,6 +14,7 @@ namespace ChessForge
     {
         /// <summary>
         /// Generates a png image for the passed position
+        /// to use in the RTF export
         /// </summary>
         /// <param name="nd"></param>
         public static byte[] GenerateImage(TreeNode node, bool isFlipped)
@@ -31,7 +32,8 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Saves the diagram as an image file.
+        /// Saves the diagram as an image file
+        /// for the "Save Diagram as Picture..." menu item.
         /// </summary>
         /// <param name="node"></param>
         /// <param name="isFlipped"></param>
