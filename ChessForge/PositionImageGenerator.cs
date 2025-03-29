@@ -116,12 +116,13 @@ namespace ChessForge
             }
 
             int sizeToUse = useSmallBoard ? smallBoardBaseSize : largeBoardBaseSize;
-            mainCanvas.Measure(new Size(sizeToUse + 2, sizeToUse + 2));
-            mainCanvas.Arrange(new Rect(new Size(sizeToUse + 2, sizeToUse + 2)));
+            int sizeFull = sizeToUse + 4;
+            mainCanvas.Measure(new Size(sizeFull, sizeFull));
+            mainCanvas.Arrange(new Rect(new Size(sizeFull, sizeFull)));
 
             mainCanvas.UpdateLayout();
 
-            RenderTargetBitmap originalBitmap = new RenderTargetBitmap(sizeToUse + 2, sizeToUse + 2, 96, 96, PixelFormats.Pbgra32);
+            RenderTargetBitmap originalBitmap = new RenderTargetBitmap(sizeFull, sizeFull, 96, 96, PixelFormats.Pbgra32);
             originalBitmap.Render(mainCanvas);
 
             double scale = (double)pixelSize / sizeToUse;
