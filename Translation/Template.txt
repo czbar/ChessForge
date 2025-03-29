@@ -97,6 +97,10 @@ Min=
 #english: Max=Max
 Max=
 
+#description: Colors
+#english: Colors=Colors
+Colors=
+
 #description: Overwrite
 #english: Overwrite=Overwrite
 Overwrite=

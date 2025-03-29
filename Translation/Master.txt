@@ -77,6 +77,9 @@ Min=Min
 #Max
 Max=Max
 
+#Colors
+Colors=Colors
+
 #Overwrite
 Overwrite=Overwrite
 

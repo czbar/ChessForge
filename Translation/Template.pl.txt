@@ -97,6 +97,10 @@ Min=Min
 #english: Max=Max
 Max=Maks
 
+#description: Colors
+#english: Colors=Colors
+Colors=Kolory
+
 #description: Overwrite
 #english: Overwrite=Overwrite
 Overwrite=Nadpisz

@@ -177,6 +177,9 @@
   <data name="Max" xml:space="preserve">
     <value>Maks</value>
   </data>
+  <data name="Colors" xml:space="preserve">
+    <value>Kolory</value>
+  </data>
   <data name="Overwrite" xml:space="preserve">
     <value>Nadpisz</value>
   </data>

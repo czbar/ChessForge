@@ -177,6 +177,9 @@
   <data name="Max" xml:space="preserve">
     <value>Max</value>
   </data>
+  <data name="Colors" xml:space="preserve">
+    <value>Colors</value>
+  </data>
   <data name="Overwrite" xml:space="preserve">
     <value>Overwrite</value>
   </data>
