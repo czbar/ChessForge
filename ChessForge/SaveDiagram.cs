@@ -1,5 +1,5 @@
-﻿using GameTree;
-using ChessPosition;
+﻿using ChessPosition;
+using GameTree;
 using Microsoft.Win32;
 using System;
 using System.IO;
