@@ -42,7 +42,7 @@ namespace ChessForge
         /// <param name="dpi"></param>
         public static void SaveDiagramAsImage(TreeNode node, bool isFlipped, string filePath, int pixelSize = 240, double dpi = 96)
         {
-            BitmapEncoder encoder = EncodePositionAsImage(node, isFlipped, Configuration.DiagramImageColors, pixelSize, dpi);
+            BitmapEncoder encoder = EncodePositionAsImage(node, isFlipped, Configuration.DiagramImageBorderWidth, Configuration.DiagramImageColors, pixelSize, dpi);
 
             using (FileStream fs = new FileStream(filePath, FileMode.Create))
             {
@@ -58,12 +58,12 @@ namespace ChessForge
         /// <param name="pixelSize"></param>
         /// <param name="dpi"></param>
         /// <returns></returns>
-        private static BitmapEncoder EncodePositionAsImage(TreeNode node, bool isFlipped, int colorId = 1, int pixelSize = 240, double dpi = 96)
+        private static BitmapEncoder EncodePositionAsImage(TreeNode node, bool isFlipped, int borderWidth = 1, int colorId = 1, int pixelSize = 240, double dpi = 96)
         {
             const int maxSmallChessBoardSize = 240;
 
-            const int smallBoardBaseSize = 242;
-            const int largeBoardBaseSize = 644;
+            int smallBoardBaseSize = 240 + 2 * borderWidth;
+            int largeBoardBaseSize = 640 + 2 * borderWidth;
 
             bool useSmallBoard = pixelSize <= maxSmallChessBoardSize;
 
@@ -102,8 +102,8 @@ namespace ChessForge
             boardCanvas.Children.Add(imageChessboard);
 
             mainCanvas.Children.Add(boardCanvas);
-            Canvas.SetLeft(boardCanvas, useSmallBoard ? 1 : 2);
-            Canvas.SetTop(boardCanvas, useSmallBoard ? 1 : 2);
+            Canvas.SetLeft(boardCanvas, borderWidth);
+            Canvas.SetTop(boardCanvas, borderWidth);
 
             ChessBoard chessBoard = useSmallBoard ? new ChessBoardSmall(boardCanvas, imageChessboard, null, null, false, false)
                                                   : new ChessBoard(false, boardCanvas, imageChessboard, null, false, false);
