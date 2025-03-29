@@ -188,7 +188,7 @@ namespace ChessPosition
         /// <summary>
         /// Maximum width of the border around the diagram in the image.
         /// </summary>
-        public static int MAX_DIAGRAM_BORDER_WIDTH = 10;
+        public static int MAX_DIAGRAM_IMAGE_BORDER_WIDTH = 50;
 
         /// <summary>
         /// Normal menu fony size
