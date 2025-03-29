@@ -42,7 +42,7 @@ namespace ChessForge
         /// <param name="dpi"></param>
         public static void SaveDiagramAsImage(TreeNode node, bool isFlipped, string filePath, int pixelSize = 240, double dpi = 96)
         {
-            BitmapEncoder encoder = EncodePositionAsImage(node, isFlipped, pixelSize, dpi);
+            BitmapEncoder encoder = EncodePositionAsImage(node, isFlipped, Configuration.DiagramImageColors, pixelSize, dpi);
 
             using (FileStream fs = new FileStream(filePath, FileMode.Create))
             {
@@ -58,7 +58,7 @@ namespace ChessForge
         /// <param name="pixelSize"></param>
         /// <param name="dpi"></param>
         /// <returns></returns>
-        private static BitmapEncoder EncodePositionAsImage(TreeNode node, bool isFlipped, int pixelSize = 240, double dpi = 96)
+        private static BitmapEncoder EncodePositionAsImage(TreeNode node, bool isFlipped, int colorId = 1, int pixelSize = 240, double dpi = 96)
         {
             const int maxSmallChessBoardSize = 240;
 
@@ -69,7 +69,31 @@ namespace ChessForge
 
             // Load chessboard image
             Image imageChessboard = new Image();
-            imageChessboard.Source = useSmallBoard ? ChessBoards.ChessBoardGreySmall : ChessBoards.ChessBoardGrey;
+
+            switch(colorId)
+            {
+                case 1:
+                    imageChessboard.Source = useSmallBoard ? ChessBoards.ChessBoardGreySmall : ChessBoards.ChessBoardGrey;
+                    break;
+                case 2:
+                    imageChessboard.Source = useSmallBoard ? ChessBoards.ChessBoardBlueSmall : ChessBoards.ChessBoardBlue;
+                    break;
+                case 3:
+                    imageChessboard.Source = useSmallBoard ? ChessBoards.ChessBoardBrownSmall : ChessBoards.ChessBoardBrown;
+                    break;
+                case 4:
+                    imageChessboard.Source = useSmallBoard ? ChessBoards.ChessBoardGreenSmall : ChessBoards.ChessBoardGreen;
+                    break;
+                case 5:
+                    imageChessboard.Source = useSmallBoard ? ChessBoards.ChessBoardVistulaSmall : ChessBoards.ChessBoardVistula;
+                    break;
+                case 6:
+                    imageChessboard.Source = useSmallBoard ? ChessBoards.ChessBoardLightBlueSmall : ChessBoards.ChessBoardLightBlue;
+                    break;
+                default:
+                    imageChessboard.Source = useSmallBoard ? ChessBoards.ChessBoardGreySmall : ChessBoards.ChessBoardGrey;
+                    break;
+            }
 
             Canvas mainCanvas = new Canvas();
             mainCanvas.Background = Brushes.Black;
