@@ -941,6 +941,8 @@ EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
 #Size of the diagram's side
 SideSize=Height and Width in Pixels
 
+#Border width
+ImageBorderWidth=Border Width
 
 #######################################
 #

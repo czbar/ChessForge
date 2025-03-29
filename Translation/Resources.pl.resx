@@ -922,6 +922,9 @@
   <data name="SideSize" xml:space="preserve">
     <value>Wysokość i szerokość w pikselach</value>
   </data>
+  <data name="ImageBorderWidth" xml:space="preserve">
+    <value>Szerokość ramki</value>
+  </data>
   <data name="FileExistActionsPrompt" xml:space="preserve">
     <value>Wybierz jak kontynuować.</value>
   </data>

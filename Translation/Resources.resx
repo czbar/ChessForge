@@ -922,6 +922,9 @@
   <data name="SideSize" xml:space="preserve">
     <value>Height and Width in Pixels</value>
   </data>
+  <data name="ImageBorderWidth" xml:space="preserve">
+    <value>Border Width</value>
+  </data>
   <data name="FileExistActionsPrompt" xml:space="preserve">
     <value>Choose how to proceed.</value>
   </data>

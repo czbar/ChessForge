@@ -1209,6 +1209,9 @@ EgCentipawnAccuracy=maksymalne odchylenie od najlepszego ruchu wynosi
 #english: SideSize=Height and Width in Pixels
 SideSize=Wysokość i szerokość w pikselach
 
+#description: Border width
+#english: ImageBorderWidth=Border Width
+ImageBorderWidth=Szerokość ramki
 
 #######################################
 #

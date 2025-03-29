@@ -3922,6 +3922,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Border Width.
+        /// </summary>
+        public static string ImageBorderWidth {
+            get {
+                return ResourceManager.GetString("ImageBorderWidth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Image files.
         /// </summary>
         public static string ImageFiles {

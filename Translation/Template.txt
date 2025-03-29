@@ -1209,6 +1209,9 @@ EgCentipawnAccuracy=
 #english: SideSize=Height and Width in Pixels
 SideSize=
 
+#description: Border width
+#english: ImageBorderWidth=Border Width
+ImageBorderWidth=
 
 #######################################
 #
