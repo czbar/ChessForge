@@ -17,7 +17,7 @@
         <CheckBox x:Name="UiCbDoNotAskAgain" Content="{x:Static p:Resources.CbDoNotAskInSession}" HorizontalAlignment="Center" Margin="0,115,0,0" VerticalAlignment="Top"/>
         <Button x:Name="UiBtnSave" Content="{x:Static p:Resources.Save}" IsDefault="True" HorizontalAlignment="Center" Margin="-100,150,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnSave_Click"/>
         <Button x:Name="UiBtnCancel" Content="{x:Static p:Resources.Cancel}" IsCancel="True" HorizontalAlignment="Center" Margin="100,150,0,0" Width="80" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
-        <GroupBox Margin="0,10,10,0" Width="112" Height="90" Header="{x:Static p:Resources.IgnoreColors}" HorizontalAlignment="Right" VerticalAlignment="Top">
+        <GroupBox Margin="0,10,10,0" Width="112" Height="90" Header="{x:Static p:Resources.Colors}" HorizontalAlignment="Right" VerticalAlignment="Top">
             <Canvas x:Name="UiCnvColors" Margin="0,0,0,0">
                 <Image x:Name="UiImgColorsSelector" Margin="9,9,0,0" Width="23" Height="23" HorizontalAlignment="Left" VerticalAlignment="Top" Source="/Resources/Images/DiagramExportColors/ColorSelectionRectangle.png" Stretch="Fill"/>
                 <Image x:Name="UiImgColors_1" Margin="10,10,0,0" Width="21" Height="21" HorizontalAlignment="Left" VerticalAlignment="Top" Source="/Resources/Images/DiagramExportColors/DiagramExportColors_1.png" Stretch="Fill" MouseDown="UiImgColors_1_MouseDown"/>
