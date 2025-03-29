@@ -2028,6 +2028,11 @@ namespace ChessForge
             {
                 try
                 {
+                    if ((Keyboard.Modifiers & ModifierKeys.Shift) != 0)
+                    {
+                        Configuration.DoNotAskDiagramImageSize = false;
+                    }
+
                     TreeNode nd = AppState.MainWin.ActiveTreeView.GetSelectedNode();
                     if (nd != null)
                     {
