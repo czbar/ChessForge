@@ -62,8 +62,8 @@ namespace ChessForge
         {
             const int maxSmallChessBoardSize = 240;
 
-            const int smallBoardBaseSize = 240;
-            const int largeBoardBaseSize = 640;
+            const int smallBoardBaseSize = 242;
+            const int largeBoardBaseSize = 644;
 
             bool useSmallBoard = pixelSize <= maxSmallChessBoardSize;
 
@@ -102,8 +102,8 @@ namespace ChessForge
             boardCanvas.Children.Add(imageChessboard);
 
             mainCanvas.Children.Add(boardCanvas);
-            Canvas.SetLeft(boardCanvas, 1);
-            Canvas.SetTop(boardCanvas, 1);
+            Canvas.SetLeft(boardCanvas, useSmallBoard ? 1 : 2);
+            Canvas.SetTop(boardCanvas, useSmallBoard ? 1 : 2);
 
             ChessBoard chessBoard = useSmallBoard ? new ChessBoardSmall(boardCanvas, imageChessboard, null, null, false, false)
                                                   : new ChessBoard(false, boardCanvas, imageChessboard, null, false, false);
@@ -116,13 +116,12 @@ namespace ChessForge
             }
 
             int sizeToUse = useSmallBoard ? smallBoardBaseSize : largeBoardBaseSize;
-            int sizeFull = sizeToUse + 4;
-            mainCanvas.Measure(new Size(sizeFull, sizeFull));
-            mainCanvas.Arrange(new Rect(new Size(sizeFull, sizeFull)));
+            mainCanvas.Measure(new Size(sizeToUse, sizeToUse));
+            mainCanvas.Arrange(new Rect(new Size(sizeToUse, sizeToUse)));
 
             mainCanvas.UpdateLayout();
 
-            RenderTargetBitmap originalBitmap = new RenderTargetBitmap(sizeFull, sizeFull, 96, 96, PixelFormats.Pbgra32);
+            RenderTargetBitmap originalBitmap = new RenderTargetBitmap(sizeToUse, sizeToUse, 96, 96, PixelFormats.Pbgra32);
             originalBitmap.Render(mainCanvas);
 
             double scale = (double)pixelSize / sizeToUse;
@@ -144,7 +143,7 @@ namespace ChessForge
             var scaledBitmap = new RenderTargetBitmap(
                 (int)(originalBitmap.PixelWidth * scale),
                 (int)(originalBitmap.PixelHeight * scale),
-                originalBitmap.DpiX,                      // Keep original DPI
+                originalBitmap.DpiX,
                 originalBitmap.DpiY,
                 PixelFormats.Pbgra32);
 
