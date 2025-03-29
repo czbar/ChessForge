@@ -27,10 +27,14 @@ namespace ChessForge
             InitializeComponent();
 
             Title = TextUtils.RemoveTrailingElipsis(Title);
-            UiTbSideSize.Text = Configuration.DiagramImageSize.ToString();
+            UiTbSideSize.Text = CorrectSideSize(Configuration.DiagramImageSize).ToString();
+            UiTbBorderWidth.Text = CorrectBorderWidth(Configuration.DiagramImageBorderWidth).ToString();
+
             UiCbDoNotAskAgain.IsChecked = Configuration.DoNotAskDiagramImageSize;
-            UiLblMinMax.Content = "(" + Properties.Resources.Min + " " + Constants.MIN_DIAGRAM_SIZE 
+            UiLblSizeMinMax.Content = "(" + Properties.Resources.Min + " " + Constants.MIN_DIAGRAM_SIZE 
                                     + " - " + Properties.Resources.Max + " " + Constants.MAX_DIAGRAM_SIZE + ")";
+            UiLblBorderMinMax.Content = "( 0"
+                                    + " - " + Constants.MAX_DIAGRAM_IMAGE_BORDER_WIDTH + ")";
             SelectColorSet();
 
         }
@@ -69,6 +73,25 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Corrects the border width if outside bounds.
+        /// </summary>
+        /// <param name="borderWidth"></param>
+        /// <returns></returns>
+        private int CorrectBorderWidth(int borderWidth)
+        {
+            return Math.Max(0, Math.Min(borderWidth, Constants.MAX_DIAGRAM_IMAGE_BORDER_WIDTH));
+        }
+
+        /// <summary>
+        /// Corrects the side size if outside bounds.
+        /// </summary>
+        /// <param name="sideSize"></param>
+        /// <returns></returns>
+        private int CorrectSideSize(int sideSize)
+        {
+            return Math.Max(Constants.MIN_DIAGRAM_SIZE, Math.Min(sideSize, Constants.MAX_DIAGRAM_SIZE));
+        }
         /// <summary>
         /// Handles the click event for the color set buttons.
         /// </summary>
@@ -149,10 +172,13 @@ namespace ChessForge
         private void UiBtnSave_Click(object sender, RoutedEventArgs e)
         {
             int.TryParse(UiTbSideSize.Text, out int sideSize);
-            sideSize = Math.Max(sideSize, Constants.MIN_DIAGRAM_SIZE);
-            sideSize = Math.Min(sideSize, Constants.MAX_DIAGRAM_SIZE);
-            
+            sideSize = CorrectSideSize(sideSize);            
             Configuration.DiagramImageSize = sideSize;
+            
+            int.TryParse(UiTbBorderWidth.Text, out int borderWidth);
+            borderWidth = CorrectBorderWidth(borderWidth);
+            Configuration.DiagramImageBorderWidth = borderWidth;
+
             Configuration.DiagramImageColors = _selectedColorSet;
             Configuration.DoNotAskDiagramImageSize = UiCbDoNotAskAgain.IsChecked == true;
             
@@ -167,6 +193,16 @@ namespace ChessForge
         private void UiBtnCancel_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
+        }
+
+        /// <summary>
+        /// Links to the relevant Wiki page.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Save-Diagram");
         }
     }
 }
