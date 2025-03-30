@@ -2005,6 +2005,9 @@
   <data name="FlMsgChaptersImported" xml:space="preserve">
     <value>Rozdziały zostały zaimportowane</value>
   </data>
+  <data name="FlMsgNumberOfDiagramsSaved" xml:space="preserve">
+    <value>Liczba zapisanych diagramów</value>
+  </data>
   <data name="MsgNoDuplicatesFound" xml:space="preserve">
     <value>Nie znaleziono duplikatów.</value>
   </data>

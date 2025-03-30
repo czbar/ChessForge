@@ -2276,7 +2276,8 @@ FlMsgChapterImported=Items Imported into New Chapter
 #Flash message: Chapters Imported
 FlMsgChaptersImported=Chapters Imported
 
-
+#Flash message: Number of diagrams saved
+FlMsgNumberOfDiagramsSaved=Number of diagrams saved
 
 ##################################
 #

@@ -3454,6 +3454,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Number of diagrams saved.
+        /// </summary>
+        public static string FlMsgNumberOfDiagramsSaved {
+            get {
+                return ResourceManager.GetString("FlMsgNumberOfDiagramsSaved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Number of Pasted New Moves.
         /// </summary>
         public static string FlMsgPastedMovesCount {

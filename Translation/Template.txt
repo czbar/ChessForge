@@ -2905,7 +2905,9 @@ FlMsgChapterImported=
 #english: FlMsgChaptersImported=Chapters Imported
 FlMsgChaptersImported=
 
-
+#description: Flash message: Number of diagrams saved
+#english: FlMsgNumberOfDiagramsSaved=Number of diagrams saved
+FlMsgNumberOfDiagramsSaved=
 
 ##################################
 #

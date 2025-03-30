@@ -2905,7 +2905,9 @@ FlMsgChapterImported=Pozycje zaimportowane do nowego rozdziału
 #english: FlMsgChaptersImported=Chapters Imported
 FlMsgChaptersImported=Rozdziały zostały zaimportowane
 
-
+#description: Flash message: Number of diagrams saved
+#english: FlMsgNumberOfDiagramsSaved=Number of diagrams saved
+FlMsgNumberOfDiagramsSaved=Liczba zapisanych diagramów
 
 ##################################
 #
