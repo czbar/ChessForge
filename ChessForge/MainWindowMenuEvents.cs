@@ -2019,58 +2019,33 @@ namespace ChessForge
 
         /// <summary>
         /// Saves the diagram as an image.
+        /// The request is coming from the main board menu.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void UiMn_SaveDiagramMainBoard_Click(object sender, RoutedEventArgs e)
+        {
+            SaveDiagram.SaveDiagramAsImage(true);
+        }
+
+        /// <summary>
+        /// Saves the diagram as an image.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         public void UiMn_SaveDiagram_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                TreeNode nd = GetSelectedNode();
-                if (nd != null)
-                {
-                    if ((Keyboard.Modifiers & ModifierKeys.Shift) != 0)
-                    {
-                        Configuration.DoNotAskDiagramImageSize = false;
-                    }
-
-                    bool isFlipped = false;
-                    if (nd.IsDiagram)
-                    {
-                        isFlipped = nd.IsDiagramFlipped;
-                    }
-                    else
-                    {
-                        isFlipped = MainChessBoard.IsFlipped;
-                    }
-                    SaveDiagram.SaveAsImage(nd, isFlipped);
-                }
-            }
-            catch (Exception ex)
-            {
-                AppLog.Message("UiMn_SaveDiagram_Click()", ex);
-            }
+            SaveDiagram.SaveDiagramAsImage(false);
         }
 
         /// <summary>
-        /// Determines the currently selected node whether it is in the ActiveTreeView
-        /// or Intro and ActiveTreeView is null.
+        /// Saves all diagrams as images.
         /// </summary>
-        /// <returns></returns>
-        private TreeNode GetSelectedNode()
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void UiMn_SaveDiagrams_Click(object sender, RoutedEventArgs e)
         {
-            TreeNode nd = null;
-
-            if (ActiveTreeView != null)
-            {
-                nd = ActiveTreeView.GetSelectedNode();
-            }
-            else if (AppState.ActiveTab == TabViewType.INTRO && _introView != null)
-            {
-                nd = _introView.Intro.Tree.SelectedNode;
-            }
-
-            return nd;
+            SaveDiagram.SaveDiagramsAsImages();
         }
 
         /// <summary>
@@ -2115,7 +2090,6 @@ namespace ChessForge
         {
             CreateNewModelGame();
         }
-
 
         /// <summary>
         /// Copy FEN of the selected position to the clipboard.
@@ -2206,7 +2180,6 @@ namespace ChessForge
         {
             ActiveTreeView.CopyFenToClipboard();
         }
-
 
         /// <summary>
         /// Copies a header from a GameHeader object to the Tree.
