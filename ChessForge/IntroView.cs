@@ -507,6 +507,7 @@ namespace ChessForge
                                 menuItem.Visibility = !isDiagram ? Visibility.Visible : Visibility.Collapsed;
                                 break;
                             case "UiCmiEditDiagram":
+                            case "UiCmiSaveDiagram":
                                 menuItem.Visibility = isDiagram && nd != null ? Visibility.Visible : Visibility.Collapsed;
                                 break;
                             case "UiCmiFlipDiagram":

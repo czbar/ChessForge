@@ -559,6 +559,7 @@
                                         <Separator></Separator>
                                         <MenuItem x:Name="UiCmiInsertDiagram" Header="{x:Static p:Resources.InsertDiagram}" Click="UiCmiInsertDiagram_Click"  />
                                         <MenuItem x:Name="UiCmiEditDiagram" Header="{x:Static p:Resources.EditDiagram}" Click="UiCmiEditDiagram_Click"  />
+                                        <MenuItem x:Name="UiCmiSaveDiagram" Header="{x:Static p:Resources.SaveDiagramAsImage}" Click="UiMn_SaveDiagram_Click"  />
                                         <MenuItem x:Name="UiCmiInsertHyperlink" Header="{x:Static p:Resources.InsertHyperlink}"  Click="UiCmiInsertHyperlink_Click"  />
                                         <MenuItem x:Name="UiCmiEditHyperlink" Header="{x:Static p:Resources.EditHyperlink}" Click="UiCmiEditHyperlink_Click"   />
                                         <MenuItem x:Name="UiCmiFlipDiagram" Header="{x:Static p:Resources.FlipBoard}" Click="UiCmiFlipDiagram_Click"  />
