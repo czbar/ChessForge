@@ -1171,7 +1171,9 @@ namespace ChessForge
             Paragraph nextPara = tp.Paragraph;
 
             // need copy of the node as we may need the original for a move Run
-            TreeNode node = nd.CloneMe(true);
+            TreeNode node = nd.CloneMe(true);            
+            node.IsDiagram = true;
+
             int node_id = AddNode(node);
             _selectedNode = node;
 
@@ -1219,6 +1221,7 @@ namespace ChessForge
             {
                 flipState = !flipState;
             }
+            nd.IsDiagramFlipped = flipState;
 
             CreateDiagramElements(para, diag, nd, flipState);
             DiagramList.Add(diag);
