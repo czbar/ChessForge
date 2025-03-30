@@ -51,6 +51,18 @@ namespace ChessPosition
     };
 
     /// <summary>
+    /// Flags to use e.g. when scoping certain operations.
+    /// </summary>
+    public enum ViewTypeScope
+    {
+        NONE = 0,
+        INTRO = 0x01,
+        STUDY = 0x02,
+        MODEL_GAMES = 0x04,
+        EXERCISES = 0x08,
+    };
+
+    /// <summary>
     /// Possible actions on a list of articles.
     /// </summary>
     public enum ArticlesAction
