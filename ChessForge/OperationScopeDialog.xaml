@@ -6,24 +6,25 @@
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
         xmlns:p="clr-namespace:ChessForge.Properties"
-        Title="{x:Static p:Resources.ScopeForDeleteComments}" Height="230" Width="440">
+        Title="{x:Static p:Resources.ScopeForDeleteComments}" Height="255" Width="440">
     <Grid>
         <Label x:Name="UiLblScopeInfo" Content="{x:Static p:Resources.OperationScope}" HorizontalAlignment="Center" Margin="0,0,0,0" Padding="20,0,20,0" VerticalAlignment="Top"/>
-        <GroupBox Header="{x:Static p:Resources.Scope}" Margin="10,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Height="105">
+        <GroupBox Header="{x:Static p:Resources.Scope}" Margin="10,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Height="130">
             <StackPanel>
-                <RadioButton x:Name="UiRbCurrentItem" Content="{x:Static p:Resources.CurrentItem}" HorizontalAlignment="Left" Margin="15,10,0,0" VerticalAlignment="Top" Checked="UiRbCurrentItem_Checked"/>
-                <RadioButton x:Name="UiRbCurrentChapter" Content="{x:Static p:Resources.CurrentChapter}" HorizontalAlignment="Left" Margin="15,10,0,0" VerticalAlignment="Top" Checked="UiRbCurrentChapter_Checked"/>
-                <RadioButton x:Name="UiRbWorkbook" Content="{x:Static p:Resources.EntireWorkbook}" HorizontalAlignment="Left" Margin="15,10,0,0" VerticalAlignment="Top" Checked="UiRbWorkbook_Checked"/>
+                <RadioButton x:Name="UiRbCurrentItem" Content="{x:Static p:Resources.CurrentItem}" HorizontalAlignment="Left" Margin="15,18,0,0" VerticalAlignment="Top" Checked="UiRbCurrentItem_Checked"/>
+                <RadioButton x:Name="UiRbCurrentChapter" Content="{x:Static p:Resources.CurrentChapter}" HorizontalAlignment="Left" Margin="15,12,0,0" VerticalAlignment="Top" Checked="UiRbCurrentChapter_Checked"/>
+                <RadioButton x:Name="UiRbWorkbook" Content="{x:Static p:Resources.EntireWorkbook}" HorizontalAlignment="Left" Margin="15,12,0,0" VerticalAlignment="Top" Checked="UiRbWorkbook_Checked"/>
             </StackPanel>
         </GroupBox>
-        <GroupBox Header="{x:Static p:Resources.ItemsType}" Margin="0,30,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="200" Height="105">
+        <GroupBox Header="{x:Static p:Resources.ItemsType}" Margin="0,30,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="200" Height="130">
             <StackPanel>
+                <CheckBox x:Name="UiCbIntro" Content="{x:Static p:Resources.Intros}" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top"/>
                 <CheckBox x:Name="UiCbStudy" Content="{x:Static p:Resources.Studies}" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top"/>
                 <CheckBox x:Name="UiCbGames" Content="{x:Static p:Resources.Games}" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top"/>
                 <CheckBox x:Name="UiCbExercises" Content="{x:Static p:Resources.Exercises}" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top"/>
             </StackPanel>
         </GroupBox>
-        <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Ok}" IsDefault="True" HorizontalAlignment="Center" Margin="-130,155,0,0" VerticalAlignment="Top" Width="100" Click="UiBtnOk_Click" />
-        <Button x:Name="UiBtnCancel" Content="{x:Static p:Resources.Cancel}" IsCancel="True" HorizontalAlignment="Center" Margin="130,155,0,0" VerticalAlignment="Top" Width="100"/>
+        <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Ok}" IsDefault="True" HorizontalAlignment="Center" Margin="-130,180,0,0" VerticalAlignment="Top" Width="100" Click="UiBtnOk_Click" />
+        <Button x:Name="UiBtnCancel" Content="{x:Static p:Resources.Cancel}" IsCancel="True" HorizontalAlignment="Center" Margin="130,180,0,0" VerticalAlignment="Top" Width="100"/>
     </Grid>
 </Window>
