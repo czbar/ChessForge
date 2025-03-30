@@ -2036,10 +2036,16 @@ namespace ChessForge
                     TreeNode nd = AppState.MainWin.ActiveTreeView.GetSelectedNode();
                     if (nd != null)
                     {
+                        bool isFlipped = false;
                         if (nd.IsDiagram)
                         {
-                            SaveDiagram.SaveAsImage(nd, nd.IsDiagramFlipped);
+                            isFlipped = nd.IsDiagramFlipped;
                         }
+                        else
+                        {
+                            isFlipped = MainChessBoard.IsFlipped;
+                        }
+                        SaveDiagram.SaveAsImage(nd, isFlipped);
                     }
                 }
                 catch (Exception ex)
