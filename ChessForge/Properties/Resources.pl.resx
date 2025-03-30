@@ -702,6 +702,9 @@
   <data name="MsgClipboardContainsPgn" xml:space="preserve">
     <value>Zawartość schowka</value>
   </data>
+  <data name="MsgNoDiagramsFound" xml:space="preserve">
+    <value>Nie znaleziono żadnych diagramów</value>
+  </data>
   <data name="DlgTitleWorkbookOptions" xml:space="preserve">
     <value>Opcje Podręcznika</value>
   </data>
@@ -722,6 +725,21 @@
   </data>
   <data name="RestoreFontDefaults" xml:space="preserve">
     <value>Przywróć Domyślne Wartości</value>
+  </data>
+  <data name="AssignECO" xml:space="preserve">
+    <value>Przypisz kody ECO</value>
+  </data>
+  <data name="SaveDiagramsAsImages" xml:space="preserve">
+    <value>Zapisz diagramy jako obrazy</value>
+  </data>
+  <data name="MergeChapters" xml:space="preserve">
+    <value>Połącz rozdziały</value>
+  </data>
+  <data name="ManageChapter" xml:space="preserve">
+    <value>Organizuj Rozdział</value>
+  </data>
+  <data name="SplitChapterMenu" xml:space="preserve">
+    <value>Podziel Rozdział</value>
   </data>
   <data name="Tools" xml:space="preserve">
     <value>Narzędzia</value>
@@ -747,20 +765,8 @@
   <data name="DeleteEngineEvals" xml:space="preserve">
     <value>Usuń oceny silnika</value>
   </data>
-  <data name="AssignECO" xml:space="preserve">
-    <value>Przypisz kody ECO</value>
-  </data>
   <data name="FindGames" xml:space="preserve">
     <value>Znajdź partie...</value>
-  </data>
-  <data name="MergeChapters" xml:space="preserve">
-    <value>Połącz rozdziały</value>
-  </data>
-  <data name="ManageChapter" xml:space="preserve">
-    <value>Organizuj Rozdział</value>
-  </data>
-  <data name="SplitChapterMenu" xml:space="preserve">
-    <value>Podziel Rozdział</value>
   </data>
   <data name="RemoveDuplicates" xml:space="preserve">
     <value>Usuń duplikaty...</value>

@@ -4885,6 +4885,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No diagrams have been found.
+        /// </summary>
+        public static string MsgNoDiagramsFound {
+            get {
+                return ResourceManager.GetString("MsgNoDiagramsFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No duplicates found..
         /// </summary>
         public static string MsgNoDuplicatesFound {
@@ -6430,6 +6439,15 @@ namespace ChessForge.Properties {
         public static string SaveDiagramAsImage {
             get {
                 return ResourceManager.GetString("SaveDiagramAsImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Diagrams as Pictures.
+        /// </summary>
+        public static string SaveDiagramsAsImages {
+            get {
+                return ResourceManager.GetString("SaveDiagramsAsImages", resourceCulture);
             }
         }
         

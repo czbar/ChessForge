@@ -702,6 +702,9 @@
   <data name="MsgClipboardContainsPgn" xml:space="preserve">
     <value>Clipboard's content</value>
   </data>
+  <data name="MsgNoDiagramsFound" xml:space="preserve">
+    <value>No diagrams have been found</value>
+  </data>
   <data name="DlgTitleWorkbookOptions" xml:space="preserve">
     <value>Workbook Options</value>
   </data>
@@ -722,6 +725,21 @@
   </data>
   <data name="RestoreFontDefaults" xml:space="preserve">
     <value>Restore Font Defaults</value>
+  </data>
+  <data name="AssignECO" xml:space="preserve">
+    <value>Assign ECOs</value>
+  </data>
+  <data name="SaveDiagramsAsImages" xml:space="preserve">
+    <value>Save Diagrams as Pictures</value>
+  </data>
+  <data name="MergeChapters" xml:space="preserve">
+    <value>Merge Chapters</value>
+  </data>
+  <data name="ManageChapter" xml:space="preserve">
+    <value>Manage Chapter</value>
+  </data>
+  <data name="SplitChapterMenu" xml:space="preserve">
+    <value>Split Chapter</value>
   </data>
   <data name="Tools" xml:space="preserve">
     <value>Tools</value>
@@ -747,20 +765,8 @@
   <data name="DeleteEngineEvals" xml:space="preserve">
     <value>Delete Engine Evaluations...</value>
   </data>
-  <data name="AssignECO" xml:space="preserve">
-    <value>Assign ECOs</value>
-  </data>
   <data name="FindGames" xml:space="preserve">
     <value>Find Games...</value>
-  </data>
-  <data name="MergeChapters" xml:space="preserve">
-    <value>Merge Chapters</value>
-  </data>
-  <data name="ManageChapter" xml:space="preserve">
-    <value>Manage Chapter</value>
-  </data>
-  <data name="SplitChapterMenu" xml:space="preserve">
-    <value>Split Chapter</value>
   </data>
   <data name="RemoveDuplicates" xml:space="preserve">
     <value>Remove Duplicates...</value>

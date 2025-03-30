@@ -663,7 +663,7 @@ Save=
 SaveAs=
 
 #description: Context menu to save a diagram as an image 
-#english: SaveDiagramAsImage= Save Diagram as Picture...
+#english: SaveDiagramAsImage=Save Diagram as Picture...
 SaveDiagramAsImage=
 
 #description: Export
@@ -851,6 +851,10 @@ MsgTitlePositionSearch=
 #english: MsgClipboardContainsPgn=Clipboard's content
 MsgClipboardContainsPgn=
 
+#description: Message: No diagrams found.
+#english: MsgNoDiagramsFound=No diagrams have been found
+MsgNoDiagramsFound=
+
 #description: Workbook Options dialog title
 #english: DlgTitleWorkbookOptions=Workbook Options
 DlgTitleWorkbookOptions=
@@ -878,6 +882,31 @@ UseVariableFontSize=
 #description: Restore font size defaults
 #english: RestoreFontDefaults=Restore Font Defaults
 RestoreFontDefaults=
+
+###########################
+#
+# Header: MAIN MENU: Chapter
+#
+
+#description: Assign ECOs
+#english: AssignECO=Assign ECOs
+AssignECO=
+
+#description: Save diagrams as an image 
+#english: SaveDiagramsAsImages=Save Diagrams as Pictures
+SaveDiagramsAsImages=
+
+#description: Allows the user to merge multiple chapters into one
+#english: MergeChapters=Merge Chapters
+MergeChapters=
+
+#description: Manage Chapter
+#english: ManageChapter=Manage Chapter
+ManageChapter=
+
+#description: Split Chapter
+#english: SplitChapterMenu=Split Chapter
+SplitChapterMenu=
 
 
 ###########################
@@ -918,25 +947,9 @@ StripComments=
 #english: DeleteEngineEvals=Delete Engine Evaluations...
 DeleteEngineEvals=
 
-#description: Delete all engine evals
-#english: AssignECO=Assign ECOs
-AssignECO=
-
 #description: Find Games
 #english: FindGames=Find Games...
 FindGames=
-
-#description: Allows the user to merge multiple chapters into one
-#english: MergeChapters=Merge Chapters
-MergeChapters=
-
-#description: Manage Chapter
-#english: ManageChapter=Manage Chapter
-ManageChapter=
-
-#description: Split Chapter
-#english: SplitChapterMenu=Split Chapter
-SplitChapterMenu=
 
 #description: Remove duplicates
 #english: RemoveDuplicates=Remove Duplicates...
