@@ -20,6 +20,8 @@ namespace GameTree
         public const string XAML_FEN = "fen";
         public const string XAML_CIRCLES = "csl";
         public const string XAML_ARROWS = "cal";
+        public const string XAML_IS_DIAGRAM = "diag";
+        public const string XAML_IS_DIAGRAM_FLIPPED = "diag_flip";
 
         // ChessBase diagram command
         public const string CHESS_BASE_DIAGRAM = "[#]";

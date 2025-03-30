@@ -698,6 +698,12 @@ namespace GameTree
                     case ChfCommands.XAML_ARROWS:
                         node.Arrows = val;
                         break;
+                    case ChfCommands.XAML_IS_DIAGRAM:
+                        node.IsDiagram = true;
+                        break;
+                    case ChfCommands.XAML_IS_DIAGRAM_FLIPPED:
+                        node.IsDiagramFlipped = true;
+                        break;
                 }
             }
         }
