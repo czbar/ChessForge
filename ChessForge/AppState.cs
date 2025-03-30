@@ -1942,11 +1942,7 @@ namespace ChessForge
                         _mainWin.UiMnciSepar_EvalPos.Visibility = Visibility.Collapsed;
                         _mainWin.UiMnciSepar_EvalLine.Visibility = Visibility.Collapsed;
 
-                        _mainWin.UiMncMainBoardSepar_2.Visibility = Visibility.Collapsed;
-
                         _mainWin.UiMnciReplay.Visibility = Visibility.Collapsed;
-
-                        _mainWin.UiMncMainBoardSepar_3.Visibility = Visibility.Collapsed;
 
                         _mainWin.UiMnciPlayEngine.Visibility = Visibility.Collapsed;
                         break;
