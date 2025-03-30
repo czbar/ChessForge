@@ -2024,35 +2024,53 @@ namespace ChessForge
         /// <param name="e"></param>
         public void UiMn_SaveDiagram_Click(object sender, RoutedEventArgs e)
         {
-            if (AppState.MainWin.ActiveTreeView != null)
+            try
             {
-                try
+                TreeNode nd = GetSelectedNode();
+                if (nd != null)
                 {
                     if ((Keyboard.Modifiers & ModifierKeys.Shift) != 0)
                     {
                         Configuration.DoNotAskDiagramImageSize = false;
                     }
 
-                    TreeNode nd = AppState.MainWin.ActiveTreeView.GetSelectedNode();
-                    if (nd != null)
+                    bool isFlipped = false;
+                    if (nd.IsDiagram)
                     {
-                        bool isFlipped = false;
-                        if (nd.IsDiagram)
-                        {
-                            isFlipped = nd.IsDiagramFlipped;
-                        }
-                        else
-                        {
-                            isFlipped = MainChessBoard.IsFlipped;
-                        }
-                        SaveDiagram.SaveAsImage(nd, isFlipped);
+                        isFlipped = nd.IsDiagramFlipped;
                     }
-                }
-                catch (Exception ex)
-                {
-                    AppLog.Message("UiMn_SaveDiagram_Click()", ex);
+                    else
+                    {
+                        isFlipped = MainChessBoard.IsFlipped;
+                    }
+                    SaveDiagram.SaveAsImage(nd, isFlipped);
                 }
             }
+            catch (Exception ex)
+            {
+                AppLog.Message("UiMn_SaveDiagram_Click()", ex);
+            }
+        }
+
+        /// <summary>
+        /// Determines the currently selected node whether it is in the ActiveTreeView
+        /// or Intro and ActiveTreeView is null.
+        /// </summary>
+        /// <returns></returns>
+        private TreeNode GetSelectedNode()
+        {
+            TreeNode nd = null;
+
+            if (ActiveTreeView != null)
+            {
+                nd = ActiveTreeView.GetSelectedNode();
+            }
+            else if (AppState.ActiveTab == TabViewType.INTRO && _introView != null)
+            {
+                nd = _introView.Intro.Tree.SelectedNode;
+            }
+
+            return nd;
         }
 
         /// <summary>
