@@ -169,7 +169,7 @@ namespace ChessForge
         /// <summary>
         /// Whether a tab with an active Tree View is currently open.
         /// </summary>
-        /// <param name="ignoreActiveTree">If true, the function will ignore the stated of the Active Tree.
+        /// <param name="ignoreActiveTree">If true, the function will ignore the state of the Active Tree.
         /// Otherwise, it will return false if the ActiveTree is null. </param>
         /// <returns></returns>
         public static bool IsTreeViewTabActive(bool ignoreActiveTree = false)
