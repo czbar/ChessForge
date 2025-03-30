@@ -279,6 +279,7 @@
                                 <Separator x:Name="UiMncMainBoardSepar_2" />
                                 <MenuItem x:Name="UiMnciBookmarkPosition" Header="{x:Static p:Resources.BookmarkThisPosition}" Click="UiMnMarkBookmark_Click" />
                                 <MenuItem x:Name="UiMnciDeleteBookmark" Visibility="Collapsed" Header="{x:Static p:Resources.DeleteThisBookmark}" Click="UiMnciDeleteBookmark_Click" />
+                                <MenuItem x:Name="UiMnciSaveDiagram" Visibility="Visible" Header="{x:Static p:Resources.SaveDiagramAsImage}" Click="UiMn_SaveDiagram_Click" />
                                 <Separator x:Name="UiMncMainBoardSepar_4" />
                                 <MenuItem x:Name="UiMnciReplay" Header="{x:Static p:Resources.Replay}"  Click="UiMnReplayLine_Clicked"/>
                                 <Separator x:Name="UiMncMainBoardSepar_3" />
