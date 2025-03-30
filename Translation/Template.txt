@@ -125,6 +125,10 @@ Chapters=
 #english: Intro=Intro
 Intro=
 
+#description: Intros
+#english: Intros=Intros
+Intros=
+
 #description: Study Tree
 #english: Study=Study
 Study=

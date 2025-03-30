@@ -198,6 +198,9 @@
   <data name="Intro" xml:space="preserve">
     <value>Wstęp</value>
   </data>
+  <data name="Intros" xml:space="preserve">
+    <value>Wstępy</value>
+  </data>
   <data name="Study" xml:space="preserve">
     <value>Teoria</value>
   </data>

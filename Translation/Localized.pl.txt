@@ -125,6 +125,10 @@ Chapters=Rozdziały
 #english: Intro=Intro
 Intro=Wstęp
 
+#description: Intros
+#english: Intros=Intros
+Intros=Wstępy
+
 #description: Study Tree
 #english: Study=Study
 Study=Teoria

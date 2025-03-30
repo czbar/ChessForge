@@ -98,6 +98,9 @@ Chapters=Chapters
 #Intro
 Intro=Intro
 
+#Intros
+Intros=Intros
+
 #Study Tree
 Study=Study
 
