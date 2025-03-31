@@ -239,6 +239,16 @@ namespace ChessForge
         public static int DiagramImageSize = 240;
 
         /// <summary>
+        /// The number of the color set to use in the diagram image.
+        /// </summary>
+        public static int DiagramImageColors = 1;
+
+        /// <summary>
+        /// The width of the border around the diagram image.
+        /// </summary>
+        public static int DiagramImageBorderWidth = 1;
+
+        /// <summary>
         /// Time given to the engine to evaluate a single move
         /// (in milliseconds)
         /// </summary>
@@ -630,6 +640,8 @@ namespace ChessForge
         private const string CFG_FONT_SIZE_DIFF = "FontSizeDiff";
         private const string CFG_AUTO_SAVE_FREQ = "AutoSaveFrequency";
         private const string CFG_DIAGRAM_IMAGE_SIZE = "DiagramImageSize";
+        private const string CFG_DIAGRAM_IMAGE_COLORS = "DiagramImageColors";
+        private const string CFG_DIAGRAM_IMAGE_BORDER_WIDTH = "DiagramImageBorderWidth";
 
         /// <summary>
         /// PGN export configuration.
@@ -815,6 +827,8 @@ namespace ChessForge
                 sb.Append(CFG_FONT_SIZE_DIFF + "=" + FontSizeDiff.ToString() + Environment.NewLine);
                 sb.Append(CFG_AUTO_SAVE_FREQ + "=" + AutoSaveFrequency.ToString() + Environment.NewLine);
                 sb.Append(CFG_DIAGRAM_IMAGE_SIZE + "=" + DiagramImageSize.ToString() + Environment.NewLine);
+                sb.Append(CFG_DIAGRAM_IMAGE_COLORS + "=" + DiagramImageColors.ToString() + Environment.NewLine);
+                sb.Append(CFG_DIAGRAM_IMAGE_BORDER_WIDTH + "=" + DiagramImageBorderWidth.ToString() + Environment.NewLine);
 
                 sb.Append(CFG_VIABLE_MOVE_CP_DIFF + "=" + ViableMoveCpDiff.ToString() + Environment.NewLine);
                 sb.Append(CFG_BLUNDER_DET_EVAL_DROP + "=" + BlunderDetectEvalDrop.ToString() + Environment.NewLine);
@@ -1164,6 +1178,12 @@ namespace ChessForge
                             break;
                         case CFG_DIAGRAM_IMAGE_SIZE:
                             int.TryParse(value, out DiagramImageSize);
+                            break;
+                        case CFG_DIAGRAM_IMAGE_COLORS:
+                            int.TryParse(value, out DiagramImageColors);
+                            break;
+                        case CFG_DIAGRAM_IMAGE_BORDER_WIDTH:
+                            int.TryParse(value, out DiagramImageBorderWidth);
                             break;
                         case CFG_BLUNDER_DET_EVAL_DROP:
                             uint.TryParse(value, out BlunderDetectEvalDrop);

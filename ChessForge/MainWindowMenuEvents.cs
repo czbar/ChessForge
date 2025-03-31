@@ -2019,29 +2019,33 @@ namespace ChessForge
 
         /// <summary>
         /// Saves the diagram as an image.
+        /// The request is coming from the main board menu.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void UiMn_SaveDiagramMainBoard_Click(object sender, RoutedEventArgs e)
+        {
+            SaveDiagram.SaveDiagramAsImage(true);
+        }
+
+        /// <summary>
+        /// Saves the diagram as an image.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         public void UiMn_SaveDiagram_Click(object sender, RoutedEventArgs e)
         {
-            if (AppState.MainWin.ActiveTreeView != null)
-            {
-                try
-                {
-                    TreeNode nd = AppState.MainWin.ActiveTreeView.GetSelectedNode();
-                    if (nd != null)
-                    {
-                        if (nd.IsDiagram)
-                        {
-                            SaveDiagram.SaveAsImage(nd, nd.IsDiagramFlipped);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    AppLog.Message("UiMn_SaveDiagram_Click()", ex);
-                }
-            }
+            SaveDiagram.SaveDiagramAsImage(false);
+        }
+
+        /// <summary>
+        /// Saves all diagrams as images.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void UiMn_SaveDiagrams_Click(object sender, RoutedEventArgs e)
+        {
+            SaveDiagram.SaveDiagramsAsImages();
         }
 
         /// <summary>
@@ -2086,7 +2090,6 @@ namespace ChessForge
         {
             CreateNewModelGame();
         }
-
 
         /// <summary>
         /// Copy FEN of the selected position to the clipboard.
@@ -2177,7 +2180,6 @@ namespace ChessForge
         {
             ActiveTreeView.CopyFenToClipboard();
         }
-
 
         /// <summary>
         /// Copies a header from a GameHeader object to the Tree.

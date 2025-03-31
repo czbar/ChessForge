@@ -517,6 +517,16 @@ namespace ChessForge
                     sb.Append(ChfCommands.XAML_CIRCLES + "=" + nd.Circles + " ");
                 }
 
+                if (nd.IsDiagram)
+                {
+                    sb.Append(ChfCommands.XAML_IS_DIAGRAM + "=1" + " ");
+                }
+
+                if (nd.IsDiagramFlipped)
+                {
+                    sb.Append(ChfCommands.XAML_IS_DIAGRAM_FLIPPED + "=1" + " ");
+                }
+
                 return sb.ToString();
             }
             else

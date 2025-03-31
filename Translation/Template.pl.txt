@@ -97,6 +97,10 @@ Min=Min
 #english: Max=Max
 Max=Maks
 
+#description: Colors
+#english: Colors=Colors
+Colors=Kolory
+
 #description: Overwrite
 #english: Overwrite=Overwrite
 Overwrite=Nadpisz
@@ -120,6 +124,10 @@ Chapters=Rozdziały
 #description: Intro
 #english: Intro=Intro
 Intro=Wstęp
+
+#description: Intros
+#english: Intros=Intros
+Intros=Wstępy
 
 #description: Study Tree
 #english: Study=Study
@@ -655,7 +663,7 @@ Save=Zapisz
 SaveAs=Zapisz $0 jako ...
 
 #description: Context menu to save a diagram as an image 
-#english: SaveDiagramAsImage= Save Diagram as Picture...
+#english: SaveDiagramAsImage=Save Diagram as Picture...
 SaveDiagramAsImage= Zapisz diagram jako obraz...
 
 #description: Export
@@ -843,6 +851,10 @@ MsgTitlePositionSearch=Wyszukiwanie Pozycji
 #english: MsgClipboardContainsPgn=Clipboard's content
 MsgClipboardContainsPgn=Zawartość schowka
 
+#description: Message: No diagrams found.
+#english: MsgNoDiagramsFound=No diagrams have been found
+MsgNoDiagramsFound=Nie znaleziono żadnych diagramów
+
 #description: Workbook Options dialog title
 #english: DlgTitleWorkbookOptions=Workbook Options
 DlgTitleWorkbookOptions=Opcje Podręcznika
@@ -870,6 +882,31 @@ UseVariableFontSize=Użyj Zmienną Czcionkę
 #description: Restore font size defaults
 #english: RestoreFontDefaults=Restore Font Defaults
 RestoreFontDefaults=Przywróć Domyślne Wartości
+
+###########################
+#
+# Header: MAIN MENU: Chapter
+#
+
+#description: Assign ECOs
+#english: AssignECO=Assign ECOs
+AssignECO=Przypisz kody ECO
+
+#description: Save diagrams as an image 
+#english: SaveDiagramsAsImages=Save Diagrams as Pictures
+SaveDiagramsAsImages=Zapisz diagramy jako obrazy
+
+#description: Allows the user to merge multiple chapters into one
+#english: MergeChapters=Merge Chapters
+MergeChapters=Połącz rozdziały
+
+#description: Manage Chapter
+#english: ManageChapter=Manage Chapter
+ManageChapter=Organizuj Rozdział
+
+#description: Split Chapter
+#english: SplitChapterMenu=Split Chapter
+SplitChapterMenu=Podziel Rozdział
 
 
 ###########################
@@ -910,25 +947,9 @@ StripComments=Usuń komentarze...
 #english: DeleteEngineEvals=Delete Engine Evaluations...
 DeleteEngineEvals=Usuń oceny silnika
 
-#description: Delete all engine evals
-#english: AssignECO=Assign ECOs
-AssignECO=Przypisz kody ECO
-
 #description: Find Games
 #english: FindGames=Find Games...
 FindGames=Znajdź partie...
-
-#description: Allows the user to merge multiple chapters into one
-#english: MergeChapters=Merge Chapters
-MergeChapters=Połącz rozdziały
-
-#description: Manage Chapter
-#english: ManageChapter=Manage Chapter
-ManageChapter=Organizuj Rozdział
-
-#description: Split Chapter
-#english: SplitChapterMenu=Split Chapter
-SplitChapterMenu=Podziel Rozdział
 
 #description: Remove duplicates
 #english: RemoveDuplicates=Remove Duplicates...
@@ -1205,6 +1226,9 @@ EgCentipawnAccuracy=maksymalne odchylenie od najlepszego ruchu wynosi
 #english: SideSize=Height and Width in Pixels
 SideSize=Wysokość i szerokość w pikselach
 
+#description: Border width
+#english: ImageBorderWidth=Border Width
+ImageBorderWidth=Szerokość ramki
 
 #######################################
 #
@@ -2881,7 +2905,9 @@ FlMsgChapterImported=Pozycje zaimportowane do nowego rozdziału
 #english: FlMsgChaptersImported=Chapters Imported
 FlMsgChaptersImported=Rozdziały zostały zaimportowane
 
-
+#description: Flash message: Number of diagrams saved
+#english: FlMsgNumberOfDiagramsSaved=Number of diagrams saved
+FlMsgNumberOfDiagramsSaved=Liczba zapisanych diagramów
 
 ##################################
 #

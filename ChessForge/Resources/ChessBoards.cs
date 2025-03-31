@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using static ChessForge.ChessBoards;
 
@@ -30,9 +26,27 @@ namespace ChessForge
             GREY = 8
         }
 
+        /// <summary>
+        /// Supported chessboard sizes define by the square size.
+        /// </summary>
+        public enum SquareSize
+        {
+            SIZE_15 = 15,
+            SIZE_18 = 18,
+            SIZE_20 = 20,
+            SIZE_30 = 30,
+            SIZE_45 = 45,
+            SIZE_60 = 60,
+            SIZE_80 = 80,
+        }
+
         public static BitmapImage ChessBoardBlue = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessBoardBlue.png", UriKind.RelativeOrAbsolute));
         public static BitmapImage ChessBoardBlueSmall = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessBoardBlueSmall.png", UriKind.RelativeOrAbsolute));
         public static BitmapImage ChessBoardBlueIcon = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessBoardBlueIcon.png", UriKind.RelativeOrAbsolute));
+
+        public static BitmapImage ChessBoardVistula = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessBoardVistula.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage ChessBoardVistulaSmall = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessBoardVistulaSmall.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage ChessBoardVistulaIcon = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessBoardVistulaIcon.png", UriKind.RelativeOrAbsolute));
 
         public static BitmapImage ChessBoardLightBlue = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessBoardLightBlue.png", UriKind.RelativeOrAbsolute));
         public static BitmapImage ChessBoardLightBlueSmall = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessBoardLightBlueSmall.png", UriKind.RelativeOrAbsolute));
@@ -44,6 +58,8 @@ namespace ChessForge
 
         public static BitmapImage ChessBoardGrey = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessBoardGrey.png", UriKind.RelativeOrAbsolute));
         public static BitmapImage ChessBoardGreySmall = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessBoardGreySmall.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage ChessBoardGrey_160 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessboardsOtherSizes/ChessBoardGrey_160.png", UriKind.RelativeOrAbsolute));
+        public static BitmapImage ChessBoardGrey_144 = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessboardsOtherSizes/ChessBoardGrey_144.png", UriKind.RelativeOrAbsolute));
         public static BitmapImage ChessBoardGreyIcon = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessBoardGreyIcon.png", UriKind.RelativeOrAbsolute));
 
         public static BitmapImage ChessBoardGreen = new BitmapImage(new Uri("pack://application:,,,/Resources/Images/ChessBoardGreen.png", UriKind.RelativeOrAbsolute));

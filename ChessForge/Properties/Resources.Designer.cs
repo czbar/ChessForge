@@ -1231,6 +1231,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Colors.
+        /// </summary>
+        public static string Colors {
+            get {
+                return ResourceManager.GetString("Colors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Comment.
         /// </summary>
         public static string Comment {
@@ -3373,7 +3382,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Diagram image saved to a file..
+        ///   Looks up a localized string similar to Diagram image saved to.
         /// </summary>
         public static string FlMsgDiagramImageSaved {
             get {
@@ -3441,6 +3450,15 @@ namespace ChessForge.Properties {
         public static string FlMsgItemsRemoved {
             get {
                 return ResourceManager.GetString("FlMsgItemsRemoved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of diagrams saved.
+        /// </summary>
+        public static string FlMsgNumberOfDiagramsSaved {
+            get {
+                return ResourceManager.GetString("FlMsgNumberOfDiagramsSaved", resourceCulture);
             }
         }
         
@@ -3913,6 +3931,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Border Width.
+        /// </summary>
+        public static string ImageBorderWidth {
+            get {
+                return ResourceManager.GetString("ImageBorderWidth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Image files.
         /// </summary>
         public static string ImageFiles {
@@ -4134,6 +4161,15 @@ namespace ChessForge.Properties {
         public static string Intro {
             get {
                 return ResourceManager.GetString("Intro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Intros.
+        /// </summary>
+        public static string Intros {
+            get {
+                return ResourceManager.GetString("Intros", resourceCulture);
             }
         }
         
@@ -4854,6 +4890,15 @@ namespace ChessForge.Properties {
         public static string MsgNeedValidUrlOrEmpty {
             get {
                 return ResourceManager.GetString("MsgNeedValidUrlOrEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No diagrams have been found.
+        /// </summary>
+        public static string MsgNoDiagramsFound {
+            get {
+                return ResourceManager.GetString("MsgNoDiagramsFound", resourceCulture);
             }
         }
         
@@ -6403,6 +6448,15 @@ namespace ChessForge.Properties {
         public static string SaveDiagramAsImage {
             get {
                 return ResourceManager.GetString("SaveDiagramAsImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Diagrams as Pictures.
+        /// </summary>
+        public static string SaveDiagramsAsImages {
+            get {
+                return ResourceManager.GetString("SaveDiagramsAsImages", resourceCulture);
             }
         }
         

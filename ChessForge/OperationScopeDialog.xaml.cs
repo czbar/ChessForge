@@ -1,8 +1,5 @@
 ﻿using ChessPosition;
 using GameTree;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -20,7 +17,8 @@ namespace ChessForge
         public enum ScopedAction
         {
             DEFAULT,
-            ASSIGN_ECO
+            ASSIGN_ECO,
+            SAVE_DIAGRAM
         }
 
         /// <summary>
@@ -29,24 +27,14 @@ namespace ChessForge
         public ScopedAction Action;
 
         /// <summary>
+        /// The types of selected in this dialog.
+        /// </summary>
+        public ViewTypeScope ApplicableViews = ViewTypeScope.NONE;
+
+        /// <summary>
         /// The scope selected by the user.
         /// </summary>
         public OperationScope ApplyScope { get; set; }
-
-        /// <summary>
-        /// Whether to apply the operation to Study/Studies.
-        /// </summary>
-        public bool ApplyToStudies { get; set; }
-
-        /// <summary>
-        /// Whether to apply the operation to Model Games.
-        /// </summary>
-        public bool ApplyToGames { get; set; }
-
-        /// <summary>
-        /// Whether to apply the operation to Exercises.
-        /// </summary>
-        public bool ApplyToExercises { get; set; }
 
         // flags change in selection logic after the first radio button check
         private bool firstTimeCheck = true;
@@ -57,6 +45,14 @@ namespace ChessForge
         private bool _allowStudies
         {
             get => Action != ScopedAction.ASSIGN_ECO;
+        }
+
+        /// <summary>
+        /// Whether Intros should be shown at all
+        /// </summary>
+        private bool _allowIntros
+        {
+            get => Action == ScopedAction.SAVE_DIAGRAM;
         }
 
         /// <summary>
@@ -72,42 +68,18 @@ namespace ChessForge
 
             this.Title = title;
 
-            if (_allowStudies)
+            if (Action == ScopedAction.SAVE_DIAGRAM && (AppState.IsTreeViewTabActive() || AppState.ActiveTab == TabViewType.INTRO)
+                || 
+                AppState.Workbook.ActiveArticle != null &&
+                (AppState.Workbook.ActiveArticle.ContentType == GameData.ContentType.MODEL_GAME
+                || AppState.Workbook.ActiveArticle.ContentType == GameData.ContentType.EXERCISE))
             {
-                UiCbStudy.IsChecked = true;
-                UiCbGames.IsChecked = false;
-                UiCbExercises.IsChecked = false;
-
-                UiCbStudy.Visibility = Visibility.Visible;
-                if (AppState.MainWin.ActiveVariationTree == null)
-                {
-                    UiRbCurrentChapter.IsChecked = true;
-                }
-                else
-                {
-                    UiRbCurrentItem.IsChecked = true;
-                }
+                UiRbCurrentItem.IsChecked = true;
             }
             else
             {
-                UiCbStudy.Content = "   -   ";
-                UiCbStudy.IsChecked = false;
-                UiCbGames.IsChecked = true;
-                UiCbExercises.IsChecked = false;
-
-                UiCbStudy.IsEnabled = false;
-
-                if (AppState.Workbook.ActiveArticle != null &&
-                    (AppState.Workbook.ActiveArticle.ContentType == GameData.ContentType.MODEL_GAME
-                    || AppState.Workbook.ActiveArticle.ContentType == GameData.ContentType.EXERCISE))
-                {
-                    UiRbCurrentItem.IsChecked = true;
-                }
-                else
-                {
-                    UiRbCurrentItem.IsEnabled = false;
-                    UiRbCurrentChapter.IsChecked = true;
-                }
+                UiRbCurrentItem.IsEnabled = false;
+                UiRbCurrentChapter.IsChecked = true;
             }
 
             ApplyScope = OperationScope.NONE;
@@ -118,19 +90,22 @@ namespace ChessForge
         /// the one that corresponds to the passed itemType.
         /// </summary>
         /// <param name="itemType"></param>
-        private void ShowItemType(GameData.ContentType itemType, bool enabled)
+        private void CheckSingleItemType(GameData.ContentType itemType, bool enabled)
         {
-            if (!_allowStudies && itemType == GameData.ContentType.STUDY_TREE)
+            if (!_allowStudies && itemType == GameData.ContentType.STUDY_TREE
+                || !_allowIntros && itemType == GameData.ContentType.INTRO)
             {
                 return;
             }
 
-            UiCbGames.IsChecked = false;
-            UiCbExercises.IsChecked = false;
+            CheckAllItemTypes(false);
 
             CheckBox cb = null;
             switch (itemType)
             {
+                case GameData.ContentType.INTRO:
+                    cb = UiCbIntro;
+                    break;
                 case GameData.ContentType.STUDY_TREE:
                     cb = UiCbStudy;
                     break;
@@ -145,30 +120,22 @@ namespace ChessForge
             if (cb != null)
             {
                 cb.IsChecked = true;
-                cb.Visibility = Visibility.Visible;
-                cb.IsEnabled = enabled ? true : false;
+                cb.IsEnabled = enabled;
             }
         }
 
         /// <summary>
         /// Enables all itmes, shows or hides them,
-        /// sets singular or plural lable for games/exercises.
+        /// sets singular or plural labels for games/exercises.
         /// </summary>
-        /// <param name="showHide"></param>
+        /// <param name="enable"></param>
         /// <param name="plural"></param>
-        private void ShowEnableAllItemTypes(bool showHide, bool plural)
+        private void EnableAllItemTypes(bool enable, bool plural)
         {
-            UiCbStudy.IsEnabled = _allowStudies;
-            UiCbGames.IsEnabled = true;
-            UiCbExercises.IsEnabled = true;
-
-            UiCbStudy.Visibility = (showHide && _allowStudies) ? Visibility.Visible : Visibility.Hidden;
-            UiCbGames.Visibility = showHide ? Visibility.Visible : Visibility.Hidden;
-            UiCbExercises.Visibility = showHide ? Visibility.Visible : Visibility.Hidden;
-
-            //UiCbStudy.IsEnabled = (showHide && _allowStudies) ? true : false;
-            //UiCbGames.IsEnabled = showHide ? true : false;
-            //UiCbExercises.IsEnabled = showHide ? true : false;
+            UiCbIntro.IsEnabled = enable && _allowIntros;
+            UiCbStudy.IsEnabled = enable && _allowStudies;
+            UiCbGames.IsEnabled = enable ;
+            UiCbExercises.IsEnabled = enable;
 
             UiCbGames.Content = plural ? Properties.Resources.Games : Properties.Resources.Game;
             UiCbExercises.Content = plural ? Properties.Resources.Exercises : Properties.Resources.Exercise;
@@ -178,8 +145,9 @@ namespace ChessForge
         /// Checks or unchecks all check boxes.
         /// </summary>
         /// <param name="isChecked"></param>
-        private void CheckAll(bool isChecked)
+        private void CheckAllItemTypes(bool isChecked)
         {
+            UiCbIntro.IsChecked = isChecked && _allowIntros;
             UiCbStudy.IsChecked = isChecked && _allowStudies;
             UiCbGames.IsChecked = isChecked;
             UiCbExercises.IsChecked = isChecked;
@@ -203,15 +171,19 @@ namespace ChessForge
 
             if (AppState.MainWin.ActiveVariationTree == null)
             {
-                ShowItemType(GameData.ContentType.NONE, false);
-                ShowEnableAllItemTypes(false, true);
+                CheckSingleItemType(GameData.ContentType.NONE, false);
+                EnableAllItemTypes(false, true);
             }
             else
             {
-                ShowEnableAllItemTypes(false, false);
-                ShowItemType(AppState.MainWin.ActiveVariationTree.ContentType, false);
+                EnableAllItemTypes(false, false);
+                CheckSingleItemType(AppState.MainWin.ActiveVariationTree.ContentType, false);
             }
 
+            if (_allowIntros)
+            {
+                UiCbIntro.Content = Properties.Resources.Intro;
+            }
             if (_allowStudies)
             {
                 UiCbStudy.Content = Properties.Resources.Study;
@@ -225,14 +197,20 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiRbCurrentChapter_Checked(object sender, RoutedEventArgs e)
         {
-            ShowEnableAllItemTypes(true, true);
+            EnableAllItemTypes(true, true);
+
+            if (_allowIntros)
+            {
+                UiCbIntro.Content = Properties.Resources.Intro;
+            }
             if (_allowStudies)
             {
                 UiCbStudy.Content = Properties.Resources.Study;
             }
+
             if (firstTimeCheck)
             {
-                CheckAll(true);
+                CheckAllItemTypes(true);
                 firstTimeCheck = false;
             }
 
@@ -251,14 +229,19 @@ namespace ChessForge
         private void UiRbWorkbook_Checked(object sender, RoutedEventArgs e)
         {
             UiLblScopeInfo.Content = Properties.Resources.OperationScope;
-            ShowEnableAllItemTypes(true, true);
+            EnableAllItemTypes(true, true);
             if (_allowStudies)
             {
                 UiCbStudy.Content = (AppState.Workbook != null && AppState.Workbook.GetChapterCount() > 1) ? Properties.Resources.Studies : Properties.Resources.Study;
             }
+            if (_allowIntros)
+            {
+                UiCbIntro.Content = (AppState.Workbook != null && AppState.Workbook.GetChapterCount() > 1) ? Properties.Resources.Intros : Properties.Resources.Intro;
+            }
+
             if (firstTimeCheck)
             {
-                CheckAll(true);
+                CheckAllItemTypes(true);
                 firstTimeCheck = false;
             }
         }
@@ -289,17 +272,21 @@ namespace ChessForge
                 ApplyScope = OperationScope.WORKBOOK;
             }
 
+            if (UiCbIntro.IsChecked == true)
+            {
+                ApplicableViews |= ViewTypeScope.INTRO;
+            }
             if (UiCbStudy.IsChecked == true)
             {
-                ApplyToStudies = true;
+                ApplicableViews |= ViewTypeScope.STUDY;
             }
             if (UiCbGames.IsChecked == true)
             {
-                ApplyToGames = true;
+                ApplicableViews |= ViewTypeScope.MODEL_GAMES;
             }
             if (UiCbExercises.IsChecked == true)
             {
-                ApplyToExercises = true;
+                ApplicableViews |= ViewTypeScope.EXERCISES;
             }
 
             DialogResult = true;

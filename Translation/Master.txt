@@ -77,6 +77,9 @@ Min=Min
 #Max
 Max=Max
 
+#Colors
+Colors=Colors
+
 #Overwrite
 Overwrite=Overwrite
 
@@ -94,6 +97,9 @@ Chapters=Chapters
 
 #Intro
 Intro=Intro
+
+#Intros
+Intros=Intros
 
 #Study Tree
 Study=Study
@@ -504,7 +510,7 @@ Save=Save
 SaveAs=Save $0 As ...
 
 #Context menu to save a diagram as an image 
-SaveDiagramAsImage= Save Diagram as Picture...
+SaveDiagramAsImage=Save Diagram as Picture...
 
 #Export
 Export=Export
@@ -650,6 +656,9 @@ MsgTitlePositionSearch=Position Search
 #Message: Clipboard contains PGN text
 MsgClipboardContainsPgn=Clipboard's content
 
+#Message: No diagrams found.
+MsgNoDiagramsFound=No diagrams have been found
+
 #Workbook Options dialog title
 DlgTitleWorkbookOptions=Workbook Options
 
@@ -670,6 +679,26 @@ UseVariableFontSize=Variable Font Size
 
 #Restore font size defaults
 RestoreFontDefaults=Restore Font Defaults
+
+###########################
+#
+# Header: MAIN MENU: Chapter
+#
+
+#Assign ECOs
+AssignECO=Assign ECOs
+
+#Save diagrams as an image 
+SaveDiagramsAsImages=Save Diagrams as Pictures
+
+#Allows the user to merge multiple chapters into one
+MergeChapters=Merge Chapters
+
+#Manage Chapter
+ManageChapter=Manage Chapter
+
+#Split Chapter
+SplitChapterMenu=Split Chapter
 
 
 ###########################
@@ -702,20 +731,8 @@ StripComments=Delete Comments...
 #Delete all engine evals
 DeleteEngineEvals=Delete Engine Evaluations...
 
-#Delete all engine evals
-AssignECO=Assign ECOs
-
 #Find Games
 FindGames=Find Games...
-
-#Allows the user to merge multiple chapters into one
-MergeChapters=Merge Chapters
-
-#Manage Chapter
-ManageChapter=Manage Chapter
-
-#Split Chapter
-SplitChapterMenu=Split Chapter
 
 #Remove duplicates
 RemoveDuplicates=Remove Duplicates...
@@ -938,6 +955,8 @@ EgCentipawnAccuracy=max allowed centipawn deviation from the best move is
 #Size of the diagram's side
 SideSize=Height and Width in Pixels
 
+#Border width
+ImageBorderWidth=Border Width
 
 #######################################
 #
@@ -2257,7 +2276,8 @@ FlMsgChapterImported=Items Imported into New Chapter
 #Flash message: Chapters Imported
 FlMsgChaptersImported=Chapters Imported
 
-
+#Flash message: Number of diagrams saved
+FlMsgNumberOfDiagramsSaved=Number of diagrams saved
 
 ##################################
 #

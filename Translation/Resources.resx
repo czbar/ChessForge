@@ -177,6 +177,9 @@
   <data name="Max" xml:space="preserve">
     <value>Max</value>
   </data>
+  <data name="Colors" xml:space="preserve">
+    <value>Colors</value>
+  </data>
   <data name="Overwrite" xml:space="preserve">
     <value>Overwrite</value>
   </data>
@@ -194,6 +197,9 @@
   </data>
   <data name="Intro" xml:space="preserve">
     <value>Intro</value>
+  </data>
+  <data name="Intros" xml:space="preserve">
+    <value>Intros</value>
   </data>
   <data name="Study" xml:space="preserve">
     <value>Study</value>
@@ -696,6 +702,9 @@
   <data name="MsgClipboardContainsPgn" xml:space="preserve">
     <value>Clipboard's content</value>
   </data>
+  <data name="MsgNoDiagramsFound" xml:space="preserve">
+    <value>No diagrams have been found</value>
+  </data>
   <data name="DlgTitleWorkbookOptions" xml:space="preserve">
     <value>Workbook Options</value>
   </data>
@@ -716,6 +725,21 @@
   </data>
   <data name="RestoreFontDefaults" xml:space="preserve">
     <value>Restore Font Defaults</value>
+  </data>
+  <data name="AssignECO" xml:space="preserve">
+    <value>Assign ECOs</value>
+  </data>
+  <data name="SaveDiagramsAsImages" xml:space="preserve">
+    <value>Save Diagrams as Pictures</value>
+  </data>
+  <data name="MergeChapters" xml:space="preserve">
+    <value>Merge Chapters</value>
+  </data>
+  <data name="ManageChapter" xml:space="preserve">
+    <value>Manage Chapter</value>
+  </data>
+  <data name="SplitChapterMenu" xml:space="preserve">
+    <value>Split Chapter</value>
   </data>
   <data name="Tools" xml:space="preserve">
     <value>Tools</value>
@@ -741,20 +765,8 @@
   <data name="DeleteEngineEvals" xml:space="preserve">
     <value>Delete Engine Evaluations...</value>
   </data>
-  <data name="AssignECO" xml:space="preserve">
-    <value>Assign ECOs</value>
-  </data>
   <data name="FindGames" xml:space="preserve">
     <value>Find Games...</value>
-  </data>
-  <data name="MergeChapters" xml:space="preserve">
-    <value>Merge Chapters</value>
-  </data>
-  <data name="ManageChapter" xml:space="preserve">
-    <value>Manage Chapter</value>
-  </data>
-  <data name="SplitChapterMenu" xml:space="preserve">
-    <value>Split Chapter</value>
   </data>
   <data name="RemoveDuplicates" xml:space="preserve">
     <value>Remove Duplicates...</value>
@@ -918,6 +930,9 @@
   </data>
   <data name="SideSize" xml:space="preserve">
     <value>Height and Width in Pixels</value>
+  </data>
+  <data name="ImageBorderWidth" xml:space="preserve">
+    <value>Border Width</value>
   </data>
   <data name="FileExistActionsPrompt" xml:space="preserve">
     <value>Choose how to proceed.</value>
@@ -1989,6 +2004,9 @@
   </data>
   <data name="FlMsgChaptersImported" xml:space="preserve">
     <value>Chapters Imported</value>
+  </data>
+  <data name="FlMsgNumberOfDiagramsSaved" xml:space="preserve">
+    <value>Number of diagrams saved</value>
   </data>
   <data name="MsgNoDuplicatesFound" xml:space="preserve">
     <value>No duplicates found.</value>

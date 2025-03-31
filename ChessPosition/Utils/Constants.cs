@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace ChessPosition
 {
@@ -50,6 +48,18 @@ namespace ChessPosition
         ACTIVE_ITEM,
         CHAPTER,
         WORKBOOK
+    };
+
+    /// <summary>
+    /// Flags to use e.g. when scoping certain operations.
+    /// </summary>
+    public enum ViewTypeScope
+    {
+        NONE = 0,
+        INTRO = 0x01,
+        STUDY = 0x02,
+        MODEL_GAMES = 0x04,
+        EXERCISES = 0x08,
     };
 
     /// <summary>
@@ -185,7 +195,12 @@ namespace ChessPosition
         /// <summary>
         /// Maximum size of the diagram image.
         /// </summary>
-        public static int MAX_DIAGRAM_SIZE = 480;
+        public static int MAX_DIAGRAM_SIZE = 960;
+
+        /// <summary>
+        /// Maximum width of the border around the diagram in the image.
+        /// </summary>
+        public static int MAX_DIAGRAM_IMAGE_BORDER_WIDTH = 50;
 
         /// <summary>
         /// Normal menu fony size
