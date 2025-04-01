@@ -516,7 +516,10 @@ SaveDiagramAsImage=Save Diagram as Picture...
 Export=Export
 
 #Export as RTF
-ExportRtf=Export as RTF (Beta)
+ExportRtf=Export as RTF
+
+#Export as text
+ExportText=Export as text
 
 #Saves a copy of the current Workbook with the current version number, increments the version number
 BackUpThisVersion=Back up this Version ...

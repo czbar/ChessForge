@@ -585,6 +585,9 @@
   <data name="ExportRtf" xml:space="preserve">
     <value>Eksportuj jako RTF</value>
   </data>
+  <data name="ExportText" xml:space="preserve">
+    <value>Eksportuj jako tekst</value>
+  </data>
   <data name="BackUpThisVersion" xml:space="preserve">
     <value>Zrób kopię tej wersji...</value>
   </data>

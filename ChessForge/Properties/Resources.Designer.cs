@@ -3121,11 +3121,20 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Export as RTF (Beta).
+        ///   Looks up a localized string similar to Export as RTF.
         /// </summary>
         public static string ExportRtf {
             get {
                 return ResourceManager.GetString("ExportRtf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export as text.
+        /// </summary>
+        public static string ExportText {
+            get {
+                return ResourceManager.GetString("ExportText", resourceCulture);
             }
         }
         

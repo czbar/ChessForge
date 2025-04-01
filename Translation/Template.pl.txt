@@ -671,8 +671,12 @@ SaveDiagramAsImage= Zapisz diagram jako obraz...
 Export=Eksportuj
 
 #description: Export as RTF
-#english: ExportRtf=Export as RTF (Beta)
+#english: ExportRtf=Export as RTF
 ExportRtf=Eksportuj jako RTF
+
+#description: Export as text
+#english: ExportText=Export as text
+ExportText=Eksportuj jako tekst
 
 #description: Saves a copy of the current Workbook with the current version number, increments the version number
 #english: BackUpThisVersion=Back up this Version ...
