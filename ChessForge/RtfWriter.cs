@@ -50,7 +50,7 @@ namespace ChessForge
         private static int _diagramId = 0;
 
         /// <summary>
-        /// Exports the passed chapter into an RTF file.
+        /// Exports the scoped articles into an RTF file.
         /// </summary>
         /// <param name="chapter"></param>
         public static bool WriteRtf(string fileName)
