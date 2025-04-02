@@ -4075,8 +4075,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Invoked from a debug menu,
-        /// writes out the content of the current view to an RTF file.
+        /// Writes out the content of the current view to an RTF file.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -4106,6 +4105,16 @@ namespace ChessForge
                     catch { }
                 }
             }
+        }
+
+        /// <summary>
+        /// Writes out the content of the current view to a text file.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnWriteText_Click(object sender, RoutedEventArgs e)
+        {
+            TextWriter.WriteText(null);
         }
     }
 }

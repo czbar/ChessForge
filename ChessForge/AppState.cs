@@ -1112,6 +1112,7 @@ namespace ChessForge
                 }
 
                 MainWin.UiMnExportRtf.IsEnabled = AppState.Workbook != null;
+                MainWin.UiMnExportText.IsEnabled = AppState.Workbook != null;
             });
         }
 
