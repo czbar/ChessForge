@@ -15,6 +15,9 @@ namespace ChessForge.TreeViewManagement
         // highest branch level in the view
         private int _maxBranchLevel = -1;
 
+        // index depth
+        private int _variationIndexDepth = -1;
+
         /// <summary>
         /// The list of LineSectors
         /// </summary>
@@ -24,10 +27,12 @@ namespace ChessForge.TreeViewManagement
         /// Separates lines out of the tree, sets line Ids on the nodes
         /// and places the lines in the list.
         /// </summary>
-        public void BuildLineSectors(TreeNode root)
+        public void BuildLineSectors(TreeNode root, bool isIndexed)
         {
             _lineSectorsToDelete = new List<LineSector>();
             _maxBranchLevel = -1;
+            
+            _variationIndexDepth = isIndexed ? VariationTreeViewUtils.VariationIndexDepth : -1;
 
             LineSectors = new List<LineSector>();
             LineSector rootSector = CreateRootLineSector(root);
@@ -138,7 +143,11 @@ namespace ChessForge.TreeViewManagement
                 if (!IsIndexLevel(lineSector.BranchLevel - 1) && lineSector.Parent != null)
                 {
                     // do not proceed if Parent.Parent == null 'coz we then get a parenthesis first (after the 0 move!)
-                    if (lineSector.Parent.Children.Count == 2 && lineSector.Parent.Parent != null && lineSector.Parent.Children[1] == lineSector && lineSector.Parent.Children[0].SectorType == LineSectorType.LEAF)
+                    if (lineSector.Parent.Children.Count == 2 
+                        && !lineSector.Nodes[0].IsMainLine() 
+                        && lineSector.Parent.Parent != null 
+                        && lineSector.Parent.Children[1] == lineSector 
+                        && lineSector.Parent.Children[0].SectorType == LineSectorType.LEAF)
                     {
                         int index = 0;
                         lineSector.Parent.Children[1].InsertOpenBracketNode(index);
@@ -226,7 +235,7 @@ namespace ChessForge.TreeViewManagement
         /// <returns></returns>
         private bool IsIndexLevel(int branchLevel)
         {
-            return branchLevel <= (VariationTreeViewUtils.VariationIndexDepth + 1);
+            return branchLevel <= (_variationIndexDepth + 1);
         }
 
         /// <summary>
