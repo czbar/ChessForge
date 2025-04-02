@@ -675,8 +675,8 @@ Export=Eksportuj
 ExportRtf=Eksportuj jako RTF
 
 #description: Export as text
-#english: ExportText=Export as text
-ExportText=Eksportuj jako tekst
+#english: ExportText=Export as Text
+ExportText=Eksportuj jako Tekst
 
 #description: Saves a copy of the current Workbook with the current version number, increments the version number
 #english: BackUpThisVersion=Back up this Version ...

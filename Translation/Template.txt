@@ -675,7 +675,7 @@ Export=
 ExportRtf=
 
 #description: Export as text
-#english: ExportText=Export as text
+#english: ExportText=Export as Text
 ExportText=
 
 #description: Saves a copy of the current Workbook with the current version number, increments the version number

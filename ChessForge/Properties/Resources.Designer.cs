@@ -3130,7 +3130,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Export as text.
+        ///   Looks up a localized string similar to Export as Text.
         /// </summary>
         public static string ExportText {
             get {

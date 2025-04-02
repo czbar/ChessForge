@@ -586,7 +586,7 @@
     <value>Export as RTF</value>
   </data>
   <data name="ExportText" xml:space="preserve">
-    <value>Export as text</value>
+    <value>Export as Text</value>
   </data>
   <data name="BackUpThisVersion" xml:space="preserve">
     <value>Back up this Version ...</value>
