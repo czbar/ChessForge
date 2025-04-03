@@ -156,6 +156,9 @@
   <data name="RtfFiles" xml:space="preserve">
     <value>Pliki RTF</value>
   </data>
+  <data name="TextFiles" xml:space="preserve">
+    <value>Pliki Tekstowe</value>
+  </data>
   <data name="FileExists" xml:space="preserve">
     <value>Plik już istnieje</value>
   </data>
@@ -987,6 +990,9 @@
   </data>
   <data name="CustomTerms" xml:space="preserve">
     <value>Niestandardowe Nagłówki</value>
+  </data>
+  <data name="InsertFensUnderDiagrams" xml:space="preserve">
+    <value>Wstaw FEN pod diagramami</value>
   </data>
   <data name="ReorderLines" xml:space="preserve">
     <value>Kolejność Wariantów</value>

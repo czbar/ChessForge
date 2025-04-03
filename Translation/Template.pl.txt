@@ -69,6 +69,10 @@ ImageFiles=Obrazy
 #english: RtfFiles=RTF files
 RtfFiles=Pliki RTF
 
+#description: Text files
+#english: TextFiles=Text files
+TextFiles=Pliki Tekstowe
+
 #description: File already exists
 #english: FileExists=File Already Exists
 FileExists=Plik już istnieje
@@ -1319,6 +1323,9 @@ TwoColumnFormat=Format 2-kolumnowy
 #english: CustomTerms=Custom Headers
 CustomTerms=Niestandardowe Nagłówki
 
+#description: Insert FEN under diagrams
+#english: InsertFensUnderDiagrams=Insert FEN under diagrams
+InsertFensUnderDiagrams=Wstaw FEN pod diagramami
 
 #######################################
 #

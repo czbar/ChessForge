@@ -4156,6 +4156,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Insert FEN under diagrams.
+        /// </summary>
+        public static string InsertFensUnderDiagrams {
+            get {
+                return ResourceManager.GetString("InsertFensUnderDiagrams", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Insert Hyperlink.
         /// </summary>
         public static string InsertHyperlink {
@@ -7357,6 +7366,15 @@ namespace ChessForge.Properties {
         public static string Text {
             get {
                 return ResourceManager.GetString("Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text files.
+        /// </summary>
+        public static string TextFiles {
+            get {
+                return ResourceManager.GetString("TextFiles", resourceCulture);
             }
         }
         

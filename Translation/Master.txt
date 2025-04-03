@@ -56,6 +56,9 @@ ImageFiles=Image files
 #RTF files
 RtfFiles=RTF files
 
+#Text files
+TextFiles=Text files
+
 #File already exists
 FileExists=File Already Exists
 
@@ -1029,6 +1032,8 @@ TwoColumnFormat=Two Column Format
 #Custom Terms
 CustomTerms=Custom Headers
 
+#Insert FEN under diagrams
+InsertFensUnderDiagrams=Insert FEN under diagrams
 
 #######################################
 #
