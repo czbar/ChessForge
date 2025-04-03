@@ -28,7 +28,7 @@ namespace ChessForge
     /// </summary>
     public class RtfWriter
     {
-        // TODO: these field is meant to be Configuration items.
+        // TODO: this field is meant to be Configuration items.
         private static bool _continuousArticleNumbering = true;
 
         // counts exported games if _continuousArticleNumbering is on 
@@ -49,6 +49,9 @@ namespace ChessForge
         // running id of the diagrams in the document
         private static int _diagramId = 0;
 
+        // whether to insert FENs under diagrams
+        private static bool _insertFens = false;
+        
         /// <summary>
         /// Exports the scoped articles into an RTF file.
         /// </summary>
@@ -56,6 +59,7 @@ namespace ChessForge
         public static bool WriteRtf(string fileName)
         {
             bool result = true;
+            _insertFens = ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.FEN_UNDER_DIAGRAMS);
 
             ResetCounters();
             bool saveUseFixedFont = Configuration.UseFixedFont;
@@ -1229,6 +1233,7 @@ namespace ChessForge
             foreach (Block block in guiDoc.Blocks)
             {
                 lastRunWasIntroMove = false;
+
                 if (block is Paragraph guiPara)
                 {
                     Paragraph printPara = new Paragraph();
@@ -1252,7 +1257,6 @@ namespace ChessForge
                             if (inl is Run run && run.Text != null)
                             {
                                 lastRunWasIntroMove = false;
-
                                 printPara = CreateTextRuns(printDoc, printPara, run);
                             }
                             else if (inl is InlineUIContainer uic)
@@ -1264,8 +1268,9 @@ namespace ChessForge
                                 else if (inl.Name.StartsWith(RichTextBoxUtilities.InlineDiagramIucPrefix))
                                 {
                                     printDoc.Blocks.Add(printPara);
-                                    printPara = CreateInlineDiagramForPrint(printDoc, printPara, inl.Name, tree, ref diagrams);
+                                    CreateInlineDiagramForPrint(printDoc, printPara, inl.Name, tree, ref diagrams);
                                     lastRunWasIntroMove = false;
+                                    break;
                                 }
                                 else
                                 {
@@ -1313,10 +1318,20 @@ namespace ChessForge
             printPara = new Paragraph();
             _diagramId++;
             ProcessDiagram(_diagramId, printPara, tree, nodeId, diagrams);
+            printPara.TextAlignment = TextAlignment.Center;
             printDoc.Blocks.Add(printPara);
 
-            Paragraph dummy = new Paragraph();
-            printDoc.Blocks.Add(dummy);
+            if (_insertFens)
+            {
+                TreeNode nd = tree.GetNodeFromNodeId(nodeId);
+                string fenText = "FEN " + FenParser.GenerateFenFromPosition(nd.Position);
+                Paragraph fen = new Paragraph();
+                fen.Inlines.Add(new Run(fenText));
+                fen.TextAlignment = TextAlignment.Center;
+                fen.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff - 2;
+                fen.FontFamily = new FontFamily("Courier New");
+                printDoc.Blocks.Add(fen);
+            }
 
             return printPara;
         }
@@ -1376,13 +1391,13 @@ namespace ChessForge
             }
             else if (run.Name != null && run.Name.StartsWith(RichTextBoxUtilities.PostInlineDiagramRunPrefix))
             {
-                // this is post inline diagram so complete the current paragraph
-                // and add a dummy one to create space after the diagram
-                printDoc.Blocks.Add(printPara);
+                //// this is post inline diagram so complete the current paragraph
+                //// and add a dummy one to create space after the diagram
+                //printDoc.Blocks.Add(printPara);
 
-                printPara = new Paragraph();
-                printDoc.Blocks.Add(printPara);
-                printPara = new Paragraph();
+                //printPara = new Paragraph();
+                //printDoc.Blocks.Add(printPara);
+                //printPara = new Paragraph();
             }
             else
             {
