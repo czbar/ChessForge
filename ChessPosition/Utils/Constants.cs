@@ -188,6 +188,16 @@ namespace ChessPosition
                 };
 
         /// <summary>
+        /// Character used to start the Comment.
+        /// </summary>
+        public const char START_COMMENT = '{';
+
+        /// <summary>
+        /// Character used to end the Comment.
+        /// </summary>
+        public const char END_COMMENT = '}';
+
+        /// <summary>
         /// Minimum size of the diagram image.
         /// </summary>
         public static int MIN_DIAGRAM_SIZE = 120;
