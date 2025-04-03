@@ -1,5 +1,6 @@
 ﻿using ChessPosition;
 using System.Windows;
+using System.Windows.Media;
 
 namespace ChessForge
 {
@@ -8,6 +9,20 @@ namespace ChessForge
     /// </summary>
     public partial class RtfExportDialog : Window
     {
+        /// <summary>
+        /// Export format selected by the user.
+        /// </summary>
+        public enum ExportFormat
+        {
+            RTF,
+            TEXT
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ExportFormat _exportFormat;
+
         /// <summary>
         /// Scope of export selected by the user.
         /// </summary>
@@ -31,13 +46,40 @@ namespace ChessForge
         /// <summary>
         /// Initializes the data.
         /// </summary>
-        public RtfExportDialog()
+        public RtfExportDialog(ExportFormat exportFormat)
         {
+            _exportFormat = exportFormat;
+
             InitializeComponent();
+
+            if (_exportFormat == ExportFormat.RTF)
+            {
+                Title = Properties.Resources.ExportRtf;
+            }
+            else
+            {
+                Title = Properties.Resources.ExportText;
+
+                UiGbColumnFormats.IsEnabled = false;
+                UiCbIntro2Col.IsChecked = false;
+                UiCbStudy2Col.IsChecked = false;
+                UiCbGames2Col.IsChecked = false;
+                UiCbExercises2Col.IsChecked = false;
+
+                UiGbColumnFormats.Foreground = Brushes.LightGray;
+                UiCbIntro2Col.Foreground = Brushes.LightGray;
+                UiCbStudy2Col.Foreground = Brushes.LightGray;
+                UiCbGames2Col.Foreground = Brushes.LightGray;
+                UiCbExercises2Col.Foreground = Brushes.LightGray;
+
+                UiCbFens.IsChecked = true;
+                UiCbFens.IsEnabled = false;
+                UiCbFens.Foreground = Brushes.LightGray;
+            }
 
             Scope = ConfigurationRtfExport.GetScope();
 
-            // check if current view is printanble, if not disable the radiobutton and change scope if CurrentViewSelected
+            // check if current view is printable, if not disable the radio button and change scope if CurrentViewSelected
             TabViewType vt = AppState.ActiveTab;
             if (vt != TabViewType.CHAPTERS && vt != TabViewType.INTRO && vt != TabViewType.STUDY && vt != TabViewType.MODEL_GAME && vt != TabViewType.EXERCISE)
             {
@@ -78,14 +120,20 @@ namespace ChessForge
             _lastCbExercises = bVal;
             EnableChapterItems(true, true);
 
-            bVal = ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.TWO_COLUMN_INTRO);
-            UiCbIntro2Col.IsChecked = bVal;
-            bVal = ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.TWO_COLUMN_STUDY);
-            UiCbStudy2Col.IsChecked = bVal;
-            bVal = ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.TWO_COLUMN_GAMES);
-            UiCbGames2Col.IsChecked = bVal;
-            bVal = ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.TWO_COLUMN_EXERCISES);
-            UiCbExercises2Col.IsChecked = bVal;
+            if (_exportFormat == ExportFormat.RTF)
+            {
+                bVal = ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.TWO_COLUMN_INTRO);
+                UiCbIntro2Col.IsChecked = bVal;
+                bVal = ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.TWO_COLUMN_STUDY);
+                UiCbStudy2Col.IsChecked = bVal;
+                bVal = ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.TWO_COLUMN_GAMES);
+                UiCbGames2Col.IsChecked = bVal;
+                bVal = ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.TWO_COLUMN_EXERCISES);
+                UiCbExercises2Col.IsChecked = bVal;
+
+                bVal = ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.FEN_UNDER_DIAGRAMS);
+                UiCbFens.IsChecked = bVal;
+            }
 
             sVal = ConfigurationRtfExport.GetStringValue(ConfigurationRtfExport.CUSTOM_TERM_STUDY);
             UiTbStudyCustom.Text = sVal;
@@ -97,9 +145,6 @@ namespace ChessForge
             UiTbExercisesCustom.Text = sVal;
             sVal = ConfigurationRtfExport.GetStringValue(ConfigurationRtfExport.CUSTOM_TERM_EXERCISE);
             UiTbExerciseCustom.Text = sVal;
-
-            bVal = ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.FEN_UNDER_DIAGRAMS);
-            UiCbFens.IsChecked = bVal;
 
             UiCbStudyCustom.IsChecked = null;
             UiCbGamesCustom.IsChecked = null;
@@ -225,10 +270,15 @@ namespace ChessForge
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.INCLUDE_GAMES, _lastCbGames);
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.INCLUDE_EXERCISES, _lastCbExercises);
 
-            ConfigurationRtfExport.SetValue(ConfigurationRtfExport.TWO_COLUMN_INTRO, UiCbIntro2Col.IsChecked == true);
-            ConfigurationRtfExport.SetValue(ConfigurationRtfExport.TWO_COLUMN_STUDY, UiCbStudy2Col.IsChecked == true);
-            ConfigurationRtfExport.SetValue(ConfigurationRtfExport.TWO_COLUMN_GAMES, UiCbGames2Col.IsChecked == true);
-            ConfigurationRtfExport.SetValue(ConfigurationRtfExport.TWO_COLUMN_EXERCISES, UiCbExercises2Col.IsChecked == true);
+            if (_exportFormat == ExportFormat.RTF)
+            {
+                ConfigurationRtfExport.SetValue(ConfigurationRtfExport.TWO_COLUMN_INTRO, UiCbIntro2Col.IsChecked == true);
+                ConfigurationRtfExport.SetValue(ConfigurationRtfExport.TWO_COLUMN_STUDY, UiCbStudy2Col.IsChecked == true);
+                ConfigurationRtfExport.SetValue(ConfigurationRtfExport.TWO_COLUMN_GAMES, UiCbGames2Col.IsChecked == true);
+                ConfigurationRtfExport.SetValue(ConfigurationRtfExport.TWO_COLUMN_EXERCISES, UiCbExercises2Col.IsChecked == true);
+
+                ConfigurationRtfExport.SetValue(ConfigurationRtfExport.FEN_UNDER_DIAGRAMS, UiCbFens.IsChecked == true);
+            }
 
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.USE_CUSTOM_STUDY, UiCbStudyCustom.IsChecked == true);
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.USE_CUSTOM_GAMES, UiCbGamesCustom.IsChecked == true);
@@ -241,8 +291,6 @@ namespace ChessForge
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.CUSTOM_TERM_GAME, UiTbGameCustom.Text);
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.CUSTOM_TERM_EXERCISES, UiTbExercisesCustom.Text);
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.CUSTOM_TERM_EXERCISE, UiTbExerciseCustom.Text);
-
-            ConfigurationRtfExport.SetValue(ConfigurationRtfExport.FEN_UNDER_DIAGRAMS, UiCbFens.IsChecked == true);
 
             Configuration.WriteOutConfiguration();
         }

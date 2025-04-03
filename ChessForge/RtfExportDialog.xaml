@@ -30,7 +30,7 @@
                 <CheckBox x:Name="UiCbExercises" Content="{x:Static p:Resources.Exercises}" Margin="10,10,0,0"/>
             </StackPanel>
         </GroupBox>
-        <GroupBox Header="{x:Static p:Resources.TwoColumnFormat}" Margin="15,150,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="160" Height="162">
+        <GroupBox x:Name="UiGbColumnFormats" Header="{x:Static p:Resources.TwoColumnFormat}" Margin="15,150,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="160" Height="162">
             <StackPanel>
                 <CheckBox x:Name="UiCbIntro2Col" Content="{x:Static p:Resources.Intro}" Margin="10,15,0,0"/>
                 <CheckBox x:Name="UiCbStudy2Col" Content="{x:Static p:Resources.Study}" Margin="10,15,0,0"/>
