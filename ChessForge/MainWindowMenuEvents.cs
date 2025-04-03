@@ -4086,7 +4086,7 @@ namespace ChessForge
             while (!done)
             {
                 done = true;
-                RtfExportDialog dlg = new RtfExportDialog();
+                RtfExportDialog dlg = new RtfExportDialog(RtfExportDialog.ExportFormat.RTF);
                 GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
                 if (dlg.ShowDialog() == true)
@@ -4114,7 +4114,30 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnWriteText_Click(object sender, RoutedEventArgs e)
         {
-            TextWriter.WriteText(null);
+            bool done = false;
+
+            while (!done)
+            {
+                done = true;
+                RtfExportDialog dlg = new RtfExportDialog(RtfExportDialog.ExportFormat.TEXT);
+                GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
+
+                if (dlg.ShowDialog() == true)
+                {
+                    try
+                    {
+                        string filePath = TextWriter.SelectTargetTextFile();
+
+                        if (!string.IsNullOrEmpty(filePath) && filePath[0] != '.')
+                        {
+                            Mouse.SetCursor(Cursors.Wait);
+                            done = TextWriter.WriteText(filePath);
+                            Mouse.SetCursor(Cursors.Arrow);
+                        }
+                    }
+                    catch { }
+                }
+            }
         }
     }
 }
