@@ -1239,12 +1239,26 @@ namespace ChessForge
                     Paragraph printPara = new Paragraph();
                     CopyParaAttributes(printPara, guiPara);
 
+                    // set Left margin to 0 so that centering will work correctly
+                    printPara.Margin = new Thickness(0, guiPara.Margin.Top, guiPara.Margin.Right, guiPara.Margin.Bottom);
+
                     printDoc.Blocks.Add(printPara);
 
                     if (guiPara.Name != null && guiPara.Name.StartsWith(RichTextBoxUtilities.DiagramParaPrefix))
                     {
-                        CreateIntroDiagramForPrint(printPara, guiPara, tree, ref diagrams);
+                        TreeNode nd = CreateIntroDiagramForPrint(printPara, guiPara, tree, ref diagrams);
                         lastDiagramPara = printPara;
+
+                        if (_insertFens)
+                        {
+                            string fenText = "FEN " + FenParser.GenerateFenFromPosition(nd.Position);
+                            Paragraph fen = new Paragraph();
+                            fen.Inlines.Add(new Run(fenText));
+                            fen.TextAlignment = TextAlignment.Center;
+                            fen.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff - 2;
+                            fen.FontFamily = new FontFamily("Courier New");
+                            printDoc.Blocks.Add(fen);
+                        }
                     }
                     else if (guiPara.Name == RichTextBoxUtilities.ExerciseUnderBoardControls)
                     {
@@ -1343,10 +1357,10 @@ namespace ChessForge
         /// <param name="guiPara"></param>
         /// <param name="tree"></param>
         /// <param name="diagrams"></param>
-        private static void CreateIntroDiagramForPrint(Paragraph printPara, Paragraph guiPara, VariationTree tree, ref List<RtfDiagram> diagrams)
+        private static TreeNode CreateIntroDiagramForPrint(Paragraph printPara, Paragraph guiPara, VariationTree tree, ref List<RtfDiagram> diagrams)
         {
             _diagramId++;
-            ProcessDiagram(_diagramId, printPara, guiPara, tree, diagrams);
+            return ProcessDiagram(_diagramId, printPara, guiPara, tree, diagrams);
         }
 
         /// <summary>
@@ -1444,19 +1458,24 @@ namespace ChessForge
         /// <param name="para"></param>
         /// <param name="tree"></param>
         /// <param name="diagrams"></param>
-        private static void ProcessDiagram(int diagramId, Paragraph printPara, Paragraph para, VariationTree tree, List<RtfDiagram> diagrams)
+        private static TreeNode ProcessDiagram(int diagramId, Paragraph printPara, Paragraph para, VariationTree tree, List<RtfDiagram> diagrams)
         {
+            TreeNode nd = null;
+
             int nodeId = TextUtils.GetIdFromPrefixedString(para.Name);
             if (tree != null)
             {
-                TreeNode nd = tree.GetNodeFromNodeId(nodeId);
+                nd = tree.GetNodeFromNodeId(nodeId);
                 if (nd != null)
                 {
                     bool isFlipped = RichTextBoxUtilities.GetDiagramFlipState(para);
                     printPara.Inlines.Add(CreateDiagramPlaceholderRun(diagramId));
+                    printPara.TextAlignment = TextAlignment.Center;
                     diagrams.Add(new RtfDiagram(diagramId, nd, isFlipped));
                 }
             }
+
+            return nd;
         }
 
         /// <summary>
