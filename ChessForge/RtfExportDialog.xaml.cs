@@ -98,6 +98,9 @@ namespace ChessForge
             sVal = ConfigurationRtfExport.GetStringValue(ConfigurationRtfExport.CUSTOM_TERM_EXERCISE);
             UiTbExerciseCustom.Text = sVal;
 
+            bVal = ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.FEN_UNDER_DIAGRAMS);
+            UiCbFens.IsChecked = bVal;
+
             UiCbStudyCustom.IsChecked = null;
             UiCbGamesCustom.IsChecked = null;
             UiCbGameCustom.IsChecked = null;
@@ -238,6 +241,8 @@ namespace ChessForge
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.CUSTOM_TERM_GAME, UiTbGameCustom.Text);
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.CUSTOM_TERM_EXERCISES, UiTbExercisesCustom.Text);
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.CUSTOM_TERM_EXERCISE, UiTbExerciseCustom.Text);
+
+            ConfigurationRtfExport.SetValue(ConfigurationRtfExport.FEN_UNDER_DIAGRAMS, UiCbFens.IsChecked == true);
 
             Configuration.WriteOutConfiguration();
         }

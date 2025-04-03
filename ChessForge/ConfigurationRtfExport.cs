@@ -177,6 +177,11 @@ namespace ChessForge
         /// </summary>
         public const string CUSTOM_TERM_EXERCISE = ItemPrefix + "CustomTermExercise";
 
+        /// <summary>
+        /// Whether to include the FEN string under diagrams.
+        /// </summary>
+        public const string FEN_UNDER_DIAGRAMS = ItemPrefix + "FenUnderDiagrams";
+
         // the dictionary of configuration items
         private static Dictionary<string, string> _rtfConfigItems = new Dictionary<string, string>();
 
@@ -266,6 +271,8 @@ namespace ChessForge
             _rtfConfigItems[CUSTOM_TERM_GAME] = "";
             _rtfConfigItems[CUSTOM_TERM_EXERCISES] = "";
             _rtfConfigItems[CUSTOM_TERM_EXERCISE] = "";
+
+            _rtfConfigItems[FEN_UNDER_DIAGRAMS] = "0";
         }
 
         /// <summary>
