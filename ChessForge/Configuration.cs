@@ -129,6 +129,16 @@ namespace ChessForge
         public static string LastPngFile = "";
 
         /// <summary>
+        /// Last RTF file to export to.
+        /// </summary>
+        public static string LastRtfExportFile = "";
+
+        /// <summary>
+        /// Last TEXT file to export to.
+        /// </summary>
+        public static string LastTextExportFile = "";
+
+        /// <summary>
         /// Chessboard colors coded for the views in the form of
         /// ChessboardColors = "1,3,3,2" where the numbers correspond to the 
         /// values in ChessBoard.ColorSets and apply to Study, Games, Exercises
@@ -601,7 +611,9 @@ namespace ChessForge
         private const string CFG_LAST_DIRECTORY = "LastDirectory";
         private const string CFG_LAST_IMPORT_DIRECTORY = "LastImportDirectory";
         private const string CFG_LAST_FILE = "LastFile";
-        private const string CFG_LAST_PNG_FILE = "LastPngFile";
+        private const string CFG_LAST_PNG_EXPORT_FILE = "LastPngExportFile";
+        private const string CFG_LAST_RTF_EXPORT_FILE = "LastRtfExportFile";
+        private const string CFG_LAST_TEXT_EXPORT_FILE = "LastTextExportFile";
         private const string CFG_RECENT_FILES = "RecentFiles";
         private const string CFG_LAST_PRIVATE_LIBRARY = "LastPrivateLibrary";
         private const string CFG_PRIVATE_LIBRARY = "PrivateLibrary";
@@ -802,7 +814,9 @@ namespace ChessForge
                 sb.Append(CFG_LAST_DIRECTORY + "=" + (LastOpenDirectory ?? "").ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_IMPORT_DIRECTORY + "=" + (LastImportDirectory ?? "").ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_FILE + "=" + (LastWorkbookFile ?? "").ToString() + Environment.NewLine);
-                sb.Append(CFG_LAST_PNG_FILE + "=" + (LastPngFile ?? "").ToString() + Environment.NewLine);
+                sb.Append(CFG_LAST_PNG_EXPORT_FILE + "=" + (LastPngFile ?? "").ToString() + Environment.NewLine);
+                sb.Append(CFG_LAST_RTF_EXPORT_FILE + "=" + (LastRtfExportFile ?? "").ToString() + Environment.NewLine);
+                sb.Append(CFG_LAST_TEXT_EXPORT_FILE + "=" + (LastTextExportFile ?? "").ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_PRIVATE_LIBRARY + "=" + (LastPrivateLibrary ?? "").ToString() + Environment.NewLine);
 
                 foreach (string privateLibrary in PrivateLibraries)
@@ -1154,8 +1168,14 @@ namespace ChessForge
                         case CFG_LAST_FILE:
                             LastWorkbookFile = value;
                             break;
-                        case CFG_LAST_PNG_FILE:
+                        case CFG_LAST_PNG_EXPORT_FILE:
                             LastPngFile = value;
+                            break;
+                        case CFG_LAST_RTF_EXPORT_FILE:
+                            LastRtfExportFile = value;
+                            break;
+                        case CFG_LAST_TEXT_EXPORT_FILE:
+                            LastTextExportFile = value;
                             break;
                         case CFG_ENGINE_EXE:
                             EngineExePath = value;
