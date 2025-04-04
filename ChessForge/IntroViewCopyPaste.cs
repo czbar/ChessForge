@@ -199,7 +199,7 @@ namespace ChessForge
                                     if (plainText.Length > 0)
                                     {
                                         plainText.AppendLine("");
-                                        plainText.AppendLine("");
+                                        //plainText.AppendLine("");
                                     }
                                 }
                                 currParagraph = position.Parent as Paragraph;
