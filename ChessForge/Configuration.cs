@@ -126,7 +126,7 @@ namespace ChessForge
         /// <summary>
         /// Last PNG file to which a diagram was exported.
         /// </summary>
-        public static string LastPngFile = "";
+        public static string LastPngExportFile = "";
 
         /// <summary>
         /// Last RTF file to export to.
@@ -814,7 +814,7 @@ namespace ChessForge
                 sb.Append(CFG_LAST_DIRECTORY + "=" + (LastOpenDirectory ?? "").ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_IMPORT_DIRECTORY + "=" + (LastImportDirectory ?? "").ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_FILE + "=" + (LastWorkbookFile ?? "").ToString() + Environment.NewLine);
-                sb.Append(CFG_LAST_PNG_EXPORT_FILE + "=" + (LastPngFile ?? "").ToString() + Environment.NewLine);
+                sb.Append(CFG_LAST_PNG_EXPORT_FILE + "=" + (LastPngExportFile ?? "").ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_RTF_EXPORT_FILE + "=" + (LastRtfExportFile ?? "").ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_TEXT_EXPORT_FILE + "=" + (LastTextExportFile ?? "").ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_PRIVATE_LIBRARY + "=" + (LastPrivateLibrary ?? "").ToString() + Environment.NewLine);
@@ -1169,7 +1169,7 @@ namespace ChessForge
                             LastWorkbookFile = value;
                             break;
                         case CFG_LAST_PNG_EXPORT_FILE:
-                            LastPngFile = value;
+                            LastPngExportFile = value;
                             break;
                         case CFG_LAST_RTF_EXPORT_FILE:
                             LastRtfExportFile = value;
