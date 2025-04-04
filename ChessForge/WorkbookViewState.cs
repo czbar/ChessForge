@@ -215,9 +215,16 @@ namespace ChessForge
         /// <returns></returns>
         private string BuildViewConfigFilePath()
         {
-            string directoryPath = Path.GetDirectoryName(AppState.WorkbookFilePath);
-            string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(AppState.WorkbookFilePath);
-            return Path.Combine(directoryPath, fileNameWithoutExtension) + ".cf_";
+            try
+            {
+                string directoryPath = Path.GetDirectoryName(AppState.WorkbookFilePath);
+                string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(AppState.WorkbookFilePath);
+                return Path.Combine(directoryPath, fileNameWithoutExtension) + ".cf_";
+            }
+            catch
+            {
+                return "";
+            }
         }
     }
 }

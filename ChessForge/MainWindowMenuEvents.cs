@@ -155,7 +155,11 @@ namespace ChessForge
 
                 if (result == true)
                 {
-                    Configuration.LastOpenDirectory = Path.GetDirectoryName(openFileDialog.FileName);
+                    try
+                    {
+                        Configuration.LastOpenDirectory = Path.GetDirectoryName(openFileDialog.FileName);
+                    }
+                    catch { }
                     ReadWorkbookFile(openFileDialog.FileName, false, ref WorkbookManager.VariationTreeList);
                 }
             }
@@ -173,7 +177,11 @@ namespace ChessForge
             {
                 string menuItemName = ((MenuItem)e.Source).Name;
                 string path = Configuration.GetRecentFile(menuItemName);
-                Configuration.LastOpenDirectory = Path.GetDirectoryName(path);
+                try
+                {
+                    Configuration.LastOpenDirectory = Path.GetDirectoryName(path);
+                }
+                catch { }
                 ReadWorkbookFile(path, false, ref WorkbookManager.VariationTreeList);
             }
         }
@@ -3145,7 +3153,14 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnSelectEngine_Click(object sender, RoutedEventArgs e)
         {
-            string searchPath = Path.GetDirectoryName(Configuration.EngineExePath);
+            string searchPath = "";
+
+            try
+            {
+                searchPath = Path.GetDirectoryName(Configuration.EngineExePath);
+            }
+            catch { }
+
             if (!string.IsNullOrEmpty(Configuration.SelectEngineExecutable(searchPath)))
             {
                 ReloadEngine();

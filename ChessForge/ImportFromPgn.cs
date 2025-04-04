@@ -339,7 +339,11 @@ namespace ChessForge
 
             if (result == true)
             {
-                Configuration.LastImportDirectory = Path.GetDirectoryName(openFileDialog.FileName);
+                try
+                {
+                    Configuration.LastImportDirectory = Path.GetDirectoryName(openFileDialog.FileName);
+                }
+                catch { }
                 return openFileDialog.FileNames;
             }
             else
