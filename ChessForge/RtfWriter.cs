@@ -136,21 +136,30 @@ namespace ChessForge
         public static string SelectTargetRtfFile()
         {
             string rtfExt = ".rtf";
-            string rtfFileName;
+            string rtfFileName = Configuration.LastRtfExportFile;
 
-            if (string.IsNullOrEmpty(AppState.WorkbookFilePath))
+            if (string.IsNullOrEmpty(rtfFileName))
             {
-                rtfFileName = TextUtils.RemoveInvalidCharsFromFileName(WorkbookManager.SessionWorkbook.Title) + rtfExt;
-            }
-            else
-            {
-                rtfFileName = FileUtils.ReplacePathExtension(AppState.WorkbookFilePath, rtfExt);
+                if (string.IsNullOrEmpty(AppState.WorkbookFilePath))
+                {
+                    rtfFileName = TextUtils.RemoveInvalidCharsFromFileName(WorkbookManager.SessionWorkbook.Title) + rtfExt;
+                }
+                else
+                {
+                    rtfFileName = FileUtils.ReplacePathExtension(AppState.WorkbookFilePath, rtfExt);
+                }
             }
 
             SaveFileDialog saveDlg = new SaveFileDialog
             {
-                Filter = Properties.Resources.RtfFiles + " (*.rtf)|*.rtf"
+                Filter = Properties.Resources.RtfFiles + " (*.rtf)|*.rtf",
             };
+
+            try
+            {
+                saveDlg.InitialDirectory = Path.GetDirectoryName(rtfFileName);
+            }
+            catch { }
 
             saveDlg.FileName = Path.GetFileName(rtfFileName);
             saveDlg.Title = Properties.Resources.ExportRtf;
@@ -159,6 +168,7 @@ namespace ChessForge
             if (saveDlg.ShowDialog() == true)
             {
                 rtfFileName = saveDlg.FileName;
+                Configuration.LastRtfExportFile = rtfFileName;
             }
             else
             {
