@@ -144,7 +144,7 @@ namespace ChessForge.TreeViewManagement
                 {
                     // do not proceed if Parent.Parent == null 'coz we then get a parenthesis first (after the 0 move!)
                     if (lineSector.Parent.Children.Count == 2 
-                        && !lineSector.Nodes[0].IsMainLine() 
+                        && (lineSector.Nodes.Count == 0 || !lineSector.Nodes[0].IsMainLine()) 
                         && lineSector.Parent.Parent != null 
                         && lineSector.Parent.Children[1] == lineSector 
                         && lineSector.Parent.Children[0].SectorType == LineSectorType.LEAF)
