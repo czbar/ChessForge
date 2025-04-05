@@ -79,7 +79,7 @@ namespace ChessForge
 
             Scope = ConfigurationRtfExport.GetScope();
 
-            // check if current view is printable, if not disable the radio button and change scope if CurrentViewSelected
+            // check if current view is printable, if not, disable the radio button and change scope if CurrentViewSelected
             TabViewType vt = AppState.ActiveTab;
             if (vt != TabViewType.CHAPTERS && vt != TabViewType.INTRO && vt != TabViewType.STUDY && vt != TabViewType.MODEL_GAME && vt != TabViewType.EXERCISE)
             {
@@ -376,15 +376,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiRbCurrentItem_Checked(object sender, RoutedEventArgs e)
         {
-            if (AppState.ActiveTab != ChessPosition.TabViewType.CHAPTERS)
-            {
-                EnableWorkbookItems(false);
-            }
-            else
-            {
-                EnableWorkbookItems(true);
-            }
-
+            EnableWorkbookItems(false);
             EnableChapterItems(false);
         }
 
