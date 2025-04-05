@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
 
 namespace ChessForge
 {
@@ -32,11 +34,9 @@ namespace ChessForge
         public static bool WriteText(string fileName)
         {
             bool result = true;
-
             ResetCounters();
 
             StringBuilder sb = new StringBuilder();
-
             try
             {
                 // dummy write to trigger an error on access, before we take time to process.
@@ -53,7 +53,7 @@ namespace ChessForge
                 }
                 else
                 {
-                    PrintWorkbookOrChapterScope(scope);
+                    sb.Append(PrintWorkbookOrChapterScope(scope));
                 }
 
                 WriteOutFile(fileName, sb.ToString());
@@ -68,49 +68,70 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Prints the workbook front page to text.
+        /// Shows the dialog for the user to selecy the target file.
         /// </summary>
         /// <returns></returns>
-        private static string PrintWorkbookFrontPage()
+        public static string SelectTargetTextFile()
         {
-            StringBuilder sb = new StringBuilder();
+            string textExt = ".txt";
+            string textFileName = Configuration.LastTextExportFile;
 
-            sb.Append(Properties.Resources.ChessForgeGenNotice);
-            sb.Append(" " + Constants.CHAR_SUPER_LEFT_PARENTHESIS + Constants.CHAR_TRADE_MARK + Constants.CHAR_SUPER_RIGHT_PARENTHESIS);
-
-            sb.AppendLine();
-
-            sb.AppendLine(AppState.Workbook.Title);
-
-            sb.AppendLine(Properties.Resources.Version + ": " + AppState.Workbook.Version);
-
-            if (!string.IsNullOrEmpty(AppState.Workbook.Author))
+            if (string.IsNullOrEmpty(textFileName))
             {
-                sb.Append(Properties.Resources.Author + ": ");
-                sb.AppendLine(AppState.Workbook.Author);
+                if (string.IsNullOrEmpty(AppState.WorkbookFilePath))
+                {
+                    textFileName = TextUtils.RemoveInvalidCharsFromFileName(WorkbookManager.SessionWorkbook.Title) + textExt;
+                }
+                else
+                {
+                    textFileName = FileUtils.ReplacePathExtension(AppState.WorkbookFilePath, textExt);
+                }
             }
 
-            return sb.ToString();
+            SaveFileDialog saveDlg = new SaveFileDialog
+            {
+                Filter = Properties.Resources.TextFiles + " (*.txt)|*.txt",
+            };
+
+            try
+            {
+                saveDlg.InitialDirectory = Path.GetDirectoryName(textFileName);
+            }
+            catch { }
+
+            saveDlg.FileName = Path.GetFileName(textFileName);
+            saveDlg.Title = Properties.Resources.ExportText;
+
+            saveDlg.OverwritePrompt = true;
+            if (saveDlg.ShowDialog() == true)
+            {
+                textFileName = saveDlg.FileName;
+                Configuration.LastTextExportFile = textFileName;
+            }
+            else
+            {
+                textFileName = "";
+            }
+
+            return textFileName;
         }
 
         /// <summary>
-        /// Prints the contents of the workbook to text.
+        /// Writes the text to a file.
         /// </summary>
-        /// <param name="workbook"></param>
-        /// <returns></returns>
-        private static string PrintWorkbookContents(Workbook workbook)
+        /// <param name="fileName"></param>
+        /// <param name="content"></param>
+        private static void WriteOutFile(string fileName, string content)
         {
-            StringBuilder sb = new StringBuilder();
-
-            sb.AppendLine(Properties.Resources.Contents);
-
-            foreach (Chapter chapter in workbook.Chapters)
-            {
-                sb.AppendLine((chapter.Index + 1).ToString() + ".\t " + chapter.Title);
-            }
-
-            return sb.ToString();
+            File.WriteAllText(fileName, content);
         }
+
+
+        //********************************************
+        //
+        // TOP LEVEL CALLS
+        //
+        //********************************************
 
         /// <summary>
         /// Prints the workbook or chapter scope to text.
@@ -129,12 +150,13 @@ namespace ChessForge
 
                 if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_CONTENTS))
                 {
+                    sb.AppendLine();
                     sb.AppendLine(PrintWorkbookContents(AppState.Workbook));
                     sb.Append(AddPageBreakPlaceholder());
                 }
             }
 
-            PrintChapters(isFirstPrintPage);
+            sb.Append(PrintChapters(isFirstPrintPage));
 
             if (scope == PrintScope.WORKBOOK)
             {
@@ -157,6 +179,176 @@ namespace ChessForge
                         sb.Append(AddPageBreakPlaceholder());
                     }
                 }
+            }
+
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// Prints the active view to text.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <returns></returns>
+        private static string PrintActiveView(Chapter chapter)
+        {
+            string txt = "";
+            if (AppState.ActiveTab == TabViewType.CHAPTERS)
+            {
+                txt = PrintChaptersViewToText();
+            }
+            else
+            {
+                switch (AppState.Workbook.ActiveArticle.Tree.ContentType)
+                {
+                    case GameData.ContentType.INTRO:
+                        PrintIntro(chapter);
+                        break;
+                    case GameData.ContentType.STUDY_TREE:
+                        txt = PrintTreeView(AppState.Workbook.ActiveArticle.Tree);
+                        break;
+                    case GameData.ContentType.MODEL_GAME:
+                        txt = PrintTreeView(AppState.Workbook.ActiveArticle.Tree);
+                        break;
+                    case GameData.ContentType.EXERCISE:
+                        txt = PrintTreeView(AppState.Workbook.ActiveArticle.Tree);
+                        break;
+                }
+            }
+
+            return txt;
+        }
+
+        /// <summary>
+        /// Prints the chapter's content to text.
+        /// </summary>
+        /// <param name="isFirstPrintPage"></param>
+        /// <returns></returns>
+        private static string PrintChapters(bool isFirstPrintPage)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            foreach (Chapter chapter in AppState.Workbook.Chapters)
+            {
+                try
+                {
+                    // if scope is CHAPTER, only act when we encounter the active chapter
+                    if (_printScope == PrintScope.WORKBOOK || _printScope == PrintScope.CHAPTER && _chapterToPrint == chapter)
+                    {
+                        sb.Append(PrintChapterTitle(chapter));
+                        if (!isFirstPrintPage)
+                        {
+                            sb.Append(AddPageBreakPlaceholder());
+                        }
+                        else
+                        {
+                            isFirstPrintPage = false;
+                        }
+
+                        bool introPrinted = false;
+                        if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_INTRO))
+                        {
+                            if (!chapter.IsIntroEmpty())
+                            {
+                                sb.Append(PrintIntroToText(_printScope, chapter));
+                                introPrinted = true;
+                            }
+                        }
+
+                        if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_STUDY))
+                        {
+                            if (!chapter.IsStudyEmpty())
+                            {
+                                sb.Append(PrintStudyToText(_printScope, chapter, introPrinted));
+                            }
+                        }
+
+                        if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_GAMES))
+                        {
+                            if (chapter.ModelGames.Count > 0)
+                            {
+                                sb.Append(PrintGamesHeader());
+                                sb.Append(AddPageBreakPlaceholder());
+
+                                for (int i = 0; i < chapter.ModelGames.Count; i++)
+                                {
+                                    sb.Append(PrintGameToText(chapter, i));
+                                }
+                            }
+                        }
+
+                        if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_EXERCISES))
+                        {
+                            if (chapter.Exercises.Count > 0)
+                            {
+                                sb.Append(PrintExercisesHeader());
+                                sb.Append(AddPageBreakPlaceholder());
+
+                                for (int i = 0; i < chapter.Exercises.Count; i++)
+                                {
+                                    sb.Append(PrintExerciseToText(chapter, i));
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    AppLog.Message("PrintChaptersToText()" + "Chapter " + chapter.Index, ex);
+                }
+            }
+
+            return sb.ToString();
+        }
+
+
+        //********************************************
+        //
+        // INDICES AND HEADERS
+        //
+        //********************************************
+
+
+        /// <summary>
+        /// Prints the workbook front page to text.
+        /// </summary>
+        /// <returns></returns>
+        private static string PrintWorkbookFrontPage()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(Properties.Resources.ChessForgeGenNotice);
+            sb.AppendLine(" (" + Constants.CHAR_TRADE_MARK + ")");
+            sb.AppendLine();
+
+            sb.AppendLine(Properties.Resources.Title + ": " + AppState.Workbook.Title);
+            sb.AppendLine();
+
+            sb.AppendLine(Properties.Resources.Version + ": " + AppState.Workbook.Version);
+
+            if (!string.IsNullOrEmpty(AppState.Workbook.Author))
+            {
+                sb.Append(Properties.Resources.Author + ": ");
+                sb.AppendLine(AppState.Workbook.Author);
+                sb.AppendLine();
+            }
+
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// Prints the contents of the workbook to text.
+        /// </summary>
+        /// <param name="workbook"></param>
+        /// <returns></returns>
+        private static string PrintWorkbookContents(Workbook workbook)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendLine(Properties.Resources.Contents);
+
+            foreach (Chapter chapter in workbook.Chapters)
+            {
+                sb.AppendLine((chapter.Index + 1).ToString() + ".\t " + chapter.Title);
             }
 
             return sb.ToString();
@@ -235,133 +427,27 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Prints the intro of the chapter to text.
+        /// Builds the chapter title.
         /// </summary>
-        /// <param name="chapter"></param>
         /// <returns></returns>
-        private static string PrintIntro(Chapter chapter)
-        {
-            // TODO: use CopySelectionToClipboard()
-
-            return "";
-        }
-
-        /// <summary>
-        /// Prints the chapter's content to text.
-        /// </summary>
-        /// <param name="isFirstPrintPage"></param>
-        /// <returns></returns>
-        private static string PrintChapters(bool isFirstPrintPage)
+        private static string BuildChapterTitle()
         {
             StringBuilder sb = new StringBuilder();
-
-            foreach (Chapter chapter in AppState.Workbook.Chapters)
+            Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+            if (chapter != null)
             {
-                try
+                sb.AppendLine(chapter.GetTitle());
+
+                if (!string.IsNullOrWhiteSpace(chapter.GetAuthor()))
                 {
-                    // if scope is CHAPTER, only act when we encounter the active chapter
-                    if (_printScope == PrintScope.WORKBOOK || _printScope == PrintScope.CHAPTER && _chapterToPrint == chapter)
-                    {
-                        sb.Append(PrintChapterTitle(chapter));
-                        if (!isFirstPrintPage)
-                        {
-                            sb.Append(AddPageBreakPlaceholder());
-                        }
-                        else
-                        {
-                            isFirstPrintPage = false;
-                        }
-
-                        bool introPrinted = false;
-                        if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_INTRO))
-                        {
-                            if (!chapter.IsIntroEmpty())
-                            {
-                                PrintIntroToText(_printScope, chapter);
-                                introPrinted = true;
-                            }
-                        }
-
-                        if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_STUDY))
-                        {
-                            if (!chapter.IsStudyEmpty())
-                            {
-                                PrintStudyToText(_printScope, chapter, introPrinted);
-                            }
-                        }
-
-                        if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_GAMES))
-                        {
-                            if (chapter.ModelGames.Count > 0)
-                            {
-                                sb.Append(PrintGamesHeader());
-                                sb.Append(AddPageBreakPlaceholder());
-
-                                for (int i = 0; i < chapter.ModelGames.Count; i++)
-                                {
-                                    PrintGameToText(chapter, i);
-                                }
-                            }
-                        }
-
-                        if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_EXERCISES))
-                        {
-                            if (chapter.Exercises.Count > 0)
-                            {
-                                sb.Append( PrintExercisesHeader());
-                                sb.Append(AddPageBreakPlaceholder());
-
-                                for (int i = 0; i < chapter.Exercises.Count; i++)
-                                {
-                                    PrintExerciseToText(chapter, i);
-                                }
-                            }
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    AppLog.Message("PrintChaptersToText()" + "Chapter " + chapter.Index, ex);
+                    sb.AppendLine();
+                    string rAuthor = "    " + Properties.Resources.Author + ": " + chapter.GetAuthor();
+                    sb.AppendLine(rAuthor);
                 }
             }
 
             return sb.ToString();
         }
-
-        //********************************************
-        //
-        // PRINT INIDIVIDUAL ARTICLES
-        //
-        //********************************************
-
-        /// <summary>
-        /// Prints as text the view of the passed tree.
-        /// </summary>
-        /// <param name="tree"></param>
-        /// <returns></returns>
-        private static string PrintTreeView(VariationTree tree)
-        {
-            StringBuilder sb = new StringBuilder();
-
-            tree = AppState.ActiveVariationTree;
-            sb.AppendLine(BuildPageHeader(tree, tree.ContentType));
-            LineSectorsBuilder builder = new LineSectorsBuilder();
-            builder.BuildLineSectors(tree.Nodes[0], false);
-            foreach (LineSector sector in builder.LineSectors)
-            {
-                string lineText = WriteLineSector(sector, tree);
-                sb.AppendLine(lineText);
-            }
-
-            return sb.ToString();
-        }
-
-
-        //********************************************
-        //
-        // HEADER LINES
-        //
-        //********************************************
 
         /// <summary>
         /// Prints the header for the study.
@@ -436,16 +522,29 @@ namespace ChessForge
 
         //********************************************
         //
-        // "PRINT" TO TEXT
+        // PREPARE ARTICLE PRINTING
         //
         //********************************************
+
+        /// <summary>
+        /// Prints the chapters view to text.
+        /// </summary>
+        /// <returns></returns>
+        private static string PrintChaptersViewToText()
+        {
+            RichTextBox rtb = new RichTextBox();
+            var chaptersView = new ChaptersView(rtb, null, true);
+            chaptersView.BuildFlowDocumentForChaptersView(false);
+
+            return FlowDocumentToText(rtb.Document);
+        }
 
         /// <summary>
         /// Prints the intro to text.
         /// </summary>
         /// <param name="scope"></param>
         /// <param name="chapter"></param>
-        private static void PrintIntroToText(PrintScope scope, Chapter chapter)
+        private static string PrintIntroToText(PrintScope scope, Chapter chapter)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -455,6 +554,8 @@ namespace ChessForge
             }
 
             sb.Append(PrintIntro(chapter));
+
+            return sb.ToString();
         }
 
         /// <summary>
@@ -537,87 +638,52 @@ namespace ChessForge
             return sb.ToString();
         }
 
+
+        //********************************************
+        //
+        // PRINT INIDIVIDUAL ARTICLES
+        //
+        //********************************************
+
         /// <summary>
-        /// Prints the active view to text.
+        /// Prints the intro of the chapter to text.
         /// </summary>
         /// <param name="chapter"></param>
         /// <returns></returns>
-        private static string PrintActiveView(Chapter chapter)
+        private static string PrintIntro(Chapter chapter)
         {
-            string txt = "";
-            if (AppState.ActiveTab == TabViewType.CHAPTERS)
-            {
-                //PrintChaptersViewToText();
-            }
-            else
-            {
-                switch (AppState.Workbook.ActiveArticle.Tree.ContentType)
-                {
-                    case GameData.ContentType.INTRO:
-                        //PrintIntroToText(chapter);
-                        break;
-                    case GameData.ContentType.STUDY_TREE:
-                        txt = PrintTreeView(AppState.Workbook.ActiveArticle.Tree);
-                        break;
-                    case GameData.ContentType.MODEL_GAME:
-                        txt = PrintTreeView(AppState.Workbook.ActiveArticle.Tree);
-                        break;
-                    case GameData.ContentType.EXERCISE:
-                        txt = PrintTreeView(AppState.Workbook.ActiveArticle.Tree);
-                        break;
-                }
-            }
+            // TODO: use CopySelectionToClipboard()
 
-            return txt;
+            return "";
         }
 
         /// <summary>
-        /// Writes the text to a file.
+        /// Prints as text the view of the passed tree.
         /// </summary>
-        /// <param name="fileName"></param>
-        /// <param name="content"></param>
-        private static void WriteOutFile(string fileName, string content)
-        {
-            File.WriteAllText(fileName, content);
-        }
-
-        /// <summary>
-        /// Shows the dialog for the user to selecy the target file.
-        /// </summary>
+        /// <param name="tree"></param>
         /// <returns></returns>
-        public static string SelectTargetTextFile()
+        private static string PrintTreeView(VariationTree tree)
         {
-            string textExt = ".txt";
-            string textFileName;
+            StringBuilder sb = new StringBuilder();
 
-            if (string.IsNullOrEmpty(AppState.WorkbookFilePath))
-            {
-                textFileName = TextUtils.RemoveInvalidCharsFromFileName(WorkbookManager.SessionWorkbook.Title) + textExt;
-            }
-            else
-            {
-                textFileName = FileUtils.ReplacePathExtension(AppState.WorkbookFilePath, textExt);
-            }
+            sb.AppendLine(BuildPageHeader(tree, tree.ContentType));
 
-            SaveFileDialog saveDlg = new SaveFileDialog
+            if (tree.ContentType == GameData.ContentType.EXERCISE)
             {
-                Filter = Properties.Resources.TextFiles + " (*.txt)|*.txt"
-            };
-
-            saveDlg.FileName = Path.GetFileName(textFileName);
-            saveDlg.Title = Properties.Resources.ExportText;
-
-            saveDlg.OverwritePrompt = true;
-            if (saveDlg.ShowDialog() == true)
-            {
-                textFileName = saveDlg.FileName;
-            }
-            else
-            {
-                textFileName = "";
+                string fen = FenParser.GenerateFenFromPosition(tree.Nodes[0].Position, tree.MoveNumberOffset);
+                sb.AppendLine("[" + fen + "]");
+                sb.AppendLine();
             }
 
-            return textFileName;
+            LineSectorsBuilder builder = new LineSectorsBuilder();
+            builder.BuildLineSectors(tree.Nodes[0], false);
+            foreach (LineSector sector in builder.LineSectors)
+            {
+                string lineText = WriteLineSector(sector, tree);
+                sb.AppendLine(lineText);
+            }
+
+            return sb.ToString();
         }
 
         /// <summary>
@@ -703,6 +769,7 @@ namespace ChessForge
 
                         if (!string.IsNullOrEmpty(tree.Header.GetEventName(out _)))
                         {
+                            sb.AppendLine();
                             if (hasPlayerNames)
                             {
                                 string round = tree.Header.GetRound(out _);
@@ -757,29 +824,6 @@ namespace ChessForge
                     case GameData.ContentType.STUDY_TREE:
                         sb.AppendLine(BuildChapterTitle());
                         break;
-                }
-            }
-
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Builds the chapter title.
-        /// </summary>
-        /// <returns></returns>
-        private static string BuildChapterTitle()
-        {
-            StringBuilder sb = new StringBuilder();
-            Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-            if (chapter != null)
-            {
-                sb.AppendLine(chapter.GetTitle());
-
-                if (!string.IsNullOrWhiteSpace(chapter.GetAuthor()))
-                {
-                    sb.AppendLine();
-                    string rAuthor = "    " + Properties.Resources.Author + ": " + chapter.GetAuthor();
-                    sb.AppendLine(rAuthor);
                 }
             }
 
@@ -875,6 +919,28 @@ namespace ChessForge
             {
                 return playerName + " (" + playerElo + ")";
             }
+        }
+
+
+        //********************************************
+        //
+        // UTILITIES
+        //
+        //********************************************
+
+
+        /// <summary>
+        /// Converts a FlowDocument to text.
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <returns></returns>
+        private static string FlowDocumentToText(FlowDocument doc)
+        {
+            StringBuilder sb = new StringBuilder();
+            TextRange textRange = new TextRange(doc.ContentStart, doc.ContentEnd);
+            string text = textRange.Text;
+            sb.Append(text);
+            return sb.ToString();
         }
 
         /// <summary>
