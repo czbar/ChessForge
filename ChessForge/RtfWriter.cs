@@ -375,25 +375,16 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Process the contents list place it in the printDoc.
+        /// Process the Chapters View and place it in the printDoc.
         /// </summary>
         /// <param name="printDoc"></param>
         /// <param name="diagrams"></param>
         private static void PrintChaptersViewToFlowDoc(FlowDocument printDoc, ref List<RtfDiagram> diagrams)
         {
-            FlowDocument workbookFP = PrintWorkbookFrontPage();
-            CreateDocumentForPrint(printDoc, workbookFP, null, ref diagrams);
-
-            FlowDocument docContents = PrintWorkbookContents(AppState.Workbook);
-            AddPageBreakPlaceholder(docContents);
-            CreateDocumentForPrint(printDoc, docContents, null, ref diagrams);
-
-            FlowDocument docGameIndex = PrintGameOrExerciseIndex(AppState.Workbook, true);
-            if (docGameIndex != null)
-            {
-                AddPageBreakPlaceholder(docGameIndex);
-                CreateDocumentForPrint(printDoc, docGameIndex, null, ref diagrams);
-            }
+            RichTextBox rtb = new RichTextBox();
+            var chaptersView = new  ChaptersView(rtb, null, true);
+            chaptersView.BuildFlowDocumentForChaptersView(false);
+            CreateDocumentForPrint(printDoc, rtb.Document, null, ref diagrams);
         }
 
         /// <summary>
