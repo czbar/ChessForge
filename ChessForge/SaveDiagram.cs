@@ -358,7 +358,7 @@ namespace ChessForge
         /// <returns></returns>
         private static string ExtractBaseName(string fileName)
         {
-            Match match = Regex.Match(fileName, @"^(.*?)(?:\s+\d+)?$", RegexOptions.IgnoreCase);
+            Match match = Regex.Match(fileName, @"^(.*?)(?:_\d+)?$", RegexOptions.IgnoreCase);
             return match.Success ? match.Groups[1].Value : fileName;
         }
 
@@ -371,7 +371,7 @@ namespace ChessForge
         /// <returns></returns>
         private static string GetNextAvailableFileName(string directoryPath, string baseName)
         {
-            string pattern = $"^{Regex.Escape(baseName)}\\s*(\\d+)\\.png$";
+            string pattern = $"^{Regex.Escape(baseName)}_(\\d+)\\.png$";
             Regex regex = new Regex(pattern);
 
             var existingNumbers = Directory.EnumerateFiles(directoryPath, "*.png")
@@ -387,7 +387,7 @@ namespace ChessForge
                 M++;
             }
 
-            return $"{baseName} {M}.png";
+            return $"{baseName}_{M}.png";
         }
     }
 }
