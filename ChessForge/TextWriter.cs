@@ -1,5 +1,4 @@
-﻿using ChessForge.TreeViewManagement;
-using ChessPosition;
+﻿using ChessPosition;
 using GameTree;
 using Microsoft.Win32;
 using System;
@@ -56,7 +55,8 @@ namespace ChessForge
                     sb.Append(PrintWorkbookOrChapterScope(scope));
                 }
 
-                WriteOutFile(fileName, sb.ToString());
+                string outText = ReplaceSpecialChars(sb.ToString());
+                WriteOutFile(fileName, outText);
             }
             catch (Exception ex)
             {
@@ -162,11 +162,11 @@ namespace ChessForge
             {
                 if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_GAME_INDEX))
                 {
+                    sb.Append(AddPageBreakPlaceholder());
                     string gameIndexText = PrintGameOrExerciseIndex(AppState.Workbook, true);
                     if (!string.IsNullOrEmpty(gameIndexText))
                     {
                         sb.Append(gameIndexText);
-                        sb.Append(AddPageBreakPlaceholder());
                     }
                 }
 
@@ -175,8 +175,8 @@ namespace ChessForge
                     string exerciseIndexText = PrintGameOrExerciseIndex(AppState.Workbook, false);
                     if (!string.IsNullOrEmpty(exerciseIndexText))
                     {
-                        sb.Append(exerciseIndexText);
                         sb.Append(AddPageBreakPlaceholder());
+                        sb.Append(exerciseIndexText);
                     }
                 }
             }
@@ -266,8 +266,8 @@ namespace ChessForge
                         {
                             if (chapter.ModelGames.Count > 0)
                             {
-                                sb.Append(PrintGamesHeader());
                                 sb.Append(AddPageBreakPlaceholder());
+                                sb.Append(PrintGamesHeader());
 
                                 for (int i = 0; i < chapter.ModelGames.Count; i++)
                                 {
@@ -280,8 +280,8 @@ namespace ChessForge
                         {
                             if (chapter.Exercises.Count > 0)
                             {
-                                sb.Append(PrintExercisesHeader());
                                 sb.Append(AddPageBreakPlaceholder());
+                                sb.Append(PrintExercisesHeader());
 
                                 for (int i = 0; i < chapter.Exercises.Count; i++)
                                 {
@@ -372,6 +372,8 @@ namespace ChessForge
                 int itemCount = gameOrExerc ? chapter.GetModelGameCount() : chapter.GetExerciseCount();
                 if (itemCount > 0)
                 {
+                    sb.AppendLine();
+
                     string chapterTitle = Properties.Resources.Chapter + " " + (chapter.Index + 1).ToString();
                     sb.AppendLine(chapterTitle);
 
@@ -384,7 +386,7 @@ namespace ChessForge
                               article.Tree.Header.BuildGameHeaderLine(false, false, true, true, false)
                             : article.Tree.Header.BuildGameHeaderLine(true, false, true, true, false);
 
-                        string title = itemCounter.ToString() + ".\t " + articleTitle;
+                        string title = itemCounter.ToString() + ". " + articleTitle;
                         sb.AppendLine(title);
                     }
                 }
@@ -536,7 +538,7 @@ namespace ChessForge
             var chaptersView = new ChaptersView(rtb, null, true);
             chaptersView.BuildFlowDocumentForChaptersView(false);
 
-            return FlowDocumentToText(rtb.Document);
+            return FlowDocumentToText(rtb.Document, null);
         }
 
         /// <summary>
@@ -578,7 +580,7 @@ namespace ChessForge
             if (scope != PrintScope.ARTICLE && introPrinted)
             {
                 sb.Append(PrintStudyHeader());
-                sb.Append(AddPageBreakPlaceholder());
+                sb.AppendLine();
             }
 
             sb.Append(PrintTreeView(chapter.StudyTree.Tree));
@@ -675,15 +677,63 @@ namespace ChessForge
                 sb.AppendLine();
             }
 
-            LineSectorsBuilder builder = new LineSectorsBuilder();
-            builder.BuildLineSectors(tree.Nodes[0], false);
-            foreach (LineSector sector in builder.LineSectors)
+            return PrintArticle(tree);
+        }
+
+
+        /// <summary>
+        /// Print an article to text.
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <returns></returns>
+        private static string PrintArticle(VariationTree tree)
+        {
+            RichTextBox rtbView = new RichTextBox();
+
+            if (tree.ContentType == GameData.ContentType.MODEL_GAME)
             {
-                string lineText = WriteLineSector(sector, tree);
-                sb.AppendLine(lineText);
+                VariationTreeView gameView = new VariationTreeView(rtbView, GameData.ContentType.MODEL_GAME, true);
+                gameView.BuildFlowDocumentForVariationTree(false, tree);
+            }
+            else if (tree.ContentType == GameData.ContentType.EXERCISE)
+            {
+                ExerciseTreeView exerciseView = new ExerciseTreeView(rtbView, GameData.ContentType.EXERCISE, true);
+                exerciseView.BuildFlowDocumentForVariationTree(false, tree);
+                RemoveExerciseUnderBoardControls(rtbView.Document);
+            }
+            else if (tree.ContentType == GameData.ContentType.STUDY_TREE)
+            {
+                StudyTreeView studyView = new StudyTreeView(rtbView, GameData.ContentType.STUDY_TREE, true);
+                studyView.BuildFlowDocumentForVariationTree(false, tree);
             }
 
-            return sb.ToString();
+            return FlowDocumentToText(rtbView.Document, tree);
+        }
+
+        /// <summary>
+        /// Removes controls under the board in the exercise view.
+        /// </summary>
+        /// <param name="doc"></param>
+        private static void RemoveExerciseUnderBoardControls(FlowDocument doc)
+        {
+            Paragraph paraUnderBoard = null;
+
+            foreach (Block block in doc.Blocks)
+            {
+                if (block is Paragraph para)
+                {
+                    if (para.Name == RichTextBoxUtilities.ExerciseUnderBoardControls)
+                    {
+                        paraUnderBoard = para;
+                        break;
+                    }
+                }
+            }
+
+            if (paraUnderBoard != null)
+            {
+                doc.Blocks.Remove(paraUnderBoard);
+            }
         }
 
         /// <summary>
@@ -934,13 +984,149 @@ namespace ChessForge
         /// </summary>
         /// <param name="doc"></param>
         /// <returns></returns>
-        private static string FlowDocumentToText(FlowDocument doc)
+        private static string FlowDocumentToText(FlowDocument doc, VariationTree tree)
         {
+            if (tree != null)
+            {
+                ReplaceDiagramsInFlowDocument(doc, tree);
+            }
+            InsertIndents(doc);
+
             StringBuilder sb = new StringBuilder();
             TextRange textRange = new TextRange(doc.ContentStart, doc.ContentEnd);
             string text = textRange.Text;
             sb.Append(text);
             return sb.ToString();
+        }
+
+        /// <summary>
+        /// Inserts spaces as indents.
+        /// </summary>
+        /// <param name="doc"></param>
+        private static void InsertIndents(FlowDocument doc)
+        {
+            List<Block> blocksToModify = new List<Block>();
+
+            // Iterate over the blocks and add them to the list
+            foreach (Block block in doc.Blocks)
+            {
+                blocksToModify.Add(block);
+            }
+
+            foreach (Block block in blocksToModify)
+            {
+                if (block is Paragraph para)
+                {
+                    if (block.Margin.Left > 0)
+                    {
+                        string indent = new string(' ', (int)(block.Margin.Left / 10));
+                        para.Inlines.InsertBefore(para.Inlines.FirstInline, new Run(indent));
+
+                        // for each inline with 'n' insert indent after '\n'  
+                        List<Inline> inlinesToModify = new List<Inline>();
+                        foreach (Inline inl in para.Inlines)
+                        {
+                            inlinesToModify.Add(inl);
+                        }
+                        foreach (Inline inl in inlinesToModify)
+                        {
+                            if (inl is Run run && !string.IsNullOrEmpty(run.Text))
+                            {
+                                run.Text = run.Text.Replace("\n", "\n" + indent);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Replaces diagrams in the FlowDocument with FEN strings. 
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="tree"></param>
+        private static void ReplaceDiagramsInFlowDocument(FlowDocument doc, VariationTree tree)
+        {
+            List<Block> blocksToModify = new List<Block>();
+            foreach (Block block in doc.Blocks)
+            {
+                blocksToModify.Add(block);
+            }
+
+            foreach (Block block in blocksToModify)
+            {
+                if (block is Paragraph para)
+                {
+                    if (para.Name != null && para.Name.StartsWith(RichTextBoxUtilities.DiagramParaPrefix))
+                    {
+                        int nodeId = TextUtils.GetIdFromPrefixedString(para.Name);
+                        TreeNode nd = tree.GetNodeFromNodeId(nodeId);
+                        para.Inlines.Clear();
+
+                        string fenText = "[" + FenParser.GenerateFenFromPosition(nd.Position) + "]";
+
+                        if (tree.ContentType == GameData.ContentType.EXERCISE && nd.NodeId == 0)
+                        {
+                            if (nd.ColorToMove == PieceColor.White)
+                            {
+                                fenText += " " + Constants.CHAR_WHITE_LARGE_TRIANGLE_UP.ToString();
+                            }
+                            else
+                            {
+                                fenText += " " + Constants.CHAR_BLACK_LARGE_TRIANGLE_DOWN.ToString();
+                            }
+                        }
+                        para.Inlines.Add(new Run(fenText + '\n'));
+                    }
+                    else
+                    {
+                        List<Inline> inlinesToModify = new List<Inline>();
+                        foreach (Inline inl in para.Inlines)
+                        {
+                            inlinesToModify.Add(inl);
+                        }
+
+                        para.Inlines.Clear();
+                        foreach (Inline inl in inlinesToModify)
+                        {
+                            if (inl is Run run)
+                            {
+                                para.Inlines.Add(run);
+                            }
+                            else if (inl is InlineUIContainer iuc)
+                            {
+                                if (inl.Name.StartsWith(RichTextBoxUtilities.InlineDiagramIucPrefix))
+                                {
+                                    int nodeId = TextUtils.GetIdFromPrefixedString(inl.Name);
+                                    TreeNode nd = tree.GetNodeFromNodeId(nodeId);
+
+                                    string fenText = "[" + FenParser.GenerateFenFromPosition(nd.Position) + "]";
+                                    para.Inlines.Add(new Run(fenText));
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    AppLog.Message("RTF Write: Block element type = " + block.GetType().ToString());
+                }
+            }
+        }
+
+        /// <summary>
+        /// Replaces the NAG characters that may not render well in text.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        private static string ReplaceSpecialChars(string text)
+        {
+            string outText = text.Replace(Constants.NagsDict[14].ToString(), "+/=");
+            outText = outText.Replace(Constants.NagsDict[15].ToString(), "=/+");
+            outText = outText.Replace(Constants.NagsDict[16].ToString(), "+/-");
+            outText = outText.Replace(Constants.NagsDict[17].ToString(), "-/+");
+
+            return outText;
         }
 
         /// <summary>
@@ -958,7 +1144,7 @@ namespace ChessForge
         /// <returns></returns>
         private static string AddPageBreakPlaceholder()
         {
-            return "\n\n\n\n";
+            return "\n\n\n";
         }
     }
 }
