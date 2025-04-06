@@ -152,7 +152,6 @@ namespace ChessForge
                 {
                     sb.AppendLine();
                     sb.AppendLine(PrintWorkbookContents(AppState.Workbook));
-                    sb.Append(AddPageBreakPlaceholder());
                 }
             }
 
@@ -201,7 +200,7 @@ namespace ChessForge
                 switch (AppState.Workbook.ActiveArticle.Tree.ContentType)
                 {
                     case GameData.ContentType.INTRO:
-                        PrintIntro(chapter);
+                        txt = PrintIntro(chapter);
                         break;
                     case GameData.ContentType.STUDY_TREE:
                         txt = PrintTreeView(AppState.Workbook.ActiveArticle.Tree);
@@ -345,6 +344,7 @@ namespace ChessForge
             StringBuilder sb = new StringBuilder();
 
             sb.AppendLine(Properties.Resources.Contents);
+            sb.AppendLine(CreateUnderscoreLine(Properties.Resources.Contents));
 
             foreach (Chapter chapter in workbook.Chapters)
             {
@@ -364,7 +364,9 @@ namespace ChessForge
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.AppendLine(gameOrExerc ? Properties.Resources.GameIndex : Properties.Resources.ExerciseIndex);
+            string indexTitle = gameOrExerc ? Properties.Resources.Games : Properties.Resources.Exercises;
+            sb.AppendLine(indexTitle);
+            CreateUnderscoreLine(indexTitle);
 
             int itemCounter = 0;
             foreach (Chapter chapter in workbook.Chapters)
@@ -410,12 +412,14 @@ namespace ChessForge
         private static string PrintChapterTitle(Chapter chapter)
         {
             StringBuilder sb = new StringBuilder();
+            sb.Append(AddPageBreakPlaceholder());
 
             string title = chapter.Title;
             int chapterNo = chapter.Index + 1;
             string runNo = Properties.Resources.Chapter + " " + chapterNo.ToString();
 
             sb.AppendLine(runNo);
+            sb.AppendLine(CreateUnderscoreLine(runNo));
 
             // if title is empty, do not include the second paragraph
             if (!string.IsNullOrWhiteSpace(title))
@@ -467,7 +471,8 @@ namespace ChessForge
 
             if (!string.IsNullOrWhiteSpace(studyTitle))
             {
-                sb.Append(studyTitle);
+                sb.AppendLine(studyTitle);
+                sb.AppendLine(CreateUnderscoreLine(studyTitle));
             }
 
             return sb.ToString();
@@ -489,7 +494,8 @@ namespace ChessForge
 
             if (!string.IsNullOrWhiteSpace(gamesHeader))
             {
-                sb.Append(gamesHeader);
+                sb.AppendLine(gamesHeader);
+                sb.AppendLine(CreateUnderscoreLine(gamesHeader));
             }
 
             sb.AppendLine();
@@ -513,7 +519,8 @@ namespace ChessForge
 
             if (!string.IsNullOrWhiteSpace(exercisesHeader))
             {
-                sb.Append(exercisesHeader);
+                sb.AppendLine(exercisesHeader);
+                sb.AppendLine(CreateUnderscoreLine(exercisesHeader));
             }
 
             sb.AppendLine();
@@ -579,8 +586,8 @@ namespace ChessForge
             // if we are printing just this study or there was no Intro, print without the header and page break.
             if (scope != PrintScope.ARTICLE && introPrinted)
             {
+                sb.Append(AddPageBreakPlaceholder());
                 sb.Append(PrintStudyHeader());
-                sb.AppendLine();
             }
 
             sb.Append(PrintTreeView(chapter.StudyTree.Tree));
@@ -654,9 +661,29 @@ namespace ChessForge
         /// <returns></returns>
         private static string PrintIntro(Chapter chapter)
         {
-            // TODO: use CopySelectionToClipboard()
+            RichTextBox rtb = new RichTextBox();
 
-            return "";
+            StringBuilder sb = new StringBuilder();
+            if (_printScope == PrintScope.ARTICLE)
+            {
+                sb.Append(PrintChapterTitle(chapter));
+            }
+
+            IntroView intro = new IntroView(rtb, chapter, true);
+
+            // the user may have placed an empty line at the start.
+            // we don't want it in print so remove it
+            Block first = rtb.Document.Blocks.FirstBlock;
+            if (first is Paragraph para)
+            {
+                if (!RichTextBoxUtilities.HasNonEmptyInline(para))
+                {
+                    rtb.Document.Blocks.Remove(first);
+                }
+            }
+
+            sb.Append(FlowDocumentToText(rtb.Document, chapter.Intro.Tree));
+            return sb.ToString();
         }
 
         /// <summary>
@@ -1145,6 +1172,18 @@ namespace ChessForge
         private static string AddPageBreakPlaceholder()
         {
             return "\n\n\n";
+        }
+
+        private static string CreateUnderscoreLine(string txt)
+        {
+            if (string.IsNullOrEmpty(txt))
+            {
+                return "";
+            }
+            else
+            {
+                return new string('=', txt.Length);
+            }
         }
     }
 }
