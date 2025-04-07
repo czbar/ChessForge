@@ -59,6 +59,9 @@ RtfFiles=RTF files
 #Text files
 TextFiles=Text files
 
+#First file
+FirstFile=first file
+
 #File already exists
 FileExists=File Already Exists
 

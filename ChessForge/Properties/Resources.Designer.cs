@@ -3310,6 +3310,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to first file.
+        /// </summary>
+        public static string FirstFile {
+            get {
+                return ResourceManager.GetString("FirstFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Number of the first move.
         /// </summary>
         public static string FirstMoveNumber {

@@ -73,6 +73,10 @@ RtfFiles=
 #english: TextFiles=Text files
 TextFiles=
 
+#description: First file
+#english: FirstFile=first file
+FirstFile=
+
 #description: File already exists
 #english: FileExists=File Already Exists
 FileExists=

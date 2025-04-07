@@ -159,6 +159,9 @@
   <data name="TextFiles" xml:space="preserve">
     <value>Pliki Tekstowe</value>
   </data>
+  <data name="FirstFile" xml:space="preserve">
+    <value>pierwszy plik</value>
+  </data>
   <data name="FileExists" xml:space="preserve">
     <value>Plik już istnieje</value>
   </data>

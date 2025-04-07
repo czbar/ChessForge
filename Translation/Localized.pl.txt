@@ -73,6 +73,10 @@ RtfFiles=Pliki RTF
 #english: TextFiles=Text files
 TextFiles=Pliki Tekstowe
 
+#description: First file
+#english: FirstFile=first file
+FirstFile=pierwszy plik
+
 #description: File already exists
 #english: FileExists=File Already Exists
 FileExists=Plik już istnieje
