@@ -429,29 +429,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Builds the chapter title.
-        /// </summary>
-        /// <returns></returns>
-        private static string BuildChapterTitle()
-        {
-            StringBuilder sb = new StringBuilder();
-            Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-            if (chapter != null)
-            {
-                sb.AppendLine(chapter.GetTitle());
-
-                if (!string.IsNullOrWhiteSpace(chapter.GetAuthor()))
-                {
-                    sb.AppendLine();
-                    string rAuthor = "    " + Properties.Resources.Author + ": " + chapter.GetAuthor();
-                    sb.AppendLine(rAuthor);
-                }
-            }
-
-            return sb.ToString();
-        }
-
-        /// <summary>
         /// Prints the header for the study.
         /// </summary>
         /// <returns></returns>
