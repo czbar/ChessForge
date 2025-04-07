@@ -902,11 +902,13 @@ namespace ChessForge
                 para.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff;
                 para.FontWeight = FontWeights.Bold;
 
-                string gameHeader = Properties.Resources.Game + " " + gameNo.ToString();
+                string gameWord = Properties.Resources.Game;
                 if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.USE_CUSTOM_GAME))
                 {
-                    gameHeader = ConfigurationRtfExport.GetStringValue(ConfigurationRtfExport.CUSTOM_TERM_GAME);
+                    gameWord = ConfigurationRtfExport.GetStringValue(ConfigurationRtfExport.CUSTOM_TERM_GAME);
                 }
+
+                string gameHeader = gameWord + " " + gameNo.ToString();
 
                 para.TextAlignment = TextAlignment.Center;
                 para.TextDecorations = TextDecorations.Underline;
@@ -982,11 +984,13 @@ namespace ChessForge
                 para.TextAlignment = TextAlignment.Center;
                 para.TextDecorations = TextDecorations.Underline;
 
-                string exerciseHeader = Properties.Resources.Exercise + " " + exerciseNo.ToString();
+                string exerciseWord = Properties.Resources.Exercise;
                 if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.USE_CUSTOM_EXERCISE))
                 {
-                    exerciseHeader = ConfigurationRtfExport.GetStringValue(ConfigurationRtfExport.CUSTOM_TERM_EXERCISE);
+                    exerciseWord = ConfigurationRtfExport.GetStringValue(ConfigurationRtfExport.CUSTOM_TERM_EXERCISE);
                 }
+
+                string exerciseHeader = exerciseWord + " " + exerciseNo.ToString();
 
                 if (!string.IsNullOrWhiteSpace(exerciseHeader))
                 {
