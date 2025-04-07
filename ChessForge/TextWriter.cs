@@ -13,6 +13,9 @@ namespace ChessForge
 {
     public class TextWriter
     {
+        // TODO: this field is meant to be Configuration items.
+        private static bool _continuousArticleNumbering = true;
+
         // counts exported games if _continuousArticleNumbering is on 
         private static int _currentGameNumber = 0;
 
@@ -232,7 +235,7 @@ namespace ChessForge
                         sb.Append(PrintChapterTitle(chapter));
                         if (!isFirstPrintPage)
                         {
-                            sb.Append(AddPageBreakPlaceholder());
+                            sb.AppendLine();
                         }
                         else
                         {
@@ -362,7 +365,7 @@ namespace ChessForge
 
             string indexTitle = gameOrExerc ? Properties.Resources.Games : Properties.Resources.Exercises;
             sb.AppendLine(indexTitle);
-            CreateUnderscoreLine(indexTitle);
+            sb.Append(CreateUnderscoreLine(indexTitle));
 
             int itemCounter = 0;
             foreach (Chapter chapter in workbook.Chapters)
@@ -412,16 +415,11 @@ namespace ChessForge
 
             string title = chapter.Title;
             int chapterNo = chapter.Index + 1;
-            string runNo = Properties.Resources.Chapter + " " + chapterNo.ToString();
+            string sNo = Properties.Resources.Chapter + " " + chapterNo.ToString();
 
-            sb.AppendLine(runNo);
-            sb.AppendLine(CreateUnderscoreLine(runNo));
-
-            // if title is empty, do not include the second paragraph
-            if (!string.IsNullOrWhiteSpace(title))
-            {
-                sb.AppendLine(title);
-            }
+            sb.Append(sNo + ": ");
+            sb.AppendLine(title);
+            sb.AppendLine(CreateUnderscoreLine(sNo));
 
             sb.AppendLine();
 
@@ -589,8 +587,25 @@ namespace ChessForge
                 game = chapter.ModelGames[chapter.ActiveModelGameIndex];
             }
 
-            sb.Append(PrintArticle(game.Tree));
+            _currentGameNumber++;
+            int gameNo = _continuousArticleNumbering ? _currentGameNumber : gameIndex + 1;
 
+            // if index < 0 then we are printing for the CurrentView scope hence no need for a header
+            if (gameIndex >= 0)
+            {
+                string gameWord = Properties.Resources.Game;
+                if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.USE_CUSTOM_GAME))
+                {
+                    gameWord = ConfigurationRtfExport.GetStringValue(ConfigurationRtfExport.CUSTOM_TERM_GAME);
+                }
+
+                string gameHeader = gameWord + " " + gameNo.ToString();
+
+                sb.AppendLine();
+                sb.AppendLine(gameHeader);
+            }
+
+            sb.Append(PrintArticle(game.Tree));
             return sb.ToString();
         }
 
@@ -613,6 +628,24 @@ namespace ChessForge
             else
             {
                 exercise = chapter.Exercises[chapter.ActiveExerciseIndex];
+            }
+
+            _currentExerciseNumber++;
+            int exerciseNo = _continuousArticleNumbering ? _currentExerciseNumber : exerciseIndex + 1;
+
+            // if index < 0 then we are printing for the CurrentView scope hence no need for a header
+            if (exerciseIndex >= 0)
+            {
+                string exerciseWord = Properties.Resources.Exercise;
+                if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.USE_CUSTOM_EXERCISE))
+                {
+                    exerciseWord = ConfigurationRtfExport.GetStringValue(ConfigurationRtfExport.CUSTOM_TERM_EXERCISE);
+                }
+
+                string exerciseHeader = exerciseWord + " " + exerciseNo.ToString();
+
+                sb.AppendLine();
+                sb.AppendLine(exerciseHeader);
             }
 
             sb.Append(PrintArticle(exercise.Tree));
