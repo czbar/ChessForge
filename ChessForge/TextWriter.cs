@@ -203,13 +203,9 @@ namespace ChessForge
                         txt = PrintIntro(chapter);
                         break;
                     case GameData.ContentType.STUDY_TREE:
-                        txt = PrintTreeView(AppState.Workbook.ActiveArticle.Tree);
-                        break;
                     case GameData.ContentType.MODEL_GAME:
-                        txt = PrintTreeView(AppState.Workbook.ActiveArticle.Tree);
-                        break;
                     case GameData.ContentType.EXERCISE:
-                        txt = PrintTreeView(AppState.Workbook.ActiveArticle.Tree);
+                        txt = PrintArticle(AppState.Workbook.ActiveArticle.Tree);
                         break;
                 }
             }
@@ -590,7 +586,7 @@ namespace ChessForge
                 sb.Append(PrintStudyHeader());
             }
 
-            sb.Append(PrintTreeView(chapter.StudyTree.Tree));
+            sb.Append(PrintArticle(chapter.StudyTree.Tree));
 
             return sb.ToString();
         }
@@ -616,7 +612,7 @@ namespace ChessForge
                 game = chapter.ModelGames[chapter.ActiveModelGameIndex];
             }
 
-            sb.Append(PrintTreeView(game.Tree));
+            sb.Append(PrintArticle(game.Tree));
 
             return sb.ToString();
         }
@@ -642,7 +638,7 @@ namespace ChessForge
                 exercise = chapter.Exercises[chapter.ActiveExerciseIndex];
             }
 
-            sb.Append(PrintTreeView(exercise.Tree));
+            sb.Append(PrintArticle(exercise.Tree));
 
             return sb.ToString();
         }
@@ -685,28 +681,6 @@ namespace ChessForge
             sb.Append(FlowDocumentToText(rtb.Document, chapter.Intro.Tree));
             return sb.ToString();
         }
-
-        /// <summary>
-        /// Prints as text the view of the passed tree.
-        /// </summary>
-        /// <param name="tree"></param>
-        /// <returns></returns>
-        private static string PrintTreeView(VariationTree tree)
-        {
-            StringBuilder sb = new StringBuilder();
-
-            sb.AppendLine(BuildPageHeader(tree, tree.ContentType));
-
-            if (tree.ContentType == GameData.ContentType.EXERCISE)
-            {
-                string fen = FenParser.GenerateFenFromPosition(tree.Nodes[0].Position, tree.MoveNumberOffset);
-                sb.AppendLine("[" + fen + "]");
-                sb.AppendLine();
-            }
-
-            return PrintArticle(tree);
-        }
-
 
         /// <summary>
         /// Print an article to text.
@@ -762,242 +736,6 @@ namespace ChessForge
                 doc.Blocks.Remove(paraUnderBoard);
             }
         }
-
-        /// <summary>
-        /// Writes a line sector to a string.
-        /// </summary>
-        /// <param name="sector"></param>
-        /// <returns></returns>
-        private static string WriteLineSector(LineSector sector, VariationTree tree)
-        {
-            StringBuilder sb = new StringBuilder();
-
-            bool firstMove = true;
-
-            string indent = "";
-
-            for (int i = 0; i < sector.DisplayLevel; i++)
-            {
-                indent += "  ";
-            }
-
-            for (int i = 0; i < sector.Nodes.Count; i++)
-            {
-                if (firstMove)
-                {
-                    sb.Append(indent);
-                }
-
-                TreeNode nd = sector.Nodes[i];
-                if (nd.NodeId != 0)
-                {
-                    if (nd.NodeId == LineSector.OPEN_BRACKET)
-                    {
-                        sb.Append("(");
-                    }
-                    else if (nd.NodeId == LineSector.CLOSE_BRACKET)
-                    {
-                        sb.Append(") ");
-                    }
-                    else
-                    {
-                        string textForNode = GetTextForNode(tree, nd, ref firstMove, indent);
-                        sb.Append(textForNode);
-                        if (i < sector.Nodes.Count - 1 && sector.Nodes[i + 1].NodeId != LineSector.CLOSE_BRACKET)
-                        {
-                            sb.Append(' ');
-                        }
-                    }
-                }
-            }
-
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Builds the header for the page.
-        /// </summary>
-        /// <param name="tree"></param>
-        /// <param name="contentType"></param>
-        /// <returns></returns>
-        private static string BuildPageHeader(VariationTree tree, GameData.ContentType contentType)
-        {
-            StringBuilder sb = new StringBuilder();
-
-            if (tree != null)
-            {
-                switch (contentType)
-                {
-                    case GameData.ContentType.MODEL_GAME:
-                    case GameData.ContentType.EXERCISE:
-                        string whitePlayer = tree.Header.GetWhitePlayer(out _);
-                        string blackPlayer = tree.Header.GetBlackPlayer(out _);
-
-                        string whitePlayerElo = tree.Header.GetWhitePlayerElo(out _);
-                        string blackPlayerElo = tree.Header.GetBlackPlayerElo(out _);
-
-                        bool hasPlayerNames = !(string.IsNullOrWhiteSpace(whitePlayer) && string.IsNullOrWhiteSpace(blackPlayer));
-
-                        if (hasPlayerNames)
-                        {
-                            sb.AppendLine(BuildPlayerLine(whitePlayer, whitePlayerElo));
-                            sb.AppendLine(BuildPlayerLine(blackPlayer, blackPlayerElo));
-                        }
-
-                        if (!string.IsNullOrEmpty(tree.Header.GetEventName(out _)))
-                        {
-                            sb.AppendLine();
-                            if (hasPlayerNames)
-                            {
-                                string round = tree.Header.GetRound(out _);
-                                if (!string.IsNullOrWhiteSpace(round))
-                                {
-                                    round = " (" + round + ")";
-                                }
-                                else
-                                {
-                                    round = "";
-                                }
-                                sb.AppendLine(tree.Header.GetEventName(out _) + round);
-                            }
-                            else
-                            {
-                                sb.AppendLine(tree.Header.GetEventName(out _));
-                            }
-                        }
-
-                        string annotator = tree.Header.GetAnnotator(out _);
-                        if (!string.IsNullOrWhiteSpace(annotator))
-                        {
-                            annotator = "      " + Properties.Resources.Annotator + ": " + annotator;
-                            sb.AppendLine(annotator);
-                        }
-
-                        string dateForDisplay = TextUtils.BuildDateFromDisplayFromPgnString(tree.Header.GetDate(out _));
-                        if (!string.IsNullOrEmpty(dateForDisplay))
-                        {
-                            sb.AppendLine("      " + Properties.Resources.Date + ": " + dateForDisplay);
-                        }
-
-                        string eco = tree.Header.GetECO(out _);
-                        string result = tree.Header.GetResult(out _);
-                        BuildResultAndEcoLine(eco, result, out string rEco, out string rResult);
-                        if (rEco != null || rResult != null)
-                        {
-                            sb.Append("      ");
-
-                            if (rEco != null)
-                            {
-                                sb.Append(rEco);
-                            }
-                            if (rResult != null)
-                            {
-                                sb.Append(rResult);
-                            }
-
-                            sb.AppendLine();
-                        }
-                        break;
-                    case GameData.ContentType.STUDY_TREE:
-                        sb.AppendLine(BuildChapterTitle());
-                        break;
-                }
-            }
-
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Builds the result and eco line.
-        /// </summary>
-        /// <param name="eco"></param>
-        /// <param name="result"></param>
-        /// <param name="rEco"></param>
-        /// <param name="rResult"></param>
-        private static void BuildResultAndEcoLine(string eco, string result, out string rEco, out string rResult)
-        {
-            rEco = null;
-            rResult = null;
-            if (!string.IsNullOrWhiteSpace(eco))
-            {
-                rEco = eco + "  ";
-            }
-
-            if (!string.IsNullOrWhiteSpace(result) && result != "*")
-            {
-                rResult = "(" + result + ")";
-            }
-        }
-
-        /// <summary>
-        /// Gets the text for a node.
-        /// </summary>
-        /// <param name="nd"></param>
-        /// <param name="isFirstNode"></param>
-        /// <param name="indent"></param>
-        /// <returns></returns>
-        private static string GetTextForNode(VariationTree tree, TreeNode nd, ref bool isFirstNode, string indent)
-        {
-            StringBuilder sb = new StringBuilder();
-
-            bool includeNumber = isFirstNode;
-            isFirstNode = false;
-
-            if (!string.IsNullOrWhiteSpace(nd.CommentBeforeMove))
-            {
-                sb.Append(Constants.START_COMMENT + nd.CommentBeforeMove + Constants.END_COMMENT + " ");
-                includeNumber = true;
-            }
-
-            sb.Append(MoveUtils.BuildSingleMoveText(nd, includeNumber, true, tree.MoveNumberOffset));
-
-            string fen = "";
-            if (nd.IsDiagram)
-            {
-                fen = "[" + FenParser.GenerateFenFromPosition(nd.Position, tree.MoveNumberOffset) + "]";
-            }
-
-            if (fen.Length > 0 && nd.IsDiagramPreComment)
-            {
-                sb.Append(Environment.NewLine + indent + fen + Environment.NewLine);
-                isFirstNode = true;
-            }
-            if (!string.IsNullOrWhiteSpace(nd.Comment))
-            {
-                sb.Append(" " + Constants.START_COMMENT + nd.Comment + Constants.END_COMMENT);
-            }
-            if (fen.Length > 0 && !nd.IsDiagramPreComment)
-            {
-                sb.Append(Environment.NewLine + indent + fen + Environment.NewLine);
-                isFirstNode = true;
-            }
-
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Builds a player line.
-        /// </summary>
-        /// <param name="playerName"></param>
-        /// <param name="playerElo"></param>
-        /// <returns></returns>
-        private static string BuildPlayerLine(string playerName, string playerElo)
-        {
-            if (string.IsNullOrWhiteSpace(playerName))
-            {
-                return "NN";
-            }
-
-            if (string.IsNullOrWhiteSpace(playerElo))
-            {
-                return playerName;
-            }
-            else
-            {
-                return playerName + " (" + playerElo + ")";
-            }
-        }
-
 
         //********************************************
         //
@@ -1174,6 +912,11 @@ namespace ChessForge
             return "\n\n\n";
         }
 
+        /// <summary>
+        /// Creates a line of underscores.
+        /// </summary>
+        /// <param name="txt"></param>
+        /// <returns></returns>
         private static string CreateUnderscoreLine(string txt)
         {
             if (string.IsNullOrEmpty(txt))
