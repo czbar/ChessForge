@@ -1,4 +1,5 @@
-﻿using ChessPosition;
+﻿using ChessForge.Properties;
+using ChessPosition;
 using GameTree;
 using Microsoft.Win32;
 using System;
@@ -72,9 +73,9 @@ namespace ChessForge
                                 {
                                     fileName = GetNextAvailableFileName(directory, baseName);
                                     filePath = Path.Combine(directory, fileName);
-                                    PositionImageGenerator.SaveDiagramAsImage(lstDiagsToSave[i], 
-                                                                              lstDiagsToSave[i].IsDiagramFlipped, 
-                                                                              filePath, 
+                                    PositionImageGenerator.SaveDiagramAsImage(lstDiagsToSave[i],
+                                                                              lstDiagsToSave[i].IsDiagramFlipped,
+                                                                              filePath,
                                                                               Configuration.DiagramImageSize);
                                 }
 
@@ -82,7 +83,7 @@ namespace ChessForge
                                 AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(message, CommentBox.HintType.INFO);
                                 Mouse.SetCursor(Cursors.Arrow);
                             }
-                        }                     
+                        }
                     }
                 }
             }
@@ -298,7 +299,14 @@ namespace ChessForge
             };
 
             saveDlg.OverwritePrompt = true;
-            saveDlg.Title = " " + Properties.Resources.SaveDiagramAsImage;
+            if (isMultiDiagrams)
+            {
+                saveDlg.Title = " " + Properties.Resources.SaveDiagramsAsImages + " (" + Resources.FirstFile + ")";
+            }
+            else
+            {
+                saveDlg.Title = " " + TextUtils.RemoveTrailingElipsis(Properties.Resources.SaveDiagramAsImage);
+            }
 
             try
             {
