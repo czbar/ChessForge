@@ -2038,8 +2038,9 @@ namespace ChessForge
                 invertDiagram.Visibility = hasDiagram ? Visibility.Visible : Visibility.Collapsed;
                 invertDiagram.IsEnabled = hasDiagram;
 
-                saveDiagram.Visibility = hasDiagram ? Visibility.Visible : Visibility.Collapsed;
-                saveDiagram.IsEnabled = hasDiagram;
+                // if NodeId is 0 we are looking at the main diagram on the exercise page
+                saveDiagram.Visibility = (hasDiagram || nd.NodeId == 0) ? Visibility.Visible : Visibility.Collapsed;
+                saveDiagram.IsEnabled = (hasDiagram || nd.NodeId == 0);
             }
         }
 
