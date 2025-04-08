@@ -667,6 +667,12 @@ namespace ChessForge
         /// <returns></returns>
         private static string PrintIntro(Chapter chapter)
         {
+            if (AppState.ActiveTab == TabViewType.INTRO)
+            {
+                // Intro is a special case where we need to save it to update the underlying data.
+                AppState.MainWin.SaveIntro();
+            }
+
             RichTextBox rtb = new RichTextBox();
 
             StringBuilder sb = new StringBuilder();

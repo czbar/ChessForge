@@ -51,7 +51,7 @@ namespace ChessForge
 
         // whether to insert FENs under diagrams
         private static bool _insertFens = false;
-        
+
         /// <summary>
         /// Exports the scoped articles into an RTF file.
         /// </summary>
@@ -382,7 +382,7 @@ namespace ChessForge
         private static void PrintChaptersViewToFlowDoc(FlowDocument printDoc, ref List<RtfDiagram> diagrams)
         {
             RichTextBox rtb = new RichTextBox();
-            var chaptersView = new  ChaptersView(rtb, null, true);
+            var chaptersView = new ChaptersView(rtb, null, true);
             chaptersView.BuildFlowDocumentForChaptersView(false);
             CreateDocumentForPrint(printDoc, rtb.Document, null, ref diagrams);
         }
@@ -792,6 +792,12 @@ namespace ChessForge
         /// <returns></returns>
         private static FlowDocument PrintIntro(Chapter chapter)
         {
+            if (AppState.ActiveTab == TabViewType.INTRO)
+            {
+                // Intro is a special case where we need to save it to update the underlying data.
+                AppState.MainWin.SaveIntro();
+            }
+
             RichTextBox rtbIntro = new RichTextBox();
             IntroView introView = new IntroView(rtbIntro, chapter, true);
 
