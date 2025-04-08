@@ -10,6 +10,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace ChessForge
 {
@@ -4106,6 +4107,7 @@ namespace ChessForge
 
                 if (dlg.ShowDialog() == true)
                 {
+                    WaitDialog waitDlg = null;
                     try
                     {
                         string filePath = RtfWriter.SelectTargetRtfFile();
@@ -4113,11 +4115,23 @@ namespace ChessForge
                         if (!string.IsNullOrEmpty(filePath) && filePath[0] != '.')
                         {
                             Mouse.SetCursor(Cursors.Wait);
+                            waitDlg = new WaitDialog(Properties.Resources.ExportToRtf);
+                            GuiUtilities.PositionDialogInMiddle(waitDlg, this);
+                            waitDlg.Show();
+                            Application.Current.Dispatcher.Invoke(() => { }, DispatcherPriority.Render);
                             done = RtfWriter.WriteRtf(filePath);
-                            Mouse.SetCursor(Cursors.Arrow);
+                            BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.OperationCompleted, CommentBox.HintType.INFO);
                         }
                     }
                     catch { }
+                    finally
+                    {
+                        if (waitDlg != null)
+                        {
+                            waitDlg.Close();
+                        }
+                        Mouse.SetCursor(Cursors.Arrow);
+                    }
                 }
             }
         }
@@ -4139,6 +4153,7 @@ namespace ChessForge
 
                 if (dlg.ShowDialog() == true)
                 {
+                    WaitDialog waitDlg = null;
                     try
                     {
                         string filePath = TextWriter.SelectTargetTextFile();
@@ -4146,11 +4161,23 @@ namespace ChessForge
                         if (!string.IsNullOrEmpty(filePath) && filePath[0] != '.')
                         {
                             Mouse.SetCursor(Cursors.Wait);
+                            waitDlg = new WaitDialog(Properties.Resources.ExportToText);
+                            GuiUtilities.PositionDialogInMiddle(waitDlg, this);
+                            waitDlg.Show();
+                            Application.Current.Dispatcher.Invoke(() => { }, DispatcherPriority.Render);
                             done = TextWriter.WriteText(filePath);
-                            Mouse.SetCursor(Cursors.Arrow);
+                            BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.OperationCompleted, CommentBox.HintType.INFO);
                         }
                     }
                     catch { }
+                    finally
+                    {
+                        if (waitDlg != null)
+                        {
+                            waitDlg.Close();
+                        }
+                        Mouse.SetCursor(Cursors.Arrow);
+                    }
                 }
             }
         }
