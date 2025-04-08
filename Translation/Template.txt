@@ -682,9 +682,18 @@ Export=
 #english: ExportRtf=Export as RTF
 ExportRtf=
 
+#description: Export to RTF
+#english: ExportToRtf=Export to RTF
+ExportToRtf=
+
 #description: Export as text
 #english: ExportText=Export as Text
 ExportText=
+
+#description: Export to text
+#english: ExportToText=Export to Text
+ExportToText=
+
 
 #description: Saves a copy of the current Workbook with the current version number, increments the version number
 #english: BackUpThisVersion=Back up this Version ...
@@ -1250,6 +1259,20 @@ ImageBorderWidth=
 #description: File exists options
 #english: FileExistActionsPrompt=Choose how to proceed.
 FileExistActionsPrompt=
+
+
+#######################################
+#
+# Header: DIALOG Wait Dialog
+#
+
+#description: Operation in progress
+#english: OperationInProgress=Operation in Progress
+OperationInProgress=
+
+#description: Operation completed
+#english: OperationCompleted=Operation Completed
+OperationCompleted=
 
 
 #######################################

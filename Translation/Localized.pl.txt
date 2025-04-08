@@ -682,9 +682,18 @@ Export=Eksportuj
 #english: ExportRtf=Export as RTF
 ExportRtf=Eksportuj jako RTF
 
+#description: Export to RTF
+#english: ExportToRtf=Export to RTF
+ExportToRtf=Eksport do pliku RTF
+
 #description: Export as text
 #english: ExportText=Export as Text
 ExportText=Eksportuj jako Tekst
+
+#description: Export to text
+#english: ExportToText=Export to Text
+ExportToText=Eksport do pliku tekstowego
+
 
 #description: Saves a copy of the current Workbook with the current version number, increments the version number
 #english: BackUpThisVersion=Back up this Version ...
@@ -1250,6 +1259,20 @@ ImageBorderWidth=Szerokość ramki
 #description: File exists options
 #english: FileExistActionsPrompt=Choose how to proceed.
 FileExistActionsPrompt=Wybierz jak kontynuować.
+
+
+#######################################
+#
+# Header: DIALOG Wait Dialog
+#
+
+#description: Operation in progress
+#english: OperationInProgress=Operation in Progress
+OperationInProgress=Przetwarzanie w toku
+
+#description: Operation completed
+#english: OperationCompleted=Operation Completed
+OperationCompleted=Przetwarzanie zakończone
 
 
 #######################################
@@ -3406,7 +3429,7 @@ EvaluateGames=Oceń partie z podręcznika
 
 #description: Please wait
 #english: PleaseWait=Please Wait
-PleaseWait=Proszę czekać!
+PleaseWait=Proszę czekać
 
 #description: Replay speed
 #english: ReplaySpeed=Replay Speed

@@ -3139,6 +3139,24 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Export to RTF.
+        /// </summary>
+        public static string ExportToRtf {
+            get {
+                return ResourceManager.GetString("ExportToRtf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export to Text.
+        /// </summary>
+        public static string ExportToText {
+            get {
+                return ResourceManager.GetString("ExportToText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Congratulations! You have completed the guessing exercise..
         /// </summary>
         public static string ExVwCompletedGuessing {
@@ -5624,11 +5642,29 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Operation Completed.
+        /// </summary>
+        public static string OperationCompleted {
+            get {
+                return ResourceManager.GetString("OperationCompleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Details .
         /// </summary>
         public static string OperationDetails {
             get {
                 return ResourceManager.GetString("OperationDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operation in Progress.
+        /// </summary>
+        public static string OperationInProgress {
+            get {
+                return ResourceManager.GetString("OperationInProgress", resourceCulture);
             }
         }
         

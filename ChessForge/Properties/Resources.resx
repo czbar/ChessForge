@@ -591,8 +591,14 @@
   <data name="ExportRtf" xml:space="preserve">
     <value>Export as RTF</value>
   </data>
+  <data name="ExportToRtf" xml:space="preserve">
+    <value>Export to RTF</value>
+  </data>
   <data name="ExportText" xml:space="preserve">
     <value>Export as Text</value>
+  </data>
+  <data name="ExportToText" xml:space="preserve">
+    <value>Export to Text</value>
   </data>
   <data name="BackUpThisVersion" xml:space="preserve">
     <value>Back up this Version ...</value>
@@ -945,6 +951,12 @@
   </data>
   <data name="FileExistActionsPrompt" xml:space="preserve">
     <value>Choose how to proceed.</value>
+  </data>
+  <data name="OperationInProgress" xml:space="preserve">
+    <value>Operation in Progress</value>
+  </data>
+  <data name="OperationCompleted" xml:space="preserve">
+    <value>Operation Completed</value>
   </data>
   <data name="DlgBlunderDetection" xml:space="preserve">
     <value>Bad Move Detection</value>

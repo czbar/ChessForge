@@ -591,8 +591,14 @@
   <data name="ExportRtf" xml:space="preserve">
     <value>Eksportuj jako RTF</value>
   </data>
+  <data name="ExportToRtf" xml:space="preserve">
+    <value>Eksport do pliku RTF</value>
+  </data>
   <data name="ExportText" xml:space="preserve">
     <value>Eksportuj jako Tekst</value>
+  </data>
+  <data name="ExportToText" xml:space="preserve">
+    <value>Eksport do pliku tekstowego</value>
   </data>
   <data name="BackUpThisVersion" xml:space="preserve">
     <value>Zrób kopię tej wersji...</value>
@@ -945,6 +951,12 @@
   </data>
   <data name="FileExistActionsPrompt" xml:space="preserve">
     <value>Wybierz jak kontynuować.</value>
+  </data>
+  <data name="OperationInProgress" xml:space="preserve">
+    <value>Przetwarzanie w toku</value>
+  </data>
+  <data name="OperationCompleted" xml:space="preserve">
+    <value>Przetwarzanie zakończone</value>
   </data>
   <data name="DlgBlunderDetection" xml:space="preserve">
     <value>Detekcja Słabych Posunięć</value>
@@ -2369,7 +2381,7 @@
     <value>Oceń partie z podręcznika</value>
   </data>
   <data name="PleaseWait" xml:space="preserve">
-    <value>Proszę czekać!</value>
+    <value>Proszę czekać</value>
   </data>
   <data name="ReplaySpeed" xml:space="preserve">
     <value>Prędkość Auto-Odtwarzania</value>
