@@ -415,9 +415,9 @@ namespace ChessForge
 
             string title = chapter.Title;
             int chapterNo = chapter.Index + 1;
-            string sNo = Properties.Resources.Chapter + " " + chapterNo.ToString();
+            string sNo = Properties.Resources.Chapter + " " + chapterNo.ToString() + ":";
+            sb.Append(sNo + " ");
 
-            sb.Append(sNo + ": ");
             sb.AppendLine(title);
             sb.AppendLine(CreateUnderscoreLine(sNo));
 
@@ -763,7 +763,7 @@ namespace ChessForge
         {
             if (tree != null)
             {
-                ReplaceDiagramsInFlowDocument(doc, tree);
+                ReplaceNonTextInFlowDocument(doc, tree);
             }
             InsertIndents(doc);
 
@@ -820,9 +820,10 @@ namespace ChessForge
         /// </summary>
         /// <param name="doc"></param>
         /// <param name="tree"></param>
-        private static void ReplaceDiagramsInFlowDocument(FlowDocument doc, VariationTree tree)
+        private static void ReplaceNonTextInFlowDocument(FlowDocument doc, VariationTree tree)
         {
             List<Block> blocksToModify = new List<Block>();
+
             foreach (Block block in doc.Blocks)
             {
                 blocksToModify.Add(block);
@@ -855,31 +856,7 @@ namespace ChessForge
                     }
                     else
                     {
-                        List<Inline> inlinesToModify = new List<Inline>();
-                        foreach (Inline inl in para.Inlines)
-                        {
-                            inlinesToModify.Add(inl);
-                        }
-
-                        para.Inlines.Clear();
-                        foreach (Inline inl in inlinesToModify)
-                        {
-                            if (inl is Run run)
-                            {
-                                para.Inlines.Add(run);
-                            }
-                            else if (inl is InlineUIContainer iuc)
-                            {
-                                if (inl.Name.StartsWith(RichTextBoxUtilities.InlineDiagramIucPrefix))
-                                {
-                                    int nodeId = TextUtils.GetIdFromPrefixedString(inl.Name);
-                                    TreeNode nd = tree.GetNodeFromNodeId(nodeId);
-
-                                    string fenText = "[" + FenParser.GenerateFenFromPosition(nd.Position) + "]";
-                                    para.Inlines.Add(new Run(fenText));
-                                }
-                            }
-                        }
+                        ProcessInlines(para, tree);
                     }
                 }
                 else
@@ -887,6 +864,91 @@ namespace ChessForge
                     AppLog.Message("RTF Write: Block element type = " + block.GetType().ToString());
                 }
             }
+        }
+
+        /// <summary>
+        /// Processes the inlines of a paragraph.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <param name="tree"></param>
+        private static void ProcessInlines(Paragraph para, VariationTree tree)
+        {
+            List<Inline> inlinesToModify = new List<Inline>();
+            foreach (Inline inl in para.Inlines)
+            {
+                inlinesToModify.Add(inl);
+            }
+
+            bool lastRunWasIntroMove = false;
+            para.Inlines.Clear();
+            foreach (Inline inl in inlinesToModify)
+            {
+                if (inl is Run run)
+                {
+                    lastRunWasIntroMove = false;
+                    para.Inlines.Add(run);
+                }
+                else if (inl is InlineUIContainer iuc)
+                {
+                    if (inl.Name != null && inl.Name.StartsWith(RichTextBoxUtilities.InlineDiagramIucPrefix))
+                    {
+                        lastRunWasIntroMove = false;
+
+                        int nodeId = TextUtils.GetIdFromPrefixedString(inl.Name);
+                        TreeNode nd = tree.GetNodeFromNodeId(nodeId);
+
+                        string fenText = "[" + FenParser.GenerateFenFromPosition(nd.Position) + "]";
+                        para.Inlines.Add(new Run(fenText));
+                    }
+                    else if (inl.Name != null && inl.Name.StartsWith(RichTextBoxUtilities.UicMovePrefix))
+                    {
+                        lastRunWasIntroMove = ProcessIntroMove(para, iuc, lastRunWasIntroMove);
+                    }
+                    else
+                    {
+                        lastRunWasIntroMove = false;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Replace the special Move encoding found in the Intro view
+        /// witht the text of the move.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <param name="iuc"></param>
+        /// <param name="lastRunWasIntroMove"></param>
+        /// <returns></returns>
+        private static bool ProcessIntroMove(Paragraph para, InlineUIContainer iuc, bool lastRunWasIntroMove)
+        {
+            bool handled = false;
+
+            // there should be just one child of type TextBlock
+            var tb = iuc.Child;
+            if (tb != null && tb is TextBlock tbMove)
+            {
+                // this should have just one inline of type Run
+                if (tbMove.Inlines.Count > 0)
+                {
+                    Run rMove = tbMove.Inlines.FirstInline as Run;
+                    if (rMove != null && rMove.Text != null)
+                    {
+                        Run moveRun = new Run();
+                        moveRun.Text = rMove.Text;
+
+                        // if previous text was also an IntroMove, remove the leading space so we don't have too many!
+                        if (lastRunWasIntroMove && !string.IsNullOrEmpty(moveRun.Text) && moveRun.Text[0] == ' ')
+                        {
+                            moveRun.Text = moveRun.Text.Substring(1);
+                        }
+                        para.Inlines.Add(moveRun);
+                        handled = true;
+                    }
+                }
+            }
+
+            return handled;
         }
 
         /// <summary>
