@@ -359,6 +359,9 @@
     <Compile Include="VariationTreeViewMoveRuns.cs" />
     <Compile Include="VariationTreeViewSelections.cs" />
     <Compile Include="VariationTreeViewUtils.cs" />
+    <Compile Include="WaitDialog.xaml.cs">
+      <DependentUpon>WaitDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WorkbookLocation.cs" />
     <Compile Include="WorkbookLocationNavigator.cs" />
     <Compile Include="WorkbookOperation.cs" />
@@ -636,6 +639,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UpdateAvailableDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WaitDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
