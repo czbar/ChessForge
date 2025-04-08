@@ -243,12 +243,11 @@ namespace ChessForge
                     if (currGame != null && currGame.GameText != null)
                     {
                         AppState.MainWin.BoardCommentBox.ReadingItems(_articlesCompleted, _articleList.Count, currGame, ticks);
-                        System.Windows.Application.Current.Dispatcher.Invoke(() => { }, DispatcherPriority.Render);
                         if (_state == ProcessState.FINISHED)
                         {
                             AppState.MainWin.BoardCommentBox.ShowTabHints();
                         }
-                        AppState.DoEvents();
+                        //AppState.DoEvents();
                     }
                 }
             }
