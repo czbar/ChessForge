@@ -849,7 +849,7 @@ namespace ChessForge
                 Inline inlClicked = FindInlineByName(HostRtb.Document, uicName);
                 if (adjustCaret)
                 {
-                    _rtb.CaretPosition = inlClicked.ElementEnd;
+                    HostRtb.CaretPosition = inlClicked.ElementEnd;
                 }
                 AppState.MainWin.DisplayPosition(_selectedNode);
 
