@@ -4118,7 +4118,7 @@ namespace ChessForge
                             waitDlg = new WaitDialog(Properties.Resources.ExportToRtf);
                             GuiUtilities.PositionDialogInMiddle(waitDlg, this);
                             waitDlg.Show();
-                            Application.Current.Dispatcher.Invoke(() => { }, DispatcherPriority.Render);
+                            AppState.DoEvents();
                             done = RtfWriter.WriteRtf(filePath);
                             BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.OperationCompleted, CommentBox.HintType.INFO);
                         }
@@ -4164,7 +4164,7 @@ namespace ChessForge
                             waitDlg = new WaitDialog(Properties.Resources.ExportToText);
                             GuiUtilities.PositionDialogInMiddle(waitDlg, this);
                             waitDlg.Show();
-                            Application.Current.Dispatcher.Invoke(() => { }, DispatcherPriority.Render);
+                            AppState.DoEvents();
                             done = TextWriter.WriteText(filePath);
                             BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.OperationCompleted, CommentBox.HintType.INFO);
                         }
