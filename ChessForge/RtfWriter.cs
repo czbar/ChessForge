@@ -1527,6 +1527,8 @@ namespace ChessForge
                     {
                         Run moveRun = new Run();
                         CopyRunAttributes(moveRun, rMove);
+
+                        // if previous text was also an IntroMove, remove the leading space so we don't have too many!
                         if (lastRunWasIntroMove && moveRun.Text != null && moveRun.Text[0] == ' ')
                         {
                             moveRun.Text = moveRun.Text.Substring(1);
