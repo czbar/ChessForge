@@ -156,6 +156,12 @@
   <data name="RtfFiles" xml:space="preserve">
     <value>RTF files</value>
   </data>
+  <data name="TextFiles" xml:space="preserve">
+    <value>Text files</value>
+  </data>
+  <data name="FirstFile" xml:space="preserve">
+    <value>first file</value>
+  </data>
   <data name="FileExists" xml:space="preserve">
     <value>File Already Exists</value>
   </data>
@@ -583,7 +589,16 @@
     <value>Export</value>
   </data>
   <data name="ExportRtf" xml:space="preserve">
-    <value>Export as RTF (Beta)</value>
+    <value>Export as RTF</value>
+  </data>
+  <data name="ExportToRtf" xml:space="preserve">
+    <value>Export to RTF</value>
+  </data>
+  <data name="ExportText" xml:space="preserve">
+    <value>Export as Text</value>
+  </data>
+  <data name="ExportToText" xml:space="preserve">
+    <value>Export to Text</value>
   </data>
   <data name="BackUpThisVersion" xml:space="preserve">
     <value>Back up this Version ...</value>
@@ -937,6 +952,12 @@
   <data name="FileExistActionsPrompt" xml:space="preserve">
     <value>Choose how to proceed.</value>
   </data>
+  <data name="OperationInProgress" xml:space="preserve">
+    <value>Operation in Progress</value>
+  </data>
+  <data name="OperationCompleted" xml:space="preserve">
+    <value>Operation Completed</value>
+  </data>
   <data name="DlgBlunderDetection" xml:space="preserve">
     <value>Bad Move Detection</value>
   </data>
@@ -984,6 +1005,9 @@
   </data>
   <data name="CustomTerms" xml:space="preserve">
     <value>Custom Headers</value>
+  </data>
+  <data name="InsertFensUnderDiagrams" xml:space="preserve">
+    <value>Insert FEN under diagrams</value>
   </data>
   <data name="ReorderLines" xml:space="preserve">
     <value>Reorder Lines</value>

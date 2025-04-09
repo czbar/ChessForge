@@ -334,6 +334,7 @@
     </Compile>
     <Compile Include="StatsUtils.cs" />
     <Compile Include="StudyTreeView.cs" />
+    <Compile Include="TextWriter.cs" />
     <Compile Include="Tools.cs" />
     <Compile Include="TrainingSessionControl.xaml.cs">
       <DependentUpon>TrainingSessionControl.xaml</DependentUpon>
@@ -350,6 +351,7 @@
     <Compile Include="SystemClipboard.cs" />
     <Compile Include="TopGamesViewRow.cs" />
     <Compile Include="TrainingViewMoveHandlers.cs" />
+    <Compile Include="TreeViewManagement\LineSectorsBuilder.cs" />
     <Compile Include="TreeViewManagement\TreeViewUpdater.cs" />
     <Compile Include="VariationTreeViewBuild.cs" />
     <Compile Include="VariationTreeViewDiagram.cs" />
@@ -357,6 +359,9 @@
     <Compile Include="VariationTreeViewMoveRuns.cs" />
     <Compile Include="VariationTreeViewSelections.cs" />
     <Compile Include="VariationTreeViewUtils.cs" />
+    <Compile Include="WaitDialog.xaml.cs">
+      <DependentUpon>WaitDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WorkbookLocation.cs" />
     <Compile Include="WorkbookLocationNavigator.cs" />
     <Compile Include="WorkbookOperation.cs" />
@@ -634,6 +639,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UpdateAvailableDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WaitDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -69,6 +69,14 @@ ImageFiles=Obrazy
 #english: RtfFiles=RTF files
 RtfFiles=Pliki RTF
 
+#description: Text files
+#english: TextFiles=Text files
+TextFiles=Pliki Tekstowe
+
+#description: First file
+#english: FirstFile=first file
+FirstFile=pierwszy plik
+
 #description: File already exists
 #english: FileExists=File Already Exists
 FileExists=Plik już istnieje
@@ -671,8 +679,21 @@ SaveDiagramAsImage= Zapisz diagram jako obraz...
 Export=Eksportuj
 
 #description: Export as RTF
-#english: ExportRtf=Export as RTF (Beta)
+#english: ExportRtf=Export as RTF
 ExportRtf=Eksportuj jako RTF
+
+#description: Export to RTF
+#english: ExportToRtf=Export to RTF
+ExportToRtf=Eksport do pliku RTF
+
+#description: Export as text
+#english: ExportText=Export as Text
+ExportText=Eksportuj jako Tekst
+
+#description: Export to text
+#english: ExportToText=Export to Text
+ExportToText=Eksport do pliku tekstowego
+
 
 #description: Saves a copy of the current Workbook with the current version number, increments the version number
 #english: BackUpThisVersion=Back up this Version ...
@@ -1242,6 +1263,20 @@ FileExistActionsPrompt=Wybierz jak kontynuować.
 
 #######################################
 #
+# Header: DIALOG Wait Dialog
+#
+
+#description: Operation in progress
+#english: OperationInProgress=Operation in Progress
+OperationInProgress=Przetwarzanie w toku
+
+#description: Operation completed
+#english: OperationCompleted=Operation Completed
+OperationCompleted=Przetwarzanie zakończone
+
+
+#######################################
+#
 # Header: DIALOG Bad Move Options
 #
 
@@ -1315,6 +1350,9 @@ TwoColumnFormat=Format 2-kolumnowy
 #english: CustomTerms=Custom Headers
 CustomTerms=Niestandardowe Nagłówki
 
+#description: Insert FEN under diagrams
+#english: InsertFensUnderDiagrams=Insert FEN under diagrams
+InsertFensUnderDiagrams=Wstaw FEN pod diagramami
 
 #######################################
 #
@@ -3391,7 +3429,7 @@ EvaluateGames=Oceń partie z podręcznika
 
 #description: Please wait
 #english: PleaseWait=Please Wait
-PleaseWait=Proszę czekać!
+PleaseWait=Proszę czekać
 
 #description: Replay speed
 #english: ReplaySpeed=Replay Speed

@@ -104,21 +104,32 @@ namespace ChessForge
         // attributes of the Run to bring to view
         private ChaptersViewRunAttrs _runToBringToView;
 
+        // whether the view is built for printing
+        private bool _isPrinting;
+
         /// <summary>
         /// Constructor. Sets a reference to the 
         /// FlowDocument for the RichTextBox control, via
         /// a call to the base class's constructor.
         /// </summary>
-        /// <param name="doc"></param>
-        public ChaptersView(RichTextBox rtb, MainWindow mainWin) : base(rtb)
+        /// <param name="rtb"></param>
+        /// <param name="mainWin">Main application window or null if called for export/print.</param>
+        public ChaptersView(RichTextBox rtb, MainWindow mainWin, bool isPrinting = false) : base(rtb)
         {
-            _mainWin = mainWin;
-            _mainWin.UiRtbChaptersView.AllowDrop = false;
-            _mainWin.UiRtbChaptersView.IsReadOnly = true;
+            // for the GUI display we need mainWin but when buidling the view
+            // to print we don't
+            if (mainWin != null)
+            {
+                _mainWin = mainWin;
+                _mainWin.UiRtbChaptersView.AllowDrop = false;
+                _mainWin.UiRtbChaptersView.IsReadOnly = true;
 
-            _richTextBox = AppState.MainWin.UiRtbChaptersView;
+                _richTextBox = AppState.MainWin.UiRtbChaptersView;
 
-            SetRtbPageWidth(_richTextBox.Document);
+                SetRtbPageWidth(_richTextBox.Document);
+            }
+
+            _isPrinting = isPrinting;
         }
 
         /// <summary>
@@ -603,15 +614,23 @@ namespace ChessForge
 
                 para.Name = _par_chapter_ + chapter.Index.ToString();
 
-                char expandCollapse = chapter.IsViewExpanded ? Constants.CharCollapse : Constants.CharExpand;
-                Run rExpandChar = CreateRun(STYLE_CHAPTER_TITLE, expandCollapse.ToString() + " ", true);
-                rExpandChar.Name = _run_chapter_expand_char_ + chapter.Index.ToString();
-                rExpandChar.MouseDown += EventChapterExpandSymbolClicked;
-                para.Inlines.Add(rExpandChar);
+                if (!_isPrinting)
+                {
+                    char expandCollapse = chapter.IsViewExpanded ? Constants.CharCollapse : Constants.CharExpand;
+                    Run rExpandChar = CreateRun(STYLE_CHAPTER_TITLE, expandCollapse.ToString() + " ", true);
+                    rExpandChar.Name = _run_chapter_expand_char_ + chapter.Index.ToString();
+                    rExpandChar.MouseDown += EventChapterExpandSymbolClicked;
+                    para.Inlines.Add(rExpandChar);
+                }
+                else
+                {
+                    // in printing we want an empty line between chapters
+                    para.Inlines.Add(new Run("\n"));
+                }
 
-                string chapterNo = (WorkbookManager.SessionWorkbook.GetChapterIndex(chapter) + 1).ToString();
+                    string chapterNo = (WorkbookManager.SessionWorkbook.GetChapterIndex(chapter) + 1).ToString();
                 Run rChapter = CreateRun(STYLE_CHAPTER_TITLE, "[" + chapterNo + ".] " + chapter.GetTitle(), true);
-                if (chapter.Index == WorkbookManager.SessionWorkbook.ActiveChapter.Index)
+                if (chapter.Index == WorkbookManager.SessionWorkbook.ActiveChapter.Index && !_isPrinting)
                 {
                     ShowSelectionMark(ref rChapter, true, SELECTED_CHAPTER_PREFIX, NON_SELECTED_CHAPTER_PREFIX);
                 }
@@ -622,7 +641,7 @@ namespace ChessForge
                 rChapter.MouseLeave += EventChapterHeaderLeft;
                 para.Inlines.Add(rChapter);
 
-                if (chapter.IsViewExpanded)
+                if (chapter.IsViewExpanded || _isPrinting)
                 {
                     InsertIntroRun(para, chapter);
                     InsertStudyRun(para, chapter);
@@ -851,6 +870,10 @@ namespace ChessForge
                     para.Inlines.Add(new Run("\n"));
                     string lineText = BuildModelGameTitleText(chapter, i);
                     Run rGame = CreateRun(STYLE_SUBHEADER, lineText, true);
+                    if (_isPrinting)
+                    {
+                        rGame.FontSize -= 2;
+                    }
                     rGame.Name = _run_model_game_ + i.ToString();
                     // use Preview for MouseDn/Up but "plain" MouseMove. Otherwise drag-and-drop logic won't work
                     // as move events won't be received until mouse button is no longer down.
@@ -858,7 +881,9 @@ namespace ChessForge
                     rGame.PreviewMouseUp += EventModelGameRunDrop;
                     rGame.MouseMove += EventModelGameRunHovered;
                     rGame.MouseLeave += EventModelGameRunLeft;
-                    if (LastClickedItemType == WorkbookManager.ItemType.MODEL_GAME && i == chapter.ActiveModelGameIndex && chapter == WorkbookManager.SessionWorkbook.ActiveChapter)
+                    if (LastClickedItemType == WorkbookManager.ItemType.MODEL_GAME 
+                        && i == chapter.ActiveModelGameIndex 
+                        && chapter == WorkbookManager.SessionWorkbook.ActiveChapter)
                     {
                         ShowSelectionMark(ref rGame, true, SELECTED_ARTICLE_PREFIX, NON_SELECTED_ARTICLE_PREFIX);
                     }
@@ -906,6 +931,10 @@ namespace ChessForge
                     para.Inlines.Add(new Run("\n"));
                     string lineText = BuildExerciseTitleText(chapter, i);
                     Run rExercise = CreateRun(STYLE_SUBHEADER, lineText, false);
+                    if (_isPrinting)
+                    {
+                        rExercise.FontSize -= 2;
+                    }
                     rExercise.Name = _run_exercise_ + i.ToString();
 
                     // use Preview for MouseDn/Up but "plain" MouseMove. Otherwise drag-and-drop logic won't work
@@ -914,7 +943,9 @@ namespace ChessForge
                     rExercise.PreviewMouseUp += EventExerciseRunDrop;
                     rExercise.MouseMove += EventExerciseRunHovered;
                     rExercise.MouseLeave += EventExerciseRunLeft;
-                    if (LastClickedItemType == WorkbookManager.ItemType.EXERCISE && i == chapter.ActiveExerciseIndex && chapter == WorkbookManager.SessionWorkbook.ActiveChapter)
+                    if (LastClickedItemType == WorkbookManager.ItemType.EXERCISE 
+                        && i == chapter.ActiveExerciseIndex 
+                        && chapter == WorkbookManager.SessionWorkbook.ActiveChapter)
                     {
                         ShowSelectionMark(ref rExercise, true, SELECTED_ARTICLE_PREFIX, NON_SELECTED_ARTICLE_PREFIX);
                     }
@@ -934,7 +965,7 @@ namespace ChessForge
         /// <returns></returns>
         private Run InsertExpandCollapseSymbolRun(Paragraph para, string prefix, int chapterIndex, GameData.ContentType contentType, bool isExpanded, bool hasContent)
         {
-            if (hasContent)
+            if (hasContent && !_isPrinting)
             {
                 char expandCollapse = isExpanded ? Constants.CharCollapse : Constants.CharExpand;
                 Run rExpandChar = CreateRun(STYLE_SUBHEADER, expandCollapse.ToString() + " ", true);
@@ -1672,7 +1703,7 @@ namespace ChessForge
         /// <param name="highlighted"></param>
         private void ShowSelectionMark(ref Run run, bool highlighted, string selectionPrefix, string nonSelectionPrefix)
         {
-            if (string.IsNullOrEmpty(run.Text))
+            if (string.IsNullOrEmpty(run.Text) || _isPrinting)
             {
                 return;
             }

@@ -138,12 +138,19 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnLocateEngine_Click(object sender, RoutedEventArgs e)
         {
-            string searchPath = Path.GetDirectoryName(Configuration.EngineExePath);
-            string res = Configuration.SelectEngineExecutable(searchPath);
-            if (!string.IsNullOrEmpty(res))
+            try
             {
-                EnginePath = res;
-                UiTbEngineExe.Text = EnginePath;
+                string searchPath = Path.GetDirectoryName(Configuration.EngineExePath);
+
+                string res = Configuration.SelectEngineExecutable(searchPath);
+                if (!string.IsNullOrEmpty(res))
+                {
+                    EnginePath = res;
+                    UiTbEngineExe.Text = EnginePath;
+                }
+            }
+            catch
+            {
             }
         }
 

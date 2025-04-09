@@ -33,13 +33,17 @@ namespace ChessForge
             string pathNoExt = "";
             if (!string.IsNullOrEmpty(path))
             {
-                string directory = Path.GetDirectoryName(path);
+                try
+                {
+                    string directory = Path.GetDirectoryName(path);
 
-                // Get the file name without the extension
-                string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(path);
+                    // Get the file name without the extension
+                    string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(path);
 
-                // Combine the directory and file name without extension
-                pathNoExt = Path.Combine(directory, fileNameWithoutExtension);
+                    // Combine the directory and file name without extension
+                    pathNoExt = Path.Combine(directory, fileNameWithoutExtension);
+                }
+                catch { }
             }
 
             return pathNoExt;

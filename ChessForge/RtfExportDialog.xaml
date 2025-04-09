@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
         xmlns:p="clr-namespace:ChessForge.Properties"
-        Title="{x:Static p:Resources.DlgExportRtf}" Height="410" Width="575">
+        Title="{x:Static p:Resources.DlgExportRtf}" Height="435" Width="575">
     <Grid>
         <GroupBox Header="{x:Static p:Resources.Scope}" Margin="15,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="160" Height="135">
             <StackPanel>
@@ -30,7 +30,7 @@
                 <CheckBox x:Name="UiCbExercises" Content="{x:Static p:Resources.Exercises}" Margin="10,10,0,0"/>
             </StackPanel>
         </GroupBox>
-        <GroupBox Header="{x:Static p:Resources.TwoColumnFormat}" Margin="15,150,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="160" Height="162">
+        <GroupBox x:Name="UiGbColumnFormats" Header="{x:Static p:Resources.TwoColumnFormat}" Margin="15,150,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="160" Height="162">
             <StackPanel>
                 <CheckBox x:Name="UiCbIntro2Col" Content="{x:Static p:Resources.Intro}" Margin="10,15,0,0"/>
                 <CheckBox x:Name="UiCbStudy2Col" Content="{x:Static p:Resources.Study}" Margin="10,15,0,0"/>
@@ -58,7 +58,8 @@
                 <TextBox x:Name="UiTbExerciseCustomDummy" IsEnabled="False" Visibility="Hidden" Text="" Margin="150,112,0,0" Width="140" Height="20"/>
             </Canvas>
         </GroupBox>
-        <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Export}" IsDefault="True" HorizontalAlignment="Center" Margin="-120,0,0,25" VerticalAlignment="Bottom" Width="100" Click="UiBtnOk_Click" />
-        <Button x:Name="UiBtnCancel" Content="{x:Static p:Resources.Cancel}" IsCancel="True" HorizontalAlignment="Center" Margin="120,0,0,25" VerticalAlignment="Bottom" Width="100"/>
+        <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Export}" IsDefault="True" HorizontalAlignment="Center" Margin="-120,0,0,20" VerticalAlignment="Bottom" Width="100" Click="UiBtnOk_Click" />
+        <Button x:Name="UiBtnCancel" Content="{x:Static p:Resources.Cancel}" IsCancel="True" HorizontalAlignment="Center" Margin="120,0,0,20" VerticalAlignment="Bottom" Width="100"/>
+        <CheckBox x:Name="UiCbFens" Content="{x:Static p:Resources.InsertFensUnderDiagrams}" HorizontalAlignment="Center" Margin="0,0,0,56" VerticalAlignment="Bottom"/>
     </Grid>
 </Window>

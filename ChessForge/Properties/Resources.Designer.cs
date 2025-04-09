@@ -3121,11 +3121,38 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Export as RTF (Beta).
+        ///   Looks up a localized string similar to Export as RTF.
         /// </summary>
         public static string ExportRtf {
             get {
                 return ResourceManager.GetString("ExportRtf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export as Text.
+        /// </summary>
+        public static string ExportText {
+            get {
+                return ResourceManager.GetString("ExportText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export to RTF.
+        /// </summary>
+        public static string ExportToRtf {
+            get {
+                return ResourceManager.GetString("ExportToRtf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export to Text.
+        /// </summary>
+        public static string ExportToText {
+            get {
+                return ResourceManager.GetString("ExportToText", resourceCulture);
             }
         }
         
@@ -3297,6 +3324,15 @@ namespace ChessForge.Properties {
         public static string FindIdenticalPosition {
             get {
                 return ResourceManager.GetString("FindIdenticalPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to first file.
+        /// </summary>
+        public static string FirstFile {
+            get {
+                return ResourceManager.GetString("FirstFile", resourceCulture);
             }
         }
         
@@ -4143,6 +4179,15 @@ namespace ChessForge.Properties {
         public static string InsertDiagramPreComment {
             get {
                 return ResourceManager.GetString("InsertDiagramPreComment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insert FEN under diagrams.
+        /// </summary>
+        public static string InsertFensUnderDiagrams {
+            get {
+                return ResourceManager.GetString("InsertFensUnderDiagrams", resourceCulture);
             }
         }
         
@@ -5597,11 +5642,29 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Operation Completed.
+        /// </summary>
+        public static string OperationCompleted {
+            get {
+                return ResourceManager.GetString("OperationCompleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Details .
         /// </summary>
         public static string OperationDetails {
             get {
                 return ResourceManager.GetString("OperationDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operation in Progress.
+        /// </summary>
+        public static string OperationInProgress {
+            get {
+                return ResourceManager.GetString("OperationInProgress", resourceCulture);
             }
         }
         
@@ -7348,6 +7411,15 @@ namespace ChessForge.Properties {
         public static string Text {
             get {
                 return ResourceManager.GetString("Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text files.
+        /// </summary>
+        public static string TextFiles {
+            get {
+                return ResourceManager.GetString("TextFiles", resourceCulture);
             }
         }
         

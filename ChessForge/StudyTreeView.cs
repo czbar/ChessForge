@@ -426,6 +426,11 @@ namespace ChessForge
         /// <param name="downOnly"></param>
         public void InsertArrowRuns(Paragraph para, bool downOnly = false)
         {
+            if (_isPrinting)
+            {
+                return;
+            }
+
             Run rPlus = new Run(Constants.CHAR_DOWN_ARROW.ToString());
             rPlus.FontWeight = FontWeights.Normal;
             rPlus.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;

@@ -1,4 +1,5 @@
-﻿using ChessPosition;
+﻿using ChessForge.Properties;
+using ChessPosition;
 using GameTree;
 using Microsoft.Win32;
 using System;
@@ -72,9 +73,9 @@ namespace ChessForge
                                 {
                                     fileName = GetNextAvailableFileName(directory, baseName);
                                     filePath = Path.Combine(directory, fileName);
-                                    PositionImageGenerator.SaveDiagramAsImage(lstDiagsToSave[i], 
-                                                                              lstDiagsToSave[i].IsDiagramFlipped, 
-                                                                              filePath, 
+                                    PositionImageGenerator.SaveDiagramAsImage(lstDiagsToSave[i],
+                                                                              lstDiagsToSave[i].IsDiagramFlipped,
+                                                                              filePath,
                                                                               Configuration.DiagramImageSize);
                                 }
 
@@ -82,7 +83,7 @@ namespace ChessForge
                                 AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(message, CommentBox.HintType.INFO);
                                 Mouse.SetCursor(Cursors.Arrow);
                             }
-                        }                     
+                        }
                     }
                 }
             }
@@ -157,9 +158,9 @@ namespace ChessForge
                         Configuration.DiagramImageSize = sideSize;
 
                         // at this point we have all we need in the Configuration class
-                        PositionImageGenerator.SaveDiagramAsImage(node, isFlipped, Configuration.LastPngFile, Configuration.DiagramImageSize);
+                        PositionImageGenerator.SaveDiagramAsImage(node, isFlipped, Configuration.LastPngExportFile, Configuration.DiagramImageSize);
                         AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgDiagramImageSaved + " "
-                                                                               + Path.GetFileName(Configuration.LastPngFile), CommentBox.HintType.INFO);
+                                                                               + Path.GetFileName(Configuration.LastPngExportFile), CommentBox.HintType.INFO);
                     }
                 }
             }
@@ -170,10 +171,6 @@ namespace ChessForge
             }
 
             return result;
-        }
-
-        private static void SaveMultipleImages()
-        {
         }
 
         /// <summary>
@@ -277,15 +274,23 @@ namespace ChessForge
         /// <returns></returns>
         private static string GetUserSelectedFileName(bool isMultiDiagrams)
         {
-            string filePath = Configuration.LastPngFile;
+            string filePath = Configuration.LastPngExportFile;
+            string fileName = "";
 
             if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
             {
-                string directory = Path.GetDirectoryName(filePath);
-                string fileName = Path.GetFileNameWithoutExtension(filePath);
-                string baseName = ExtractBaseName(fileName);
-                fileName = GetNextAvailableFileName(directory, baseName);
-                filePath = Path.Combine(directory, fileName);
+                try
+                {
+                    string directory = Path.GetDirectoryName(filePath);
+                    fileName = Path.GetFileNameWithoutExtension(filePath);
+                    string baseName = ExtractBaseName(fileName);
+                    fileName = GetNextAvailableFileName(directory, baseName);
+                    filePath = Path.Combine(directory, fileName);
+                }
+                catch
+                {
+                    filePath = "";
+                }
             }
 
             SaveFileDialog saveDlg = new SaveFileDialog
@@ -294,16 +299,32 @@ namespace ChessForge
             };
 
             saveDlg.OverwritePrompt = true;
-            saveDlg.Title = " " + Properties.Resources.SaveDiagramAsImage;
+            if (isMultiDiagrams)
+            {
+                saveDlg.Title = " " + Properties.Resources.SaveDiagramsAsImages + " (" + Resources.FirstFile + ")";
+            }
+            else
+            {
+                saveDlg.Title = " " + TextUtils.RemoveTrailingElipsis(Properties.Resources.SaveDiagramAsImage);
+            }
 
-            saveDlg.FileName = filePath;
+            try
+            {
+                saveDlg.InitialDirectory = Path.GetDirectoryName(filePath);
+            }
+            catch
+            {
+                saveDlg.InitialDirectory = "";
+            }
+
+            saveDlg.FileName = fileName;
 
             if (saveDlg.ShowDialog() == true)
             {
                 filePath = saveDlg.FileName;
                 if (!string.IsNullOrEmpty(filePath))
                 {
-                    Configuration.LastPngFile = filePath;
+                    Configuration.LastPngExportFile = filePath;
                 }
                 return saveDlg.FileName;
             }
@@ -345,7 +366,7 @@ namespace ChessForge
         /// <returns></returns>
         private static string ExtractBaseName(string fileName)
         {
-            Match match = Regex.Match(fileName, @"^(.*?)(?:\s+\d+)?$", RegexOptions.IgnoreCase);
+            Match match = Regex.Match(fileName, @"^(.*?)(?:_\d+)?$", RegexOptions.IgnoreCase);
             return match.Success ? match.Groups[1].Value : fileName;
         }
 
@@ -358,7 +379,7 @@ namespace ChessForge
         /// <returns></returns>
         private static string GetNextAvailableFileName(string directoryPath, string baseName)
         {
-            string pattern = $"^{Regex.Escape(baseName)}\\s*(\\d+)\\.png$";
+            string pattern = $"^{Regex.Escape(baseName)}_(\\d+)\\.png$";
             Regex regex = new Regex(pattern);
 
             var existingNumbers = Directory.EnumerateFiles(directoryPath, "*.png")
@@ -374,7 +395,7 @@ namespace ChessForge
                 M++;
             }
 
-            return $"{baseName} {M}.png";
+            return $"{baseName}_{M}.png";
         }
     }
 }

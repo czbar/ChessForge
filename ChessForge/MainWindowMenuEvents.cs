@@ -10,6 +10,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace ChessForge
 {
@@ -155,7 +156,11 @@ namespace ChessForge
 
                 if (result == true)
                 {
-                    Configuration.LastOpenDirectory = Path.GetDirectoryName(openFileDialog.FileName);
+                    try
+                    {
+                        Configuration.LastOpenDirectory = Path.GetDirectoryName(openFileDialog.FileName);
+                    }
+                    catch { }
                     ReadWorkbookFile(openFileDialog.FileName, false, ref WorkbookManager.VariationTreeList);
                 }
             }
@@ -173,7 +178,11 @@ namespace ChessForge
             {
                 string menuItemName = ((MenuItem)e.Source).Name;
                 string path = Configuration.GetRecentFile(menuItemName);
-                Configuration.LastOpenDirectory = Path.GetDirectoryName(path);
+                try
+                {
+                    Configuration.LastOpenDirectory = Path.GetDirectoryName(path);
+                }
+                catch { }
                 ReadWorkbookFile(path, false, ref WorkbookManager.VariationTreeList);
             }
         }
@@ -3145,7 +3154,14 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnSelectEngine_Click(object sender, RoutedEventArgs e)
         {
-            string searchPath = Path.GetDirectoryName(Configuration.EngineExePath);
+            string searchPath = "";
+
+            try
+            {
+                searchPath = Path.GetDirectoryName(Configuration.EngineExePath);
+            }
+            catch { }
+
             if (!string.IsNullOrEmpty(Configuration.SelectEngineExecutable(searchPath)))
             {
                 ReloadEngine();
@@ -4075,8 +4091,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Invoked from a debug menu,
-        /// writes out the content of the current view to an RTF file.
+        /// Writes out the content of the current view to an RTF file.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -4087,11 +4102,12 @@ namespace ChessForge
             while (!done)
             {
                 done = true;
-                RtfExportDialog dlg = new RtfExportDialog();
+                RtfExportDialog dlg = new RtfExportDialog(RtfExportDialog.ExportFormat.RTF);
                 GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
                 if (dlg.ShowDialog() == true)
                 {
+                    WaitDialog waitDlg = null;
                     try
                     {
                         string filePath = RtfWriter.SelectTargetRtfFile();
@@ -4099,11 +4115,69 @@ namespace ChessForge
                         if (!string.IsNullOrEmpty(filePath) && filePath[0] != '.')
                         {
                             Mouse.SetCursor(Cursors.Wait);
+                            waitDlg = new WaitDialog(Properties.Resources.ExportToRtf);
+                            GuiUtilities.PositionDialogInMiddle(waitDlg, this);
+                            waitDlg.Show();
+                            AppState.DoEvents();
                             done = RtfWriter.WriteRtf(filePath);
-                            Mouse.SetCursor(Cursors.Arrow);
+                            BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.OperationCompleted, CommentBox.HintType.INFO);
                         }
                     }
                     catch { }
+                    finally
+                    {
+                        if (waitDlg != null)
+                        {
+                            waitDlg.Close();
+                        }
+                        Mouse.SetCursor(Cursors.Arrow);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Writes out the content of the current view to a text file.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnWriteText_Click(object sender, RoutedEventArgs e)
+        {
+            bool done = false;
+
+            while (!done)
+            {
+                done = true;
+                RtfExportDialog dlg = new RtfExportDialog(RtfExportDialog.ExportFormat.TEXT);
+                GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
+
+                if (dlg.ShowDialog() == true)
+                {
+                    WaitDialog waitDlg = null;
+                    try
+                    {
+                        string filePath = TextWriter.SelectTargetTextFile();
+
+                        if (!string.IsNullOrEmpty(filePath) && filePath[0] != '.')
+                        {
+                            Mouse.SetCursor(Cursors.Wait);
+                            waitDlg = new WaitDialog(Properties.Resources.ExportToText);
+                            GuiUtilities.PositionDialogInMiddle(waitDlg, this);
+                            waitDlg.Show();
+                            AppState.DoEvents();
+                            done = TextWriter.WriteText(filePath);
+                            BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.OperationCompleted, CommentBox.HintType.INFO);
+                        }
+                    }
+                    catch { }
+                    finally
+                    {
+                        if (waitDlg != null)
+                        {
+                            waitDlg.Close();
+                        }
+                        Mouse.SetCursor(Cursors.Arrow);
+                    }
                 }
             }
         }

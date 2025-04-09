@@ -156,6 +156,12 @@
   <data name="RtfFiles" xml:space="preserve">
     <value>Pliki RTF</value>
   </data>
+  <data name="TextFiles" xml:space="preserve">
+    <value>Pliki Tekstowe</value>
+  </data>
+  <data name="FirstFile" xml:space="preserve">
+    <value>pierwszy plik</value>
+  </data>
   <data name="FileExists" xml:space="preserve">
     <value>Plik już istnieje</value>
   </data>
@@ -585,6 +591,15 @@
   <data name="ExportRtf" xml:space="preserve">
     <value>Eksportuj jako RTF</value>
   </data>
+  <data name="ExportToRtf" xml:space="preserve">
+    <value>Eksport do pliku RTF</value>
+  </data>
+  <data name="ExportText" xml:space="preserve">
+    <value>Eksportuj jako Tekst</value>
+  </data>
+  <data name="ExportToText" xml:space="preserve">
+    <value>Eksport do pliku tekstowego</value>
+  </data>
   <data name="BackUpThisVersion" xml:space="preserve">
     <value>Zrób kopię tej wersji...</value>
   </data>
@@ -937,6 +952,12 @@
   <data name="FileExistActionsPrompt" xml:space="preserve">
     <value>Wybierz jak kontynuować.</value>
   </data>
+  <data name="OperationInProgress" xml:space="preserve">
+    <value>Przetwarzanie w toku</value>
+  </data>
+  <data name="OperationCompleted" xml:space="preserve">
+    <value>Przetwarzanie zakończone</value>
+  </data>
   <data name="DlgBlunderDetection" xml:space="preserve">
     <value>Detekcja Słabych Posunięć</value>
   </data>
@@ -984,6 +1005,9 @@
   </data>
   <data name="CustomTerms" xml:space="preserve">
     <value>Niestandardowe Nagłówki</value>
+  </data>
+  <data name="InsertFensUnderDiagrams" xml:space="preserve">
+    <value>Wstaw FEN pod diagramami</value>
   </data>
   <data name="ReorderLines" xml:space="preserve">
     <value>Kolejność Wariantów</value>
@@ -2357,7 +2381,7 @@
     <value>Oceń partie z podręcznika</value>
   </data>
   <data name="PleaseWait" xml:space="preserve">
-    <value>Proszę czekać!</value>
+    <value>Proszę czekać</value>
   </data>
   <data name="ReplaySpeed" xml:space="preserve">
     <value>Prędkość Auto-Odtwarzania</value>

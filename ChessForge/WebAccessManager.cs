@@ -65,7 +65,7 @@ namespace ChessForge
                 LichessOpeningsStats stats = CheckResults();
                 if (stats != null)
                 {
-                    AppLog.Message(2, "Received Web Data for: " + WebAccessState.ReadyNode.LastMoveAlgebraicNotation);
+                    AppLog.Message(2, "Received Web Data for: " + WebAccessState.ReadyNode == null ? "???" : WebAccessState.ReadyNode.LastMoveAlgebraicNotation);
                     WebAccessState.IsWaitingForResults = false;
                     AppState.MainWin.Dispatcher.Invoke(() =>
                     {

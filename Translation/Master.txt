@@ -56,6 +56,12 @@ ImageFiles=Image files
 #RTF files
 RtfFiles=RTF files
 
+#Text files
+TextFiles=Text files
+
+#First file
+FirstFile=first file
+
 #File already exists
 FileExists=File Already Exists
 
@@ -516,7 +522,17 @@ SaveDiagramAsImage=Save Diagram as Picture...
 Export=Export
 
 #Export as RTF
-ExportRtf=Export as RTF (Beta)
+ExportRtf=Export as RTF
+
+#Export to RTF
+ExportToRtf=Export to RTF
+
+#Export as text
+ExportText=Export as Text
+
+#Export to text
+ExportToText=Export to Text
+
 
 #Saves a copy of the current Workbook with the current version number, increments the version number
 BackUpThisVersion=Back up this Version ...
@@ -969,6 +985,18 @@ FileExistActionsPrompt=Choose how to proceed.
 
 #######################################
 #
+# Header: DIALOG Wait Dialog
+#
+
+#Operation in progress
+OperationInProgress=Operation in Progress
+
+#Operation completed
+OperationCompleted=Operation Completed
+
+
+#######################################
+#
 # Header: DIALOG Bad Move Options
 #
 
@@ -1026,6 +1054,8 @@ TwoColumnFormat=Two Column Format
 #Custom Terms
 CustomTerms=Custom Headers
 
+#Insert FEN under diagrams
+InsertFensUnderDiagrams=Insert FEN under diagrams
 
 #######################################
 #

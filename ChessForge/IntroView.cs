@@ -78,7 +78,7 @@ namespace ChessForge
         // currently selected node
         private TreeNode _selectedNode;
 
-        // refrence to HostRtb.
+        // static reference to HostRtb.
         private static RichTextBox _rtb;
 
         // flags if the view is in the "print" mode
@@ -849,7 +849,7 @@ namespace ChessForge
                 Inline inlClicked = FindInlineByName(HostRtb.Document, uicName);
                 if (adjustCaret)
                 {
-                    _rtb.CaretPosition = inlClicked.ElementEnd;
+                    HostRtb.CaretPosition = inlClicked.ElementEnd;
                 }
                 AppState.MainWin.DisplayPosition(_selectedNode);
 
@@ -2005,34 +2005,6 @@ namespace ChessForge
             catch { }
 
             return move;
-        }
-
-        /// <summary>
-        /// Removes diagram paragraphs that no longer hold diagrams.
-        /// </summary>
-        private static void RemoveEmptyDiagrams()
-        {
-            List<Paragraph> parasToRemove = new List<Paragraph>();
-
-            foreach (Block block in _rtb.Document.Blocks)
-            {
-                Paragraph para = block as Paragraph;
-                if (para != null)
-                {
-                    if (para.Name.StartsWith(RichTextBoxUtilities.DiagramParaPrefix))
-                    {
-                        if (!HasInlineUIContainer(para))
-                        {
-                            parasToRemove.Add(para);
-                        }
-                    }
-                }
-            }
-
-            foreach (Paragraph para in parasToRemove)
-            {
-                _rtb.Document.Blocks.Remove(para);
-            }
         }
 
         /// <summary>

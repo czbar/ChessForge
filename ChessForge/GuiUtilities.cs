@@ -295,6 +295,21 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Positions a dialog in the middle of the owner window.
+        /// </summary>
+        /// <param name="dlg"></param>
+        /// <param name="owner"></param>
+        public static void PositionDialogInMiddle(Window dlg, Window owner)
+        {
+            Point leftTop = owner.PointToScreen(new Point(0, 0));
+
+            dlg.Left = leftTop.X + (owner.Width - dlg.Width) / 2;
+            dlg.Top = leftTop.Y + (owner.Height - dlg.Height) / 2;
+            dlg.Topmost = false;
+            dlg.Owner = owner;
+        }
+
+        /// <summary>
         /// Checks if the vertical scroll bar is visible in the Rich Text Box.
         /// </summary>
         /// <param name="richTextBox"></param>

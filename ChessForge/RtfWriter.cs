@@ -28,7 +28,7 @@ namespace ChessForge
     /// </summary>
     public class RtfWriter
     {
-        // TODO: these field is meant to be Configuration items.
+        // TODO: this field is meant to be Configuration items.
         private static bool _continuousArticleNumbering = true;
 
         // counts exported games if _continuousArticleNumbering is on 
@@ -49,13 +49,17 @@ namespace ChessForge
         // running id of the diagrams in the document
         private static int _diagramId = 0;
 
+        // whether to insert FENs under diagrams
+        private static bool _insertFens = false;
+
         /// <summary>
-        /// Exports the passed chapter into an RTF file.
+        /// Exports the scoped articles into an RTF file.
         /// </summary>
         /// <param name="chapter"></param>
         public static bool WriteRtf(string fileName)
         {
             bool result = true;
+            _insertFens = ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.FEN_UNDER_DIAGRAMS);
 
             ResetCounters();
             bool saveUseFixedFont = Configuration.UseFixedFont;
@@ -132,21 +136,30 @@ namespace ChessForge
         public static string SelectTargetRtfFile()
         {
             string rtfExt = ".rtf";
-            string rtfFileName;
+            string rtfFileName = Configuration.LastRtfExportFile;
 
-            if (string.IsNullOrEmpty(AppState.WorkbookFilePath))
+            if (string.IsNullOrEmpty(rtfFileName))
             {
-                rtfFileName = TextUtils.RemoveInvalidCharsFromFileName(WorkbookManager.SessionWorkbook.Title) + rtfExt;
-            }
-            else
-            {
-                rtfFileName = FileUtils.ReplacePathExtension(AppState.WorkbookFilePath, rtfExt);
+                if (string.IsNullOrEmpty(AppState.WorkbookFilePath))
+                {
+                    rtfFileName = TextUtils.RemoveInvalidCharsFromFileName(WorkbookManager.SessionWorkbook.Title) + rtfExt;
+                }
+                else
+                {
+                    rtfFileName = FileUtils.ReplacePathExtension(AppState.WorkbookFilePath, rtfExt);
+                }
             }
 
             SaveFileDialog saveDlg = new SaveFileDialog
             {
-                Filter = Properties.Resources.RtfFiles + " (*.rtf)|*.rtf"
+                Filter = Properties.Resources.RtfFiles + " (*.rtf)|*.rtf",
             };
+
+            try
+            {
+                saveDlg.InitialDirectory = Path.GetDirectoryName(rtfFileName);
+            }
+            catch { }
 
             saveDlg.FileName = Path.GetFileName(rtfFileName);
             saveDlg.Title = Properties.Resources.ExportRtf;
@@ -155,6 +168,7 @@ namespace ChessForge
             if (saveDlg.ShowDialog() == true)
             {
                 rtfFileName = saveDlg.FileName;
+                Configuration.LastRtfExportFile = rtfFileName;
             }
             else
             {
@@ -361,25 +375,16 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Process the contents list place it in the printDoc.
+        /// Process the Chapters View and place it in the printDoc.
         /// </summary>
         /// <param name="printDoc"></param>
         /// <param name="diagrams"></param>
         private static void PrintChaptersViewToFlowDoc(FlowDocument printDoc, ref List<RtfDiagram> diagrams)
         {
-            FlowDocument workbookFP = PrintWorkbookFrontPage();
-            CreateDocumentForPrint(printDoc, workbookFP, null, ref diagrams);
-
-            FlowDocument docContents = PrintWorkbookContents(AppState.Workbook);
-            AddPageBreakPlaceholder(docContents);
-            CreateDocumentForPrint(printDoc, docContents, null, ref diagrams);
-
-            FlowDocument docGameIndex = PrintGameOrExerciseIndex(AppState.Workbook, true);
-            if (docGameIndex != null)
-            {
-                AddPageBreakPlaceholder(docGameIndex);
-                CreateDocumentForPrint(printDoc, docGameIndex, null, ref diagrams);
-            }
+            RichTextBox rtb = new RichTextBox();
+            var chaptersView = new ChaptersView(rtb, null, true);
+            chaptersView.BuildFlowDocumentForChaptersView(false);
+            CreateDocumentForPrint(printDoc, rtb.Document, null, ref diagrams);
         }
 
         /// <summary>
@@ -787,6 +792,12 @@ namespace ChessForge
         /// <returns></returns>
         private static FlowDocument PrintIntro(Chapter chapter)
         {
+            if (AppState.ActiveTab == TabViewType.INTRO)
+            {
+                // Intro is a special case where we need to save it to update the underlying data.
+                AppState.MainWin.SaveIntro();
+            }
+
             RichTextBox rtbIntro = new RichTextBox();
             IntroView introView = new IntroView(rtbIntro, chapter, true);
 
@@ -897,11 +908,13 @@ namespace ChessForge
                 para.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff;
                 para.FontWeight = FontWeights.Bold;
 
-                string gameHeader = Properties.Resources.Game + " " + gameNo.ToString();
+                string gameWord = Properties.Resources.Game;
                 if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.USE_CUSTOM_GAME))
                 {
-                    gameHeader = ConfigurationRtfExport.GetStringValue(ConfigurationRtfExport.CUSTOM_TERM_GAME);
+                    gameWord = ConfigurationRtfExport.GetStringValue(ConfigurationRtfExport.CUSTOM_TERM_GAME);
                 }
+
+                string gameHeader = gameWord + " " + gameNo.ToString();
 
                 para.TextAlignment = TextAlignment.Center;
                 para.TextDecorations = TextDecorations.Underline;
@@ -977,11 +990,13 @@ namespace ChessForge
                 para.TextAlignment = TextAlignment.Center;
                 para.TextDecorations = TextDecorations.Underline;
 
-                string exerciseHeader = Properties.Resources.Exercise + " " + exerciseNo.ToString();
+                string exerciseWord = Properties.Resources.Exercise;
                 if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.USE_CUSTOM_EXERCISE))
                 {
-                    exerciseHeader = ConfigurationRtfExport.GetStringValue(ConfigurationRtfExport.CUSTOM_TERM_EXERCISE);
+                    exerciseWord = ConfigurationRtfExport.GetStringValue(ConfigurationRtfExport.CUSTOM_TERM_EXERCISE);
                 }
+
+                string exerciseHeader = exerciseWord + " " + exerciseNo.ToString();
 
                 if (!string.IsNullOrWhiteSpace(exerciseHeader))
                 {
@@ -1229,17 +1244,32 @@ namespace ChessForge
             foreach (Block block in guiDoc.Blocks)
             {
                 lastRunWasIntroMove = false;
+
                 if (block is Paragraph guiPara)
                 {
                     Paragraph printPara = new Paragraph();
                     CopyParaAttributes(printPara, guiPara);
 
+                    // set Left margin to 0 so that centering will work correctly
+                    printPara.Margin = new Thickness(0, guiPara.Margin.Top, guiPara.Margin.Right, guiPara.Margin.Bottom);
+
                     printDoc.Blocks.Add(printPara);
 
                     if (guiPara.Name != null && guiPara.Name.StartsWith(RichTextBoxUtilities.DiagramParaPrefix))
                     {
-                        CreateIntroDiagramForPrint(printPara, guiPara, tree, ref diagrams);
+                        TreeNode nd = CreateIntroDiagramForPrint(printPara, guiPara, tree, ref diagrams);
                         lastDiagramPara = printPara;
+
+                        if (_insertFens)
+                        {
+                            string fenText = "FEN " + FenParser.GenerateFenFromPosition(nd.Position);
+                            Paragraph fen = new Paragraph();
+                            fen.Inlines.Add(new Run(fenText));
+                            fen.TextAlignment = TextAlignment.Center;
+                            fen.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff - 2;
+                            fen.FontFamily = new FontFamily("Courier New");
+                            printDoc.Blocks.Add(fen);
+                        }
                     }
                     else if (guiPara.Name == RichTextBoxUtilities.ExerciseUnderBoardControls)
                     {
@@ -1252,7 +1282,6 @@ namespace ChessForge
                             if (inl is Run run && run.Text != null)
                             {
                                 lastRunWasIntroMove = false;
-
                                 printPara = CreateTextRuns(printDoc, printPara, run);
                             }
                             else if (inl is InlineUIContainer uic)
@@ -1264,8 +1293,9 @@ namespace ChessForge
                                 else if (inl.Name.StartsWith(RichTextBoxUtilities.InlineDiagramIucPrefix))
                                 {
                                     printDoc.Blocks.Add(printPara);
-                                    printPara = CreateInlineDiagramForPrint(printDoc, printPara, inl.Name, tree, ref diagrams);
+                                    CreateInlineDiagramForPrint(printDoc, printPara, inl.Name, tree, ref diagrams);
                                     lastRunWasIntroMove = false;
+                                    break;
                                 }
                                 else
                                 {
@@ -1313,10 +1343,20 @@ namespace ChessForge
             printPara = new Paragraph();
             _diagramId++;
             ProcessDiagram(_diagramId, printPara, tree, nodeId, diagrams);
+            printPara.TextAlignment = TextAlignment.Center;
             printDoc.Blocks.Add(printPara);
 
-            Paragraph dummy = new Paragraph();
-            printDoc.Blocks.Add(dummy);
+            if (_insertFens)
+            {
+                TreeNode nd = tree.GetNodeFromNodeId(nodeId);
+                string fenText = "FEN " + FenParser.GenerateFenFromPosition(nd.Position);
+                Paragraph fen = new Paragraph();
+                fen.Inlines.Add(new Run(fenText));
+                fen.TextAlignment = TextAlignment.Center;
+                fen.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff - 2;
+                fen.FontFamily = new FontFamily("Courier New");
+                printDoc.Blocks.Add(fen);
+            }
 
             return printPara;
         }
@@ -1328,10 +1368,10 @@ namespace ChessForge
         /// <param name="guiPara"></param>
         /// <param name="tree"></param>
         /// <param name="diagrams"></param>
-        private static void CreateIntroDiagramForPrint(Paragraph printPara, Paragraph guiPara, VariationTree tree, ref List<RtfDiagram> diagrams)
+        private static TreeNode CreateIntroDiagramForPrint(Paragraph printPara, Paragraph guiPara, VariationTree tree, ref List<RtfDiagram> diagrams)
         {
             _diagramId++;
-            ProcessDiagram(_diagramId, printPara, guiPara, tree, diagrams);
+            return ProcessDiagram(_diagramId, printPara, guiPara, tree, diagrams);
         }
 
         /// <summary>
@@ -1376,13 +1416,13 @@ namespace ChessForge
             }
             else if (run.Name != null && run.Name.StartsWith(RichTextBoxUtilities.PostInlineDiagramRunPrefix))
             {
-                // this is post inline diagram so complete the current paragraph
-                // and add a dummy one to create space after the diagram
-                printDoc.Blocks.Add(printPara);
+                //// this is post inline diagram so complete the current paragraph
+                //// and add a dummy one to create space after the diagram
+                //printDoc.Blocks.Add(printPara);
 
-                printPara = new Paragraph();
-                printDoc.Blocks.Add(printPara);
-                printPara = new Paragraph();
+                //printPara = new Paragraph();
+                //printDoc.Blocks.Add(printPara);
+                //printPara = new Paragraph();
             }
             else
             {
@@ -1429,19 +1469,24 @@ namespace ChessForge
         /// <param name="para"></param>
         /// <param name="tree"></param>
         /// <param name="diagrams"></param>
-        private static void ProcessDiagram(int diagramId, Paragraph printPara, Paragraph para, VariationTree tree, List<RtfDiagram> diagrams)
+        private static TreeNode ProcessDiagram(int diagramId, Paragraph printPara, Paragraph para, VariationTree tree, List<RtfDiagram> diagrams)
         {
+            TreeNode nd = null;
+
             int nodeId = TextUtils.GetIdFromPrefixedString(para.Name);
             if (tree != null)
             {
-                TreeNode nd = tree.GetNodeFromNodeId(nodeId);
+                nd = tree.GetNodeFromNodeId(nodeId);
                 if (nd != null)
                 {
                     bool isFlipped = RichTextBoxUtilities.GetDiagramFlipState(para);
                     printPara.Inlines.Add(CreateDiagramPlaceholderRun(diagramId));
+                    printPara.TextAlignment = TextAlignment.Center;
                     diagrams.Add(new RtfDiagram(diagramId, nd, isFlipped));
                 }
             }
+
+            return nd;
         }
 
         /// <summary>
@@ -1488,6 +1533,8 @@ namespace ChessForge
                     {
                         Run moveRun = new Run();
                         CopyRunAttributes(moveRun, rMove);
+
+                        // if previous text was also an IntroMove, remove the leading space so we don't have too many!
                         if (lastRunWasIntroMove && moveRun.Text != null && moveRun.Text[0] == ' ')
                         {
                             moveRun.Text = moveRun.Text.Substring(1);

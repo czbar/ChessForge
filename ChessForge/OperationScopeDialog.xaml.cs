@@ -68,11 +68,8 @@ namespace ChessForge
 
             this.Title = title;
 
-            if (Action == ScopedAction.SAVE_DIAGRAM && (AppState.IsTreeViewTabActive() || AppState.ActiveTab == TabViewType.INTRO)
-                || 
-                AppState.Workbook.ActiveArticle != null &&
-                (AppState.Workbook.ActiveArticle.ContentType == GameData.ContentType.MODEL_GAME
-                || AppState.Workbook.ActiveArticle.ContentType == GameData.ContentType.EXERCISE))
+            if (AppState.ActiveTab == TabViewType.INTRO  || 
+                (AppState.IsTreeViewTabActive() && AppState.ActiveVariationTree != null))
             {
                 UiRbCurrentItem.IsChecked = true;
             }

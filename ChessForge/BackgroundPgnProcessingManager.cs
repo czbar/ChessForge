@@ -7,6 +7,7 @@ using System.Text;
 using System.Timers;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace ChessForge
 {
@@ -246,7 +247,7 @@ namespace ChessForge
                         {
                             AppState.MainWin.BoardCommentBox.ShowTabHints();
                         }
-                        AppState.DoEvents();
+                        //AppState.DoEvents();
                     }
                 }
             }
