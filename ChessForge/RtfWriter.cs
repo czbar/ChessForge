@@ -1262,13 +1262,16 @@ namespace ChessForge
 
                         if (_insertFens)
                         {
-                            string fenText = "FEN " + FenParser.GenerateFenFromPosition(nd.Position);
-                            Paragraph fen = new Paragraph();
-                            fen.Inlines.Add(new Run(fenText));
-                            fen.TextAlignment = TextAlignment.Center;
-                            fen.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff - 2;
-                            fen.FontFamily = new FontFamily("Courier New");
-                            printDoc.Blocks.Add(fen);
+                            if (nd != null)
+                            {
+                                string fenText = "FEN " + FenParser.GenerateFenFromPosition(nd.Position);
+                                Paragraph fen = new Paragraph();
+                                fen.Inlines.Add(new Run(fenText));
+                                fen.TextAlignment = TextAlignment.Center;
+                                fen.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff - 2;
+                                fen.FontFamily = new FontFamily("Courier New");
+                                printDoc.Blocks.Add(fen);
+                            }
                         }
                     }
                     else if (guiPara.Name == RichTextBoxUtilities.ExerciseUnderBoardControls)
