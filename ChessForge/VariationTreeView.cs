@@ -641,6 +641,41 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Duplicates the currently selected node as a variation.
+        /// </summary>
+        public void DuplicateAsVariation()
+        {
+            try
+            {
+                TreeNode nd = GetSelectedNode();
+
+                TreeNode dupeNode = nd.CloneMe(true);
+                dupeNode.NodeId = ShownVariationTree.GetNewNodeId();
+                ShownVariationTree.AddNode(dupeNode);
+                nd.Parent.AddChild(dupeNode);
+                dupeNode.Parent = nd.Parent;
+                ShownVariationTree.BuildLines();
+
+                _mainWin.SetActiveLine(dupeNode.LineId, dupeNode.NodeId);
+                BuildFlowDocumentForVariationTree(false);
+                ShownVariationTree.SetSelectedNodeId(dupeNode.NodeId);
+                SelectNode(dupeNode);
+                int nodeIndex = _mainWin.ActiveLine.GetIndexForNode(dupeNode.NodeId);
+                SelectLineAndMoveInWorkbookViews(dupeNode.LineId, nodeIndex, false);
+
+                EditOperation op = new EditOperation(EditOperation.EditType.ADD_MOVE, dupeNode);
+                AppState.ActiveVariationTree.OpsManager.PushOperation(op);
+
+                PulseManager.BringSelectedRunIntoView();
+                AppState.IsDirty = true;
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("DuplicateAsVariation()", ex);
+            }
+        }
+
+        /// <summary>
         /// Copies FEN of the selected position to the clipboard.
         /// </summary>
         public void CopyFenToClipboard()
@@ -1489,7 +1524,7 @@ namespace ChessForge
                 while (rPreviousInline.NextInline != null && !string.IsNullOrEmpty(rPreviousInline.NextInline.Name))
                 {
                     rPreviousInline = rPreviousInline.NextInline;
-                    if (rPreviousInline.Name !=  null && rPreviousInline.Name.StartsWith(RichTextBoxUtilities.InlineDiagramIucPrefix))
+                    if (rPreviousInline.Name != null && rPreviousInline.Name.StartsWith(RichTextBoxUtilities.InlineDiagramIucPrefix))
                     {
                         hasDiagram = true;
                     }
