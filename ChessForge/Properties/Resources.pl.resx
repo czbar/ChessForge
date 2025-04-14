@@ -1753,6 +1753,9 @@
   <data name="EnterNullMove" xml:space="preserve">
     <value>Wprowadź pusty ruch</value>
   </data>
+  <data name="DuplicateAsVariation" xml:space="preserve">
+    <value>Duplikuj ruch jako wariant</value>
+  </data>
   <data name="DeleteMovesFromHere" xml:space="preserve">
     <value>Usuń zaznaczony ruch i wszystkie dalsze posunięcia</value>
   </data>

@@ -1753,6 +1753,9 @@
   <data name="EnterNullMove" xml:space="preserve">
     <value>Enter Null Move</value>
   </data>
+  <data name="DuplicateAsVariation" xml:space="preserve">
+    <value>Duplicate Move as Variation</value>
+  </data>
   <data name="DeleteMovesFromHere" xml:space="preserve">
     <value>Delete the Selected Move and All Moves that Follow</value>
   </data>

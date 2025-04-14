@@ -2514,6 +2514,10 @@ PromoteLine=Promuj Wariant
 #english: EnterNullMove=Enter Null Move
 EnterNullMove=Wprowadź pusty ruch
 
+#description: Duplicate move as variation
+#english: DuplicateAsVariation=Duplicate Move as Variation
+DuplicateAsVariation=Duplikuj ruch jako wariant
+
 
 #description: Delete the line starting from the current position
 #english: DeleteMovesFromHere=Delete the Selected Move and All Moves that Follow

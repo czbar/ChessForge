@@ -2514,6 +2514,10 @@ PromoteLine=
 #english: EnterNullMove=Enter Null Move
 EnterNullMove=
 
+#description: Duplicate move as variation
+#english: DuplicateAsVariation=Duplicate Move as Variation
+DuplicateAsVariation=
+
 
 #description: Delete the line starting from the current position
 #english: DeleteMovesFromHere=Delete the Selected Move and All Moves that Follow
