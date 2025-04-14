@@ -862,7 +862,7 @@ MsgNoIdenticalPositions=Nie znaleziono identycznych pozycji.
 
 #description: Ask whether to edit search when identical positions not found
 #english: MsgEditPositionSearch=Positions not found. Edit search?
-MsgEditPositionSearch=Pozycki nie znaleziono. Wrócić do edycji?
+MsgEditPositionSearch=Pozycji nie znaleziono. Wrócić do edycji?
 
 #description: Message Box Title for Position Search
 #english: MsgTitlePositionSearch=Position Search
