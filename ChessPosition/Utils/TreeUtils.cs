@@ -558,7 +558,7 @@ namespace ChessPosition
         /// <param name="insertedInsertions"></param>
         /// <param name="failedInsertions"></param>
         /// <returns></returns>
-        public static TreeNode InsertSubtreeMovesIntoTree(VariationTree targetTree, TreeNode nodeToInsertAt, List<TreeNode> nodesToInsertOrig, ref List<TreeNode> insertedInsertions, ref List<TreeNode> failedInsertions)
+        public static TreeNode InsertSubtreeMovesIntoTree(VariationTree targetTree, TreeNode nodeToInsertAt, List<TreeNode> nodesToInsertOrig, ref List<TreeNode> insertedInsertions, ref List<TreeNode> failedInsertions, bool allowDupe = false)
         {
             try
             {
@@ -584,7 +584,7 @@ namespace ChessPosition
                     }
                     if (nodeToInsertAt != null)
                     {
-                        updatedRoot = InsertMoveAndChildrenIntoTree(targetTree, nodeToInsertAt, subtreeRoot, ref insertedInsertions, ref failedInsertions);
+                        updatedRoot = InsertMoveAndChildrenIntoTree(targetTree, nodeToInsertAt, subtreeRoot, ref insertedInsertions, ref failedInsertions, allowDupe);
                     }
                 }
 
@@ -922,9 +922,9 @@ namespace ChessPosition
         /// <param name="insertAtNode"></param>
         /// <param name="moveToInsert"></param>
         /// <param name="failedInsertions"></param>
-        private static TreeNode InsertMoveAndChildrenIntoTree(VariationTree targetTree, TreeNode insertAtNode, TreeNode moveToInsert, ref List<TreeNode> insertedNodes, ref List<TreeNode> failedInsertions)
+        private static TreeNode InsertMoveAndChildrenIntoTree(VariationTree targetTree, TreeNode insertAtNode, TreeNode moveToInsert, ref List<TreeNode> insertedNodes, ref List<TreeNode> failedInsertions, bool allowDupe = false)
         {
-            TreeNode insertedNode = InsertMoveIntoTree(targetTree, insertAtNode, moveToInsert, ref insertedNodes);
+            TreeNode insertedNode = InsertMoveIntoTree(targetTree, insertAtNode, moveToInsert, ref insertedNodes, allowDupe);
 
             if (insertedNode == null)
             {
@@ -934,7 +934,7 @@ namespace ChessPosition
 
             foreach (TreeNode child in moveToInsert.Children)
             {
-                InsertMoveAndChildrenIntoTree(targetTree, insertedNode, child, ref insertedNodes, ref failedInsertions);
+                InsertMoveAndChildrenIntoTree(targetTree, insertedNode, child, ref insertedNodes, ref failedInsertions, allowDupe);
             }
 
             return insertedNode;
@@ -950,18 +950,21 @@ namespace ChessPosition
         /// <param name="insertAtNode"></param>
         /// <param name="algMove"></param>
         /// <returns></returns>
-        private static TreeNode InsertMoveIntoTree(VariationTree targetTree, TreeNode insertAtNode, TreeNode nodeToInsert, ref List<TreeNode> insertedNodes)
+        private static TreeNode InsertMoveIntoTree(VariationTree targetTree, TreeNode insertAtNode, TreeNode nodeToInsert, ref List<TreeNode> insertedNodes, bool allowDupe = false)
         {
             TreeNode retNode = null;
 
             string algMove = nodeToInsert.LastMoveAlgebraicNotation;
             // if the target tree already has a node with the passed algMove, return it
-            foreach (TreeNode nd in insertAtNode.Children)
+            if (!allowDupe)
             {
-                if (MoveUtils.AreAlgMovesIdentical(nd.LastMoveAlgebraicNotation, algMove))
+                foreach (TreeNode nd in insertAtNode.Children)
                 {
-                    retNode = nd;
-                    break;
+                    if (MoveUtils.AreAlgMovesIdentical(nd.LastMoveAlgebraicNotation, algMove))
+                    {
+                        retNode = nd;
+                        break;
+                    }
                 }
             }
 
