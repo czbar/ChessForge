@@ -609,6 +609,7 @@
                                     <MenuItem x:Name="UiMnPromoteLine" Header="{x:Static p:Resources.PromoteLine}" Click="UiMnPromoteLine_Click" InputGestureText="P" />
                                     <MenuItem x:Name="UiMnReorderLines" Header="{x:Static p:Resources.ReorderLines}" Click="UiMnReorderLines_Click" />
                                     <MenuItem x:Name="UiMnEnterNullMove" Header="{x:Static p:Resources.EnterNullMove}" Click="UiMnEnterNullMove_Click" />
+                                    <MenuItem x:Name="UiMnDuplicateAsVariation" Header="{x:Static p:Resources.DuplicateAsVariation}" Click="UiMnDuplicateAsVariation_Click" />
                                     <Separator />
                                     <MenuItem x:Name="UiMnRegenerateStudy" Header="{x:Static p:Resources.RegenerateStudyTree}" Click="UiMnRegenerateStudy_Click" />
                                     <Separator />
@@ -707,6 +708,7 @@
                                     <MenuItem x:Name="UiMnGamePromoteLine" Header="{x:Static p:Resources.PromoteLine}" Click="UiMnGame_PromoteLine_Click" InputGestureText="P"  />
                                     <MenuItem x:Name="UiMnGameReorderLines" Header="{x:Static p:Resources.ReorderLines}" Click="UiMnReorderLines_Click" />
                                     <MenuItem x:Name="UiMnGameEnterNullMove" Header="{x:Static p:Resources.EnterNullMove}" Click="UiMnEnterNullMove_Click" />
+                                    <MenuItem x:Name="UiMnGameDuplicateAsVariation" Header="{x:Static p:Resources.DuplicateAsVariation}" Click="UiMnDuplicateAsVariation_Click" />
                                     <Separator />
                                     <MenuItem x:Name="UiMnGameDeleteMovesFromHere" Header="{x:Static p:Resources.DeleteMovesFromHere}" Click="UiMnGame_DeleteMovesFromHere_Click" InputGestureText="Del" />
                                     <Separator />
@@ -820,6 +822,7 @@
                                     <MenuItem x:Name="UiMnExercPromoteLine" Header="{x:Static p:Resources.PromoteLine}" Click="UiMnExerc_PromoteLine_Click" InputGestureText="P"  />
                                     <MenuItem x:Name="UiMnExercReorderLines" Header="{x:Static p:Resources.ReorderLines}" Click="UiMnReorderLines_Click" />
                                     <MenuItem x:Name="UiMnExercEnterNullMove" Header="{x:Static p:Resources.EnterNullMove}" Click="UiMnEnterNullMove_Click" />
+                                    <MenuItem x:Name="UiMnExercDuplicateAsVariation" Header="{x:Static p:Resources.DuplicateAsVariation}" Click="UiMnDuplicateAsVariation_Click" />
                                     <Separator />
                                     <MenuItem x:Name="UiMnExercDeleteMovesFromHere" Header="{x:Static p:Resources.DeleteMovesFromHere}" Click="UiMnExerc_DeleteMovesFromHere_Click" InputGestureText="Del" />
                                     <Separator x:Name="UiMnExerc_Separator_2"/>
