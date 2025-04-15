@@ -1817,6 +1817,7 @@ namespace ChessForge
                 if (fontColor != null && para.Inlines.Count == 0)
                 {
                     r.Foreground = fontColor;
+                    r.Tag = fontColor;
                     r.FontWeight = FontWeights.Bold;
                 }
 
