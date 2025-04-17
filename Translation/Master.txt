@@ -1969,6 +1969,9 @@ PromoteLine=Promote Line
 #Enter null move
 EnterNullMove=Enter Null Move
 
+#Duplicate move as variation
+DuplicateAsVariation=Duplicate Move as Variation
+
 
 #Delete the line starting from the current position
 DeleteMovesFromHere=Delete the Selected Move and All Moves that Follow

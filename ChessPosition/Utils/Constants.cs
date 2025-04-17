@@ -406,6 +406,11 @@ namespace ChessPosition
         public const char CHAR_SQUARED_SQUARE = '\u29C8';
 
         /// <summary>
+        /// Asterisk to indicate a thumbnail
+        /// </summary>
+        public const char CHAR_THUMBNAIL = '\u002A';
+
+        /// <summary>
         /// The reference mark character
         /// </summary>
         public const char CHAR_REFERENCE_MARK = '\u203B';

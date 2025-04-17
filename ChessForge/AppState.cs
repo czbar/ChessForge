@@ -1240,6 +1240,7 @@ namespace ChessForge
                                 SetMarkThumbnailMenuItemHeader(menuItem, selectedNode);
                                 break;
                             case "UiMnStudyInsertDiagramPostComment":
+                            case "UiMnDuplicateAsVariation":
                                 menuItem.IsEnabled = tree != null && tree.SelectedNode != null;
                                 break;
                             case "UiMnMainCopy":
@@ -1320,6 +1321,7 @@ namespace ChessForge
                                 menuItem.IsEnabled = gameIndex >= 0;
                                 break;
                             case "UiMnGameMarkBookmark":
+                            case "UiMnGameDuplicateAsVariation":
                                 menuItem.IsEnabled = gameIndex >= 0 && selectedNodeId > 0;
                                 break;
                             case "UiMnGameMarkThumbnail":
@@ -1420,6 +1422,7 @@ namespace ChessForge
                             case "UiMnExerc_EvalLine":
                             case "UiMnExerc_EvalMove":
                             case "UiMnExercDontSaveEvals":
+                            case "UiMnExercDuplicateAsVariation":
                                 menuItem.IsEnabled = exerciseIndex >= 0 && selectedNodeId > 0 && isSolutionShown;
                                 menuItem.Visibility = isTrainingOrSolving ? Visibility.Collapsed : Visibility.Visible;
                                 break;

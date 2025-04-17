@@ -292,17 +292,19 @@ namespace ChessForge
         private TreeNode PasteOneEngineLine(VariationTree targetTree, TreeNode insertAtNode, List<TreeNode> line,
                                         List<TreeNode> insertedNewNodes, List<TreeNode> failedInsertions)
         {
-            TreeNode lastSharedNode = TreeUtils.GetLastSharedNode(insertAtNode, line, out int index);
-            if (lastSharedNode != null)
-            {
-                insertAtNode = lastSharedNode;
-                for (int i = 0; i <= index; i++)
-                {
-                    line.RemoveAt(0);
-                }
-            }
+            // NOTE: the following was commented out as we allowed "duplicate" moves at the same fork
+            //
+            //TreeNode lastSharedNode = TreeUtils.GetLastSharedNode(insertAtNode, line, out int index);
+            //if (lastSharedNode != null)
+            //{
+            //    insertAtNode = lastSharedNode;
+            //    for (int i = 0; i <= index; i++)
+            //    {
+            //        line.RemoveAt(0);
+            //    }
+            //}
 
-            TreeNode firstInserted = TreeUtils.InsertSubtreeMovesIntoTree(AppState.ActiveVariationTree, insertAtNode, line, ref insertedNewNodes, ref failedInsertions);
+            TreeNode firstInserted = TreeUtils.InsertSubtreeMovesIntoTree(AppState.ActiveVariationTree, insertAtNode, line, ref insertedNewNodes, ref failedInsertions, true);
 
             // if we inserted an already existing line, do nothing
             if (insertedNewNodes.Count > 0)

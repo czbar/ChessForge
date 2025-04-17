@@ -3008,6 +3008,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// The user requested that the current move be duplicated as a variation.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnDuplicateAsVariation_Click(object sender, RoutedEventArgs e)
+        {
+            ActiveTreeView?.DuplicateAsVariation();
+        }
+
+        /// <summary>
         /// Deletes the subtree having checked with the user.
         /// </summary>
         public void DeleteRemainingMoves()

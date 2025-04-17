@@ -386,6 +386,12 @@ namespace ChessForge
                     parts.Insert(0, ass);
                 }
 
+                // if the last part is DIAGRAM, we already have a new line and we don't want a leading space either!
+                if (parts.Count > 1 && parts[parts.Count - 2].Type == CommentPartType.DIAGRAM)
+                {
+                    endPart.Text = "";
+                }
+
                 PlaceCommentPartsIntoParagraph(para, nd, parts, ref isAssessmentBlunderShown);
             }
             catch (Exception ex)
@@ -427,11 +433,11 @@ namespace ChessForge
                     string thmb;
                     if (i < partsCount - 2)
                     {
-                        thmb = Constants.CHAR_SQUARED_SQUARE.ToString() + " ";
+                        thmb = Constants.CHAR_THUMBNAIL.ToString() + " ";
                     }
                     else
                     {
-                        thmb = Constants.CHAR_SQUARED_SQUARE.ToString();
+                        thmb = Constants.CHAR_THUMBNAIL.ToString();
                     }
                     _lastThumbnailNode = nd;
                     inl = new Run(thmb);

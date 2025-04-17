@@ -2122,6 +2122,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Duplicate Move as Variation.
+        /// </summary>
+        public static string DuplicateAsVariation {
+            get {
+                return ResourceManager.GetString("DuplicateAsVariation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Append Games to the current Chapter.
         /// </summary>
         public static string DwnLdAppendToCurrentChapter {

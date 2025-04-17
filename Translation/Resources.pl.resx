@@ -709,7 +709,7 @@
     <value>Nie znaleziono identycznych pozycji.</value>
   </data>
   <data name="MsgEditPositionSearch" xml:space="preserve">
-    <value>Pozycki nie znaleziono. Wrócić do edycji?</value>
+    <value>Pozycji nie znaleziono. Wrócić do edycji?</value>
   </data>
   <data name="MsgTitlePositionSearch" xml:space="preserve">
     <value>Wyszukiwanie Pozycji</value>
@@ -1752,6 +1752,9 @@
   </data>
   <data name="EnterNullMove" xml:space="preserve">
     <value>Wprowadź pusty ruch</value>
+  </data>
+  <data name="DuplicateAsVariation" xml:space="preserve">
+    <value>Duplikuj ruch jako wariant</value>
   </data>
   <data name="DeleteMovesFromHere" xml:space="preserve">
     <value>Usuń zaznaczony ruch i wszystkie dalsze posunięcia</value>

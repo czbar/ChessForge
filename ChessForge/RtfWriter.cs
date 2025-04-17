@@ -1250,9 +1250,6 @@ namespace ChessForge
                     Paragraph printPara = new Paragraph();
                     CopyParaAttributes(printPara, guiPara);
 
-                    // set Left margin to 0 so that centering will work correctly
-                    printPara.Margin = new Thickness(0, guiPara.Margin.Top, guiPara.Margin.Right, guiPara.Margin.Bottom);
-
                     printDoc.Blocks.Add(printPara);
 
                     if (guiPara.Name != null && guiPara.Name.StartsWith(RichTextBoxUtilities.DiagramParaPrefix))
@@ -1262,13 +1259,16 @@ namespace ChessForge
 
                         if (_insertFens)
                         {
-                            string fenText = "FEN " + FenParser.GenerateFenFromPosition(nd.Position);
-                            Paragraph fen = new Paragraph();
-                            fen.Inlines.Add(new Run(fenText));
-                            fen.TextAlignment = TextAlignment.Center;
-                            fen.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff - 2;
-                            fen.FontFamily = new FontFamily("Courier New");
-                            printDoc.Blocks.Add(fen);
+                            if (nd != null)
+                            {
+                                string fenText = "FEN " + FenParser.GenerateFenFromPosition(nd.Position);
+                                Paragraph fen = new Paragraph();
+                                fen.Inlines.Add(new Run(fenText));
+                                fen.TextAlignment = TextAlignment.Center;
+                                fen.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff - 2;
+                                fen.FontFamily = new FontFamily("Courier New");
+                                printDoc.Blocks.Add(fen);
+                            }
                         }
                     }
                     else if (guiPara.Name == RichTextBoxUtilities.ExerciseUnderBoardControls)
@@ -1293,9 +1293,15 @@ namespace ChessForge
                                 else if (inl.Name.StartsWith(RichTextBoxUtilities.InlineDiagramIucPrefix))
                                 {
                                     printDoc.Blocks.Add(printPara);
-                                    CreateInlineDiagramForPrint(printDoc, printPara, inl.Name, tree, ref diagrams);
+                                    printPara = CreateInlineDiagramForPrint(printDoc, printPara, inl.Name, tree, ref diagrams);
+
+                                    // set Left margin to 0 so that centering will work correctly
+                                    // and make some space between the diagram and the previous/next paragraphs
+                                    printPara.Margin = new Thickness(0, guiPara.Margin.Top + 10, guiPara.Margin.Right, guiPara.Margin.Bottom + 5);
                                     lastRunWasIntroMove = false;
-                                    break;
+
+                                    printPara = new Paragraph();
+                                    CopyParaAttributes(printPara, guiPara);
                                 }
                                 else
                                 {

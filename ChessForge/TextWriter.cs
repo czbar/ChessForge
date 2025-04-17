@@ -801,7 +801,16 @@ namespace ChessForge
                     if (block.Margin.Left > 0)
                     {
                         string indent = new string(' ', (int)(block.Margin.Left / 10));
-                        para.Inlines.InsertBefore(para.Inlines.FirstInline, new Run(indent));
+
+                        Run rIndent = new Run(indent);
+                        if (para.Inlines.Count == 0)
+                        {
+                            para.Inlines.Add(rIndent);
+                        }
+                        else
+                        {
+                            para.Inlines.InsertBefore(para.Inlines.FirstInline, rIndent);
+                        }
 
                         // for each inline with 'n' insert indent after '\n'  
                         List<Inline> inlinesToModify = new List<Inline>();
@@ -845,20 +854,23 @@ namespace ChessForge
                         TreeNode nd = tree.GetNodeFromNodeId(nodeId);
                         para.Inlines.Clear();
 
-                        string fenText = "[" + FenParser.GenerateFenFromPosition(nd.Position) + "]";
-
-                        if (tree.ContentType == GameData.ContentType.EXERCISE && nd.NodeId == 0)
+                        if (nd != null)
                         {
-                            if (nd.ColorToMove == PieceColor.White)
+                            string fenText = "[" + FenParser.GenerateFenFromPosition(nd.Position) + "]";
+
+                            if (tree.ContentType == GameData.ContentType.EXERCISE && nd.NodeId == 0)
                             {
-                                fenText += " " + Constants.CHAR_WHITE_LARGE_TRIANGLE_UP.ToString();
+                                if (nd.ColorToMove == PieceColor.White)
+                                {
+                                    fenText += " " + Constants.CHAR_WHITE_LARGE_TRIANGLE_UP.ToString();
+                                }
+                                else
+                                {
+                                    fenText += " " + Constants.CHAR_BLACK_LARGE_TRIANGLE_DOWN.ToString();
+                                }
                             }
-                            else
-                            {
-                                fenText += " " + Constants.CHAR_BLACK_LARGE_TRIANGLE_DOWN.ToString();
-                            }
+                            para.Inlines.Add(new Run(fenText + '\n'));
                         }
-                        para.Inlines.Add(new Run(fenText + '\n'));
                     }
                     else
                     {

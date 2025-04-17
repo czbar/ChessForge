@@ -30,6 +30,7 @@ namespace ChessForge
             Constants.CHAR_DOWN_ARROW,
             Constants.CHAR_REFERENCE_MARK,
             Constants.CHAR_SQUARED_SQUARE,
+            Constants.CHAR_THUMBNAIL,
           };
 
         /// <summary>
