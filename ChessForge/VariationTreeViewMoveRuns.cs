@@ -433,11 +433,11 @@ namespace ChessForge
                     string thmb;
                     if (i < partsCount - 2)
                     {
-                        thmb = Constants.CHAR_SQUARED_SQUARE.ToString() + " ";
+                        thmb = Constants.CHAR_THUMBNAIL.ToString() + " ";
                     }
                     else
                     {
-                        thmb = Constants.CHAR_SQUARED_SQUARE.ToString();
+                        thmb = Constants.CHAR_THUMBNAIL.ToString();
                     }
                     _lastThumbnailNode = nd;
                     inl = new Run(thmb);
