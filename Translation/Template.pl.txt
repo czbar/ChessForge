@@ -679,16 +679,16 @@ SaveDiagramAsImage= Zapisz diagram jako obraz...
 Export=Eksportuj
 
 #description: Export as RTF
-#english: ExportRtf=Export as RTF
-ExportRtf=Eksportuj jako RTF
+#english: ExportRtf=as RTF
+ExportRtf=jako RTF
 
 #description: Export to RTF
 #english: ExportToRtf=Export to RTF
 ExportToRtf=Eksport do pliku RTF
 
 #description: Export as text
-#english: ExportText=Export as Text
-ExportText=Eksportuj jako Tekst
+#english: ExportText=as Text
+ExportText=jako Tekst
 
 #description: Export to text
 #english: ExportToText=Export to Text

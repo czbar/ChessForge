@@ -589,13 +589,13 @@
     <value>Eksportuj</value>
   </data>
   <data name="ExportRtf" xml:space="preserve">
-    <value>Eksportuj jako RTF</value>
+    <value>jako RTF</value>
   </data>
   <data name="ExportToRtf" xml:space="preserve">
     <value>Eksport do pliku RTF</value>
   </data>
   <data name="ExportText" xml:space="preserve">
-    <value>Eksportuj jako Tekst</value>
+    <value>jako Tekst</value>
   </data>
   <data name="ExportToText" xml:space="preserve">
     <value>Eksport do pliku tekstowego</value>

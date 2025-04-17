@@ -522,13 +522,13 @@ SaveDiagramAsImage=Save Diagram as Picture...
 Export=Export
 
 #Export as RTF
-ExportRtf=Export as RTF
+ExportRtf=as RTF
 
 #Export to RTF
 ExportToRtf=Export to RTF
 
 #Export as text
-ExportText=Export as Text
+ExportText=as Text
 
 #Export to text
 ExportToText=Export to Text

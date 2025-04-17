@@ -679,7 +679,7 @@ SaveDiagramAsImage=
 Export=
 
 #description: Export as RTF
-#english: ExportRtf=Export as RTF
+#english: ExportRtf=as RTF
 ExportRtf=
 
 #description: Export to RTF
@@ -687,7 +687,7 @@ ExportRtf=
 ExportToRtf=
 
 #description: Export as text
-#english: ExportText=Export as Text
+#english: ExportText=as Text
 ExportText=
 
 #description: Export to text
