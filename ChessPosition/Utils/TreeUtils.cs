@@ -172,7 +172,39 @@ namespace ChessPosition
         /// <returns></returns>
         public static TreeNode FindMainLineMove(VariationTree tree, int moveNumber, PieceColor color)
         {
-            return tree.Nodes.Find(x => x.IsMainLine() && x.MoveNumber == moveNumber && x.ColorToMove != color);
+            // we cannot rely on lineIds to determine is the move is on the main line
+            return tree.Nodes.Find(x => IsTopLine(x) && x.MoveNumber == moveNumber && x.ColorToMove != color);
+        }
+
+        /// <summary>
+        /// Same purpose as TreeNode.IsMainLine() but does not assume 
+        /// that the line ids have been built.
+        /// It is therefore slower but more universal.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        public static bool IsTopLine(TreeNode nd)
+        {
+            bool result = true;
+
+            try
+            {
+                while (nd != null && nd.Parent != null)
+                {
+                    if (nd.Parent.Children[0] != nd)
+                    {
+                        result = false;
+                        break;
+                    }
+                    else
+                    {
+                        nd = nd.Parent;
+                    }
+                }
+            }
+            catch { }
+
+            return result;
         }
 
         /// <summary>
