@@ -163,6 +163,19 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Finds the main line move in the passed tree with the passed move number and color.
+        /// The passed color is the side "to move" i.e. White if the text is of the Black's move.
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <param name="moveNumber"></param>
+        /// <param name="color"></param>
+        /// <returns></returns>
+        public static TreeNode FindMainLineMove(VariationTree tree, int moveNumber, PieceColor color)
+        {
+            return tree.Nodes.Find(x => x.IsMainLine() && x.MoveNumber == moveNumber && x.ColorToMove != color);
+        }
+
+        /// <summary>
         /// Makes a deep copy of the passed variation tree.
         /// </summary>
         /// <param name="source">VariationTree to copy</param>
