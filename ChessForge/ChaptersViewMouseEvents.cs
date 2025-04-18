@@ -736,7 +736,11 @@ namespace ChessForge
                 {
                     if (node == null)
                     {
-                        node = game.Tree.GetFinalPosition();
+                        node = TreeUtils.FindMainLineMove(game.Tree, Configuration.AutoThumbnailMoveNo, Configuration.AutoThumbnailColor ? PieceColor.White : PieceColor.Black);
+                        if (node == null)
+                        {
+                            node = game.Tree.GetFinalPosition();
+                        }
                     }
                     ShowFloatingBoardForNode(e, node, TabViewType.MODEL_GAME);
                 }
