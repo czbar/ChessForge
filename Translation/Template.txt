@@ -1490,6 +1490,21 @@ AutoReplaySpeed=
 #english: AllowMouseWheel=Allow Mouse Wheel
 AllowMouseWheel=
 
+#description: Auto thumbnails
+#english: AutoThumbnails=Auto-Thumbnails for Games
+AutoThumbnails=
+
+#description: After move number
+#english: AfterMove=After Move No.
+AfterMove=
+
+#description: Move made by White
+#english: MadeByWhite=Made by White
+MadeByWhite=
+
+#description: Move made by Black
+#english: MadeByBlack=Made by Black
+MadeByBlack=
 
 
 #######################################

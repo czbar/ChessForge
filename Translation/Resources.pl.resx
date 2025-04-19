@@ -1096,6 +1096,18 @@
   <data name="AllowMouseWheel" xml:space="preserve">
     <value>Uaktywnij kółko myszy</value>
   </data>
+  <data name="AutoThumbnails" xml:space="preserve">
+    <value>Auto-Wizytówki Partii</value>
+  </data>
+  <data name="AfterMove" xml:space="preserve">
+    <value>Po ruchu numer</value>
+  </data>
+  <data name="MadeByWhite" xml:space="preserve">
+    <value>Białych</value>
+  </data>
+  <data name="MadeByBlack" xml:space="preserve">
+    <value>Czarnych</value>
+  </data>
   <data name="SelectChessboards" xml:space="preserve">
     <value>Wybierz Szachownice</value>
   </data>

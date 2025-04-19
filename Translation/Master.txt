@@ -1164,6 +1164,17 @@ AutoReplaySpeed=Auto Speed (s)
 #Allow manual replay with a mouse wheel 
 AllowMouseWheel=Allow Mouse Wheel
 
+#Auto thumbnails
+AutoThumbnails=Auto-Thumbnails for Games
+
+#After move number
+AfterMove=After Move No.
+
+#Move made by White
+MadeByWhite=Made by White
+
+#Move made by Black
+MadeByBlack=Made by Black
 
 
 #######################################

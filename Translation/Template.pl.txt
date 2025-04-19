@@ -1490,6 +1490,21 @@ AutoReplaySpeed=Auto (s)
 #english: AllowMouseWheel=Allow Mouse Wheel
 AllowMouseWheel=Uaktywnij kółko myszy
 
+#description: Auto thumbnails
+#english: AutoThumbnails=Auto-Thumbnails for Games
+AutoThumbnails=Auto-Wizytówki Partii
+
+#description: After move number
+#english: AfterMove=After Move No.
+AfterMove=Po ruchu numer
+
+#description: Move made by White
+#english: MadeByWhite=Made by White
+MadeByWhite=Białych
+
+#description: Move made by Black
+#english: MadeByBlack=Made by Black
+MadeByBlack=Czarnych
 
 
 #######################################
