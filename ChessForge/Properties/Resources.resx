@@ -589,13 +589,13 @@
     <value>Export</value>
   </data>
   <data name="ExportRtf" xml:space="preserve">
-    <value>Export as RTF</value>
+    <value>as RTF</value>
   </data>
   <data name="ExportToRtf" xml:space="preserve">
     <value>Export to RTF</value>
   </data>
   <data name="ExportText" xml:space="preserve">
-    <value>Export as Text</value>
+    <value>as Text</value>
   </data>
   <data name="ExportToText" xml:space="preserve">
     <value>Export to Text</value>
@@ -1095,6 +1095,18 @@
   </data>
   <data name="AllowMouseWheel" xml:space="preserve">
     <value>Allow Mouse Wheel</value>
+  </data>
+  <data name="AutoThumbnails" xml:space="preserve">
+    <value>Auto-Thumbnails for Games</value>
+  </data>
+  <data name="AfterMove" xml:space="preserve">
+    <value>After Move No.</value>
+  </data>
+  <data name="MadeByWhite" xml:space="preserve">
+    <value>Made by White</value>
+  </data>
+  <data name="MadeByBlack" xml:space="preserve">
+    <value>Made by Black</value>
   </data>
   <data name="SelectChessboards" xml:space="preserve">
     <value>Select Chessboards</value>

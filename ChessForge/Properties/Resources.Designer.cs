@@ -97,6 +97,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to After Move Number.
+        /// </summary>
+        public static string AfterMove {
+            get {
+                return ResourceManager.GetString("AfterMove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All Chapters.
         /// </summary>
         public static string AllChapters {
@@ -282,6 +291,15 @@ namespace ChessForge.Properties {
         public static string AutoSave {
             get {
                 return ResourceManager.GetString("AutoSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto-Thumbnails for Games.
+        /// </summary>
+        public static string AutoThumbnails {
+            get {
+                return ResourceManager.GetString("AutoThumbnails", resourceCulture);
             }
         }
         
@@ -3130,7 +3148,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Export as RTF.
+        ///   Looks up a localized string similar to as RTF.
         /// </summary>
         public static string ExportRtf {
             get {
@@ -3139,7 +3157,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Export as Text.
+        ///   Looks up a localized string similar to as Text.
         /// </summary>
         public static string ExportText {
             get {
@@ -4521,6 +4539,24 @@ namespace ChessForge.Properties {
         public static string LostQuizPoints {
             get {
                 return ResourceManager.GetString("LostQuizPoints", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Made by Black.
+        /// </summary>
+        public static string MadeByBlack {
+            get {
+                return ResourceManager.GetString("MadeByBlack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Made by White.
+        /// </summary>
+        public static string MadeByWhite {
+            get {
+                return ResourceManager.GetString("MadeByWhite", resourceCulture);
             }
         }
         

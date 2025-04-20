@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ChessPosition;
 using System.Windows;
-using System.Windows.Controls;
-using System.IO;
-using ChessPosition;
 
 namespace ChessForge
 {
@@ -33,6 +29,9 @@ namespace ChessForge
 
         // LargeMenuFont on entry
         private bool _currentLargeMenuFont;
+
+        // AutoThumbnailMoveColor on entry
+        private bool _autoThumbnailMoveColor;
 
         /// <summary>
         /// The language selected upon exit
@@ -196,6 +195,11 @@ namespace ChessForge
             UiCbLargeMenuFont.IsChecked = (LargeMenuFont == true);
             UiCbFigurines.IsChecked = (Configuration.UseFigurines == true);
 
+            UiTbAtMove.Text = Configuration.AutoThumbnailMoveNo.ToString();
+
+            _autoThumbnailMoveColor = Configuration.AutoThumbnailColor;
+            SetAutoThumbnailColorText(_autoThumbnailMoveColor);
+
             Languages.AvailableLanguages.Sort();
             foreach (Language lang in Languages.AvailableLanguages)
             {
@@ -206,6 +210,15 @@ namespace ChessForge
                     UiLbLanguages.SelectedItem = lang;
                 }
             }
+        }
+
+        /// <summary>
+        /// Sets text of the label indicationg auto-thumbnail move color.
+        /// </summary>
+        /// <param name="isWhite"></param>
+        private void SetAutoThumbnailColorText(bool isWhite)
+        {
+            UiLblMoveBy.Content = isWhite ? Properties.Resources.MadeByWhite : Properties.Resources.MadeByBlack;
         }
 
         /// <summary>
@@ -232,10 +245,19 @@ namespace ChessForge
                 Configuration.MoveSpeed = (int)(dval * 1000);
             }
 
-            if (int.TryParse(UiTbIndexDepth.Text, out int iVal))
+            int iVal;
+
+            if (int.TryParse(UiTbIndexDepth.Text, out iVal))
             {
                 Configuration.DefaultIndexDepth = iVal;
             }
+
+            if (int.TryParse(UiTbAtMove.Text, out iVal))
+            {
+                Configuration.AutoThumbnailMoveNo = iVal;
+            }
+
+            Configuration.AutoThumbnailColor = _autoThumbnailMoveColor; 
 
             Configuration.AllowMouseWheelForMoves = (UiCbAllowWheel.IsChecked == true);
             Configuration.MainLineCommentLF = (UiCbMainLineCommentLF.IsChecked == true);
@@ -244,6 +266,7 @@ namespace ChessForge
             Configuration.WideScrollbar = (UiCbWideScrollbar.IsChecked == true);
             Configuration.LargeMenuFont = (UiCbLargeMenuFont.IsChecked == true);
             Configuration.UseFigurines = (UiCbFigurines.IsChecked == true);
+
 
             MainLineCommentLFChanged = Configuration.MainLineCommentLF != _currentMainLineCommentLF;
             WideScrollbarChanged = Configuration.WideScrollbar != _currentWideScrollbar;
@@ -271,6 +294,18 @@ namespace ChessForge
             }
 
             DialogResult = true;
+        }
+
+
+        /// <summary>
+        /// Swaps the color of the auto-thumbnail move number.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiLblSwapMoveColor_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            _autoThumbnailMoveColor = !_autoThumbnailMoveColor;
+            SetAutoThumbnailColorText(_autoThumbnailMoveColor);
         }
 
         /// <summary>

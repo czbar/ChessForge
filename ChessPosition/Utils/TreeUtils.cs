@@ -163,6 +163,51 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Finds the main line move in the passed tree with the passed move number and color.
+        /// The passed color is the side "to move" i.e. White if the text is of the Black's move.
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <param name="moveNumber"></param>
+        /// <param name="color"></param>
+        /// <returns></returns>
+        public static TreeNode FindMainLineMove(VariationTree tree, int moveNumber, PieceColor color)
+        {
+            // we cannot rely on lineIds to determine is the move is on the main line
+            return tree.Nodes.Find(x => IsTopLine(x) && x.MoveNumber == moveNumber && x.ColorToMove != color);
+        }
+
+        /// <summary>
+        /// Same purpose as TreeNode.IsMainLine() but does not assume 
+        /// that the line ids have been built.
+        /// It is therefore slower but more universal.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        public static bool IsTopLine(TreeNode nd)
+        {
+            bool result = true;
+
+            try
+            {
+                while (nd != null && nd.Parent != null)
+                {
+                    if (nd.Parent.Children[0] != nd)
+                    {
+                        result = false;
+                        break;
+                    }
+                    else
+                    {
+                        nd = nd.Parent;
+                    }
+                }
+            }
+            catch { }
+
+            return result;
+        }
+
+        /// <summary>
         /// Makes a deep copy of the passed variation tree.
         /// </summary>
         /// <param name="source">VariationTree to copy</param>

@@ -259,6 +259,17 @@ namespace ChessForge
         public static int DiagramImageBorderWidth = 1;
 
         /// <summary>
+        /// The move number at which to insert a thumbnail if no thumbnail set.
+        /// </summary>
+        public static int AutoThumbnailMoveNo = 8;
+
+        /// <summary>
+        /// The side on the move for the autothumbnail.
+        /// If true, it is white's move, otherwise black.
+        /// </summary>
+        public static bool AutoThumbnailColor = true;
+
+        /// <summary>
         /// Time given to the engine to evaluate a single move
         /// (in milliseconds)
         /// </summary>
@@ -655,6 +666,10 @@ namespace ChessForge
         private const string CFG_DIAGRAM_IMAGE_COLORS = "DiagramImageColors";
         private const string CFG_DIAGRAM_IMAGE_BORDER_WIDTH = "DiagramImageBorderWidth";
 
+        private const string CFG_AUTO_THUMBNAIL_MOVE_NO = "AutoThumbnailMoveNo";
+        private const string CFG_AUTO_THUMBNAIL_COLOR = "AutoThumbnailColor";
+        
+
         /// <summary>
         /// PGN export configuration.
         /// What to include
@@ -843,6 +858,9 @@ namespace ChessForge
                 sb.Append(CFG_DIAGRAM_IMAGE_SIZE + "=" + DiagramImageSize.ToString() + Environment.NewLine);
                 sb.Append(CFG_DIAGRAM_IMAGE_COLORS + "=" + DiagramImageColors.ToString() + Environment.NewLine);
                 sb.Append(CFG_DIAGRAM_IMAGE_BORDER_WIDTH + "=" + DiagramImageBorderWidth.ToString() + Environment.NewLine);
+                
+                sb.Append(CFG_AUTO_THUMBNAIL_MOVE_NO + "=" + AutoThumbnailMoveNo.ToString() + Environment.NewLine);
+                sb.AppendLine(CFG_AUTO_THUMBNAIL_COLOR + "=" + (AutoThumbnailColor ? "1" : "0"));                
 
                 sb.Append(CFG_VIABLE_MOVE_CP_DIFF + "=" + ViableMoveCpDiff.ToString() + Environment.NewLine);
                 sb.Append(CFG_BLUNDER_DET_EVAL_DROP + "=" + BlunderDetectEvalDrop.ToString() + Environment.NewLine);
@@ -1204,6 +1222,12 @@ namespace ChessForge
                             break;
                         case CFG_DIAGRAM_IMAGE_BORDER_WIDTH:
                             int.TryParse(value, out DiagramImageBorderWidth);
+                            break;                            
+                        case CFG_AUTO_THUMBNAIL_MOVE_NO:
+                            int.TryParse(value, out AutoThumbnailMoveNo);
+                            break;
+                        case CFG_AUTO_THUMBNAIL_COLOR:
+                            AutoThumbnailColor = value != "0" ? true : false;
                             break;
                         case CFG_BLUNDER_DET_EVAL_DROP:
                             uint.TryParse(value, out BlunderDetectEvalDrop);

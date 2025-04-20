@@ -589,13 +589,13 @@
     <value>Eksportuj</value>
   </data>
   <data name="ExportRtf" xml:space="preserve">
-    <value>Eksportuj jako RTF</value>
+    <value>jako RTF</value>
   </data>
   <data name="ExportToRtf" xml:space="preserve">
     <value>Eksport do pliku RTF</value>
   </data>
   <data name="ExportText" xml:space="preserve">
-    <value>Eksportuj jako Tekst</value>
+    <value>jako Tekst</value>
   </data>
   <data name="ExportToText" xml:space="preserve">
     <value>Eksport do pliku tekstowego</value>
@@ -1095,6 +1095,18 @@
   </data>
   <data name="AllowMouseWheel" xml:space="preserve">
     <value>Uaktywnij kółko myszy</value>
+  </data>
+  <data name="AutoThumbnails" xml:space="preserve">
+    <value>Auto-Wizytówki Partii</value>
+  </data>
+  <data name="AfterMove" xml:space="preserve">
+    <value>Po ruchu numer</value>
+  </data>
+  <data name="MadeByWhite" xml:space="preserve">
+    <value>Białych</value>
+  </data>
+  <data name="MadeByBlack" xml:space="preserve">
+    <value>Czarnych</value>
   </data>
   <data name="SelectChessboards" xml:space="preserve">
     <value>Wybierz Szachownice</value>

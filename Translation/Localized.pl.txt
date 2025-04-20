@@ -679,16 +679,16 @@ SaveDiagramAsImage= Zapisz diagram jako obraz...
 Export=Eksportuj
 
 #description: Export as RTF
-#english: ExportRtf=Export as RTF
-ExportRtf=Eksportuj jako RTF
+#english: ExportRtf=as RTF
+ExportRtf=jako RTF
 
 #description: Export to RTF
 #english: ExportToRtf=Export to RTF
 ExportToRtf=Eksport do pliku RTF
 
 #description: Export as text
-#english: ExportText=Export as Text
-ExportText=Eksportuj jako Tekst
+#english: ExportText=as Text
+ExportText=jako Tekst
 
 #description: Export to text
 #english: ExportToText=Export to Text
@@ -1490,6 +1490,21 @@ AutoReplaySpeed=Auto (s)
 #english: AllowMouseWheel=Allow Mouse Wheel
 AllowMouseWheel=Uaktywnij kółko myszy
 
+#description: Auto thumbnails
+#english: AutoThumbnails=Auto-Thumbnails for Games
+AutoThumbnails=Auto-Wizytówki Partii
+
+#description: After move number
+#english: AfterMove=After Move Number
+AfterMove=Po ruchu numer
+
+#description: Move made by White
+#english: MadeByWhite=Made by White
+MadeByWhite=Białych
+
+#description: Move made by Black
+#english: MadeByBlack=Made by Black
+MadeByBlack=Czarnych
 
 
 #######################################
