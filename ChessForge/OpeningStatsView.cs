@@ -369,7 +369,7 @@ namespace ChessForge
         /// </summary>
         private void BuildFlowDocument(DataMode mode, LichessOpeningsStats openingStats, string errorMessage = "")
         {
-            FlowDocument doc = new FlowDocument();
+            FlowDocument doc = HostRtb.Document;
 
             _lastDataMode = mode;
             _lastOpeningStats = openingStats;
@@ -418,7 +418,7 @@ namespace ChessForge
                 }
             }
 
-            HostRtb.Document = doc;
+            //HostRtb.Document = doc;
         }
 
         /// <summary>
