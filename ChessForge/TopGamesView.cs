@@ -78,8 +78,8 @@ namespace ChessForge
         /// <summary>
         /// Creates the view and registers a listener with WebAccess
         /// </summary>
-        /// <param name="doc"></param>
-        public TopGamesView(RichTextBox doc, bool mainWin) : base(doc)
+        /// <param name="rtb"></param>
+        public TopGamesView(RichTextBox rtb, bool mainWin) : base(rtb)
         {
             _isMainWin = mainWin;
             // listen to Data Received Errors events
