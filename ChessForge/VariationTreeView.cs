@@ -1537,7 +1537,10 @@ namespace ChessForge
                     rPreviousInline = postDiagRun;
                 }
 
-                Run runMove = new Run(MoveUtils.BuildSingleMoveText(nd, hasDiagram, false, ShownVariationTree.MoveNumberOffset) + " ");
+                // while this method is only used when we are inserting a move in a "plain" branch,
+                // we may have to provide a number for the Black move if the previous White move has a comment.
+                bool isStandalone = !string.IsNullOrEmpty(nd.Parent.Comment) || hasDiagram;
+                Run runMove = new Run(MoveUtils.BuildSingleMoveText(nd, isStandalone, false, ShownVariationTree.MoveNumberOffset) + " ");
                 runMove.Name = RichTextBoxUtilities.RunMovePrefix + nd.NodeId.ToString();
                 runMove.PreviewMouseDown += EventRunClicked;
 
