@@ -1446,7 +1446,14 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnImportChapter_Click(object sender, RoutedEventArgs e)
         {
-            ImportFromPgn.ImportChapter();
+            try
+            {
+                ImportFromPgn.ImportChapter();
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("UiMnImportChapter_Click()", ex);
+            }
         }
 
         /// <summary>

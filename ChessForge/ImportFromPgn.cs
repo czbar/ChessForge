@@ -25,6 +25,11 @@ namespace ChessForge
         public static void ImportChapter()
         {
             string[] fileNames = ImportFromPgn.SelectPgnFile(false);
+            if (fileNames == null || fileNames.Length == 0)
+            {
+                return;
+            }
+
             string fileName = null;
             if (fileNames.Length == 1)
             {
