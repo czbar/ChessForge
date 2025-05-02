@@ -1199,7 +1199,8 @@ namespace ChessForge
                         mi.ToolTip = recentFiles.ElementAt(i);
                     }
                 }
-                catch { };
+                catch { }
+                ;
             }
         }
 
@@ -1225,7 +1226,8 @@ namespace ChessForge
                 }
             }
             catch
-            { };
+            { }
+            ;
         }
 
         /// <summary>
@@ -2685,9 +2687,12 @@ namespace ChessForge
             {
                 MainChessBoard.RemoveMoveSquareColors();
 
-                MoveUtils.EngineNotationToCoords(engCode, out SquareCoords sqOrig, out SquareCoords sqDest, out _);
-                MainChessBoard.ColorMoveSquare(sqOrig.Xcoord, sqOrig.Ycoord, true);
-                MainChessBoard.ColorMoveSquare(sqDest.Xcoord, sqDest.Ycoord, false);
+                if (!string.IsNullOrEmpty(engCode))
+                {
+                    MoveUtils.EngineNotationToCoords(engCode, out SquareCoords sqOrig, out SquareCoords sqDest, out _);
+                    MainChessBoard.ColorMoveSquare(sqOrig.Xcoord, sqOrig.Ycoord, true);
+                    MainChessBoard.ColorMoveSquare(sqDest.Xcoord, sqDest.Ycoord, false);
+                }
             });
         }
 
