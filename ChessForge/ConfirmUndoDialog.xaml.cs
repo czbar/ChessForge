@@ -57,7 +57,7 @@ namespace ChessForge
             switch (_operation.OpType)
             {
                 case WorkbookOperationType.CREATE_ARTICLE:
-                    if (_operation.OpData_1 is Article article)
+                    if (_operation.Article is Article article)
                     {
                         if (article.ContentType == GameData.ContentType.EXERCISE)
                         {

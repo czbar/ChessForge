@@ -140,8 +140,8 @@ namespace ChessForge
                     case WorkbookOperationType.CREATE_ARTICLE:
                         WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
                         selectedChapterIndex = WorkbookManager.SessionWorkbook.GetChapterIndex(op.Chapter);
-                        WorkbookManager.SessionWorkbook.UndoCreateArticle(op.Chapter, op.OpData_1 as Article);
-                        selectedArticleIndex = op.Chapter.AdjustActiveArticleIndex((op.OpData_1 as Article).ContentType);
+                        WorkbookManager.SessionWorkbook.UndoCreateArticle(op.Chapter, op.Article);
+                        selectedArticleIndex = op.Chapter.AdjustActiveArticleIndex((op.Article).ContentType);
                         break;
                     case WorkbookOperationType.DELETE_MODEL_GAMES:
                     case WorkbookOperationType.DELETE_EXERCISES:
