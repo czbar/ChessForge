@@ -2115,16 +2115,12 @@ MsgInvalidMoveRange=
 # Header: TRAINING VIEW
 #
 
-#description: User wants to restart the game against the engine after a certain move in the Training Session
-#english: RestartGameAfter=Restart Game After 
-RestartGameAfter=
-
 #description: User wants to restart the training from a certain move in the Training Session
 #english: RestartFrom=Restart from 
 RestartFrom=
 
 #description: Restart game from a selected move (context menu item)
-#english: RestartGameFrom=Restart Game from 
+#english: RestartGameFrom=Restart Game from
 RestartGameFrom=
 
 #description: Replace engine move

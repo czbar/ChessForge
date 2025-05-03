@@ -1477,9 +1477,6 @@
   <data name="MsgInvalidMoveRange" xml:space="preserve">
     <value>Nieprawidłowy zakres ruchów</value>
   </data>
-  <data name="RestartGameAfter" xml:space="preserve">
-    <value>Cofnij Partię do</value>
-  </data>
   <data name="RestartFrom" xml:space="preserve">
     <value>Cofnij do</value>
   </data>

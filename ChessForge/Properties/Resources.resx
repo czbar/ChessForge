@@ -1477,14 +1477,11 @@
   <data name="MsgInvalidMoveRange" xml:space="preserve">
     <value>Invalid Move Range</value>
   </data>
-  <data name="RestartGameAfter" xml:space="preserve">
-    <value>Restart Game After </value>
-  </data>
   <data name="RestartFrom" xml:space="preserve">
     <value>Restart from </value>
   </data>
   <data name="RestartGameFrom" xml:space="preserve">
-    <value>Restart Game from </value>
+    <value>Restart Game from</value>
   </data>
   <data name="ReplaceEngineMove" xml:space="preserve">
     <value>Replace Engine Move</value>
