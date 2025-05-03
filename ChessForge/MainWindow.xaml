@@ -333,7 +333,7 @@
                                     <MenuItem x:Name="_mnTrainRestartTraining" Header="{x:Static p:Resources.RestartTrainingSession}" Click="UiMnTrainRestartTraining_Click" />
                                     <MenuItem x:Name="_mnTrainExitTraining" Header="{x:Static p:Resources.ExitTraining}"  Click="UiMnStopTraining_Click" />
                                     <Separator x:Name="_mnTrainSepar_1" />
-                                    <MenuItem x:Name="_mnTrainRestartGame" Header="{x:Static p:Resources.RestartGameAfter}" Click="UiMnTrainRestartGame_Click" />
+                                    <MenuItem x:Name="_mnTrainRestartGame" Header="{x:Static p:Resources.RestartGameFrom}" Click="UiMnTrainRestartGame_Click" />
                                     <MenuItem x:Name="_mnRollBackTraining" Header="{x:Static p:Resources.RestartFrom}" Click="UiMnRollBackTraining_Click" />
                                     <MenuItem x:Name="UiMncTrainReplaceEngineMove" Header="{x:Static p:Resources.ReplaceEngineMove}"  Click="UiMnReplaceEngineMove_Click" />
                                     <Separator x:Name="_mnTrainSepar_2" />
