@@ -582,7 +582,11 @@ namespace ChessForge
                     {
                         title = "; " + title;
                     }
-                    parts.Add(new CommentPart(cpt, " " + title, article.Guid));
+                    if (!first || !string.IsNullOrEmpty(nd.Comment))
+                    {
+                        title = " " + title;
+                    }
+                    parts.Add(new CommentPart(cpt, title, article.Guid));
                     first = false;
                 }
             }
