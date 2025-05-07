@@ -621,6 +621,10 @@ namespace ChessForge
                     MoveUtils.CleanupNullMove(ref nullNd);
 
                     ShownVariationTree.AddNodeToParent(nullNd);
+
+                    EditOperation op = new EditOperation(EditOperation.EditType.ADD_MOVE, nullNd);
+                    AppState.ActiveVariationTree.OpsManager.PushOperation(op);
+
                     ShownVariationTree.BuildLines();
 
                     _mainWin.SetActiveLine(nullNd.LineId, nullNd.NodeId);
