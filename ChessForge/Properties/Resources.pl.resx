@@ -1075,6 +1075,9 @@
   <data name="ParaForComment" xml:space="preserve">
     <value>Nowy akapit dla komentarza</value>
   </data>
+  <data name="ExtraSpacing" xml:space="preserve">
+    <value>Powiększ odstęp</value>
+  </data>
   <data name="ShowMovesAtFork" xml:space="preserve">
     <value>Tabelka przy rozgałęzieniu</value>
   </data>

@@ -97,7 +97,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to After Move Number.
+        ///   Looks up a localized string similar to After Move No..
         /// </summary>
         public static string AfterMove {
             get {
@@ -3180,6 +3180,15 @@ namespace ChessForge.Properties {
         public static string ExportToText {
             get {
                 return ResourceManager.GetString("ExportToText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Extra spacing.
+        /// </summary>
+        public static string ExtraSpacing {
+            get {
+                return ResourceManager.GetString("ExtraSpacing", resourceCulture);
             }
         }
         
@@ -6443,16 +6452,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Restart Game After .
-        /// </summary>
-        public static string RestartGameAfter {
-            get {
-                return ResourceManager.GetString("RestartGameAfter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Restart Game from .
+        ///   Looks up a localized string similar to Restart Game from.
         /// </summary>
         public static string RestartGameFrom {
             get {

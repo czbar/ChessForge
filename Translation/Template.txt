@@ -1462,6 +1462,10 @@ SoundOn=
 #english: ParaForComment=Line break before comment
 ParaForComment=
 
+#description: Additional space around the comment line
+#english: ExtraSpacing=Extra spacing
+ExtraSpacing=
+
 #description: Whether to show inline table with move options at a fork
 #english: ShowMovesAtFork=Show Moves at Fork
 ShowMovesAtFork=
