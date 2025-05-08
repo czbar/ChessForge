@@ -613,7 +613,14 @@ namespace ChessForge
                 && !string.IsNullOrEmpty(nd.Comment)
                 && (!nd.IsDiagram || !nd.IsDiagramPreComment))
             {
-                text = "\n";
+                if (Configuration.ExtraSpacing)
+                {
+                    text = "\n\n";
+                }
+                else
+                {
+                    text = "\n";
+                }
             }
             else
             {
@@ -644,7 +651,14 @@ namespace ChessForge
                 && !string.IsNullOrEmpty(nd.Comment)
                 && (!nd.IsDiagram || nd.IsDiagramPreComment))
             {
-                text += "\n";
+                if (Configuration.ExtraSpacing)
+                {
+                    text += "\n\n";
+                }
+                else
+                {
+                    text += "\n";
+                }
             }
             else
             {

@@ -1,5 +1,6 @@
 ﻿using ChessPosition;
 using System.Windows;
+using System.Windows.Media;
 
 namespace ChessForge
 {
@@ -23,6 +24,9 @@ namespace ChessForge
 
         // MainLineCommentLF on entry
         private bool _currentMainLineCommentLF;
+
+        // ExtraSpacing on entry
+        private bool _currentExtraSpacing;
 
         // WideScrollbar on entry
         private bool _currentWideScrollbar;
@@ -72,6 +76,12 @@ namespace ChessForge
         /// </summary>
         public bool MainLineCommentLFChanged = false;
 
+        /// <summary>
+        /// Set on Exit to indicate whether the ExtraSpacing
+        /// differs from the one configured before the dialog was opened
+        /// </summary>
+        public bool ExtraSpacingChanged = false;
+        
         /// <summary>
         /// Configured path to the engine's executable.
         /// </summary>
@@ -126,6 +136,11 @@ namespace ChessForge
         public bool MainLineCommentLF;
 
         /// <summary>
+        /// Whether extra line spacing is used for the main line comments.
+        /// </summary>
+        public bool ExtraSpacing;
+
+        /// <summary>
         /// Whether "fork tables" are shown.
         /// </summary>
         public bool ShowMovesAtFork;
@@ -153,6 +168,9 @@ namespace ChessForge
         // path to the engine as this dialog is invoked,
         private string _originalEnginePath;
 
+        // foreground for enabled text
+        private Brush _defaultForegroundColor = Brushes.Black;
+
         /// <summary>
         /// Creates the dialog and initializes the controls with
         /// formatted configuration values.
@@ -162,6 +180,7 @@ namespace ChessForge
             InitializeComponent();
             EnginePath = Configuration.EngineExePath;
             _originalEnginePath = EnginePath;
+            _defaultForegroundColor = UiCbExtraSpacing.Foreground;
 
             ReplaySpeed = (double)Configuration.MoveSpeed / 1000.0;
             EngineTimePerMoveInGame = (double)Configuration.EngineMoveTime / 1000.0;
@@ -172,6 +191,7 @@ namespace ChessForge
             EngineHashSize = (long)Configuration.EngineHashSize;
             AllowMouseWheel = Configuration.AllowMouseWheelForMoves;
             MainLineCommentLF = Configuration.MainLineCommentLF;
+            ExtraSpacing = Configuration.ExtraSpacing;
             ShowMovesAtFork = Configuration.ShowMovesAtFork;
             SoundOn = Configuration.SoundOn;
             WideScrollbar = Configuration.WideScrollbar;
@@ -181,6 +201,7 @@ namespace ChessForge
             _currentEngineThreads = Configuration.EngineThreads;
             _currentEngineHashSize = Configuration.EngineHashSize;
             _currentMainLineCommentLF = Configuration.MainLineCommentLF;
+            _currentExtraSpacing = Configuration.ExtraSpacing;
             _currentWideScrollbar = Configuration.WideScrollbar;
             _currentLargeMenuFont = Configuration.LargeMenuFont;
 
@@ -189,6 +210,7 @@ namespace ChessForge
             UiTbReplaySpeed.Text = ReplaySpeed.ToString("F1");
             UiCbAllowWheel.IsChecked = (AllowMouseWheel == true);
             UiCbMainLineCommentLF.IsChecked = MainLineCommentLF == true;
+            UiCbExtraSpacing.IsChecked = ExtraSpacing == true;
             UiCbShowForkMoves.IsChecked = (ShowMovesAtFork == true);
             UiCbSoundOn.IsChecked = (SoundOn == true);
             UiCbWideScrollbar.IsChecked = (WideScrollbar == true);
@@ -199,6 +221,7 @@ namespace ChessForge
 
             _autoThumbnailMoveColor = Configuration.AutoThumbnailColor;
             SetAutoThumbnailColorText(_autoThumbnailMoveColor);
+            SetExtraSpacingCheckBox();
 
             Languages.AvailableLanguages.Sort();
             foreach (Language lang in Languages.AvailableLanguages)
@@ -209,6 +232,23 @@ namespace ChessForge
                     _currentConfiguredLanguage = lang.Code;
                     UiLbLanguages.SelectedItem = lang;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Sets the state of the extra spacing check box.
+        /// </summary>
+        private void SetExtraSpacingCheckBox()
+        {
+            if (UiCbMainLineCommentLF.IsChecked == true)
+            {
+                UiCbExtraSpacing.IsEnabled = true;
+                UiCbExtraSpacing.Foreground = _defaultForegroundColor;
+            }
+            else
+            {
+                UiCbExtraSpacing.IsEnabled = false;
+                UiCbExtraSpacing.Foreground = Brushes.Gray;
             }
         }
 
@@ -261,6 +301,7 @@ namespace ChessForge
 
             Configuration.AllowMouseWheelForMoves = (UiCbAllowWheel.IsChecked == true);
             Configuration.MainLineCommentLF = (UiCbMainLineCommentLF.IsChecked == true);
+            Configuration.ExtraSpacing = (UiCbExtraSpacing.IsChecked == true);
             Configuration.ShowMovesAtFork = (UiCbShowForkMoves.IsChecked == true);
             Configuration.SoundOn = (UiCbSoundOn.IsChecked == true);
             Configuration.WideScrollbar = (UiCbWideScrollbar.IsChecked == true);
@@ -269,6 +310,7 @@ namespace ChessForge
 
 
             MainLineCommentLFChanged = Configuration.MainLineCommentLF != _currentMainLineCommentLF;
+            ExtraSpacingChanged = Configuration.ExtraSpacing != _currentExtraSpacing;
             WideScrollbarChanged = Configuration.WideScrollbar != _currentWideScrollbar;
             LargeMenuFontChanged = Configuration.LargeMenuFont != _currentLargeMenuFont;
 
@@ -306,6 +348,26 @@ namespace ChessForge
         {
             _autoThumbnailMoveColor = !_autoThumbnailMoveColor;
             SetAutoThumbnailColorText(_autoThumbnailMoveColor);
+        }
+
+        /// <summary>
+        /// Main line comment check box is checked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiCbMainLineCommentLF_Checked(object sender, RoutedEventArgs e)
+        {
+            SetExtraSpacingCheckBox();
+        }
+
+        /// <summary>
+        /// Main line comment check box is unchecked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiCbMainLineCommentLF_Unchecked(object sender, RoutedEventArgs e)
+        {
+            SetExtraSpacingCheckBox();
         }
 
         /// <summary>

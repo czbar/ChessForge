@@ -2841,7 +2841,7 @@ namespace ChessForge
                     }
                     catch { }
                 }
-                else if (dlg.MainLineCommentLFChanged)
+                else if (dlg.MainLineCommentLFChanged || dlg.ExtraSpacingChanged)
                 {
                     AppState.MainWin.RebuildActiveTreeView();
                     AppState.MainWin.RefreshSelectedActiveLineAndNode();
