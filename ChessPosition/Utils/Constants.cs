@@ -286,6 +286,11 @@ namespace ChessPosition
         public static string NULL_MOVE_NOTATION = "---";
 
         /// <summary>
+        /// String to use in order to create extra spacing for game's main line comments.
+        /// </summary>
+        public static string PSEUDO_LINE_SPACING = "\n\t\n";
+
+        /// <summary>
         /// Name to use for lichess in configuration for selecting a web site
         /// </summary>
         public static string LichessNameId = "lichess.org";
