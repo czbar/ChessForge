@@ -483,6 +483,11 @@ namespace ChessForge
                     break;
                 default:
                     inl = new Run(part.Text);
+                    if (part.Text == Constants.PSEUDO_LINE_SPACING)
+                    {
+                        // small font size to ensure the additional spacing is not too big
+                        inl.FontSize = 4;
+                    }
                     inl.FontStyle = FontStyles.Normal;
                     inl.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
                     inl.FontWeight = FontWeights.Normal;
@@ -604,18 +609,18 @@ namespace ChessForge
         {
             string text = string.Empty;
 
-            // if this is mainline in Game or Exercise, and the comment is non-empty
+            // if configured and this is the mainline in Game or Exercise, and the comment is non-empty
             // and it is not on move 0, add newline. 
             if (Configuration.MainLineCommentLF
                 && (ContentType == GameData.ContentType.MODEL_GAME || ContentType == GameData.ContentType.EXERCISE && !AppState.IsUserSolving())
                 && nd.IsMainLine()
-                && nd.Parent != null
                 && !string.IsNullOrEmpty(nd.Comment)
+                && nd.Parent != null
                 && (!nd.IsDiagram || !nd.IsDiagramPreComment))
             {
-                if (Configuration.ExtraSpacing)
+                if (Configuration.ExtraSpacing && !_isPrinting)
                 {
-                    text = "\n\n";
+                    text = Constants.PSEUDO_LINE_SPACING;
                 }
                 else
                 {
@@ -644,16 +649,17 @@ namespace ChessForge
         {
             string text = string.Empty;
 
-            // if the comment is on the main line
+            // if configured and this is the mainline in Game or Exercise, and the comment is non-empty
+            // add newline. 
             if (Configuration.MainLineCommentLF
                 && (ContentType == GameData.ContentType.MODEL_GAME || ContentType == GameData.ContentType.EXERCISE && !AppState.IsUserSolving())
                 && nd.IsMainLine()
                 && !string.IsNullOrEmpty(nd.Comment)
                 && (!nd.IsDiagram || nd.IsDiagramPreComment))
             {
-                if (Configuration.ExtraSpacing)
+                if (Configuration.ExtraSpacing && !_isPrinting)
                 {
-                    text += "\n\n";
+                    text = Constants.PSEUDO_LINE_SPACING;
                 }
                 else
                 {
