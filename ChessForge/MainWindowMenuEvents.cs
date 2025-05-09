@@ -3748,7 +3748,7 @@ namespace ChessForge
             {
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
 
-                Article exercise = chapter.ModelGames[chapter.ActiveExerciseIndex];
+                Article exercise = chapter.Exercises[chapter.ActiveExerciseIndex];
                 VariationTree tree = exercise.Tree;
                 var dlg = new GameHeaderDialog(tree, Properties.Resources.ExerciseHeader);
                 GuiUtilities.PositionDialog(dlg, this, 100);
