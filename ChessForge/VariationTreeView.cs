@@ -1278,7 +1278,14 @@ namespace ChessForge
             if (!string.IsNullOrWhiteSpace(preamble))
             {
                 Paragraph para = CreateParagraph("preamble", true);
-                para.Margin = new Thickness(20, 20, 20, 20);
+                if (_contentType == GameData.ContentType.MODEL_GAME)
+                {
+                    para.Margin = new Thickness(20, 0, 20, 20);
+                }
+                else
+                {
+                    para.Margin = new Thickness(20, 20, 20, 20);
+                }
                 Run rPreamble = new Run(preamble);
                 para.Inlines.Add(rPreamble);
                 para.BorderThickness = new Thickness(1, 1, 1, 1);
