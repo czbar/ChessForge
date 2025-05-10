@@ -397,6 +397,7 @@ namespace ChessForge
                         Paragraph resultPara = BuildResultPara();
                         if (resultPara != null)
                         {
+                            RemoveEmptyParagraphs(doc);
                             doc.Blocks.Add(resultPara);
                         }
                     }
@@ -1076,6 +1077,7 @@ namespace ChessForge
         private Paragraph BuildDummyPararaph()
         {
             Paragraph dummy = new Paragraph();
+            dummy.Name = Constants.DUMMY_PARA_NAME;
             dummy.Margin = new Thickness(0, 0, 0, 0);
             dummy.Inlines.Add(new Run(""));
             return dummy;
