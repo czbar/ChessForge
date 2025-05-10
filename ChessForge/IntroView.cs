@@ -1871,6 +1871,11 @@ namespace ChessForge
             {
                 e.Handled = ProcessArrowKey(e.Key);
             }
+            else if (e.Key == Key.F2)
+            {
+                AppState.MainWin.EngineToggleClicked(sender);
+                e.Handled = true;
+            }
             else if (e.Key == Key.F3)
             {
                 AppState.MainWin.UiMnFindIdenticalPosition_Click(null, null);

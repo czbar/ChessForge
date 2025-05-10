@@ -619,6 +619,10 @@ namespace ChessForge
                         _mainWin.DeleteRemainingMoves();
                         e.Handled = true;
                         break;
+                    case Key.F2:
+                        _mainWin.EngineToggleClicked(sender);
+                        e.Handled = true;
+                        break;
                     case Key.F3:
                         _mainWin.UiMnFindIdenticalPosition_Click(null, null);
                         e.Handled = true;
