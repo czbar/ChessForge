@@ -516,13 +516,16 @@ namespace ChessForge
                     if (inl is InlineUIContainer)
                     {
                         Viewbox vb = ((InlineUIContainer)inl).Child as Viewbox;
-                        Canvas canvas = vb.Child as Canvas;
-                        foreach (UIElement uie in canvas.Children)
+                        if (vb != null && vb.Child != null)
                         {
-                            if (uie is CheckBox)
+                            Canvas canvas = vb.Child as Canvas;
+                            foreach (UIElement uie in canvas.Children)
                             {
-                                cb = uie as CheckBox;
-                                break;
+                                if (uie is CheckBox)
+                                {
+                                    cb = uie as CheckBox;
+                                    break;
+                                }
                             }
                         }
                     }

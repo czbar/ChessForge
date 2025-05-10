@@ -1583,17 +1583,21 @@ namespace ChessForge
                     if (inl is InlineUIContainer)
                     {
                         Viewbox vb = ((InlineUIContainer)inl).Child as Viewbox;
-                        Canvas canvas = vb.Child as Canvas;
-                        foreach (UIElement uie in canvas.Children)
+
+                        if (vb != null && vb.Child != null)
                         {
-                            if (uie is Canvas)
+                            Canvas canvas = vb.Child as Canvas;
+                            foreach (UIElement uie in canvas.Children)
                             {
-                                foreach (UIElement elm in (uie as Canvas).Children)
+                                if (uie is Canvas)
                                 {
-                                    if (elm is Image)
+                                    foreach (UIElement elm in (uie as Canvas).Children)
                                     {
-                                        img = elm as Image;
-                                        break;
+                                        if (elm is Image)
+                                        {
+                                            img = elm as Image;
+                                            break;
+                                        }
                                     }
                                 }
                             }
