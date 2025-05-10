@@ -8063,8 +8063,8 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Turn the Engine Off
-        ///(Evaluations are not being updated. Ctrl+K to allow.).
+        ///   Looks up a localized string similar to Turn the Engine Off (F2)
+        ///NOTE: Evaluations are not being updated. Ctrl+K to allow.).
         /// </summary>
         public static string TtAllowEvalUpdate {
             get {
@@ -8109,7 +8109,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Turn the Engine Off.
+        ///   Looks up a localized string similar to Turn the Engine Off (F2).
         /// </summary>
         public static string TurnEngineOff {
             get {
@@ -8118,7 +8118,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Turn the Engine On.
+        ///   Looks up a localized string similar to Turn the Engine On (F2).
         /// </summary>
         public static string TurnEngineOn {
             get {

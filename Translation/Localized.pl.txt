@@ -1037,16 +1037,16 @@ TurnExplorersOn=Pokaż biblioteki
 
 
 #description: Tool tip for turning Engine off
-#english: TurnEngineOff=Turn the Engine Off
-TurnEngineOff=Wyłącz silnik
+#english: TurnEngineOff=Turn the Engine Off (F2)
+TurnEngineOff=Wyłącz silnik (F2)
 
 #description: Tool tip for turning AutoSave on
-#english: TurnEngineOn=Turn the Engine On
-TurnEngineOn=Włącz silnik
+#english: TurnEngineOn=Turn the Engine On (F2)
+TurnEngineOn=Włącz silnik (F2)
 
 #description: Tool tip for allowing evakuation persistance
-#english: TtAllowEvalUpdate=Turn the Engine Off\n(Evaluations are not being updated. Ctrl+K to allow.)
-TtAllowEvalUpdate=Wyłącz silnik\n(Oceny nie są uaktualniane. Włącz przez Ctrl+K.)
+#english: TtAllowEvalUpdate=Turn the Engine Off (F2)\nNOTE: Evaluations are not being updated. Ctrl+K to allow.)
+TtAllowEvalUpdate=Wyłącz silnik (F2)\nUWAGA: Oceny nie są uaktualniane. Zezwól przez Ctrl+K.)
 
 #description: Tool tip for hiding Eval Chart
 #english: HideEvaluationChart=Hide Evaluation Chart

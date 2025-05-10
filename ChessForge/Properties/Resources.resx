@@ -820,14 +820,14 @@
     <value>Use Opening Explorer and Tablebases</value>
   </data>
   <data name="TurnEngineOff" xml:space="preserve">
-    <value>Turn the Engine Off</value>
+    <value>Turn the Engine Off (F2)</value>
   </data>
   <data name="TurnEngineOn" xml:space="preserve">
-    <value>Turn the Engine On</value>
+    <value>Turn the Engine On (F2)</value>
   </data>
   <data name="TtAllowEvalUpdate" xml:space="preserve">
-    <value>Turn the Engine Off
-(Evaluations are not being updated. Ctrl+K to allow.)</value>
+    <value>Turn the Engine Off (F2)
+NOTE: Evaluations are not being updated. Ctrl+K to allow.)</value>
   </data>
   <data name="HideEvaluationChart" xml:space="preserve">
     <value>Hide Evaluation Chart</value>
