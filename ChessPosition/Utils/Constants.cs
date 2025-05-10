@@ -291,6 +291,11 @@ namespace ChessPosition
         public static string PSEUDO_LINE_SPACING = "\n\t\n";
 
         /// <summary>
+        /// Name of the empty paragraph deliberately created to provide extra spacing
+        /// </summary>
+        public static string DUMMY_PARA_NAME = "dummy_para";
+
+        /// <summary>
         /// Name to use for lichess in configuration for selecting a web site
         /// </summary>
         public static string LichessNameId = "lichess.org";
