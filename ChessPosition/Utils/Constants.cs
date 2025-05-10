@@ -296,6 +296,11 @@ namespace ChessPosition
         public static string DUMMY_PARA_NAME = "dummy_para";
 
         /// <summary>
+        /// Name of the paragraph to use for the title of the workbook.
+        /// </summary>
+        public static string WORKBOOK_TITLE_PARAGRAPH_NAME = "para_title";
+
+        /// <summary>
         /// Name to use for lichess in configuration for selecting a web site
         /// </summary>
         public static string LichessNameId = "lichess.org";
