@@ -1,16 +1,12 @@
-﻿using System;
+﻿using ChessForge.Properties;
+using ChessPosition;
+using GameTree;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using System.Timers;
-using System.Text;
 using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using ChessForge;
-using ChessPosition;
-using GameTree;
-using ChessForge.Properties;
 
 namespace ChessForge
 {
@@ -316,7 +312,10 @@ namespace ChessForge
                         {
                             title = Properties.Resources.UntitledWorkbook;
                         }
-                        AddNewParagraphToDoc(HostRtb.Document, "title", title);
+                        
+                        Paragraph paraTitle =  AddNewParagraphToDoc(HostRtb.Document, "title", title);
+                        paraTitle.Name = Constants.WORKBOOK_TITLE_PARAGRAPH_NAME;
+
                         AddNewParagraphToDoc(HostRtb.Document, "bold_prompt", Properties.Resources.cbActions);
                         string commentText = "";
                         if (viewType == TabViewType.NONE)
