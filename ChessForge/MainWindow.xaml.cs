@@ -2737,37 +2737,48 @@ namespace ChessForge
 
             if (dlg.ExitOK)
             {
-                SessionWorkbook.Title = dlg.WorkbookTitle;
-                SessionWorkbook.Author = dlg.Author;
-                SessionWorkbook.TrainingSideConfig = dlg.TrainingSide;
-                SessionWorkbook.TrainingSideCurrent = dlg.TrainingSide;
-
-                SessionWorkbook.StudyBoardOrientationConfig = dlg.StudyBoardOrientation;
-                SessionWorkbook.GameBoardOrientationConfig = dlg.GameBoardOrientation;
-                SessionWorkbook.ExerciseBoardOrientationConfig = dlg.ExerciseBoardOrientation;
-
-                AppState.IsDirty = true;
-
-                switch (WorkbookManager.ActiveTab)
+                try
                 {
-                    case TabViewType.CHAPTERS:
-                    case TabViewType.STUDY:
-                    case TabViewType.BOOKMARKS:
-                        MainChessBoard.FlipBoard(EffectiveBoardOrientation(WorkbookManager.ItemType.STUDY));
-                        break;
-                    case TabViewType.MODEL_GAME:
-                        MainChessBoard.FlipBoard(EffectiveBoardOrientation(WorkbookManager.ItemType.MODEL_GAME));
-                        break;
-                    case TabViewType.EXERCISE:
-                        MainChessBoard.FlipBoard(EffectiveBoardOrientation(WorkbookManager.ItemType.EXERCISE));
-                        break;
-                }
+                    SessionWorkbook.Title = dlg.WorkbookTitle;
+                    SessionWorkbook.Author = dlg.Author;
+                    SessionWorkbook.TrainingSideConfig = dlg.TrainingSide;
+                    SessionWorkbook.TrainingSideCurrent = dlg.TrainingSide;
 
-                if (_chaptersView != null)
+                    SessionWorkbook.StudyBoardOrientationConfig = dlg.StudyBoardOrientation;
+                    SessionWorkbook.GameBoardOrientationConfig = dlg.GameBoardOrientation;
+                    SessionWorkbook.ExerciseBoardOrientationConfig = dlg.ExerciseBoardOrientation;
+
+                    AppState.IsDirty = true;
+
+                    switch (WorkbookManager.ActiveTab)
+                    {
+                        case TabViewType.CHAPTERS:
+                        case TabViewType.STUDY:
+                        case TabViewType.BOOKMARKS:
+                            MainChessBoard.FlipBoard(EffectiveBoardOrientation(WorkbookManager.ItemType.STUDY));
+                            break;
+                        case TabViewType.MODEL_GAME:
+                            MainChessBoard.FlipBoard(EffectiveBoardOrientation(WorkbookManager.ItemType.MODEL_GAME));
+                            break;
+                        case TabViewType.EXERCISE:
+                            MainChessBoard.FlipBoard(EffectiveBoardOrientation(WorkbookManager.ItemType.EXERCISE));
+                            break;
+                    }
+
+                    if (_chaptersView != null)
+                    {
+                        _chaptersView.BuildFlowDocumentForChaptersView(false);
+                    }
+
+                    // update CommentBox if needed
+                    if (RichTextBoxUtilities.FindParagraphByName(AppState.MainWin.BoardCommentBox.HostRtb.Document, Constants.WORKBOOK_TITLE_PARAGRAPH_NAME, false) != null)
+                    {
+                        AppState.MainWin.BoardCommentBox.ShowTabHints();
+                    }
+                }
+                catch
                 {
-                    _chaptersView.BuildFlowDocumentForChaptersView(false);
                 }
-
                 return true;
             }
             else
