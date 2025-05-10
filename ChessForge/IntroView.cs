@@ -928,6 +928,7 @@ namespace ChessForge
                         _selectedNode = nd;
                         FlipDiagram();
                     }
+                    e.Handled = true;
                 }
                 catch
                 {
