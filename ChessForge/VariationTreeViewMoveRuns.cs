@@ -200,11 +200,19 @@ namespace ChessForge
                     TreeNode nextNode = ShownVariationTree.GetNodeFromNodeId(nodeId);
                     if (nextNode != null)
                     {
+                        bool firstInPara = false;
+                        Paragraph nextPara = nextMoveRun.Parent as Paragraph;
+                        if (nextPara != null)
+                        {
+                            firstInPara = RichTextBoxUtilities.IsFirstMoveRunInParagraph(nextMoveRun, nextPara);
+                        }
+
                         // take care of the special case where node 0 may have a comment
                         bool includeNumber = currNode.NodeId == 0
                             || !string.IsNullOrWhiteSpace(currNode.Comment)
                             || !string.IsNullOrEmpty(nextNode.CommentBeforeMove)
-                            || currNode.IsDiagram;
+                            || currNode.IsDiagram
+                            || firstInPara;
                         UpdateRunText(nextMoveRun, nextNode, includeNumber);
                     }
                 }
