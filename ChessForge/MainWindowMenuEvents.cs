@@ -2152,10 +2152,16 @@ namespace ChessForge
                     TreeUtils.RemoveOpeningInfo(tree);
                     tree.MoveNumberOffset = moveNumberOffset;
 
-                    // remove any comments from the first move
+                    // remove any comments, references and the diagram from the first move
                     tree.RootNode.Comment = "";
                     tree.RootNode.CommentBeforeMove = "";
                     tree.RootNode.Nags = "";
+                    
+                    tree.RootNode.References = "";
+
+                    tree.RootNode.IsDiagram = false;
+                    tree.RootNode.IsDiagramFlipped = false;
+                    tree.RootNode.IsDiagramPreComment = false;
 
                     Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                     CopyHeaderFromGame(tree, ActiveVariationTree.Header, false);
@@ -3644,11 +3650,15 @@ namespace ChessForge
         {
             try
             {
-                WorkbookManager.SessionWorkbook.ActiveChapter.AddExercise(tree);
-                WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex
-                    = WorkbookManager.SessionWorkbook.ActiveChapter.GetExerciseCount() - 1;
+                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+
+                Article exercise = WorkbookManager.SessionWorkbook.ActiveChapter.AddExercise(tree);
+                exercise.ShowSolutionByDefault = chapter.ShowSolutionsOnOpen;
+                exercise.Tree.ShowTreeLines = chapter.ShowSolutionsOnOpen;
+
+                chapter.ActiveExerciseIndex = WorkbookManager.SessionWorkbook.ActiveChapter.GetExerciseCount() - 1;
                 _chaptersView.BuildFlowDocumentForChaptersView(false);
-                SelectExercise(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveExerciseIndex, true);
+                SelectExercise(chapter.ActiveExerciseIndex, true);
                 AppState.IsDirty = true;
             }
             catch (Exception ex)
