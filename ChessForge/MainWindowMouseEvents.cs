@@ -1708,6 +1708,8 @@ namespace ChessForge
 
                     if (ActiveVariationTree != null && ActiveVariationTree.ShowTreeLines)
                     {
+                        // set the solving mode value to ensure the correct GUI layout
+                        ActiveVariationTree.CurrentSolvingMode = VariationTree.SolvingMode.EDITING;
                         ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.SHOW_ACTIVE_LINE);
                     }
                     else
