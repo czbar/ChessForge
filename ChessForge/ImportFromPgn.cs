@@ -196,7 +196,7 @@ namespace ChessForge
                         Chapter targetChapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(chapterIndex);
                         if (newChapter)
                         {
-                            proceed = ChapterUtils.NameNeWChapter(targetChapter, activeChapter);
+                            proceed = ChapterUtils.NameNewChapter(targetChapter, activeChapter);
                         }
                         else
                         {
