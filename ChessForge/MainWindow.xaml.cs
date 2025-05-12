@@ -1101,10 +1101,19 @@ namespace ChessForge
                 exerciseIndex = AdjustArticleIndex(exerciseIndex, activeChapter.GetExerciseCount());
                 if (exerciseIndex >= 0 && exerciseIndex < activeChapter.GetExerciseCount())
                 {
-                    Article article = activeChapter.Exercises[exerciseIndex];
-                    if (!article.IsReady)
+                    Article exercise = activeChapter.Exercises[exerciseIndex];
+                    if (!exercise.IsReady)
                     {
-                        activeChapter.Exercises[exerciseIndex] = WorkbookManager.SessionWorkbook.GamesManager.ProcessArticleSync(article);
+                        exercise = WorkbookManager.SessionWorkbook.GamesManager.ProcessArticleSync(exercise);
+                        activeChapter.Exercises[exerciseIndex] = exercise;
+
+                        // having read the content, set the solution's visibility per chapter settings
+                        exercise.Tree.ShowTreeLines = activeChapter.ShowSolutionsOnOpen;
+                        if (activeChapter.ShowSolutionsOnOpen)
+                        {
+                            exercise.ShowSolutionByDefault = true;
+                            exercise.Tree.CurrentSolvingMode = VariationTree.SolvingMode.EDITING;
+                        }
                     }
 
                     activeChapter.ActiveExerciseIndex = exerciseIndex;
