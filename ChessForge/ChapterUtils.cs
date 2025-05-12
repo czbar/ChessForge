@@ -23,7 +23,7 @@ namespace ChessForge
         /// <param name="targetChapter"></param>
         /// <param name="activeChapter"></param>
         /// <returns></returns>
-        public static bool NameNeWChapter(Chapter targetChapter, Chapter activeChapter)
+        public static bool NameNewChapter(Chapter targetChapter, Chapter activeChapter)
         {
             bool proceed = true;
 

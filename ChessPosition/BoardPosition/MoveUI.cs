@@ -73,14 +73,22 @@ namespace ChessPosition
         /// </summary>
         public PieceColor Color;
 
+        /// <summary>
+        /// Returns the engine-format notation for the move.
+        /// </summary>
+        /// <returns></returns>
         public string GetEngineNotation()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append(PositionUtils.ConvertXYtoAlgebraic(Origin.Xcoord, Origin.Ycoord) + PositionUtils.ConvertXYtoAlgebraic(Destination.Xcoord, Destination.Ycoord));
 
-            if (PiecePromotedTo != PieceType.None)
+            if (Origin != null && Destination != null)
             {
-               sb.Append(FenParser.PieceToFenChar[PiecePromotedTo]);
+                sb.Append(PositionUtils.ConvertXYtoAlgebraic(Origin.Xcoord, Origin.Ycoord) + PositionUtils.ConvertXYtoAlgebraic(Destination.Xcoord, Destination.Ycoord));
+
+                if (PiecePromotedTo != PieceType.None)
+                {
+                    sb.Append(FenParser.PieceToFenChar[PiecePromotedTo]);
+                }
             }
 
             return sb.ToString();

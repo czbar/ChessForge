@@ -1,13 +1,10 @@
-﻿using System;
+﻿using ChessPosition;
+using GameTree;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using ChessPosition;
-using GameTree;
 
 namespace ChessForge
 {
@@ -136,6 +133,16 @@ namespace ChessForge
         private Label _mainLabel;
 
         /// <summary>
+        /// Label control to show the material imbalance in White's favor.
+        /// </summary>
+        private Label _lblWhiteMaterial;
+
+        /// <summary>
+        /// Label control to show the material imbalance in Black's favor.
+        /// </summary>
+        private Label _lblBlackMaterial;
+
+        /// <summary>
         /// Whether the board is displayed upside down.
         /// </summary>
         private bool _isFlipped;
@@ -150,6 +157,11 @@ namespace ChessForge
         /// representing the move's origin.
         /// </summary>
         private SquareCoords _coloredSquareFrom = new SquareCoords(-1, -1);
+
+        /// <summary>
+        /// Whether to show material imbalance labels.
+        /// </summary>
+        private bool _showMaterial;
 
         /// <summary>
         /// Whether to show corrdinates
@@ -180,7 +192,7 @@ namespace ChessForge
         /// <param name="BoardCtrl"></param>
         /// <param name="labelCtrl"></param>
         /// <param name="startPos"></param>
-        public ChessBoard(bool hasShapes, Canvas cnv, Image BoardCtrl, Label labelCtrl, bool startPos, bool includeCoords)
+        public ChessBoard(bool hasShapes, Canvas cnv, Image BoardCtrl, Label labelCtrl, bool startPos, bool includeCoords, bool showMaterial = false)
         {
             if (hasShapes)
             {
@@ -190,8 +202,10 @@ namespace ChessForge
             BoardImgCtrl = BoardCtrl;
             _mainLabel = labelCtrl;
             _includeCoords = includeCoords;
+            _showMaterial = showMaterial;
 
             InitializeCoordinateLabels();
+            InitializeMaterialLabels();
 
             Initialize(startPos);
         }
@@ -341,7 +355,7 @@ namespace ChessForge
         /// <returns></returns>
         public TransformedBitmap ScaleSource(BitmapImage source)
         {
-            double scale = (double)SquareSize / (double) _canonicalSquareSize;
+            double scale = (double)SquareSize / (double)_canonicalSquareSize;
             var transform = new ScaleTransform(scale, scale);
 
             TransformedBitmap transformedBitmap = new TransformedBitmap(source, transform);
@@ -354,6 +368,30 @@ namespace ChessForge
         public double SizeScaleFactor
         {
             get => (double)SquareSize / (double)_canonicalSquareSize;
+        }
+
+        /// <summary>
+        /// Sets the text on the label for white's material advantage.
+        /// </summary>
+        /// <param name="text"></param>
+        public void SetWhiteMaterialLabelText(string text)
+        {
+            if (_lblWhiteMaterial != null)
+            {
+                _lblWhiteMaterial.Content = text;
+            }
+        }
+
+        /// <summary>
+        /// Sets the text on the label for black's material advantage.
+        /// </summary>
+        /// <param name="text"></param>
+        public void SetBlackMaterialLabelText(string text)
+        {
+            if (_lblBlackMaterial != null)
+            {
+                _lblBlackMaterial.Content = text;
+            }
         }
 
         /// <summary>
@@ -389,6 +427,43 @@ namespace ChessForge
             }
 
             SetCoordinateLabelsText(false);
+        }
+
+        /// <summary>
+        /// Creates the material labels.
+        /// </summary>
+        private void InitializeMaterialLabels()
+        {
+            if (!_showMaterial)
+            {
+                return;
+            }   
+
+            // set up the "white imbalance" label in the top left corner above the board
+            _lblWhiteMaterial = new Label();
+            CanvasCtrl.Children.Add(_lblWhiteMaterial);
+
+            Canvas.SetLeft(_lblWhiteMaterial, 15);
+            Canvas.SetTop(_lblWhiteMaterial, -2);
+
+            _lblWhiteMaterial.Width = 300;
+            _lblWhiteMaterial.Height = 28;
+            _lblWhiteMaterial.FontSize = 12;
+            _lblWhiteMaterial.Foreground = Brushes.White;
+
+
+            // set up the "black imbalance" label in the top right corner above the board
+            _lblBlackMaterial = new Label();
+            CanvasCtrl.Children.Add(_lblBlackMaterial);
+
+            Canvas.SetRight(_lblBlackMaterial, 15);
+            Canvas.SetTop(_lblBlackMaterial, -2);
+
+            _lblBlackMaterial.Width = 300;
+            _lblBlackMaterial.Height = 28;
+            _lblBlackMaterial.FontSize = 12;
+            _lblBlackMaterial.Foreground = Brushes.Goldenrod;
+            _lblBlackMaterial.HorizontalContentAlignment = HorizontalAlignment.Right;
         }
 
         /// <summary>
@@ -915,6 +990,13 @@ namespace ChessForge
             }
 
             RemoveMoveSquareColors();
+
+            if (_showMaterial)
+            {
+                MaterialImbalanceUtils.BuildMaterialImbalanceStrings(_position, out string whiteMaterial, out string blackMaterial);
+                SetWhiteMaterialLabelText(whiteMaterial);
+                SetBlackMaterialLabelText(blackMaterial);
+            }
         }
 
         /// <summary>

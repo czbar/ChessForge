@@ -453,7 +453,7 @@ namespace ChessForge
             Timers = new AppTimers(this);
 
             // main chess board
-            MainChessBoard = new ChessBoard(true, MainCanvas, UiImgMainChessboard, null, true, true);
+            MainChessBoard = new ChessBoard(true, MainCanvas, UiImgMainChessboard, null, true, true, true);
 
             // floating boards
             TrainingFloatingBoard = new ChessBoardSmall(_cnvTrainingFloat, _imgTrainingFloatingBoard, null, null, true, false);
@@ -1101,10 +1101,19 @@ namespace ChessForge
                 exerciseIndex = AdjustArticleIndex(exerciseIndex, activeChapter.GetExerciseCount());
                 if (exerciseIndex >= 0 && exerciseIndex < activeChapter.GetExerciseCount())
                 {
-                    Article article = activeChapter.Exercises[exerciseIndex];
-                    if (!article.IsReady)
+                    Article exercise = activeChapter.Exercises[exerciseIndex];
+                    if (!exercise.IsReady)
                     {
-                        activeChapter.Exercises[exerciseIndex] = WorkbookManager.SessionWorkbook.GamesManager.ProcessArticleSync(article);
+                        exercise = WorkbookManager.SessionWorkbook.GamesManager.ProcessArticleSync(exercise);
+                        activeChapter.Exercises[exerciseIndex] = exercise;
+
+                        // having read the content, set the solution's visibility per chapter settings
+                        exercise.Tree.ShowTreeLines = activeChapter.ShowSolutionsOnOpen;
+                        if (activeChapter.ShowSolutionsOnOpen)
+                        {
+                            exercise.ShowSolutionByDefault = true;
+                            exercise.Tree.CurrentSolvingMode = VariationTree.SolvingMode.EDITING;
+                        }
                     }
 
                     activeChapter.ActiveExerciseIndex = exerciseIndex;
@@ -1199,7 +1208,8 @@ namespace ChessForge
                         mi.ToolTip = recentFiles.ElementAt(i);
                     }
                 }
-                catch { };
+                catch { }
+                ;
             }
         }
 
@@ -1225,7 +1235,8 @@ namespace ChessForge
                 }
             }
             catch
-            { };
+            { }
+            ;
         }
 
         /// <summary>
@@ -2685,9 +2696,12 @@ namespace ChessForge
             {
                 MainChessBoard.RemoveMoveSquareColors();
 
-                MoveUtils.EngineNotationToCoords(engCode, out SquareCoords sqOrig, out SquareCoords sqDest, out _);
-                MainChessBoard.ColorMoveSquare(sqOrig.Xcoord, sqOrig.Ycoord, true);
-                MainChessBoard.ColorMoveSquare(sqDest.Xcoord, sqDest.Ycoord, false);
+                if (!string.IsNullOrEmpty(engCode))
+                {
+                    MoveUtils.EngineNotationToCoords(engCode, out SquareCoords sqOrig, out SquareCoords sqDest, out _);
+                    MainChessBoard.ColorMoveSquare(sqOrig.Xcoord, sqOrig.Ycoord, true);
+                    MainChessBoard.ColorMoveSquare(sqDest.Xcoord, sqDest.Ycoord, false);
+                }
             });
         }
 
@@ -2732,37 +2746,48 @@ namespace ChessForge
 
             if (dlg.ExitOK)
             {
-                SessionWorkbook.Title = dlg.WorkbookTitle;
-                SessionWorkbook.Author = dlg.Author;
-                SessionWorkbook.TrainingSideConfig = dlg.TrainingSide;
-                SessionWorkbook.TrainingSideCurrent = dlg.TrainingSide;
-
-                SessionWorkbook.StudyBoardOrientationConfig = dlg.StudyBoardOrientation;
-                SessionWorkbook.GameBoardOrientationConfig = dlg.GameBoardOrientation;
-                SessionWorkbook.ExerciseBoardOrientationConfig = dlg.ExerciseBoardOrientation;
-
-                AppState.IsDirty = true;
-
-                switch (WorkbookManager.ActiveTab)
+                try
                 {
-                    case TabViewType.CHAPTERS:
-                    case TabViewType.STUDY:
-                    case TabViewType.BOOKMARKS:
-                        MainChessBoard.FlipBoard(EffectiveBoardOrientation(WorkbookManager.ItemType.STUDY));
-                        break;
-                    case TabViewType.MODEL_GAME:
-                        MainChessBoard.FlipBoard(EffectiveBoardOrientation(WorkbookManager.ItemType.MODEL_GAME));
-                        break;
-                    case TabViewType.EXERCISE:
-                        MainChessBoard.FlipBoard(EffectiveBoardOrientation(WorkbookManager.ItemType.EXERCISE));
-                        break;
-                }
+                    SessionWorkbook.Title = dlg.WorkbookTitle;
+                    SessionWorkbook.Author = dlg.Author;
+                    SessionWorkbook.TrainingSideConfig = dlg.TrainingSide;
+                    SessionWorkbook.TrainingSideCurrent = dlg.TrainingSide;
 
-                if (_chaptersView != null)
+                    SessionWorkbook.StudyBoardOrientationConfig = dlg.StudyBoardOrientation;
+                    SessionWorkbook.GameBoardOrientationConfig = dlg.GameBoardOrientation;
+                    SessionWorkbook.ExerciseBoardOrientationConfig = dlg.ExerciseBoardOrientation;
+
+                    AppState.IsDirty = true;
+
+                    switch (WorkbookManager.ActiveTab)
+                    {
+                        case TabViewType.CHAPTERS:
+                        case TabViewType.STUDY:
+                        case TabViewType.BOOKMARKS:
+                            MainChessBoard.FlipBoard(EffectiveBoardOrientation(WorkbookManager.ItemType.STUDY));
+                            break;
+                        case TabViewType.MODEL_GAME:
+                            MainChessBoard.FlipBoard(EffectiveBoardOrientation(WorkbookManager.ItemType.MODEL_GAME));
+                            break;
+                        case TabViewType.EXERCISE:
+                            MainChessBoard.FlipBoard(EffectiveBoardOrientation(WorkbookManager.ItemType.EXERCISE));
+                            break;
+                    }
+
+                    if (_chaptersView != null)
+                    {
+                        _chaptersView.BuildFlowDocumentForChaptersView(false);
+                    }
+
+                    // update CommentBox if needed
+                    if (RichTextBoxUtilities.FindParagraphByName(AppState.MainWin.BoardCommentBox.HostRtb.Document, Constants.WORKBOOK_TITLE_PARAGRAPH_NAME, false) != null)
+                    {
+                        AppState.MainWin.BoardCommentBox.ShowTabHints();
+                    }
+                }
+                catch
                 {
-                    _chaptersView.BuildFlowDocumentForChaptersView(false);
                 }
-
                 return true;
             }
             else
@@ -2836,7 +2861,7 @@ namespace ChessForge
                     }
                     catch { }
                 }
-                else if (dlg.MainLineCommentLFChanged)
+                else if (dlg.MainLineCommentLFChanged || dlg.ExtraSpacingChanged)
                 {
                     AppState.MainWin.RebuildActiveTreeView();
                     AppState.MainWin.RefreshSelectedActiveLineAndNode();

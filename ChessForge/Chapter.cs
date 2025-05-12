@@ -920,10 +920,12 @@ namespace ChessForge
         /// Adds a VariationTree to the list of Exercises
         /// </summary>
         /// <param name="game"></param>
-        public void AddExercise(VariationTree game)
+        public Article AddExercise(VariationTree game)
         {
             Article article = new Article(game);
             Exercises.Add(article);
+
+            return article;
         }
 
         /// <summary>

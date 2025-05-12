@@ -200,11 +200,19 @@ namespace ChessForge
                     TreeNode nextNode = ShownVariationTree.GetNodeFromNodeId(nodeId);
                     if (nextNode != null)
                     {
+                        bool firstInPara = false;
+                        Paragraph nextPara = nextMoveRun.Parent as Paragraph;
+                        if (nextPara != null)
+                        {
+                            firstInPara = RichTextBoxUtilities.IsFirstMoveRunInParagraph(nextMoveRun, nextPara);
+                        }
+
                         // take care of the special case where node 0 may have a comment
                         bool includeNumber = currNode.NodeId == 0
                             || !string.IsNullOrWhiteSpace(currNode.Comment)
                             || !string.IsNullOrEmpty(nextNode.CommentBeforeMove)
-                            || currNode.IsDiagram;
+                            || currNode.IsDiagram
+                            || firstInPara;
                         UpdateRunText(nextMoveRun, nextNode, includeNumber);
                     }
                 }
@@ -483,6 +491,11 @@ namespace ChessForge
                     break;
                 default:
                     inl = new Run(part.Text);
+                    if (part.Text == Constants.PSEUDO_LINE_SPACING)
+                    {
+                        // small font size to ensure the additional spacing is not too big
+                        inl.FontSize = 4;
+                    }
                     inl.FontStyle = FontStyles.Normal;
                     inl.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
                     inl.FontWeight = FontWeights.Normal;
@@ -582,7 +595,11 @@ namespace ChessForge
                     {
                         title = "; " + title;
                     }
-                    parts.Add(new CommentPart(cpt, " " + title, article.Guid));
+                    if (!first || !string.IsNullOrEmpty(nd.Comment))
+                    {
+                        title = " " + title;
+                    }
+                    parts.Add(new CommentPart(cpt, title, article.Guid));
                     first = false;
                 }
             }
@@ -600,16 +617,23 @@ namespace ChessForge
         {
             string text = string.Empty;
 
-            // if this is mainline in Game or Exercise, and the comment is non-empty
+            // if configured and this is the mainline in Game or Exercise, and the comment is non-empty
             // and it is not on move 0, add newline. 
             if (Configuration.MainLineCommentLF
                 && (ContentType == GameData.ContentType.MODEL_GAME || ContentType == GameData.ContentType.EXERCISE && !AppState.IsUserSolving())
                 && nd.IsMainLine()
-                && nd.Parent != null
                 && !string.IsNullOrEmpty(nd.Comment)
+                && nd.Parent != null
                 && (!nd.IsDiagram || !nd.IsDiagramPreComment))
             {
-                text = "\n";
+                if (Configuration.ExtraSpacing && !_isPrinting)
+                {
+                    text = Constants.PSEUDO_LINE_SPACING;
+                }
+                else
+                {
+                    text = "\n";
+                }
             }
             else
             {
@@ -633,14 +657,22 @@ namespace ChessForge
         {
             string text = string.Empty;
 
-            // if the comment is on the main line
+            // if configured and this is the mainline in Game or Exercise, and the comment is non-empty
+            // add newline. 
             if (Configuration.MainLineCommentLF
                 && (ContentType == GameData.ContentType.MODEL_GAME || ContentType == GameData.ContentType.EXERCISE && !AppState.IsUserSolving())
                 && nd.IsMainLine()
                 && !string.IsNullOrEmpty(nd.Comment)
                 && (!nd.IsDiagram || nd.IsDiagramPreComment))
             {
-                text += "\n";
+                if (Configuration.ExtraSpacing && !_isPrinting)
+                {
+                    text = Constants.PSEUDO_LINE_SPACING;
+                }
+                else
+                {
+                    text += "\n";
+                }
             }
             else
             {

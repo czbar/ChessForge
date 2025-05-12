@@ -820,14 +820,14 @@
     <value>Use Opening Explorer and Tablebases</value>
   </data>
   <data name="TurnEngineOff" xml:space="preserve">
-    <value>Turn the Engine Off</value>
+    <value>Turn the Engine Off (F2)</value>
   </data>
   <data name="TurnEngineOn" xml:space="preserve">
-    <value>Turn the Engine On</value>
+    <value>Turn the Engine On (F2)</value>
   </data>
   <data name="TtAllowEvalUpdate" xml:space="preserve">
-    <value>Turn the Engine Off
-(Evaluations are not being updated. Ctrl+K to allow.)</value>
+    <value>Turn the Engine Off (F2)
+NOTE: Evaluations are not being updated. Ctrl+K to allow.)</value>
   </data>
   <data name="HideEvaluationChart" xml:space="preserve">
     <value>Hide Evaluation Chart</value>
@@ -1074,6 +1074,9 @@
   </data>
   <data name="ParaForComment" xml:space="preserve">
     <value>Line break before comment</value>
+  </data>
+  <data name="ExtraSpacing" xml:space="preserve">
+    <value>Extra spacing</value>
   </data>
   <data name="ShowMovesAtFork" xml:space="preserve">
     <value>Show Moves at Fork</value>
@@ -1477,14 +1480,11 @@
   <data name="MsgInvalidMoveRange" xml:space="preserve">
     <value>Invalid Move Range</value>
   </data>
-  <data name="RestartGameAfter" xml:space="preserve">
-    <value>Restart Game After </value>
-  </data>
   <data name="RestartFrom" xml:space="preserve">
     <value>Restart from </value>
   </data>
   <data name="RestartGameFrom" xml:space="preserve">
-    <value>Restart Game from </value>
+    <value>Restart Game from</value>
   </data>
   <data name="ReplaceEngineMove" xml:space="preserve">
     <value>Replace Engine Move</value>

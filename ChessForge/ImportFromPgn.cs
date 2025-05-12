@@ -25,6 +25,11 @@ namespace ChessForge
         public static void ImportChapter()
         {
             string[] fileNames = ImportFromPgn.SelectPgnFile(false);
+            if (fileNames == null || fileNames.Length == 0)
+            {
+                return;
+            }
+
             string fileName = null;
             if (fileNames.Length == 1)
             {
@@ -191,7 +196,7 @@ namespace ChessForge
                         Chapter targetChapter = WorkbookManager.SessionWorkbook.GetChapterByIndex(chapterIndex);
                         if (newChapter)
                         {
-                            proceed = ChapterUtils.NameNeWChapter(targetChapter, activeChapter);
+                            proceed = ChapterUtils.NameNewChapter(targetChapter, activeChapter);
                         }
                         else
                         {

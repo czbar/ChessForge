@@ -1219,11 +1219,18 @@ namespace ChessForge
         {
             lock (MoveCandidatesLock)
             {
-                EngineMoveCandidates.Clear();
+                int maxMultipv = 0;
+
                 foreach (string message in messages)
                 {
                     ParseInfoMessage(message, out string moves, out int? multipv, out int? depth, out int? seldepth, out int? score, out int? movesToMate);
                     UpdateMoveCandidates(evalNode, moves, multipv, depth, seldepth, score, movesToMate);
+                    maxMultipv = multipv.HasValue ? multipv.Value : 0;
+                }
+
+                if (maxMultipv < EngineMoveCandidates.Lines.Count)
+                {
+                    EngineMoveCandidates.Lines.RemoveRange(maxMultipv, EngineMoveCandidates.Lines.Count - maxMultipv);
                 }
             }
         }

@@ -397,6 +397,7 @@ namespace ChessForge
                         Paragraph resultPara = BuildResultPara();
                         if (resultPara != null)
                         {
+                            RemoveEmptyParagraphs(doc);
                             doc.Blocks.Add(resultPara);
                         }
                     }
@@ -621,6 +622,10 @@ namespace ChessForge
                     MoveUtils.CleanupNullMove(ref nullNd);
 
                     ShownVariationTree.AddNodeToParent(nullNd);
+
+                    EditOperation op = new EditOperation(EditOperation.EditType.ADD_MOVE, nullNd);
+                    AppState.ActiveVariationTree.OpsManager.PushOperation(op);
+
                     ShownVariationTree.BuildLines();
 
                     _mainWin.SetActiveLine(nullNd.LineId, nullNd.NodeId);
@@ -1072,6 +1077,7 @@ namespace ChessForge
         private Paragraph BuildDummyPararaph()
         {
             Paragraph dummy = new Paragraph();
+            dummy.Name = Constants.DUMMY_PARA_NAME;
             dummy.Margin = new Thickness(0, 0, 0, 0);
             dummy.Inlines.Add(new Run(""));
             return dummy;
@@ -1274,7 +1280,14 @@ namespace ChessForge
             if (!string.IsNullOrWhiteSpace(preamble))
             {
                 Paragraph para = CreateParagraph("preamble", true);
-                para.Margin = new Thickness(20, 20, 20, 20);
+                if (_contentType == GameData.ContentType.MODEL_GAME)
+                {
+                    para.Margin = new Thickness(20, 0, 20, 20);
+                }
+                else
+                {
+                    para.Margin = new Thickness(20, 20, 20, 20);
+                }
                 Run rPreamble = new Run(preamble);
                 para.Inlines.Add(rPreamble);
                 para.BorderThickness = new Thickness(1, 1, 1, 1);
@@ -1537,7 +1550,10 @@ namespace ChessForge
                     rPreviousInline = postDiagRun;
                 }
 
-                Run runMove = new Run(MoveUtils.BuildSingleMoveText(nd, hasDiagram, false, ShownVariationTree.MoveNumberOffset) + " ");
+                // while this method is only used when we are inserting a move in a "plain" branch,
+                // we may have to provide a number for the Black move if the previous White move has a comment.
+                bool isStandalone = !string.IsNullOrEmpty(nd.Parent.Comment) || hasDiagram;
+                Run runMove = new Run(MoveUtils.BuildSingleMoveText(nd, isStandalone, false, ShownVariationTree.MoveNumberOffset) + " ");
                 runMove.Name = RichTextBoxUtilities.RunMovePrefix + nd.NodeId.ToString();
                 runMove.PreviewMouseDown += EventRunClicked;
 

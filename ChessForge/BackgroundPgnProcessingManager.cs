@@ -122,12 +122,23 @@ namespace ChessForge
             BackgroundPgnProcessor processor = _workerPool.Find(x => x.ArticleIndex == articleIndex);
             if (processor != null)
             {
-                Article article = _articleList[articleIndex];
                 // Check that the article has not been processed synchronously earlier.
                 if (!_articleList[articleIndex].IsReady && processor.DataObject.Tree != null)
                 {
-                    _articleList[articleIndex].Tree = processor.DataObject.Tree;
-                    _articleList[articleIndex].IsReady = true;
+                    Article article = _articleList[articleIndex];
+                    article.Tree = processor.DataObject.Tree;
+                    article.IsReady = true;
+
+                    if (article.ContentType == GameData.ContentType.EXERCISE)
+                    {
+                        Chapter chapter = AppState.Workbook.GetChapterForArticle(article.Guid);
+                        if (chapter != null && chapter.ShowSolutionsOnOpen)
+                        {
+                            article.Tree.ShowTreeLines = true;
+                            article.ShowSolutionByDefault = true;
+                            article.Tree.CurrentSolvingMode = VariationTree.SolvingMode.EDITING;
+                        }
+                    }
                     _errors[articleIndex] = errorText;
                 }
 

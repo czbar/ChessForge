@@ -77,12 +77,13 @@ namespace ChessForge
         public static void SetModelGameCounterControls(int gameIndex)
         {
             MainWindow mainWin = AppState.MainWin;
+            Chapter chapter = AppState.ActiveChapter;
 
             int gameCount = 0;
 
-            if (WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.ActiveChapter != null)
+            if (chapter != null)
             {
-                gameCount = WorkbookManager.SessionWorkbook.ActiveChapter.GetModelGameCount();
+                gameCount = chapter.GetModelGameCount();
             }
 
             SetupElements(mainWin.UiGamesLblChapterTitle,
@@ -92,6 +93,18 @@ namespace ChessForge
                           "Game",
                           gameIndex,
                           gameCount);
+
+            if (chapter != null && gameIndex >= 0 && gameIndex < chapter.ModelGames.Count)
+            {
+                Article game = chapter.ModelGames[gameIndex];
+                string white = game.Tree.Header.GetWhitePlayer(out _) ?? "-";
+                string black = game.Tree.Header.GetBlackPlayer(out _) ?? "-";
+                mainWin.UiLblGameCounter.ToolTip = white + "\n" + black;
+            }
+            else
+            {
+                mainWin.UiLblGameCounter.ToolTip = "";
+            }
         }
 
         /// <summary>

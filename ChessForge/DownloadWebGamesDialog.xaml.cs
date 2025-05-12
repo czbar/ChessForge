@@ -307,8 +307,10 @@ namespace ChessForge
                 }
                 else
                 {
-                    filter.StartDate = UiDtStartDate.SelectedDate.Value;
-                    filter.EndDate = UiDtEndDate.SelectedDate.Value;
+                    filter.StartDate = UiDtStartDate.SelectedDate;
+                    filter.EndDate = UiDtEndDate.SelectedDate;
+
+                    VerifyDatesInFilter(filter);
                 }
                 filter.IsUtcTimes = UiCbUtc.IsChecked == true;
 
@@ -320,6 +322,28 @@ namespace ChessForge
                 {
                     _ = WebAccess.LichessUserGames.GetLichessUserGames(filter);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Replaces null dates with the current date and yesterday if both are null.
+        /// If one is null, then the other one is used for both.
+        /// </summary>
+        /// <param name="filter"></param>
+        private void VerifyDatesInFilter(GamesFilter filter)
+        {
+            if (filter.StartDate == null && filter.EndDate == null)
+            {
+                filter.StartDate = DateTime.Now;
+                filter.EndDate = DateTime.Now;
+            }
+            else if (!filter.StartDate.HasValue && filter.EndDate.HasValue)
+            {
+                filter.StartDate = filter.EndDate;
+            }
+            else if (filter.StartDate.HasValue && !filter.EndDate.HasValue)
+            {
+                filter.EndDate = filter.StartDate;
             }
         }
 

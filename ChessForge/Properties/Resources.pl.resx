@@ -820,14 +820,14 @@
     <value>Pokaż biblioteki</value>
   </data>
   <data name="TurnEngineOff" xml:space="preserve">
-    <value>Wyłącz silnik</value>
+    <value>Wyłącz silnik (F2)</value>
   </data>
   <data name="TurnEngineOn" xml:space="preserve">
-    <value>Włącz silnik</value>
+    <value>Włącz silnik (F2)</value>
   </data>
   <data name="TtAllowEvalUpdate" xml:space="preserve">
-    <value>Wyłącz silnik
-(Oceny nie są uaktualniane. Włącz przez Ctrl+K.)</value>
+    <value>Wyłącz silnik (F2)
+UWAGA: Oceny nie są uaktualniane. Zezwól przez Ctrl+K.)</value>
   </data>
   <data name="HideEvaluationChart" xml:space="preserve">
     <value>Ukryj wykres ocen silnika</value>
@@ -1074,6 +1074,9 @@
   </data>
   <data name="ParaForComment" xml:space="preserve">
     <value>Nowy akapit dla komentarza</value>
+  </data>
+  <data name="ExtraSpacing" xml:space="preserve">
+    <value>Powiększ odstęp</value>
   </data>
   <data name="ShowMovesAtFork" xml:space="preserve">
     <value>Tabelka przy rozgałęzieniu</value>
@@ -1476,9 +1479,6 @@
   </data>
   <data name="MsgInvalidMoveRange" xml:space="preserve">
     <value>Nieprawidłowy zakres ruchów</value>
-  </data>
-  <data name="RestartGameAfter" xml:space="preserve">
-    <value>Cofnij Partię do</value>
   </data>
   <data name="RestartFrom" xml:space="preserve">
     <value>Cofnij do</value>

@@ -206,31 +206,34 @@ namespace ChessForge
         {
             try
             {
-                lock (_lockNodeAccess)
+                if (AppState.MainWin.ActiveVariationTree != null)
                 {
-                    _node = AppState.MainWin.ActiveVariationTree.SelectedNode;
-                    string eco;
-                    if (_node != null)
+                    lock (_lockNodeAccess)
                     {
-                        string opening = EcoUtils.GetOpeningNameFromDictionary(_node, out eco);
-                        if (opening != null)
+                        _node = AppState.MainWin.ActiveVariationTree.SelectedNode;
+                        string eco;
+                        if (_node != null)
                         {
-                            _node.Eco = eco;
-                            _node.OpeningName = opening;
-                        }
-                        else
-                        {
-                            string openingName = FindOpeningNameFromPredecessors(_node, out eco);
-                            if (!string.IsNullOrEmpty(openingName))
+                            string opening = EcoUtils.GetOpeningNameFromDictionary(_node, out eco);
+                            if (opening != null)
                             {
                                 _node.Eco = eco;
-                                _node.OpeningName = openingName;
+                                _node.OpeningName = opening;
                             }
-                        }
+                            else
+                            {
+                                string openingName = FindOpeningNameFromPredecessors(_node, out eco);
+                                if (!string.IsNullOrEmpty(openingName))
+                                {
+                                    _node.Eco = eco;
+                                    _node.OpeningName = openingName;
+                                }
+                            }
 
-                        if (NodeHasOpeningName(_node))
-                        {
-                            UpdateOpeningNameTable();
+                            if (NodeHasOpeningName(_node))
+                            {
+                                UpdateOpeningNameTable();
+                            }
                         }
                     }
                 }
@@ -369,7 +372,7 @@ namespace ChessForge
         /// </summary>
         private void BuildFlowDocument(DataMode mode, LichessOpeningsStats openingStats, string errorMessage = "")
         {
-            FlowDocument doc = new FlowDocument();
+            FlowDocument doc = HostRtb.Document;
 
             _lastDataMode = mode;
             _lastOpeningStats = openingStats;
@@ -418,7 +421,7 @@ namespace ChessForge
                 }
             }
 
-            HostRtb.Document = doc;
+            //HostRtb.Document = doc;
         }
 
         /// <summary>

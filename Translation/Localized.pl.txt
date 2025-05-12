@@ -1037,16 +1037,16 @@ TurnExplorersOn=Pokaż biblioteki
 
 
 #description: Tool tip for turning Engine off
-#english: TurnEngineOff=Turn the Engine Off
-TurnEngineOff=Wyłącz silnik
+#english: TurnEngineOff=Turn the Engine Off (F2)
+TurnEngineOff=Wyłącz silnik (F2)
 
 #description: Tool tip for turning AutoSave on
-#english: TurnEngineOn=Turn the Engine On
-TurnEngineOn=Włącz silnik
+#english: TurnEngineOn=Turn the Engine On (F2)
+TurnEngineOn=Włącz silnik (F2)
 
 #description: Tool tip for allowing evakuation persistance
-#english: TtAllowEvalUpdate=Turn the Engine Off\n(Evaluations are not being updated. Ctrl+K to allow.)
-TtAllowEvalUpdate=Wyłącz silnik\n(Oceny nie są uaktualniane. Włącz przez Ctrl+K.)
+#english: TtAllowEvalUpdate=Turn the Engine Off (F2)\nNOTE: Evaluations are not being updated. Ctrl+K to allow.)
+TtAllowEvalUpdate=Wyłącz silnik (F2)\nUWAGA: Oceny nie są uaktualniane. Zezwól przez Ctrl+K.)
 
 #description: Tool tip for hiding Eval Chart
 #english: HideEvaluationChart=Hide Evaluation Chart
@@ -1462,6 +1462,10 @@ SoundOn=Włącz dźwięk
 #english: ParaForComment=Line break before comment
 ParaForComment=Nowy akapit dla komentarza
 
+#description: Additional space around the comment line
+#english: ExtraSpacing=Extra spacing
+ExtraSpacing=Powiększ odstęp
+
 #description: Whether to show inline table with move options at a fork
 #english: ShowMovesAtFork=Show Moves at Fork
 ShowMovesAtFork=Tabelka przy rozgałęzieniu
@@ -1495,7 +1499,7 @@ AllowMouseWheel=Uaktywnij kółko myszy
 AutoThumbnails=Auto-Wizytówki Partii
 
 #description: After move number
-#english: AfterMove=After Move Number
+#english: AfterMove=After Move No.
 AfterMove=Po ruchu numer
 
 #description: Move made by White
@@ -2115,16 +2119,12 @@ MsgInvalidMoveRange=Nieprawidłowy zakres ruchów
 # Header: TRAINING VIEW
 #
 
-#description: User wants to restart the game against the engine after a certain move in the Training Session
-#english: RestartGameAfter=Restart Game After 
-RestartGameAfter=Cofnij Partię do
-
 #description: User wants to restart the training from a certain move in the Training Session
 #english: RestartFrom=Restart from 
 RestartFrom=Cofnij do
 
 #description: Restart game from a selected move (context menu item)
-#english: RestartGameFrom=Restart Game from 
+#english: RestartGameFrom=Restart Game from
 RestartGameFrom=Cofnij Partię do
 
 #description: Replace engine move

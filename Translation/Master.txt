@@ -803,13 +803,13 @@ TurnExplorersOn=Use Opening Explorer and Tablebases
 
 
 #Tool tip for turning Engine off
-TurnEngineOff=Turn the Engine Off
+TurnEngineOff=Turn the Engine Off (F2)
 
 #Tool tip for turning AutoSave on
-TurnEngineOn=Turn the Engine On
+TurnEngineOn=Turn the Engine On (F2)
 
 #Tool tip for allowing evakuation persistance
-TtAllowEvalUpdate=Turn the Engine Off\n(Evaluations are not being updated. Ctrl+K to allow.)
+TtAllowEvalUpdate=Turn the Engine Off (F2)\nNOTE: Evaluations are not being updated. Ctrl+K to allow.)
 
 #Tool tip for hiding Eval Chart
 HideEvaluationChart=Hide Evaluation Chart
@@ -1142,6 +1142,9 @@ SoundOn=Sound On
 
 #Whether to place main line comments in a separate paragraph
 ParaForComment=Line break before comment
+
+#Additional space around the comment line
+ExtraSpacing=Extra spacing
 
 #Whether to show inline table with move options at a fork
 ShowMovesAtFork=Show Moves at Fork
@@ -1662,14 +1665,11 @@ MsgInvalidMoveRange=Invalid Move Range
 # Header: TRAINING VIEW
 #
 
-#User wants to restart the game against the engine after a certain move in the Training Session
-RestartGameAfter=Restart Game After 
- 
 #User wants to restart the training from a certain move in the Training Session
 RestartFrom=Restart from 
 
 #Restart game from a selected move (context menu item)
-RestartGameFrom=Restart Game from 
+RestartGameFrom=Restart Game from
 
 #Replace engine move
 ReplaceEngineMove=Replace Engine Move

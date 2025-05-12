@@ -515,7 +515,7 @@ namespace ChessForge
         /// <param name="canvas"></param>
         private void PopulateSolvingPanel(Canvas canvas)
         {
-            int leftMargin = 280;
+            int leftMargin = 275;
             int topMargin = 50;
 
             if (_mainVariationTree != null && _mainVariationTree.Header.GetContentType(out _) == GameData.ContentType.EXERCISE)

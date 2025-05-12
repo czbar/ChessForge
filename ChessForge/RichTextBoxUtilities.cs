@@ -98,6 +98,33 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Checks if the passed Run is the first Run in the Paragraph.
+        /// Only the name of the Run is checked as it is to be used
+        /// for checking move runs only and they have unique names.
+        /// </summary>
+        /// <param name="run"></param>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        public static bool IsFirstMoveRunInParagraph(Run run, Paragraph para)
+        {
+            bool isFirst = false;
+
+            if (para != null && run != null)
+            {
+                foreach (Inline inl in para.Inlines)
+                {
+                    if (inl is Run r)
+                    {
+                        isFirst = (r.Name == run.Name);
+                        break;
+                    }
+                }
+            }
+
+            return isFirst;
+        }
+
+        /// <summary>
         /// Finds the last Run representing a move in the paragraph.
         /// </summary>
         /// <param name="para"></param>
@@ -516,13 +543,16 @@ namespace ChessForge
                     if (inl is InlineUIContainer)
                     {
                         Viewbox vb = ((InlineUIContainer)inl).Child as Viewbox;
-                        Canvas canvas = vb.Child as Canvas;
-                        foreach (UIElement uie in canvas.Children)
+                        if (vb != null && vb.Child != null)
                         {
-                            if (uie is CheckBox)
+                            Canvas canvas = vb.Child as Canvas;
+                            foreach (UIElement uie in canvas.Children)
                             {
-                                cb = uie as CheckBox;
-                                break;
+                                if (uie is CheckBox)
+                                {
+                                    cb = uie as CheckBox;
+                                    break;
+                                }
                             }
                         }
                     }

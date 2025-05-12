@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
         ShowInTaskbar="True"
-        Title="{x:Static p:Resources.DlgTitleApplicationOptions}" Height="465" Width="430">
+        Title="{x:Static p:Resources.DlgTitleApplicationOptions}" Height="490" Width="430">
     <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"  >
         <GroupBox x:Name="UiGbLanguage" Margin="15,15,0,0" Height="130" Width="200" Header="{x:Static p:Resources.LanguageNotation}" HorizontalAlignment="Left" VerticalAlignment="Top">
             <StackPanel>
@@ -16,10 +16,11 @@
             </StackPanel>
         </GroupBox>
         <Button x:Name="UiBtnEngine" Content="{x:Static p:Resources.EngineOptions}" HorizontalAlignment="Left" Margin="236,62,0,0" VerticalAlignment="Top" Width="135" Height="22" Click="UiBtnEngine_Click"/>
-        <GroupBox x:Name="UiGbViews" Header="{x:Static p:Resources.Views}" HorizontalAlignment="Left" Height="205" Margin="15,160,0,0" VerticalAlignment="Top" Width="200">
+        <GroupBox x:Name="UiGbViews" Header="{x:Static p:Resources.Views}" HorizontalAlignment="Left" Height="230" Margin="15,160,0,0" VerticalAlignment="Top" Width="200">
             <StackPanel>
-                <CheckBox x:Name="UiCbMainLineCommentLF" Content="{x:Static p:Resources.ParaForComment}" HorizontalAlignment="Left" Margin="5,12,10,0" VerticalAlignment="Top"/>
-                <CheckBox x:Name="UiCbShowForkMoves" Content="{x:Static p:Resources.ShowMovesAtFork}" HorizontalAlignment="Left" Margin="5,12,10,0" VerticalAlignment="Top"/>
+                <CheckBox x:Name="UiCbMainLineCommentLF" Content="{x:Static p:Resources.ParaForComment}" HorizontalAlignment="Left" Margin="5,12,10,0" VerticalAlignment="Top" Checked="UiCbMainLineCommentLF_Checked" Unchecked="UiCbMainLineCommentLF_Unchecked"/>
+                <CheckBox x:Name="UiCbExtraSpacing" Content="{x:Static p:Resources.ExtraSpacing}" HorizontalAlignment="Left" Margin="55,6,10,0" VerticalAlignment="Top"/>
+                <CheckBox x:Name="UiCbShowForkMoves" Content="{x:Static p:Resources.ShowMovesAtFork}" HorizontalAlignment="Left" Margin="5,15,10,0" VerticalAlignment="Top"/>
                 <CheckBox x:Name="UiCbSoundOn" Content="{x:Static p:Resources.SoundOn}" HorizontalAlignment="Left" Margin="5,15,0,0" VerticalAlignment="Top"/>
                 <CheckBox x:Name="UiCbLargeMenuFont" Content="{x:Static p:Resources.LargeMenuFont}" HorizontalAlignment="Left" Margin="5,15,0,0" VerticalAlignment="Top"/>
                 <CheckBox x:Name="UiCbWideScrollbar" Content="{x:Static p:Resources.WideScrollbar}" HorizontalAlignment="Left" Margin="5,15,0,0" VerticalAlignment="Top"/>
@@ -27,16 +28,16 @@
                 <TextBox x:Name="UiTbIndexDepth" Text="" HorizontalAlignment="Left" Width="20" Margin="153,-22,0,0" HorizontalContentAlignment="Center" VerticalAlignment="Top"/>
             </StackPanel>
         </GroupBox>
-        <GroupBox x:Name="UiGbAutoReplay" HorizontalAlignment="Left" Height="100" Header="{x:Static p:Resources.MoveReplay}" Margin="219,160,0,0" VerticalAlignment="Top" Width="190">
+        <GroupBox x:Name="UiGbAutoReplay" HorizontalAlignment="Left" Height="110" Header="{x:Static p:Resources.MoveReplay}" Margin="219,160,0,0" VerticalAlignment="Top" Width="190">
             <StackPanel Margin="0,0,0,0">
-                <Label x:Name="UiLblReplaySpeed" Content="{x:Static p:Resources.AutoReplaySpeed}" HorizontalAlignment="Left" Margin="0,7,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="UiLblReplaySpeed" Content="{x:Static p:Resources.AutoReplaySpeed}" HorizontalAlignment="Left" Margin="0,12,0,0" VerticalAlignment="Top"/>
                 <TextBox x:Name="UiTbReplaySpeed" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="115,-22,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="40"/>
                 <CheckBox x:Name="UiCbAllowWheel" Content="{x:Static p:Resources.AllowMouseWheel}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4,10,0,0" Height="20"/>
             </StackPanel>
         </GroupBox>
-        <GroupBox x:Name="UiGbAutoThumbnails" HorizontalAlignment="Left" Height="100" Header="{x:Static p:Resources.AutoThumbnails}" Margin="219,265,0,0" VerticalAlignment="Top" Width="190">
+        <GroupBox x:Name="UiGbAutoThumbnails" HorizontalAlignment="Left" Height="110" Header="{x:Static p:Resources.AutoThumbnails}" Margin="219,280,0,0" VerticalAlignment="Top" Width="190">
             <StackPanel Margin="0,0,0,0">
-                <Label x:Name="UiLblAtMove" Content="{x:Static p:Resources.AfterMove}" HorizontalAlignment="Left" Margin="0,7,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="UiLblAtMove" Content="{x:Static p:Resources.AfterMove}" HorizontalAlignment="Left" Margin="0,12,0,0" VerticalAlignment="Top"/>
                 <TextBox x:Name="UiTbAtMove" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="115,-22,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="40"/>
                 <Label x:Name="UiLblMoveBy" Content="{x:Static p:Resources.MadeByWhite}" HorizontalAlignment="Left" Margin="0,5,0,0" VerticalAlignment="Top"/>
                 <Image x:Name="UiImgSwapColor" HorizontalAlignment="Left" Height="20" Margin="125,-22,0,0" VerticalAlignment="Top" Width="20" Source="Resources/Images/swap_vert.png" PreviewMouseDown="UiLblSwapMoveColor_PreviewMouseDown" />

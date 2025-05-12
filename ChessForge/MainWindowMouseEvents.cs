@@ -1020,12 +1020,29 @@ namespace ChessForge
         /// <param name="e"></param>
         public void EngineToggleGray_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            SetDontSaveEvalsMenuItems(false);
-            BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgUpdatePositionEvalOn, CommentBox.HintType.INFO);
-
-            EngineToggleOff_OnPreviewMouseLeftButtonDown(sender, e);
+            EngineToggleOn_OnPreviewMouseLeftButtonDown(sender, e);
         }
 
+        /// <summary>
+        /// Handles the Engine toggle being told to flip (e.g. user pressed 'F2').
+        /// Checks with engine toggle image is visible and calls the appropriate handler.
+        /// </summary>
+        /// <param name="sender"></param>
+        public void EngineToggleClicked(object sender)
+        {
+            if (UiImgEngineOff.Visibility == Visibility.Visible)
+            {
+                EngineToggleOff_OnPreviewMouseLeftButtonDown(sender, null);
+            }
+            else if (UiImgEngineOn.Visibility == Visibility.Visible)
+            {
+                EngineToggleOn_OnPreviewMouseLeftButtonDown(sender, null);
+            }
+            else if (UiImgEngineOnGray.Visibility == Visibility.Visible)
+            {
+                EngineToggleGray_OnPreviewMouseLeftButtonDown(sender, null);
+            }
+        }
 
         //**************************************************************
         //
@@ -1691,6 +1708,8 @@ namespace ChessForge
 
                     if (ActiveVariationTree != null && ActiveVariationTree.ShowTreeLines)
                     {
+                        // set the solving mode value to ensure the correct GUI layout
+                        ActiveVariationTree.CurrentSolvingMode = VariationTree.SolvingMode.EDITING;
                         ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.SHOW_ACTIVE_LINE);
                     }
                     else

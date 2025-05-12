@@ -1757,7 +1757,7 @@ namespace ChessForge
                     MainWin.UiMnSetThumbnails.IsEnabled = AppState.ActiveChapter != null;
 
                     MainWin.UiMnExerciseViewConfig.IsEnabled = AppState.ActiveChapter != null;
-                    GuiUtilities.SetShowSolutionsMenuCheckMark(ActiveChapter);
+                    //GuiUtilities.SetShowSolutionsMenuCheckMark(ActiveChapter);
 
                     MainWin.UiMnSplitChapter.IsEnabled = AppState.ActiveChapter != null;
 

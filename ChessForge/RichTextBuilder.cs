@@ -273,6 +273,7 @@ namespace ChessForge
         /// <summary>
         /// Removes empty paragraphs that get created when building the document
         /// or left behind after deletions.
+        /// Does not remove paragraphs with the name "dummy" as they were created for a specific purpose.
         /// </summary>
         public void RemoveEmptyParagraphs(FlowDocument doc)
         {
@@ -282,7 +283,7 @@ namespace ChessForge
             {
                 if (para is Paragraph paragraph)
                 {
-                    if (paragraph.Inlines.Count == 0 || !RichTextBoxUtilities.HasNonEmptyInline(para as Paragraph))
+                    if (para.Name != Constants.DUMMY_PARA_NAME && (paragraph.Inlines.Count == 0 || !RichTextBoxUtilities.HasNonEmptyInline(para as Paragraph)))
                     {
                         parasToRemove.Add(paragraph);
                     }

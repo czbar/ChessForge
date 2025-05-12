@@ -72,6 +72,11 @@ namespace ChessForge
         /// </summary>
         public static bool DoNotAskDiagramImageSize = false;
 
+        /// <summary>
+        /// Determines whether position evaluations are saved
+        /// </summary>
+        public static bool DontSavePositionEvals = false;
+
 
         //*********************************
         //
@@ -157,11 +162,6 @@ namespace ChessForge
         /// Determines if the GUI is in dark mode
         /// </summary>
         public static bool IsDarkMode = false;
-
-        /// <summary>
-        /// Determines whether position evaluations are saved
-        /// </summary>
-        public static bool DontSavePositionEvals = false;
 
         /// <summary>
         /// Path to the engine executable
@@ -538,6 +538,11 @@ namespace ChessForge
         public static bool MainLineCommentLF = true;
 
         /// <summary>
+        /// Whether to use extra line spacing around the main line comment.
+        /// </summary>
+        public static bool ExtraSpacing = true;
+
+        /// <summary>
         /// Whether to allow replaying moves with the mouse wheel. 
         /// </summary>
         public static bool AllowMouseWheelForMoves = false;
@@ -658,7 +663,6 @@ namespace ChessForge
 
         private const string CFG_FAST_LAYOUT = "FastLayout";
         private const string CFG_IS_DARK_MODE = "IsDarkMode";
-        private const string CFG_DONT_SAVE_EVALS = "DontSavePositionEvals";
 
         private const string CFG_FONT_SIZE_DIFF = "FontSizeDiff";
         private const string CFG_AUTO_SAVE_FREQ = "AutoSaveFrequency";
@@ -684,6 +688,7 @@ namespace ChessForge
         private const string CFG_USE_FIGURINES = "UseFigurines";
         private const string CFG_USE_FIXED_FONT = "UseFixedFont";
         private const string CFG_MAIN_LINE_COMMENT_LF = "MainLineCommentLn";
+        private const string CFG_EXTRA_SPACING = "ExtraSpacing";
         private const string CFG_SHOW_MOVES_AT_FORK = "ShowMovesAtFork";
         private const string CFG_SHOW_EXPLORERS = "ShowExplorers";
         private const string CFG_SHOW_EVALUATION_CHART = "ShowEvaluationChart";
@@ -872,7 +877,6 @@ namespace ChessForge
 
                 sb.AppendLine(CFG_FAST_LAYOUT + "=" + (FastLayout ? "1" : "0"));
                 sb.AppendLine(CFG_IS_DARK_MODE + "=" + (IsDarkMode ? "1" : "0"));
-                sb.AppendLine(CFG_DONT_SAVE_EVALS + "=" + (DontSavePositionEvals ? "1" : "0"));
 
                 sb.Append(CFG_PGN_EXP_BOOKMARKS + "=" + (PgnExportBookmarks ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_PGN_EXP_EVALS + "=" + (PgnExportEvaluations ? "1" : "0") + Environment.NewLine);
@@ -884,6 +888,7 @@ namespace ChessForge
                 sb.Append(CFG_USE_FIGURINES + "=" + (UseFigurines ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_USE_FIXED_FONT + "=" + (UseFixedFont ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_MAIN_LINE_COMMENT_LF + "=" + (MainLineCommentLF ? "1" : "0") + Environment.NewLine);
+                sb.Append(CFG_EXTRA_SPACING + "=" + (ExtraSpacing ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_SHOW_MOVES_AT_FORK + "=" + (ShowMovesAtFork ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_SHOW_EXPLORERS + "=" + (ShowExplorers ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_SHOW_EVALUATION_CHART + "=" + (ShowEvaluationChart? "1" : "0") + Environment.NewLine);
@@ -1253,9 +1258,6 @@ namespace ChessForge
                         case CFG_IS_DARK_MODE:
                             IsDarkMode = value != "0" ? true : false;
                             break;
-                        case CFG_DONT_SAVE_EVALS:
-                            DontSavePositionEvals = value != "0" ? true : false;
-                            break;
                         case CFG_ENGINE_EVALUATION_TIME:
                             int.TryParse(value, out _engineEvaluationTime);
                             break;
@@ -1317,6 +1319,9 @@ namespace ChessForge
                             break;
                         case CFG_MAIN_LINE_COMMENT_LF:
                             MainLineCommentLF = value != "0" ? true : false;
+                            break;
+                        case CFG_EXTRA_SPACING:
+                            ExtraSpacing = value != "0" ? true : false;
                             break;
                         case CFG_ALLOW_MOUSE_WHEEL_FOR_MOVES:
                             AllowMouseWheelForMoves = value != "0" ? true : false;
