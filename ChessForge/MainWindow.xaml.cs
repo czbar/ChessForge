@@ -453,7 +453,7 @@ namespace ChessForge
             Timers = new AppTimers(this);
 
             // main chess board
-            MainChessBoard = new ChessBoard(true, MainCanvas, UiImgMainChessboard, null, true, true);
+            MainChessBoard = new ChessBoard(true, MainCanvas, UiImgMainChessboard, null, true, true, true);
 
             // floating boards
             TrainingFloatingBoard = new ChessBoardSmall(_cnvTrainingFloat, _imgTrainingFloatingBoard, null, null, true, false);
