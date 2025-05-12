@@ -273,7 +273,6 @@ namespace ChessForge
                         case GameData.ContentType.EXERCISE:
                             chapter.Exercises.Add(article);
                             article.ShowSolutionByDefault = chapter.ShowSolutionsOnOpen;
-                            article.Tree.ShowTreeLines = chapter.ShowSolutionsOnOpen;
                             break;
                     }
 
@@ -386,6 +385,52 @@ namespace ChessForge
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Looks for a chapter with the requested article guid.
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <returns></returns>
+        public Chapter GetChapterForArticle(string guid)
+        {
+            Chapter chapter = null;
+
+            foreach (Chapter ch in _chapters)
+            {
+                foreach (Article game in ch.ModelGames)
+                {
+                    if (game.Guid == guid)
+                    {
+                        chapter = ch;
+                        break;
+                    }
+                }
+
+                if (chapter == null)
+                {
+                    foreach (Article exercise in ch.Exercises)
+                    {
+                        if (exercise.Guid == guid)
+                        {
+                            chapter = ch;
+                            break;
+                        }
+                    }
+                }
+
+                if (chapter == null && ch.StudyTree.Guid == guid)
+                {
+                    chapter = ch;
+                }
+
+                if (chapter != null)
+                {
+                    break;
+                }
+            }
+
+            return chapter;
         }
 
         /// <summary>
@@ -1100,7 +1145,7 @@ namespace ChessForge
         {
             Dictionary<Article, List<MoveAttributes>> dictMoveAttrs = dictMoveAttributes as Dictionary<Article, List<MoveAttributes>>;
             List<ArticleAttributes> lstArticleAttrs = lstArticleAttributes as List<ArticleAttributes>;
-            
+
             // restore article attributes
             foreach (ArticleAttributes attrs in lstArticleAttrs)
             {
