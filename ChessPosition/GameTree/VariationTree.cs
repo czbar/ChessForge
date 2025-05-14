@@ -1084,18 +1084,8 @@ namespace GameTree
         /// <returns></returns>
         public bool NodeHasSiblings(int nodeId)
         {
-            bool ret;
             TreeNode nd = GetNodeFromNodeId(nodeId);
-            if (nd != null && nd.Parent != null && nd.Parent.Children.Count > 1)
-            {
-                ret = true;
-            }
-            else
-            {
-                ret = false;
-            }
-
-            return ret;
+            return TreeUtils.NodeHasSiblings(nd);
         }
 
         /// <summary>
