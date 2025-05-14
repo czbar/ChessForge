@@ -1275,6 +1275,11 @@ namespace ChessForge
             chapter.StudyTree.Tree.CreateNew();
             //TODO: we need to have a chapter specific version of SetupGuiForNewSession 
 
+            if (ChapterUtils.IsAllChaptersShowSolutionsOnOpen())
+            {
+                chapter.ShowSolutionsOnOpen = true;
+            }
+
             Chapters.Add(chapter);
             SetActiveChapter(chapter);
 
