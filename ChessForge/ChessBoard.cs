@@ -444,11 +444,11 @@ namespace ChessForge
             CanvasCtrl.Children.Add(_lblWhiteMaterial);
 
             Canvas.SetLeft(_lblWhiteMaterial, 15);
-            Canvas.SetTop(_lblWhiteMaterial, -2);
+            Canvas.SetTop(_lblWhiteMaterial, -5);
 
             _lblWhiteMaterial.Width = 300;
             _lblWhiteMaterial.Height = 28;
-            _lblWhiteMaterial.FontSize = 12;
+            _lblWhiteMaterial.FontSize = 16;
             _lblWhiteMaterial.Foreground = Brushes.White;
 
 
@@ -457,11 +457,11 @@ namespace ChessForge
             CanvasCtrl.Children.Add(_lblBlackMaterial);
 
             Canvas.SetRight(_lblBlackMaterial, 15);
-            Canvas.SetTop(_lblBlackMaterial, -2);
+            Canvas.SetTop(_lblBlackMaterial, -5);
 
             _lblBlackMaterial.Width = 300;
             _lblBlackMaterial.Height = 28;
-            _lblBlackMaterial.FontSize = 12;
+            _lblBlackMaterial.FontSize = 16;
             _lblBlackMaterial.Foreground = Brushes.Goldenrod;
             _lblBlackMaterial.HorizontalContentAlignment = HorizontalAlignment.Right;
         }
