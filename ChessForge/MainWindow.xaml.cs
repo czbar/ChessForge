@@ -503,6 +503,8 @@ namespace ChessForge
                 DefaultMenuFontSize = UiMainMenu.FontSize;
             }
 
+            UiTbEngineLines.FontSize = Constants.BASE_ENGINE_LINES_FONT_SIZE + Configuration.FontSizeDiff;
+
             if (Configuration.WideScrollbar)
             {
                 GuiUtilities.SetWideScrollbar();

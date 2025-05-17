@@ -2156,7 +2156,7 @@ namespace ChessForge
                     tree.RootNode.Comment = "";
                     tree.RootNode.CommentBeforeMove = "";
                     tree.RootNode.Nags = "";
-                    
+
                     tree.RootNode.References = "";
 
                     tree.RootNode.IsDiagram = false;
@@ -4025,6 +4025,7 @@ namespace ChessForge
                 Configuration.FontSizeDiff++;
                 SetupMenuBarControls();
                 RebuildAllTreeViews(true);
+                UiTbEngineLines.FontSize = Constants.BASE_ENGINE_LINES_FONT_SIZE + Configuration.FontSizeDiff;
             }
             AppState.ConfigureFontSizeMenus();
         }
@@ -4045,6 +4046,7 @@ namespace ChessForge
                 Configuration.FontSizeDiff--;
                 SetupMenuBarControls();
                 RebuildAllTreeViews(false);
+                UiTbEngineLines.FontSize = Constants.BASE_ENGINE_LINES_FONT_SIZE + Configuration.FontSizeDiff;
             }
 
             AppState.ConfigureFontSizeMenus();
