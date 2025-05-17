@@ -85,7 +85,7 @@ namespace ChessForge
                     if (contentType == GameData.ContentType.MODEL_GAME || contentType == GameData.ContentType.GENERIC)
                     {
                         // make sure to skip ChessForge workbook header
-                        if (!first || game.GetWorkbookTitle() != null)
+                        if (!first || game.GetWorkbookTitle() == null)
                         {
                             game.Header.SetContentType(GameData.ContentType.MODEL_GAME);
                             gameCount++;
