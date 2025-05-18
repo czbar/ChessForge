@@ -28,6 +28,9 @@ namespace ChessForge
         // ExtraSpacing on entry
         private bool _currentExtraSpacing;
 
+        // ShowMovesAtFork on entry
+        private bool _currentShowMovesAtFork;
+
         // WideScrollbar on entry
         private bool _currentWideScrollbar;
 
@@ -81,7 +84,12 @@ namespace ChessForge
         /// differs from the one configured before the dialog was opened
         /// </summary>
         public bool ExtraSpacingChanged = false;
-        
+
+        /// <summary>
+        /// Set on Exit to indicate whether the ShowMovesAtFork
+        /// </summary>
+        public bool ShowMovesAtForkChanged = false;
+
         /// <summary>
         /// Configured path to the engine's executable.
         /// </summary>
@@ -202,6 +210,7 @@ namespace ChessForge
             _currentEngineHashSize = Configuration.EngineHashSize;
             _currentMainLineCommentLF = Configuration.MainLineCommentLF;
             _currentExtraSpacing = Configuration.ExtraSpacing;
+            _currentShowMovesAtFork = Configuration.ShowMovesAtFork;
             _currentWideScrollbar = Configuration.WideScrollbar;
             _currentLargeMenuFont = Configuration.LargeMenuFont;
 
@@ -311,6 +320,7 @@ namespace ChessForge
 
             MainLineCommentLFChanged = Configuration.MainLineCommentLF != _currentMainLineCommentLF;
             ExtraSpacingChanged = Configuration.ExtraSpacing != _currentExtraSpacing;
+            ShowMovesAtForkChanged = Configuration.ShowMovesAtFork != _currentShowMovesAtFork;
             WideScrollbarChanged = Configuration.WideScrollbar != _currentWideScrollbar;
             LargeMenuFontChanged = Configuration.LargeMenuFont != _currentLargeMenuFont;
 
