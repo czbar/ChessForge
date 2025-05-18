@@ -893,7 +893,7 @@ namespace ChessForge
 
                 ClearCopySelect();
 
-                TreeNode nd = GetSelectedNode(); // _shownVariationTree.GetNodeFromNodeId(_lastClickedNodeId);
+                TreeNode nd = GetSelectedNode(); 
                 TreeNode parent = nd.Parent;
                 ShownVariationTree.DeleteRemainingMoves(nd);
                 ShownVariationTree.BuildLines();
