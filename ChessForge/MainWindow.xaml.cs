@@ -2863,7 +2863,7 @@ namespace ChessForge
                     }
                     catch { }
                 }
-                else if (dlg.MainLineCommentLFChanged || dlg.ExtraSpacingChanged)
+                else if (dlg.MainLineCommentLFChanged || dlg.ExtraSpacingChanged || dlg.ShowMovesAtForkChanged)
                 {
                     AppState.MainWin.RebuildActiveTreeView();
                     AppState.MainWin.RefreshSelectedActiveLineAndNode();
