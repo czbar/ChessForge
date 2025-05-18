@@ -357,7 +357,8 @@ namespace ChessForge
                             // or if the parent has siblings (in which there may be layout changes)
                             // or in the exercise view, if this is the first move (nd.Parent.NodeId == 0)
                             // in which case we want to call a Rebuild so we get the move number
-                            if (nd.Parent == null || nd.Parent.NodeId == 0 || nd.Parent.Children.Count > 1)
+                            if (nd.Parent == null || nd.Parent.NodeId == 0 || nd.Parent.Children.Count > 1
+                                || AppState.MainWin.ActiveVariationTree.NodeHasSiblings(nd.Parent.NodeId))
                             {
                                 AppState.MainWin.RebuildActiveTreeView();
                             }
