@@ -19,6 +19,21 @@ namespace ChessForge
         public string Author{ get; set; }
 
         /// <summary>
+        /// Preamble of the Study.
+        /// </summary>
+        public string Preamble { get; set; }
+
+        /// <summary>
+        /// True if the Preamble was changed by the user in this dialog.
+        /// </summary>
+        public bool PreambleChanged { get; set; } = false;
+
+        /// <summary>
+        /// The chapter whose title is being edited.
+        /// </summary>
+        private Chapter _chapter;
+
+        /// <summary>
         /// Constructor.
         /// Sets the text to the current title of the chapter.
         /// </summary>
@@ -26,11 +41,27 @@ namespace ChessForge
         public ChapterTitleDialog(Chapter chapter)
         {
             InitializeComponent();
-            UiTbChapterTitle.Text = chapter.GetTitle();
+            _chapter = chapter;
+
+            UiTbChapterTitle.Text = _chapter.GetTitle();
             UiTbChapterTitle.Focus();
             UiTbChapterTitle.SelectAll();
 
-            UiTbAuthor.Text = chapter.GetAuthor();
+            UiTbAuthor.Text = _chapter.GetAuthor();
+            UiTbPreamble.Text = _chapter.StudyTree.Tree.Header.BuildPreambleText();
+        }
+
+        /// <summary>
+        /// Check if the user pressed key combination to enter a figurine.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTbPreamble_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (GuiUtilities.InsertFigurine(UiTbPreamble, sender, e))
+            {
+                e.Handled = true;
+            }
         }
 
         /// <summary>
@@ -42,6 +73,14 @@ namespace ChessForge
         {
             ChapterTitle = UiTbChapterTitle.Text;
             Author = UiTbAuthor.Text;
+
+            if (Preamble != UiTbPreamble.Text)
+            {
+                PreambleChanged = true;
+                Preamble = UiTbPreamble.Text;
+            }
+
+            _chapter.StudyTree.Tree.Header.SetPreamble(UiTbPreamble.Text);
 
             DialogResult = true;
         }
