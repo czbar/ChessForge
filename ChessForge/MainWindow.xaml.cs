@@ -2925,6 +2925,10 @@ namespace ChessForge
                     _studyTreeView = new StudyTreeView(UiRtbStudyTreeView, GameData.ContentType.STUDY_TREE);
                     _studyTreeView.BuildFlowDocumentForVariationTree(false);
                 }
+                else if (dlg.PreambleChanged)
+                {
+                    _studyTreeView.BuildFlowDocumentForVariationTree(false);
+                }
                 else
                 {
                     _studyTreeView.UpdateChapterTitle();
