@@ -487,6 +487,11 @@ namespace ChessForge
         public static bool ShowMovesAtFork = true;
 
         /// <summary>
+        /// Whether to show the material imbalance.
+        /// </summary>
+        public static bool ShowMaterial = true;
+
+        /// <summary>
         /// Whether to show the Explorers.
         /// </summary>
         public static bool ShowExplorers = true;
@@ -690,6 +695,7 @@ namespace ChessForge
         private const string CFG_MAIN_LINE_COMMENT_LF = "MainLineCommentLn";
         private const string CFG_EXTRA_SPACING = "ExtraSpacing";
         private const string CFG_SHOW_MOVES_AT_FORK = "ShowMovesAtFork";
+        private const string CFG_SHOW_MATERIAL = "ShowMaterial";
         private const string CFG_SHOW_EXPLORERS = "ShowExplorers";
         private const string CFG_SHOW_EVALUATION_CHART = "ShowEvaluationChart";
         private const string CFG_SHOW_INTRO_TAB = "ShowIntroTab";
@@ -890,6 +896,7 @@ namespace ChessForge
                 sb.Append(CFG_MAIN_LINE_COMMENT_LF + "=" + (MainLineCommentLF ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_EXTRA_SPACING + "=" + (ExtraSpacing ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_SHOW_MOVES_AT_FORK + "=" + (ShowMovesAtFork ? "1" : "0") + Environment.NewLine);
+                sb.Append(CFG_SHOW_MATERIAL + "=" + (ShowMaterial ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_SHOW_EXPLORERS + "=" + (ShowExplorers ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_SHOW_EVALUATION_CHART + "=" + (ShowEvaluationChart? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_SHOW_INTRO_TAB + "=" + (ShowIntroTab ? "1" : "0") + Environment.NewLine);
@@ -1286,6 +1293,9 @@ namespace ChessForge
                             break;
                         case CFG_SHOW_MOVES_AT_FORK:
                             ShowMovesAtFork = value != "0" ? true : false;
+                            break;
+                        case CFG_SHOW_MATERIAL:
+                            ShowMaterial = value != "0" ? true : false;
                             break;
                         case CFG_SHOW_EXPLORERS:
                             ShowExplorers = value != "0" ? true : false;
