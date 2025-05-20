@@ -2833,6 +2833,18 @@ namespace ChessForge
                     SetMenuFontSize(Configuration.LargeMenuFont ? Constants.LARGE_MENU_FONT_SIZE : DefaultMenuFontSize);
                 }
 
+                if (dlg.ShowMaterialChanged)
+                {
+                    if (Configuration.ShowMaterial)
+                    {
+                        MainChessBoard.DisplayPosition(ActiveLine.GetSelectedTreeNode(), true);
+                    }
+                    else
+                    {
+                        MainChessBoard.ClearMaterialImbalanceLabels();
+                    }
+                }
+
                 Configuration.WriteOutConfiguration();
 
                 if (dlg.EngineParamsChanged)
@@ -2847,7 +2859,7 @@ namespace ChessForge
                     try
                     {
                         TreeNode nd = ActiveLine.GetSelectedTreeNode();
-                        if (nd != null)
+                        if (nd != null && ActiveVariationTree != null)
                         {
                             string lineId = ActiveVariationTree.GetDefaultLineIdForNode(nd.NodeId);
                             ActiveTreeView.SetAndSelectActiveLine(lineId, nd.NodeId);
@@ -2863,7 +2875,7 @@ namespace ChessForge
                     }
                     catch { }
                 }
-                else if (dlg.MainLineCommentLFChanged || dlg.ExtraSpacingChanged || dlg.ShowMovesAtForkChanged)
+                else if (dlg.MainLineCommentLFChanged || dlg.ExtraSpacingChanged || dlg.ShowMovesAtForkChanged || dlg.ShowMaterialChanged)
                 {
                     AppState.MainWin.RebuildActiveTreeView();
                     AppState.MainWin.RefreshSelectedActiveLineAndNode();
