@@ -222,6 +222,9 @@
   <data name="Games" xml:space="preserve">
     <value>Games</value>
   </data>
+  <data name="GamesAndExercises" xml:space="preserve">
+    <value>Games and Exercises</value>
+  </data>
   <data name="EngineGame" xml:space="preserve">
     <value>Engine Game</value>
   </data>
@@ -1080,6 +1083,9 @@ NOTE: Evaluations are not being updated. Ctrl+K to allow.)</value>
   </data>
   <data name="ShowMovesAtFork" xml:space="preserve">
     <value>Show Moves at Fork</value>
+  </data>
+  <data name="ShowMaterial" xml:space="preserve">
+    <value>Show Material Imbalance</value>
   </data>
   <data name="WideScrollbar" xml:space="preserve">
     <value>Wide Scrollbar</value>

@@ -3751,6 +3751,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Games and Exercises.
+        /// </summary>
+        public static string GamesAndExercises {
+            get {
+                return ResourceManager.GetString("GamesAndExercises", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Games Evaluation.
         /// </summary>
         public static string GamesEvaluation {
@@ -7024,6 +7033,15 @@ namespace ChessForge.Properties {
         public static string ShowIndex {
             get {
                 return ResourceManager.GetString("ShowIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Material Imbalance.
+        /// </summary>
+        public static string ShowMaterial {
+            get {
+                return ResourceManager.GetString("ShowMaterial", resourceCulture);
             }
         }
         

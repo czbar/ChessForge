@@ -157,6 +157,11 @@ Game=Partia
 #english: Games=Games
 Games=Partie
 
+#description: Games plural
+#english: GamesAndExercises=Games and Exercises
+GamesAndExercises=Partie i Ćwiczenia
+
+
 #description: Engine Game
 #english: EngineGame=Engine Game
 EngineGame=Partia z Silnikiem
@@ -1469,6 +1474,10 @@ ExtraSpacing=Powiększ odstęp
 #description: Whether to show inline table with move options at a fork
 #english: ShowMovesAtFork=Show Moves at Fork
 ShowMovesAtFork=Tabelka przy rozgałęzieniu
+
+#description: Show material imbalance
+#english: ShowMaterial=Show Material Imbalance
+ShowMaterial=Pokaż różnice materiału
 
 #description: Wide scrollbar
 #english: WideScrollbar=Wide Scrollbar
