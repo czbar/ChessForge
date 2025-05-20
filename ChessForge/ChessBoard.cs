@@ -371,6 +371,15 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Clears the material imbalance labels.
+        /// </summary>
+        public void ClearMaterialImbalanceLabels()
+        {
+            SetWhiteMaterialLabelText("");
+            SetBlackMaterialLabelText("");
+        }
+
+        /// <summary>
         /// Sets the text on the label for white's material advantage.
         /// </summary>
         /// <param name="text"></param>
@@ -991,7 +1000,7 @@ namespace ChessForge
 
             RemoveMoveSquareColors();
 
-            if (_showMaterial)
+            if (_showMaterial && Configuration.ShowMaterial)
             {
                 MaterialImbalanceUtils.BuildMaterialImbalanceStrings(_position, out string whiteMaterial, out string blackMaterial);
                 SetWhiteMaterialLabelText(whiteMaterial);
