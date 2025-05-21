@@ -37,17 +37,17 @@
                 <Image x:Name="UiImgSwapColor" HorizontalAlignment="Left" Height="20" Margin="125,-22,0,0" VerticalAlignment="Top" Width="20" Source="Resources/Images/swap_vert.png" PreviewMouseDown="UiLblSwapMoveColor_PreviewMouseDown" />
             </StackPanel>
         </GroupBox>
-        <GroupBox x:Name="UiGbStudy" Header="{x:Static p:Resources.Studies}" HorizontalAlignment="Left" Height="90" Margin="229,260,0,0" VerticalAlignment="Top" Width="200">
-            <StackPanel>
-                <Label x:Name="UiLblIndexDepth" Content="{x:Static p:Resources.DefaultIndexDepth}" HorizontalAlignment="Left" Margin="0,20,0,0" VerticalAlignment="Top"/>
-                <TextBox x:Name="UiTbIndexDepth" Text="" HorizontalAlignment="Left" Width="20" Margin="153,-22,0,0" HorizontalContentAlignment="Center" VerticalAlignment="Top"/>
-            </StackPanel>
-        </GroupBox>
-        <GroupBox x:Name="UiGbAutoReplay" HorizontalAlignment="Left" Height="90" Header="{x:Static p:Resources.MoveReplay}" Margin="15,355,0,0" VerticalAlignment="Top" Width="200">
+        <GroupBox x:Name="UiGbAutoReplay" HorizontalAlignment="Left" Height="90" Header="{x:Static p:Resources.MoveReplay}" Margin="229,260,0,0" VerticalAlignment="Top" Width="200">
             <StackPanel Margin="0,0,0,0">
                 <Label x:Name="UiLblReplaySpeed" Content="{x:Static p:Resources.AutoReplaySpeed}" HorizontalAlignment="Left" Margin="0,8,0,0" VerticalAlignment="Top"/>
                 <TextBox x:Name="UiTbReplaySpeed" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="115,-22,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="40"/>
                 <CheckBox x:Name="UiCbAllowWheel" Content="{x:Static p:Resources.AllowMouseWheel}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4,10,0,0" Height="20"/>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox x:Name="UiGbStudy" Header="{x:Static p:Resources.Studies}" HorizontalAlignment="Left" Height="90" Margin="15,355,0,0" VerticalAlignment="Top" Width="200">
+            <StackPanel>
+                <Label x:Name="UiLblIndexDepth" Content="{x:Static p:Resources.DefaultIndexDepth}" HorizontalAlignment="Left" Margin="0,20,0,0" VerticalAlignment="Top"/>
+                <TextBox x:Name="UiTbIndexDepth" Text="" HorizontalAlignment="Left" Width="20" Margin="153,-22,0,0" HorizontalContentAlignment="Center" VerticalAlignment="Top"/>
             </StackPanel>
         </GroupBox>
         <GroupBox x:Name="UiGbGamesAndExercises" Header="{x:Static p:Resources.GamesAndExercises}" HorizontalAlignment="Left" Height="90" Margin="229,355,0,0" VerticalAlignment="Top" Width="200">
