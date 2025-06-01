@@ -157,6 +157,11 @@ Game=
 #english: Games=Games
 Games=
 
+#description: Games plural
+#english: GamesAndExercises=Games and Exercises
+GamesAndExercises=
+
+
 #description: Engine Game
 #english: EngineGame=Engine Game
 EngineGame=
@@ -1469,6 +1474,10 @@ ExtraSpacing=
 #description: Whether to show inline table with move options at a fork
 #english: ShowMovesAtFork=Show Moves at Fork
 ShowMovesAtFork=
+
+#description: Show material imbalance
+#english: ShowMaterial=Show Material Imbalance
+ShowMaterial=
 
 #description: Wide scrollbar
 #english: WideScrollbar=Wide Scrollbar

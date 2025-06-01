@@ -28,6 +28,12 @@ namespace ChessForge
         // ExtraSpacing on entry
         private bool _currentExtraSpacing;
 
+        // ShowMovesAtFork on entry
+        private bool _currentShowMovesAtFork;
+
+        // ShowMaterial on entry
+        private bool _currentShowMaterial;
+
         // WideScrollbar on entry
         private bool _currentWideScrollbar;
 
@@ -81,7 +87,17 @@ namespace ChessForge
         /// differs from the one configured before the dialog was opened
         /// </summary>
         public bool ExtraSpacingChanged = false;
-        
+
+        /// <summary>
+        /// Set on Exit to indicate whether the ShowMovesAtFork has changed
+        /// </summary>
+        public bool ShowMovesAtForkChanged = false;
+
+        /// <summary>
+        /// Set on Exit to indicate whether the ShowMaterial has changed
+        /// </summary>
+        public bool ShowMaterialChanged = false;
+
         /// <summary>
         /// Configured path to the engine's executable.
         /// </summary>
@@ -146,6 +162,11 @@ namespace ChessForge
         public bool ShowMovesAtFork;
 
         /// <summary>
+        /// Whether the material imbalance is shown.
+        /// </summary>
+        public bool ShowMaterial;
+
+        /// <summary>
         /// Whether the sound is turned on.
         /// </summary>
         public bool SoundOn;
@@ -193,6 +214,7 @@ namespace ChessForge
             MainLineCommentLF = Configuration.MainLineCommentLF;
             ExtraSpacing = Configuration.ExtraSpacing;
             ShowMovesAtFork = Configuration.ShowMovesAtFork;
+            ShowMaterial = Configuration.ShowMaterial;
             SoundOn = Configuration.SoundOn;
             WideScrollbar = Configuration.WideScrollbar;
             LargeMenuFont = Configuration.LargeMenuFont;
@@ -202,6 +224,8 @@ namespace ChessForge
             _currentEngineHashSize = Configuration.EngineHashSize;
             _currentMainLineCommentLF = Configuration.MainLineCommentLF;
             _currentExtraSpacing = Configuration.ExtraSpacing;
+            _currentShowMovesAtFork = Configuration.ShowMovesAtFork;
+            _currentShowMaterial = Configuration.ShowMaterial;
             _currentWideScrollbar = Configuration.WideScrollbar;
             _currentLargeMenuFont = Configuration.LargeMenuFont;
 
@@ -212,6 +236,7 @@ namespace ChessForge
             UiCbMainLineCommentLF.IsChecked = MainLineCommentLF == true;
             UiCbExtraSpacing.IsChecked = ExtraSpacing == true;
             UiCbShowForkMoves.IsChecked = (ShowMovesAtFork == true);
+            UiCbShowMaterial.IsChecked = (ShowMaterial == true);
             UiCbSoundOn.IsChecked = (SoundOn == true);
             UiCbWideScrollbar.IsChecked = (WideScrollbar == true);
             UiCbLargeMenuFont.IsChecked = (LargeMenuFont == true);
@@ -303,6 +328,7 @@ namespace ChessForge
             Configuration.MainLineCommentLF = (UiCbMainLineCommentLF.IsChecked == true);
             Configuration.ExtraSpacing = (UiCbExtraSpacing.IsChecked == true);
             Configuration.ShowMovesAtFork = (UiCbShowForkMoves.IsChecked == true);
+            Configuration.ShowMaterial = (UiCbShowMaterial.IsChecked == true);
             Configuration.SoundOn = (UiCbSoundOn.IsChecked == true);
             Configuration.WideScrollbar = (UiCbWideScrollbar.IsChecked == true);
             Configuration.LargeMenuFont = (UiCbLargeMenuFont.IsChecked == true);
@@ -311,6 +337,8 @@ namespace ChessForge
 
             MainLineCommentLFChanged = Configuration.MainLineCommentLF != _currentMainLineCommentLF;
             ExtraSpacingChanged = Configuration.ExtraSpacing != _currentExtraSpacing;
+            ShowMovesAtForkChanged = Configuration.ShowMovesAtFork != _currentShowMovesAtFork;
+            ShowMaterialChanged = Configuration.ShowMaterial != _currentShowMaterial;
             WideScrollbarChanged = Configuration.WideScrollbar != _currentWideScrollbar;
             LargeMenuFontChanged = Configuration.LargeMenuFont != _currentLargeMenuFont;
 

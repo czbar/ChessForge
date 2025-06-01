@@ -893,7 +893,7 @@ namespace ChessForge
 
                 ClearCopySelect();
 
-                TreeNode nd = GetSelectedNode(); // _shownVariationTree.GetNodeFromNodeId(_lastClickedNodeId);
+                TreeNode nd = GetSelectedNode(); 
                 TreeNode parent = nd.Parent;
                 ShownVariationTree.DeleteRemainingMoves(nd);
                 ShownVariationTree.BuildLines();
@@ -1569,6 +1569,99 @@ namespace ChessForge
                 _lastAddedRun = runMove;
             }
             catch { }
+        }
+
+        /// <summary>
+        /// Checks if the passed node is a 'super leaf' and if so, deletes it.
+        /// Cleans up all the artefacts associated with the node.
+        /// By 'super leaf' we mean a node that has no children and no siblings.
+        /// Additionally we will not delete here if there is a move Run representing a node 
+        /// after this one in the same paragraph.
+        /// This is because there may be a layout one day that could allow that.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns>True if the node was deleted.</returns>
+        public bool DeleteLeafMove(TreeNode nd)
+        {
+            // TODO: to be used when deleteing a move from the view.
+            bool success = false;
+
+            try
+            {
+                if (nd != null && nd.Children.Count == 0 && nd.Parent != null && !TreeUtils.NodeHasSiblings(nd))
+                {
+                    // get the run for the move
+                    if (_dictNodeToRun.TryGetValue(nd.NodeId, out Run rMoveRun))
+                    {
+                        bool proceed = true;
+                        Inline inline = rMoveRun.NextInline;
+                        
+                        List<Run> lstRunsToRemove = new List<Run>();
+                        lstRunsToRemove.Add(rMoveRun);
+
+                        while (inline != null)
+                        {
+                            inline = inline.NextInline;
+                            if (inline is Run run)
+                            {
+                                if (run.Name != null && run.Name.StartsWith(RichTextBoxUtilities.RunMovePrefix))
+                                {
+                                    proceed = false;
+                                    break;
+                                }
+                                else
+                                {
+                                    lstRunsToRemove.Add(run);
+                                }
+                            }
+                            else
+                            {
+                                proceed = false;
+                                break;
+                            }
+                        }
+
+                        if (proceed)
+                        {
+                            Paragraph para = _dictRunToParagraph[rMoveRun];
+                            if (para != null)
+                            {
+                                // remove the node from the tree
+                                nd.Parent.Children.Remove(nd);
+
+                                // remove the entries from the dictionaries
+                                _dictNodeToRun.Remove(nd.NodeId);
+
+                                Run commentRun = _dictNodeToCommentRun[nd.NodeId] as Run;
+                                _dictNodeToCommentRun.Remove(nd.NodeId);
+
+                                Run commentBeforeRun = _dictNodeToCommentBeforeMoveRun[nd.NodeId] as Run;
+                                _dictNodeToCommentBeforeMoveRun.Remove(nd.NodeId);
+
+                                _dictRunToParagraph.Remove(rMoveRun);
+                                _dictCommentRunToParagraph.Remove(commentRun);
+                                _dictCommentBeforeMoveRunToParagraph.Remove(commentBeforeRun);
+
+                                // remove the runs associated with the move.
+                                foreach (Run r in lstRunsToRemove)
+                                {
+                                    if (r != null)
+                                    {
+                                        para.Inlines.Remove(r);
+                                    }
+                                }
+                            }
+                            success = true;
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                success = false;
+            }
+
+            return success;
         }
 
         /// <summary>

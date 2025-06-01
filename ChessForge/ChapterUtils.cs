@@ -46,6 +46,34 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns true if all chapters in the workbook have ShowSolutionsOnOpen set to true
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsAllChaptersShowSolutionsOnOpen()
+        {
+            bool all = true;
+
+            try
+            {
+                foreach(Chapter ch in AppState.Workbook.Chapters)
+                {
+                    if (!ch.ShowSolutionsOnOpen)
+                    {
+                        all = false;
+                        break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                all = false;
+                AppLog.Message("IsAllChaptersShowSolutionsOnOpen()", ex);
+            }
+
+            return all;
+        }
+
+        /// <summary>
         /// Through some loose programming we may end up with some garbage in the Study Tree header
         /// (e.g. after regenerating) which in turn may affect things like the title of an exercise
         /// when created from a position in the Study.

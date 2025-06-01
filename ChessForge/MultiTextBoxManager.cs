@@ -191,13 +191,13 @@ namespace ChessForge
             {
                 MainWin.UiTbEngineLines.Height = EVAL_CHART_FULL_HEIGHT;
                 MainWin.UiTbEngineLines.Margin = new Thickness(0, 10, 0, 0);
-                MainWin.UiTbEngineLines.FontSize = 12;
+                MainWin.UiTbEngineLines.FontSize = Constants.BASE_ENGINE_LINES_FONT_SIZE + Configuration.FontSizeDiff;
             }
             else
             {
                 MainWin.UiTbEngineLines.Height = EVAL_CHART_FULL_HEIGHT / 2;
                 MainWin.UiTbEngineLines.Margin = new Thickness(0, 10 + (EVAL_CHART_FULL_HEIGHT / 2), 0, 0);
-                MainWin.UiTbEngineLines.FontSize = 10;
+                MainWin.UiTbEngineLines.FontSize = (Constants.BASE_ENGINE_LINES_FONT_SIZE + Configuration.FontSizeDiff) - 2;
             }
         }
     }

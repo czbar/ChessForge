@@ -503,6 +503,8 @@ namespace ChessForge
                 DefaultMenuFontSize = UiMainMenu.FontSize;
             }
 
+            UiTbEngineLines.FontSize = Constants.BASE_ENGINE_LINES_FONT_SIZE + Configuration.FontSizeDiff;
+
             if (Configuration.WideScrollbar)
             {
                 GuiUtilities.SetWideScrollbar();
@@ -2831,6 +2833,18 @@ namespace ChessForge
                     SetMenuFontSize(Configuration.LargeMenuFont ? Constants.LARGE_MENU_FONT_SIZE : DefaultMenuFontSize);
                 }
 
+                if (dlg.ShowMaterialChanged)
+                {
+                    if (Configuration.ShowMaterial)
+                    {
+                        MainChessBoard.DisplayPosition(ActiveLine.GetSelectedTreeNode(), true);
+                    }
+                    else
+                    {
+                        MainChessBoard.ClearMaterialImbalanceLabels();
+                    }
+                }
+
                 Configuration.WriteOutConfiguration();
 
                 if (dlg.EngineParamsChanged)
@@ -2845,7 +2859,7 @@ namespace ChessForge
                     try
                     {
                         TreeNode nd = ActiveLine.GetSelectedTreeNode();
-                        if (nd != null)
+                        if (nd != null && ActiveVariationTree != null)
                         {
                             string lineId = ActiveVariationTree.GetDefaultLineIdForNode(nd.NodeId);
                             ActiveTreeView.SetAndSelectActiveLine(lineId, nd.NodeId);
@@ -2861,7 +2875,7 @@ namespace ChessForge
                     }
                     catch { }
                 }
-                else if (dlg.MainLineCommentLFChanged || dlg.ExtraSpacingChanged)
+                else if (dlg.MainLineCommentLFChanged || dlg.ExtraSpacingChanged || dlg.ShowMovesAtForkChanged || dlg.ShowMaterialChanged)
                 {
                     AppState.MainWin.RebuildActiveTreeView();
                     AppState.MainWin.RefreshSelectedActiveLineAndNode();
@@ -2921,6 +2935,10 @@ namespace ChessForge
                 if (_studyTreeView == null)
                 {
                     _studyTreeView = new StudyTreeView(UiRtbStudyTreeView, GameData.ContentType.STUDY_TREE);
+                    _studyTreeView.BuildFlowDocumentForVariationTree(false);
+                }
+                else if (dlg.PreambleChanged)
+                {
                     _studyTreeView.BuildFlowDocumentForVariationTree(false);
                 }
                 else

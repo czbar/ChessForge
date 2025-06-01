@@ -371,6 +371,15 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Clears the material imbalance labels.
+        /// </summary>
+        public void ClearMaterialImbalanceLabels()
+        {
+            SetWhiteMaterialLabelText("");
+            SetBlackMaterialLabelText("");
+        }
+
+        /// <summary>
         /// Sets the text on the label for white's material advantage.
         /// </summary>
         /// <param name="text"></param>
@@ -444,11 +453,11 @@ namespace ChessForge
             CanvasCtrl.Children.Add(_lblWhiteMaterial);
 
             Canvas.SetLeft(_lblWhiteMaterial, 15);
-            Canvas.SetTop(_lblWhiteMaterial, -2);
+            Canvas.SetTop(_lblWhiteMaterial, -5);
 
             _lblWhiteMaterial.Width = 300;
             _lblWhiteMaterial.Height = 28;
-            _lblWhiteMaterial.FontSize = 12;
+            _lblWhiteMaterial.FontSize = 16;
             _lblWhiteMaterial.Foreground = Brushes.White;
 
 
@@ -457,11 +466,11 @@ namespace ChessForge
             CanvasCtrl.Children.Add(_lblBlackMaterial);
 
             Canvas.SetRight(_lblBlackMaterial, 15);
-            Canvas.SetTop(_lblBlackMaterial, -2);
+            Canvas.SetTop(_lblBlackMaterial, -5);
 
             _lblBlackMaterial.Width = 300;
             _lblBlackMaterial.Height = 28;
-            _lblBlackMaterial.FontSize = 12;
+            _lblBlackMaterial.FontSize = 16;
             _lblBlackMaterial.Foreground = Brushes.Goldenrod;
             _lblBlackMaterial.HorizontalContentAlignment = HorizontalAlignment.Right;
         }
@@ -991,7 +1000,7 @@ namespace ChessForge
 
             RemoveMoveSquareColors();
 
-            if (_showMaterial)
+            if (_showMaterial && Configuration.ShowMaterial)
             {
                 MaterialImbalanceUtils.BuildMaterialImbalanceStrings(_position, out string whiteMaterial, out string blackMaterial);
                 SetWhiteMaterialLabelText(whiteMaterial);

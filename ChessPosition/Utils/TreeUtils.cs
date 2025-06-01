@@ -48,6 +48,26 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Checks if the passed node has siblings.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        public static bool NodeHasSiblings(TreeNode nd)
+        {
+            bool ret;
+            if (nd != null && nd.Parent != null && nd.Parent.Children.Count > 1)
+            {
+                ret = true;
+            }
+            else
+            {
+                ret = false;
+            }
+
+            return ret;
+        }
+
+        /// <summary>
         /// Returns the closest ancestor that is not collapsed.
         /// </summary>
         /// <param name="node"></param>

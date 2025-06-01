@@ -2156,7 +2156,7 @@ namespace ChessForge
                     tree.RootNode.Comment = "";
                     tree.RootNode.CommentBeforeMove = "";
                     tree.RootNode.Nags = "";
-                    
+
                     tree.RootNode.References = "";
 
                     tree.RootNode.IsDiagram = false;
@@ -3646,13 +3646,15 @@ namespace ChessForge
         /// Creates a new exercise from the passed VariationTree
         /// </summary>
         /// <param name="tree"></param>
-        private void CreateNewExerciseFromTree(VariationTree tree)
+        private Article CreateNewExerciseFromTree(VariationTree tree)
         {
+            Article exercise = null;
+
             try
             {
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
 
-                Article exercise = WorkbookManager.SessionWorkbook.ActiveChapter.AddExercise(tree);
+                exercise = WorkbookManager.SessionWorkbook.ActiveChapter.AddExercise(tree);
                 exercise.ShowSolutionByDefault = chapter.ShowSolutionsOnOpen;
                 exercise.Tree.ShowTreeLines = chapter.ShowSolutionsOnOpen;
 
@@ -3665,6 +3667,8 @@ namespace ChessForge
             {
                 AppLog.Message("CreateNewExercise()", ex);
             }
+
+            return exercise;
         }
 
         /// <summary>
@@ -4021,6 +4025,7 @@ namespace ChessForge
                 Configuration.FontSizeDiff++;
                 SetupMenuBarControls();
                 RebuildAllTreeViews(true);
+                UiTbEngineLines.FontSize = Constants.BASE_ENGINE_LINES_FONT_SIZE + Configuration.FontSizeDiff;
             }
             AppState.ConfigureFontSizeMenus();
         }
@@ -4041,6 +4046,7 @@ namespace ChessForge
                 Configuration.FontSizeDiff--;
                 SetupMenuBarControls();
                 RebuildAllTreeViews(false);
+                UiTbEngineLines.FontSize = Constants.BASE_ENGINE_LINES_FONT_SIZE + Configuration.FontSizeDiff;
             }
 
             AppState.ConfigureFontSizeMenus();

@@ -222,6 +222,9 @@
   <data name="Games" xml:space="preserve">
     <value>Partie</value>
   </data>
+  <data name="GamesAndExercises" xml:space="preserve">
+    <value>Partie i Ćwiczenia</value>
+  </data>
   <data name="EngineGame" xml:space="preserve">
     <value>Partia z Silnikiem</value>
   </data>
@@ -1080,6 +1083,9 @@ UWAGA: Oceny nie są uaktualniane. Zezwól przez Ctrl+K.)</value>
   </data>
   <data name="ShowMovesAtFork" xml:space="preserve">
     <value>Tabelka przy rozgałęzieniu</value>
+  </data>
+  <data name="ShowMaterial" xml:space="preserve">
+    <value>Pokaż różnice materiału</value>
   </data>
   <data name="WideScrollbar" xml:space="preserve">
     <value>Szeroki pasek przewijania</value>

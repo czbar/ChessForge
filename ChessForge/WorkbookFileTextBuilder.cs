@@ -321,6 +321,7 @@ namespace ChessForge
 
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_WHITE, "Chapter"));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_BLACK, "Introduction"));
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_RESULT, "*"));
             sb.AppendLine("");
 
             return sb.ToString();
@@ -352,7 +353,7 @@ namespace ChessForge
 
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_BLACK, chapter.GetTitle()));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_INDEX_DEPTH, chapter.VariationIndexDepth == null ? "" : chapter.VariationIndexDepth.Value.ToString()));
-            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_SHOW_SOLUTIONS_ON_OPEN, chapter.ShowSolutionsOnOpen ? "1" : "0"));
+            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_RESULT, "*"));
             sb.AppendLine(BuildPreamble(tree));
 
             sb.AppendLine("");
