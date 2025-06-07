@@ -274,11 +274,13 @@ namespace ChessForge
             _rtfConfigItems[INCLUDE_STUDY] = "1";
             _rtfConfigItems[INCLUDE_GAMES] = "1";
             _rtfConfigItems[INCLUDE_EXERCISES] = "1";
+            _rtfConfigItems[INCLUDE_BOOKMARKS] = "1";
 
             _rtfConfigItems[TWO_COLUMN_INTRO] = "1";
             _rtfConfigItems[TWO_COLUMN_STUDY] = "1";
             _rtfConfigItems[TWO_COLUMN_GAMES] = "1";
             _rtfConfigItems[TWO_COLUMN_EXERCISES] = "1";
+            _rtfConfigItems[TWO_COLUMN_BOOKMARKS] = "1";
 
             _rtfConfigItems[USE_CUSTOM_STUDY] = "0";
             _rtfConfigItems[USE_CUSTOM_GAMES] = "0";
