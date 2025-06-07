@@ -192,7 +192,7 @@ namespace ChessForge
                 }
             }
 
-            SortBookmarks();
+            SortBookmarks(BookmarkList);
 
             HighlightBookmark(_lastAddedBookmark);
             _lastAddedBookmark = null;
@@ -301,9 +301,9 @@ namespace ChessForge
         /// This method should be called after initialization
         /// and any subsequents addition.
         /// </summary>
-        public static void SortBookmarks()
+        public static void SortBookmarks(List<BookmarkWrapper> bookMarks)
         {
-            BookmarkList.Sort();
+            bookMarks.Sort();
 
             int lastBmPage = PageForLastAddedBookmark();
             if (lastBmPage > 0)
@@ -332,7 +332,7 @@ namespace ChessForge
                 {
                     BookmarkWrapper bmv = new BookmarkWrapper(WorkbookManager.SessionWorkbook.ActiveChapterIndex, tree, bm, articleIndex);
                     BookmarkList.Add(bmv);
-                    SortBookmarks();
+                    SortBookmarks(BookmarkList);
                     ResyncBookmarks(_currentPage);
                     AppState.IsDirty = true;
                 }
@@ -665,6 +665,28 @@ namespace ChessForge
                 else
                 {
                     bv.Highlight(false);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Builds a list of bookmarks for the current chapter or the whole workbook
+        /// of the requested type.
+        /// </summary>
+        /// <param name="bookmarkList"></param>
+        /// <param name="chapter"></param>
+        /// <param name="contentType"></param>
+        public static void BuildBookmarkList(List<BookmarkWrapper> bookmarkList, Chapter chapter, GameData.ContentType contentType)
+        {
+            if (chapter != null)
+            {
+                BuildBookmarkListForChapter(bookmarkList, chapter, contentType);
+            }
+            else
+            {
+                foreach (Chapter ch in WorkbookManager.SessionWorkbook.Chapters)
+                {
+                    BuildBookmarkListForChapter(bookmarkList, ch, contentType);
                 }
             }
         }
