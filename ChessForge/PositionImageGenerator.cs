@@ -58,7 +58,7 @@ namespace ChessForge
         /// <param name="pixelSize"></param>
         /// <param name="dpi"></param>
         /// <returns></returns>
-        private static BitmapEncoder EncodePositionAsImage(TreeNode node, bool isFlipped, int borderWidth = 1, int colorId = 1, int pixelSize = 240, double dpi = 96)
+        private static BitmapEncoder EncodePositionAsImage(TreeNode node, bool isFlipped, int borderWidth = 2, int colorId = 1, int pixelSize = 240, double dpi = 96)
         {
             const int maxSmallChessBoardSize = 240;
 
