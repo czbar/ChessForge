@@ -94,7 +94,7 @@ Description:Workbooks examining theory and practice of various Openings.
     Description: Short booklets on rare, unorthodox openings. 
     
 	  Book:The Elephant Gambit
-      Description: These days extict in masters' practice but a 1.e4 player must know it.
+      Description: These days extinct in masters' practice but a 1.e4 player must know it.
       File: Openings/Unorthodox/Elephant Gambit.pgn
 
 	  Book:The Nakhmanson Gambit
