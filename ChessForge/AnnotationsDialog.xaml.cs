@@ -400,7 +400,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiLblGameExerciseRefs_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            var dlg = new SelectArticleRefsDialog(_node);
+            var dlg = new SelectArticleRefsDialog(_node, _gameExerciseRefGuids);
             GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
             if (dlg.ShowDialog() == true)
