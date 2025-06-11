@@ -110,6 +110,7 @@
     <Compile Include="BoardArrow.cs" />
     <Compile Include="BoardShapesManager.cs" />
     <Compile Include="BoardCircle.cs" />
+    <Compile Include="BookmarkUtils.cs" />
     <Compile Include="BookmarkWrapper.cs" />
     <Compile Include="Chapter.cs" />
     <Compile Include="ChapterFromLineDialog.xaml.cs">

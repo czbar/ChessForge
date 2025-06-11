@@ -210,6 +210,12 @@ namespace ChessForge
 
             PrintChaptersToFlowDoc(printDoc, scope, ref diagrams, isFirstPrintPage);
 
+            if ((scope == PrintScope.CHAPTER || scope == PrintScope.WORKBOOK) 
+                 && ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_BOOKMARKS))
+            {
+                PrintBookmarks(printDoc, scope, ref diagrams);  
+            }
+
             if (scope == PrintScope.WORKBOOK)
             {
                 if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_GAME_INDEX))
@@ -482,6 +488,20 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Prints a single Bookmark and places it in the printDoc.
+        /// </summary>
+        /// <param name="printDoc"></param>
+        /// <param name="bookmark"></param>
+        /// <param name="bookmarkIndex"></param>
+        /// <param name="diagrams"></param>
+        private static void PrintBookmarkToFlowDoc(FlowDocument printDoc, BookmarkWrapper bookmark, int bookmarkIndex, ref List<RtfDiagram> diagrams)
+        {
+            FlowDocument guiDoc = PrintBookmark(printDoc, bookmark, bookmarkIndex, ref diagrams);
+            CreateDocumentForPrint(printDoc, guiDoc, null, ref diagrams);
+            CreateBookmarkDiagramForPrint(printDoc, bookmark.Node, ref diagrams);
+        }
+
+        /// <summary>
         /// Generates the string ready to be exported as RTF file.
         /// Performs the placeholder replacements and creates diagrams.
         /// </summary>
@@ -572,6 +592,50 @@ namespace ChessForge
             }
 
             return doc;
+        }
+
+        /// <summary>
+        /// Prints the bookmarks of the current chapter or the entire workbook.
+        /// </summary>
+        /// <param name="printDoc"></param>
+        /// <param name="scope"></param>
+        /// <param name="diagrams"></param>
+        private static void PrintBookmarks(FlowDocument printDoc, PrintScope scope, ref List<RtfDiagram> diagrams)
+        {
+            List<BookmarkWrapper> bookMarkList = new List<BookmarkWrapper>();
+            if (scope == PrintScope.CHAPTER)
+            {
+                BookmarkManager.BuildBookmarkList(bookMarkList, _chapterToPrint, GameData.ContentType.NONE);
+            }
+            else
+            {
+                BookmarkManager.BuildBookmarkList(bookMarkList, null, GameData.ContentType.NONE);
+            }
+
+            if (bookMarkList.Count > 0)
+            {
+                BookmarkManager.SortBookmarks(bookMarkList);
+                FlowDocument docBookmarksHeader = PrintBookmarksHeader();
+                AddPageBreakPlaceholder(docBookmarksHeader);
+                CreateDocumentForPrint(printDoc, docBookmarksHeader, null, ref diagrams);
+
+                // if "two-column format" is set, place the start command before the first game
+                // and the end command after the last one
+                if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.TWO_COLUMN_BOOKMARKS))
+                {
+                    printDoc.Blocks.Add(CreateTwoColumnBeginPara());
+                }
+
+                for (int i = 0; i < bookMarkList.Count; i++)
+                {
+                    PrintBookmarkToFlowDoc(printDoc, bookMarkList[i], i, ref diagrams);
+                }
+
+                if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.TWO_COLUMN_GAMES))
+                {
+                    printDoc.Blocks.Add(CreateTwoColumnEndPara());
+                }
+            }
         }
 
         /// <summary>
@@ -781,6 +845,38 @@ namespace ChessForge
             Paragraph paraDummy2 = new Paragraph();
             paraDummy2.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff + 4;
             doc.Blocks.Add(paraDummy2);
+
+            return doc;
+        }
+
+        /// <summary>
+        /// Creates a flow document with the Bookmarks header.
+        /// </summary>
+        /// <returns></returns>
+        private static FlowDocument PrintBookmarksHeader()
+        {
+            FlowDocument doc = new FlowDocument();
+
+            Paragraph paraHeader = new Paragraph();
+            paraHeader.TextAlignment = TextAlignment.Center;
+            paraHeader.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff + 2;
+            paraHeader.FontWeight = FontWeights.Bold;
+
+            string bookmarksHeader = Properties.Resources.Bookmarks;
+            if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.USE_CUSTOM_BOOKMARKS))
+            {
+                bookmarksHeader = ConfigurationRtfExport.GetStringValue(ConfigurationRtfExport.CUSTOM_TERM_BOOKMARKS);
+            }
+
+            if (!string.IsNullOrWhiteSpace(bookmarksHeader))
+            {
+                paraHeader.Inlines.Add(new Run(bookmarksHeader));
+                doc.Blocks.Add(paraHeader);
+            }
+
+            Paragraph paraSpacing = new Paragraph();
+            paraSpacing.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff + 4;
+            doc.Blocks.Add(paraSpacing);
 
             return doc;
         }
@@ -1044,6 +1140,50 @@ namespace ChessForge
 
             return doc;
         }
+
+        /// <summary>
+        /// Prints a single Bookmark and returns the FlowDocument.
+        /// </summary>
+        /// <param name="printDoc"></param>
+        /// <param name="bookmark"></param>
+        /// <param name="bookmarkIndex"></param>
+        /// <param name="diagrams"></param>
+        /// <returns></returns>
+        private static FlowDocument PrintBookmark(FlowDocument printDoc, BookmarkWrapper bookmark, int bookmarkIndex, ref List<RtfDiagram> diagrams)
+        {
+            FlowDocument doc = new FlowDocument();
+
+            if (bookmarkIndex > 0)
+            {
+                Paragraph preSpace = new Paragraph();
+                preSpace.Margin = new Thickness(0, 20, 0, 0);
+                doc.Blocks.Add(preSpace);
+            }
+
+            Paragraph paraChapterRef = new Paragraph();
+            paraChapterRef.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff;
+            paraChapterRef.FontWeight = FontWeights.Bold;
+            paraChapterRef.TextAlignment = TextAlignment.Center;
+
+            string chapterRefText = Properties.Resources.Chapter + " " + (bookmark.ChapterIndex + 1).ToString();
+            Run chapterRefRun = new Run(chapterRefText);
+            paraChapterRef.Inlines.Add(chapterRefRun);
+
+            Paragraph paraArticleRef = new Paragraph();
+            paraArticleRef.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff;
+            paraArticleRef.FontWeight = FontWeights.Normal;
+            paraArticleRef.TextAlignment = TextAlignment.Center;
+
+            string articleRefText = BookmarkUtils.BuildArticleLabelText(bookmark) + "\n";
+            Run articleRefRun = new Run(articleRefText);
+            paraArticleRef.Inlines.Add(articleRefRun);
+
+            doc.Blocks.Add(paraChapterRef);
+            doc.Blocks.Add(paraArticleRef);
+
+            return doc;
+        }
+
 
         /// <summary>
         /// Creates a paragraph for use when building the Front Page FlowDocument.
@@ -1368,6 +1508,37 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Inserts placeholder for a bookmark diagram.
+        /// </summary>
+        /// <param name="printDoc"></param>
+        /// <param name="nd"></param>
+        /// <param name="diagrams"></param>
+        /// <returns></returns>
+        private static Paragraph CreateBookmarkDiagramForPrint(FlowDocument printDoc, TreeNode nd, ref List<RtfDiagram> diagrams)
+        {
+            Paragraph printPara = new Paragraph();
+            _diagramId++;
+            ProcessDiagram(_diagramId, printPara, nd, diagrams);
+            printPara.TextAlignment = TextAlignment.Center;
+            printDoc.Blocks.Add(printPara);
+
+            printDoc.Blocks.Add(new Paragraph()); // add a dummy paragraph to create space after the diagram
+
+            if (_insertFens)
+            {
+                string fenText = "FEN " + FenParser.GenerateFenFromPosition(nd.Position);
+                Paragraph fen = new Paragraph();
+                fen.Inlines.Add(new Run(fenText));
+                fen.TextAlignment = TextAlignment.Center;
+                fen.FontSize = Constants.BASE_FIXED_FONT_SIZE + Configuration.FontSizeDiff - 2;
+                fen.FontFamily = new FontFamily("Courier New");
+                printDoc.Blocks.Add(fen);
+            }
+
+            return printPara;
+        }
+
+        /// <summary>
         /// Inserts a diagram placeholder into the Print Doc.
         /// </summary>
         /// <param name="printPara"></param>
@@ -1508,11 +1679,23 @@ namespace ChessForge
             if (tree != null)
             {
                 TreeNode nd = tree.GetNodeFromNodeId(nodeId);
-                if (nd != null)
-                {
-                    printPara.Inlines.Add(CreateDiagramPlaceholderRun(diagramId));
-                    diagrams.Add(new RtfDiagram(diagramId, nd, false));
-                }
+                ProcessDiagram(diagramId, printPara, nd, diagrams);
+            }
+        }
+
+        /// <summary>
+        /// Creates a paragraph representing an inline diagram.
+        /// </summary>
+        /// <param name="diagramId"></param>
+        /// <param name="printPara"></param>
+        /// <param name="nd"></param>
+        /// <param name="diagrams"></param>
+        private static void ProcessDiagram(int diagramId, Paragraph printPara, TreeNode nd, List<RtfDiagram> diagrams)
+        {
+            if (nd != null)
+            {
+                printPara.Inlines.Add(CreateDiagramPlaceholderRun(diagramId));
+                diagrams.Add(new RtfDiagram(diagramId, nd, false));
             }
         }
 

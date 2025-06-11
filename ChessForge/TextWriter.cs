@@ -160,6 +160,12 @@ namespace ChessForge
 
             sb.Append(PrintChapters(isFirstPrintPage));
 
+            if ((scope == PrintScope.CHAPTER || scope == PrintScope.WORKBOOK)
+                 && ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_BOOKMARKS))
+            {
+                sb.Append(PrintBookmarks(scope));
+            }
+
             if (scope == PrintScope.WORKBOOK)
             {
                 if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_GAME_INDEX))
@@ -354,6 +360,42 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Prints the bookmarks, if any.
+        /// </summary>
+        /// <param name="scope"></param>
+        /// <returns></returns>
+        private static string PrintBookmarks(PrintScope scope)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            List<BookmarkWrapper> bookMarkList = new List<BookmarkWrapper>();
+            if (scope == PrintScope.CHAPTER)
+            {
+                BookmarkManager.BuildBookmarkList(bookMarkList, _chapterToPrint, GameData.ContentType.NONE);
+            }
+            else
+            {
+                BookmarkManager.BuildBookmarkList(bookMarkList, null, GameData.ContentType.NONE);
+            }
+
+            if (bookMarkList.Count > 0)
+            {
+                BookmarkManager.SortBookmarks(bookMarkList);
+
+                sb.Append(AddPageBreakPlaceholder());
+                sb.AppendLine(PrintBookmarksHeader());
+                sb.AppendLine();
+
+                for (int i = 0; i < bookMarkList.Count; i++)
+                {
+                    sb.Append(PrintBookmarkToText(bookMarkList[i]));
+                }
+            }
+
+            return sb.ToString();
+        }
+
+        /// <summary>
         /// Prints the index of games or exercises to text.
         /// </summary>
         /// <param name="workbook"></param>
@@ -495,6 +537,29 @@ namespace ChessForge
             }
 
             sb.AppendLine();
+
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// Prints the header before the bookmarks part.
+        /// </summary>
+        /// <returns></returns>
+        private static string PrintBookmarksHeader()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            string bookmarksHeader = Properties.Resources.Bookmarks;
+            if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.USE_CUSTOM_BOOKMARKS))
+            {
+                bookmarksHeader = ConfigurationRtfExport.GetStringValue(ConfigurationRtfExport.CUSTOM_TERM_BOOKMARKS);
+            }
+
+            if (!string.IsNullOrWhiteSpace(bookmarksHeader))
+            {
+                sb.AppendLine(bookmarksHeader);
+                sb.AppendLine(CreateUnderscoreLine(bookmarksHeader));
+            }
 
             return sb.ToString();
         }
@@ -653,6 +718,25 @@ namespace ChessForge
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Generates text representing a bookmark.
+        /// </summary>
+        /// <param name="bookmark"></param>
+        /// <returns></returns>
+        private static string PrintBookmarkToText(BookmarkWrapper bookmark)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            if (bookmark.Node != null)
+            {
+                sb.AppendLine();
+                sb.AppendLine(Properties.Resources.Chapter + " " + (bookmark.ChapterIndex + 1).ToString());
+                sb.AppendLine(BookmarkUtils.BuildArticleLabelText(bookmark));
+                sb.AppendLine("[" + FenParser.GenerateFenFromPosition(bookmark.Node.Position) + "]");
+            }
+
+            return sb.ToString();
+        }
 
         //********************************************
         //

@@ -108,6 +108,11 @@ namespace ChessForge
         public const string INCLUDE_EXERCISES = ItemPrefix + "IncludeExercises";
 
         /// <summary>
+        /// Whether to include Bookmarks.
+        /// </summary>
+        public const string INCLUDE_BOOKMARKS = ItemPrefix + "IncludeBookmarks";
+
+        /// <summary>
         /// Whether to use 2 column format in Intro.
         /// </summary>
         public const string TWO_COLUMN_INTRO = ItemPrefix + "TwoColsIntro";
@@ -126,6 +131,11 @@ namespace ChessForge
         /// Whether to use 2 column format in Exercises.
         /// </summary>
         public const string TWO_COLUMN_EXERCISES = ItemPrefix + "TwoColsExercises";
+
+        /// <summary>
+        /// Whether to use 2 column format in Bookmarks.
+        /// </summary>
+        public const string TWO_COLUMN_BOOKMARKS = ItemPrefix + "TwoColsBookmarks";
 
         /// <summary>
         /// Whether to a use a custom term for Study
@@ -153,6 +163,11 @@ namespace ChessForge
         public const string USE_CUSTOM_EXERCISE = ItemPrefix + "UseCustomExercise";
 
         /// <summary>
+        /// Whether to a use a custom term for Bookmarks
+        /// </summary>
+        public const string USE_CUSTOM_BOOKMARKS = ItemPrefix + "UseCustomBookmarks";
+
+        /// <summary>
         /// The custom term for Study
         /// </summary>
         public const string CUSTOM_TERM_STUDY = ItemPrefix + "CustomTermStudy";
@@ -176,6 +191,11 @@ namespace ChessForge
         /// The custom term for Exercise
         /// </summary>
         public const string CUSTOM_TERM_EXERCISE = ItemPrefix + "CustomTermExercise";
+
+        /// <summary>
+        /// The custom term for Bookmarks
+        /// </summary>
+        public const string CUSTOM_TERM_BOOKMARKS = ItemPrefix + "CustomTermBookmarks";
 
         /// <summary>
         /// Whether to include the FEN string under diagrams.
@@ -254,23 +274,27 @@ namespace ChessForge
             _rtfConfigItems[INCLUDE_STUDY] = "1";
             _rtfConfigItems[INCLUDE_GAMES] = "1";
             _rtfConfigItems[INCLUDE_EXERCISES] = "1";
+            _rtfConfigItems[INCLUDE_BOOKMARKS] = "1";
 
             _rtfConfigItems[TWO_COLUMN_INTRO] = "1";
             _rtfConfigItems[TWO_COLUMN_STUDY] = "1";
             _rtfConfigItems[TWO_COLUMN_GAMES] = "1";
             _rtfConfigItems[TWO_COLUMN_EXERCISES] = "1";
+            _rtfConfigItems[TWO_COLUMN_BOOKMARKS] = "1";
 
             _rtfConfigItems[USE_CUSTOM_STUDY] = "0";
             _rtfConfigItems[USE_CUSTOM_GAMES] = "0";
             _rtfConfigItems[USE_CUSTOM_GAME] = "0";
             _rtfConfigItems[USE_CUSTOM_EXERCISES] = "0";
             _rtfConfigItems[USE_CUSTOM_EXERCISE] = "0";
+            _rtfConfigItems[USE_CUSTOM_BOOKMARKS] = "0";
 
             _rtfConfigItems[CUSTOM_TERM_STUDY] = "";
             _rtfConfigItems[CUSTOM_TERM_GAMES] = "";
             _rtfConfigItems[CUSTOM_TERM_GAME] = "";
             _rtfConfigItems[CUSTOM_TERM_EXERCISES] = "";
             _rtfConfigItems[CUSTOM_TERM_EXERCISE] = "";
+            _rtfConfigItems[CUSTOM_TERM_BOOKMARKS] = "";
 
             _rtfConfigItems[FEN_UNDER_DIAGRAMS] = "0";
         }

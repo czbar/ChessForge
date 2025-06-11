@@ -42,6 +42,7 @@ namespace ChessForge
         private bool _lastCbStudy = false;
         private bool _lastCbGames = false;
         private bool _lastCbExercises = false;
+        private bool _lastCbBookmarks = false;
 
         /// <summary>
         /// Initializes the data.
@@ -65,12 +66,14 @@ namespace ChessForge
                 UiCbStudy2Col.IsChecked = false;
                 UiCbGames2Col.IsChecked = false;
                 UiCbExercises2Col.IsChecked = false;
+                UiCbBookmarks2Col.IsChecked = false;
 
                 UiGbColumnFormats.Foreground = Brushes.LightGray;
                 UiCbIntro2Col.Foreground = Brushes.LightGray;
                 UiCbStudy2Col.Foreground = Brushes.LightGray;
                 UiCbGames2Col.Foreground = Brushes.LightGray;
                 UiCbExercises2Col.Foreground = Brushes.LightGray;
+                UiCbBookmarks2Col.Foreground = Brushes.LightGray;
 
                 UiCbFens.IsChecked = true;
                 UiCbFens.IsEnabled = false;
@@ -118,6 +121,8 @@ namespace ChessForge
             _lastCbGames = bVal;
             bVal = ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_EXERCISES);
             _lastCbExercises = bVal;
+            bVal = ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_BOOKMARKS);
+            _lastCbBookmarks = bVal;
             EnableChapterItems(true, true);
 
             if (_exportFormat == ExportFormat.RTF)
@@ -130,6 +135,8 @@ namespace ChessForge
                 UiCbGames2Col.IsChecked = bVal;
                 bVal = ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.TWO_COLUMN_EXERCISES);
                 UiCbExercises2Col.IsChecked = bVal;
+                bVal = ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.TWO_COLUMN_BOOKMARKS);
+                UiCbBookmarks2Col.IsChecked = bVal;
 
                 bVal = ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.FEN_UNDER_DIAGRAMS);
                 UiCbFens.IsChecked = bVal;
@@ -145,12 +152,15 @@ namespace ChessForge
             UiTbExercisesCustom.Text = sVal;
             sVal = ConfigurationRtfExport.GetStringValue(ConfigurationRtfExport.CUSTOM_TERM_EXERCISE);
             UiTbExerciseCustom.Text = sVal;
+            sVal = ConfigurationRtfExport.GetStringValue(ConfigurationRtfExport.CUSTOM_TERM_BOOKMARKS);
+            UiTbBookmarksCustom.Text = sVal;
 
             UiCbStudyCustom.IsChecked = null;
             UiCbGamesCustom.IsChecked = null;
             UiCbGameCustom.IsChecked = null;
             UiCbExercisesCustom.IsChecked = null;
             UiCbExerciseCustom.IsChecked = null;
+            UiCbBookmarksCustom.IsChecked = null;
 
             bVal = ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.USE_CUSTOM_STUDY);
             UiCbStudyCustom.IsChecked = bVal;
@@ -166,6 +176,9 @@ namespace ChessForge
 
             bVal = ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.USE_CUSTOM_EXERCISE);
             UiCbExerciseCustom.IsChecked = bVal;
+
+            bVal = ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.USE_CUSTOM_BOOKMARKS);
+            UiCbBookmarksCustom.IsChecked = bVal;
 
             // the Scope button must only be set now so that the controls that will be disabled have their values preserved.
             SetScopeButton(Scope);
@@ -225,11 +238,13 @@ namespace ChessForge
                 _lastCbStudy = UiCbStudy.IsChecked == true;
                 _lastCbGames = UiCbGames.IsChecked == true;
                 _lastCbExercises = UiCbExercises.IsChecked == true;
+                _lastCbBookmarks = UiCbBookmarks.IsChecked == true;
 
                 UiCbIntro.IsChecked = false;
                 UiCbStudy.IsChecked = false;
                 UiCbGames.IsChecked = false;
                 UiCbExercises.IsChecked = false;
+                UiCbBookmarks.IsChecked = false;
             }
             else
             {
@@ -237,6 +252,7 @@ namespace ChessForge
                 UiCbStudy.IsChecked = _lastCbStudy;
                 UiCbGames.IsChecked = _lastCbGames;
                 UiCbExercises.IsChecked = _lastCbExercises;
+                UiCbBookmarks.IsChecked = _lastCbBookmarks;
             }
 
         }
@@ -264,11 +280,13 @@ namespace ChessForge
                 _lastCbStudy = UiCbStudy.IsChecked == true;
                 _lastCbGames = UiCbGames.IsChecked == true;
                 _lastCbExercises = UiCbExercises.IsChecked == true;
+                _lastCbBookmarks = UiCbBookmarks.IsChecked == true;
             }
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.INCLUDE_INTRO, _lastCbIntro);
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.INCLUDE_STUDY, _lastCbStudy);
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.INCLUDE_GAMES, _lastCbGames);
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.INCLUDE_EXERCISES, _lastCbExercises);
+            ConfigurationRtfExport.SetValue(ConfigurationRtfExport.INCLUDE_BOOKMARKS, _lastCbBookmarks);
 
             if (_exportFormat == ExportFormat.RTF)
             {
@@ -276,6 +294,7 @@ namespace ChessForge
                 ConfigurationRtfExport.SetValue(ConfigurationRtfExport.TWO_COLUMN_STUDY, UiCbStudy2Col.IsChecked == true);
                 ConfigurationRtfExport.SetValue(ConfigurationRtfExport.TWO_COLUMN_GAMES, UiCbGames2Col.IsChecked == true);
                 ConfigurationRtfExport.SetValue(ConfigurationRtfExport.TWO_COLUMN_EXERCISES, UiCbExercises2Col.IsChecked == true);
+                ConfigurationRtfExport.SetValue(ConfigurationRtfExport.TWO_COLUMN_BOOKMARKS, UiCbBookmarks2Col.IsChecked == true);
 
                 ConfigurationRtfExport.SetValue(ConfigurationRtfExport.FEN_UNDER_DIAGRAMS, UiCbFens.IsChecked == true);
             }
@@ -285,12 +304,14 @@ namespace ChessForge
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.USE_CUSTOM_GAME, UiCbGameCustom.IsChecked == true);
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.USE_CUSTOM_EXERCISES, UiCbExercisesCustom.IsChecked == true);
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.USE_CUSTOM_EXERCISE, UiCbExerciseCustom.IsChecked == true);
+            ConfigurationRtfExport.SetValue(ConfigurationRtfExport.USE_CUSTOM_BOOKMARKS, UiCbBookmarksCustom.IsChecked == true);
 
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.CUSTOM_TERM_STUDY, UiTbStudyCustom.Text);
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.CUSTOM_TERM_GAMES, UiTbGamesCustom.Text);
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.CUSTOM_TERM_GAME, UiTbGameCustom.Text);
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.CUSTOM_TERM_EXERCISES, UiTbExercisesCustom.Text);
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.CUSTOM_TERM_EXERCISE, UiTbExerciseCustom.Text);
+            ConfigurationRtfExport.SetValue(ConfigurationRtfExport.CUSTOM_TERM_BOOKMARKS, UiTbBookmarksCustom.Text);
 
             Configuration.WriteOutConfiguration();
         }
@@ -488,6 +509,28 @@ namespace ChessForge
         {
             UiTbExerciseCustom.Visibility = Visibility.Hidden;
             UiTbExerciseCustomDummy.Visibility = Visibility.Visible;
+        }
+
+        /// <summary>
+        /// Make the Main TextBox visible and the Dummy hidden.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiCbBookmarksCustom_Checked(object sender, RoutedEventArgs e)
+        {
+            UiTbBookmarksCustom.Visibility = Visibility.Visible;
+            UiTbBookmarksCustomDummy.Visibility = Visibility.Hidden;
+        }
+
+        /// <summary>
+        /// Make the Main TextBox hidden and the Dummy visible.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiCbBookmarksCustom_Unchecked(object sender, RoutedEventArgs e)
+        {
+            UiTbBookmarksCustom.Visibility = Visibility.Hidden;
+            UiTbBookmarksCustomDummy.Visibility = Visibility.Visible;
         }
     }
 }

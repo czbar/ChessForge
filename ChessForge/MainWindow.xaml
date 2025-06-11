@@ -940,9 +940,9 @@
                                                 <ColumnDefinition Width="Auto"/>
                                             </Grid.ColumnDefinitions>
                                             <Label x:Name="UiLblBmChapters" Grid.Column="0" Content="{x:Static p:Resources.Chapter}" Margin="20,0,0,0" FontSize="12"  />
-                                            <ComboBox x:Name="UiComboBoxBmChapters" Grid.Column="1" Margin="0,2,0,0"  Width="30" Height="18" FontSize="12" SelectionChanged="UiComboBoxBmChapters_SelectionChanged" />
+                                            <ComboBox x:Name="UiComboBoxBmChapters" Grid.Column="1" Margin="0,2,0,0"  Width="30" Height="18" FontSize="10" SelectionChanged="UiComboBoxBmChapters_SelectionChanged" />
                                             <Label x:Name="UiLblBmCContent" Content="{x:Static p:Resources.Content}" Margin="25,0,0,0" Grid.Column="2" FontSize="12" />
-                                            <ComboBox x:Name="UiComboBoxBmContent" Grid.Column="3" Margin="0,2,0,0" Width="65" Height="18" FontSize="12" SelectionChanged="UiComboBoxBmContent_SelectionChanged" />
+                                            <ComboBox x:Name="UiComboBoxBmContent" Grid.Column="3" Margin="0,2,0,0" Width="65" Height="18" FontSize="10" SelectionChanged="UiComboBoxBmContent_SelectionChanged" />
                                         </Grid>
                                         <Image x:Name="UiImgLeftArrow" Cursor="Hand" Grid.Column="1" HorizontalAlignment="Right"  Margin="0,9,0,0" Source="Resources/Images/LeftArrow.png" PreviewMouseDown="Bookmarks_PreviousPage_OnPreviewMouseDown"  />
                                         <Label x:Name="UiLblBookmarkPage" Content="" Padding="15,9,15,0" Grid.Column="2" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,0,0,0" FontWeight="Bold" />

@@ -32,7 +32,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd"></param>
         /// <param name="articleType"></param>
-        public SelectArticleRefsDialog(TreeNode nd, GameData.ContentType articleType = GameData.ContentType.GENERIC)
+        public SelectArticleRefsDialog(TreeNode nd, string articleReferences, GameData.ContentType articleType = GameData.ContentType.GENERIC)
         {
             _node = nd;
             _articleType = articleType;
@@ -43,7 +43,7 @@ namespace ChessForge
 
             Title = Properties.Resources.SelectReferences;
 
-            SelectNodeReferences();
+            SelectNodeReferences(articleReferences);
             UiLvGames.ItemsSource = _articleList;
 
             ArticleListItem itemToBringIntoView = null;
@@ -104,7 +104,7 @@ namespace ChessForge
         /// This will only run if _node is not null i.e. when this dialog
         /// is invoked for setting up references.
         /// </summary>
-        private void SelectNodeReferences()
+        private void SelectNodeReferences(string refString)
         {
             if (_node == null)
             {
@@ -113,9 +113,9 @@ namespace ChessForge
 
             try
             {
-                if (!string.IsNullOrEmpty(_node.References))
+                if (!string.IsNullOrEmpty(refString))
                 {
-                    string[] refs = _node.References.Split('|');
+                    string[] refs = refString.Split('|');
                     foreach (string guid in refs)
                     {
                         foreach (ArticleListItem item in _articleList)

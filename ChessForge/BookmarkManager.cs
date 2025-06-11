@@ -1,13 +1,8 @@
-﻿using System;
+﻿using GameTree;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Controls;
-using GameTree;
-using ChessForge.Properties;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
 namespace ChessForge
@@ -187,17 +182,17 @@ namespace ChessForge
             BookmarkList.Clear();
             if (_selectedChapterIndex >= 0)
             {
-                BuildBookmarkListForChapter(_selectedChapter, contentType);
+                BuildBookmarkListForChapter(BookmarkList, _selectedChapter, contentType);
             }
             else
             {
                 foreach (Chapter ch in WorkbookManager.SessionWorkbook.Chapters)
                 {
-                    BuildBookmarkListForChapter(ch, contentType);
+                    BuildBookmarkListForChapter(BookmarkList, ch, contentType);
                 }
             }
 
-            SortBookmarks();
+            SortBookmarks(BookmarkList);
 
             HighlightBookmark(_lastAddedBookmark);
             _lastAddedBookmark = null;
@@ -306,9 +301,9 @@ namespace ChessForge
         /// This method should be called after initialization
         /// and any subsequents addition.
         /// </summary>
-        public static void SortBookmarks()
+        public static void SortBookmarks(List<BookmarkWrapper> bookMarks)
         {
-            BookmarkList.Sort();
+            bookMarks.Sort();
 
             int lastBmPage = PageForLastAddedBookmark();
             if (lastBmPage > 0)
@@ -337,7 +332,7 @@ namespace ChessForge
                 {
                     BookmarkWrapper bmv = new BookmarkWrapper(WorkbookManager.SessionWorkbook.ActiveChapterIndex, tree, bm, articleIndex);
                     BookmarkList.Add(bmv);
-                    SortBookmarks();
+                    SortBookmarks(BookmarkList);
                     ResyncBookmarks(_currentPage);
                     AppState.IsDirty = true;
                 }
@@ -675,6 +670,72 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Builds a list of bookmarks for the current chapter or the whole workbook
+        /// of the requested type.
+        /// </summary>
+        /// <param name="bookmarkList"></param>
+        /// <param name="chapter"></param>
+        /// <param name="contentType"></param>
+        public static void BuildBookmarkList(List<BookmarkWrapper> bookmarkList, Chapter chapter, GameData.ContentType contentType)
+        {
+            if (chapter != null)
+            {
+                BuildBookmarkListForChapter(bookmarkList, chapter, contentType);
+            }
+            else
+            {
+                foreach (Chapter ch in WorkbookManager.SessionWorkbook.Chapters)
+                {
+                    BuildBookmarkListForChapter(bookmarkList, ch, contentType);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Builds a list of bookmarks for a single chapter.
+        /// </summary>
+        /// <param name="chapter"></param>
+        public static void BuildBookmarkListForChapter(List<BookmarkWrapper> bookmarkList, Chapter chapter, GameData.ContentType contentType)
+        {
+            int chapterIndex = WorkbookManager.SessionWorkbook.GetChapterIndex(chapter);
+
+            if (contentType == GameData.ContentType.NONE || contentType == GameData.ContentType.STUDY_TREE)
+            {
+                foreach (Bookmark bkm in chapter.StudyTree.Tree.Bookmarks)
+                {
+                    BookmarkWrapper bkv = new BookmarkWrapper(chapterIndex, chapter.StudyTree.Tree, bkm, -1);
+                    bookmarkList.Add(bkv);
+                }
+            }
+
+            if (contentType == GameData.ContentType.NONE || contentType == GameData.ContentType.MODEL_GAME)
+            {
+                for (int i = 0; i < chapter.GetModelGameCount(); i++)
+                {
+                    Article art = chapter.ModelGames[i];
+                    foreach (Bookmark bkm in art.Tree.Bookmarks)
+                    {
+                        BookmarkWrapper bkv = new BookmarkWrapper(chapterIndex, art.Tree, bkm, i);
+                        bookmarkList.Add(bkv);
+                    }
+                }
+            }
+
+            if (contentType == GameData.ContentType.NONE || contentType == GameData.ContentType.EXERCISE)
+            {
+                for (int i = 0; i < chapter.GetExerciseCount(); i++)
+                {
+                    Article art = chapter.Exercises[i];
+                    foreach (Bookmark bkm in art.Tree.Bookmarks)
+                    {
+                        BookmarkWrapper bkv = new BookmarkWrapper(chapterIndex, art.Tree, bkm, i);
+                        bookmarkList.Add(bkv);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Deletes a bookmark from the parent tree
         /// and the list of bookmarks.
         /// </summary>
@@ -791,50 +852,6 @@ namespace ChessForge
             }
 
             return pageNo;
-        }
-
-        /// <summary>
-        /// Builds a list of bookmarks for a single chapter.
-        /// </summary>
-        /// <param name="chapter"></param>
-        private static void BuildBookmarkListForChapter(Chapter chapter, GameData.ContentType contentType)
-        {
-            int chapterIndex = WorkbookManager.SessionWorkbook.GetChapterIndex(chapter);
-
-            if (contentType == GameData.ContentType.NONE || contentType == GameData.ContentType.STUDY_TREE)
-            {
-                foreach (Bookmark bkm in chapter.StudyTree.Tree.Bookmarks)
-                {
-                    BookmarkWrapper bkv = new BookmarkWrapper(chapterIndex, chapter.StudyTree.Tree, bkm, -1);
-                    BookmarkList.Add(bkv);
-                }
-            }
-
-            if (contentType == GameData.ContentType.NONE || contentType == GameData.ContentType.MODEL_GAME)
-            {
-                for (int i = 0; i < chapter.GetModelGameCount(); i++)
-                {
-                    Article art = chapter.ModelGames[i];
-                    foreach (Bookmark bkm in art.Tree.Bookmarks)
-                    {
-                        BookmarkWrapper bkv = new BookmarkWrapper(chapterIndex, art.Tree, bkm, i);
-                        BookmarkList.Add(bkv);
-                    }
-                }
-            }
-
-            if (contentType == GameData.ContentType.NONE || contentType == GameData.ContentType.EXERCISE)
-            {
-                for (int i = 0; i < chapter.GetExerciseCount(); i++)
-                {
-                    Article art = chapter.Exercises[i];
-                    foreach (Bookmark bkm in art.Tree.Bookmarks)
-                    {
-                        BookmarkWrapper bkv = new BookmarkWrapper(chapterIndex, art.Tree, bkm, i);
-                        BookmarkList.Add(bkv);
-                    }
-                }
-            }
         }
 
         /// <summary>

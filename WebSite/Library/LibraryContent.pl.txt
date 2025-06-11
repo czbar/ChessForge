@@ -101,7 +101,7 @@ Description:Teoria i praktyka debiutów szachowych.
     Description: Krótkie podręczniki dla rzadkich i nietypowych debiutów. 
     
 	  Book:The Gambit Słonia
-      Description: Nie spotykany już w praktyce mistrzowskiej, ale każdy kto gra 1.e4 musi gi znać.
+      Description: Nie spotykany już w praktyce mistrzowskiej, ale każdy kto gra 1.e4 musi go znać.
       File: Openings/Unorthodox/Elephant Gambit.pgn
 
 	  Book:Gambit Nakhmansona
