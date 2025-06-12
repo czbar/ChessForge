@@ -52,6 +52,9 @@ namespace ChessForge
             _bringSelectedRunIntoView = true;
         }
 
+        // pulse event busy flag to prevent re-entrance
+        private static bool _pulseBusy = false;
+
         /// <summary>
         /// Handles the PULSE timer event.
         /// </summary>
@@ -59,6 +62,15 @@ namespace ChessForge
         /// <param name="e"></param>
         public static void PulseEventHandler(object source, ElapsedEventArgs e)
         {
+            // if we are already busy, do not re-enter
+            if (_pulseBusy)
+            {
+                return;
+            }
+
+            // set busy flag to prevent re-entrance
+            _pulseBusy = true;
+
             WebAccessManager.UpdateWebAccess();
             UpdateEvaluationBar();
             if (_chapterIndexToBringIntoView >= 0)
@@ -99,6 +111,9 @@ namespace ChessForge
                     _articleToBringIntoView.ArticleIndex = -1;
                 }
             }
+
+            // allow re-entrance now that we are done
+            _pulseBusy = false;
         }
 
         /// <summary>
