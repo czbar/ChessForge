@@ -1077,6 +1077,7 @@ namespace ChessForge
             {
                 AppLog.Message("Exception in UiImgChapterLeftArrow_PreviewMouseLeftButtonDown()");
             }
+            e.Handled = true;
         }
 
         /// <summary>
@@ -1107,6 +1108,7 @@ namespace ChessForge
             {
                 AppLog.Message("Exception in UiImgChapterRightArrow_PreviewMouseLeftButtonDown()");
             }
+            e.Handled = true;
         }
 
         /// <summary>
