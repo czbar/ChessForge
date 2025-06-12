@@ -2126,7 +2126,7 @@ namespace ChessForge
                         AppState.MainWin.UiEvalChart.SelectMove(nd);
                     }
 
-                    if (selectedNodeId > 0)
+                    if (selectedNodeId > 0 && nd != null)
                     {
                         ActiveLine.SelectPly((int)nd.Parent.MoveNumber, nd.Parent.ColorToMove);
                     }
