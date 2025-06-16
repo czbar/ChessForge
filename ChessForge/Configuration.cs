@@ -144,6 +144,11 @@ namespace ChessForge
         public static string LastTextExportFile = "";
 
         /// <summary>
+        /// Last PGN file to export to.
+        /// </summary>
+        public static string LastPgnExportFile = "";
+
+        /// <summary>
         /// Chessboard colors coded for the views in the form of
         /// ChessboardColors = "1,3,3,2" where the numbers correspond to the 
         /// values in ChessBoard.ColorSets and apply to Study, Games, Exercises
@@ -635,6 +640,7 @@ namespace ChessForge
         private const string CFG_LAST_PNG_EXPORT_FILE = "LastPngExportFile";
         private const string CFG_LAST_RTF_EXPORT_FILE = "LastRtfExportFile";
         private const string CFG_LAST_TEXT_EXPORT_FILE = "LastTextExportFile";
+        private const string CFG_LAST_PGN_EXPORT_FILE = "LastPgnExportFile";
         private const string CFG_RECENT_FILES = "RecentFiles";
         private const string CFG_LAST_PRIVATE_LIBRARY = "LastPrivateLibrary";
         private const string CFG_PRIVATE_LIBRARY = "PrivateLibrary";
@@ -843,6 +849,7 @@ namespace ChessForge
                 sb.Append(CFG_LAST_PNG_EXPORT_FILE + "=" + (LastPngExportFile ?? "").ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_RTF_EXPORT_FILE + "=" + (LastRtfExportFile ?? "").ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_TEXT_EXPORT_FILE + "=" + (LastTextExportFile ?? "").ToString() + Environment.NewLine);
+                sb.Append(CFG_LAST_PGN_EXPORT_FILE + "=" + (LastPgnExportFile ?? "").ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_PRIVATE_LIBRARY + "=" + (LastPrivateLibrary ?? "").ToString() + Environment.NewLine);
 
                 foreach (string privateLibrary in PrivateLibraries)
@@ -1206,6 +1213,9 @@ namespace ChessForge
                             break;
                         case CFG_LAST_TEXT_EXPORT_FILE:
                             LastTextExportFile = value;
+                            break;
+                        case CFG_LAST_PGN_EXPORT_FILE:
+                            LastPgnExportFile = value;
                             break;
                         case CFG_ENGINE_EXE:
                             EngineExePath = value;
