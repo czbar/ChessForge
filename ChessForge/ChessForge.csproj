@@ -256,6 +256,9 @@
       <DependentUpon>OperationScopeDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="PgnArticleUtils.cs" />
+    <Compile Include="PgnExportDialog.xaml.cs">
+      <DependentUpon>PgnExportDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PgnWriter.cs" />
     <Compile Include="PieceImageDictionaries.cs" />
     <Compile Include="PlayerStats.cs" />
@@ -538,6 +541,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="OperationScopeDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PgnExportDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
