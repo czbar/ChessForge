@@ -4170,6 +4170,52 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Writes out the content of the current view to an PGN file.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnWritePgn_Click(object sender, RoutedEventArgs e)
+        {
+            bool done = false;
+
+            while (!done)
+            {
+                done = true;
+                PgnExportDialog dlg = new PgnExportDialog();
+                GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
+
+                if (dlg.ShowDialog() == true)
+                {
+                    WaitDialog waitDlg = null;
+                    try
+                    {
+                        string filePath = PgnWriter.SelectTargetPgnFile();
+
+                        if (!string.IsNullOrEmpty(filePath) && filePath[0] != '.')
+                        {
+                            Mouse.SetCursor(Cursors.Wait);
+                            waitDlg = new WaitDialog(Properties.Resources.ExportToPgn);
+                            GuiUtilities.PositionDialogInMiddle(waitDlg, this);
+                            waitDlg.Show();
+                            AppState.DoEvents();
+                            done = PgnWriter.WritePgn(filePath);
+                            BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.OperationCompleted, CommentBox.HintType.INFO);
+                        }
+                    }
+                    catch { }
+                    finally
+                    {
+                        if (waitDlg != null)
+                        {
+                            waitDlg.Close();
+                        }
+                        Mouse.SetCursor(Cursors.Arrow);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Writes out the content of the current view to a text file.
         /// </summary>
         /// <param name="sender"></param>

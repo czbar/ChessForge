@@ -102,6 +102,7 @@
                         <Separator />
                         <MenuItem x:Name="UiMnExport" Header="{x:Static p:Resources.Export}">
                             <MenuItem x:Name="UiMnExportRtf" Header="{x:Static p:Resources.ExportRtf}" Click="UiMnWriteRtf_Click" />
+                            <MenuItem x:Name="UiMnExportPgn" Header="{x:Static p:Resources.ExportPgn}" Click="UiMnWritePgn_Click" />
                             <MenuItem x:Name="UiMnExportText" Header="{x:Static p:Resources.ExportText}" Click="UiMnWriteText_Click" />
                         </MenuItem>
                         <Separator />
