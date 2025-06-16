@@ -1,5 +1,6 @@
 ﻿using ChessPosition;
 using GameTree;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,6 +22,9 @@ namespace ChessForge
         // Chapter being printed
         private static Chapter _chapterToPrint;
 
+        // keeps output text as it is being built
+        private static StringBuilder _fileText;
+
         /// <summary>
         /// Exports the scoped articles into a PGN text file.
         /// The exact scope is determined by the ConfigurationRtfExport parameters.
@@ -31,7 +35,6 @@ namespace ChessForge
         {
             bool result = true;
 
-            StringBuilder sb = new StringBuilder();
             try
             {
                 // dummy write to trigger an error on access, before we take time to process.
@@ -42,16 +45,18 @@ namespace ChessForge
                 _printScope = scope;
                 _chapterToPrint = AppState.ActiveChapter;
 
+                StringBuilder sbOut = new StringBuilder();
+
                 if (scope == PrintScope.ARTICLE)
                 {
-                    sb.Append(BuildActiveViewtext(_chapterToPrint));
+                    sbOut.Append(BuildActiveViewText(_chapterToPrint));
                 }
                 else
                 {
-                    sb.Append(BuildChaptersText());
+                    sbOut.Append(BuildChaptersText());
                 }
 
-                WriteOutFile(fileName, sb.ToString());
+                WriteOutFile(fileName, sbOut.ToString());
             }
             catch (Exception ex)
             {
@@ -62,6 +67,66 @@ namespace ChessForge
             return result;
         }
 
+        /// <summary>
+        /// Shows the dialog for the user to select the target file.
+        /// </summary>
+        /// <returns></returns>
+        public static string SelectTargetPgnFile()
+        {
+            // we need more than just the extension to prevent overwriting the actual workbook!
+            string pgnExt = "_exp.pgn";
+            string pgnFileName = Configuration.LastPgnExportFile;
+
+            if (string.IsNullOrEmpty(pgnFileName))
+            {
+                if (string.IsNullOrEmpty(AppState.WorkbookFilePath))
+                {
+                    pgnFileName = TextUtils.RemoveInvalidCharsFromFileName(WorkbookManager.SessionWorkbook.Title) + pgnExt;
+                }
+                else
+                {
+                    pgnFileName = FileUtils.ReplacePathExtension(AppState.WorkbookFilePath, pgnExt);
+                }
+            }
+
+            if (pgnFileName == AppState.WorkbookFilePath)
+            {
+                // do not allow same name as the workbook file so we do not overwrite it
+                MessageBox.Show(Properties.Resources.ErrFileNameSameAsWorkbook, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
+
+                // return null so the caller knows
+                pgnFileName = null;
+            }
+            else
+            {
+                SaveFileDialog saveDlg = new SaveFileDialog
+                {
+                    Filter = Properties.Resources.PgnFiles + " (*.pgn)|*.pgn",
+                };
+
+                try
+                {
+                    saveDlg.InitialDirectory = Path.GetDirectoryName(pgnFileName);
+                }
+                catch { }
+
+                saveDlg.FileName = Path.GetFileName(pgnFileName);
+                saveDlg.Title = Properties.Resources.ExportPgn;
+
+                saveDlg.OverwritePrompt = true;
+                if (saveDlg.ShowDialog() == true)
+                {
+                    pgnFileName = saveDlg.FileName;
+                    Configuration.LastPgnExportFile = pgnFileName;
+                }
+                else
+                {
+                    pgnFileName = "";
+                }
+            }
+
+            return pgnFileName;
+        }
 
         /// <summary>
         /// Builds text for all elements in all chapters
@@ -136,7 +201,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="chapter"></param>
         /// <returns></returns>
-        private static string BuildActiveViewtext(Chapter chapter)
+        private static string BuildActiveViewText(Chapter chapter)
         {
             string txt = "";
             switch (AppState.Workbook.ActiveArticle.Tree.ContentType)
@@ -201,6 +266,8 @@ namespace ChessForge
             StringBuilder sb = new StringBuilder();
             StringBuilder sbOutput = new StringBuilder();
 
+            _fileText = new StringBuilder();
+
             try
             {
                 string headerText = BuildArticleHeaderText(article.Tree);
@@ -209,8 +276,8 @@ namespace ChessForge
                 if (root != null)
                 {
                     // There may be a comment or command before the first move. Add if so.
-                    sb.Append(BuildCommandAndCommentText(sb, root));
-                    sb.Append(BuildTreeLineText(sb, root));
+                    sb.Append(BuildCommandAndCommentText(root));
+                    sb.Append(BuildTreeLineText(root));
                 }
 
                 sbOutput.Append(headerText + WorkbookFileTextBuilder.DivideLine(sb.ToString(), 80));
@@ -242,7 +309,6 @@ namespace ChessForge
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_ECO, tree.Header.GetECO(out _)));
             AppendHeaderLine(ref sb, PgnHeaders.KEY_LICHESS_ID, tree.Header.GetLichessId(out _));
             AppendHeaderLine(ref sb, PgnHeaders.KEY_CHESSCOM_ID, tree.Header.GetChessComId(out _));
-            sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_GUID, tree.Header.GetGuid(out _)));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_DATE, tree.Header.GetDate(out _)));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_WHITE, tree.Header.GetWhitePlayer(out _)));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_BLACK, tree.Header.GetBlackPlayer(out _)));
@@ -299,7 +365,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd"></param>
         /// <param name="includeNumber"></param>
-        private static string BuildTreeLineText(StringBuilder sb, TreeNode nd, bool includeNumber = false)
+        private static string BuildTreeLineText(TreeNode nd, bool includeNumber = false)
         {
             while (true)
             {
@@ -307,7 +373,7 @@ namespace ChessForge
                 // print it and return 
                 if (nd.Children.Count == 0)
                 {
-                    return sb.ToString();
+                    return _fileText.ToString();
                 }
 
                 // if the node has 1 child, print it,
@@ -316,9 +382,9 @@ namespace ChessForge
                 if (nd.Children.Count == 1)
                 {
                     TreeNode child = nd.Children[0];
-                    BuildNodeText(sb, child, includeNumber);
-                    BuildTreeLineText(sb, child);
-                    return sb.ToString();
+                    BuildNodeText(child, includeNumber);
+                    BuildTreeLineText(child);
+                    return _fileText.ToString();
                 }
 
                 // if the node has more than 1 child
@@ -328,20 +394,20 @@ namespace ChessForge
                 if (nd.Children.Count > 1)
                 {
                     // the first child remains at the same level as the parent
-                    BuildNodeText(sb, nd.Children[0], includeNumber);
+                    BuildNodeText(nd.Children[0], includeNumber);
                     for (int i = 1; i < nd.Children.Count; i++)
                     {
                         // if there is more than 2 children, create a new para,
                         // otherwise just use parenthesis
 
-                        sb.Append(" (");
-                        BuildNodeText(sb, nd.Children[i], true);
-                        BuildTreeLineText(sb, nd.Children[i]);
-                        sb.Append(") ");
+                        _fileText.Append(" (");
+                        BuildNodeText(nd.Children[i], true);
+                        BuildTreeLineText(nd.Children[i]);
+                        _fileText.Append(") ");
                     }
 
-                    BuildTreeLineText(sb, nd.Children[0], true);
-                    return sb.ToString();
+                    BuildTreeLineText(nd.Children[0], true);
+                    return _fileText.ToString();
                 }
             }
         }
@@ -351,8 +417,15 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd"></param>
         /// <param name="includeNumber"></param>
-        private static string BuildNodeText(StringBuilder sb, TreeNode nd, bool includeNumber)
+        private static void BuildNodeText(TreeNode nd, bool includeNumber)
         {
+            StringBuilder sb = new StringBuilder();
+
+            if (!string.IsNullOrEmpty(nd.CommentBeforeMove))
+            {
+                sb.Append(" {" + CleanupCommentText(nd.CommentBeforeMove) + "}");
+            }
+
             if (nd.Position.ColorToMove == PieceColor.Black)
             {
                 if (!includeNumber && nd.Position.MoveNumber != 1)
@@ -379,9 +452,9 @@ namespace ChessForge
 
             sb.Append(nd.Nags);
 
-            sb.Append(BuildCommandAndCommentText(sb, nd));
+            sb.Append(BuildCommandAndCommentText(nd));
 
-            return sb.ToString();
+            _fileText.Append(sb.ToString());
         }
 
         /// <summary>
@@ -391,29 +464,21 @@ namespace ChessForge
         /// <param name="sb"></param>
         /// <param name="nd"></param>
         /// <returns></returns>
-        private static string BuildCommandAndCommentText(StringBuilder sb, TreeNode nd)
+        private static string BuildCommandAndCommentText(TreeNode nd)
         {
             if (!string.IsNullOrEmpty(nd.Comment)
-                || !string.IsNullOrEmpty(nd.CommentBeforeMove)
                 || !string.IsNullOrEmpty(nd.EngineEvaluation)
                 || !string.IsNullOrEmpty(nd.Arrows)
                 || !string.IsNullOrEmpty(nd.Circles))
             {
+                StringBuilder sb = new StringBuilder();
+
                 sb.Append(" {");
 
                 // Process an Evaluation ChfCommand
                 if (!string.IsNullOrEmpty(nd.EngineEvaluation))
                 {
                     string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.ENGINE_EVALUATION_V2) + " " + nd.EngineEvaluation;
-                    sb.Append("[" + sCmd + "]");
-                }
-
-                // Process the CommentBeforeMove
-                if (!string.IsNullOrEmpty(nd.CommentBeforeMove))
-                {
-                    string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.COMMENT_BEFORE_MOVE) + " " + nd.CommentBeforeMove;
-                    // replace '[' and ']'
-                    sCmd = sCmd.Replace('[', '(').Replace(']', ')');
                     sb.Append("[" + sCmd + "]");
                 }
 
@@ -435,7 +500,7 @@ namespace ChessForge
                 if (!string.IsNullOrEmpty(nd.Comment))
                 {
                     // replace '[', '{', '}', and ']'
-                    nd.Comment = nd.Comment.Replace('[', '(').Replace(']', ')').Replace('{', '(').Replace('}', ')');
+                    nd.Comment = CleanupCommentText(nd.Comment);
                     sb.Append(nd.Comment);
                 }
 
@@ -446,6 +511,18 @@ namespace ChessForge
             else
             {
                 return "";
+            }
+        }
+
+        private static string CleanupCommentText(string comment)
+        {
+            if (string.IsNullOrEmpty(comment))
+            {
+                return comment;
+            }
+            else
+            {
+                return comment.Replace('[', '(').Replace(']', ')').Replace('{', '(').Replace('}', ')');
             }
         }
 
