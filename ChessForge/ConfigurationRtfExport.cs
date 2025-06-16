@@ -113,6 +113,16 @@ namespace ChessForge
         public const string INCLUDE_BOOKMARKS = ItemPrefix + "IncludeBookmarks";
 
         /// <summary>
+        /// Whether to keep comments.
+        /// </summary>
+        public const string KEEP_COMMENTS = ItemPrefix + "KeepComments";
+
+        /// <summary>
+        /// Whether to keep engine evaluations.
+        /// </summary>
+        public const string KEEP_EVALUATIONS = ItemPrefix + "KeepEvaluations";
+
+        /// <summary>
         /// Whether to use 2 column format in Intro.
         /// </summary>
         public const string TWO_COLUMN_INTRO = ItemPrefix + "TwoColsIntro";
@@ -275,6 +285,8 @@ namespace ChessForge
             _rtfConfigItems[INCLUDE_GAMES] = "1";
             _rtfConfigItems[INCLUDE_EXERCISES] = "1";
             _rtfConfigItems[INCLUDE_BOOKMARKS] = "1";
+            _rtfConfigItems[KEEP_COMMENTS] = "1";
+            _rtfConfigItems[KEEP_EVALUATIONS] = "1";
 
             _rtfConfigItems[TWO_COLUMN_INTRO] = "1";
             _rtfConfigItems[TWO_COLUMN_STUDY] = "1";
