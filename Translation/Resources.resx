@@ -156,6 +156,9 @@
   <data name="RtfFiles" xml:space="preserve">
     <value>RTF files</value>
   </data>
+  <data name="PgnFiles" xml:space="preserve">
+    <value>PGN files</value>
+  </data>
   <data name="TextFiles" xml:space="preserve">
     <value>Text files</value>
   </data>
@@ -305,6 +308,9 @@
   </data>
   <data name="Evaluation" xml:space="preserve">
     <value>Evaluation</value>
+  </data>
+  <data name="Evaluations" xml:space="preserve">
+    <value>Evaluations</value>
   </data>
   <data name="Version" xml:space="preserve">
     <value>Version</value>
@@ -519,8 +525,8 @@
   <data name="ErrClipboardLinePaste" xml:space="preserve">
     <value>Error pasting variation from the Clipboard </value>
   </data>
-  <data name="ClipboardOperation" xml:space="preserve">
-    <value>Clipboard Operation</value>
+  <data name="ErrFileNameSameAsWorkbook" xml:space="preserve">
+    <value>File name cannot be the same as Workbook's file</value>
   </data>
   <data name="ErrNoGamesDownloaded" xml:space="preserve">
     <value>No games have been downloaded</value>
@@ -561,6 +567,9 @@
   <data name="ErrNoTextReceived" xml:space="preserve">
     <value>no text received.</value>
   </data>
+  <data name="ClipboardOperation" xml:space="preserve">
+    <value>Clipboard Operation</value>
+  </data>
   <data name="File" xml:space="preserve">
     <value>File</value>
   </data>
@@ -596,6 +605,12 @@
   </data>
   <data name="ExportToRtf" xml:space="preserve">
     <value>Export to RTF</value>
+  </data>
+  <data name="ExportPgn" xml:space="preserve">
+    <value>as PGN</value>
+  </data>
+  <data name="ExportToPgn" xml:space="preserve">
+    <value>Export to PGN</value>
   </data>
   <data name="ExportText" xml:space="preserve">
     <value>as Text</value>
@@ -830,7 +845,7 @@
   </data>
   <data name="TtAllowEvalUpdate" xml:space="preserve">
     <value>Turn the Engine Off (F2)
-NOTE: Evaluations are not being updated. Ctrl+K to allow.)</value>
+NOTE: Evaluations are not being updated (Ctrl+K to allow).</value>
   </data>
   <data name="HideEvaluationChart" xml:space="preserve">
     <value>Hide Evaluation Chart</value>
@@ -1011,6 +1026,9 @@ NOTE: Evaluations are not being updated. Ctrl+K to allow.)</value>
   </data>
   <data name="InsertFensUnderDiagrams" xml:space="preserve">
     <value>Insert FEN under diagrams</value>
+  </data>
+  <data name="DlgExportPgn" xml:space="preserve">
+    <value>Export to PGN</value>
   </data>
   <data name="ReorderLines" xml:space="preserve">
     <value>Reorder Lines</value>

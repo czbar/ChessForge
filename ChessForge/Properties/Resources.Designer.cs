@@ -1933,6 +1933,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Export to PGN.
+        /// </summary>
+        public static string DlgExportPgn {
+            get {
+                return ResourceManager.GetString("DlgExportPgn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Export to RTF.
         /// </summary>
         public static string DlgExportRtf {
@@ -2662,6 +2671,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File name cannot be the same as Workbook&apos;s file.
+        /// </summary>
+        public static string ErrFileNameSameAsWorkbook {
+            get {
+                return ResourceManager.GetString("ErrFileNameSameAsWorkbook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Found.
         /// </summary>
         public static string ErrFound {
@@ -2923,6 +2941,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Evaluations.
+        /// </summary>
+        public static string Evaluations {
+            get {
+                return ResourceManager.GetString("Evaluations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ev.
         /// </summary>
         public static string EvaluationShort {
@@ -3148,6 +3175,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to as PGN.
+        /// </summary>
+        public static string ExportPgn {
+            get {
+                return ResourceManager.GetString("ExportPgn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to as RTF.
         /// </summary>
         public static string ExportRtf {
@@ -3162,6 +3198,15 @@ namespace ChessForge.Properties {
         public static string ExportText {
             get {
                 return ResourceManager.GetString("ExportText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export to PGN.
+        /// </summary>
+        public static string ExportToPgn {
+            get {
+                return ResourceManager.GetString("ExportToPgn", resourceCulture);
             }
         }
         
@@ -5975,6 +6020,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PGN files.
+        /// </summary>
+        public static string PgnFiles {
+            get {
+                return ResourceManager.GetString("PgnFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Missing move after.
         /// </summary>
         public static string PgnMissingMoveAfter {
@@ -8082,7 +8136,7 @@ namespace ChessForge.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to Turn the Engine Off (F2)
-        ///NOTE: Evaluations are not being updated. Ctrl+K to allow.).
+        ///NOTE: Evaluations are not being updated (Ctrl+K to allow)..
         /// </summary>
         public static string TtAllowEvalUpdate {
             get {

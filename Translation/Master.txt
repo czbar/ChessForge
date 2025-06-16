@@ -56,6 +56,9 @@ ImageFiles=Image files
 #RTF files
 RtfFiles=RTF files
 
+#PGN files
+PgnFiles=PGN files
+
 #Text files
 TextFiles=Text files
 
@@ -206,6 +209,9 @@ Annotation=Annotation
 
 #Evaluation
 Evaluation=Evaluation
+
+#Evaluation
+Evaluations=Evaluations
 
 #Version
 Version=Version
@@ -446,9 +452,8 @@ ErrAfterMove=after move
 #Cannot insert line from the Clipboard
 ErrClipboardLinePaste=Error pasting variation from the Clipboard 
 
-#Clipboard operation
-ClipboardOperation=Clipboard Operation
-
+#Selected file name is the same as the workbook's
+ErrFileNameSameAsWorkbook=File name cannot be the same as Workbook's file
 
 #No games downloaded
 ErrNoGamesDownloaded=No games have been downloaded
@@ -488,6 +493,9 @@ ErrHttpStatus=Bad response from the server. Error: $0
 
 #No text in the downloaded game
 ErrNoTextReceived=no text received.
+
+#Clipboard operation
+ClipboardOperation=Clipboard Operation
 
 
 #################################
@@ -530,6 +538,12 @@ ExportRtf=as RTF
 
 #Export to RTF
 ExportToRtf=Export to RTF
+
+#Export as PGN
+ExportPgn=as PGN
+
+#Export to PGN
+ExportToPgn=Export to PGN
 
 #Export as text
 ExportText=as Text
@@ -1060,6 +1074,17 @@ CustomTerms=Custom Headers
 
 #Insert FEN under diagrams
 InsertFensUnderDiagrams=Insert FEN under diagrams
+
+
+#######################################
+#
+# Header: DIALOG Export PGN
+#
+
+
+#Export PGN dialog title
+DlgExportPgn=Export to PGN
+
 
 #######################################
 #

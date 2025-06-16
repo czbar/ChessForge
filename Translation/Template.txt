@@ -69,6 +69,10 @@ ImageFiles=
 #english: RtfFiles=RTF files
 RtfFiles=
 
+#description: PGN files
+#english: PgnFiles=PGN files
+PgnFiles=
+
 #description: Text files
 #english: TextFiles=Text files
 TextFiles=
@@ -269,6 +273,10 @@ Annotation=
 #description: Evaluation
 #english: Evaluation=Evaluation
 Evaluation=
+
+#description: Evaluation
+#english: Evaluations=Evaluations
+Evaluations=
 
 #description: Version
 #english: Version=Version
@@ -580,10 +588,9 @@ ErrAfterMove=
 #english: ErrClipboardLinePaste=Error pasting variation from the Clipboard 
 ErrClipboardLinePaste=
 
-#description: Clipboard operation
-#english: ClipboardOperation=Clipboard Operation
-ClipboardOperation=
-
+#description: Selected file name is the same as the workbook's
+#english: ErrFileNameSameAsWorkbook=File name cannot be the same as Workbook's file
+ErrFileNameSameAsWorkbook=
 
 #description: No games downloaded
 #english: ErrNoGamesDownloaded=No games have been downloaded
@@ -636,6 +643,10 @@ ErrHttpStatus=
 #description: No text in the downloaded game
 #english: ErrNoTextReceived=no text received.
 ErrNoTextReceived=
+
+#description: Clipboard operation
+#english: ClipboardOperation=Clipboard Operation
+ClipboardOperation=
 
 
 #################################
@@ -690,6 +701,14 @@ ExportRtf=
 #description: Export to RTF
 #english: ExportToRtf=Export to RTF
 ExportToRtf=
+
+#description: Export as PGN
+#english: ExportPgn=as PGN
+ExportPgn=
+
+#description: Export to PGN
+#english: ExportToPgn=Export to PGN
+ExportToPgn=
 
 #description: Export as text
 #english: ExportText=as Text
@@ -1050,7 +1069,7 @@ TurnEngineOff=
 TurnEngineOn=
 
 #description: Tool tip for allowing evakuation persistance
-#english: TtAllowEvalUpdate=Turn the Engine Off (F2)\nNOTE: Evaluations are not being updated. Ctrl+K to allow.)
+#english: TtAllowEvalUpdate=Turn the Engine Off (F2)\nNOTE: Evaluations are not being updated (Ctrl+K to allow).
 TtAllowEvalUpdate=
 
 #description: Tool tip for hiding Eval Chart
@@ -1358,6 +1377,18 @@ CustomTerms=
 #description: Insert FEN under diagrams
 #english: InsertFensUnderDiagrams=Insert FEN under diagrams
 InsertFensUnderDiagrams=
+
+
+#######################################
+#
+# Header: DIALOG Export PGN
+#
+
+
+#description: Export PGN dialog title
+#english: DlgExportPgn=Export to PGN
+DlgExportPgn=
+
 
 #######################################
 #
