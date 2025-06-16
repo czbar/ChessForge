@@ -1,6 +1,5 @@
 ﻿using ChessPosition;
 using System.Windows;
-using System.Windows.Media;
 
 namespace ChessForge
 {
@@ -28,6 +27,12 @@ namespace ChessForge
         private bool _lastCbStudy = false;
         private bool _lastCbGames = false;
         private bool _lastCbExercises = false;
+
+        /// <summary>
+        /// Variables the hold last state of inclusion CheckBoxes before they were greyed out
+        /// </summary>
+        private bool _lastCbComments = false;
+        private bool _lastCbEvaluations = false;
 
         /// <summary>
         /// Initializes the data.
@@ -70,7 +75,16 @@ namespace ChessForge
             _lastCbGames = bVal;
             bVal = ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_EXERCISES);
             _lastCbExercises = bVal;
+
             EnableChapterItems(true, true);
+
+            bVal = ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.KEEP_COMMENTS);
+            _lastCbComments = bVal;
+            bVal = ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.KEEP_EVALUATIONS);
+            _lastCbEvaluations = bVal;
+
+            UiCbComments.IsChecked = _lastCbComments;
+            UiCbEngineEvals.IsChecked = _lastCbEvaluations; 
 
             // the Scope button must only be set now so that the controls that will be disabled have their values preserved.
             SetScopeButton(Scope);
@@ -131,10 +145,17 @@ namespace ChessForge
                 _lastCbGames = UiCbGames.IsChecked == true;
                 _lastCbExercises = UiCbExercises.IsChecked == true;
             }
+
+            _lastCbComments = UiCbComments.IsChecked == true;
+            _lastCbEvaluations = UiCbEngineEvals.IsChecked == true;
+
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.INCLUDE_INTRO, _lastCbIntro);
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.INCLUDE_STUDY, _lastCbStudy);
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.INCLUDE_GAMES, _lastCbGames);
             ConfigurationRtfExport.SetValue(ConfigurationRtfExport.INCLUDE_EXERCISES, _lastCbExercises);
+
+            ConfigurationRtfExport.SetValue(ConfigurationRtfExport.KEEP_COMMENTS, _lastCbComments);
+            ConfigurationRtfExport.SetValue(ConfigurationRtfExport.KEEP_EVALUATIONS, _lastCbEvaluations);
 
             Configuration.WriteOutConfiguration();
         }
