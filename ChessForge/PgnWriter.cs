@@ -421,7 +421,7 @@ namespace ChessForge
         {
             StringBuilder sb = new StringBuilder();
 
-            if (!string.IsNullOrEmpty(nd.CommentBeforeMove))
+            if (!string.IsNullOrEmpty(nd.CommentBeforeMove) && ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.KEEP_COMMENTS))
             {
                 sb.Append(" {" + CleanupCommentText(nd.CommentBeforeMove) + "}");
             }
@@ -466,42 +466,49 @@ namespace ChessForge
         /// <returns></returns>
         private static string BuildCommandAndCommentText(TreeNode nd)
         {
-            if (!string.IsNullOrEmpty(nd.Comment)
-                || !string.IsNullOrEmpty(nd.EngineEvaluation)
+            bool keepComments = ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.KEEP_COMMENTS);
+            bool keepEvaluations = ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.KEEP_EVALUATIONS);
+
+            if (keepComments &&
+                (!string.IsNullOrEmpty(nd.Comment)
                 || !string.IsNullOrEmpty(nd.Arrows)
                 || !string.IsNullOrEmpty(nd.Circles))
+                || !string.IsNullOrEmpty(nd.EngineEvaluation) && keepEvaluations)
             {
                 StringBuilder sb = new StringBuilder();
 
                 sb.Append(" {");
 
                 // Process an Evaluation ChfCommand
-                if (!string.IsNullOrEmpty(nd.EngineEvaluation))
+                if (keepEvaluations && !string.IsNullOrEmpty(nd.EngineEvaluation))
                 {
                     string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.ENGINE_EVALUATION_V2) + " " + nd.EngineEvaluation;
                     sb.Append("[" + sCmd + "]");
                 }
 
-                // Process the Arrows string
-                if (!string.IsNullOrEmpty(nd.Arrows))
+                if (keepComments)
                 {
-                    string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.ARROWS) + " " + nd.Arrows;
-                    sb.Append("[" + sCmd + "]");
-                }
+                    // Process the Arrows string
+                    if (!string.IsNullOrEmpty(nd.Arrows))
+                    {
+                        string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.ARROWS) + " " + nd.Arrows;
+                        sb.Append("[" + sCmd + "]");
+                    }
 
-                // Process the Circles string
-                if (!string.IsNullOrEmpty(nd.Circles))
-                {
-                    string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.CIRCLES) + " " + nd.Circles;
-                    sb.Append("[" + sCmd + "]");
-                }
+                    // Process the Circles string
+                    if (!string.IsNullOrEmpty(nd.Circles))
+                    {
+                        string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.CIRCLES) + " " + nd.Circles;
+                        sb.Append("[" + sCmd + "]");
+                    }
 
-                // Comment, if any
-                if (!string.IsNullOrEmpty(nd.Comment))
-                {
-                    // replace '[', '{', '}', and ']'
-                    nd.Comment = CleanupCommentText(nd.Comment);
-                    sb.Append(nd.Comment);
+                    // Comment, if any
+                    if (!string.IsNullOrEmpty(nd.Comment))
+                    {
+                        // replace '[', '{', '}', and ']'
+                        nd.Comment = CleanupCommentText(nd.Comment);
+                        sb.Append(nd.Comment);
+                    }
                 }
 
                 sb.Append("} ");
