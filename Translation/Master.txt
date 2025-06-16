@@ -813,7 +813,7 @@ TurnEngineOff=Turn the Engine Off (F2)
 TurnEngineOn=Turn the Engine On (F2)
 
 #Tool tip for allowing evakuation persistance
-TtAllowEvalUpdate=Turn the Engine Off (F2)\nNOTE: Evaluations are not being updated. Ctrl+K to allow.)
+TtAllowEvalUpdate=Turn the Engine Off (F2)\nNOTE: Evaluations are not being updated (Ctrl+K to allow).
 
 #Tool tip for hiding Eval Chart
 HideEvaluationChart=Hide Evaluation Chart

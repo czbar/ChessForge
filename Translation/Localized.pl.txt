@@ -1051,7 +1051,7 @@ TurnEngineOn=Włącz silnik (F2)
 
 #description: Tool tip for allowing evakuation persistance
 #english: TtAllowEvalUpdate=Turn the Engine Off (F2)\nNOTE: Evaluations are not being updated. Ctrl+K to allow.)
-TtAllowEvalUpdate=Wyłącz silnik (F2)\nUWAGA: Oceny nie są uaktualniane. Zezwól przez Ctrl+K.)
+TtAllowEvalUpdate=Wyłącz silnik (F2)\nUWAGA: Oceny nie są uaktualniane (zezwól przez Ctrl+K).
 
 #description: Tool tip for hiding Eval Chart
 #english: HideEvaluationChart=Hide Evaluation Chart
