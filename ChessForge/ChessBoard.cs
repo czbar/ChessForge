@@ -446,7 +446,7 @@ namespace ChessForge
             if (!_showMaterial)
             {
                 return;
-            }   
+            }
 
             // set up the "white imbalance" label in the top left corner above the board
             _lblWhiteMaterial = new Label();
@@ -1003,8 +1003,11 @@ namespace ChessForge
             if (_showMaterial && Configuration.ShowMaterial)
             {
                 MaterialImbalanceUtils.BuildMaterialImbalanceStrings(_position, out string whiteMaterial, out string blackMaterial);
-                SetWhiteMaterialLabelText(whiteMaterial);
-                SetBlackMaterialLabelText(blackMaterial);
+                AppState.MainWin.Dispatcher.Invoke(() =>
+                {
+                    SetWhiteMaterialLabelText(whiteMaterial);
+                    SetBlackMaterialLabelText(blackMaterial);
+                });
             }
         }
 
