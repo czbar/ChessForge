@@ -452,8 +452,8 @@ ErrAfterMove=after move
 #Cannot insert line from the Clipboard
 ErrClipboardLinePaste=Error pasting variation from the Clipboard 
 
-#Selected file name is the same as the workbook's
-ErrFileNameSameAsWorkbook=File name cannot be the same as Workbook's file
+#Selected file is a Workbook, do not overwrite.
+ErrDontOverwriteWorkbook=The selected file is a ChessForge Workbook. Choose a different file.
 
 #No games downloaded
 ErrNoGamesDownloaded=No games have been downloaded

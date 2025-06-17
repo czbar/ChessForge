@@ -590,7 +590,7 @@ ErrClipboardLinePaste=Błąd przy wklejaniu wariantu ze schowka
 
 #description: Selected file name is the same as the workbook's
 #english: ErrFileNameSameAsWorkbook=File name cannot be the same as Workbook's file
-ErrFileNameSameAsWorkbook=Nazwa pliku nie może być taka sama jak plik Podręcznika
+ErrDontOverwriteWorkbook=Wybrany plik jest podręcznikiem ChessForge. Wybierz inny plik.
 
 #description: No games downloaded
 #english: ErrNoGamesDownloaded=No games have been downloaded

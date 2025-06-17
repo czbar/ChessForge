@@ -525,8 +525,8 @@
   <data name="ErrClipboardLinePaste" xml:space="preserve">
     <value>Błąd przy wklejaniu wariantu ze schowka</value>
   </data>
-  <data name="ErrFileNameSameAsWorkbook" xml:space="preserve">
-    <value>Nazwa pliku nie może być taka sama jak plik Podręcznika</value>
+  <data name="ErrDontOverwriteWorkbook" xml:space="preserve">
+    <value>Wybrany plik jest podręcznikiem ChessForge. Wybierz inny plik.</value>
   </data>
   <data name="ErrNoGamesDownloaded" xml:space="preserve">
     <value>Nie pobrano żadnych partii</value>

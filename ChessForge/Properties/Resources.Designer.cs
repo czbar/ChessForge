@@ -2653,6 +2653,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The selected file is a ChessForge Workbook. Choose a different file..
+        /// </summary>
+        public static string ErrDontOverwriteWorkbook {
+            get {
+                return ResourceManager.GetString("ErrDontOverwriteWorkbook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Provide User Name.
         /// </summary>
         public static string ErrEmptyUserName {
@@ -2667,15 +2676,6 @@ namespace ChessForge.Properties {
         public static string ErrFileFormatOrCorrupt {
             get {
                 return ResourceManager.GetString("ErrFileFormatOrCorrupt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to File name cannot be the same as Workbook&apos;s file.
-        /// </summary>
-        public static string ErrFileNameSameAsWorkbook {
-            get {
-                return ResourceManager.GetString("ErrFileNameSameAsWorkbook", resourceCulture);
             }
         }
         
