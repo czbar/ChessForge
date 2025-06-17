@@ -89,43 +89,57 @@ namespace ChessForge
                 }
             }
 
-            if (pgnFileName == AppState.WorkbookFilePath)
+            SaveFileDialog saveDlg = new SaveFileDialog
             {
-                // do not allow same name as the workbook file so we do not overwrite it
-                MessageBox.Show(Properties.Resources.ErrFileNameSameAsWorkbook, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
+                Filter = Properties.Resources.PgnFiles + " (*.pgn)|*.pgn",
+            };
 
-                // return null so the caller knows
-                pgnFileName = null;
+            try
+            {
+                saveDlg.InitialDirectory = Path.GetDirectoryName(pgnFileName);
+            }
+            catch { }
+
+            saveDlg.FileName = Path.GetFileName(pgnFileName);
+            saveDlg.Title = Properties.Resources.ExportPgn;
+
+            saveDlg.OverwritePrompt = true;
+            if (saveDlg.ShowDialog() == true)
+            {
+                pgnFileName = saveDlg.FileName;
+                Configuration.LastPgnExportFile = pgnFileName;
             }
             else
             {
-                SaveFileDialog saveDlg = new SaveFileDialog
-                {
-                    Filter = Properties.Resources.PgnFiles + " (*.pgn)|*.pgn",
-                };
+                // user cancelled
+                pgnFileName = "";
+            }
 
-                try
-                {
-                    saveDlg.InitialDirectory = Path.GetDirectoryName(pgnFileName);
-                }
-                catch { }
-
-                saveDlg.FileName = Path.GetFileName(pgnFileName);
-                saveDlg.Title = Properties.Resources.ExportPgn;
-
-                saveDlg.OverwritePrompt = true;
-                if (saveDlg.ShowDialog() == true)
-                {
-                    pgnFileName = saveDlg.FileName;
-                    Configuration.LastPgnExportFile = pgnFileName;
-                }
-                else
-                {
-                    pgnFileName = "";
-                }
+            if (!IsTargetFileValid(pgnFileName))
+            {
+                pgnFileName = null;
             }
 
             return pgnFileName;
+        }
+
+        /// <summary>
+        /// Checks if the target file is valid i.e. not a Workbook file.
+        /// </summary>
+        /// <param name="pgnFileName"></param>
+        /// <returns></returns>
+        private static bool IsTargetFileValid(string pgnFileName)
+        {
+            bool isValid = true;
+
+            if (pgnFileName == AppState.WorkbookFilePath || WorkbookManager.IsChessForgeWorkbook(pgnFileName))
+            {
+                // do not allow overwriting a workbook file
+                MessageBox.Show(Properties.Resources.ErrDontOverwriteWorkbook, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
+                isValid = false;
+            }
+
+            return isValid;
         }
 
         /// <summary>
