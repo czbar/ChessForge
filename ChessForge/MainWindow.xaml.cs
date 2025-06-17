@@ -2837,7 +2837,7 @@ namespace ChessForge
                 {
                     if (Configuration.ShowMaterial)
                     {
-                        MainChessBoard.DisplayPosition(ActiveLine.GetSelectedTreeNode(), true);
+                        MainChessBoard.DisplayPosition(MainChessBoard.DisplayedNode, true);
                     }
                     else
                     {
