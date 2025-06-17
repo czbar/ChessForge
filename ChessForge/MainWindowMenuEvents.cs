@@ -4189,7 +4189,13 @@ namespace ChessForge
                     WaitDialog waitDlg = null;
                     try
                     {
-                        string filePath = PgnWriter.SelectTargetPgnFile();
+                        string filePath = "";
+
+                        // SelectTargetPgnFile() will return null if user chose an invalid file
+                        // and "" if user cancelled.
+                        // So if it is null we give them another chance, hence the loop
+                        while (PgnWriter.SelectTargetPgnFile() == null)
+                        {}
 
                         if (!string.IsNullOrEmpty(filePath) && filePath[0] != '.')
                         {
