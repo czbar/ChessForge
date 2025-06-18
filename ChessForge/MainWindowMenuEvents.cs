@@ -545,6 +545,7 @@ namespace ChessForge
                 return false;
             }
 
+            PulseManager.SetPauseCounter(5);
             AppState.ActiveVariationTree.OpsManager.Undo(out EditOperation.EditType opType,
                                                          out string selectedLineId,
                                                          out int selectedNodeId,
@@ -634,6 +635,7 @@ namespace ChessForge
         {
             try
             {
+                PulseManager.SetPauseCounter(5);
                 WorkbookOperation op = WorkbookManager.SessionWorkbook.OpsManager.Peek();
                 if (op != null)
                 {
