@@ -360,6 +360,7 @@ namespace ChessForge
                             if (nd.Parent == null || nd.Parent.NodeId == 0 || nd.Parent.Children.Count > 1
                                 || AppState.MainWin.ActiveVariationTree.NodeHasSiblings(nd.Parent.NodeId))
                             {
+                                PulseManager.SetPauseCounter(5);
                                 AppState.MainWin.RebuildActiveTreeView();
                             }
                             else
@@ -379,6 +380,8 @@ namespace ChessForge
                 }
                 else
                 {
+                    PulseManager.SetPauseCounter(5);
+
                     // new move for which we need a new line id
                     // if it is new and has siblings, rebuild line ids
                     // Workbook view will need a full update unless TODO this node AND its parent have no siblings
