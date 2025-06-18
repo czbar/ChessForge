@@ -1005,6 +1005,8 @@ namespace ChessForge
         {
             try
             {
+                PulseManager.SetPauseCounter(5);
+
                 Chapter activeChapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                 gameIndex = AdjustArticleIndex(gameIndex, activeChapter.GetModelGameCount());
                 if (gameIndex >= 0 && gameIndex < activeChapter.GetModelGameCount())
@@ -1099,6 +1101,8 @@ namespace ChessForge
         {
             try
             {
+                PulseManager.SetPauseCounter(5);
+
                 Chapter activeChapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                 exerciseIndex = AdjustArticleIndex(exerciseIndex, activeChapter.GetExerciseCount());
                 if (exerciseIndex >= 0 && exerciseIndex < activeChapter.GetExerciseCount())
@@ -1770,6 +1774,7 @@ namespace ChessForge
                 return;
             }
 
+            PulseManager.SetPauseCounter(5);
             Mouse.SetCursor(Cursors.Wait);
             try
             {
