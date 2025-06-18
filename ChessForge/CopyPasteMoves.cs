@@ -60,6 +60,8 @@ namespace ChessForge
             {
                 if (lstNodes != null && lstNodes.Count > 0 && AppState.IsVariationTreeTabType)
                 {
+                    PulseManager.SetPauseCounter(5);
+
                     VariationTree targetTree = AppState.MainWin.ActiveVariationTree;
                     VariationTreeView targetView = AppState.MainWin.ActiveTreeView;
                     List<TreeNode> insertedNewNodes = new List<TreeNode>();
