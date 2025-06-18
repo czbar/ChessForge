@@ -893,6 +893,8 @@ namespace ChessForge
 
                 ClearCopySelect();
 
+                PulseManager.SetPauseCounter(5);
+
                 TreeNode nd = GetSelectedNode(); 
                 TreeNode parent = nd.Parent;
                 ShownVariationTree.DeleteRemainingMoves(nd);
