@@ -802,7 +802,7 @@ namespace ChessForge
                 if (nd.IsDiagram)
                 {
                     string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.DIAGRAM) + " " 
-                        + ChfCommands.CodeDiagramAttrs(nd.IsDiagramFlipped, nd.IsDiagramPreComment).ToString();
+                        + ChfCommands.CodeDiagramAttrs(nd.IsDiagramFlipped, nd.IsDiagramPreComment, nd.IsDiagramBeforeMove).ToString();
                     sb.Append("[" + sCmd + "]");
                 }
 

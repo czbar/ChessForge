@@ -681,6 +681,7 @@ namespace ChessPosition
                     nd.IsDiagram = attrs.IsDiagram;
                     nd.IsDiagramFlipped = attrs.IsDiagramFlipped;
                     nd.IsDiagramPreComment = attrs.IsDiagramPreComment;
+                    nd.IsDiagramBeforeMove = attrs.IsDiagramBeforeMove;
                 }
             }
         }
@@ -1049,6 +1050,7 @@ namespace ChessPosition
                         retNode.IsDiagram = nodeToInsert.IsDiagram;
                         retNode.IsDiagramFlipped = nodeToInsert.IsDiagramFlipped;
                         retNode.IsDiagramPreComment = nodeToInsert.IsDiagramPreComment;
+                        retNode.IsDiagramBeforeMove = nodeToInsert.IsDiagramBeforeMove;
                         retNode.LastMoveAlgebraicNotationWithNag = nodeToInsert.LastMoveAlgebraicNotationWithNag;
                         retNode.Position.IsCheckmate = PositionUtils.IsCheckmate(retNode.Position, out bool isCheck);
                         retNode.Position.IsCheck = isCheck;

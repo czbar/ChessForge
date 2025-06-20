@@ -2164,6 +2164,7 @@ namespace ChessForge
                     tree.RootNode.IsDiagram = false;
                     tree.RootNode.IsDiagramFlipped = false;
                     tree.RootNode.IsDiagramPreComment = false;
+                    tree.RootNode.IsDiagramBeforeMove = false;
 
                     Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                     CopyHeaderFromGame(tree, ActiveVariationTree.Header, false);

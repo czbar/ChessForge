@@ -520,7 +520,7 @@ namespace GameTree
                         {
                             if (uint.TryParse(tokens[1], out uint attrs))
                             {
-                                ChfCommands.DecodeDiagramAttrs(attrs, out nd.IsDiagramFlipped, out nd.IsDiagramPreComment);
+                                ChfCommands.DecodeDiagramAttrs(attrs, out nd.IsDiagramFlipped, out nd.IsDiagramPreComment, out nd.IsDiagramBeforeMove);
                             }
                         }
                         else

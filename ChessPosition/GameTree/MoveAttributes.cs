@@ -19,6 +19,7 @@
             IsDiagram = nd.IsDiagram;
             IsDiagramFlipped = nd.IsDiagramFlipped;
             IsDiagramPreComment = nd.IsDiagramPreComment;
+            IsDiagramBeforeMove = nd.IsDiagramBeforeMove;
             EngineEval = nd.EngineEvaluation;
             Assessment = nd.Assessment;
             BestResponse = nd.BestResponse;
@@ -34,7 +35,8 @@
         /// <param name="isDiagram"></param>
         /// <param name="isDiagramFlipped"></param>
         /// <param name="isDiagramPreComment"></param>
-        public MoveAttributes(int nodeId, string comment, string commentBeforeMove, string nags, string references, bool isDiagram, bool isDiagramFlipped, bool isDiagramPreComment) 
+        /// <param name="isDiagramBeforeMove"></param>
+        public MoveAttributes(int nodeId, string comment, string commentBeforeMove, string nags, string references, bool isDiagram, bool isDiagramFlipped, bool isDiagramPreComment, bool isDiagramBeforeMove) 
         { 
             NodeId = nodeId;
             Comment = comment;
@@ -44,6 +46,7 @@
             IsDiagram = isDiagram;
             IsDiagramFlipped = isDiagramFlipped;
             IsDiagramPreComment = isDiagramPreComment;
+            IsDiagramBeforeMove = isDiagramBeforeMove;
         }
 
         /// <summary>
@@ -116,6 +119,11 @@
         /// comes before the comment.
         /// </summary>
         public bool IsDiagramPreComment;
+
+        /// <summary>
+        /// Indicates whether the diagram is placed before the move.
+        /// </summary>
+        public bool IsDiagramBeforeMove;
 
         /// <summary>
         /// Engine Evaluation.
