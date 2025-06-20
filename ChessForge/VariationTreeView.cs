@@ -895,7 +895,7 @@ namespace ChessForge
 
                 PulseManager.SetPauseCounter(5);
 
-                TreeNode nd = GetSelectedNode(); 
+                TreeNode nd = GetSelectedNode();
                 TreeNode parent = nd.Parent;
                 ShownVariationTree.DeleteRemainingMoves(nd);
                 ShownVariationTree.BuildLines();
@@ -1151,7 +1151,7 @@ namespace ChessForge
 
             TreeNode node = ShownVariationTree.GetNodeFromNodeId(nodeId);
 
-            if (node == null || node.Children.Count <= 2)
+            if (!ShowForkTable(node))
             {
                 return null;
             }
@@ -1242,6 +1242,49 @@ namespace ChessForge
             }
 
             return _forkTable;
+        }
+
+        /// <summary>
+        /// Given a TreeNode, checks if the table with moves at the fork should be shown.
+        /// It should always be shown if there are more than two children.
+        /// If there are exactly two children, it should be shown only if they are in different paragraphs
+        /// e.g. not of the notation is of the type "1. e4 e5 2. Nf3 (2.Nc3 c5) Nc6", and if we are in the Study view.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        private bool ShowForkTable(TreeNode node)
+        {
+            bool show = false;
+
+            if (node != null && node.Children.Count > 1)
+            {
+                if (node.Children.Count > 2)
+                {
+                    show = true;
+                }
+                else
+                {
+                    if (AppState.ActiveTab == TabViewType.STUDY)
+                    {
+                        // there are exactly two children, so we need to check
+                        // if both in the same paragraph, when we do not wanted the table.
+                        try
+                        {
+                            Paragraph para1 = _dictRunToParagraph[_dictNodeToRun[node.Children[0].NodeId]];
+                            Paragraph para2 = _dictRunToParagraph[_dictNodeToRun[node.Children[1].NodeId]];
+                            if (para1 != para2)
+                            {
+                                show = true;
+                            }
+                        }
+                        catch
+                        {
+                        }
+                    }
+                }
+            }
+
+            return show;
         }
 
         /// <summary>
@@ -1597,7 +1640,7 @@ namespace ChessForge
                     {
                         bool proceed = true;
                         Inline inline = rMoveRun.NextInline;
-                        
+
                         List<Run> lstRunsToRemove = new List<Run>();
                         lstRunsToRemove.Add(rMoveRun);
 
