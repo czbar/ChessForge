@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
+﻿using ChessPosition;
 using GameTree;
-using ChessPosition;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace ChessForge
 {
@@ -94,7 +92,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="comment"></param>
         /// <returns></returns>
-        private static string BuildCommentText(string comment)
+        public static string BuildCommentText(string comment)
         {
             if (string.IsNullOrEmpty(comment))
             {
@@ -312,7 +310,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="chapter"></param>
         /// <returns></returns>
-        private static string BuildIntroHeaderText(Chapter chapter)
+        public static string BuildIntroHeaderText(Chapter chapter)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -555,7 +553,7 @@ namespace ChessForge
         /// <param name="inp"></param>
         /// <param name="maxChars"></param>
         /// <returns></returns>
-        private static string DivideLine(string inp, int maxChars)
+        public static string DivideLine(string inp, int maxChars)
         {
             StringBuilder sb = new StringBuilder();
             int startIdx = 0;
@@ -804,7 +802,7 @@ namespace ChessForge
                 if (nd.IsDiagram)
                 {
                     string sCmd = ChfCommands.GetStringForCommand(ChfCommands.Command.DIAGRAM) + " " 
-                        + ChfCommands.CodeDiagramAttrs(nd.IsDiagramFlipped, nd.IsDiagramPreComment).ToString();
+                        + ChfCommands.CodeDiagramAttrs(nd.IsDiagramFlipped, nd.IsDiagramPreComment, nd.IsDiagramBeforeMove).ToString();
                     sb.Append("[" + sCmd + "]");
                 }
 

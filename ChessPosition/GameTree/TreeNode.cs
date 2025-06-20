@@ -211,6 +211,13 @@ namespace GameTree
         public bool IsDiagramPreComment = false;
 
         /// <summary>
+        /// Whether the diagram is to be shown before the move
+        /// reflecting the position from the parent.
+        /// Only applies if IsDiagram is true.
+        /// </summary>
+        public bool IsDiagramBeforeMove = false;
+
+        /// <summary>
         /// References to Games, Exercises or Chapters
         /// in the form of GUID|GUID|...|GUID
         /// </summary>

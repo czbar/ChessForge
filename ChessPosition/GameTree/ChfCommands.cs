@@ -115,14 +115,17 @@ namespace GameTree
         /// The LSB determines if the diagram is flipped.
         /// The second bit determines if the diagram is placed
         /// before the comment.
+        /// The third bit determines whether the diagram is to be shown before
+        /// the move, reflecting the position from the parent node.
         /// </summary>
         /// <param name="attrs"></param>
         /// <param name="isFlipped"></param>
         /// <param name="isPreComment"></param>
-        public static void DecodeDiagramAttrs(uint attrs, out bool isFlipped, out bool isPreComment)
+        public static void DecodeDiagramAttrs(uint attrs, out bool isFlipped, out bool isPreComment, out bool isBeforeMove)
         {
             isFlipped = false;
             isPreComment = false;
+            isBeforeMove = false;
 
             if ((attrs & 0x01) != 0)
             {
@@ -132,17 +135,23 @@ namespace GameTree
             {
                 isPreComment = true;
             }
+            if ((attrs & 0x04) != 0)
+            {
+                isBeforeMove = true;
+            }
         }
 
         /// <summary>
         /// The LSB determines if the diagram is flipped.
         /// The second bit determines if the diagram is placed
         /// before the comment.
+        /// The third bit determines whether the diagram is to be shown before
+        /// the move, reflecting the position from the parent node.
         /// </summary>
         /// <param name="attrs"></param>
         /// <param name="isFlipped"></param>
         /// <param name="isPreComment"></param>
-        public static uint CodeDiagramAttrs(bool isFlipped, bool isPreComment)
+        public static uint CodeDiagramAttrs(bool isFlipped, bool isPreComment, bool isBeforeMove)
         {
             uint coded = 0;
 
@@ -153,6 +162,10 @@ namespace GameTree
             if (isPreComment)
             {
                 coded |= 0x02;
+            }
+            if (isBeforeMove)
+            {
+                coded |= 0x04;
             }
 
             return coded;

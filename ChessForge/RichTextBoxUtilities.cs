@@ -74,6 +74,40 @@ namespace ChessForge
         public static readonly string RunMovePrefix = "run_move_";
 
         /// <summary>
+        /// Checks if the passed object is a Run representing a move.
+        /// </summary>
+        /// <param name="o"></param>
+        /// <returns></returns>
+        public static bool IsMoveRun(object o)
+        {
+            bool isMove = false;
+            
+            if (o is Run run)
+            {
+                return IsMoveRunName(run.Name);
+            }
+
+            return isMove;
+        }
+
+        /// <summary>
+        /// Checks if the passed name is a Run representing a move.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static bool IsMoveRunName(string name)
+        {
+            bool isMove = false;
+
+            if (!string.IsNullOrEmpty(name) && name.StartsWith(RunMovePrefix))
+            {
+                isMove = true;
+            }
+
+            return isMove;
+        }
+
+        /// <summary>
         /// Finds the first Run representing a move in the paragraph.
         /// </summary>
         /// <param name="para"></param>

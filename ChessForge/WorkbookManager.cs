@@ -141,6 +141,37 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Checks if the file at the given path is a Chess Forge Workbook.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static bool IsChessForgeWorkbook(string path)
+        {
+            bool isChessForge = false;
+
+            // the file must exist and have the Workbook header line as the first non-empty line 
+            if (File.Exists(path) == true)
+            {
+                // the first non-empty line must be a Chess Forge header line
+                using (TextReader sr = new StreamReader(path))
+                {
+                    while (sr.Peek() >= 0)
+                    {
+                        string line = sr.ReadLine();
+                        if (!string.IsNullOrWhiteSpace(line))
+                        {
+                            string header = PgnHeaders.ParsePgnHeaderLine(line, out string val);
+                            isChessForge = header != null && header == PgnHeaders.KEY_WORKBOOK_TITLE;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return isChessForge;
+        }
+
+        /// <summary>
         /// Checks if file exists or is already open 
         /// and advises the user accordingly.
         /// </summary>

@@ -36,6 +36,9 @@ namespace ChessForge
         // whether counting until bringing the selected run into view
         private static bool _bringSelectedRunIntoView = false;
 
+        // counter monitoring the pause in pulse processing
+        private static int _pauseCounter = 0;
+
         /// <summary>
         /// Index of the chapter to bring into view.
         /// </summary>
@@ -52,6 +55,9 @@ namespace ChessForge
             _bringSelectedRunIntoView = true;
         }
 
+        // pulse event busy flag to prevent re-entrance
+        private static bool _pulseBusy = false;
+
         /// <summary>
         /// Handles the PULSE timer event.
         /// </summary>
@@ -59,6 +65,20 @@ namespace ChessForge
         /// <param name="e"></param>
         public static void PulseEventHandler(object source, ElapsedEventArgs e)
         {
+            // if we are already busy, do not re-enter
+            if (_pulseBusy || _pauseCounter > 0)
+            {
+                if (_pauseCounter > 0)
+                {
+                    _pauseCounter--;
+                }
+
+                return;
+            }
+
+            // set busy flag to prevent re-entrance
+            _pulseBusy = true;
+
             WebAccessManager.UpdateWebAccess();
             UpdateEvaluationBar();
             if (_chapterIndexToBringIntoView >= 0)
@@ -99,6 +119,9 @@ namespace ChessForge
                     _articleToBringIntoView.ArticleIndex = -1;
                 }
             }
+
+            // allow re-entrance now that we are done
+            _pulseBusy = false;
         }
 
         /// <summary>
@@ -112,6 +135,16 @@ namespace ChessForge
             _articleToBringIntoView.ChapterIndex = chapterIndex;
             _articleToBringIntoView.ContentType = contentType;
             _articleToBringIntoView.ArticleIndex = articleIndex;
+        }
+
+        /// <summary>
+        /// Sets the value of the pause counter.
+        /// It will prevent processing of the PULSE events for a number of pulses.
+        /// </summary>
+        /// <param name="count"></param>
+        public static void SetPauseCounter(int count)
+        {
+            _pauseCounter = count;
         }
 
         /// <summary>

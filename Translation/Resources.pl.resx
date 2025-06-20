@@ -156,6 +156,9 @@
   <data name="RtfFiles" xml:space="preserve">
     <value>Pliki RTF</value>
   </data>
+  <data name="PgnFiles" xml:space="preserve">
+    <value>PGN files</value>
+  </data>
   <data name="TextFiles" xml:space="preserve">
     <value>Pliki Tekstowe</value>
   </data>
@@ -277,7 +280,7 @@
     <value>Wytnij</value>
   </data>
   <data name="Paste" xml:space="preserve">
-    <value>Wkleić</value>
+    <value>Wklej</value>
   </data>
   <data name="PasteFromClipboard" xml:space="preserve">
     <value>Wklej Zawartość Schowka </value>
@@ -305,6 +308,9 @@
   </data>
   <data name="Evaluation" xml:space="preserve">
     <value>Ocena</value>
+  </data>
+  <data name="Evaluations" xml:space="preserve">
+    <value>Oceny</value>
   </data>
   <data name="Version" xml:space="preserve">
     <value>Wersja</value>
@@ -519,8 +525,8 @@
   <data name="ErrClipboardLinePaste" xml:space="preserve">
     <value>Błąd przy wklejaniu wariantu ze schowka</value>
   </data>
-  <data name="ClipboardOperation" xml:space="preserve">
-    <value>Operacja Schowka</value>
+  <data name="ErrDontOverwriteWorkbook" xml:space="preserve">
+    <value>Wybrany plik jest podręcznikiem ChessForge. Wybierz inny plik.</value>
   </data>
   <data name="ErrNoGamesDownloaded" xml:space="preserve">
     <value>Nie pobrano żadnych partii</value>
@@ -561,6 +567,9 @@
   <data name="ErrNoTextReceived" xml:space="preserve">
     <value>brak tekstu partii.</value>
   </data>
+  <data name="ClipboardOperation" xml:space="preserve">
+    <value>Operacja Schowka</value>
+  </data>
   <data name="File" xml:space="preserve">
     <value>Plik</value>
   </data>
@@ -596,6 +605,12 @@
   </data>
   <data name="ExportToRtf" xml:space="preserve">
     <value>Eksport do pliku RTF</value>
+  </data>
+  <data name="ExportPgn" xml:space="preserve">
+    <value>jako PGN</value>
+  </data>
+  <data name="ExportToPgn" xml:space="preserve">
+    <value>Eksport do pliku PGN</value>
   </data>
   <data name="ExportText" xml:space="preserve">
     <value>jako Tekst</value>
@@ -830,7 +845,7 @@
   </data>
   <data name="TtAllowEvalUpdate" xml:space="preserve">
     <value>Wyłącz silnik (F2)
-UWAGA: Oceny nie są uaktualniane. Zezwól przez Ctrl+K.)</value>
+UWAGA: Oceny nie są uaktualniane (zezwól przez Ctrl+K).</value>
   </data>
   <data name="HideEvaluationChart" xml:space="preserve">
     <value>Ukryj wykres ocen silnika</value>
@@ -983,7 +998,7 @@ UWAGA: Oceny nie są uaktualniane. Zezwól przez Ctrl+K.)</value>
     <value>Włącz detekcję</value>
   </data>
   <data name="DlgExportRtf" xml:space="preserve">
-    <value>Export do Pliku RTF</value>
+    <value>Eksport do pliku RTF</value>
   </data>
   <data name="ChessForgeGenNotice" xml:space="preserve">
     <value>Wygenerowano programem Chess Forge</value>
@@ -1011,6 +1026,9 @@ UWAGA: Oceny nie są uaktualniane. Zezwól przez Ctrl+K.)</value>
   </data>
   <data name="InsertFensUnderDiagrams" xml:space="preserve">
     <value>Wstaw FEN pod diagramami</value>
+  </data>
+  <data name="DlgExportPgn" xml:space="preserve">
+    <value>Eksport do pliku PGN</value>
   </data>
   <data name="ReorderLines" xml:space="preserve">
     <value>Kolejność Wariantów</value>

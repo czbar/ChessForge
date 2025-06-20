@@ -84,7 +84,8 @@ namespace ChessForge
 
             // check if current view is printable, if not, disable the radio button and change scope if CurrentViewSelected
             TabViewType vt = AppState.ActiveTab;
-            if (vt != TabViewType.CHAPTERS && vt != TabViewType.INTRO && vt != TabViewType.STUDY && vt != TabViewType.MODEL_GAME && vt != TabViewType.EXERCISE)
+            if (vt != TabViewType.CHAPTERS && vt != TabViewType.INTRO && vt != TabViewType.STUDY 
+                && vt != TabViewType.MODEL_GAME && vt != TabViewType.EXERCISE && vt != TabViewType.BOOKMARKS)
             {
                 UiRbCurrentItem.IsEnabled = false;
                 if (Scope == PrintScope.ARTICLE)

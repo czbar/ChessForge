@@ -1,6 +1,5 @@
 ﻿using ChessPosition;
 using ChessPosition.Utils;
-using EngineService;
 using GameTree;
 using System;
 using System.Collections.Generic;
@@ -9,13 +8,13 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Management;
 using System.Threading;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using WebAccess;
-using System.Management;
 
 namespace ChessForge
 {
@@ -1005,6 +1004,8 @@ namespace ChessForge
         {
             try
             {
+                PulseManager.SetPauseCounter(5);
+
                 Chapter activeChapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                 gameIndex = AdjustArticleIndex(gameIndex, activeChapter.GetModelGameCount());
                 if (gameIndex >= 0 && gameIndex < activeChapter.GetModelGameCount())
@@ -1099,6 +1100,8 @@ namespace ChessForge
         {
             try
             {
+                PulseManager.SetPauseCounter(5);
+
                 Chapter activeChapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                 exerciseIndex = AdjustArticleIndex(exerciseIndex, activeChapter.GetExerciseCount());
                 if (exerciseIndex >= 0 && exerciseIndex < activeChapter.GetExerciseCount())
@@ -1770,6 +1773,7 @@ namespace ChessForge
                 return;
             }
 
+            PulseManager.SetPauseCounter(5);
             Mouse.SetCursor(Cursors.Wait);
             try
             {
@@ -2126,7 +2130,7 @@ namespace ChessForge
                         AppState.MainWin.UiEvalChart.SelectMove(nd);
                     }
 
-                    if (selectedNodeId > 0)
+                    if (selectedNodeId > 0 && nd != null)
                     {
                         ActiveLine.SelectPly((int)nd.Parent.MoveNumber, nd.Parent.ColorToMove);
                     }
@@ -2837,7 +2841,7 @@ namespace ChessForge
                 {
                     if (Configuration.ShowMaterial)
                     {
-                        MainChessBoard.DisplayPosition(ActiveLine.GetSelectedTreeNode(), true);
+                        MainChessBoard.DisplayPosition(MainChessBoard.DisplayedNode, true);
                     }
                     else
                     {

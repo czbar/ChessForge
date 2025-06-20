@@ -9,6 +9,12 @@ using System.Windows.Input;
 
 namespace ChessForge
 {
+    /// <summary>
+    /// Represents a specialized tree view for displaying and interacting with a variation tree.
+    /// </summary>
+    /// <remarks>The <see cref="VariationTreeView"/> class extends <see cref="RichTextBuilder"/> to provide
+    /// functionality for handling user interactions with variations, comments, hyperlinks, and references.
+    /// It includes event handlers for mouse actions, enabling dynamic updates to the UI based on user input.</remarks>
     public partial class VariationTreeView : RichTextBuilder
     {
         /// <summary>

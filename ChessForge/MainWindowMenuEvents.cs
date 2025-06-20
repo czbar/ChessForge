@@ -545,6 +545,7 @@ namespace ChessForge
                 return false;
             }
 
+            PulseManager.SetPauseCounter(5);
             AppState.ActiveVariationTree.OpsManager.Undo(out EditOperation.EditType opType,
                                                          out string selectedLineId,
                                                          out int selectedNodeId,
@@ -634,6 +635,7 @@ namespace ChessForge
         {
             try
             {
+                PulseManager.SetPauseCounter(5);
                 WorkbookOperation op = WorkbookManager.SessionWorkbook.OpsManager.Peek();
                 if (op != null)
                 {
@@ -2162,6 +2164,7 @@ namespace ChessForge
                     tree.RootNode.IsDiagram = false;
                     tree.RootNode.IsDiagramFlipped = false;
                     tree.RootNode.IsDiagramPreComment = false;
+                    tree.RootNode.IsDiagramBeforeMove = false;
 
                     Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
                     CopyHeaderFromGame(tree, ActiveVariationTree.Header, false);
@@ -4153,6 +4156,58 @@ namespace ChessForge
                             waitDlg.Show();
                             AppState.DoEvents();
                             done = RtfWriter.WriteRtf(filePath);
+                            BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.OperationCompleted, CommentBox.HintType.INFO);
+                        }
+                    }
+                    catch { }
+                    finally
+                    {
+                        if (waitDlg != null)
+                        {
+                            waitDlg.Close();
+                        }
+                        Mouse.SetCursor(Cursors.Arrow);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Writes out the content of the current view to an PGN file.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnWritePgn_Click(object sender, RoutedEventArgs e)
+        {
+            bool done = false;
+
+            while (!done)
+            {
+                done = true;
+                PgnExportDialog dlg = new PgnExportDialog();
+                GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
+
+                if (dlg.ShowDialog() == true)
+                {
+                    WaitDialog waitDlg = null;
+                    try
+                    {
+                        string filePath = "";
+
+                        // SelectTargetPgnFile() will return null if user chose an invalid file
+                        // and "" if user cancelled.
+                        // So if it is null we give them another chance, hence the loop
+                        while ((filePath = PgnWriter.SelectTargetPgnFile()) == null)
+                        {}
+
+                        if (!string.IsNullOrEmpty(filePath) && filePath[0] != '.')
+                        {
+                            Mouse.SetCursor(Cursors.Wait);
+                            waitDlg = new WaitDialog(Properties.Resources.ExportToPgn);
+                            GuiUtilities.PositionDialogInMiddle(waitDlg, this);
+                            waitDlg.Show();
+                            AppState.DoEvents();
+                            done = PgnWriter.WritePgn(filePath);
                             BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.OperationCompleted, CommentBox.HintType.INFO);
                         }
                     }
