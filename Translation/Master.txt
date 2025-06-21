@@ -2010,7 +2010,7 @@ MnGameExerciseReferences=Game/Exercise References...
 PromoteLine=Promote Line
 
 #Enter null move
-EnterNullMove=Enter Null Move
+EnterNullMove=Insert Null Move
 
 #Duplicate move as variation
 DuplicateAsVariation=Duplicate Move as Variation

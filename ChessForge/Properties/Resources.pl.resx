@@ -1787,7 +1787,7 @@ UWAGA: Oceny nie są uaktualniane (zezwól przez Ctrl+K).</value>
     <value>Promuj Wariant</value>
   </data>
   <data name="EnterNullMove" xml:space="preserve">
-    <value>Wprowadź pusty ruch</value>
+    <value>Wstaw pusty ruch</value>
   </data>
   <data name="DuplicateAsVariation" xml:space="preserve">
     <value>Duplikuj ruch jako wariant</value>

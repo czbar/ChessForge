@@ -2566,8 +2566,8 @@ MnGameExerciseReferences=Edytuj Odsyłacz do Partii i Ćwiczeń...
 PromoteLine=Promuj Wariant
 
 #description: Enter null move
-#english: EnterNullMove=Enter Null Move
-EnterNullMove=Wprowadź pusty ruch
+#english: EnterNullMove=Insert Null Move
+EnterNullMove=Wstaw pusty ruch
 
 #description: Duplicate move as variation
 #english: DuplicateAsVariation=Duplicate Move as Variation

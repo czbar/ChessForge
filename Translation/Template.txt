@@ -2566,7 +2566,7 @@ MnGameExerciseReferences=
 PromoteLine=
 
 #description: Enter null move
-#english: EnterNullMove=Enter Null Move
+#english: EnterNullMove=Insert Null Move
 EnterNullMove=
 
 #description: Duplicate move as variation

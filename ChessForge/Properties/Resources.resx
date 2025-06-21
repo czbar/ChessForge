@@ -1787,7 +1787,7 @@ NOTE: Evaluations are not being updated (Ctrl+K to allow).</value>
     <value>Promote Line</value>
   </data>
   <data name="EnterNullMove" xml:space="preserve">
-    <value>Enter Null Move</value>
+    <value>Insert Null Move</value>
   </data>
   <data name="DuplicateAsVariation" xml:space="preserve">
     <value>Duplicate Move as Variation</value>
