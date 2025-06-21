@@ -539,7 +539,7 @@ namespace ChessForge
         /// This is required when saving the position as FEN.
         /// </summary>
         /// <param name="pos"></param>
-        private static void UpShiftOnePly(ref BoardPosition pos)
+        public static void UpShiftOnePly(ref BoardPosition pos)
         {
             if (pos.ColorToMove == PieceColor.White)
             {
