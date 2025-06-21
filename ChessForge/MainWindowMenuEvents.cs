@@ -3743,6 +3743,7 @@ namespace ChessForge
                     if (WorkbookManager.ActiveTab == TabViewType.MODEL_GAME)
                     {
                         _modelGameTreeView.BuildFlowDocumentForVariationTree(false);
+                        _modelGameTreeView.RestoreSelectedLineAndNode();
                     }
                     if (AppState.AreExplorersOn)
                     {
@@ -3779,6 +3780,7 @@ namespace ChessForge
                     if (WorkbookManager.ActiveTab == TabViewType.EXERCISE)
                     {
                         _exerciseTreeView.BuildFlowDocumentForVariationTree(false);
+                        _exerciseTreeView.RestoreSelectedLineAndNode();
                     }
                 }
                 if (AppState.AreExplorersOn)
