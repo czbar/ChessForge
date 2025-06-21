@@ -330,7 +330,18 @@ namespace ChessForge
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_BLACK_ELO, tree.Header.GetBlackPlayerElo(out _)));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_ANNOTATOR, tree.Header.GetAnnotator(out _)));
             sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_RESULT, tree.Header.GetResult(out _)));
-            sb.AppendLine(BuildPreambleText(tree));
+
+            if (tree.ContentType == GameData.ContentType.EXERCISE)
+            {
+                // FEN, if required, must be last for compatibility with ChesBase.
+                if (tree.RootNode != null)
+                {
+                    BoardPosition pos = new BoardPosition(tree.Nodes[0].Position);
+                    WorkbookFileTextBuilder.UpShiftOnePly(ref pos);
+                    string fen = FenParser.GenerateFenFromPosition(pos, tree.MoveNumberOffset);
+                    sb.AppendLine(PgnHeaders.BuildHeaderLine(PgnHeaders.KEY_FEN_STRING, fen));
+                }
+            }
 
             sb.AppendLine();
 
