@@ -120,6 +120,8 @@ namespace ChessForge
         /// <summary>
         /// If the Comment Before Run for the passed node already exists, it will be updated.
         /// If it does not exist, it will be created.
+        /// NOTE: the Comment Before Run used to be just one text run but now we can have 
+        /// diagram before move as well.
         /// </summary>
         /// <param name="nd"></param>
         public Inline InsertOrUpdateCommentBeforeMoveRun(TreeNode nd, bool? includeNumber = null)
@@ -145,22 +147,22 @@ namespace ChessForge
 
                 _dictNodeToCommentBeforeMoveRun.TryGetValue(nd.NodeId, out inlCommentBeforeMove);
 
-                if (string.IsNullOrEmpty(nd.CommentBeforeMove))
+                // if there is no comment or diagram just clear all
+                if (string.IsNullOrEmpty(nd.CommentBeforeMove) && (!nd.IsDiagram || !nd.IsDiagramBeforeMove))
                 {
-                    // if the comment run existed, remove it
                     if (inlCommentBeforeMove != null)
                     {
                         _dictNodeToCommentBeforeMoveRun.Remove(nd.NodeId);
-                        RemoveRunFromHostingParagraph(inlCommentBeforeMove);
+                        RemoveCommentBeforeMoveRunsFromHostingParagraph(inlCommentBeforeMove, nd.NodeId);
                     }
                 }
                 else
                 {
                     _dictNodeToCommentBeforeMoveRun.Remove(nd.NodeId);
-                    RemoveRunFromHostingParagraph(inlCommentBeforeMove);
+                    RemoveCommentBeforeMoveRunsFromHostingParagraph(inlCommentBeforeMove, nd.NodeId);
 
                     Paragraph para = rMove.Parent as Paragraph;
-                    AddCommentBeforeMoveRunToParagraph(nd, para);
+                    AddCommentBeforeMoveRunsToParagraph(nd, para);
                 }
 
                 // if the passed includeNumber was true, do not question it (it is part of first render)
@@ -719,7 +721,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd"></param>
         /// <param name="para"></param>
-        private void AddCommentBeforeMoveRunToParagraph(TreeNode nd, Paragraph para)
+        private void AddCommentBeforeMoveRunsToParagraph(TreeNode nd, Paragraph para)
         {
             if (string.IsNullOrEmpty(nd.CommentBeforeMove))
             {
