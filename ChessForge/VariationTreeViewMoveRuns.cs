@@ -184,17 +184,20 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Gets the next Run and its TreeNode and changes its text if the
-        /// passed run has a textual comment.
-        /// This is to inssert or remove the move number on the black move
-        /// depending on whether there is or isn't a comment in the current move.
+        /// This is to insert or remove the move number from the next move's run 
+        /// if it is a black's move depending on whether there is or isn't a comment 
+        /// in the current move.
         /// </summary>
         /// <param name="run"></param>
         protected void UpdateNextMoveText(Run currRun, TreeNode currNode, TreeNode nextMoveNode)
         {
+            // if there is a next move and it is in the same para.
+            // if it is in the next para, we know there is no need to change
+            // in particular, we do not want to remove the move number for the move
+            // in the next para whether or not the current move has a comment.
             if (_dictNodeToRun.TryGetValue(nextMoveNode.NodeId, out Run nextMoveRun))
             {
-                if (nextMoveRun != null)
+                if (nextMoveRun != null && currRun.Parent == nextMoveRun.Parent)
                 {
                     int nodeId = TextUtils.GetIdFromPrefixedString(nextMoveRun.Name);
                     TreeNode nextNode = ShownVariationTree.GetNodeFromNodeId(nodeId);
