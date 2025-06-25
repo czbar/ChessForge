@@ -28,3 +28,5 @@ Speed up Undo delete move for simple cases. Same Undo for AddMove and for Delete
 Clicking on the next move takes much longer that using an arrow key.
 
 Remove leading space in Intro moves.
+
+Test export RTF/TEXT and Undo with Diagram Before Move

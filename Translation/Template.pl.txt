@@ -2517,12 +2517,12 @@ ConfirmDeleteExercise=Usunąć ćwiczenie
 InsertDiagram=Wstaw Diagram
 
 #description: Insert a diagram after comment
-#english: InsertDiagramPreComment=Insert Diagram Before Comment
-InsertDiagramPreComment=Wstaw Diagram przed komentarzem
+#english: InsertDiagramBeforeMove=Insert Diagram Before Move
+InsertDiagramBeforeMove=Wstaw diagram przed posunięciem
 
 #description: Insert a diagram after comment
-#english: InsertDiagramPostComment=Insert Diagram After Comment
-InsertDiagramPostComment=Wstaw Diagram po komentarzu
+#english: InsertDiagramAfterMove=Insert Diagram After Move
+InsertDiagramAfterMove=Wstaw diagram po posunięciu
 
 #description: Remove the diagram
 #english: RemoveDiagram=Remove Diagram

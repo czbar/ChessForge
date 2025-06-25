@@ -1972,10 +1972,10 @@ ConfirmDeleteExercise=Delete Exercise
 InsertDiagram=Insert Diagram
 
 #Insert a diagram after comment
-InsertDiagramPreComment=Insert Diagram Before Comment
+InsertDiagramBeforeMove=Insert Diagram Before Move
 
 #Insert a diagram after comment
-InsertDiagramPostComment=Insert Diagram After Comment
+InsertDiagramAfterMove=Insert Diagram After Move
 
 #Remove the diagram
 RemoveDiagram=Remove Diagram
