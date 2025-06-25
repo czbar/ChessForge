@@ -123,7 +123,14 @@ namespace ChessForge
                         isFlipped = AppState.MainWin.MainChessBoard.IsFlipped;
                     }
 
-                    SaveAsImage(nd, isFlipped);
+                    if (!requestFromMainBoard && nd.IsDiagram && nd.IsDiagramBeforeMove)
+                    {
+                        SaveAsImage(nd.Parent, isFlipped);
+                    }
+                    else
+                    {
+                        SaveAsImage(nd, isFlipped);
+                    }
                 }
             }
             catch (Exception ex)

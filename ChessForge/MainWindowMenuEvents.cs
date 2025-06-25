@@ -1989,8 +1989,17 @@ namespace ChessForge
                         insertOrDelete = !nd.IsDiagram;
                     }
                     string lineId = AppState.MainWin.ActiveVariationTree.SelectedLineId;
+                    bool isDiagramBeforeMove = nd.IsDiagramBeforeMove;
+
                     ActiveTreeView?.ToggleDiagramFlag(insertOrDelete == true, preComment);
-                    ActiveTreeView.InsertOrUpdateCommentRun(nd);
+                    if (isDiagramBeforeMove)
+                    {
+                        ActiveTreeView.InsertOrUpdateCommentBeforeMoveRun(nd);
+                    }
+                    else
+                    {
+                        ActiveTreeView.InsertOrUpdateCommentRun(nd);
+                    }
                 }
             }
         }
@@ -2008,7 +2017,14 @@ namespace ChessForge
                 {
                     string lineId = AppState.MainWin.ActiveVariationTree.SelectedLineId;
                     ActiveTreeView.SwapCommentWithDiagram(nd);
-                    ActiveTreeView.InsertOrUpdateCommentRun(nd);
+                    if (nd.IsDiagramBeforeMove)
+                    {
+                        ActiveTreeView.InsertOrUpdateCommentBeforeMoveRun(nd);
+                    }
+                    else
+                    {
+                        ActiveTreeView.InsertOrUpdateCommentRun(nd);
+                    }
                 }
             }
         }
@@ -2028,7 +2044,14 @@ namespace ChessForge
                     if (nd.IsDiagram)
                     {
                         nd.IsDiagramFlipped = !nd.IsDiagramFlipped;
-                        ActiveTreeView.InsertOrUpdateCommentRun(nd);
+                        if (nd.IsDiagramBeforeMove)
+                        {
+                            ActiveTreeView.InsertOrUpdateCommentBeforeMoveRun(nd);
+                        }
+                        else
+                        {
+                            ActiveTreeView.InsertOrUpdateCommentRun(nd);
+                        }
                         AppState.IsDirty = true;
                     }
                 }
