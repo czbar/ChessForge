@@ -162,7 +162,7 @@ namespace ChessForge
                     RemoveCommentBeforeMoveRunsFromHostingParagraph(inlCommentBeforeMove, nd.NodeId);
 
                     Paragraph para = rMove.Parent as Paragraph;
-                    AddCommentBeforeMoveRunsToParagraph(nd, para);
+                    AddCommentBeforeMoveRunsToParagraph(nd, para, out bool diagram);
                 }
 
                 // if the passed includeNumber was true, do not question it (it is part of first render)
@@ -173,6 +173,7 @@ namespace ChessForge
                     // or this move has a CommentBeforeMove
                     bool includeNo = RichTextBoxUtilities.IsFirstNonEmptyRunInPara(rMove, rMove.Parent as Paragraph)
                                      || !string.IsNullOrWhiteSpace(nd.CommentBeforeMove)
+                                     || (nd.IsDiagram && nd.IsDiagramBeforeMove)
                                      || (nd.Parent != null && (!string.IsNullOrEmpty(nd.Parent.Comment) || nd != nd.Parent.Children[0]));
                     UpdateRunText(rMove, nd, includeNo);
                 }
@@ -283,7 +284,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Creates a list of inlines for a diagrm.  
+        /// Creates a list of inlines for a diagram.  
         /// </summary>
         /// <param name="nd"></param>
         /// <param name="para"></param>
@@ -291,24 +292,38 @@ namespace ChessForge
         {
             List<Inline> inlines = new List<Inline>();
 
-            if (nd.IsDiagram)
+            InlineUIContainer iuc = VariationTreeViewDiagram.CreateDiagram(nd, out ChessBoardSmall chessboard, IsLargeDiagram(nd));
+            if (iuc != null)
             {
-                InlineUIContainer iuc = VariationTreeViewDiagram.CreateDiagram(nd, out ChessBoardSmall chessboard, IsLargeDiagram(nd));
-                if (iuc != null)
+                Run preDiagRun = new Run("\n");
+                if (nd.IsDiagramBeforeMove)
                 {
-                    Run preDiagRun = new Run("\n");
+                    preDiagRun.Name = RichTextBoxUtilities.PreInlineDiagramBeforeMoveRunPrefix + nd.NodeId.ToString();
+                }
+                else
+                {
                     preDiagRun.Name = RichTextBoxUtilities.PreInlineDiagramRunPrefix + nd.NodeId.ToString();
-                    inlines.Add(preDiagRun);
+                }
+                inlines.Add(preDiagRun);
 
-                    iuc.MouseDown += EventRunClicked;
-                    inlines.Add(iuc);
+                iuc.MouseDown += EventRunClicked;
+                inlines.Add(iuc);
 
-                    // TODO: the following needs resolving in some other way.
-                    // e.g. perhaps always add the post diag run and remove in post-processing
-                    // if it is found to be the last run in a paragraph.
-                    // NOTE: it might have already been resolved by removing the last new line in paras.
-                    inlines.Add(CreatePostDiagramRun(nd));
+                // TODO: the following needs resolving in some other way.
+                // e.g. perhaps always add the post diag run and remove in post-processing
+                // if it is found to be the last run in a paragraph.
+                // NOTE: it might have already been resolved by removing the last new line in paras.
+                inlines.Add(CreatePostDiagramRun(nd));
 
+                if (nd.IsDiagramBeforeMove)
+                {
+                    if (nd.Parent != null)
+                    {
+                        chessboard.DisplayPosition(nd.Parent, false);
+                    }
+                }
+                else
+                {
                     chessboard.DisplayPosition(nd, false);
                 }
             }
@@ -325,8 +340,71 @@ namespace ChessForge
         private Run CreatePostDiagramRun(TreeNode nd)
         {
             Run postDiagRun = new Run("\n");
-            postDiagRun.Name = RichTextBoxUtilities.PostInlineDiagramRunPrefix + nd.NodeId.ToString();
+            if (nd.IsDiagramBeforeMove)
+            {
+                postDiagRun.Name = RichTextBoxUtilities.PostInlineDiagramBeforeMoveRunPrefix + nd.NodeId.ToString();
+            }
+            else
+            {
+                postDiagRun.Name = RichTextBoxUtilities.PostInlineDiagramRunPrefix + nd.NodeId.ToString();
+            }
             return postDiagRun;
+        }
+
+        /// <summary>
+        /// Creates the comment-before-move Run if there is a CommentBeforeRun with the move.
+        /// Adds the run to the paragraph.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="para"></param>
+        private void AddCommentBeforeMoveRunsToParagraph(TreeNode nd, Paragraph para, out bool diagram)
+        {
+            diagram = false;
+
+            if (!IsCommentBeforeMoveRunToShow(nd))
+            {
+                return;
+            }
+
+            try
+            {
+                List<CommentPart> parts = CommentProcessor.SplitCommentTextAtUrls(nd.CommentBeforeMove);
+
+                // if the node has a diagram, insert it at the beginning (PreComment) or end (PostComment)
+                if (nd.IsDiagram && nd.IsDiagramBeforeMove)
+                {
+                    diagram = true;
+                    CommentPart diag = new CommentPart(CommentPartType.DIAGRAM, "");
+                    if (nd.IsDiagramPreComment)
+                    {
+                        parts.Insert(0, diag);
+                    }
+                    else
+                    {
+                        parts.Add(diag);
+                    }
+                }
+
+                Run ndRun =_dictNodeToRun[nd.NodeId];
+                bool isFirstInPara = RichTextBoxUtilities.IsFirstNonEmptyRunInPara(ndRun, para);
+                CommentPart startPart = new CommentPart(CommentPartType.TEXT, BuildTextForBeforeMoveStartPart(nd, isFirstInPara));
+                parts.Insert(0, startPart);
+
+                CommentPart endPart = new CommentPart(CommentPartType.TEXT, " ");
+                parts.Add(endPart);
+
+                // if the last part is DIAGRAM, we already have a new line and we don't want a leading space either!
+                if (parts.Count > 1 && parts[parts.Count - 2].Type == CommentPartType.DIAGRAM)
+                {
+                    endPart.Text = "";
+                }
+
+                PlaceCommentBeforeMovePartsIntoParagraph(para, nd, parts);
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("AddCommentBeforeMoveRunsToParagraph()", ex);
+            }
         }
 
         /// <summary>
@@ -364,7 +442,7 @@ namespace ChessForge
                 CreateReferenceCommentParts(nd, parts);
 
                 // if the node has a diagram, insert it at the beginning(PreComment) or end (PostComment)
-                if (nd.IsDiagram)
+                if (nd.IsDiagram && !nd.IsDiagramBeforeMove)
                 {
                     diagram = true;
                     CommentPart diag = new CommentPart(CommentPartType.DIAGRAM, "");
@@ -429,7 +507,14 @@ namespace ChessForge
             switch (part.Type)
             {
                 case CommentPartType.DIAGRAM:
-                    inlines = CreateInlinesForDiagram(nd);
+                    if (nd.IsDiagramBeforeMove)
+                    {
+                        inlines = CreateInlinesForDiagram(nd);
+                    }
+                    else
+                    {
+                        inlines = CreateInlinesForDiagram(nd);
+                    }
                     inl = inlines.Last();
                     break;
                 case CommentPartType.ASSESSMENT:
@@ -438,7 +523,14 @@ namespace ChessForge
                     inl.ToolTip = Properties.Resources.TooltipEngineBlunderDetect;
                     inl.FontStyle = FontStyles.Normal;
                     inl.FontWeight = FontWeights.Normal;
-                    inl.PreviewMouseDown += EventCommentRunClicked;
+                    if (nd.IsDiagramBeforeMove)
+                    {
+                        inl.PreviewMouseDown += EventCommentBeforeMoveRunClicked;
+                    }
+                    else
+                    {
+                        inl.PreviewMouseDown += EventCommentRunClicked;
+                    }
                     inlines.Add(inl);
                     break;
                 case CommentPartType.THUMBNAIL_SYMBOL:
@@ -459,7 +551,14 @@ namespace ChessForge
                     inl.FontStyle = FontStyles.Normal;
                     inl.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
                     inl.FontWeight = FontWeights.Normal;
-                    inl.PreviewMouseDown += EventCommentRunClicked;
+                    if (nd.IsDiagramBeforeMove)
+                    {
+                        inl.PreviewMouseDown += EventCommentBeforeMoveRunClicked;
+                    }
+                    else
+                    {
+                        inl.PreviewMouseDown += EventCommentRunClicked;
+                    }
                     inlines.Add(inl);
                     break;
                 case CommentPartType.URL:
@@ -504,12 +603,67 @@ namespace ChessForge
                     inl.FontStyle = FontStyles.Normal;
                     inl.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
                     inl.FontWeight = FontWeights.Normal;
-                    inl.PreviewMouseDown += EventCommentRunClicked;
+                    if (nd.IsDiagramBeforeMove)
+                    {
+                        inl.PreviewMouseDown += EventCommentBeforeMoveRunClicked;
+                    }
+                    else
+                    {
+                        inl.PreviewMouseDown += EventCommentRunClicked;
+                    }
                     inlines.Add(inl);
                     break;
             }
 
             return inlines;
+        }
+
+        /// <summary>
+        /// Creates inlines for comment parts and inserts them in the appropriate order 
+        /// into the paragraph.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <param name="nd"></param>
+        /// <param name="parts"></param>
+        private void PlaceCommentBeforeMovePartsIntoParagraph(Paragraph para, TreeNode nd, List<CommentPart> parts)
+        {
+            Inline inlPrevious = null;
+            for (int i = 0; i < parts.Count; i++)
+            {
+                CommentPart part = parts[i];
+                List<Inline> inlines = CreateInlineForCommentPart(part, nd, i, parts.Count);
+
+                // the above may or may not have set the name.
+                foreach (Inline inl in inlines)
+                {
+                    if (string.IsNullOrEmpty(inl.Name))
+                    {
+                        inl.Name = _run_comment_before_move_ + nd.NodeId.ToString();
+                    }
+                }
+
+                if (inlPrevious == null)
+                {
+                    // this is the first comment inline which is a single inline
+                    // because only multiple ones are from the diagram and it will be always preceded
+                    // by at least START. 
+                    Run rNode;
+                    rNode = _dictNodeToRun[nd.NodeId];
+                    para.Inlines.InsertBefore(rNode, inlines[0]);
+                    inlPrevious = inlines[0];
+
+                    _dictNodeToCommentBeforeMoveRun[nd.NodeId] = inlines[0];
+                    _dictCommentBeforeMoveRunToParagraph[inlines[0]] = para;
+                }
+                else
+                {
+                    foreach (Inline inline in inlines)
+                    {
+                        para.Inlines.InsertAfter(inlPrevious, inline);
+                        inlPrevious = inline;
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -652,6 +806,31 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Creates text to start the BeforeMove comment inlines.
+        /// If this is the first run in the paragraph, it will be empty,
+        /// if there is a BeforeMove diagram and the comment placed before
+        /// the diagram, it will be a new line,
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="isFirstInPara"></param>
+        /// <returns></returns>
+        private string BuildTextForBeforeMoveStartPart(TreeNode nd, bool isFirstInPara)
+        {
+            string text = string.Empty;
+
+            if (nd.IsDiagram && nd.IsDiagramBeforeMove && !nd.IsDiagramPreComment && !isFirstInPara && !string.IsNullOrEmpty(nd.CommentBeforeMove))
+            {
+                text = "\n";
+            }
+            else if (nd.Parent != null && !isFirstInPara)
+            {
+                text = " ";
+            }
+
+            return text;
+        }
+
+        /// <summary>
         /// Builds the end part of the comment.
         /// It will be NewLines if we are on main line 
         /// or a space if we are not.
@@ -716,51 +895,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Creates the comment-before-move Run if there is a CommentBeforeRun with the move.
-        /// Adds the run to the paragraph.
-        /// </summary>
-        /// <param name="nd"></param>
-        /// <param name="para"></param>
-        private void AddCommentBeforeMoveRunsToParagraph(TreeNode nd, Paragraph para)
-        {
-            if (string.IsNullOrEmpty(nd.CommentBeforeMove))
-            {
-                return;
-            }
-
-            try
-            {
-                string commentText = " " + (nd.CommentBeforeMove ?? "") + " ";
-
-                Run run = new Run(commentText);
-                run.FontStyle = FontStyles.Normal;
-                run.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
-                run.FontWeight = FontWeights.Normal;
-                run.PreviewMouseDown += EventCommentBeforeMoveRunClicked;
-                run.Name = _run_comment_ + nd.NodeId.ToString();
-
-                run.Name = _run_comment_before_move_ + nd.NodeId.ToString();
-
-                _dictNodeToCommentBeforeMoveRun[nd.NodeId] = run;
-                _dictCommentBeforeMoveRunToParagraph[run] = para;
-
-                Run rNode = _dictNodeToRun[nd.NodeId];
-                if (RichTextBoxUtilities.IsFirstNonEmptyRunInPara(rNode, para)
-                   || (Configuration.MainLineCommentLF && nd.Parent != null && (!string.IsNullOrEmpty(nd.Parent.Comment) || nd.Parent.IsDiagram))
-                   )
-                {
-                    // if this is the first run in the para remove leading space to eliminate spurious indent.
-                    run.Text = run.Text.Substring(1);
-                }
-                para.Inlines.InsertBefore(rNode, run);
-            }
-            catch (Exception ex)
-            {
-                AppLog.Message("AddCommentBeforeMoveRunToParagraph()", ex);
-            }
-        }
-
-        /// <summary>
         /// Checks if the last run in the paragraph is a comment.
         /// NOTE: we rely on the fact the both pre- and post-move comment run names
         /// begin with the _run_comment_ constant.
@@ -797,11 +931,21 @@ namespace ChessForge
         {
             return !string.IsNullOrEmpty(nd.Comment)
                    || !string.IsNullOrEmpty(nd.References)
-                   || nd.IsDiagram
+                   || (nd.IsDiagram && !nd.IsDiagramBeforeMove)
                    || (nd.IsThumbnail && !_isPrinting)
                    || HandleBlunders && nd.Assessment != 0 && nd.IsMainLine()
                    || (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.EDITING && nd.QuizPoints != 0);
         }
 
+        /// <summary>
+        /// Checks if there is anything to show in the comment-before-move run i.e.
+        /// non-empty BeforeMove comment text or a BeforeMove diagram.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        private bool IsCommentBeforeMoveRunToShow(TreeNode nd)
+        {
+            return !string.IsNullOrEmpty(nd.CommentBeforeMove) || (nd.IsDiagram && nd.IsDiagramBeforeMove);
+        }
     }
 }
