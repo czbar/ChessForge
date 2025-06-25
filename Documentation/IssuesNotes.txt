@@ -25,12 +25,6 @@ IntroView uses _rtb static reference to HostRtb. This is problematic. Try text c
 
 Speed up Undo delete move for simple cases. Same Undo for AddMove and for Delete move.
 
-After editing the game header selection is not shown.
-
 Clicking on the next move takes much longer that using an arrow key.
 
-After inserting a diagram in Study after A) 10...Bf6, the number "10..." disappeared.
-
 Remove leading space in Intro moves.
-
-Export PGN does not eksport Exercises properly (no FEN included)
