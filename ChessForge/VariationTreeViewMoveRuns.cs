@@ -145,6 +145,8 @@ namespace ChessForge
                     return null;
                 }
 
+                bool isFirstInPara = RichTextBoxUtilities.IsFirstNonEmptyRunInPara(rMove, rMove.Parent as Paragraph);
+
                 _dictNodeToCommentBeforeMoveRun.TryGetValue(nd.NodeId, out inlCommentBeforeMove);
 
                 // if there is no comment or diagram just clear all
@@ -162,7 +164,7 @@ namespace ChessForge
                     RemoveCommentBeforeMoveRunsFromHostingParagraph(inlCommentBeforeMove, nd.NodeId);
 
                     Paragraph para = rMove.Parent as Paragraph;
-                    AddCommentBeforeMoveRunsToParagraph(nd, para, out bool diagram);
+                    AddCommentBeforeMoveRunsToParagraph(nd, para, isFirstInPara, out bool diagram);
                 }
 
                 // if the passed includeNumber was true, do not question it (it is part of first render)
@@ -171,7 +173,7 @@ namespace ChessForge
                 {
                     // we need the number if this is the first run in the paragraph or previous move has a Comment
                     // or this move has a CommentBeforeMove
-                    bool includeNo = RichTextBoxUtilities.IsFirstNonEmptyRunInPara(rMove, rMove.Parent as Paragraph)
+                    bool includeNo = isFirstInPara
                                      || !string.IsNullOrWhiteSpace(nd.CommentBeforeMove)
                                      || (nd.IsDiagram && nd.IsDiagramBeforeMove)
                                      || (nd.Parent != null && (!string.IsNullOrEmpty(nd.Parent.Comment) || nd != nd.Parent.Children[0]));
@@ -288,20 +290,29 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd"></param>
         /// <param name="para"></param>
-        private List<Inline> CreateInlinesForDiagram(TreeNode nd)
+        private List<Inline> CreateInlinesForDiagram(TreeNode nd, bool isFirstInPara)
         {
             List<Inline> inlines = new List<Inline>();
 
             InlineUIContainer iuc = VariationTreeViewDiagram.CreateDiagram(nd, out ChessBoardSmall chessboard, IsLargeDiagram(nd));
             if (iuc != null)
             {
-                Run preDiagRun = new Run("\n");
+                Run preDiagRun;
                 if (nd.IsDiagramBeforeMove)
                 {
+                    if (isFirstInPara)
+                    {
+                        preDiagRun = new Run("");
+                    }
+                    else
+                    {
+                        preDiagRun = new Run("\n");
+                    }
                     preDiagRun.Name = RichTextBoxUtilities.PreInlineDiagramBeforeMoveRunPrefix + nd.NodeId.ToString();
                 }
                 else
                 {
+                    preDiagRun = new Run("\n");
                     preDiagRun.Name = RichTextBoxUtilities.PreInlineDiagramRunPrefix + nd.NodeId.ToString();
                 }
                 inlines.Add(preDiagRun);
@@ -357,7 +368,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd"></param>
         /// <param name="para"></param>
-        private void AddCommentBeforeMoveRunsToParagraph(TreeNode nd, Paragraph para, out bool diagram)
+        private void AddCommentBeforeMoveRunsToParagraph(TreeNode nd, Paragraph para, bool isFirstInPara, out bool diagram)
         {
             diagram = false;
 
@@ -385,8 +396,6 @@ namespace ChessForge
                     }
                 }
 
-                Run ndRun =_dictNodeToRun[nd.NodeId];
-                bool isFirstInPara = RichTextBoxUtilities.IsFirstNonEmptyRunInPara(ndRun, para);
                 CommentPart startPart = new CommentPart(CommentPartType.TEXT, BuildTextForBeforeMoveStartPart(nd, isFirstInPara));
                 parts.Insert(0, startPart);
 
@@ -399,7 +408,7 @@ namespace ChessForge
                     endPart.Text = "";
                 }
 
-                PlaceCommentBeforeMovePartsIntoParagraph(para, nd, parts);
+                PlaceCommentBeforeMovePartsIntoParagraph(para, nd, isFirstInPara, parts);
             }
             catch (Exception ex)
             {
@@ -499,7 +508,7 @@ namespace ChessForge
         /// <param name="i"></param>
         /// <param name="partsCount"></param>
         /// <returns></returns>
-        private List<Inline> CreateInlineForCommentPart(CommentPart part, TreeNode nd, int i, int partsCount)
+        private List<Inline> CreateInlineForCommentPart(CommentPart part, TreeNode nd, bool isFirstInPara, int i, int partsCount)
         {
             List<Inline> inlines = new List<Inline>();
             Inline inl;
@@ -507,14 +516,7 @@ namespace ChessForge
             switch (part.Type)
             {
                 case CommentPartType.DIAGRAM:
-                    if (nd.IsDiagramBeforeMove)
-                    {
-                        inlines = CreateInlinesForDiagram(nd);
-                    }
-                    else
-                    {
-                        inlines = CreateInlinesForDiagram(nd);
-                    }
+                    inlines = CreateInlinesForDiagram(nd, isFirstInPara);
                     inl = inlines.Last();
                     break;
                 case CommentPartType.ASSESSMENT:
@@ -625,13 +627,13 @@ namespace ChessForge
         /// <param name="para"></param>
         /// <param name="nd"></param>
         /// <param name="parts"></param>
-        private void PlaceCommentBeforeMovePartsIntoParagraph(Paragraph para, TreeNode nd, List<CommentPart> parts)
+        private void PlaceCommentBeforeMovePartsIntoParagraph(Paragraph para, TreeNode nd, bool isFirstInPara, List<CommentPart> parts)
         {
             Inline inlPrevious = null;
             for (int i = 0; i < parts.Count; i++)
             {
                 CommentPart part = parts[i];
-                List<Inline> inlines = CreateInlineForCommentPart(part, nd, i, parts.Count);
+                List<Inline> inlines = CreateInlineForCommentPart(part, nd, isFirstInPara, i, parts.Count);
 
                 // the above may or may not have set the name.
                 foreach (Inline inl in inlines)
@@ -685,7 +687,7 @@ namespace ChessForge
                     isAssessmentBlunderShown = true;
                 }
 
-                List<Inline> inlines = CreateInlineForCommentPart(part, nd, i, parts.Count);
+                List<Inline> inlines = CreateInlineForCommentPart(part, nd, false, i, parts.Count);
 
                 // the above may or may not have set the name.
                 foreach (Inline inl in inlines)
