@@ -1937,7 +1937,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void UiMn_InsertPreCommentDiagram_Click(object sender, RoutedEventArgs e)
+        public void UiMn_InsertBeforeMoveDiagram_Click(object sender, RoutedEventArgs e)
         {
             InsertOrDeleteDiagram(true, true);
         }
@@ -1947,7 +1947,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void UiMn_InsertPostCommentDiagram_Click(object sender, RoutedEventArgs e)
+        public void UiMn_InsertAfterMoveDiagram_Click(object sender, RoutedEventArgs e)
         {
             InsertOrDeleteDiagram(false, true);
         }
@@ -1976,8 +1976,8 @@ namespace ChessForge
         /// Inserts or removes a diagram.
         /// </summary>
         /// <param name="insertOrDelete"></param>
-        /// <param name="preComment"></param>
-        public void InsertOrDeleteDiagram(bool preComment, bool? insertOrDelete)
+        /// <param name="beforeMove"></param>
+        public void InsertOrDeleteDiagram(bool beforeMove, bool? insertOrDelete)
         {
             if (AppState.MainWin.ActiveTreeView != null)
             {
@@ -1989,10 +1989,14 @@ namespace ChessForge
                         insertOrDelete = !nd.IsDiagram;
                     }
                     string lineId = AppState.MainWin.ActiveVariationTree.SelectedLineId;
-                    bool isDiagramBeforeMove = nd.IsDiagramBeforeMove;
 
-                    ActiveTreeView?.ToggleDiagramFlag(insertOrDelete == true, preComment);
-                    if (isDiagramBeforeMove)
+                    if (insertOrDelete == true)
+                    {
+                        nd.IsDiagramBeforeMove = beforeMove;
+                    }
+
+                    ActiveTreeView?.ToggleDiagramFlag(nd, insertOrDelete == true);
+                    if (nd.IsDiagramBeforeMove)
                     {
                         ActiveTreeView.InsertOrUpdateCommentBeforeMoveRun(nd);
                     }
