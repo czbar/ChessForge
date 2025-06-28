@@ -1430,7 +1430,8 @@ namespace ChessForge
                                 {
                                     lastRunWasIntroMove = ProcessIntroMove(printPara, uic, lastRunWasIntroMove);
                                 }
-                                else if (inl.Name.StartsWith(RichTextBoxUtilities.InlineDiagramIucPrefix))
+                                else if (inl.Name.StartsWith(RichTextBoxUtilities.InlineDiagramIucPrefix)
+                                    || inl.Name.StartsWith(RichTextBoxUtilities.InlineDiagramBeforeMoveIucPrefix))
                                 {
                                     printDoc.Blocks.Add(printPara);
                                     printPara = CreateInlineDiagramForPrint(printDoc, printPara, inl.Name, tree, ref diagrams);
@@ -1694,8 +1695,19 @@ namespace ChessForge
         {
             if (nd != null)
             {
-                printPara.Inlines.Add(CreateDiagramPlaceholderRun(diagramId));
-                diagrams.Add(new RtfDiagram(diagramId, nd, false));
+                if (nd.IsDiagramBeforeMove)
+                {
+                    if (nd.Parent != null)
+                    {
+                        printPara.Inlines.Add(CreateDiagramPlaceholderRun(diagramId));
+                        diagrams.Add(new RtfDiagram(diagramId, nd.Parent, false));
+                    }
+                }
+                else
+                {
+                    printPara.Inlines.Add(CreateDiagramPlaceholderRun(diagramId));
+                    diagrams.Add(new RtfDiagram(diagramId, nd, false));
+                }
             }
         }
 
