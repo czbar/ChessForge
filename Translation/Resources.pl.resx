@@ -1753,11 +1753,11 @@ UWAGA: Oceny nie są uaktualniane (zezwól przez Ctrl+K).</value>
   <data name="InsertDiagram" xml:space="preserve">
     <value>Wstaw Diagram</value>
   </data>
-  <data name="InsertDiagramPreComment" xml:space="preserve">
-    <value>Wstaw Diagram przed komentarzem</value>
+  <data name="InsertDiagramBeforeMove" xml:space="preserve">
+    <value>Wstaw diagram przed posunięciem</value>
   </data>
-  <data name="InsertDiagramPostComment" xml:space="preserve">
-    <value>Wstaw Diagram po komentarzu</value>
+  <data name="InsertDiagramAfterMove" xml:space="preserve">
+    <value>Wstaw diagram po posunięciu</value>
   </data>
   <data name="RemoveDiagram" xml:space="preserve">
     <value>Usuń Diagram</value>
@@ -1787,7 +1787,7 @@ UWAGA: Oceny nie są uaktualniane (zezwól przez Ctrl+K).</value>
     <value>Promuj Wariant</value>
   </data>
   <data name="EnterNullMove" xml:space="preserve">
-    <value>Wprowadź pusty ruch</value>
+    <value>Wstaw pusty ruch</value>
   </data>
   <data name="DuplicateAsVariation" xml:space="preserve">
     <value>Duplikuj ruch jako wariant</value>

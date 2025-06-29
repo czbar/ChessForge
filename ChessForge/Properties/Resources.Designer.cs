@@ -2608,7 +2608,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter Null Move.
+        ///   Looks up a localized string similar to Insert Null Move.
         /// </summary>
         public static string EnterNullMove {
             get {
@@ -4255,20 +4255,20 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Insert Diagram After Comment.
+        ///   Looks up a localized string similar to Insert Diagram After Move.
         /// </summary>
-        public static string InsertDiagramPostComment {
+        public static string InsertDiagramAfterMove {
             get {
-                return ResourceManager.GetString("InsertDiagramPostComment", resourceCulture);
+                return ResourceManager.GetString("InsertDiagramAfterMove", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Insert Diagram Before Comment.
+        ///   Looks up a localized string similar to Insert Diagram Before Move.
         /// </summary>
-        public static string InsertDiagramPreComment {
+        public static string InsertDiagramBeforeMove {
             get {
-                return ResourceManager.GetString("InsertDiagramPreComment", resourceCulture);
+                return ResourceManager.GetString("InsertDiagramBeforeMove", resourceCulture);
             }
         }
         

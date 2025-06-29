@@ -1064,22 +1064,57 @@ namespace ChessForge
 
         /// <summary>
         /// Finds engine executable by checking if it is already set
-        /// and if not, if we have it in the current directory.
+        /// and if not, check the installation and the current directory.
         /// If all fails, asks the user to find it.
         /// </summary>
         /// <returns></returns>
         public static string EngineExecutableFilePath()
         {
+            // if the path is not set, look for the engine executable
             if (!File.Exists(EngineExePath))
             {
-                string searchPath = "";
-                try
+                // first check the installation folder
+                EngineExePath = FindEngineExeInFolder(AppDomain.CurrentDomain.BaseDirectory);
+
+                // if not found, check the current folder
+                if (string.IsNullOrEmpty(EngineExePath))
                 {
-                    searchPath = Path.GetDirectoryName(EngineExePath);
+                    EngineExePath = FindEngineExeInFolder(".");
                 }
-                catch { };
-                EngineExePath = "";
-                DirectoryInfo info = new DirectoryInfo(".");
+
+                // if still not found, check the path where the exe was supposed to be
+                if (string.IsNullOrEmpty(EngineExePath))
+                {
+                    string searchPath = "";
+                    try
+                    {
+                        searchPath = Path.GetDirectoryName(EngineExePath);
+                    }
+                    catch 
+                    {
+                        // there was no path set
+                    }
+
+                    // show the dialog to select the engine executable
+                    EngineExePath = SelectEngineExecutable(searchPath);
+                }
+            }
+
+            return EngineExePath;
+        }
+
+        /// <summary>
+        /// Finds the "distribution" Stockfish engine executable
+        /// in the given folder.
+        /// </summary>
+        /// <param name="folder"></param>
+        /// <returns></returns>
+        private static string FindEngineExeInFolder(string folder)
+        {
+            string engineExe = "";
+            try
+            {
+                DirectoryInfo info = new DirectoryInfo(folder);
                 FileInfo[] files = info.GetFiles();
 
                 int latestVer = -1;
@@ -1097,20 +1132,16 @@ namespace ChessForge
                                 if (ver > latestVer)
                                 {
                                     latestVer = ver;
-                                    EngineExePath = file.FullName;
+                                    engineExe = file.FullName;
                                 }
                             }
                         }
                     }
                 }
-
-                if (string.IsNullOrEmpty(EngineExePath))
-                {
-                    EngineExePath = SelectEngineExecutable(searchPath);
-                }
             }
+            catch { }
 
-            return EngineExePath;
+            return engineExe;
         }
 
         /// <summary>

@@ -48,7 +48,7 @@ namespace ChessForge
                     {
                         isValidMove = AppState.IsMoveValid(moveEngCode.ToString());
                     }
-                    catch 
+                    catch
                     {
                         isValidMove = false;
                     }
@@ -330,7 +330,7 @@ namespace ChessForge
 
                 // while testing set FastLayout to 1 in config,txt
                 bool useNewLayout = Configuration.FastLayout;
-                
+
                 TreeNode collapsedAncestor = VariationTreeViewUtils.FindCollapsedAncestor(nd);
                 if (collapsedAncestor != null)
                 {
@@ -361,6 +361,18 @@ namespace ChessForge
                                 || AppState.MainWin.ActiveVariationTree.NodeHasSiblings(nd.Parent.NodeId))
                             {
                                 PulseManager.SetPauseCounter(5);
+
+                                // TODO: during some tests, it appeared that the call to AppState.MainWin.RebuildActiveTreeView()
+                                //       causes a big perf hit with frustranus showing for a long time.
+                                //       At the same, changing chapters was very fast.
+                                //       This need to be investigated further but is very difficult to reproduce.
+                                //
+                                //if (AppState.MainWin.ActiveTreeView.ContentType == GameData.ContentType.STUDY_TREE)
+                                //{
+                                //    WorkbookLocationNavigator.GotoArticle(WorkbookManager.SessionWorkbook.ActiveChapterIndex, TabViewType.S);
+                                //}
+                                //else
+
                                 AppState.MainWin.RebuildActiveTreeView();
                             }
                             else
@@ -388,7 +400,7 @@ namespace ChessForge
                     AppState.MainWin.ActiveTreeView.UnhighlightActiveLine();
                     AppState.MainWin.ActiveVariationTree.SetLineIdForNewNode(nd);
                     AppState.MainWin.SetActiveLine(nd.LineId, nd.NodeId, false);
-                    
+
                     if (useNewLayout && AppState.MainWin.ActiveTreeView is StudyTreeView studyView)
                     {
                         studyView.UpdateLayoutOnAddedMove(nd);

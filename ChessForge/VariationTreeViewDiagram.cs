@@ -69,7 +69,14 @@ namespace ChessForge
 
                     iuc = new InlineUIContainer();
                     iuc.Child = viewBox;
-                    iuc.Name = RichTextBoxUtilities.InlineDiagramIucPrefix + nd.NodeId.ToString();
+                    if (nd.IsDiagramBeforeMove)
+                    {
+                        iuc.Name = RichTextBoxUtilities.InlineDiagramBeforeMoveIucPrefix + nd.NodeId.ToString();
+                    }
+                    else
+                    {
+                        iuc.Name = RichTextBoxUtilities.InlineDiagramIucPrefix + nd.NodeId.ToString();
+                    }
                 }
                 catch
                 {

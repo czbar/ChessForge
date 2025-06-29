@@ -588,8 +588,8 @@ ErrAfterMove=po ruchu
 #english: ErrClipboardLinePaste=Error pasting variation from the Clipboard 
 ErrClipboardLinePaste=Błąd przy wklejaniu wariantu ze schowka
 
-#description: Selected file name is the same as the workbook's
-#english: ErrFileNameSameAsWorkbook=File name cannot be the same as Workbook's file
+#description: Selected file is a Workbook, do not overwrite.
+#english: ErrDontOverwriteWorkbook=The selected file is a ChessForge Workbook. Choose a different file.
 ErrDontOverwriteWorkbook=Wybrany plik jest podręcznikiem ChessForge. Wybierz inny plik.
 
 #description: No games downloaded
@@ -2518,11 +2518,11 @@ InsertDiagram=Wstaw Diagram
 
 #description: Insert a diagram after comment
 #english: InsertDiagramPreComment=Insert Diagram Before Comment
-InsertDiagramPreComment=Wstaw Diagram przed komentarzem
+InsertDiagramBeforeMove=Wstaw diagram przed posunięciem
 
 #description: Insert a diagram after comment
 #english: InsertDiagramPostComment=Insert Diagram After Comment
-InsertDiagramPostComment=Wstaw Diagram po komentarzu
+InsertDiagramAfterMove=Wstaw diagram po posunięciu
 
 #description: Remove the diagram
 #english: RemoveDiagram=Remove Diagram
@@ -2566,8 +2566,8 @@ MnGameExerciseReferences=Edytuj Odsyłacz do Partii i Ćwiczeń...
 PromoteLine=Promuj Wariant
 
 #description: Enter null move
-#english: EnterNullMove=Enter Null Move
-EnterNullMove=Wprowadź pusty ruch
+#english: EnterNullMove=Insert Null Move
+EnterNullMove=Wstaw pusty ruch
 
 #description: Duplicate move as variation
 #english: DuplicateAsVariation=Duplicate Move as Variation

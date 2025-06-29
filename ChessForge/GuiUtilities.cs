@@ -673,7 +673,7 @@ namespace ChessForge
                 {
                     var key = (e.Key == Key.System ? e.SystemKey : e.Key);
 
-                    char charToInsert = GetFigurineChar(key);
+                    char charToInsert = GetFigurineChar(key, true);
 
                     if (charToInsert != '\0')
                     {
@@ -989,7 +989,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        private static char GetFigurineChar(Key key)
+        private static char GetFigurineChar(Key key, bool inclPawn = false)
         {
             char charToInsert = '\0';
 
@@ -1010,6 +1010,12 @@ namespace ChessForge
                     break;
                 case Key.N:
                     charToInsert = isShift ? Languages.BlackFigurinesMapping['N'] : Languages.WhiteFigurinesMapping['N'];
+                    break;
+                case Key.P:
+                    if (inclPawn)
+                    {
+                        charToInsert = isShift ? Languages.BlackFigurinesMapping['P'] : Languages.WhiteFigurinesMapping['P'];
+                    }
                     break;
                 default:
                     break;

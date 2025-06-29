@@ -992,14 +992,24 @@ namespace ChessForge
                 }
                 else if (inl is InlineUIContainer iuc)
                 {
-                    if (inl.Name != null && inl.Name.StartsWith(RichTextBoxUtilities.InlineDiagramIucPrefix))
+                    if (inl.Name != null && 
+                        (inl.Name.StartsWith(RichTextBoxUtilities.InlineDiagramIucPrefix) || inl.Name.StartsWith(RichTextBoxUtilities.InlineDiagramBeforeMoveIucPrefix)))
                     {
                         lastRunWasIntroMove = false;
 
                         int nodeId = TextUtils.GetIdFromPrefixedString(inl.Name);
                         TreeNode nd = tree.GetNodeFromNodeId(nodeId);
 
-                        string fenText = "[" + FenParser.GenerateFenFromPosition(nd.Position) + "]";
+                        string fenText;
+                        if (nd.IsDiagramBeforeMove)
+                        {
+                            fenText = "[" + FenParser.GenerateFenFromPosition(nd.Parent.Position) + "]";
+                        }
+                        else
+                        {
+                            fenText = "[" + FenParser.GenerateFenFromPosition(nd.Position) + "]";
+                        }
+
                         para.Inlines.Add(new Run(fenText));
                     }
                     else if (inl.Name != null && inl.Name.StartsWith(RichTextBoxUtilities.UicMovePrefix))

@@ -1753,11 +1753,11 @@ NOTE: Evaluations are not being updated (Ctrl+K to allow).</value>
   <data name="InsertDiagram" xml:space="preserve">
     <value>Insert Diagram</value>
   </data>
-  <data name="InsertDiagramPreComment" xml:space="preserve">
-    <value>Insert Diagram Before Comment</value>
+  <data name="InsertDiagramBeforeMove" xml:space="preserve">
+    <value>Insert Diagram Before Move</value>
   </data>
-  <data name="InsertDiagramPostComment" xml:space="preserve">
-    <value>Insert Diagram After Comment</value>
+  <data name="InsertDiagramAfterMove" xml:space="preserve">
+    <value>Insert Diagram After Move</value>
   </data>
   <data name="RemoveDiagram" xml:space="preserve">
     <value>Remove Diagram</value>
@@ -1787,7 +1787,7 @@ NOTE: Evaluations are not being updated (Ctrl+K to allow).</value>
     <value>Promote Line</value>
   </data>
   <data name="EnterNullMove" xml:space="preserve">
-    <value>Enter Null Move</value>
+    <value>Insert Null Move</value>
   </data>
   <data name="DuplicateAsVariation" xml:space="preserve">
     <value>Duplicate Move as Variation</value>

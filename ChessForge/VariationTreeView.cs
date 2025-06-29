@@ -754,15 +754,13 @@ namespace ChessForge
         /// <summary>
         /// Toggles the diagram flag on the currently selected node.
         /// </summary>
-        public void ToggleDiagramFlag(bool insertOrDelete, bool isPreOrPost)
+        public void ToggleDiagramFlag(TreeNode nd, bool insertOrDelete)
         {
             try
             {
-                TreeNode nd = GetSelectedNode();
                 if (nd != null)
                 {
                     nd.IsDiagram = insertOrDelete;
-                    nd.IsDiagramPreComment = isPreOrPost;
 
                     EditOperation.EditType typ = nd.IsDiagram ? EditOperation.EditType.INSERT_DIAGRAM : EditOperation.EditType.DELETE_DIAGRAM;
                     EditOperation op = new EditOperation(typ, nd);
@@ -1777,6 +1775,8 @@ namespace ChessForge
                             {
                                 para2 = CreateParagraph(_currParagraphLevel.ToString(), true);
                                 para2.Margin = new Thickness(para.Margin.Left, 0, 0, 5);
+                                // TODO: review the reason for the line above.
+                                // Not clear why it has 5 as "Bottom" and why "Left" needs to be set.
                             }
                             doc.Blocks.Add(para2);
                         }

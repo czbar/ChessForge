@@ -420,6 +420,52 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Removes all parts of the "comment before move" for a given node.
+        /// These are identified by prefixes and nodeIds coded in the name of the inline.
+        /// </summary>
+        /// <param name="inline"></param>
+        /// <param name="nodeId"></param>
+        public void RemoveCommentBeforeMoveRunsFromHostingParagraph(Inline inline, int nodeId)
+        {
+            if (inline == null)
+            {
+                return;
+            }
+
+            Paragraph parent = inline.Parent as Paragraph;
+            if (parent == null)
+            {
+                return;
+            }
+
+            string commentTextName = _run_comment_before_move_ + nodeId.ToString();
+            string preDiagTextName = RichTextBoxUtilities.PreInlineDiagramBeforeMoveRunPrefix + nodeId.ToString();
+            string postDiagTextName = RichTextBoxUtilities.PostInlineDiagramBeforeMoveRunPrefix + nodeId.ToString();
+            string iucDiagramName = RichTextBoxUtilities.InlineDiagramBeforeMoveIucPrefix + nodeId.ToString();
+
+            List<Inline> inlinesToRemove = new List<Inline>();
+            // where appropriate we need to match the full name e.g. "run_comment_45"
+            // (so that we don't match the above for node id 4)
+            // and in the case of refs the first 2 parts ending with '_'.
+            foreach (Inline inl in parent.Inlines)
+            {
+                if (inl.Name == commentTextName
+                    || inl.Name == preDiagTextName
+                    || inl.Name == postDiagTextName
+                    || inl.Name == iucDiagramName
+                    )
+                {
+                    inlinesToRemove.Add(inl);
+                }
+            }
+
+            foreach (Inline inlToRemove in inlinesToRemove)
+            {
+                parent.Inlines.Remove(inlToRemove);
+            }
+        }
+
+        /// <summary>
         /// Insert a Run after a specified Run.
         /// </summary>
         /// <param name="runToIsert"></param>

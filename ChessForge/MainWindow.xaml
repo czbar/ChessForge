@@ -601,9 +601,9 @@
                                     <MenuItem x:Name="UiMnMarkBookmark" Header="{x:Static p:Resources.BookmarkThisPosition}" Click="UiMnMarkBookmark_Click" />
                                     <MenuItem x:Name="UiMnStDeleteBookmark" Visibility="Collapsed" Header="{x:Static p:Resources.DeleteThisBookmark}" Click="UiMnciDeleteBookmark_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="UiMnStudyInsertDiagramPreComment" Header="{x:Static p:Resources.InsertDiagramPreComment}"  Click="UiMn_InsertPreCommentDiagram_Click" InputGestureText="Ctrl+I" />
-                                    <MenuItem x:Name="UiMnStudyInsertDiagramPostComment" Header="{x:Static p:Resources.InsertDiagramPostComment}"  Click="UiMn_InsertPostCommentDiagram_Click" InputGestureText="Ctrl+J" />
-                                    <MenuItem x:Name="UiMnStudyDeleteDiagram" Visibility="Collapsed" Header="{x:Static p:Resources.RemoveDiagram}" Click="UiMn_DeleteDiagram_Click" InputGestureText="Ctrl+I" />
+                                    <MenuItem x:Name="UiMnStudyInsertDiagramPostComment" Header="{x:Static p:Resources.InsertDiagramAfterMove}"  Click="UiMn_InsertAfterMoveDiagram_Click" InputGestureText="Ctrl+I" />
+                                    <MenuItem x:Name="UiMnStudyInsertDiagramPreComment" Header="{x:Static p:Resources.InsertDiagramBeforeMove}"  Click="UiMn_InsertBeforeMoveDiagram_Click" InputGestureText="Ctrl+J" />
+                                    <MenuItem x:Name="UiMnStudyDeleteDiagram" Visibility="Collapsed" Header="{x:Static p:Resources.RemoveDiagram}" Click="UiMn_DeleteDiagram_Click" InputGestureText="Ctrl+I/J" />
                                     <MenuItem x:Name="UiMnStudySwapDiagramComment" Visibility="Collapsed" Header="{x:Static p:Resources.SwapDiagramComment}" Click="UiMn_SwapDiagramComment_Click" />
                                     <MenuItem x:Name="UiMnStudyInvertDiagram" Header="{x:Static p:Resources.InvertDiagram}"  Click="UiMn_InvertDiagram_Click" />
                                     <MenuItem x:Name="UiMnStudySaveDiagram" Header="{x:Static p:Resources.SaveDiagramAsImage}"  Click="UiMn_SaveDiagram_Click" />
@@ -700,9 +700,9 @@
                                     <MenuItem x:Name="UiMnGameMarkBookmark" Header="{x:Static p:Resources.BookmarkThisPosition}" Click="UiMnMarkBookmark_Click" />
                                     <MenuItem x:Name="UiMnGameDeleteBookmark" Visibility="Collapsed" Header="{x:Static p:Resources.DeleteThisBookmark}" Click="UiMnciDeleteBookmark_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="UiMnGameInsertDiagramPreComment" Header="{x:Static p:Resources.InsertDiagramPreComment}" Click="UiMn_InsertPreCommentDiagram_Click" InputGestureText="Ctrl+I" />
-                                    <MenuItem x:Name="UiMnGameInsertDiagramPostComment" Header="{x:Static p:Resources.InsertDiagramPostComment}" Click="UiMn_InsertPostCommentDiagram_Click" InputGestureText="Ctrl+J" />
-                                    <MenuItem x:Name="UiMnGame_DeleteDiagram" Visibility="Collapsed" Header="{x:Static p:Resources.RemoveDiagram}" Click="UiMn_DeleteDiagram_Click" InputGestureText="Ctrl+I" />
+                                    <MenuItem x:Name="UiMnGameInsertDiagramPostComment" Header="{x:Static p:Resources.InsertDiagramAfterMove}" Click="UiMn_InsertAfterMoveDiagram_Click" InputGestureText="Ctrl+I" />
+                                    <MenuItem x:Name="UiMnGameInsertDiagramPreComment" Header="{x:Static p:Resources.InsertDiagramBeforeMove}" Click="UiMn_InsertBeforeMoveDiagram_Click" InputGestureText="Ctrl+J" />
+                                    <MenuItem x:Name="UiMnGame_DeleteDiagram" Visibility="Collapsed" Header="{x:Static p:Resources.RemoveDiagram}" Click="UiMn_DeleteDiagram_Click" InputGestureText="Ctrl+I/J" />
                                     <MenuItem x:Name="UiMnGameSwapDiagramComment" Visibility="Collapsed" Header="{x:Static p:Resources.SwapDiagramComment}" Click="UiMn_SwapDiagramComment_Click" />
                                     <MenuItem x:Name="UiMnGameInvertDiagram" Header="{x:Static p:Resources.InvertDiagram}"  Click="UiMn_InvertDiagram_Click" />
                                     <MenuItem x:Name="UiMnGameSaveDiagram" Header="{x:Static p:Resources.SaveDiagramAsImage}"  Click="UiMn_SaveDiagram_Click" />
@@ -814,9 +814,9 @@
                                     <MenuItem x:Name="UiMnExercMarkBookmark" Header="{x:Static p:Resources.BookmarkThisPosition}" Click="UiMnMarkBookmark_Click" />
                                     <MenuItem x:Name="UiMnExercDeleteBookmark" Visibility="Collapsed" Header="{x:Static p:Resources.DeleteThisBookmark}" Click="UiMnciDeleteBookmark_Click" />
                                     <Separator />
-                                    <MenuItem x:Name="UiMnExercInsertDiagramPreComment" Header="{x:Static p:Resources.InsertDiagramPreComment}" Click="UiMn_InsertPreCommentDiagram_Click" InputGestureText="Ctrl+I" />
-                                    <MenuItem x:Name="UiMnExercInsertDiagramPostComment" Header="{x:Static p:Resources.InsertDiagramPostComment}" Click="UiMn_InsertPostCommentDiagram_Click" InputGestureText="Ctrl+J" />
-                                    <MenuItem x:Name="UiMnExerc_DeleteDiagram" Visibility="Collapsed" Header="{x:Static p:Resources.RemoveDiagram}" Click="UiMn_DeleteDiagram_Click" InputGestureText="Ctrl+I" />
+                                    <MenuItem x:Name="UiMnExercInsertDiagramPostComment" Header="{x:Static p:Resources.InsertDiagramAfterMove}" Click="UiMn_InsertAfterMoveDiagram_Click" InputGestureText="Ctrl+I" />
+                                    <MenuItem x:Name="UiMnExercInsertDiagramPreComment" Header="{x:Static p:Resources.InsertDiagramBeforeMove}" Click="UiMn_InsertBeforeMoveDiagram_Click" InputGestureText="Ctrl+J" />
+                                    <MenuItem x:Name="UiMnExerc_DeleteDiagram" Visibility="Collapsed" Header="{x:Static p:Resources.RemoveDiagram}" Click="UiMn_DeleteDiagram_Click" InputGestureText="Ctrl+I/J" />
                                     <MenuItem x:Name="UiMnExercSwapDiagramComment" Visibility="Collapsed" Header="{x:Static p:Resources.SwapDiagramComment}" Click="UiMn_SwapDiagramComment_Click" />
                                     <MenuItem x:Name="UiMnExercInvertDiagram" Header="{x:Static p:Resources.InvertDiagram}"  Click="UiMn_InvertDiagram_Click" />
                                     <MenuItem x:Name="UiMnExercSaveDiagram" Header="{x:Static p:Resources.SaveDiagramAsImage}"  Click="UiMn_SaveDiagram_Click" />
