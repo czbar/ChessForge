@@ -709,11 +709,11 @@ namespace ChessForge
                                 e.Handled = true;
                                 break;
                             case Key.I:
-                                _mainWin.InsertOrDeleteDiagram(true, null);
+                                _mainWin.InsertOrDeleteDiagram(false, null);
                                 e.Handled = true;
                                 break;
                             case Key.J:
-                                _mainWin.InsertOrDeleteDiagram(false, null);
+                                _mainWin.InsertOrDeleteDiagram(true, null);
                                 e.Handled = true;
                                 break;
                             case Key.G:
