@@ -290,7 +290,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd"></param>
         /// <param name="para"></param>
-        private List<Inline> CreateInlinesForDiagram(TreeNode nd, bool isFirstInPara)
+        private List<Inline> CreateInlinesForDiagram(TreeNode nd, bool isFirstInPara, bool isBeforeMove)
         {
             List<Inline> inlines = new List<Inline>();
 
@@ -317,7 +317,15 @@ namespace ChessForge
                 }
                 inlines.Add(preDiagRun);
 
-                iuc.MouseDown += EventRunClicked;
+                if (isBeforeMove)
+                {
+                    iuc.MouseDown += EventDiagramBeforeMoveClicked;
+                }
+                else
+                {
+                    iuc.MouseDown += EventRunClicked;
+                }
+
                 inlines.Add(iuc);
 
                 // TODO: the following needs resolving in some other way.
@@ -508,7 +516,7 @@ namespace ChessForge
         /// <param name="i"></param>
         /// <param name="partsCount"></param>
         /// <returns></returns>
-        private List<Inline> CreateInlineForCommentPart(CommentPart part, TreeNode nd, bool isFirstInPara, int i, int partsCount)
+        private List<Inline> CreateInlineForCommentPart(CommentPart part, bool isBeforeMoveComment, TreeNode nd, bool isFirstInPara, int i, int partsCount)
         {
             List<Inline> inlines = new List<Inline>();
             Inline inl;
@@ -516,7 +524,7 @@ namespace ChessForge
             switch (part.Type)
             {
                 case CommentPartType.DIAGRAM:
-                    inlines = CreateInlinesForDiagram(nd, isFirstInPara);
+                    inlines = CreateInlinesForDiagram(nd, isFirstInPara, isBeforeMoveComment);
                     inl = inlines.Last();
                     break;
                 case CommentPartType.ASSESSMENT:
@@ -525,14 +533,7 @@ namespace ChessForge
                     inl.ToolTip = Properties.Resources.TooltipEngineBlunderDetect;
                     inl.FontStyle = FontStyles.Normal;
                     inl.FontWeight = FontWeights.Normal;
-                    if (nd.IsDiagramBeforeMove)
-                    {
-                        inl.PreviewMouseDown += EventCommentBeforeMoveRunClicked;
-                    }
-                    else
-                    {
-                        inl.PreviewMouseDown += EventCommentRunClicked;
-                    }
+                    inl.PreviewMouseDown += EventCommentRunClicked;
                     inlines.Add(inl);
                     break;
                 case CommentPartType.THUMBNAIL_SYMBOL:
@@ -553,14 +554,7 @@ namespace ChessForge
                     inl.FontStyle = FontStyles.Normal;
                     inl.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
                     inl.FontWeight = FontWeights.Normal;
-                    if (nd.IsDiagramBeforeMove)
-                    {
-                        inl.PreviewMouseDown += EventCommentBeforeMoveRunClicked;
-                    }
-                    else
-                    {
-                        inl.PreviewMouseDown += EventCommentRunClicked;
-                    }
+                    inl.PreviewMouseDown += EventCommentRunClicked;
                     inlines.Add(inl);
                     break;
                 case CommentPartType.URL:
@@ -605,7 +599,7 @@ namespace ChessForge
                     inl.FontStyle = FontStyles.Normal;
                     inl.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
                     inl.FontWeight = FontWeights.Normal;
-                    if (nd.IsDiagramBeforeMove)
+                    if (isBeforeMoveComment)
                     {
                         inl.PreviewMouseDown += EventCommentBeforeMoveRunClicked;
                     }
@@ -633,7 +627,7 @@ namespace ChessForge
             for (int i = 0; i < parts.Count; i++)
             {
                 CommentPart part = parts[i];
-                List<Inline> inlines = CreateInlineForCommentPart(part, nd, isFirstInPara, i, parts.Count);
+                List<Inline> inlines = CreateInlineForCommentPart(part, true, nd, isFirstInPara, i, parts.Count);
 
                 // the above may or may not have set the name.
                 foreach (Inline inl in inlines)
@@ -687,7 +681,7 @@ namespace ChessForge
                     isAssessmentBlunderShown = true;
                 }
 
-                List<Inline> inlines = CreateInlineForCommentPart(part, nd, false, i, parts.Count);
+                List<Inline> inlines = CreateInlineForCommentPart(part, false, nd, false, i, parts.Count);
 
                 // the above may or may not have set the name.
                 foreach (Inline inl in inlines)
