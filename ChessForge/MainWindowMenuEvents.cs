@@ -1993,6 +1993,8 @@ namespace ChessForge
                     if (insertOrDelete == true)
                     {
                         nd.IsDiagramBeforeMove = beforeMove;
+                        // when inserting a new diagram, we set the IsDiagramPreComment flag to true
+                        nd.IsDiagramPreComment = true;
                     }
 
                     ActiveTreeView?.ToggleDiagramFlag(nd, insertOrDelete == true);
