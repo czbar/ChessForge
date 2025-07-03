@@ -510,12 +510,14 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Select a Run.
+        /// Selects a Run.
+        /// If double-click is performed, it will open the Annotations dialog
+        /// or the Before Move dialog if the "Diag Before Move" button was clicked.
         /// </summary>
         /// <param name="runToSelect"></param>
         /// <param name="clickCount"></param>
         /// <param name="changedButton"></param>
-        protected void SelectRun(Run runToSelect, int clickCount, MouseButton changedButton)
+        protected void SelectRun(Run runToSelect, int clickCount, MouseButton changedButton, bool isDiagBeforeMoveClicked = false)
         {
             if (!IsSelectionEnabled() || runToSelect == null)
             {
@@ -549,9 +551,19 @@ namespace ChessForge
 
                 if (clickCount == 2)
                 {
-                    if (_mainWin.InvokeAnnotationsDialog(nd))
+                    if (isDiagBeforeMoveClicked)
                     {
-                        InsertOrUpdateCommentRun(nd);
+                        if (_mainWin.InvokeCommentBeforeMoveDialog(nd))
+                        {
+                            InsertOrUpdateCommentBeforeMoveRun(nd);
+                        }
+                    }
+                    else
+                    {
+                        if (_mainWin.InvokeAnnotationsDialog(nd))
+                        {
+                            InsertOrUpdateCommentRun(nd);
+                        }
                     }
                 }
                 else
