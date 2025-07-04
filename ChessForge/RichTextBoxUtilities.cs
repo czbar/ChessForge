@@ -88,6 +88,29 @@ namespace ChessForge
         /// </summary>
         public static readonly string RunMovePrefix = "run_move_";
 
+
+        //************************************************
+        //
+        // Prefixes for Runs specific to the self-indexing view.
+        //
+        //************************************************
+
+        /// <summary>
+        /// Prefix for Runs in the index paragraph.
+        /// </summary>
+        public static readonly string IndexRunPrefix = "indexrun_";
+
+        /// <summary>
+        /// Prefix for index level lines in the main body
+        /// </summary>
+        public static readonly string IndexLevelIdRunPrefix = "idxprefix_";
+
+        /// <summary>
+        /// Prefix for expand elipsis runs
+        /// </summary>
+        public static readonly string IndexElipsisRunPrefix = "expelipsis_";
+
+
         /// <summary>
         /// Checks if the passed object is a Run representing a move.
         /// </summary>
@@ -96,7 +119,7 @@ namespace ChessForge
         public static bool IsMoveRun(object o)
         {
             bool isMove = false;
-            
+
             if (o is Run run)
             {
                 return IsMoveRunName(run.Name);
@@ -297,6 +320,31 @@ namespace ChessForge
                         res = (r == run);
                         break;
                     }
+                }
+            }
+
+            return res;
+        }
+
+        /// <summary>
+        /// Checks if the first non-empty Run in the Paragraph
+        /// is a Run representing an index level id e.g. "A)" or "B.2)".
+        /// </summary>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        public static bool ParagraphStartsWithIndexRun(Paragraph para)
+        {
+            bool res = false;
+
+            foreach (Inline inl in para.Inlines)
+            {
+                if (inl is Run r && !string.IsNullOrEmpty(r.Text))
+                {
+                    if (r.Name != null && r.Name.StartsWith(IndexLevelIdRunPrefix))
+                    {
+                        res = true;
+                    }
+                    break;
                 }
             }
 
