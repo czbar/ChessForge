@@ -410,7 +410,7 @@ namespace ChessForge
             try
             {
                 run = new Run(text.ToString());
-                run.Name = RichTextBoxUtilities.RunMovePrefix + nd.NodeId.ToString();
+                run.Name = RichTextBoxUtilities.NameMoveRun(nd.NodeId);
                 run.PreviewMouseDown += EventMoveRunClicked;
                 para.Inlines.Add(run);
 
