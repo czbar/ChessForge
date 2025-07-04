@@ -1597,7 +1597,7 @@ namespace ChessForge
                 // we may have to provide a number for the Black move if the previous White move has a comment.
                 bool isStandalone = !string.IsNullOrEmpty(nd.Parent.Comment) || hasDiagram;
                 Run runMove = new Run(MoveUtils.BuildSingleMoveText(nd, isStandalone, false, ShownVariationTree.MoveNumberOffset) + " ");
-                runMove.Name = RichTextBoxUtilities.RunMovePrefix + nd.NodeId.ToString();
+                runMove.Name = RichTextBoxUtilities.NameMoveRun(nd.NodeId);
                 runMove.PreviewMouseDown += EventRunClicked;
 
                 runMove.FontStyle = rParentMoveRun.FontStyle;
@@ -1846,10 +1846,12 @@ namespace ChessForge
         {
             diagram = false;
 
-            // check if we must set includeNumber to true
-            if (!includeNumber && (inclComment && IsLastRunComment(para, nd)
+            // check if we must set includeNumber to true,
+            // we will do that if the currently last Run in the para was a comment and/or comment before move is not empty
+            // or previous move was followed by a diagram.
+            if (!includeNumber && (inclComment && IsLastRunPostMoveComment(para, nd)
                                     || !string.IsNullOrEmpty(nd.CommentBeforeMove)
-                                    || (nd.Parent != null && nd.Parent.IsDiagram))
+                                    || (nd.Parent != null && nd.Parent.IsDiagram && !nd.Parent.IsDiagramBeforeMove))
                                     )
             {
                 includeNumber = true;
@@ -1958,7 +1960,7 @@ namespace ChessForge
             try
             {
                 r = new Run(text.ToString());
-                r.Name = RichTextBoxUtilities.RunMovePrefix + nd.NodeId.ToString();
+                r.Name = RichTextBoxUtilities.NameMoveRun(nd.NodeId);
                 r.PreviewMouseDown += EventRunClicked;
 
                 if (_isIntraFork)
