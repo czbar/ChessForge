@@ -31,4 +31,4 @@ Remove leading space in Intro moves.
 
 When reporting the best move, the check sign '+' is omitted
 
-When inserting a beforeMove diagram in a sideline in a game where there is a BeforeMove comment, the space above it is too large. After refresh it is good.
+Look into that mysterious bootom margin = 5 in game layout.
