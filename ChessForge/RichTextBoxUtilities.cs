@@ -304,6 +304,42 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Checks if the Run with the given nodeId is the first move representing Run
+        /// in the passed Paragraph.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <param name="nodeId"></param>
+        /// <returns>true if the first Run representing a move in the passed paragraph is for the move with the passed NodeId</returns>
+        public static bool IsFirstMoveRunInParagraph(Paragraph para, int nodeId)
+        {
+            bool res = false;
+
+            if (para != null)
+            {
+                foreach (Inline inl in para.Inlines)
+                {
+                    if (inl is Run run && run.Name.StartsWith(RunMovePrefix))
+                    {
+                        res = (run.Name == NameMoveRun(nodeId));
+                        break;
+                    }
+                }
+            }
+
+            return res;
+        }
+
+        /// <summary>
+        /// Builds a name for a Run representing a move
+        /// </summary>
+        /// <param name="nodeId"></param>
+        /// <returns></returns>
+        public static string NameMoveRun(int nodeId)
+        {
+            return RunMovePrefix + nodeId.ToString();
+        }
+
+        /// <summary>
         /// Makes a copy of a Run with selected properties.
         /// </summary>
         /// <param name="src"></param>
