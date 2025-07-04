@@ -598,7 +598,7 @@ namespace ChessForge
                         part.Guid = WorkbookManager.UpdateGuid(oldGuid);
                         nd.References = (nd.References ?? "").Replace(oldGuid, part.Guid);
                     }
-                    inl.Name = _run_comment_article_ref + nd.NodeId.ToString() + "_" + (part.Guid ?? "");
+                    inl.Name = RichTextBoxUtilities.CommentArticleRefPrefix + nd.NodeId.ToString() + "_" + (part.Guid ?? "");
                     inl.Tag = part.Type;
                     inl.PreviewMouseDown += EventReferenceMouseButtonDown;
                     inl.MouseEnter += EventReferenceMouseEnter;
@@ -653,7 +653,7 @@ namespace ChessForge
                 {
                     if (string.IsNullOrEmpty(inl.Name))
                     {
-                        inl.Name = _run_comment_before_move_ + nd.NodeId.ToString();
+                        inl.Name = RichTextBoxUtilities.CommentBeforeMoveRunPrefix + nd.NodeId.ToString();
                     }
                 }
 
@@ -707,7 +707,7 @@ namespace ChessForge
                 {
                     if (string.IsNullOrEmpty(inl.Name))
                     {
-                        inl.Name = _run_comment_ + nd.NodeId.ToString();
+                        inl.Name = RichTextBoxUtilities.CommentRunPrefix + nd.NodeId.ToString();
                     }
                 }
 
@@ -921,7 +921,7 @@ namespace ChessForge
         {
             bool res = false;
 
-            if (para != null && para.Inlines.Last().Name.StartsWith(_run_comment_))
+            if (para != null && para.Inlines.Last().Name.StartsWith(RichTextBoxUtilities.CommentRunPrefix))
             {
                 // finally check if this is actual textual comment
                 if (nd.Parent != null && !string.IsNullOrEmpty(nd.Parent.Comment))

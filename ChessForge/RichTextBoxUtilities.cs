@@ -13,6 +13,35 @@ namespace ChessForge
     /// </summary>
     public class RichTextBoxUtilities
     {
+        //************************************************
+        //
+        // Names of Runs and represening comment parts.
+        // NOTE: we rely on the fact that comment runs' names begin with run_comment (!)
+        //
+        //************************************************
+
+        /// <summary>
+        /// Post move comment prefix.
+        /// </summary>
+        public static readonly string CommentRunPrefix = "run_comment_";
+
+        /// <summary>
+        /// Before move comment prefix.
+        /// </summary>
+        public static readonly string CommentBeforeMoveRunPrefix = "run_comment_before_move_";
+
+        /// <summary>
+        /// Prefix for the run representing a reference identifier.
+        /// </summary>
+        public static readonly string CommentArticleRefPrefix = "run_comment_artcle_ref_";
+
+        //************************************************
+        //
+        // END
+        //
+        //************************************************
+
+
         /// <summary>
         /// Prefix for naming paragraphs representing a diagram.
         /// </summary>
