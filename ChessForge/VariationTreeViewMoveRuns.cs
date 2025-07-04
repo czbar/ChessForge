@@ -145,7 +145,18 @@ namespace ChessForge
                     return null;
                 }
 
-                bool isFirstInPara = RichTextBoxUtilities.IsFirstNonEmptyRunInPara(rMove, rMove.Parent as Paragraph);
+                Paragraph parentPara = rMove.Parent as Paragraph;
+
+                bool isFirstInPara = RichTextBoxUtilities.IsFirstMoveRunInParagraph(parentPara, nd.NodeId);
+
+                // if there is an index name run (in a Study) and the diagram is to be first, reverse isFirstPara
+                if (isFirstInPara && RichTextBoxUtilities.ParagraphStartsWithIndexRun(parentPara))
+                {
+                    if (nd.IsDiagram && nd.IsDiagramPreComment)
+                    {
+                        isFirstInPara = false;
+                    }
+                }
 
                 _dictNodeToCommentBeforeMoveRun.TryGetValue(nd.NodeId, out inlCommentBeforeMove);
 
@@ -300,18 +311,26 @@ namespace ChessForge
                 Run preDiagRun;
                 if (nd.IsDiagramBeforeMove)
                 {
-                    if (isFirstInPara)
+                    if (!isFirstInPara)
                     {
-                        preDiagRun = new Run("");
+                        // if not first in paragraph then we need a new line regardless of before-move-comment existence or order.
+                        preDiagRun = new Run("\n");
+                    }
+                    else if (isBeforeMove && !nd.IsDiagramPreComment && !string.IsNullOrEmpty(nd.CommentBeforeMove))
+                    {
+                        // if this is the first inline in para but the diagram is BEFORE the move and AFTER the comment
+                        // we need a new line too.
+                        preDiagRun = new Run("\n");
                     }
                     else
                     {
-                        preDiagRun = new Run("\n");
+                        preDiagRun = new Run("");
                     }
                     preDiagRun.Name = RichTextBoxUtilities.PreInlineDiagramBeforeMoveRunPrefix + nd.NodeId.ToString();
                 }
                 else
                 {
+                    // the diagram goes after the move so new line is always required.
                     preDiagRun = new Run("\n");
                     preDiagRun.Name = RichTextBoxUtilities.PreInlineDiagramRunPrefix + nd.NodeId.ToString();
                 }
@@ -891,15 +910,14 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Checks if the last run in the paragraph is a comment.
-        /// NOTE: we rely on the fact the both pre- and post-move comment run names
-        /// begin with the _run_comment_ constant.
+        /// Checks if the last run in the paragraph is a comment for the parent
+        /// of the passed node..
         /// This method is used to determine whether we need to have move number included
-        /// when rendering the next move.
+        /// when rendering the move being added to the paragraph.
         /// </summary>
         /// <param name="para"></param>
         /// <returns></returns>
-        protected bool IsLastRunComment(Paragraph para, TreeNode nd)
+        protected bool IsLastRunPostMoveComment(Paragraph para, TreeNode nd)
         {
             bool res = false;
 
