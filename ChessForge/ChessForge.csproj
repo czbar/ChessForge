@@ -193,6 +193,7 @@
     <Compile Include="GamesEvaluationManager.cs" />
     <Compile Include="GameSortCriterion.cs" />
     <Compile Include="GuiConfiguration.cs" />
+    <Compile Include="GuiControlPlacement.cs" />
     <Compile Include="HiddenClickDialog.xaml.cs">
       <DependentUpon>HiddenClickDialog.xaml</DependentUpon>
     </Compile>
