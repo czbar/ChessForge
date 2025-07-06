@@ -1,13 +1,7 @@
 ﻿using ChessPosition;
 using GameTree;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
 
 namespace ChessForge
 {
@@ -152,6 +146,8 @@ namespace ChessForge
         /// <summary>
         /// Resizes the height of the Evaluation Chart and sets
         /// the affected attributes accordingly.
+        /// There is no need to change the margins as the chart's top margin
+        /// remains the same in both full and half size modes.
         /// </summary>
         /// <param name="fullSize"></param>
         private static void ResizeEvaluationChart(bool fullSize)
@@ -183,20 +179,26 @@ namespace ChessForge
         /// <summary>
         /// Resizes the height of the Engine Lines box and sets
         /// the affected attributes accordingly.
+        /// In addition to the height, the Top margin is also changed
+        /// as the Engine Lines box is shown below the Evaluation Chart
+        /// if the latter is visible.
         /// </summary>
         /// <param name="fullSize"></param>
         private static void ResizeEngineLinesBox(bool fullSize)
         {
+            // restore the default top margin which we will then adjust
+            // for the half size mode.
+            ThicknessUtils.SetControlThickness(MainWin.UiTbEngineLines, MainWin.GetTbEngineLinesDefaultTopMargin());
+
             if (fullSize)
             {
                 MainWin.UiTbEngineLines.Height = EVAL_CHART_FULL_HEIGHT;
-                MainWin.UiTbEngineLines.Margin = new Thickness(0, 10, 0, 0);
                 MainWin.UiTbEngineLines.FontSize = Constants.BASE_ENGINE_LINES_FONT_SIZE + Configuration.FontSizeDiff;
             }
             else
             {
+                ThicknessUtils.AdjustControlTopMargin(MainWin.UiTbEngineLines, EVAL_CHART_FULL_HEIGHT / 2);
                 MainWin.UiTbEngineLines.Height = EVAL_CHART_FULL_HEIGHT / 2;
-                MainWin.UiTbEngineLines.Margin = new Thickness(0, 10 + (EVAL_CHART_FULL_HEIGHT / 2), 0, 0);
                 MainWin.UiTbEngineLines.FontSize = (Constants.BASE_ENGINE_LINES_FONT_SIZE + Configuration.FontSizeDiff) - 2;
             }
         }
