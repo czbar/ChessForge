@@ -343,6 +343,7 @@
     <Compile Include="StatsUtils.cs" />
     <Compile Include="StudyTreeView.cs" />
     <Compile Include="TextWriter.cs" />
+    <Compile Include="ThicknessUtils.cs" />
     <Compile Include="Tools.cs" />
     <Compile Include="TrainingSessionControl.xaml.cs">
       <DependentUpon>TrainingSessionControl.xaml</DependentUpon>
