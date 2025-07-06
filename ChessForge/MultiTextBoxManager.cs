@@ -188,7 +188,7 @@ namespace ChessForge
         {
             // restore the default top margin which we will then adjust
             // for the half size mode.
-            ThicknessUtils.SetControlThickness(MainWin.UiTbEngineLines, MainWin.GetTbEngineLinesDefaultTopMargin());
+            ThicknessUtils.SetControlTopMargin(MainWin.UiTbEngineLines, MainWin.GetSecondRowTopPad());
 
             if (fullSize)
             {
