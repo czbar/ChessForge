@@ -492,6 +492,8 @@ namespace ChessForge
             }
             catch { }
 
+            InitializeLayout();
+
             if (Configuration.LargeMenuFont)
             {
                 DefaultMenuFontSize = Constants.DEAFULT_MENU_FONT_SIZE;
