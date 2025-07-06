@@ -9,8 +9,16 @@ namespace ChessForge
     /// </summary>
     public partial class MainWindow : Window
     {
+        private const double CHESSBOARD_DEFAULT_WIDTH = 680;
+
         // Padding around the main tab control.
-        private const int PADDING = 5;
+        private const int MAIN_TAB_PAD = 5;
+
+        // Left and right padding of the CommentBox / EngineLines / EvalChart controls.
+        private const int COMMENT_BOX_PAD = 4;
+
+        // Top padding of the CommentBox / EngineLines / EvalChart and Explorer controls.
+        private const int SECOND_ROW_TOP_PAD = 10;
 
         // Right margin of the main tab control in the presence of the scoresheet.
         private const int RIGHT_MARGIN_WITH_SCORESHEET = 275;
@@ -42,12 +50,39 @@ namespace ChessForge
         /// </summary>
         private int MAX_USER_WIDTH_ADJUSTMENT = 400;
 
+        // Default margins for the main window controls (Manual Review, Training, Game).
+        private Thickness _mainTabCtrlDefaultThickness;
+
+        // Default margins for the CommentBox, EngineLines and EvalChart controls.
+        private Thickness _wndCommentBoxDefaultThickness;
+
+        // Default margins for the Openings control.
+        private Thickness _rtbOpeningsDefaultThickness;
+
+        // Default width and height of the main board.
+        private double _mainBoardDefaultWidth;
+
         /// <summary>
         /// Sets and stores the default sizes and margins of the main window controls.
         /// </summary>
-        private void InitializeLayout()
+        public void InitializeLayout()
         {
-            // TODO: Implement
+            // The main tab control in all learning modes, has the width and height determined
+            // by the margins. The width and the height are not set explicitly.
+            _mainTabCtrlDefaultThickness = new Thickness(MAIN_TAB_PAD, MAIN_TAB_PAD, MAIN_TAB_PAD, MAIN_TAB_PAD);
+            _wndCommentBoxDefaultThickness = new Thickness(COMMENT_BOX_PAD, SECOND_ROW_TOP_PAD, COMMENT_BOX_PAD, 0);
+            _rtbOpeningsDefaultThickness = new Thickness(MAIN_TAB_PAD, SECOND_ROW_TOP_PAD, RIGHT_MARGIN_WITH_SCORESHEET, 0);
+
+            _mainBoardDefaultWidth = CHESSBOARD_DEFAULT_WIDTH;
+        }
+
+        /// <summary>
+        /// Return the default top margin (padding) for the controls in the second row.
+        /// </summary>
+        /// <returns></returns>
+        public double GetSecondRowTopPad()
+        {
+            return SECOND_ROW_TOP_PAD;
         }
 
         /// <summary>
@@ -62,12 +97,12 @@ namespace ChessForge
         /// <param name="sizeMode"></param>
         public void ResizeTabControl(TabControl tabControl, TabControlSizeMode sizeMode)
         {
-            int leftPad = PADDING - USER_WIDTH_ADJUSTMENT;
+            int leftPad = MAIN_TAB_PAD - USER_WIDTH_ADJUSTMENT;
 
             switch (sizeMode)
             {
                 case TabControlSizeMode.SHOW_ACTIVE_LINE:
-                    tabControl.Margin = new Thickness(leftPad, PADDING, RIGHT_MARGIN_WITH_SCORESHEET, PADDING);
+                    tabControl.Margin = new Thickness(leftPad, MAIN_TAB_PAD, RIGHT_MARGIN_WITH_SCORESHEET, MAIN_TAB_PAD);
 
                     UiDgActiveLine.Visibility = Visibility.Visible;
                     PositionScoresheetLabel(UiDgActiveLine);
@@ -76,63 +111,63 @@ namespace ChessForge
                     //UiLblScoresheet.Margin = new Thickness(0, 0, 10 + (UiDgActiveLine.Width - UiLblScoresheet.Width), 0);
                     break;
                 case TabControlSizeMode.HIDE_ACTIVE_LINE:
-                    tabControl.Margin = new Thickness(leftPad, PADDING, PADDING, PADDING);
+                    tabControl.Margin = new Thickness(leftPad, MAIN_TAB_PAD, MAIN_TAB_PAD, MAIN_TAB_PAD);
                     UiDgActiveLine.Visibility = Visibility.Hidden;
                     UiLblScoresheet.Visibility = Visibility.Hidden;
                     break;
                 case TabControlSizeMode.SHOW_ACTIVE_LINE_NO_EVAL:
-                    tabControl.Margin = new Thickness(leftPad, PADDING, RIGHT_MARGIN_WITH_SCORESHEET_NO_EVALS, PADDING);
+                    tabControl.Margin = new Thickness(leftPad, MAIN_TAB_PAD, RIGHT_MARGIN_WITH_SCORESHEET_NO_EVALS, MAIN_TAB_PAD);
                     UiDgActiveLine.Visibility = Visibility.Visible;
                     PositionScoresheetLabel(UiDgActiveLine);
                     UiLblScoresheet.Visibility = Visibility.Visible;
                     break;
                 case TabControlSizeMode.SHOW_ENGINE_GAME_LINE:
-                    tabControl.Margin = new Thickness(leftPad, PADDING, RIGHT_MARGIN_WITH_SCORESHEET_NO_EVALS, PADDING);
+                    tabControl.Margin = new Thickness(leftPad, MAIN_TAB_PAD, RIGHT_MARGIN_WITH_SCORESHEET_NO_EVALS, MAIN_TAB_PAD);
                     UiDgActiveLine.Visibility = Visibility.Hidden;
                     PositionScoresheetLabel(UiDgEngineGame);
                     UiLblScoresheet.Visibility = Visibility.Visible;
                     UiDgEngineGame.Visibility = Visibility.Visible;
                     break;
                 case TabControlSizeMode.HIDE_ENGINE_GAME_LINE:
-                    tabControl.Margin = new Thickness(leftPad, PADDING, PADDING, PADDING);
+                    tabControl.Margin = new Thickness(leftPad, MAIN_TAB_PAD, MAIN_TAB_PAD, MAIN_TAB_PAD);
                     UiDgActiveLine.Visibility = Visibility.Hidden;
                     UiLblScoresheet.Visibility = Visibility.Hidden;
                     break;
                 default:
-                    tabControl.Margin = new Thickness(leftPad, PADDING, RIGHT_MARGIN_DEFAULT, PADDING);
+                    tabControl.Margin = new Thickness(leftPad, MAIN_TAB_PAD, RIGHT_MARGIN_DEFAULT, MAIN_TAB_PAD);
                     UiDgActiveLine.Visibility = Visibility.Visible;
                     UiLblScoresheet.Visibility = Visibility.Hidden;
                     break;
             }
         }
 
+        /// <summary>
+        /// Adjusts the widths of the main tab control and the controls
+        /// according to the currently selected adjustment value.
+        /// </summary>
+        /// <param name="adjustment"></param>
         private void AdjustPanelWidths(int adjustment)
         {
             if (adjustment < 0 || adjustment > MAX_USER_WIDTH_ADJUSTMENT)
             {
-                return; // Invalid adjustment
+                // Invalid adjustment, ignore it.
+                return; 
             }
 
             USER_WIDTH_ADJUSTMENT = adjustment;
 
-            AdjustTabControlWidth(UiTabCtrlManualReview, USER_WIDTH_ADJUSTMENT);
-            AdjustTabControlWidth(UiTabCtrlEngineGame, USER_WIDTH_ADJUSTMENT);
-            AdjustTabControlWidth(UiTabCtrlTraining, USER_WIDTH_ADJUSTMENT);
+            ThicknessUtils.AdjustControlLeftMargin(UiTabCtrlManualReview, -USER_WIDTH_ADJUSTMENT);
+            ThicknessUtils.AdjustControlLeftMargin(UiTabCtrlEngineGame, -USER_WIDTH_ADJUSTMENT);
+            ThicknessUtils.AdjustControlLeftMargin(UiTabCtrlTraining, -USER_WIDTH_ADJUSTMENT);
 
-            UiTbEngineLines.Margin = new Thickness(UiTbEngineLines.Margin.Left, UiTbEngineLines.Margin.Top, UiTbEngineLines.Margin.Right + USER_WIDTH_ADJUSTMENT, UiTbEngineLines.Margin.Bottom);
-            UiEvalChart.Margin = new Thickness(UiEvalChart.Margin.Left, UiEvalChart.Margin.Top, UiEvalChart.Margin.Right + USER_WIDTH_ADJUSTMENT, UiEvalChart.Margin.Bottom);
-            UiRtbBoardComment.Margin = new Thickness(UiRtbBoardComment.Margin.Left, UiRtbBoardComment.Margin.Top, UiRtbBoardComment.Margin.Right + USER_WIDTH_ADJUSTMENT, UiRtbBoardComment.Margin.Bottom);
-        
-            UiRtbOpenings.Margin = new Thickness(UiRtbOpenings.Margin.Left - USER_WIDTH_ADJUSTMENT, UiRtbOpenings.Margin.Top, UiRtbOpenings.Margin.Right, UiRtbOpenings.Margin.Bottom);
-            UiRtbOpenings.Width += USER_WIDTH_ADJUSTMENT;
+            ThicknessUtils.AdjustControlRightMargin(UiTbEngineLines, USER_WIDTH_ADJUSTMENT);
+            ThicknessUtils.AdjustControlRightMargin(UiEvalChart, USER_WIDTH_ADJUSTMENT);
+            ThicknessUtils.AdjustControlRightMargin(UiRtbBoardComment, USER_WIDTH_ADJUSTMENT);
+
+            ThicknessUtils.AdjustControlLeftMargin(UiRtbOpenings, -USER_WIDTH_ADJUSTMENT);
 
             MainBoard.Width -= USER_WIDTH_ADJUSTMENT;
             MainBoard.Height -= USER_WIDTH_ADJUSTMENT;
-        }
-
-        private void AdjustTabControlWidth(TabControl tabControl, int adjustment)
-        {
-            tabControl.Margin = new Thickness(PADDING - USER_WIDTH_ADJUSTMENT, tabControl.Margin.Top, tabControl.Margin.Right, tabControl.Margin.Bottom);
         }
 
         /// <summary>
