@@ -28,9 +28,9 @@ namespace ChessForge
         /// <param name="ctrl"></param>
         /// <param name="newValue"></param>
         /// <returns></returns>
-        public static void SetControlLeftMargin(Control ctrl, double newValue)
+        public static void SetControlLeftMargin(Control ctrl, Thickness defaultThickness, double newValue)
         {
-            ctrl.Margin = SetLeftMargin(ctrl.Margin, newValue);
+            ctrl.Margin = SetLeftMargin(defaultThickness, newValue);
         }
 
         /// <summary>
@@ -48,9 +48,9 @@ namespace ChessForge
         /// </summary>
         /// <param name="ctrl"></param>
         /// <param name="newValue"></param>
-        public static void SetControlRightMargin(Control ctrl, double newValue)
+        public static void SetControlRightMargin(Control ctrl, Thickness defaultThickness, double newValue)
         {
-            ctrl.Margin = SetRightMargin(ctrl.Margin, newValue);
+            ctrl.Margin = SetRightMargin(defaultThickness, newValue);
         }
 
         /// <summary>
@@ -110,13 +110,13 @@ namespace ChessForge
         /// <param name="thickness"></param>
         /// <param name="newValue"></param>
         /// <returns></returns>
-        public static Thickness SetLeftMargin(Thickness thickness, double newValue)
+        public static Thickness SetLeftMargin(Thickness defaultThickness, double newValue)
         {
             return new Thickness(
                 newValue,
-                thickness.Top,
-                thickness.Right,
-                thickness.Bottom);
+                defaultThickness.Top,
+                defaultThickness.Right,
+                defaultThickness.Bottom);
         }
 
         /// <summary>
@@ -137,16 +137,16 @@ namespace ChessForge
         /// <summary>
         /// Returns a new Thickness with the right margin set to the new value.
         /// </summary>
-        /// <param name="thickness"></param>
+        /// <param name="defaultThickness"></param>
         /// <param name="newValue"></param>
         /// <returns></returns>
-        public static Thickness SetRightMargin(Thickness thickness, double newValue)
+        public static Thickness SetRightMargin(Thickness defaultThickness, double newValue)
         {
             return new Thickness(
-                thickness.Left,
-                thickness.Top,
+                defaultThickness.Left,
+                defaultThickness.Top,
                 newValue,
-                thickness.Bottom);
+                defaultThickness.Bottom);
         }
 
         /// <summary>
