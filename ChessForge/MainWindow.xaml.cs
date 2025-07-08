@@ -426,7 +426,7 @@ namespace ChessForge
             UiTabIntro.Visibility = Configuration.ShowIntroTab ? Visibility.Visible : Visibility.Collapsed;
             SoundPlayer.Initialize();
 
-            InitializeConfiguration();
+            ApplyLayoutConfiguration();
 
             // initialize GUI theme
             if (Configuration.IsDarkMode)
@@ -682,34 +682,6 @@ namespace ChessForge
             Configuration.StartDirectory = App.AppPath;
             ConfigurationRtfExport.InitializeRtfConfig();
             Configuration.ReadConfigurationFile();
-        }
-
-        /// <summary>
-        /// Initializes configurable entities.
-        /// </summary>
-        private void InitializeConfiguration()
-        {
-            if (Configuration.IsMainWinPosValid())
-            {
-                this.Left = Configuration.MainWinPos.Left;
-                this.Top = Configuration.MainWinPos.Top;
-                this.Width = Configuration.MainWinPos.Right - Configuration.MainWinPos.Left;
-                this.Height = Configuration.MainWinPos.Bottom - Configuration.MainWinPos.Top;
-            }
-
-            DebugUtils.DebugLevel = Configuration.DebugLevel;
-
-            // setup control positions
-            UiDgActiveLine.HorizontalAlignment = HorizontalAlignment.Right;
-            UiDgActiveLine.Margin = new Thickness(0, 27, 10, 0);
-
-            UiLblScoresheet.HorizontalAlignment = HorizontalAlignment.Right;
-            UiLblScoresheet.Margin = new Thickness(0, 0, 10 + (UiDgActiveLine.Width - UiLblScoresheet.Width), 0);
-
-            UiDgEngineGame.HorizontalAlignment = HorizontalAlignment.Right;
-            UiDgEngineGame.Margin = new Thickness(0, 27, 10, 0);
-
-            SetupMenuBarControls();
         }
 
         [Conditional("DEBUG")]
