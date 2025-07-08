@@ -249,7 +249,7 @@
             </Grid>
         </StackPanel>
 
-        <Viewbox HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1">
+        <Viewbox x:Name="vbMainWindow" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Panel.ZIndex="0">
             <Grid x:Name="_gridMain" ShowGridLines="False">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1"/>
@@ -259,8 +259,8 @@
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="680" />
-                    <ColumnDefinition Width="270" />
                     <ColumnDefinition Width="600" />
+                    <ColumnDefinition Width="270" />
                     <ColumnDefinition Width="1" />
                 </Grid.ColumnDefinitions>
                 <Viewbox x:Name="MainBoard" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Height="680" Margin="0,0,0,0" VerticalAlignment="Top" Width="680" PreviewMouseWheel="OnPreviewMouseWheel">
@@ -306,7 +306,22 @@
                     </Canvas>
                 </Viewbox>
 
-                <DataGrid x:Name="UiDgEngineGame" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Height="648" Margin="10,27,0,0" VerticalAlignment="Top" Width="180"  
+                <Viewbox x:Name="UiVbManualSplitter" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0" Width="6" Height="980" Panel.ZIndex="10" >
+                    <Rectangle x:Name="ManualSplitter"
+                               Panel.ZIndex="10"
+                        Margin="0,0,0,0"
+                        Width="6"
+                        Height="840"
+                        Fill="Transparent"
+                        Cursor="SizeWE"                       
+                        HorizontalAlignment="Left" 
+                        MouseDown="ManualSplitter_MouseDown"
+                        MouseMove="ManualSplitter_MouseMove"
+                        MouseUp="ManualSplitter_MouseUp">
+                    </Rectangle>
+                </Viewbox>
+
+                <DataGrid x:Name="UiDgEngineGame" Grid.Column="2" HorizontalAlignment="Left" Height="648" Margin="4,27,4,0" VerticalAlignment="Top"
                   SelectionMode="Single" SelectionUnit="Cell" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" CanUserSortColumns="False"
                   GridLinesVisibility="None" Grid.Row="1" Background="White" PreviewMouseDown="EngineGame_OnPreviewMouseDown"  PreviewMouseUp="EngineGame_OnPreviewMouseUp"   >
                     <DataGrid.Resources>
@@ -392,7 +407,7 @@
                         </Grid>
                     </TabItem>
                 </TabControl>
-                <TabControl x:Name="UiTabCtrlManualReview" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="20,5,20,0" Grid.Row="1" VerticalAlignment="Top" Grid.RowSpan="1" IsVisibleChanged="UiTabCtrlManualReview_IsVisibleChanged"  PreviewMouseWheel="OnPreviewMouseWheel">
+                <TabControl x:Name="UiTabCtrlManualReview"  Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="20,5,20,0" Grid.Row="1" VerticalAlignment="Top" Grid.RowSpan="1" IsVisibleChanged="UiTabCtrlManualReview_IsVisibleChanged"  PreviewMouseWheel="OnPreviewMouseWheel">
                     <TabItem x:Name="UiTabChapters"  Header="{x:Static p:Resources.Chapters}" GotFocus="UiTabChapters_GotFocus" 
                              PreviewKeyDown="ChessForgeMain_PreviewKeyDown" PreviewKeyUp="ChessForgeMain_PreviewKeyUp">
                         <Grid Background="#FFE5E5E5" PreviewMouseDown="Chapters_PreviewMouseDown" ContextMenuOpening="SupressContextMenu" PreviewMouseUp="Chapters_PreviewMouseUp" >
@@ -1135,8 +1150,8 @@
                         </Grid>
                     </TabItem>
                 </TabControl>
-                <Label x:Name="UiLblScoresheet" FontWeight="Bold" Content="{x:Static p:Resources.Scoresheet}"  Grid.Column="1" Grid.ColumnSpan="2"  HorizontalAlignment="Right" VerticalContentAlignment="Center" Height="24" Margin="0,0,68,0" Width="80" VerticalAlignment="Top" Visibility="Visible" Grid.Row="1" />
-                <DataGrid x:Name="UiDgActiveLine" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" Height="648" Margin="0,27,10,0" VerticalAlignment="Top" Width="260"  
+                <Label x:Name="UiLblScoresheet" FontWeight="Bold" Content="{x:Static p:Resources.Scoresheet}"  Grid.Column="2" HorizontalAlignment="Left" VerticalContentAlignment="Center" Height="24" Margin="4,0" VerticalAlignment="Top" Visibility="Visible" Grid.Row="1" />
+                <DataGrid x:Name="UiDgActiveLine" Grid.Column="2" HorizontalAlignment="Left" Height="648" Margin="4,27,4,0" VerticalAlignment="Top" Width="260"  
                   SelectionMode="Single" SelectionUnit="Cell" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" 
                   VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden"
                   CanUserSortColumns="False" GridLinesVisibility="None" Grid.Row="1" 
@@ -1180,8 +1195,8 @@
                          BorderThickness="1" Background="#FFF2F5F3" BorderBrush="Black" Visibility="Hidden" VerticalScrollBarVisibility="Auto" 
                          PreviewMouseRightButtonUp="UiTbEngineLines_MouseRightButtonUp" PreviewMouseDoubleClick="UiTbEngineLines_PreviewMouseDoubleClick" />
                 <RichTextBox x:Name="UiRtbBoardComment"  ContextMenu="{x:Null}" IsUndoEnabled="False" Panel.ZIndex="0" 
-                             Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                             Height="150" Margin="4,10,0,0"
+                             Grid.Row="2" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" 
+                             Height="150" Margin="4,10,4,0" 
                              BorderThickness="1" BorderBrush="Black" IsReadOnly="True">
                     <RichTextBox.Resources>
                         <Style TargetType="{x:Type Paragraph}">
@@ -1201,7 +1216,7 @@
                     </FlowDocument>
                 </RichTextBox>
                 <RichTextBox x:Name="UiRtbOpenings" IsUndoEnabled="False"  ContextMenu="{x:Null}" 
-                             Panel.ZIndex="0" HorizontalAlignment="Left" 
+                             Panel.ZIndex="0" HorizontalAlignment="Stretch" 
                              Height="150" Margin="5,10,275,0"
                              Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" 
                              VerticalScrollBarVisibility="Auto"
@@ -1219,8 +1234,8 @@
                                            VerticalAlignment="Top" BorderThickness="1" BorderBrush="Black"
                                            Visibility="Hidden">
                 </uc:TrainingSessionControl>
-                <RichTextBox x:Name="UiRtbTopGames" IsUndoEnabled="False" Panel.ZIndex="0" HorizontalAlignment="Left" Height="150" Margin="600,10,0,0" Grid.Row="2" VerticalScrollBarVisibility="Auto"
-                             Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Width="260" BorderThickness="1" IsReadOnly="True">
+                <RichTextBox x:Name="UiRtbTopGames" IsUndoEnabled="False" Panel.ZIndex="0" HorizontalAlignment="Left" Height="150" Margin="4,10,4,0" Grid.Row="2" VerticalScrollBarVisibility="Auto"
+                             Grid.Column="2" VerticalAlignment="Top" BorderThickness="1" IsReadOnly="True">
                     <RichTextBox.Resources>
                         <Style TargetType="{x:Type Paragraph}">
                             <Setter Property="Margin" Value="0" />
