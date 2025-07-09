@@ -253,6 +253,7 @@
       <DependentUpon>OnlineLibraryContentDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="OpeningStatsView.cs" />
+    <Compile Include="OpeningStatsViewLayout.cs" />
     <Compile Include="OpeningStatsViewRow.cs" />
     <Compile Include="OperationScopeDialog.xaml.cs">
       <DependentUpon>OperationScopeDialog.xaml</DependentUpon>
