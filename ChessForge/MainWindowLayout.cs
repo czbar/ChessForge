@@ -42,6 +42,13 @@ namespace ChessForge
         // therefore the control to the left (e.g. Training Tab Conbtrol) is made wider.
         public double SCORESHEET_NO_EVALS_LEFT_MARGIN = 90;
 
+        // Width of the scoresheet in the presence of evals.
+        // TODO: get rid of this and use margins instead.
+        public double SCORESHEET_WIDTH_WITH_EVALS = 260;
+
+        // Width of the scoresheet in the absence of evals.
+        public double SCORESHEET_WIDTH_NO_EVALS = 160;
+
         /// <summary>
         /// Right margin of the main tab control in the presence of the scoresheet without evals.
         /// The scoresheet to the right of the main tab control is narrower here so we need
