@@ -3376,7 +3376,7 @@ namespace ChessForge
                     Configuration.IsDarkMode = true;
                     ChessForgeColors.SetMainControlColors();
                     RebuildAllTreeViews(null, true);
-                    _openingStatsView.UpdateColorTheme();
+                    _openingStatsView.RebuildView();
                     _topGamesView.UpdateColorTheme();
                     BoardCommentBox.UpdateColorTheme();
                 }
@@ -3403,7 +3403,7 @@ namespace ChessForge
                     Configuration.IsDarkMode = false;
                     ChessForgeColors.SetMainControlColors();
                     RebuildAllTreeViews(null, true);
-                    _openingStatsView.UpdateColorTheme();
+                    _openingStatsView.RebuildView();
                     _topGamesView.UpdateColorTheme();
                     BoardCommentBox.UpdateColorTheme();
                 }
