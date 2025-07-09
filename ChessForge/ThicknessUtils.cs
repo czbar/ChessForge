@@ -28,9 +28,9 @@ namespace ChessForge
         /// <param name="ctrl"></param>
         /// <param name="newValue"></param>
         /// <returns></returns>
-        public static void SetControlLeftMargin(Control ctrl, Thickness defaultThickness, double newValue)
+        public static void SetControlLeftMargin(Control ctrl, double newValue)
         {
-            ctrl.Margin = SetLeftMargin(defaultThickness, newValue);
+            ctrl.Margin = SetLeftMargin(ctrl.Margin, newValue);
         }
 
         /// <summary>
