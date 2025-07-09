@@ -14,9 +14,6 @@ namespace ChessForge
     /// </summary>
     public class OpeningStatsViewRow
     {
-        // scale factor for table cell sizes
-        private double scaleFactor = 3.5;
-
         // base font size for the control
         private int _baseFontSize = 11;
 
@@ -25,9 +22,6 @@ namespace ChessForge
 
         // prefix for the Run with the move
         private readonly string MOVE_PREFIX = "_move_";
-
-        // column widths in the stats table
-        private readonly double _totalGamesColumnWidth = 20;
 
         // label for the total number of games
         private Label _lblTotalGames;
@@ -131,7 +125,7 @@ namespace ChessForge
         /// <param name="pct"></param>
         private void SetPercentLabel(Label lbl, int pct)
         {
-            lbl.Width = pct * scaleFactor;
+            lbl.Width = ((double)pct / 100) * OpeningStatsViewLayout.StatsLabelsWidth;
             lbl.Content = pct.ToString() + "%";
         }
 
@@ -145,14 +139,14 @@ namespace ChessForge
 
             Canvas canvas = new Canvas
             {
-                Width = scaleFactor * (_totalGamesColumnWidth),
+                Width = OpeningStatsViewLayout.TotalGamesColumnWidth,
                 Height = 20 + Configuration.FontSizeDiff,
                 Background = ChessForgeColors.CurrentTheme.RtbBackground,
             };
 
             _lblTotalGames = new Label
             {
-                Width = scaleFactor * _totalGamesColumnWidth,
+                Width = OpeningStatsViewLayout.TotalGamesColumnWidth,
                 Height = 18 + Configuration.FontSizeDiff,
                 FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff,
                 VerticalContentAlignment = VerticalAlignment.Center,
@@ -168,7 +162,7 @@ namespace ChessForge
 
             canvas.Children.Add(_lblTotalGames);
 
-            Canvas.SetLeft(_lblTotalGames, 0 * scaleFactor);
+            Canvas.SetLeft(_lblTotalGames, 0);
 
             InlineUIContainer uIContainer = new InlineUIContainer
             {
@@ -215,7 +209,7 @@ namespace ChessForge
                 int blackWinsPercent = (int)Math.Round((double)(blackWins * 100) / (double)totalGames);
                 int drawsPercent = 100 - (whiteWinsPercent + blackWinsPercent);
 
-                Canvas.SetLeft(_lblPctWhite, 10 * scaleFactor);
+                Canvas.SetLeft(_lblPctWhite, OpeningStatsViewLayout.StatsColumnIndent);
                 Canvas.SetLeft(_lblPctDraws, Canvas.GetLeft(_lblPctWhite) + _lblPctWhite.Width);
                 Canvas.SetLeft(_lblPctBlack, Canvas.GetLeft(_lblPctDraws) + _lblPctDraws.Width);
 
@@ -240,7 +234,7 @@ namespace ChessForge
 
             Canvas canvas = new Canvas
             {
-                Width = scaleFactor * 110 + 2,
+                Width = OpeningStatsViewLayout.StatsColumnWidth.Value + 2,
                 Height = 20 + Configuration.FontSizeDiff,
                 Background = ChessForgeColors.CurrentTheme.RtbBackground,
             };
@@ -261,7 +255,7 @@ namespace ChessForge
             _pctBarBorder = new Border
             {
                 BorderBrush = ChessForgeColors.TABLE_ROW_LIGHT_GRAY,
-                Width = (100 * scaleFactor + 2),
+                Width = (OpeningStatsViewLayout.StatsLabelsWidth + 2),
                 Height = 16 + Configuration.FontSizeDiff,
                 BorderThickness = new Thickness(1),
                 CornerRadius = new CornerRadius(3),
@@ -272,8 +266,8 @@ namespace ChessForge
             canvas.Children.Add(_lblPctBlack);
             canvas.Children.Add(_pctBarBorder);
 
-            Canvas.SetLeft(_pctBarBorder, 10 * scaleFactor - 1);
-            Canvas.SetLeft(_lblPctWhite, 10 * scaleFactor);
+            Canvas.SetLeft(_pctBarBorder, OpeningStatsViewLayout.StatsColumnIndent - 1);
+            Canvas.SetLeft(_lblPctWhite, OpeningStatsViewLayout.StatsColumnIndent);
             Canvas.SetLeft(_lblPctDraws, Canvas.GetLeft(_lblPctWhite) + _lblPctWhite.Width);
             Canvas.SetLeft(_lblPctBlack, Canvas.GetLeft(_lblPctDraws) + _lblPctDraws.Width);
 
@@ -304,7 +298,7 @@ namespace ChessForge
             SetPercentLabel(_lblPctDraws, pctDraws);
             SetPercentLabel(_lblPctBlack, pctBlack);
 
-            Canvas.SetLeft(_lblPctWhite, 10 * scaleFactor);
+            Canvas.SetLeft(_lblPctWhite, OpeningStatsViewLayout.StatsColumnIndent);
             Canvas.SetLeft(_lblPctDraws, Canvas.GetLeft(_lblPctWhite) + _lblPctWhite.Width);
             Canvas.SetLeft(_lblPctBlack, Canvas.GetLeft(_lblPctDraws) + _lblPctDraws.Width);
         }
