@@ -2128,7 +2128,8 @@ namespace ChessForge
                     _mainWin.UiLblScoresheet.Visibility = Visibility.Visible;
                     _mainWin.UiDgActiveLine.Columns[2].Visibility = includeEvals ? Visibility.Visible : Visibility.Hidden;
                     _mainWin.UiDgActiveLine.Columns[4].Visibility = includeEvals ? Visibility.Visible : Visibility.Hidden;
-                    _mainWin.UiDgActiveLine.Width = includeEvals ? 260 : 160;
+                    _mainWin.UiDgActiveLine.Width = includeEvals ? MainWin.SCORESHEET_WIDTH_WITH_EVALS : MainWin.SCORESHEET_WIDTH_NO_EVALS;
+                    ThicknessUtils.SetControlLeftMargin(_mainWin.UiDgActiveLine, includeEvals ? 0 : MainWin.SCORESHEET_NO_EVALS_LEFT_MARGIN);                    
 
                     if (includeEvals)
                     {
