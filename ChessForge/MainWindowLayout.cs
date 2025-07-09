@@ -11,6 +11,8 @@ namespace ChessForge
     /// </summary>
     public partial class MainWindow : Window
     {
+        public double MainChessBoardWidthAdjustment = 0;
+
         // Default width (and height) of the main chessboard.
         private const double CHESSBOARD_DEFAULT_WIDTH = 680;
 
@@ -32,6 +34,13 @@ namespace ChessForge
         // original grid row/column height/width definitions for the main grid.
         private double[] MAIN_GRID_ROWS = { 1.0, 680.0, 160.0, 20.0 };
         private double[] MAIN_GRID_COLUMNS = { 680.0, 600.0, 270.0, 1.0 };
+
+        // Adjustment of the width of the second column of the main grid compared to its default size.
+        public double ABSOLUTE_ADJUSTMENT = 0;
+
+        // how far to move the scoresheet to the right when it has no evals and
+        // therefore the control to the left (e.g. Training Tab Conbtrol) is made wider.
+        public double SCORESHEET_NO_EVALS_LEFT_MARGIN = 90;
 
         /// <summary>
         /// Right margin of the main tab control in the presence of the scoresheet without evals.
@@ -141,6 +150,9 @@ namespace ChessForge
         /// <param name="sizeMode"></param>
         public void ResizeTabControl(TabControl tabControl, TabControlSizeMode sizeMode)
         {
+            ThicknessUtils.SetControlLeftMargin(UiDgActiveLine, 0);
+            ThicknessUtils.SetControlLeftMargin(UiDgEngineGame, SCORESHEET_NO_EVALS_LEFT_MARGIN);
+
             switch (sizeMode)
             {
                 case TabControlSizeMode.SHOW_ACTIVE_LINE:
@@ -158,12 +170,16 @@ namespace ChessForge
                     tabControl.Margin = new Thickness(MAIN_TAB_PAD, MAIN_TAB_PAD, RIGHT_MARGIN_WITH_SCORESHEET_NO_EVALS, MAIN_TAB_PAD);
                     UiDgActiveLine.Visibility = Visibility.Visible;
                     UiLblScoresheet.Visibility = Visibility.Visible;
+                    ThicknessUtils.SetControlLeftMargin(UiDgActiveLine, SCORESHEET_NO_EVALS_LEFT_MARGIN);
+                    ThicknessUtils.SetControlLeftMargin(UiDgEngineGame, SCORESHEET_NO_EVALS_LEFT_MARGIN);
                     break;
                 case TabControlSizeMode.SHOW_ENGINE_GAME_LINE:
                     tabControl.Margin = new Thickness(MAIN_TAB_PAD, MAIN_TAB_PAD, RIGHT_MARGIN_WITH_SCORESHEET_NO_EVALS, MAIN_TAB_PAD);
                     UiDgActiveLine.Visibility = Visibility.Hidden;
                     UiLblScoresheet.Visibility = Visibility.Visible;
                     UiDgEngineGame.Visibility = Visibility.Visible;
+                    ThicknessUtils.SetControlLeftMargin(UiDgActiveLine, SCORESHEET_NO_EVALS_LEFT_MARGIN);
+                    ThicknessUtils.SetControlLeftMargin(UiDgEngineGame, SCORESHEET_NO_EVALS_LEFT_MARGIN);
                     break;
                 case TabControlSizeMode.HIDE_ENGINE_GAME_LINE:
                     tabControl.Margin = new Thickness(MAIN_TAB_PAD, MAIN_TAB_PAD, MAIN_TAB_PAD, MAIN_TAB_PAD);
@@ -185,13 +201,15 @@ namespace ChessForge
         /// <param name="adjustment"></param>
         private void AdjustPanelWidths(double adjustment)
         {
-            // calculate the adjustment releative to the default boundary between the first and second column.
+            // calculate the adjustment relative to the default boundary between the first and second column.
             double absoluteAdjustment = _runningAdjustment + (_gridMain.ColumnDefinitions[0].Width.Value - MAIN_GRID_COLUMNS[0]);
             if (absoluteAdjustment > 0 || absoluteAdjustment < -MAX_USER_WIDTH_ADJUSTMENT)
             {
                 // An invalid adjustment should have been caught earlier so this is just a defensive measure.
                 return;
             }
+
+            ABSOLUTE_ADJUSTMENT = absoluteAdjustment;
 
             _gridMain.ColumnDefinitions[0].Width = new GridLength(_gridMain.ColumnDefinitions[0].Width.Value + adjustment);
             _gridMain.ColumnDefinitions[1].Width = new GridLength(_gridMain.ColumnDefinitions[1].Width.Value - adjustment);
@@ -200,6 +218,11 @@ namespace ChessForge
 
             MainBoard.Width = CHESSBOARD_DEFAULT_WIDTH + absoluteAdjustment;
             MainBoard.Height = CHESSBOARD_DEFAULT_WIDTH + absoluteAdjustment;
+
+            if (_openingStatsView != null && AppState.AreExplorersOn)
+            {
+                _openingStatsView.RebuildView(absoluteAdjustment);
+            }
 
             return;
         }
