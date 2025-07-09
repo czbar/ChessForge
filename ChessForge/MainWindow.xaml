@@ -340,7 +340,7 @@
                         <DataGridTextColumn Header="{x:Static p:Resources.Black}" Width="60" Binding="{Binding BlackPly}" CanUserReorder="False"/>
                     </DataGrid.Columns>
                 </DataGrid>
-                <TabControl x:Name="UiTabCtrlTraining" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="20,5,20,0" Grid.Row="1" 
+                <TabControl x:Name="UiTabCtrlTraining" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="5,5,5,5" Grid.Row="1" 
                     VerticalAlignment="Top" Grid.RowSpan="1" Visibility="Hidden">
                     <TabItem x:Name="UiTabTrainingProgress"  Header="{x:Static p:Resources.Training}" IsVisibleChanged="UiTabTrainingProgress_IsVisibleChanged">
                         <Grid Background="#FFE5E5E5">
@@ -379,7 +379,7 @@
                         </Grid>
                     </TabItem>
                 </TabControl>
-                <TabControl x:Name="UiTabCtrlEngineGame" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="20,5,20,0" Grid.Row="1" 
+                <TabControl x:Name="UiTabCtrlEngineGame" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="5,5,5,5" Grid.Row="1" 
                     VerticalAlignment="Top" Grid.RowSpan="1" Visibility="Hidden">
                     <TabItem x:Name="UiTabEngineGame"  Header="{x:Static p:Resources.GameAgainstEngine}" IsVisibleChanged="UiTabEngineGame_IsVisibleChanged" 
                              PreviewKeyDown="UiTabEngineGame_PreviewKeyDown" PreviewKeyUp="UiTabEngineGame_PreviewKeyUp" PreviewMouseDown="UiTabEngineGame_PreviewMouseDown"  >
@@ -407,7 +407,7 @@
                         </Grid>
                     </TabItem>
                 </TabControl>
-                <TabControl x:Name="UiTabCtrlManualReview"  Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="20,5,20,0" Grid.Row="1" VerticalAlignment="Top" Grid.RowSpan="1" IsVisibleChanged="UiTabCtrlManualReview_IsVisibleChanged"  PreviewMouseWheel="OnPreviewMouseWheel">
+                <TabControl x:Name="UiTabCtrlManualReview"  Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="5,5,5,5" Grid.Row="1" VerticalAlignment="Top" Grid.RowSpan="1" IsVisibleChanged="UiTabCtrlManualReview_IsVisibleChanged"  PreviewMouseWheel="OnPreviewMouseWheel">
                     <TabItem x:Name="UiTabChapters"  Header="{x:Static p:Resources.Chapters}" GotFocus="UiTabChapters_GotFocus" 
                              PreviewKeyDown="ChessForgeMain_PreviewKeyDown" PreviewKeyUp="ChessForgeMain_PreviewKeyUp">
                         <Grid Background="#FFE5E5E5" PreviewMouseDown="Chapters_PreviewMouseDown" ContextMenuOpening="SupressContextMenu" PreviewMouseUp="Chapters_PreviewMouseUp" >
@@ -1185,7 +1185,7 @@
                 </DataGrid>
                 <uc:EvaluationChartControl x:Name="UiEvalChart" Panel.ZIndex="1"  FontSize="12"
                                            Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top"
-                                           Height="150" Margin="4,10,0,0" 
+                                           Height="150" Margin="4,10,4,0" 
                                            BorderThickness="1" BorderBrush="Black"
                                            Visibility="Hidden">
                 </uc:EvaluationChartControl>
@@ -1216,9 +1216,9 @@
                     </FlowDocument>
                 </RichTextBox>
                 <RichTextBox x:Name="UiRtbOpenings" IsUndoEnabled="False"  ContextMenu="{x:Null}" 
-                             Panel.ZIndex="0" HorizontalAlignment="Stretch" 
-                             Height="150" Margin="5,10,275,0"
-                             Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" 
+                             Panel.ZIndex="0" 
+                             Height="150" Margin="4,10,4,0"
+                             Grid.Column="1" Grid.Row="2" 
                              VerticalScrollBarVisibility="Auto"
                              VerticalAlignment="Top" BorderThickness="1" IsReadOnly="True">
                     <RichTextBox.Resources>
