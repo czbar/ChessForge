@@ -1228,8 +1228,8 @@
                     </RichTextBox.Resources>
                 </RichTextBox>
                 <uc:TrainingSessionControl x:Name="UiTrainingSessionBox" FontSize="12"
-                                           Panel.ZIndex="0" HorizontalAlignment="Left" 
-                                           Height="150" Width="669" Margin="5,10,0,0" 
+                                           Panel.ZIndex="0" 
+                                           Height="150" Margin="5,10,0,0" 
                                            Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" 
                                            VerticalAlignment="Top" BorderThickness="1" BorderBrush="Black"
                                            Visibility="Hidden">
