@@ -157,16 +157,16 @@ namespace ChessForge
                 if (fullSize)
                 {
                     MainWin.UiEvalChart.Height = EVAL_CHART_FULL_HEIGHT;
-                    MainWin.UiEvalChart.CanvasHeight = (EVAL_CHART_FULL_HEIGHT - 2) / 2;
-                    MainWin.UiEvalChart.MarkerSize = 8;
-                    MainWin.UiEvalChart.BaseFontSize = 12;
+                    MainWin.UiEvalChart.INITIAL_CANVAS_HEIGHT = (EVAL_CHART_FULL_HEIGHT - 2) / 2;
+                    MainWin.UiEvalChart.INITIAL_MARKER_SIZE = 8;
+                    MainWin.UiEvalChart.BASE_FONT_SIZE = 12;
                 }
                 else
                 {
                     MainWin.UiEvalChart.Height = (EVAL_CHART_FULL_HEIGHT / 2);
-                    MainWin.UiEvalChart.CanvasHeight = (EVAL_CHART_FULL_HEIGHT - 2) / 4;
-                    MainWin.UiEvalChart.MarkerSize = 5;
-                    MainWin.UiEvalChart.BaseFontSize = 10;
+                    MainWin.UiEvalChart.INITIAL_CANVAS_HEIGHT = (EVAL_CHART_FULL_HEIGHT - 2) / 4;
+                    MainWin.UiEvalChart.INITIAL_MARKER_SIZE = 5;
+                    MainWin.UiEvalChart.BASE_FONT_SIZE = 10;
                 }
 
                 IsFullSize = fullSize;
