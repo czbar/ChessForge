@@ -19,17 +19,20 @@ namespace ChessForge
         /// <summary>
         /// Height of either Canvas in the control
         /// </summary>
-        public double CanvasHeight = 74;
+        public double INITIAL_CANVAS_HEIGHT = 74;
+
+        // width of the 2 canvases
+        private double INITIAL_CANVAS_WIDTH = 670;
 
         /// <summary>
         /// Diameter if the move marker.
         /// </summary>
-        public int MarkerSize = 8;
+        public int INITIAL_MARKER_SIZE = 8;
 
         /// <summary>
         /// Font size to use as base for other font sizes. 
         /// </summary>
-        public int BaseFontSize = 12;
+        public int BASE_FONT_SIZE = 12;
 
         /// <summary>
         /// Set to true from the client if the evaluations have changed
@@ -45,9 +48,6 @@ namespace ChessForge
 
         // max allowed scale
         private int MAX_EVAL_SCALE = 16;
-
-        // width of the 2 canvases
-        private double CANVAS_WIDTH = 670;
 
         // min allowed scale
         private int MIN_EVAL_SCALE = 1;
@@ -135,37 +135,39 @@ namespace ChessForge
         /// </summary>
         public void InitSizes()
         {
+            double widthAdjustment = AppState.MainWin.ABSOLUTE_ADJUSTMENT;
+
             UiCnvWhite.Children.Clear();
             UiCnvBlack.Children.Clear();
 
-            MainGrid.RowDefinitions[0].Height = new GridLength(CanvasHeight);
-            MainGrid.RowDefinitions[1].Height = new GridLength(CanvasHeight);
+            MainGrid.RowDefinitions[0].Height = new GridLength(INITIAL_CANVAS_HEIGHT);
+            MainGrid.RowDefinitions[1].Height = new GridLength(INITIAL_CANVAS_HEIGHT);
 
-            UiCnvWhite.Width = CANVAS_WIDTH;
-            UiCnvWhite.Height = CanvasHeight;
+            UiCnvWhite.Width = INITIAL_CANVAS_WIDTH + widthAdjustment;
+            UiCnvWhite.Height = INITIAL_CANVAS_HEIGHT;
             UiCnvWhite.Background = ChessForgeColors.TABLE_HIGHLIGHT_GREEN;
 
-            UiCnvBlack.Width = CANVAS_WIDTH;
-            UiCnvBlack.Height = CanvasHeight;
+            UiCnvBlack.Width = INITIAL_CANVAS_WIDTH + widthAdjustment;
+            UiCnvBlack.Height = INITIAL_CANVAS_HEIGHT;
             UiCnvBlack.Background = ChessForgeColors.TABLE_HEADER_GREEN;
 
             Line UiMidLine = new Line();
             UiMidLine.Stroke = Brushes.DarkGreen;
             UiMidLine.StrokeThickness = 1;
             UiMidLine.X1 = 0;
-            UiMidLine.X1 = CANVAS_WIDTH;
-            UiMidLine.Y1 = CanvasHeight;
-            UiMidLine.Y2 = CanvasHeight;
+            UiMidLine.X1 = INITIAL_CANVAS_WIDTH + widthAdjustment;
+            UiMidLine.Y1 = INITIAL_CANVAS_HEIGHT;
+            UiMidLine.Y2 = INITIAL_CANVAS_HEIGHT;
 
             UiCnvWhite.Children.Add(UiMidLine);
             Panel.SetZIndex(UiMidLine, _zIndexMidLine);
 
-            _maxX = CANVAS_WIDTH;
-            _maxY = CanvasHeight;
+            _maxX = INITIAL_CANVAS_WIDTH + widthAdjustment;
+            _maxY = INITIAL_CANVAS_HEIGHT;
 
-            ConfigureScaleElements();
-            ConfigureTitleLabel();
-            ConfigureMoveLabel();
+            ConfigureScaleElements(widthAdjustment);
+            ConfigureTitleLabel(widthAdjustment);
+            ConfigureMoveLabel(widthAdjustment);
 
             ConfigureVerticalLine();
             ConfigureEvaluationLabels();
@@ -281,7 +283,7 @@ namespace ChessForge
         /// <summary>
         /// Creates the static label with "Evaluation Chart" title.
         /// </summary>
-        private void ConfigureTitleLabel()
+        private void ConfigureTitleLabel(double widthAdjustment)
         {
             _lblTitle.Content = Properties.Resources.EvaluationChart;
             _lblTitle.Background = Brushes.Transparent;
@@ -290,17 +292,19 @@ namespace ChessForge
             Canvas.SetLeft(_lblTitle, 5);
             Canvas.SetTop(_lblTitle, 0);
 
-            _lblTitle.FontSize = BaseFontSize;
+            _lblTitle.FontSize = AdjustFontSize(BASE_FONT_SIZE, widthAdjustment);
         }
 
         /// <summary>
         /// Creates the move label.
         /// </summary>
-        private void ConfigureMoveLabel()
+        private void ConfigureMoveLabel(double widthAdjustment)
         {
             _lblMove.Background = Brushes.Transparent;
             _lblMove.FontWeight = FontWeights.Bold;
-            _lblMove.FontSize = BaseFontSize;
+            _lblMove.FontSize = BASE_FONT_SIZE;
+
+            _lblMove.FontSize = AdjustFontSize(BASE_FONT_SIZE, widthAdjustment);
 
             UiCnvWhite.Children.Add(_lblMove);
             Canvas.SetRight(_lblMove, 5);
@@ -329,7 +333,7 @@ namespace ChessForge
             line.X1 = -1;
             line.X2 = -1;
             line.Y1 = 0;
-            line.Y2 = CanvasHeight;
+            line.Y2 = INITIAL_CANVAS_HEIGHT;
             line.Stroke = Brushes.Ivory;
 
             cnv.Children.Add(line);
@@ -357,7 +361,7 @@ namespace ChessForge
         {
             lbl.Foreground = Brushes.Black;
             lbl.Background = Brushes.Ivory;
-            lbl.FontSize = BaseFontSize;
+            lbl.FontSize = BASE_FONT_SIZE;
             lbl.Visibility = Visibility.Collapsed;
             cnv.Children.Add(lbl);
             Canvas.SetZIndex(lbl, _zIndexEvalLabel);
@@ -379,8 +383,8 @@ namespace ChessForge
         /// <param name="marker"></param>
         private void ConfigureMarker(Canvas cnv, Ellipse marker)
         {
-            marker.Width = MarkerSize;
-            marker.Height = MarkerSize;
+            marker.Width = INITIAL_MARKER_SIZE;
+            marker.Height = INITIAL_MARKER_SIZE;
             marker.Fill = Brushes.Yellow;
 
             cnv.Children.Add(marker);
@@ -391,37 +395,65 @@ namespace ChessForge
         /// <summary>
         /// Configures Scale Elements.
         /// </summary>
-        private void ConfigureScaleElements()
+        private void ConfigureScaleElements(double widthAdjustment)
         {
             UiCnvWhite.Children.Add(_lblScale);
             UiCnvWhite.Children.Add(_btnPlus);
             UiCnvWhite.Children.Add(_btnMinus);
 
             Panel.SetZIndex(_lblScale, _zScaleElements);
-            Canvas.SetLeft(_lblScale, 268);
             Canvas.SetTop(_lblScale, 7);
-            _lblScale.Height = BaseFontSize + 6;
-            _lblScale.FontSize = BaseFontSize - 1;
+            _lblScale.Height = BASE_FONT_SIZE + 6;
+            _lblScale.FontSize = BASE_FONT_SIZE - 1;
 
             Panel.SetZIndex(_btnPlus, _zScaleElements);
-            Canvas.SetLeft(_btnPlus, 317);
             Canvas.SetTop(_btnPlus, 4);
-            _btnPlus.Height = BaseFontSize + 6;
-            _btnPlus.Width = BaseFontSize + 4;
-            _btnPlus.FontSize = BaseFontSize + 2;
+            _btnPlus.Height = BASE_FONT_SIZE + 6;
+            _btnPlus.Width = BASE_FONT_SIZE + 4;
+            _btnPlus.FontSize = BASE_FONT_SIZE + 2;
 
             Panel.SetZIndex(_btnMinus, _zScaleElements);
-            Canvas.SetLeft(_btnMinus, 333);
             Canvas.SetTop(_btnMinus, 4);
-            _btnMinus.Height = BaseFontSize + 6;
-            _btnMinus.Width = BaseFontSize + 4;
-            _btnMinus.FontSize = BaseFontSize + 2;
+            _btnMinus.Height = BASE_FONT_SIZE + 6;
+            _btnMinus.Width = BASE_FONT_SIZE + 4;
+            _btnMinus.FontSize = BASE_FONT_SIZE + 2;
 
-            Canvas.SetLeft(_btnPlus, (CANVAS_WIDTH / 2) - 18);
-            Canvas.SetLeft(_btnMinus, (CANVAS_WIDTH / 2) + 1);
+            Canvas.SetLeft(_btnPlus, ((INITIAL_CANVAS_WIDTH + widthAdjustment) / 2) - 18);
+            Canvas.SetLeft(_btnMinus, ((INITIAL_CANVAS_WIDTH + widthAdjustment) / 2) + 1);
 
-            Canvas.SetLeft(_lblScale, (CANVAS_WIDTH / 2) - 80);
+            Canvas.SetLeft(_lblScale, ((INITIAL_CANVAS_WIDTH + widthAdjustment) / 2) - 80);
             SetScaleLabelText();
+        }
+
+        /// <summary>
+        /// Returns the passed font size adjusted for the current width of the chart. 
+        /// </summary>
+        /// <param name="initSize"></param>
+        /// <param name="widthAdjustment"></param>
+        /// <returns></returns>
+        private double AdjustFontSize(double initSize, double widthAdjustment)
+        {
+            double adjustedSize = initSize;
+
+            if (widthAdjustment < -(INITIAL_CANVAS_WIDTH / 3))
+            {
+                adjustedSize = initSize - 2;
+            }
+            else if (widthAdjustment < -(INITIAL_CANVAS_WIDTH / 4))
+            {
+                adjustedSize = BASE_FONT_SIZE - 1;
+            }
+
+            return adjustedSize;
+        }
+
+        /// <summary>
+        /// Determines if the chart is too narrow to show the full labels.
+        /// </summary>
+        /// <returns></returns>
+        private bool UseConciseLabels()
+        {
+            return AppState.MainWin.ABSOLUTE_ADJUSTMENT < -(INITIAL_CANVAS_WIDTH / 3);
         }
 
         //*****************************************************
@@ -552,7 +584,7 @@ namespace ChessForge
                 if (singleNode)
                 {
                     // vertical up/down line
-                    Point whitePoint = new Point(p.Value.X - _halfPixelsPerPly, CanvasHeight - p.Value.Y);
+                    Point whitePoint = new Point(p.Value.X - _halfPixelsPerPly, INITIAL_CANVAS_HEIGHT - p.Value.Y);
                     whitePath.Add(new LineSegment(whitePoint, false));
                     whiteLine.Points.Add(whitePoint);
 
@@ -560,7 +592,7 @@ namespace ChessForge
                     blackPath.Add(new LineSegment(blackPoint, false));
                     blackLine.Points.Add(blackPoint);
 
-                    whitePoint = new Point(p.Value.X, CanvasHeight - p.Value.Y);
+                    whitePoint = new Point(p.Value.X, INITIAL_CANVAS_HEIGHT - p.Value.Y);
                     whitePath.Add(new LineSegment(whitePoint, false));
                     whiteLine.Points.Add(whitePoint);
 
@@ -570,7 +602,7 @@ namespace ChessForge
                 }
                 else
                 {
-                    whitePath.Add(new LineSegment(new Point(p.Value.X, CanvasHeight - p.Value.Y), false));
+                    whitePath.Add(new LineSegment(new Point(p.Value.X, INITIAL_CANVAS_HEIGHT - p.Value.Y), false));
                     blackPath.Add(new LineSegment(new Point(p.Value.X, -p.Value.Y), false));
                 }
             }
@@ -589,7 +621,7 @@ namespace ChessForge
             Point? p = GetPointForMove(nd);
             if (p.HasValue)
             {
-                Point whitePoint = new Point(p.Value.X, CanvasHeight - p.Value.Y);
+                Point whitePoint = new Point(p.Value.X, INITIAL_CANVAS_HEIGHT - p.Value.Y);
                 whitePath.Add(new LineSegment(whitePoint, true));
 
                 Point blackPoint = new Point(p.Value.X, -p.Value.Y);
@@ -615,7 +647,7 @@ namespace ChessForge
                 if (singleNode)
                 {
                     // extension for a single node
-                    Point whitePoint = new Point(p.Value.X + _halfPixelsPerPly, CanvasHeight - p.Value.Y);
+                    Point whitePoint = new Point(p.Value.X + _halfPixelsPerPly, INITIAL_CANVAS_HEIGHT - p.Value.Y);
                     whitePath.Add(new LineSegment(whitePoint, false));
                     whiteLine.Points.Add(whitePoint);
 
@@ -624,14 +656,14 @@ namespace ChessForge
                     blackLine.Points.Add(blackPoint);
 
                     // vertical up/down line
-                    whitePoint = new Point(p.Value.X + _halfPixelsPerPly, CanvasHeight);
+                    whitePoint = new Point(p.Value.X + _halfPixelsPerPly, INITIAL_CANVAS_HEIGHT);
                     blackPoint = new Point(p.Value.X + _halfPixelsPerPly, 0);
                     whitePath.Add(new LineSegment(whitePoint, false));
                     blackPath.Add(new LineSegment(blackPoint, false));
                 }
                 else
                 {
-                    whitePath.Add(new LineSegment(new Point(p.Value.X, CanvasHeight), false));
+                    whitePath.Add(new LineSegment(new Point(p.Value.X, INITIAL_CANVAS_HEIGHT), false));
                     blackPath.Add(new LineSegment(new Point(p.Value.X, 0), false));
                 }
             }
@@ -768,7 +800,7 @@ namespace ChessForge
                         isValuePositive = true;
                         marker = _whiteMarker;
                         otherMarker = _blackMarker;
-                        p.Y = CanvasHeight - p.Y;
+                        p.Y = INITIAL_CANVAS_HEIGHT - p.Y;
                     }
                     else
                     {
@@ -778,8 +810,8 @@ namespace ChessForge
                         otherMarker = _whiteMarker;
                     }
 
-                    p.Y = p.Y - MarkerSize;
-                    p.X = p.X - (MarkerSize / 2);
+                    p.Y = p.Y - INITIAL_MARKER_SIZE;
+                    p.X = p.X - (INITIAL_MARKER_SIZE / 2);
 
                     marker.Visibility = Visibility.Visible;
                     otherMarker.Visibility = Visibility.Collapsed;
@@ -788,7 +820,7 @@ namespace ChessForge
                     {
                         Point pOther = new Point();
                         pOther.X = p.X;
-                        pOther.Y = CanvasHeight + p.Y;
+                        pOther.Y = INITIAL_CANVAS_HEIGHT + p.Y;
                         otherMarker.Visibility = Visibility.Visible;
                         Canvas.SetLeft(otherMarker, pOther.X);
                         Canvas.SetTop(otherMarker, pOther.Y);
@@ -1042,7 +1074,14 @@ namespace ChessForge
         /// <returns></returns>
         private void SetScaleLabelText()
         {
-            _lblScale.Content = Properties.Resources.Scale + ": " + _evalScale.ToString("F1");
+            if (UseConciseLabels())
+            {
+                _lblScale.Content = "";
+            }
+            else
+            {
+                _lblScale.Content = Properties.Resources.Scale + ": " + _evalScale.ToString("F1");
+            }
         }
 
         /// <summary>
@@ -1166,9 +1205,9 @@ namespace ChessForge
         private void CreateScaleLabel()
         {
             _lblScale = new Label();
-            _lblScale.Height = BaseFontSize + 6;
+            _lblScale.Height = BASE_FONT_SIZE + 6;
             _lblScale.Padding = new Thickness(0, 0, 0, 0);
-            _lblScale.FontSize = BaseFontSize - 1;
+            _lblScale.FontSize = BASE_FONT_SIZE - 1;
             _lblScale.Foreground = Brushes.DarkGreen;
             _lblScale.Padding = new Thickness(0, 0, 0, 0);
         }
@@ -1183,9 +1222,9 @@ namespace ChessForge
         {
             Button button = new Button();
             button.Content = text;
-            button.Height = BaseFontSize + 6;
-            button.Width = BaseFontSize + 4;
-            button.FontSize = BaseFontSize + 2;
+            button.Height = BASE_FONT_SIZE + 6;
+            button.Width = BASE_FONT_SIZE + 4;
+            button.FontSize = BASE_FONT_SIZE + 2;
             button.FontWeight = FontWeights.Bold;
             button.Foreground = Brushes.DarkGreen;
             button.Background = Brushes.Transparent;
