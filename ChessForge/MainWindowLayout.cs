@@ -159,6 +159,8 @@ namespace ChessForge
         {
             ThicknessUtils.SetControlLeftMargin(UiDgActiveLine, 0);
             ThicknessUtils.SetControlLeftMargin(UiDgEngineGame, SCORESHEET_NO_EVALS_LEFT_MARGIN);
+            
+            UiTrainingSessionBox.Margin = new Thickness(MAIN_TAB_PAD, SECOND_ROW_TOP_PAD, RIGHT_MARGIN_WITH_SCORESHEET_NO_EVALS, 0);
 
             switch (sizeMode)
             {
@@ -230,6 +232,9 @@ namespace ChessForge
             {
                 _openingStatsView.RebuildView(absoluteAdjustment);
             }
+
+            UiEvalChart.InitSizes();
+            UiEvalChart.Refresh();
 
             return;
         }
