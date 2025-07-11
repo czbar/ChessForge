@@ -279,7 +279,7 @@ namespace ChessForge
                     eco = string.Empty;
                 }
 
-                _lblEcoCode.Content = eco;
+                _lblEcoCode.Content = " " + eco;
             }
         }
 
@@ -346,56 +346,62 @@ namespace ChessForge
         /// </summary>
         private void BuildFlowDocument(DataMode mode, LichessOpeningsStats openingStats, string errorMessage = "")
         {
-            FlowDocument doc = HostRtb.Document;
-
-            _lastDataMode = mode;
-            _lastOpeningStats = openingStats;
-            _lasterrorMessage = errorMessage;
-
-            doc.Blocks.Clear();
-            doc.PageWidth = OpeningStatsViewLayout.ViewAreaWidth + 10;
-
-            if (_node != null)
+            try
             {
-                switch (mode)
+                FlowDocument doc = HostRtb.Document;
+
+                _lastDataMode = mode;
+                _lastOpeningStats = openingStats;
+                _lasterrorMessage = errorMessage;
+
+                doc.Blocks.Clear();
+                doc.PageWidth = OpeningStatsViewLayout.ViewAreaWidth + 10;
+
+                if (_node != null)
                 {
-                    case DataMode.OPENINGS:
-                        BuildOpeningNameTable();
-                        if (_openingNameTable != null)
-                        {
-                            doc.Blocks.Add(_openingNameTable);
-                        }
-                        BuildOpeningStatsTable(openingStats);
-                        doc.Blocks.Add(_openingStatsTable);
-                        break;
-                    case DataMode.TABLEBASE:
-                        if (_node.ColorToMove == PieceColor.White)
-                        {
-                            InsertTablebaseCategoryTable("loss");
-                            InsertTablebaseCategoryTable("unknown");
-                            InsertTablebaseCategoryTable("draw");
-                            InsertTablebaseCategoryTable("win");
-                        }
-                        else
-                        {
-                            InsertTablebaseCategoryTable("loss");
-                            InsertTablebaseCategoryTable("unknown");
-                            InsertTablebaseCategoryTable("draw");
-                            InsertTablebaseCategoryTable("win");
-                        }
-                        break;
-                    case DataMode.NO_DATA:
-                        BuildOpeningNameTable();
-                        if (_openingNameTable != null)
-                        {
-                            doc.Blocks.Add(_openingNameTable);
-                        }
-                        doc.Blocks.Add(BuildErrorMessagePara(errorMessage));
-                        break;
+                    switch (mode)
+                    {
+                        case DataMode.OPENINGS:
+                            BuildOpeningNameTable();
+                            if (_openingNameTable != null)
+                            {
+                                doc.Blocks.Add(_openingNameTable);
+                            }
+                            BuildOpeningStatsTable(openingStats);
+                            doc.Blocks.Add(_openingStatsTable);
+                            break;
+                        case DataMode.TABLEBASE:
+                            if (_node.ColorToMove == PieceColor.White)
+                            {
+                                InsertTablebaseCategoryTable("loss");
+                                InsertTablebaseCategoryTable("unknown");
+                                InsertTablebaseCategoryTable("draw");
+                                InsertTablebaseCategoryTable("win");
+                            }
+                            else
+                            {
+                                InsertTablebaseCategoryTable("loss");
+                                InsertTablebaseCategoryTable("unknown");
+                                InsertTablebaseCategoryTable("draw");
+                                InsertTablebaseCategoryTable("win");
+                            }
+                            break;
+                        case DataMode.NO_DATA:
+                            BuildOpeningNameTable();
+                            if (_openingNameTable != null)
+                            {
+                                doc.Blocks.Add(_openingNameTable);
+                            }
+                            doc.Blocks.Add(BuildErrorMessagePara(errorMessage));
+                            break;
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                AppLog.Message("BuildFlowDocument()", ex);
+            }
 
-            //HostRtb.Document = doc;
         }
 
         /// <summary>
@@ -927,7 +933,7 @@ namespace ChessForge
                     break;
             }
 
-            TableCell cellTitle = new TableCell(new Paragraph(new Run(title)));
+            TableCell cellTitle = new TableCell(new Paragraph(new Run(" " + title)));
             cellTitle.FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff;
             cellTitle.FontWeight = FontWeights.Bold;
             cellTitle.Foreground = Brushes.Black;
