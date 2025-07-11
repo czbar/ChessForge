@@ -535,7 +535,6 @@ namespace ChessForge
 
 
             AddDebugMenu();
-
             ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
             SetEvaluationLabels();
 
@@ -556,6 +555,9 @@ namespace ChessForge
                 UiImgChartOn.Visibility = Visibility.Visible;
                 UiImgChartOff.Visibility = Visibility.Hidden;
             }
+
+
+            AdjustPanelWidths(Configuration.ChessboardSizeAdjustment);
 
             Timers.Start(AppTimers.TimerId.APP_START);
 
