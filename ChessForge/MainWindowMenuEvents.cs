@@ -1048,9 +1048,8 @@ namespace ChessForge
         private void UiMnPlayEngine_Click(object sender, RoutedEventArgs e)
         {
 
-            // double check that we are in the Study or Games tab,
-            // we don't allow starting a game from anywhere else
-            if (AppState.ActiveTab == TabViewType.STUDY || AppState.ActiveTab == TabViewType.MODEL_GAME)
+            // double check that we are in the Study / Games /EXERCISES tab.
+            if (AppState.ActiveTab == TabViewType.STUDY || AppState.ActiveTab == TabViewType.MODEL_GAME || AppState.ActiveTab == TabViewType.EXERCISE)
             {
                 if (!EngineMessageProcessor.IsEngineAvailable)
                 {
