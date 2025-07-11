@@ -1429,7 +1429,9 @@ namespace ChessForge
                 foreach (TreeNode child in nd.Parent.Children)
                 {
                     // we cannot use ArePositionsIdentical() because nd only has static position
-                    if (child.LastMoveEngineNotation != nd.LastMoveEngineNotation && !child.IsNewTrainingMove)
+                    if (child.LastMoveEngineNotation != nd.LastMoveEngineNotation 
+                        && !child.IsNewTrainingMove 
+                        && (!child.IsNullMove || child.Children.Count > 0))
                     {
                         lstNodes.Add(child);
                     }
