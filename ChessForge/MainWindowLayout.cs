@@ -11,8 +11,6 @@ namespace ChessForge
     /// </summary>
     public partial class MainWindow : Window
     {
-        public double MainChessBoardWidthAdjustment = 0;
-
         // Default width (and height) of the main chessboard.
         private const double CHESSBOARD_DEFAULT_WIDTH = 680;
 
@@ -34,9 +32,6 @@ namespace ChessForge
         // original grid row/column height/width definitions for the main grid.
         private double[] MAIN_GRID_ROWS = { 1.0, 680.0, 160.0, 20.0 };
         private double[] MAIN_GRID_COLUMNS = { 680.0, 600.0, 270.0, 1.0 };
-
-        // Adjustment of the width of the second column of the main grid compared to its default size.
-        public double ABSOLUTE_ADJUSTMENT = 0;
 
         // how far to move the scoresheet to the right when it has no evals and
         // therefore the control to the left (e.g. Training Tab Conbtrol) is made wider.
@@ -211,14 +206,14 @@ namespace ChessForge
         private void AdjustPanelWidths(double adjustment)
         {
             // calculate the adjustment relative to the default boundary between the first and second column.
-            double absoluteAdjustment = _runningAdjustment + (_gridMain.ColumnDefinitions[0].Width.Value - MAIN_GRID_COLUMNS[0]);
+            double absoluteAdjustment = adjustment + (_gridMain.ColumnDefinitions[0].Width.Value - MAIN_GRID_COLUMNS[0]);
             if (absoluteAdjustment > 0 || absoluteAdjustment < -MAX_USER_WIDTH_ADJUSTMENT)
             {
                 // An invalid adjustment should have been caught earlier so this is just a defensive measure.
                 return;
             }
 
-            ABSOLUTE_ADJUSTMENT = absoluteAdjustment;
+            Configuration.ChessboardSizeAdjustment = (int)absoluteAdjustment;
 
             _gridMain.ColumnDefinitions[0].Width = new GridLength(_gridMain.ColumnDefinitions[0].Width.Value + adjustment);
             _gridMain.ColumnDefinitions[1].Width = new GridLength(_gridMain.ColumnDefinitions[1].Width.Value - adjustment);

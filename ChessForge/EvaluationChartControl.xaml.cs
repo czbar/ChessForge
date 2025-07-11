@@ -135,7 +135,7 @@ namespace ChessForge
         /// </summary>
         public void InitSizes()
         {
-            double widthAdjustment = AppState.MainWin.ABSOLUTE_ADJUSTMENT;
+            double widthAdjustment = (double)Configuration.ChessboardSizeAdjustment;
 
             UiCnvWhite.Children.Clear();
             UiCnvBlack.Children.Clear();
@@ -453,7 +453,7 @@ namespace ChessForge
         /// <returns></returns>
         private bool UseConciseLabels()
         {
-            return AppState.MainWin.ABSOLUTE_ADJUSTMENT < -(INITIAL_CANVAS_WIDTH / 3);
+            return (double)Configuration.ChessboardSizeAdjustment < -(INITIAL_CANVAS_WIDTH / 3);
         }
 
         //*****************************************************

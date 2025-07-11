@@ -18,7 +18,7 @@ namespace ChessForge
         {
             get
             {
-                return INITIAL_VIEW_AREA_WIDTH - AppState.MainWin.ABSOLUTE_ADJUSTMENT;
+                return INITIAL_VIEW_AREA_WIDTH - (double)Configuration.ChessboardSizeAdjustment;
             }
         }
 
