@@ -190,6 +190,13 @@ namespace ChessForge
         public static int MoveSpeed = 200;
 
         /// <summary>
+        /// Adjustment to apply to the chessboard size and the first column 
+        /// where it lives.
+        /// It should be 0 or negative.
+        /// </summary>
+        public static int ChessboardSizeAdjustment = 0;
+
+        /// <summary>
         /// Depth of the study tree automatically built
         /// from the games of the chapter or the downloaded list.
         /// </summary>
@@ -632,6 +639,7 @@ namespace ChessForge
         //*********************************
 
         private const string CFG_MOVE_SPEED = "MoveSpeed";
+        private const string CFG_CHESSBOARD_SIZE_ADJUSTMENT = "ChessboardSizeAdjustment";
         private const string CFG_DEFAULT_INDEX_DEPTH = "DefaultIndexDepth";
         private const string CFG_AUTOGEN_TREE_DEPTH = "AutogenTreeDepth";
         private const string CFG_LAST_DIRECTORY = "LastDirectory";
@@ -842,6 +850,7 @@ namespace ChessForge
 
                 sb.Append(CFG_AUTOGEN_TREE_DEPTH + "=" + AutogenTreeDepth.ToString() + Environment.NewLine);
                 sb.Append(CFG_MOVE_SPEED + "=" + MoveSpeed.ToString() + Environment.NewLine);
+                sb.Append(CFG_CHESSBOARD_SIZE_ADJUSTMENT + "=" + ChessboardSizeAdjustment.ToString() + Environment.NewLine);
                 sb.Append(CFG_DEFAULT_INDEX_DEPTH + "=" + DefaultIndexDepth.ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_DIRECTORY + "=" + (LastOpenDirectory ?? "").ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_IMPORT_DIRECTORY + "=" + (LastImportDirectory ?? "").ToString() + Environment.NewLine);
@@ -1208,6 +1217,9 @@ namespace ChessForge
                             break;
                         case CFG_MOVE_SPEED:
                             int.TryParse(value, out MoveSpeed);
+                            break;
+                        case CFG_CHESSBOARD_SIZE_ADJUSTMENT:
+                            int.TryParse(value, out ChessboardSizeAdjustment);
                             break;
                         case CFG_DEFAULT_INDEX_DEPTH:
                             int.TryParse(value, out _defaultIndexDepth);
