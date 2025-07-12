@@ -282,7 +282,7 @@ namespace ChessForge
                     else
                     {
                         _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
-                        _mainWin.ResetEvaluationProgressBar();
+                        _mainWin.ZeroEvaluationProgressBar();
                     }
 
                     // if this is Training with Continuous mode, switch to Continuous
@@ -308,7 +308,7 @@ namespace ChessForge
                 else
                 {
                     _mainWin.Timers.Stop(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
-                    _mainWin.ResetEvaluationProgressBar();
+                    _mainWin.ZeroEvaluationProgressBar();
                     _mainWin.Timers.Start(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
                 }
             }
@@ -325,7 +325,7 @@ namespace ChessForge
             // stop the timer, apply training mode specific handling 
             // NOTE do not reset Evaluation.CurrentMode as this will be done 
             // later down the chain
-            _mainWin.ResetEvaluationProgressBar();
+            _mainWin.ZeroEvaluationProgressBar();
 
             if (EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)
             {
@@ -569,7 +569,7 @@ namespace ChessForge
                     }
                     else
                     {
-                        _mainWin.EngineGameView.UpdateMovePromptParagraph(true);
+                        _mainWin.EngineGameView.UpdateMovePromptParagraph(true, nd.ColorToMove);
                     }
                 }
             });
