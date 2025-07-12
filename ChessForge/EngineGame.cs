@@ -37,6 +37,11 @@ namespace ChessForge
         /// </summary>
         public static GameState CurrentState { get => _gameState; }
 
+        /// <summary>
+        /// The tab that was opened when the game started.
+        /// </summary>
+        public static TabViewType ActiveTabOnStart = TabViewType.NONE;
+
         // color that the engine plays with
         private static PieceColor _engineColor = PieceColor.None;
 
