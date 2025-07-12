@@ -1067,7 +1067,7 @@ namespace ChessForge
 
                 if (nd != null)
                 {
-                    AppState.SetupGuiForEngineGame();
+                    EngineGame.ActiveTabOnStart = AppState.ActiveTab;
                     StartEngineGame(nd, false);
                 }
                 else
@@ -1112,7 +1112,18 @@ namespace ChessForge
                         }
                         EngineGame.Line.Tree.Header.SetHeaderValue(PgnHeaders.KEY_DATE, PgnHeaders.FormatPgnDateString(DateTime.Now));
                         CreateNewModelGame(EngineGame.Line.Tree);
+                        UiTabModelGames.Focus();
                     }
+
+                    GameData.ContentType contentType = ActiveVariationTree == null ? GameData.ContentType.NONE : ActiveVariationTree.ContentType;
+                    if (contentType == GameData.ContentType.EXERCISE)
+                    {
+                        _exerciseTreeView.DeactivateSolvingMode(VariationTree.SolvingMode.NONE);
+                    }
+
+                    AppState.SwapCommentBoxForEngineLines(false);
+                    BoardCommentBox.RestoreTitleMessage(contentType);
+                    LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
                 }
             }
             catch
@@ -1132,7 +1143,7 @@ namespace ChessForge
         {
             bool? save = false;
 
-            if (!TrainingSession.IsTrainingInProgress)
+            if (!TrainingSession.IsTrainingInProgress && EngineGame.ActiveTabOnStart == TabViewType.MODEL_GAME)
             {
                 MessageBoxResult res = MessageBox.Show(Properties.Resources.EngGameSave,
                     Properties.Resources.EngineGame
