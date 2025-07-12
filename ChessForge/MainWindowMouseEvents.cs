@@ -1674,7 +1674,6 @@ namespace ChessForge
                 AppState.ShowExplorers(false, false);
             }
 
-            BoardCommentBox.ShowTabHints();
             try
             {
                 if (KeepFocusOnGame())
@@ -1723,6 +1722,8 @@ namespace ChessForge
             catch
             {
             }
+
+            BoardCommentBox.ShowTabHints();
         }
 
         /// <summary>
