@@ -2183,9 +2183,9 @@ namespace ChessForge
             EngineMessageProcessor.RequestPositionEvaluation(nd, ActiveVariationTreeId, Configuration.EngineMpv, 0);
         }
 
-        public void ResetEvaluationProgressBar()
+        public void ZeroEvaluationProgressBar()
         {
-            EngineLinesBox.ResetEvaluationProgressBar();
+            EngineLinesBox.ZeroEvaluationProgressBar();
         }
 
         /// <summary>
@@ -2220,9 +2220,9 @@ namespace ChessForge
 
             UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
 
+            AppState.SetupGuiForEngineGame();
             LearningMode.ChangeCurrentMode(LearningMode.Mode.ENGINE_GAME);
 
-            AppState.SetupGuiForEngineGame();
 
             EngineGame.InitializeGameObject(startNode, true, IsTraining);
             UiDgEngineGame.ItemsSource = EngineGame.Line.MoveList;
@@ -2322,7 +2322,7 @@ namespace ChessForge
         {
             Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
 
-            ResetEvaluationProgressBae();
+            ResetEvaluationProgressBar();
 
             MainChessBoard.RemoveMoveSquareColors();
 
@@ -2334,9 +2334,6 @@ namespace ChessForge
             EngineGame.ChangeCurrentState(EngineGame.GameState.IDLE);
 
             Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
-
-            //AppState.MainWin.ActiveVariationTree.BuildLines();
-            //RebuildActiveTreeView();
 
             AppState.SetupGuiForCurrentStates();
 
@@ -2350,7 +2347,7 @@ namespace ChessForge
         /// Sets its visibility to hidden.
         /// and Maximum value to the appropriate engine time: move or evaluation.
         /// </summary>
-        public void ResetEvaluationProgressBae()
+        public void ResetEvaluationProgressBar()
         {
             UiPbEngineThinking.Dispatcher.Invoke(() =>
             {
