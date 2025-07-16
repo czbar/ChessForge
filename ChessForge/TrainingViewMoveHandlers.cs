@@ -1,12 +1,7 @@
 ﻿using ChessPosition;
 using GameTree;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Documents;
 using System.Windows;
+using System.Windows.Documents;
 
 namespace ChessForge
 {
@@ -151,7 +146,7 @@ namespace ChessForge
                     }
                     else
                     {
-                        if (!child.IsNewTrainingMove)
+                        if (!child.IsNewTrainingMove && (!child.IsNullMove || child.Children.Count > 0))
                         {
                             _otherMovesInWorkbook.Add(child);
                         }

@@ -18,15 +18,6 @@ namespace ChessForge
     /// </summary>
     public class StudyTreeView : VariationTreeView
     {
-        // prefix for Runs in the index paragraph.
-        private readonly string _indexrun_ = "indexrun_";
-
-        // prefix for index level lines in the main body
-        private readonly string _idxprefix_ = "idxprefix_";
-
-        // prefix for expand elipsis runs
-        private readonly string _expelipsis_ = "expelipsis_";
-
         // id of the first node in the sector for which index prefix was last clicked 
         private int _lastClickedIndexPrefix = -1;
 
@@ -548,7 +539,7 @@ namespace ChessForge
             TreeNode startNode = sector.Nodes[0];
 
             Run rIndexTitle = BuildSectionIdTitle(startNode.LineId);
-            rIndexTitle.Name = _idxprefix_ + startNode.NodeId.ToString();
+            rIndexTitle.Name = RichTextBoxUtilities.IndexLevelIdRunPrefix + startNode.NodeId.ToString();
             rIndexTitle.PreviewMouseDown += EventIdxPrefixRunClicked;
             rIndexTitle.Foreground = ChessForgeColors.CurrentTheme.IndexPrefixForeground;
             rIndexTitle.ToolTip = Properties.Resources.TtClickToExpandCollapse;
@@ -570,7 +561,7 @@ namespace ChessForge
         {
             Run elipsis = new Run(" [...]");
 
-            elipsis.Name = _expelipsis_ + nd.NodeId.ToString();
+            elipsis.Name = RichTextBoxUtilities.IndexElipsisRunPrefix + nd.NodeId.ToString();
             elipsis.PreviewMouseDown += EventIdxPrefixRunClicked;
             elipsis.ToolTip = Properties.Resources.TtClickToExpand;
             para.Inlines.Add(elipsis);
@@ -1053,7 +1044,7 @@ namespace ChessForge
             try
             {
                 r = new Run(text.ToString());
-                r.Name = _indexrun_ + nd.NodeId.ToString();
+                r.Name = RichTextBoxUtilities.IndexRunPrefix + nd.NodeId.ToString();
                 r.PreviewMouseDown += EventIndexRunClicked;
 
                 // only used the passed fontColor on the first move in the paragraph

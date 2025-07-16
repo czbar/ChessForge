@@ -18,35 +18,58 @@ namespace ChessForge
     public partial class VariationTreeView : RichTextBuilder
     {
         /// <summary>
-        /// Event handler invoked when a Run was clicked.
-        /// In response, we highlight the line to which this Run belongs
-        /// (selecting the top branch for the part of the line beyond
-        /// the clicked Run).
-        /// 
-        /// This event will also be invoked if an inline diagram was clicked.
-        /// In that case the diagram's associated Run will be identified.
+        /// Event handler invoked when a Run or a run associated comment/diagram
+        /// inline is clicked.
+        /// In response, we highlight the line to which this Run belongs.
+        /// The SelectRun() method will also handle a case of double-click
+        /// invoking the approriate comment editing dialog.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void EventRunClicked(object sender, MouseButtonEventArgs e)
         {
-            Run r = null;
+            Run run = ProcessRunClick(sender, e);
+            SelectRun(run, e.ClickCount, e.ChangedButton, false);
+        }
+
+        /// <summary>
+        /// Invoked when a Run in the "before move" diagram was clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventDiagramBeforeMoveClicked(object sender, MouseButtonEventArgs e)
+        {
+            Run run = ProcessRunClick(sender, e);
+            SelectRun(run, e.ClickCount, e.ChangedButton, true);
+        }
+
+        /// <summary>
+        /// Performs the common actions required when a Run or a run associated comment/diagram
+        /// inline is clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <returns></returns>
+        private Run ProcessRunClick(object sender, MouseButtonEventArgs e)
+        {
+            Run run = null;
 
             if (e.Source is Run)
             {
-                r = e.Source as Run;
+                run = e.Source as Run;
             }
             else if (sender is InlineUIContainer iuc)
             {
                 int nodeId = TextUtils.GetIdFromPrefixedString(iuc.Name);
                 if (_dictNodeToRun.ContainsKey(nodeId))
                 {
-                    r = _dictNodeToRun[nodeId];
+                    run = _dictNodeToRun[nodeId];
                 }
             }
 
             _mainWin.StopReplayIfActive();
-            SelectRun(r, e.ClickCount, e.ChangedButton);
+            
+            return run;
         }
 
         /// <summary>
@@ -244,7 +267,7 @@ namespace ChessForge
 
                 if (_dictNodeToRun.ContainsKey(nd.NodeId))
                 {
-                    SelectRun(_dictNodeToRun[nd.NodeId], 1, MouseButton.Left);
+                    SelectRun(_dictNodeToRun[nd.NodeId], 1, MouseButton.Left, true);
                     if (_mainWin.InvokeCommentBeforeMoveDialog(nd))
                     {
                         InsertOrUpdateCommentBeforeMoveRun(nd);

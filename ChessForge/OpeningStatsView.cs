@@ -23,9 +23,6 @@ namespace ChessForge
         // string to use when query returned no opening name for the position
         private string POSITION_NOT_NAMED = Properties.Resources.NotNamed;
 
-        // scale factor for table cell sizes
-        private double scaleFactor = 3.5;
-
         // The top table showing the name of the opening 
         private Table _openingNameTable;
 
@@ -76,20 +73,6 @@ namespace ChessForge
             CreateOpeningStatsTable();
         }
 
-        // column widths in the stats table
-        private readonly double _moveColumnWidth = 20;
-        private readonly double _totalGamesColumnWidth = 20;
-        // 100 for the percentage bar and 10 for the left margin
-        private readonly double _statsColumnWidth = 110;
-
-        private readonly double _tablebaseMoveColumnWidth = 60;
-        private readonly double _dtzColumnWidth = 40;
-        private readonly double _dtmColumnWidth = 40;
-
-        // column widths in the stats table's header
-        private readonly double _ecoColumnWidth = 20;
-        private readonly double _openingNameColumnWidth = 130;
-
         private readonly string MOVE_PREFIX = "_move_";
 
         /// <summary>
@@ -110,15 +93,6 @@ namespace ChessForge
             [STYLE_WORKBOOK_TITLE] = new RichTextPara(0, 10, 18, FontWeights.Bold, TextAlignment.Left),
             ["default"] = new RichTextPara(140, 5, 11, FontWeights.Normal, TextAlignment.Left),
         };
-
-        /// <summary>
-        /// The width of the stats table being a sum of
-        /// the declared column widths.
-        /// </summary>
-        private double TotalStatsTableWidth
-        {
-            get => _moveColumnWidth + _totalGamesColumnWidth + _statsColumnWidth;
-        }
 
         // Used to ensure that _node object is not accessed simultaneously by OpeningStatsReceived and SetOpeningName
         private object _lockNodeAccess = new object();
@@ -248,15 +222,15 @@ namespace ChessForge
         /// This will be called in response to user selecting the DarkMode
         /// menu item.
         /// </summary>
-        public void UpdateColorTheme()
+        public void RebuildView(double absoluteAdjustment = 0)
         {
             // reset variables that, if set, block proper re-build.
             _openingNameTable = null;
             _lstRows.Clear();
-            
+
             CreateOpeningStatsTable();
-            if (_lastDataMode == DataMode.OPENINGS && _lastOpeningStats != null 
-                || _lastDataMode == DataMode.TABLEBASE &&  TablebaseExplorer.Response.Moves != null)
+            if ( _lastDataMode == DataMode.OPENINGS && _lastOpeningStats != null
+                || _lastDataMode == DataMode.TABLEBASE && TablebaseExplorer.Response.Moves != null)
             {
                 BuildFlowDocument(_lastDataMode, _lastOpeningStats, _lasterrorMessage);
             }
@@ -305,7 +279,7 @@ namespace ChessForge
                     eco = string.Empty;
                 }
 
-                _lblEcoCode.Content = eco;
+                _lblEcoCode.Content = " " + eco;
             }
         }
 
@@ -363,7 +337,7 @@ namespace ChessForge
         /// </summary>
         private static DataMode _lastDataMode = DataMode.NO_DATA;
         private static LichessOpeningsStats _lastOpeningStats = null;
-        private string _lasterrorMessage = ""; 
+        private string _lasterrorMessage = "";
 
         /// <summary>
         /// Builds the flow for this view.
@@ -372,56 +346,62 @@ namespace ChessForge
         /// </summary>
         private void BuildFlowDocument(DataMode mode, LichessOpeningsStats openingStats, string errorMessage = "")
         {
-            FlowDocument doc = HostRtb.Document;
-
-            _lastDataMode = mode;
-            _lastOpeningStats = openingStats;
-            _lasterrorMessage = errorMessage;
-
-            doc.Blocks.Clear();
-            doc.PageWidth = 590;
-
-            if (_node != null)
+            try
             {
-                switch (mode)
+                FlowDocument doc = HostRtb.Document;
+
+                _lastDataMode = mode;
+                _lastOpeningStats = openingStats;
+                _lasterrorMessage = errorMessage;
+
+                doc.Blocks.Clear();
+                doc.PageWidth = OpeningStatsViewLayout.ViewAreaWidth + 10;
+
+                if (_node != null)
                 {
-                    case DataMode.OPENINGS:
-                        BuildOpeningNameTable();
-                        if (_openingNameTable != null)
-                        {
-                            doc.Blocks.Add(_openingNameTable);
-                        }
-                        BuildOpeningStatsTable(openingStats);
-                        doc.Blocks.Add(_openingStatsTable);
-                        break;
-                    case DataMode.TABLEBASE:
-                        if (_node.ColorToMove == PieceColor.White)
-                        {
-                            InsertTablebaseCategoryTable("loss");
-                            InsertTablebaseCategoryTable("unknown");
-                            InsertTablebaseCategoryTable("draw");
-                            InsertTablebaseCategoryTable("win");
-                        }
-                        else
-                        {
-                            InsertTablebaseCategoryTable("loss");
-                            InsertTablebaseCategoryTable("unknown");
-                            InsertTablebaseCategoryTable("draw");
-                            InsertTablebaseCategoryTable("win");
-                        }
-                        break;
-                    case DataMode.NO_DATA:
-                        BuildOpeningNameTable();
-                        if (_openingNameTable != null)
-                        {
-                            doc.Blocks.Add(_openingNameTable);
-                        }
-                        doc.Blocks.Add(BuildErrorMessagePara(errorMessage));
-                        break;
+                    switch (mode)
+                    {
+                        case DataMode.OPENINGS:
+                            BuildOpeningNameTable();
+                            if (_openingNameTable != null)
+                            {
+                                doc.Blocks.Add(_openingNameTable);
+                            }
+                            BuildOpeningStatsTable(openingStats);
+                            doc.Blocks.Add(_openingStatsTable);
+                            break;
+                        case DataMode.TABLEBASE:
+                            if (_node.ColorToMove == PieceColor.White)
+                            {
+                                InsertTablebaseCategoryTable("loss");
+                                InsertTablebaseCategoryTable("unknown");
+                                InsertTablebaseCategoryTable("draw");
+                                InsertTablebaseCategoryTable("win");
+                            }
+                            else
+                            {
+                                InsertTablebaseCategoryTable("loss");
+                                InsertTablebaseCategoryTable("unknown");
+                                InsertTablebaseCategoryTable("draw");
+                                InsertTablebaseCategoryTable("win");
+                            }
+                            break;
+                        case DataMode.NO_DATA:
+                            BuildOpeningNameTable();
+                            if (_openingNameTable != null)
+                            {
+                                doc.Blocks.Add(_openingNameTable);
+                            }
+                            doc.Blocks.Add(BuildErrorMessagePara(errorMessage));
+                            break;
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                AppLog.Message("BuildFlowDocument()", ex);
+            }
 
-            //HostRtb.Document = doc;
         }
 
         /// <summary>
@@ -505,10 +485,10 @@ namespace ChessForge
                 _openingNameTable.RowGroups.Add(new TableRowGroup());
 
                 _openingNameTable.Columns.Add(new TableColumn());
-                _openingNameTable.Columns[0].Width = new GridLength(_ecoColumnWidth * scaleFactor);
+                _openingNameTable.Columns[0].Width = new GridLength(OpeningStatsViewLayout.EcoColumnWidth);
 
                 _openingNameTable.Columns.Add(new TableColumn());
-                _openingNameTable.Columns[1].Width = new GridLength((_openingNameColumnWidth * scaleFactor) + 1);
+                _openingNameTable.Columns[1].Width = new GridLength((OpeningStatsViewLayout.OpeningNameColumnWidth) + 1);
 
                 TableRow row = new TableRow();
                 _openingNameTable.RowGroups[0].Rows.Add(row);
@@ -541,7 +521,7 @@ namespace ChessForge
             _openingStatsTable.CellSpacing = 0;
             _openingStatsTable.RowGroups.Add(new TableRowGroup());
 
-            CreateStatsTableColumns(scaleFactor);
+            CreateStatsTableColumns();
 
             _lstRows.Clear();
             for (int i = 0; i < MAX_MOVE_ROW_COUNT; i++)
@@ -658,7 +638,7 @@ namespace ChessForge
             }
 
             StringBuilder sb = new StringBuilder();
-            
+
             uint moveNumberOffset = 0;
             if (AppState.ActiveVariationTree != null)
             {
@@ -681,19 +661,19 @@ namespace ChessForge
         /// Creates columns in the table.
         /// </summary>
         /// <param name="scaleFactor"></param>
-        private void CreateStatsTableColumns(double scaleFactor)
+        private void CreateStatsTableColumns()
         {
             // Move
             _openingStatsTable.Columns.Add(new TableColumn());
-            _openingStatsTable.Columns[0].Width = new GridLength(_moveColumnWidth * scaleFactor);
+            _openingStatsTable.Columns[0].Width = new GridLength(OpeningStatsViewLayout.MoveColumnWidth);
 
             // Total games
             _openingStatsTable.Columns.Add(new TableColumn());
-            _openingStatsTable.Columns[1].Width = new GridLength(_totalGamesColumnWidth * scaleFactor);
+            _openingStatsTable.Columns[1].Width = new GridLength(OpeningStatsViewLayout.TotalGamesColumnWidth);
 
             // Scoring
             _openingStatsTable.Columns.Add(new TableColumn());
-            _openingStatsTable.Columns[2].Width = new GridLength(_statsColumnWidth * scaleFactor + 1);
+            _openingStatsTable.Columns[2].Width = OpeningStatsViewLayout.StatsColumnWidth;
         }
 
         /// <summary>
@@ -707,14 +687,14 @@ namespace ChessForge
 
             Canvas canvas = new Canvas
             {
-                Width = scaleFactor * (TotalStatsTableWidth - _ecoColumnWidth) + 1,
+                Width = (OpeningStatsViewLayout.OpeningNameColumnWidth) + 1,
                 Height = 22 + Configuration.FontSizeDiff,
                 Background = Brushes.White
             };
 
             _lblOpeningName = new Label
             {
-                Width = scaleFactor * (TotalStatsTableWidth - _ecoColumnWidth) + 1,
+                Width = (OpeningStatsViewLayout.OpeningNameColumnWidth) + 1,
                 Height = 22 + Configuration.FontSizeDiff,
                 FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff,
                 VerticalContentAlignment = VerticalAlignment.Center,
@@ -730,7 +710,7 @@ namespace ChessForge
 
             canvas.Children.Add(_lblOpeningName);
 
-            Canvas.SetLeft(_lblOpeningName, 0 * scaleFactor);
+            Canvas.SetLeft(_lblOpeningName, 0);
 
             InlineUIContainer uIContainer = new InlineUIContainer
             {
@@ -752,14 +732,14 @@ namespace ChessForge
 
             Canvas canvas = new Canvas
             {
-                Width = scaleFactor * _ecoColumnWidth,
+                Width = OpeningStatsViewLayout.EcoColumnWidth,
                 Height = 22 + Configuration.FontSizeDiff,
                 Background = Brushes.White
             };
 
             _lblEcoCode = new Label
             {
-                Width = scaleFactor * (_ecoColumnWidth),
+                Width = OpeningStatsViewLayout.EcoColumnWidth,
                 Height = 22 + Configuration.FontSizeDiff,
                 FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff,
                 VerticalContentAlignment = VerticalAlignment.Center,
@@ -775,7 +755,7 @@ namespace ChessForge
 
             canvas.Children.Add(_lblEcoCode);
 
-            Canvas.SetLeft(_lblEcoCode, 0 * scaleFactor);
+            Canvas.SetLeft(_lblEcoCode, 0);
 
             InlineUIContainer uIContainer = new InlineUIContainer
             {
@@ -825,13 +805,13 @@ namespace ChessForge
             table.RowGroups.Add(new TableRowGroup());
 
             table.Columns.Add(new TableColumn());
-            table.Columns[0].Width = new GridLength(_tablebaseMoveColumnWidth * scaleFactor);
+            table.Columns[0].Width = new GridLength(OpeningStatsViewLayout.TablebaseMoveColumnWidth);
 
             table.Columns.Add(new TableColumn());
-            table.Columns[1].Width = new GridLength(_dtzColumnWidth * scaleFactor);
+            table.Columns[1].Width = new GridLength(OpeningStatsViewLayout.DtzColumnWidth);
 
             table.Columns.Add(new TableColumn());
-            table.Columns[2].Width = new GridLength(_dtmColumnWidth * scaleFactor);
+            table.Columns[2].Width = new GridLength(OpeningStatsViewLayout.DtmColumnWidth);
 
             LichessTablebaseMove[] moves = TablebaseExplorer.Response.Moves;
             foreach (LichessTablebaseMove move in moves)
@@ -863,7 +843,6 @@ namespace ChessForge
 
             return table;
         }
-
 
         /// <summary>
         /// Gets text for the DTM cell.
@@ -929,7 +908,7 @@ namespace ChessForge
             table.RowGroups.Add(new TableRowGroup());
 
             table.Columns.Add(new TableColumn());
-            table.Columns[0].Width = new GridLength((_ecoColumnWidth + _openingNameColumnWidth) * scaleFactor + 1);
+            table.Columns[0].Width = new GridLength((OpeningStatsViewLayout.EcoColumnWidth + OpeningStatsViewLayout.OpeningNameColumnWidth) + 1);
 
             TableRow row = new TableRow();
             table.RowGroups[0].Rows.Add(row);
@@ -954,7 +933,7 @@ namespace ChessForge
                     break;
             }
 
-            TableCell cellTitle = new TableCell(new Paragraph(new Run(title)));
+            TableCell cellTitle = new TableCell(new Paragraph(new Run(" " + title)));
             cellTitle.FontSize = _baseFontSize + 1 + Configuration.FontSizeDiff;
             cellTitle.FontWeight = FontWeights.Bold;
             cellTitle.Foreground = Brushes.Black;

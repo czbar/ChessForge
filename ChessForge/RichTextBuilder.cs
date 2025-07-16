@@ -24,12 +24,6 @@ namespace ChessForge
         /// </summary>
         internal abstract Dictionary<string, RichTextPara> RichTextParas { get; }
 
-        // NOTE: we rely on the fact that both types on comments begin with run_comment (!)
-        protected readonly string _run_comment_ = "run_comment_";
-        protected readonly string _run_comment_before_move_ = "run_comment_before_move_";
-        protected readonly string _run_comment_article_ref = "run_comment_artcle_ref_";
-
-
         /// <summary>
         /// Constructs the object and sets pointer to its associated FlowDocument.
         /// </summary>
@@ -389,12 +383,12 @@ namespace ChessForge
                 return;
             }
 
-            string commentTextName = _run_comment_ + nodeId.ToString();
+            string commentTextName = RichTextBoxUtilities.CommentRunPrefix + nodeId.ToString();
             string preDiagTextName = RichTextBoxUtilities.PreInlineDiagramRunPrefix + nodeId.ToString();
             string postDiagTextName = RichTextBoxUtilities.PostInlineDiagramRunPrefix + nodeId.ToString();
             string iucDiagramName = RichTextBoxUtilities.InlineDiagramIucPrefix + nodeId.ToString();
 
-            string articleRefPrefix = _run_comment_article_ref + nodeId.ToString() + "_";
+            string articleRefPrefix = RichTextBoxUtilities.CommentArticleRefPrefix + nodeId.ToString() + "_";
 
             List<Inline> inlinesToRemove = new List<Inline>();
             // where appropriate we need to match the full name e.g. "run_comment_45"
@@ -438,7 +432,7 @@ namespace ChessForge
                 return;
             }
 
-            string commentTextName = _run_comment_before_move_ + nodeId.ToString();
+            string commentTextName = RichTextBoxUtilities.CommentBeforeMoveRunPrefix + nodeId.ToString();
             string preDiagTextName = RichTextBoxUtilities.PreInlineDiagramBeforeMoveRunPrefix + nodeId.ToString();
             string postDiagTextName = RichTextBoxUtilities.PostInlineDiagramBeforeMoveRunPrefix + nodeId.ToString();
             string iucDiagramName = RichTextBoxUtilities.InlineDiagramBeforeMoveIucPrefix + nodeId.ToString();

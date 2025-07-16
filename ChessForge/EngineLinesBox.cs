@@ -48,9 +48,9 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Resets the evaluation progress bar to 0
+        /// Resets the evaluation progress bar to 0.
         /// </summary>
-        public static void ResetEvaluationProgressBar()
+        public static void ZeroEvaluationProgressBar()
         {
             _pbEngineEval.Dispatcher.Invoke(() =>
             {

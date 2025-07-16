@@ -13,6 +13,35 @@ namespace ChessForge
     /// </summary>
     public class RichTextBoxUtilities
     {
+        //************************************************
+        //
+        // Names of Runs and represening comment parts.
+        // NOTE: we rely on the fact that comment runs' names begin with run_comment (!)
+        //
+        //************************************************
+
+        /// <summary>
+        /// Post move comment prefix.
+        /// </summary>
+        public static readonly string CommentRunPrefix = "run_comment_";
+
+        /// <summary>
+        /// Before move comment prefix.
+        /// </summary>
+        public static readonly string CommentBeforeMoveRunPrefix = "run_comment_before_move_";
+
+        /// <summary>
+        /// Prefix for the run representing a reference identifier.
+        /// </summary>
+        public static readonly string CommentArticleRefPrefix = "run_comment_artcle_ref_";
+
+        //************************************************
+        //
+        // END
+        //
+        //************************************************
+
+
         /// <summary>
         /// Prefix for naming paragraphs representing a diagram.
         /// </summary>
@@ -88,6 +117,29 @@ namespace ChessForge
         /// </summary>
         public static readonly string RunMovePrefix = "run_move_";
 
+
+        //************************************************
+        //
+        // Prefixes for Runs specific to the self-indexing view.
+        //
+        //************************************************
+
+        /// <summary>
+        /// Prefix for Runs in the index paragraph.
+        /// </summary>
+        public static readonly string IndexRunPrefix = "indexrun_";
+
+        /// <summary>
+        /// Prefix for index level lines in the main body
+        /// </summary>
+        public static readonly string IndexLevelIdRunPrefix = "idxprefix_";
+
+        /// <summary>
+        /// Prefix for expand elipsis runs
+        /// </summary>
+        public static readonly string IndexElipsisRunPrefix = "expelipsis_";
+
+
         /// <summary>
         /// Checks if the passed object is a Run representing a move.
         /// </summary>
@@ -96,7 +148,7 @@ namespace ChessForge
         public static bool IsMoveRun(object o)
         {
             bool isMove = false;
-            
+
             if (o is Run run)
             {
                 return IsMoveRunName(run.Name);
@@ -301,6 +353,67 @@ namespace ChessForge
             }
 
             return res;
+        }
+
+        /// <summary>
+        /// Checks if the first non-empty Run in the Paragraph
+        /// is a Run representing an index level id e.g. "A)" or "B.2)".
+        /// </summary>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        public static bool ParagraphStartsWithIndexRun(Paragraph para)
+        {
+            bool res = false;
+
+            foreach (Inline inl in para.Inlines)
+            {
+                if (inl is Run r && !string.IsNullOrEmpty(r.Text))
+                {
+                    if (r.Name != null && r.Name.StartsWith(IndexLevelIdRunPrefix))
+                    {
+                        res = true;
+                    }
+                    break;
+                }
+            }
+
+            return res;
+        }
+
+        /// <summary>
+        /// Checks if the Run with the given nodeId is the first move representing Run
+        /// in the passed Paragraph.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <param name="nodeId"></param>
+        /// <returns>true if the first Run representing a move in the passed paragraph is for the move with the passed NodeId</returns>
+        public static bool IsFirstMoveRunInParagraph(Paragraph para, int nodeId)
+        {
+            bool res = false;
+
+            if (para != null)
+            {
+                foreach (Inline inl in para.Inlines)
+                {
+                    if (inl is Run run && run.Name.StartsWith(RunMovePrefix))
+                    {
+                        res = (run.Name == NameMoveRun(nodeId));
+                        break;
+                    }
+                }
+            }
+
+            return res;
+        }
+
+        /// <summary>
+        /// Builds a name for a Run representing a move
+        /// </summary>
+        /// <param name="nodeId"></param>
+        /// <returns></returns>
+        public static string NameMoveRun(int nodeId)
+        {
+            return RunMovePrefix + nodeId.ToString();
         }
 
         /// <summary>

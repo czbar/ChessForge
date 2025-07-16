@@ -841,7 +841,7 @@ namespace ChessForge
                 _mainWin.UiRtbStudyTreeView.Document.Blocks.Clear();
                 _mainWin.UiRtbTrainingProgress.Document.Blocks.Clear();
 
-                _mainWin.ResetEvaluationProgressBae();
+                _mainWin.ResetEvaluationProgressBar();
 
                 EngineGame.ChangeCurrentState(EngineGame.GameState.IDLE);
 
@@ -1672,7 +1672,6 @@ namespace ChessForge
 
                     _mainWin.UiTabCtrlEngineGame.Visibility = Visibility.Hidden;
 
-                    //                    _mainWin.UiBtnExitTraining.Visibility = Visibility.Visible;
                     _mainWin.UiBtnExitTraining.Visibility = Visibility.Collapsed; // to be deprecated
                     _mainWin.UiTrainingSessionBox.Visibility = Visibility.Visible;
                     _mainWin.UiBtnExitGame.Visibility = Visibility.Collapsed;
@@ -1682,7 +1681,6 @@ namespace ChessForge
                     ConfigureMenusForEngineGame();
 
                     _mainWin.UiTrainingSessionBox.ShowElements(true);
-                    //ShowGuiEngineGameLine(true, MainWin.UiTabCtrlTraining);
                 }
                 else
                 {
@@ -1871,9 +1869,16 @@ namespace ChessForge
 
                         _mainWin.UiMncMainBoardSepar_2.Visibility = Visibility.Visible;
 
-                        _mainWin.UiMnciReplay.Visibility = Visibility.Visible;
-
-                        _mainWin.UiMncMainBoardSepar_3.Visibility = Visibility.Visible;
+                        if (ActiveTab != TabViewType.EXERCISE || CurrentSolvingMode == VariationTree.SolvingMode.EDITING)
+                        {
+                            _mainWin.UiMnciReplay.Visibility = Visibility.Visible;
+                            _mainWin.UiMncMainBoardSepar_3.Visibility = Visibility.Visible;
+                        }
+                        else
+                        {
+                            _mainWin.UiMnciReplay.Visibility = Visibility.Collapsed;
+                            _mainWin.UiMncMainBoardSepar_3.Visibility = Visibility.Collapsed;
+                        }
 
                         _mainWin.UiMnciPlayEngine.Visibility = Visibility.Visible;
                         _mainWin.UiMnciExitEngineGame.Visibility = Visibility.Collapsed;
@@ -1900,7 +1905,6 @@ namespace ChessForge
                         _mainWin.UiMnciReplay.Visibility = Visibility.Collapsed;
 
                         _mainWin.UiMncMainBoardSepar_3.Visibility = Visibility.Collapsed;
-
                         _mainWin.UiMnciPlayEngine.Visibility = Visibility.Collapsed;
                         _mainWin.UiMnciExitEngineGame.Visibility = Visibility.Collapsed;
 
@@ -2128,7 +2132,8 @@ namespace ChessForge
                     _mainWin.UiLblScoresheet.Visibility = Visibility.Visible;
                     _mainWin.UiDgActiveLine.Columns[2].Visibility = includeEvals ? Visibility.Visible : Visibility.Hidden;
                     _mainWin.UiDgActiveLine.Columns[4].Visibility = includeEvals ? Visibility.Visible : Visibility.Hidden;
-                    _mainWin.UiDgActiveLine.Width = includeEvals ? 260 : 160;
+                    _mainWin.UiDgActiveLine.Width = includeEvals ? MainWin.SCORESHEET_WIDTH_WITH_EVALS : MainWin.SCORESHEET_WIDTH_NO_EVALS;
+                    ThicknessUtils.SetControlLeftMargin(_mainWin.UiDgActiveLine, includeEvals ? 0 : MainWin.SCORESHEET_NO_EVALS_LEFT_MARGIN);                    
 
                     if (includeEvals)
                     {

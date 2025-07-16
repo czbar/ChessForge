@@ -1,13 +1,7 @@
 ﻿using ChessPosition;
 using GameTree;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
 
 namespace ChessForge
 {
@@ -152,6 +146,8 @@ namespace ChessForge
         /// <summary>
         /// Resizes the height of the Evaluation Chart and sets
         /// the affected attributes accordingly.
+        /// There is no need to change the margins as the chart's top margin
+        /// remains the same in both full and half size modes.
         /// </summary>
         /// <param name="fullSize"></param>
         private static void ResizeEvaluationChart(bool fullSize)
@@ -161,16 +157,16 @@ namespace ChessForge
                 if (fullSize)
                 {
                     MainWin.UiEvalChart.Height = EVAL_CHART_FULL_HEIGHT;
-                    MainWin.UiEvalChart.CanvasHeight = (EVAL_CHART_FULL_HEIGHT - 2) / 2;
-                    MainWin.UiEvalChart.MarkerSize = 8;
-                    MainWin.UiEvalChart.BaseFontSize = 12;
+                    MainWin.UiEvalChart.INITIAL_CANVAS_HEIGHT = (EVAL_CHART_FULL_HEIGHT - 2) / 2;
+                    MainWin.UiEvalChart.INITIAL_MARKER_SIZE = 8;
+                    MainWin.UiEvalChart.BASE_FONT_SIZE = 12;
                 }
                 else
                 {
                     MainWin.UiEvalChart.Height = (EVAL_CHART_FULL_HEIGHT / 2);
-                    MainWin.UiEvalChart.CanvasHeight = (EVAL_CHART_FULL_HEIGHT - 2) / 4;
-                    MainWin.UiEvalChart.MarkerSize = 5;
-                    MainWin.UiEvalChart.BaseFontSize = 10;
+                    MainWin.UiEvalChart.INITIAL_CANVAS_HEIGHT = (EVAL_CHART_FULL_HEIGHT - 2) / 4;
+                    MainWin.UiEvalChart.INITIAL_MARKER_SIZE = 5;
+                    MainWin.UiEvalChart.BASE_FONT_SIZE = 10;
                 }
 
                 IsFullSize = fullSize;
@@ -183,20 +179,26 @@ namespace ChessForge
         /// <summary>
         /// Resizes the height of the Engine Lines box and sets
         /// the affected attributes accordingly.
+        /// In addition to the height, the Top margin is also changed
+        /// as the Engine Lines box is shown below the Evaluation Chart
+        /// if the latter is visible.
         /// </summary>
         /// <param name="fullSize"></param>
         private static void ResizeEngineLinesBox(bool fullSize)
         {
+            // restore the default top margin which we will then adjust
+            // for the half size mode.
+            ThicknessUtils.SetControlTopMargin(MainWin.UiTbEngineLines, MainWin.GetSecondRowTopPad());
+
             if (fullSize)
             {
                 MainWin.UiTbEngineLines.Height = EVAL_CHART_FULL_HEIGHT;
-                MainWin.UiTbEngineLines.Margin = new Thickness(0, 10, 0, 0);
                 MainWin.UiTbEngineLines.FontSize = Constants.BASE_ENGINE_LINES_FONT_SIZE + Configuration.FontSizeDiff;
             }
             else
             {
+                ThicknessUtils.AdjustControlTopMargin(MainWin.UiTbEngineLines, EVAL_CHART_FULL_HEIGHT / 2);
                 MainWin.UiTbEngineLines.Height = EVAL_CHART_FULL_HEIGHT / 2;
-                MainWin.UiTbEngineLines.Margin = new Thickness(0, 10 + (EVAL_CHART_FULL_HEIGHT / 2), 0, 0);
                 MainWin.UiTbEngineLines.FontSize = (Constants.BASE_ENGINE_LINES_FONT_SIZE + Configuration.FontSizeDiff) - 2;
             }
         }

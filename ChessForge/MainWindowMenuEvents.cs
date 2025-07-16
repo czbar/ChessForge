@@ -1048,9 +1048,8 @@ namespace ChessForge
         private void UiMnPlayEngine_Click(object sender, RoutedEventArgs e)
         {
 
-            // double check that we are in the Study or Games tab,
-            // we don't allow starting a game from anywhere else
-            if (AppState.ActiveTab == TabViewType.STUDY || AppState.ActiveTab == TabViewType.MODEL_GAME)
+            // double check that we are in the Study / Games /EXERCISES tab.
+            if (AppState.ActiveTab == TabViewType.STUDY || AppState.ActiveTab == TabViewType.MODEL_GAME || AppState.ActiveTab == TabViewType.EXERCISE)
             {
                 if (!EngineMessageProcessor.IsEngineAvailable)
                 {
@@ -1068,7 +1067,7 @@ namespace ChessForge
 
                 if (nd != null)
                 {
-                    AppState.SetupGuiForEngineGame();
+                    EngineGame.ActiveTabOnStart = AppState.ActiveTab;
                     StartEngineGame(nd, false);
                 }
                 else
@@ -1113,7 +1112,18 @@ namespace ChessForge
                         }
                         EngineGame.Line.Tree.Header.SetHeaderValue(PgnHeaders.KEY_DATE, PgnHeaders.FormatPgnDateString(DateTime.Now));
                         CreateNewModelGame(EngineGame.Line.Tree);
+                        UiTabModelGames.Focus();
                     }
+
+                    GameData.ContentType contentType = ActiveVariationTree == null ? GameData.ContentType.NONE : ActiveVariationTree.ContentType;
+                    if (contentType == GameData.ContentType.EXERCISE)
+                    {
+                        _exerciseTreeView.DeactivateSolvingMode(VariationTree.SolvingMode.NONE);
+                    }
+
+                    AppState.SwapCommentBoxForEngineLines(false);
+                    BoardCommentBox.RestoreTitleMessage(contentType);
+                    LearningMode.ChangeCurrentMode(LearningMode.Mode.MANUAL_REVIEW);
                 }
             }
             catch
@@ -1133,7 +1143,7 @@ namespace ChessForge
         {
             bool? save = false;
 
-            if (!TrainingSession.IsTrainingInProgress)
+            if (!TrainingSession.IsTrainingInProgress && EngineGame.ActiveTabOnStart == TabViewType.MODEL_GAME)
             {
                 MessageBoxResult res = MessageBox.Show(Properties.Resources.EngGameSave,
                     Properties.Resources.EngineGame
@@ -1993,6 +2003,8 @@ namespace ChessForge
                     if (insertOrDelete == true)
                     {
                         nd.IsDiagramBeforeMove = beforeMove;
+                        // when inserting a new diagram, we set the IsDiagramPreComment flag to true
+                        nd.IsDiagramPreComment = true;
                     }
 
                     ActiveTreeView?.ToggleDiagramFlag(nd, insertOrDelete == true);
@@ -3374,7 +3386,7 @@ namespace ChessForge
                     Configuration.IsDarkMode = true;
                     ChessForgeColors.SetMainControlColors();
                     RebuildAllTreeViews(null, true);
-                    _openingStatsView.UpdateColorTheme();
+                    _openingStatsView.RebuildView();
                     _topGamesView.UpdateColorTheme();
                     BoardCommentBox.UpdateColorTheme();
                 }
@@ -3401,7 +3413,7 @@ namespace ChessForge
                     Configuration.IsDarkMode = false;
                     ChessForgeColors.SetMainControlColors();
                     RebuildAllTreeViews(null, true);
-                    _openingStatsView.UpdateColorTheme();
+                    _openingStatsView.RebuildView();
                     _topGamesView.UpdateColorTheme();
                     BoardCommentBox.UpdateColorTheme();
                 }

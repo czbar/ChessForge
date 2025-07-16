@@ -87,7 +87,7 @@ namespace ChessForge
             UpdateIntroParagraph(colorForUser);
             UpdateEngineOptionsParagraph();
             UpdateGameMovesParagraph();
-            UpdateMovePromptParagraph(true);
+            UpdateMovePromptParagraph(true, colorForUser);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace ChessForge
                 HostRtb.Document.Blocks.Add(para);
             }
 
-            BuildNodeTextAndAddToPara(nd, false, para);
+            BuildNodeTextAndAddToPara(nd, nd.Parent.NodeId == 0, para);
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="userToMove">If true prompts the user, if false asks to wait for engine's move</param>
         /// <returns></returns>
-        public Paragraph UpdateMovePromptParagraph(bool userToMove)
+        public Paragraph UpdateMovePromptParagraph(bool userToMove, PieceColor pieceColor = PieceColor.None)
         {
             Paragraph para = FindParagraphByName(HostRtb.Document, _para_moveprompt_, false);
             if (para == null)
@@ -177,7 +177,24 @@ namespace ChessForge
 
             para.Inlines.Clear();
 
-            string promptText = userToMove ? Properties.Resources.EngGameYourMove : Properties.Resources.EngGameEngineMove;
+            string promptText;
+            if (userToMove)
+            {
+                string color = "";
+                if (pieceColor == PieceColor.White)
+                {
+                    color = " (" + Properties.Resources.White + ")";
+                }
+                else if (pieceColor == PieceColor.Black)
+                {
+                    color = " (" + Properties.Resources.Black + ")";
+                }
+                promptText = Properties.Resources.EngGameYourMove + color;
+            }
+            else
+            {
+                promptText = Properties.Resources.EngGameEngineMove;
+            }
             para.Inlines.Add(new Run(promptText));
 
             return para;
@@ -410,14 +427,14 @@ namespace ChessForge
             try
             {
                 run = new Run(text.ToString());
-                run.Name = RichTextBoxUtilities.RunMovePrefix + nd.NodeId.ToString();
+                run.Name = RichTextBoxUtilities.NameMoveRun(nd.NodeId);
                 run.PreviewMouseDown += EventMoveRunClicked;
                 para.Inlines.Add(run);
 
             }
             catch (Exception ex)
             {
-                AppLog.Message("AddRunToParagraph() " + (run == null ? "null" : (run.Name ?? "")) , ex);
+                AppLog.Message("AddRunToParagraph() " + (run == null ? "null" : (run.Name ?? "")), ex);
             }
 
             return run;

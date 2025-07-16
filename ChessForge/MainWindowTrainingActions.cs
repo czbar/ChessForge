@@ -49,7 +49,7 @@ namespace ChessForge
         /// Invoked from the TrainingSession box rather than the menu.
         /// The arguments determine whether to exit without saving, 
         /// merge the session line to the source or create a new game from the session line.
-        /// Both mergeLine and createGame arguments cannot be true ate the same time.
+        /// Both mergeLine and createGame arguments cannot be true at the same time.
         /// </summary>
         /// <param name="mergeLine"></param>
         /// <param name="createGame"></param>

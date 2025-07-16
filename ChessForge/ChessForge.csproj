@@ -193,6 +193,7 @@
     <Compile Include="GamesEvaluationManager.cs" />
     <Compile Include="GameSortCriterion.cs" />
     <Compile Include="GuiConfiguration.cs" />
+    <Compile Include="GuiControlPlacement.cs" />
     <Compile Include="HiddenClickDialog.xaml.cs">
       <DependentUpon>HiddenClickDialog.xaml</DependentUpon>
     </Compile>
@@ -231,6 +232,7 @@
     <Compile Include="ListViewHelper.cs" />
     <Compile Include="CommentBox.cs" />
     <Compile Include="EngineLinesBox.cs" />
+    <Compile Include="MainWindowLayout.cs" />
     <Compile Include="MainWindowMenuEvents.cs" />
     <Compile Include="MainWindowMouseEvents.cs" />
     <Compile Include="MainWindowMoveAnimation.cs" />
@@ -251,6 +253,7 @@
       <DependentUpon>OnlineLibraryContentDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="OpeningStatsView.cs" />
+    <Compile Include="OpeningStatsViewLayout.cs" />
     <Compile Include="OpeningStatsViewRow.cs" />
     <Compile Include="OperationScopeDialog.xaml.cs">
       <DependentUpon>OperationScopeDialog.xaml</DependentUpon>
@@ -341,6 +344,7 @@
     <Compile Include="StatsUtils.cs" />
     <Compile Include="StudyTreeView.cs" />
     <Compile Include="TextWriter.cs" />
+    <Compile Include="ThicknessUtils.cs" />
     <Compile Include="Tools.cs" />
     <Compile Include="TrainingSessionControl.xaml.cs">
       <DependentUpon>TrainingSessionControl.xaml</DependentUpon>

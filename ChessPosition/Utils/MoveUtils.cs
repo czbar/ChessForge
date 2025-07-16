@@ -140,6 +140,8 @@ namespace ChessPosition
             {
                 // create a new node
                 TreeNode newNode = CreateNewNode(algMove, move, parentNode, parentSideToMove, nodeId);
+                // the below is strictly not necessary since CleanupNullMove() will set it, so just future proofing
+                newNode.IsNullMove = nullMove;
 
                 if (!nullMove)
                 {
@@ -200,6 +202,7 @@ namespace ChessPosition
             if (nd != null)
             {
                 nd.LastMoveAlgebraicNotation = Constants.NULL_MOVE_NOTATION;
+                nd.IsNullMove = true;
                 nd.LastMoveEngineNotation = "";
                 nd.Position.InheritedEnPassantSquare = 0;
                 nd.Position.EnPassantSquare = 0;

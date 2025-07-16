@@ -1412,6 +1412,9 @@ namespace GameTree
         /// <summary>
         /// Selects the next child of the given node
         /// based on the last stored index.
+        /// Remove from consideration nodes that are null move leaves
+        /// i.e. null moves that do not have children.
+        /// This is only used in training mode.
         /// </summary>
         /// <param name="nodeId"></param>
         /// <returns></returns>
@@ -1419,17 +1422,29 @@ namespace GameTree
         {
             TreeNode nd = GetNodeFromNodeId(nodeId);
             int childCount = nd.Children.Count;
-            if (childCount == 0)
+            if (!HasValidTrainingMoveChild(nd))
             {
                 return null;
             }
             else
             {
-                nd.SelectedChildIndex++;
-                if (nd.SelectedChildIndex > childCount - 1)
+                int currSelectedIndex = nd.SelectedChildIndex;
+
+                while (true)
                 {
-                    nd.SelectedChildIndex = 0;
+                    nd.SelectedChildIndex++;
+                    if (nd.SelectedChildIndex > childCount - 1)
+                    {
+                        nd.SelectedChildIndex = 0;
+                    }
+
+                    // we either have a valid training move or we have nothing beyond the current selection.
+                    if (IsValidTrainingMove(nd.Children[nd.SelectedChildIndex]) || currSelectedIndex == nd.SelectedChildIndex)
+                    {
+                        break;
+                    }
                 }
+
                 return nd.Children[nd.SelectedChildIndex];
             }
         }
@@ -1947,6 +1962,40 @@ namespace GameTree
             }
 
             return TreeUtils.CopySubtree(nd);
+        }
+
+
+        /// <summary>
+        /// Checks if the passed node is a valid training move.
+        /// It is a valid training move if it is not a leaf null move.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        private bool IsValidTrainingMove(TreeNode nd)
+        {
+            return !nd.IsNullMove || nd.Children.Count > 0;
+        }
+
+        /// <summary>
+        /// Determines if the passed node has at least one child
+        /// tht is a valid training move.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        private bool HasValidTrainingMoveChild(TreeNode nd)
+        {
+            bool res = false;
+
+            foreach (TreeNode child in nd.Children)
+            {
+                if (IsValidTrainingMove(child))
+                {
+                    res = true;
+                    break;
+                }
+            }
+
+            return res;
         }
 
         /// <summary>

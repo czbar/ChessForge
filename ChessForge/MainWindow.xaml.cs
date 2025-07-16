@@ -426,7 +426,7 @@ namespace ChessForge
             UiTabIntro.Visibility = Configuration.ShowIntroTab ? Visibility.Visible : Visibility.Collapsed;
             SoundPlayer.Initialize();
 
-            InitializeConfiguration();
+            ApplyLayoutConfiguration();
 
             // initialize GUI theme
             if (Configuration.IsDarkMode)
@@ -492,6 +492,8 @@ namespace ChessForge
             }
             catch { }
 
+            InitializeLayout();
+
             if (Configuration.LargeMenuFont)
             {
                 DefaultMenuFontSize = Constants.DEAFULT_MENU_FONT_SIZE;
@@ -533,7 +535,6 @@ namespace ChessForge
 
 
             AddDebugMenu();
-
             ResizeTabControl(UiTabCtrlManualReview, TabControlSizeMode.HIDE_ACTIVE_LINE);
             SetEvaluationLabels();
 
@@ -554,6 +555,9 @@ namespace ChessForge
                 UiImgChartOn.Visibility = Visibility.Visible;
                 UiImgChartOff.Visibility = Visibility.Hidden;
             }
+
+
+            AdjustPanelWidths(Configuration.ChessboardSizeAdjustment);
 
             Timers.Start(AppTimers.TimerId.APP_START);
 
@@ -680,34 +684,6 @@ namespace ChessForge
             Configuration.StartDirectory = App.AppPath;
             ConfigurationRtfExport.InitializeRtfConfig();
             Configuration.ReadConfigurationFile();
-        }
-
-        /// <summary>
-        /// Initializes configurable entities.
-        /// </summary>
-        private void InitializeConfiguration()
-        {
-            if (Configuration.IsMainWinPosValid())
-            {
-                this.Left = Configuration.MainWinPos.Left;
-                this.Top = Configuration.MainWinPos.Top;
-                this.Width = Configuration.MainWinPos.Right - Configuration.MainWinPos.Left;
-                this.Height = Configuration.MainWinPos.Bottom - Configuration.MainWinPos.Top;
-            }
-
-            DebugUtils.DebugLevel = Configuration.DebugLevel;
-
-            // setup control positions
-            UiDgActiveLine.HorizontalAlignment = HorizontalAlignment.Right;
-            UiDgActiveLine.Margin = new Thickness(0, 27, 10, 0);
-
-            UiLblScoresheet.HorizontalAlignment = HorizontalAlignment.Right;
-            UiLblScoresheet.Margin = new Thickness(0, 0, 10 + (UiDgActiveLine.Width - UiLblScoresheet.Width), 0);
-
-            UiDgEngineGame.HorizontalAlignment = HorizontalAlignment.Right;
-            UiDgEngineGame.Margin = new Thickness(0, 27, 10, 0);
-
-            SetupMenuBarControls();
         }
 
         [Conditional("DEBUG")]
@@ -2207,9 +2183,9 @@ namespace ChessForge
             EngineMessageProcessor.RequestPositionEvaluation(nd, ActiveVariationTreeId, Configuration.EngineMpv, 0);
         }
 
-        public void ResetEvaluationProgressBar()
+        public void ZeroEvaluationProgressBar()
         {
-            EngineLinesBox.ResetEvaluationProgressBar();
+            EngineLinesBox.ZeroEvaluationProgressBar();
         }
 
         /// <summary>
@@ -2244,9 +2220,9 @@ namespace ChessForge
 
             UiImgMainChessboard.Source = ChessBoards.ChessBoardGreen;
 
+            AppState.SetupGuiForEngineGame();
             LearningMode.ChangeCurrentMode(LearningMode.Mode.ENGINE_GAME);
 
-            AppState.SetupGuiForEngineGame();
 
             EngineGame.InitializeGameObject(startNode, true, IsTraining);
             UiDgEngineGame.ItemsSource = EngineGame.Line.MoveList;
@@ -2346,7 +2322,7 @@ namespace ChessForge
         {
             Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
 
-            ResetEvaluationProgressBae();
+            ResetEvaluationProgressBar();
 
             MainChessBoard.RemoveMoveSquareColors();
 
@@ -2358,9 +2334,6 @@ namespace ChessForge
             EngineGame.ChangeCurrentState(EngineGame.GameState.IDLE);
 
             Timers.Stop(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
-
-            //AppState.MainWin.ActiveVariationTree.BuildLines();
-            //RebuildActiveTreeView();
 
             AppState.SetupGuiForCurrentStates();
 
@@ -2374,7 +2347,7 @@ namespace ChessForge
         /// Sets its visibility to hidden.
         /// and Maximum value to the appropriate engine time: move or evaluation.
         /// </summary>
-        public void ResetEvaluationProgressBae()
+        public void ResetEvaluationProgressBar()
         {
             UiPbEngineThinking.Dispatcher.Invoke(() =>
             {
@@ -3095,69 +3068,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Resizes the tab control to show/hide ActiveLine/GameLine controls.
-        /// </summary>
-        /// <param name="ctrl"></param>
-        /// <param name="sizeMode"></param>
-        public void ResizeTabControl(TabControl ctrl, TabControlSizeMode sizeMode)
-        {
-            switch (sizeMode)
-            {
-                case TabControlSizeMode.SHOW_ACTIVE_LINE:
-                    ctrl.Margin = new Thickness(5, 5, 275, 5);
-
-                    UiDgActiveLine.Visibility = Visibility.Visible;
-                    PositionScoresheetLabel(UiDgActiveLine);
-                    UiLblScoresheet.Visibility = Visibility.Visible;
-                    UiLblScoresheet.Margin = new Thickness(0, 0, 10 + (UiDgActiveLine.Width - UiLblScoresheet.Width), 0);
-
-                    //UiDgEngineGame.Visibility = Visibility.Hidden;
-                    break;
-                case TabControlSizeMode.HIDE_ACTIVE_LINE:
-                    ctrl.Margin = new Thickness(5, 5, 5, 5);
-                    UiDgActiveLine.Visibility = Visibility.Hidden;
-                    UiLblScoresheet.Visibility = Visibility.Hidden;
-                    //UiDgEngineGame.Visibility = Visibility.Hidden;
-                    break;
-                case TabControlSizeMode.SHOW_ACTIVE_LINE_NO_EVAL:
-                    ctrl.Margin = new Thickness(5, 5, 195, 5);
-                    UiDgActiveLine.Visibility = Visibility.Visible;
-                    PositionScoresheetLabel(UiDgActiveLine);
-                    UiLblScoresheet.Visibility = Visibility.Visible;
-                    //UiDgEngineGame.Visibility = Visibility.Hidden;
-                    break;
-                case TabControlSizeMode.SHOW_ENGINE_GAME_LINE:
-                    ctrl.Margin = new Thickness(5, 5, 195, 5);
-                    UiDgActiveLine.Visibility = Visibility.Hidden;
-                    PositionScoresheetLabel(UiDgEngineGame);
-                    UiLblScoresheet.Visibility = Visibility.Visible;
-                    UiDgEngineGame.Visibility = Visibility.Visible;
-                    break;
-                case TabControlSizeMode.HIDE_ENGINE_GAME_LINE:
-                    ctrl.Margin = new Thickness(5, 5, 5, 5);
-                    UiDgActiveLine.Visibility = Visibility.Hidden;
-                    UiLblScoresheet.Visibility = Visibility.Hidden;
-                    //UiDgEngineGame.Visibility = Visibility.Hidden;
-                    break;
-                default:
-                    ctrl.Margin = new Thickness(5, 5, 190, 5);
-                    UiDgActiveLine.Visibility = Visibility.Visible;
-                    UiLblScoresheet.Visibility = Visibility.Hidden;
-                    break;
-            }
-        }
-
-        /// <summary>
-        /// Adjusts the position of the "Scoresheet" label in relation
-        /// to the Scoresheet (DataGrid) control it associated with
-        /// </summary>
-        /// <param name="dgControl"></param>
-        public void PositionScoresheetLabel(DataGrid dgControl)
-        {
-            UiLblScoresheet.Margin = new Thickness(0, 0, 10 + (dgControl.Width - UiLblScoresheet.Width), 0);
-        }
-
-        /// <summary>
         /// Shows the evaluation for the passed node in the Training View.
         /// </summary>
         /// <param name="nd"></param>
@@ -3243,7 +3153,9 @@ namespace ChessForge
         /// <param name="e"></param>
         private void MainCanvas_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
-            if (WorkbookManager.ActiveTab == TabViewType.STUDY)
+            if (WorkbookManager.ActiveTab == TabViewType.STUDY 
+                || WorkbookManager.ActiveTab == TabViewType.MODEL_GAME 
+                || WorkbookManager.ActiveTab == TabViewType.EXERCISE)
             {
                 _lastRightClickedPoint = null;
                 if (MainChessBoard.Shapes.IsShapeBuildInProgress)
