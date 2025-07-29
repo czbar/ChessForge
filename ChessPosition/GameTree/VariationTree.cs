@@ -709,30 +709,6 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Returns the list of Nodes from the starting position to the
-        /// last node before the passed node or to the last position before the first fork  
-        /// if the passed node is null.
-        /// </summary>
-        /// <returns></returns>
-        public List<TreeNode> BuildStem()
-        {
-            List<TreeNode> stem = new List<TreeNode>();
-            foreach (TreeNode nd in Nodes)
-            {
-                if (nd.Children.Count > 1)
-                {
-                    break;
-                }
-                else
-                {
-                    stem.Add(nd);
-                }
-            }
-
-            return stem;
-        }
-
-        /// <summary>
         /// Builds a pseudo-stem i.e. the single line
         /// leading from node 0 to the passed node.
         /// </summary>
