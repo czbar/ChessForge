@@ -2566,6 +2566,16 @@ namespace ChessForge
             LearningMode.TrainingSideCurrent = startNode.ColorToMove;
             MainChessBoard.DisplayPosition(startNode, true);
 
+            AppState.ShowMoveEvaluationControls(isContinuousEvaluation, isContinuousEvaluation);
+            AppState.ShowExplorers(false, false);
+            BoardCommentBox.TrainingSessionStart();
+
+            // The EngineGame holds the current training progress.
+            // It needs to be initialized with the startNode before we initialize
+            // the TrainingView and the TrainingSession.
+            EngineGame.InitializeGameObject(startNode, false, false);
+            UiDgEngineGame.ItemsSource = EngineGame.Line.MoveList;
+
             UiTrainingView = new TrainingView(UiRtbTrainingProgress, this);
             UiTrainingView.Initialize(startNode, ActiveVariationTree.ContentType);
             UiTrainingView.RemoveTrainingMoves(startNode);
@@ -2576,13 +2586,7 @@ namespace ChessForge
                 MainChessBoard.FlipBoard();
             }
 
-            AppState.ShowMoveEvaluationControls(isContinuousEvaluation, isContinuousEvaluation);
-            AppState.ShowExplorers(false, false);
-            BoardCommentBox.TrainingSessionStart();
 
-            // The Line display is the same as when playing a game against the computer 
-            EngineGame.InitializeGameObject(startNode, false, false);
-            UiDgEngineGame.ItemsSource = EngineGame.Line.MoveList;
             Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
 
             if (isContinuousEvaluation)
