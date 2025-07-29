@@ -202,9 +202,6 @@ namespace ChessForge
         // Application's Main Window
         private MainWindow _mainWin;
 
-        // node after which the training starts i.e. the last node in the "stem"
-        private TreeNode _startingNode;
-
         /// <summary>
         /// Creates an instance of this class and sets reference 
         /// to the FlowDocument managed by the object.
@@ -233,12 +230,6 @@ namespace ChessForge
         private static readonly string STYLE_CHECKMATE = "mate";
 
         private static readonly string STYLE_DEFAULT = "default";
-
-        /// <summary>
-        /// Training Side for this session.
-        /// Note it does not have to be the LearningMode.TrainingSide
-        /// </summary>
-        private PieceColor _trainingSide;
 
         // type of the training source
         private static GameData.ContentType _sourceType = GameData.ContentType.NONE;
@@ -286,13 +277,9 @@ namespace ChessForge
         /// <param name="node"></param>
         public void Initialize(TreeNode node, GameData.ContentType contentType)
         {
+            TrainingSession.StartPosition = node;
             _sourceType = contentType;
             _currentEngineGameMoveCount = 0;
-            _trainingSide = node.ColorToMove;
-            TrainingSession.TrainingSide = _trainingSide;
-
-            _startingNode = node;
-            TrainingSession.ResetTrainingLine(node);
             HostRtb.Document.Blocks.Clear();
             InitParaDictionary();
             _moveNumberOffset = _mainWin.ActiveVariationTree.MoveNumberOffset;
@@ -423,7 +410,6 @@ namespace ChessForge
 
                 _currentEngineGameMoveCount = 0;
 
-                TrainingSession.RollbackTrainingLine(_lastClickedNode);
                 RemoveTrainingMoves(_lastClickedNode);
                 EngineGame.RollbackGame(_lastClickedNode);
 
@@ -469,7 +455,6 @@ namespace ChessForge
 
             try
             {
-                TrainingSession.RollbackTrainingLine(ndToRollbackTo);
                 EngineGame.RollbackGame(ndToRollbackTo);
                 RemoveTrainingMoves(ndToRollbackTo);
 
@@ -562,7 +547,7 @@ namespace ChessForge
 
             // there is a special case where we are going back to the _startingNode in which case
             // we need to remove all paras after INSTRUCTIONS (we will not find a separate para for this move)
-            bool isStartingNode = move.NodeId == _startingNode.NodeId;
+            bool isStartingNode = move.NodeId == TrainingSession.StartPosition.NodeId;
             bool found = false;
             foreach (var block in HostRtb.Document.Blocks)
             {
@@ -1184,7 +1169,7 @@ namespace ChessForge
             }
             else
             {
-                if (nd.NodeId != _startingNode.NodeId)
+                if (nd.NodeId != TrainingSession.StartPosition.NodeId)
                 {
                     BuildMoveParagraph(nd, false);
                 }
@@ -1235,7 +1220,7 @@ namespace ChessForge
                         {
                             // if the parent has only this move as a child, we already announced end-of-training-line on previous move
                             // unless this is the very first training move
-                            if (userMove.Parent.Children.Count > 1 || userMove.Parent == _startingNode)
+                            if (userMove.Parent.Children.Count > 1 || userMove.Parent == TrainingSession.StartPosition)
                             {
                                 sbAlignmentNote.Append(Properties.Resources.TrnLineEnded + ". ");
                                 SoundPlayer.PlayTrainingSound(SoundPlayer.Sound.END_OF_LINE);
@@ -1659,7 +1644,7 @@ namespace ChessForge
             {
                 try
                 {
-                    if (_lastClickedNode.ColorToMove != _trainingSide)
+                    if (_lastClickedNode.ColorToMove != TrainingSession.TrainingSide)
                     {
                         RestartGameAtUserMove(nd);
                     }
@@ -1685,7 +1670,7 @@ namespace ChessForge
         {
             // first check that we are indeed replacing an engine move
             TreeNode nd = _lastClickedNode;
-            if (nd != null && _lastClickedNode.ColorToMove == _trainingSide)
+            if (nd != null && _lastClickedNode.ColorToMove == TrainingSession.TrainingSide)
             {
                 try
                 {
@@ -1714,7 +1699,7 @@ namespace ChessForge
 
             if (_lastClickedNode != null)
             {
-                if (_lastClickedNode.ColorToMove == _trainingSide)
+                if (_lastClickedNode.ColorToMove == TrainingSession.TrainingSide)
                 {
                     RollbackToUserMove();
                 }
