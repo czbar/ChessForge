@@ -31,4 +31,6 @@ Remove leading space in Intro moves.
 
 When reporting the best move, the check sign '+' is omitted
 
-Look into that mysterious bootom margin = 5 in game layout.
+Look into that mysterious bottom margin = 5 in game layout.
+
+Allow hyperlinks in the Preamble (check if some special chars must be avoided)
