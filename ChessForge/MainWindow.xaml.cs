@@ -2535,57 +2535,36 @@ namespace ChessForge
         /// Starts a training session from the specified Node.
         /// </summary>
         /// <param name="startNode"></param>
-        public void SetAppInTrainingMode(TreeNode startNode, bool isContinuousEvaluation = false)
+        public void SetAppInTrainingMode(TreeNode startNode, bool isRestart, bool isContinuousEvaluation = false)
         {
             if (ActiveVariationTree == null || startNode == null)
             {
                 return;
             }
 
-            AppLog.Message("Starting Training Session");
+            TrainingSession.PrepareGuiForTraining(startNode, isContinuousEvaluation);
 
-            // Set up the training mode
-            StopEvaluation(true);
-            StopReplayIfActive();
-
-            LearningMode.ChangeCurrentMode(LearningMode.Mode.TRAINING);
-            TrainingSession.IsTrainingInProgress = true;
-            TrainingSession.ChangeCurrentState(TrainingSession.State.AWAITING_USER_TRAINING_MOVE);
-
-            AppState.EnableNavigationArrows();
-
-            if (isContinuousEvaluation)
+            if (isRestart)
             {
-                TrainingSession.IsContinuousEvaluation = true;
+                UiTrainingView.Initialize(startNode, isRestart, ActiveVariationTree.ContentType);
             }
-            else
-            {
-                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
-            }
-
-            LearningMode.TrainingSideCurrent = startNode.ColorToMove;
-            MainChessBoard.DisplayPosition(startNode, true);
-
-            AppState.ShowMoveEvaluationControls(isContinuousEvaluation, isContinuousEvaluation);
-            AppState.ShowExplorers(false, false);
-            BoardCommentBox.TrainingSessionStart();
 
             // The EngineGame holds the current training progress.
             // It needs to be initialized with the startNode before we initialize
             // the TrainingView and the TrainingSession.
             EngineGame.InitializeGameObject(startNode, false, false);
-            UiDgEngineGame.ItemsSource = EngineGame.Line.MoveList;
 
-            UiTrainingView = new TrainingView(UiRtbTrainingProgress, this);
-            UiTrainingView.Initialize(startNode, ActiveVariationTree.ContentType);
-            UiTrainingView.RemoveTrainingMoves(startNode);
-
-            if (LearningMode.TrainingSideCurrent == PieceColor.Black && !MainChessBoard.IsFlipped
-                || LearningMode.TrainingSideCurrent == PieceColor.White && MainChessBoard.IsFlipped)
+            if (!isRestart)
             {
-                MainChessBoard.FlipBoard();
+                UiTrainingView = new TrainingView(UiRtbTrainingProgress, this);
+                UiTrainingView.Initialize(startNode, isRestart, ActiveVariationTree.ContentType);
+                UiDgEngineGame.ItemsSource = EngineGame.Line.MoveList;
+                if (LearningMode.TrainingSideCurrent == PieceColor.Black && !MainChessBoard.IsFlipped
+                    || LearningMode.TrainingSideCurrent == PieceColor.White && MainChessBoard.IsFlipped)
+                {
+                    MainChessBoard.FlipBoard();
+                }
             }
-
 
             Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
 
@@ -2594,19 +2573,36 @@ namespace ChessForge
                 UiTrainingView.RequestMoveEvaluation(ActiveVariationTree.TreeId, true);
                 AppState.SwapCommentBoxForEngineLines(true);
             }
-
         }
 
+        /// <summary>
+        /// When the user made their move, and the training is in
+        /// manual mode (as opposed to a game vs engine)
+        /// a timer was started to invoke
+        /// this method.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
         public void InvokeRequestWorkbookResponse(object source, ElapsedEventArgs e)
         {
             UiTrainingView.RequestWorkbookResponse();
         }
 
+        /// <summary>
+        /// Shows the popup menu in Training.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
         public void ShowTrainingProgressPopupMenu(object source, ElapsedEventArgs e)
         {
             UiTrainingView.ShowPopupMenu();
         }
 
+        /// <summary>
+        /// Hides the Flash Announcement.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
         public void FlashAnnouncementTimeUp(object source, ElapsedEventArgs e)
         {
             BoardCommentBox.HideFlashAnnouncement();
