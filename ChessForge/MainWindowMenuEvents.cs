@@ -2816,17 +2816,38 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Restarts training from the same position/bookmark
-        /// that we started the current session with.
+        /// Restarts training from the training starting position
+        /// repeating the current training line.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiMnTrainRestartTraining_Click(object sender, RoutedEventArgs e)
+        private void UiMnTrainRepeatLine_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show(Properties.Resources.RestartTraining, Properties.Resources.Training, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-            {
-                SetAppInTrainingMode(TrainingSession.StartPosition, TrainingSession.IsContinuousEvaluation);
-            }
+            SetAppInTrainingMode(TrainingSession.StartPosition, true, TrainingSession.IsContinuousEvaluation);
+        }
+
+        /// <summary>
+        /// Restarts training from the training starting position
+        /// moving to the next training line.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnTrainNextLine_Click(object sender, RoutedEventArgs e)
+        {
+            TrainingSession.BuildNextTrainingLine();
+            // TODO: restart training
+        }
+
+        /// <summary>
+        /// Restarts training from the training starting position
+        /// moving to the previous training line.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnTrainPreviousLine_Click(object sender, RoutedEventArgs e)
+        {
+            TrainingSession.BuildPreviousTrainingLine();
+            // TODO: restart training
         }
 
         /// <summary>
@@ -4239,7 +4260,7 @@ namespace ChessForge
                         // and "" if user cancelled.
                         // So if it is null we give them another chance, hence the loop
                         while ((filePath = PgnWriter.SelectTargetPgnFile()) == null)
-                        {}
+                        { }
 
                         if (!string.IsNullOrEmpty(filePath) && filePath[0] != '.')
                         {
