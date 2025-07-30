@@ -348,7 +348,7 @@
                         <Grid Background="#FFE5E5E5">
                             <Grid.ContextMenu>
                                 <ContextMenu x:Name="UiMncTrainingView">
-                                    <MenuItem x:Name="UiMnTrainRestartTraining" Header="{x:Static p:Resources.TrainRepeatLine}" Click="UiMnTrainRestartTraining_Click" />
+                                    <MenuItem x:Name="UiMnCiTrainRepeatLine" Header="{x:Static p:Resources.TrainRepeatLine}" Click="UiMnTrainRestartTraining_Click" />
                                     <MenuItem x:Name="UiMnCiTrainNextLine" Header="{x:Static p:Resources.TrainNextLine}" />
                                     <MenuItem x:Name="UiMnCiTrainPreviousLine" Header="{x:Static p:Resources.TrainPreviousLine}" />
                                     <Separator x:Name="UiMnSeparator_0" />

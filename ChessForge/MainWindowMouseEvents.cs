@@ -589,7 +589,7 @@ namespace ChessForge
                             case "UiMncTrainReplaceEngineMove":
                                 mi.Visibility = Visibility.Collapsed;
                                 break;
-                            case "_mnTrainRestartTraining":
+                            case "UiMnCiTrainRepeatLine":
                             case "_mnTrainExitTraining":
                                 mi.Visibility = Visibility.Visible;
                                 break;
