@@ -275,9 +275,19 @@ namespace ChessForge
         /// and shows the intro text.
         /// </summary>
         /// <param name="node"></param>
-        public void Initialize(TreeNode node, GameData.ContentType contentType)
+        public void Initialize(TreeNode node, bool isRestart, GameData.ContentType contentType)
         {
             TrainingSession.StartPosition = node;
+
+            if (isRestart)
+            {
+                TrainingSession.BuildNextTrainingLine();
+            }
+            else
+            {
+                TrainingSession.BuildFirstTrainingLine();
+            }
+
             _sourceType = contentType;
             _currentEngineGameMoveCount = 0;
             HostRtb.Document.Blocks.Clear();
@@ -410,7 +420,7 @@ namespace ChessForge
 
                 _currentEngineGameMoveCount = 0;
 
-                RemoveTrainingMoves(_lastClickedNode);
+                TrainingSession.RemoveTrainingMoves(_lastClickedNode);
                 EngineGame.RollbackGame(_lastClickedNode);
 
                 SoundPlayer.PlayMoveSound(_lastClickedNode.LastMoveAlgebraicNotation);
@@ -456,7 +466,7 @@ namespace ChessForge
             try
             {
                 EngineGame.RollbackGame(ndToRollbackTo);
-                RemoveTrainingMoves(ndToRollbackTo);
+                TrainingSession.RemoveTrainingMoves(ndToRollbackTo);
 
                 SoundPlayer.PlayMoveSound(ndToRollbackTo.LastMoveAlgebraicNotation);
                 TrainingSession.ChangeCurrentState(TrainingSession.State.AWAITING_USER_TRAINING_MOVE);
@@ -1545,7 +1555,7 @@ namespace ChessForge
                                 mi.Header = altMove;
                                 mi.Visibility = _moveContext == MoveContext.WORKBOOK_COMMENT ? Visibility.Visible : Visibility.Collapsed;
                                 break;
-                            case "_mnTrainRestartTraining":
+                            case "UiMnCiTrainRepeatLine":
                                 mi.Visibility = Visibility.Visible;
                                 break;
                             case "_mnTrainExitTraining":
@@ -1737,26 +1747,6 @@ namespace ChessForge
                 }
             }
             catch { }
-        }
-
-        /// <summary>
-        /// Removes all training moves below the specified node.
-        /// There should be at most one training node child under the node.
-        /// </summary>
-        /// <param name="nd"></param>
-        public void RemoveTrainingMoves(TreeNode nd)
-        {
-            if (nd != null)
-            {
-                foreach (TreeNode child in nd.Children)
-                {
-                    if (child.IsNewTrainingMove)
-                    {
-                        _mainWin.ActiveVariationTree.DeleteRemainingMoves(child);
-                    }
-                    break;
-                }
-            }
         }
 
         /// <summary>
