@@ -108,6 +108,90 @@ namespace ChessForge
         public static TreeNode StartPosition;
 
         /// <summary>
+        /// Prepares the GUI for training mode.
+        /// These actions will be performed when the user starts or restarts a training session.
+        /// On restart some of them may be spurious but performance is not an issue here.
+        /// </summary>
+        /// <param name="startNode"></param>
+        /// <param name="isContinuousEvaluation"></param>
+        public static void PrepareGuiForTraining(TreeNode startNode, bool isContinuousEvaluation = false)
+        {
+            if (AppState.MainWin.ActiveVariationTree == null || startNode == null)
+            {
+                return;
+            }
+
+            AppLog.Message("PrepareGuiForTraining()");
+
+            // Set up the training mode
+            AppState.MainWin.StopEvaluation(true);
+            AppState.MainWin.StopReplayIfActive();
+
+            LearningMode.ChangeCurrentMode(LearningMode.Mode.TRAINING);
+            TrainingSession.IsTrainingInProgress = true;
+            TrainingSession.ChangeCurrentState(TrainingSession.State.AWAITING_USER_TRAINING_MOVE);
+
+            AppState.EnableNavigationArrows();
+
+            if (isContinuousEvaluation)
+            {
+                TrainingSession.IsContinuousEvaluation = true;
+            }
+            else
+            {
+                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
+            }
+
+            LearningMode.TrainingSideCurrent = startNode.ColorToMove;
+            AppState.MainWin.MainChessBoard.DisplayPosition(startNode, true);
+
+            AppState.ShowMoveEvaluationControls(isContinuousEvaluation, isContinuousEvaluation);
+            AppState.ShowExplorers(false, false);
+            AppState.MainWin.BoardCommentBox.TrainingSessionStart();
+
+            RemoveTrainingMoves(startNode);
+        }
+
+        /// <summary>
+        /// Removes all training moves below the specified node.
+        /// There should be at most one training node child under the node.
+        /// </summary>
+        /// <param name="nd"></param>
+        public static void RemoveTrainingMoves(TreeNode nd)
+        {
+            if (nd != null)
+            {
+                foreach (TreeNode child in nd.Children)
+                {
+                    if (child.IsNewTrainingMove)
+                    {
+                        AppState.MainWin.ActiveVariationTree.DeleteRemainingMoves(child);
+                    }
+                    break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns the first node in the training line that follows the passed node.
+        /// </summary>
+        /// <param name="currNode"></param>
+        /// <returns></returns>
+        public static TreeNode GetNextTrainingLineMove(TreeNode currNode)
+        {
+            TreeNode nextNode = null;
+
+            int index = TrainingLine.IndexOf(currNode);
+
+            if (index >= 0 && index < TrainingLine.Count - 1)
+            {
+                nextNode = TrainingLine[index + 1];
+            }
+
+            return nextNode;
+        }
+
+        /// <summary>
         /// Builds a training line that follows the content of the EngineGame
         /// (which should be just initialized at this point) and the follows
         /// the local main line.
@@ -133,52 +217,89 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Builds the next training line.
+        /// </summary>
+        public static void BuildNextTrainingLine()
+        {
+            BuildTrainingLine(true);
+        }
+
+        /// <summary>
+        /// Builds the previous training line.
+        /// </summary>
+        public static void BuildPreviousTrainingLine()
+        {
+            BuildTrainingLine(false);
+        }
+
+        /// <summary>
         /// Obtains the current game line and starting from the last node, traverses
-        /// it to the first node until it finds a node that has a sibling NEXT to it 
-        /// (i.e. at the next index in the parent's list).
+        /// it to the first node until it finds a node that has a sibling next to it 
+        /// (i.e. at the after or before - depending on nextOrPrevLine param -
+        /// index in the parent's list).
         /// Once found, replaces the node in the TrainingLine with that sibling
         /// and builds the rest of the training line from that node down 
         /// (following the local main line).
         /// </summary>
-        public static void BuildNextTrainingLine()
+        /// <param name="nextOrPrevLine"></param>
+        private static void BuildTrainingLine(bool nextOrPrevLine)
         {
-            int moveToUpdateIndex = FindMoveToUpdateIndex();
+            int moveToUpdateIndex = FindMoveToUpdateIndex(nextOrPrevLine);
 
-            if (moveToUpdateIndex <= 0)
+            TrainingLine.Clear();
+            // 1. Add all the moves up to the move that is to be updated 
+            for (int i = 0; i < moveToUpdateIndex; i++)
             {
-                BuildFirstTrainingLine();
+                TrainingLine.Add(EngineGame.Line.NodeList[i]);
             }
-            else
-            {
-                TrainingLine.Clear();
-                // 1. Add all the moves up to the move that is to be updated 
-                for (int i = 0; i < moveToUpdateIndex; i++)
-                {
-                    TrainingLine.Add(EngineGame.Line.NodeList[i]);
-                }
 
-                // 2. Update the move at the given index
-                UpdateMoveAtIndex(moveToUpdateIndex);
+            // 2. Update the move at the given index
+            UpdateMoveAtIndex(moveToUpdateIndex, nextOrPrevLine);
 
-                // 3. Add the rest of the training line from the updated move
-                CompleteTrainingLine();
-            }
+            // 3. Add the rest of the training line from the updated move
+            CompleteTrainingLine();
         }
 
         /// <summary>
         /// Replaces the move at the given index with the next sibling.
         /// </summary>
         /// <param name="moveToUpdateIndex"></param>
-        private static void UpdateMoveAtIndex(int moveToUpdateIndex)
+        private static void UpdateMoveAtIndex(int moveToUpdateIndex, bool nextOrPrevLine)
         {
             TreeNode moveToUpdate = EngineGame.Line.NodeList[moveToUpdateIndex];
             TreeNode moveToUpdateParent = moveToUpdate.Parent;
 
             int currChildIndex = moveToUpdateParent.Children.IndexOf(moveToUpdate);
-            if (currChildIndex < moveToUpdateParent.Children.Count - 1)
+
+            if (nextOrPrevLine)
             {
-                TreeNode updatedNode = moveToUpdateParent.Children[currChildIndex + 1];
-                TrainingLine[moveToUpdateIndex] = updatedNode;
+                if (currChildIndex < moveToUpdateParent.Children.Count - 1)
+                {
+                    TreeNode updatedNode = moveToUpdateParent.Children[currChildIndex + 1];
+                    if (moveToUpdateIndex > TrainingLine.Count - 1)
+                    {
+                        TrainingLine.Add(updatedNode);
+                    }
+                    else
+                    {
+                        TrainingLine[moveToUpdateIndex] = updatedNode;
+                    }
+                }
+            }
+            else
+            {
+                if (currChildIndex > 0)
+                {
+                    TreeNode updatedNode = moveToUpdateParent.Children[currChildIndex - 1];
+                    if (moveToUpdateIndex > TrainingLine.Count - 1)
+                    {
+                        TrainingLine.Add(updatedNode);
+                    }
+                    else
+                    {
+                        TrainingLine[moveToUpdateIndex] = updatedNode;
+                    }
+                }
             }
         }
 
@@ -189,7 +310,7 @@ namespace ChessForge
         /// to find an "updateable" one.
         /// </summary>
         /// <returns></returns>
-        private static int FindMoveToUpdateIndex()
+        private static int FindMoveToUpdateIndex(bool nextOrPrevLine)
         {
             int lastWorkbookMoveIndex = FindLastWorkbookMoveIndex();
 
@@ -202,9 +323,21 @@ namespace ChessForge
                     break;
                 }
 
-                if (node.Parent != null && node.Parent.Children.IndexOf(node) < node.Parent.Children.Count - 1)
+                if (nextOrPrevLine)
                 {
-                    moveToUpdateIndex = i;
+                    if (node.ColorToMove == TrainingSide && node.Parent != null && node.Parent.Children.IndexOf(node) < node.Parent.Children.Count - 1)
+                    {
+                        moveToUpdateIndex = i;
+                        break;
+                    }
+                }
+                else
+                {
+                    if (node.ColorToMove == TrainingSide && node.Parent != null && node.Parent.Children.IndexOf(node) > 0)
+                    {
+                        moveToUpdateIndex = i;
+                        break;
+                    }
                 }
             }
 
@@ -250,7 +383,8 @@ namespace ChessForge
             {
                 if (node.Children.Count > 0 && !node.IsNewTrainingMove)
                 {
-                    TrainingLine.Add(node.Children[0]);
+                    node = node.Children[0];
+                    TrainingLine.Add(node);
                 }
                 else
                 {
