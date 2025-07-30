@@ -1729,7 +1729,9 @@ namespace ChessForge
                     GuiConfiguration.ConfigureAppBarFontButtons();
 
                     MainWin.UiMnStartTraining.IsEnabled = IsVariationTreeTabType;
-                    MainWin.UiMnRestartTraining.IsEnabled = false;
+                    MainWin.UiMnTrainRepeatLine.IsEnabled = false;
+                    MainWin.UiMnTrainNextLine.IsEnabled = false;
+                    MainWin.UiMnTrainPreviousLine.IsEnabled = false;
                     MainWin.UiMnExitTraining.IsEnabled = false;
 
                     bool engGameEnabled = ActiveVariationTree != null
@@ -1788,7 +1790,9 @@ namespace ChessForge
             MainWin.Dispatcher.Invoke(() =>
             {
                 MainWin.UiMnStartTraining.IsEnabled = false;
-                MainWin.UiMnRestartTraining.IsEnabled = true;
+                MainWin.UiMnTrainRepeatLine.IsEnabled = true;
+                MainWin.UiMnTrainNextLine.IsEnabled = true;
+                MainWin.UiMnTrainPreviousLine.IsEnabled = true;
                 MainWin.UiMnExitTraining.IsEnabled = true;
 
                 MainWin.UiMnciPlayEngine.IsEnabled = false;
@@ -1813,7 +1817,9 @@ namespace ChessForge
             _mainWin.Dispatcher.Invoke(() =>
             {
                 _mainWin.UiMnStartTraining.IsEnabled = !train;
-                _mainWin.UiMnRestartTraining.IsEnabled = train;
+                _mainWin.UiMnTrainRepeatLine.IsEnabled = train;
+                _mainWin.UiMnTrainNextLine.IsEnabled = train;
+                _mainWin.UiMnTrainPreviousLine.IsEnabled = train;
                 _mainWin.UiMnExitTraining.IsEnabled = train;
 
                 _mainWin.UiMnciPlayEngine.IsEnabled = true;
