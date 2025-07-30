@@ -654,8 +654,14 @@
   <data name="StartNewSession" xml:space="preserve">
     <value>Start New Session</value>
   </data>
-  <data name="RestartTrainingSession" xml:space="preserve">
-    <value>Restart Training Session</value>
+  <data name="TrainRepeatLine" xml:space="preserve">
+    <value>Repeat Training Line</value>
+  </data>
+  <data name="TrainNextLine" xml:space="preserve">
+    <value>Next Training Line</value>
+  </data>
+  <data name="TrainPreviousLine" xml:space="preserve">
+    <value>Previous Training Line</value>
   </data>
   <data name="ExitTraining" xml:space="preserve">
     <value>Exit Training</value>

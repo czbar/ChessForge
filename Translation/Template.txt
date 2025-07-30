@@ -774,9 +774,17 @@ Training=
 #english: StartNewSession=Start New Session
 StartNewSession=
 
-#description: Restart the Training Session from the beginning
-#english: RestartTrainingSession=Restart Training Session
-RestartTrainingSession=
+#description: Train again the same line
+#english: TrainRepeatLine=Repeat Training Line
+TrainRepeatLine=
+
+#description: Move training to the next line
+#english: TrainNextLine=Next Training Line
+TrainNextLine=
+
+#description: Move training to the previous line
+#english: TrainPreviousLine=Previous Training Line
+TrainPreviousLine=
 
 #description: Exit the Training Session
 #english: ExitTraining=Exit Training

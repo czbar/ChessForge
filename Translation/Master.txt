@@ -595,8 +595,14 @@ Training=Training
 #Start a new training session
 StartNewSession=Start New Session
 
-#Restart the Training Session from the beginning
-RestartTrainingSession=Restart Training Session
+#Train again the same line
+TrainRepeatLine=Repeat Training Line
+
+#Move training to the next line
+TrainNextLine=Next Training Line
+
+#Move training to the previous line
+TrainPreviousLine=Previous Training Line
 
 #Exit the Training Session
 ExitTraining=Exit Training

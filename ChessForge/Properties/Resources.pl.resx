@@ -654,8 +654,14 @@
   <data name="StartNewSession" xml:space="preserve">
     <value>Zacznij nową sesję</value>
   </data>
-  <data name="RestartTrainingSession" xml:space="preserve">
-    <value>Zacznij trening od początku</value>
+  <data name="TrainRepeatLine" xml:space="preserve">
+    <value>Trenuj ten sam wariant</value>
+  </data>
+  <data name="TrainNextLine" xml:space="preserve">
+    <value>Trenuj następny wariant</value>
+  </data>
+  <data name="TrainPreviousLine" xml:space="preserve">
+    <value>Trenuj poprzedni wariant</value>
   </data>
   <data name="ExitTraining" xml:space="preserve">
     <value>Zakończ trening</value>
