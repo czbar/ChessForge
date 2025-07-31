@@ -2821,9 +2821,15 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiMnTrainRepeatLine_Click(object sender, RoutedEventArgs e)
+        public void UiMnTrainFromBeginning_Click(object sender, RoutedEventArgs e)
         {
-            SetAppInTrainingMode(TrainingSession.StartPosition, true, TrainingSession.IsContinuousEvaluation);
+            TreeNode updatedNode = TrainingSession.BuildNextTrainingLine();
+            if (updatedNode == null)
+            {
+                TrainingSession.BuildFirstTrainingLine();
+            }
+            ResetTrainingMode();
+            AppState.ConfigureMenusForTraining();
         }
 
         /// <summary>
@@ -2832,10 +2838,14 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiMnTrainNextLine_Click(object sender, RoutedEventArgs e)
+        public void UiMnTrainNextLine_Click(object sender, RoutedEventArgs e)
         {
-            TrainingSession.BuildNextTrainingLine();
-            // TODO: restart training
+            TreeNode updatedNode = TrainingSession.BuildNextTrainingLine();
+            if (updatedNode != null)
+            {
+                UiTrainingView.RollbackToUserMove(updatedNode);
+                AppState.ConfigureMenusForTraining();
+            }
         }
 
         /// <summary>
@@ -2844,10 +2854,14 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiMnTrainPreviousLine_Click(object sender, RoutedEventArgs e)
+        public void UiMnTrainPreviousLine_Click(object sender, RoutedEventArgs e)
         {
-            TrainingSession.BuildPreviousTrainingLine();
-            // TODO: restart training
+            TreeNode updatedNode = TrainingSession.BuildPreviousTrainingLine();
+            if (updatedNode != null)
+            {
+                UiTrainingView.RollbackToUserMove(updatedNode);
+                AppState.ConfigureMenusForTraining();
+            }
         }
 
         /// <summary>
