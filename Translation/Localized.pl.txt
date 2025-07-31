@@ -774,9 +774,9 @@ Training=Trening
 #english: StartNewSession=Start New Session
 StartNewSession=Zacznij nową sesję
 
-#description: Train again the same line
-#english: TrainRepeatLine=Repeat Training Line
-TrainRepeatLine=Trenuj ten sam wariant
+#description: Start training from the beginning
+#english: TrainFromBeginning=Go to Beginning
+TrainFromBeginning=Wróć do początku
 
 #description: Move training to the next line
 #english: TrainNextLine=Next Training Line
@@ -2184,8 +2184,8 @@ ReplaceEngineMove=Zmień Ruch Silnika
 ExitTrainingSession=Wyjście z sesji treningowej
 
 #description: Restart the training session
-#english: RestartTraining=Restart the training session?
-RestartTraining=Zacznij trening od początku
+#english: RestartTrainingPrompt=Restart the training session?
+RestartTrainingPrompt=Zacząć trening od początku?
 
 #description: Confirmation to merge training moves into the Study Tree / Game or Exercise
 #english: MergeTrainingIntoStudy=Merge new moves from this session into the source

@@ -654,8 +654,8 @@
   <data name="StartNewSession" xml:space="preserve">
     <value>Start New Session</value>
   </data>
-  <data name="TrainRepeatLine" xml:space="preserve">
-    <value>Repeat Training Line</value>
+  <data name="TrainFromBeginning" xml:space="preserve">
+    <value>Go to Beginning</value>
   </data>
   <data name="TrainNextLine" xml:space="preserve">
     <value>Next Training Line</value>
@@ -1522,7 +1522,7 @@ NOTE: Evaluations are not being updated (Ctrl+K to allow).</value>
   <data name="ExitTrainingSession" xml:space="preserve">
     <value>Exit the training session?</value>
   </data>
-  <data name="RestartTraining" xml:space="preserve">
+  <data name="RestartTrainingPrompt" xml:space="preserve">
     <value>Restart the training session?</value>
   </data>
   <data name="MergeTrainingIntoStudy" xml:space="preserve">

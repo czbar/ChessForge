@@ -6526,9 +6526,9 @@ namespace ChessForge.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Restart the training session?.
         /// </summary>
-        public static string RestartTraining {
+        public static string RestartTrainingPrompt {
             get {
-                return ResourceManager.GetString("RestartTraining", resourceCulture);
+                return ResourceManager.GetString("RestartTrainingPrompt", resourceCulture);
             }
         }
         
@@ -7811,6 +7811,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Go to Beginning.
+        /// </summary>
+        public static string TrainFromBeginning {
+            get {
+                return ResourceManager.GetString("TrainFromBeginning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Training.
         /// </summary>
         public static string Training {
@@ -7843,15 +7852,6 @@ namespace ChessForge.Properties {
         public static string TrainPreviousLine {
             get {
                 return ResourceManager.GetString("TrainPreviousLine", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Repeat Training Line.
-        /// </summary>
-        public static string TrainRepeatLine {
-            get {
-                return ResourceManager.GetString("TrainRepeatLine", resourceCulture);
             }
         }
         

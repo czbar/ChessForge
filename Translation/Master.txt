@@ -595,8 +595,8 @@ Training=Training
 #Start a new training session
 StartNewSession=Start New Session
 
-#Train again the same line
-TrainRepeatLine=Repeat Training Line
+#Start training from the beginning
+TrainFromBeginning=Go to Beginning
 
 #Move training to the next line
 TrainNextLine=Next Training Line
@@ -1716,7 +1716,7 @@ ReplaceEngineMove=Replace Engine Move
 ExitTrainingSession=Exit the training session?
 
 #Restart the training session
-RestartTraining=Restart the training session?
+RestartTrainingPrompt=Restart the training session?
 
 #Confirmation to merge training moves into the Study Tree / Game or Exercise
 MergeTrainingIntoStudy=Merge new moves from this session into the source
