@@ -270,30 +270,33 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Initializes the state of the view.
+        /// Initializes the state of the view after the user opened a new Training Session..
         /// Sets the starting node of the training session
         /// and shows the intro text.
         /// </summary>
         /// <param name="node"></param>
-        public void Initialize(TreeNode node, bool isRestart, GameData.ContentType contentType)
+        public void Initialize(TreeNode node, GameData.ContentType contentType)
         {
             TrainingSession.StartPosition = node;
-
-            if (isRestart)
-            {
-                TrainingSession.BuildNextTrainingLine();
-            }
-            else
-            {
-                TrainingSession.BuildFirstTrainingLine();
-            }
+            TrainingSession.BuildFirstTrainingLine();
 
             _sourceType = contentType;
-            _currentEngineGameMoveCount = 0;
-            HostRtb.Document.Blocks.Clear();
             InitParaDictionary();
             _moveNumberOffset = _mainWin.ActiveVariationTree.MoveNumberOffset;
-            BuildIntroText(node);
+
+            Reset(node);
+        }
+
+        /// <summary>
+        /// Resets GUI elements of the view.
+        /// This method is called when the user re-starts training in an existing session.
+        /// </summary>
+        /// <param name="startNode"></param>
+        public void Reset(TreeNode startNode)
+        {
+            _currentEngineGameMoveCount = 0;
+            HostRtb.Document.Blocks.Clear();
+            BuildIntroText(startNode);
         }
 
         /// <summary>
@@ -410,7 +413,7 @@ namespace ChessForge
         /// Rolls back the training to the ply
         /// that we want to replace with the last clicked node.
         /// </summary>
-        public void RollbackToWorkbookMove()
+        public void RollbackToWorkbookMove(TreeNode rollbackNode)
         {
             try
             {
@@ -420,10 +423,11 @@ namespace ChessForge
 
                 _currentEngineGameMoveCount = 0;
 
-                TrainingSession.RemoveTrainingMoves(_lastClickedNode);
-                EngineGame.RollbackGame(_lastClickedNode);
+                TrainingSession.RemoveTrainingMoves(rollbackNode);
+                EngineGame.RollbackGame(rollbackNode);
+                TrainingSession.AdjustTrainingLine(rollbackNode);
 
-                SoundPlayer.PlayMoveSound(_lastClickedNode.LastMoveAlgebraicNotation);
+                SoundPlayer.PlayMoveSound(rollbackNode.LastMoveAlgebraicNotation);
 
                 TrainingSession.ChangeCurrentState(TrainingSession.State.USER_MOVE_COMPLETED);
 
@@ -431,16 +435,10 @@ namespace ChessForge
 
                 AppState.SetupGuiForCurrentStates();
 
-                _mainWin.BoardCommentBox.GameMoveMade(_lastClickedNode, true);
+                _mainWin.BoardCommentBox.GameMoveMade(rollbackNode, true);
 
-                RemoveParagraphsFromMove(_lastClickedNode);
+                RemoveParagraphsFromMove(rollbackNode);
                 ReportLastMoveVsWorkbook();
-
-                // TODO remove when no side effects seen
-                //if (TrainingSession.IsContinuousEvaluation && )
-                //{
-                //    RequestMoveEvaluation(_mainWin.ActiveVariationTreeId, true);
-                //}
             }
             catch (Exception ex)
             {
@@ -467,6 +465,7 @@ namespace ChessForge
             {
                 EngineGame.RollbackGame(ndToRollbackTo);
                 TrainingSession.RemoveTrainingMoves(ndToRollbackTo);
+                TrainingSession.AdjustTrainingLine(ndToRollbackTo);
 
                 SoundPlayer.PlayMoveSound(ndToRollbackTo.LastMoveAlgebraicNotation);
                 TrainingSession.ChangeCurrentState(TrainingSession.State.AWAITING_USER_TRAINING_MOVE);
@@ -810,7 +809,7 @@ namespace ChessForge
                     {
                         _paraCurrentEngineGame.Inlines.Add(dictEvalRunsToKeep[nd.NodeId]);
                     }
-                };
+                }
             }
         }
 
@@ -1424,8 +1423,8 @@ namespace ChessForge
                 foreach (TreeNode child in nd.Parent.Children)
                 {
                     // we cannot use ArePositionsIdentical() because nd only has static position
-                    if (child.LastMoveEngineNotation != nd.LastMoveEngineNotation 
-                        && !child.IsNewTrainingMove 
+                    if (child.LastMoveEngineNotation != nd.LastMoveEngineNotation
+                        && !child.IsNewTrainingMove
                         && (!child.IsNullMove || child.Children.Count > 0))
                     {
                         lstNodes.Add(child);
@@ -1496,9 +1495,16 @@ namespace ChessForge
         /// </summary>
         /// <param name="midTxt"></param>
         /// <returns></returns>
-        private string BuildMoveTextForMenu(TreeNode nd)
+        public string BuildMoveTextForMenu(TreeNode nd)
         {
-            return MoveUtils.BuildSingleMoveText(nd, true, true, _moveNumberOffset);
+            if (nd == null)
+            {
+                return "";
+            }
+            else
+            {
+                return MoveUtils.BuildSingleMoveText(nd, true, true, _moveNumberOffset);
+            }
         }
 
         /// <summary>
@@ -1555,10 +1561,10 @@ namespace ChessForge
                                 mi.Header = altMove;
                                 mi.Visibility = _moveContext == MoveContext.WORKBOOK_COMMENT ? Visibility.Visible : Visibility.Collapsed;
                                 break;
-                            case "UiMnCiTrainRepeatLine":
+                            case "UiMnCiTrainFromBeginningLine":
                                 mi.Visibility = Visibility.Visible;
                                 break;
-                            case "_mnTrainExitTraining":
+                            case "UiMnCiTrainExitTraining":
                                 mi.Visibility = Visibility.Visible;
                                 break;
                             default:
@@ -1716,15 +1722,9 @@ namespace ChessForge
                 else
                 {
                     // A user move was clicked so rollback to the previous Workbook move
-                    RollbackToWorkbookMove();
+                    RollbackToWorkbookMove(_lastClickedNode);
                 }
             }
-
-            // TODO: remove when no side effects seen
-            //if (TrainingSession.IsContinuousEvaluation)
-            //{
-            //    RequestMoveEvaluation(_mainWin.ActiveVariationTreeId, true);
-            //}
         }
 
         /// <summary>
@@ -1735,15 +1735,36 @@ namespace ChessForge
         {
             try
             {
-                switch (e.Key)
+                if ((Keyboard.Modifiers & ModifierKeys.Control) > 0)
                 {
-                    case Key.Space:
-                        if (TrainingSession.IsTakebackAvailable)
-                        {
-                            RestartFromLastUserWorkbookMove();
+                    switch (e.Key)
+                    {
+                        case Key.B:
+                            AppState.MainWin.UiMnTrainFromBeginning_Click(null, e);
                             e.Handled = true;
-                        }
-                        break;
+                            break;
+                        case Key.N:
+                            AppState.MainWin.UiMnTrainNextLine_Click(null, e);
+                            e.Handled = true;
+                            break;
+                        case Key.P:
+                            AppState.MainWin.UiMnTrainPreviousLine_Click(null, e);
+                            e.Handled = true;
+                            break;
+                    }
+                }
+                else
+                {
+                    switch (e.Key)
+                    {
+                        case Key.Space:
+                            if (TrainingSession.IsTakebackAvailable)
+                            {
+                                RestartFromLastUserWorkbookMove();
+                                e.Handled = true;
+                            }
+                            break;
+                    }
                 }
             }
             catch { }
