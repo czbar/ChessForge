@@ -1208,7 +1208,7 @@ namespace ChessForge
 
                 ConfigureBookmarkMenuOptions(MainWin.UiMnMarkBookmark, MainWin.UiMnStDeleteBookmark);
                 ConfigureDiagramMenuOptions(MainWin.UiMnStudyInsertDiagramPreComment, MainWin.UiMnStudyInsertDiagramPostComment
-                    , MainWin.UiMnStudyDeleteDiagram, MainWin.UiMnStudyInvertDiagram, 
+                    , MainWin.UiMnStudyDeleteDiagram, MainWin.UiMnStudyInvertDiagram,
                     MainWin.UiMnStudySwapDiagramComment, MainWin.UiMnStudySaveDiagram);
 
                 foreach (var item in MainWin.UiMncStudyTree.Items)
@@ -1729,7 +1729,7 @@ namespace ChessForge
                     GuiConfiguration.ConfigureAppBarFontButtons();
 
                     MainWin.UiMnStartTraining.IsEnabled = IsVariationTreeTabType;
-                    MainWin.UiMnTrainRepeatLine.IsEnabled = false;
+                    MainWin.UiMnTrainFromBeginning.IsEnabled = false;
                     MainWin.UiMnTrainNextLine.IsEnabled = false;
                     MainWin.UiMnTrainPreviousLine.IsEnabled = false;
                     MainWin.UiMnExitTraining.IsEnabled = false;
@@ -1785,16 +1785,14 @@ namespace ChessForge
         /// <summary>
         /// Configures menu items for the Training mode
         /// </summary>
-        private static void ConfigureMenusForTraining()
+        public static void ConfigureMenusForTraining()
         {
             MainWin.Dispatcher.Invoke(() =>
             {
                 MainWin.UiMnStartTraining.IsEnabled = false;
-                MainWin.UiMnTrainRepeatLine.IsEnabled = true;
-                MainWin.UiMnTrainNextLine.IsEnabled = true;
-                MainWin.UiMnTrainPreviousLine.IsEnabled = true;
+                MainWin.UiMnTrainFromBeginning.IsEnabled = true;
                 MainWin.UiMnExitTraining.IsEnabled = true;
-
+                ConfigureMenusForTrainingLines(MainWin.UiMnTrainNextLine, MainWin.UiMnTrainPreviousLine);
                 MainWin.UiMnciPlayEngine.IsEnabled = false;
 
                 MainWin.UiMnFindIdentical.IsEnabled = false;
@@ -1808,6 +1806,40 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Configures menu items for the Next/Previous Training lines.
+        /// </summary>
+        /// <param name="nextLine"></param>
+        /// <param name="prevLine"></param>
+        public static void ConfigureMenusForTrainingLines(MenuItem nextLine, MenuItem prevLine)
+        {
+            TreeNode junctionNodeNext = TrainingSession.FindTrainingLineJunctionNode(true);
+            string nextMoveTxt = MainWin.UiTrainingView?.BuildMoveTextForMenu(junctionNodeNext);
+
+            TreeNode junctionNodePrev = TrainingSession.FindTrainingLineJunctionNode(false);
+            string prevMoveTxt = MainWin.UiTrainingView?.BuildMoveTextForMenu(junctionNodePrev);
+
+            if (nextLine != null)
+            {
+                nextLine.IsEnabled = junctionNodeNext != null;
+                nextLine.Header = Properties.Resources.TrainNextLine;
+                if (nextLine.IsEnabled)
+                {
+                    nextLine.Header = Properties.Resources.TrainNextLine + "  (" + nextMoveTxt + ")";
+                }
+            }
+
+            if (prevLine != null)
+            {
+                prevLine.IsEnabled = junctionNodePrev != null;
+                prevLine.Header = Properties.Resources.TrainPreviousLine;
+                if (prevLine.IsEnabled)
+                {
+                    prevLine.Header = Properties.Resources.TrainPreviousLine + "  (" + prevMoveTxt + ")";
+                }
+            }
+        }
+
+        /// <summary>
         /// Configures menu items for the Engine Game mode
         /// </summary>
         private static void ConfigureMenusForEngineGame()
@@ -1817,7 +1849,7 @@ namespace ChessForge
             _mainWin.Dispatcher.Invoke(() =>
             {
                 _mainWin.UiMnStartTraining.IsEnabled = !train;
-                _mainWin.UiMnTrainRepeatLine.IsEnabled = train;
+                _mainWin.UiMnTrainFromBeginning.IsEnabled = train;
                 _mainWin.UiMnTrainNextLine.IsEnabled = train;
                 _mainWin.UiMnTrainPreviousLine.IsEnabled = train;
                 _mainWin.UiMnExitTraining.IsEnabled = train;
@@ -2010,10 +2042,10 @@ namespace ChessForge
         /// <param name="addBookmark"></param>
         /// <param name="deleteBookmark"></param>
         private static void ConfigureDiagramMenuOptions(
-            MenuItem insertDiagramPreComment, 
-            MenuItem insertDiagramPostComment, 
-            MenuItem removeDiagram, 
-            MenuItem invertDiagram, 
+            MenuItem insertDiagramPreComment,
+            MenuItem insertDiagramPostComment,
+            MenuItem removeDiagram,
+            MenuItem invertDiagram,
             MenuItem swapDiagramComment,
             MenuItem saveDiagram
             )
@@ -2139,7 +2171,7 @@ namespace ChessForge
                     _mainWin.UiDgActiveLine.Columns[2].Visibility = includeEvals ? Visibility.Visible : Visibility.Hidden;
                     _mainWin.UiDgActiveLine.Columns[4].Visibility = includeEvals ? Visibility.Visible : Visibility.Hidden;
                     _mainWin.UiDgActiveLine.Width = includeEvals ? MainWin.SCORESHEET_WIDTH_WITH_EVALS : MainWin.SCORESHEET_WIDTH_NO_EVALS;
-                    ThicknessUtils.SetControlLeftMargin(_mainWin.UiDgActiveLine, includeEvals ? 0 : MainWin.SCORESHEET_NO_EVALS_LEFT_MARGIN);                    
+                    ThicknessUtils.SetControlLeftMargin(_mainWin.UiDgActiveLine, includeEvals ? 0 : MainWin.SCORESHEET_NO_EVALS_LEFT_MARGIN);
 
                     if (includeEvals)
                     {
