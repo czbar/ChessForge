@@ -219,17 +219,81 @@ namespace ChessForge
         /// <summary>
         /// Builds the next training line.
         /// </summary>
-        public static void BuildNextTrainingLine()
+        public static TreeNode BuildNextTrainingLine()
         {
-            BuildTrainingLine(true);
+            return BuildTrainingLine(true);
         }
 
         /// <summary>
         /// Builds the previous training line.
         /// </summary>
-        public static void BuildPreviousTrainingLine()
+        public static TreeNode BuildPreviousTrainingLine()
         {
-            BuildTrainingLine(false);
+            return BuildTrainingLine(false);
+        }
+
+        /// <summary>
+        /// This will be called when the user made a move that was not in the current training line.
+        /// We will need to adjust the training line to insert the new move in the right
+        /// place and build the rest of the updated training line moves from there.
+        /// Must check if the updated node is already in the training line. If so, do nothing
+        /// as we do not want to reset the trailing nodes.
+        /// </summary>
+        /// <param name="updatedNode"></param>
+        public static void AdjustTrainingLine(TreeNode updatedNode)
+        {
+            if (TrainingLine.IndexOf(updatedNode) >= 0)
+            {
+                return;
+            }
+
+            // the parent of the updated node is the last node that we will keep
+            TreeNode lastGoodNode = updatedNode.Parent;
+            int index = TrainingLine.IndexOf(lastGoodNode);
+
+            // remove trailing nodes
+            TrainingLine.RemoveRange(index + 1, (TrainingLine.Count - index) - 1);
+
+            // appand the updated node
+            TrainingLine.Add(updatedNode);
+
+            // complete the training line from the updated node
+            CompleteTrainingLine();
+        }
+
+        /// <summary>
+        /// Identifies a node that will be a junction when switching to the next or previous training line.
+        /// </summary>
+        /// <param name="nextOrPrevLine"></param>
+        /// <returns></returns>
+        public static TreeNode FindTrainingLineJunctionNode(bool nextOrPrevLine)
+        {
+            TreeNode junctionNode = null;
+
+            try
+            {
+                int index = FindMoveToUpdateIndex(nextOrPrevLine);
+
+                if (index > 0)
+                {
+                    TreeNode moveToUpdate = TrainingLine[index];
+                    int childIndex = moveToUpdate.Parent.Children.IndexOf(moveToUpdate);
+                    if (nextOrPrevLine)
+                    {
+                        junctionNode = moveToUpdate.Parent.Children[childIndex + 1];
+                    }
+                    else
+                    {
+                        junctionNode = moveToUpdate.Parent.Children[childIndex - 1];
+                    }
+                }
+            }
+            catch
+            {
+                AppLog.Message(LogLevel.ERROR, "Exception in FindTrainingLineJunctionNode()");
+            }
+
+            return junctionNode;
         }
 
         /// <summary>
@@ -242,7 +306,7 @@ namespace ChessForge
         /// (following the local main line).
         /// </summary>
         /// <param name="nextOrPrevLine"></param>
-        private static void BuildTrainingLine(bool nextOrPrevLine)
+        private static TreeNode BuildTrainingLine(bool nextOrPrevLine)
         {
             int moveToUpdateIndex = FindMoveToUpdateIndex(nextOrPrevLine);
 
@@ -254,18 +318,22 @@ namespace ChessForge
             }
 
             // 2. Update the move at the given index
-            UpdateMoveAtIndex(moveToUpdateIndex, nextOrPrevLine);
+            TreeNode updatedNode = UpdateMoveAtIndex(moveToUpdateIndex, nextOrPrevLine);
 
             // 3. Add the rest of the training line from the updated move
             CompleteTrainingLine();
+
+            return updatedNode;
         }
 
         /// <summary>
         /// Replaces the move at the given index with the next sibling.
         /// </summary>
         /// <param name="moveToUpdateIndex"></param>
-        private static void UpdateMoveAtIndex(int moveToUpdateIndex, bool nextOrPrevLine)
+        private static TreeNode UpdateMoveAtIndex(int moveToUpdateIndex, bool nextOrPrevLine)
         {
+            TreeNode updatedNode = null;
+
             TreeNode moveToUpdate = EngineGame.Line.NodeList[moveToUpdateIndex];
             TreeNode moveToUpdateParent = moveToUpdate.Parent;
 
@@ -275,7 +343,7 @@ namespace ChessForge
             {
                 if (currChildIndex < moveToUpdateParent.Children.Count - 1)
                 {
-                    TreeNode updatedNode = moveToUpdateParent.Children[currChildIndex + 1];
+                    updatedNode = moveToUpdateParent.Children[currChildIndex + 1];
                     if (moveToUpdateIndex > TrainingLine.Count - 1)
                     {
                         TrainingLine.Add(updatedNode);
@@ -290,7 +358,7 @@ namespace ChessForge
             {
                 if (currChildIndex > 0)
                 {
-                    TreeNode updatedNode = moveToUpdateParent.Children[currChildIndex - 1];
+                    updatedNode = moveToUpdateParent.Children[currChildIndex - 1];
                     if (moveToUpdateIndex > TrainingLine.Count - 1)
                     {
                         TrainingLine.Add(updatedNode);
@@ -301,6 +369,8 @@ namespace ChessForge
                     }
                 }
             }
+
+            return updatedNode;
         }
 
         /// <summary>
