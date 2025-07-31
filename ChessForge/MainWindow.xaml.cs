@@ -2532,10 +2532,10 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Starts a training session from the specified Node.
+        /// Starts a new training session from the specified Node.
         /// </summary>
         /// <param name="startNode"></param>
-        public void SetAppInTrainingMode(TreeNode startNode, bool isRestart, bool isContinuousEvaluation = false)
+        private void SetAppInTrainingMode(TreeNode startNode, bool isContinuousEvaluation = false)
         {
             if (ActiveVariationTree == null || startNode == null)
             {
@@ -2544,27 +2544,12 @@ namespace ChessForge
 
             TrainingSession.PrepareGuiForTraining(startNode, isContinuousEvaluation);
 
-            if (isRestart)
-            {
-                UiTrainingView.Initialize(startNode, isRestart, ActiveVariationTree.ContentType);
-            }
-
             // The EngineGame holds the current training progress.
             // It needs to be initialized with the startNode before we initialize
             // the TrainingView and the TrainingSession.
             EngineGame.InitializeGameObject(startNode, false, false);
 
-            if (!isRestart)
-            {
-                UiTrainingView = new TrainingView(UiRtbTrainingProgress, this);
-                UiTrainingView.Initialize(startNode, isRestart, ActiveVariationTree.ContentType);
-                UiDgEngineGame.ItemsSource = EngineGame.Line.MoveList;
-                if (LearningMode.TrainingSideCurrent == PieceColor.Black && !MainChessBoard.IsFlipped
-                    || LearningMode.TrainingSideCurrent == PieceColor.White && MainChessBoard.IsFlipped)
-                {
-                    MainChessBoard.FlipBoard();
-                }
-            }
+            PrepareTrainingView(startNode);
 
             Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
 
@@ -2572,6 +2557,44 @@ namespace ChessForge
             {
                 UiTrainingView.RequestMoveEvaluation(ActiveVariationTree.TreeId, true);
                 AppState.SwapCommentBoxForEngineLines(true);
+            }
+        }
+
+        /// <summary>
+        /// Resets an existing training session.
+        /// </summary>
+        private void ResetTrainingMode()
+        {
+            TreeNode startNode = TrainingSession.StartPosition;
+
+            TrainingSession.PrepareGuiForTraining(startNode, TrainingSession.IsContinuousEvaluation);
+
+            UiTrainingView.Reset(startNode);
+            
+            EngineGame.InitializeGameObject(startNode, false, false);
+
+            Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
+
+            if (TrainingSession.IsContinuousEvaluation)
+            {
+                UiTrainingView.RequestMoveEvaluation(ActiveVariationTree.TreeId, true);
+                AppState.SwapCommentBoxForEngineLines(true);
+            }
+        }
+
+        /// <summary>
+        /// Initializes the TrainingView.
+        /// </summary>
+        /// <param name="startNode"></param>
+        private void PrepareTrainingView(TreeNode startNode)
+        {
+            UiTrainingView = new TrainingView(UiRtbTrainingProgress, this);
+            UiTrainingView.Initialize(startNode, ActiveVariationTree.ContentType);
+            UiDgEngineGame.ItemsSource = EngineGame.Line.MoveList;
+            if (LearningMode.TrainingSideCurrent == PieceColor.Black && !MainChessBoard.IsFlipped
+                || LearningMode.TrainingSideCurrent == PieceColor.White && MainChessBoard.IsFlipped)
+            {
+                MainChessBoard.FlipBoard();
             }
         }
 
@@ -3153,8 +3176,8 @@ namespace ChessForge
         /// <param name="e"></param>
         private void MainCanvas_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
-            if (WorkbookManager.ActiveTab == TabViewType.STUDY 
-                || WorkbookManager.ActiveTab == TabViewType.MODEL_GAME 
+            if (WorkbookManager.ActiveTab == TabViewType.STUDY
+                || WorkbookManager.ActiveTab == TabViewType.MODEL_GAME
                 || WorkbookManager.ActiveTab == TabViewType.EXERCISE)
             {
                 _lastRightClickedPoint = null;
