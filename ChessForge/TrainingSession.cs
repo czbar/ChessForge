@@ -221,7 +221,7 @@ namespace ChessForge
         /// </summary>
         public static TreeNode BuildNextTrainingLine()
         {
-            return BuildTrainingLine(true);
+            return BuildNextPrevTrainingLine(true);
         }
 
         /// <summary>
@@ -229,7 +229,7 @@ namespace ChessForge
         /// </summary>
         public static TreeNode BuildPreviousTrainingLine()
         {
-            return BuildTrainingLine(false);
+            return BuildNextPrevTrainingLine(false);
         }
 
         /// <summary>
@@ -306,9 +306,14 @@ namespace ChessForge
         /// (following the local main line).
         /// </summary>
         /// <param name="nextOrPrevLine"></param>
-        private static TreeNode BuildTrainingLine(bool nextOrPrevLine)
+        private static TreeNode BuildNextPrevTrainingLine(bool nextOrPrevLine)
         {
             int moveToUpdateIndex = FindMoveToUpdateIndex(nextOrPrevLine);
+
+            if (moveToUpdateIndex < 0)
+            {
+                return null;
+            }
 
             TrainingLine.Clear();
             // 1. Add all the moves up to the move that is to be updated 
