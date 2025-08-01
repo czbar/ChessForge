@@ -1153,7 +1153,12 @@ namespace ChessForge
                         tree.ContentType = GameData.ContentType.STUDY_TREE;
                         tree.BuildLines();
                         ClearStudyTreeHeader(tree);
+
+                        // preserve the preamble when replacing the study tree
+                        var preamble = chapter.StudyTree.Tree.Header.GetPreamble();
+
                         chapter.StudyTree.Tree = tree;
+                        tree.Header.SetPreamble(preamble);
 
                         // if we are in the study tab, must set the new tree as active tree (does not happen automatically)
                         if (AppState.ActiveTab == TabViewType.STUDY)
