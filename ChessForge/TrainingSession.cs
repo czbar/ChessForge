@@ -1,5 +1,6 @@
 ﻿using ChessPosition;
 using GameTree;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -456,9 +457,10 @@ namespace ChessForge
             // follow the first child nodes until we reach a node that has no children
             while (node != null)
             {
-                if (node.Children.Count > 0 && !node.IsNewTrainingMove)
+                TreeNode firstNonNullChild = GetFirstNonNullChild(node);
+                if (firstNonNullChild != null && !node.IsNewTrainingMove)
                 {
-                    node = node.Children[0];
+                    node = firstNonNullChild;
                     TrainingLine.Add(node);
                 }
                 else
@@ -468,5 +470,22 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Finds the first non-null child of the given node.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        private static TreeNode GetFirstNonNullChild(TreeNode node)
+        {
+            for (int i = 0; i < node.Children.Count; i++)
+            {
+                if (!node.Children[i].IsNullMove)
+                {
+                    return node.Children[i];
+                }
+            }
+
+            return null;
+        }
     }
 }
