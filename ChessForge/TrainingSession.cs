@@ -1,6 +1,5 @@
 ﻿using ChessPosition;
 using GameTree;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -345,34 +344,17 @@ namespace ChessForge
 
             int currChildIndex = moveToUpdateParent.Children.IndexOf(moveToUpdate);
 
-            if (nextOrPrevLine)
+            int childIndex = GetNonNullSiblingIndex(moveToUpdate, nextOrPrevLine);
+            if (childIndex >= 0)
             {
-                if (currChildIndex < moveToUpdateParent.Children.Count - 1)
+                updatedNode = moveToUpdateParent.Children[childIndex];
+                if (moveToUpdateIndex > TrainingLine.Count - 1)
                 {
-                    updatedNode = moveToUpdateParent.Children[currChildIndex + 1];
-                    if (moveToUpdateIndex > TrainingLine.Count - 1)
-                    {
-                        TrainingLine.Add(updatedNode);
-                    }
-                    else
-                    {
-                        TrainingLine[moveToUpdateIndex] = updatedNode;
-                    }
+                    TrainingLine.Add(updatedNode);
                 }
-            }
-            else
-            {
-                if (currChildIndex > 0)
+                else
                 {
-                    updatedNode = moveToUpdateParent.Children[currChildIndex - 1];
-                    if (moveToUpdateIndex > TrainingLine.Count - 1)
-                    {
-                        TrainingLine.Add(updatedNode);
-                    }
-                    else
-                    {
-                        TrainingLine[moveToUpdateIndex] = updatedNode;
-                    }
+                    TrainingLine[moveToUpdateIndex] = updatedNode;
                 }
             }
 
@@ -399,25 +381,61 @@ namespace ChessForge
                     break;
                 }
 
-                if (nextOrPrevLine)
+                if (node.ColorToMove == TrainingSide && GetNonNullSiblingIndex(node, nextOrPrevLine) >= 0)
                 {
-                    if (node.ColorToMove == TrainingSide && node.Parent != null && node.Parent.Children.IndexOf(node) < node.Parent.Children.Count - 1)
-                    {
-                        moveToUpdateIndex = i;
-                        break;
-                    }
-                }
-                else
-                {
-                    if (node.ColorToMove == TrainingSide && node.Parent != null && node.Parent.Children.IndexOf(node) > 0)
-                    {
-                        moveToUpdateIndex = i;
-                        break;
-                    }
+                    moveToUpdateIndex = i;
+                    break;
                 }
             }
 
             return moveToUpdateIndex;
+        }
+
+        /// <summary>
+        /// Finds the index of the next or previous non-null sibling.
+        /// Returns -1 if no such sibling is found.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="nextOtPrev"></param>
+        /// <returns></returns>
+        private static int GetNonNullSiblingIndex(TreeNode node, bool nextOtPrev)
+        {
+            int index = -1;
+
+            TreeNode parent = node.Parent;
+
+            if (parent != null)
+            {
+                int idx = parent.Children.IndexOf(node);
+
+                if (idx >= 0)
+                {
+                    if (nextOtPrev)
+                    {
+                        for (int i = idx + 1; i <= parent.Children.Count - 1; i++)
+                        {
+                            if (!parent.Children[i].IsNullMove)
+                            {
+                                index = i;
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (int i = idx - 1; i >= 0; i--)
+                        {
+                            if (!parent.Children[i].IsNullMove)
+                            {
+                                index = i;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return index;
         }
 
         /// <summary>
