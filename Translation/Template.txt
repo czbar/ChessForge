@@ -774,9 +774,17 @@ Training=
 #english: StartNewSession=Start New Session
 StartNewSession=
 
-#description: Restart the Training Session from the beginning
-#english: RestartTrainingSession=Restart Training Session
-RestartTrainingSession=
+#description: Start training from the beginning
+#english: TrainFromBeginning=Go to Beginning
+TrainFromBeginning=
+
+#description: Move training to the next line
+#english: TrainNextLine=Next Training Line
+TrainNextLine=
+
+#description: Move training to the previous line
+#english: TrainPreviousLine=Previous Training Line
+TrainPreviousLine=
 
 #description: Exit the Training Session
 #english: ExitTraining=Exit Training
@@ -2176,8 +2184,8 @@ ReplaceEngineMove=
 ExitTrainingSession=
 
 #description: Restart the training session
-#english: RestartTraining=Restart the training session?
-RestartTraining=
+#english: RestartTrainingPrompt=Restart the training session?
+RestartTrainingPrompt=
 
 #description: Confirmation to merge training moves into the Study Tree / Game or Exercise
 #english: MergeTrainingIntoStudy=Merge new moves from this session into the source

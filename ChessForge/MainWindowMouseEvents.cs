@@ -570,7 +570,6 @@ namespace ChessForge
         /// <param name="e"></param>
         private void TrainingView_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-            //UiTrainingView.SetLastClickedNode(null);
             Dispatcher.Invoke(() =>
             {
                 ContextMenu cm = UiMncTrainingView;
@@ -589,18 +588,27 @@ namespace ChessForge
                             case "UiMncTrainReplaceEngineMove":
                                 mi.Visibility = Visibility.Collapsed;
                                 break;
-                            case "_mnTrainRestartTraining":
-                            case "_mnTrainExitTraining":
+                            case "UiMnCiTrainFromBeginningLine":
+                            case "UiMnCiTrainExitTraining":
                                 mi.Visibility = Visibility.Visible;
+                                break;
+                            case "UiMnCiTrainNextLine":
+                                AppState.ConfigureMenusForTrainingLines(mi, null);
+                                break;
+                            case "UiMnCiTrainPreviousLine":
+                                AppState.ConfigureMenusForTrainingLines(null, mi);
                                 break;
                             default:
                                 break;
                         }
                     }
 
-                    if (o is Separator)
+                    if (o is Separator sep)
                     {
-                        ((Separator)o).Visibility = Visibility.Collapsed;
+                        if (sep.Name == null || !sep.Name.StartsWith("UiMnSeparator_TrainingModes"))
+                        {
+                            ((Separator)o).Visibility = Visibility.Collapsed;
+                        }
                     }
                 }
             });

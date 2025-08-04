@@ -2816,16 +2816,51 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Restarts training from the same position/bookmark
-        /// that we started the current session with.
+        /// Restarts training from the training starting position
+        /// repeating the current training line.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiMnTrainRestartTraining_Click(object sender, RoutedEventArgs e)
+        public void UiMnTrainFromBeginning_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show(Properties.Resources.RestartTraining, Properties.Resources.Training, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            TreeNode updatedNode = TrainingSession.BuildNextTrainingLine();
+            if (updatedNode == null)
             {
-                SetAppInTrainingMode(TrainingSession.StartPosition, TrainingSession.IsContinuousEvaluation);
+                TrainingSession.BuildFirstTrainingLine();
+            }
+            ResetTrainingMode();
+            AppState.ConfigureMenusForTraining();
+        }
+
+        /// <summary>
+        /// Restarts training from the training starting position
+        /// moving to the next training line.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void UiMnTrainNextLine_Click(object sender, RoutedEventArgs e)
+        {
+            TreeNode updatedNode = TrainingSession.BuildNextTrainingLine();
+            if (updatedNode != null)
+            {
+                UiTrainingView.RollbackToUserMove(updatedNode);
+                AppState.ConfigureMenusForTraining();
+            }
+        }
+
+        /// <summary>
+        /// Restarts training from the training starting position
+        /// moving to the previous training line.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void UiMnTrainPreviousLine_Click(object sender, RoutedEventArgs e)
+        {
+            TreeNode updatedNode = TrainingSession.BuildPreviousTrainingLine();
+            if (updatedNode != null)
+            {
+                UiTrainingView.RollbackToUserMove(updatedNode);
+                AppState.ConfigureMenusForTraining();
             }
         }
 
@@ -4239,7 +4274,7 @@ namespace ChessForge
                         // and "" if user cancelled.
                         // So if it is null we give them another chance, hence the loop
                         while ((filePath = PgnWriter.SelectTargetPgnFile()) == null)
-                        {}
+                        { }
 
                         if (!string.IsNullOrEmpty(filePath) && filePath[0] != '.')
                         {

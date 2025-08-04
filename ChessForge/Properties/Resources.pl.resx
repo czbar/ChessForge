@@ -654,8 +654,14 @@
   <data name="StartNewSession" xml:space="preserve">
     <value>Zacznij nową sesję</value>
   </data>
-  <data name="RestartTrainingSession" xml:space="preserve">
-    <value>Zacznij trening od początku</value>
+  <data name="TrainFromBeginning" xml:space="preserve">
+    <value>Wróć do początku</value>
+  </data>
+  <data name="TrainNextLine" xml:space="preserve">
+    <value>Trenuj następny wariant</value>
+  </data>
+  <data name="TrainPreviousLine" xml:space="preserve">
+    <value>Trenuj poprzedni wariant</value>
   </data>
   <data name="ExitTraining" xml:space="preserve">
     <value>Zakończ trening</value>
@@ -1516,8 +1522,8 @@ UWAGA: Oceny nie są uaktualniane (zezwól przez Ctrl+K).</value>
   <data name="ExitTrainingSession" xml:space="preserve">
     <value>Wyjście z sesji treningowej</value>
   </data>
-  <data name="RestartTraining" xml:space="preserve">
-    <value>Zacznij trening od początku</value>
+  <data name="RestartTrainingPrompt" xml:space="preserve">
+    <value>Zacząć trening od początku?</value>
   </data>
   <data name="MergeTrainingIntoStudy" xml:space="preserve">
     <value>Dodaj ruchy z tej sesji do źródła</value>

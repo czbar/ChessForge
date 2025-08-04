@@ -6526,18 +6526,9 @@ namespace ChessForge.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Restart the training session?.
         /// </summary>
-        public static string RestartTraining {
+        public static string RestartTrainingPrompt {
             get {
-                return ResourceManager.GetString("RestartTraining", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Restart Training Session.
-        /// </summary>
-        public static string RestartTrainingSession {
-            get {
-                return ResourceManager.GetString("RestartTrainingSession", resourceCulture);
+                return ResourceManager.GetString("RestartTrainingPrompt", resourceCulture);
             }
         }
         
@@ -7820,6 +7811,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Go to Beginning.
+        /// </summary>
+        public static string TrainFromBeginning {
+            get {
+                return ResourceManager.GetString("TrainFromBeginning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Training.
         /// </summary>
         public static string Training {
@@ -7834,6 +7834,24 @@ namespace ChessForge.Properties {
         public static string TrainingSide {
             get {
                 return ResourceManager.GetString("TrainingSide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Next Training Line.
+        /// </summary>
+        public static string TrainNextLine {
+            get {
+                return ResourceManager.GetString("TrainNextLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Previous Training Line.
+        /// </summary>
+        public static string TrainPreviousLine {
+            get {
+                return ResourceManager.GetString("TrainPreviousLine", resourceCulture);
             }
         }
         

@@ -62,7 +62,7 @@ namespace ChessForge
         /// Position from which the game started.
         /// This will be a reference to a Node in the Workbook Tree.
         /// </summary>
-        private static TreeNode GameStartPosition;
+        public static TreeNode GameStartPosition;
 
         // Current game state
         private static GameState _gameState;

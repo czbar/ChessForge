@@ -774,9 +774,17 @@ Training=Trening
 #english: StartNewSession=Start New Session
 StartNewSession=Zacznij nową sesję
 
-#description: Restart the Training Session from the beginning
-#english: RestartTrainingSession=Restart Training Session
-RestartTrainingSession=Zacznij trening od początku
+#description: Start training from the beginning
+#english: TrainFromBeginning=Go to Beginning
+TrainFromBeginning=Wróć do początku
+
+#description: Move training to the next line
+#english: TrainNextLine=Next Training Line
+TrainNextLine=Trenuj następny wariant
+
+#description: Move training to the previous line
+#english: TrainPreviousLine=Previous Training Line
+TrainPreviousLine=Trenuj poprzedni wariant
 
 #description: Exit the Training Session
 #english: ExitTraining=Exit Training
@@ -2176,8 +2184,8 @@ ReplaceEngineMove=Zmień Ruch Silnika
 ExitTrainingSession=Wyjście z sesji treningowej
 
 #description: Restart the training session
-#english: RestartTraining=Restart the training session?
-RestartTraining=Zacznij trening od początku
+#english: RestartTrainingPrompt=Restart the training session?
+RestartTrainingPrompt=Zacząć trening od początku?
 
 #description: Confirmation to merge training moves into the Study Tree / Game or Exercise
 #english: MergeTrainingIntoStudy=Merge new moves from this session into the source
@@ -2517,11 +2525,11 @@ ConfirmDeleteExercise=Usunąć ćwiczenie
 InsertDiagram=Wstaw Diagram
 
 #description: Insert a diagram after comment
-#english: InsertDiagramPreComment=Insert Diagram Before Comment
+#english: InsertDiagramBeforeMove=Insert Diagram Before Move
 InsertDiagramBeforeMove=Wstaw diagram przed posunięciem
 
 #description: Insert a diagram after comment
-#english: InsertDiagramPostComment=Insert Diagram After Comment
+#english: InsertDiagramAfterMove=Insert Diagram After Move
 InsertDiagramAfterMove=Wstaw diagram po posunięciu
 
 #description: Remove the diagram

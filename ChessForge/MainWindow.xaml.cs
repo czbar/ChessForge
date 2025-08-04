@@ -2532,57 +2532,25 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Starts a training session from the specified Node.
+        /// Starts a new training session from the specified Node.
         /// </summary>
         /// <param name="startNode"></param>
-        public void SetAppInTrainingMode(TreeNode startNode, bool isContinuousEvaluation = false)
+        private void SetAppInTrainingMode(TreeNode startNode, bool isContinuousEvaluation = false)
         {
             if (ActiveVariationTree == null || startNode == null)
             {
                 return;
             }
 
-            AppLog.Message("Starting Training Session");
+            TrainingSession.PrepareGuiForTraining(startNode, isContinuousEvaluation);
 
-            // Set up the training mode
-            StopEvaluation(true);
-            StopReplayIfActive();
-
-            LearningMode.ChangeCurrentMode(LearningMode.Mode.TRAINING);
-            TrainingSession.IsTrainingInProgress = true;
-            TrainingSession.ChangeCurrentState(TrainingSession.State.AWAITING_USER_TRAINING_MOVE);
-
-            AppState.EnableNavigationArrows();
-
-            if (isContinuousEvaluation)
-            {
-                TrainingSession.IsContinuousEvaluation = true;
-            }
-            else
-            {
-                EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
-            }
-
-            LearningMode.TrainingSideCurrent = startNode.ColorToMove;
-            MainChessBoard.DisplayPosition(startNode, true);
-
-            UiTrainingView = new TrainingView(UiRtbTrainingProgress, this);
-            UiTrainingView.Initialize(startNode, ActiveVariationTree.ContentType);
-            UiTrainingView.RemoveTrainingMoves(startNode);
-
-            if (LearningMode.TrainingSideCurrent == PieceColor.Black && !MainChessBoard.IsFlipped
-                || LearningMode.TrainingSideCurrent == PieceColor.White && MainChessBoard.IsFlipped)
-            {
-                MainChessBoard.FlipBoard();
-            }
-
-            AppState.ShowMoveEvaluationControls(isContinuousEvaluation, isContinuousEvaluation);
-            AppState.ShowExplorers(false, false);
-            BoardCommentBox.TrainingSessionStart();
-
-            // The Line display is the same as when playing a game against the computer 
+            // The EngineGame holds the current training progress.
+            // It needs to be initialized with the startNode before we initialize
+            // the TrainingView and the TrainingSession.
             EngineGame.InitializeGameObject(startNode, false, false);
-            UiDgEngineGame.ItemsSource = EngineGame.Line.MoveList;
+
+            PrepareTrainingView(startNode);
+
             Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
 
             if (isContinuousEvaluation)
@@ -2590,19 +2558,74 @@ namespace ChessForge
                 UiTrainingView.RequestMoveEvaluation(ActiveVariationTree.TreeId, true);
                 AppState.SwapCommentBoxForEngineLines(true);
             }
-
         }
 
+        /// <summary>
+        /// Resets an existing training session.
+        /// </summary>
+        private void ResetTrainingMode()
+        {
+            TreeNode startNode = TrainingSession.StartPosition;
+
+            TrainingSession.PrepareGuiForTraining(startNode, TrainingSession.IsContinuousEvaluation);
+
+            UiTrainingView.Reset(startNode);
+            
+            EngineGame.InitializeGameObject(startNode, false, false);
+
+            Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
+
+            if (TrainingSession.IsContinuousEvaluation)
+            {
+                UiTrainingView.RequestMoveEvaluation(ActiveVariationTree.TreeId, true);
+                AppState.SwapCommentBoxForEngineLines(true);
+            }
+        }
+
+        /// <summary>
+        /// Initializes the TrainingView.
+        /// </summary>
+        /// <param name="startNode"></param>
+        private void PrepareTrainingView(TreeNode startNode)
+        {
+            UiTrainingView = new TrainingView(UiRtbTrainingProgress, this);
+            UiTrainingView.Initialize(startNode, ActiveVariationTree.ContentType);
+            UiDgEngineGame.ItemsSource = EngineGame.Line.MoveList;
+            if (LearningMode.TrainingSideCurrent == PieceColor.Black && !MainChessBoard.IsFlipped
+                || LearningMode.TrainingSideCurrent == PieceColor.White && MainChessBoard.IsFlipped)
+            {
+                MainChessBoard.FlipBoard();
+            }
+        }
+
+        /// <summary>
+        /// When the user made their move, and the training is in
+        /// manual mode (as opposed to a game vs engine)
+        /// a timer was started to invoke
+        /// this method.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
         public void InvokeRequestWorkbookResponse(object source, ElapsedEventArgs e)
         {
             UiTrainingView.RequestWorkbookResponse();
         }
 
+        /// <summary>
+        /// Shows the popup menu in Training.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
         public void ShowTrainingProgressPopupMenu(object source, ElapsedEventArgs e)
         {
             UiTrainingView.ShowPopupMenu();
         }
 
+        /// <summary>
+        /// Hides the Flash Announcement.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
         public void FlashAnnouncementTimeUp(object source, ElapsedEventArgs e)
         {
             BoardCommentBox.HideFlashAnnouncement();
@@ -3153,8 +3176,8 @@ namespace ChessForge
         /// <param name="e"></param>
         private void MainCanvas_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
-            if (WorkbookManager.ActiveTab == TabViewType.STUDY 
-                || WorkbookManager.ActiveTab == TabViewType.MODEL_GAME 
+            if (WorkbookManager.ActiveTab == TabViewType.STUDY
+                || WorkbookManager.ActiveTab == TabViewType.MODEL_GAME
                 || WorkbookManager.ActiveTab == TabViewType.EXERCISE)
             {
                 _lastRightClickedPoint = null;

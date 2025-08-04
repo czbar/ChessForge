@@ -2,9 +2,6 @@
 using GameTree;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace ChessForge
@@ -36,7 +33,7 @@ namespace ChessForge
             TreeNode nd = ActiveLine.GetSelectedTreeNode();
             if (nd != null)
             {
-                SetAppInTrainingMode(nd);
+                SetAppInTrainingMode(nd, false);
                 UiTrainingSessionBox.Visibility = Visibility.Visible;
             }
             else
@@ -117,7 +114,7 @@ namespace ChessForge
         private void UiMnTrainFromBookmark_Click(object sender, RoutedEventArgs e)
         {
             BookmarkManager.SetActiveEntities(false);
-            SetAppInTrainingMode(BookmarkManager.SelectedBookmarkNode);
+            SetAppInTrainingMode(BookmarkManager.SelectedBookmarkNode, false);
         }
 
         /// <summary>

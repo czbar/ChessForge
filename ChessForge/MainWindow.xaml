@@ -109,7 +109,11 @@
                     </MenuItem>
                     <MenuItem Header="{x:Static p:Resources.Training}" Margin="0,0,0,0">
                         <MenuItem x:Name="UiMnStartTraining"  Header="{x:Static p:Resources.StartNewSession}"  Click="UiMnStartTrainingHere_Click" InputGestureText="T" />
-                        <MenuItem x:Name="UiMnRestartTraining"  Header="{x:Static p:Resources.RestartTrainingSession}" Click="UiMnTrainRestartTraining_Click"/>
+                        <MenuItem x:Name="UiMnTrainFromBeginning"  Header="{x:Static p:Resources.TrainFromBeginning}" Click="UiMnTrainFromBeginning_Click" InputGestureText="Ctrl+B"/>
+                        <Separator />
+                        <MenuItem x:Name="UiMnTrainNextLine"  Header="{x:Static p:Resources.TrainNextLine}"  Click="UiMnTrainNextLine_Click" InputGestureText="Ctrl+N"/>
+                        <MenuItem x:Name="UiMnTrainPreviousLine"  Header="{x:Static p:Resources.TrainPreviousLine}"  Click="UiMnTrainPreviousLine_Click" InputGestureText="Ctrl+P"/>
+                        <Separator />
                         <MenuItem x:Name="UiMnExitTraining" Header="{x:Static p:Resources.ExitTraining}" Click="UiMnStopTraining_Click"/>
                         <Separator />
                         <MenuItem x:Name="UiMnMainPlayEngine" Header="{x:Static p:Resources.PlayAgainstComputer}"  Click="UiMnPlayEngine_Click" />
@@ -268,7 +272,7 @@
                         <Canvas.ContextMenu>
                             <ContextMenu  x:Name="UiMncMainBoard">
                                 <MenuItem x:Name="UiMnciStartTrainingHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere_Click" InputGestureText="T" />
-                                <MenuItem x:Name="UiMnciRestartTraining"  Header="{x:Static p:Resources.RestartTraining}" Click="UiMnTrainRestartTraining_Click"/>
+                                <MenuItem x:Name="UiMnciRestartTraining"  Header="{x:Static p:Resources.TrainFromBeginning}" Click="UiMnTrainFromBeginning_Click"/>
                                 <MenuItem x:Name="UiMnciExitTraining" Header="{x:Static p:Resources.ExitTraining}" Click="UiMnStopTraining_Click"/>
                                 <Separator x:Name="UiMncMainBoardSepar_1" />
                                 <MenuItem x:Name="UiMnMain_CreateExercise" Header="{x:Static p:Resources.CreateExerciseFromHere}" Click="UiMn_CreateExercise_Click"  />
@@ -346,8 +350,12 @@
                         <Grid Background="#FFE5E5E5">
                             <Grid.ContextMenu>
                                 <ContextMenu x:Name="UiMncTrainingView">
-                                    <MenuItem x:Name="_mnTrainRestartTraining" Header="{x:Static p:Resources.RestartTrainingSession}" Click="UiMnTrainRestartTraining_Click" />
-                                    <MenuItem x:Name="_mnTrainExitTraining" Header="{x:Static p:Resources.ExitTraining}"  Click="UiMnStopTraining_Click" />
+                                    <MenuItem x:Name="UiMnCiTrainFromBeginningLine" Header="{x:Static p:Resources.TrainFromBeginning}" Click="UiMnTrainFromBeginning_Click" InputGestureText="Ctrl+B" />
+                                    <Separator x:Name="UiMnSeparator_TrainingModes_0" />
+                                    <MenuItem x:Name="UiMnCiTrainNextLine" Header="{x:Static p:Resources.TrainNextLine}"  Click="UiMnTrainNextLine_Click" InputGestureText="Ctrl+N"/>
+                                    <MenuItem x:Name="UiMnCiTrainPreviousLine" Header="{x:Static p:Resources.TrainPreviousLine}"  Click="UiMnTrainPreviousLine_Click" InputGestureText="Ctrl+P"/>
+                                    <Separator x:Name="UiMnSeparator_TrainingModes_1" />
+                                    <MenuItem x:Name="UiMnCiTrainExitTraining" Header="{x:Static p:Resources.ExitTraining}"  Click="UiMnStopTraining_Click" />
                                     <Separator x:Name="_mnTrainSepar_1" />
                                     <MenuItem x:Name="_mnTrainRestartGame" Header="{x:Static p:Resources.RestartGameFrom}" Click="UiMnTrainRestartGame_Click" />
                                     <MenuItem x:Name="_mnRollBackTraining" Header="{x:Static p:Resources.RestartFrom}" Click="UiMnRollBackTraining_Click" />

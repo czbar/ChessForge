@@ -202,9 +202,6 @@ namespace ChessForge
         // Application's Main Window
         private MainWindow _mainWin;
 
-        // node after which the training starts i.e. the last node in the "stem"
-        private TreeNode _startingNode;
-
         /// <summary>
         /// Creates an instance of this class and sets reference 
         /// to the FlowDocument managed by the object.
@@ -233,12 +230,6 @@ namespace ChessForge
         private static readonly string STYLE_CHECKMATE = "mate";
 
         private static readonly string STYLE_DEFAULT = "default";
-
-        /// <summary>
-        /// Training Side for this session.
-        /// Note it does not have to be the LearningMode.TrainingSide
-        /// </summary>
-        private PieceColor _trainingSide;
 
         // type of the training source
         private static GameData.ContentType _sourceType = GameData.ContentType.NONE;
@@ -279,24 +270,33 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Initializes the state of the view.
+        /// Initializes the state of the view after the user opened a new Training Session..
         /// Sets the starting node of the training session
         /// and shows the intro text.
         /// </summary>
         /// <param name="node"></param>
         public void Initialize(TreeNode node, GameData.ContentType contentType)
         {
-            _sourceType = contentType;
-            _currentEngineGameMoveCount = 0;
-            _trainingSide = node.ColorToMove;
-            TrainingSession.TrainingSide = _trainingSide;
+            TrainingSession.StartPosition = node;
+            TrainingSession.BuildFirstTrainingLine();
 
-            _startingNode = node;
-            TrainingSession.ResetTrainingLine(node);
-            HostRtb.Document.Blocks.Clear();
+            _sourceType = contentType;
             InitParaDictionary();
             _moveNumberOffset = _mainWin.ActiveVariationTree.MoveNumberOffset;
-            BuildIntroText(node);
+
+            Reset(node);
+        }
+
+        /// <summary>
+        /// Resets GUI elements of the view.
+        /// This method is called when the user re-starts training in an existing session.
+        /// </summary>
+        /// <param name="startNode"></param>
+        public void Reset(TreeNode startNode)
+        {
+            _currentEngineGameMoveCount = 0;
+            HostRtb.Document.Blocks.Clear();
+            BuildIntroText(startNode);
         }
 
         /// <summary>
@@ -413,7 +413,7 @@ namespace ChessForge
         /// Rolls back the training to the ply
         /// that we want to replace with the last clicked node.
         /// </summary>
-        public void RollbackToWorkbookMove()
+        public void RollbackToWorkbookMove(TreeNode rollbackNode)
         {
             try
             {
@@ -423,11 +423,11 @@ namespace ChessForge
 
                 _currentEngineGameMoveCount = 0;
 
-                TrainingSession.RollbackTrainingLine(_lastClickedNode);
-                RemoveTrainingMoves(_lastClickedNode);
-                EngineGame.RollbackGame(_lastClickedNode);
+                TrainingSession.RemoveTrainingMoves(rollbackNode);
+                EngineGame.RollbackGame(rollbackNode);
+                TrainingSession.AdjustTrainingLine(rollbackNode);
 
-                SoundPlayer.PlayMoveSound(_lastClickedNode.LastMoveAlgebraicNotation);
+                SoundPlayer.PlayMoveSound(rollbackNode.LastMoveAlgebraicNotation);
 
                 TrainingSession.ChangeCurrentState(TrainingSession.State.USER_MOVE_COMPLETED);
 
@@ -435,16 +435,10 @@ namespace ChessForge
 
                 AppState.SetupGuiForCurrentStates();
 
-                _mainWin.BoardCommentBox.GameMoveMade(_lastClickedNode, true);
+                _mainWin.BoardCommentBox.GameMoveMade(rollbackNode, true);
 
-                RemoveParagraphsFromMove(_lastClickedNode);
+                RemoveParagraphsFromMove(rollbackNode);
                 ReportLastMoveVsWorkbook();
-
-                // TODO remove when no side effects seen
-                //if (TrainingSession.IsContinuousEvaluation && )
-                //{
-                //    RequestMoveEvaluation(_mainWin.ActiveVariationTreeId, true);
-                //}
             }
             catch (Exception ex)
             {
@@ -469,9 +463,9 @@ namespace ChessForge
 
             try
             {
-                TrainingSession.RollbackTrainingLine(ndToRollbackTo);
                 EngineGame.RollbackGame(ndToRollbackTo);
-                RemoveTrainingMoves(ndToRollbackTo);
+                TrainingSession.RemoveTrainingMoves(ndToRollbackTo);
+                TrainingSession.AdjustTrainingLine(ndToRollbackTo);
 
                 SoundPlayer.PlayMoveSound(ndToRollbackTo.LastMoveAlgebraicNotation);
                 TrainingSession.ChangeCurrentState(TrainingSession.State.AWAITING_USER_TRAINING_MOVE);
@@ -562,7 +556,7 @@ namespace ChessForge
 
             // there is a special case where we are going back to the _startingNode in which case
             // we need to remove all paras after INSTRUCTIONS (we will not find a separate para for this move)
-            bool isStartingNode = move.NodeId == _startingNode.NodeId;
+            bool isStartingNode = move.NodeId == TrainingSession.StartPosition.NodeId;
             bool found = false;
             foreach (var block in HostRtb.Document.Blocks)
             {
@@ -815,7 +809,7 @@ namespace ChessForge
                     {
                         _paraCurrentEngineGame.Inlines.Add(dictEvalRunsToKeep[nd.NodeId]);
                     }
-                };
+                }
             }
         }
 
@@ -1184,7 +1178,7 @@ namespace ChessForge
             }
             else
             {
-                if (nd.NodeId != _startingNode.NodeId)
+                if (nd.NodeId != TrainingSession.StartPosition.NodeId)
                 {
                     BuildMoveParagraph(nd, false);
                 }
@@ -1235,7 +1229,7 @@ namespace ChessForge
                         {
                             // if the parent has only this move as a child, we already announced end-of-training-line on previous move
                             // unless this is the very first training move
-                            if (userMove.Parent.Children.Count > 1 || userMove.Parent == _startingNode)
+                            if (userMove.Parent.Children.Count > 1 || userMove.Parent == TrainingSession.StartPosition)
                             {
                                 sbAlignmentNote.Append(Properties.Resources.TrnLineEnded + ". ");
                                 SoundPlayer.PlayTrainingSound(SoundPlayer.Sound.END_OF_LINE);
@@ -1429,8 +1423,8 @@ namespace ChessForge
                 foreach (TreeNode child in nd.Parent.Children)
                 {
                     // we cannot use ArePositionsIdentical() because nd only has static position
-                    if (child.LastMoveEngineNotation != nd.LastMoveEngineNotation 
-                        && !child.IsNewTrainingMove 
+                    if (child.LastMoveEngineNotation != nd.LastMoveEngineNotation
+                        && !child.IsNewTrainingMove
                         && (!child.IsNullMove || child.Children.Count > 0))
                     {
                         lstNodes.Add(child);
@@ -1501,9 +1495,16 @@ namespace ChessForge
         /// </summary>
         /// <param name="midTxt"></param>
         /// <returns></returns>
-        private string BuildMoveTextForMenu(TreeNode nd)
+        public string BuildMoveTextForMenu(TreeNode nd)
         {
-            return MoveUtils.BuildSingleMoveText(nd, true, true, _moveNumberOffset);
+            if (nd == null)
+            {
+                return "";
+            }
+            else
+            {
+                return MoveUtils.BuildSingleMoveText(nd, true, true, _moveNumberOffset);
+            }
         }
 
         /// <summary>
@@ -1560,10 +1561,10 @@ namespace ChessForge
                                 mi.Header = altMove;
                                 mi.Visibility = _moveContext == MoveContext.WORKBOOK_COMMENT ? Visibility.Visible : Visibility.Collapsed;
                                 break;
-                            case "_mnTrainRestartTraining":
+                            case "UiMnCiTrainFromBeginningLine":
                                 mi.Visibility = Visibility.Visible;
                                 break;
-                            case "_mnTrainExitTraining":
+                            case "UiMnCiTrainExitTraining":
                                 mi.Visibility = Visibility.Visible;
                                 break;
                             default:
@@ -1659,7 +1660,7 @@ namespace ChessForge
             {
                 try
                 {
-                    if (_lastClickedNode.ColorToMove != _trainingSide)
+                    if (_lastClickedNode.ColorToMove != TrainingSession.TrainingSide)
                     {
                         RestartGameAtUserMove(nd);
                     }
@@ -1685,7 +1686,7 @@ namespace ChessForge
         {
             // first check that we are indeed replacing an engine move
             TreeNode nd = _lastClickedNode;
-            if (nd != null && _lastClickedNode.ColorToMove == _trainingSide)
+            if (nd != null && _lastClickedNode.ColorToMove == TrainingSession.TrainingSide)
             {
                 try
                 {
@@ -1714,22 +1715,16 @@ namespace ChessForge
 
             if (_lastClickedNode != null)
             {
-                if (_lastClickedNode.ColorToMove == _trainingSide)
+                if (_lastClickedNode.ColorToMove == TrainingSession.TrainingSide)
                 {
                     RollbackToUserMove();
                 }
                 else
                 {
                     // A user move was clicked so rollback to the previous Workbook move
-                    RollbackToWorkbookMove();
+                    RollbackToWorkbookMove(_lastClickedNode);
                 }
             }
-
-            // TODO: remove when no side effects seen
-            //if (TrainingSession.IsContinuousEvaluation)
-            //{
-            //    RequestMoveEvaluation(_mainWin.ActiveVariationTreeId, true);
-            //}
         }
 
         /// <summary>
@@ -1740,38 +1735,39 @@ namespace ChessForge
         {
             try
             {
-                switch (e.Key)
+                if ((Keyboard.Modifiers & ModifierKeys.Control) > 0)
                 {
-                    case Key.Space:
-                        if (TrainingSession.IsTakebackAvailable)
-                        {
-                            RestartFromLastUserWorkbookMove();
+                    switch (e.Key)
+                    {
+                        case Key.B:
+                            AppState.MainWin.UiMnTrainFromBeginning_Click(null, e);
                             e.Handled = true;
-                        }
-                        break;
+                            break;
+                        case Key.N:
+                            AppState.MainWin.UiMnTrainNextLine_Click(null, e);
+                            e.Handled = true;
+                            break;
+                        case Key.P:
+                            AppState.MainWin.UiMnTrainPreviousLine_Click(null, e);
+                            e.Handled = true;
+                            break;
+                    }
+                }
+                else
+                {
+                    switch (e.Key)
+                    {
+                        case Key.Space:
+                            if (TrainingSession.IsTakebackAvailable)
+                            {
+                                RestartFromLastUserWorkbookMove();
+                                e.Handled = true;
+                            }
+                            break;
+                    }
                 }
             }
             catch { }
-        }
-
-        /// <summary>
-        /// Removes all training moves below the specified node.
-        /// There should be at most one training node child under the node.
-        /// </summary>
-        /// <param name="nd"></param>
-        public void RemoveTrainingMoves(TreeNode nd)
-        {
-            if (nd != null)
-            {
-                foreach (TreeNode child in nd.Children)
-                {
-                    if (child.IsNewTrainingMove)
-                    {
-                        _mainWin.ActiveVariationTree.DeleteRemainingMoves(child);
-                    }
-                    break;
-                }
-            }
         }
 
         /// <summary>

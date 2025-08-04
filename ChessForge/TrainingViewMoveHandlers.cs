@@ -255,13 +255,22 @@ namespace ChessForge
                 _mainWin.DisplayPosition(userChoiceNode);
                 _mainWin.ColorMoveSquares(_userMove.LastMoveEngineNotation);
 
-                TreeNode nd = _mainWin.ActiveVariationTree.SelectNextChild(nodeId);
+                // consult TrainingSession to find Workbook response
+                TreeNode nd = TrainingSession.GetNextTrainingLineMove(userChoiceNode);
+
+                // nd should never be null here, but if it is, we will use the first child
+                if (nd == null && userChoiceNode.Children.Count > 0)
+                {
+                    nd = userChoiceNode.Children[0];
+                }
+
                 EngineGame.AddPlyToGame(nd);
 
                 // The move will be visualized in response to CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE timer's elapsed event
                 EngineGame.IsTrainingWorkbookMoveMade = true;
                 _mainWin.Timers.Start(AppTimers.TimerId.CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE);
                 AppState.SwapCommentBoxForEngineLines(TrainingSession.IsContinuousEvaluation);
+                AppState.ConfigureMenusForTraining();
             }
             catch
             {
