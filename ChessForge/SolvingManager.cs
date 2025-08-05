@@ -163,6 +163,13 @@ namespace ChessForge
                     // get the last move from active line
                     TreeNode guess = AppState.MainWin.ActiveLine.GetLastNode();
                     TreeNode inPrimaryTree = secondaryTree.AssociatedPrimary.FindIdenticalNode(guess, true);
+
+                    if (inPrimaryTree != null)
+                    {
+                        // copy NAGs from the primary tree for display purposes
+                        guess.SetNags(inPrimaryTree.Nags);
+                    }
+
                     // must be the first child
                     if (inPrimaryTree == null || inPrimaryTree.Parent.Children[0].NodeId != inPrimaryTree.NodeId)
                     {
@@ -363,7 +370,7 @@ namespace ChessForge
             StringBuilder note = new StringBuilder();
 
             note.Append(Constants.CharCrossMark.ToString() + " ");
-            note.Append(MoveUtils.BuildSingleMoveText(guess, true, false, moveNumberOffset));
+            note.Append(MoveUtils.BuildSingleMoveText(guess, true, true, moveNumberOffset));
             note.Append(" " + Resources.ExVwIncorrectGuess + '.');
 
             if (inPrimaryTree != null && !string.IsNullOrWhiteSpace(inPrimaryTree.Comment))
