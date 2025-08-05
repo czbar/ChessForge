@@ -3247,6 +3247,24 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to is not correct.
+        /// </summary>
+        public static string ExVwIncorrectGuess {
+            get {
+                return ResourceManager.GetString("ExVwIncorrectGuess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Try again.
+        /// </summary>
+        public static string ExVwTryAgain {
+            get {
+                return ResourceManager.GetString("ExVwTryAgain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to parse engine&apos;s move..
         /// </summary>
         public static string FailedProcessEngineMove {

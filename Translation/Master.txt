@@ -2950,6 +2950,12 @@ EngGameSave=Do you want to save this game in the current chapter?
 #Completed guessing exercise
 ExVwCompletedGuessing=Congratulations! You have completed the guessing exercise.
 
+#Note after an incorrect move guess (begin with a lower case letter)
+ExVwIncorrectGuess=is not correct
+
+#Prompt after an incorrect guess.
+ExVwTryAgain=Try again
+
 
 ##################################
 #
@@ -3014,7 +3020,7 @@ cbDoubleClickToAssignPoints=Double click a move to assign quiz points
 #Select Solving Mode
 cbSelectSolvingMove=Select Solving Mode
 
-#Right click to create or edit Excercise
+#Right click to create or edit Exercise
 cbRightClickEditExercise=Right click to open menu to edit or create exercises
 
 #Show the solution

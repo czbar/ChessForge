@@ -2635,6 +2635,12 @@ UWAGA: Oceny nie są uaktualniane (zezwól przez Ctrl+K).</value>
   <data name="ExVwCompletedGuessing" xml:space="preserve">
     <value>Gratulacje! Zakończyłeś ćwiczenie.</value>
   </data>
+  <data name="ExVwIncorrectGuess" xml:space="preserve">
+    <value>jest niepoprawne</value>
+  </data>
+  <data name="ExVwTryAgain" xml:space="preserve">
+    <value>Spróbuj ponownie</value>
+  </data>
   <data name="cbUseMenuToOpenWorkbook" xml:space="preserve">
     <value>Użyj opcji Plik w menu, by otworzyć podręcznik.</value>
   </data>
