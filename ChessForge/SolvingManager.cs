@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Shapes;
+﻿using ChessForge.Properties;
 using ChessPosition;
 using GameTree;
+using System;
+using System.Text;
 
 namespace ChessForge
 {
@@ -169,7 +166,7 @@ namespace ChessForge
                     // must be the first child
                     if (inPrimaryTree == null || inPrimaryTree.Parent.Children[0].NodeId != inPrimaryTree.NodeId)
                     {
-                        HandleIncorrectGuess(guess, secondaryTree);
+                        HandleIncorrectGuess(guess, secondaryTree, inPrimaryTree, secondaryTree.AssociatedPrimary.MoveNumberOffset);
                     }
                     else
                     {
@@ -326,11 +323,11 @@ namespace ChessForge
         /// </summary>
         /// <param name="guess"></param>
         /// <param name="secondaryTree"></param>
-        private void HandleIncorrectGuess(TreeNode guess, VariationTree secondaryTree)
+        private void HandleIncorrectGuess(TreeNode guess, VariationTree secondaryTree, TreeNode inPrimaryTree, uint moveNumberOffset)
         {
-            //TODO: make sure that secondary tree gets move number offset from primary
             // report incorrect move and (defensively) remove from the view it is there
-            guess.Parent.Comment = Constants.CharCrossMark.ToString() + " " + MoveUtils.BuildSingleMoveText(guess, true, false, secondaryTree.MoveNumberOffset) + " is not correct.";
+            guess.Parent.Comment = BuildIncorrectMoveNote(guess, inPrimaryTree, moveNumberOffset);
+
             AppState.MainWin.ActiveVariationTree.SetSelectedNodeId(guess.Parent.NodeId);
             AppState.MainWin.ActiveLine.Line.RemoveLastPly();
 
@@ -354,5 +351,29 @@ namespace ChessForge
             SoundPlayer.PlayWrongMoveSound();
         }
 
+        /// <summary>
+        /// Builds the note for the incorrect move.
+        /// </summary>
+        /// <param name="guess"></param>
+        /// <param name="inPrimaryTree"></param>
+        /// <param name="moveNumberOffset"></param>
+        /// <returns></returns>
+        private string BuildIncorrectMoveNote(TreeNode guess, TreeNode inPrimaryTree, uint moveNumberOffset)
+        {
+            StringBuilder note = new StringBuilder();
+
+            note.Append(Constants.CharCrossMark.ToString() + " ");
+            note.Append(MoveUtils.BuildSingleMoveText(guess, true, false, moveNumberOffset));
+            note.Append(" " + Resources.ExVwIncorrectGuess + '.');
+
+            if (inPrimaryTree != null && !string.IsNullOrWhiteSpace(inPrimaryTree.Comment))
+            {
+                note.Append(" (" + inPrimaryTree.Comment + ')');
+            }
+
+            note.Append(' ' + Resources.ExVwTryAgain + '.');
+
+            return note.ToString();
+        }
     }
 }
