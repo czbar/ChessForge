@@ -1,6 +1,7 @@
 ﻿using ChessPosition;
 using GameTree;
 using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -139,6 +140,57 @@ namespace ChessForge
         /// </summary>
         public static readonly string IndexElipsisRunPrefix = "expelipsis_";
 
+        /// <summary>
+        /// Creates Inlines for a text that may contain links.
+        /// Inserts the inlines into the passed Paragraph.
+        /// </summary>
+        /// <param name="para"></param>
+        /// <param name="comment"></param>
+        public static void BuildInlinesForTextWithLinks(Paragraph para, string comment)
+        {
+            try
+            {
+                List<string> urls = TextUtils.MatchUrls(comment);
+                if (urls == null || urls.Count == 0)
+                {
+                    Run run = new Run(comment);
+                    para.Inlines.Add(run);
+                }
+                else
+                {
+                    int firstUnprocessedChar = 0;
+                    for (int i = 0; i < urls.Count; i++)
+                    {
+                        int pos_start = comment.IndexOf(urls[i]);
+                        int pos_end = pos_start + urls[i].Length - 1;
+                        if (pos_start > firstUnprocessedChar)
+                        {
+                            Run textRun = new Run(comment.Substring(firstUnprocessedChar, pos_start - firstUnprocessedChar));
+                            para.Inlines.Add(textRun);
+                        }
+                        
+                        Hyperlink link = new Hyperlink(new Run(urls[i]));
+                        link.NavigateUri = new Uri(urls[i]);
+
+                        para.Inlines.Add(link);
+                        link.PreviewMouseDown += GuiUtilities.EventHyperlinkClicked;
+
+                        firstUnprocessedChar = pos_end + 1;
+                    }
+                    if (firstUnprocessedChar < comment.Length)
+                    {
+                        Run textRun = new Run(comment.Substring(firstUnprocessedChar));
+                        para.Inlines.Add(textRun);
+                    }
+                }
+            }
+            catch
+            {
+                para.Inlines.Clear();
+                Run run = new Run(comment);
+                para.Inlines.Add(run);
+            }
+        }
 
         /// <summary>
         /// Checks if the passed object is a Run representing a move.
