@@ -4,6 +4,7 @@ using EngineService;
 using GameTree;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -32,6 +33,25 @@ namespace ChessForge
             Constants.CHAR_SQUARED_SQUARE,
             Constants.CHAR_THUMBNAIL,
           };
+
+        /// <summary>
+        /// An event handler that opens a hyperlink in the default browser
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public static void EventHyperlinkClicked(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                try
+                {
+                    var hyperlink = (Hyperlink)sender;
+                    Process.Start(hyperlink.NavigateUri.ToString());
+                }
+                catch { }
+            }
+        }
+
 
         /// <summary>
         /// Sets the check mark for the Show Solutions menu item.

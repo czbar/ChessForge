@@ -434,7 +434,6 @@ namespace ChessForge
             {
                 if (location.ViewType == TabViewType.CHAPTERS
                     || location.ViewType == TabViewType.STUDY
-                    || location.ViewType == TabViewType.STUDY
                     || location.ViewType == TabViewType.BOOKMARKS)
                 {
                     exists = true;
@@ -458,6 +457,13 @@ namespace ChessForge
                         {
                             if (!hasArticleId && chapter.GetExerciseCount() == 0
                                 || chapter.GetExerciseByGuid(location.ArticleGuid, out _) != null)
+                            {
+                                exists = true;
+                            }
+                        }
+                        else if (location.ViewType == TabViewType.INTRO)
+                        {
+                            if (!chapter.IsIntroEmpty())
                             {
                                 exists = true;
                             }

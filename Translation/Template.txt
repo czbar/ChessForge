@@ -3789,6 +3789,14 @@ EngGameSave=
 #english: ExVwCompletedGuessing=Congratulations! You have completed the guessing exercise.
 ExVwCompletedGuessing=
 
+#description: Note after an incorrect move guess (begin with a lower case letter)
+#english: ExVwIncorrectGuess=is not correct
+ExVwIncorrectGuess=
+
+#description: Prompt after an incorrect guess.
+#english: ExVwTryAgain=Try again
+ExVwTryAgain=
+
 
 ##################################
 #
@@ -3872,7 +3880,7 @@ cbDoubleClickToAssignPoints=
 #english: cbSelectSolvingMove=Select Solving Mode
 cbSelectSolvingMove=
 
-#description: Right click to create or edit Excercise
+#description: Right click to create or edit Exercise
 #english: cbRightClickEditExercise=Right click to open menu to edit or create exercises
 cbRightClickEditExercise=
 

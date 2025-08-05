@@ -108,42 +108,28 @@ namespace ChessPosition.GameTree
             {
                 // this is no duplicate so find the "original" of the parent in the mergedtree
                 // and insert the subtree starting from secondTreeNode.
-                var origParent = TreeUtils.FindTreeNodeByFen(mergedTree, secondTreeNode.Parent.Fen);
-                mergedTree.InsertSubtree(origParent, secondTreeNode.Parent, maxDepth);
+                InsertSiblingSubtree(mergedTree, secondTreeNode, maxDepth);
             }
         }
 
         /// <summary>
-        /// Updates occurence counts for the positions in the tree.
+        /// Given a sourceRootNode, finds the parent node in the targetTree
+        /// and inserts the sourceRootNode subtree as a sibling subtree.
         /// </summary>
-        /// <param name="tree"></param>
-        /// <param name="fenCounts"></param>
-        private static void CountFenOccurences(VariationTree tree, Dictionary<string, int> fenCounts)
+        /// <param name="targetTree"></param>
+        /// <param name="sourceRootNode"></param>
+        /// <param name="maxDepth"></param>
+        private static void InsertSiblingSubtree(VariationTree targetTree, TreeNode sourceRootNode, uint maxDepth)
         {
-            if (tree == null || fenCounts == null)
-            {
-                return;
-            }
+            var targetNodeParent = TreeUtils.FindTreeNodeByFen(targetTree, sourceRootNode.Parent.Fen);
 
-            foreach (TreeNode nd in tree.Nodes)
-            {
-                if (nd.MoveNumber > FREQ_TRACK_DEPTH)
-                {
-                    break;
-                }
-                else
-                {
-                    string fen = FenParser.GenerateFenFromPosition(nd.Position);
-                    if (fenCounts.ContainsKey(fen))
-                    {
-                        fenCounts[fen]++;
-                    }
-                    else
-                    {
-                        fenCounts[fen] = 1;
-                    }
-                }
-            }
+            TreeNode newNode = sourceRootNode.CloneMe(true);
+            newNode.NodeId = targetTree.GetNewNodeId();
+            newNode.Parent = targetNodeParent;
+            targetNodeParent.AddChild(newNode);
+            targetTree.AddNode(newNode);
+
+            targetTree.InsertSubtree(newNode, sourceRootNode, maxDepth);
         }
 
         /// <summary>

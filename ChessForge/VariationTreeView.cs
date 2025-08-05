@@ -1331,8 +1331,9 @@ namespace ChessForge
                 {
                     para.Margin = new Thickness(20, 20, 20, 20);
                 }
-                Run rPreamble = new Run(preamble);
-                para.Inlines.Add(rPreamble);
+                
+                RichTextBoxUtilities.BuildInlinesForTextWithLinks(para, preamble);
+
                 para.BorderThickness = new Thickness(1, 1, 1, 1);
                 para.BorderBrush = ChessForgeColors.CurrentTheme.RtbForeground;
                 para.Padding = new Thickness(10, 10, 10, 10);

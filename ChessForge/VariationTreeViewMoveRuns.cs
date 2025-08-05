@@ -577,14 +577,7 @@ namespace ChessForge
                     inlines.Add(inl);
                     break;
                 case CommentPartType.URL:
-                    inl = new Hyperlink(new Run(part.Text));
-                    (inl as Hyperlink).NavigateUri = new Uri(part.Text);
-                    inl.FontWeight = FontWeights.Normal;
-                    inl.PreviewMouseDown += EventHyperlinkMouseLeftButtonDown;
-                    inl.MouseEnter += EventHyperlinkMouseEnter;
-                    inl.MouseLeave += EventHyperlinkMouseLeave;
-                    inl.Foreground = ChessForgeColors.CurrentTheme.HyperlinkForeground;
-                    inl.Cursor = Cursors.Hand;
+                    inl = CreateUrlCommentInline(part.Text);
                     inlines.Add(inl);
                     break;
                 case CommentPartType.GAME_EXERCISE_REFERENCE:
@@ -631,6 +624,39 @@ namespace ChessForge
             }
 
             return inlines;
+        }
+
+        /// <summary>
+        /// Create an Inline for a URL part of the comment.
+        /// Note that an exception may be thrown if the Hyperlink object
+        /// cannot figure out NavigateUri.
+        /// There is a discrepancy between the RegEx we use to detect the links
+        /// and the logic in the Hyperlink class that tries to figure out.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        private Inline CreateUrlCommentInline(string text)
+        {
+            Inline inl;
+
+            try
+            {
+                inl = new Hyperlink(new Run(text));
+                inl.FontWeight = FontWeights.Normal;
+                (inl as Hyperlink).NavigateUri = new Uri(text);
+                inl.PreviewMouseDown += EventHyperlinkMouseLeftButtonDown;
+                inl.MouseEnter += EventHyperlinkMouseEnter;
+                inl.MouseLeave += EventHyperlinkMouseLeave;
+                inl.Foreground = ChessForgeColors.CurrentTheme.HyperlinkForeground;
+                inl.Cursor = Cursors.Hand;
+            }
+            catch
+            {
+                inl = new Run(text); // fallback to just a run
+                inl.FontWeight = FontWeights.Normal;
+            }
+
+            return inl;
         }
 
         /// <summary>
