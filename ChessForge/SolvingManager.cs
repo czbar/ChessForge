@@ -292,6 +292,11 @@ namespace ChessForge
                 // report the correct move 
                 guess.Comment = Constants.CharCheckMark.ToString();
 
+                if (inPrimaryTree != null && !string.IsNullOrWhiteSpace(inPrimaryTree.Comment))
+                {
+                    guess.Comment += " (" + inPrimaryTree.Comment + ")";
+                }
+
                 // now make the move for the Workbook
                 if (inPrimaryTree.Children.Count == 0)
                 {
