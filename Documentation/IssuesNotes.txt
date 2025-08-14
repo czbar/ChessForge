@@ -32,3 +32,5 @@ When reporting the best move, the check sign '+' is omitted
 Look into that mysterious bottom margin = 5 in game layout.
 
 When importing from multiple PGN offer an option to create a separate chapter from each file.
+
+For German translation: FlMsgUpdatePositionEvalOff changed
