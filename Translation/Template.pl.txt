@@ -364,12 +364,12 @@ EvaluatePosition=Oceń pozycję
 DoNotUpdatePositionEval=Nie uaktualniaj ocen pozycji
 
 #description: Flash message that position evals are now persisted 
-#english: FlMsgUpdatePositionEvalOn=Position evaluations will now be updated
-FlMsgUpdatePositionEvalOn=Oceny pozycji będą teraz zapisywane
+#english: FlMsgUpdatePositionEvalOn=Engine evaluations will now be saved
+FlMsgUpdatePositionEvalOn=Oceny pozycji będą zapamiętywane
 
 #description: Flash message that position evals will now not be persisted 
-#english: FlMsgUpdatePositionEvalOff=Position evaluations will no longer be updated
-FlMsgUpdatePositionEvalOff=Oceny pozycji nie będą teraz zapisywane
+#english: FlMsgUpdatePositionEvalOff=Engine evaluations will not be saved
+FlMsgUpdatePositionEvalOff=Oceny pozycji nie będą zapamiętywane
 
 
 #description: Evaluate a move

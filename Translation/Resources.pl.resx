@@ -376,10 +376,10 @@
     <value>Nie uaktualniaj ocen pozycji</value>
   </data>
   <data name="FlMsgUpdatePositionEvalOn" xml:space="preserve">
-    <value>Oceny pozycji będą teraz zapisywane</value>
+    <value>Oceny pozycji będą zapamiętywane</value>
   </data>
   <data name="FlMsgUpdatePositionEvalOff" xml:space="preserve">
-    <value>Oceny pozycji nie będą teraz zapisywane</value>
+    <value>Oceny pozycji nie będą zapamiętywane</value>
   </data>
   <data name="EvaluateMove" xml:space="preserve">
     <value>Oceń posunięcie</value>

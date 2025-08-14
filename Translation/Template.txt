@@ -364,11 +364,11 @@ EvaluatePosition=
 DoNotUpdatePositionEval=
 
 #description: Flash message that position evals are now persisted 
-#english: FlMsgUpdatePositionEvalOn=Position evaluations will now be updated
+#english: FlMsgUpdatePositionEvalOn=Engine evaluations will now be saved
 FlMsgUpdatePositionEvalOn=
 
 #description: Flash message that position evals will now not be persisted 
-#english: FlMsgUpdatePositionEvalOff=Position evaluations will no longer be updated
+#english: FlMsgUpdatePositionEvalOff=Engine evaluations will not be saved
 FlMsgUpdatePositionEvalOff=
 
 

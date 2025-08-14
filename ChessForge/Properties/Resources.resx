@@ -376,10 +376,10 @@
     <value>Do Not Update Position Evaluations</value>
   </data>
   <data name="FlMsgUpdatePositionEvalOn" xml:space="preserve">
-    <value>Position evaluations will now be updated</value>
+    <value>Engine evaluations will now be saved</value>
   </data>
   <data name="FlMsgUpdatePositionEvalOff" xml:space="preserve">
-    <value>Position evaluations will no longer be updated</value>
+    <value>Engine evaluations will not be saved</value>
   </data>
   <data name="EvaluateMove" xml:space="preserve">
     <value>Evaluate Move</value>

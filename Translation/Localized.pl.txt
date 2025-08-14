@@ -365,11 +365,11 @@ DoNotUpdatePositionEval=Nie uaktualniaj ocen pozycji
 
 #description: Flash message that position evals are now persisted 
 #english: FlMsgUpdatePositionEvalOn=Position evaluations will now be updated
-FlMsgUpdatePositionEvalOn=Oceny pozycji będą teraz zapisywane
+FlMsgUpdatePositionEvalOn=Oceny pozycji będą zapamiętywane
 
 #description: Flash message that position evals will now not be persisted 
 #english: FlMsgUpdatePositionEvalOff=Position evaluations will no longer be updated
-FlMsgUpdatePositionEvalOff=Oceny pozycji nie będą teraz zapisywane
+FlMsgUpdatePositionEvalOff=Oceny pozycji nie będą zapamiętywane
 
 
 #description: Evaluate a move

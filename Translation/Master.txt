@@ -278,10 +278,10 @@ EvaluatePosition=Evaluate Position
 DoNotUpdatePositionEval=Do Not Update Position Evaluations
 
 #Flash message that position evals are now persisted 
-FlMsgUpdatePositionEvalOn=Position evaluations will now be updated
+FlMsgUpdatePositionEvalOn=Engine evaluations will now be saved
 
 #Flash message that position evals will now not be persisted 
-FlMsgUpdatePositionEvalOff=Position evaluations will no longer be updated
+FlMsgUpdatePositionEvalOff=Engine evaluations will not be saved
 
 
 #Evaluate a move
