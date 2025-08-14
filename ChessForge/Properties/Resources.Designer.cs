@@ -3634,7 +3634,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Position evaluations will no longer be updated.
+        ///   Looks up a localized string similar to Engine evaluations will not be saved.
         /// </summary>
         public static string FlMsgUpdatePositionEvalOff {
             get {
@@ -3643,7 +3643,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Position evaluations will now be updated.
+        ///   Looks up a localized string similar to Engine evaluations will now be saved.
         /// </summary>
         public static string FlMsgUpdatePositionEvalOn {
             get {
