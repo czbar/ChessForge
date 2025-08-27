@@ -34,3 +34,9 @@ Look into that mysterious bottom margin = 5 in game layout.
 When importing from multiple PGN offer an option to create a separate chapter from each file.
 
 For German translation: FlMsgUpdatePositionEvalOff changed
+
+Review the order if imports from multiple pgn files
+
+Dragging chapter down to the last position does not work.
+
+After regenerating the tree, the first game gets preamble from the Study.

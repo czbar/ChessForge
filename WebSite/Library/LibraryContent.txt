@@ -28,6 +28,28 @@ Description: Games from tournaments and matches.
       Description: World Rapid Championship (Women), Samarkand, December 2023.
       File:Tournaments/World Rapid Chess Championship Women 2023.pgn
 
+Bookcase: Book Companions and Samples
+Description: Collections of games from published books and book fragments adapted for Chess Forge.
+
+    Shelf:
+    Description: 
+        
+	  Book:Winning by Nigel Short
+      Description: The complete set of games from the book.
+      File: BookSamples/Nigel Short - Winning.pgn
+        
+	  Book:Magnus Carlsen - A Modern Chess Manual by Nicolai Kalinichenko
+      Description: The complete set of games from the book. NOTE: the printed book not available in English.
+      File: BookSamples/Magnus Carlsen - Modern Chess Manual.pgn
+
+	  Book:Chess Strategy Explained
+      Description: A small sample from the book by GM Bartek Macieja and IM Witalis Sapis.
+      File: BookSamples/Chess Strategy Explained.pgn
+      
+	  Book:The Complete Chess Swindler
+      Description: A small example from the award winning book by GM. David Smerdon.
+      File: BookSamples/The Complete Chess Swindler.pgn
+
 Bookcase:Strategy Morsels
 Description:Small studies of specific strategic questions.
 
@@ -116,16 +138,3 @@ Description: Collections of endgames and exercises.
       Description: Basic checkmate patterns named and illustrated.
       File: Endgames/Checkmate Patterns.pgn
         
-Bookcase: Book Samples
-Description: Book fragments adapted for Chess Forge.
-
-    Shelf:
-    Description: 
-    
-	  Book:Chess Strategy Explained
-      Description: A small sample from the book by GM Bartek Macieja and IM Witalis Sapis.
-      File: BookSamples/Chess Strategy Explained.pgn
-      
-	  Book:The Complete Chess Swindler
-      Description: A small example from the award winning book by GM. David Smerdon.
-      File: BookSamples/The Complete Chess Swindler.pgn

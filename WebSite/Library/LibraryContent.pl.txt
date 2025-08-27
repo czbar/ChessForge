@@ -28,6 +28,28 @@ Description: Partie z turniejów i meczów.
       Description: Mistrzostwa Świata w Grze Szybkiej Kobiet 2023, Samarkanda, grudzień 2023.
       File:Tournaments/World Rapid Chess Championship Women 2023.pgn
 	  
+Bookcase: Podręczniki Towarzyszące i Fragmenty Książek 
+Description: Kolekcje partii z książek i fragmenty książek zaadoptowane dla Chess Forge'a.
+
+    Shelf:
+    Description: 
+        
+	  Book:Winning, autor: Nigel Short (jęz. ang.)
+      Description: Kompletny zestaw partii z książki.
+      File: BookSamples/Nigel Short - Winning.pgn
+        
+	  Book:Magnus Carlsen, Współczesny Podręcznik Gry w Szachy, autor: Mikołaj Kaliniczenko
+      Description: Kompletny zestaw partii z książki.
+      File: BookSamples/Magnus Carlsen - Modern Chess Manual.pgn
+    
+	  Book:Elementy Startegii (jęz. ang.)
+      Description: Mała próbka z książki arcymistrza Bartka Maciei i mistrza międzynarodowego Witalisa Sapisa.
+      File: BookSamples/Chess Strategy Explained.pgn
+      
+	  Book:Kompletny Cwaniak Szachowy (jęz. ang.)
+      Description: Mała próbka nagradzanej książki arcymistrza Dawida Smerdona.
+      File: BookSamples/The Complete Chess Swindler.pgn
+
 Bookcase:Strategia
 Description:Opracowania o strategii różnych faz gry.
 
@@ -109,7 +131,6 @@ Description:Teoria i praktyka debiutów szachowych.
       File: Openings/Unorthodox/Nakhmanson Gambit.pgn
 
 
-
 Bookcase: Końcówki i Ćwiczenia
 Description: Zbiory końcówek i ćwiczeń.
 
@@ -124,16 +145,3 @@ Description: Zbiory końcówek i ćwiczeń.
       Description: Podstawowe schematy matowe, nazwane i zilustrowane.
       File: Endgames/Checkmate Patterns.pgn
         
-Bookcase: Fragmeny Książek 
-Description: Fragmenty książek szachowych zaadoptowane dla Chess Forge'a.
-
-    Shelf:
-    Description: 
-    
-	  Book:Elementy Startegii (jęz. ang.)
-      Description: Mała próbka z książki arcymistrza Bartka Maciei i mistrza międzynarodowego Witalisa Sapisa.
-      File: BookSamples/Chess Strategy Explained.pgn
-      
-	  Book:Kompletny Cwaniak Szachowy (jęz. ang.)
-      Description: Mała próbka nagradzanej książki arcymistrza Dawida Smerdona.
-      File: BookSamples/The Complete Chess Swindler.pgn
