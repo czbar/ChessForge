@@ -1,12 +1,10 @@
-﻿using System;
+﻿using ChessPosition.Utils;
+using GameTree;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using ChessPosition.Utils;
-using GameTree;
 
 namespace ChessPosition
 {
@@ -114,6 +112,17 @@ namespace ChessPosition
         {
             ResetCastlingRights(ref pos);
             CorrectCastlingRights(ref pos);
+        }
+
+        /// <summary>
+        /// Determines whether the square at the passed coordinates is light.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public static bool IsLightSquare(int x, int y)
+        {
+            return (x + y) % 2 == 0;
         }
 
         /// <summary>
@@ -708,7 +717,105 @@ namespace ChessPosition
         }
 
         /// <summary>
-        /// Sets check/chackmate and stalemate flags on the passed position.
+        /// Determines if there is insufficient mating material in the position.
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <returns></returns>
+        public static bool IsInsufficientMaterial(BoardPosition position)
+        {
+            bool insufficient = true;
+
+            int whiteCount = 0;
+            int blackCount = 0;
+
+            bool whiteLightSquaredBishop = false;
+            bool blackLightSquaredBishop = false;
+
+            bool whiteDarkSquaredBishop = false;
+            bool blackDarkSquaredBishop = false;
+
+            try
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    for (int j = 0; j < 8; j++)
+                    {
+                        byte square = position.Board[i, j];
+
+                        if (square != 0)
+                        {
+                            PieceColor color = GetPieceColor(square);
+                            PieceType ptype = GetPieceType(square);
+
+                            if (ptype != PieceType.None && ptype != PieceType.King)
+                            {
+                                if (ptype != PieceType.Knight && ptype != PieceType.Bishop)
+                                {
+                                    insufficient = false;
+                                    break;
+                                }
+                                else
+                                {
+                                    if (color == PieceColor.White)
+                                    {
+                                        whiteCount++;
+                                        if (ptype == PieceType.Bishop)
+                                        {
+                                            if (IsLightSquare(i, j))
+                                            {
+                                                whiteLightSquaredBishop = true;
+                                            }
+                                            else
+                                            {
+                                                whiteDarkSquaredBishop = true;
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        blackCount++;
+                                        if (ptype == PieceType.Bishop)
+                                        {
+                                            if (IsLightSquare(i, j))
+                                            {
+                                                blackLightSquaredBishop = true;
+                                            }
+                                            else
+                                            {
+                                                blackDarkSquaredBishop = true;
+                                            }
+                                        }
+                                    }
+
+                                    if (whiteCount + blackCount > 1)
+                                    {
+                                        if (whiteCount == 1 && blackCount == 1 && (whiteLightSquaredBishop && blackLightSquaredBishop || whiteDarkSquaredBishop && blackDarkSquaredBishop))
+                                        {
+                                            // same colored bishops only so far; not mating material
+                                        }
+                                        else
+                                        {
+                                            insufficient = false;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                insufficient = false;
+            }
+
+            position.IsInsufficientMaterial = insufficient;
+            return insufficient;
+        }
+
+        /// <summary>
+        /// Sets check/checkmate and stalemate flags on the passed position.
         /// </summary>
         /// <param name="pos"></param>
         public static void SetCheckStaleMateFlags(ref BoardPosition pos)
@@ -717,6 +824,7 @@ namespace ChessPosition
             {
                 pos.IsCheck = true;
                 pos.IsStalemate = false;
+                pos.IsInsufficientMaterial = false;
                 if (IsCheckmate(pos, out _))
                 {
                     pos.IsCheckmate = true;
@@ -729,12 +837,21 @@ namespace ChessPosition
                     pos.IsStalemate = true;
                     pos.IsCheck = false;
                     pos.IsCheckmate = false;
+                    pos.IsInsufficientMaterial = false;
+                }
+                else if (IsInsufficientMaterial(pos))
+                {
+                    pos.IsStalemate = false;
+                    pos.IsCheck = false;
+                    pos.IsCheckmate = false;
+                    pos.IsInsufficientMaterial = true;
                 }
                 else
                 {
                     pos.IsStalemate = false;
                     pos.IsCheck = false;
                     pos.IsCheckmate = false;
+                    pos.IsInsufficientMaterial = false;
                 }
             }
         }
@@ -1118,7 +1235,7 @@ namespace ChessPosition
                 TreeNode node = line[1];
                 if (node.ColorToMove == PieceColor.White)
                 {
-                    move.Number = (node.Position.MoveNumber + moveNumberOffset) .ToString() + ".";
+                    move.Number = (node.Position.MoveNumber + moveNumberOffset).ToString() + ".";
                     SetWhiteMoveInMoveList(null, ref move);
                     SetBlackMoveInMoveList(node, ref move);
 
