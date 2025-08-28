@@ -541,6 +541,12 @@ namespace ChessForge
                 isStalemate = PositionUtils.IsStalemate(nd.Position);
             }
 
+            bool isInsufficientMaterial = false;
+            if (!isMateCf && !isStalemate)
+            {
+                isInsufficientMaterial = PositionUtils.IsInsufficientMaterial(nd.Position);
+            }
+
             if (isMateCf)
             {
                 nd.Position.IsCheckmate = true;
@@ -551,6 +557,11 @@ namespace ChessForge
             {
                 EngineGame.ChangeCurrentState(EngineGame.GameState.IDLE);
                 _mainWin.BoardCommentBox.ReportStalemate();
+            }
+            else if (isInsufficientMaterial)
+            {
+                EngineGame.ChangeCurrentState(EngineGame.GameState.IDLE);
+                _mainWin.BoardCommentBox.ReportInsufficientMaterial();
             }
             else
             {
