@@ -439,7 +439,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Displays  a checkmate message.
+        /// Displays the checkmate message.
         /// </summary>
         /// <param name="userMade"></param>
         public void ReportCheckmate(bool userMade)
@@ -479,7 +479,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Displays a stalemate message.
+        /// Displays the stalemate message.
         /// </summary>
         public void ReportStalemate()
         {
@@ -497,6 +497,26 @@ namespace ChessForge
                 para.Foreground = Brushes.Red;
             });
         }
+
+        /// <summary>
+        /// Displays the stalemate message.
+        /// </summary>
+        public void ReportInsufficientMaterial()
+        {
+            _mainWin.Dispatcher.Invoke(() =>
+            {
+                HostRtb.Document.Blocks.Clear();
+
+                Paragraph dummy = CreateParagraphWithText("dummy", "", false);
+                HostRtb.Document.Blocks.Add(dummy);
+
+                string txt = Resources.cbInsufficientMaterialAndDraw;
+
+                Paragraph para = CreateParagraphWithText("end_of_game", txt, false);
+                HostRtb.Document.Blocks.Add(para);
+                para.Foreground = Brushes.Red;
+            });
+        }        
 
         /// <summary>
         /// Notifies the user that the evaluation was stopped and engine reset
