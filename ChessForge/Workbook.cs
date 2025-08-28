@@ -166,7 +166,7 @@ namespace ChessForge
 
             if (sourceIndex != targetIndex
                 && sourceIndex >= 0 && targetIndex >= 0
-                && sourceIndex < Chapters.Count && targetIndex < Chapters.Count)
+                && sourceIndex < Chapters.Count && targetIndex <= Chapters.Count)
             {
                 try
                 {
