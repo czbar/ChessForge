@@ -1845,6 +1845,9 @@ TrnEngineCheckmatedUser=The training game has ended. You have been checkmated by
 #Game ended in a stalemate
 TrnGameStalemate=This is a stalemate. The game has been drawn.
 
+#Game ended in a draw due to insufficient material
+TrnGameInsufficientMaterial=This is a draw due to insufficient material.
+
 #Training session start header
 TrnSessionStartsAfter=This training session begins after:
 

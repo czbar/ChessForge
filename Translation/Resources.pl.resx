@@ -1639,6 +1639,9 @@ UWAGA: Oceny nie są uaktualniane (zezwól przez Ctrl+K).</value>
   <data name="TrnGameStalemate" xml:space="preserve">
     <value>Partia zakończyła się patem. Remis.</value>
   </data>
+  <data name="TrnGameInsufficientMaterial" xml:space="preserve">
+    <value>Remis wobec braku matującego materiału.</value>
+  </data>
   <data name="TrnSessionStartsAfter" xml:space="preserve">
     <value>Ta sesja treningowa zaczyna się po ruchach:</value>
   </data>

@@ -1639,6 +1639,9 @@ NOTE: Evaluations are not being updated (Ctrl+K to allow).</value>
   <data name="TrnGameStalemate" xml:space="preserve">
     <value>This is a stalemate. The game has been drawn.</value>
   </data>
+  <data name="TrnGameInsufficientMaterial" xml:space="preserve">
+    <value>This is a draw due to insufficient material.</value>
+  </data>
   <data name="TrnSessionStartsAfter" xml:space="preserve">
     <value>This training session begins after:</value>
   </data>

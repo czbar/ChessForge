@@ -2352,6 +2352,10 @@ TrnEngineCheckmatedUser=Partia zakończona. Silnik zamatował Cię.
 #english: TrnGameStalemate=This is a stalemate. The game has been drawn.
 TrnGameStalemate=Partia zakończyła się patem. Remis.
 
+#description: Game ended in a draw due to insufficient material
+#english: TrnGameInsufficientMaterial=This is a draw due to insufficient material.
+TrnGameInsufficientMaterial=Remis wobec braku matującego materiału.
+
 #description: Training session start header
 #english: TrnSessionStartsAfter=This training session begins after:
 TrnSessionStartsAfter=Ta sesja treningowa zaczyna się po ruchach:

@@ -7982,6 +7982,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This is a draw due to insufficient material..
+        /// </summary>
+        public static string TrnGameInsufficientMaterial {
+            get {
+                return ResourceManager.GetString("TrnGameInsufficientMaterial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This is not in the Game.
         /// </summary>
         public static string TrnGameMoveNotInSource {

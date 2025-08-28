@@ -364,11 +364,11 @@ EvaluatePosition=Oceń pozycję
 DoNotUpdatePositionEval=Nie uaktualniaj ocen pozycji
 
 #description: Flash message that position evals are now persisted 
-#english: FlMsgUpdatePositionEvalOn=Position evaluations will now be updated
+#english: FlMsgUpdatePositionEvalOn=Engine evaluations will now be saved
 FlMsgUpdatePositionEvalOn=Oceny pozycji będą zapamiętywane
 
 #description: Flash message that position evals will now not be persisted 
-#english: FlMsgUpdatePositionEvalOff=Position evaluations will no longer be updated
+#english: FlMsgUpdatePositionEvalOff=Engine evaluations will not be saved
 FlMsgUpdatePositionEvalOff=Oceny pozycji nie będą zapamiętywane
 
 
@@ -2351,6 +2351,10 @@ TrnEngineCheckmatedUser=Partia zakończona. Silnik zamatował Cię.
 #description: Game ended in a stalemate
 #english: TrnGameStalemate=This is a stalemate. The game has been drawn.
 TrnGameStalemate=Partia zakończyła się patem. Remis.
+
+#description: Game ended in a draw due to insufficient material
+#english: TrnGameInsufficientMaterial=This is a draw due to insufficient material.
+TrnGameInsufficientMaterial=Remis wobec braku matującego materiału.
 
 #description: Training session start header
 #english: TrnSessionStartsAfter=This training session begins after:
