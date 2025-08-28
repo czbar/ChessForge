@@ -172,6 +172,15 @@ namespace ChessForge
                     }
                     BuildStalemateParagraph(_userMove);
                 }
+                else if (PositionUtils.IsInsufficientMaterial(_userMove.Position))
+                {
+                    BuildMoveParagraph(_userMove, true);
+                    if (foundMove == null)
+                    {
+                        InsertCommentIntoUserMovePara(false, _userMove);
+                    }
+                    BuildInsufficientMaterialParagraph(_userMove);
+                }
                 else
                 {
                     // double check that we have the parent in our Workbook
