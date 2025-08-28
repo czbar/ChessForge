@@ -709,6 +709,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Insufficient mating material! You have drawn the game..
+        /// </summary>
+        public static string cbInsufficientMaterialAndDraw {
+            get {
+                return ResourceManager.GetString("cbInsufficientMaterialAndDraw", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Press F3 or use the context menu to show it. .
         /// </summary>
         public static string cbInvestigateIdenticalPositions {

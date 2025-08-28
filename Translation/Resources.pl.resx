@@ -2743,6 +2743,9 @@ UWAGA: Oceny nie są uaktualniane (zezwól przez Ctrl+K).</value>
   <data name="cbStalemateAndDraw" xml:space="preserve">
     <value>Pat! Partia zakończyła się remisem.</value>
   </data>
+  <data name="cbInsufficientMaterialAndDraw" xml:space="preserve">
+    <value>Brak materiału matującego! Remis.</value>
+  </data>
   <data name="cbIdenticalPositionFound" xml:space="preserve">
     <value>Taka sama pozycja jest już gdzie indziej.</value>
   </data>

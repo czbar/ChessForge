@@ -3944,6 +3944,10 @@ cbEngineCheckmatedYou=
 #english: cbStalemateAndDraw=This is a stalemate! You have drawn the game.
 cbStalemateAndDraw=
 
+#description: This is a draw by insufficient material.
+#english: cbInsufficientMaterialAndDraw=Insufficient mating material! You have drawn the game.
+cbInsufficientMaterialAndDraw=
+
 #description: Identical position was found
 #english: cbIdenticalPositionFound=An identical position was found elsewhere.
 cbIdenticalPositionFound=

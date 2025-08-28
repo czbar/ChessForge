@@ -3069,6 +3069,9 @@ cbEngineCheckmatedYou=You have been checkmated by the engine. Better luck next t
 #This is a stalemate.
 cbStalemateAndDraw=This is a stalemate! You have drawn the game.
 
+#This is a draw by insufficient material.
+cbInsufficientMaterialAndDraw=Insufficient mating material! You have drawn the game.
+
 #Identical position was found
 cbIdenticalPositionFound=An identical position was found elsewhere.
 

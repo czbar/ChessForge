@@ -2744,6 +2744,9 @@ NOTE: Evaluations are not being updated (Ctrl+K to allow).</value>
   <data name="cbStalemateAndDraw" xml:space="preserve">
     <value>This is a stalemate! You have drawn the game.</value>
   </data>
+  <data name="cbInsufficientMaterialAndDraw" xml:space="preserve">
+    <value>Insufficient mating material! You have drawn the game.</value>
+  </data>
   <data name="cbIdenticalPositionFound" xml:space="preserve">
     <value>An identical position was found elsewhere.</value>
   </data>

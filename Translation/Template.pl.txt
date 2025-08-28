@@ -3944,6 +3944,10 @@ cbEngineCheckmatedYou=Zostałeś zamatowany przez silnik. Powodzenia następnym 
 #english: cbStalemateAndDraw=This is a stalemate! You have drawn the game.
 cbStalemateAndDraw=Pat! Partia zakończyła się remisem.
 
+#description: This is a draw by insufficient material.
+#english: cbInsufficientMaterialAndDraw=Insufficient mating material! You have drawn the game.
+cbInsufficientMaterialAndDraw=Brak materiału matującego! Remis.
+
 #description: Identical position was found
 #english: cbIdenticalPositionFound=An identical position was found elsewhere.
 cbIdenticalPositionFound=Taka sama pozycja jest już gdzie indziej.
