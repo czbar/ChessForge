@@ -35,6 +35,4 @@ For German translation: FlMsgUpdatePositionEvalOff changed
 
 Review the order if imports from multiple pgn files
 
-Dragging chapter down to the last position does not work.
-
 When exiting app while in training, the view from which training was entered should be remembered as the last view.
