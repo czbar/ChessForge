@@ -52,7 +52,13 @@ namespace ChessForge
                 if (_workbook != null)
                 {
                     StringBuilder sb = new StringBuilder();
-                    sb.AppendLine(TextUtils.BuildKeyValueLine(ACTIVE_TAB, AppState.ActiveTab));
+
+                    TabViewType lastTabToSave = AppState.ActiveTab;
+                    if (lastTabToSave == TabViewType.TRAINING)
+                    {
+                        lastTabToSave = WorkbookLocationNavigator.GetCurrentTab();
+                    }
+                    sb.AppendLine(TextUtils.BuildKeyValueLine(ACTIVE_TAB, lastTabToSave));
                     sb.AppendLine(TextUtils.BuildKeyValueLine(ACTIVE_CHAPTER_INDEX, _workbook.ActiveChapterIndex));
                     sb.AppendLine();
 
