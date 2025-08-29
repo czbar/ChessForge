@@ -160,7 +160,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sourceIndex"></param>
         /// <param name="targetIndex"></param>
-        public bool MoveChapter(int sourceIndex, int targetIndex)
+        public bool MoveChapter(int sourceIndex, ref int targetIndex)
         {
             bool ret = false;
 
@@ -170,17 +170,22 @@ namespace ChessForge
             {
                 try
                 {
-                    Chapter hold = WorkbookManager.SessionWorkbook.Chapters[sourceIndex];
-                    AppState.Workbook.Chapters.Remove(hold);
                     if (sourceIndex < targetIndex)
                     {
                         targetIndex--;
                     }
-                    AppState.Workbook.Chapters.Insert(targetIndex, hold);
-                    AppState.IsDirty = true;
+                    if (sourceIndex != targetIndex)
+                    {
+                        Chapter hold = WorkbookManager.SessionWorkbook.Chapters[sourceIndex];
+                        AppState.Workbook.Chapters.Remove(hold);
+                        AppState.Workbook.Chapters.Insert(targetIndex, hold);
+                        AppState.IsDirty = true;
+                        ret = true;
+                    }
                 }
-                catch { }
-                ret = true;
+                catch 
+                { 
+                }
             }
 
             return ret;
@@ -223,7 +228,10 @@ namespace ChessForge
                     targetChapter.InsertArticle(article, insertBeforeArticle);
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                AppLog.Message(LogLevel.ERROR, "MoveArticle() " + ex.Message);
+            }
         }
 
         /// <summary>
