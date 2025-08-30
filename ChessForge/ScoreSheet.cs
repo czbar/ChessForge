@@ -418,16 +418,19 @@ namespace ChessForge
         {
             NodeList[NodeList.Count - 1] = nd;
 
-            MoveWithEval move = MoveList[MoveList.Count - 1];
+            if (MoveList.Count > 0)
+            {
+                MoveWithEval move = MoveList[MoveList.Count - 1];
 
-            if (nd.Position.ColorToMove == PieceColor.White)
-            {
-                // we are replacing Black's move
-                move.BlackPly = nd.GetGuiPlyText(true);
-            }
-            else
-            {
-                move.WhitePly = nd.GetGuiPlyText(true);
+                if (nd.Position.ColorToMove == PieceColor.White)
+                {
+                    // we are replacing Black's move
+                    move.BlackPly = nd.GetGuiPlyText(true);
+                }
+                else
+                {
+                    move.WhitePly = nd.GetGuiPlyText(true);
+                }
             }
 
             CopyNodeListToTree();
