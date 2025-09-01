@@ -206,9 +206,11 @@ namespace ChessForge
                 TreeNode nd = EngineGame.Line.NodeList[i];
                 TrainingLine.Add(nd);
 
-                // this check should not be nesessary, if the flow is as expected
+                // if we are restarting in the middle of training rather than
+                // at the very beginning , we need to remove moves after the StartPosition.
                 if (nd == StartPosition)
                 {
+                    EngineGame.Line.RollbackToNode(nd);
                     break;
                 }
             }
