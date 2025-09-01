@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ChessPosition;
+using GameTree;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GameTree;
-using ChessPosition;
-using System.Windows;
-using System.Windows.Media;
 
 namespace ChessForge
 {
@@ -118,7 +112,11 @@ namespace ChessForge
                 }
                 else
                 {
-                    RemoveLastPly();
+                    //  don't remove move 0 (will cause an exception)
+                    if (NodeList[i].NodeId != 0)
+                    {
+                        RemoveLastPly();
+                    }
                 }
             }
             CopyNodeListToTree();
