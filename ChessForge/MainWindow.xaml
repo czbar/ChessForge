@@ -145,10 +145,10 @@
                         <MenuItem x:Name="UiMnChessboards" Header="{x:Static p:Resources.Chessboards}" Click="UiMnChessboards_Click" />
                         <Separator />
                         <MenuItem Header="{x:Static p:Resources.ApplicationOptions}" Click="UiMnApplicationOptions_Click" />
-                        <MenuItem Header="{x:Static p:Resources.EngineOptions}" Click="UiMnEngineOptions_Click" />
                         <MenuItem x:Name="UiMnWorkbookOptions" Header="{x:Static p:Resources.WorkbookOptions}" Click="UiMnWorkbookOptions_Click" />
-                        <MenuItem Header="{x:Static p:Resources.BlunderDetectionOptions}" Click="UiMnBlunderDetectionOptions_Click" />
+                        <MenuItem Header="{x:Static p:Resources.EngineOptions}" Click="UiMnEngineOptions_Click" />
                         <MenuItem Header="{x:Static p:Resources.AnalysisEngine}" Click="UiMnSelectEngine_Click" />
+                        <MenuItem Header="{x:Static p:Resources.BlunderDetectionOptions}" Click="UiMnBlunderDetectionOptions_Click" />
                         <MenuItem Header="{x:Static p:Resources.DlgOnlineLibraries}" Click="UiMnOnlineLibraries_Click" />
                         <Separator />
                         <MenuItem x:Name="UiMnDarkMode"  Header="{x:Static p:Resources.DarkMode}" IsCheckable="True" Checked="UiMnDarkMode_Checked" Unchecked="UiMnDarkMode_Unchecked"   />
