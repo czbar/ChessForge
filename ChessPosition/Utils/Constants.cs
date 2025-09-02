@@ -83,6 +83,8 @@ namespace ChessPosition
         ENGINE_EVALUATION = 0x02,
         BAD_MOVE_ASSESSMENT = 0x04,
         SIDELINE = 0x08,
+        DIAGRAM = 0x10,
+        REFERENCE = 0x20,
     };
 
     /// <summary>
