@@ -200,6 +200,16 @@ namespace ChessForge
                 article.Tree.DeleteMoveAssessments();
             }
 
+            if ((attrsFlags & (int)MoveAttribute.DIAGRAM) != 0)
+            {
+                article.Tree.DeleteDiagrams();
+            }
+
+            if ((attrsFlags & (int)MoveAttribute.REFERENCE) != 0)
+            {
+                article.Tree.DeleteReferences();
+            }
+
             if ((attrsFlags & (int)MoveAttribute.SIDELINE) != 0)
             {
                 List<TreeNode> toDelete = new List<TreeNode>();
