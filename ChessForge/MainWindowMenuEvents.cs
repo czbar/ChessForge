@@ -696,11 +696,9 @@ namespace ChessForge
                                     UiTabChapters.Focus();
                                     break;
                                 case WorkbookOperationType.DELETE_COMMENTS:
-                                    view?.BuildFlowDocumentForVariationTree(false);
-                                    break;
                                 case WorkbookOperationType.DELETE_ENGINE_EVALS:
                                 case WorkbookOperationType.CLEAN_LINES_AND_COMMENTS:
-                                    view?.BuildFlowDocumentForVariationTree(false);
+                                    RebuildAllTreeViews();
                                     ActiveLine.RefreshNodeList(true);
                                     if (view != null)
                                     {
