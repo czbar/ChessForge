@@ -124,7 +124,6 @@
                         <MenuItem x:Name="UiMnFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}"  Click="UiMnFindIdenticalPosition_Click" InputGestureText="F3" />
                         <Separator />
                         <MenuItem x:Name="UiMnAnnotations" Header="{x:Static p:Resources.Annotations}" Click="UiMnAnnotationsDialog_Click" />
-                        <MenuItem x:Name="UiMnCommentBeforeMove" Header="{x:Static p:Resources.CommentBeforeMove}" Click="UiMnCommentBeforeMoveDialog_Click" />
                         <Separator />
                         <MenuItem x:Name="UiMnMainCopy" Header="{x:Static p:Resources.Copy}"  InputGestureText="Ctrl+C" Click="UiMnMainCopy_Click" />
                         <MenuItem x:Name="UiMnMainCut" Header="{x:Static p:Resources.Cut}"  InputGestureText="Ctrl+X" Click="UiMnMainCut_Click" />
