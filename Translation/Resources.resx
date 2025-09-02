@@ -306,6 +306,12 @@
   <data name="Annotation" xml:space="preserve">
     <value>Annotation</value>
   </data>
+  <data name="Diagram" xml:space="preserve">
+    <value>Diagram</value>
+  </data>
+  <data name="Diagrams" xml:space="preserve">
+    <value>Diagrams</value>
+  </data>
   <data name="Evaluation" xml:space="preserve">
     <value>Evaluation</value>
   </data>

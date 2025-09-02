@@ -1915,6 +1915,24 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Diagram.
+        /// </summary>
+        public static string Diagram {
+            get {
+                return ResourceManager.GetString("Diagram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Diagrams.
+        /// </summary>
+        public static string Diagrams {
+            get {
+                return ResourceManager.GetString("Diagrams", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bad Move Detection.
         /// </summary>
         public static string DlgBlunderDetection {

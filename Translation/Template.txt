@@ -270,6 +270,14 @@ Comment=
 #english: Annotation=Annotation
 Annotation=
 
+#description: Diagram
+#english: Diagram=Diagram
+Diagram=
+
+#description: Diagrams
+#english: Diagrams=Diagrams
+Diagrams=
+
 #description: Evaluation
 #english: Evaluation=Evaluation
 Evaluation=

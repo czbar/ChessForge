@@ -270,6 +270,14 @@ Comment=Komentarz
 #english: Annotation=Annotation
 Annotation=Komentarz
 
+#description: Diagram
+#english: Diagram=Diagram
+Diagram=Diagram
+
+#description: Diagrams
+#english: Diagrams=Diagrams
+Diagrams=Diagramy
+
 #description: Evaluation
 #english: Evaluation=Evaluation
 Evaluation=Ocena

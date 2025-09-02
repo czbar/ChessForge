@@ -207,6 +207,12 @@ Comment=Comment
 #Annotation
 Annotation=Annotation
 
+#Diagram
+Diagram=Diagram
+
+#Diagrams
+Diagrams=Diagrams
+
 #Evaluation
 Evaluation=Evaluation
 
