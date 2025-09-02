@@ -719,7 +719,7 @@ namespace ChessPosition
                 {
                     nd.Comment = attrs.Comment;
                     nd.CommentBeforeMove = attrs.CommentBeforeMove;
-                    nd.Nags = attrs.Nags;
+                    nd.SetNags(attrs.Nags);
                     nd.References = attrs.References;
                     nd.IsDiagram = attrs.IsDiagram;
                     nd.IsDiagramFlipped = attrs.IsDiagramFlipped;
