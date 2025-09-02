@@ -305,8 +305,6 @@ namespace GameTree
                     nd.Nags = string.Empty;
                     nd.SetNags(string.Empty);
                 }
-                nd.IsDiagram = false;
-                nd.References = string.Empty;
             }
         }
 
@@ -332,6 +330,28 @@ namespace GameTree
             foreach (TreeNode nd in Nodes)
             {
                 nd.Assessment = 0;
+            }
+        }
+
+        /// <summary>
+        /// Remove diagrams.
+        /// </summary>
+        public void DeleteDiagrams()
+        {
+            foreach (TreeNode nd in Nodes)
+            {
+                nd.IsDiagram = false;
+            }
+        }
+
+        /// <summary>
+        /// Remove references.
+        /// </summary>
+        public void DeleteReferences()
+        {
+            foreach (TreeNode nd in Nodes)
+            {
+                nd.References = string.Empty;
             }
         }
 
