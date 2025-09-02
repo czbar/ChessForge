@@ -1684,6 +1684,7 @@ namespace GameTree
                 TreeNode nd = GetNodeFromNodeId(dummyNode.NodeId);
                 nd.SetNags(dummyNode.Nags);
                 nd.Comment = dummyNode.Comment;
+                nd.CommentBeforeMove = dummyNode.CommentBeforeMove;
                 nd.QuizPoints = dummyNode.QuizPoints;
                 nd.Assessment = dummyNode.Assessment;
                 nd.BestResponse = dummyNode.BestResponse;

@@ -114,6 +114,7 @@ namespace GameTree
                 {
                     _node.Nags = nd.Nags;
                     _node.Comment = nd.Comment;
+                    _node.CommentBeforeMove = nd.CommentBeforeMove;
                     _node.QuizPoints = nd.QuizPoints;
                     _node.Assessment = nd.Assessment;
                     _node.BestResponse = nd.BestResponse;

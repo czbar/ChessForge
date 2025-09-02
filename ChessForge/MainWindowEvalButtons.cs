@@ -86,6 +86,7 @@ namespace ChessForge
             if (InvokeAnnotationsDialog(nd))
             {
                 ActiveTreeView.InsertOrUpdateCommentRun(nd);
+                ActiveTreeView.InsertOrUpdateCommentBeforeMoveRun(nd);
             }
         }
 
