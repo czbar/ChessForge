@@ -866,9 +866,13 @@ namespace ChessPosition
                         (!string.IsNullOrEmpty(nd.Comment)
                         || !string.IsNullOrEmpty(nd.CommentBeforeMove)
                         || !string.IsNullOrEmpty(nd.Nags)
-                        || !string.IsNullOrEmpty(nd.References)
-                        || nd.IsDiagram
                         )
+                    ||
+                        (attrTypes & (int)MoveAttribute.DIAGRAM) != 0 &&
+                        nd.IsDiagram
+                    ||
+                        (attrTypes & (int)MoveAttribute.REFERENCE) != 0 &&
+                        !string.IsNullOrEmpty(nd.References)
                     ||
                         (attrTypes & (int)MoveAttribute.ENGINE_EVALUATION) != 0 &&
                         !string.IsNullOrEmpty(nd.EngineEvaluation)
