@@ -51,14 +51,12 @@ namespace ChessForge
                 }
             }
 
-            if (AppState.MainWin.ActiveTreeView != null && AppState.IsTreeViewTabActive())
+            AppState.MainWin.RebuildAllTreeViews();
+
+            if ((moveAttrsFlags & ((int)MoveAttribute.ENGINE_EVALUATION) | (int)MoveAttribute.BAD_MOVE_ASSESSMENT) != 0)
             {
-                AppState.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree(false);
-                if ((moveAttrsFlags & ((int)MoveAttribute.ENGINE_EVALUATION) | (int)MoveAttribute.BAD_MOVE_ASSESSMENT) != 0)
-                {
-                    // there may have been "assessments" so need to refresh this
-                    AppState.MainWin.ActiveLine.RefreshNodeList(true);
-                }
+                // there may have been "assessments" so need to refresh this
+                AppState.MainWin.ActiveLine.RefreshNodeList(true);
             }
 
             if (dictUndoMoveAttrs.Keys.Count > 0 || lstUndoArticlesAttrs.Count > 0)
