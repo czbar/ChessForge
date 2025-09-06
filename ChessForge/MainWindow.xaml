@@ -641,7 +641,6 @@
                                     <Separator />
                                     <MenuItem x:Name="UiMnStudyWorkbookEvalMove" Header="{x:Static p:Resources.EvaluatePosition}"  Click="UiMnEvaluatePosition_Click" />
                                     <MenuItem x:Name="UiMnStudyDontSaveEvals" Header="{x:Static p:Resources.DoNotUpdatePositionEval}" IsCheckable="True" Click="UiMnDontSaveEvals_Click" InputGestureText="Ctrl+K" />
-                                    <Separator x:Name="UiMnStudySepar_EvalPos" />
                                     <MenuItem x:Name="UiMnStudyEvalLine" Header="{x:Static p:Resources.EvaluateLine}"  Click="UiMnEvaluateLine_Click" />
                                     <Separator x:Name="UiMnStudySepar_EvalLine" />
                                     <MenuItem x:Name="UiMnStudyFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}"  Click="UiMnFindIdenticalPosition_Click" InputGestureText="F3" />
@@ -737,7 +736,6 @@
                                     <Separator />
                                     <MenuItem x:Name="UiMnGame_EvalMove" Header="{x:Static p:Resources.EvaluatePosition}"  Click="UiMnEvaluatePosition_Click" />
                                     <MenuItem x:Name="UiMnGameDontSaveEvals" Header="{x:Static p:Resources.DoNotUpdatePositionEval}" IsCheckable="True" Click="UiMnDontSaveEvals_Click" InputGestureText="Ctrl+K" />
-                                    <Separator x:Name="UiMnGameSepar_EvalPos" />
                                     <MenuItem x:Name="UiMnGame_EvalLine" Header="{x:Static p:Resources.EvaluateLine}"  Click="UiMnEvaluateLine_Click" />
                                     <Separator x:Name="UiMnGameSepar_EvalLine" />
                                     <MenuItem x:Name="UiMnGameFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}" Click="UiMnFindIdenticalPosition_Click" InputGestureText="F3" />
@@ -851,7 +849,6 @@
                                     <Separator x:Name="UiMnExerc_Separator_2"/>
                                     <MenuItem x:Name="UiMnExerc_EvalMove" Header="{x:Static p:Resources.EvaluatePosition}"  Click="UiMnEvaluatePosition_Click" />
                                     <MenuItem x:Name="UiMnExercDontSaveEvals" Header="{x:Static p:Resources.DoNotUpdatePositionEval}" IsCheckable="True" Click="UiMnDontSaveEvals_Click" InputGestureText="Ctrl+K" />
-                                    <Separator x:Name="UiMnExercSepar_EvalPos" />
                                     <MenuItem x:Name="UiMnExerc_EvalLine" Header="{x:Static p:Resources.EvaluateLine}"  Click="UiMnEvaluateLine_Click" />
                                     <Separator x:Name="UiMnExercSepar_EvalLine" />
                                     <MenuItem x:Name="UiMnExercFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}" Click="UiMnFindIdenticalPosition_Click" InputGestureText="F3" />
