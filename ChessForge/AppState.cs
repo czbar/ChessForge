@@ -1899,7 +1899,6 @@ namespace ChessForge
                         _mainWin.UiMnciEvalPos.Visibility = Visibility.Visible;
                         _mainWin.UiMnciEvalLine.Visibility = Visibility.Visible;
                         _mainWin.UiMnciDontSaveEvals.Visibility = Visibility.Visible;
-                        _mainWin.UiMnciSepar_EvalPos.Visibility = Visibility.Visible;
                         _mainWin.UiMnciSepar_EvalLine.Visibility = Visibility.Visible;
 
                         _mainWin.UiMncMainBoardSepar_2.Visibility = Visibility.Visible;
@@ -1932,7 +1931,6 @@ namespace ChessForge
                         _mainWin.UiMnciEvalPos.Visibility = Visibility.Collapsed;
                         _mainWin.UiMnciEvalLine.Visibility = Visibility.Collapsed;
                         _mainWin.UiMnciDontSaveEvals.Visibility = Visibility.Collapsed;
-                        _mainWin.UiMnciSepar_EvalPos.Visibility = Visibility.Collapsed;
                         _mainWin.UiMnciSepar_EvalLine.Visibility = Visibility.Collapsed;
 
                         _mainWin.UiMncMainBoardSepar_2.Visibility = Visibility.Collapsed;
@@ -1982,7 +1980,6 @@ namespace ChessForge
                         _mainWin.UiMnciEvalPos.Visibility = Visibility.Collapsed;
                         _mainWin.UiMnciEvalLine.Visibility = Visibility.Collapsed;
                         _mainWin.UiMnciDontSaveEvals.Visibility = Visibility.Collapsed;
-                        _mainWin.UiMnciSepar_EvalPos.Visibility = Visibility.Collapsed;
                         _mainWin.UiMnciSepar_EvalLine.Visibility = Visibility.Collapsed;
 
                         _mainWin.UiMnciReplay.Visibility = Visibility.Collapsed;

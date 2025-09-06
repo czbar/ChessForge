@@ -279,7 +279,6 @@
                                 <Separator x:Name="UiMncMainBoardSepar_1a" />
                                 <MenuItem x:Name="UiMnciEvalPos" Header="{x:Static p:Resources.EvaluatePosition}" Click="UiMnEvaluatePosition_Click" />
                                 <MenuItem x:Name="UiMnciDontSaveEvals" Header="{x:Static p:Resources.DoNotUpdatePositionEval}" IsCheckable="True" Click="UiMnDontSaveEvals_Click" InputGestureText="Ctrl+K" />
-                                <Separator x:Name="UiMnciSepar_EvalPos" />
                                 <MenuItem x:Name="UiMnciEvalLine" Header="{x:Static p:Resources.EvaluateLine}" Click="UiMnEvaluateLine_Click" />
                                 <Separator x:Name="UiMnciSepar_EvalLine" />
                                 <MenuItem x:Name="UiMnciFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}" Click="UiMnFindIdenticalPosition_Click" InputGestureText="F3"/>
