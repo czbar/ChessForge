@@ -802,7 +802,7 @@
     <value>Evaluate Games</value>
   </data>
   <data name="MenuDeleteNotes" xml:space="preserve">
-    <value>Clean Lines and Comments...</value>
+    <value>Clean Lines and Annotations...</value>
   </data>
   <data name="StripComments" xml:space="preserve">
     <value>Delete Comments...</value>
@@ -1046,7 +1046,7 @@ NOTE: Evaluations are not being updated (Ctrl+K to allow).</value>
     <value>Reorder Lines</value>
   </data>
   <data name="DeleteNotes" xml:space="preserve">
-    <value>Clean Lines and Comments</value>
+    <value>Clean Lines and Annotations</value>
   </data>
   <data name="ItemsToDelete" xml:space="preserve">
     <value>Items to Delete</value>
@@ -2973,7 +2973,7 @@ NOTE: Evaluations are not being updated (Ctrl+K to allow).</value>
     <value>Copy Exercises</value>
   </data>
   <data name="OpDeleteNotes" xml:space="preserve">
-    <value>Clean Lines and Comments</value>
+    <value>Clean Lines and Annotations</value>
   </data>
   <data name="OpDeleteComments" xml:space="preserve">
     <value>Delete Comments</value>

@@ -996,7 +996,7 @@ PasteEngineLines=Wklej warianty silnika...
 MnEvaluateGames=Oceń partie
 
 #description: Delete notes
-#english: MenuDeleteNotes=Clean Lines and Comments...
+#english: MenuDeleteNotes=Clean Lines and Annotations...
 MenuDeleteNotes=Wyczyść Notatki i Warianty...
 
 
@@ -1421,7 +1421,7 @@ ReorderLines=Kolejność Wariantów
 #
 
 #description: Delete Notes
-#english: DeleteNotes = Clean Lines and Comments
+#english: DeleteNotes = Clean Lines and Annotations
 DeleteNotes = Wyczyść Notatki i Warianty
 
 #description: Items to delete
@@ -4285,7 +4285,7 @@ OpMoveExercises=Przesuń Ćwiczenia
 OpCopyExercises=Kopiuj Ćwiczenia
 
 #description: Operation
-#english: OpDeleteNotes=Clean Lines and Comments
+#english: OpDeleteNotes=Clean Lines and Annotations
 OpDeleteNotes=Wyczyść Notatki i Warianty
 
 #description: Operation

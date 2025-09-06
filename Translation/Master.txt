@@ -768,7 +768,7 @@ PasteEngineLines=Paste Engine Lines...
 MnEvaluateGames=Evaluate Games
 
 #Delete notes
-MenuDeleteNotes=Clean Lines and Comments...
+MenuDeleteNotes=Clean Lines and Annotations...
 
 
 #Strip all comments
@@ -1112,7 +1112,7 @@ ReorderLines=Reorder Lines
 #
 
 #Delete Notes
-DeleteNotes = Clean Lines and Comments
+DeleteNotes = Clean Lines and Annotations
 
 #Items to delete
 ItemsToDelete=Items to Delete
@@ -3334,7 +3334,7 @@ OpMoveExercises=Move Exercises
 OpCopyExercises=Copy Exercises
 
 #Operation
-OpDeleteNotes=Clean Lines and Comments
+OpDeleteNotes=Clean Lines and Annotations
 
 #Operation
 OpDeleteComments=Delete Comments

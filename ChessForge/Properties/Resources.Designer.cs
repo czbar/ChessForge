@@ -1834,7 +1834,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clean Lines and Comments.
+        ///   Looks up a localized string similar to Clean Lines and Annotations.
         /// </summary>
         public static string DeleteNotes {
             get {
@@ -4732,7 +4732,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clean Lines and Comments....
+        ///   Looks up a localized string similar to Clean Lines and Annotations....
         /// </summary>
         public static string MenuDeleteNotes {
             get {
@@ -5696,7 +5696,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clean Lines and Comments.
+        ///   Looks up a localized string similar to Clean Lines and Annotations.
         /// </summary>
         public static string OpDeleteNotes {
             get {
