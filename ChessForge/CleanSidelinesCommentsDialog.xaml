@@ -12,10 +12,10 @@
             <StackPanel>
                 <CheckBox x:Name="UiCbComments" Content="{x:Static p:Resources.Comments}" HorizontalAlignment="Left" Margin="20,12,0,0"/>
                 <CheckBox x:Name="UiCbReferences" Content="{x:Static p:Resources.References}" HorizontalAlignment="Left" Margin="20,11,0,0"/>
-                <CheckBox x:Name="UiCbAnnotator" Content="{x:Static p:Resources.Annotator}" HorizontalAlignment="Left" Margin="20,11,0,0" VerticalAlignment="Top"/>
                 <CheckBox x:Name="UiCbEngineEvals" Content="{x:Static p:Resources.EngineEvaluations}" HorizontalAlignment="Left" Margin="20,11,0,0" VerticalAlignment="Top"/>
-                <CheckBox x:Name="UiCbSideLines" Content="{x:Static p:Resources.Sidelines}" HorizontalAlignment="Left" Margin="20,11,0,0" VerticalAlignment="Top"/>
                 <CheckBox x:Name="UiCbBadMoveDetection" Content="{x:Static p:Resources.DlgBlunderDetection}" HorizontalAlignment="Left" Margin="20,11,0,0" VerticalAlignment="Top"/>
+                <CheckBox x:Name="UiCbAnnotator" Content="{x:Static p:Resources.Annotator}" HorizontalAlignment="Left" Margin="20,11,0,0" VerticalAlignment="Top"/>
+                <CheckBox x:Name="UiCbSideLines" Content="{x:Static p:Resources.Sidelines}" HorizontalAlignment="Left" Margin="20,11,0,0" VerticalAlignment="Top"/>
                 <CheckBox x:Name="UiCbDiagrams" Content="{x:Static p:Resources.Diagrams}" HorizontalAlignment="Left" Margin="20,11,0,0" VerticalAlignment="Top"/>
             </StackPanel>
         </GroupBox>
