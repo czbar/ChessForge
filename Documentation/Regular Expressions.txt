@@ -1,0 +1,70 @@
+Wyrażenia Regularne do Typografii
+=================================
+
+1. Wstawianie nawiasów kwadratowych wokół symboli figur w ramach zapisu posunięcia
+----------------------------------------------------------------------------------
+
+([WSGHK])(x?[a-h1-8]{1,2}[1-8])
+
+Wyrażenie znajduje sekwencje zaczynające się od symbolu figury, 
+za którą opcjonalnie może być symbol bicia 'x',
+następnie jeden lub dwa znaki alfanumeryczne z zakresu a-h lub 1-8, 
+a ostatni znak to cyfry z zakresu 1-8.
+
+Przykłady: Sd4, Sxd4, Sxd4+
+
+Aby dostawić nawiasy wokół symboli figury, jako wyrażenie "zastępujące"  należy podać:
+
+[$1]$2
+
+
+2.  Wstawianie nawiasów kwadratowych wokół symboli figur przy promocji pionka
+-----------------------------------------------------------------------------
+
+([a-h]x?[a-h]?[18])([WSGH])
+
+Wyrażenie znajduje sekwencje zaczynające się od małej litery z zakresu a-h, 
+za którą opcjonalnie może być symbol bicia 'x',
+następnie opcjonalna litera z zakresu a-h,
+następnie cyfra z zakresu 1-8,
+a ostatni znak to symbol figury.
+
+Przykłady: a8H, axb8G
+
+Aby dostawić nawiasy wokół symboli figury, jako wyrażenie "zastępujące"  należy podać:
+
+$1[$2]
+
+
+3. Wyszukiwanie brakujących otwierających nawiasów kwadratowych wokół symboli figur w ramach zapisu posunięcia
+--------------------------------------------------------------------------------------------------------------
+
+(?<!\[)([WSGHK])(x?[a-h1-8]{1,2}[1-8])
+
+Wyszukuje posunięcia figurami z logiką jak w punkcie 1, 
+ale tylko te gdzie nie ma otwierajacego nawiasu przed symbolem figury.
+
+To wyrażenie może byc użyte do znajdowania "przeoczonych" symboli figur.
+
+
+4. Wyszukiwanie brakujących zamykającyh nawiasów kwadratowych wokół symboli figur w ramach zapisu posunięcia
+------------------------------------------------------------------------------------------------------------
+
+\[[WSGHK](?!\])
+
+Wyszukuje symbole figur poprzedzone otwierającym kwadratowym nawiasem,
+po których nie ma zamykającego nawiasu.
+
+To wyrażenie może byc użyte do znajdowania "zapomnianych" zamykających nawiasów.
+
+
+5. Wyszukiwanie brakujących otwierających nawiasów kwadratowych wokół symboli figur przy promocji
+-------------------------------------------------------------------------------------------------
+
+([a-h]x?[a-h]?[18])(?<!\[)([WSGH])
+
+Wyszukuje posunięcia figurami z logiką jak w punkcie 2, 
+ale tylko te gdzie nie ma otwierajacego nawiasu przed symbolem figury.
+
+To wyrażenie może byc użyte do znajdowania "przeoczonych" symboli figur
+w ruchach promujących.
