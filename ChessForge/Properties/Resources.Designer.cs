@@ -709,6 +709,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Insufficient mating material! You have drawn the game..
+        /// </summary>
+        public static string cbInsufficientMaterialAndDraw {
+            get {
+                return ResourceManager.GetString("cbInsufficientMaterialAndDraw", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Press F3 or use the context menu to show it. .
         /// </summary>
         public static string cbInvestigateIdenticalPositions {
@@ -1825,7 +1834,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clean Lines and Comments.
+        ///   Looks up a localized string similar to Clean Lines and Annotations.
         /// </summary>
         public static string DeleteNotes {
             get {
@@ -1902,6 +1911,24 @@ namespace ChessForge.Properties {
         public static string DeleteThumbnail {
             get {
                 return ResourceManager.GetString("DeleteThumbnail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Diagram.
+        /// </summary>
+        public static string Diagram {
+            get {
+                return ResourceManager.GetString("Diagram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Diagrams.
+        /// </summary>
+        public static string Diagrams {
+            get {
+                return ResourceManager.GetString("Diagrams", resourceCulture);
             }
         }
         
@@ -3634,7 +3661,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Position evaluations will no longer be updated.
+        ///   Looks up a localized string similar to Engine evaluations will not be saved.
         /// </summary>
         public static string FlMsgUpdatePositionEvalOff {
             get {
@@ -3643,7 +3670,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Position evaluations will now be updated.
+        ///   Looks up a localized string similar to Engine evaluations will now be saved.
         /// </summary>
         public static string FlMsgUpdatePositionEvalOn {
             get {
@@ -4705,7 +4732,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clean Lines and Comments....
+        ///   Looks up a localized string similar to Clean Lines and Annotations....
         /// </summary>
         public static string MenuDeleteNotes {
             get {
@@ -5669,7 +5696,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clean Lines and Comments.
+        ///   Looks up a localized string similar to Clean Lines and Annotations.
         /// </summary>
         public static string OpDeleteNotes {
             get {
@@ -7978,6 +8005,15 @@ namespace ChessForge.Properties {
         public static string TrnGameInProgress {
             get {
                 return ResourceManager.GetString("TrnGameInProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is a draw due to insufficient material..
+        /// </summary>
+        public static string TrnGameInsufficientMaterial {
+            get {
+                return ResourceManager.GetString("TrnGameInsufficientMaterial", resourceCulture);
             }
         }
         

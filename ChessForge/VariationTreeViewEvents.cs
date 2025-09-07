@@ -241,6 +241,7 @@ namespace ChessForge
                 if (e.ClickCount == 2 && _mainWin.InvokeAnnotationsDialog(nd))
                 {
                     InsertOrUpdateCommentRun(nd);
+                    InsertOrUpdateCommentBeforeMoveRun(nd);
                 }
             }
         }

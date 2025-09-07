@@ -306,6 +306,12 @@
   <data name="Annotation" xml:space="preserve">
     <value>Annotation</value>
   </data>
+  <data name="Diagram" xml:space="preserve">
+    <value>Diagram</value>
+  </data>
+  <data name="Diagrams" xml:space="preserve">
+    <value>Diagrams</value>
+  </data>
   <data name="Evaluation" xml:space="preserve">
     <value>Evaluation</value>
   </data>
@@ -376,10 +382,10 @@
     <value>Do Not Update Position Evaluations</value>
   </data>
   <data name="FlMsgUpdatePositionEvalOn" xml:space="preserve">
-    <value>Position evaluations will now be updated</value>
+    <value>Engine evaluations will now be saved</value>
   </data>
   <data name="FlMsgUpdatePositionEvalOff" xml:space="preserve">
-    <value>Position evaluations will no longer be updated</value>
+    <value>Engine evaluations will not be saved</value>
   </data>
   <data name="EvaluateMove" xml:space="preserve">
     <value>Evaluate Move</value>
@@ -796,7 +802,7 @@
     <value>Evaluate Games</value>
   </data>
   <data name="MenuDeleteNotes" xml:space="preserve">
-    <value>Clean Lines and Comments...</value>
+    <value>Clean Lines and Annotations...</value>
   </data>
   <data name="StripComments" xml:space="preserve">
     <value>Delete Comments...</value>
@@ -1040,7 +1046,7 @@ NOTE: Evaluations are not being updated (Ctrl+K to allow).</value>
     <value>Reorder Lines</value>
   </data>
   <data name="DeleteNotes" xml:space="preserve">
-    <value>Clean Lines and Comments</value>
+    <value>Clean Lines and Annotations</value>
   </data>
   <data name="ItemsToDelete" xml:space="preserve">
     <value>Items to Delete</value>
@@ -1638,6 +1644,9 @@ NOTE: Evaluations are not being updated (Ctrl+K to allow).</value>
   </data>
   <data name="TrnGameStalemate" xml:space="preserve">
     <value>This is a stalemate. The game has been drawn.</value>
+  </data>
+  <data name="TrnGameInsufficientMaterial" xml:space="preserve">
+    <value>This is a draw due to insufficient material.</value>
   </data>
   <data name="TrnSessionStartsAfter" xml:space="preserve">
     <value>This training session begins after:</value>
@@ -2741,6 +2750,9 @@ NOTE: Evaluations are not being updated (Ctrl+K to allow).</value>
   <data name="cbStalemateAndDraw" xml:space="preserve">
     <value>This is a stalemate! You have drawn the game.</value>
   </data>
+  <data name="cbInsufficientMaterialAndDraw" xml:space="preserve">
+    <value>Insufficient mating material! You have drawn the game.</value>
+  </data>
   <data name="cbIdenticalPositionFound" xml:space="preserve">
     <value>An identical position was found elsewhere.</value>
   </data>
@@ -2961,7 +2973,7 @@ NOTE: Evaluations are not being updated (Ctrl+K to allow).</value>
     <value>Copy Exercises</value>
   </data>
   <data name="OpDeleteNotes" xml:space="preserve">
-    <value>Clean Lines and Comments</value>
+    <value>Clean Lines and Annotations</value>
   </data>
   <data name="OpDeleteComments" xml:space="preserve">
     <value>Delete Comments</value>

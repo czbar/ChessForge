@@ -166,6 +166,10 @@ namespace ChessForge
             {
                 AppState.MainWin.BoardCommentBox.ReportStalemate();
             }
+            else if (nd.Position.IsInsufficientMaterial)
+            {
+                AppState.MainWin.BoardCommentBox.ReportInsufficientMaterial();
+            }
             else
             {
                 AppState.MainWin.BoardCommentBox.GameMoveMade(nd, true);
@@ -183,7 +187,7 @@ namespace ChessForge
 
             if (!TrainingSession.IsTrainingInProgress && AppState.MainWin.EngineGameView != null)
             {
-                if (nd.Position.IsStalemate || nd.Position.IsCheckmate)
+                if (nd.Position.IsStalemate || nd.Position.IsCheckmate || nd.Position.IsInsufficientMaterial)
                 {
                     AppState.MainWin.EngineGameView.ClearMovePromptParagraph();
                 }
@@ -271,6 +275,11 @@ namespace ChessForge
                     endOfGame = true;
                     AppState.MainWin.BoardCommentBox.ReportStalemate();
                 }
+                else if (PositionUtils.IsInsufficientMaterial(nd.Position))
+                {
+                    endOfGame = true;
+                    AppState.MainWin.BoardCommentBox.ReportInsufficientMaterial();
+                }
 
                 EngineGame.Line.AddPlyAndMove(nd);
 
@@ -316,6 +325,10 @@ namespace ChessForge
                 else if (PositionUtils.IsStalemate(nd.Position))
                 {
                     nd.Position.IsStalemate = true;
+                }
+                else if (PositionUtils.IsInsufficientMaterial(nd.Position))
+                {
+                    nd.Position.IsInsufficientMaterial = true;
                 }
 
                 //TODO: update Workbook, ActiveLine and Workbook View

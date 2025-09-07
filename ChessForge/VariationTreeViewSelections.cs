@@ -563,6 +563,7 @@ namespace ChessForge
                         if (_mainWin.InvokeAnnotationsDialog(nd))
                         {
                             InsertOrUpdateCommentRun(nd);
+                            InsertOrUpdateCommentBeforeMoveRun(nd);
                         }
                     }
                 }

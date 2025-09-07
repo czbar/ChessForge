@@ -967,6 +967,12 @@ namespace ChessForge
         /// <param name="e"></param>
         public void EngineToggleOff_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (AppState.IsUserSolving())
+            {
+                // no engine allowed while solving
+                return;
+            }
+
             if (!EngineMessageProcessor.IsEngineAvailable)
             {
                 BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.EngineNotAvailable, CommentBox.HintType.ERROR);

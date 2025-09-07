@@ -124,7 +124,6 @@
                         <MenuItem x:Name="UiMnFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}"  Click="UiMnFindIdenticalPosition_Click" InputGestureText="F3" />
                         <Separator />
                         <MenuItem x:Name="UiMnAnnotations" Header="{x:Static p:Resources.Annotations}" Click="UiMnAnnotationsDialog_Click" />
-                        <MenuItem x:Name="UiMnCommentBeforeMove" Header="{x:Static p:Resources.CommentBeforeMove}" Click="UiMnCommentBeforeMoveDialog_Click" />
                         <Separator />
                         <MenuItem x:Name="UiMnMainCopy" Header="{x:Static p:Resources.Copy}"  InputGestureText="Ctrl+C" Click="UiMnMainCopy_Click" />
                         <MenuItem x:Name="UiMnMainCut" Header="{x:Static p:Resources.Cut}"  InputGestureText="Ctrl+X" Click="UiMnMainCut_Click" />
@@ -145,10 +144,10 @@
                         <MenuItem x:Name="UiMnChessboards" Header="{x:Static p:Resources.Chessboards}" Click="UiMnChessboards_Click" />
                         <Separator />
                         <MenuItem Header="{x:Static p:Resources.ApplicationOptions}" Click="UiMnApplicationOptions_Click" />
-                        <MenuItem Header="{x:Static p:Resources.EngineOptions}" Click="UiMnEngineOptions_Click" />
                         <MenuItem x:Name="UiMnWorkbookOptions" Header="{x:Static p:Resources.WorkbookOptions}" Click="UiMnWorkbookOptions_Click" />
-                        <MenuItem Header="{x:Static p:Resources.BlunderDetectionOptions}" Click="UiMnBlunderDetectionOptions_Click" />
+                        <MenuItem Header="{x:Static p:Resources.EngineOptions}" Click="UiMnEngineOptions_Click" />
                         <MenuItem Header="{x:Static p:Resources.AnalysisEngine}" Click="UiMnSelectEngine_Click" />
+                        <MenuItem Header="{x:Static p:Resources.BlunderDetectionOptions}" Click="UiMnBlunderDetectionOptions_Click" />
                         <MenuItem Header="{x:Static p:Resources.DlgOnlineLibraries}" Click="UiMnOnlineLibraries_Click" />
                         <Separator />
                         <MenuItem x:Name="UiMnDarkMode"  Header="{x:Static p:Resources.DarkMode}" IsCheckable="True" Checked="UiMnDarkMode_Checked" Unchecked="UiMnDarkMode_Unchecked"   />
@@ -280,7 +279,6 @@
                                 <Separator x:Name="UiMncMainBoardSepar_1a" />
                                 <MenuItem x:Name="UiMnciEvalPos" Header="{x:Static p:Resources.EvaluatePosition}" Click="UiMnEvaluatePosition_Click" />
                                 <MenuItem x:Name="UiMnciDontSaveEvals" Header="{x:Static p:Resources.DoNotUpdatePositionEval}" IsCheckable="True" Click="UiMnDontSaveEvals_Click" InputGestureText="Ctrl+K" />
-                                <Separator x:Name="UiMnciSepar_EvalPos" />
                                 <MenuItem x:Name="UiMnciEvalLine" Header="{x:Static p:Resources.EvaluateLine}" Click="UiMnEvaluateLine_Click" />
                                 <Separator x:Name="UiMnciSepar_EvalLine" />
                                 <MenuItem x:Name="UiMnciFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}" Click="UiMnFindIdenticalPosition_Click" InputGestureText="F3"/>
@@ -643,7 +641,6 @@
                                     <Separator />
                                     <MenuItem x:Name="UiMnStudyWorkbookEvalMove" Header="{x:Static p:Resources.EvaluatePosition}"  Click="UiMnEvaluatePosition_Click" />
                                     <MenuItem x:Name="UiMnStudyDontSaveEvals" Header="{x:Static p:Resources.DoNotUpdatePositionEval}" IsCheckable="True" Click="UiMnDontSaveEvals_Click" InputGestureText="Ctrl+K" />
-                                    <Separator x:Name="UiMnStudySepar_EvalPos" />
                                     <MenuItem x:Name="UiMnStudyEvalLine" Header="{x:Static p:Resources.EvaluateLine}"  Click="UiMnEvaluateLine_Click" />
                                     <Separator x:Name="UiMnStudySepar_EvalLine" />
                                     <MenuItem x:Name="UiMnStudyFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}"  Click="UiMnFindIdenticalPosition_Click" InputGestureText="F3" />
@@ -739,7 +736,6 @@
                                     <Separator />
                                     <MenuItem x:Name="UiMnGame_EvalMove" Header="{x:Static p:Resources.EvaluatePosition}"  Click="UiMnEvaluatePosition_Click" />
                                     <MenuItem x:Name="UiMnGameDontSaveEvals" Header="{x:Static p:Resources.DoNotUpdatePositionEval}" IsCheckable="True" Click="UiMnDontSaveEvals_Click" InputGestureText="Ctrl+K" />
-                                    <Separator x:Name="UiMnGameSepar_EvalPos" />
                                     <MenuItem x:Name="UiMnGame_EvalLine" Header="{x:Static p:Resources.EvaluateLine}"  Click="UiMnEvaluateLine_Click" />
                                     <Separator x:Name="UiMnGameSepar_EvalLine" />
                                     <MenuItem x:Name="UiMnGameFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}" Click="UiMnFindIdenticalPosition_Click" InputGestureText="F3" />
@@ -853,7 +849,6 @@
                                     <Separator x:Name="UiMnExerc_Separator_2"/>
                                     <MenuItem x:Name="UiMnExerc_EvalMove" Header="{x:Static p:Resources.EvaluatePosition}"  Click="UiMnEvaluatePosition_Click" />
                                     <MenuItem x:Name="UiMnExercDontSaveEvals" Header="{x:Static p:Resources.DoNotUpdatePositionEval}" IsCheckable="True" Click="UiMnDontSaveEvals_Click" InputGestureText="Ctrl+K" />
-                                    <Separator x:Name="UiMnExercSepar_EvalPos" />
                                     <MenuItem x:Name="UiMnExerc_EvalLine" Header="{x:Static p:Resources.EvaluateLine}"  Click="UiMnEvaluateLine_Click" />
                                     <Separator x:Name="UiMnExercSepar_EvalLine" />
                                     <MenuItem x:Name="UiMnExercFindIdentical" Header="{x:Static p:Resources.FindIdenticalPosition}" Click="UiMnFindIdenticalPosition_Click" InputGestureText="F3" />

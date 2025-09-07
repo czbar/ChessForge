@@ -380,6 +380,7 @@ namespace ChessForge
             if (InvokeAnnotationsDialog(nd))
             {
                 ActiveTreeView.InsertOrUpdateCommentRun(nd);
+                ActiveTreeView.InsertOrUpdateCommentBeforeMoveRun(nd);
             }
         }
 
@@ -605,6 +606,7 @@ namespace ChessForge
                 if (opType == EditOperation.EditType.UPDATE_ANNOTATION)
                 {
                     AppState.MainWin.ActiveTreeView.InsertOrUpdateCommentRun(selectedNode);
+                    AppState.MainWin.ActiveTreeView.InsertOrUpdateCommentBeforeMoveRun(selectedNode);
                 }
                 else if (opType == EditOperation.EditType.UPDATE_COMMENT_BEFORE_MOVE)
                 {
@@ -694,11 +696,9 @@ namespace ChessForge
                                     UiTabChapters.Focus();
                                     break;
                                 case WorkbookOperationType.DELETE_COMMENTS:
-                                    view?.BuildFlowDocumentForVariationTree(false);
-                                    break;
                                 case WorkbookOperationType.DELETE_ENGINE_EVALS:
                                 case WorkbookOperationType.CLEAN_LINES_AND_COMMENTS:
-                                    view?.BuildFlowDocumentForVariationTree(false);
+                                    RebuildAllTreeViews();
                                     ActiveLine.RefreshNodeList(true);
                                     if (view != null)
                                     {

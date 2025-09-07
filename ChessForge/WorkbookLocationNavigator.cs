@@ -235,6 +235,26 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Gets the type of tab currently open.
+        /// Note that if we are currently in training, the current tab 
+        /// will be reported as the last tab opened before training
+        /// because we don't add Training location to the Locations stack. 
+        /// </summary>
+        /// <returns></returns>
+        public static TabViewType GetCurrentTab()
+        {
+            try
+            {
+                WorkbookLocation currentLocation = _locations[_currentLocationIndex];
+                return currentLocation.ViewType;
+            }
+            catch
+            {
+                return TabViewType.NONE;
+            }
+        }
+
+        /// <summary>
         /// Checks if the location needs to be added
         /// and if so appends it.
         /// </summary>

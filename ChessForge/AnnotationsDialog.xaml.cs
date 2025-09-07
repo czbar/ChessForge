@@ -10,9 +10,14 @@ namespace ChessForge
     public partial class AnnotationsDialog : Window
     {
         /// <summary>
-        /// Comment for the move for which this dialog was invoked.
+        /// Text of the main comment.
         /// </summary>
         public string Comment { get; set; }
+
+        /// <summary>
+        /// Text of the comment before move.
+        /// </summary>
+        public string CommentBeforeMove { get; set; }
 
         /// <summary>
         /// Combined Reference Guids
@@ -80,6 +85,8 @@ namespace ChessForge
             UiTbComment.Text = nd.Comment ?? "";
             UiTbComment.Focus();
             UiTbComment.SelectAll();
+
+            UiTbCommentBeforeMove.Text = nd.CommentBeforeMove ?? "";
 
             Nags = nd.Nags;
 
@@ -360,13 +367,26 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Handles the key down event in the text box. 
+        /// Handles the key down event in the comment text box. 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void UiTbComment_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (GuiUtilities.InsertFigurine(UiTbComment, sender, e))
+            {
+                e.Handled = true;
+            }
+        }
+
+        /// <summary>
+        /// Handles the key down event in the comment before move text box. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiTbCommentBeforeMove_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (GuiUtilities.InsertFigurine(UiTbCommentBeforeMove, sender, e))
             {
                 e.Handled = true;
             }
@@ -442,6 +462,7 @@ namespace ChessForge
         private void UiBtnOk_Click(object sender, RoutedEventArgs e)
         {
             Comment = UiTbComment.Text;
+            CommentBeforeMove = UiTbCommentBeforeMove.Text;
             ReferenceGuids = ReferenceUtils.CombineReferences(_gameExerciseRefGuids, _chapterRefGuids);
             if (_isExerciseEditing)
             {

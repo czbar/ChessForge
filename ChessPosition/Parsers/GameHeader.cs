@@ -40,12 +40,19 @@ namespace GameTree
         public GameHeader CloneMe(bool deep)
         {
             GameHeader header = this.MemberwiseClone() as GameHeader;
+
             if (deep)
             {
                 header._headers = new List<KeyValuePair<string, string>>();
                 foreach (KeyValuePair<string, string> pair in this._headers)
                 {
                     header._headers.Add(pair);
+                }
+
+                header._preamble = new List<string>();
+                foreach (string s in _preamble)
+                {
+                    header._preamble.Add(s);
                 }
             }
             return header;

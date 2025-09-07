@@ -172,6 +172,15 @@ namespace ChessForge
                     }
                     BuildStalemateParagraph(_userMove);
                 }
+                else if (PositionUtils.IsInsufficientMaterial(_userMove.Position))
+                {
+                    BuildMoveParagraph(_userMove, true);
+                    if (foundMove == null)
+                    {
+                        InsertCommentIntoUserMovePara(false, _userMove);
+                    }
+                    BuildInsufficientMaterialParagraph(_userMove);
+                }
                 else
                 {
                     // double check that we have the parent in our Workbook
@@ -186,7 +195,7 @@ namespace ChessForge
                     InsertCommentIntoUserMovePara(foundMove != null, _userMove);
 
                     // if we found a move and this is not the last move in the Workbbook, request response.
-                    if (foundMove != null && foundMove.GetChildrenCount(false) > 0)
+                    if (foundMove != null && TreeUtils.NonNullChildrenCount(foundMove, false) > 0)
                     {
                         // start the timer that will trigger a workbook response by RequestWorkbookResponse()
                         TrainingSession.ChangeCurrentState(TrainingSession.State.AWAITING_WORKBOOK_RESPONSE);
@@ -259,9 +268,9 @@ namespace ChessForge
                 TreeNode nd = TrainingSession.GetNextTrainingLineMove(userChoiceNode);
 
                 // nd should never be null here, but if it is, we will use the first child
-                if (nd == null && userChoiceNode.Children.Count > 0)
+                if (nd == null && TreeUtils.NonNullChildrenCount(nd) > 0)
                 {
-                    nd = userChoiceNode.Children[0];
+                    nd = TreeUtils.GetFirstNonNullChild(userChoiceNode);
                 }
 
                 EngineGame.AddPlyToGame(nd);

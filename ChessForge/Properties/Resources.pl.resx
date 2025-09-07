@@ -306,6 +306,12 @@
   <data name="Annotation" xml:space="preserve">
     <value>Komentarz</value>
   </data>
+  <data name="Diagram" xml:space="preserve">
+    <value>Diagram</value>
+  </data>
+  <data name="Diagrams" xml:space="preserve">
+    <value>Diagramy</value>
+  </data>
   <data name="Evaluation" xml:space="preserve">
     <value>Ocena</value>
   </data>
@@ -376,10 +382,10 @@
     <value>Nie uaktualniaj ocen pozycji</value>
   </data>
   <data name="FlMsgUpdatePositionEvalOn" xml:space="preserve">
-    <value>Oceny pozycji będą teraz zapisywane</value>
+    <value>Oceny pozycji będą zapamiętywane</value>
   </data>
   <data name="FlMsgUpdatePositionEvalOff" xml:space="preserve">
-    <value>Oceny pozycji nie będą teraz zapisywane</value>
+    <value>Oceny pozycji nie będą zapamiętywane</value>
   </data>
   <data name="EvaluateMove" xml:space="preserve">
     <value>Oceń posunięcie</value>
@@ -1639,6 +1645,9 @@ UWAGA: Oceny nie są uaktualniane (zezwól przez Ctrl+K).</value>
   <data name="TrnGameStalemate" xml:space="preserve">
     <value>Partia zakończyła się patem. Remis.</value>
   </data>
+  <data name="TrnGameInsufficientMaterial" xml:space="preserve">
+    <value>Remis wobec braku matującego materiału.</value>
+  </data>
   <data name="TrnSessionStartsAfter" xml:space="preserve">
     <value>Ta sesja treningowa zaczyna się po ruchach:</value>
   </data>
@@ -2739,6 +2748,9 @@ UWAGA: Oceny nie są uaktualniane (zezwól przez Ctrl+K).</value>
   </data>
   <data name="cbStalemateAndDraw" xml:space="preserve">
     <value>Pat! Partia zakończyła się remisem.</value>
+  </data>
+  <data name="cbInsufficientMaterialAndDraw" xml:space="preserve">
+    <value>Brak materiału matującego! Remis.</value>
   </data>
   <data name="cbIdenticalPositionFound" xml:space="preserve">
     <value>Taka sama pozycja jest już gdzie indziej.</value>

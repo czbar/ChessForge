@@ -270,6 +270,14 @@ Comment=
 #english: Annotation=Annotation
 Annotation=
 
+#description: Diagram
+#english: Diagram=Diagram
+Diagram=
+
+#description: Diagrams
+#english: Diagrams=Diagrams
+Diagrams=
+
 #description: Evaluation
 #english: Evaluation=Evaluation
 Evaluation=
@@ -364,11 +372,11 @@ EvaluatePosition=
 DoNotUpdatePositionEval=
 
 #description: Flash message that position evals are now persisted 
-#english: FlMsgUpdatePositionEvalOn=Position evaluations will now be updated
+#english: FlMsgUpdatePositionEvalOn=Engine evaluations will now be saved
 FlMsgUpdatePositionEvalOn=
 
 #description: Flash message that position evals will now not be persisted 
-#english: FlMsgUpdatePositionEvalOff=Position evaluations will no longer be updated
+#english: FlMsgUpdatePositionEvalOff=Engine evaluations will not be saved
 FlMsgUpdatePositionEvalOff=
 
 
@@ -988,7 +996,7 @@ PasteEngineLines=
 MnEvaluateGames=
 
 #description: Delete notes
-#english: MenuDeleteNotes=Clean Lines and Comments...
+#english: MenuDeleteNotes=Clean Lines and Annotations...
 MenuDeleteNotes=
 
 
@@ -1413,7 +1421,7 @@ ReorderLines=
 #
 
 #description: Delete Notes
-#english: DeleteNotes = Clean Lines and Comments
+#english: DeleteNotes = Clean Lines and Annotations
 DeleteNotes =
 
 #description: Items to delete
@@ -2351,6 +2359,10 @@ TrnEngineCheckmatedUser=
 #description: Game ended in a stalemate
 #english: TrnGameStalemate=This is a stalemate. The game has been drawn.
 TrnGameStalemate=
+
+#description: Game ended in a draw due to insufficient material
+#english: TrnGameInsufficientMaterial=This is a draw due to insufficient material.
+TrnGameInsufficientMaterial=
 
 #description: Training session start header
 #english: TrnSessionStartsAfter=This training session begins after:
@@ -3940,6 +3952,10 @@ cbEngineCheckmatedYou=
 #english: cbStalemateAndDraw=This is a stalemate! You have drawn the game.
 cbStalemateAndDraw=
 
+#description: This is a draw by insufficient material.
+#english: cbInsufficientMaterialAndDraw=Insufficient mating material! You have drawn the game.
+cbInsufficientMaterialAndDraw=
+
 #description: Identical position was found
 #english: cbIdenticalPositionFound=An identical position was found elsewhere.
 cbIdenticalPositionFound=
@@ -4269,7 +4285,7 @@ OpMoveExercises=
 OpCopyExercises=
 
 #description: Operation
-#english: OpDeleteNotes=Clean Lines and Comments
+#english: OpDeleteNotes=Clean Lines and Annotations
 OpDeleteNotes=
 
 #description: Operation

@@ -6,33 +6,35 @@
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
         xmlns:p="clr-namespace:ChessForge.Properties"
-        Title="{x:Static p:Resources.DeleteNotes}" Height="330" Width="440">
+        Title="{x:Static p:Resources.DeleteNotes}" Height="330" Width="435">
     <Grid>
-        <GroupBox Header="{x:Static p:Resources.ItemsToDelete}" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Height="155">
+        <GroupBox Header="{x:Static p:Resources.ItemsToDelete}" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Height="220">
             <StackPanel>
-                <CheckBox x:Name="UiCbComments" Content="{x:Static p:Resources.Comments}" HorizontalAlignment="Left" Margin="20,10,0,0"/>
-                <CheckBox x:Name="UiCbAnnotator" Content="{x:Static p:Resources.Annotator}" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top"/>
-                <CheckBox x:Name="UiCbEngineEvals" Content="{x:Static p:Resources.EngineEvaluations}" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top"/>
-                <CheckBox x:Name="UiCbSideLines" Content="{x:Static p:Resources.Sidelines}" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top"/>
-                <CheckBox x:Name="UiCbBadMoveDetection" Content="{x:Static p:Resources.DlgBlunderDetection}" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top"/>
+                <CheckBox x:Name="UiCbComments" Content="{x:Static p:Resources.Comments}" HorizontalAlignment="Left" Margin="20,12,0,0"/>
+                <CheckBox x:Name="UiCbReferences" Content="{x:Static p:Resources.References}" HorizontalAlignment="Left" Margin="20,11,0,0"/>
+                <CheckBox x:Name="UiCbEngineEvals" Content="{x:Static p:Resources.EngineEvaluations}" HorizontalAlignment="Left" Margin="20,11,0,0" VerticalAlignment="Top"/>
+                <CheckBox x:Name="UiCbBadMoveDetection" Content="{x:Static p:Resources.DlgBlunderDetection}" HorizontalAlignment="Left" Margin="20,11,0,0" VerticalAlignment="Top"/>
+                <CheckBox x:Name="UiCbAnnotator" Content="{x:Static p:Resources.Annotator}" HorizontalAlignment="Left" Margin="20,11,0,0" VerticalAlignment="Top"/>
+                <CheckBox x:Name="UiCbSideLines" Content="{x:Static p:Resources.Sidelines}" HorizontalAlignment="Left" Margin="20,11,0,0" VerticalAlignment="Top"/>
+                <CheckBox x:Name="UiCbDiagrams" Content="{x:Static p:Resources.Diagrams}" HorizontalAlignment="Left" Margin="20,11,0,0" VerticalAlignment="Top"/>
             </StackPanel>
         </GroupBox>
-        <GroupBox Header="{x:Static p:Resources.ViewsTypeToApplyTo}" Margin="10,170,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Height="105">
+        <GroupBox Header="{x:Static p:Resources.Scope}" Margin="0,10,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="190" Height="105">
+            <StackPanel>
+                <RadioButton x:Name="UiRbCurrentItem" Content="{x:Static p:Resources.CurrentItem}" HorizontalAlignment="Left" Margin="15,10,0,0" VerticalAlignment="Top" Checked="UiRbCurrentItem_Checked"/>
+                <RadioButton x:Name="UiRbCurrentChapter" Content="{x:Static p:Resources.CurrentChapter}" HorizontalAlignment="Left" Margin="15,10,0,0" VerticalAlignment="Top" Checked="UiRbCurrentChapter_Checked"/>
+                <RadioButton x:Name="UiRbWorkbook" Content="{x:Static p:Resources.EntireWorkbook}" HorizontalAlignment="Left" Margin="15,10,0,0" VerticalAlignment="Top" Checked="UiRbWorkbook_Checked"/>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Header="{x:Static p:Resources.ViewsTypeToApplyTo}" Margin="0,125,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="190" Height="105">
             <StackPanel>
                 <CheckBox x:Name="UiCbStudy" Content="{x:Static p:Resources.Studies}" HorizontalAlignment="Left" Margin="20,10,0,0"/>
                 <CheckBox x:Name="UiCbGames" Content="{x:Static p:Resources.Games}" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top"/>
                 <CheckBox x:Name="UiCbExercises" Content="{x:Static p:Resources.Exercises}" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top"/>
             </StackPanel>
         </GroupBox>
-        <GroupBox Header="{x:Static p:Resources.Scope}" Margin="0,10,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="193" Height="155">
-            <StackPanel>
-                <RadioButton x:Name="UiRbCurrentItem" Content="{x:Static p:Resources.CurrentItem}" HorizontalAlignment="Left" Margin="15,32,0,0" VerticalAlignment="Top" Checked="UiRbCurrentItem_Checked"/>
-                <RadioButton x:Name="UiRbCurrentChapter" Content="{x:Static p:Resources.CurrentChapter}" HorizontalAlignment="Left" Margin="15,10,0,0" VerticalAlignment="Top" Checked="UiRbCurrentChapter_Checked"/>
-                <RadioButton x:Name="UiRbWorkbook" Content="{x:Static p:Resources.EntireWorkbook}" HorizontalAlignment="Left" Margin="15,10,0,0" VerticalAlignment="Top" Checked="UiRbWorkbook_Checked"/>
-            </StackPanel>
-        </GroupBox>
-        <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Ok}" IsDefault="True" HorizontalAlignment="Center" Margin="210,187,0,0" VerticalAlignment="Top" Width="100" Click="UiBtnOk_Click" />
-        <Button x:Name="UiBtnCancel" Content="{x:Static p:Resources.Cancel}" IsCancel="True" HorizontalAlignment="Center" Margin="210,216,0,0" VerticalAlignment="Top" Width="100"/>
-        <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Center" Margin="210,247,0,0" VerticalAlignment="Top" Width="100" Click="UiBtnHelp_Click"/>
+        <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Ok}" IsDefault="True" HorizontalAlignment="Center" Margin="-220,0,0,20" VerticalAlignment="Bottom" Width="100" Click="UiBtnOk_Click" />
+        <Button x:Name="UiBtnCancel" Content="{x:Static p:Resources.Cancel}" IsCancel="True" HorizontalAlignment="Center" Margin="0,0,0,20" VerticalAlignment="Bottom" Width="100"/>
+        <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Center" Margin="220,0,0,20" VerticalAlignment="Bottom" Width="100" Click="UiBtnHelp_Click"/>
     </Grid>
 </Window>

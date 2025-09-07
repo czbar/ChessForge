@@ -19,7 +19,50 @@ namespace ChessPosition
         }
 
         /// <summary>
-        /// Checks if the first passed node has the second node as its ancestor (at any lavel).
+        /// Counts the number of non-null children of the passed node.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="inclTrainingMoves"></param>
+        /// <returns></returns>
+        public static int NonNullChildrenCount(TreeNode node, bool inclTrainingMoves = true)
+        {
+            int count = 0;
+
+            if (node != null)
+            {
+                foreach (TreeNode child in node.Children)
+                {
+                    if (!child.IsNullMove && (!child.IsNewTrainingMove || inclTrainingMoves))
+                    {
+                        count++;
+                    }
+                }
+            }
+
+            return count;
+        }
+
+
+        /// <summary>
+        /// Finds the first non-null child of the given node.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        public static TreeNode GetFirstNonNullChild(TreeNode node)
+        {
+            for (int i = 0; i < node.Children.Count; i++)
+            {
+                if (!node.Children[i].IsNullMove)
+                {
+                    return node.Children[i];
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Checks if the first passed node has the second node as its ancestor (at any level).
         /// </summary>
         /// <param name="node"></param>
         /// <param name="ancestor"></param>
@@ -676,7 +719,7 @@ namespace ChessPosition
                 {
                     nd.Comment = attrs.Comment;
                     nd.CommentBeforeMove = attrs.CommentBeforeMove;
-                    nd.Nags = attrs.Nags;
+                    nd.SetNags(attrs.Nags);
                     nd.References = attrs.References;
                     nd.IsDiagram = attrs.IsDiagram;
                     nd.IsDiagramFlipped = attrs.IsDiagramFlipped;
@@ -823,9 +866,13 @@ namespace ChessPosition
                         (!string.IsNullOrEmpty(nd.Comment)
                         || !string.IsNullOrEmpty(nd.CommentBeforeMove)
                         || !string.IsNullOrEmpty(nd.Nags)
-                        || !string.IsNullOrEmpty(nd.References)
-                        || nd.IsDiagram
                         )
+                    ||
+                        (attrTypes & (int)MoveAttribute.DIAGRAM) != 0 &&
+                        nd.IsDiagram
+                    ||
+                        (attrTypes & (int)MoveAttribute.REFERENCE) != 0 &&
+                        !string.IsNullOrEmpty(nd.References)
                     ||
                         (attrTypes & (int)MoveAttribute.ENGINE_EVALUATION) != 0 &&
                         !string.IsNullOrEmpty(nd.EngineEvaluation)

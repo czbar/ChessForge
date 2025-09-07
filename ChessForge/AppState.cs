@@ -879,7 +879,6 @@ namespace ChessForge
 
                 MainWin.UiMnAnnotations.IsEnabled = false;
                 MainWin.UiMnMainPaste.IsEnabled = false;
-                MainWin.UiMnCommentBeforeMove.IsEnabled = false;
                 MainWin.UiMnMergeChapters.IsEnabled = false;
 
                 MainWin.UiMnWorkbookOptions.IsEnabled = WorkbookManager.SessionWorkbook != null;
@@ -1767,7 +1766,6 @@ namespace ChessForge
 
                     MainWin.UiMnAnnotations.IsEnabled = IsTreeViewTabActive();
                     MainWin.UiMnMainPaste.IsEnabled = !string.IsNullOrEmpty(SystemClipboard.GetText());
-                    MainWin.UiMnCommentBeforeMove.IsEnabled = IsTreeViewTabActive();
                     MainWin.UiMnMergeChapters.IsEnabled = WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.GetChapterCount() > 1;
 
                     MainWin.UiMnMainDeleteGames.IsEnabled = WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.HasAnyModelGames;
@@ -1867,7 +1865,6 @@ namespace ChessForge
             {
                 MainWin.UiMnAnnotations.IsEnabled = false;
                 MainWin.UiMnMainPaste.IsEnabled = false;
-                MainWin.UiMnCommentBeforeMove.IsEnabled = false;
                 MainWin.UiMnMergeChapters.IsEnabled = false;
 
                 MainWin.UiMnciBookmarkPosition.IsEnabled = false;
@@ -1902,7 +1899,6 @@ namespace ChessForge
                         _mainWin.UiMnciEvalPos.Visibility = Visibility.Visible;
                         _mainWin.UiMnciEvalLine.Visibility = Visibility.Visible;
                         _mainWin.UiMnciDontSaveEvals.Visibility = Visibility.Visible;
-                        _mainWin.UiMnciSepar_EvalPos.Visibility = Visibility.Visible;
                         _mainWin.UiMnciSepar_EvalLine.Visibility = Visibility.Visible;
 
                         _mainWin.UiMncMainBoardSepar_2.Visibility = Visibility.Visible;
@@ -1935,7 +1931,6 @@ namespace ChessForge
                         _mainWin.UiMnciEvalPos.Visibility = Visibility.Collapsed;
                         _mainWin.UiMnciEvalLine.Visibility = Visibility.Collapsed;
                         _mainWin.UiMnciDontSaveEvals.Visibility = Visibility.Collapsed;
-                        _mainWin.UiMnciSepar_EvalPos.Visibility = Visibility.Collapsed;
                         _mainWin.UiMnciSepar_EvalLine.Visibility = Visibility.Collapsed;
 
                         _mainWin.UiMncMainBoardSepar_2.Visibility = Visibility.Collapsed;
@@ -1985,7 +1980,6 @@ namespace ChessForge
                         _mainWin.UiMnciEvalPos.Visibility = Visibility.Collapsed;
                         _mainWin.UiMnciEvalLine.Visibility = Visibility.Collapsed;
                         _mainWin.UiMnciDontSaveEvals.Visibility = Visibility.Collapsed;
-                        _mainWin.UiMnciSepar_EvalPos.Visibility = Visibility.Collapsed;
                         _mainWin.UiMnciSepar_EvalLine.Visibility = Visibility.Collapsed;
 
                         _mainWin.UiMnciReplay.Visibility = Visibility.Collapsed;

@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
 
@@ -322,7 +321,14 @@ namespace ChessForge
                     {
                         _dictResChapters[critPart] = new Chapter();
                         origTitle = RemoveEcoFromOriginalChapterTitle(origTitle);
-                        _dictResChapters[critPart].SetTitle(origTitle + " (" + critPart + ")");
+                        if (!string.IsNullOrWhiteSpace(origTitle))
+                        {
+                            _dictResChapters[critPart].SetTitle(origTitle + " (" + critPart + ")");
+                        }
+                        else
+                        {
+                            _dictResChapters[critPart].SetTitle(critPart);
+                        }
                     }
                     _dictResChapters[critPart].ModelGames.Add(game);
                 }
@@ -346,7 +352,14 @@ namespace ChessForge
                     Chapter exercChapter = new Chapter();
                     exercChapter.StudyTree.Tree.CreateNew();
                     exercChapter.Exercises = chapter.Exercises;
-                    exercChapter.SetTitle(origTitle + " - " + Properties.Resources.Exercises);
+                    if (!string.IsNullOrWhiteSpace(origTitle))
+                    {
+                        exercChapter.SetTitle(origTitle + " - " + Properties.Resources.Exercises);
+                    }
+                    else
+                    {
+                        exercChapter.SetTitle(Properties.Resources.Exercises);
+                    }
                     resChapters.Add(exercChapter);
                 }
 
@@ -434,7 +447,14 @@ namespace ChessForge
                     if (!_dictResChapters.ContainsKey(critPart))
                     {
                         _dictResChapters[critPart] = new Chapter();
-                        _dictResChapters[critPart].SetTitle(origTitle + " " + critPart);
+                        if (!string.IsNullOrWhiteSpace(origTitle))
+                        {
+                            _dictResChapters[critPart].SetTitle(origTitle + " " + critPart);
+                        }
+                        else
+                        {
+                            _dictResChapters[critPart].SetTitle(critPart);
+                        }
                     }
                     _dictResChapters[critPart].ModelGames.Add(game);
                 }
@@ -445,7 +465,14 @@ namespace ChessForge
                     if (!_dictResChapters.ContainsKey(critPart))
                     {
                         _dictResChapters[critPart] = new Chapter();
-                        _dictResChapters[critPart].SetTitle(origTitle + " " + critPart);
+                        if (!string.IsNullOrWhiteSpace(origTitle))
+                        {
+                            _dictResChapters[critPart].SetTitle(origTitle + " " + critPart);
+                        }
+                        else
+                        {
+                            _dictResChapters[critPart].SetTitle(critPart);
+                        }
                     }
                     _dictResChapters[critPart].Exercises.Add(exercise);
                 }
@@ -492,7 +519,14 @@ namespace ChessForge
                     if (!_dictResChapters.ContainsKey(round))
                     {
                         _dictResChapters[round] = new Chapter();
-                        _dictResChapters[round].SetTitle(origTitle + " - " + Properties.Resources.Round + " " + round);
+                        if (!string.IsNullOrWhiteSpace(origTitle))
+                        {
+                            _dictResChapters[round].SetTitle(origTitle + " - " + Properties.Resources.Round + " " + round);
+                        }
+                        else
+                        {
+                            _dictResChapters[round].SetTitle(Properties.Resources.Round + " " + round);
+                        }
                     }
                     _dictResChapters[round].ModelGames.Add(game);
                 }
@@ -503,7 +537,14 @@ namespace ChessForge
                     if (!_dictResChapters.ContainsKey(round))
                     {
                         _dictResChapters[round] = new Chapter();
-                        _dictResChapters[round].SetTitle(origTitle + " - " + Properties.Resources.Round + " " + round);
+                        if (!string.IsNullOrWhiteSpace(origTitle))
+                        {
+                            _dictResChapters[round].SetTitle(origTitle + " - " + Properties.Resources.Round + " " + round);
+                        }
+                        else
+                        {
+                            _dictResChapters[round].SetTitle(Properties.Resources.Round + " " + round);
+                        }
                     }
                     _dictResChapters[round].Exercises.Add(exercise);
                 }

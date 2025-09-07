@@ -198,6 +198,7 @@ namespace ChessForge
 
         private readonly string _par_checkmate_ = "par_checkmate_";
         private readonly string _par_stalemate_ = "par_stalemate_";
+        private readonly string _par_insufficientmaterial_ = "par_insufficientmaterial_";
 
         // Application's Main Window
         private MainWindow _mainWin;
@@ -330,7 +331,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// A color theme was change in the application and the colors
+        /// A color theme was changed in the application and the colors
         /// must be updated.
         /// </summary>
         public void UpdateColors()
@@ -359,7 +360,7 @@ namespace ChessForge
             {
                 if (block is Paragraph b)
                 {
-                    if (b.Name == _par_checkmate_ || b.Name == _par_stalemate_)
+                    if (b.Name == _par_checkmate_ || b.Name == _par_stalemate_ || b.Name == _par_insufficientmaterial_)
                     {
                         foreach (Inline inl in b.Inlines)
                         {
@@ -597,6 +598,7 @@ namespace ChessForge
                 // remove a possible checkmate/stalemate paragraph if exits
                 RemoveCheckmatePara();
                 RemoveStalematePara();
+                RemoveInsufficientMaterialPara();
             }
         }
 
@@ -637,6 +639,31 @@ namespace ChessForge
                 if (block is Paragraph)
                 {
                     if (((Paragraph)block).Name == _par_stalemate_)
+                    {
+                        paraToRemove = block as Paragraph;
+                        break;
+                    }
+                }
+            }
+
+            if (paraToRemove != null)
+            {
+                HostRtb.Document.Blocks.Remove(paraToRemove);
+            }
+        }
+
+        /// <summary>
+        /// Removes a insufficient material para if exists.
+        /// </summary>
+        private void RemoveInsufficientMaterialPara()
+        {
+            Paragraph paraToRemove = null;
+
+            foreach (var block in HostRtb.Document.Blocks)
+            {
+                if (block is Paragraph)
+                {
+                    if (((Paragraph)block).Name == _par_insufficientmaterial_)
                     {
                         paraToRemove = block as Paragraph;
                         break;
@@ -704,6 +731,10 @@ namespace ChessForge
             else if (nd.Position.IsStalemate)
             {
                 BuildStalemateParagraph(nd);
+            }
+            else if (nd.Position.IsInsufficientMaterial)
+            {
+                BuildInsufficientMaterialParagraph(nd);
             }
             else
             {
@@ -1058,6 +1089,25 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Builds a paragraph reporting insufficient material.
+        /// </summary>
+        /// <param name="nd"></param>
+        private void BuildInsufficientMaterialParagraph(TreeNode nd)
+        {
+            string paraName = _par_insufficientmaterial_;
+
+            Paragraph para = AddNewParagraphToDoc(HostRtb.Document, STYLE_CHECKMATE, "");
+            para.Foreground = ChessForgeColors.CurrentTheme.TrainingCheckmateForeground;
+            para.Name = paraName;
+
+            Run r_prefix = new Run();
+            r_prefix.Text = "\n" + Properties.Resources.TrnGameInsufficientMaterial;
+
+            para.Inlines.Add(r_prefix);
+            _mainWin.UiRtbTrainingProgress.ScrollToEnd();
+        }
+
+        /// <summary>
         /// Builds the "stem line" paragraphs that is always visible at the top
         /// of the view.
         /// </summary>
@@ -1162,6 +1212,12 @@ namespace ChessForge
                 isStalemate = PositionUtils.IsStalemate(nd.Position);
             }
 
+            bool isInsufficientMaterial = false;
+            if (!isMateCf && !isStalemate)
+            {
+                isInsufficientMaterial = PositionUtils.IsInsufficientMaterial(nd.Position);
+            }
+
             if (isMateCf)
             {
                 BuildMoveParagraph(nd, false);
@@ -1175,6 +1231,13 @@ namespace ChessForge
                 BuildStalemateParagraph(nd);
                 HostRtb.Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
                 _mainWin.BoardCommentBox.ReportStalemate();
+            }
+            else if (isInsufficientMaterial)
+            {
+                BuildMoveParagraph(nd, false);
+                BuildInsufficientMaterialParagraph(nd);
+                HostRtb.Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
+                _mainWin.BoardCommentBox.ReportInsufficientMaterial();
             }
             else
             {
@@ -1825,6 +1888,7 @@ namespace ChessForge
 
             RemoveCheckmatePara();
             RemoveStalematePara();
+            RemoveInsufficientMaterialPara();
         }
 
         /// <summary>

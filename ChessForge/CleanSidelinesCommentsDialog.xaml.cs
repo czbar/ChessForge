@@ -253,6 +253,14 @@ namespace ChessForge
             {
                 MoveAttrsFlags |= (int)MoveAttribute.SIDELINE;
             }
+            if (UiCbReferences.IsChecked == true)
+            {
+                MoveAttrsFlags |= (int)MoveAttribute.REFERENCE;
+            }
+            if (UiCbDiagrams.IsChecked == true)
+            {
+                MoveAttrsFlags |= (int)MoveAttribute.DIAGRAM;
+            }
 
             DialogResult = true;
         }

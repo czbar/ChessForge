@@ -442,7 +442,7 @@ namespace ChessForge
                 // game with no moves
                 return _mainWin.ActiveVariationTree.Nodes[0];
             }
-            else if (plyCount == 0) 
+            else if (plyCount == 0)
             {
                 return null;
             }
@@ -640,7 +640,7 @@ namespace ChessForge
                         e.Handled = true;
                         break;
                     case Key.E:
-                        bool isEngineOn = _mainWin.UiImgEngineOff.Visibility != System.Windows.Visibility.Visible 
+                        bool isEngineOn = _mainWin.UiImgEngineOff.Visibility != System.Windows.Visibility.Visible
                             || _mainWin.UiImgEngineOnGray.Visibility == System.Windows.Visibility.Visible;
                         if (isEngineOn)
                         {
@@ -756,7 +756,11 @@ namespace ChessForge
                             case Key.K:
                                 _mainWin.SetDontSaveEvalsMenuItems(!Configuration.DontSavePositionEvals);
                                 string msg = Configuration.DontSavePositionEvals ? Properties.Resources.FlMsgUpdatePositionEvalOff : Properties.Resources.FlMsgUpdatePositionEvalOn;
-                                CommentBox.HintType ht = Configuration.DontSavePositionEvals ? CommentBox.HintType.ERROR : CommentBox.HintType.INFO;
+                                CommentBox.HintType ht = Configuration.DontSavePositionEvals ? CommentBox.HintType.PROGRESS : CommentBox.HintType.INFO;
+                                if (Configuration.DontSavePositionEvals)
+                                {
+                                    _mainWin.EngineToggleOff_OnPreviewMouseLeftButtonDown(null, null);
+                                }
                                 _mainWin.BoardCommentBox.ShowFlashAnnouncement(msg, ht);
                                 e.Handled = true;
                                 break;

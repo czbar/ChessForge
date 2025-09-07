@@ -207,6 +207,12 @@ Comment=Comment
 #Annotation
 Annotation=Annotation
 
+#Diagram
+Diagram=Diagram
+
+#Diagrams
+Diagrams=Diagrams
+
 #Evaluation
 Evaluation=Evaluation
 
@@ -278,10 +284,10 @@ EvaluatePosition=Evaluate Position
 DoNotUpdatePositionEval=Do Not Update Position Evaluations
 
 #Flash message that position evals are now persisted 
-FlMsgUpdatePositionEvalOn=Position evaluations will now be updated
+FlMsgUpdatePositionEvalOn=Engine evaluations will now be saved
 
 #Flash message that position evals will now not be persisted 
-FlMsgUpdatePositionEvalOff=Position evaluations will no longer be updated
+FlMsgUpdatePositionEvalOff=Engine evaluations will not be saved
 
 
 #Evaluate a move
@@ -762,7 +768,7 @@ PasteEngineLines=Paste Engine Lines...
 MnEvaluateGames=Evaluate Games
 
 #Delete notes
-MenuDeleteNotes=Clean Lines and Comments...
+MenuDeleteNotes=Clean Lines and Annotations...
 
 
 #Strip all comments
@@ -1106,7 +1112,7 @@ ReorderLines=Reorder Lines
 #
 
 #Delete Notes
-DeleteNotes = Clean Lines and Comments
+DeleteNotes = Clean Lines and Annotations
 
 #Items to delete
 ItemsToDelete=Items to Delete
@@ -1844,6 +1850,9 @@ TrnEngineCheckmatedUser=The training game has ended. You have been checkmated by
 
 #Game ended in a stalemate
 TrnGameStalemate=This is a stalemate. The game has been drawn.
+
+#Game ended in a draw due to insufficient material
+TrnGameInsufficientMaterial=This is a draw due to insufficient material.
 
 #Training session start header
 TrnSessionStartsAfter=This training session begins after:
@@ -3066,6 +3075,9 @@ cbEngineCheckmatedYou=You have been checkmated by the engine. Better luck next t
 #This is a stalemate.
 cbStalemateAndDraw=This is a stalemate! You have drawn the game.
 
+#This is a draw by insufficient material.
+cbInsufficientMaterialAndDraw=Insufficient mating material! You have drawn the game.
+
 #Identical position was found
 cbIdenticalPositionFound=An identical position was found elsewhere.
 
@@ -3322,7 +3334,7 @@ OpMoveExercises=Move Exercises
 OpCopyExercises=Copy Exercises
 
 #Operation
-OpDeleteNotes=Clean Lines and Comments
+OpDeleteNotes=Clean Lines and Annotations
 
 #Operation
 OpDeleteComments=Delete Comments

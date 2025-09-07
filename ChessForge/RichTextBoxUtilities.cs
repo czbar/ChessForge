@@ -319,13 +319,13 @@ namespace ChessForge
             TextPointer tpMousePos = rtb.GetPositionFromPoint(ptMouse, true);
 
             // calculate a point half the font size below
-            Point ptBelow = new Point(ptMouse.X, ptMouse.Y + inline.FontSize / 2);
+            Point ptBelow = new Point(ptMouse.X, ptMouse.Y + inline.FontSize / 1.5);
 
             // get the TextPointer of the point below
             TextPointer tpBelow = rtb.GetPositionFromPoint(ptBelow, true);
 
-            // if it is still the same TextPointer, we clicked the upper half
-            return tpMousePos.CompareTo(tpBelow) == 0;
+            // if it is still the same TextPointer and not outside the control, we clicked the upper half
+            return tpMousePos.CompareTo(tpBelow) == 0 && ptMouse.Y + inline.FontSize < rtb.ActualHeight;
         }
 
         /// <summary>

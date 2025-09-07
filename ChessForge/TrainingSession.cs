@@ -206,9 +206,11 @@ namespace ChessForge
                 TreeNode nd = EngineGame.Line.NodeList[i];
                 TrainingLine.Add(nd);
 
-                // this check should not be nesessary, if the flow is as expected
+                // if we are restarting in the middle of training rather than
+                // at the very beginning , we need to remove moves after the StartPosition.
                 if (nd == StartPosition)
                 {
+                    EngineGame.Line.RollbackToNode(nd);
                     break;
                 }
             }
@@ -475,7 +477,7 @@ namespace ChessForge
             // follow the first child nodes until we reach a node that has no children
             while (node != null)
             {
-                TreeNode firstNonNullChild = GetFirstNonNullChild(node);
+                TreeNode firstNonNullChild = TreeUtils.GetFirstNonNullChild(node);
                 if (firstNonNullChild != null && !node.IsNewTrainingMove)
                 {
                     node = firstNonNullChild;
@@ -486,24 +488,6 @@ namespace ChessForge
                     break;
                 }
             }
-        }
-
-        /// <summary>
-        /// Finds the first non-null child of the given node.
-        /// </summary>
-        /// <param name="node"></param>
-        /// <returns></returns>
-        private static TreeNode GetFirstNonNullChild(TreeNode node)
-        {
-            for (int i = 0; i < node.Children.Count; i++)
-            {
-                if (!node.Children[i].IsNullMove)
-                {
-                    return node.Children[i];
-                }
-            }
-
-            return null;
         }
     }
 }

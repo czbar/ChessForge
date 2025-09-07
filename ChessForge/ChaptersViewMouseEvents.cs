@@ -1139,7 +1139,7 @@ namespace ChessForge
             AppState.IsDirty = true;
 
             RebuildChapterParagraph(doc, AppState.Workbook.Chapters[DraggedArticle.ChapterIndex]);
-            if (DraggedArticle.ChapterIndex != articleIndex)
+            if (DraggedArticle.ChapterIndex != targetChapterIndex)
             {
                 RebuildChapterParagraph(doc, targetChapter);
             }
@@ -1153,7 +1153,7 @@ namespace ChessForge
         /// <param name="targetIndex"></param>
         public void MoveChapter(int sourceIndex, int targetIndex)
         {
-            if (AppState.Workbook.MoveChapter(sourceIndex, targetIndex))
+            if (AppState.Workbook.MoveChapter(sourceIndex, ref targetIndex))
             {
                 BuildFlowDocumentForChaptersView(false);
 

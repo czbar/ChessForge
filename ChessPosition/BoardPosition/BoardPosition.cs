@@ -97,14 +97,19 @@ namespace ChessPosition
         public bool IsCheck = false;
 
         /// <summary>
-        /// Flags checkmate to the side that would moe next
+        /// Flags checkmate to the side that would move next
         /// </summary>
         public bool IsCheckmate = false;
 
         /// <summary>
-        /// Flags stalemate to the side that would moe next
+        /// Flags stalemate to the side that would move next
         /// </summary>
         public bool IsStalemate = false;
+
+        /// <summary>
+        /// Flags insufficient material to the side that would move next
+        /// </summary>
+        public bool IsInsufficientMaterial = false;
 
         /// <summary>
         /// Constructor.
