@@ -324,6 +324,9 @@ namespace ChessForge
                 TrainingLine.Add(EngineGame.Line.NodeList[i]);
             }
 
+            // necessary to bring back the engine game line to the move
+            EngineGame.Line.RollbackToNode(moveToUpdateIndex);
+
             // 2. Update the move at the given index
             TreeNode updatedNode = UpdateMoveAtIndex(moveToUpdateIndex, nextOrPrevLine);
 
