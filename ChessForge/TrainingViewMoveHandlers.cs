@@ -267,8 +267,8 @@ namespace ChessForge
                 // consult TrainingSession to find Workbook response
                 TreeNode nd = TrainingSession.GetNextTrainingLineMove(userChoiceNode);
 
-                // nd should never be null here, but if it is, we will use the first child
-                if (nd == null && TreeUtils.NonNullChildrenCount(nd) > 0)
+                // nd should never be null here, but if it is, we will use the first child of the user move
+                if (nd == null && TreeUtils.NonNullChildrenCount(userChoiceNode) > 0)
                 {
                     nd = TreeUtils.GetFirstNonNullChild(userChoiceNode);
                 }
