@@ -210,7 +210,7 @@ namespace ChessForge
                 // at the very beginning , we need to remove moves after the StartPosition.
                 if (nd == StartPosition)
                 {
-                    EngineGame.Line.RollbackToNode(nd);
+                    EngineGame.Line.RollbackToNode(i);
                     break;
                 }
             }
