@@ -170,27 +170,26 @@
                         <MenuItem  x:Name="UiMnFontDefaults" Header="{x:Static p:Resources.RestoreFontDefaults}" Click="UiMnFontDefaults_Click" />
                     </MenuItem>
                     <MenuItem Header="{x:Static p:Resources.Chapter}" Margin="0,0,0,0">
-                        <MenuItem x:Name="UiMnEvaluateGames" Header="{x:Static p:Resources.MnEvaluateGames}" Click="UiMnEvaluateGames_Click" />
-                        <MenuItem x:Name="UiMnAssignECO" Header="{x:Static p:Resources.AssignECO}" Click="UiAssignEco_Click" />
-                        <MenuItem x:Name="UiMnOrderGames" Header="{x:Static p:Resources.GamesOrder}" Click="UiMnSortGames_Click" />
-                        <MenuItem x:Name="UiMnSetThumbnails" Header="{x:Static p:Resources.GameThumbnails}" Click="UiMnSetThumbnails_Click" />
-                        <MenuItem x:Name="UiMnExerciseViewConfig" Header="{x:Static p:Resources.ShowSolutions}" IsCheckable="True" IsChecked="False" Click="UiMnExerciseViewConfig_Click" />
-                        <Separator />
-                        <MenuItem x:Name="UiMnSaveDiagrams" Header="{x:Static p:Resources.SaveDiagramsAsImages}" Click="UiMn_SaveDiagrams_Click" />
-                        <Separator />
-                        <MenuItem x:Name="UiMnSplitChapter" Header="{x:Static p:Resources.SplitChapterMenu}"  Click="UiMnSplitChapter_Click" />
                         <MenuItem x:Name="UiMnMergeChapters" Header="{x:Static p:Resources.MergeChapters}" Click="UiMnMergeChapters_Click" />
+                        <MenuItem x:Name="UiMnSplitChapter" Header="{x:Static p:Resources.SplitChapterMenu}"  Click="UiMnSplitChapter_Click" />
+                        <MenuItem x:Name="UiMnCopyArticles" Header="{x:Static p:Resources.CopyArticlesToChapter}" Click="UiMnCopyArticles_Click" />
+                        <MenuItem x:Name="UiMnMoveArticles" Header="{x:Static p:Resources.MoveArticlesToChapter}" Click="UiMnMoveArticles_Click" />
+                        <Separator />
+                        <MenuItem x:Name="UiMnAssignECO" Header="{x:Static p:Resources.AssignECO}" Click="UiAssignEco_Click" />
+                        <MenuItem x:Name="UiMnSetThumbnails" Header="{x:Static p:Resources.GameThumbnails}" Click="UiMnSetThumbnails_Click" />
+                        <MenuItem x:Name="UiMnOrderGames" Header="{x:Static p:Resources.GamesOrder}" Click="UiMnSortGames_Click" />
+                        <MenuItem x:Name="UiMnEvaluateGames" Header="{x:Static p:Resources.MnEvaluateGames}" Click="UiMnEvaluateGames_Click" />
+                        <Separator />
+                        <MenuItem x:Name="UiMnExerciseViewConfig" Header="{x:Static p:Resources.ShowSolutions}" IsCheckable="True" IsChecked="False" Click="UiMnExerciseViewConfig_Click" />
                     </MenuItem>
                     <MenuItem Header="{x:Static p:Resources.Tools}" Margin="0,0,0,0">
                         <MenuItem x:Name="UiMnMainImportFromPgn" Header="{x:Static p:Resources.ImportFromPgn}" Click="UiMnMainImportFromPgn_Click"  />
                         <MenuItem x:Name="UiMnDownloadWebGames" Header="{x:Static p:Resources.DownloadGamesFromWeb}" Click="UiMnDownloadWebGames_Click" />
-                        <Separator />
-                        <MenuItem x:Name="UiMnCopyArticles" Header="{x:Static p:Resources.CopyArticlesToChapter}" Click="UiMnCopyArticles_Click" />
-                        <MenuItem x:Name="UiMnMoveArticles" Header="{x:Static p:Resources.MoveArticlesToChapter}" Click="UiMnMoveArticles_Click" />
+                        <MenuItem x:Name="UiMnSaveDiagrams" Header="{x:Static p:Resources.SaveDiagramsAsImages}" Click="UiMn_SaveDiagrams_Click" />
                         <Separator />
                         <MenuItem x:Name="UiMnPasteEngineLines" Header="{x:Static p:Resources.PasteEngineLines}" Click="UiMnPasteEngineLines_Click"  />
-                        <MenuItem x:Name="UiMnCleanLinesAndComments" Header="{x:Static p:Resources.MenuDeleteNotes}" Click="UiCleanLinesAndComments_Click" />
                         <Separator />
+                        <MenuItem x:Name="UiMnCleanLinesAndComments" Header="{x:Static p:Resources.MenuDeleteNotes}" Click="UiCleanLinesAndComments_Click" />
                         <MenuItem x:Name="UiMnMainDeleteGames" Header="{x:Static p:Resources.DeleteGames}" Click="UiMnToolsDeleteGames_Click" />
                         <MenuItem x:Name="UiMnMainDeleteExercises" Header="{x:Static p:Resources.DeleteExercises}" Click="UiMnToolsDeleteExercises_Click"  />
                         <MenuItem x:Name="UiMnRemoveDuplicates" Header="{x:Static p:Resources.RemoveDuplicates}" Click="UiMnRemoveDuplicates_Click"  />
