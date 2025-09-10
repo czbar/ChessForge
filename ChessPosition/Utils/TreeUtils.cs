@@ -24,7 +24,7 @@ namespace ChessPosition
         /// <param name="node"></param>
         /// <param name="inclTrainingMoves"></param>
         /// <returns></returns>
-        public static int NonNullChildrenCount(TreeNode node, bool inclTrainingMoves = true)
+        public static int NonNullLeafChildrenCount(TreeNode node, bool inclTrainingMoves = true)
         {
             int count = 0;
 
@@ -32,7 +32,7 @@ namespace ChessPosition
             {
                 foreach (TreeNode child in node.Children)
                 {
-                    if (!child.IsNullMove && (!child.IsNewTrainingMove || inclTrainingMoves))
+                    if (!MoveUtils.IsNullLeafMove(child) && (!child.IsNewTrainingMove || inclTrainingMoves))
                     {
                         count++;
                     }
@@ -52,7 +52,7 @@ namespace ChessPosition
         {
             for (int i = 0; i < node.Children.Count; i++)
             {
-                if (!node.Children[i].IsNullMove)
+                if (!MoveUtils.IsNullLeafMove(node.Children[i]))
                 {
                     return node.Children[i];
                 }
