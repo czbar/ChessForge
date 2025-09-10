@@ -1970,7 +1970,7 @@ namespace GameTree
         /// <returns></returns>
         private bool IsValidTrainingMove(TreeNode nd)
         {
-            return !nd.IsNullMove || nd.Children.Count > 0;
+            return !MoveUtils.IsNullLeafMove(nd);
         }
 
         /// <summary>
