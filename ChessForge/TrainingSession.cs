@@ -349,7 +349,7 @@ namespace ChessForge
 
             int currChildIndex = moveToUpdateParent.Children.IndexOf(moveToUpdate);
 
-            int childIndex = GetNonNullSiblingIndex(moveToUpdate, nextOrPrevLine);
+            int childIndex = GetNonNullLeafSiblingIndex(moveToUpdate, nextOrPrevLine);
             if (childIndex >= 0)
             {
                 updatedNode = moveToUpdateParent.Children[childIndex];
@@ -386,7 +386,7 @@ namespace ChessForge
                     break;
                 }
 
-                if (node.ColorToMove == TrainingSide && GetNonNullSiblingIndex(node, nextOrPrevLine) >= 0)
+                if (node.ColorToMove == TrainingSide && GetNonNullLeafSiblingIndex(node, nextOrPrevLine) >= 0)
                 {
                     moveToUpdateIndex = i;
                     break;
@@ -403,7 +403,7 @@ namespace ChessForge
         /// <param name="node"></param>
         /// <param name="nextOtPrev"></param>
         /// <returns></returns>
-        private static int GetNonNullSiblingIndex(TreeNode node, bool nextOtPrev)
+        private static int GetNonNullLeafSiblingIndex(TreeNode node, bool nextOtPrev)
         {
             int index = -1;
 
@@ -419,7 +419,7 @@ namespace ChessForge
                     {
                         for (int i = idx + 1; i <= parent.Children.Count - 1; i++)
                         {
-                            if (!parent.Children[i].IsNullMove)
+                            if (!MoveUtils.IsNullLeafMove(parent.Children[i]))
                             {
                                 index = i;
                                 break;
@@ -430,7 +430,7 @@ namespace ChessForge
                     {
                         for (int i = idx - 1; i >= 0; i--)
                         {
-                            if (!parent.Children[i].IsNullMove)
+                            if (!MoveUtils.IsNullLeafMove(parent.Children[i]))
                             {
                                 index = i;
                                 break;
