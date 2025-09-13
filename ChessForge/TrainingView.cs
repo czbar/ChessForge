@@ -1403,7 +1403,7 @@ namespace ChessForge
 
             StringBuilder sbWbAlternatives = new StringBuilder();
 
-            List<TreeNode> lstAlternatives = GetWorkbookSiblings(moveNode);
+            List<TreeNode> lstAlternatives = GetWorkbookNonNullLeafSiblings(moveNode);
 
             if (lstAlternatives.Count == 0)
             {
@@ -1478,7 +1478,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd"></param>
         /// <returns></returns>
-        private List<TreeNode> GetWorkbookSiblings(TreeNode nd)
+        private List<TreeNode> GetWorkbookNonNullLeafSiblings(TreeNode nd)
         {
             List<TreeNode> lstNodes = new List<TreeNode>();
             if (nd != null && nd.Parent != null)
@@ -1488,7 +1488,7 @@ namespace ChessForge
                     // we cannot use ArePositionsIdentical() because nd only has static position
                     if (child.LastMoveEngineNotation != nd.LastMoveEngineNotation
                         && !child.IsNewTrainingMove
-                        && (!child.IsNullMove || child.Children.Count > 0))
+                        && !MoveUtils.IsNullLeafMove(child))
                     {
                         lstNodes.Add(child);
                     }

@@ -97,8 +97,10 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Removes all moves and plies trailing
-        /// the specified Node.
+        /// Removes all moves and plies trailing the specified Node.
+        /// Removes children of the specified node if they are "training moves".
+        /// NOTE that this affects the source variation tree
+        /// so use trainingMovesOnly == false carefully.
         /// </summary>
         /// <param name="nd"></param>
         public void RollbackToNode(TreeNode nd, bool trainingMovesOnly = true)
@@ -120,6 +122,23 @@ namespace ChessForge
                 }
             }
             CopyNodeListToTree();
+        }
+
+        /// <summary>
+        /// Removes all moves and plies trailing the specified Node.
+        /// It is used only from training when building a new training line.
+        /// </summary>
+        /// <param name="indexToRollbackTo"></param>
+        public void RollbackToNode(int indexToRollbackTo)
+        {
+            if (indexToRollbackTo >= 0)
+            {
+                for (int i = NodeList.Count - 1; i > indexToRollbackTo; i--)
+                {
+                    RemoveLastPly();
+                }
+                CopyNodeListToTree();
+            }
         }
 
         /// <summary>

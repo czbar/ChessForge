@@ -213,6 +213,23 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Checks if the passed node is a null move leaf (i.e. a null move with no children).
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <returns></returns>
+        public static bool IsNullLeafMove(TreeNode nd)
+        {
+            if (nd != null && nd.IsNullMove && nd.Children.Count == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Checks if 2 algebraic notations are identical (having removed any check or mate signs)
         /// </summary>
         /// <param name="move1"></param>

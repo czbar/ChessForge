@@ -152,6 +152,8 @@ namespace ChessForge
                         // move articles 
                         MoveArticlesToTargetEcoChapters(currChapter, list);
 
+                        AppState.IsDirty = true;
+
                         // collect info for the Undo operation
                         WorkbookOperationType typ = WorkbookOperationType.MOVE_ARTICLES_MULTI_CHAPTER;
                         WorkbookOperation op = new WorkbookOperation(typ, currChapter, (object)list);

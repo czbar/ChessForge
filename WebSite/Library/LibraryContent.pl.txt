@@ -12,6 +12,10 @@ Description: Partie z turniejów i meczów.
       Description: Wszystkie partie z meczów o mistrzostwo świata mężczyzn.
       File:Tournaments/Mens World Individual Championships.pgn
 
+	  Book:Turniej Kandydatów - Zurych 1953
+      Description: Partie turnieju Kandydatów do meczu o Mistrzostwo Świata, Zurych 1953.
+      File:Tournaments/Candidates 1953 - Zurich.pgn
+
 	  Book:Turniej Kandydatów 2024
       Description: Partie turnieju Kandydatów do meczu o Mistrzostwo Świata, Toronto 2024
       File:Tournaments/FIDE Candidates 2024 - Men.pgn

@@ -146,7 +146,7 @@ namespace ChessForge
                     }
                     else
                     {
-                        if (!child.IsNewTrainingMove && (!child.IsNullMove || child.Children.Count > 0))
+                        if (!child.IsNewTrainingMove && !MoveUtils.IsNullLeafMove(child))
                         {
                             _otherMovesInWorkbook.Add(child);
                         }
@@ -195,7 +195,7 @@ namespace ChessForge
                     InsertCommentIntoUserMovePara(foundMove != null, _userMove);
 
                     // if we found a move and this is not the last move in the Workbbook, request response.
-                    if (foundMove != null && TreeUtils.NonNullChildrenCount(foundMove, false) > 0)
+                    if (foundMove != null && TreeUtils.NonNullLeafChildrenCount(foundMove, false) > 0)
                     {
                         // start the timer that will trigger a workbook response by RequestWorkbookResponse()
                         TrainingSession.ChangeCurrentState(TrainingSession.State.AWAITING_WORKBOOK_RESPONSE);
@@ -267,8 +267,8 @@ namespace ChessForge
                 // consult TrainingSession to find Workbook response
                 TreeNode nd = TrainingSession.GetNextTrainingLineMove(userChoiceNode);
 
-                // nd should never be null here, but if it is, we will use the first child
-                if (nd == null && TreeUtils.NonNullChildrenCount(nd) > 0)
+                // nd should never be null here, but if it is, we will use the first child of the user move
+                if (nd == null && TreeUtils.NonNullLeafChildrenCount(userChoiceNode) > 0)
                 {
                     nd = TreeUtils.GetFirstNonNullChild(userChoiceNode);
                 }

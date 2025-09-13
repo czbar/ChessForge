@@ -124,8 +124,8 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Show or hide Split by and Spli Criteria group boxes
-        /// in response to the chnaging state of the Move Games check box
+        /// Show or hide Split by and Split Criteria group boxes
+        /// in response to the changing state of the Move Games check box
         /// </summary>
         /// <param name="show"></param>
         private void ShowSplitByGroups(bool show)
