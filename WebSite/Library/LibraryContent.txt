@@ -6,11 +6,15 @@ Bookcase:Tournaments
 Description: Games from tournaments and matches.
 
     Shelf:World Championship 
-    Description: Games from World Championship Matches.
+    Description: Games from World Championship matches and qualifying tournaments.
     
 	  Book:Men's World Championships
       Description: All games from Men's World Championship Matches and Tournaments.
       File:Tournaments/Mens World Individual Championships.pgn
+    
+	  Book:FIDE Candidates 1953 (Men)
+      Description: All games from the legendary Candidates Tournament, Zurich 1953.
+      File:Tournaments/Candidates 1953 - Zurich.pgn
 
 	  Book:FIDE Candidates 2024 (Men)
       Description: All games of the Men's World Chamionship Candidates, Toronto 2024
