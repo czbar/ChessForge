@@ -969,6 +969,10 @@ ManageChapter=
 #english: SplitChapterMenu=Split Chapter
 SplitChapterMenu=
 
+#description: Match Games to Chapters by ECO
+#english: MatchGamesToChaptersByECO=Match Games to Chapters by ECO
+MatchGamesToChaptersByECO=
+
 
 ###########################
 #
@@ -2472,7 +2476,7 @@ MoveGameUp=
 MoveGameDown=
 
 #description: Move game to another chapter
-#english: MoveGameToChapter=Move Game To Chapter...
+#english: MoveGameToChapter=Move Game to Chapter...
 MoveGameToChapter=
 
 #description: Move exercise one position up
@@ -2484,7 +2488,7 @@ MoveExerciseUp=
 MoveExerciseDown=
 
 #description: Move exercise to another chapter
-#english: MoveExerciseToChapter=Move Exercise To Chapter...
+#english: MoveExerciseToChapter=Move Exercise to Chapter...
 MoveExerciseToChapter=
 
 #description: Deleted selected chapter
@@ -3025,6 +3029,14 @@ FlMsgChaptersImported=
 #description: Flash message: Number of diagrams saved
 #english: FlMsgNumberOfDiagramsSaved=Number of diagrams saved
 FlMsgNumberOfDiagramsSaved=
+
+#description: Flash message: Number of games moved
+#english: FlMsgNumberGamesMoved=Number of Games Moved
+FlMsgNumberGamesMoved=
+
+#description: Flash message: Number of chapters created
+#english: FlMsgNumberOfChaptersCreated=Number of New Chapters
+FlMsgNumberOfChaptersCreated=
 
 ##################################
 #

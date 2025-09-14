@@ -786,6 +786,9 @@
   <data name="SplitChapterMenu" xml:space="preserve">
     <value>Podziel Rozdział</value>
   </data>
+  <data name="MatchGamesToChaptersByECO" xml:space="preserve">
+    <value>Dopasuj Partie do Rozdziałów wg ECO</value>
+  </data>
   <data name="Tools" xml:space="preserve">
     <value>Narzędzia</value>
   </data>
@@ -2085,6 +2088,12 @@ UWAGA: Oceny nie są uaktualniane (zezwól przez Ctrl+K).</value>
   </data>
   <data name="FlMsgNumberOfDiagramsSaved" xml:space="preserve">
     <value>Liczba zapisanych diagramów</value>
+  </data>
+  <data name="FlMsgNumberGamesMoved" xml:space="preserve">
+    <value>Liczba przesuniętych partii</value>
+  </data>
+  <data name="FlMsgNumberOfChaptersCreated" xml:space="preserve">
+    <value>Liczba nowych rozdziałów</value>
   </data>
   <data name="MsgNoDuplicatesFound" xml:space="preserve">
     <value>Nie znaleziono duplikatów.</value>
