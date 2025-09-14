@@ -30,47 +30,42 @@ namespace ChessForge
 
             if (dlg.ShowDialog() == true)
             {
-                if (dlg.MoveToChaptersPerECO)
+                switch (SplitChapterDialog.LastSplitBy)
                 {
-                    DistributeGamesByECO(chapter);
+                    case SplitBy.ECO:
+                        createdChapters = SplitChapterByECO(SplitChapterDialog.LastSplitByCrtierion, chapter, origTitle);
+                        break;
+                    case SplitBy.DATE:
+                        createdChapters = SplitChapterByDate(SplitChapterDialog.LastSplitByCrtierion, chapter, origTitle);
+                        break;
+                    case SplitBy.ROUND:
+                        createdChapters = SplitChapterByRound(chapter, origTitle);
+                        break;
                 }
-                else
+
+                if (createdChapters != null && createdChapters.Count > 1)
                 {
-                    switch (SplitChapterDialog.LastSplitBy)
+                    //collect info for the Undo operation
+                    WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.SPLIT_CHAPTER, chapter, createdChapters);
+                    WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
+
+                    // remove the current chapter, insert the new chapters
+                    // and set the first new one as Active (so the ActiveChapterIndex will not change)
+                    int index = AppState.Workbook.ActiveChapterIndex;
+
+                    // replace the chapter at index with the first one from the list
+                    AppState.Workbook.Chapters[index] = createdChapters[0];
+
+                    for (int i = 1; i < createdChapters.Count; i++)
                     {
-                        case SplitBy.ECO:
-                            createdChapters = SplitChapterByECO(SplitChapterDialog.LastSplitByCrtierion, chapter, origTitle);
-                            break;
-                        case SplitBy.DATE:
-                            createdChapters = SplitChapterByDate(SplitChapterDialog.LastSplitByCrtierion, chapter, origTitle);
-                            break;
-                        case SplitBy.ROUND:
-                            createdChapters = SplitChapterByRound(chapter, origTitle);
-                            break;
+                        AppState.Workbook.Chapters.Insert(index + i, createdChapters[i]);
                     }
 
-                    if (createdChapters != null && createdChapters.Count > 1)
-                    {
-                        //collect info for the Undo operation
-                        WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.SPLIT_CHAPTER, chapter, createdChapters);
-                        WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
+                    AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgNumberOfChaptersCreated + ": " + createdChapters.ToString(), CommentBox.HintType.INFO);
 
-                        // remove the current chapter, insert the new chapters
-                        // and set the first new one as Active (so the ActiveChapterIndex will not change)
-                        int index = AppState.Workbook.ActiveChapterIndex;
-
-                        // replace the chapter at index with the first one from the list
-                        AppState.Workbook.Chapters[index] = createdChapters[0];
-
-                        for (int i = 1; i < createdChapters.Count; i++)
-                        {
-                            AppState.Workbook.Chapters.Insert(index + i, createdChapters[i]);
-                        }
-
-                        AppState.MainWin.ExpandCollapseChaptersView(false, false);
-                        AppState.SetupGuiForCurrentStates();
-                        AppState.IsDirty = true;
-                    }
+                    AppState.MainWin.ExpandCollapseChaptersView(false, false);
+                    AppState.SetupGuiForCurrentStates();
+                    AppState.IsDirty = true;
                 }
             }
         }
@@ -131,7 +126,7 @@ namespace ChessForge
         /// based on the ECO and moves it there.
         /// </summary>
         /// <param name="chapter"></param>
-        private static void DistributeGamesByECO(Chapter currChapter)
+        public static int DistributeGamesByECO(Chapter currChapter)
         {
             List<EcoChapterStats> stats = CalculateEcoStats(currChapter);
             AllocateGamesToChapterByEco(currChapter, stats);
@@ -169,6 +164,7 @@ namespace ChessForge
                 MessageBox.Show(Properties.Resources.MsgNoGoodChapterForAnyGame, Properties.Resources.Information, MessageBoxButton.OK, MessageBoxImage.Information);
             }
 
+            return list.Count;
         }
 
         /// <summary>
@@ -368,7 +364,7 @@ namespace ChessForge
                 // make sense to sort games in all new chapters by ECO, e.g. if we split by E2* we want E20 before E21 etc.
                 foreach (Chapter ch in resChapters)
                 {
-                    ChapterUtils.SortGames(ch, GameSortCriterion.SortItem.ECO, GameSortCriterion.SortItem.ASCENDING);
+                    ChapterUtils.SortGames(ch, GameSortCriterion.SortItem.ECO, GameSortCriterion.SortItem.ASCENDING, false);
                 }
             }
             catch (Exception ex)
