@@ -75,6 +75,12 @@ namespace ChessForge
             {
                 cmRefs.FontSize = size;
             }
+
+            ContextMenu cmAssess = AppState.MainWin.Resources["CmAssessments"] as ContextMenu;
+            if (cmAssess != null)
+            {
+                cmAssess.FontSize = size;
+            }
         }
 
 
