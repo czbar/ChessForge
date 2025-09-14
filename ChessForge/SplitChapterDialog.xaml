@@ -6,35 +6,34 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
         mc:Ignorable="d"
-        Title="{x:Static p:Resources.SplitChapter}" Height="285" Width="362">
+        Title="{x:Static p:Resources.SplitChapter}" Height="250" Width="365">
     <Grid>
         <Label x:Name="UiLabelChapterTitle" Content="{x:Static p:Resources.Chapter}" HorizontalAlignment="Center" HorizontalContentAlignment="Left" Margin="-15,6,0,0" Padding="35,0,20,0" VerticalAlignment="Top"/>
-        <GroupBox x:Name="UiGbSplitBy" Header="{x:Static p:Resources.SplitBy}" Margin="12,30,0,0" Width="155" HorizontalAlignment="Left" VerticalAlignment="Top" Height="115">
+        <GroupBox x:Name="UiGbSplitBy" Header="{x:Static p:Resources.SplitBy}" Margin="14,34,0,0" Width="155" HorizontalAlignment="Left" VerticalAlignment="Top" Height="115">
             <StackPanel>
                 <RadioButton x:Name="UiRbSplitByEco" Content="{x:Static p:Resources.ECO}" HorizontalAlignment="Left" Margin="10,15,0,0" Checked="UiRbSplitByEco_Checked"/>
                 <RadioButton x:Name="UiRbSplitByDate" Content="{x:Static p:Resources.Date}" HorizontalAlignment="Left" Margin="10,10,0,0" Checked="UiRbSplitByDate_Checked"/>
                 <RadioButton x:Name="UiRbSplitByRound" Content="{x:Static p:Resources.Round}" HorizontalAlignment="Left" Margin="10,10,0,0" Checked="UiRbSplitByRound_Checked"/>
             </StackPanel>
         </GroupBox>
-        <GroupBox x:Name="UiGbDateCrit" Header="{x:Static p:Resources.Granularity}" Margin="180,30,0,0" Width="155" HorizontalAlignment="Left" VerticalAlignment="Top" Height="115">
+        <GroupBox x:Name="UiGbDateCrit" Header="{x:Static p:Resources.Granularity}" Margin="180,34,0,0" Width="155" HorizontalAlignment="Left" VerticalAlignment="Top" Height="115">
             <StackPanel>
                 <RadioButton x:Name="UiRbCritYear" Content="{x:Static p:Resources.Year}" HorizontalAlignment="Left" Margin="10,15,0,0"/>
                 <RadioButton x:Name="UiRbCritMonth" Content="{x:Static p:Resources.Month}" HorizontalAlignment="Left" Margin="10,10,0,0"/>
                 <RadioButton x:Name="UiRbCritDay" Content="{x:Static p:Resources.Day}" HorizontalAlignment="Left" Margin="10,10,0,0"/>
             </StackPanel>
         </GroupBox>
-        <GroupBox x:Name="UiGbEcoCrit" Header="{x:Static p:Resources.Granularity}" Margin="180,30,0,0" Width="155" HorizontalAlignment="Left" VerticalAlignment="Top" Height="115">
+        <GroupBox x:Name="UiGbEcoCrit" Header="{x:Static p:Resources.Granularity}" Margin="180,34,0,0" Width="155" HorizontalAlignment="Left" VerticalAlignment="Top" Height="115">
             <StackPanel>
                 <RadioButton x:Name="UiRbCritAtoE" Content="A...E" HorizontalAlignment="Left" Margin="10,15,0,0"/>
                 <RadioButton x:Name="UiRbCritA0toE9" Content="A0 ... E9" HorizontalAlignment="Left" Margin="10,10,0,0"/>
                 <RadioButton x:Name="UiRbCritA00toE99" Content="A00 ... E99" HorizontalAlignment="Left" Margin="10,10,0,0"/>
             </StackPanel>
         </GroupBox>
-        <GroupBox x:Name="UiGbRoundCrit" Foreground="LightGray" Header="{x:Static p:Resources.Granularity}" Margin="180,30,0,0" Width="155" HorizontalAlignment="Left" VerticalAlignment="Top" Height="115">
+        <GroupBox x:Name="UiGbRoundCrit" Foreground="LightGray" Header="{x:Static p:Resources.Granularity}" Margin="180,34,0,0" Width="155" HorizontalAlignment="Left" VerticalAlignment="Top" Height="115">
         </GroupBox>
         <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="-220,0,0,20" Width="90" VerticalAlignment="Bottom" Click="UiBtnOk_Click"  />
         <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="0,0,0,20" Width="90" VerticalAlignment="Bottom"/>
         <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Center" Margin="220,0,0,20" Width="90" VerticalAlignment="Bottom" Click="UiBtnHelp_Click" />
-        <CheckBox x:Name="UiCbDistribByEco" Content="{x:Static p:Resources.MoveGamesPerEco}" HorizontalAlignment="Left" Margin="25,168,0,0" VerticalAlignment="Top" Checked="UiCbDistribByEco_Checked" Unchecked="UiCbDistribByEco_Unchecked"/>
     </Grid>
 </Window>
