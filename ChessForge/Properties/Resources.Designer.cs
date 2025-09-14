@@ -6488,6 +6488,24 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remove All Assessments.
+        /// </summary>
+        public static string RemoveAllAssessments {
+            get {
+                return ResourceManager.GetString("RemoveAllAssessments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Assessment.
+        /// </summary>
+        public static string RemoveAssessment {
+            get {
+                return ResourceManager.GetString("RemoveAssessment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove Diagram.
         /// </summary>
         public static string RemoveDiagram {

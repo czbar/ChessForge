@@ -917,6 +917,19 @@ AutoPlaceAllReferences=Adjust All References' Positions
 
 ###########################
 #
+# Header: CONTEXT MENU for Assessments
+#
+
+#Remove assessment
+RemoveAssessment=Remove Assessment
+
+#Remove reference
+RemoveAllAssessments=Remove All Assessments
+
+
+
+###########################
+#
 # Header: Self-indexing view
 #
 

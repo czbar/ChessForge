@@ -919,6 +919,12 @@ UWAGA: Oceny nie są uaktualniane (zezwól przez Ctrl+K).</value>
   <data name="AutoPlaceAllReferences" xml:space="preserve">
     <value>Popraw pozycje wszystkich odsyłaczy</value>
   </data>
+  <data name="RemoveAssessment" xml:space="preserve">
+    <value>Usuń ocenę</value>
+  </data>
+  <data name="RemoveAllAssessments" xml:space="preserve">
+    <value>Usuń wszystkie oceny</value>
+  </data>
   <data name="TtClickToExpandCollapse" xml:space="preserve">
     <value>Kliknij by zwinąć/rozwinąć</value>
   </data>

@@ -919,6 +919,12 @@ NOTE: Evaluations are not being updated (Ctrl+K to allow).</value>
   <data name="AutoPlaceAllReferences" xml:space="preserve">
     <value>Adjust All References' Positions</value>
   </data>
+  <data name="RemoveAssessment" xml:space="preserve">
+    <value>Remove Assessment</value>
+  </data>
+  <data name="RemoveAllAssessments" xml:space="preserve">
+    <value>Remove All Assessments</value>
+  </data>
   <data name="TtClickToExpandCollapse" xml:space="preserve">
     <value>Click to Expand/Collapse</value>
   </data>

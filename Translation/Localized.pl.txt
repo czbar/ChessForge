@@ -1184,6 +1184,21 @@ AutoPlaceAllReferences=Popraw pozycje wszystkich odsyłaczy
 
 ###########################
 #
+# Header: CONTEXT MENU for Assessments
+#
+
+#description: Remove assessment
+#english: RemoveAssessment=Remove Assessment
+RemoveAssessment=Usuń ocenę
+
+#description: Remove reference
+#english: RemoveAllAssessments=Remove All Assessments
+RemoveAllAssessments=Usuń wszystkie oceny
+
+
+
+###########################
+#
 # Header: Self-indexing view
 #
 
