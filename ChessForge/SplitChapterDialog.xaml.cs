@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
-using System.Windows.Media;
+﻿using System.Windows;
 
 namespace ChessForge
 {
@@ -36,12 +32,6 @@ namespace ChessForge
     public partial class SplitChapterDialog : Window
     {
         /// <summary>
-        /// Whether the Move to Chapters per ECO
-        /// option was selected.
-        /// </summary>
-        public bool MoveToChaptersPerECO;
-
-        /// <summary>
         /// Last used split by field
         /// </summary>
         public static SplitBy LastSplitBy = SplitBy.ECO;
@@ -62,11 +52,6 @@ namespace ChessForge
             SetSplitBySelection(LastSplitBy);
             SetDefaultCriterionButton(LastSplitBy);
             SetActiveCriterionButton(LastSplitBy);
-
-            if (AppState.Workbook.Chapters.Count <= 1)
-            {
-                UiCbDistribByEco.IsEnabled = false;
-            }
         }
 
         /// <summary>
@@ -96,58 +81,6 @@ namespace ChessForge
                     UiGbDateCrit.Visibility = Visibility.Collapsed;
                     UiGbRoundCrit.Visibility = Visibility.Visible;
                     break;
-            }
-        }
-
-        /// <summary>
-        /// Retrieves the current SplitBy selection.
-        /// </summary>
-        /// <returns></returns>
-        private SplitBy CurrentSplitBy()
-        {
-            SplitBy splitBy;
-
-            if (UiRbSplitByEco.IsChecked == true)
-            {
-                splitBy = SplitBy.ECO;
-            }
-            else if (UiRbSplitByDate.IsChecked == true)
-            {
-                splitBy = SplitBy.DATE;
-            }
-            else
-            {
-                splitBy = SplitBy.ROUND;
-            }
-
-            return splitBy;
-        }
-
-        /// <summary>
-        /// Show or hide Split by and Split Criteria group boxes
-        /// in response to the changing state of the Move Games check box
-        /// </summary>
-        /// <param name="show"></param>
-        private void ShowSplitByGroups(bool show)
-        {
-            if (show)
-            {
-                SetSplitBySelection(CurrentSplitBy());
-                UiGbSplitBy.Foreground = Brushes.Black;
-                UiRbSplitByDate.Visibility = Visibility.Visible;
-                UiRbSplitByEco.Visibility = Visibility.Visible;
-                UiRbSplitByRound.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                UiGbEcoCrit.Visibility = Visibility.Hidden;
-                UiGbDateCrit.Visibility = Visibility.Hidden;
-                UiGbRoundCrit.Visibility = Visibility.Visible;
-
-                UiGbSplitBy.Foreground = Brushes.LightGray;
-                UiRbSplitByDate.Visibility = Visibility.Hidden;
-                UiRbSplitByEco.Visibility = Visibility.Hidden;
-                UiRbSplitByRound.Visibility = Visibility.Hidden;
             }
         }
 
@@ -239,8 +172,6 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnOk_Click(object sender, RoutedEventArgs e)
         {
-            MoveToChaptersPerECO = UiCbDistribByEco.IsChecked == true;
-
             if (UiRbSplitByEco.IsChecked == true)
             {
                 LastSplitBy = SplitBy.ECO;
@@ -290,26 +221,6 @@ namespace ChessForge
         private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Splitting-Chapter");
-        }
-
-        /// <summary>
-        /// The ditribute by ECO box was checked.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiCbDistribByEco_Checked(object sender, RoutedEventArgs e)
-        {
-            ShowSplitByGroups(false);
-        }
-
-        /// <summary>
-        /// The distribute by ECO box was unchecked.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiCbDistribByEco_Unchecked(object sender, RoutedEventArgs e)
-        {
-            ShowSplitByGroups(true);
         }
     }
 }
