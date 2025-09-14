@@ -2732,6 +2732,22 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Finds games in the active chapter that would better 
+        /// be placed in other chapters based on their ECO codes.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnMatchGamesToChapterByECO_Click(object sender, RoutedEventArgs e)
+        {
+            int gamesMoved = SplitChapterUtils.DistributeGamesByECO(AppState.ActiveChapter);
+
+            if (gamesMoved > 0)
+            {
+                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgNumberGamesMoved + ": " + gamesMoved.ToString(), CommentBox.HintType.INFO);
+            }
+        }
+
+        /// <summary>
         /// Opens the dialog for importing games from the Web
         /// </summary>
         /// <param name="sender"></param>
