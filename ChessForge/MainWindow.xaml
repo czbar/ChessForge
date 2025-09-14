@@ -171,6 +171,7 @@
                     <MenuItem Header="{x:Static p:Resources.Chapter}" Margin="0,0,0,0">
                         <MenuItem x:Name="UiMnMergeChapters" Header="{x:Static p:Resources.MergeChapters}" Click="UiMnMergeChapters_Click" />
                         <MenuItem x:Name="UiMnSplitChapter" Header="{x:Static p:Resources.SplitChapterMenu}"  Click="UiMnSplitChapter_Click" />
+                        <MenuItem x:Name="UiMnMatchGamesToChaptersByElo" Header="{x:Static p:Resources.MatchGamesToChaptersByECO}"  Click="UiMnMatchGamesToChapterByECO_Click" />
                         <MenuItem x:Name="UiMnCopyArticles" Header="{x:Static p:Resources.CopyArticlesToChapter}" Click="UiMnCopyArticles_Click" />
                         <MenuItem x:Name="UiMnMoveArticles" Header="{x:Static p:Resources.MoveArticlesToChapter}" Click="UiMnMoveArticles_Click" />
                         <Separator />
