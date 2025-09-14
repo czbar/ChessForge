@@ -163,6 +163,11 @@ namespace ChessForge
         public int LastClickedNodeId { get => _lastClickedNodeId; set => _lastClickedNodeId = value; }
 
         /// <summary>
+        /// Most recent node for which assessment was clicked
+        /// </summary>
+        public int LastClickedAssessmentNodeId;
+
+        /// <summary>
         /// Layout definitions for paragraphs at different levels.
         /// </summary>
         private Dictionary<string, RichTextPara> _richTextParas = new Dictionary<string, RichTextPara>()
