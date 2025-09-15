@@ -21,7 +21,7 @@
         <TextBox x:Name="UiTbFromMove" Visibility="Collapsed" HorizontalAlignment="Left" Margin="658,44,0,0" HorizontalContentAlignment="Center" Text="" VerticalAlignment="Top" Width="30"/>
         <Label x:Name="UiLblDash" Visibility="Collapsed" Content="-" HorizontalAlignment="Left" Margin="693,38,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="UiTbToMove" Visibility="Collapsed" HorizontalAlignment="Left" Margin="712,44,0,0" HorizontalContentAlignment="Center" Text="" VerticalAlignment="Top" Width="30"/>
-        <ListView x:Name="UiLvGames" Margin="10,0,10,0"  Grid.Row="1" ItemsSource="{Binding}" MouseDoubleClick="UiLvGames_MouseDoubleClick" MouseRightButtonUp="UiLvGames_MouseRightButtonUp" ContextMenuOpening="UiLvGames_ContextMenuOpening" >
+        <ListView x:Name="UiLvGames" Margin="10,0,10,0"  Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ItemsSource="{Binding}" MouseDoubleClick="UiLvGames_MouseDoubleClick" MouseRightButtonUp="UiLvGames_MouseRightButtonUp" ContextMenuOpening="UiLvGames_ContextMenuOpening" >
             <ListView.ContextMenu>
                 <ContextMenu x:Name="UiCmGame">
                     <MenuItem x:Name="UiMnPreviewGame" Header="" Click="UiMnPreviewGame_Click" />
