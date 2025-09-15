@@ -693,7 +693,7 @@ namespace ChessForge
             {
                 CheckBox cb = sender as CheckBox;
                 ArticleListItem item = cb.DataContext as ArticleListItem;
-                if (item.IsChapterHeader)
+                if (item != null && item.IsChapterHeader)
                 {
                     if (!item.IsChapterExpanded)
                     {
@@ -726,7 +726,7 @@ namespace ChessForge
             {
                 CheckBox cb = sender as CheckBox;
                 ArticleListItem item = cb.DataContext as ArticleListItem;
-                if (item.IsChapterHeader)
+                if (item != null && item.IsChapterHeader)
                 {
                     if (!item.IsChapterExpanded)
                     {

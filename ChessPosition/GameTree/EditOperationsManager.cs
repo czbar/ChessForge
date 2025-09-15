@@ -19,9 +19,10 @@ namespace GameTree
         /// <summary>
         /// Performs the undo of the Operation in the queue.
         /// </summary>
-        public void Undo(out EditOperation.EditType tp, out string selectedLineId, out int selectedNodeId, out HashSet<int> nodesToUpdate)
+        public void Undo(out EditOperation.EditType tp, out string selectedLineId, out int selectedNodeId, out HashSet<int> nodesToUpdate, out bool noRefresh)
         {
             nodesToUpdate = null;
+            noRefresh = false;
 
             tp = EditOperation.EditType.NONE;
             selectedLineId = "";
@@ -52,6 +53,7 @@ namespace GameTree
                         break;
                     case EditOperation.EditType.REORDER_LINES:
                         _owningTree.UndoReorderLines(op.OpData_1, op.OpData_2);
+                        selectedNodeId = (op.OpData_1 as TreeNode).NodeId;
                         break;
                     case EditOperation.EditType.UPDATE_ANNOTATION:
                         _owningTree.UndoUpdateAnnotation(op.Node);
@@ -101,9 +103,15 @@ namespace GameTree
                         break;
                     case EditOperation.EditType.DELETE_REFERENCE:
                         selectedNodeId = _owningTree.UndoDeleteReference(op.OpData_1, op.OpData_2, out nodesToUpdate);
+                        noRefresh = true;
                         break;
                     case EditOperation.EditType.REPOSITION_REFERENCES:
                         selectedNodeId =  _owningTree.UndoRepositionReferences(op.OpData_1, out nodesToUpdate);
+                        noRefresh = true;
+                        break;
+                    case EditOperation.EditType.DELETE_ASSESSMENTS:
+                        _owningTree.UndoDeleteAssessments(op.OpData_1, out nodesToUpdate);
+                        noRefresh = true;
                         break;
                 }
             }

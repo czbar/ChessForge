@@ -969,6 +969,10 @@ ManageChapter=Organizuj Rozdział
 #english: SplitChapterMenu=Split Chapter
 SplitChapterMenu=Podziel Rozdział
 
+#description: Match Games to Chapters by ECO
+#english: MatchGamesToChaptersByECO=Match Games to Chapters by ECO
+MatchGamesToChaptersByECO=Dopasuj Partie do Rozdziałów wg ECO
+
 
 ###########################
 #
@@ -1176,6 +1180,21 @@ AutoPlaceMoveReferences=Popraw pozycje odsyłaczy w tym ruchu
 #description: Automatically place all references in the optimal places
 #english: AutoPlaceAllReferences=Adjust All References' Positions
 AutoPlaceAllReferences=Popraw pozycje wszystkich odsyłaczy
+
+
+###########################
+#
+# Header: CONTEXT MENU for Assessments
+#
+
+#description: Remove assessment
+#english: RemoveAssessment=Remove Assessment
+RemoveAssessment=Usuń ocenę
+
+#description: Remove reference
+#english: RemoveAllAssessments=Remove All Assessments
+RemoveAllAssessments=Usuń wszystkie oceny
+
 
 
 ###########################
@@ -2472,7 +2491,7 @@ MoveGameUp=Przesuń Partię do Góry
 MoveGameDown=Przesuń Rozdział na Dół
 
 #description: Move game to another chapter
-#english: MoveGameToChapter=Move Game To Chapter...
+#english: MoveGameToChapter=Move Game to Chapter...
 MoveGameToChapter=Przenieś Partię do Rozdziału...
 
 #description: Move exercise one position up
@@ -2484,7 +2503,7 @@ MoveExerciseUp=Przesuń Ćwiczenie do Góry
 MoveExerciseDown=Przesuń Ćwiczenie na Dół
 
 #description: Move exercise to another chapter
-#english: MoveExerciseToChapter=Move Exercise To Chapter...
+#english: MoveExerciseToChapter=Move Exercise to Chapter...
 MoveExerciseToChapter=Przenieś Ćwiczenie do Rozdziału
 
 #description: Deleted selected chapter
@@ -3025,6 +3044,14 @@ FlMsgChaptersImported=Rozdziały zostały zaimportowane
 #description: Flash message: Number of diagrams saved
 #english: FlMsgNumberOfDiagramsSaved=Number of diagrams saved
 FlMsgNumberOfDiagramsSaved=Liczba zapisanych diagramów
+
+#description: Flash message: Number of games moved
+#english: FlMsgNumberGamesMoved=Number of Games Moved
+FlMsgNumberGamesMoved=Liczba przesuniętych partii
+
+#description: Flash message: Number of chapters created
+#english: FlMsgNumberOfChaptersCreated=Number of New Chapters
+FlMsgNumberOfChaptersCreated=Liczba nowych rozdziałów
 
 ##################################
 #

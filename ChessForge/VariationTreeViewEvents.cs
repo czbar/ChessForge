@@ -68,7 +68,7 @@ namespace ChessForge
             }
 
             _mainWin.StopReplayIfActive();
-            
+
             return run;
         }
 
@@ -179,6 +179,41 @@ namespace ChessForge
                 }
             }
             catch { }
+        }
+
+        /// <summary>
+        /// An assessment part of the comment was clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventAssessmentMouseButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                if (e.ChangedButton == MouseButton.Left)
+                {
+                    EventCommentRunClicked(sender, e);
+                    return;
+                }
+                else if (e.ChangedButton == MouseButton.Right && sender is Inline inl)
+                {
+                    Run r = (Run)e.Source;
+
+                    int nodeId = TextUtils.GetIdFromPrefixedString(r.Name);
+                    LastClickedAssessmentNodeId = nodeId;
+
+                    ContextMenu cmAssessments = _mainWin.Resources["CmAssessments"] as ContextMenu;
+                    if (cmAssessments != null)
+                    {
+                        cmAssessments.IsOpen = true;
+                    }
+                }
+            }
+            catch
+            {
+            }
+
+            e.Handled = true;
         }
 
         /// <summary>

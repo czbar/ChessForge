@@ -746,6 +746,9 @@ ManageChapter=Manage Chapter
 #Split Chapter
 SplitChapterMenu=Split Chapter
 
+#Match Games to Chapters by ECO
+MatchGamesToChaptersByECO=Match Games to Chapters by ECO
+
 
 ###########################
 #
@@ -910,6 +913,19 @@ AutoPlaceMoveReferences=Adjust Move's References' Positions
 
 #Automatically place all references in the optimal places
 AutoPlaceAllReferences=Adjust All References' Positions
+
+
+###########################
+#
+# Header: CONTEXT MENU for Assessments
+#
+
+#Remove assessment
+RemoveAssessment=Remove Assessment
+
+#Remove reference
+RemoveAllAssessments=Remove All Assessments
+
 
 
 ###########################
@@ -1937,7 +1953,7 @@ MoveGameUp=Move Game Up
 MoveGameDown=Move Game Down
 
 #Move game to another chapter
-MoveGameToChapter=Move Game To Chapter...
+MoveGameToChapter=Move Game to Chapter...
 
 #Move exercise one position up
 MoveExerciseUp=Move Exercise Up
@@ -1946,7 +1962,7 @@ MoveExerciseUp=Move Exercise Up
 MoveExerciseDown=Move Exercise Down
 
 #Move exercise to another chapter
-MoveExerciseToChapter=Move Exercise To Chapter...
+MoveExerciseToChapter=Move Exercise to Chapter...
 
 #Deleted selected chapter
 DeleteSelectedChapter=Delete Selected Chapter
@@ -2369,6 +2385,12 @@ FlMsgChaptersImported=Chapters Imported
 
 #Flash message: Number of diagrams saved
 FlMsgNumberOfDiagramsSaved=Number of diagrams saved
+
+#Flash message: Number of games moved
+FlMsgNumberGamesMoved=Number of Games Moved
+
+#Flash message: Number of chapters created
+FlMsgNumberOfChaptersCreated=Number of New Chapters
 
 ##################################
 #

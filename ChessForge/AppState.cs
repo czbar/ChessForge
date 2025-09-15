@@ -1759,6 +1759,7 @@ namespace ChessForge
                     //GuiUtilities.SetShowSolutionsMenuCheckMark(ActiveChapter);
 
                     MainWin.UiMnSplitChapter.IsEnabled = AppState.ActiveChapter != null;
+                    MainWin.UiMnMatchGamesToChaptersByElo.IsEnabled = Workbook != null && Workbook.Chapters.Count > 1;
 
                     MainWin.UiMnPasteEngineLines.IsEnabled = Workbook != null
                         && CurrentLearningMode == LearningMode.Mode.MANUAL_REVIEW

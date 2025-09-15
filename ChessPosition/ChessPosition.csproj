@@ -60,6 +60,7 @@
     <Compile Include="GameTree\SectorParaAttrs.cs" />
     <Compile Include="GameTree\TreeManager.cs" />
     <Compile Include="GameTree\Operation.cs" />
+    <Compile Include="GameTree\VariationTreeUndos.cs" />
     <Compile Include="Parsers\EngineLineParser.cs" />
     <Compile Include="Parsers\GameHeader.cs" />
     <Compile Include="GameTree\PlyForTreeView.cs" />

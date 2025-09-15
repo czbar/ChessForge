@@ -26,16 +26,16 @@ namespace ChessForge
             switch (action)
             {
                 case ArticlesAction.COPY:
-                    sbDialogTitle.AppendLine(Properties.Resources.LblNumberOfItemsCopied);
+                    sbDialogTitle.Append(Properties.Resources.LblNumberOfItemsCopied);
                     break;
                 case ArticlesAction.MOVE:
-                    sbDialogTitle.AppendLine(Properties.Resources.LblNumberOfItemsMoved);
+                    sbDialogTitle.Append(Properties.Resources.LblNumberOfItemsMoved);
                     break;
                 case ArticlesAction.DELETE:
-                    sbDialogTitle.AppendLine(Properties.Resources.LblNumberOfItemsDeleted);
+                    sbDialogTitle.Append(Properties.Resources.LblNumberOfItemsDeleted);
                     break;
                 default:
-                    sbDialogTitle.AppendLine(Properties.Resources.LblNumberOfItemsActedOn);
+                    sbDialogTitle.Append(Properties.Resources.LblNumberOfItemsActedOn);
                     break;
             }
             sbDialogTitle.Append(": " + itemCount.ToString());

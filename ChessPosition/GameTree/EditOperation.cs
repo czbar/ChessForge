@@ -26,6 +26,7 @@ namespace GameTree
             MARK_THUMBNAIL,
             DELETE_REFERENCE,
             REPOSITION_REFERENCES,
+            DELETE_ASSESSMENTS,
         }
 
         /// <summary>

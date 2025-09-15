@@ -355,13 +355,6 @@ namespace ChessForge
                 RemoveChapters(lstArticles);
                 bool emptyEntryList = lstArticles.Count == 0;
 
-                if (newChapter && startNode != null)
-                {
-                    List<TreeNode> stem = TreeUtils.GetStemLine(startNode, true);
-                    targetChapter.StudyTree.Tree.Nodes = TreeUtils.CopyNodeList(stem);
-                    targetChapter.StudyTree.Tree.Nodes[stem.Count - 1].IsThumbnail = true;
-                }
-
                 if (targetChapter != null)
                 {
                     List<ArticleListItem> articlesToInsert = CreateListToMoveOrCopy(lstArticles, action, targetChapter);
@@ -890,7 +883,7 @@ namespace ChessForge
         /// <param name="chapter"></param>
         /// <param name="sortBy"></param>
         /// <param name="direction"></param>
-        public static void SortGames(Chapter chapter, GameSortCriterion.SortItem sortBy, GameSortCriterion.SortItem direction)
+        public static void SortGames(Chapter chapter, GameSortCriterion.SortItem sortBy, GameSortCriterion.SortItem direction, bool showMsg = true)
         {
             Mouse.SetCursor(Cursors.Wait);
 
@@ -916,7 +909,10 @@ namespace ChessForge
                     AppState.MainWin.ChaptersView.BuildFlowDocumentForChaptersView(false);
                 }
 
-                AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgGamesSorted, CommentBox.HintType.INFO);
+                if (showMsg)
+                {
+                    AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgGamesSorted, CommentBox.HintType.INFO);
+                }
             }
             catch
             {

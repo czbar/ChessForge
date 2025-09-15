@@ -552,7 +552,7 @@ namespace ChessForge
                     inl.ToolTip = Properties.Resources.TooltipEngineBlunderDetect;
                     inl.FontStyle = FontStyles.Normal;
                     inl.FontWeight = FontWeights.Normal;
-                    inl.PreviewMouseDown += EventCommentRunClicked;
+                    inl.PreviewMouseDown += EventAssessmentMouseButtonDown;
                     inlines.Add(inl);
                     break;
                 case CommentPartType.THUMBNAIL_SYMBOL:

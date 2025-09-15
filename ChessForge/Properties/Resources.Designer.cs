@@ -3616,6 +3616,24 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Number of Games Moved.
+        /// </summary>
+        public static string FlMsgNumberGamesMoved {
+            get {
+                return ResourceManager.GetString("FlMsgNumberGamesMoved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of New Chapters.
+        /// </summary>
+        public static string FlMsgNumberOfChaptersCreated {
+            get {
+                return ResourceManager.GetString("FlMsgNumberOfChaptersCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Number of diagrams saved.
         /// </summary>
         public static string FlMsgNumberOfDiagramsSaved {
@@ -4705,6 +4723,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Match Games to Chapters by ECO.
+        /// </summary>
+        public static string MatchGamesToChaptersByECO {
+            get {
+                return ResourceManager.GetString("MatchGamesToChaptersByECO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Max.
         /// </summary>
         public static string Max {
@@ -4912,7 +4939,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Move Exercise To Chapter....
+        ///   Looks up a localized string similar to Move Exercise to Chapter....
         /// </summary>
         public static string MoveExerciseToChapter {
             get {
@@ -4948,7 +4975,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Move Game To Chapter....
+        ///   Looks up a localized string similar to Move Game to Chapter....
         /// </summary>
         public static string MoveGameToChapter {
             get {
@@ -6457,6 +6484,24 @@ namespace ChessForge.Properties {
         public static string RegenerateStudyTree {
             get {
                 return ResourceManager.GetString("RegenerateStudyTree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove All Assessments.
+        /// </summary>
+        public static string RemoveAllAssessments {
+            get {
+                return ResourceManager.GetString("RemoveAllAssessments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Assessment.
+        /// </summary>
+        public static string RemoveAssessment {
+            get {
+                return ResourceManager.GetString("RemoveAssessment", resourceCulture);
             }
         }
         

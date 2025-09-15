@@ -786,6 +786,9 @@
   <data name="SplitChapterMenu" xml:space="preserve">
     <value>Split Chapter</value>
   </data>
+  <data name="MatchGamesToChaptersByECO" xml:space="preserve">
+    <value>Match Games to Chapters by ECO</value>
+  </data>
   <data name="Tools" xml:space="preserve">
     <value>Tools</value>
   </data>
@@ -915,6 +918,12 @@ NOTE: Evaluations are not being updated (Ctrl+K to allow).</value>
   </data>
   <data name="AutoPlaceAllReferences" xml:space="preserve">
     <value>Adjust All References' Positions</value>
+  </data>
+  <data name="RemoveAssessment" xml:space="preserve">
+    <value>Remove Assessment</value>
+  </data>
+  <data name="RemoveAllAssessments" xml:space="preserve">
+    <value>Remove All Assessments</value>
   </data>
   <data name="TtClickToExpandCollapse" xml:space="preserve">
     <value>Click to Expand/Collapse</value>
@@ -1724,7 +1733,7 @@ NOTE: Evaluations are not being updated (Ctrl+K to allow).</value>
     <value>Move Game Down</value>
   </data>
   <data name="MoveGameToChapter" xml:space="preserve">
-    <value>Move Game To Chapter...</value>
+    <value>Move Game to Chapter...</value>
   </data>
   <data name="MoveExerciseUp" xml:space="preserve">
     <value>Move Exercise Up</value>
@@ -1733,7 +1742,7 @@ NOTE: Evaluations are not being updated (Ctrl+K to allow).</value>
     <value>Move Exercise Down</value>
   </data>
   <data name="MoveExerciseToChapter" xml:space="preserve">
-    <value>Move Exercise To Chapter...</value>
+    <value>Move Exercise to Chapter...</value>
   </data>
   <data name="DeleteSelectedChapter" xml:space="preserve">
     <value>Delete Selected Chapter</value>
@@ -2085,6 +2094,12 @@ NOTE: Evaluations are not being updated (Ctrl+K to allow).</value>
   </data>
   <data name="FlMsgNumberOfDiagramsSaved" xml:space="preserve">
     <value>Number of diagrams saved</value>
+  </data>
+  <data name="FlMsgNumberGamesMoved" xml:space="preserve">
+    <value>Number of Games Moved</value>
+  </data>
+  <data name="FlMsgNumberOfChaptersCreated" xml:space="preserve">
+    <value>Number of New Chapters</value>
   </data>
   <data name="MsgNoDuplicatesFound" xml:space="preserve">
     <value>No duplicates found.</value>

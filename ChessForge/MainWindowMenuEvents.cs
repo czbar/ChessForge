@@ -550,7 +550,8 @@ namespace ChessForge
             AppState.ActiveVariationTree.OpsManager.Undo(out EditOperation.EditType opType,
                                                          out string selectedLineId,
                                                          out int selectedNodeId,
-                                                         out HashSet<int> nodesToUpdate);
+                                                         out HashSet<int> nodesToUpdate,
+                                                         out bool noRefresh);
 
             try
             {
@@ -563,7 +564,7 @@ namespace ChessForge
 
                 MultiTextBoxManager.ShowEvaluationChart(true);
 
-                if (selectedNode == null)
+                if (selectedNode == null && !noRefresh)
                 {
                     selectedNodeId = 0;
                     selectedLineId = "1";
@@ -575,18 +576,21 @@ namespace ChessForge
                     AppState.ActiveVariationTree.BuildLines();
                 }
 
-                if (!string.IsNullOrEmpty(selectedLineId))
+                if (!noRefresh)
                 {
-                    AppState.MainWin.ActiveTreeView.SelectNode(selectedNode);
-                    AppState.MainWin.SetActiveLine(selectedLineId, selectedNodeId);
-                }
-                else if (selectedNodeId >= 0)
-                {
-                    if (selectedNode != null)
+                    if (!string.IsNullOrEmpty(selectedLineId))
                     {
-                        selectedLineId = selectedNode.LineId;
                         AppState.MainWin.ActiveTreeView.SelectNode(selectedNode);
                         AppState.MainWin.SetActiveLine(selectedLineId, selectedNodeId);
+                    }
+                    else if (selectedNodeId >= 0)
+                    {
+                        if (selectedNode != null)
+                        {
+                            selectedLineId = selectedNode.LineId;
+                            AppState.MainWin.ActiveTreeView.SelectNode(selectedNode);
+                            AppState.MainWin.SetActiveLine(selectedLineId, selectedNodeId);
+                        }
                     }
                 }
 
@@ -618,7 +622,10 @@ namespace ChessForge
                     AppState.MainWin.ActiveTreeView.HighlightLineAndMove(AppState.MainWin.ActiveTreeView.HostRtb.Document, selectedLineId, selectedNodeId);
                 }
 
-                PulseManager.BringSelectedRunIntoView();
+                if (!noRefresh)
+                {
+                    PulseManager.BringSelectedRunIntoView();
+                }
 
                 AppState.IsDirty = true;
             }
@@ -1163,6 +1170,70 @@ namespace ChessForge
 
             return save;
         }
+
+
+        //**********************
+        //
+        //  ASSESSMENTS CONTEXT MENU
+        // 
+        //**********************
+
+        /// <summary>
+        /// Removes the clicked assessment.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnciRemoveAssessment_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int nodeId = ActiveTreeView.LastClickedAssessmentNodeId;
+                TreeNode node = ActiveVariationTree.GetNodeFromNodeId(nodeId);
+
+                if (node != null && node.Assessment != 0)
+                {
+                    node.Assessment = 0;
+
+                    //EditOperation editOp = new EditOperation(EditOperation.EditType.DELETE_ASSESSMENTS, node, refGuid);
+                    //ActiveVariationTree.OpsManager.PushOperation(editOp);
+                    ActiveTreeView.InsertOrUpdateCommentRun(node);
+                    AppState.IsDirty = true;
+                }
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// Removes all assessments in the current view.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnciRemoveAllAssessments_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var nodeAssessments = new Dictionary<int, uint>();
+                foreach (TreeNode node in ActiveVariationTree.Nodes)
+                {
+                    if (node.Assessment != 0)
+                    {
+                        nodeAssessments.Add(node.NodeId, node.Assessment);
+                        node.Assessment = 0;
+                        ActiveTreeView.InsertOrUpdateCommentRun(node);
+                    }
+                }
+
+                if (nodeAssessments.Count > 0)
+                {
+                    AppState.IsDirty = true;
+                    EditOperation editOp = new EditOperation(EditOperation.EditType.DELETE_ASSESSMENTS, nodeAssessments, null);
+                    ActiveVariationTree.OpsManager.PushOperation(editOp);
+                }
+            }
+
+            catch { }
+        }
+
 
 
         //**********************
@@ -2732,6 +2803,22 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Finds games in the active chapter that would better 
+        /// be placed in other chapters based on their ECO codes.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnMatchGamesToChapterByECO_Click(object sender, RoutedEventArgs e)
+        {
+            int gamesMoved = SplitChapterUtils.DistributeGamesByECO(AppState.ActiveChapter);
+
+            if (gamesMoved > 0)
+            {
+                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgNumberGamesMoved + ": " + gamesMoved.ToString(), CommentBox.HintType.INFO);
+            }
+        }
+
+        /// <summary>
         /// Opens the dialog for importing games from the Web
         /// </summary>
         /// <param name="sender"></param>
@@ -3033,7 +3120,7 @@ namespace ChessForge
                         lstChildrenOrder.Add(child);
                     }
 
-                    EditOperation op = new EditOperation(EditOperation.EditType.REORDER_LINES, nd.Parent, lstChildrenOrder);
+                    EditOperation op = new EditOperation(EditOperation.EditType.REORDER_LINES, nd, lstChildrenOrder);
 
                     uint moveOffset = ActiveVariationTree.MoveNumberOffset;
                     ReorderLinesDialog dlg = new ReorderLinesDialog(nd.Parent, moveOffset);
