@@ -1,15 +1,9 @@
-﻿using System;
-using System.Text;
-using System.Linq;
-using System.Windows;
+﻿using ChessForge;
+using ChessPosition;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using ChessPosition;
-using System.Xml.Linq;
-using ChessPosition.GameTree;
-using ChessForge;
-using System.Windows.Controls;
-using System.Windows.Input;
+using System.Linq;
 
 namespace GameTree
 {
@@ -1293,7 +1287,7 @@ namespace GameTree
                 {
                     childAtFork[i] = int.Parse(tokens[i]);
                 }
-                
+
                 int levelCount = childAtFork.Length;
                 int currLevel = 0;
 
@@ -1577,12 +1571,13 @@ namespace GameTree
         /// </summary>
         /// <param name="oParent"></param>
         /// <param name="oChildren"></param>
-        public void UndoReorderLines(object oParent, object oChildren)
+        public void UndoReorderLines(object oNode, object oChildren)
         {
             try
             {
-                if (oParent is TreeNode oldParent && oChildren is List<TreeNode> oldChildren)
+                if (oNode is TreeNode node && oChildren is List<TreeNode> oldChildren)
                 {
+                    TreeNode oldParent = node.Parent;
                     // there may have been operations in the meantime so we need to check that the tree
                     // is in the same state as before the operation so get the nodes by NodeId 
                     TreeNode newParent = GetNodeFromNodeId(oldParent.NodeId);
@@ -1912,6 +1907,27 @@ namespace GameTree
             }
 
             return selectedNodeId;
+        }
+
+        /// <summary>
+        /// Restores deleted assessments.
+        /// </summary>
+        /// <param name="oPreOpAssessments"></param>
+        /// <param name="nodesToUpdate"></param>
+        public void UndoDeleteAssessments(object oPreOpAssessments, out HashSet<int> nodesToUpdate)
+        {
+            nodesToUpdate = new HashSet<int>();
+
+            var nodeAssessments = oPreOpAssessments as Dictionary<int, uint>;
+            foreach (var kvp in nodeAssessments)
+            {
+                TreeNode node = GetNodeFromNodeId(kvp.Key);
+                if (node != null)
+                {
+                    node.Assessment = kvp.Value;
+                    nodesToUpdate.Add(node.NodeId);
+                }
+            }
         }
 
         /// <summary>
