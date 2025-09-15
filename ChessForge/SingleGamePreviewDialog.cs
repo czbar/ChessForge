@@ -1,8 +1,6 @@
-﻿using System;
+﻿using GameTree;
 using System.Collections.Generic;
 using System.Windows;
-using System.Text;
-using GameTree;
 using System.Windows.Controls;
 
 namespace ChessForge
@@ -57,8 +55,9 @@ namespace ChessForge
             UiBtnExit.Margin = currExitBtnRThick;
 
             this.Width = 520;
-            //this.SizeToContent= SizeToContent.Width;
-            UiBtnExit.Margin = new Thickness(UiBtnExit.Margin.Left, UiGReplaySpeed.Margin.Top - 35, 0, 0);
+            UiGReplaySpeed.Margin = new Thickness(UiGReplaySpeed.Margin.Left, UiGReplaySpeed.Margin.Top - 40, UiGReplaySpeed.Margin.Right, UiGReplaySpeed.Margin.Bottom);
+            UiBtnExit.Margin = new Thickness(UiBtnExit.Margin.Left, UiBtnExit.Margin.Top, UiBtnExit.Margin.Right, UiBtnExit.Margin.Bottom + 20);
+
             _games = games;
             PlaySelectedGame();
         }
