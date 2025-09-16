@@ -956,7 +956,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Undo splitting of a chpater.
+        /// Undo splitting of a chapter.
         /// The chapters from the objChapterList will be deleted and the "chapter"
         /// will be inserted in place of the first chapter from the list.
         /// </summary>
@@ -981,6 +981,30 @@ namespace ChessForge
                 }
 
                 Chapters.Insert(index, chapter);
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// Undo sorting of games.
+        /// </summary>
+        /// <param name="objPersortOrder"></param>
+        public void UndoSortGames(object objPersortOrder)
+        {
+            try
+            {
+                Dictionary<int, List<Article>> presortOrder = objPersortOrder as Dictionary<int, List<Article>>;
+                
+                foreach (int chapterIndex in presortOrder.Keys)
+                {
+                    Chapter ch = Chapters[chapterIndex];
+                    for (int i = 0; i < ch.ModelGames.Count; i++)
+                    {
+                        ch.ModelGames[i] = presortOrder[chapterIndex][i];
+                    }
+                }
             }
             catch
             {
