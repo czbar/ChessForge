@@ -330,6 +330,7 @@
     <Compile Include="SingleLineEditor.xaml.cs">
       <DependentUpon>SingleLineEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SortArticlesUtils.cs" />
     <Compile Include="SortGamesDialog.xaml.cs">
       <DependentUpon>SortGamesDialog.xaml</DependentUpon>
     </Compile>

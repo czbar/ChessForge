@@ -364,7 +364,7 @@ namespace ChessForge
                 // make sense to sort games in all new chapters by ECO, e.g. if we split by E2* we want E20 before E21 etc.
                 foreach (Chapter ch in resChapters)
                 {
-                    ChapterUtils.SortGames(ch, GameSortCriterion.SortItem.ECO, GameSortCriterion.SortItem.ASCENDING, false);
+                    SortArticlesUtils.SortGames(ch, GameSortCriterion.SortItem.ECO, GameSortCriterion.SortItem.ASCENDING, false);
                 }
             }
             catch (Exception ex)

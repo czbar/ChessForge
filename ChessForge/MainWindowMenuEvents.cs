@@ -2769,7 +2769,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnSortGames_Click(object sender, RoutedEventArgs e)
         {
-            ChapterUtils.InvokeSortGamesDialog(AppState.ActiveChapter);
+            SortArticlesUtils.InvokeSortGamesDialog(AppState.ActiveChapter);
         }
 
         /// <summary>
