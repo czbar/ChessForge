@@ -690,6 +690,7 @@ namespace ChessForge
                                 case WorkbookOperationType.DELETE_CHAPTERS:
                                 case WorkbookOperationType.MERGE_CHAPTERS:
                                 case WorkbookOperationType.SPLIT_CHAPTER:
+                                case WorkbookOperationType.SORT_GAMES:
                                     AppState.MainWin.ChaptersView.IsDirty = true;
                                     GuiUtilities.RefreshChaptersView(null);
                                     AppState.MainWin.UiTabChapters.Focus();
