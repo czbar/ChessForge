@@ -133,13 +133,24 @@ namespace ChessForge
 
                     if (dlg.ShowDialog() == true && dlg.SortGamesBy != GameSortCriterion.SortItem.NONE)
                     {
+                        var presortOrder = new Dictionary<int, List<Article>>();
+
                         if (dlg.ApplyToAllChapters)
                         {
+                            WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.SORT_GAMES, null, (object)presortOrder);
+                            foreach (Chapter ch in AppState.Workbook.Chapters)
+                            {
+                                StorePresortGamesOrder(ch, presortOrder);
+                            }
                             SortGames(null, dlg.SortGamesBy, dlg.SortGamesDirection);
+                            WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
                         }
                         else
                         {
+                            WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.SORT_GAMES, chapter, (object)presortOrder);
+                            StorePresortGamesOrder(chapter, presortOrder);
                             SortGames(chapter, dlg.SortGamesBy, dlg.SortGamesDirection);
+                            WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
                         }
 
                         AppState.IsDirty = true;
@@ -152,6 +163,20 @@ namespace ChessForge
                 {
                     AppLog.Message("InvokeSortGamesDialog()", ex);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Saves the current order of games in the chapter
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="presortOrder"></param>
+        private static void StorePresortGamesOrder(Chapter chapter, Dictionary<int, List<Article>> presortOrder)
+        {
+            presortOrder.Add(chapter.Index, new List<Article>());
+            foreach (var game in chapter.ModelGames)
+            {
+                presortOrder[chapter.Index].Add(game);
             }
         }
 
