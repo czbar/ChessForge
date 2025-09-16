@@ -2999,6 +2999,9 @@ NOTE: Evaluations are not being updated (Ctrl+K to allow).</value>
   <data name="OpAssignECOs" xml:space="preserve">
     <value>Assign ECO Codes</value>
   </data>
+  <data name="OpSortGames" xml:space="preserve">
+    <value>Sort Games</value>
+  </data>
   <data name="PgnMissingMoveAfter" xml:space="preserve">
     <value>Missing move after</value>
   </data>

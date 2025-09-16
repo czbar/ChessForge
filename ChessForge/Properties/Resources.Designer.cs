@@ -5939,6 +5939,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sort Games.
+        /// </summary>
+        public static string OpSortGames {
+            get {
+                return ResourceManager.GetString("OpSortGames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Split Chapter.
         /// </summary>
         public static string OpSplitChapter {

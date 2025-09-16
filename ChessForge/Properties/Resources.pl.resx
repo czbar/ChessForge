@@ -2998,6 +2998,9 @@ UWAGA: Oceny nie są uaktualniane (zezwól przez Ctrl+K).</value>
   <data name="OpAssignECOs" xml:space="preserve">
     <value>Przypisz Kody ECO</value>
   </data>
+  <data name="OpSortGames" xml:space="preserve">
+    <value>Sortuj Partie</value>
+  </data>
   <data name="PgnMissingMoveAfter" xml:space="preserve">
     <value>Brakuje ruchu po</value>
   </data>

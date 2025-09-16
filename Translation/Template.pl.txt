@@ -4327,6 +4327,10 @@ OpDeleteEngineEvals=Usuń Oceny Silnika
 #english: OpAssignECOs=Assign ECO Codes
 OpAssignECOs=Przypisz Kody ECO
 
+#description: Operation
+#english: OpSortGames=Sort Games
+OpSortGames=Sortuj Partie
+
 
 
 

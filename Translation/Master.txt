@@ -3367,6 +3367,9 @@ OpDeleteEngineEvals=Delete Engine Evaluations
 #Operation
 OpAssignECOs=Assign ECO Codes
 
+#Operation
+OpSortGames=Sort Games
+
 
 
 

@@ -4327,6 +4327,10 @@ OpDeleteEngineEvals=
 #english: OpAssignECOs=Assign ECO Codes
 OpAssignECOs=
 
+#description: Operation
+#english: OpSortGames=Sort Games
+OpSortGames=
+
 
 
 
