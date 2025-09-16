@@ -415,7 +415,7 @@ namespace ChessForge
             ObservableCollection<ArticleListItem> retList = new ObservableCollection<ArticleListItem>();
             foreach (ArticleListItem item in items)
             {
-                if (item.Article != null && item.IsSelected)
+                if (item.Article != null && item.IsSelected == true)
                 {
                     retList.Add(item);
                 }

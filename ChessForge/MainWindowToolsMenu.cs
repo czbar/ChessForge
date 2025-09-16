@@ -144,7 +144,7 @@ namespace ChessForge
                         ObservableCollection<ArticleListItem> gamesToEvaluate = new ObservableCollection<ArticleListItem>();
                         foreach (ArticleListItem item in gameList)
                         {
-                            if (item.ContentType == GameData.ContentType.MODEL_GAME && item.IsSelected)
+                            if (item.ContentType == GameData.ContentType.MODEL_GAME && item.IsSelected == true)
                             {
                                 gamesToEvaluate.Add(item);
                             }

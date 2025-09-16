@@ -130,7 +130,7 @@ namespace ChessForge
             bool isAllSelected = true;
             foreach (ArticleListItem item in _articleListOriginal)
             {
-                if (!item.IsSelected)
+                if (item.IsSelected == false)
                 {
                     isAllSelected = false;
                     break;
@@ -218,7 +218,7 @@ namespace ChessForge
 
             foreach (ArticleListItem item in _articleListItemsSource)
             {
-                if (item.Article != null && item.IsSelected)
+                if (item.Article != null && item.IsSelected == true)
                 {
                     GameData.ContentType ctype = item.Article.Tree.Header.GetContentType(out _);
                     if (ctype == GameData.ContentType.MODEL_GAME || ctype == GameData.ContentType.EXERCISE)
@@ -328,7 +328,7 @@ namespace ChessForge
 
             foreach (ArticleListItem item in _articleListOriginal)
             {
-                if (item.IsSelected && item.Chapter != WorkbookManager.SessionWorkbook.ActiveChapter)
+                if (item.IsSelected == true && item.Chapter != WorkbookManager.SessionWorkbook.ActiveChapter)
                 {
                     res = true;
                     break;
@@ -427,7 +427,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Checks the seletcion status of a chapter.
+        /// Checks the selection status of a chapter.
         /// Returns values indicating whether all items in the chapter are selected or unselected.
         /// </summary>
         /// <param name="chapterIndex"></param>
@@ -443,7 +443,7 @@ namespace ChessForge
             {
                 if (!item.IsChapterHeader && item.ChapterIndex == chapterIndex)
                 {
-                    if (item.IsSelected)
+                    if (item.IsSelected == true)
                     {
                         anySelected = true;
                     }
@@ -682,6 +682,10 @@ namespace ChessForge
             UiBtnOk_Click(null, null);
         }
 
+
+        // flag to block processing of CheckBox events when we are programmatically processing them
+        private bool _blockGameClicks = false;
+
         /// <summary>
         /// The selection CheckBox was clicked.
         /// </summary>
@@ -689,6 +693,11 @@ namespace ChessForge
         /// <param name="e"></param>
         private void SelectionCheckBox_Checked(object sender, RoutedEventArgs e)
         {
+            if (_blockGameClicks)
+            {
+                return;
+            }
+
             try
             {
                 CheckBox cb = sender as CheckBox;
@@ -700,6 +709,7 @@ namespace ChessForge
                         ChapterHeaderDoubleClicked(item);
                     }
 
+                    _blockGameClicks = true;
                     for (int i = 0; i < _articleListItemsSource.Count; i++)
                     {
                         ArticleListItem art = _articleListItemsSource[i];
@@ -712,6 +722,10 @@ namespace ChessForge
             }
             catch
             {
+            }
+            finally
+            {
+                _blockGameClicks = false;
             }
         }
 

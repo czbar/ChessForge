@@ -1059,7 +1059,7 @@ namespace ChessForge
 
             foreach (ArticleListItem item in lstIdenticalPositions)
             {
-                if (item.Article != null && !item.IsSelected)
+                if (item.Article != null && item.IsSelected == false)
                 {
                     itemsToRemove.Add(item);
                 }

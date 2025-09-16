@@ -18,7 +18,7 @@ namespace ChessForge
         private bool _isShown;
 
         // whether this game is selected in the GUI
-        private bool _isSelected;
+        private bool? _isSelected;
 
         // is selection checkbox visible
         private bool _isSelectCheckBoxVisible;
@@ -317,7 +317,7 @@ namespace ChessForge
         /// Accessor to _isSelected.
         /// Indicates wheter the item is selected.
         /// </summary>
-        public bool IsSelected
+        public bool? IsSelected
         {
             get { return _isSelected; }
             set
