@@ -30,6 +30,7 @@ namespace ChessForge
         DELETE_ENGINE_EVALS,
         CLEAN_LINES_AND_COMMENTS,
         ASSIGN_ECO,
+        SORT_GAMES,
     }
 
     /// <summary>
