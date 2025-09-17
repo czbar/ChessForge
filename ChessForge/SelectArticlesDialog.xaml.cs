@@ -1,6 +1,5 @@
 ﻿using ChessPosition;
 using GameTree;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -420,9 +419,6 @@ namespace ChessForge
                 artItem.IsChapterAllSelected = anySelected && !anyUnselected;
                 artItem.IsChapterAllUnselected = !anySelected && anyUnselected;
                 artItem.IsChapterExpanded = ExpandCollapseChapter(artItem);
-
-                artItem.ChapterCheckBoxVisible = (artItem.IsChapterExpanded || artItem.IsChapterAllSelected || artItem.IsChapterAllUnselected) ? "Visible" : "Collapsed";
-                artItem.ChapterGrayedCheckBoxVisible = (!artItem.IsChapterExpanded && !artItem.IsChapterAllSelected && !artItem.IsChapterAllUnselected) ? "Visible" : "Collapsed";
             }
         }
 
@@ -532,6 +528,75 @@ namespace ChessForge
                 GuiUtilities.PositionDialog(dlg, this, 20);
                 dlg.ShowDialog();
             }
+        }
+
+        /// <summary>
+        /// The overall selection state of the parent chapter is checked.
+        /// It could be all selected, all unselected or partial.
+        /// The chapter header's checkbox is updated accordingly.
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        private bool? ChapterArticlesSelectionState(ArticleListItem item)
+        {
+            bool selectedFound = false;
+            bool unselectedFound = false;
+
+            bool? result = null;
+
+            if (item != null)
+            {
+                ArticleListItem chapterHeader = null;
+
+                for (int i = 0; i < _articleListItemsSource.Count; i++)
+                {
+                    if (_articleListItemsSource[i].ChapterIndex == item.ChapterIndex)
+                    {
+                        if (_articleListItemsSource[i].IsChapterHeader)
+                        {
+                            chapterHeader = _articleListItemsSource[i];
+                        }
+                        else
+                        {
+                            if (_articleListItemsSource[i].IsSelected == true)
+                            {
+                                selectedFound = true;
+                            }
+                            else if (_articleListItemsSource[i].IsSelected == false)
+                            {
+                                unselectedFound = true;
+                            }
+
+                            if (selectedFound && unselectedFound)
+                            {
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if (selectedFound && !unselectedFound)
+                {
+                    result = true;
+                }
+                else if (!selectedFound && unselectedFound)
+                {
+                    result = false;
+                }
+                else
+                {
+                    result = null;
+                }
+
+                if (chapterHeader != null)
+                {
+                    chapterHeader.IsChapterAllSelected = selectedFound && !unselectedFound;
+                    chapterHeader.IsChapterAllUnselected = !selectedFound && unselectedFound;
+                    chapterHeader.IsSelected = result;
+                }
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -693,40 +758,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void SelectionCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            if (_blockGameClicks)
-            {
-                return;
-            }
-
-            try
-            {
-                CheckBox cb = sender as CheckBox;
-                ArticleListItem item = cb.DataContext as ArticleListItem;
-                if (item != null && item.IsChapterHeader)
-                {
-                    if (!item.IsChapterExpanded)
-                    {
-                        ChapterHeaderDoubleClicked(item);
-                    }
-
-                    _blockGameClicks = true;
-                    for (int i = 0; i < _articleListItemsSource.Count; i++)
-                    {
-                        ArticleListItem art = _articleListItemsSource[i];
-                        if (art.ChapterIndex == item.ChapterIndex && !art.IsChapterHeader)
-                        {
-                            art.IsSelected = true;
-                        }
-                    }
-                }
-            }
-            catch
-            {
-            }
-            finally
-            {
-                _blockGameClicks = false;
-            }
+            SelectionCheckBoxClicked(sender, true);
         }
 
         /// <summary>
@@ -736,48 +768,63 @@ namespace ChessForge
         /// <param name="e"></param>
         private void SelectionCheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
+            SelectionCheckBoxClicked(sender, false);
+        }
+
+        /// <summary>
+        /// A chapter or article IsSelected CheckBox was clicked.
+        /// If a chapter CheckBox was clicked, the chapter will be expanded
+        /// if it is not already and all articles in the chapter will be selected or unselected
+        /// depending on the new state of the chapter CheckBox.
+        /// If an article CheckBox was clicked, the overall chapter selection state will be updated
+        /// as it could be all selected, all unselected or partial.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="check"></param>
+        private void SelectionCheckBoxClicked(object sender, bool check)
+        {
+            if (_blockGameClicks)
+            {
+                return;
+            }
+
             try
             {
                 CheckBox cb = sender as CheckBox;
                 ArticleListItem item = cb.DataContext as ArticleListItem;
-                if (item != null && item.IsChapterHeader)
+                if (item != null)
                 {
-                    if (!item.IsChapterExpanded)
+                    if (item.IsChapterHeader)
                     {
-                        ChapterHeaderDoubleClicked(item);
-                    }
-                    for (int i = 0; i < _articleListItemsSource.Count; i++)
-                    {
-                        ArticleListItem art = _articleListItemsSource[i];
-                        if (art.ChapterIndex == item.ChapterIndex && !art.IsChapterHeader)
+                        // a chapter header checkbox was clicked
+                        if (!item.IsChapterExpanded)
                         {
-                            art.IsSelected = false;
+                            ChapterHeaderDoubleClicked(item);
                         }
+
+                        _blockGameClicks = true;
+                        for (int i = 0; i < _articleListItemsSource.Count; i++)
+                        {
+                            ArticleListItem art = _articleListItemsSource[i];
+                            if (art.ChapterIndex == item.ChapterIndex && !art.IsChapterHeader)
+                            {
+                                art.IsSelected = check;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // an article checkbox was clicked
+                        ChapterArticlesSelectionState(item);
                     }
                 }
             }
             catch
             {
             }
-        }
-
-        /// <summary>
-        /// When the "grayed" chapter box is clicked, expand the chapter and ensure 
-        /// that the box remains checked for when it is made visible the next time.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UiCbGrayedChapter_Click(object sender, RoutedEventArgs e)
-        {
-            CheckBox cb = sender as CheckBox;
-            if (cb != null)
+            finally
             {
-                cb.IsChecked = true;
-                ArticleListItem item = cb.DataContext as ArticleListItem;
-                if (!item.IsChapterExpanded)
-                {
-                    ChapterHeaderDoubleClicked(item);
-                }
+                _blockGameClicks = false;
             }
         }
 
