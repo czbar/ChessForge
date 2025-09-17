@@ -45,7 +45,6 @@
                 <DataTemplate x:Key="SelectionCell">
                     <StackPanel Orientation="Horizontal">
                         <CheckBox BorderThickness="2" BorderBrush="Green" IsChecked="{Binding Path=IsSelected}" Visibility="{Binding Path=ChapterCheckBoxVisible}" Checked="SelectionCheckBox_Checked" Unchecked="SelectionCheckBox_Unchecked"   />
-                        <CheckBox x:Name="UiCbGrayedChapter" Opacity="0.5" BorderThickness="2" Background="LightGray" BorderBrush="Green" IsChecked="True" Visibility="{Binding Path=ChapterGrayedCheckBoxVisible}" Click="UiCbGrayedChapter_Click"   />
                         <CheckBox Margin="10,0,0,0" BorderBrush="Black" BorderThickness="1" IsChecked="{Binding Path=IsSelected}" Visibility="{Binding Path=NonChapterCheckBoxVisible}" Checked="SelectionCheckBox_Checked" Unchecked="SelectionCheckBox_Unchecked"   />
                     </StackPanel>
                 </DataTemplate>
