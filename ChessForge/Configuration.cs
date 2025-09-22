@@ -169,6 +169,12 @@ namespace ChessForge
         public static bool IsDarkMode = false;
 
         /// <summary>
+        /// Whether to force TLS 1.2 for web requests
+        /// rather than relying on the host OS.
+        /// </summary>
+        public static bool ForceTls12 = false;
+
+        /// <summary>
         /// Path to the engine executable
         /// </summary>
         public static string EngineExePath = "";
@@ -682,6 +688,7 @@ namespace ChessForge
 
         private const string CFG_FAST_LAYOUT = "FastLayout";
         private const string CFG_IS_DARK_MODE = "IsDarkMode";
+        private const string CFG_FORCE_TLS12 = "ForceTls12";
 
         private const string CFG_FONT_SIZE_DIFF = "FontSizeDiff";
         private const string CFG_AUTO_SAVE_FREQ = "AutoSaveFrequency";
@@ -899,6 +906,7 @@ namespace ChessForge
 
                 sb.AppendLine(CFG_FAST_LAYOUT + "=" + (FastLayout ? "1" : "0"));
                 sb.AppendLine(CFG_IS_DARK_MODE + "=" + (IsDarkMode ? "1" : "0"));
+                sb.AppendLine(CFG_FORCE_TLS12 + "=" + (ForceTls12 ? "1" : "0"));
 
                 sb.Append(CFG_PGN_EXP_BOOKMARKS + "=" + (PgnExportBookmarks ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_PGN_EXP_EVALS + "=" + (PgnExportEvaluations ? "1" : "0") + Environment.NewLine);
@@ -1317,6 +1325,9 @@ namespace ChessForge
                             break;
                         case CFG_IS_DARK_MODE:
                             IsDarkMode = value != "0" ? true : false;
+                            break;
+                        case CFG_FORCE_TLS12:
+                            ForceTls12 = value != "0" ? true : false;
                             break;
                         case CFG_ENGINE_EVALUATION_TIME:
                             int.TryParse(value, out _engineEvaluationTime);
