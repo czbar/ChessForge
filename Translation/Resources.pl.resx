@@ -2519,16 +2519,16 @@ UWAGA: Oceny nie są uaktualniane (zezwól przez Ctrl+K).</value>
     <value>Utwórz Rozdział do Każdej Partii</value>
   </data>
   <data name="DwnLdCreateRepertoireChapter" xml:space="preserve">
-    <value>Utwórz rozdziały repertuarowe</value>
+    <value>Utwórz rozdziały repertuarowe dla białych i czarnych</value>
   </data>
   <data name="TrimStudyTree" xml:space="preserve">
-    <value>Do ruchu</value>
+    <value>Z teorią do ruchu</value>
   </data>
   <data name="DwnLdAppendToCurrentChapter" xml:space="preserve">
     <value>Dodaj partie do obecnego rozdziału</value>
   </data>
   <data name="DwnLdCreateNewChapter" xml:space="preserve">
-    <value>Zapisz partie w nowym rozdziale</value>
+    <value>Utwórz nowy rozdział</value>
   </data>
   <data name="DwnLdCreateNewWorkbook" xml:space="preserve">
     <value>Zapisz w nowym podręczniku</value>

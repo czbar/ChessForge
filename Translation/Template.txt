@@ -3627,11 +3627,11 @@ CopyGamesNoMerge=
 CreateChapterPerGame=
 
 #description: Generate repertoire chapters
-#english: DwnLdCreateRepertoireChapter=Create Repertoire Chapters
+#english: DwnLdCreateRepertoireChapter=Create White and Black Repertoire Chapters
 DwnLdCreateRepertoireChapter=
 
 #description: Move number aftre which to trim the study tree
-#english: TrimStudyTree=Trim after Move
+#english: TrimStudyTree=Trim Study after Move
 TrimStudyTree=
 
 #description: Append games to the current chapter
@@ -3639,7 +3639,7 @@ TrimStudyTree=
 DwnLdAppendToCurrentChapter=
 
 #description: Create a new chapter for the downloaded games
-#english: DwnLdCreateNewChapter=Save Games to a new Chapter
+#english: DwnLdCreateNewChapter=Create a new Chapter
 DwnLdCreateNewChapter=
 
 #description: Create a new workbook for the downloaded games

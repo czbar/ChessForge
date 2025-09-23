@@ -2520,16 +2520,16 @@ NOTE: Evaluations are not being updated (Ctrl+K to allow).</value>
     <value>Create Chapter per Game</value>
   </data>
   <data name="DwnLdCreateRepertoireChapter" xml:space="preserve">
-    <value>Create Repertoire Chapters</value>
+    <value>Create White and Black Repertoire Chapters</value>
   </data>
   <data name="TrimStudyTree" xml:space="preserve">
-    <value>Trim after Move</value>
+    <value>Trim Study after Move</value>
   </data>
   <data name="DwnLdAppendToCurrentChapter" xml:space="preserve">
     <value>Append Games to the current Chapter</value>
   </data>
   <data name="DwnLdCreateNewChapter" xml:space="preserve">
-    <value>Save Games to a new Chapter</value>
+    <value>Create a new Chapter</value>
   </data>
   <data name="DwnLdCreateNewWorkbook" xml:space="preserve">
     <value>Save to a new Workbook</value>

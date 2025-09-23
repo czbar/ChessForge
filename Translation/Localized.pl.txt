@@ -3627,20 +3627,20 @@ CopyGamesNoMerge=Skopiuj Partie do Sekcji Partii i zostaw Teorię pustą
 CreateChapterPerGame=Utwórz Rozdział do Każdej Partii
 
 #description: Generate repertoire chapters
-#english: DwnLdCreateRepertoireChapter=Create Repertoire Chapters
-DwnLdCreateRepertoireChapter=Utwórz rozdziały repertuarowe
+#english: DwnLdCreateRepertoireChapter=Create White and Black Repertoire Chapters
+DwnLdCreateRepertoireChapter=Utwórz rozdziały repertuarowe dla białych i czarnych
 
 #description: Move number aftre which to trim the study tree
-#english: TrimStudyTree=Trim after Move
-TrimStudyTree=Do ruchu
+#english: TrimStudyTree=Trim Study after Move
+TrimStudyTree=Z teorią do ruchu
 
 #description: Append games to the current chapter
 #english: DwnLdAppendToCurrentChapter=Append Games to the current Chapter
 DwnLdAppendToCurrentChapter=Dodaj partie do obecnego rozdziału
 
 #description: Create a new chapter for the downloaded games
-#english: DwnLdCreateNewChapter=Save Games to a new Chapter
-DwnLdCreateNewChapter=Zapisz partie w nowym rozdziale
+#english: DwnLdCreateNewChapter=Create a new Chapter
+DwnLdCreateNewChapter=Utwórz nowy rozdział
 
 #description: Create a new workbook for the downloaded games
 #english: DwnLdCreateNewWorkbook=Save to a new Workbook

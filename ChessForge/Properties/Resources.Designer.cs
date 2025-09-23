@@ -2194,7 +2194,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Save Games to a new Chapter.
+        ///   Looks up a localized string similar to Create a new Chapter.
         /// </summary>
         public static string DwnLdCreateNewChapter {
             get {
@@ -2212,7 +2212,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create Repertoire Chapters.
+        ///   Looks up a localized string similar to Create White and Black Repertoire Chapters.
         /// </summary>
         public static string DwnLdCreateRepertoireChapter {
             get {
@@ -7955,7 +7955,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Trim after Move.
+        ///   Looks up a localized string similar to Trim Study after Move.
         /// </summary>
         public static string TrimStudyTree {
             get {

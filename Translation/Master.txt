@@ -2827,16 +2827,16 @@ CopyGamesNoMerge=Copy Games into the Games section only (leave the study tree em
 CreateChapterPerGame=Create Chapter per Game
 
 #Generate repertoire chapters
-DwnLdCreateRepertoireChapter=Create Repertoire Chapters
+DwnLdCreateRepertoireChapter=Create White and Black Repertoire Chapters
 
 #Move number aftre which to trim the study tree
-TrimStudyTree=Trim after Move
+TrimStudyTree=Trim Study after Move
 
 #Append games to the current chapter
 DwnLdAppendToCurrentChapter=Append Games to the current Chapter
 
 #Create a new chapter for the downloaded games
-DwnLdCreateNewChapter=Save Games to a new Chapter
+DwnLdCreateNewChapter=Create a new Chapter
 
 #Create a new workbook for the downloaded games
 DwnLdCreateNewWorkbook=Save to a new Workbook
