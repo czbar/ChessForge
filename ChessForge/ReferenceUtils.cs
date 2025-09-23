@@ -21,6 +21,56 @@ namespace ChessForge
         public static int LastClickedReferenceNodeId;
 
         /// <summary>
+        /// Replaces all GUIDs in the workbook with newly generated ones.
+        /// Updates all references accordingly.
+        /// This is needed when importing chapters from another workbook which may have been
+        /// based (copied) on the current one and has duplicates of the articles.
+        /// </summary>
+        /// <param name="workbook"></param>
+        public static void RenewAllReferences(Workbook workbook)
+        {
+            try
+            {
+                // build a map of current references to the newly generated ones
+                Dictionary<string, string> refsMap = new Dictionary<string, string>();
+                foreach (Chapter chapter in workbook.Chapters)
+                {
+                    refsMap[chapter.StudyTree.Guid] = System.Guid.NewGuid().ToString();
+                    foreach (Article article in chapter.ModelGames)
+                    {
+                        refsMap[article.Guid] = System.Guid.NewGuid().ToString();
+                    }
+                    foreach (Article article in chapter.Exercises)
+                    {
+                        refsMap[article.Guid] = System.Guid.NewGuid().ToString();
+                    }
+                }
+
+                foreach (Chapter chapter in workbook.Chapters)
+                {
+                    // update Study references
+                    UpdateReferencesInTree(chapter.StudyTree.Tree, refsMap);
+
+                    // update the model games references
+                    foreach (Article article in chapter.ModelGames)
+                    {
+                        UpdateReferencesInTree(article.Tree, refsMap);
+
+                    }
+
+                    // update the exercises references
+                    foreach (Article article in chapter.Exercises)
+                    {
+                        UpdateReferencesInTree(article.Tree, refsMap);
+                    }
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
         /// Calls UpdateReferenceTextInView() for all views that may contain the reference.
         /// </summary>
         /// <param name="guid"></param>
@@ -311,6 +361,30 @@ namespace ChessForge
         {
             SplitReferencesString(refGuids, out string gameExerciseRefGuids, out string chapterRefGuids);
             return CombineReferences(gameExerciseRefGuids, chapterRefGuids);
+        }
+
+        /// <summary>
+        /// Given a map of old to new GUIDs, updates all references in the tree.
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <param name="refsMap"></param>
+        private static void UpdateReferencesInTree(VariationTree tree, Dictionary<string, string> refsMap)
+        {
+            foreach (TreeNode node in tree.Nodes)
+            {
+                if (!string.IsNullOrEmpty(node.References))
+                {
+                    string[] refs = node.References.Split('|');
+                    node.References = null;
+                    foreach (string guid in refs)
+                    {
+                        if (refsMap.ContainsKey(guid))
+                        {
+                            AddReferenceToNode(node, refsMap[guid]);
+                        }
+                    }
+                }
+            }
         }
 
         /// <summary>
