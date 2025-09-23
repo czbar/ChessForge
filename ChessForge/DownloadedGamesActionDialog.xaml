@@ -7,16 +7,16 @@
         xmlns:p="clr-namespace:ChessForge.Properties"
         mc:Ignorable="d"
         ShowInTaskbar="True"
-        Title="{x:Static p:Resources.SaveDownloadedGames}" Height="325" Width="400">
+        Title="{x:Static p:Resources.SaveDownloadedGames}" Height="325" Width="390">
     <Grid>
         <GroupBox x:Name="UiGbOptions" Header="" Margin="15,15,15,0" Height="210" VerticalAlignment="Top">
             <StackPanel Margin="2,0,-2,0">
-                <CheckBox x:Name="UiCbCreateNewWorkbook" Content="{x:Static p:Resources.DwnLdCreateNewWorkbook}" HorizontalAlignment="Left" Margin="30,20,0,0" Grid.Row="2" VerticalAlignment="Top" Checked="UiCbCreateNewWorkbook_Checked" Unchecked="UiCbCreateNewWorkbook_Unchecked"/>
-                <RadioButton x:Name="UiRbRepertoireChapters" Margin="30,30,0,0" Content="{x:Static p:Resources.DwnLdCreateRepertoireChapter}" Checked="UiRbRepertoireChapters_Checked" Unchecked="UiRbRepertoireChapters_Unchecked"/>
-                <Label x:Name="UilblLastTreeMoveNo" Margin="60,0,0,0" HorizontalAlignment="Left" Content="{x:Static p:Resources.TrimStudyTree}" />
+                <CheckBox x:Name="UiCbCreateNewWorkbook" Content="{x:Static p:Resources.DwnLdCreateNewWorkbook}" HorizontalAlignment="Left" Margin="20,20,0,0" Grid.Row="2" VerticalAlignment="Top" Checked="UiCbCreateNewWorkbook_Checked" Unchecked="UiCbCreateNewWorkbook_Unchecked"/>
+                <RadioButton x:Name="UiRbRepertoireChapters" Margin="20,30,0,0" Content="{x:Static p:Resources.DwnLdCreateRepertoireChapter}" Checked="UiRbRepertoireChapters_Checked" Unchecked="UiRbRepertoireChapters_Unchecked"/>
+                <Label x:Name="UilblLastTreeMoveNo" Margin="60,5,0,0" HorizontalAlignment="Left" Content="{x:Static p:Resources.TrimStudyTree}" />
                 <TextBox x:Name="UiTbLastTreeMoveNo" Width="40" Margin="230,-23, 0, 3" HorizontalAlignment="Left" />
-                <RadioButton x:Name="UiRbCreateNewChapter" Content="{x:Static p:Resources.DwnLdCreateNewChapter}" HorizontalAlignment="Left" Margin="30,15,0,0" Grid.Row="2" VerticalAlignment="Top"/>
-                <RadioButton x:Name="UiRbAppendCurrentChapter" Content="{x:Static p:Resources.DwnLdAppendToCurrentChapter}" HorizontalAlignment="Left" Margin="30,10,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+                <RadioButton x:Name="UiRbCreateNewChapter" Content="{x:Static p:Resources.DwnLdCreateNewChapter}" HorizontalAlignment="Left" Margin="20,15,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+                <RadioButton x:Name="UiRbAppendCurrentChapter" Content="{x:Static p:Resources.DwnLdAppendToCurrentChapter}" HorizontalAlignment="Left" Margin="20,10,0,0" Grid.Row="2" VerticalAlignment="Top"/>
             </StackPanel>
         </GroupBox>
         <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="-220,245,0,0" Width="100" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
