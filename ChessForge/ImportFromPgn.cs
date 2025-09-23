@@ -128,7 +128,7 @@ namespace ChessForge
 
                     if (sb.Length > 0)
                     {
-                        bool gamesFound = ProcessArticlesText(sb.ToString(), contentType, targetcontentType, out gameCount, out exerciseCount);
+                        bool gamesFound = ProcessArticlesText(sb.ToString(), contentType, targetcontentType, out gameCount, out exerciseCount, true);
                         if (!gamesFound)
                         {
                             StringBuilder sbFileNames = new StringBuilder();
@@ -157,7 +157,8 @@ namespace ChessForge
         /// <param name="gameCount"></param>
         /// <param name="exerciseCount"></param>
         /// <returns></returns>
-        private static bool ProcessArticlesText(string sb, GameData.ContentType contentType, GameData.ContentType targetcontentType, out int gameCount, out int exerciseCount)
+        private static bool ProcessArticlesText(string sb, GameData.ContentType contentType, GameData.ContentType targetcontentType, 
+                                                out int gameCount, out int exerciseCount, bool assignNewGuids = false)
         {
             bool gamesFound = true;
 
@@ -217,6 +218,11 @@ namespace ChessForge
                                         try
                                         {
                                             int index = PgnArticleUtils.AddArticle(targetChapter, games[i], contentType, out string error, out article, targetcontentType);
+                                            if (assignNewGuids)
+                                            {
+                                                article.Guid = TextUtils.GenerateRandomElementName();
+                                            }
+                                            
                                             if (index < 0)
                                             {
                                                 if (string.IsNullOrEmpty(error))
