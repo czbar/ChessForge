@@ -46,6 +46,8 @@ namespace ChessForge
                 {
                     Workbook workbook = new Workbook();
                     WorkbookManager.CreateWorkbookFromGameList(ref workbook, ref games);
+                    ReferenceUtils.RenewAllReferences(workbook);
+
                     SelectChaptersDialog dlg = new SelectChaptersDialog(workbook);
                     GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
