@@ -9,6 +9,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Management;
+using System.Net;
 using System.Threading;
 using System.Timers;
 using System.Windows;
@@ -413,6 +414,12 @@ namespace ChessForge
 
             // the next lines pertain to localization, must be invoked here (before InitializeComponent) and in this order
             ReadConfiguration();
+
+            if (Configuration.ForceTls12)
+            {
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            }
+
             Languages.UseFigurines = Configuration.UseFigurines;
             SetCultureInfo(Configuration.CultureName);
             InitializedLocalizedDictionary();
@@ -2000,7 +2007,7 @@ namespace ChessForge
         {
             if (ActiveTreeView != null)
             {
-                ActiveTreeView.BuildFlowDocumentForVariationTree(false);
+                ActiveTreeView.BuildFlowDocumentForVariationTree(true);
             }
         }
 
