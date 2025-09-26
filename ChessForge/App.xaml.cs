@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace ChessForge
 {
@@ -23,7 +20,6 @@ namespace ChessForge
         // full aplication path
         public static string AppPath;
 
-
         /// <summary>
         /// Invoked on application start up.
         /// Processes command line parameters.
@@ -38,6 +34,58 @@ namespace ChessForge
             if (e.Args.Length > 0)
             {
                 CmdLineFileName = e.Args[0];
+            }
+
+            // Register a class-level command binding for all TextBoxes
+            CommandManager.RegisterClassCommandBinding(
+                typeof(TextBox),
+                new CommandBinding(ApplicationCommands.Paste, OnExecutedPaste, OnCanExecutePaste)
+            );
+        }
+
+        /// <summary>
+        /// Allow text pasting.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnCanExecutePaste(object sender, CanExecuteRoutedEventArgs e)
+        {
+            if (e.Command == ApplicationCommands.Paste)
+            {
+                e.CanExecute = true;   // Always allow paste if there's text
+                e.Handled = true;      // Prevent default determination
+            }
+        }
+
+        /// <summary>
+        /// When pasting text into a TextBox replace all new line characters with spaces.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnExecutedPaste(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (e.Command == ApplicationCommands.Paste)
+            {
+                if (Clipboard.ContainsText())
+                {
+                    try
+                    {
+                        string text = Clipboard.GetText();
+
+                        // Replace newlines with spaces
+                        text = text.Replace("\r\n", " ")
+                                   .Replace("\n", " ")
+                                   .Replace("\r", " ");
+
+                        if (sender is TextBox tb)
+                        {
+                            tb.SelectedText = text;
+                        }
+                    }
+                    catch { }
+
+                    e.Handled = true;  // Stop default paste
+                }
             }
         }
     }
