@@ -28,6 +28,9 @@ namespace ChessForge
             PROGRESS // blue
         }
 
+        // flags whether a special message is currently being shown
+        public bool HasSpecialMessage = false;
+
         // main application window
         private MainWindow _mainWin;
 
@@ -150,6 +153,7 @@ namespace ChessForge
                 AddNewParagraphToDoc(HostRtb.Document, "bold_16", MoveUtils.BuildSingleMoveText(nd, true, false, moveNumberOffset));
                 AddNewParagraphToDoc(HostRtb.Document, "normal", Properties.Resources.YourTurn);
             }
+            HasSpecialMessage = false;
         }
 
         /// <summary>
@@ -171,6 +175,7 @@ namespace ChessForge
                 AddNewParagraphToDoc(HostRtb.Document, "bold_16", Properties.Resources.MakeMoveForEngine);
             }
             catch { }
+            HasSpecialMessage = false;
         }
 
 
@@ -292,6 +297,8 @@ namespace ChessForge
         /// <param name="title"></param>
         public void ShowTabHints(TabViewType viewType = TabViewType.NONE)
         {
+            HasSpecialMessage = false;
+
             if (WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.GamesManager.State == ProcessState.RUNNING
                 || _mainWin.ActiveLineReplay.IsReplayActive
                 || MultiTextBoxManager.CanShowEvaluationChart(false, out _) )
@@ -402,6 +409,8 @@ namespace ChessForge
                 AddNewParagraphToDoc(HostRtb.Document, "bold_prompt", Resources.cbIdenticalPositionFound).Foreground = Brushes.Green;
                 AddNewParagraphToDoc(HostRtb.Document, "normal_14", Resources.cbInvestigateIdenticalPositions).Foreground = Brushes.Green;
             });
+
+            HasSpecialMessage = false;
         }
 
         /// <summary>
@@ -415,6 +424,8 @@ namespace ChessForge
             AddNewParagraphToDoc(HostRtb.Document, "dummy", "");
             AddNewParagraphToDoc(HostRtb.Document, "bold_18", Resources.cbAutoReplayInProgress);
             AddNewParagraphToDoc(HostRtb.Document, "normal", Resources.cbClickToStop);
+
+            HasSpecialMessage = false;
         }
 
         /// <summary>
@@ -426,6 +437,8 @@ namespace ChessForge
             AddNewParagraphToDoc(HostRtb.Document, "dummy", "");
             AddNewParagraphToDoc(HostRtb.Document, "bold_16", Resources.cbTrainingStarted);
             AddNewParagraphToDoc(HostRtb.Document, "normal_14", Resources.cbMakeMoveAndWatch);
+
+            HasSpecialMessage = false;
         }
 
         /// <summary>
@@ -436,6 +449,8 @@ namespace ChessForge
             HostRtb.Document.Blocks.Clear();
             AddNewParagraphToDoc(HostRtb.Document, "dummy", "");
             AddNewParagraphToDoc(HostRtb.Document, "bold_16", Resources.EngGameStarted);
+
+            HasSpecialMessage = false;
         }
 
         /// <summary>
@@ -476,6 +491,8 @@ namespace ChessForge
                 HostRtb.Document.Blocks.Add(para);
                 para.Foreground = Brushes.Red;
             });
+
+            HasSpecialMessage = true;
         }
 
         /// <summary>
@@ -496,6 +513,8 @@ namespace ChessForge
                 HostRtb.Document.Blocks.Add(para);
                 para.Foreground = Brushes.Red;
             });
+
+            HasSpecialMessage = true;
         }
 
         /// <summary>
@@ -516,7 +535,9 @@ namespace ChessForge
                 HostRtb.Document.Blocks.Add(para);
                 para.Foreground = Brushes.Red;
             });
-        }        
+
+            HasSpecialMessage = true;
+        }
 
         /// <summary>
         /// Notifies the user that the evaluation was stopped and engine reset
