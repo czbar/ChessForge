@@ -928,6 +928,10 @@ namespace ChessForge
                             }
                         }
                         _mainWin.ActiveTreeView.SelectLineAndMoveInWorkbookViews(Line.GetLineId(), plyIndex, true);
+                        if (AppState.MainWin.BoardCommentBox.HasSpecialMessage)
+                        {
+                            AppState.MainWin.BoardCommentBox.RestoreTitleMessage();
+                        }
                     }
                 }
                 handled = true;
