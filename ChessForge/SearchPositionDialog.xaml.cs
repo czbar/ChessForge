@@ -952,6 +952,18 @@ namespace ChessForge
         {
             UiImgEmptySquare.Visibility = Visibility.Collapsed;
             Configuration.PartialSearch = false;
+
+            for (int i = 0; i <= 7; i++)
+            {
+                for (int j = 0; j <= 7; j++)
+                {
+                    if (PositionSetup.Board[i, j] == 0xFF)
+                    {
+                        SquareCoords sc = new SquareCoords(i, j);
+                        RemovePieceFromBoard(sc);
+                    }
+                }
+            }
         }
 
         /// <summary>
