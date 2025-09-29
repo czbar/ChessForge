@@ -1745,6 +1745,8 @@ namespace ChessForge
 
                     MainWin.UiMnFindIdentical.IsEnabled = IsTreeViewTabActive() || ActiveTab == TabViewType.INTRO;
                     MainWin.UiMnciFindIdentical.IsEnabled = IsTreeViewTabActive() || ActiveTab == TabViewType.INTRO;
+                    MainWin.UiMnFindPositions.IsEnabled = IsTreeViewTabActive() || ActiveTab == TabViewType.INTRO;
+                    MainWin.UiMnciFindPositions.IsEnabled = IsTreeViewTabActive() || ActiveTab == TabViewType.INTRO;
 
                     MainWin.UiMnMainImportFromPgn.IsEnabled = AppState.Workbook != null && Workbook.IsReady;
                     MainWin.UiMnCleanLinesAndComments.IsEnabled = WorkbookManager.SessionWorkbook != null;
