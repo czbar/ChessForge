@@ -2231,7 +2231,7 @@ BtnDontSaveSession=
 BtnMergeSession=
 
 #description: Button Merge session to source 
-#english: BtnCreateGame=Create Game From Session's Last Line
+#english: BtnCreateGame=Create Game from Session's Last Line
 BtnCreateGame=
 
 #
@@ -2618,7 +2618,7 @@ DuplicateAsVariation=
 DeleteMovesFromHere=
 
 #description: Create a new chpater from the selected line
-#english: CreateNewChapterFromLine=Create New Chapter From Line
+#english: CreateNewChapterFromLine=Create New Chapter from Line
 CreateNewChapterFromLine=
 
 #description: Bookmark the current position and position for all alternative moves

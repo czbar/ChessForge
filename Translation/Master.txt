@@ -1753,7 +1753,7 @@ BtnDontSaveSession=Do Not Save Session
 BtnMergeSession=Merge Session Line to Source
 
 #Button Merge session to source 
-BtnCreateGame=Create Game From Session's Last Line
+BtnCreateGame=Create Game from Session's Last Line
 
 #
 # Training Prompts
@@ -2051,7 +2051,7 @@ DuplicateAsVariation=Duplicate Move as Variation
 DeleteMovesFromHere=Delete the Selected Move and All Moves that Follow
 
 #Create a new chpater from the selected line
-CreateNewChapterFromLine=Create New Chapter From Line
+CreateNewChapterFromLine=Create New Chapter from Line
 
 #Bookmark the current position and position for all alternative moves
 BookmarkAllOptionsHere=Bookmark All Options Here

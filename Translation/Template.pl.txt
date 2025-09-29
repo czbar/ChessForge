@@ -2231,7 +2231,7 @@ BtnDontSaveSession=Nie Zapisuj tej Sesji
 BtnMergeSession=Dodaj Ruchy z tej Sesji do Źródła
 
 #description: Button Merge session to source 
-#english: BtnCreateGame=Create Game From Session's Last Line
+#english: BtnCreateGame=Create Game from Session's Last Line
 BtnCreateGame=Utwórz Partię z Ostatniej Gry w tej Sesji
 
 #
@@ -2618,7 +2618,7 @@ DuplicateAsVariation=Duplikuj ruch jako wariant
 DeleteMovesFromHere=Usuń zaznaczony ruch i wszystkie dalsze posunięcia
 
 #description: Create a new chpater from the selected line
-#english: CreateNewChapterFromLine=Create New Chapter From Line
+#english: CreateNewChapterFromLine=Create New Chapter from Line
 CreateNewChapterFromLine=Utwórz Nowy Rozdział z Wariantu
 
 #description: Bookmark the current position and position for all alternative moves

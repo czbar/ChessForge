@@ -475,7 +475,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create Game From Session&apos;s Last Line.
+        ///   Looks up a localized string similar to Create Game from Session&apos;s Last Line.
         /// </summary>
         public static string BtnCreateGame {
             get {
@@ -1519,7 +1519,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create New Chapter From Line.
+        ///   Looks up a localized string similar to Create New Chapter from Line.
         /// </summary>
         public static string CreateNewChapterFromLine {
             get {

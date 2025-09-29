@@ -1553,7 +1553,7 @@ NOTE: Evaluations are not being updated (Ctrl+K to allow).</value>
     <value>Merge Session Line to Source</value>
   </data>
   <data name="BtnCreateGame" xml:space="preserve">
-    <value>Create Game From Session's Last Line</value>
+    <value>Create Game from Session's Last Line</value>
   </data>
   <data name="YourMoveWas" xml:space="preserve">
     <value>Your move was</value>
@@ -1820,7 +1820,7 @@ NOTE: Evaluations are not being updated (Ctrl+K to allow).</value>
     <value>Delete the Selected Move and All Moves that Follow</value>
   </data>
   <data name="CreateNewChapterFromLine" xml:space="preserve">
-    <value>Create New Chapter From Line</value>
+    <value>Create New Chapter from Line</value>
   </data>
   <data name="BookmarkAllOptionsHere" xml:space="preserve">
     <value>Bookmark All Options Here</value>
