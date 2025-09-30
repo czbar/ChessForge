@@ -1037,21 +1037,24 @@ namespace ChessForge
             {
                 para = AddNewParagraphToDoc(HostRtb.Document, STYLE_TAKEBACK, "");
                 _dictParas[ParaType.TAKEBACK] = para;
-                para.MouseDown += EventTakebackParaClicked;
-                para.Cursor = Cursors.Hand;
             }
 
             para.Inlines.Clear();
 
             para.Foreground = ChessForgeColors.CurrentTheme.TrainingTakebackForeground;
 
-            para.Inlines.Add(new Run("\n " + Properties.Resources.MsgTakebackWanted));
+            Run rTakeback = new Run("\n " + Properties.Resources.MsgTakebackWanted);
+            rTakeback.MouseDown += EventTakebackParaClicked;
+            rTakeback.Cursor = Cursors.Hand;
+            para.Inlines.Add(rTakeback);
 
             Run note = new Run();
             note.FontSize = para.FontSize - 2;
             note.FontStyle = FontStyles.Italic;
             note.FontWeight = FontWeights.Normal;
             note.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
+            note.MouseDown += EventTakebackParaClicked;
+            note.Cursor = Cursors.Hand;
 
             note.Text = "  " + Properties.Resources.MsgTakebackInfo;
             para.Inlines.Add(note);
