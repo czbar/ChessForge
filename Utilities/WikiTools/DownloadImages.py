@@ -5,7 +5,7 @@ import requests
 # Directory where .md files live
 SOURCE_DIR = "C:/GitHub/ChessForge.wiki"   # change if needed
 # Directory to save downloaded images
-OUTPUT_DIR = "C:/GitHub/ChessForge.wiki/images"
+OUTPUT_DIR = "C:/GitHub/WikiDownloadedImages"
 
 # Make sure output directory exists
 os.makedirs(OUTPUT_DIR, exist_ok=True)

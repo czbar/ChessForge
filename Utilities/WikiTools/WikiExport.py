@@ -4,11 +4,11 @@ import subprocess
 
 # Path to the local clone of your Wiki repo
 # Example: git clone https://github.com/czbar/ChessForge.wiki.git
-WIKI_PATH = r"C:\GitHub\ChessForge.wiki"
+WIKI_PATH = r"C:/GitHub/Outputs/WikiForPandoc"
 
 # Output files
-OUTPUT_PDF = r"C:\Users\Robert Rozycki\Documents\Visual Studio 2022\WikiExport\Outputs\ChessForge_Manual.pdf"
-OUTPUT_DOCX = r"C:\Users\Robert Rozycki\Documents\Visual Studio 2022\WikiExport\Outputs\ChessForge_Manual.docx"
+OUTPUT_PDF = "C:/GitHub/Wiki/Generated/ChessForge_Manual.pdf"
+OUTPUT_DOCX = "C:/GitHub/Wiki/Generated/ChessForge_Manual.docx"
 
 # Optional: define order of pages (filenames in wiki repo).
 # If left empty, all .md files will be included alphabetically.
