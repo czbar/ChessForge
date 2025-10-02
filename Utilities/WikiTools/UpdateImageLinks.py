@@ -6,11 +6,16 @@ import sys
 # Directory with .md files
 SOURCE_DIR = "C:/GitHub/ChessForge.wiki"
 
-OUTPUT_DIR_WEB = "C:/GitHub/Wiki/Outputs/WikiForWeb"
-OUTPUT_DIR_PANDOC = "C:/GitHub/Wiki/Outputs/WikiForPandoc"
+OUTPUT_DIR_WEB = "C:/GitHub/Wiki/WikiForWeb"
+OUTPUT_DIR_PANDOC = "C:/GitHub/Wiki/WikiForPandoc"
 
 # Regex to capture the URL and GUID
-IMG_URL_PATTERN = re.compile(r'(<img src=")https://github\.com[^\s"]*?([0-9a-fA-F-]{36})(?:\.png)?(")')
+IMG_URL_PATTERN = re.compile(r'(<img src=")https://[^\s"]*?([0-9a-fA-F-]{36})(?:\.png)?(")(.*)')
+
+IMG_LONG_URL_PATTERN = re.compile(r'(.*)https://[^\s"]*?([0-9a-fA-F-]{46})(?:\.png)?(.*)')
+
+# Regex to capture Width=<N>
+WIDTH_PATTERN = re.compile(r'Width\s*=\s*(\d+)', re.IGNORECASE)
 
 def update_md_files():
     """Update .md files with new image URLs."""
@@ -20,29 +25,67 @@ def update_md_files():
             outpath_web = os.path.join(OUTPUT_DIR_WEB, fname)
             outpath_pandoc = os.path.join(OUTPUT_DIR_PANDOC, fname)
 
+            updated_lines = []
+            updated_lines_pandoc = []
+            changed = False
+
             with open(filepath, "r", encoding="utf-8") as f:
-                content = f.read()
+                for line in f:
+                    original_line = line
+                    line_pandoc = line
 
-            # Replace URLs with new format for web
-            new_content = IMG_URL_PATTERN.sub(
-                lambda m: f'{m.group(1)}https://github.com/czbar/ChessForge/wiki/images/{m.group(2)}.png{m.group(3)}',
-                content
-            )
+                    # Get Width if found in the line before we process the line.
+                    width_match = WIDTH_PATTERN.search(line)
+                    if width_match:
+                        width_value = width_match.group(1)
 
-            with open(outpath_web, "w", encoding="utf-8") as f:
-                f.write(new_content)
+                    # Replace the GitHub image URL with the new format
+                    line = IMG_LONG_URL_PATTERN.sub(
+                        lambda m: f'{m.group(1)}https://github.com/czbar/ChessForge/wiki/images/{m.group(2)}.png',
+                        line,
+                    )
+
+                    if line != original_line:
+                        changed = True
+                        print(line)
+                        line_pandoc = IMG_LONG_URL_PATTERN.sub(
+                            lambda m: f'![](C:/GitHub/Wiki/DownloadedImages/{m.group(2)}.png)',
+                            line_pandoc,
+                    )
+                    else:
+                        line = IMG_URL_PATTERN.sub(
+                            lambda m: f'{m.group(1)}https://github.com/czbar/ChessForge/wiki/images/{m.group(2)}.png{m.group(3)}',
+                            line,
+                        )
+                        if line != original_line:
+                            changed = True
+                            line_pandoc = IMG_URL_PATTERN.sub(
+                                lambda m: f'![](C:/GitHub/Wiki/DownloadedImages/{m.group(2)}.png)',
+                                line_pandoc,
+                            )
+                    
+                    if width_match:
+                        # remove the Width=<N> part
+                        line_pandoc = WIDTH_PATTERN.sub("", line_pandoc)
+                        line_pandoc = line_pandoc.rstrip() + f'{{ width={width_value}px }}\n'
+
+                    updated_lines.append(line)
+                    updated_lines_pandoc.append(line_pandoc)
+
+                    if line != original_line:
+                        changed = True
+                    
+            if changed:
+                with open(outpath_web, "w", encoding="utf-8") as f:
+                    f.writelines(updated_lines)
                 print(f"Updated: {fname}")
+            else:
+                print(f"No changes in: {fname}")
 
-                
-            # Replace URLs with new format for Pandoc
-            new_content = IMG_URL_PATTERN.sub(
-                lambda m: f'{m.group(1)}C:/GitHub/Wiki/DownloadedImages/{m.group(2)}.png{m.group(3)}',
-                content
-            )
-
-            with open(outpath_pandoc, "w", encoding="utf-8") as f:
-                f.write(new_content)
-                print(f"Updated: {fname}")
+            if changed:
+                with open(outpath_pandoc, "w", encoding="utf-8") as f:
+                    f.writelines(updated_lines_pandoc)
+                        
 
 if __name__ == "__main__":
     update_md_files()

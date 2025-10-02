@@ -4,7 +4,7 @@ import subprocess
 
 # Path to the local clone of your Wiki repo
 # Example: git clone https://github.com/czbar/ChessForge.wiki.git
-WIKI_PATH = r"C:/GitHub/Outputs/WikiForPandoc"
+WIKI_PATH = r"C:/GitHub/Wiki/WikiForPandoc"
 
 # Output files
 OUTPUT_PDF = "C:/GitHub/Wiki/Generated/ChessForge_Manual.pdf"
@@ -16,6 +16,27 @@ PAGE_ORDER = [
     "User's-Manual.md",
     "Installation.md",
     "Graphical-User-Interface.md",
+    "Keyboards-Navigation-and-Shortcuts.md",
+    "Application-Options-Dialog.md",
+    "Engine-Options-Dialog.md",
+    "Connecting-Chess-Forge-to-Chess-Engine.md",
+    "Chessboard-Selection-Dialog.md",
+    "Workbook-Structure.md",
+    "Workbook-Options.md",
+    "Opening-a-Workbook.md",
+    "Online-Libraries.md",
+    "Creating-a-Private-Online-Library.md",
+    "Working-with-Moves-and-Lines.md",
+    "Drawing-Arrows-and-Circles.md",
+    "Annotation-Editor.md",
+    "Scoresheet.md",
+    "Explorer-and-Tablebase.md",
+    "Engine-and-Evaluation.md",
+    "Finding-Positions.md",
+    "Replaying-Line.md",
+    "FEN.md",
+    "Diagrams.md",
+    "Thumbnails.md",
 ]
 
 def collect_markdown_files():

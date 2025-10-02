@@ -5,13 +5,14 @@ import requests
 # Directory where .md files live
 SOURCE_DIR = "C:/GitHub/ChessForge.wiki"   # change if needed
 # Directory to save downloaded images
-OUTPUT_DIR = "C:/GitHub/WikiDownloadedImages"
+OUTPUT_DIR = "C:/GitHub/Wiki/DownloadedImages"
 
 # Make sure output directory exists
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # Regex to capture URLs of the form <img src="https://github.com...GUID[.png]"
 IMG_URL_PATTERN = re.compile(r'<img src="(https://github\.com[^\s"]*?([0-9a-fA-F-]{36})(?:\.png)?)"')
+IMG_LONG_URL_PATTERN = re.compile(r'(https://[^\s"]*?([0-9a-fA-F-]{46})(?:\.png)?)')
 
 def download_image(url, guid):
     filename = f"{guid}.png"
@@ -38,10 +39,15 @@ def process_md_files():
         if fname.endswith(".md"):
             with open(os.path.join(SOURCE_DIR, fname), "r", encoding="utf-8") as f:
                 for line in f:
-                    match = IMG_URL_PATTERN.search(line)
+                    match = IMG_LONG_URL_PATTERN.search(line)
                     if match:
                         url, guid = match.groups()
                         download_image(url, guid)
+                    else:
+                        match = IMG_URL_PATTERN.search(line)
+                        if match:
+                            url, guid = match.groups()
+                            download_image(url, guid)
 
 if __name__ == "__main__":
     process_md_files()
