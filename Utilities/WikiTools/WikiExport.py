@@ -37,6 +37,45 @@ PAGE_ORDER = [
     "FEN.md",
     "Diagrams.md",
     "Thumbnails.md",
+    "Creating-Chapter.md",
+    "Merging-Chapters.md",
+    "Splitting-Chapter.md",
+    "Matching-Games-to-Chapters-by-ECO.md",
+    "Copying-Games-and-Exercises-between-Chapters.md",
+    "Moving-Games-and-Exercises-between-Chapters.md",
+    "Assigning-ECOs-to-Chapter-Items.md",
+    "Sorting-Games-across-Chapters.md",
+    "Regenerating-Study-from-Games.md",
+    "Statistics.md",
+    "Creating-Chapter-Intro.md",
+    "Intro-Editor.md",
+    "Creating-Study-Tree.md",
+    "Importing-Study-Tree.md",
+    "Self-Indexing-View.md",
+    "Games-View.md",
+    "Creating-a-New-Game.md",
+    "Game-Header-Editor.md",
+    "Navigating-Games.md",
+    "Importing-or-Downloading-Games.md",
+    "Finding-Games.md",
+    "Deleting-Games.md",
+    "Exercises-View.md",
+    "Creating-a-New-Exercise.md",
+    "Exercise-Header-Editor.md",
+    "Navigating-Exercises.md",
+    "Entering-Solution-for-the-Exercise.md",
+    "Showing-Exercise-Solutions.md",
+    "Solving-an-Exercise.md",
+    "Importing-Exercises.md",
+    "Deleting-Exercises.md",
+    "Creating-Bookmarks.md",
+    "Deleting-Bookmarks.md",
+    "Filtering-Bookmarks.md",
+    "Working-with-Bookmarks.md",
+    "Starting-Training.md",
+    "Playing-in-Training-Mode.md",
+    "Saving-Training.md",
+    "Playing-Against-Engine.md",
 ]
 
 def collect_markdown_files():
@@ -82,5 +121,5 @@ if __name__ == "__main__":
     else:
         merged = merge_markdown(md_files)
         # Choose which outputs you want:
-        export_to_pdf(merged)
+        # export_to_pdf(merged)
         export_to_docx(merged)

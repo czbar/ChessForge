@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>ef49fd39-e898-45cf-acfa-8d83974c8243</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>WikiExport.py</StartupFile>
+    <StartupFile>UpdateImageLinks.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>

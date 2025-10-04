@@ -10,7 +10,7 @@ OUTPUT_DIR_WEB = "C:/GitHub/Wiki/WikiForWeb"
 OUTPUT_DIR_PANDOC = "C:/GitHub/Wiki/WikiForPandoc"
 
 # Regex to capture the URL and GUID
-IMG_URL_PATTERN = re.compile(r'(<img src=")https://[^\s"]*?([0-9a-fA-F-]{36})(?:\.png)?(")(.*)')
+IMG_URL_PATTERN = re.compile(r'(.*)https://[^\s"]*?([0-9a-fA-F-]{36})(.*)')
 
 IMG_LONG_URL_PATTERN = re.compile(r'(.*)https://[^\s"]*?([0-9a-fA-F-]{46})(?:\.png)?(.*)')
 
@@ -81,7 +81,8 @@ def update_md_files():
                 print(f"Updated: {fname}")
             else:
                 print(f"No changes in: {fname}")
-
+            
+            changed = True  # Force update for pandoc files
             if changed:
                 with open(outpath_pandoc, "w", encoding="utf-8") as f:
                     f.writelines(updated_lines_pandoc)

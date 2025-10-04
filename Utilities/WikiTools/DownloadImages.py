@@ -11,7 +11,7 @@ OUTPUT_DIR = "C:/GitHub/Wiki/DownloadedImages"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # Regex to capture URLs of the form <img src="https://github.com...GUID[.png]"
-IMG_URL_PATTERN = re.compile(r'<img src="(https://github\.com[^\s"]*?([0-9a-fA-F-]{36})(?:\.png)?)"')
+IMG_URL_PATTERN = re.compile(r'(https://[^\s"]*?([0-9a-fA-F-]{36}))')
 IMG_LONG_URL_PATTERN = re.compile(r'(https://[^\s"]*?([0-9a-fA-F-]{46})(?:\.png)?)')
 
 def download_image(url, guid):
