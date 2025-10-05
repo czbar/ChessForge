@@ -13,7 +13,6 @@ OUTPUT_DOCX = "C:/GitHub/Wiki/Generated/ChessForge_Manual.docx"
 # Optional: define order of pages (filenames in wiki repo).
 # If left empty, all .md files will be included alphabetically.
 PAGE_ORDER = [
-    "User's-Manual.md",
     "Installation.md",
     "Graphical-User-Interface.md",
     "Keyboards-Navigation-and-Shortcuts.md",
