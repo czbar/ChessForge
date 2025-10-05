@@ -22,6 +22,8 @@ Sub InsertTableOfContentsAtBeginning()
         UseHyperlinks:=True, _
         HidePageNumbersInWeb:=False
 
+    Selection.InsertBreak Type:=wdPageBreak
+    
     ' Update the TOC to show entries
     doc.TablesOfContents(1).Update
 End Sub
