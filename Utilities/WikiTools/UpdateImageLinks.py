@@ -29,6 +29,15 @@ def update_md_files():
             updated_lines_pandoc = []
             changed = False
 
+            # Get the filename without extension
+            name_without_ext = os.path.splitext(fname)[0]
+
+            # Replace hyphens with spaces
+            title = name_without_ext.replace("-", " ")
+
+            updated_lines_pandoc.append(f"# {title}")
+            updated_lines_pandoc.append("\n\n")
+
             with open(filepath, "r", encoding="utf-8") as f:
                 for line in f:
                     original_line = line
