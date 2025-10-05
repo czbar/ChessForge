@@ -1,4 +1,4 @@
-Attribute VB_Name = "Module2"
+Attribute VB_Name = "RegexReplace"
 Sub MultiRegexReplacePreserveFormatting()
     Dim rng As Range
     Dim patterns As Variant, replacements As Variant

@@ -1,11 +1,11 @@
-Attribute VB_Name = "Module3"
+Attribute VB_Name = "InsertTableOfContents"
 
 Sub InsertTableOfContentsAtBeginning()
     Dim doc As Document
     Set doc = ActiveDocument
 
     ' Move cursor to the start of the document
-    'Selection.HomeKey Unit:=wdStory
+    Selection.HomeKey Unit:=wdStory
 
     ' Insert a page break to separate TOC from the rest (optional)
     'Selection.InsertBreak Type:=wdPageBreak

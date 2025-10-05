@@ -1,4 +1,4 @@
-Attribute VB_Name = "Module1"
+Attribute VB_Name = "RemoveLocalHyperlinks"
 Sub RemoveLocalHyperlinks()
     Dim h As Hyperlink
     Dim i As Long

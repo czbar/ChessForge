@@ -1,6 +1,6 @@
-Attribute VB_Name = "Module4"
+Attribute VB_Name = "FinalizeDocument"
 Sub FinalizeDocument()
-    Call RemoveLocalHyperlinks
-    Call InsertTitlePage
-    Call InsertTableOfContentsAtBeginning
+    Call RemoveLocalHyperlinks.RemoveLocalHyperlinks
+    Call InsertTableOfContents.InsertTableOfContentsAtBeginning
+    Call InsertTitlePage.InsertTitlePage
 End Sub
