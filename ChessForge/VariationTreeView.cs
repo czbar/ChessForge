@@ -953,6 +953,10 @@ namespace ChessForge
             {
                 node = TreeUtils.InsertSubtreeMovesIntoTree(ShownVariationTree, nodeToInsertAt, nodesToInsert, ref insertedNodes, ref failedInsertions);
 
+                // Create Undo info only if there was at least one move inserted
+                // and no failures.
+                // In case of failures the caller will remove the inserted nodes
+                // so there will be nothing to undo.
                 if (insertedNodes.Count > 0 && failedInsertions.Count == 0)
                 {
                     // Prepare info for potential Undo
