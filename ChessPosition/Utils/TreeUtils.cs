@@ -690,7 +690,11 @@ namespace ChessPosition
                     {
                         nodeToInsertAt = nodeToInsertAt.Parent;
                     }
-                    if (nodeToInsertAt != null)
+                    if (nodeToInsertAt == null)
+                    {
+                        failedInsertions.Add(nodesToInsertOrig[0]);
+                    }
+                    else
                     {
                         updatedRoot = InsertMoveAndChildrenIntoTree(targetTree, nodeToInsertAt, subtreeRoot, ref insertedInsertions, ref failedInsertions, allowDupe);
                     }
