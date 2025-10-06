@@ -20,8 +20,19 @@ Attribute InsertTitlePage.VB_ProcData.VB_Invoke_Func = "Normal.InsertTitlePage.I
     Selection.TypeParagraph
     Selection.Font.Size = 36
     Selection.Font.Color = -704593921
+    Selection.Font.Bold = wdToggle
+    Selection.Font.BoldBi = wdToggle
     Selection.ParagraphFormat.Alignment = wdAlignParagraphCenter
     Selection.TypeText Text:="User's Manual"
+    Selection.TypeParagraph
+    
+    Selection.TypeParagraph
+    Selection.Font.Size = 18
+    Selection.Font.Color = -704593921
+    Selection.Font.Bold = wdToggle
+    Selection.Font.BoldBi = wdToggle
+    Selection.ParagraphFormat.Alignment = wdAlignParagraphCenter
+    Selection.TypeText Text:="Version 1.13.0"
     Selection.TypeParagraph
     
     Selection.InsertBreak Type:=wdPageBreak
