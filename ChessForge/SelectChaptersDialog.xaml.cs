@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace ChessForge
 {
@@ -16,6 +11,16 @@ namespace ChessForge
     /// </summary>
     public partial class SelectChaptersDialog : Window
     {
+        /// <summary>
+        /// How was the dialog invoked.
+        /// Determines which Help topic to show.
+        /// </summary>
+        public enum Mode
+        {   
+            IMPORT,
+            MERGE
+        }
+
         /// <summary>
         /// Exit result of this dialog.
         /// </summary>
@@ -27,16 +32,20 @@ namespace ChessForge
         // The list of properties to bind to the List View
         public ObservableCollection<SelectedChapter> ChapterList = new ObservableCollection<SelectedChapter>();
 
+        // How was the dialog invoked
+        private Mode _mode;
+
         /// <summary>
         /// Initializes the dialog and builds a list of chapters
         /// for the user to choose from.
         /// </summary>
         /// <param name="workbook"></param>
-        public SelectChaptersDialog(Workbook workbook, string title = null)
+        public SelectChaptersDialog(Workbook workbook, Mode mode, string title = null)
         {
             InitializeComponent();
 
             _workbook = workbook;
+            _mode = mode;
 
             int index = 0;
             foreach (Chapter ch in _workbook.Chapters)
@@ -111,6 +120,28 @@ namespace ChessForge
             ExitOK = false;
             Close();
         }
+
+        /// <summary>
+        /// Links to the relevant Wiki page.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
+        {
+            if (_mode == Mode.IMPORT)
+            {
+                System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Importing-Data-into-Chess-Forge#importing-chapters");
+            }
+            else if (_mode == Mode.MERGE)
+            {
+                System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Merging-Chapters");
+            }
+            else
+            {
+                System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/User's-Manual");
+            }
+        }
+
     }
 
     /// <summary>
