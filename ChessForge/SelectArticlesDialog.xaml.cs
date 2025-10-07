@@ -81,7 +81,8 @@ namespace ChessForge
 
             switch (ActionOnArticles)
             {
-                case ArticlesAction.COPY_OR_MOVE:
+                case ArticlesAction.COPY_OR_MOVE_FOUND_GAMES:
+                case ArticlesAction.COPY_OR_MOVE_FOUND_POSITIONS:
                     UiBtnOk.Visibility = Visibility.Collapsed;
                     break;
                 case ArticlesAction.DELETE:
@@ -919,5 +920,39 @@ namespace ChessForge
                 }
             }
         }
+
+        /// <summary>
+        /// Links to the relevant Wiki page.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
+        {
+            switch (ActionOnArticles)
+            {
+                case ArticlesAction.COPY_OR_MOVE_FOUND_GAMES:
+                    System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Finding-Games");
+                    break;
+                case ArticlesAction.COPY_OR_MOVE_FOUND_POSITIONS:
+                    System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Copying-Games-and-Exercises-between-Chapters#Copy-Games-and-Exercises-from-Identical-Positions");
+                    break;
+                case ArticlesAction.DELETE:
+                    System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Deleting-Games#deleting-multiple-games");
+                    break;
+                case ArticlesAction.COPY:
+                    System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Copying-Games-and-Exercises-between-Chapters");
+                    break;
+                case ArticlesAction.MOVE:
+                    System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Moving-Games-and-Exercises-between-Chapters");
+                    break;
+                case ArticlesAction.EVALUATE:
+                    System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Engine-and-Evaluation#evaluate-games");
+                    break;
+                default:
+                    System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/User's-Manual");
+                    break;
+            }
+        }
+
     }
 }
