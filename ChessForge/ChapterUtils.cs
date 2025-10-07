@@ -258,7 +258,8 @@ namespace ChessForge
                 case ArticlesAction.MOVE:
                     title = Properties.Resources.SelectItemsToMove;
                     break;
-                case ArticlesAction.COPY_OR_MOVE:
+                case ArticlesAction.COPY_OR_MOVE_FOUND_GAMES:
+                case ArticlesAction.COPY_OR_MOVE_FOUND_POSITIONS:
                     title = Properties.Resources.SelectItemsToCopyOrMove;
                     break;
             }
@@ -266,7 +267,7 @@ namespace ChessForge
             SelectArticlesDialog dlg = new SelectArticlesDialog(null, allChaptersCheckbox, title, ref lstArticleItems, showAllChapters, action);
             GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
-            if (action == ArticlesAction.COPY_OR_MOVE)
+            if (action == ArticlesAction.COPY_OR_MOVE_FOUND_POSITIONS || action == ArticlesAction.COPY_OR_MOVE_FOUND_GAMES)
             {
                 dlg.SetupGuiForGamesCopyOrMove();
             }

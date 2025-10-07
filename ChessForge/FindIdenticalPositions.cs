@@ -111,7 +111,7 @@ namespace ChessForge
             {
                 if (dlgEx.Request == FoundArticlesDialog.Action.CopyOrMoveArticles)
                 {
-                    ChapterUtils.RequestCopyMoveArticles(searchNode, false, lstIdenticalPositions, ArticlesAction.COPY_OR_MOVE, true);
+                    ChapterUtils.RequestCopyMoveArticles(searchNode, false, lstIdenticalPositions, ArticlesAction.COPY_OR_MOVE_FOUND_POSITIONS, true);
                 }
                 else if (dlgEx.ArticleIndexId >= 0 && dlgEx.ArticleIndexId < lstIdenticalPositions.Count)
                 {
