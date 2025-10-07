@@ -70,8 +70,10 @@ namespace ChessPosition
         NONE,
         COPY,
         MOVE,
-        COPY_OR_MOVE,
-        DELETE
+        COPY_OR_MOVE_FOUND_POSITIONS,
+        COPY_OR_MOVE_FOUND_GAMES,
+        DELETE,
+        EVALUATE
     }
 
     /// <summary>
