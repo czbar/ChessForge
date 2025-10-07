@@ -777,7 +777,18 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Finding-Positions");
+            if (_mode == Mode.FILTER_GAMES)
+            {
+                System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Finding-Games");
+            }
+            else if (_mode == Mode.IDENTICAL_ARTICLES)
+            {
+                System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Finding-Positions");
+            }
+            else
+            {
+                System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/User's-Manual");            
+            }
         }
     }
 
