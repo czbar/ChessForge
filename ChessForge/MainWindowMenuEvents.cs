@@ -406,7 +406,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnMergeChapters_Click(object sender, RoutedEventArgs e)
         {
-            SelectChaptersDialog dlg = new SelectChaptersDialog(WorkbookManager.SessionWorkbook, Properties.Resources.SelectChaptersToMerge);
+            SelectChaptersDialog dlg = new SelectChaptersDialog(WorkbookManager.SessionWorkbook, SelectChaptersDialog.Mode.MERGE, Properties.Resources.SelectChaptersToMerge);
             GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
             dlg.ShowDialog();

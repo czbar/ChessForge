@@ -48,7 +48,7 @@ namespace ChessForge
                     WorkbookManager.CreateWorkbookFromGameList(ref workbook, ref games);
                     ReferenceUtils.RenewAllReferences(workbook);
 
-                    SelectChaptersDialog dlg = new SelectChaptersDialog(workbook);
+                    SelectChaptersDialog dlg = new SelectChaptersDialog(workbook, SelectChaptersDialog.Mode.IMPORT);
                     GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
                     dlg.ShowDialog();
