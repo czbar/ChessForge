@@ -39,3 +39,5 @@ ChessForge still gives notation like Nge3.
 While browsing the game, bring into view the NEXT move on the main line or move the view up if we are at the bottom.
 
 After editing the starting position of an existing study, the solution gets hidden. 
+
+Exit after a game vs engine asked to save even if no moves were made.

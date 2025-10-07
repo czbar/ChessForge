@@ -778,6 +778,23 @@ WorkbookStats=
 #english: Training=Training
 Training=
 
+#description: Training from current positon
+#english: TrainFromCurrentPosition=From Current Position
+TrainFromCurrentPosition=
+
+#description: Training from starting position
+#english: TrainFromStartingPosition=From Starting Position
+TrainFromStartingPosition=
+
+#description: Training chapter shuffle
+#english: TrainChapterShuffle=Chapter Study Shuffle
+TrainChapterShuffle=
+
+#description: Training workbook shuffle
+#english: TrainWorkbookShuffle=Workbook Studies Shuffle
+TrainWorkbookShuffle=
+
+
 #description: Start a new training session
 #english: StartNewSession=Start New Session
 StartNewSession=

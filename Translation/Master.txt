@@ -598,6 +598,19 @@ WorkbookStats=Workbook Stats
 #Training
 Training=Training
 
+#Training from current positon
+TrainFromCurrentPosition=From Current Position
+
+#Training from starting position
+TrainFromStartingPosition=From Starting Position
+
+#Training chapter shuffle
+TrainChapterShuffle=Chapter Study Shuffle
+
+#Training workbook shuffle
+TrainWorkbookShuffle=Workbook Studies Shuffle
+
+
 #Start a new training session
 StartNewSession=Start New Session
 

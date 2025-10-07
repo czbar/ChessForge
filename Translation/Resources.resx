@@ -657,6 +657,18 @@
   <data name="Training" xml:space="preserve">
     <value>Training</value>
   </data>
+  <data name="TrainFromCurrentPosition" xml:space="preserve">
+    <value>From Current Position</value>
+  </data>
+  <data name="TrainFromStartingPosition" xml:space="preserve">
+    <value>From Starting Position</value>
+  </data>
+  <data name="TrainChapterShuffle" xml:space="preserve">
+    <value>Chapter Study Shuffle</value>
+  </data>
+  <data name="TrainWorkbookShuffle" xml:space="preserve">
+    <value>Workbook Studies Shuffle</value>
+  </data>
   <data name="StartNewSession" xml:space="preserve">
     <value>Start New Session</value>
   </data>
