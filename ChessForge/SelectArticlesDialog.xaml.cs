@@ -937,7 +937,14 @@ namespace ChessForge
                     System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Copying-Games-and-Exercises-between-Chapters#Copy-Games-and-Exercises-from-Identical-Positions");
                     break;
                 case ArticlesAction.DELETE:
-                    System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Deleting-Games#deleting-multiple-games");
+                    if (_articleType == GameData.ContentType.EXERCISE)
+                    {
+                        System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Deleting-Exercises#deleting-multiple-exercises");
+                    }
+                    else
+                    {
+                        System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Deleting-Games#deleting-multiple-games");
+                    }
                     break;
                 case ArticlesAction.COPY:
                     System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Copying-Games-and-Exercises-between-Chapters");
