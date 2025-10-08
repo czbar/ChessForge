@@ -1,0 +1,39 @@
+1. Update (pull from origin) the ChessForge.wiki repository.
+
+2. Run the following Python scripts (stand alone or from the WikiExport solution in Visual Studio)
+
+A) DownloadImages.py
+ 
+Iterates over all .md files in C:/GitHub/ChessForge.wiki 
+(i.e. the ChessForge.wiki repo) identifying all lines 
+that look like links to images i.e. have a URL with short (36) 
+or long GUID (48).
+
+Downloads the images from the identified links and saves them in the
+C:/GitHub/Wiki/DownloadedImages folder naming them <GUID>.png
+
+B) UpdateImageLinks.py
+
+Processes all the .md files from the repo, replacing the original 
+links to images with ones to the images saved by the previous script
+in C:/GitHub/Wiki/DownloadedImages.
+
+Saves the processed .md files in C:/GitHub/Wiki/WikiForPandoc
+
+C) WikiExport
+
+Merges all .md files from C:/GitHub/Wiki/WikiForPandoc listed 
+in variable PAGE_ORDER.
+
+Invokes the Pandoc tool to generate a docx output file.
+
+D) WORD macros.
+
+All required macros can be found in the main ChessForge repo
+under Utilities\WikiTools.
+
+When or all accessible from the generated WORD document (e.g.
+by being part of the Normal template), press Alt+F8 and run
+FinalizeDocument.bas.
+
+Save the document and then "Save As" PDF.
