@@ -13,33 +13,9 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void UiMnStartTrainingHere_Click(object sender, RoutedEventArgs e)
+        public void UiMnStartTrainingHere(object sender, RoutedEventArgs e)
         {
-            if (ActiveVariationTree == null || !AppState.IsTreeViewTabActive())
-            {
-                return;
-            }
-
-            // do some housekeeping just in case
-            if (AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
-            {
-                StopEngineGame();
-            }
-            else if (EvaluationManager.IsRunning)
-            {
-                EngineMessageProcessor.StopEngineEvaluation();
-            }
-
-            TreeNode nd = ActiveLine.GetSelectedTreeNode();
-            if (nd != null)
-            {
-                SetAppInTrainingMode(nd, false);
-                UiTrainingSessionBox.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                MessageBox.Show(Properties.Resources.NoTrainingStartMove, Properties.Resources.Training, MessageBoxButton.OK, MessageBoxImage.Information);
-            }
+            StartTrainingSession(TrainingSession.SequenceType.METHODIC_CURRENT_MOVE);
         }
 
         /// <summary>
@@ -47,33 +23,100 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void UiMnStartTrainingFromStartingPosition_Click(object sender, RoutedEventArgs e)
+        public void UiMnStartTrainingFromStartingPosition(object sender, RoutedEventArgs e)
         {
-            if (ActiveVariationTree == null || !AppState.IsTreeViewTabActive())
-            {
-                return;
-            }
+            StartTrainingSession(TrainingSession.SequenceType.METHODIC_STARTING_POSITION);
+        }
 
-            // do some housekeeping just in case
-            if (AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
-            {
-                StopEngineGame();
-            }
-            else if (EvaluationManager.IsRunning)
-            {
-                EngineMessageProcessor.StopEngineEvaluation();
-            }
+        /// <summary>
+        /// Starts a training session with lines selected randomly from the current chapter.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void UiMnStartTrainingChapterShuffle(object sender, RoutedEventArgs e)
+        {
+            StartTrainingSession(TrainingSession.SequenceType.CHAPTER_SHUFFLE);
+        }
 
-            PieceColor trainingSide = WorkbookManager.SessionWorkbook.TrainingSideCurrent;
-            TreeNode nd = trainingSide == PieceColor.White ? ActiveVariationTree.Nodes[0] : ActiveVariationTree.Nodes[0].Children[0];
-            if (nd != null)
+        /// <summary>
+        /// Starts a training session with lines selected randomly from the current workbook.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void UiMnStartTrainingWorkbookShuffle(object sender, RoutedEventArgs e)
+        {
+            StartTrainingSession(TrainingSession.SequenceType.WORKBOOK_SHUFFLE);
+        }
+
+        /// <summary>
+        /// Starts a training session from the specified sequence type.
+        /// </summary>
+        /// <param name="sequenceType"></param>
+        public void StartTrainingSession(TrainingSession.SequenceType sequenceType)
+        {
+            try
             {
-                SetAppInTrainingMode(nd, false);
-                UiTrainingSessionBox.Visibility = Visibility.Visible;
+                if (ActiveVariationTree == null || !AppState.IsTreeViewTabActive())
+                {
+                    return;
+                }
+
+                // do some housekeeping just in case
+                if (AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
+                {
+                    StopEngineGame();
+                }
+                else if (EvaluationManager.IsRunning)
+                {
+                    EngineMessageProcessor.StopEngineEvaluation();
+                }
+
+                TrainingSession.CurrentSequenceType = sequenceType;
+
+                TreeNode nd = null;
+
+                // only the METHODIC_CURRENT_MOVE training type starts from the currently selected move,
+                // all others start from the startign position
+                if (sequenceType == TrainingSession.SequenceType.METHODIC_CURRENT_MOVE)
+                {
+                    nd = ActiveLine.GetSelectedTreeNode();
+                }
+                else
+                {
+                    // in Exercise the color to move in the start node may not be White, so check it
+                    PieceColor startNodeColorToMove = ActiveVariationTree.Nodes[0].ColorToMove;
+
+                    PieceColor trainingSide = WorkbookManager.SessionWorkbook.TrainingSideCurrent;
+                    if (trainingSide == startNodeColorToMove)
+                    {
+                        nd = ActiveVariationTree.Nodes[0];
+                    }
+                    else
+                    {
+                        if (ActiveVariationTree.Nodes[0].Children.Count > 0)
+                        {
+                            nd = ActiveVariationTree.Nodes[0].Children[0];
+                        }
+                        else
+                        {
+                            nd = null;
+                        }
+                    }
+                }
+
+                if (nd != null)
+                {
+                    SetAppInTrainingMode(nd, false);
+                    UiTrainingSessionBox.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    MessageBox.Show(Properties.Resources.NoTrainingStartMove, Properties.Resources.Training, MessageBoxButton.OK, MessageBoxImage.Information);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show(Properties.Resources.NoTrainingStartMove, Properties.Resources.Training, MessageBoxButton.OK, MessageBoxImage.Information);
+                AppLog.Message("UiMnStartTrainingHere_Click()", ex);
             }
         }
 
