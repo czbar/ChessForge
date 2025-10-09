@@ -43,6 +43,41 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// A request from the menu to start training at the starting position.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void UiMnStartTrainingFromStartingPosition_Click(object sender, RoutedEventArgs e)
+        {
+            if (ActiveVariationTree == null || !AppState.IsTreeViewTabActive())
+            {
+                return;
+            }
+
+            // do some housekeeping just in case
+            if (AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
+            {
+                StopEngineGame();
+            }
+            else if (EvaluationManager.IsRunning)
+            {
+                EngineMessageProcessor.StopEngineEvaluation();
+            }
+
+            PieceColor trainingSide = WorkbookManager.SessionWorkbook.TrainingSideCurrent;
+            TreeNode nd = trainingSide == PieceColor.White ? ActiveVariationTree.Nodes[0] : ActiveVariationTree.Nodes[0].Children[0];
+            if (nd != null)
+            {
+                SetAppInTrainingMode(nd, false);
+                UiTrainingSessionBox.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                MessageBox.Show(Properties.Resources.NoTrainingStartMove, Properties.Resources.Training, MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        /// <summary>
         /// Invoked from the TrainingSession box rather than the menu.
         /// The arguments determine whether to exit without saving, 
         /// merge the session line to the source or create a new game from the session line.
