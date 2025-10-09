@@ -677,7 +677,7 @@ namespace ChessForge
                         e.Handled = true;
                         break;
                     case Key.T:
-                        _mainWin.UiMnStartTrainingHere_Click(null, null);
+                        _mainWin.UiMnStartTrainingHere(null, null);
                         e.Handled = true;
                         break;
                     default:
@@ -781,7 +781,7 @@ namespace ChessForge
                                     e.Handled = true;
                                     break;
                                 case Key.T:
-                                    _mainWin.UiMnStartTrainingFromStartingPosition_Click(null, null);
+                                    _mainWin.UiMnStartTrainingFromStartingPosition(null, null);
                                     e.Handled = true;
                                     break;
                                 default:
