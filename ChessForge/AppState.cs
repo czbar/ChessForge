@@ -1727,10 +1727,11 @@ namespace ChessForge
                 {
                     GuiConfiguration.ConfigureAppBarFontButtons();
 
-                    MainWin.UiMnStartTraining.IsEnabled = IsVariationTreeTabType;
-                    MainWin.UiMnTrainFromBeginning.IsEnabled = false;
-                    MainWin.UiMnTrainNextLine.IsEnabled = false;
-                    MainWin.UiMnTrainPreviousLine.IsEnabled = false;
+                    MainWin.UiMnTrainFromCurrentPosition.IsEnabled = IsVariationTreeTabType;
+                    MainWin.UiMnTrainFromStartingPosition.IsEnabled = IsVariationTreeTabType;
+                    MainWin.UiMnTrainChapterShuffle.IsEnabled = IsVariationTreeTabType;
+                    MainWin.UiMnTrainWworkbookShuffle.IsEnabled = IsVariationTreeTabType;
+
                     MainWin.UiMnExitTraining.IsEnabled = false;
 
                     bool engGameEnabled = ActiveVariationTree != null
@@ -1790,10 +1791,12 @@ namespace ChessForge
         {
             MainWin.Dispatcher.Invoke(() =>
             {
-                MainWin.UiMnStartTraining.IsEnabled = false;
-                MainWin.UiMnTrainFromBeginning.IsEnabled = true;
+                MainWin.UiMnTrainFromCurrentPosition.IsEnabled = false;
+                MainWin.UiMnTrainFromStartingPosition.IsEnabled = false;
+                MainWin.UiMnTrainChapterShuffle.IsEnabled = false;
+                MainWin.UiMnTrainWworkbookShuffle.IsEnabled = false;
+
                 MainWin.UiMnExitTraining.IsEnabled = true;
-                ConfigureMenusForTrainingLines(MainWin.UiMnTrainNextLine, MainWin.UiMnTrainPreviousLine);
                 MainWin.UiMnciPlayEngine.IsEnabled = false;
 
                 MainWin.UiMnFindIdentical.IsEnabled = false;
@@ -1849,11 +1852,12 @@ namespace ChessForge
 
             _mainWin.Dispatcher.Invoke(() =>
             {
-                _mainWin.UiMnStartTraining.IsEnabled = !train;
-                _mainWin.UiMnTrainFromBeginning.IsEnabled = train;
-                _mainWin.UiMnTrainNextLine.IsEnabled = train;
-                _mainWin.UiMnTrainPreviousLine.IsEnabled = train;
-                _mainWin.UiMnExitTraining.IsEnabled = train;
+                MainWin.UiMnTrainFromCurrentPosition.IsEnabled = !train;
+                MainWin.UiMnTrainFromStartingPosition.IsEnabled = !train;
+                MainWin.UiMnTrainChapterShuffle.IsEnabled = !train;
+                MainWin.UiMnTrainWworkbookShuffle.IsEnabled = !train;
+
+                MainWin.UiMnExitTraining.IsEnabled = train;
 
                 _mainWin.UiMnciPlayEngine.IsEnabled = true;
             });
