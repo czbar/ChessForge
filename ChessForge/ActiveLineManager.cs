@@ -780,6 +780,10 @@ namespace ChessForge
                                     _mainWin.UiMnFindPositions_Click(null, null);
                                     e.Handled = true;
                                     break;
+                                case Key.T:
+                                    _mainWin.UiMnStartTrainingFromStartingPosition_Click(null, null);
+                                    e.Handled = true;
+                                    break;
                                 default:
                                     if (HandleKeyDown(e.Key))
                                     {
