@@ -593,10 +593,13 @@ namespace ChessForge
                                 mi.Visibility = Visibility.Visible;
                                 break;
                             case "UiMnCiTrainNextLine":
-                                AppState.ConfigureMenusForTrainingLines(mi, null);
+                                AppState.ConfigureMenusForTrainingLines(mi, null, null);
                                 break;
                             case "UiMnCiTrainPreviousLine":
-                                AppState.ConfigureMenusForTrainingLines(null, mi);
+                                AppState.ConfigureMenusForTrainingLines(null, mi, null);
+                                break;
+                            case "UiMnCiTrainRandomLine":
+                                AppState.ConfigureMenusForTrainingLines(null, null, mi);
                                 break;
                             default:
                                 break;
