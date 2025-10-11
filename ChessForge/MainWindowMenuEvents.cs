@@ -2921,8 +2921,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Restarts training from the training starting position
-        /// moving to the next training line.
+        /// Restarts training from the next training line.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -2937,8 +2936,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Restarts training from the training starting position
-        /// moving to the previous training line.
+        /// Restarts training from the the previous training line.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -2950,6 +2948,16 @@ namespace ChessForge
                 UiTrainingView.RollbackToUserMove(updatedNode);
                 AppState.ConfigureMenusForTraining();
             }
+        }
+
+        /// <summary>
+        /// Restarts training on a random training line.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void UiMnTrainRandomLine(object sender, RoutedEventArgs e)
+        {
+            // TODO: IMPLEMENT
         }
 
         /// <summary>
