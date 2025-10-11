@@ -1729,8 +1729,6 @@ namespace ChessForge
 
                     MainWin.UiMnTrainFromCurrentPosition.IsEnabled = IsVariationTreeTabType;
                     MainWin.UiMnTrainFromStartingPosition.IsEnabled = IsVariationTreeTabType;
-                    MainWin.UiMnTrainChapterShuffle.IsEnabled = IsVariationTreeTabType;
-                    MainWin.UiMnTrainWworkbookShuffle.IsEnabled = IsVariationTreeTabType;
 
                     MainWin.UiMnExitTraining.IsEnabled = false;
 
@@ -1793,8 +1791,6 @@ namespace ChessForge
             {
                 MainWin.UiMnTrainFromCurrentPosition.IsEnabled = false;
                 MainWin.UiMnTrainFromStartingPosition.IsEnabled = false;
-                MainWin.UiMnTrainChapterShuffle.IsEnabled = false;
-                MainWin.UiMnTrainWworkbookShuffle.IsEnabled = false;
 
                 MainWin.UiMnExitTraining.IsEnabled = true;
                 MainWin.UiMnciPlayEngine.IsEnabled = false;
@@ -1814,7 +1810,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="nextLine"></param>
         /// <param name="prevLine"></param>
-        public static void ConfigureMenusForTrainingLines(MenuItem nextLine, MenuItem prevLine)
+        public static void ConfigureMenusForTrainingLines(MenuItem nextLine, MenuItem prevLine, MenuItem randomLine)
         {
             TreeNode junctionNodeNext = TrainingSession.FindTrainingLineJunctionNode(true);
             string nextMoveTxt = MainWin.UiTrainingView?.BuildMoveTextForMenu(junctionNodeNext);
@@ -1841,6 +1837,13 @@ namespace ChessForge
                     prevLine.Header = Properties.Resources.TrainPreviousLine + "  (" + prevMoveTxt + ")";
                 }
             }
+
+            if (randomLine != null)
+            {
+                //TODO: implement random line selection
+                randomLine.IsEnabled = false;
+                randomLine.Header = Properties.Resources.TrainRandomLine;
+            }
         }
 
         /// <summary>
@@ -1854,8 +1857,6 @@ namespace ChessForge
             {
                 MainWin.UiMnTrainFromCurrentPosition.IsEnabled = !train;
                 MainWin.UiMnTrainFromStartingPosition.IsEnabled = !train;
-                MainWin.UiMnTrainChapterShuffle.IsEnabled = !train;
-                MainWin.UiMnTrainWworkbookShuffle.IsEnabled = !train;
 
                 MainWin.UiMnExitTraining.IsEnabled = train;
 
