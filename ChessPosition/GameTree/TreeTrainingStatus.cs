@@ -47,7 +47,21 @@ namespace GameTree
             {
                 return _nodeStatusMap.Values.All(n => n.IsExhausted || n.Node.ColorToMove != _trainingSide);
             }
-        }   
+        }
+
+        /// <summary>
+        /// Gets the <see cref="TreeNode"/> associated with the specified node identifier.
+        /// </summary>
+        /// <param name="nodeId"></param>
+        /// <returns></returns>
+        public NodeTrainingStatus GetNodeStatusById(int nodeId)
+        {
+            if (_nodeStatusMap.TryGetValue(nodeId, out var status))
+            {
+                return status;
+            }
+            return null;
+        }
 
         /// <summary>
         /// Initializes the training status for all nodes in the tree.
@@ -55,8 +69,10 @@ namespace GameTree
         /// <remarks>This method iterates through all nodes in the tree and creates a corresponding  <see
         /// cref="NodeTrainingStatus"/> object for each node. The status is initialized  with default values, and child
         /// nodes are populated if applicable.</remarks>
-        private void Initialize()
+        public void Initialize()
         {
+            _nodeStatusMap.Clear();
+
             foreach (var node in _tree.Nodes)
             {
                 var status = new NodeTrainingStatus
