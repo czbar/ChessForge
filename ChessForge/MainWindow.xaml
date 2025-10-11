@@ -116,9 +116,6 @@
                         <MenuItem x:Name="UiMnTrainFromCurrentPosition"  Header="{x:Static p:Resources.TrainFromCurrentPosition}" Click="UiMnStartTrainingHere"  InputGestureText="T" />
                         <MenuItem x:Name="UiMnTrainFromStartingPosition"  Header="{x:Static p:Resources.TrainFromStartingPosition}" Click="UiMnStartTrainingFromStartingPosition" InputGestureText="Shift+T"/>
                         <Separator />
-                        <MenuItem x:Name="UiMnTrainChapterShuffle"  Header="{x:Static p:Resources.TrainChapterShuffle}" Click="UiMnStartTrainingChapterShuffle" />
-                        <MenuItem x:Name="UiMnTrainWworkbookShuffle"  Header="{x:Static p:Resources.TrainWorkbookShuffle}" Click="UiMnStartTrainingWorkbookShuffle" />
-                        <Separator />
                         <MenuItem x:Name="UiMnExitTraining" Header="{x:Static p:Resources.ExitTraining}" Click="UiMnStopTraining_Click"/>
                         <Separator />
                         <MenuItem x:Name="UiMnMainPlayEngine" Header="{x:Static p:Resources.PlayAgainstComputer}"  Click="UiMnPlayEngine_Click" />
@@ -356,6 +353,7 @@
                                     <Separator x:Name="UiMnSeparator_TrainingModes_0" />
                                     <MenuItem x:Name="UiMnCiTrainNextLine" Header="{x:Static p:Resources.TrainNextLine}"  Click="UiMnTrainNextLine_Click" InputGestureText="Ctrl+N"/>
                                     <MenuItem x:Name="UiMnCiTrainPreviousLine" Header="{x:Static p:Resources.TrainPreviousLine}"  Click="UiMnTrainPreviousLine_Click" InputGestureText="Ctrl+P"/>
+                                    <MenuItem x:Name="UiMnCiTrainRandomLine" Header="{x:Static p:Resources.TrainRandomLine}"  Click="UiMnTrainRandomLine" InputGestureText="Ctrl+R"/>
                                     <Separator x:Name="UiMnSeparator_TrainingModes_1" />
                                     <MenuItem x:Name="UiMnCiTrainExitTraining" Header="{x:Static p:Resources.ExitTraining}"  Click="UiMnStopTraining_Click" />
                                     <Separator x:Name="_mnTrainSepar_1" />
