@@ -29,26 +29,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Starts a training session with lines selected randomly from the current chapter.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void UiMnStartTrainingChapterShuffle(object sender, RoutedEventArgs e)
-        {
-            StartTrainingSession(TrainingSession.SequenceType.CHAPTER_SHUFFLE);
-        }
-
-        /// <summary>
-        /// Starts a training session with lines selected randomly from the current workbook.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void UiMnStartTrainingWorkbookShuffle(object sender, RoutedEventArgs e)
-        {
-            StartTrainingSession(TrainingSession.SequenceType.WORKBOOK_SHUFFLE);
-        }
-
-        /// <summary>
         /// Starts a training session from the specified sequence type.
         /// </summary>
         /// <param name="sequenceType"></param>
@@ -76,26 +56,28 @@ namespace ChessForge
                 TreeNode nd = null;
 
                 // only the METHODIC_CURRENT_MOVE training type starts from the currently selected move,
-                // all others start from the startign position
+                // all others start from the starting position
                 if (sequenceType == TrainingSession.SequenceType.METHODIC_CURRENT_MOVE)
                 {
                     nd = ActiveLine.GetSelectedTreeNode();
                 }
                 else
                 {
+                    VariationTree variationTree = ActiveVariationTree;
+
                     // in Exercise the color to move in the start node may not be White, so check it
-                    PieceColor startNodeColorToMove = ActiveVariationTree.Nodes[0].ColorToMove;
+                    PieceColor startNodeColorToMove = variationTree.Nodes[0].ColorToMove;
 
                     PieceColor trainingSide = WorkbookManager.SessionWorkbook.TrainingSideCurrent;
                     if (trainingSide == startNodeColorToMove)
                     {
-                        nd = ActiveVariationTree.Nodes[0];
+                        nd = variationTree.Nodes[0];
                     }
                     else
                     {
-                        if (ActiveVariationTree.Nodes[0].Children.Count > 0)
+                        if (variationTree.Nodes[0].Children.Count > 0)
                         {
-                            nd = ActiveVariationTree.Nodes[0].Children[0];
+                            nd = variationTree.Nodes[0].Children[0];
                         }
                         else
                         {
@@ -108,6 +90,8 @@ namespace ChessForge
                 {
                     SetAppInTrainingMode(nd, false);
                     UiTrainingSessionBox.Visibility = Visibility.Visible;
+
+                    TrainingSession.BuildTrainingStatusTree(); 
                 }
                 else
                 {
