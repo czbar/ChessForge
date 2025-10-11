@@ -663,12 +663,6 @@
   <data name="TrainFromStartingPosition" xml:space="preserve">
     <value>Od Pozycji Początkowej</value>
   </data>
-  <data name="TrainChapterShuffle" xml:space="preserve">
-    <value>Losowo z Teorii Rozdziału</value>
-  </data>
-  <data name="TrainWorkbookShuffle" xml:space="preserve">
-    <value>Losowo z Teorii Podręcznika</value>
-  </data>
   <data name="StartNewSession" xml:space="preserve">
     <value>Zacznij nową sesję</value>
   </data>
@@ -680,6 +674,9 @@
   </data>
   <data name="TrainPreviousLine" xml:space="preserve">
     <value>Trenuj poprzedni wariant</value>
+  </data>
+  <data name="TrainRandomLine" xml:space="preserve">
+    <value>Trenuj losowy wariant</value>
   </data>
   <data name="ExitTraining" xml:space="preserve">
     <value>Zakończ trening</value>

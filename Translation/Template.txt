@@ -786,15 +786,6 @@ TrainFromCurrentPosition=
 #english: TrainFromStartingPosition=From Starting Position
 TrainFromStartingPosition=
 
-#description: Training chapter shuffle
-#english: TrainChapterShuffle=Chapter Study Shuffle
-TrainChapterShuffle=
-
-#description: Training workbook shuffle
-#english: TrainWorkbookShuffle=Workbook Studies Shuffle
-TrainWorkbookShuffle=
-
-
 #description: Start a new training session
 #english: StartNewSession=Start New Session
 StartNewSession=
@@ -810,6 +801,10 @@ TrainNextLine=
 #description: Move training to the previous line
 #english: TrainPreviousLine=Previous Training Line
 TrainPreviousLine=
+
+#description: Move training to a random line
+#english: TrainRandomLine=Random Training Line
+TrainRandomLine=
 
 #description: Exit the Training Session
 #english: ExitTraining=Exit Training

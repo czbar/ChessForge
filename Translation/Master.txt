@@ -604,13 +604,6 @@ TrainFromCurrentPosition=From Current Position
 #Training from starting position
 TrainFromStartingPosition=From Starting Position
 
-#Training chapter shuffle
-TrainChapterShuffle=Chapter Study Shuffle
-
-#Training workbook shuffle
-TrainWorkbookShuffle=Workbook Studies Shuffle
-
-
 #Start a new training session
 StartNewSession=Start New Session
 
@@ -622,6 +615,9 @@ TrainNextLine=Next Training Line
 
 #Move training to the previous line
 TrainPreviousLine=Previous Training Line
+
+#Move training to a random line
+TrainRandomLine=Random Training Line
 
 #Exit the Training Session
 ExitTraining=Exit Training

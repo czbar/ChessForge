@@ -786,15 +786,6 @@ TrainFromCurrentPosition=Od Bieżącej Pozycji
 #english: TrainFromStartingPosition=From Starting Position
 TrainFromStartingPosition=Od Pozycji Początkowej
 
-#description: Training chapter shuffle
-#english: TrainChapterShuffle=Chapter Study Shuffle
-TrainChapterShuffle=Losowo z Teorii Rozdziału
-
-#description: Training workbook shuffle
-#english: TrainWorkbookShuffle=Workbook Studies Shuffle
-TrainWorkbookShuffle=Losowo z Teorii Podręcznika
-
-
 #description: Start a new training session
 #english: StartNewSession=Start New Session
 StartNewSession=Zacznij nową sesję
@@ -810,6 +801,10 @@ TrainNextLine=Trenuj następny wariant
 #description: Move training to the previous line
 #english: TrainPreviousLine=Previous Training Line
 TrainPreviousLine=Trenuj poprzedni wariant
+
+#description: Move training to a random line
+#english: TrainRandomLine=Random Training Line
+TrainRandomLine=Trenuj losowy wariant
 
 #description: Exit the Training Session
 #english: ExitTraining=Exit Training

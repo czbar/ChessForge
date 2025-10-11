@@ -7910,15 +7910,6 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chapter Study Shuffle.
-        /// </summary>
-        public static string TrainChapterShuffle {
-            get {
-                return ResourceManager.GetString("TrainChapterShuffle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Go to Beginning.
         /// </summary>
         public static string TrainFromBeginning {
@@ -7982,11 +7973,11 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Workbook Studies Shuffle.
+        ///   Looks up a localized string similar to Random Training Line.
         /// </summary>
-        public static string TrainWorkbookShuffle {
+        public static string TrainRandomLine {
             get {
-                return ResourceManager.GetString("TrainWorkbookShuffle", resourceCulture);
+                return ResourceManager.GetString("TrainRandomLine", resourceCulture);
             }
         }
         
