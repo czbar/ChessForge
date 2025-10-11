@@ -1817,6 +1817,10 @@ namespace ChessForge
                             AppState.MainWin.UiMnTrainPreviousLine_Click(null, e);
                             e.Handled = true;
                             break;
+                        case Key.R:
+                            AppState.MainWin.UiMnTrainRandomLine(null, e);
+                            e.Handled = true;
+                            break;
                     }
                 }
                 else
