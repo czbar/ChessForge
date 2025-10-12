@@ -1840,8 +1840,7 @@ namespace ChessForge
 
             if (randomLine != null)
             {
-                //TODO: implement random line selection
-                randomLine.IsEnabled = false;
+                randomLine.IsEnabled = TrainingSession.HasRandomLines();
                 randomLine.Header = Properties.Resources.TrainRandomLine;
             }
         }
