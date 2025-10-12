@@ -90,8 +90,6 @@ namespace ChessForge
                 {
                     SetAppInTrainingMode(nd, false);
                     UiTrainingSessionBox.Visibility = Visibility.Visible;
-
-                    TrainingSession.BuildTrainingStatusTree(); 
                 }
                 else
                 {
