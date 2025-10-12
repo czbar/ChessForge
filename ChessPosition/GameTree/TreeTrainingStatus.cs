@@ -1,4 +1,6 @@
-﻿using ChessPosition;
+﻿using ChessForge;
+using ChessPosition;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -29,7 +31,7 @@ namespace GameTree
         /// of nodes in the provided variation tree for the specified side.</remarks>
         /// <param name="tree">The variation tree to be tracked.</param>
         /// <param name="trainingSide">The side (color) for which the training status is being tracked.</param>
-        public TreeTrainingStatus(VariationTree tree, PieceColor trainingSide)
+        public TreeTrainingStatus(VariationTree tree, PieceColor trainingSide, TreeNode node)
         {
             _tree = tree;
             _trainingSide = trainingSide;
@@ -69,22 +71,29 @@ namespace GameTree
         /// <remarks>This method iterates through all nodes in the tree and creates a corresponding  <see
         /// cref="NodeTrainingStatus"/> object for each node. The status is initialized  with default values, and child
         /// nodes are populated if applicable.</remarks>
-        public void Initialize()
+        private void Initialize()
         {
-            _nodeStatusMap.Clear();
-
-            foreach (var node in _tree.Nodes)
+            try
             {
-                var status = new NodeTrainingStatus
+                _nodeStatusMap.Clear();
+
+                foreach (var node in _tree.Nodes)
                 {
-                    Node = node,
-                    IsTrained = false,
-                    IsExhausted = false,
-                    Children = node.Children.Count > 0 ? new List<NodeTrainingStatus>() : null
-                };
-                _nodeStatusMap[node.NodeId] = status;
+                    var status = new NodeTrainingStatus
+                    {
+                        Node = node,
+                        IsTrained = false,
+                        IsExhausted = false,
+                        Children = node.Children.Count > 0 ? new List<NodeTrainingStatus>() : null
+                    };
+                    _nodeStatusMap[node.NodeId] = status;
+                }
 
                 PopulateChildren();
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("TreeTrainingStatus.Initialize()", ex);
             }
         }
 
