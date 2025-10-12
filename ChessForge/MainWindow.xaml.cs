@@ -2556,7 +2556,7 @@ namespace ChessForge
             // the TrainingView and the TrainingSession.
             EngineGame.InitializeGameObject(startNode, false, false);
 
-            PrepareTrainingView(startNode);
+            PrepareTrainingView();
 
             Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
 
@@ -2593,10 +2593,10 @@ namespace ChessForge
         /// Initializes the TrainingView.
         /// </summary>
         /// <param name="startNode"></param>
-        private void PrepareTrainingView(TreeNode startNode)
+        private void PrepareTrainingView()
         {
             UiTrainingView = new TrainingView(UiRtbTrainingProgress, this);
-            UiTrainingView.Initialize(startNode, ActiveVariationTree.ContentType);
+            UiTrainingView.Initialize(TrainingSession.StartPosition, ActiveVariationTree.ContentType);
             UiDgEngineGame.ItemsSource = EngineGame.Line.MoveList;
             if (LearningMode.TrainingSideCurrent == PieceColor.Black && !MainChessBoard.IsFlipped
                 || LearningMode.TrainingSideCurrent == PieceColor.White && MainChessBoard.IsFlipped)
