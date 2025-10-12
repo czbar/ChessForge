@@ -9,7 +9,7 @@ namespace ChessForge
     /// <summary>
     /// Holds attributes of the current training session. 
     /// </summary>
-    public class TrainingSession
+    public partial class TrainingSession
     {
         /// <summary>
         /// Object to lock examining of the user move vs Workbook.
@@ -103,9 +103,6 @@ namespace ChessForge
         /// </summary>
         private static List<TreeNode> TrainingLine = new List<TreeNode>();
 
-        // Training status of the tree.
-        private static TreeTrainingStatus _trainingStatusTree;
-
         /// <summary>
         /// The side that is training. It can be different from the Workbook's training side.
         /// </summary>
@@ -129,83 +126,6 @@ namespace ChessForge
         public static TreeNode StartPosition;
 
         /// <summary>
-        /// The TreeTrainingStatus object(s) is only created if we are in one
-        /// of the shuffle modes.
-        /// </summary>
-        public static void BuildTrainingStatusTree()
-        {
-            _trainingStatusTree = new TreeTrainingStatus(AppState.MainWin.ActiveVariationTree, TrainingSide);
-        }
-
-        /// <summary>
-        /// Randomly selects the next move from for training line.
-        /// </summary>
-        /// <param name="currNode"></param>
-        /// <returns></returns>
-        public static TreeNode GetNextMoveInShuffleMode(TreeNode currNode)
-        {
-            TreeNode nextNode = null;
-
-            return nextNode;
-        }
-
-        /// <summary>
-        /// Randomly selects one of the untrained children of the current node.
-        /// </summary>
-        /// <param name="currNode"></param>
-        /// <param name="tts"></param>
-        /// <returns></returns>
-        private static TreeNode SelectRandomTreeNodeChild(TreeNode currNode, TreeTrainingStatus tts)
-        {
-            TreeNode nextNode = null;
-
-            // find currNode in the tts tree
-            NodeTrainingStatus nts = tts.GetNodeStatusById(currNode.NodeId);
-
-            List<NodeTrainingStatus> possibleChildren = nts.Children.Where(c => !c.IsTrained).ToList();
-
-            if (possibleChildren.Count == 0)
-            {
-                // this should not happen,
-                // but just in case, we reset the status of all children
-                foreach (var child in nts.Children)
-                {
-                    child.IsTrained = false;
-                }
-
-                possibleChildren = nts.Children;
-            }
-
-            if (possibleChildren.Count == 1)
-            {
-                nextNode = nts.Node.Children[0];
-            }
-            else if (possibleChildren.Count > 1)
-            {
-                var random = new Random();
-                var randomIndex = random.Next(possibleChildren.Count);
-                nextNode = possibleChildren[randomIndex].Node;
-            }
-
-            // check if all children are now trained, if so propagate up the IsExhausted status
-            possibleChildren = nts.Children.Where(c => !c.IsTrained).ToList();
-            if (possibleChildren.Count == 0)
-            {
-                nts.IsExhausted = true;
-                while (nts != null && nts.IsExhausted)
-                {
-                    nts = tts.GetNodeStatusById(nts.Node.Parent?.NodeId ?? -1);
-                    if (nts != null)
-                    {
-                        nts.IsExhausted = nts.Children.All(c => c.IsExhausted);
-                    }
-                }
-            }
-
-            return nextNode;
-        }
-
-        /// <summary>
         /// Prepares the GUI for training mode.
         /// These actions will be performed when the user starts or restarts a training session.
         /// On restart some of them may be spurious but performance is not an issue here.
@@ -227,6 +147,7 @@ namespace ChessForge
 
             LearningMode.ChangeCurrentMode(LearningMode.Mode.TRAINING);
             IsTrainingInProgress = true;
+            StartPosition = startNode;
             ChangeCurrentState(TrainingSession.State.AWAITING_USER_TRAINING_MOVE);
 
             AppState.EnableNavigationArrows();
@@ -248,6 +169,7 @@ namespace ChessForge
             AppState.MainWin.BoardCommentBox.TrainingSessionStart();
 
             RemoveTrainingMoves(startNode);
+            InitializeRandomLines();
         }
 
         /// <summary>
