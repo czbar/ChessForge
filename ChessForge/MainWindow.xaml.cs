@@ -2550,6 +2550,7 @@ namespace ChessForge
             }
 
             TrainingSession.PrepareGuiForTraining(startNode, isContinuousEvaluation);
+            TrainingSession.InitializeRandomLines();
 
             // The EngineGame holds the current training progress.
             // It needs to be initialized with the startNode before we initialize
@@ -2570,7 +2571,7 @@ namespace ChessForge
         /// <summary>
         /// Resets an existing training session.
         /// </summary>
-        public void ResetTrainingMode()
+        private void ResetTrainingMode()
         {
             TreeNode startNode = TrainingSession.StartPosition;
             TrainingSession.PrepareGuiForTraining(startNode, TrainingSession.IsContinuousEvaluation);
