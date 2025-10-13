@@ -15,7 +15,7 @@ namespace ChessForge
         /// <param name="e"></param>
         public void UiMnStartTrainingHere(object sender, RoutedEventArgs e)
         {
-            StartTrainingSession(TrainingSession.SequenceType.METHODIC_CURRENT_MOVE);
+            StartTrainingSession(false);
         }
 
         /// <summary>
@@ -25,14 +25,14 @@ namespace ChessForge
         /// <param name="e"></param>
         public void UiMnStartTrainingFromStartingPosition(object sender, RoutedEventArgs e)
         {
-            StartTrainingSession(TrainingSession.SequenceType.METHODIC_STARTING_POSITION);
+            StartTrainingSession(true);
         }
 
         /// <summary>
         /// Starts a training session from the specified sequence type.
         /// </summary>
         /// <param name="sequenceType"></param>
-        public void StartTrainingSession(TrainingSession.SequenceType sequenceType)
+        public void StartTrainingSession(bool fromStartingPosition)
         {
             try
             {
@@ -51,13 +51,11 @@ namespace ChessForge
                     EngineMessageProcessor.StopEngineEvaluation();
                 }
 
-                TrainingSession.CurrentSequenceType = sequenceType;
-
                 TreeNode nd = null;
 
                 // only the METHODIC_CURRENT_MOVE training type starts from the currently selected move,
                 // all others start from the starting position
-                if (sequenceType == TrainingSession.SequenceType.METHODIC_CURRENT_MOVE)
+                if (!fromStartingPosition)
                 {
                     nd = ActiveLine.GetSelectedTreeNode();
                 }
