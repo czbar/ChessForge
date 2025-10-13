@@ -1,6 +1,5 @@
 ﻿using ChessPosition;
 using GameTree;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -37,18 +36,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// How the training lines are sequenced.
-        /// </summary>
-        public enum SequenceType
-        {
-            // Goes from line to line in order starting from the current move.
-            METHODIC_CURRENT_MOVE,
-
-            // Goes from line to line in order from the starting position.
-            METHODIC_STARTING_POSITION,
-        }
-
-        /// <summary>
         /// Whether a training session is in progress.
         /// </summary>
         public static bool IsTrainingInProgress
@@ -77,11 +64,6 @@ namespace ChessForge
         /// The current state of the Training session.
         /// </summary>
         public static State CurrentState { get => _currentState; }
-
-        /// <summary>
-        /// The current sequence type for training lines.
-        /// </summary>
-        public static SequenceType CurrentSequenceType = SequenceType.METHODIC_CURRENT_MOVE;
 
         // whether continuous evaluation is enabled
         private static bool _isContinuousEvaluation;
@@ -169,7 +151,6 @@ namespace ChessForge
             AppState.MainWin.BoardCommentBox.TrainingSessionStart();
 
             RemoveTrainingMoves(startNode);
-            InitializeRandomLines();
         }
 
         /// <summary>
