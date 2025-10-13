@@ -351,6 +351,7 @@
       <DependentUpon>TrainingSessionControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="TrainingSessionRandomLine.cs" />
+    <Compile Include="TrainingViewParaBuilder.cs" />
     <Compile Include="TreeViewManagement\LineSectorRunColors.cs" />
     <Compile Include="TreeViewManagement\LineSectorManager.cs" />
     <Compile Include="SelectArticlesDialog.xaml.cs">
