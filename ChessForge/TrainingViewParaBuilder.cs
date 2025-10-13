@@ -1,6 +1,7 @@
 ﻿using ChessPosition;
 using GameTree;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Documents;
@@ -11,6 +12,106 @@ namespace ChessForge
 {
     public partial class TrainingView
     {
+        /// <summary>
+        /// Builds paragraphs for a training line that was not
+        /// actually played but provides a starting point for a random line training.
+        /// </summary>
+        /// <param name="lstLine"></param>
+        public void BuildTrainingLineParas(List<TreeNode> lstLine)
+        {
+            try
+            {
+                RemoveIntroParas();
+
+                for (int i = 0; i < lstLine.Count; i++)
+                {
+                    TreeNode nd = lstLine[i];
+                    EngineGame.AddPlyToGame(nd);
+
+                    bool isUserMove = nd.ColorToMove != TrainingSession.TrainingSide;
+                    if (isUserMove)
+                    {
+                        // user move
+                        _otherMovesInWorkbook.Clear();
+                        foreach (TreeNode sibling in GetWorkbookNonNullLeafSiblings(nd))
+                        {
+                            _otherMovesInWorkbook.Add(sibling);
+                        }
+                        BuildMoveParagraph(nd, true);
+                        InsertCommentIntoUserMovePara(true, nd, false);
+                    }
+                    else
+                    {
+                        // engine move
+                        BuildMoveParagraph(nd, false);
+                    }
+                }
+
+                if (lstLine.Count > 0)
+                {
+                    _mainWin.DisplayPosition(lstLine.Last());
+                    BuildSecondPromptParagraph();
+                }
+            }
+            catch (System.Exception ex)
+            {
+                AppLog.Message("BuildTrainingLineParas()", ex);
+            }
+        }
+
+        /// <summary>
+        /// Builds a paragraph containing just one move with NAGs and Comments/Commands if any. 
+        /// </summary>
+        private void BuildMoveParagraph(TreeNode nd, bool userMove)
+        {
+            string paraName = _par_line_moves_ + nd.NodeId.ToString();
+            string runName = _run_line_move_ + nd.NodeId.ToString();
+
+            // check if already exists. Due to timing issues it may be called multiple times
+            if (FindParagraphByName(HostRtb.Document, paraName, false) == null)
+            {
+                Paragraph para = AddNewParagraphToDoc(HostRtb.Document, STYLE_MOVES_MAIN, "");
+                para.Name = paraName;
+
+                Run r_prefix = new Run();
+                if (userMove)
+                {
+                    r_prefix.FontWeight = FontWeights.Normal;
+                    para.Inlines.Add(r_prefix);
+                }
+                else
+                {
+                    switch (_sourceType)
+                    {
+                        case GameData.ContentType.STUDY_TREE:
+                            r_prefix.Text = Properties.Resources.TrnStudyResponse + ": ";
+                            break;
+                        case GameData.ContentType.MODEL_GAME:
+                            r_prefix.Text = Properties.Resources.TrnGameResponse + ": ";
+                            break;
+                        case GameData.ContentType.EXERCISE:
+                            r_prefix.Text = Properties.Resources.TrnExerciseResponse + ": ";
+                            break;
+                    }
+                    r_prefix.FontWeight = FontWeights.Normal;
+                    para.Inlines.Add(r_prefix);
+                }
+
+                Run r = CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, true, true,
+                    _moveNumberOffset) + " ",
+                    runName,
+                    ChessForgeColors.CurrentTheme.RtbForeground);
+                para.Inlines.Add(r);
+
+                if (!userMove)
+                {
+                    InsertCommentIntoWorkbookMovePara(para, nd);
+                }
+
+                _mainWin.UiRtbTrainingProgress.ScrollToEnd();
+            }
+        }
+
         /// <summary>
         /// Builds the paragraph prompting the user to make a move
         /// after the program responded.
@@ -71,59 +172,6 @@ namespace ChessForge
             if (TrainingSession.IsContinuousEvaluation)
             {
                 RequestMoveEvaluation(_mainWin.ActiveVariationTreeId, true);
-            }
-        }
-
-        /// <summary>
-        /// Builds a paragraph containing just one move with NAGs and Comments/Commands if any. 
-        /// </summary>
-        private void BuildMoveParagraph(TreeNode nd, bool userMove)
-        {
-            string paraName = _par_line_moves_ + nd.NodeId.ToString();
-            string runName = _run_line_move_ + nd.NodeId.ToString();
-
-            // check if already exists. Due to timing issues it may be called multiple times
-            if (FindParagraphByName(HostRtb.Document, paraName, false) == null)
-            {
-                Paragraph para = AddNewParagraphToDoc(HostRtb.Document, STYLE_MOVES_MAIN, "");
-                para.Name = paraName;
-
-                Run r_prefix = new Run();
-                if (userMove)
-                {
-                    r_prefix.FontWeight = FontWeights.Normal;
-                    para.Inlines.Add(r_prefix);
-                }
-                else
-                {
-                    switch (_sourceType)
-                    {
-                        case GameData.ContentType.STUDY_TREE:
-                            r_prefix.Text = Properties.Resources.TrnStudyResponse + ": ";
-                            break;
-                        case GameData.ContentType.MODEL_GAME:
-                            r_prefix.Text = Properties.Resources.TrnGameResponse + ": ";
-                            break;
-                        case GameData.ContentType.EXERCISE:
-                            r_prefix.Text = Properties.Resources.TrnExerciseResponse + ": ";
-                            break;
-                    }
-                    r_prefix.FontWeight = FontWeights.Normal;
-                    para.Inlines.Add(r_prefix);
-                }
-
-                Run r = CreateButtonRun(MoveUtils.BuildSingleMoveText(nd, true, true,
-                    _moveNumberOffset) + " ",
-                    runName,
-                    ChessForgeColors.CurrentTheme.RtbForeground);
-                para.Inlines.Add(r);
-
-                if (!userMove)
-                {
-                    InsertCommentIntoWorkbookMovePara(para, nd);
-                }
-
-                _mainWin.UiRtbTrainingProgress.ScrollToEnd();
             }
         }
 
@@ -283,7 +331,7 @@ namespace ChessForge
         /// Inserts a comment run into the user move paragraph.
         /// </summary>
         /// <param name="isWorkbookMove"></param>
-        private void InsertCommentIntoUserMovePara(bool isWorkbookMove, TreeNode userMove)
+        private void InsertCommentIntoUserMovePara(bool isWorkbookMove, TreeNode userMove, bool showCheckMark = true)
         {
             Paragraph para = FindUserMoveParagraph(userMove);
             if (para != null)
@@ -295,7 +343,7 @@ namespace ChessForge
                 {
                     para.FontWeight = FontWeights.Normal;
 
-                    if (isWorkbookMove || userMove.Parent.Children.Count > 1)
+                    if (showCheckMark && (isWorkbookMove || userMove.Parent.Children.Count > 1))
                     {
                         InsertCheckmarkRun(para, isWorkbookMove);
                     }
