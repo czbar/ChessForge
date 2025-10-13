@@ -55,13 +55,14 @@ namespace ChessForge
 
                 // only the METHODIC_CURRENT_MOVE training type starts from the currently selected move,
                 // all others start from the starting position
+                VariationTree variationTree = ActiveVariationTree;
+
                 if (!fromStartingPosition)
                 {
                     nd = ActiveLine.GetSelectedTreeNode();
                 }
                 else
                 {
-                    VariationTree variationTree = ActiveVariationTree;
 
                     // in Exercise the color to move in the start node may not be White, so check it
                     PieceColor startNodeColorToMove = variationTree.Nodes[0].ColorToMove;
@@ -88,6 +89,18 @@ namespace ChessForge
                 {
                     SetAppInTrainingMode(nd, false);
                     UiTrainingSessionBox.Visibility = Visibility.Visible;
+
+                    if (fromStartingPosition)
+                    {
+                        if (variationTree.Nodes[0].Children.Count > 1)
+                        {
+                            List<TreeNode> lstLine = new List<TreeNode>
+                                {
+                                    nd
+                                };
+                            UiTrainingView.BuildTrainingLineParas(lstLine);
+                        }
+                    }
                 }
                 else
                 {
@@ -137,7 +150,7 @@ namespace ChessForge
 
                     // remove training moves from source, BEFORE we change ActiveVariation tree
                     AppState.MainWin.ActiveVariationTree.RemoveTrainingMoves();
-                    
+
                     // clear training move flags (otherwise we have a side effect of the program asking whether to save the training line!)
                     tree.ClearTrainingFlags();
 
