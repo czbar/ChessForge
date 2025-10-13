@@ -2917,7 +2917,6 @@ namespace ChessForge
                 TrainingSession.BuildFirstTrainingLine();
             }
             ResetTrainingMode();
-            AppState.ConfigureMenusForTraining();
         }
 
         /// <summary>

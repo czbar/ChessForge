@@ -2570,16 +2570,14 @@ namespace ChessForge
         /// <summary>
         /// Resets an existing training session.
         /// </summary>
-        private void ResetTrainingMode()
+        public void ResetTrainingMode()
         {
             TreeNode startNode = TrainingSession.StartPosition;
-
             TrainingSession.PrepareGuiForTraining(startNode, TrainingSession.IsContinuousEvaluation);
 
             UiTrainingView.Reset(startNode);
             
             EngineGame.InitializeGameObject(startNode, false, false);
-
             Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
 
             if (TrainingSession.IsContinuousEvaluation)
@@ -2587,6 +2585,8 @@ namespace ChessForge
                 UiTrainingView.RequestMoveEvaluation(ActiveVariationTree.TreeId, true);
                 AppState.SwapCommentBoxForEngineLines(true);
             }
+
+            AppState.ConfigureMenusForTraining();
         }
 
         /// <summary>
