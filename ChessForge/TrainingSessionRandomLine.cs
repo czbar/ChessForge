@@ -1,7 +1,9 @@
-﻿using GameTree;
+﻿using ChessPosition;
+using GameTree;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace ChessForge
 {
@@ -30,6 +32,16 @@ namespace ChessForge
 
             _ntsRoot = _trainingStatusTree.GetNodeStatusById(StartPosition.NodeId);
             IdentifyTrainingForks(_ntsRoot);
+
+            if (Configuration.DebugLevel >= (int)LogLevel.DETAIL)
+            {
+                StringBuilder sb = new StringBuilder("Training Forks: ");
+                foreach (var nts in _trainingForks)
+                {
+                    sb.Append(MoveUtils.BuildSingleMoveText(nts.Node, true, true, 0) + " ");
+                }
+                AppLog.Message(LogLevel.DETAIL, sb.ToString());
+            }
         }
 
         /// <summary>
@@ -50,6 +62,8 @@ namespace ChessForge
         /// <returns></returns>
         public static List<TreeNode> SelectRandomLine()
         {
+            _isRandomLinesMode = true;
+
             List<TreeNode> line = new List<TreeNode>();
             
             NodeTrainingStatus fork = SelectRandomNotExhaustedFork();
@@ -113,6 +127,34 @@ namespace ChessForge
                 }
             }
         }
+
+        /// <summary>
+        /// Gets the next move in the current random line.
+        /// </summary>
+        /// <param name="currNode"></param>
+        /// <returns></returns>
+        private static TreeNode GetRandomLineNextMove(TreeNode currNode)
+        {
+            TreeNode nextNode = null;
+
+            // find the currNode in _trainingForks
+            NodeTrainingStatus status = _trainingForks.Where(f => f.Node.NodeId == currNode.NodeId).FirstOrDefault();
+
+            if (status == null)
+            {
+                if (currNode.Children.Count > 0)
+                {
+                    nextNode = currNode.Children[0];
+                }
+            }
+            else
+            {
+                nextNode = SelectRandomNotTrainedChild(status, _trainingStatusTree)?.Node;
+            }
+
+            return nextNode;
+        }
+
 
         /// <summary>
         /// Randomly selects one of the not exhausted forks in the training tree.
