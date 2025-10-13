@@ -65,6 +65,9 @@ namespace ChessForge
         /// </summary>
         public static State CurrentState { get => _currentState; }
 
+        // whether we are in random lines mode
+        private static bool _isRandomLinesMode = false;
+
         // whether continuous evaluation is enabled
         private static bool _isContinuousEvaluation;
 
@@ -179,6 +182,23 @@ namespace ChessForge
         /// <param name="currNode"></param>
         /// <returns></returns>
         public static TreeNode GetNextTrainingLineMove(TreeNode currNode)
+        {
+            if (_isRandomLinesMode)
+            {
+                return GetRandomLineNextMove(currNode);
+            }
+            else
+            {
+                return GetFixedLineNextMove(currNode);
+            }
+        }
+
+        /// <summary>
+        /// Gets the next move in the fixed (a.k.a. "methodic") line mode.
+        /// </summary>
+        /// <param name="currNode"></param>
+        /// <returns></returns>
+        private static TreeNode GetFixedLineNextMove(TreeNode currNode)
         {
             TreeNode nextNode = null;
 
@@ -311,6 +331,8 @@ namespace ChessForge
         /// <param name="nextOrPrevLine"></param>
         private static TreeNode BuildNextPrevTrainingLine(bool nextOrPrevLine)
         {
+            _isRandomLinesMode = false;
+
             int moveToUpdateIndex = FindMoveToUpdateIndex(nextOrPrevLine);
 
             if (moveToUpdateIndex < 0)
