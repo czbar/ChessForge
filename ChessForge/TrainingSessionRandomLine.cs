@@ -63,39 +63,61 @@ namespace ChessForge
         public static List<TreeNode> SelectRandomLine()
         {
             _isRandomLinesMode = true;
-
             ClearForkExhaustion();
 
-            List<TreeNode> line = new List<TreeNode>();
-            
+            List<TreeNode> line = null;
             NodeTrainingStatus fork = SelectRandomNotExhaustedFork();
-            
-            if (fork != null)
-            {
-                NodeTrainingStatus lastLineMove = SelectRandomNotTrainedChild(fork, _trainingStatusTree);
 
-                if (lastLineMove != null)
+            NodeTrainingStatus lastLineMove = GetRandomLineLastMove(fork, _trainingStatusTree);
+
+            if (lastLineMove != null)
+            {
+                line = new List<TreeNode>();
+                
+                // build the line from the root to the selected child
+                var current = lastLineMove;
+                while (current != _ntsRoot && current != null)
                 {
-                    // build the line from the root to the selected child
-                    var current = lastLineMove;
-                    while (current != _ntsRoot && current != null)
+                    line.Add(current.Node);
+                    if (current.Node.Parent != null)
                     {
-                        line.Add(current.Node);
-                        if (current.Node.Parent != null)
-                        {
-                            current = _trainingStatusTree.GetNodeStatusById(current.Node.Parent.NodeId);
-                        }
-                        else
-                        {
-                            current = null;
-                        }
+                        current = _trainingStatusTree.GetNodeStatusById(current.Node.Parent.NodeId);
                     }
-                    line.Reverse();
+                    else
+                    {
+                        current = null;
+                    }
                 }
-                return line;
+                line.Reverse();
             }
 
             return line;
+        }
+
+        /// <summary>
+        /// Gets the last move in the randomly selected line.
+        /// </summary>
+        /// <param name="fork"></param>
+        /// <param name="_trainingStatusTree"></param>
+        /// <returns></returns>
+        private static NodeTrainingStatus GetRandomLineLastMove(NodeTrainingStatus fork, TreeTrainingStatus _trainingStatusTree)
+        {
+            NodeTrainingStatus lastLineMove = null;
+
+            if (fork != null)
+            {
+                return SelectRandomNotTrainedChild(fork, _trainingStatusTree);
+            }
+            else
+            {
+                lastLineMove = _trainingStatusTree.GetNodeStatusById(0);
+                if (lastLineMove.Node.ColorToMove != ActualTrainingSide && lastLineMove.Children.Count > 0)
+                {
+                    lastLineMove = lastLineMove.Children[0];
+                }
+            }
+
+            return lastLineMove;
         }
 
         /// <summary>
@@ -118,7 +140,10 @@ namespace ChessForge
                     // check if this is a "training" fork and add to the list if so
                     if (nts.Children.Count > 1 && nts.Node.ColorToMove != ActualTrainingSide)
                     {
-                        _trainingForks.Add(nts);
+                        if (CheckForTrainingFork(nts))
+                        {
+                            _trainingForks.Add(nts);
+                        }
                     }
 
                     // continue recursively
@@ -128,6 +153,33 @@ namespace ChessForge
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Checks if the given node is a training fork and marks its children as leafs if they have no children.
+        /// </summary>
+        /// <param name="nts"></param>
+        /// <returns></returns>
+        private static bool CheckForTrainingFork(NodeTrainingStatus nts)
+        {
+            bool isFork = false;
+
+            if (nts.Children.Count > 1 && nts.Node.ColorToMove != ActualTrainingSide)
+            {
+                foreach (var child in nts.Children)
+                {
+                    if (child.Node.Children.Count > 0)
+                    {
+                        isFork = true;
+                    }
+                    else
+                    {
+                        child.IsLeaf = true;
+                    }
+                }
+            }
+
+            return isFork;
         }
 
         /// <summary>
@@ -191,7 +243,7 @@ namespace ChessForge
         {
             NodeTrainingStatus nextNodeStatus = null;
 
-            List<NodeTrainingStatus> possibleChildren = fork.Children.Where(c => !c.IsTrained).ToList();
+            List<NodeTrainingStatus> possibleChildren = fork.Children.Where(c => !c.IsTrained && !c.IsLeaf).ToList();
 
             if (possibleChildren.Count == 0)
             {
@@ -245,7 +297,10 @@ namespace ChessForge
                     fork.IsExhausted = false;
                     foreach (var child in fork.Children)
                     {
-                        child.IsTrained = false;
+                        if (!child.IsLeaf)
+                        {
+                            child.IsTrained = false;
+                        }
                     }
                 }
             }
