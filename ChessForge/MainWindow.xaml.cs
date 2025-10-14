@@ -2570,6 +2570,11 @@ namespace ChessForge
                 UiTrainingView.RequestMoveEvaluation(ActiveVariationTree.TreeId, true);
                 AppState.SwapCommentBoxForEngineLines(true);
             }
+
+            if(TrainingSession.IsRandomLinesMode)
+            {
+                UiMnTrainRandomLine(null, null);
+            }
         }
 
         /// <summary>
