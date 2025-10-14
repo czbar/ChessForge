@@ -15,6 +15,7 @@ namespace ChessForge
         /// <param name="e"></param>
         public void UiMnStartTrainingHere(object sender, RoutedEventArgs e)
         {
+            TrainingSession.IsRandomLinesMode = false;
             StartTrainingSession(false);
         }
 
@@ -25,6 +26,18 @@ namespace ChessForge
         /// <param name="e"></param>
         public void UiMnStartTrainingFromStartingPosition(object sender, RoutedEventArgs e)
         {
+            TrainingSession.IsRandomLinesMode = false;
+            StartTrainingSession(true);
+        }
+
+        /// <summary>
+        /// A request from the menu to start training with random line.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void UiMnStartTrainingRandomLines(object sender, RoutedEventArgs e)
+        {
+            TrainingSession.IsRandomLinesMode = true;
             StartTrainingSession(true);
         }
 

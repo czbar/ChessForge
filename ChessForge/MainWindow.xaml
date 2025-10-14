@@ -115,6 +115,7 @@
                     <MenuItem Header="{x:Static p:Resources.Training}" Margin="0,0,0,0">
                         <MenuItem x:Name="UiMnTrainFromCurrentPosition"  Header="{x:Static p:Resources.TrainFromCurrentPosition}" Click="UiMnStartTrainingHere"  InputGestureText="T" />
                         <MenuItem x:Name="UiMnTrainFromStartingPosition"  Header="{x:Static p:Resources.TrainFromStartingPosition}" Click="UiMnStartTrainingFromStartingPosition" InputGestureText="Shift+T"/>
+                        <MenuItem x:Name="UiMnTrainRandomLines"  Header="{x:Static p:Resources.TrainRandomLines}" Click="UiMnStartTrainingRandomLines" InputGestureText="Shift+R"/>
                         <Separator />
                         <MenuItem x:Name="UiMnExitTraining" Header="{x:Static p:Resources.ExitTraining}" Click="UiMnStopTraining_Click"/>
                         <Separator />
