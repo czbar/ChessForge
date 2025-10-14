@@ -784,6 +784,10 @@ namespace ChessForge
                                     _mainWin.UiMnStartTrainingFromStartingPosition(null, null);
                                     e.Handled = true;
                                     break;
+                                case Key.R:
+                                    _mainWin.UiMnStartTrainingRandomLines(null, null);
+                                    e.Handled = true;
+                                    break;
                                 default:
                                     if (HandleKeyDown(e.Key))
                                     {
