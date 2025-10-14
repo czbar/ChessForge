@@ -88,12 +88,24 @@ namespace ChessForge
         /// </summary>
         private static List<TreeNode> TrainingLine = new List<TreeNode>();
 
+        // The side that is training. It can be different from the Workbook's training side.
+        private static PieceColor _trainingSide = PieceColor.None;
+
         /// <summary>
         /// The side that is training. It can be different from the Workbook's training side.
         /// </summary>
-        public static PieceColor TrainingSide
+        public static PieceColor ActualTrainingSide
         {
-            get { return StartPosition.ColorToMove; }
+            get { return _trainingSide; }
+        }
+
+        /// <summary>
+        /// Explicitly sets the training side.
+        /// </summary>
+        /// <param name="color"></param>
+        public static void SetTrainingSide(PieceColor color)
+        {
+            _trainingSide = color;
         }
 
         /// <summary>
@@ -132,7 +144,6 @@ namespace ChessForge
 
             LearningMode.ChangeCurrentMode(LearningMode.Mode.TRAINING);
             IsTrainingInProgress = true;
-            StartPosition = startNode;
             ChangeCurrentState(TrainingSession.State.AWAITING_USER_TRAINING_MOVE);
 
             AppState.EnableNavigationArrows();
@@ -146,7 +157,6 @@ namespace ChessForge
                 EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
             }
 
-            LearningMode.TrainingSideCurrent = startNode.ColorToMove;
             AppState.MainWin.MainChessBoard.DisplayPosition(startNode, true);
 
             AppState.ShowMoveEvaluationControls(isContinuousEvaluation, isContinuousEvaluation);
@@ -409,7 +419,7 @@ namespace ChessForge
                     break;
                 }
 
-                if (node.ColorToMove == TrainingSide && GetNonNullLeafSiblingIndex(node, nextOrPrevLine) >= 0)
+                if (node.ColorToMove == ActualTrainingSide && GetNonNullLeafSiblingIndex(node, nextOrPrevLine) >= 0)
                 {
                     moveToUpdateIndex = i;
                     break;
