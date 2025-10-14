@@ -27,7 +27,7 @@ namespace ChessForge
         /// </summary>
         public static void InitializeRandomLines()
         {
-            _trainingStatusTree = new TreeTrainingStatus(AppState.MainWin.ActiveVariationTree, TrainingSide, StartPosition);
+            _trainingStatusTree = new TreeTrainingStatus(AppState.MainWin.ActiveVariationTree, ActualTrainingSide, StartPosition);
             _trainingForks = new List<NodeTrainingStatus>();
 
             _ntsRoot = _trainingStatusTree.GetNodeStatusById(StartPosition.NodeId);
@@ -63,6 +63,8 @@ namespace ChessForge
         public static List<TreeNode> SelectRandomLine()
         {
             _isRandomLinesMode = true;
+
+            ClearForkExhaustion();
 
             List<TreeNode> line = new List<TreeNode>();
             
@@ -114,7 +116,7 @@ namespace ChessForge
                 else
                 {
                     // check if this is a "training" fork and add to the list if so
-                    if (nts.Children.Count > 1 && nts.Node.ColorToMove != TrainingSide)
+                    if (nts.Children.Count > 1 && nts.Node.ColorToMove != ActualTrainingSide)
                     {
                         _trainingForks.Add(nts);
                     }
@@ -154,7 +156,6 @@ namespace ChessForge
 
             return nextNode;
         }
-
 
         /// <summary>
         /// Randomly selects one of the not exhausted forks in the training tree.
@@ -205,7 +206,7 @@ namespace ChessForge
 
             if (possibleChildren.Count == 1)
             {
-                nextNodeStatus = fork.Children[0];
+                nextNodeStatus = possibleChildren[0];
             }
             else if (possibleChildren.Count > 1)
             {
@@ -219,7 +220,7 @@ namespace ChessForge
                 nextNodeStatus.IsTrained = true;
             }
 
-            // check if all children are now trained, if so propagate up the IsExhausted status
+            // check if all children are now trained, if so set IsExhausted.
             possibleChildren = fork.Children.Where(c => !c.IsTrained).ToList();
             if (possibleChildren.Count == 0)
             {
@@ -229,5 +230,25 @@ namespace ChessForge
             return nextNodeStatus;
         }
 
+        /// <summary>
+        /// If there are no non-exhausted forks, clear the IsExhausted flag
+        /// on all forks and the IsTrained flag on all their children.
+        /// </summary>
+        private static void ClearForkExhaustion()
+        {
+            int nonExhausted = _trainingForks.Where(f => !f.IsExhausted).Count();
+
+            if (nonExhausted == 0)
+            {
+                foreach (var fork in _trainingForks)
+                {
+                    fork.IsExhausted = false;
+                    foreach (var child in fork.Children)
+                    {
+                        child.IsTrained = false;
+                    }
+                }
+            }
+        }
     }
 }
