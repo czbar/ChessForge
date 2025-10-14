@@ -117,7 +117,7 @@ namespace ChessForge
             AddNewParagraphToDoc(HostRtb.Document,"dummy", "");
 
             // user moved and it was not user replacing the last engine move in Training
-            if (userMove && (!TrainingSession.IsTrainingInProgress || nd.ColorToMove != TrainingSession.TrainingSide))
+            if (userMove && (!TrainingSession.IsTrainingInProgress || nd.ColorToMove != TrainingSession.ActualTrainingSide))
             {
                 AddNewParagraphToDoc(HostRtb.Document, "normal", Properties.Resources.YourMoveWas + ":");
                 uint moveNumberOffset = 0;

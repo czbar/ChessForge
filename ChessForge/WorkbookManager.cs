@@ -838,7 +838,6 @@ namespace ChessForge
                 workbook.SetVersion(GameList[0].GetWorkbookVersion());
                 workbook.Guid = GameList[0].GetGuid();
                 workbook.TrainingSideConfig = TextUtils.ConvertStringToPieceColor(GameList[0].Header.GetTrainingSide(out _));
-                workbook.TrainingSideCurrent = workbook.TrainingSideConfig;
 
                 workbook.StudyBoardOrientationConfig = TextUtils.ConvertStringToPieceColor(GameList[0].Header.GetStudyBoardOrientation(out _));
                 workbook.GameBoardOrientationConfig = TextUtils.ConvertStringToPieceColor(GameList[0].Header.GetGameBoardOrientation(out _));

@@ -862,7 +862,7 @@ namespace ChessForge
                                 mi.Header = Properties.Resources.ReplaceEngineMove + " " + moveTxt;
                                 mi.Visibility = (_moveContext == MoveContext.GAME
                                                  && EngineGame.CurrentState == EngineGame.GameState.USER_THINKING
-                                                 && _lastClickedNode.ColorToMove == TrainingSession.TrainingSide)
+                                                 && _lastClickedNode.ColorToMove == TrainingSession.ActualTrainingSide)
                                                  ? Visibility.Visible : Visibility.Collapsed;
                                 break;
                             case "_mnTrainSwitchToWorkbook":
@@ -970,7 +970,7 @@ namespace ChessForge
             {
                 try
                 {
-                    if (_lastClickedNode.ColorToMove != TrainingSession.TrainingSide)
+                    if (_lastClickedNode.ColorToMove != TrainingSession.ActualTrainingSide)
                     {
                         RestartGameAtUserMove(nd);
                     }
@@ -996,7 +996,7 @@ namespace ChessForge
         {
             // first check that we are indeed replacing an engine move
             TreeNode nd = _lastClickedNode;
-            if (nd != null && _lastClickedNode.ColorToMove == TrainingSession.TrainingSide)
+            if (nd != null && _lastClickedNode.ColorToMove == TrainingSession.ActualTrainingSide)
             {
                 try
                 {
@@ -1025,7 +1025,7 @@ namespace ChessForge
 
             if (_lastClickedNode != null)
             {
-                if (_lastClickedNode.ColorToMove == TrainingSession.TrainingSide)
+                if (_lastClickedNode.ColorToMove == TrainingSession.ActualTrainingSide)
                 {
                     RollbackToUserMove();
                 }
