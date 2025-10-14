@@ -2542,13 +2542,17 @@ namespace ChessForge
         /// Starts a new training session from the specified Node.
         /// </summary>
         /// <param name="startNode"></param>
-        private void SetAppInTrainingMode(TreeNode startNode, bool isContinuousEvaluation = false)
+        private void SetAppInTrainingMode(TreeNode startNode, PieceColor trainingSide, bool isContinuousEvaluation = false)
         {
             if (ActiveVariationTree == null || startNode == null)
             {
                 return;
             }
 
+            TrainingSession.StartPosition = startNode;
+
+            TrainingSession.SetTrainingSide(trainingSide);
+            MainChessBoard.FlipBoard(trainingSide);
             TrainingSession.PrepareGuiForTraining(startNode, isContinuousEvaluation);
             TrainingSession.InitializeRandomLines();
 
@@ -2599,8 +2603,8 @@ namespace ChessForge
             UiTrainingView = new TrainingView(UiRtbTrainingProgress, this);
             UiTrainingView.Initialize(TrainingSession.StartPosition, ActiveVariationTree.ContentType);
             UiDgEngineGame.ItemsSource = EngineGame.Line.MoveList;
-            if (LearningMode.TrainingSideCurrent == PieceColor.Black && !MainChessBoard.IsFlipped
-                || LearningMode.TrainingSideCurrent == PieceColor.White && MainChessBoard.IsFlipped)
+            if (TrainingSession.ActualTrainingSide == PieceColor.Black && !MainChessBoard.IsFlipped
+                || TrainingSession.ActualTrainingSide == PieceColor.White && MainChessBoard.IsFlipped)
             {
                 MainChessBoard.FlipBoard();
             }
@@ -2761,7 +2765,6 @@ namespace ChessForge
                     SessionWorkbook.Title = dlg.WorkbookTitle;
                     SessionWorkbook.Author = dlg.Author;
                     SessionWorkbook.TrainingSideConfig = dlg.TrainingSide;
-                    SessionWorkbook.TrainingSideCurrent = dlg.TrainingSide;
 
                     SessionWorkbook.StudyBoardOrientationConfig = dlg.StudyBoardOrientation;
                     SessionWorkbook.GameBoardOrientationConfig = dlg.GameBoardOrientation;
