@@ -96,15 +96,12 @@ namespace ChessForge
 
                     if (fromStartingPosition)
                     {
-                        if (variationTree.Nodes[0].Children.Count > 1)
+                        List<TreeNode> lstLine = new List<TreeNode>
                         {
-                            List<TreeNode> lstLine = new List<TreeNode>
-                                {
-                                    nd
-                                };
-                            UiTrainingView.BuildTrainingLineParas(lstLine);
-                            TrainingSession.SetTrainingSide(nd.ColorToMove);
-                        }
+                            nd
+                        };
+                        UiTrainingView.BuildTrainingLineParas(lstLine);
+                        TrainingSession.SetTrainingSide(nd.ColorToMove);
                     }
                 }
                 else
