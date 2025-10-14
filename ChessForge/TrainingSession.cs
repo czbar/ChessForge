@@ -61,6 +61,12 @@ namespace ChessForge
         { get => _isTakebackAvailable; set => _isTakebackAvailable = value; }
 
         /// <summary>
+        /// Whether we are in random lines mode.
+        /// </summary>
+        public static bool IsRandomLinesMode
+        { get => _isRandomLinesMode; set => _isRandomLinesMode = value; }   
+
+        /// <summary>
         /// The current state of the Training session.
         /// </summary>
         public static State CurrentState { get => _currentState; }
