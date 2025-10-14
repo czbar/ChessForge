@@ -29,6 +29,11 @@ namespace GameTree
         public bool IsExhausted = false;
 
         /// <summary>
+        /// Whether this node is a leaf (has no children).
+        /// </summary>
+        public bool IsLeaf = false;
+
+        /// <summary>
         /// The collection of child nodes representing the training status of each node.
         /// </summary>
         public List<NodeTrainingStatus> Children;
