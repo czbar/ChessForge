@@ -52,9 +52,8 @@ namespace ChessForge
                 }
 
                 TreeNode nd = null;
+                TreeNode ndStartView = null;
 
-                // only the METHODIC_CURRENT_MOVE training type starts from the currently selected move,
-                // all others start from the starting position
                 VariationTree variationTree = ActiveVariationTree;
 
                 if (!fromStartingPosition)
@@ -67,7 +66,7 @@ namespace ChessForge
                     // in Exercise the color to move in the start node may not be White, so check it
                     PieceColor startNodeColorToMove = variationTree.Nodes[0].ColorToMove;
 
-                    PieceColor trainingSide = WorkbookManager.SessionWorkbook.TrainingSideCurrent;
+                    PieceColor trainingSide = WorkbookManager.SessionWorkbook.TrainingSideConfig;
                     if (trainingSide == startNodeColorToMove)
                     {
                         nd = variationTree.Nodes[0];
@@ -77,6 +76,7 @@ namespace ChessForge
                         if (variationTree.Nodes[0].Children.Count > 0)
                         {
                             nd = variationTree.Nodes[0].Children[0];
+                            ndStartView = variationTree.Nodes[0];
                         }
                         else
                         {
@@ -87,7 +87,11 @@ namespace ChessForge
 
                 if (nd != null)
                 {
-                    SetAppInTrainingMode(nd, false);
+                    if (ndStartView == null)
+                    {
+                        ndStartView = nd;
+                    }
+                    SetAppInTrainingMode(ndStartView, nd.ColorToMove, false);
                     UiTrainingSessionBox.Visibility = Visibility.Visible;
 
                     if (fromStartingPosition)
@@ -99,6 +103,7 @@ namespace ChessForge
                                     nd
                                 };
                             UiTrainingView.BuildTrainingLineParas(lstLine);
+                            TrainingSession.SetTrainingSide(nd.ColorToMove);
                         }
                     }
                 }
@@ -146,7 +151,7 @@ namespace ChessForge
                     // create the game tree and set its header
                     VariationTree tree = new VariationTree(GameData.ContentType.MODEL_GAME);
                     tree.Nodes = newGameNodes;
-                    GuiUtilities.CreateHeaderForTrainingGame(tree, LearningMode.TrainingSideCurrent);
+                    GuiUtilities.CreateHeaderForTrainingGame(tree, TrainingSession.ActualTrainingSide);
 
                     // remove training moves from source, BEFORE we change ActiveVariation tree
                     AppState.MainWin.ActiveVariationTree.RemoveTrainingMoves();
@@ -185,7 +190,7 @@ namespace ChessForge
         private void UiMnTrainFromBookmark_Click(object sender, RoutedEventArgs e)
         {
             BookmarkManager.SetActiveEntities(false);
-            SetAppInTrainingMode(BookmarkManager.SelectedBookmarkNode, false);
+            SetAppInTrainingMode(BookmarkManager.SelectedBookmarkNode, BookmarkManager.SelectedBookmarkNode.ColorToMove, false);
         }
 
         /// <summary>
