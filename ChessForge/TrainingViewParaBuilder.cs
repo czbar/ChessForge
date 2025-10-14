@@ -28,7 +28,7 @@ namespace ChessForge
                     TreeNode nd = lstLine[i];
                     EngineGame.AddPlyToGame(nd);
 
-                    bool isUserMove = nd.ColorToMove != TrainingSession.TrainingSide;
+                    bool isUserMove = nd.ColorToMove != TrainingSession.ActualTrainingSide;
                     if (isUserMove)
                     {
                         // user move
@@ -311,7 +311,7 @@ namespace ChessForge
             }
             else
             {
-                if (nd.ColorToMove == TrainingSession.TrainingSide)
+                if (nd.ColorToMove == TrainingSession.ActualTrainingSide)
                 {
                     _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc(HostRtb.Document, STYLE_SECOND_PROMPT, "\n   " + Properties.Resources.YourTurn + "...");
                     _dictParas[ParaType.PROMPT_TO_MOVE].Foreground = ChessForgeColors.GetHintForeground(CommentBox.HintType.INFO);
