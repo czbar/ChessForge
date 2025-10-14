@@ -663,6 +663,9 @@
   <data name="TrainFromStartingPosition" xml:space="preserve">
     <value>From Starting Position</value>
   </data>
+  <data name="TrainRandomLines" xml:space="preserve">
+    <value>Random Lines</value>
+  </data>
   <data name="StartNewSession" xml:space="preserve">
     <value>Start New Session</value>
   </data>
@@ -1619,7 +1622,7 @@ NOTE: Evaluations are not being updated (Ctrl+K to allow).</value>
     <value>Play $0 instead of Your Move</value>
   </data>
   <data name="TrnStudyResponse" xml:space="preserve">
-    <value>Workbook response</value>
+    <value>Workbook move</value>
   </data>
   <data name="TrnStudyMoveNotInSource" xml:space="preserve">
     <value>This is not in the Workbook</value>
@@ -1631,7 +1634,7 @@ NOTE: Evaluations are not being updated (Ctrl+K to allow).</value>
     <value>The Workbook moves are</value>
   </data>
   <data name="TrnGameResponse" xml:space="preserve">
-    <value>Response from the Game</value>
+    <value>Game move</value>
   </data>
   <data name="TrnGameMoveNotInSource" xml:space="preserve">
     <value>This is not in the Game</value>
@@ -1643,7 +1646,7 @@ NOTE: Evaluations are not being updated (Ctrl+K to allow).</value>
     <value>The moves in the Game are</value>
   </data>
   <data name="TrnExerciseResponse" xml:space="preserve">
-    <value>Response from the Exercise</value>
+    <value>Exercise move</value>
   </data>
   <data name="TrnExerciseMoveNotInSource" xml:space="preserve">
     <value>This is not in the Exercise</value>
@@ -1683,6 +1686,18 @@ NOTE: Evaluations are not being updated (Ctrl+K to allow).</value>
   </data>
   <data name="TrnClickMoveBelow" xml:space="preserve">
     <value>Click any move below to restart training from it.  </value>
+  </data>
+  <data name="TrnChangeLineInfo" xml:space="preserve">
+    <value>Click below to change the line:  </value>
+  </data>
+  <data name="TrnNextLine" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="TrnPreviousLine" xml:space="preserve">
+    <value>Previous</value>
+  </data>
+  <data name="TrnRandomLine" xml:space="preserve">
+    <value>Random</value>
   </data>
   <data name="TrnRightClickMove" xml:space="preserve">
     <value>Right click to open the context menu.  </value>

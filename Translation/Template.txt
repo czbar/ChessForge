@@ -786,6 +786,10 @@ TrainFromCurrentPosition=
 #english: TrainFromStartingPosition=From Starting Position
 TrainFromStartingPosition=
 
+#description: Training on random lines
+#english: TrainRandomLines=Random Lines
+TrainRandomLines=
+
 #description: Start a new training session
 #english: StartNewSession=Start New Session
 StartNewSession=
@@ -2325,7 +2329,7 @@ TrnPlayMoveInstead=
 ### Training from Study
 
 #description: Response 
-#english: TrnStudyResponse=Workbook response
+#english: TrnStudyResponse=Workbook move
 TrnStudyResponse=
 
 #description: Not in the source 
@@ -2344,7 +2348,7 @@ TrnStudySourceMoves=
 ### Training from Game
 
 #description: Response 
-#english: TrnGameResponse=Response from the Game
+#english: TrnGameResponse=Game move
 TrnGameResponse=
 
 #description: Not in the source 
@@ -2363,7 +2367,7 @@ TrnGameSourceMoves=
 ### Training from Exercise
 
 #description: Response 
-#english: TrnExerciseResponse=Response from the Exercise
+#english: TrnExerciseResponse=Exercise move
 TrnExerciseResponse=
 
 #description: Not in the source 
@@ -2418,6 +2422,22 @@ TrnUserPlaysBlack=
 #description: Click move instruction
 #english: TrnClickMoveBelow=Click any move below to restart training from it.  
 TrnClickMoveBelow=
+
+#description: Change line instruction
+#english: TrnChangeLineInfo=Click below to change the line:  
+TrnChangeLineInfo=
+
+#description: Next line link
+#english: TrnNextLine=Next
+TrnNextLine=
+
+#description: Previous line link
+#english: TrnPreviousLine=Previous
+TrnPreviousLine=
+
+#description: Random line link
+#english: TrnRandomLine=Random
+TrnRandomLine=
 
 #description: Right click move instruction
 #english: TrnRightClickMove=Right click to open the context menu.  

@@ -786,6 +786,10 @@ TrainFromCurrentPosition=Od Bieżącej Pozycji
 #english: TrainFromStartingPosition=From Starting Position
 TrainFromStartingPosition=Od Pozycji Początkowej
 
+#description: Training on random lines
+#english: TrainRandomLines=Random Lines
+TrainRandomLines=Losowe Warianty
+
 #description: Start a new training session
 #english: StartNewSession=Start New Session
 StartNewSession=Zacznij nową sesję
@@ -2325,8 +2329,8 @@ TrnPlayMoveInstead=Graj $0 zamiast Twojego ruchu
 ### Training from Study
 
 #description: Response 
-#english: TrnStudyResponse=Workbook response
-TrnStudyResponse=Odpowiedź z Podręcznika
+#english: TrnStudyResponse=Workbook move
+TrnStudyResponse=Ruch z Podręcznika
 
 #description: Not in the source 
 #english: TrnStudyMoveNotInSource=This is not in the Workbook
@@ -2344,8 +2348,8 @@ TrnStudySourceMoves=Ruchy z Podręcznika to
 ### Training from Game
 
 #description: Response 
-#english: TrnGameResponse=Response from the Game
-TrnGameResponse=Odpowiedź z Partii
+#english: TrnGameResponse=Game move
+TrnGameResponse=Ruch z Partii
 
 #description: Not in the source 
 #english: TrnGameMoveNotInSource=This is not in the Game
@@ -2363,8 +2367,8 @@ TrnGameSourceMoves=Ruchy w Partii to
 ### Training from Exercise
 
 #description: Response 
-#english: TrnExerciseResponse=Response from the Exercise
-TrnExerciseResponse=Odpowiedź z Ćwiczenia
+#english: TrnExerciseResponse=Exercise move
+TrnExerciseResponse=Ruch z Ćwiczenia
 
 #description: Not in the source 
 #english: TrnExerciseMoveNotInSource=This is not in the Exercise
@@ -2418,6 +2422,22 @@ TrnUserPlaysBlack=Grasz czarnymi, a wirtualny trener gra białymi.
 #description: Click move instruction
 #english: TrnClickMoveBelow=Click any move below to restart training from it.  
 TrnClickMoveBelow=Kliknij na dowolny ruch poniżej aby cofnąć trening do niego.
+
+#description: Change line instruction
+#english: TrnChangeLineInfo=Click below to change the line:  
+TrnChangeLineInfo=Kliknij poniżej by zmienić wariant:  
+
+#description: Next line link
+#english: TrnNextLine=Next
+TrnNextLine=Następny
+
+#description: Previous line link
+#english: TrnPreviousLine=Previous
+TrnPreviousLine=Poprzedni
+
+#description: Random line link
+#english: TrnRandomLine=Random
+TrnRandomLine=Losowy
 
 #description: Right click move instruction
 #english: TrnRightClickMove=Right click to open the context menu.  

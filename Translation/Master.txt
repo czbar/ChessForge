@@ -604,6 +604,9 @@ TrainFromCurrentPosition=From Current Position
 #Training from starting position
 TrainFromStartingPosition=From Starting Position
 
+#Training on random lines
+TrainRandomLines=Random Lines
+
 #Start a new training session
 StartNewSession=Start New Session
 
@@ -1825,7 +1828,7 @@ TrnPlayMoveInstead=Play $0 instead of Your Move
 ### Training from Study
 
 #Response 
-TrnStudyResponse=Workbook response
+TrnStudyResponse=Workbook move
 
 #Not in the source 
 TrnStudyMoveNotInSource=This is not in the Workbook
@@ -1840,7 +1843,7 @@ TrnStudySourceMoves=The Workbook moves are
 ### Training from Game
 
 #Response 
-TrnGameResponse=Response from the Game
+TrnGameResponse=Game move
 
 #Not in the source 
 TrnGameMoveNotInSource=This is not in the Game
@@ -1855,7 +1858,7 @@ TrnGameSourceMoves=The moves in the Game are
 ### Training from Exercise
 
 #Response 
-TrnExerciseResponse=Response from the Exercise
+TrnExerciseResponse=Exercise move
 
 #Not in the source 
 TrnExerciseMoveNotInSource=This is not in the Exercise
@@ -1896,6 +1899,18 @@ TrnUserPlaysBlack=You play Black and the virtual coach plays White.
 
 #Click move instruction
 TrnClickMoveBelow=Click any move below to restart training from it.  
+
+#Change line instruction
+TrnChangeLineInfo=Click below to change the line:  
+
+#Next line link
+TrnNextLine=Next
+
+#Previous line link
+TrnPreviousLine=Previous
+
+#Random line link
+TrnRandomLine=Random
 
 #Right click move instruction
 TrnRightClickMove=Right click to open the context menu.  
