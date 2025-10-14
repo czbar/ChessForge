@@ -2956,9 +2956,13 @@ namespace ChessForge
         /// <param name="e"></param>
         public void UiMnTrainRandomLine(object sender, RoutedEventArgs e)
         {
-            ResetTrainingMode();
             List<TreeNode> lstLine = TrainingSession.SelectRandomLine();
-            UiTrainingView.BuildTrainingLineParas(lstLine);
+
+            if (lstLine != null)
+            {
+                ResetTrainingMode();
+                UiTrainingView.BuildTrainingLineParas(lstLine);
+            }
         }
 
         /// <summary>
