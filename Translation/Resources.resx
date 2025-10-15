@@ -1688,7 +1688,7 @@ NOTE: Evaluations are not being updated (Ctrl+K to allow).</value>
     <value>Click any move below to restart training from it.  </value>
   </data>
   <data name="TrnChangeLineInfo" xml:space="preserve">
-    <value>Click below to change the line:  </value>
+    <value>Click below to change the training line:  </value>
   </data>
   <data name="TrnNextLine" xml:space="preserve">
     <value>Next</value>
@@ -1698,6 +1698,12 @@ NOTE: Evaluations are not being updated (Ctrl+K to allow).</value>
   </data>
   <data name="TrnRandomLine" xml:space="preserve">
     <value>Random</value>
+  </data>
+  <data name="TrnSelectNextRandomLine" xml:space="preserve">
+    <value>Click to go to</value>
+  </data>
+  <data name="TrnNextRandomLine" xml:space="preserve">
+    <value>Next Random Line</value>
   </data>
   <data name="TrnRightClickMove" xml:space="preserve">
     <value>Right click to open the context menu.  </value>

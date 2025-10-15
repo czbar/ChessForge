@@ -8036,7 +8036,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Click below to change the line:  .
+        ///   Looks up a localized string similar to Click below to change the training line:  .
         /// </summary>
         public static string TrnChangeLineInfo {
             get {
@@ -8198,6 +8198,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Next Random Line.
+        /// </summary>
+        public static string TrnNextRandomLine {
+            get {
+                return ResourceManager.GetString("TrnNextRandomLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Play $0 instead of Your Move.
         /// </summary>
         public static string TrnPlayMoveInstead {
@@ -8248,6 +8257,15 @@ namespace ChessForge.Properties {
         public static string TrnRightClickMove {
             get {
                 return ResourceManager.GetString("TrnRightClickMove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click to go to.
+        /// </summary>
+        public static string TrnSelectNextRandomLine {
+            get {
+                return ResourceManager.GetString("TrnSelectNextRandomLine", resourceCulture);
             }
         }
         

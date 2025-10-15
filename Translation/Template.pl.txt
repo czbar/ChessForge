@@ -2424,8 +2424,8 @@ TrnUserPlaysBlack=Grasz czarnymi, a wirtualny trener gra białymi.
 TrnClickMoveBelow=Kliknij na dowolny ruch poniżej aby cofnąć trening do niego.
 
 #description: Change line instruction
-#english: TrnChangeLineInfo=Click below to change the line:  
-TrnChangeLineInfo=Kliknij poniżej by zmienić wariant:  
+#english: TrnChangeLineInfo=Click below to change the training line:  
+TrnChangeLineInfo=Kliknij poniżej by zmienić wariant treningowy:  
 
 #description: Next line link
 #english: TrnNextLine=Next
@@ -2438,6 +2438,14 @@ TrnPreviousLine=Poprzedni
 #description: Random line link
 #english: TrnRandomLine=Random
 TrnRandomLine=Losowy
+
+#description: Move to next random line Change line instruction
+#english: TrnSelectNextRandomLine=Click to go to
+TrnSelectNextRandomLine=Kliknij by wybrać
+
+#description: Next Random line link
+#english: TrnNextRandomLine=Next Random Line
+TrnNextRandomLine=następny losowy wariant
 
 #description: Right click move instruction
 #english: TrnRightClickMove=Right click to open the context menu.  

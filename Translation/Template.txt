@@ -2424,7 +2424,7 @@ TrnUserPlaysBlack=
 TrnClickMoveBelow=
 
 #description: Change line instruction
-#english: TrnChangeLineInfo=Click below to change the line:  
+#english: TrnChangeLineInfo=Click below to change the training line:  
 TrnChangeLineInfo=
 
 #description: Next line link
@@ -2438,6 +2438,14 @@ TrnPreviousLine=
 #description: Random line link
 #english: TrnRandomLine=Random
 TrnRandomLine=
+
+#description: Move to next random line Change line instruction
+#english: TrnSelectNextRandomLine=Click to go to
+TrnSelectNextRandomLine=
+
+#description: Next Random line link
+#english: TrnNextRandomLine=Next Random Line
+TrnNextRandomLine=
 
 #description: Right click move instruction
 #english: TrnRightClickMove=Right click to open the context menu.  

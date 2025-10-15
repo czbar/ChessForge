@@ -1901,7 +1901,7 @@ TrnUserPlaysBlack=You play Black and the virtual coach plays White.
 TrnClickMoveBelow=Click any move below to restart training from it.  
 
 #Change line instruction
-TrnChangeLineInfo=Click below to change the line:  
+TrnChangeLineInfo=Click below to change the training line:  
 
 #Next line link
 TrnNextLine=Next
@@ -1911,6 +1911,12 @@ TrnPreviousLine=Previous
 
 #Random line link
 TrnRandomLine=Random
+
+#Move to next random line Change line instruction
+TrnSelectNextRandomLine=Click to go to
+
+#Next Random line link
+TrnNextRandomLine=Next Random Line
 
 #Right click move instruction
 TrnRightClickMove=Right click to open the context menu.  

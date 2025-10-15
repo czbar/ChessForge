@@ -1688,7 +1688,7 @@ UWAGA: Oceny nie są uaktualniane (zezwól przez Ctrl+K).</value>
     <value>Kliknij na dowolny ruch poniżej aby cofnąć trening do niego.</value>
   </data>
   <data name="TrnChangeLineInfo" xml:space="preserve">
-    <value>Kliknij poniżej by zmienić wariant:  </value>
+    <value>Kliknij poniżej by zmienić wariant treningowy:  </value>
   </data>
   <data name="TrnNextLine" xml:space="preserve">
     <value>Następny</value>
@@ -1698,6 +1698,12 @@ UWAGA: Oceny nie są uaktualniane (zezwól przez Ctrl+K).</value>
   </data>
   <data name="TrnRandomLine" xml:space="preserve">
     <value>Losowy</value>
+  </data>
+  <data name="TrnSelectNextRandomLine" xml:space="preserve">
+    <value>Kliknij by wybrać</value>
+  </data>
+  <data name="TrnNextRandomLine" xml:space="preserve">
+    <value>następny losowy wariant</value>
   </data>
   <data name="TrnRightClickMove" xml:space="preserve">
     <value>Prawy przycisk myszki wywoła menu.</value>
