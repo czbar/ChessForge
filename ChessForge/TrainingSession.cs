@@ -199,7 +199,7 @@ namespace ChessForge
         /// <returns></returns>
         public static TreeNode GetNextTrainingLineMove(TreeNode currNode)
         {
-            if (_isRandomLinesMode)
+            if (IsRandomLinesMode)
             {
                 return GetRandomLineNextMove(currNode);
             }
@@ -347,8 +347,6 @@ namespace ChessForge
         /// <param name="nextOrPrevLine"></param>
         private static TreeNode BuildNextPrevTrainingLine(bool nextOrPrevLine)
         {
-            _isRandomLinesMode = false;
-
             int moveToUpdateIndex = FindMoveToUpdateIndex(nextOrPrevLine);
 
             if (moveToUpdateIndex < 0)
