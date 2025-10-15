@@ -2588,6 +2588,7 @@ namespace ChessForge
             UiTrainingView.Reset(startNode);
             
             EngineGame.InitializeGameObject(startNode, false, false);
+            UiDgEngineGame.ItemsSource = EngineGame.Line.MoveList;
             Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
 
             if (TrainingSession.IsContinuousEvaluation)
