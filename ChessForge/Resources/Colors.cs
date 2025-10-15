@@ -257,6 +257,9 @@ namespace ChessForge
             LightMode.RtbSelectLineForeground.Freeze();
             LightMode.RtbSelectLineBackground.Freeze();
 
+            LightMode.DisabledItemForeground = Brushes.Gray;
+            LightMode.DisabledItemForeground.Freeze();
+
             LightMode.IntroMoveForeground = Brushes.Blue;
             LightMode.IntroDiagBackground = Brushes.Black;
             LightMode.IntroDiagSideCanvasBackground = Brushes.White;
@@ -352,6 +355,9 @@ namespace ChessForge
             DarkMode.RtbSelectLineBackground = new SolidColorBrush(Color.FromRgb(100, 100, 0));
             DarkMode.RtbSelectLineForeground.Freeze();
             DarkMode.RtbSelectLineBackground.Freeze();
+
+            DarkMode.DisabledItemForeground = Brushes.LightGray;
+            DarkMode.DisabledItemForeground.Freeze();
 
             DarkMode.IntroMoveForeground = Brushes.LightBlue;
             DarkMode.IntroDiagBackground = Brushes.Black;

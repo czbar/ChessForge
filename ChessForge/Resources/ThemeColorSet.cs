@@ -73,9 +73,13 @@ namespace ChessForge
         /// </summary>
         public SolidColorBrush RtbSelectMovesForCopyBackground;
 
+        /// <summary>
+        /// Foreground color for a disabled item.
+        /// </summary>
+        public SolidColorBrush DisabledItemForeground;
 
         /// <summary>
-        /// Forground of the nonselected DataGrid cell
+        /// Foreground of the nonselected DataGrid cell
         /// </summary>
         public SolidColorBrush DataGridForeground;
 
