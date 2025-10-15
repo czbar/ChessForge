@@ -238,6 +238,8 @@ namespace ChessForge
                 }
             }
             _mainWin.UiRtbTrainingProgress.ScrollToEnd();
+
+            EnableChangeLineRuns();
         }
 
         /// <summary>
