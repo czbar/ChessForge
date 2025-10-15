@@ -81,6 +81,19 @@ namespace ChessForge
         //**************************************************
 
         /// <summary>
+        /// This method will be called when the program made a move 
+        /// and we want to update the Training view.
+        /// </summary>
+        public void WorkbookMoveMade()
+        {
+            _mainWin.UiRtbTrainingProgress.Dispatcher.Invoke(() =>
+            {
+                BuildSecondPromptParagraph();
+                EnableChangeLineRuns();
+            });
+        }
+
+        /// <summary>
         /// This method is invoked when user makes their move.
         /// 
         /// It gets the last ply from the EngineGame.Line (which is the

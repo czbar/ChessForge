@@ -1229,18 +1229,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// This method will be called when the program made a move 
-        /// and we want to update the Training view.
-        /// </summary>
-        public void WorkbookMoveMade()
-        {
-            _mainWin.UiRtbTrainingProgress.Dispatcher.Invoke(() =>
-            {
-                BuildSecondPromptParagraph();
-            });
-        }
-
-        /// <summary>
         /// Given a run name and a prefix, returns the NodeId
         /// associated with the run.
         /// The run name is expected to be in the form prefix + NodeId.
