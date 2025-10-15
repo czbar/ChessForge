@@ -171,8 +171,10 @@ namespace ChessForge
                 }
 
                 HostRtb.Document.Blocks.Remove(_dictParas[ParaType.PROMPT_TO_MOVE]);
-                _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc(HostRtb.Document, STYLE_SECOND_PROMPT, "\n   " + Properties.Resources.YourTurn + "...");
-                _dictParas[ParaType.PROMPT_TO_MOVE].Foreground = ChessForgeColors.GetHintForeground(CommentBox.HintType.INFO);
+                Paragraph para = AddNewParagraphToDoc(HostRtb.Document, STYLE_SECOND_PROMPT, "\n   " + Properties.Resources.YourTurn + "...");
+                _dictParas[ParaType.PROMPT_TO_MOVE] = para;
+                para.Foreground = ChessForgeColors.GetHintForeground(CommentBox.HintType.INFO);
+                para.Name = _par_move_prompt_;
 
                 _mainWin.BoardCommentBox.GameMoveMade(nd, false);
             }
@@ -321,13 +323,17 @@ namespace ChessForge
             {
                 if (nd.ColorToMove == TrainingSession.ActualTrainingSide)
                 {
-                    _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc(HostRtb.Document, STYLE_SECOND_PROMPT, "\n   " + Properties.Resources.YourTurn + "...");
-                    _dictParas[ParaType.PROMPT_TO_MOVE].Foreground = ChessForgeColors.GetHintForeground(CommentBox.HintType.INFO);
+                    Paragraph para = AddNewParagraphToDoc(HostRtb.Document, STYLE_SECOND_PROMPT, "\n   " + Properties.Resources.YourTurn + "...");
+                    _dictParas[ParaType.PROMPT_TO_MOVE] = para;
+                    para.Name = _par_move_prompt_;
+                    para.Foreground = ChessForgeColors.GetHintForeground(CommentBox.HintType.INFO);
                 }
                 else
                 {
-                    _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc(HostRtb.Document, STYLE_SECOND_PROMPT, "\n   " + Properties.Resources.WaitForEngineResponse);
-                    _dictParas[ParaType.PROMPT_TO_MOVE].Foreground = ChessForgeColors.GetHintForeground(CommentBox.HintType.INFO);
+                    Paragraph para = AddNewParagraphToDoc(HostRtb.Document, STYLE_SECOND_PROMPT, "\n   " + Properties.Resources.WaitForEngineResponse);
+                    _dictParas[ParaType.PROMPT_TO_MOVE] = para;
+                    para.Name = _par_move_prompt_;
+                    para.Foreground = ChessForgeColors.GetHintForeground(CommentBox.HintType.INFO);
                 }
             }
 
@@ -656,8 +662,10 @@ namespace ChessForge
 
                 para.Inlines.Add(new LineBreak());
 
-                _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc(HostRtb.Document, STYLE_FIRST_PROMPT, Properties.Resources.TrnMakeFirstMove);
-                _dictParas[ParaType.PROMPT_TO_MOVE].Foreground = ChessForgeColors.GetHintForeground(CommentBox.HintType.INFO);
+                Paragraph paraPrompt = AddNewParagraphToDoc(HostRtb.Document, STYLE_FIRST_PROMPT, Properties.Resources.TrnMakeFirstMove);
+                _dictParas[ParaType.PROMPT_TO_MOVE] = paraPrompt;
+                paraPrompt.Foreground = ChessForgeColors.GetHintForeground(CommentBox.HintType.INFO);
+                paraPrompt.Name = _par_move_prompt_;
             }
 
             EnableChangeLineRuns();
@@ -694,6 +702,7 @@ namespace ChessForge
                     ChessForgeColors.GetHintForeground(CommentBox.HintType.PROGRESS) :
                     ChessForgeColors.CurrentTheme.DisabledItemForeground;
                 _rNextLine.Cursor = hasNextLine ? Cursors.Hand : Cursors.Arrow;
+                _rNextLine.Name = hasNextLine ? _run_change_line_ : _run_disabled_;
             }
 
             if (_rPreviousLine != null)
@@ -702,6 +711,7 @@ namespace ChessForge
                     ChessForgeColors.GetHintForeground(CommentBox.HintType.PROGRESS) :
                     ChessForgeColors.CurrentTheme.DisabledItemForeground;
                 _rPreviousLine.Cursor = hasPreviousLine ? Cursors.Hand : Cursors.Arrow;
+                _rPreviousLine.Name = hasPreviousLine ? _run_change_line_ : _run_disabled_;
             }
 
             if (_rRandomLine != null)
@@ -710,6 +720,7 @@ namespace ChessForge
                     ChessForgeColors.GetHintForeground(CommentBox.HintType.PROGRESS) :
                     ChessForgeColors.CurrentTheme.DisabledItemForeground;
                 _rRandomLine.Cursor = hasRandomLine ? Cursors.Hand : Cursors.Arrow;
+                _rRandomLine.Name = hasRandomLine ? _run_change_line_ : _run_disabled_;
             }
         }
 
