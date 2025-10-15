@@ -679,6 +679,9 @@ namespace ChessForge
             return run;
         }
 
+        /// <summary>
+        /// Enables/disables Runs representing clicks to change lines.
+        /// </summary>
         private void EnableChangeLineRuns()
         {
             bool hasNextLine = TrainingSession.FindTrainingLineJunctionNode(true) != null;
