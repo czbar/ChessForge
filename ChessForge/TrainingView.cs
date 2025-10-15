@@ -191,6 +191,8 @@ namespace ChessForge
         private readonly string _run_wb_alternatives_ = "wb_alternatives_";
         private readonly string _run_wb_comment_ = "wb_comment_";
         private readonly string _run_wb_ended_ = "wb_ended_";
+        private readonly string _run_change_line_ = "_change_line_";
+        private readonly string _run_disabled_ = "_disabled_";
 
         private readonly string _par_line_moves_ = "par_line_moves_";
         private readonly string _par_game_moves_ = "par_game_moves_";
@@ -198,6 +200,7 @@ namespace ChessForge
         private readonly string _par_checkmate_ = "par_checkmate_";
         private readonly string _par_stalemate_ = "par_stalemate_";
         private readonly string _par_insufficientmaterial_ = "par_insufficientmaterial_";
+        private readonly string _par_move_prompt_ = "par_move_prompt_";
 
         // Application's Main Window
         private MainWindow _mainWin;
@@ -354,6 +357,8 @@ namespace ChessForge
             _dictColors[_run_wb_alternatives_] = _workbookBrush;
             _dictColors[_run_wb_comment_] = _workbookBrush;
             _dictColors[_run_wb_ended_] = ChessForgeColors.CurrentTheme.RtbForeground;
+            _dictColors[_run_change_line_] = _workbookBrush;
+            _dictColors[_run_disabled_] = ChessForgeColors.CurrentTheme.DisabledItemForeground;
 
             foreach (var block in HostRtb.Document.Blocks)
             {
@@ -371,31 +376,38 @@ namespace ChessForge
                     }
                     else
                     {
-                        foreach (Inline inl in b.Inlines)
+                        if (b.Name == _par_move_prompt_)
                         {
-                            if (inl is Run run)
+                            b.Foreground = ChessForgeColors.GetHintForeground(CommentBox.HintType.INFO);
+                        }
+                        else
+                        {
+                            foreach (Inline inl in b.Inlines)
                             {
-                                string prefix = TextUtils.GetPrefixFromPrefixedString(run.Name);
-
-                                // special case for _run_wb_move_
-                                if (prefix == _run_wb_move_)
+                                if (inl is Run run)
                                 {
-                                    if (run.Foreground == previousUserBrush)
+                                    string prefix = TextUtils.GetPrefixFromPrefixedString(run.Name);
+
+                                    // special case for _run_wb_move_
+                                    if (prefix == _run_wb_move_)
                                     {
-                                        run.Foreground = _userBrush;
+                                        if (run.Foreground == previousUserBrush)
+                                        {
+                                            run.Foreground = _userBrush;
+                                        }
+                                        else
+                                        {
+                                            run.Foreground = _workbookBrush;
+                                        }
+                                    }
+                                    else if (_dictColors.TryGetValue(prefix, out SolidColorBrush brush))
+                                    {
+                                        run.Foreground = brush;
                                     }
                                     else
                                     {
-                                        run.Foreground = _workbookBrush;
+                                        run.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
                                     }
-                                }
-                                else if (_dictColors.TryGetValue(prefix, out SolidColorBrush brush))
-                                {
-                                    run.Foreground = brush;
-                                }
-                                else
-                                {
-                                    run.Foreground = ChessForgeColors.CurrentTheme.RtbForeground;
                                 }
                             }
                         }
