@@ -12,6 +12,12 @@ namespace ChessForge
 {
     public partial class TrainingView
     {
+        // Runs acting as buttons for changing training lines
+        private Run _rPreviousLine = null;
+        private Run _rNextLine = null;
+        private Run _rRandomLine = null;
+
+
         /// <summary>
         /// Builds paragraphs for a training line that was not
         /// actually played but provides a starting point for a random line training.
@@ -52,6 +58,8 @@ namespace ChessForge
                     _mainWin.DisplayPosition(lstLine.Last());
                     BuildSecondPromptParagraph();
                 }
+
+                EnableChangeLineRuns();
             }
             catch (System.Exception ex)
             {
@@ -577,6 +585,129 @@ namespace ChessForge
 
             para.Inlines.Add(r_prefix);
             _mainWin.UiRtbTrainingProgress.ScrollToEnd();
+        }
+
+
+        /// <summary>
+        /// Initial prompt to advise the user make their move.
+        /// This paragraph is removed later on to reduce clutter.
+        /// </summary>
+        private void BuildInstructionsText()
+        {
+            StringBuilder sbInstruction = new StringBuilder();
+            if (TrainingSession.ActualTrainingSide == PieceColor.White)
+            {
+                sbInstruction.Append(Properties.Resources.TrnUserPlaysWhite);
+            }
+            else
+            {
+                sbInstruction.Append(Properties.Resources.TrnUserPlaysBlack);
+            }
+
+            sbInstruction.AppendLine("");
+            sbInstruction.AppendLine("");
+
+            sbInstruction.AppendLine(Properties.Resources.TrnClickMoveBelow);
+            sbInstruction.AppendLine(Properties.Resources.TrnRightClickMove);
+            sbInstruction.AppendLine("");
+
+            if (TrainingSession.IsRandomLinesMode)
+            {
+                sbInstruction.Append(Properties.Resources.TrnSelectNextRandomLine + " ");
+            }
+            else
+            {
+                sbInstruction.AppendLine(Properties.Resources.TrnChangeLineInfo);
+            }
+
+            Paragraph para = AddNewParagraphToDoc(HostRtb.Document, STYLE_INTRO, sbInstruction.ToString());
+            _dictParas[ParaType.INSTRUCTIONS] = para;
+
+            SolidColorBrush brush = ChessForgeColors.GetHintForeground(CommentBox.HintType.PROGRESS);
+
+            if (TrainingSession.IsRandomLinesMode)
+            {
+                _rNextLine = null;
+                _rPreviousLine = null;
+
+                _rRandomLine = BuildChangeLineRun(Properties.Resources.TrnNextRandomLine + ".\n", brush);
+                _rRandomLine.MouseDown += EventRandomLineClicked;
+                para.Inlines.Add(_rRandomLine);
+            }
+            else
+            {
+                para.Inlines.Add(new Run("  "));
+
+                _rNextLine = BuildChangeLineRun(Properties.Resources.TrnNextLine, brush);
+                _rNextLine.MouseDown += EventNextLineClicked;
+                para.Inlines.Add(_rNextLine);
+
+                para.Inlines.Add(new Run("  "));
+
+                _rPreviousLine = BuildChangeLineRun(Properties.Resources.TrnPreviousLine, brush);
+                _rPreviousLine.MouseDown += EventPreviousLineClicked;
+                para.Inlines.Add(_rPreviousLine);
+
+                para.Inlines.Add(new Run("  "));
+
+                _rRandomLine = BuildChangeLineRun(Properties.Resources.TrnRandomLine, brush);
+                _rRandomLine.MouseDown += EventRandomLineClicked;
+                para.Inlines.Add(_rRandomLine);
+
+                para.Inlines.Add(new LineBreak());
+
+                _dictParas[ParaType.PROMPT_TO_MOVE] = AddNewParagraphToDoc(HostRtb.Document, STYLE_FIRST_PROMPT, Properties.Resources.TrnMakeFirstMove);
+                _dictParas[ParaType.PROMPT_TO_MOVE].Foreground = ChessForgeColors.GetHintForeground(CommentBox.HintType.INFO);
+            }
+
+            EnableChangeLineRuns();
+        }
+
+        /// <summary>
+        /// Builds a run for one of the change line options
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="brush"></param>
+        /// <returns></returns>
+        private Run BuildChangeLineRun(string text, SolidColorBrush brush)
+        {
+            Run run = new Run(text);
+            run.Foreground = brush;
+            run.TextDecorations = TextDecorations.Underline;
+            run.Cursor = Cursors.Hand;
+
+            return run;
+        }
+
+        private void EnableChangeLineRuns()
+        {
+            bool hasNextLine = TrainingSession.FindTrainingLineJunctionNode(true) != null;
+            bool hasPreviousLine = TrainingSession.FindTrainingLineJunctionNode(false) != null;
+            bool hasRandomLine = TrainingSession.HasRandomLines();
+
+            if (_rNextLine != null)
+            {
+                _rNextLine.Foreground = hasNextLine ? 
+                    ChessForgeColors.GetHintForeground(CommentBox.HintType.PROGRESS) :
+                    ChessForgeColors.CurrentTheme.DisabledItemForeground;
+                _rNextLine.Cursor = hasNextLine ? Cursors.Hand : Cursors.Arrow;
+            }
+
+            if (_rPreviousLine != null)
+            {
+                _rPreviousLine.Foreground = hasPreviousLine ?
+                    ChessForgeColors.GetHintForeground(CommentBox.HintType.PROGRESS) :
+                    ChessForgeColors.CurrentTheme.DisabledItemForeground;
+                _rPreviousLine.Cursor = hasPreviousLine ? Cursors.Hand : Cursors.Arrow;
+            }
+
+            if (_rRandomLine != null)
+            {
+                _rRandomLine.Foreground = hasRandomLine ?
+                    ChessForgeColors.GetHintForeground(CommentBox.HintType.PROGRESS) :
+                    ChessForgeColors.CurrentTheme.DisabledItemForeground;
+                _rRandomLine.Cursor = hasRandomLine ? Cursors.Hand : Cursors.Arrow;
+            }
         }
 
         /// <summary>
