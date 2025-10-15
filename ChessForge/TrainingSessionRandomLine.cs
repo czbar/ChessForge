@@ -62,7 +62,6 @@ namespace ChessForge
         /// <returns></returns>
         public static List<TreeNode> SelectRandomLine()
         {
-            _isRandomLinesMode = true;
             ClearForkExhaustion();
 
             List<TreeNode> line = null;
