@@ -54,7 +54,7 @@ namespace ChessForge
 
             try
             {
-                foreach(Chapter ch in AppState.Workbook.Chapters)
+                foreach (Chapter ch in AppState.Workbook.Chapters)
                 {
                     if (!ch.ShowSolutionsOnOpen)
                     {
@@ -363,12 +363,7 @@ namespace ChessForge
 
                             if (gotoChaptersView)
                             {
-                                AppState.Workbook.ActiveChapter = targetChapter;
-                                targetChapter.IsViewExpanded = true;
-                                // show chapter view with the target chapter in the view and expanded
-                                AppState.MainWin.ChaptersView.IsDirty = true;
-                                AppState.MainWin.UiTabChapters.Focus();
-                                PulseManager.ChapterIndexToBringIntoView = targetChapter.Index;
+                                GotoChaptersView(targetChapter, false);
                             }
                         }
                     }
@@ -385,6 +380,33 @@ namespace ChessForge
                     AppLog.Message("Unexpected error in ProcessCopyMoveArticlesRequest() - target chapter is null");
                 }
             }
+        }
+
+        /// <summary>
+        /// Opens the Chapters view, expands the target chapter
+        /// or all chapters and brings the target chapter into view.
+        /// Note that ExpandCollapseChaptersView() rebuilds the entire view
+        /// while in the case of expandAll==false we just mark the ChaptersView
+        /// as dirty and UiTabChapters.Focus() will do the rebuild.
+        /// </summary>
+        /// <param name="targetChapter"></param>
+        /// <param name="expandAll"></param>
+        public static void GotoChaptersView(Chapter targetChapter, bool expandAll)
+        {
+            AppState.Workbook.ActiveChapter = targetChapter;
+
+            if (expandAll)
+            {
+                AppState.MainWin.ExpandCollapseChaptersView(true, true);
+            }
+            else
+            {
+                targetChapter.IsViewExpanded = true;
+                AppState.MainWin.ChaptersView.IsDirty = true;
+            }
+
+            AppState.MainWin.UiTabChapters.Focus();
+            PulseManager.ChapterIndexToBringIntoView = targetChapter.Index;
         }
 
         /// <summary>
