@@ -55,16 +55,16 @@ namespace ChessForge
 
                     // replace the chapter at index with the first one from the list
                     AppState.Workbook.Chapters[index] = createdChapters[0];
+                    AppState.Workbook.SelectActiveChapter(index);
 
                     for (int i = 1; i < createdChapters.Count; i++)
                     {
                         AppState.Workbook.Chapters.Insert(index + i, createdChapters[i]);
                     }
 
-                    AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgNumberOfChaptersCreated + ": " + createdChapters.ToString(), CommentBox.HintType.INFO);
+                    AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgNumberOfChaptersCreated + ": " + createdChapters.Count.ToString(), CommentBox.HintType.INFO);
 
-                    AppState.MainWin.ExpandCollapseChaptersView(false, false);
-                    AppState.SetupGuiForCurrentStates();
+                    ChapterUtils.GotoChaptersView(AppState.Workbook.Chapters[index], true);
                     AppState.IsDirty = true;
                 }
             }
