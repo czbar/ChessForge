@@ -45,6 +45,19 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Copies the current line from the engine game to TrainingLine.
+        /// </summary>
+        public static void SyncTrainingLine()
+        {
+            TrainingLine.Clear();
+
+            foreach (TreeNode nd in EngineGame.Line.NodeList)
+            {
+                TrainingLine.Add(nd);
+            }
+        }
+
+        /// <summary>
         /// Whether there are any random lines available.
         /// </summary>
         /// <returns></returns>
