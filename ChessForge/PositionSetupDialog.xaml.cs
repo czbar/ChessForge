@@ -926,6 +926,7 @@ namespace ChessForge
             {
                 TreeNode ndRoot = _tree.Nodes[0].CloneMe(false);
                 VariationTree fixedTree = TreeUtils.CreateNewTreeFromNode(ndRoot, _tree.ContentType);
+                fixedTree.MoveNumberOffset = _tree.MoveNumberOffset;
                 fixedTree.Header = _tree.Header.CloneMe(false);
                 fixedTree.RootNode.Position = new BoardPosition(PositionSetup);
 
