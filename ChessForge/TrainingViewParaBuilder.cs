@@ -60,6 +60,7 @@ namespace ChessForge
                 }
 
                 EnableChangeLineRuns();
+                TrainingSession.SyncTrainingLine();
             }
             catch (System.Exception ex)
             {
@@ -692,26 +693,39 @@ namespace ChessForge
         /// </summary>
         private void EnableChangeLineRuns()
         {
-            bool hasNextLine = TrainingSession.FindTrainingLineJunctionNode(true) != null;
-            bool hasPreviousLine = TrainingSession.FindTrainingLineJunctionNode(false) != null;
+            bool enableNextLine = AppState.GetTrainingLineMenuItemStatus(true, out string nextMoveTxt);
+            bool enablePrevLine = AppState.GetTrainingLineMenuItemStatus(false, out string prevMoveTxt);
+
             bool hasRandomLine = TrainingSession.HasRandomLines();
 
             if (_rNextLine != null)
             {
-                _rNextLine.Foreground = hasNextLine ? 
+                _rNextLine.Foreground = enableNextLine ? 
                     ChessForgeColors.GetHintForeground(CommentBox.HintType.PROGRESS) :
                     ChessForgeColors.CurrentTheme.DisabledItemForeground;
-                _rNextLine.Cursor = hasNextLine ? Cursors.Hand : Cursors.Arrow;
-                _rNextLine.Name = hasNextLine ? _run_change_line_ : _run_disabled_;
+                _rNextLine.Cursor = enableNextLine ? Cursors.Hand : Cursors.Arrow;
+                _rNextLine.Name = enableNextLine ? _run_change_line_ : _run_disabled_;
+
+                _rNextLine.Text = Properties.Resources.TrnNextLine;
+                if (enableNextLine)
+                {
+                    _rNextLine.Text += "  (" + nextMoveTxt + ")";
+                }
             }
 
             if (_rPreviousLine != null)
             {
-                _rPreviousLine.Foreground = hasPreviousLine ?
+                _rPreviousLine.Foreground = enablePrevLine ?
                     ChessForgeColors.GetHintForeground(CommentBox.HintType.PROGRESS) :
                     ChessForgeColors.CurrentTheme.DisabledItemForeground;
-                _rPreviousLine.Cursor = hasPreviousLine ? Cursors.Hand : Cursors.Arrow;
-                _rPreviousLine.Name = hasPreviousLine ? _run_change_line_ : _run_disabled_;
+                _rPreviousLine.Cursor = enablePrevLine ? Cursors.Hand : Cursors.Arrow;
+                _rPreviousLine.Name = enablePrevLine ? _run_change_line_ : _run_disabled_;
+
+                _rPreviousLine.Text = Properties.Resources.TrnPreviousLine;
+                if (enablePrevLine)
+                {
+                    _rPreviousLine.Text += "  (" + prevMoveTxt + ")";
+                }
             }
 
             if (_rRandomLine != null)
