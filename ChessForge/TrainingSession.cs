@@ -315,7 +315,7 @@ namespace ChessForge
 
                 if (index > 0)
                 {
-                    TreeNode moveToUpdate = TrainingLine[index];
+                    TreeNode moveToUpdate = EngineGame.Line.NodeList[index];
                     int childIndex = moveToUpdate.Parent.Children.IndexOf(moveToUpdate);
                     if (nextOrPrevLine)
                     {
