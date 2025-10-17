@@ -1812,15 +1812,12 @@ namespace ChessForge
         /// <param name="prevLine"></param>
         public static void ConfigureMenusForTrainingLines(MenuItem nextLine, MenuItem prevLine, MenuItem randomLine)
         {
-            TreeNode junctionNodeNext = TrainingSession.FindTrainingLineJunctionNode(true);
-            string nextMoveTxt = MainWin.UiTrainingView?.BuildMoveTextForMenu(junctionNodeNext);
-
-            TreeNode junctionNodePrev = TrainingSession.FindTrainingLineJunctionNode(false);
-            string prevMoveTxt = MainWin.UiTrainingView?.BuildMoveTextForMenu(junctionNodePrev);
+            bool enableNextLine = GetTrainingLineMenuItemStatus(true, out string nextMoveTxt);
+            bool enablePrevLine = GetTrainingLineMenuItemStatus(true, out string prevMoveTxt);
 
             if (nextLine != null)
             {
-                nextLine.IsEnabled = junctionNodeNext != null;
+                nextLine.IsEnabled = enableNextLine;
                 nextLine.Header = Properties.Resources.TrainNextLine;
                 if (nextLine.IsEnabled)
                 {
@@ -1830,7 +1827,7 @@ namespace ChessForge
 
             if (prevLine != null)
             {
-                prevLine.IsEnabled = junctionNodePrev != null;
+                prevLine.IsEnabled = enablePrevLine;
                 prevLine.Header = Properties.Resources.TrainPreviousLine;
                 if (prevLine.IsEnabled)
                 {
@@ -1843,6 +1840,21 @@ namespace ChessForge
                 randomLine.IsEnabled = TrainingSession.HasRandomLines();
                 randomLine.Header = Properties.Resources.TrainRandomLine;
             }
+        }
+
+        /// <summary>
+        /// Determines whether there is a next or previous training line.
+        /// Returns also the text of the move to be displayed in the menu item.
+        /// </summary>
+        /// <param name="nextPreviousLine"></param>
+        /// <param name="menuText"></param>
+        /// <returns></returns>
+        public static bool GetTrainingLineMenuItemStatus(bool nextPreviousLine, out string menuText)
+        {
+            TreeNode junctionNode = TrainingSession.FindTrainingLineJunctionNode(nextPreviousLine);
+            menuText = MainWin.UiTrainingView?.BuildMoveTextForMenu(junctionNode);
+
+            return junctionNode != null;
         }
 
         /// <summary>
