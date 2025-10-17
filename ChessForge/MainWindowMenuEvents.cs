@@ -2467,15 +2467,19 @@ namespace ChessForge
                 if (index >= 0)
                 {
                     VariationTree tree = chapter.Exercises[index].Tree;
+
+                    // preserve current ShowTreeLines setting
+                    bool showLines = tree.ShowTreeLines;
+
                     PositionSetupDialog dlg = new PositionSetupDialog(tree);
                     GuiUtilities.PositionDialog(dlg, this, 100);
                     dlg.ShowDialog();
                     if (dlg.ExitOK)
                     {
                         chapter.Exercises[index].Tree = dlg.FixedTree;
-                        //chapter.SetActiveVariationTree(GameData.ContentType.EXERCISE, index);
-                        //_exerciseTreeView.BuildFlowDocumentForVariationTree(false);
-                        SelectExercise(index, false);
+
+                        // restore ShowTreeLines setting
+                        SelectExercise(index, false, showLines);
                         AppState.IsDirty = true;
                     }
                 }
