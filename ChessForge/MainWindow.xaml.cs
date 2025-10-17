@@ -1079,7 +1079,7 @@ namespace ChessForge
         /// at the passed index.
         /// </summary>
         /// <param name="exerciseIndex"></param>
-        public void SelectExercise(int exerciseIndex, bool setFocus)
+        public void SelectExercise(int exerciseIndex, bool setFocus, bool forceShowSolution = false)
         {
             try
             {
@@ -1114,11 +1114,16 @@ namespace ChessForge
                     }
                     MainChessBoard.FlipBoard(orient);
 
+                    if (forceShowSolution)
+                    {
+                        ActiveVariationTree.ShowTreeLines = true;
+                    }
                     SetupGuiForActiveExercise(exerciseIndex, setFocus);
                     if (setFocus && WorkbookManager.SessionWorkbook != null)
                     {
                         WorkbookLocationNavigator.SaveNewLocation(activeChapter, GameData.ContentType.EXERCISE, exerciseIndex);
                     }
+
                 }
                 else
                 {
