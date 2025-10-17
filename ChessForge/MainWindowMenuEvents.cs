@@ -2796,7 +2796,7 @@ namespace ChessForge
         private void UiMnExerciseViewConfig_Click(object sender, RoutedEventArgs e)
         {
             ChapterUtils.InvokeExerciseViewConfigDialog(AppState.ActiveChapter);
-            UiMnExerciseViewConfig.IsChecked = AppState.ActiveChapter != null && AppState.ActiveChapter.ShowSolutionsOnOpen;
+            //UiMnExerciseViewConfig.IsChecked = AppState.ActiveChapter != null && AppState.ActiveChapter.ShowSolutionsOnOpen;
         }
 
         /// <summary>
