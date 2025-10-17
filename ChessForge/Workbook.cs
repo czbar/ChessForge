@@ -280,7 +280,6 @@ namespace ChessForge
                             break;
                         case GameData.ContentType.EXERCISE:
                             chapter.Exercises.Add(article);
-                            article.ShowSolutionByDefault = chapter.ShowSolutionsOnOpen;
                             break;
                     }
 

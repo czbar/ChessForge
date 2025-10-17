@@ -1099,7 +1099,6 @@ namespace ChessForge
                         exercise.Tree.ShowTreeLines = activeChapter.ShowSolutionsOnOpen;
                         if (activeChapter.ShowSolutionsOnOpen)
                         {
-                            exercise.ShowSolutionByDefault = true;
                             exercise.Tree.CurrentSolvingMode = VariationTree.SolvingMode.EDITING;
                         }
                     }

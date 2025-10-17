@@ -135,7 +135,6 @@ namespace ChessForge
                         if (chapter != null && chapter.ShowSolutionsOnOpen)
                         {
                             article.Tree.ShowTreeLines = true;
-                            article.ShowSolutionByDefault = true;
                             article.Tree.CurrentSolvingMode = VariationTree.SolvingMode.EDITING;
                         }
                     }

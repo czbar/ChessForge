@@ -33,12 +33,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Applies to Exercises only.
-        /// Determines whether to show or hide the solution by default.
-        /// </summary>
-        public bool ShowSolutionByDefault;
-
-        /// <summary>
         /// True if the article has been fully created from it PGN
         /// </summary>
         public bool IsReady;

@@ -3843,7 +3843,6 @@ namespace ChessForge
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
 
                 exercise = WorkbookManager.SessionWorkbook.ActiveChapter.AddExercise(tree);
-                exercise.ShowSolutionByDefault = chapter.ShowSolutionsOnOpen;
                 exercise.Tree.ShowTreeLines = chapter.ShowSolutionsOnOpen;
 
                 chapter.ActiveExerciseIndex = WorkbookManager.SessionWorkbook.ActiveChapter.GetExerciseCount() - 1;
