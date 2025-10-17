@@ -118,7 +118,14 @@ namespace ChessForge
                     }
                 }
 
-                AppState.IsDirty = true;
+                // Mark the application state as dirty
+                // if we are NOT in training mode or, if we are, the training mode is not ENGINE_GAME
+                // and engine evalution is ON.
+                if (!TrainingSession.IsTrainingInProgress ||
+                    (LearningMode.CurrentMode != LearningMode.Mode.ENGINE_GAME && (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS || EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)))
+                {
+                    AppState.IsDirty = true;
+                }
             }
         }
 
