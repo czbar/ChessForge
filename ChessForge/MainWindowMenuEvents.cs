@@ -1151,7 +1151,9 @@ namespace ChessForge
         {
             bool? save = false;
 
-            if (!TrainingSession.IsTrainingInProgress && EngineGame.ActiveTabOnStart == TabViewType.MODEL_GAME)
+            if (!TrainingSession.IsTrainingInProgress 
+                && (EngineGame.ActiveTabOnStart == TabViewType.MODEL_GAME || EngineGame.ActiveTabOnStart == TabViewType.STUDY)
+                && EngineGame.HasNewMoves())
             {
                 MessageBoxResult res = MessageBox.Show(Properties.Resources.EngGameSave,
                     Properties.Resources.EngineGame
