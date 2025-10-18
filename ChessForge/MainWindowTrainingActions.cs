@@ -107,7 +107,7 @@ namespace ChessForge
                     SetAppInTrainingMode(ndStartView, nd.ColorToMove, false);
                     UiTrainingSessionBox.Visibility = Visibility.Visible;
 
-                    if (fromStartingPosition)
+                    if (fromStartingPosition && !TrainingSession.IsRandomLinesMode)
                     {
                         List<TreeNode> lstLine = new List<TreeNode>
                         {
