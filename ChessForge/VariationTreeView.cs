@@ -1024,7 +1024,7 @@ namespace ChessForge
         {
             if (_selectedRun != null && (TextUtils.GetIdFromPrefixedString(_selectedRun.Name) != 0))
             {
-                _selectedRun?.BringIntoView();
+                BringRunIntoView(_selectedRun);
             }
         }
 

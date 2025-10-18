@@ -314,7 +314,7 @@ namespace ChessForge
 
                         if (nodeId != 0)
                         {
-                            _selectedRun.BringIntoView();
+                            PulseManager.BringSelectedRunIntoView();
                         }
                     }
                 }
