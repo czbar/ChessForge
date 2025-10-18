@@ -89,7 +89,9 @@ namespace ChessForge
 
             UiLblVersion.Content = Properties.Resources.Version +  ": " + _workbook.Version;
             UiLblVersion.ToolTip = Properties.Resources.TooltipWorkbookVersion;
-            
+
+            UiTbTitle.Focus();
+            UiTbTitle.SelectAll();
         }
 
         /// <summary>
