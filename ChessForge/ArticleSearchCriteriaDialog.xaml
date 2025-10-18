@@ -47,7 +47,8 @@
                 <CheckBox x:Name="UiCbEmptyYear" TabIndex="14"  Content="{x:Static p:Resources.IncludeYearUnspecified}" HorizontalAlignment="Left" Margin="20,37,0,0" />
             </Canvas>
         </GroupBox>
-        <Button x:Name="UiBtnOk" IsDefault="True" TabIndex="15" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="-120,260,0,0" VerticalAlignment="Top" Width="80" Click="UiBtnOk_Click"/>
-        <Button x:Name="UiBtnCancel" IsCancel="True" TabIndex="16" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="120,260,0,0" VerticalAlignment="Top" Width="80"/>
+        <Button x:Name="UiBtnOk" IsDefault="True" TabIndex="15" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="-200,260,0,0" VerticalAlignment="Top" Width="80" Click="UiBtnOk_Click"/>
+        <Button x:Name="UiBtnCancel" IsCancel="True" TabIndex="16" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="0,260,0,0" VerticalAlignment="Top" Width="80"/>
+        <Button x:Name="UiBtnHelp" TabIndex="15" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Center" Margin="200,260,0,0" VerticalAlignment="Top" Width="80" Click="UiBtnHelp_Click"/>
     </Grid>
 </Window>

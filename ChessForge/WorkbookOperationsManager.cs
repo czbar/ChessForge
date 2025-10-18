@@ -125,6 +125,13 @@ namespace ChessForge
                             WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
                         }
                         break;
+                    case WorkbookOperationType.SORT_GAMES:
+                        WorkbookManager.SessionWorkbook.UndoSortGames(op.OpData_1);
+                        if (op.Chapter != null)
+                        {
+                            WorkbookManager.SessionWorkbook.ActiveChapter = op.Chapter;
+                        }
+                        break;
                     case WorkbookOperationType.CREATE_CHAPTER:
                         if (WorkbookManager.SessionWorkbook.GetChapterCount() > 1)
                         {

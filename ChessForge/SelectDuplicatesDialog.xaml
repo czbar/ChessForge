@@ -32,9 +32,9 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Delete}" HorizontalAlignment="Center" Margin="-220,0,0,40" Width="80" Height="20" VerticalAlignment="Bottom" Click="UiBtnOk_Click" />
-        <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="0,0,0,40" Width="80" Height="20" VerticalAlignment="Bottom" Click="UiBtnCancel_Click" />
-        <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Center" Margin="220,0,0,40" Width="80" Height="20" VerticalAlignment="Bottom" Click="UiBtnHelp_Click" />
+        <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Delete}" HorizontalAlignment="Center" Margin="-220,0,0,30" Width="80" Height="20" VerticalAlignment="Bottom" Click="UiBtnOk_Click" />
+        <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="0,0,0,30" Width="80" Height="20" VerticalAlignment="Bottom" Click="UiBtnCancel_Click" />
+        <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Center" Margin="220,0,0,30" Width="80" Height="20" VerticalAlignment="Bottom" Click="UiBtnHelp_Click" />
         <Label x:Name="UiLblInstruction" Content="{x:Static p:Resources.SelectArticleDuplicatesToDelete}" HorizontalAlignment="Left" Margin="292,10,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

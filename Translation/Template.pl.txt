@@ -778,6 +778,18 @@ WorkbookStats=Statystyki podręcznika
 #english: Training=Training
 Training=Trening
 
+#description: Training from current positon
+#english: TrainFromCurrentPosition=From Current Position
+TrainFromCurrentPosition=Od Bieżącej Pozycji
+
+#description: Training from starting position
+#english: TrainFromStartingPosition=From Starting Position
+TrainFromStartingPosition=Od Pozycji Początkowej
+
+#description: Training on random lines
+#english: TrainRandomLines=Random Lines
+TrainRandomLines=Losowe Warianty
+
 #description: Start a new training session
 #english: StartNewSession=Start New Session
 StartNewSession=Zacznij nową sesję
@@ -793,6 +805,10 @@ TrainNextLine=Trenuj następny wariant
 #description: Move training to the previous line
 #english: TrainPreviousLine=Previous Training Line
 TrainPreviousLine=Trenuj poprzedni wariant
+
+#description: Move training to a random line
+#english: TrainRandomLine=Random Training Line
+TrainRandomLine=Trenuj losowy wariant
 
 #description: Exit the Training Session
 #english: ExitTraining=Exit Training
@@ -2231,7 +2247,7 @@ BtnDontSaveSession=Nie Zapisuj tej Sesji
 BtnMergeSession=Dodaj Ruchy z tej Sesji do Źródła
 
 #description: Button Merge session to source 
-#english: BtnCreateGame=Create Game From Session's Last Line
+#english: BtnCreateGame=Create Game from Session's Last Line
 BtnCreateGame=Utwórz Partię z Ostatniej Gry w tej Sesji
 
 #
@@ -2313,8 +2329,8 @@ TrnPlayMoveInstead=Graj $0 zamiast Twojego ruchu
 ### Training from Study
 
 #description: Response 
-#english: TrnStudyResponse=Workbook response
-TrnStudyResponse=Odpowiedź z Podręcznika
+#english: TrnStudyResponse=Workbook move
+TrnStudyResponse=Ruch z Podręcznika
 
 #description: Not in the source 
 #english: TrnStudyMoveNotInSource=This is not in the Workbook
@@ -2332,8 +2348,8 @@ TrnStudySourceMoves=Ruchy z Podręcznika to
 ### Training from Game
 
 #description: Response 
-#english: TrnGameResponse=Response from the Game
-TrnGameResponse=Odpowiedź z Partii
+#english: TrnGameResponse=Game move
+TrnGameResponse=Ruch z Partii
 
 #description: Not in the source 
 #english: TrnGameMoveNotInSource=This is not in the Game
@@ -2351,8 +2367,8 @@ TrnGameSourceMoves=Ruchy w Partii to
 ### Training from Exercise
 
 #description: Response 
-#english: TrnExerciseResponse=Response from the Exercise
-TrnExerciseResponse=Odpowiedź z Ćwiczenia
+#english: TrnExerciseResponse=Exercise move
+TrnExerciseResponse=Ruch z Ćwiczenia
 
 #description: Not in the source 
 #english: TrnExerciseMoveNotInSource=This is not in the Exercise
@@ -2406,6 +2422,30 @@ TrnUserPlaysBlack=Grasz czarnymi, a wirtualny trener gra białymi.
 #description: Click move instruction
 #english: TrnClickMoveBelow=Click any move below to restart training from it.  
 TrnClickMoveBelow=Kliknij na dowolny ruch poniżej aby cofnąć trening do niego.
+
+#description: Change line instruction
+#english: TrnChangeLineInfo=Click below to change the training line:  
+TrnChangeLineInfo=Kliknij poniżej by zmienić wariant treningowy:  
+
+#description: Next line link
+#english: TrnNextLine=Next
+TrnNextLine=Następny
+
+#description: Previous line link
+#english: TrnPreviousLine=Previous
+TrnPreviousLine=Poprzedni
+
+#description: Random line link
+#english: TrnRandomLine=Random
+TrnRandomLine=Losowy
+
+#description: Move to next random line Change line instruction
+#english: TrnSelectNextRandomLine=Click to go to
+TrnSelectNextRandomLine=Kliknij by wybrać
+
+#description: Next Random line link
+#english: TrnNextRandomLine=Next Random Line
+TrnNextRandomLine=następny losowy wariant
 
 #description: Right click move instruction
 #english: TrnRightClickMove=Right click to open the context menu.  
@@ -2618,7 +2658,7 @@ DuplicateAsVariation=Duplikuj ruch jako wariant
 DeleteMovesFromHere=Usuń zaznaczony ruch i wszystkie dalsze posunięcia
 
 #description: Create a new chpater from the selected line
-#english: CreateNewChapterFromLine=Create New Chapter From Line
+#english: CreateNewChapterFromLine=Create New Chapter from Line
 CreateNewChapterFromLine=Utwórz Nowy Rozdział z Wariantu
 
 #description: Bookmark the current position and position for all alternative moves
@@ -3627,20 +3667,20 @@ CopyGamesNoMerge=Skopiuj Partie do Sekcji Partii i zostaw Teorię pustą
 CreateChapterPerGame=Utwórz Rozdział do Każdej Partii
 
 #description: Generate repertoire chapters
-#english: DwnLdCreateRepertoireChapter=Create Repertoire Chapters
-DwnLdCreateRepertoireChapter=Utwórz rozdziały repertuarowe
+#english: DwnLdCreateRepertoireChapter=Create White and Black Repertoire Chapters
+DwnLdCreateRepertoireChapter=Utwórz rozdziały repertuarowe dla białych i czarnych
 
 #description: Move number aftre which to trim the study tree
-#english: TrimStudyTree=Trim after Move
-TrimStudyTree=Do ruchu
+#english: TrimStudyTree=Trim Study after Move
+TrimStudyTree=Z teorią do ruchu
 
 #description: Append games to the current chapter
 #english: DwnLdAppendToCurrentChapter=Append Games to the current Chapter
 DwnLdAppendToCurrentChapter=Dodaj partie do obecnego rozdziału
 
 #description: Create a new chapter for the downloaded games
-#english: DwnLdCreateNewChapter=Save Games to a new Chapter
-DwnLdCreateNewChapter=Zapisz partie w nowym rozdziale
+#english: DwnLdCreateNewChapter=Create a new Chapter
+DwnLdCreateNewChapter=Utwórz nowy rozdział
 
 #description: Create a new workbook for the downloaded games
 #english: DwnLdCreateNewWorkbook=Save to a new Workbook
@@ -4326,6 +4366,10 @@ OpDeleteEngineEvals=Usuń Oceny Silnika
 #description: Operation
 #english: OpAssignECOs=Assign ECO Codes
 OpAssignECOs=Przypisz Kody ECO
+
+#description: Operation
+#english: OpSortGames=Sort Games
+OpSortGames=Sortuj Partie
 
 
 

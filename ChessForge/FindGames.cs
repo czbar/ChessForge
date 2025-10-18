@@ -132,7 +132,7 @@ namespace ChessForge
                         {
                             if (dlgEx.Request == FoundArticlesDialog.Action.CopyOrMoveArticles)
                             {
-                                ChapterUtils.RequestCopyMoveArticles(null, false, lstGames, ArticlesAction.COPY_OR_MOVE, true);
+                                ChapterUtils.RequestCopyMoveArticles(null, false, lstGames, ArticlesAction.COPY_OR_MOVE_FOUND_GAMES, true);
                             }
                             else if (dlgEx.ArticleIndexId >= 0 && dlgEx.ArticleIndexId < lstGames.Count)
                             {

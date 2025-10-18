@@ -778,6 +778,18 @@ WorkbookStats=
 #english: Training=Training
 Training=
 
+#description: Training from current positon
+#english: TrainFromCurrentPosition=From Current Position
+TrainFromCurrentPosition=
+
+#description: Training from starting position
+#english: TrainFromStartingPosition=From Starting Position
+TrainFromStartingPosition=
+
+#description: Training on random lines
+#english: TrainRandomLines=Random Lines
+TrainRandomLines=
+
 #description: Start a new training session
 #english: StartNewSession=Start New Session
 StartNewSession=
@@ -793,6 +805,10 @@ TrainNextLine=
 #description: Move training to the previous line
 #english: TrainPreviousLine=Previous Training Line
 TrainPreviousLine=
+
+#description: Move training to a random line
+#english: TrainRandomLine=Random Training Line
+TrainRandomLine=
 
 #description: Exit the Training Session
 #english: ExitTraining=Exit Training
@@ -2231,7 +2247,7 @@ BtnDontSaveSession=
 BtnMergeSession=
 
 #description: Button Merge session to source 
-#english: BtnCreateGame=Create Game From Session's Last Line
+#english: BtnCreateGame=Create Game from Session's Last Line
 BtnCreateGame=
 
 #
@@ -2313,7 +2329,7 @@ TrnPlayMoveInstead=
 ### Training from Study
 
 #description: Response 
-#english: TrnStudyResponse=Workbook response
+#english: TrnStudyResponse=Workbook move
 TrnStudyResponse=
 
 #description: Not in the source 
@@ -2332,7 +2348,7 @@ TrnStudySourceMoves=
 ### Training from Game
 
 #description: Response 
-#english: TrnGameResponse=Response from the Game
+#english: TrnGameResponse=Game move
 TrnGameResponse=
 
 #description: Not in the source 
@@ -2351,7 +2367,7 @@ TrnGameSourceMoves=
 ### Training from Exercise
 
 #description: Response 
-#english: TrnExerciseResponse=Response from the Exercise
+#english: TrnExerciseResponse=Exercise move
 TrnExerciseResponse=
 
 #description: Not in the source 
@@ -2406,6 +2422,30 @@ TrnUserPlaysBlack=
 #description: Click move instruction
 #english: TrnClickMoveBelow=Click any move below to restart training from it.  
 TrnClickMoveBelow=
+
+#description: Change line instruction
+#english: TrnChangeLineInfo=Click below to change the training line:  
+TrnChangeLineInfo=
+
+#description: Next line link
+#english: TrnNextLine=Next
+TrnNextLine=
+
+#description: Previous line link
+#english: TrnPreviousLine=Previous
+TrnPreviousLine=
+
+#description: Random line link
+#english: TrnRandomLine=Random
+TrnRandomLine=
+
+#description: Move to next random line Change line instruction
+#english: TrnSelectNextRandomLine=Click to go to
+TrnSelectNextRandomLine=
+
+#description: Next Random line link
+#english: TrnNextRandomLine=Next Random Line
+TrnNextRandomLine=
 
 #description: Right click move instruction
 #english: TrnRightClickMove=Right click to open the context menu.  
@@ -2618,7 +2658,7 @@ DuplicateAsVariation=
 DeleteMovesFromHere=
 
 #description: Create a new chpater from the selected line
-#english: CreateNewChapterFromLine=Create New Chapter From Line
+#english: CreateNewChapterFromLine=Create New Chapter from Line
 CreateNewChapterFromLine=
 
 #description: Bookmark the current position and position for all alternative moves
@@ -3627,11 +3667,11 @@ CopyGamesNoMerge=
 CreateChapterPerGame=
 
 #description: Generate repertoire chapters
-#english: DwnLdCreateRepertoireChapter=Create Repertoire Chapters
+#english: DwnLdCreateRepertoireChapter=Create White and Black Repertoire Chapters
 DwnLdCreateRepertoireChapter=
 
 #description: Move number aftre which to trim the study tree
-#english: TrimStudyTree=Trim after Move
+#english: TrimStudyTree=Trim Study after Move
 TrimStudyTree=
 
 #description: Append games to the current chapter
@@ -3639,7 +3679,7 @@ TrimStudyTree=
 DwnLdAppendToCurrentChapter=
 
 #description: Create a new chapter for the downloaded games
-#english: DwnLdCreateNewChapter=Save Games to a new Chapter
+#english: DwnLdCreateNewChapter=Create a new Chapter
 DwnLdCreateNewChapter=
 
 #description: Create a new workbook for the downloaded games
@@ -4326,6 +4366,10 @@ OpDeleteEngineEvals=
 #description: Operation
 #english: OpAssignECOs=Assign ECO Codes
 OpAssignECOs=
+
+#description: Operation
+#english: OpSortGames=Sort Games
+OpSortGames=
 
 
 

@@ -187,7 +187,7 @@ namespace ChessForge
                     bool includeNo = isFirstInPara
                                      || !string.IsNullOrWhiteSpace(nd.CommentBeforeMove)
                                      || (nd.IsDiagram && nd.IsDiagramBeforeMove)
-                                     || (nd.Parent != null && (!string.IsNullOrEmpty(nd.Parent.Comment) || nd != nd.Parent.Children[0]));
+                                     || (nd.Parent != null && (!string.IsNullOrEmpty(nd.Parent.Comment) || nd != nd.Parent.Children[0] || nd.Parent.NodeId == 0));
                     UpdateRunText(rMove, nd, includeNo);
                 }
             }

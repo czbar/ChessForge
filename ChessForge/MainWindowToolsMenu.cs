@@ -110,7 +110,7 @@ namespace ChessForge
                     ObservableCollection<ArticleListItem> gameList = WorkbookManager.SessionWorkbook.GenerateArticleList(null, GameData.ContentType.MODEL_GAME);
 
                     string title = Properties.Resources.EvaluateGames;
-                    SelectArticlesDialog dlg = new SelectArticlesDialog(null, true, title, ref gameList, false, ArticlesAction.NONE, GameData.ContentType.MODEL_GAME);
+                    SelectArticlesDialog dlg = new SelectArticlesDialog(null, true, title, ref gameList, false, ArticlesAction.EVALUATE, GameData.ContentType.MODEL_GAME);
                     GuiUtilities.PositionDialog(dlg, this, 100);
                     dlg.SetupGuiForGamesEval();
 
@@ -144,7 +144,7 @@ namespace ChessForge
                         ObservableCollection<ArticleListItem> gamesToEvaluate = new ObservableCollection<ArticleListItem>();
                         foreach (ArticleListItem item in gameList)
                         {
-                            if (item.ContentType == GameData.ContentType.MODEL_GAME && item.IsSelected)
+                            if (item.ContentType == GameData.ContentType.MODEL_GAME && item.IsSelected == true)
                             {
                                 gamesToEvaluate.Add(item);
                             }

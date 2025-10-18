@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Timers;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ChessPosition;
 using GameTree;
-using ChessPosition;
+using System;
+using System.Timers;
 using System.Windows;
 
 namespace ChessForge
@@ -135,6 +132,29 @@ namespace ChessForge
 
                 Line.CopyNodeListToTree();
             }
+        }
+
+        /// <summary>
+        /// Determines if there are new moves in the current game.
+        /// Does not compare the Node objects directly as we may have a copy
+        /// of the original Node in the GameLine.
+        /// </summary>
+        /// <returns></returns>
+        public static bool HasNewMoves()
+        {
+            bool hasNewNodes = false;
+
+            try
+            {
+                TreeNode lastNode = GetLastGameNode();
+                hasNewNodes = lastNode.NodeId != GameStartPosition.NodeId;
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message(1, "EngineGame.HasNewMoves() Exception: " + ex.Message);
+            }
+
+            return hasNewNodes;
         }
 
         /// <summary>

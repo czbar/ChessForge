@@ -90,7 +90,7 @@ namespace ChessForge
                         {
                             game.Article.Tree.BuildLines();
                         }
-                        if (game.IsSelected)
+                        if (game.IsSelected == true)
                         {
                             int plyCount = CalculatePlyCount(game);
                             _plyCountToEvaluate += plyCount;
@@ -254,7 +254,7 @@ namespace ChessForge
         {
             for (int i = startIndex + 1; i < _games.Count; i++)
             {
-                if (_games[i].IsSelected)
+                if (_games[i].IsSelected == true)
                 {
                     return i;
                 }

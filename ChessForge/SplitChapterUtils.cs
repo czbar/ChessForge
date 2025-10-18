@@ -55,16 +55,16 @@ namespace ChessForge
 
                     // replace the chapter at index with the first one from the list
                     AppState.Workbook.Chapters[index] = createdChapters[0];
+                    AppState.Workbook.SelectActiveChapter(index);
 
                     for (int i = 1; i < createdChapters.Count; i++)
                     {
                         AppState.Workbook.Chapters.Insert(index + i, createdChapters[i]);
                     }
 
-                    AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgNumberOfChaptersCreated + ": " + createdChapters.ToString(), CommentBox.HintType.INFO);
+                    AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgNumberOfChaptersCreated + ": " + createdChapters.Count.ToString(), CommentBox.HintType.INFO);
 
-                    AppState.MainWin.ExpandCollapseChaptersView(false, false);
-                    AppState.SetupGuiForCurrentStates();
+                    ChapterUtils.GotoChaptersView(AppState.Workbook.Chapters[index], true);
                     AppState.IsDirty = true;
                 }
             }
@@ -364,7 +364,7 @@ namespace ChessForge
                 // make sense to sort games in all new chapters by ECO, e.g. if we split by E2* we want E20 before E21 etc.
                 foreach (Chapter ch in resChapters)
                 {
-                    ChapterUtils.SortGames(ch, GameSortCriterion.SortItem.ECO, GameSortCriterion.SortItem.ASCENDING, false);
+                    SortArticlesUtils.SortGames(ch, GameSortCriterion.SortItem.ECO, GameSortCriterion.SortItem.ASCENDING, false);
                 }
             }
             catch (Exception ex)
@@ -415,7 +415,7 @@ namespace ChessForge
             ObservableCollection<ArticleListItem> retList = new ObservableCollection<ArticleListItem>();
             foreach (ArticleListItem item in items)
             {
-                if (item.Article != null && item.IsSelected)
+                if (item.Article != null && item.IsSelected == true)
                 {
                     retList.Add(item);
                 }

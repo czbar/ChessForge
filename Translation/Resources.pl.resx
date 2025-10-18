@@ -657,6 +657,15 @@
   <data name="Training" xml:space="preserve">
     <value>Trening</value>
   </data>
+  <data name="TrainFromCurrentPosition" xml:space="preserve">
+    <value>Od Bieżącej Pozycji</value>
+  </data>
+  <data name="TrainFromStartingPosition" xml:space="preserve">
+    <value>Od Pozycji Początkowej</value>
+  </data>
+  <data name="TrainRandomLines" xml:space="preserve">
+    <value>Losowe Warianty</value>
+  </data>
   <data name="StartNewSession" xml:space="preserve">
     <value>Zacznij nową sesję</value>
   </data>
@@ -668,6 +677,9 @@
   </data>
   <data name="TrainPreviousLine" xml:space="preserve">
     <value>Trenuj poprzedni wariant</value>
+  </data>
+  <data name="TrainRandomLine" xml:space="preserve">
+    <value>Trenuj losowy wariant</value>
   </data>
   <data name="ExitTraining" xml:space="preserve">
     <value>Zakończ trening</value>
@@ -1610,7 +1622,7 @@ UWAGA: Oceny nie są uaktualniane (zezwól przez Ctrl+K).</value>
     <value>Graj $0 zamiast Twojego ruchu</value>
   </data>
   <data name="TrnStudyResponse" xml:space="preserve">
-    <value>Odpowiedź z Podręcznika</value>
+    <value>Ruch z Podręcznika</value>
   </data>
   <data name="TrnStudyMoveNotInSource" xml:space="preserve">
     <value>Tego ruchu nie ma w Podręczniku</value>
@@ -1622,7 +1634,7 @@ UWAGA: Oceny nie są uaktualniane (zezwól przez Ctrl+K).</value>
     <value>Ruchy z Podręcznika to</value>
   </data>
   <data name="TrnGameResponse" xml:space="preserve">
-    <value>Odpowiedź z Partii</value>
+    <value>Ruch z Partii</value>
   </data>
   <data name="TrnGameMoveNotInSource" xml:space="preserve">
     <value>Tego ruchu nie ma w Partii</value>
@@ -1634,7 +1646,7 @@ UWAGA: Oceny nie są uaktualniane (zezwól przez Ctrl+K).</value>
     <value>Ruchy w Partii to</value>
   </data>
   <data name="TrnExerciseResponse" xml:space="preserve">
-    <value>Odpowiedź z Ćwiczenia</value>
+    <value>Ruch z Ćwiczenia</value>
   </data>
   <data name="TrnExerciseMoveNotInSource" xml:space="preserve">
     <value>Tego ruchu nie ma w Ćwiczeniu</value>
@@ -1674,6 +1686,24 @@ UWAGA: Oceny nie są uaktualniane (zezwól przez Ctrl+K).</value>
   </data>
   <data name="TrnClickMoveBelow" xml:space="preserve">
     <value>Kliknij na dowolny ruch poniżej aby cofnąć trening do niego.</value>
+  </data>
+  <data name="TrnChangeLineInfo" xml:space="preserve">
+    <value>Kliknij poniżej by zmienić wariant treningowy:  </value>
+  </data>
+  <data name="TrnNextLine" xml:space="preserve">
+    <value>Następny</value>
+  </data>
+  <data name="TrnPreviousLine" xml:space="preserve">
+    <value>Poprzedni</value>
+  </data>
+  <data name="TrnRandomLine" xml:space="preserve">
+    <value>Losowy</value>
+  </data>
+  <data name="TrnSelectNextRandomLine" xml:space="preserve">
+    <value>Kliknij by wybrać</value>
+  </data>
+  <data name="TrnNextRandomLine" xml:space="preserve">
+    <value>następny losowy wariant</value>
   </data>
   <data name="TrnRightClickMove" xml:space="preserve">
     <value>Prawy przycisk myszki wywoła menu.</value>
@@ -2519,16 +2549,16 @@ UWAGA: Oceny nie są uaktualniane (zezwól przez Ctrl+K).</value>
     <value>Utwórz Rozdział do Każdej Partii</value>
   </data>
   <data name="DwnLdCreateRepertoireChapter" xml:space="preserve">
-    <value>Utwórz rozdziały repertuarowe</value>
+    <value>Utwórz rozdziały repertuarowe dla białych i czarnych</value>
   </data>
   <data name="TrimStudyTree" xml:space="preserve">
-    <value>Do ruchu</value>
+    <value>Z teorią do ruchu</value>
   </data>
   <data name="DwnLdAppendToCurrentChapter" xml:space="preserve">
     <value>Dodaj partie do obecnego rozdziału</value>
   </data>
   <data name="DwnLdCreateNewChapter" xml:space="preserve">
-    <value>Zapisz partie w nowym rozdziale</value>
+    <value>Utwórz nowy rozdział</value>
   </data>
   <data name="DwnLdCreateNewWorkbook" xml:space="preserve">
     <value>Zapisz w nowym podręczniku</value>
@@ -2997,6 +3027,9 @@ UWAGA: Oceny nie są uaktualniane (zezwól przez Ctrl+K).</value>
   </data>
   <data name="OpAssignECOs" xml:space="preserve">
     <value>Przypisz Kody ECO</value>
+  </data>
+  <data name="OpSortGames" xml:space="preserve">
+    <value>Sortuj Partie</value>
   </data>
   <data name="PgnMissingMoveAfter" xml:space="preserve">
     <value>Brakuje ruchu po</value>

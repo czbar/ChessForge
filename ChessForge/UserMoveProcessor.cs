@@ -285,7 +285,7 @@ namespace ChessForge
 
                 // here we need to disinguish between a "regular" user move (in the "else" branch below)
                 // and the case we made a manual move to replace the engine's move
-                if (TrainingSession.IsTrainingInProgress && TrainingSession.TrainingSide == nd.ColorToMove)
+                if (TrainingSession.IsTrainingInProgress && TrainingSession.ActualTrainingSide == nd.ColorToMove)
                 {
                     // the user's move was replacing the existing engine's move so we stay with the user on the move.
                     EngineGame.SwitchToAwaitUserMove(nd);

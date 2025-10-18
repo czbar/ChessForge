@@ -1,12 +1,6 @@
 ﻿using ChessPosition;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 
 namespace ChessForge
 {
@@ -78,7 +72,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Set-Game-Thumbnails");
+            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Thumbnails#assigning-thumbnails-to-multiple-games");
         }
 
         /// <summary>

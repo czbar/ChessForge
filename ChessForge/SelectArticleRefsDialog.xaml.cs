@@ -86,7 +86,7 @@ namespace ChessForge
 
             foreach (ArticleListItem item in _articleList)
             {
-                if (item.Article != null && item.IsSelected)
+                if (item.Article != null && item.IsSelected == true)
                 {
                     GameData.ContentType ctype = item.Article.Tree.Header.GetContentType(out _);
                     if (ctype == GameData.ContentType.MODEL_GAME || ctype == GameData.ContentType.EXERCISE)

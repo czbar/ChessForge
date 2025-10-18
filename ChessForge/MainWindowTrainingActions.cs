@@ -13,32 +13,118 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void UiMnStartTrainingHere_Click(object sender, RoutedEventArgs e)
+        public void UiMnStartTrainingHere(object sender, RoutedEventArgs e)
         {
-            if (ActiveVariationTree == null || !AppState.IsTreeViewTabActive())
-            {
-                return;
-            }
+            TrainingSession.IsRandomLinesMode = false;
+            StartTrainingSession(false);
+        }
 
-            // do some housekeeping just in case
-            if (AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
-            {
-                StopEngineGame();
-            }
-            else if (EvaluationManager.IsRunning)
-            {
-                EngineMessageProcessor.StopEngineEvaluation();
-            }
+        /// <summary>
+        /// A request from the menu to start training at the starting position.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void UiMnStartTrainingFromStartingPosition(object sender, RoutedEventArgs e)
+        {
+            TrainingSession.IsRandomLinesMode = false;
+            StartTrainingSession(true);
+        }
 
-            TreeNode nd = ActiveLine.GetSelectedTreeNode();
-            if (nd != null)
+        /// <summary>
+        /// A request from the menu to start training with random line.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void UiMnStartTrainingRandomLines(object sender, RoutedEventArgs e)
+        {
+            TrainingSession.IsRandomLinesMode = true;
+            StartTrainingSession(true);
+        }
+
+        /// <summary>
+        /// Starts a training session from the specified sequence type.
+        /// </summary>
+        /// <param name="sequenceType"></param>
+        public void StartTrainingSession(bool fromStartingPosition)
+        {
+            try
             {
-                SetAppInTrainingMode(nd, false);
-                UiTrainingSessionBox.Visibility = Visibility.Visible;
+                if (ActiveVariationTree == null || !AppState.IsTreeViewTabActive())
+                {
+                    return;
+                }
+
+                // do some housekeeping just in case
+                if (AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
+                {
+                    StopEngineGame();
+                }
+                else if (EvaluationManager.IsRunning)
+                {
+                    EngineMessageProcessor.StopEngineEvaluation();
+                }
+
+                TreeNode nd = null;
+                TreeNode ndStartView = null;
+
+                VariationTree variationTree = ActiveVariationTree;
+
+                if (!fromStartingPosition)
+                {
+                    nd = ActiveLine.GetSelectedTreeNode();
+                }
+                else
+                {
+
+                    // in Exercise the color to move in the start node may not be White, so check it
+                    PieceColor startNodeColorToMove = variationTree.Nodes[0].ColorToMove;
+
+                    PieceColor trainingSide = WorkbookManager.SessionWorkbook.TrainingSideConfig;
+                    if (trainingSide == startNodeColorToMove)
+                    {
+                        nd = variationTree.Nodes[0];
+                    }
+                    else
+                    {
+                        if (variationTree.Nodes[0].Children.Count > 0)
+                        {
+                            nd = variationTree.Nodes[0].Children[0];
+                            ndStartView = variationTree.Nodes[0];
+                        }
+                        else
+                        {
+                            nd = null;
+                        }
+                    }
+                }
+
+                if (nd != null)
+                {
+                    if (ndStartView == null)
+                    {
+                        ndStartView = nd;
+                    }
+                    SetAppInTrainingMode(ndStartView, nd.ColorToMove, false);
+                    UiTrainingSessionBox.Visibility = Visibility.Visible;
+
+                    if (fromStartingPosition)
+                    {
+                        List<TreeNode> lstLine = new List<TreeNode>
+                        {
+                            nd
+                        };
+                        UiTrainingView.BuildTrainingLineParas(lstLine);
+                        TrainingSession.SetTrainingSide(nd.ColorToMove);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(Properties.Resources.NoTrainingStartMove, Properties.Resources.Training, MessageBoxButton.OK, MessageBoxImage.Information);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show(Properties.Resources.NoTrainingStartMove, Properties.Resources.Training, MessageBoxButton.OK, MessageBoxImage.Information);
+                AppLog.Message("UiMnStartTrainingHere_Click()", ex);
             }
         }
 
@@ -75,11 +161,11 @@ namespace ChessForge
                     // create the game tree and set its header
                     VariationTree tree = new VariationTree(GameData.ContentType.MODEL_GAME);
                     tree.Nodes = newGameNodes;
-                    GuiUtilities.CreateHeaderForTrainingGame(tree, LearningMode.TrainingSideCurrent);
+                    GuiUtilities.CreateHeaderForTrainingGame(tree, TrainingSession.ActualTrainingSide);
 
                     // remove training moves from source, BEFORE we change ActiveVariation tree
                     AppState.MainWin.ActiveVariationTree.RemoveTrainingMoves();
-                    
+
                     // clear training move flags (otherwise we have a side effect of the program asking whether to save the training line!)
                     tree.ClearTrainingFlags();
 
@@ -114,7 +200,7 @@ namespace ChessForge
         private void UiMnTrainFromBookmark_Click(object sender, RoutedEventArgs e)
         {
             BookmarkManager.SetActiveEntities(false);
-            SetAppInTrainingMode(BookmarkManager.SelectedBookmarkNode, false);
+            SetAppInTrainingMode(BookmarkManager.SelectedBookmarkNode, BookmarkManager.SelectedBookmarkNode.ColorToMove, false);
         }
 
         /// <summary>

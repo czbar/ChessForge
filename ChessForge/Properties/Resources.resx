@@ -657,6 +657,15 @@
   <data name="Training" xml:space="preserve">
     <value>Training</value>
   </data>
+  <data name="TrainFromCurrentPosition" xml:space="preserve">
+    <value>From Current Position</value>
+  </data>
+  <data name="TrainFromStartingPosition" xml:space="preserve">
+    <value>From Starting Position</value>
+  </data>
+  <data name="TrainRandomLines" xml:space="preserve">
+    <value>Random Lines</value>
+  </data>
   <data name="StartNewSession" xml:space="preserve">
     <value>Start New Session</value>
   </data>
@@ -668,6 +677,9 @@
   </data>
   <data name="TrainPreviousLine" xml:space="preserve">
     <value>Previous Training Line</value>
+  </data>
+  <data name="TrainRandomLine" xml:space="preserve">
+    <value>Random Training Line</value>
   </data>
   <data name="ExitTraining" xml:space="preserve">
     <value>Exit Training</value>
@@ -1553,7 +1565,7 @@ NOTE: Evaluations are not being updated (Ctrl+K to allow).</value>
     <value>Merge Session Line to Source</value>
   </data>
   <data name="BtnCreateGame" xml:space="preserve">
-    <value>Create Game From Session's Last Line</value>
+    <value>Create Game from Session's Last Line</value>
   </data>
   <data name="YourMoveWas" xml:space="preserve">
     <value>Your move was</value>
@@ -1610,7 +1622,7 @@ NOTE: Evaluations are not being updated (Ctrl+K to allow).</value>
     <value>Play $0 instead of Your Move</value>
   </data>
   <data name="TrnStudyResponse" xml:space="preserve">
-    <value>Workbook response</value>
+    <value>Workbook move</value>
   </data>
   <data name="TrnStudyMoveNotInSource" xml:space="preserve">
     <value>This is not in the Workbook</value>
@@ -1622,7 +1634,7 @@ NOTE: Evaluations are not being updated (Ctrl+K to allow).</value>
     <value>The Workbook moves are</value>
   </data>
   <data name="TrnGameResponse" xml:space="preserve">
-    <value>Response from the Game</value>
+    <value>Game move</value>
   </data>
   <data name="TrnGameMoveNotInSource" xml:space="preserve">
     <value>This is not in the Game</value>
@@ -1634,7 +1646,7 @@ NOTE: Evaluations are not being updated (Ctrl+K to allow).</value>
     <value>The moves in the Game are</value>
   </data>
   <data name="TrnExerciseResponse" xml:space="preserve">
-    <value>Response from the Exercise</value>
+    <value>Exercise move</value>
   </data>
   <data name="TrnExerciseMoveNotInSource" xml:space="preserve">
     <value>This is not in the Exercise</value>
@@ -1674,6 +1686,24 @@ NOTE: Evaluations are not being updated (Ctrl+K to allow).</value>
   </data>
   <data name="TrnClickMoveBelow" xml:space="preserve">
     <value>Click any move below to restart training from it.  </value>
+  </data>
+  <data name="TrnChangeLineInfo" xml:space="preserve">
+    <value>Click below to change the training line:  </value>
+  </data>
+  <data name="TrnNextLine" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="TrnPreviousLine" xml:space="preserve">
+    <value>Previous</value>
+  </data>
+  <data name="TrnRandomLine" xml:space="preserve">
+    <value>Random</value>
+  </data>
+  <data name="TrnSelectNextRandomLine" xml:space="preserve">
+    <value>Click to go to</value>
+  </data>
+  <data name="TrnNextRandomLine" xml:space="preserve">
+    <value>Next Random Line</value>
   </data>
   <data name="TrnRightClickMove" xml:space="preserve">
     <value>Right click to open the context menu.  </value>
@@ -1820,7 +1850,7 @@ NOTE: Evaluations are not being updated (Ctrl+K to allow).</value>
     <value>Delete the Selected Move and All Moves that Follow</value>
   </data>
   <data name="CreateNewChapterFromLine" xml:space="preserve">
-    <value>Create New Chapter From Line</value>
+    <value>Create New Chapter from Line</value>
   </data>
   <data name="BookmarkAllOptionsHere" xml:space="preserve">
     <value>Bookmark All Options Here</value>
@@ -2520,16 +2550,16 @@ NOTE: Evaluations are not being updated (Ctrl+K to allow).</value>
     <value>Create Chapter per Game</value>
   </data>
   <data name="DwnLdCreateRepertoireChapter" xml:space="preserve">
-    <value>Create Repertoire Chapters</value>
+    <value>Create White and Black Repertoire Chapters</value>
   </data>
   <data name="TrimStudyTree" xml:space="preserve">
-    <value>Trim after Move</value>
+    <value>Trim Study after Move</value>
   </data>
   <data name="DwnLdAppendToCurrentChapter" xml:space="preserve">
     <value>Append Games to the current Chapter</value>
   </data>
   <data name="DwnLdCreateNewChapter" xml:space="preserve">
-    <value>Save Games to a new Chapter</value>
+    <value>Create a new Chapter</value>
   </data>
   <data name="DwnLdCreateNewWorkbook" xml:space="preserve">
     <value>Save to a new Workbook</value>
@@ -2998,6 +3028,9 @@ NOTE: Evaluations are not being updated (Ctrl+K to allow).</value>
   </data>
   <data name="OpAssignECOs" xml:space="preserve">
     <value>Assign ECO Codes</value>
+  </data>
+  <data name="OpSortGames" xml:space="preserve">
+    <value>Sort Games</value>
   </data>
   <data name="PgnMissingMoveAfter" xml:space="preserve">
     <value>Missing move after</value>

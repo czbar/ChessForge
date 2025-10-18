@@ -288,5 +288,26 @@ namespace ChessForge
 
             DialogResult = true;
         }
+
+        /// <summary>
+        /// Links to the relevant Wiki page.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
+        {
+            switch (Action)
+            {
+                case ScopedAction.ASSIGN_ECO:
+                    System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Assigning-ECOs-to-Chapter-Items");
+                    break;
+                case ScopedAction.SAVE_DIAGRAM:
+                    System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Diagrams#save-diagrams-as-pictures");
+                    break;
+                default:
+                    System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/User's-Manual");
+                    break;
+            }
+        }
     }
 }

@@ -1727,10 +1727,9 @@ namespace ChessForge
                 {
                     GuiConfiguration.ConfigureAppBarFontButtons();
 
-                    MainWin.UiMnStartTraining.IsEnabled = IsVariationTreeTabType;
-                    MainWin.UiMnTrainFromBeginning.IsEnabled = false;
-                    MainWin.UiMnTrainNextLine.IsEnabled = false;
-                    MainWin.UiMnTrainPreviousLine.IsEnabled = false;
+                    MainWin.UiMnTrainFromCurrentPosition.IsEnabled = IsVariationTreeTabType;
+                    MainWin.UiMnTrainFromStartingPosition.IsEnabled = IsVariationTreeTabType;
+
                     MainWin.UiMnExitTraining.IsEnabled = false;
 
                     bool engGameEnabled = ActiveVariationTree != null
@@ -1745,6 +1744,8 @@ namespace ChessForge
 
                     MainWin.UiMnFindIdentical.IsEnabled = IsTreeViewTabActive() || ActiveTab == TabViewType.INTRO;
                     MainWin.UiMnciFindIdentical.IsEnabled = IsTreeViewTabActive() || ActiveTab == TabViewType.INTRO;
+                    MainWin.UiMnFindPositions.IsEnabled = IsTreeViewTabActive() || ActiveTab == TabViewType.INTRO;
+                    MainWin.UiMnciFindPositions.IsEnabled = IsTreeViewTabActive() || ActiveTab == TabViewType.INTRO;
 
                     MainWin.UiMnMainImportFromPgn.IsEnabled = AppState.Workbook != null && Workbook.IsReady;
                     MainWin.UiMnCleanLinesAndComments.IsEnabled = WorkbookManager.SessionWorkbook != null;
@@ -1788,10 +1789,10 @@ namespace ChessForge
         {
             MainWin.Dispatcher.Invoke(() =>
             {
-                MainWin.UiMnStartTraining.IsEnabled = false;
-                MainWin.UiMnTrainFromBeginning.IsEnabled = true;
+                MainWin.UiMnTrainFromCurrentPosition.IsEnabled = false;
+                MainWin.UiMnTrainFromStartingPosition.IsEnabled = false;
+
                 MainWin.UiMnExitTraining.IsEnabled = true;
-                ConfigureMenusForTrainingLines(MainWin.UiMnTrainNextLine, MainWin.UiMnTrainPreviousLine);
                 MainWin.UiMnciPlayEngine.IsEnabled = false;
 
                 MainWin.UiMnFindIdentical.IsEnabled = false;
@@ -1809,17 +1810,14 @@ namespace ChessForge
         /// </summary>
         /// <param name="nextLine"></param>
         /// <param name="prevLine"></param>
-        public static void ConfigureMenusForTrainingLines(MenuItem nextLine, MenuItem prevLine)
+        public static void ConfigureMenusForTrainingLines(MenuItem nextLine, MenuItem prevLine, MenuItem randomLine)
         {
-            TreeNode junctionNodeNext = TrainingSession.FindTrainingLineJunctionNode(true);
-            string nextMoveTxt = MainWin.UiTrainingView?.BuildMoveTextForMenu(junctionNodeNext);
-
-            TreeNode junctionNodePrev = TrainingSession.FindTrainingLineJunctionNode(false);
-            string prevMoveTxt = MainWin.UiTrainingView?.BuildMoveTextForMenu(junctionNodePrev);
+            bool enableNextLine = GetTrainingLineMenuItemStatus(true, out string nextMoveTxt);
+            bool enablePrevLine = GetTrainingLineMenuItemStatus(true, out string prevMoveTxt);
 
             if (nextLine != null)
             {
-                nextLine.IsEnabled = junctionNodeNext != null;
+                nextLine.IsEnabled = enableNextLine;
                 nextLine.Header = Properties.Resources.TrainNextLine;
                 if (nextLine.IsEnabled)
                 {
@@ -1829,13 +1827,34 @@ namespace ChessForge
 
             if (prevLine != null)
             {
-                prevLine.IsEnabled = junctionNodePrev != null;
+                prevLine.IsEnabled = enablePrevLine;
                 prevLine.Header = Properties.Resources.TrainPreviousLine;
                 if (prevLine.IsEnabled)
                 {
                     prevLine.Header = Properties.Resources.TrainPreviousLine + "  (" + prevMoveTxt + ")";
                 }
             }
+
+            if (randomLine != null)
+            {
+                randomLine.IsEnabled = TrainingSession.HasRandomLines();
+                randomLine.Header = Properties.Resources.TrainRandomLine;
+            }
+        }
+
+        /// <summary>
+        /// Determines whether there is a next or previous training line.
+        /// Returns also the text of the move to be displayed in the menu item.
+        /// </summary>
+        /// <param name="nextPreviousLine"></param>
+        /// <param name="menuText"></param>
+        /// <returns></returns>
+        public static bool GetTrainingLineMenuItemStatus(bool nextPreviousLine, out string menuText)
+        {
+            TreeNode junctionNode = TrainingSession.FindTrainingLineJunctionNode(nextPreviousLine);
+            menuText = MainWin.UiTrainingView?.BuildMoveTextForMenu(junctionNode);
+
+            return junctionNode != null;
         }
 
         /// <summary>
@@ -1847,11 +1866,10 @@ namespace ChessForge
 
             _mainWin.Dispatcher.Invoke(() =>
             {
-                _mainWin.UiMnStartTraining.IsEnabled = !train;
-                _mainWin.UiMnTrainFromBeginning.IsEnabled = train;
-                _mainWin.UiMnTrainNextLine.IsEnabled = train;
-                _mainWin.UiMnTrainPreviousLine.IsEnabled = train;
-                _mainWin.UiMnExitTraining.IsEnabled = train;
+                MainWin.UiMnTrainFromCurrentPosition.IsEnabled = !train;
+                MainWin.UiMnTrainFromStartingPosition.IsEnabled = !train;
+
+                MainWin.UiMnExitTraining.IsEnabled = train;
 
                 _mainWin.UiMnciPlayEngine.IsEnabled = true;
             });

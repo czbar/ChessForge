@@ -24,7 +24,8 @@
                 <CheckBox x:Name="UiCbExercises" Content="{x:Static p:Resources.Exercises}" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top"/>
             </StackPanel>
         </GroupBox>
-        <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Ok}" IsDefault="True" HorizontalAlignment="Center" Margin="-130,180,0,0" VerticalAlignment="Top" Width="100" Click="UiBtnOk_Click" />
-        <Button x:Name="UiBtnCancel" Content="{x:Static p:Resources.Cancel}" IsCancel="True" HorizontalAlignment="Center" Margin="130,180,0,0" VerticalAlignment="Top" Width="100"/>
+        <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Ok}" IsDefault="True" HorizontalAlignment="Center" Margin="-200,180,0,0" VerticalAlignment="Top" Width="80" Click="UiBtnOk_Click" />
+        <Button x:Name="UiBtnCancel" Content="{x:Static p:Resources.Cancel}" IsCancel="True" HorizontalAlignment="Center" Margin="0,180,0,0" VerticalAlignment="Top" Width="80"/>
+        <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Center" Margin="200,180,0,0" VerticalAlignment="Top" Width="80" Click="UiBtnHelp_Click" />
     </Grid>
 </Window>

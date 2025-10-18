@@ -187,6 +187,7 @@ namespace ChessForge
             _dictOpTypeToTitle[WorkbookOperationType.DELETE_COMMENTS] = Properties.Resources.OpDeleteComments;
             _dictOpTypeToTitle[WorkbookOperationType.DELETE_ENGINE_EVALS] = Properties.Resources.OpDeleteEngineEvals;
             _dictOpTypeToTitle[WorkbookOperationType.CLEAN_LINES_AND_COMMENTS] = Properties.Resources.OpDeleteNotes;
+            _dictOpTypeToTitle[WorkbookOperationType.SORT_GAMES] = Properties.Resources.OpSortGames;
         }
 
         /// <summary>

@@ -118,7 +118,14 @@ namespace ChessForge
                     }
                 }
 
-                AppState.IsDirty = true;
+                // Mark the application state as dirty
+                // if we are NOT in training mode or, if we are, the training mode is not ENGINE_GAME
+                // and engine evalution is ON.
+                if (!TrainingSession.IsTrainingInProgress ||
+                    (LearningMode.CurrentMode != LearningMode.Mode.ENGINE_GAME && (EvaluationManager.CurrentMode == EvaluationManager.Mode.CONTINUOUS || EvaluationManager.CurrentMode == EvaluationManager.Mode.LINE)))
+                {
+                    AppState.IsDirty = true;
+                }
             }
         }
 
@@ -677,7 +684,7 @@ namespace ChessForge
                         e.Handled = true;
                         break;
                     case Key.T:
-                        _mainWin.UiMnStartTrainingHere_Click(null, null);
+                        _mainWin.UiMnStartTrainingHere(null, null);
                         e.Handled = true;
                         break;
                     default:
@@ -778,6 +785,14 @@ namespace ChessForge
                             {
                                 case Key.F3:
                                     _mainWin.UiMnFindPositions_Click(null, null);
+                                    e.Handled = true;
+                                    break;
+                                case Key.T:
+                                    _mainWin.UiMnStartTrainingFromStartingPosition(null, null);
+                                    e.Handled = true;
+                                    break;
+                                case Key.R:
+                                    _mainWin.UiMnStartTrainingRandomLines(null, null);
                                     e.Handled = true;
                                     break;
                                 default:
@@ -928,6 +943,10 @@ namespace ChessForge
                             }
                         }
                         _mainWin.ActiveTreeView.SelectLineAndMoveInWorkbookViews(Line.GetLineId(), plyIndex, true);
+                        if (AppState.MainWin.BoardCommentBox.HasSpecialMessage)
+                        {
+                            AppState.MainWin.BoardCommentBox.RestoreTitleMessage();
+                        }
                     }
                 }
                 handled = true;

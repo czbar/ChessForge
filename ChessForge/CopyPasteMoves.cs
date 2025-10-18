@@ -67,6 +67,10 @@ namespace ChessForge
                     List<TreeNode> insertedNewNodes = new List<TreeNode>();
                     List<TreeNode> failedInsertions = new List<TreeNode>();
                     TreeNode firstInserted = targetView.InsertSubtree(lstNodes, ref insertedNewNodes, ref failedInsertions);
+                    
+                    // NOTE: if failed to insert the entire list nodes, we fail the whole process
+                    //       i.e. we DO NOT keep the successfully inserted nodes
+                    
                     if (failedInsertions.Count == 0)
                     {
                         // if we inserted an already existing line, do nothing

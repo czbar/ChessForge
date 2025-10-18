@@ -733,7 +733,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Online-Library");
+            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Online-Libraries");
         }
 
         /// <summary>

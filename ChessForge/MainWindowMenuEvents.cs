@@ -406,7 +406,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnMergeChapters_Click(object sender, RoutedEventArgs e)
         {
-            SelectChaptersDialog dlg = new SelectChaptersDialog(WorkbookManager.SessionWorkbook, Properties.Resources.SelectChaptersToMerge);
+            SelectChaptersDialog dlg = new SelectChaptersDialog(WorkbookManager.SessionWorkbook, SelectChaptersDialog.Mode.MERGE, Properties.Resources.SelectChaptersToMerge);
             GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
             dlg.ShowDialog();
@@ -690,6 +690,7 @@ namespace ChessForge
                                 case WorkbookOperationType.DELETE_CHAPTERS:
                                 case WorkbookOperationType.MERGE_CHAPTERS:
                                 case WorkbookOperationType.SPLIT_CHAPTER:
+                                case WorkbookOperationType.SORT_GAMES:
                                     AppState.MainWin.ChaptersView.IsDirty = true;
                                     GuiUtilities.RefreshChaptersView(null);
                                     AppState.MainWin.UiTabChapters.Focus();
@@ -1150,7 +1151,9 @@ namespace ChessForge
         {
             bool? save = false;
 
-            if (!TrainingSession.IsTrainingInProgress && EngineGame.ActiveTabOnStart == TabViewType.MODEL_GAME)
+            if (!TrainingSession.IsTrainingInProgress 
+                && (EngineGame.ActiveTabOnStart == TabViewType.MODEL_GAME || EngineGame.ActiveTabOnStart == TabViewType.STUDY)
+                && EngineGame.HasNewMoves())
             {
                 MessageBoxResult res = MessageBox.Show(Properties.Resources.EngGameSave,
                     Properties.Resources.EngineGame
@@ -2464,15 +2467,19 @@ namespace ChessForge
                 if (index >= 0)
                 {
                     VariationTree tree = chapter.Exercises[index].Tree;
+
+                    // preserve current ShowTreeLines setting
+                    bool showLines = tree.ShowTreeLines;
+
                     PositionSetupDialog dlg = new PositionSetupDialog(tree);
                     GuiUtilities.PositionDialog(dlg, this, 100);
                     dlg.ShowDialog();
                     if (dlg.ExitOK)
                     {
                         chapter.Exercises[index].Tree = dlg.FixedTree;
-                        //chapter.SetActiveVariationTree(GameData.ContentType.EXERCISE, index);
-                        //_exerciseTreeView.BuildFlowDocumentForVariationTree(false);
-                        SelectExercise(index, false);
+
+                        // restore ShowTreeLines setting
+                        SelectExercise(index, false, showLines);
                         AppState.IsDirty = true;
                     }
                 }
@@ -2768,7 +2775,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnSortGames_Click(object sender, RoutedEventArgs e)
         {
-            ChapterUtils.InvokeSortGamesDialog(AppState.ActiveChapter);
+            SortArticlesUtils.InvokeSortGamesDialog(AppState.ActiveChapter);
         }
 
         /// <summary>
@@ -2789,7 +2796,7 @@ namespace ChessForge
         private void UiMnExerciseViewConfig_Click(object sender, RoutedEventArgs e)
         {
             ChapterUtils.InvokeExerciseViewConfigDialog(AppState.ActiveChapter);
-            UiMnExerciseViewConfig.IsChecked = AppState.ActiveChapter != null && AppState.ActiveChapter.ShowSolutionsOnOpen;
+            //UiMnExerciseViewConfig.IsChecked = AppState.ActiveChapter != null && AppState.ActiveChapter.ShowSolutionsOnOpen;
         }
 
         /// <summary>
@@ -2916,12 +2923,10 @@ namespace ChessForge
                 TrainingSession.BuildFirstTrainingLine();
             }
             ResetTrainingMode();
-            AppState.ConfigureMenusForTraining();
         }
 
         /// <summary>
-        /// Restarts training from the training starting position
-        /// moving to the next training line.
+        /// Restarts training from the next training line.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -2936,8 +2941,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Restarts training from the training starting position
-        /// moving to the previous training line.
+        /// Restarts training from the the previous training line.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -2948,6 +2952,22 @@ namespace ChessForge
             {
                 UiTrainingView.RollbackToUserMove(updatedNode);
                 AppState.ConfigureMenusForTraining();
+            }
+        }
+
+        /// <summary>
+        /// Restarts training on a random training line.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void UiMnTrainRandomLine(object sender, RoutedEventArgs e)
+        {
+            List<TreeNode> lstLine = TrainingSession.SelectRandomLine();
+
+            if (lstLine != null)
+            {
+                ResetTrainingMode();
+                UiTrainingView.BuildTrainingLineParas(lstLine);
             }
         }
 
@@ -3312,6 +3332,8 @@ namespace ChessForge
             if (ActiveTreeView != null)
             {
                 ActiveTreeView.SelectActiveLineForCopy();
+                ActiveTreeView.PlaceSelectedForCopyInClipboard();
+                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgCopiedMoves, CommentBox.HintType.INFO);
             }
         }
 
@@ -3325,6 +3347,8 @@ namespace ChessForge
             if (ActiveTreeView != null)
             {
                 ActiveTreeView.SelectSubtreeForCopy();
+                ActiveTreeView.PlaceSelectedForCopyInClipboard();
+                BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgCopiedMoves, CommentBox.HintType.INFO);
             }
         }
 
@@ -3819,7 +3843,6 @@ namespace ChessForge
                 Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
 
                 exercise = WorkbookManager.SessionWorkbook.ActiveChapter.AddExercise(tree);
-                exercise.ShowSolutionByDefault = chapter.ShowSolutionsOnOpen;
                 exercise.Tree.ShowTreeLines = chapter.ShowSolutionsOnOpen;
 
                 chapter.ActiveExerciseIndex = WorkbookManager.SessionWorkbook.ActiveChapter.GetExerciseCount() - 1;

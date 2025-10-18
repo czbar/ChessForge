@@ -475,7 +475,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create Game From Session&apos;s Last Line.
+        ///   Looks up a localized string similar to Create Game from Session&apos;s Last Line.
         /// </summary>
         public static string BtnCreateGame {
             get {
@@ -1519,7 +1519,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create New Chapter From Line.
+        ///   Looks up a localized string similar to Create New Chapter from Line.
         /// </summary>
         public static string CreateNewChapterFromLine {
             get {
@@ -2194,7 +2194,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Save Games to a new Chapter.
+        ///   Looks up a localized string similar to Create a new Chapter.
         /// </summary>
         public static string DwnLdCreateNewChapter {
             get {
@@ -2212,7 +2212,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create Repertoire Chapters.
+        ///   Looks up a localized string similar to Create White and Black Repertoire Chapters.
         /// </summary>
         public static string DwnLdCreateRepertoireChapter {
             get {
@@ -5939,6 +5939,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sort Games.
+        /// </summary>
+        public static string OpSortGames {
+            get {
+                return ResourceManager.GetString("OpSortGames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Split Chapter.
         /// </summary>
         public static string OpSplitChapter {
@@ -7910,6 +7919,24 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to From Current Position.
+        /// </summary>
+        public static string TrainFromCurrentPosition {
+            get {
+                return ResourceManager.GetString("TrainFromCurrentPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From Starting Position.
+        /// </summary>
+        public static string TrainFromStartingPosition {
+            get {
+                return ResourceManager.GetString("TrainFromStartingPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Training.
         /// </summary>
         public static string Training {
@@ -7946,7 +7973,25 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Trim after Move.
+        ///   Looks up a localized string similar to Random Training Line.
+        /// </summary>
+        public static string TrainRandomLine {
+            get {
+                return ResourceManager.GetString("TrainRandomLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Random Lines.
+        /// </summary>
+        public static string TrainRandomLines {
+            get {
+                return ResourceManager.GetString("TrainRandomLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trim Study after Move.
         /// </summary>
         public static string TrimStudyTree {
             get {
@@ -7991,6 +8036,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Click below to change the training line:  .
+        /// </summary>
+        public static string TrnChangeLineInfo {
+            get {
+                return ResourceManager.GetString("TrnChangeLineInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Click any move below to restart training from it.  .
         /// </summary>
         public static string TrnClickMoveBelow {
@@ -8027,7 +8081,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Response from the Exercise.
+        ///   Looks up a localized string similar to Exercise move.
         /// </summary>
         public static string TrnExerciseResponse {
             get {
@@ -8081,7 +8135,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Response from the Game.
+        ///   Looks up a localized string similar to Game move.
         /// </summary>
         public static string TrnGameResponse {
             get {
@@ -8135,6 +8189,24 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Next.
+        /// </summary>
+        public static string TrnNextLine {
+            get {
+                return ResourceManager.GetString("TrnNextLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Next Random Line.
+        /// </summary>
+        public static string TrnNextRandomLine {
+            get {
+                return ResourceManager.GetString("TrnNextRandomLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Play $0 instead of Your Move.
         /// </summary>
         public static string TrnPlayMoveInstead {
@@ -8162,11 +8234,38 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Previous.
+        /// </summary>
+        public static string TrnPreviousLine {
+            get {
+                return ResourceManager.GetString("TrnPreviousLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Random.
+        /// </summary>
+        public static string TrnRandomLine {
+            get {
+                return ResourceManager.GetString("TrnRandomLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Right click to open the context menu.  .
         /// </summary>
         public static string TrnRightClickMove {
             get {
                 return ResourceManager.GetString("TrnRightClickMove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click to go to.
+        /// </summary>
+        public static string TrnSelectNextRandomLine {
+            get {
+                return ResourceManager.GetString("TrnSelectNextRandomLine", resourceCulture);
             }
         }
         
@@ -8207,7 +8306,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Workbook response.
+        ///   Looks up a localized string similar to Workbook move.
         /// </summary>
         public static string TrnStudyResponse {
             get {

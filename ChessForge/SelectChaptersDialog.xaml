@@ -36,8 +36,11 @@
             </ListView.View>
         </ListView>
         <CheckBox x:Name="UiCbSelectAll" IsChecked="False" Grid.Row="1" Content="" HorizontalAlignment="Left" Margin="10,3,0,0" VerticalAlignment="Top" Checked="UiCbSelectAll_Checked" Unchecked="UiCbSelectAll_Unchecked"/>
-        <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Left" Margin="320,10,0,0" Grid.Row="2" Width="60" Height="20" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
-        <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Right" Margin="400,10,320,0" Grid.Row="2" Width="60" Height="20" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
+        
+        <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="-200,10,0,0" Grid.Row="2" Width="80" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
+        <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="2" Width="80" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
+        <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Center" Margin="200,10,0,0" Grid.Row="2" Width="80" VerticalAlignment="Top" Click="UiBtnHelp_Click"/>
+        
         <Label x:Name="UiLblInstruct" Content="{x:Static p:Resources.SelectChaptersToImport}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Width="766"/>
 
     </Grid>

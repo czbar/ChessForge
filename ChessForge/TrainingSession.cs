@@ -8,7 +8,7 @@ namespace ChessForge
     /// <summary>
     /// Holds attributes of the current training session. 
     /// </summary>
-    public class TrainingSession
+    public partial class TrainingSession
     {
         /// <summary>
         /// Object to lock examining of the user move vs Workbook.
@@ -61,9 +61,18 @@ namespace ChessForge
         { get => _isTakebackAvailable; set => _isTakebackAvailable = value; }
 
         /// <summary>
+        /// Whether we are in random lines mode.
+        /// </summary>
+        public static bool IsRandomLinesMode
+        { get => _isRandomLinesMode; set => _isRandomLinesMode = value; }   
+
+        /// <summary>
         /// The current state of the Training session.
         /// </summary>
         public static State CurrentState { get => _currentState; }
+
+        // whether we are in random lines mode
+        private static bool _isRandomLinesMode = false;
 
         // whether continuous evaluation is enabled
         private static bool _isContinuousEvaluation;
@@ -85,12 +94,24 @@ namespace ChessForge
         /// </summary>
         private static List<TreeNode> TrainingLine = new List<TreeNode>();
 
+        // The side that is training. It can be different from the Workbook's training side.
+        private static PieceColor _trainingSide = PieceColor.None;
+
         /// <summary>
         /// The side that is training. It can be different from the Workbook's training side.
         /// </summary>
-        public static PieceColor TrainingSide
+        public static PieceColor ActualTrainingSide
         {
-            get { return StartPosition.ColorToMove; }
+            get { return _trainingSide; }
+        }
+
+        /// <summary>
+        /// Explicitly sets the training side.
+        /// </summary>
+        /// <param name="color"></param>
+        public static void SetTrainingSide(PieceColor color)
+        {
+            _trainingSide = color;
         }
 
         /// <summary>
@@ -128,21 +149,20 @@ namespace ChessForge
             AppState.MainWin.StopReplayIfActive();
 
             LearningMode.ChangeCurrentMode(LearningMode.Mode.TRAINING);
-            TrainingSession.IsTrainingInProgress = true;
-            TrainingSession.ChangeCurrentState(TrainingSession.State.AWAITING_USER_TRAINING_MOVE);
+            IsTrainingInProgress = true;
+            ChangeCurrentState(TrainingSession.State.AWAITING_USER_TRAINING_MOVE);
 
             AppState.EnableNavigationArrows();
 
             if (isContinuousEvaluation)
             {
-                TrainingSession.IsContinuousEvaluation = true;
+                IsContinuousEvaluation = true;
             }
             else
             {
                 EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
             }
 
-            LearningMode.TrainingSideCurrent = startNode.ColorToMove;
             AppState.MainWin.MainChessBoard.DisplayPosition(startNode, true);
 
             AppState.ShowMoveEvaluationControls(isContinuousEvaluation, isContinuousEvaluation);
@@ -178,6 +198,23 @@ namespace ChessForge
         /// <param name="currNode"></param>
         /// <returns></returns>
         public static TreeNode GetNextTrainingLineMove(TreeNode currNode)
+        {
+            if (IsRandomLinesMode)
+            {
+                return GetRandomLineNextMove(currNode);
+            }
+            else
+            {
+                return GetFixedLineNextMove(currNode);
+            }
+        }
+
+        /// <summary>
+        /// Gets the next move in the fixed (a.k.a. "methodic") line mode.
+        /// </summary>
+        /// <param name="currNode"></param>
+        /// <returns></returns>
+        private static TreeNode GetFixedLineNextMove(TreeNode currNode)
         {
             TreeNode nextNode = null;
 
@@ -278,7 +315,7 @@ namespace ChessForge
 
                 if (index > 0)
                 {
-                    TreeNode moveToUpdate = TrainingLine[index];
+                    TreeNode moveToUpdate = EngineGame.Line.NodeList[index];
                     int childIndex = moveToUpdate.Parent.Children.IndexOf(moveToUpdate);
                     if (nextOrPrevLine)
                     {
@@ -386,7 +423,7 @@ namespace ChessForge
                     break;
                 }
 
-                if (node.ColorToMove == TrainingSide && GetNonNullLeafSiblingIndex(node, nextOrPrevLine) >= 0)
+                if (node.ColorToMove == ActualTrainingSide && GetNonNullLeafSiblingIndex(node, nextOrPrevLine) >= 0)
                 {
                     moveToUpdateIndex = i;
                     break;

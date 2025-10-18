@@ -598,6 +598,15 @@ WorkbookStats=Workbook Stats
 #Training
 Training=Training
 
+#Training from current positon
+TrainFromCurrentPosition=From Current Position
+
+#Training from starting position
+TrainFromStartingPosition=From Starting Position
+
+#Training on random lines
+TrainRandomLines=Random Lines
+
 #Start a new training session
 StartNewSession=Start New Session
 
@@ -609,6 +618,9 @@ TrainNextLine=Next Training Line
 
 #Move training to the previous line
 TrainPreviousLine=Previous Training Line
+
+#Move training to a random line
+TrainRandomLine=Random Training Line
 
 #Exit the Training Session
 ExitTraining=Exit Training
@@ -1753,7 +1765,7 @@ BtnDontSaveSession=Do Not Save Session
 BtnMergeSession=Merge Session Line to Source
 
 #Button Merge session to source 
-BtnCreateGame=Create Game From Session's Last Line
+BtnCreateGame=Create Game from Session's Last Line
 
 #
 # Training Prompts
@@ -1816,7 +1828,7 @@ TrnPlayMoveInstead=Play $0 instead of Your Move
 ### Training from Study
 
 #Response 
-TrnStudyResponse=Workbook response
+TrnStudyResponse=Workbook move
 
 #Not in the source 
 TrnStudyMoveNotInSource=This is not in the Workbook
@@ -1831,7 +1843,7 @@ TrnStudySourceMoves=The Workbook moves are
 ### Training from Game
 
 #Response 
-TrnGameResponse=Response from the Game
+TrnGameResponse=Game move
 
 #Not in the source 
 TrnGameMoveNotInSource=This is not in the Game
@@ -1846,7 +1858,7 @@ TrnGameSourceMoves=The moves in the Game are
 ### Training from Exercise
 
 #Response 
-TrnExerciseResponse=Response from the Exercise
+TrnExerciseResponse=Exercise move
 
 #Not in the source 
 TrnExerciseMoveNotInSource=This is not in the Exercise
@@ -1887,6 +1899,24 @@ TrnUserPlaysBlack=You play Black and the virtual coach plays White.
 
 #Click move instruction
 TrnClickMoveBelow=Click any move below to restart training from it.  
+
+#Change line instruction
+TrnChangeLineInfo=Click below to change the training line:  
+
+#Next line link
+TrnNextLine=Next
+
+#Previous line link
+TrnPreviousLine=Previous
+
+#Random line link
+TrnRandomLine=Random
+
+#Move to next random line Change line instruction
+TrnSelectNextRandomLine=Click to go to
+
+#Next Random line link
+TrnNextRandomLine=Next Random Line
 
 #Right click move instruction
 TrnRightClickMove=Right click to open the context menu.  
@@ -2051,7 +2081,7 @@ DuplicateAsVariation=Duplicate Move as Variation
 DeleteMovesFromHere=Delete the Selected Move and All Moves that Follow
 
 #Create a new chpater from the selected line
-CreateNewChapterFromLine=Create New Chapter From Line
+CreateNewChapterFromLine=Create New Chapter from Line
 
 #Bookmark the current position and position for all alternative moves
 BookmarkAllOptionsHere=Bookmark All Options Here
@@ -2827,16 +2857,16 @@ CopyGamesNoMerge=Copy Games into the Games section only (leave the study tree em
 CreateChapterPerGame=Create Chapter per Game
 
 #Generate repertoire chapters
-DwnLdCreateRepertoireChapter=Create Repertoire Chapters
+DwnLdCreateRepertoireChapter=Create White and Black Repertoire Chapters
 
 #Move number aftre which to trim the study tree
-TrimStudyTree=Trim after Move
+TrimStudyTree=Trim Study after Move
 
 #Append games to the current chapter
 DwnLdAppendToCurrentChapter=Append Games to the current Chapter
 
 #Create a new chapter for the downloaded games
-DwnLdCreateNewChapter=Save Games to a new Chapter
+DwnLdCreateNewChapter=Create a new Chapter
 
 #Create a new workbook for the downloaded games
 DwnLdCreateNewWorkbook=Save to a new Workbook
@@ -3366,6 +3396,9 @@ OpDeleteEngineEvals=Delete Engine Evaluations
 
 #Operation
 OpAssignECOs=Assign ECO Codes
+
+#Operation
+OpSortGames=Sort Games
 
 
 

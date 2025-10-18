@@ -4,7 +4,6 @@ using GameTree;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -55,7 +54,7 @@ namespace ChessForge
 
             try
             {
-                foreach(Chapter ch in AppState.Workbook.Chapters)
+                foreach (Chapter ch in AppState.Workbook.Chapters)
                 {
                     if (!ch.ShowSolutionsOnOpen)
                     {
@@ -117,44 +116,6 @@ namespace ChessForge
                 }
             }
         }
-
-        /// <summary>
-        /// Invokes the dialog for sorting games in a chapter/workbook.
-        /// </summary>
-        /// <param name="chapter"></param>
-        public static void InvokeSortGamesDialog(Chapter chapter)
-        {
-            if (chapter != null)
-            {
-                try
-                {
-                    SortGamesDialog dlg = new SortGamesDialog(chapter);
-                    GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
-
-                    if (dlg.ShowDialog() == true && dlg.SortGamesBy != GameSortCriterion.SortItem.NONE)
-                    {
-                        if (dlg.ApplyToAllChapters)
-                        {
-                            SortGames(null, dlg.SortGamesBy, dlg.SortGamesDirection);
-                        }
-                        else
-                        {
-                            SortGames(chapter, dlg.SortGamesBy, dlg.SortGamesDirection);
-                        }
-
-                        AppState.IsDirty = true;
-                        GuiUtilities.RefreshChaptersView(null);
-                        AppState.MainWin.UiTabChapters.Focus();
-                        PulseManager.ChapterIndexToBringIntoView = chapter.Index;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    AppLog.Message("InvokeSortGamesDialog()", ex);
-                }
-            }
-        }
-
         /// <summary>
         /// Invokes the dialog for configuring the exercise view.
         /// </summary>
@@ -297,7 +258,8 @@ namespace ChessForge
                 case ArticlesAction.MOVE:
                     title = Properties.Resources.SelectItemsToMove;
                     break;
-                case ArticlesAction.COPY_OR_MOVE:
+                case ArticlesAction.COPY_OR_MOVE_FOUND_GAMES:
+                case ArticlesAction.COPY_OR_MOVE_FOUND_POSITIONS:
                     title = Properties.Resources.SelectItemsToCopyOrMove;
                     break;
             }
@@ -305,7 +267,7 @@ namespace ChessForge
             SelectArticlesDialog dlg = new SelectArticlesDialog(null, allChaptersCheckbox, title, ref lstArticleItems, showAllChapters, action);
             GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
 
-            if (action == ArticlesAction.COPY_OR_MOVE)
+            if (action == ArticlesAction.COPY_OR_MOVE_FOUND_POSITIONS || action == ArticlesAction.COPY_OR_MOVE_FOUND_GAMES)
             {
                 dlg.SetupGuiForGamesCopyOrMove();
             }
@@ -401,12 +363,7 @@ namespace ChessForge
 
                             if (gotoChaptersView)
                             {
-                                AppState.Workbook.ActiveChapter = targetChapter;
-                                targetChapter.IsViewExpanded = true;
-                                // show chapter view with the target chapter in the view and expanded
-                                AppState.MainWin.ChaptersView.IsDirty = true;
-                                AppState.MainWin.UiTabChapters.Focus();
-                                PulseManager.ChapterIndexToBringIntoView = targetChapter.Index;
+                                GotoChaptersView(targetChapter, false);
                             }
                         }
                     }
@@ -423,6 +380,33 @@ namespace ChessForge
                     AppLog.Message("Unexpected error in ProcessCopyMoveArticlesRequest() - target chapter is null");
                 }
             }
+        }
+
+        /// <summary>
+        /// Opens the Chapters view, expands the target chapter
+        /// or all chapters and brings the target chapter into view.
+        /// Note that ExpandCollapseChaptersView() rebuilds the entire view
+        /// while in the case of expandAll==false we just mark the ChaptersView
+        /// as dirty and UiTabChapters.Focus() will do the rebuild.
+        /// </summary>
+        /// <param name="targetChapter"></param>
+        /// <param name="expandAll"></param>
+        public static void GotoChaptersView(Chapter targetChapter, bool expandAll)
+        {
+            AppState.Workbook.ActiveChapter = targetChapter;
+
+            if (expandAll)
+            {
+                AppState.MainWin.ExpandCollapseChaptersView(true, true);
+            }
+            else
+            {
+                targetChapter.IsViewExpanded = true;
+                AppState.MainWin.ChaptersView.IsDirty = true;
+            }
+
+            AppState.MainWin.UiTabChapters.Focus();
+            PulseManager.ChapterIndexToBringIntoView = targetChapter.Index;
         }
 
         /// <summary>
@@ -875,93 +859,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Sorts games in the chapter per specified criteria.
-        /// Keep the original order if items cannot be separated by those criteria.
-        /// This method is superior to the standard QuickSort because it does keep 
-        /// the original order.
-        /// </summary>
-        /// <param name="chapter"></param>
-        /// <param name="sortBy"></param>
-        /// <param name="direction"></param>
-        public static void SortGames(Chapter chapter, GameSortCriterion.SortItem sortBy, GameSortCriterion.SortItem direction, bool showMsg = true)
-        {
-            Mouse.SetCursor(Cursors.Wait);
-
-            try
-            {
-                if (chapter != null)
-                {
-                    SortGamesInChapter(chapter, sortBy, direction);
-                }
-                else
-                {
-                    foreach (Chapter ch in AppState.Workbook.Chapters)
-                    {
-                        SortGamesInChapter(ch, sortBy, direction);
-                    }
-                }
-
-                AppState.MainWin.ChaptersView.IsDirty = true;
-                AppState.IsDirty = true;
-
-                if (AppState.ActiveTab == TabViewType.CHAPTERS)
-                {
-                    AppState.MainWin.ChaptersView.BuildFlowDocumentForChaptersView(false);
-                }
-
-                if (showMsg)
-                {
-                    AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgGamesSorted, CommentBox.HintType.INFO);
-                }
-            }
-            catch
-            {
-            }
-
-            Mouse.SetCursor(Cursors.Arrow);
-        }
-
-        /// <summary>
-        /// Sorts games in a single chapter per specified criteria.
-        /// </summary>
-        /// <param name="chapter"></param>
-        /// <param name="sortBy"></param>
-        /// <param name="direction"></param>
-        private static void SortGamesInChapter(Chapter chapter, GameSortCriterion.SortItem sortBy, GameSortCriterion.SortItem direction)
-        {
-            IComparer<Article> comparer = new ArticleComparer(sortBy, direction);
-            chapter.ModelGames = chapter.ModelGames
-                .Select((item, index) => new { item, index })
-                .OrderBy(z => z.item, comparer)
-                .ThenBy(z => z.index)
-                .Select(z => z.item)
-                .ToList();
-        }
-
-        /// <summary>
-        /// Sorts exercises in the chapter per specified criteria.
-        /// Keep the original order if items cannot be separated by those criteria.
-        /// This method is superior to the standard QuickSort because it does keep 
-        /// the original order.
-        /// </summary>
-        /// <param name="chapter"></param>
-        /// <param name="sortBy"></param>
-        /// <param name="direction"></param>
-        private static void SortExercises(Chapter chapter, GameSortCriterion.SortItem sortBy, GameSortCriterion.SortItem direction)
-        {
-            IComparer<Article> comparer = new ArticleComparer(sortBy, direction);
-            chapter.Exercises = chapter.Exercises
-                .Select((item, index) => new { item, index })
-                .OrderBy(z => z.item, comparer)
-                .ThenBy(z => z.index)
-                .Select(z => z.item)
-                .ToList();
-
-            AppState.MainWin.ChaptersView.IsDirty = true;
-            AppState.IsDirty = true;
-        }
-
-        /// <summary>
         /// Sets thumbnails at the requested move in all games of a chapter
         /// or of all chapters.
         /// </summary>
@@ -1185,7 +1082,7 @@ namespace ChessForge
 
             foreach (ArticleListItem item in lstIdenticalPositions)
             {
-                if (item.Article != null && !item.IsSelected)
+                if (item.Article != null && item.IsSelected == false)
                 {
                     itemsToRemove.Add(item);
                 }

@@ -35,3 +35,6 @@ For German translation: FlMsgUpdatePositionEvalOff changed
 
 When 2 pieces can go to the target square but one actually cannot because it would put its king in check, 
 ChessForge still gives notation like Nge3.
+
+While browsing the game, move the view up a few lines if we are at the bottom.
+

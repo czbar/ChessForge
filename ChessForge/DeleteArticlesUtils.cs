@@ -180,7 +180,7 @@ namespace ChessForge
             List<ArticleListItem> articlesToDelete = new List<ArticleListItem>();
             foreach (ArticleListItem item in articleList)
             {
-                if (item.IsSelected && item.Article != null)
+                if (item.IsSelected == true && item.Article != null)
                 {
                     articlesToDelete.Add(item);
                 }

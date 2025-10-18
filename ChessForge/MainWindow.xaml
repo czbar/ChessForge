@@ -113,11 +113,9 @@
                         <Separator />
                     </MenuItem>
                     <MenuItem Header="{x:Static p:Resources.Training}" Margin="0,0,0,0">
-                        <MenuItem x:Name="UiMnStartTraining"  Header="{x:Static p:Resources.StartNewSession}"  Click="UiMnStartTrainingHere_Click" InputGestureText="T" />
-                        <MenuItem x:Name="UiMnTrainFromBeginning"  Header="{x:Static p:Resources.TrainFromBeginning}" Click="UiMnTrainFromBeginning_Click" InputGestureText="Ctrl+B"/>
-                        <Separator />
-                        <MenuItem x:Name="UiMnTrainNextLine"  Header="{x:Static p:Resources.TrainNextLine}"  Click="UiMnTrainNextLine_Click" InputGestureText="Ctrl+N"/>
-                        <MenuItem x:Name="UiMnTrainPreviousLine"  Header="{x:Static p:Resources.TrainPreviousLine}"  Click="UiMnTrainPreviousLine_Click" InputGestureText="Ctrl+P"/>
+                        <MenuItem x:Name="UiMnTrainFromCurrentPosition"  Header="{x:Static p:Resources.TrainFromCurrentPosition}" Click="UiMnStartTrainingHere"  InputGestureText="T" />
+                        <MenuItem x:Name="UiMnTrainFromStartingPosition"  Header="{x:Static p:Resources.TrainFromStartingPosition}" Click="UiMnStartTrainingFromStartingPosition" InputGestureText="Shift+T"/>
+                        <MenuItem x:Name="UiMnTrainRandomLines"  Header="{x:Static p:Resources.TrainRandomLines}" Click="UiMnStartTrainingRandomLines" InputGestureText="Shift+R"/>
                         <Separator />
                         <MenuItem x:Name="UiMnExitTraining" Header="{x:Static p:Resources.ExitTraining}" Click="UiMnStopTraining_Click"/>
                         <Separator />
@@ -185,7 +183,7 @@
                         <MenuItem x:Name="UiMnOrderGames" Header="{x:Static p:Resources.GamesOrder}" Click="UiMnSortGames_Click" />
                         <MenuItem x:Name="UiMnEvaluateGames" Header="{x:Static p:Resources.MnEvaluateGames}" Click="UiMnEvaluateGames_Click" />
                         <Separator />
-                        <MenuItem x:Name="UiMnExerciseViewConfig" Header="{x:Static p:Resources.ShowSolutions}" IsCheckable="True" IsChecked="False" Click="UiMnExerciseViewConfig_Click" />
+                        <MenuItem x:Name="UiMnExerciseViewConfig" Header="{x:Static p:Resources.ShowSolutions}" Click="UiMnExerciseViewConfig_Click" />
                     </MenuItem>
                     <MenuItem Header="{x:Static p:Resources.Tools}" Margin="0,0,0,0">
                         <MenuItem x:Name="UiMnMainImportFromPgn" Header="{x:Static p:Resources.ImportFromPgn}" Click="UiMnMainImportFromPgn_Click"  />
@@ -274,7 +272,7 @@
                     <Canvas x:Name="MainCanvas" Grid.Column="0" HorizontalAlignment="Left" Height="680" Margin="0,0,0,0" VerticalAlignment="Top" Width="680" ContextMenuOpening="MainCanvas_ContextMenuOpening">
                         <Canvas.ContextMenu>
                             <ContextMenu  x:Name="UiMncMainBoard">
-                                <MenuItem x:Name="UiMnciStartTrainingHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere_Click" InputGestureText="T" />
+                                <MenuItem x:Name="UiMnciStartTrainingHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere" InputGestureText="T" />
                                 <MenuItem x:Name="UiMnciRestartTraining"  Header="{x:Static p:Resources.TrainFromBeginning}" Click="UiMnTrainFromBeginning_Click"/>
                                 <MenuItem x:Name="UiMnciExitTraining" Header="{x:Static p:Resources.ExitTraining}" Click="UiMnStopTraining_Click"/>
                                 <Separator x:Name="UiMncMainBoardSepar_1" />
@@ -356,6 +354,7 @@
                                     <Separator x:Name="UiMnSeparator_TrainingModes_0" />
                                     <MenuItem x:Name="UiMnCiTrainNextLine" Header="{x:Static p:Resources.TrainNextLine}"  Click="UiMnTrainNextLine_Click" InputGestureText="Ctrl+N"/>
                                     <MenuItem x:Name="UiMnCiTrainPreviousLine" Header="{x:Static p:Resources.TrainPreviousLine}"  Click="UiMnTrainPreviousLine_Click" InputGestureText="Ctrl+P"/>
+                                    <MenuItem x:Name="UiMnCiTrainRandomLine" Header="{x:Static p:Resources.TrainRandomLine}"  Click="UiMnTrainRandomLine" InputGestureText="Ctrl+R"/>
                                     <Separator x:Name="UiMnSeparator_TrainingModes_1" />
                                     <MenuItem x:Name="UiMnCiTrainExitTraining" Header="{x:Static p:Resources.ExitTraining}"  Click="UiMnStopTraining_Click" />
                                     <Separator x:Name="_mnTrainSepar_1" />
@@ -620,7 +619,7 @@
                             </Grid.ColumnDefinitions>
                             <Grid.ContextMenu>
                                 <ContextMenu x:Name="UiMncStudyTree">
-                                    <MenuItem x:Name="UiMnStudyStartTrainingHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere_Click" InputGestureText="T" />
+                                    <MenuItem x:Name="UiMnStudyStartTrainingHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere" InputGestureText="T" />
                                     <MenuItem x:Name="UiMnStudy_CreateExercise" Header="{x:Static p:Resources.CreateExerciseFromHere}" Click="UiMn_CreateExercise_Click"  />
                                     <MenuItem x:Name="UiMnStudyMarkThumbnail" Header="{x:Static p:Resources.MarkAsThumbnail}" Click="UiMn_MarkThumbnail_Click" InputGestureText="Ctrl+T" />
                                     <MenuItem x:Name="UiMnMarkBookmark" Header="{x:Static p:Resources.BookmarkThisPosition}" Click="UiMnMarkBookmark_Click" />
@@ -718,7 +717,7 @@
                                         <MenuItem x:Name="UiMnGamesImportGames" Header="{x:Static p:Resources.ImportGames}" Click="UiMnImportModelGames_Click"  />
                                     </MenuItem>
                                     <Separator />
-                                    <MenuItem x:Name="UiMnGameStartTrainingFromHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere_Click" InputGestureText="T" />
+                                    <MenuItem x:Name="UiMnGameStartTrainingFromHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere" InputGestureText="T" />
                                     <MenuItem x:Name="UiMnGameCreateExercise" Header="{x:Static p:Resources.CreateExerciseFromHere}" Click="UiMnGame_CreateExercise_Click" />
                                     <MenuItem x:Name="UiMnGameMarkThumbnail" Header="{x:Static p:Resources.MarkAsThumbnail}" Click="UiMn_MarkThumbnail_Click" InputGestureText="Ctrl+T" />
                                     <MenuItem x:Name="UiMnGameMarkBookmark" Header="{x:Static p:Resources.BookmarkThisPosition}" Click="UiMnMarkBookmark_Click" />
@@ -832,7 +831,7 @@
                                     <MenuItem x:Name="UiMnExerc_ShowAllSolutions" Header="{x:Static p:Resources.ShowSolutionsInChapter}" Click="UiMnExerc_ShowSolutions_Click" />
                                     <MenuItem x:Name="UiMnExerc_HideAllSolutions" Header="{x:Static p:Resources.HideSolutionsInChapter}" Click="UiMnExerc_HideSolutions_Click" />
                                     <Separator x:Name="UiMnExerc_Separator_8"/>
-                                    <MenuItem x:Name="UiMnExercStartTrainingFromHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere_Click" InputGestureText="T" />
+                                    <MenuItem x:Name="UiMnExercStartTrainingFromHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere" InputGestureText="T" />
                                     <MenuItem x:Name="_mnExerc_MarkThumbnail" Header="{x:Static p:Resources.MarkAsThumbnail}" Click="UiMn_ExerciseMarkThumbnail_Click" InputGestureText="Ctrl+T" />
                                     <MenuItem x:Name="UiMnExercMarkBookmark" Header="{x:Static p:Resources.BookmarkThisPosition}" Click="UiMnMarkBookmark_Click" />
                                     <MenuItem x:Name="UiMnExercDeleteBookmark" Visibility="Collapsed" Header="{x:Static p:Resources.DeleteThisBookmark}" Click="UiMnciDeleteBookmark_Click" />

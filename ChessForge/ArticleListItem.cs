@@ -18,7 +18,7 @@ namespace ChessForge
         private bool _isShown;
 
         // whether this game is selected in the GUI
-        private bool _isSelected;
+        private bool? _isSelected;
 
         // is selection checkbox visible
         private bool _isSelectCheckBoxVisible;
@@ -315,9 +315,9 @@ namespace ChessForge
 
         /// <summary>
         /// Accessor to _isSelected.
-        /// Indicates wheter the item is selected.
+        /// Indicates whether the item is selected.
         /// </summary>
-        public bool IsSelected
+        public bool? IsSelected
         {
             get { return _isSelected; }
             set
@@ -444,9 +444,6 @@ namespace ChessForge
         // whether the regular chapter CheckBox is visible
         private string _isChapterCheckboxVisible = "Visible";
 
-        // whether the "grayed" chapter CheckBox is visible
-        private string _isChapterGrayedCheckboxVisible = "Collapsed";
-
         // whether the parent chapter is expanded
         private bool _isChapterExpanded = true;
 
@@ -466,21 +463,6 @@ namespace ChessForge
             set
             {
                 _isChapterCheckboxVisible = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        /// <summary>
-        /// Set from outside to indicate if the regular chapter
-        /// CheckBox is visible.
-        /// </summary>
-        public string ChapterGrayedCheckBoxVisible
-        {
-            get => IsChapterHeader ? _isChapterGrayedCheckboxVisible : "Collapsed";
-            set
-            {
-                _isChapterGrayedCheckboxVisible = value;
-                NotifyPropertyChanged();
             }
         }
 

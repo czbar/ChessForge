@@ -9,6 +9,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Management;
+using System.Net;
 using System.Threading;
 using System.Timers;
 using System.Windows;
@@ -413,6 +414,12 @@ namespace ChessForge
 
             // the next lines pertain to localization, must be invoked here (before InitializeComponent) and in this order
             ReadConfiguration();
+
+            if (Configuration.ForceTls12)
+            {
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            }
+
             Languages.UseFigurines = Configuration.UseFigurines;
             SetCultureInfo(Configuration.CultureName);
             InitializedLocalizedDictionary();
@@ -1072,7 +1079,7 @@ namespace ChessForge
         /// at the passed index.
         /// </summary>
         /// <param name="exerciseIndex"></param>
-        public void SelectExercise(int exerciseIndex, bool setFocus)
+        public void SelectExercise(int exerciseIndex, bool setFocus, bool forceShowSolution = false)
         {
             try
             {
@@ -1092,7 +1099,6 @@ namespace ChessForge
                         exercise.Tree.ShowTreeLines = activeChapter.ShowSolutionsOnOpen;
                         if (activeChapter.ShowSolutionsOnOpen)
                         {
-                            exercise.ShowSolutionByDefault = true;
                             exercise.Tree.CurrentSolvingMode = VariationTree.SolvingMode.EDITING;
                         }
                     }
@@ -1107,11 +1113,16 @@ namespace ChessForge
                     }
                     MainChessBoard.FlipBoard(orient);
 
+                    if (forceShowSolution)
+                    {
+                        ActiveVariationTree.ShowTreeLines = true;
+                    }
                     SetupGuiForActiveExercise(exerciseIndex, setFocus);
                     if (setFocus && WorkbookManager.SessionWorkbook != null)
                     {
                         WorkbookLocationNavigator.SaveNewLocation(activeChapter, GameData.ContentType.EXERCISE, exerciseIndex);
                     }
+
                 }
                 else
                 {
@@ -2000,7 +2011,7 @@ namespace ChessForge
         {
             if (ActiveTreeView != null)
             {
-                ActiveTreeView.BuildFlowDocumentForVariationTree(false);
+                ActiveTreeView.BuildFlowDocumentForVariationTree(true);
             }
         }
 
@@ -2535,21 +2546,26 @@ namespace ChessForge
         /// Starts a new training session from the specified Node.
         /// </summary>
         /// <param name="startNode"></param>
-        private void SetAppInTrainingMode(TreeNode startNode, bool isContinuousEvaluation = false)
+        private void SetAppInTrainingMode(TreeNode startNode, PieceColor trainingSide, bool isContinuousEvaluation = false)
         {
             if (ActiveVariationTree == null || startNode == null)
             {
                 return;
             }
 
+            TrainingSession.StartPosition = startNode;
+
+            TrainingSession.SetTrainingSide(trainingSide);
+            MainChessBoard.FlipBoard(trainingSide);
             TrainingSession.PrepareGuiForTraining(startNode, isContinuousEvaluation);
+            TrainingSession.InitializeRandomLines();
 
             // The EngineGame holds the current training progress.
             // It needs to be initialized with the startNode before we initialize
             // the TrainingView and the TrainingSession.
             EngineGame.InitializeGameObject(startNode, false, false);
 
-            PrepareTrainingView(startNode);
+            PrepareTrainingView();
 
             Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
 
@@ -2557,6 +2573,11 @@ namespace ChessForge
             {
                 UiTrainingView.RequestMoveEvaluation(ActiveVariationTree.TreeId, true);
                 AppState.SwapCommentBoxForEngineLines(true);
+            }
+
+            if(TrainingSession.IsRandomLinesMode)
+            {
+                UiMnTrainRandomLine(null, null);
             }
         }
 
@@ -2566,13 +2587,12 @@ namespace ChessForge
         private void ResetTrainingMode()
         {
             TreeNode startNode = TrainingSession.StartPosition;
-
             TrainingSession.PrepareGuiForTraining(startNode, TrainingSession.IsContinuousEvaluation);
 
             UiTrainingView.Reset(startNode);
             
             EngineGame.InitializeGameObject(startNode, false, false);
-
+            UiDgEngineGame.ItemsSource = EngineGame.Line.MoveList;
             Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
 
             if (TrainingSession.IsContinuousEvaluation)
@@ -2580,19 +2600,21 @@ namespace ChessForge
                 UiTrainingView.RequestMoveEvaluation(ActiveVariationTree.TreeId, true);
                 AppState.SwapCommentBoxForEngineLines(true);
             }
+
+            AppState.ConfigureMenusForTraining();
         }
 
         /// <summary>
         /// Initializes the TrainingView.
         /// </summary>
         /// <param name="startNode"></param>
-        private void PrepareTrainingView(TreeNode startNode)
+        private void PrepareTrainingView()
         {
             UiTrainingView = new TrainingView(UiRtbTrainingProgress, this);
-            UiTrainingView.Initialize(startNode, ActiveVariationTree.ContentType);
+            UiTrainingView.Initialize(TrainingSession.StartPosition, ActiveVariationTree.ContentType);
             UiDgEngineGame.ItemsSource = EngineGame.Line.MoveList;
-            if (LearningMode.TrainingSideCurrent == PieceColor.Black && !MainChessBoard.IsFlipped
-                || LearningMode.TrainingSideCurrent == PieceColor.White && MainChessBoard.IsFlipped)
+            if (TrainingSession.ActualTrainingSide == PieceColor.Black && !MainChessBoard.IsFlipped
+                || TrainingSession.ActualTrainingSide == PieceColor.White && MainChessBoard.IsFlipped)
             {
                 MainChessBoard.FlipBoard();
             }
@@ -2753,7 +2775,6 @@ namespace ChessForge
                     SessionWorkbook.Title = dlg.WorkbookTitle;
                     SessionWorkbook.Author = dlg.Author;
                     SessionWorkbook.TrainingSideConfig = dlg.TrainingSide;
-                    SessionWorkbook.TrainingSideCurrent = dlg.TrainingSide;
 
                     SessionWorkbook.StudyBoardOrientationConfig = dlg.StudyBoardOrientation;
                     SessionWorkbook.GameBoardOrientationConfig = dlg.GameBoardOrientation;
