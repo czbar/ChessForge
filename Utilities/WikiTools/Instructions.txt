@@ -1,0 +1,78 @@
+
+The scripts in this project are designed to manage image links in the ChessForge's Wiki .md files. 
+
+They all rely on guids embedded in the image links to identify and process the images correctly.
+
+
+
+DESCRIPTION OF THE SCRIPTS
+==========================
+
+
+DownloadImages.py: 
+--------------------------
+Reads the extracted image links from the md file and downloads each image to a specified local directory. 
+
+For first use, the images were downloaded to the "images" folder in the cloned repository of the wiki.
+
+However, for subsequent uses, the images should be downloaded to a directory outside of the repository 
+and then only the new ones then manually copied over to the repository.
+
+
+The downloaded images are named using their corresponding guids (adding .png extension) to ensure uniqueness and easy identification.
+
+
+UpdateImageLinks.py:
+--------------------------
+Produces two new versions of the .md files with updated image links. 
+The two versions differ in the format of the image links and should be created in two separate directories ouside of the cloned repository.
+
+The first version has links that work in the wiki on the web. It can be placed in the cloned repository and used to update the md file in the wiki.
+
+The second version has links that the Pandoc tool understands and will correctly insert the images in the generated WORD and PDF files.
+Those links point to the local directory where the images were downloaded.
+
+
+WikiExport.py:
+--------------------------
+Uses the Pandoc tool to convert the .md files with updated image links into WORD and PDF formats.
+
+
+
+USAGE INSTRUCTIONS
+==================
+
+Open a PowerShell window and navigate to the directory where the scripts are located (C:\Users\Robert Rozycki\Documents\ChessForge\Utilities\WikiTools).
+Run the command: python.exe <ScriptName.py> <Arguments>
+
+Replace <ScriptName.py> with the name of the script you want to run (DownloadImages.py, UpdateImageLinks.py, or WikiExport.py).
+
+
+Downloading/Updating Images:
+--------------------------
+If there were new images added to the wiki online, run DownloadImages.py (with no arguments) to download them to a local directory. Using Windows File Explorer, copy any new images to the "images" folder in the cloned repository of the wiki.
+
+To change the output directory edit the value of OUTPUT_DIR in the script e.g.:
+OUTPUT_DIR = "C:/GitHub/Wiki/DownloadedImages"
+
+
+Updating Image Links:
+--------------------------
+Run UpdateImageLinks.py (with no arguments) to create two new versions of the .md files with updated image links.
+
+There are two output directories that need to be set in the script. One for the version with links that work in the wiki on the web and one for the version with links that work with Pandoc. E.g.:
+OUTPUT_DIR_WEB = "C:/GitHub/Wiki/Outputs/WikiForWeb"
+OUTPUT_DIR_PANDOC = "C:/GitHub/Wiki/Outputs/WikiForPandoc"
+
+
+Creating WORD and PDF files:
+--------------------------
+Run WikiExport.py (with no arguments) to create WORD and PDF files from the .md files with updated image links.
+
+The input directory needs to be set in the script. It should be the same as OUTPUT_DIR_PANDOC used in UpdateImageLinks.py. E.g.:
+WIKI_PATH = "C:/GitHub/Outputs/WikiForPandoc"
+
+Also the names of the output WORD and PDF files need to be set in the script. E.g.:
+
+OUTPUT_PDF = "C:/GitHub/Wiki/Generated/ChessForge_Manual.pdf"
+OUTPUT_DOCX = "C:/GitHub/Wiki/Generated/ChessForge_Manual.docx"
