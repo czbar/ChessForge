@@ -1819,7 +1819,11 @@ namespace ChessForge
             {
                 nextLine.IsEnabled = enableNextLine;
                 nextLine.Header = Properties.Resources.TrainNextLine;
-                if (nextLine.IsEnabled)
+                if (TrainingSession.IsRandomLinesMode)
+                {
+                    nextLine.Visibility = Visibility.Collapsed;
+                }
+                else if (nextLine.IsEnabled)
                 {
                     nextLine.Header = Properties.Resources.TrainNextLine + "  (" + nextMoveTxt + ")";
                 }
@@ -1829,7 +1833,11 @@ namespace ChessForge
             {
                 prevLine.IsEnabled = enablePrevLine;
                 prevLine.Header = Properties.Resources.TrainPreviousLine;
-                if (prevLine.IsEnabled)
+                if (TrainingSession.IsRandomLinesMode)
+                {
+                    prevLine.Visibility = Visibility.Collapsed;
+                }
+                else if (prevLine.IsEnabled)
                 {
                     prevLine.Header = Properties.Resources.TrainPreviousLine + "  (" + prevMoveTxt + ")";
                 }
@@ -1838,7 +1846,14 @@ namespace ChessForge
             if (randomLine != null)
             {
                 randomLine.IsEnabled = TrainingSession.HasRandomLines();
-                randomLine.Header = Properties.Resources.TrainRandomLine;
+                if (TrainingSession.IsRandomLinesMode)
+                {
+                    randomLine.Header = Properties.Resources.TrnNextRandomLine;
+                }
+                else
+                {
+                    randomLine.Header = Properties.Resources.TrainRandomLine;
+                }
             }
         }
 
