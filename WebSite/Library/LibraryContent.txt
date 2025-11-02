@@ -32,6 +32,17 @@ Description: Games from tournaments and matches.
       Description: World Rapid Championship (Women), Samarkand, December 2023.
       File:Tournaments/World Rapid Chess Championship Women 2023.pgn
 
+    Shelf:European Championships 
+    Description: Games from European Championships.
+    
+	  Book:European Team Championship 2025 - Open Section
+      Description: All games from Men's World Championship Matches and Tournaments.
+      File:Tournaments/European Team Championship 2025 - Open.pgn
+        
+	  Book:European Team Championship 2025 - Women's Section
+      Description: All games from Men's World Championship Matches and Tournaments.
+      File:Tournaments/European Team Championship 2025 - Women.pgn
+
 Bookcase: Book Companions and Samples
 Description: Collections of games from published books and book fragments adapted for Chess Forge.
 
@@ -104,6 +115,10 @@ Description:Workbooks examining theory and practice of various Openings.
       Description: All the lines you need to know to play Caro-Kann.
       File: Openings/Black/Caro-Kann for Black.pgn
     
+	  Book:French Defense
+      Description: The French Defense for Black.
+      File: Openings/Black/French for Black.pgn
+	  
 	  Book:Exchange French
       Description: Breaking symmetry when facing the Exchange Variation in the French.
       File: Openings/Black/French Exchange for Black.pgn

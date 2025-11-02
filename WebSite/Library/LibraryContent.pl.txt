@@ -6,7 +6,7 @@ Bookcase:Tournaments
 Description: Partie z turniejów i meczów.
 
     Shelf:Mistrzostwa Świata 
-    Description: Partie z meczów o mistrzostwo świata
+    Description: Partie z meczów o mistrzostwo świata.
     
 	  Book:Indywidualne mistrzostwa świata mężczyzn (jęz. ang.)
       Description: Wszystkie partie z meczów o mistrzostwo świata mężczyzn.
@@ -32,6 +32,17 @@ Description: Partie z turniejów i meczów.
       Description: Mistrzostwa Świata w Grze Szybkiej Kobiet 2023, Samarkanda, grudzień 2023.
       File:Tournaments/World Rapid Chess Championship Women 2023.pgn
 	  
+    Shelf:Mistrzostwa Europy 
+    Description: Partie z mistrzostw Europy.
+    
+	  Book:Drużynowe Mistrzostwa Europy 2025 - Sekcja Otwarta
+      Description: Wszystkie partie z mistrzostwo Europy w sekcji otwartej.
+      File:Tournaments/European Team Championship 2025 - Open.pgn
+        
+	  Book:Drużynowe Mistrzostwa Europy 2025 - Sekcja Kobiet
+      Description: Wszystkie partie z mistrzostwo Europy w sekcji kobiet.
+      File:Tournaments/European Team Championship 2025 - Women.pgn
+
 Bookcase: Podręczniki Towarzyszące i Fragmenty Książek 
 Description: Kolekcje partii z książek i fragmenty książek zaadoptowane dla Chess Forge'a.
 
@@ -111,12 +122,16 @@ Description:Teoria i praktyka debiutów szachowych.
       Description: Wszystko co musisz wiedzieć, żeby grać Caro-Kann.
       File: Openings/Black/Caro-Kann for Black.pgn
 
+	  Book:Obrona Francuska (jęz. ang.)
+      Description: Obrona Francuska od strony czarnych.
+      File: Openings/Black/French for Black.pgn
+	  
 	  Book:Wariant Wymienny Obronny Francuskiej (jęz. ang.)
       Description: Jak przełamać symetrię grając czarnymi wariant wymienny Francuskiej.
       File: Openings/Black/French Exchange for Black.pgn
 	  
       Book:Obrona Ragozina (jęz. ang.)
-      Description: Solidne element repertuaru czarnych przeciwko 1.d4.
+      Description: Solidny element repertuaru czarnych przeciwko 1.d4.
       File: Openings/Black/Ragozin for Black.pgn
       
 	  Book:Pułapki w Gambicie Stafforda (jęz. ang.)
