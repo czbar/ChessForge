@@ -1,17 +1,54 @@
-﻿using System;
+﻿using ChessPosition.Utils;
+using GameTree;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Documents;
-using ChessPosition.Utils;
-using GameTree;
 
 namespace ChessPosition
 {
     public class TextUtils
     {
+        /// <summary>
+        /// Parses a version string in the form of "major.minor"
+        /// where major and minor are unsigned integers.
+        /// If the passed string represents a single number
+        /// then minor will be set to 0.
+        /// </summary>
+        /// <param name="txt"></param>
+        /// <param name="major"></param>
+        /// <param name="minor"></param>
+        /// <returns></returns>
+        public static bool ParseVersionString(string txt, out uint major, out uint minor)
+        {
+            major = 0;
+            minor = 0;
+            
+            bool result = false;
+
+            if (!string.IsNullOrEmpty(txt))
+            {
+                string[] tokens = txt.Split('.');
+                int tokenCount = tokens.Length;
+                switch(tokenCount)
+                {
+                    case 1:
+                        result = uint.TryParse(tokens[0], out major);
+                        break;
+                    case 2:
+                        result = uint.TryParse(tokens[0], out major) && uint.TryParse(tokens[1], out minor);
+                        break;
+                    default:
+                        result = false;
+                        break;
+                }
+            }
+
+            return result;
+        }
+
         /// <summary>
         /// Removes any trailing ellipsis from the passed string.
         /// </summary>
@@ -618,13 +655,13 @@ namespace ChessPosition
                 int len = tokens.Length;
                 if (len >= 3)
                 {
-                    if (!int.TryParse(tokens[len-2], out nodeId))
+                    if (!int.TryParse(tokens[len - 2], out nodeId))
                     {
                         nodeId = -1;
                     }
                     else
                     {
-                        articleRef = tokens[len-1];
+                        articleRef = tokens[len - 1];
                     }
                 }
             }
