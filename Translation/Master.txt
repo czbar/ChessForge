@@ -717,6 +717,9 @@ MsgClipboardContainsPgn=Clipboard's content
 #Message: No diagrams found.
 MsgNoDiagramsFound=No diagrams have been found
 
+#Message: Invalid version number.
+MsgInvalidVersionNumber=Version number must be in the form 'X.Y' where X and Y are non-negative numbers.
+
 #Workbook Options dialog title
 DlgTitleWorkbookOptions=Workbook Options
 

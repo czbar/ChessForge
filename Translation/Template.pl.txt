@@ -932,6 +932,10 @@ MsgClipboardContainsPgn=Zawartość schowka
 #english: MsgNoDiagramsFound=No diagrams have been found
 MsgNoDiagramsFound=Nie znaleziono żadnych diagramów
 
+#description: Message: Invalid version number.
+#english: MsgInvalidVersionNumber=Version number must be in the form "X.Y" where X and Y are non-negative numbers.
+MsgInvalidVersionNumber=Wersja musi być w formacie 'X.Y' gdzie X i Y są liczbami.
+
 #description: Workbook Options dialog title
 #english: DlgTitleWorkbookOptions=Workbook Options
 DlgTitleWorkbookOptions=Opcje Podręcznika

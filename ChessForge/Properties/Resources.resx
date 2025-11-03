@@ -762,6 +762,9 @@
   <data name="MsgNoDiagramsFound" xml:space="preserve">
     <value>No diagrams have been found</value>
   </data>
+  <data name="MsgInvalidVersionNumber" xml:space="preserve">
+    <value>Version number must be in the form "X.Y" where X and Y are non-negative numbers.</value>
+  </data>
   <data name="DlgTitleWorkbookOptions" xml:space="preserve">
     <value>Workbook Options</value>
   </data>
