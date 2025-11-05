@@ -134,6 +134,14 @@ Description:Teoria i praktyka debiutów szachowych.
       Description: Solidny element repertuaru czarnych przeciwko 1.d4.
       File: Openings/Black/Ragozin for Black.pgn
       
+	  Book:Boczne Debiuty (jęz. ang.)
+      Description: Szkice Debiutowe - Kilka idei jak odpowiadać na "boczne" otwarcia białych.
+      File: Openings/Black/Flank Openings for Black.pgn
+      
+	  Book:Uniwersalne 1...b6 (jęz. ang.)
+      Description: Szkice Debiutowe - 1...b6 niezaleznie od pierwszego ruchu białych.
+      File: Openings/Black/1... b6 for Black.pgn
+      
 	  Book:Pułapki w Gambicie Stafforda (jęz. ang.)
       Description: Zabawna rozprawka Erica Rosena o Gambicie Stafforda.  Zaadoptowana ze studium Erica na lichess.
       File: Openings/Black/Stafford Gambit for Black.pgn

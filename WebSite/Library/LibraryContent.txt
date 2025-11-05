@@ -127,6 +127,14 @@ Description:Workbooks examining theory and practice of various Openings.
       Description: A solid addition to one's repertoire against 1.d4.
       File: Openings/Black/Ragozin for Black.pgn
       
+	  Book:Flank Openings
+      Description: Openings Outlines Series - Some ideas on how to handle those awkward flank openings.
+      File: Openings/Black/Flank Openings for Black.pgn
+      
+	  Book:Universal 1...b6
+      Description: Openings Outlines Series - 1...b6 regardless of White's first move.
+      File: Openings/Black/1... b6 for Black.pgn
+	  
 	  Book:Stafford Gambit Traps
       Description: Eric Rosen's entertaining treatise on the Stafford Gambit.  Adapted from Eric's lichess study.
       File: Openings/Black/Stafford Gambit for Black.pgn
