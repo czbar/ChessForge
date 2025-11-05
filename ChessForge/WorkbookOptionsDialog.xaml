@@ -8,6 +8,7 @@
         mc:Ignorable="d"
          AllowsTransparency="False"
          Background="Transparent"
+        ResizeMode="NoResize"
         ShowInTaskbar="True"
         Title="{x:Static p:Resources.DlgTitleWorkbookOptions}" Height="395" Width="440" HorizontalAlignment="Left">
 
@@ -16,10 +17,10 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Label x:Name="UiLblTitle" Content="{x:Static p:Resources.Title}" HorizontalAlignment="Left" Margin="30,10,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="UiTbTitle" HorizontalAlignment="Left" VerticalContentAlignment="Center" Margin="100,12,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="26" Width="295" Visibility="Visible"/>
+        <TextBox x:Name="UiTbTitle" HorizontalAlignment="Left" VerticalContentAlignment="Center" Margin="100,12,0,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Height="26" Width="295" Visibility="Visible"/>
 
         <Label x:Name="UiLblAuthor" Content="{x:Static p:Resources.Author}" HorizontalAlignment="Left" Margin="30,45,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="UiTbAuthor" HorizontalAlignment="Left" VerticalContentAlignment="Center" Margin="100,47,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="26" Width="295" Visibility="Visible"/>
+        <TextBox x:Name="UiTbAuthor" HorizontalAlignment="Left" VerticalContentAlignment="Center" Margin="100,47,0,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Height="26" Width="295" Visibility="Visible"/>
 
         <Label x:Name="UiLblVersion" Content="{x:Static p:Resources.Version}" HorizontalAlignment="Left" Margin="30,80,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="UiTbVersion" HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="100,82,0,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Height="26" Width="40" Visibility="Visible"/>
