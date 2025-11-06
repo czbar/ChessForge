@@ -144,6 +144,13 @@ namespace ChessForge
                     AppLog.Message("ERROR: InsertOrUpdateCommentBeforeRun()- Run " + nd.NodeId.ToString() + " not found in _dictNodeToRun");
                     return null;
                 }
+                else
+                {
+                    if (IsMoveTextWithNumber(rMove.Text))
+                    {
+                        includeNumber = true;
+                    }
+                }
 
                 Paragraph parentPara = rMove.Parent as Paragraph;
 
