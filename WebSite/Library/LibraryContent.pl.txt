@@ -134,7 +134,7 @@ Description:Teoria i praktyka debiutów szachowych.
       Description: Solidny element repertuaru czarnych przeciwko 1.d4.
       File: Openings/Black/Ragozin for Black.pgn
       
-	  Book:Boczne Debiuty (jęz. ang.)
+	  Book:Otwarcia Flankowe (jęz. ang.)
       Description: Szkice Debiutowe - Kilka idei jak odpowiadać na "boczne" otwarcia białych.
       File: Openings/Black/Flank Openings for Black.pgn
       
