@@ -965,11 +965,11 @@ namespace ChessForge
         {
             try
             {
-                List<Chapter> chapters = objChapterList as List<Chapter>;
-                int index = chapters[0].Index;
+                List<Chapter> createdChapters = objChapterList as List<Chapter>;
+                int index = createdChapters[0].Index;
 
                 List<Chapter> chaptersToDelete = new List<Chapter>();
-                foreach (Chapter ch in Chapters)
+                foreach (Chapter ch in createdChapters)
                 {
                     chaptersToDelete.Add(ch);
                 }
