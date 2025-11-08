@@ -30,7 +30,11 @@
                 <RadioButton x:Name="UiRbCritA00toE99" Content="A00 ... E99" HorizontalAlignment="Left" Margin="10,10,0,0"/>
             </StackPanel>
         </GroupBox>
-        <GroupBox x:Name="UiGbRoundCrit" Foreground="LightGray" Header="{x:Static p:Resources.Granularity}" Margin="180,34,0,0" Width="155" HorizontalAlignment="Left" VerticalAlignment="Top" Height="115">
+        <GroupBox x:Name="UiGbRoundCrit" Header="{x:Static p:Resources.Granularity}" Margin="180,34,0,0" Width="155" HorizontalAlignment="Left" VerticalAlignment="Top" Height="115">
+            <StackPanel>
+                <RadioButton x:Name="UiRbCrit_12" Content="1,2,3..." HorizontalAlignment="Left" Margin="10,22,0,0"/>
+                <RadioButton x:Name="UiRbCrit_11_12" Content="1.1,1.2,1.3..." HorizontalAlignment="Left" Margin="10,16,0,0"/>
+            </StackPanel>
         </GroupBox>
         <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="-220,0,0,20" Width="90" VerticalAlignment="Bottom" Click="UiBtnOk_Click"  />
         <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="0,0,0,20" Width="90" VerticalAlignment="Bottom"/>

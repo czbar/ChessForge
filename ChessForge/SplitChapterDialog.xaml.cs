@@ -23,7 +23,10 @@ namespace ChessForge
 
         DATE_YEAR,
         DATE_MONTH,
-        DATE_DAY
+        DATE_DAY,
+
+        ROUND_ONE_NUMBER,
+        ROUND_TWO_NUMBERS,
     }
 
     /// <summary>
@@ -111,11 +114,18 @@ namespace ChessForge
                 case SplitByCriterion.DATE_DAY:
                     UiRbCritDay.IsChecked = true;
                     break;
+
+                case SplitByCriterion.ROUND_ONE_NUMBER:
+                    UiRbCrit_12.IsChecked = true;
+                    break;
+                case SplitByCriterion.ROUND_TWO_NUMBERS:
+                    UiRbCrit_11_12.IsChecked = true;
+                    break;
             }
         }
 
         /// <summary>
-        /// Set the radio button selection for the non-nonselected current SplitBy buttons. 
+        /// Set the radio button selection for the non-selected current SplitBy buttons. 
         /// </summary>
         /// <param name="splitBy"></param>
         private void SetDefaultCriterionButton(SplitBy splitBy)
@@ -124,9 +134,11 @@ namespace ChessForge
             {
                 case SplitBy.ECO:
                     UiRbCritYear.IsChecked = true;
+                    UiRbCrit_12.IsChecked = true;
                     break;
                 case SplitBy.DATE:
                     UiRbCritAtoE.IsChecked = true;
+                    UiRbCrit_12.IsChecked = true;
                     break;
                 case SplitBy.ROUND:
                     UiRbCritYear.IsChecked = true;
@@ -207,6 +219,14 @@ namespace ChessForge
             else
             {
                 LastSplitBy = SplitBy.ROUND;
+                if (UiRbCrit_12.IsChecked == true)
+                {
+                    LastSplitByCrtierion = SplitByCriterion.ROUND_ONE_NUMBER;
+                }
+                else
+                {
+                    LastSplitByCrtierion = SplitByCriterion.ROUND_TWO_NUMBERS;
+                }
             }
 
 
