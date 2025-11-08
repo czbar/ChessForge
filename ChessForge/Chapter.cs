@@ -1,11 +1,10 @@
-﻿using ChessForge.Properties;
-using ChessPosition;
+﻿using ChessPosition;
 using GameTree;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Markup;
 using System.Windows.Documents;
+using System.Windows.Markup;
 
 namespace ChessForge
 {
@@ -66,27 +65,25 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// The Guid of the Workbook.
+        /// The Guid of the Chapter which is the GUI of the Study Tree.
         /// Generates a guid if empty.
         /// </summary>
         public string Guid
         {
             get
             {
-                if (string.IsNullOrEmpty(_guid))
+                string guid = StudyTree.Guid;
+                if (string.IsNullOrEmpty(guid))
                 {
-                    _guid = TextUtils.GenerateRandomElementName();
+                    guid = TextUtils.GenerateGuid();
                 }
-                return _guid;
+                return guid;
             }
             set
             {
-                _guid = value;
+                StudyTree.Guid = value;
             }
         }
-
-        // guid of this chapter
-        private string _guid;
 
         // title of this chapter
         private string _title;
