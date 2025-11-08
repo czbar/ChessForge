@@ -39,7 +39,7 @@ namespace ChessForge
                         createdChapters = SplitChapterByDate(SplitChapterDialog.LastSplitByCrtierion, chapter, origTitle);
                         break;
                     case SplitBy.ROUND:
-                        createdChapters = SplitChapterByRound(chapter, origTitle);
+                        createdChapters = SplitChapterByRound(SplitChapterDialog.LastSplitByCrtierion, chapter, origTitle);
                         break;
                 }
 
@@ -503,7 +503,7 @@ namespace ChessForge
         /// <param name="chapter"></param>
         /// <param name="origTitle"></param>
         /// <returns></returns>
-        private static List<Chapter> SplitChapterByRound(Chapter chapter, string origTitle)
+        private static List<Chapter> SplitChapterByRound(SplitByCriterion crit, Chapter chapter, string origTitle)
         {
             List<Chapter> resChapters = new List<Chapter>();
 
@@ -514,6 +514,15 @@ namespace ChessForge
                 foreach (Article game in chapter.ModelGames)
                 {
                     string round = game.Tree.Header.GetRound(out _);
+                    if (crit == SplitByCriterion.ROUND_ONE_NUMBER)
+                    {
+                        int pos = round.IndexOf('.');
+                        if (pos >= 0)
+                        {
+                            round = round.Substring(0, pos);
+                        }
+                    }
+
                     if (!_dictResChapters.ContainsKey(round))
                     {
                         _dictResChapters[round] = new Chapter();
