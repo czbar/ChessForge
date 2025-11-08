@@ -836,7 +836,7 @@ namespace ChessForge
             {
                 if (string.IsNullOrEmpty(_guid))
                 {
-                    _guid = TextUtils.GenerateRandomElementName();
+                    _guid = TextUtils.GenerateGuid();
                 }
                 return _guid;
             }
@@ -1331,6 +1331,7 @@ namespace ChessForge
         {
             Chapter chapter = new Chapter();
             chapter.StudyTree = new Article(tree);
+            chapter.StudyTree.Guid = TextUtils.GenerateGuid();
 
             Chapters.Add(chapter);
 
