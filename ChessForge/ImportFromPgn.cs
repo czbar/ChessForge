@@ -222,7 +222,7 @@ namespace ChessForge
                                             int index = PgnArticleUtils.AddArticle(targetChapter, games[i], contentType, out string error, out article, targetcontentType);
                                             if (assignNewGuids)
                                             {
-                                                article.Guid = TextUtils.GenerateRandomElementName();
+                                                article.Guid = TextUtils.GenerateGuid();
                                             }
                                             
                                             if (index < 0)

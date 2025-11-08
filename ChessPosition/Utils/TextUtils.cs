@@ -731,11 +731,11 @@ namespace ChessPosition
         }
 
         /// <summary>
-        /// Uses Guid to generatean alphanumeric string starting with 'R'
-        /// as names in many contexts must start with a letter.
+        /// Generates a Guid startign with an "R" 
+        /// as names in many contexts (elements in XAML) must start with a letter.
         /// </summary>
         /// <returns></returns>
-        public static string GenerateRandomElementName()
+        public static string GenerateGuid()
         {
             return "R" + Guid.NewGuid().ToString("N");
         }

@@ -689,7 +689,7 @@ namespace GameTree
             string value = _headers.Where(kvp => kvp.Key == headerKey).FirstOrDefault().Value;
             if (string.IsNullOrEmpty(value))
             {
-                value = TextUtils.GenerateRandomElementName();
+                value = TextUtils.GenerateGuid();
                 SetHeaderValue(PgnHeaders.KEY_GUID, value);
             }
 
@@ -723,7 +723,7 @@ namespace GameTree
         /// <returns></returns>
         public string SetNewTreeGuid()
         {
-            string guid = TextUtils.GenerateRandomElementName();
+            string guid = TextUtils.GenerateGuid();
             SetHeaderValue(PgnHeaders.KEY_GUID, guid);
             return guid;
         }

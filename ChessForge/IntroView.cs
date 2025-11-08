@@ -471,14 +471,14 @@ namespace ChessForge
                         }
                         else
                         {
-                            block.Name = TextUtils.GenerateRandomElementName();
+                            block.Name = TextUtils.GenerateGuid();
                         }
                     }
                     else
                     {
                         if (name == string.Empty)
                         {
-                            block.Name = TextUtils.GenerateRandomElementName();
+                            block.Name = TextUtils.GenerateGuid();
                         }
                     }
                 }
@@ -1800,7 +1800,7 @@ namespace ChessForge
                         if (nameToSearchPos > 0)
                         {
                             // duplicate found so replace
-                            string nameToReplaceWith = SEARCH_STRING + TextUtils.GenerateRandomElementName() + "\"";
+                            string nameToReplaceWith = SEARCH_STRING + TextUtils.GenerateGuid() + "\"";
                             string xamlPart1 = xamlString.Substring(0, closeQuotePos + 1);
                             string xamlPart2 = xamlString.Substring(closeQuotePos + 1);
                             xamlPart1 = xamlPart1.Replace(nameToSearch, nameToReplaceWith);
