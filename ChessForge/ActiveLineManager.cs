@@ -638,6 +638,10 @@ namespace ChessForge
                         ToggleDontSaveEvals();
                         e.Handled = true;
                         break;
+                    case Key.F9:
+                        _mainWin.UiMnEnterNullMove_Click(null, null);
+                        e.Handled = true;
+                        break;
                     case Key.PageUp:
                         _mainWin.ActiveTreeView?.HostRtb.PageUp();
                         e.Handled = true;
