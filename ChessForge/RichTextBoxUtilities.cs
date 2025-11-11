@@ -168,7 +168,7 @@ namespace ChessForge
                             Run textRun = new Run(comment.Substring(firstUnprocessedChar, pos_start - firstUnprocessedChar));
                             para.Inlines.Add(textRun);
                         }
-                        
+
                         Hyperlink link = new Hyperlink(new Run(urls[i]));
                         link.NavigateUri = new Uri(urls[i]);
 
@@ -455,6 +455,45 @@ namespace ChessForge
                 }
             }
 
+            return res;
+        }
+
+        /// <summary>
+        /// Checks if the previous Inline before the passed Run
+        /// is a Run ending with a new line character.
+        /// </summary>
+        /// <param name="run"></param>
+        /// <returns></returns>
+        public static bool IsPreviousRunNewLine(Run run)
+        {
+            bool res = false;
+
+            if (run != null)
+            {
+                Inline inl = run.PreviousInline;
+                res = IsRunEndsWithNewLine(inl as Run);
+            }
+
+            return res;
+        }
+
+        /// <summary>
+        /// Checks if the passed Run ends with a new line character.
+        /// </summary>
+        /// <param name="run"></param>
+        /// <returns></returns>
+        public static bool IsRunEndsWithNewLine(Run run)
+        {
+            bool res = false;
+            
+            if (run != null)
+            {
+                if (!string.IsNullOrEmpty(run.Text))
+                {
+                    res = run.Text.EndsWith("\n");
+                }
+            }
+         
             return res;
         }
 
