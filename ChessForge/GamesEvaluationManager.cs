@@ -1,14 +1,9 @@
-﻿using GameTree;
-using ChessPosition;
+﻿using ChessPosition;
+using GameTree;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
-using WebAccess;
 
 namespace ChessForge
 {
@@ -208,7 +203,7 @@ namespace ChessForge
                         double fract = (double)_pliesEvaluated / (double)_plyCountToEvaluate;
                         long timeRemaining = _estExecutionTime - (long)(fract * (double)_estExecutionTime);
                         _dlgProgress.UiLblTimeRemaining.Content = Properties.Resources.TimeRemainig + ": " + GuiUtilities.TimeStringInTwoParts(timeRemaining);
-                        int pct = (int)(fract * 100.0);
+                        int pct = Math.Min(99, (int)(fract * 100.0));
                         _dlgProgress.UiLblProgressPct.Content = pct.ToString() + "%";
                         _dlgProgress.UiPbProgress.Value = pct;
 
