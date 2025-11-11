@@ -612,7 +612,7 @@ namespace ChessForge
             if (GetDiagramFromParagraph(para, out _))
             {
                 para = rtb.CaretPosition.InsertParagraphBreak().Paragraph;
-                para.Name = TextUtils.GenerateRandomElementName();
+                para.Name = TextUtils.GenerateGuid();
                 insertBefore = null;
             }
             else

@@ -35,14 +35,14 @@ namespace ChessForge
                 Dictionary<string, string> refsMap = new Dictionary<string, string>();
                 foreach (Chapter chapter in workbook.Chapters)
                 {
-                    refsMap[chapter.StudyTree.Guid] = System.Guid.NewGuid().ToString();
+                    refsMap[chapter.StudyTree.Guid] = TextUtils.GenerateGuid();
                     foreach (Article article in chapter.ModelGames)
                     {
-                        refsMap[article.Guid] = System.Guid.NewGuid().ToString();
+                        refsMap[article.Guid] = TextUtils.GenerateGuid();
                     }
                     foreach (Article article in chapter.Exercises)
                     {
-                        refsMap[article.Guid] = System.Guid.NewGuid().ToString();
+                        refsMap[article.Guid] = TextUtils.GenerateGuid();
                     }
                 }
 

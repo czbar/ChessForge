@@ -2766,15 +2766,16 @@ namespace ChessForge
             WorkbookOptionsDialog dlg = new WorkbookOptionsDialog(SessionWorkbook);
             GuiUtilities.PositionDialog(dlg, this, 100);
 
-            dlg.ShowDialog();
-
-            if (dlg.ExitOK)
+            if (dlg.ShowDialog() == true)
             {
                 try
                 {
                     SessionWorkbook.Title = dlg.WorkbookTitle;
+                    SessionWorkbook.SetVersion(dlg.WorkbookVer);
                     SessionWorkbook.Author = dlg.Author;
                     SessionWorkbook.TrainingSideConfig = dlg.TrainingSide;
+                    // version may have changed
+                    AppState.UpdateAppTitleBar();
 
                     SessionWorkbook.StudyBoardOrientationConfig = dlg.StudyBoardOrientation;
                     SessionWorkbook.GameBoardOrientationConfig = dlg.GameBoardOrientation;

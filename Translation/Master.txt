@@ -717,6 +717,9 @@ MsgClipboardContainsPgn=Clipboard's content
 #Message: No diagrams found.
 MsgNoDiagramsFound=No diagrams have been found
 
+#Message: Invalid version number.
+MsgInvalidVersionNumber=Version number must be in the form 'X.Y' where X and Y are non-negative numbers.
+
 #Workbook Options dialog title
 DlgTitleWorkbookOptions=Workbook Options
 
@@ -854,7 +857,7 @@ TurnEngineOff=Turn the Engine Off (F2)
 TurnEngineOn=Turn the Engine On (F2)
 
 #Tool tip for allowing evakuation persistance
-TtAllowEvalUpdate=Turn the Engine Off (F2)\nNOTE: Evaluations are not being updated (Ctrl+K to allow).
+TtAllowEvalUpdate=Turn the Engine Off (F2)\nNOTE: Evaluations are not being updated (press F8 to allow).
 
 #Tool tip for hiding Eval Chart
 HideEvaluationChart=Hide Evaluation Chart

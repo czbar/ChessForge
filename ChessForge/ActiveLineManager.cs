@@ -634,6 +634,14 @@ namespace ChessForge
                         _mainWin.UiMnFindIdenticalPosition_Click(null, null);
                         e.Handled = true;
                         break;
+                    case Key.F8:
+                        ToggleDontSaveEvals();
+                        e.Handled = true;
+                        break;
+                    case Key.F9:
+                        _mainWin.UiMnEnterNullMove_Click(null, null);
+                        e.Handled = true;
+                        break;
                     case Key.PageUp:
                         _mainWin.ActiveTreeView?.HostRtb.PageUp();
                         e.Handled = true;
@@ -761,14 +769,7 @@ namespace ChessForge
                                 e.Handled = true;
                                 break;
                             case Key.K:
-                                _mainWin.SetDontSaveEvalsMenuItems(!Configuration.DontSavePositionEvals);
-                                string msg = Configuration.DontSavePositionEvals ? Properties.Resources.FlMsgUpdatePositionEvalOff : Properties.Resources.FlMsgUpdatePositionEvalOn;
-                                CommentBox.HintType ht = Configuration.DontSavePositionEvals ? CommentBox.HintType.PROGRESS : CommentBox.HintType.INFO;
-                                if (Configuration.DontSavePositionEvals)
-                                {
-                                    _mainWin.EngineToggleOff_OnPreviewMouseLeftButtonDown(null, null);
-                                }
-                                _mainWin.BoardCommentBox.ShowFlashAnnouncement(msg, ht);
+                                ToggleDontSaveEvals();
                                 e.Handled = true;
                                 break;
                         }
@@ -975,6 +976,21 @@ namespace ChessForge
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Toggles the Don't Save Position Evaluations setting.
+        /// </summary>
+        public void ToggleDontSaveEvals()
+        {
+            _mainWin.SetDontSaveEvalsMenuItems(!Configuration.DontSavePositionEvals);
+            string msg = Configuration.DontSavePositionEvals ? Properties.Resources.FlMsgUpdatePositionEvalOff : Properties.Resources.FlMsgUpdatePositionEvalOn;
+            CommentBox.HintType ht = Configuration.DontSavePositionEvals ? CommentBox.HintType.PROGRESS : CommentBox.HintType.INFO;
+            if (Configuration.DontSavePositionEvals)
+            {
+                _mainWin.EngineToggleOff_OnPreviewMouseLeftButtonDown(null, null);
+            }
+            _mainWin.BoardCommentBox.ShowFlashAnnouncement(msg, ht);
         }
 
         /// <summary>

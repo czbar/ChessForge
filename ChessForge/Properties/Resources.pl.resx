@@ -762,6 +762,9 @@
   <data name="MsgNoDiagramsFound" xml:space="preserve">
     <value>Nie znaleziono żadnych diagramów</value>
   </data>
+  <data name="MsgInvalidVersionNumber" xml:space="preserve">
+    <value>Wersja musi być w formacie 'X.Y' gdzie X i Y są liczbami.</value>
+  </data>
   <data name="DlgTitleWorkbookOptions" xml:space="preserve">
     <value>Opcje Podręcznika</value>
   </data>
@@ -872,7 +875,7 @@
   </data>
   <data name="TtAllowEvalUpdate" xml:space="preserve">
     <value>Wyłącz silnik (F2)
-UWAGA: Oceny nie są uaktualniane (zezwól przez Ctrl+K).</value>
+UWAGA: Oceny nie są uaktualniane (zezwól naciskając F8).</value>
   </data>
   <data name="HideEvaluationChart" xml:space="preserve">
     <value>Ukryj wykres ocen silnika</value>

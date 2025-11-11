@@ -21,6 +21,11 @@ namespace ChessForge
         public string WorkbookTitle;
 
         /// <summary>
+        /// Workbook Version 
+        /// </summary>
+        public string WorkbookVer;
+
+        /// <summary>
         /// Author's name entered by the user
         /// </summary>
         public string Author;
@@ -40,11 +45,6 @@ namespace ChessForge
         /// </summary>
         public PieceColor ExerciseBoardOrientation;
 
-        /// <summary>
-        /// True if dialog exited by clicking Save
-        /// </summary>
-        public bool ExitOK = false;
-
         // string for White to display in the UI 
         private static string _strWhite = Properties.Resources.White.ToUpper();
 
@@ -63,6 +63,7 @@ namespace ChessForge
             WorkbookTitle = _workbook.Title;
             Author = _workbook.Author;
             TrainingSide = _workbook.TrainingSideConfig;
+            WorkbookVer = _workbook.Version.ToString();
 
             UiTbTitle.Text = _workbook.Title;
             UiTbAuthor.Text = _workbook.Author;
@@ -87,8 +88,8 @@ namespace ChessForge
                 UiLblBoardExercisesOrient.Content = _workbook.ExerciseBoardOrientationConfig == PieceColor.Black ? _strBlack : _strWhite;
             }
 
-            UiLblVersion.Content = Properties.Resources.Version +  ": " + _workbook.Version;
-            UiLblVersion.ToolTip = Properties.Resources.TooltipWorkbookVersion;
+            UiTbVersion.Text = _workbook.Version.ToString();
+            UiTbVersion.ToolTip = Properties.Resources.TooltipWorkbookVersion;
 
             UiTbTitle.Focus();
             UiTbTitle.SelectAll();
@@ -118,43 +119,52 @@ namespace ChessForge
 
         /// <summary>
         /// The user pressed the OK button.
-        /// Saves the workbook's title and exits.
+        /// Saves the workbook's options and exits.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void UiBtnOK_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            WorkbookTitle = UiTbTitle.Text;
-            Author = UiTbAuthor.Text;
-
-            if ((string)UiLblSideToMove.Content == _strBlack)
+            if (TextUtils.ParseVersionString(UiTbVersion.Text, out uint major, out uint minor))
             {
-                TrainingSide = PieceColor.Black;
+                WorkbookVer = $"{major}.{minor}";
+
+                WorkbookTitle = UiTbTitle.Text;
+                Author = UiTbAuthor.Text;
+
+                if ((string)UiLblSideToMove.Content == _strBlack)
+                {
+                    TrainingSide = PieceColor.Black;
+                }
+                else
+                {
+                    TrainingSide = PieceColor.White;
+                }
+
+                StudyBoardOrientation = ((string)UiLblBoardStudyOrient.Content == _strBlack) ? PieceColor.Black : PieceColor.White;
+                GameBoardOrientation = ((string)UiLblBoardGamesOrient.Content == _strBlack) ? PieceColor.Black : PieceColor.White;
+
+                if ((string)UiLblBoardExercisesOrient.Content == _strSideToMove)
+                {
+                    ExerciseBoardOrientation = PieceColor.None;
+                }
+                else
+                {
+                    ExerciseBoardOrientation = ((string)UiLblBoardExercisesOrient.Content == _strBlack) ? PieceColor.Black : PieceColor.White;
+                }
+
+                DialogResult = true;
+                Close();
             }
             else
             {
-                TrainingSide = PieceColor.White;
+                MessageBox.Show(Properties.Resources.MsgInvalidVersionNumber, Properties.Resources.Error,
+                    MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
-            StudyBoardOrientation = ((string)UiLblBoardStudyOrient.Content == _strBlack) ? PieceColor.Black : PieceColor.White;
-            GameBoardOrientation = ((string)UiLblBoardGamesOrient.Content == _strBlack) ? PieceColor.Black : PieceColor.White;
-            
-            if ((string)UiLblBoardExercisesOrient.Content == _strSideToMove)
-            {
-                ExerciseBoardOrientation = PieceColor.None;
-            }
-            else
-            {
-                ExerciseBoardOrientation = ((string)UiLblBoardExercisesOrient.Content == _strBlack) ? PieceColor.Black : PieceColor.White;
-            }
-
-            ExitOK = true;
-            this.Close();
         }
 
         /// <summary>
-        /// Exits the dialog without setting ExitOK to true.
-        /// The caller should consider such exit as cancellation.
+        /// Cancels the dialog.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

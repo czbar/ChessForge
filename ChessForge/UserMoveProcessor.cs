@@ -365,27 +365,16 @@ namespace ChessForge
                         }
                         else
                         {
-
                             // to improve performance we only need to rebuild the tree if the new move has siblings
                             // or if the parent has siblings (in which there may be layout changes)
                             // or in the exercise view, if this is the first move (nd.Parent.NodeId == 0)
-                            // in which case we want to call a Rebuild so we get the move number
-                            if (nd.Parent == null || nd.Parent.NodeId == 0 || nd.Parent.Children.Count > 1
+                            // in which case we want to call a Rebuild so we get the move number.
+                            // NOTE: we added nd.Parent.IsDiagram as when the line was in parenthesis, the new move was being
+                            // added outside the parenthesis which was not correct.
+                            if (nd.Parent == null || nd.Parent.NodeId == 0 || nd.Parent.Children.Count > 1 || nd.Parent.IsDiagram
                                 || AppState.MainWin.ActiveVariationTree.NodeHasSiblings(nd.Parent.NodeId))
                             {
                                 PulseManager.SetPauseCounter(5);
-
-                                // TODO: during some tests, it appeared that the call to AppState.MainWin.RebuildActiveTreeView()
-                                //       causes a big perf hit with frustranus showing for a long time.
-                                //       At the same, changing chapters was very fast.
-                                //       This need to be investigated further but is very difficult to reproduce.
-                                //
-                                //if (AppState.MainWin.ActiveTreeView.ContentType == GameData.ContentType.STUDY_TREE)
-                                //{
-                                //    WorkbookLocationNavigator.GotoArticle(WorkbookManager.SessionWorkbook.ActiveChapterIndex, TabViewType.S);
-                                //}
-                                //else
-
                                 AppState.MainWin.RebuildActiveTreeView();
                             }
                             else

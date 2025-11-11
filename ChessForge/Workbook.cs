@@ -836,7 +836,7 @@ namespace ChessForge
             {
                 if (string.IsNullOrEmpty(_guid))
                 {
-                    _guid = TextUtils.GenerateRandomElementName();
+                    _guid = TextUtils.GenerateGuid();
                 }
                 return _guid;
             }
@@ -965,11 +965,11 @@ namespace ChessForge
         {
             try
             {
-                List<Chapter> chapters = objChapterList as List<Chapter>;
-                int index = chapters[0].Index;
+                List<Chapter> createdChapters = objChapterList as List<Chapter>;
+                int index = createdChapters[0].Index;
 
                 List<Chapter> chaptersToDelete = new List<Chapter>();
-                foreach (Chapter ch in Chapters)
+                foreach (Chapter ch in createdChapters)
                 {
                     chaptersToDelete.Add(ch);
                 }
@@ -1331,6 +1331,7 @@ namespace ChessForge
         {
             Chapter chapter = new Chapter();
             chapter.StudyTree = new Article(tree);
+            chapter.StudyTree.Guid = TextUtils.GenerateGuid();
 
             Chapters.Add(chapter);
 

@@ -5110,6 +5110,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Version number must be in the form &apos;X.Y&apos; where X and Y are non-negative numbers..
+        /// </summary>
+        public static string MsgInvalidVersionNumber {
+            get {
+                return ResourceManager.GetString("MsgInvalidVersionNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter valid Url or leave empty to delete link. .
         /// </summary>
         public static string MsgNeedValidUrlOrEmpty {
@@ -8352,7 +8361,7 @@ namespace ChessForge.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to Turn the Engine Off (F2)
-        ///NOTE: Evaluations are not being updated (Ctrl+K to allow)..
+        ///NOTE: Evaluations are not being updated (press F8 to allow)..
         /// </summary>
         public static string TtAllowEvalUpdate {
             get {
