@@ -2,6 +2,100 @@ Redirect:
 Message:
 
       
+Bookcase:Openings
+Description:Teoria i praktyka debiutów szachowych.
+    
+	Shelf:Ogólne
+    Description: Debiuty analizowane z obu stron.
+	
+      Book:System Londyński (jęz. ang.)
+      Description: Szczegółowy przegląd Systemu Londyńskiego.
+      File: Openings/General/London System.pgn
+    
+	Shelf:Repertuar dla Białych
+    Description: Debiuty analizowane z punktu widzenia białych.
+      
+	  Book:Obrona Królewsko-Indyjska, wariant Karpowa (jęz. ang.)
+      Description:Bardzo popularny i efektywny wariant przeciw obronie Królewsko-Indyjskiej.
+      File: Openings/White/King's Indian - Karpov variation for White.pgn
+
+	  Book:Obrona Królewsko-Indyjska, wariant Sämischa (jęz. ang.)
+      Description:Klasyczny system oparty na solidnym centrum pionkowym.
+      File: Openings/White/King's Indian - Sämisch for White.pgn
+          
+	  Book:Gambit Budapesztański (jęz. ang.)
+      Description: Kilka metod okiełznania Gambitu Budapesztańskiego.
+      File: Openings/White/Budapest for White.pgn
+
+	  Book:Gambit Morry (jęz. ang.)
+      Description: Popularny oręż przeciwko Obronie Sycylijskiej.
+      File: Openings/White/Smith Morra Gambit.pgn
+          
+	  Book:Gambit Evansa (jęz. ang.)
+      Description: Zwięzłe opracowanie jednego z najsłynnniejszych, klasycznych gambitów.
+      File: Openings/White/Evans Gambit Starter Kit.pgn
+	
+	Shelf:Repertuar dla Czarnych
+    Description: Debiuty analizowane z punktu widzenia czarnych.
+        
+	  Book:Klasyczna Sycylijska 2...d6, 5...Sc6 (jęz. ang.)
+      Description: Klasyczny, zawsze popularny na wszystkich szczeblach system w Obronie Syscylijskiej.
+      File: Openings/Black/Classical Sicilian for Black.pgn
+    
+	  Book:Caro-Kann (jęz. ang.)
+      Description: Wszystko co musisz wiedzieć, żeby grać Caro-Kann.
+      File: Openings/Black/Caro-Kann for Black.pgn
+
+	  Book:Obrona Francuska (jęz. ang.)
+      Description: Obrona Francuska od strony czarnych.
+      File: Openings/Black/French for Black.pgn
+	  
+	  Book:Wariant Wymienny Obronny Francuskiej (jęz. ang.)
+      Description: Jak przełamać symetrię grając czarnymi wariant wymienny Francuskiej.
+      File: Openings/Black/French Exchange for Black.pgn
+	  
+      Book:Obrona Ragozina (jęz. ang.)
+      Description: Solidny element repertuaru czarnych przeciwko 1.d4.
+      File: Openings/Black/Ragozin for Black.pgn
+      
+	  Book:Otwarcia Flankowe (jęz. ang.)
+      Description: Szkice Debiutowe - Kilka idei jak odpowiadać na "boczne" otwarcia białych.
+      File: Openings/Black/Flank Openings for Black.pgn
+      
+	  Book:Uniwersalne 1...b6 (jęz. ang.)
+      Description: Szkice Debiutowe - 1...b6 niezaleznie od pierwszego ruchu białych.
+      File: Openings/Black/1... b6 for Black.pgn
+      
+	  Book:Pułapki w Gambicie Stafforda (jęz. ang.)
+      Description: Zabawna rozprawka Erica Rosena o Gambicie Stafforda.  Zaadoptowana ze studium Erica na lichess.
+      File: Openings/Black/Stafford Gambit for Black.pgn
+
+	Shelf:Nietypowe Otwarcia 
+    Description: Krótkie podręczniki dla rzadkich i nietypowych debiutów. 
+    
+	  Book:The Gambit Słonia
+      Description: Nie spotykany już w praktyce mistrzowskiej, ale każdy kto gra 1.e4 musi go znać.
+      File: Openings/Unorthodox/Elephant Gambit.pgn
+
+	  Book:Gambit Nakhmansona
+      Description: Agresywna ofiara skoczka w Partii Włoskiej.
+      File: Openings/Unorthodox/Nakhmanson Gambit.pgn
+
+
+Bookcase: Końcówki i Ćwiczenia
+Description: Zbiory końcówek i ćwiczeń.
+
+    Shelf:Końcówki
+    Description: 
+    
+	  Book:Zbiór końcówek autorstwa NoseKnowsAll@lichess (jęz. ang.)
+      Description: Znakomity wybór końcówek importowany ze studium użytkownika NoseKnowsAll nalichess.
+      File: Endgames/Endgames by NoseKnowsAll.pgn
+
+      Book:Schematy matowe (jęz. ang.)
+      Description: Podstawowe schematy matowe, nazwane i zilustrowane.
+      File: Endgames/Checkmate Patterns.pgn
+        
 Bookcase:Tournaments
 Description: Partie z turniejów i meczów.
 
@@ -82,93 +176,3 @@ Description:Opracowania o strategii różnych faz gry.
       Description: Czarny król wędruje na skrzydło hetmańskie gdzie białe mają półotwartą linię b.
       File: Strategy/Strategy Ke8-d8-c7.pgn
 
-Bookcase:Openings
-Description:Teoria i praktyka debiutów szachowych.
-    
-	Shelf:Ogólne
-    Description: Debiuty analizowane z obu stron.
-	
-      Book:System Londyński (jęz. ang.)
-      Description: Szczegółowy przegląd Systemu Londyńskiego.
-      File: Openings/General/London System.pgn
-    
-	Shelf:Repertuar dla Białych
-    Description: Debiuty analizowane z punktu widzenia białych.
-      
-	  Book:Gambit Budapesztański (jęz. ang.)
-      Description: Kilka metod okiełznania Gambitu Budapesztańskiego.
-      File: Openings/White/Budapest for White.pgn
-      
-	  Book:Obrona Królewsko-Indyjska, wariant Karpowa (jęz. ang.)
-      Description:Bardzo popularny i efektywny wariant przeciw obronie Królewsko-Indyjskiej.
-      File: Openings/White/King's Indian - Karpov variation for White.pgn
-    
-	  Book:Gambit Morry (jęz. ang.)
-      Description: Popularny oręż przeciwko Obronie Sycylijskiej.
-      File: Openings/White/Smith Morra Gambit.pgn
-          
-	  Book:Gambit Evansa (jęz. ang.)
-      Description: Zwięzłe opracowanie jednego z najsłynnniejszych, klasycznych gambitów.
-      File: Openings/White/Evans Gambit Starter Kit.pgn
-	
-	Shelf:Repertuar dla Czarnych
-    Description: Debiuty analizowane z punktu widzenia czarnych.
-        
-	  Book:Klasyczna Sycylijska 2...d6, 5...Sc6 (jęz. ang.)
-      Description: Klasyczny, zawsze popularny na wszystkich szczeblach system w Obronie Syscylijskiej.
-      File: Openings/Black/Classical Sicilian for Black.pgn
-    
-	  Book:Caro-Kann (jęz. ang.)
-      Description: Wszystko co musisz wiedzieć, żeby grać Caro-Kann.
-      File: Openings/Black/Caro-Kann for Black.pgn
-
-	  Book:Obrona Francuska (jęz. ang.)
-      Description: Obrona Francuska od strony czarnych.
-      File: Openings/Black/French for Black.pgn
-	  
-	  Book:Wariant Wymienny Obronny Francuskiej (jęz. ang.)
-      Description: Jak przełamać symetrię grając czarnymi wariant wymienny Francuskiej.
-      File: Openings/Black/French Exchange for Black.pgn
-	  
-      Book:Obrona Ragozina (jęz. ang.)
-      Description: Solidny element repertuaru czarnych przeciwko 1.d4.
-      File: Openings/Black/Ragozin for Black.pgn
-      
-	  Book:Otwarcia Flankowe (jęz. ang.)
-      Description: Szkice Debiutowe - Kilka idei jak odpowiadać na "boczne" otwarcia białych.
-      File: Openings/Black/Flank Openings for Black.pgn
-      
-	  Book:Uniwersalne 1...b6 (jęz. ang.)
-      Description: Szkice Debiutowe - 1...b6 niezaleznie od pierwszego ruchu białych.
-      File: Openings/Black/1... b6 for Black.pgn
-      
-	  Book:Pułapki w Gambicie Stafforda (jęz. ang.)
-      Description: Zabawna rozprawka Erica Rosena o Gambicie Stafforda.  Zaadoptowana ze studium Erica na lichess.
-      File: Openings/Black/Stafford Gambit for Black.pgn
-
-	Shelf:Nietypowe Otwarcia 
-    Description: Krótkie podręczniki dla rzadkich i nietypowych debiutów. 
-    
-	  Book:The Gambit Słonia
-      Description: Nie spotykany już w praktyce mistrzowskiej, ale każdy kto gra 1.e4 musi go znać.
-      File: Openings/Unorthodox/Elephant Gambit.pgn
-
-	  Book:Gambit Nakhmansona
-      Description: Agresywna ofiara skoczka w Partii Włoskiej.
-      File: Openings/Unorthodox/Nakhmanson Gambit.pgn
-
-
-Bookcase: Końcówki i Ćwiczenia
-Description: Zbiory końcówek i ćwiczeń.
-
-    Shelf:Końcówki
-    Description: 
-    
-	  Book:Zbiór końcówek autorstwa NoseKnowsAll@lichess (jęz. ang.)
-      Description: Znakomity wybór końcówek importowany ze studium użytkownika NoseKnowsAll nalichess.
-      File: Endgames/Endgames by NoseKnowsAll.pgn
-
-      Book:Schematy matowe (jęz. ang.)
-      Description: Podstawowe schematy matowe, nazwane i zilustrowane.
-      File: Endgames/Checkmate Patterns.pgn
-        
