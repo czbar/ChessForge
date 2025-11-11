@@ -3199,7 +3199,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiMnEnterNullMove_Click(object sender, RoutedEventArgs e)
+        public void UiMnEnterNullMove_Click(object sender, RoutedEventArgs e)
         {
             ActiveTreeView?.EnterNullMove();
         }
