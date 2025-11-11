@@ -3581,7 +3581,8 @@ namespace ChessForge
         {
             if (sender is MenuItem mni)
             {
-                SetDontSaveEvalsMenuItems(mni.IsChecked);
+                Configuration.DontSavePositionEvals = !mni.IsChecked;
+                ActiveLine.ToggleDontSaveEvals();
             }
         }
 
