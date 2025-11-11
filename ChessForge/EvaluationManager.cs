@@ -195,10 +195,12 @@ namespace ChessForge
                     }
                     AppState.MainWin.Timers.Start(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
                     AppState.MainWin.Timers.Start(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
+                    Configuration.DontSavePositionEvals = false;
                     break;
                 case Mode.ENGINE_GAME:
                     AppState.MainWin.Timers.Start(AppTimers.StopwatchId.EVALUATION_ELAPSED_TIME);
                     AppState.MainWin.Timers.Stop(AppTimers.TimerId.EVALUATION_LINE_DISPLAY);
+                    Configuration.DontSavePositionEvals = false;
                     break;
             }
 
