@@ -875,7 +875,7 @@
   </data>
   <data name="TtAllowEvalUpdate" xml:space="preserve">
     <value>Wyłącz silnik (F2)
-UWAGA: Oceny nie są uaktualniane (zezwól przez Ctrl+K).</value>
+UWAGA: Oceny nie są uaktualniane (zezwól naciskając F8).</value>
   </data>
   <data name="HideEvaluationChart" xml:space="preserve">
     <value>Ukryj wykres ocen silnika</value>

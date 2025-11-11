@@ -933,7 +933,7 @@ MsgClipboardContainsPgn=
 MsgNoDiagramsFound=
 
 #description: Message: Invalid version number.
-#english: MsgInvalidVersionNumber=Version number must be in the form "X.Y" where X and Y are non-negative numbers.
+#english: MsgInvalidVersionNumber=Version number must be in the form 'X.Y' where X and Y are non-negative numbers.
 MsgInvalidVersionNumber=
 
 #description: Workbook Options dialog title
@@ -1109,7 +1109,7 @@ TurnEngineOff=
 TurnEngineOn=
 
 #description: Tool tip for allowing evakuation persistance
-#english: TtAllowEvalUpdate=Turn the Engine Off (F2)\nNOTE: Evaluations are not being updated (Ctrl+K to allow).
+#english: TtAllowEvalUpdate=Turn the Engine Off (F2)\nNOTE: Evaluations are not being updated (press F8 to allow).
 TtAllowEvalUpdate=
 
 #description: Tool tip for hiding Eval Chart

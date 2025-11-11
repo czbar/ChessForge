@@ -763,7 +763,7 @@
     <value>No diagrams have been found</value>
   </data>
   <data name="MsgInvalidVersionNumber" xml:space="preserve">
-    <value>Version number must be in the form "X.Y" where X and Y are non-negative numbers.</value>
+    <value>Version number must be in the form 'X.Y' where X and Y are non-negative numbers.</value>
   </data>
   <data name="DlgTitleWorkbookOptions" xml:space="preserve">
     <value>Workbook Options</value>
@@ -875,7 +875,7 @@
   </data>
   <data name="TtAllowEvalUpdate" xml:space="preserve">
     <value>Turn the Engine Off (F2)
-NOTE: Evaluations are not being updated (Ctrl+K to allow).</value>
+NOTE: Evaluations are not being updated (press F8 to allow).</value>
   </data>
   <data name="HideEvaluationChart" xml:space="preserve">
     <value>Hide Evaluation Chart</value>
