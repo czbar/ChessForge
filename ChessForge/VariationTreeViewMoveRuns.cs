@@ -676,6 +676,8 @@ namespace ChessForge
         private void PlaceCommentBeforeMovePartsIntoParagraph(Paragraph para, TreeNode nd, bool isFirstInPara, List<CommentPart> parts)
         {
             Inline inlPrevious = null;
+            bool isPrevLineEmpty = false;
+
             for (int i = 0; i < parts.Count; i++)
             {
                 CommentPart part = parts[i];
@@ -697,6 +699,9 @@ namespace ChessForge
                     // by at least START. 
                     Run rNode;
                     rNode = _dictNodeToRun[nd.NodeId];
+
+                    // set the flag for skipping double new lines
+                    isPrevLineEmpty = RichTextBoxUtilities.IsPreviousRunNewLine(rNode);
                     para.Inlines.InsertBefore(rNode, inlines[0]);
                     inlPrevious = inlines[0];
 
@@ -707,8 +712,19 @@ namespace ChessForge
                 {
                     foreach (Inline inline in inlines)
                     {
-                        para.Inlines.InsertAfter(inlPrevious, inline);
-                        inlPrevious = inline;
+                        if (isPrevLineEmpty && (inline is Run r) && r.Text == "\n")
+                        {
+                            // skip this inline as it would create double new line
+                            // this covers the case where we inserted a new line Run before diagram
+                            // so that it is always on a new line, but the previous inline already ended
+                            // with a new line.
+                            isPrevLineEmpty = false;
+                        }
+                        else
+                        {
+                            para.Inlines.InsertAfter(inlPrevious, inline);
+                            inlPrevious = inline;
+                        }
                     }
                 }
             }
