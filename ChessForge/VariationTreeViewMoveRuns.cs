@@ -237,7 +237,7 @@ namespace ChessForge
                         bool includeNumber = currNode.NodeId == 0
                             || !string.IsNullOrWhiteSpace(currNode.Comment)
                             || !string.IsNullOrEmpty(nextNode.CommentBeforeMove)
-                            || currNode.IsDiagram
+                            || (currNode.IsDiagram && !currNode.IsDiagramBeforeMove)
                             || firstInPara;
                         UpdateRunText(nextMoveRun, nextNode, includeNumber);
                     }
