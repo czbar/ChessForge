@@ -291,20 +291,27 @@ namespace ChessForge
         /// </summary>
         public void OpenReplayDialog()
         {
-            // pass ActiveTab so that we can add a reference if this is a Study Tree
-            TabViewType activeTab = WorkbookManager.ActiveTab;
-
-            LichessGamesPreviewDialog dlg = new LichessGamesPreviewDialog(_clickedGameId, _gameIdList, 
-                                                AppState.ActiveTab, AppState.MainWin.ActiveTreeView, AppState.ActiveArticleIndex);
-            GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
-            dlg.ShowDialog();
-
-            WorkbookManager.ActiveTab = TabViewType.NONE;
-            if (dlg.GoToGamesOnExit)
+            try
             {
-                activeTab = TabViewType.MODEL_GAME;
+                // pass ActiveTab so that we can add a reference if this is a Study Tree
+                TabViewType activeTab = WorkbookManager.ActiveTab;
+
+                LichessGamesPreviewDialog dlg = new LichessGamesPreviewDialog(_clickedGameId, _gameIdList,
+                                                    AppState.ActiveTab, AppState.MainWin.ActiveTreeView, AppState.ActiveArticleIndex);
+                GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
+                dlg.ShowDialog();
+
+                WorkbookManager.ActiveTab = TabViewType.NONE;
+                if (dlg.GoToGamesOnExit)
+                {
+                    activeTab = TabViewType.MODEL_GAME;
+                }
+                GuiUtilities.ForceFocus(activeTab);
             }
-            GuiUtilities.ForceFocus(activeTab);
+            catch (Exception ex)
+            {
+                AppLog.Message("OpenReplayDialog() ", ex); ;
+            }
         }
 
         /// <summary>
