@@ -48,15 +48,17 @@ namespace ChessForge
         {
             if (index >= 0)
             {
-                _tree = _games[index].Tree;
-                if (string.IsNullOrEmpty(_tree.RootNode.LineId))
+                // process a variation tree for the selected game
+                // to get the _mainLine nodes an populate GUI fields.
+                VariationTree tree = _games[index].Tree;
+                if (string.IsNullOrEmpty(tree.RootNode.LineId))
                 {
-                    _tree.BuildLines();
+                    tree.BuildLines();
                 }
-                PopulateHeaderLine(_tree);
-                _chessBoard.DisplayStartingPosition();
-                _mainLine = _tree.GetNodesForLine("1");
+                PopulateHeaderLine(tree);
 
+                _chessBoard.DisplayStartingPosition();
+                _mainLine = tree.GetNodesForLine("1");
                 _currentNodeMoveIndex = 1;
                 RequestMoveAnimation(_currentNodeMoveIndex);
 

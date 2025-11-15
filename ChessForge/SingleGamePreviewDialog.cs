@@ -68,12 +68,14 @@ namespace ChessForge
         /// <param name="index"></param>
         private void SelectGame()
         {
-            _tree = _games[0].Tree;
-            _tree.BuildLines();
-            PopulateHeaderLine(_tree);
-            _chessBoard.DisplayStartingPosition();
-            _mainLine = _tree.GetNodesForLine("1");
+            // process a variation tree for the selected game
+            // to get the _mainLine nodes an populate GUI fields.
+            VariationTree tree = _games[0].Tree;
+            tree.BuildLines();
+            PopulateHeaderLine(tree);
 
+            _chessBoard.DisplayStartingPosition();
+            _mainLine = tree.GetNodesForLine("1");
             _currentNodeMoveIndex = 1;
             RequestMoveAnimation(_currentNodeMoveIndex);
 
