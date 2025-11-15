@@ -1,10 +1,7 @@
-﻿using GameTree;
-using ChessPosition;
+﻿using ChessPosition;
+using GameTree;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using WebAccess;
@@ -24,6 +21,9 @@ namespace ChessForge
 
         // list of games already downloaded in this dialog session
         private List<string> _importedGameIds = new List<string>();
+
+        // downloaded game trees cache
+        protected Dictionary<string, VariationTree> _downloadedGameTrees = new Dictionary<string, VariationTree>();
 
         /// <summary>
         /// Sets the value of the _openingsData property. 
@@ -59,7 +59,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="lichessGameId"></param>
         /// <param name="gameIdList"></param>
-        public LichessGamesPreviewDialog(string lichessGameId, List<string> gameIdList, TabViewType activeTab, 
+        public LichessGamesPreviewDialog(string lichessGameId, List<string> gameIdList, TabViewType activeTab,
                                          VariationTreeView activeTreeView, int activeArticleIndex)
             : base(lichessGameId, gameIdList, activeTreeView, activeArticleIndex, true)
         {
@@ -109,24 +109,40 @@ namespace ChessForge
                         {
                             throw new Exception(Properties.Resources.ErrGamesNotFound);
                         }
-                        _tree = new VariationTree(GameData.ContentType.MODEL_GAME);
-                        PgnGameParser pgnGame = new PgnGameParser(GameDownload.GameText, _tree, null);
-                        _tree.ContentType = GameData.ContentType.MODEL_GAME;
 
-                        PopulateHeaderLine(_tree);
+                        VariationTree tree = new VariationTree(GameData.ContentType.MODEL_GAME);
+                        PgnGameParser pgnGame = new PgnGameParser(GameDownload.GameText, tree, null);
+                        tree.ContentType = GameData.ContentType.MODEL_GAME;
 
-                        _tree.BuildLines();
-                        _chessBoard.DisplayStartingPosition();
-                        _mainLine = _tree.GetNodesForLine("1");
+                        string gameId = tree.Header.GetGameId(out _);
 
-                        _currentNodeMoveIndex = 1;
-                        RequestMoveAnimation(_currentNodeMoveIndex);
+                        if (!string.IsNullOrEmpty(gameId))
+                        {
+                            // set Lichess ID header to GAME_ID from the downloaded game
+                            tree.Header.SetHeaderValue(PgnHeaders.KEY_LICHESS_ID, gameId);
 
-                        ShowControls(true, false);
+                            PopulateHeaderLine(tree);
+                            tree.BuildLines();
+
+                            _downloadedGameTrees[tree.Header.GetLichessId(out _)] = tree;
+
+                            _chessBoard.DisplayStartingPosition();
+                            _mainLine = tree.GetNodesForLine("1");
+
+                            _currentNodeMoveIndex = 1;
+                            RequestMoveAnimation(_currentNodeMoveIndex);
+
+                            ShowControls(true, false);
+                        }
                     }
                 }
                 else
                 {
+                    //game download failed on the lichess side, remove the blue banner and stop previous replay if happening
+                    UiLblLoading.Visibility = Visibility.Collapsed;
+                    _mainLine = null;
+                    UiImgPause_MouseDown(null, null);
+                    MessageBox.Show(Properties.Resources.GameDownloadError, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             catch (Exception ex)
@@ -161,26 +177,40 @@ namespace ChessForge
             Chapter chapter = AppState.ActiveChapter;
             if (chapter != null)
             {
-                bool import = true;
-                if (_importedGameIds.Find(x => x == _currentGameId) != null
-                    ||
-                    !string.IsNullOrEmpty(_currentGameId) && chapter.ModelGames.Find(x => x.Tree.Header.GetHeaderValue(PgnHeaders.KEY_LICHESS_ID) == _currentGameId) != null)
+                try
                 {
-                    if (MessageBox.Show(Properties.Resources.MsgDuplicateLichessImport
-                        , Properties.Resources.ImportIntoChapter
-                        , MessageBoxButton.YesNo, MessageBoxImage.Question
-                        , MessageBoxResult.No) != MessageBoxResult.Yes)
+                    bool import = true;
+                    if (_importedGameIds.Find(x => x == _currentGameId) != null
+                        ||
+                        !string.IsNullOrEmpty(_currentGameId) && chapter.ModelGames.Find(x => x.Tree.Header.GetHeaderValue(PgnHeaders.KEY_LICHESS_ID) == _currentGameId) != null)
                     {
-                        import = false;
+                        if (MessageBox.Show(Properties.Resources.MsgDuplicateLichessImport
+                            , Properties.Resources.ImportIntoChapter
+                            , MessageBoxButton.YesNo, MessageBoxImage.Question
+                            , MessageBoxResult.No) != MessageBoxResult.Yes)
+                        {
+                            import = false;
+                        }
+                    }
+
+                    if (import)
+                    {
+                        if (_downloadedGameTrees.TryGetValue(_currentGameId, out VariationTree treeToProcess))
+                        {
+                            AppState.MainWin.UiTabChapters.Focus();
+                            _importedGameIds.Add(_currentGameId);
+
+                            AppState.FinalizeLichessDownload(chapter, treeToProcess, _currentGameId, _activeTabOnEntry, _activeViewOnEntry);
+                        }
+                        else
+                        {
+                            MessageBox.Show(Properties.Resources.ErrInternalGameNotFound, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
                     }
                 }
-
-                if (import)
+                catch (Exception ex)
                 {
-                    AppState.MainWin.UiTabChapters.Focus();
-                    _importedGameIds.Add(_currentGameId);
-
-                    AppState.FinalizeLichessDownload(chapter, _tree, _currentGameId, _activeTabOnEntry, _activeViewOnEntry);
+                    MessageBox.Show(Properties.Resources.Error + ": " + ex.Message, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
