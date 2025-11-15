@@ -19,6 +19,9 @@ namespace ChessForge
         // lock object for accessing _openingsData as it theoretically (highly unlikely, though) may be written into while we processing 
         private static object _lockOpeningData = new object();
 
+        // lock object for processin importing to chapter to avoid race conditions 
+        private static object _lockImport = new object();
+
         // list of games already downloaded in this dialog session
         private List<string> _importedGameIds = new List<string>();
 
@@ -195,16 +198,19 @@ namespace ChessForge
 
                     if (import)
                     {
-                        if (_downloadedGameTrees.TryGetValue(_currentGameId, out VariationTree treeToProcess))
+                        lock (_lockImport)
                         {
-                            AppState.MainWin.UiTabChapters.Focus();
-                            _importedGameIds.Add(_currentGameId);
+                            if (_downloadedGameTrees.TryGetValue(_currentGameId, out VariationTree treeToProcess))
+                            {
+                                AppState.MainWin.UiTabChapters.Focus();
+                                _importedGameIds.Add(_currentGameId);
 
-                            AppState.FinalizeLichessDownload(chapter, treeToProcess, _currentGameId, _activeTabOnEntry, _activeViewOnEntry);
-                        }
-                        else
-                        {
-                            MessageBox.Show(Properties.Resources.ErrInternalGameNotFound, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
+                                AppState.FinalizeLichessDownload(chapter, treeToProcess, _currentGameId, _activeTabOnEntry, _activeViewOnEntry);
+                            }
+                            else
+                            {
+                                MessageBox.Show(Properties.Resources.ErrInternalGameNotFound, Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
+                            }
                         }
                     }
                 }
