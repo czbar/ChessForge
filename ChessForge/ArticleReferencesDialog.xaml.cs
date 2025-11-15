@@ -2,9 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -128,21 +125,26 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Open the game preview dialog.
+        /// </summary>
+        /// <param name="art"></param>
         private void InvokeGamePreviewDialog(Article art)
         {
-            List<string> gameIdList = new List<string>();
-            List<Article> games = new List<Article> { art };
-            gameIdList.Add(art.Tree.Header.GetGuid(out _));
+            try
+            {
+                List<string> gameIdList = new List<string>();
+                List<Article> games = new List<Article> { art };
+                gameIdList.Add(art.Tree.Header.GetGuid(out _));
 
-            SingleGamePreviewDialog dlg = new SingleGamePreviewDialog(gameIdList, games);
-            //{
-            //    Left = this.Left + 20,
-            //    Top = this.Top + 20,
-            //    Topmost = false,
-            //    Owner = this
-            //};
-            GuiUtilities.PositionDialog(dlg, this, 20);
-            dlg.ShowDialog();
+                SingleGamePreviewDialog dlg = new SingleGamePreviewDialog(gameIdList, games);
+                GuiUtilities.PositionDialog(dlg, this, 20);
+                dlg.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                AppLog.Message("InvokeGamePreviewDialog() ", ex);
+            }
         }
 
         /// <summary>
