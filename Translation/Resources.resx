@@ -552,6 +552,9 @@
   <data name="ErrGameNotFound" xml:space="preserve">
     <value>Game not found</value>
   </data>
+  <data name="ErrInternalGameNotFound" xml:space="preserve">
+    <value>Internal Error: Game not Found</value>
+  </data>
   <data name="ErrGamesNotFound" xml:space="preserve">
     <value>Games not found</value>
   </data>

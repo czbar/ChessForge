@@ -479,6 +479,9 @@ ErrNotAllGamesCopied=Not all games were copied
 #Game not found
 ErrGameNotFound=Game not found
 
+#Internal error: Game not found
+ErrInternalGameNotFound=Internal Error: Game not Found
+
 #Games not found
 ErrGamesNotFound=Games not found
 

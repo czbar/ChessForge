@@ -624,6 +624,10 @@ ErrNotAllGamesCopied=Nie wszystkie partie zostały skopiowane
 #english: ErrGameNotFound=Game not found
 ErrGameNotFound=Partii nie znaleziono
 
+#description: Internal error: Game not found
+#english: ErrInternalGameNotFound=Internal Error: Game not Found
+ErrInternalGameNotFound=Błąd wewnętrzny: Partii nie znaleziono
+
 #description: Games not found
 #english: ErrGamesNotFound=Games not found
 ErrGamesNotFound=Partii nie znaleziono

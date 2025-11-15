@@ -2752,6 +2752,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Internal Error: Game not Found.
+        /// </summary>
+        public static string ErrInternalGameNotFound {
+            get {
+                return ResourceManager.GetString("ErrInternalGameNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Library Download Error.
         /// </summary>
         public static string ErrLibraryDownload {

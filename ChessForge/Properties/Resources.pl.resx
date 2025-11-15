@@ -552,6 +552,9 @@
   <data name="ErrGameNotFound" xml:space="preserve">
     <value>Partii nie znaleziono</value>
   </data>
+  <data name="ErrInternalGameNotFound" xml:space="preserve">
+    <value>Błąd wewnętrzny: Partii nie znaleziono</value>
+  </data>
   <data name="ErrGamesNotFound" xml:space="preserve">
     <value>Partii nie znaleziono</value>
   </data>
