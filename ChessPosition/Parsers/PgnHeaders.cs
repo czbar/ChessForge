@@ -67,6 +67,14 @@ namespace GameTree
         public const string KEY_ECO = "ECO";
 
         /// <summary>
+        /// Id of the downloaded game.
+        /// It can be lichess or chesscom id, and will be used
+        /// to populate KEY_LICHESS_ID or KEY_CHESSCOM_ID
+        /// depending on context.
+        /// </summary>
+        public const string KEY_GAME_ID = "GameId";
+
+        /// <summary>
         /// Lichess id of the game downloaded from lichess.org.
         /// </summary>
         public const string KEY_LICHESS_ID = "LichessId";

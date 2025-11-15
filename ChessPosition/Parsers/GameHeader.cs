@@ -641,6 +641,24 @@ namespace GameTree
         }
 
         /// <summary>
+        /// Returns the GameId
+        /// </summary>
+        /// <returns></returns>
+        public string GetGameId(out string key)
+        {
+            string headerKey = PgnHeaders.KEY_GAME_ID;
+            key = headerKey;
+
+            string value = _headers.Where(kvp => kvp.Key == headerKey).FirstOrDefault().Value;
+            if (string.IsNullOrEmpty(value))
+            {
+                value = "";
+            }
+
+            return value;
+        }
+
+        /// <summary>
         /// Returns the Lichess Id
         /// </summary>
         /// <returns></returns>
