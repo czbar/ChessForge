@@ -1864,7 +1864,8 @@ namespace ChessForge
             // or previous move was followed by a diagram.
             if (!includeNumber && (inclComment && IsLastRunPostMoveComment(para, nd)
                                     || !string.IsNullOrEmpty(nd.CommentBeforeMove)
-                                    || (nd.Parent != null && nd.Parent.IsDiagram && !nd.Parent.IsDiagramBeforeMove))
+                                    || (nd.Parent != null && nd.Parent.IsDiagram && !nd.Parent.IsDiagramBeforeMove)
+                                    || (nd.Parent != null && !string.IsNullOrEmpty(nd.Parent.References)))
                                     )
             {
                 includeNumber = true;
