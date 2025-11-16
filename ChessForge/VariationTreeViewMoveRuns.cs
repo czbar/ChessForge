@@ -236,6 +236,7 @@ namespace ChessForge
                         // take care of the special case where node 0 may have a comment
                         bool includeNumber = currNode.NodeId == 0
                             || !string.IsNullOrWhiteSpace(currNode.Comment)
+                            || !string.IsNullOrEmpty(currNode.References)
                             || !string.IsNullOrEmpty(nextNode.CommentBeforeMove)
                             || (currNode.IsDiagram && !currNode.IsDiagramBeforeMove)
                             || firstInPara;
