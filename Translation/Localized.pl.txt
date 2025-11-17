@@ -4284,8 +4284,8 @@ OpRenameChapter=Zmień Nazwę Rozdziału
 OpCreateArticle=Utwórz Partię/Ćwiczenie
 
 #description: Operation
-#english: OpCreateGame=Create Game
-OpCreateGame=Utwórz Partię
+#english: OpImportLichessGame=Import Lichess Game
+OpImportLichessGame=Importuj Partię z Lichess
 
 #description: Operation
 #english: OpCreateExercise=Create Exercise

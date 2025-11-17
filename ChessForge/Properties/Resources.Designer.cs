@@ -5651,15 +5651,6 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create Game.
-        /// </summary>
-        public static string OpCreateGame {
-            get {
-                return ResourceManager.GetString("OpCreateGame", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Delete Games/Exercises.
         /// </summary>
         public static string OpDeleteArticles {
@@ -5881,6 +5872,15 @@ namespace ChessForge.Properties {
         public static string OpImportChapters {
             get {
                 return ResourceManager.GetString("OpImportChapters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import Lichess Game.
+        /// </summary>
+        public static string OpImportLichessGame {
+            get {
+                return ResourceManager.GetString("OpImportLichessGame", resourceCulture);
             }
         }
         

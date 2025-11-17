@@ -2965,8 +2965,8 @@ UWAGA: Oceny nie są uaktualniane (zezwól naciskając F8).</value>
   <data name="OpCreateArticle" xml:space="preserve">
     <value>Utwórz Partię/Ćwiczenie</value>
   </data>
-  <data name="OpCreateGame" xml:space="preserve">
-    <value>Utwórz Partię</value>
+  <data name="OpImportLichessGame" xml:space="preserve">
+    <value>Importuj Partię z Lichess</value>
   </data>
   <data name="OpCreateExercise" xml:space="preserve">
     <value>Utwórz Ćwiczenie</value>

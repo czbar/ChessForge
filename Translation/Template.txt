@@ -4284,8 +4284,8 @@ OpRenameChapter=
 OpCreateArticle=
 
 #description: Operation
-#english: OpCreateGame=Create Game
-OpCreateGame=
+#english: OpImportLichessGame=Import Lichess Game
+OpImportLichessGame=
 
 #description: Operation
 #english: OpCreateExercise=Create Exercise

@@ -3335,7 +3335,7 @@ OpRenameChapter=Rename Chapter
 OpCreateArticle=Create 
 
 #Operation
-OpCreateGame=Create Game
+OpImportLichessGame=Import Lichess Game
 
 #Operation
 OpCreateExercise=Create Exercise
