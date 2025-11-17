@@ -769,6 +769,11 @@ namespace ChessForge
                 MainWin.ChaptersView.IsDirty = true;
                 IsDirty = true;
                 MainWin.SelectModelGame(chapter.ActiveModelGameIndex, true);
+                // the above will not set ActiveLine and hence populate the Scoresheet
+                // because it checks if we are already in MODEL_GAMES tab.
+                // Therefore we set ActiveLine explicitly.
+                MainWin.SetActiveLine("1", 0);
+
                 MainWin.BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgGameImportSuccess, CommentBox.HintType.INFO);
             }
 
