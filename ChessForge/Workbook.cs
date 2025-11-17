@@ -183,8 +183,8 @@ namespace ChessForge
                         ret = true;
                     }
                 }
-                catch 
-                { 
+                catch
+                {
                 }
             }
 
@@ -995,7 +995,7 @@ namespace ChessForge
             try
             {
                 Dictionary<int, List<Article>> presortOrder = objPersortOrder as Dictionary<int, List<Article>>;
-                
+
                 foreach (int chapterIndex in presortOrder.Keys)
                 {
                     Chapter ch = Chapters[chapterIndex];
@@ -1022,6 +1022,7 @@ namespace ChessForge
                 if (chapter != null && article != null)
                 {
                     chapter.DeleteArticle(article);
+                    WorkbookManager.RemoveArticleReferences(article.Guid);
                 }
             }
             catch
