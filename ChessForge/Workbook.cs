@@ -1011,11 +1011,11 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Undo creation/addition of an Article.
+        /// Undo creation of an Article as import from Lichess.
         /// </summary>
         /// <param name="chapter"></param>
         /// <param name="article"></param>
-        public void UndoCreateArticle(Chapter chapter, Article article)
+        public void UndoImportLichessGame(Chapter chapter, Article article)
         {
             try
             {

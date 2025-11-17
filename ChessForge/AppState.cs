@@ -749,7 +749,7 @@ namespace ChessForge
             {
                 added = true;
 
-                WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.CREATE_ARTICLE, chapter, article, articleIndex);
+                WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.IMPORT_LICHESS_GAME, chapter, article, articleIndex);
                 WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
 
                 chapter.ActiveModelGameIndex = chapter.GetModelGameCount() - 1;

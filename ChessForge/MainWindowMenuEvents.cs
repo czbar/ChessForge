@@ -671,7 +671,7 @@ namespace ChessForge
                                     AppState.DoEvents();
                                     _chaptersView.BringChapterIntoViewByIndex(_chaptersView.HostRtb.Document, selectedChapterIndex);
                                     break;
-                                case WorkbookOperationType.CREATE_ARTICLE:
+                                case WorkbookOperationType.IMPORT_LICHESS_GAME:
                                     if (AppState.ActiveTab == TabViewType.CHAPTERS)
                                     {
                                         _chaptersView.BuildFlowDocumentForChaptersView(false);
