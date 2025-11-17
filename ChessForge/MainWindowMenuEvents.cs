@@ -679,7 +679,10 @@ namespace ChessForge
                                     else
                                     {
                                         _chaptersView.IsDirty = true;
-                                        SelectModelGame(selectedArticleIndex, true);
+                                        if (AppState.ActiveTab == TabViewType.MODEL_GAME)
+                                        {
+                                            SelectModelGame(selectedArticleIndex, true);
+                                        }
                                     }
                                     break;
                                 case WorkbookOperationType.DELETE_MODEL_GAMES:
