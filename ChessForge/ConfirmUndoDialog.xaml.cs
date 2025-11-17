@@ -54,27 +54,9 @@ namespace ChessForge
         {
             string opName = Properties.Resources.OpUnknown;
 
-            switch (_operation.OpType)
+            if (_dictOpTypeToTitle.ContainsKey(_operation.OpType))
             {
-                case WorkbookOperationType.IMPORT_LICHESS_GAME:
-                    if (_operation.Article is Article article)
-                    {
-                        if (article.ContentType == GameData.ContentType.EXERCISE)
-                        {
-                            opName = Properties.Resources.OpCreateExercise;
-                        }
-                        else
-                        {
-                            opName = Properties.Resources.OpCreateGame;
-                        }
-                    }
-                    break;
-                default:
-                    if (_dictOpTypeToTitle.ContainsKey(_operation.OpType))
-                    {
-                        opName = _dictOpTypeToTitle[_operation.OpType];
-                    }
-                    break;
+                opName = _dictOpTypeToTitle[_operation.OpType];
             }
 
             return opName;
@@ -172,7 +154,7 @@ namespace ChessForge
             _dictOpTypeToTitle[WorkbookOperationType.SPLIT_CHAPTER] = Properties.Resources.OpSplitChapter;
             _dictOpTypeToTitle[WorkbookOperationType.CREATE_CHAPTER] = Properties.Resources.OpCreateChapter;
             _dictOpTypeToTitle[WorkbookOperationType.RENAME_CHAPTER] = Properties.Resources.OpRenameChapter;
-            _dictOpTypeToTitle[WorkbookOperationType.IMPORT_LICHESS_GAME] = Properties.Resources.OpCreateArticle;
+            _dictOpTypeToTitle[WorkbookOperationType.IMPORT_LICHESS_GAME] = Properties.Resources.OpImportLichessGame;
             _dictOpTypeToTitle[WorkbookOperationType.DELETE_MODEL_GAMES] = Properties.Resources.OpDeleteGames;
             _dictOpTypeToTitle[WorkbookOperationType.DELETE_EXERCISES] = Properties.Resources.OpDeleteExercises;
             _dictOpTypeToTitle[WorkbookOperationType.DELETE_ARTICLES] = Properties.Resources.OpDeleteArticles;
