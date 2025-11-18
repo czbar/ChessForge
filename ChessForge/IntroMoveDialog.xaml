@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChessForge"
         xmlns:p="clr-namespace:ChessForge.Properties"
+        ResizeMode="NoResize"
         mc:Ignorable="d"
         ShowInTaskbar="True"
         Title="{x:Static p:Resources.DlgEditMoveInIntro}" Height="220" Width="400">
