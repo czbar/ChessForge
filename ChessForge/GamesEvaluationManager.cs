@@ -269,6 +269,10 @@ namespace ChessForge
             ObservableCollection<TreeNode> lineToSelect = game.Article.Tree.GetNodesForLine("1");
             if (HasMovesToEvaluate(game))
             {
+                // fixes the problem where the last selected move was on a sideline. It would appear selected after the eval
+                // and result in a confusing GUI.
+                AppState.MainWin.ActiveTreeView.SelectNode(AppState.ActiveVariationTree.Nodes[0]);
+                
                 int firstNodeId = FirstNodeToEvaluate(lineToSelect);
                 AppState.MainWin.SetActiveLine(lineToSelect, firstNodeId);
                 AppState.MainWin.UiMnEvaluateLine_Click(null, null);
