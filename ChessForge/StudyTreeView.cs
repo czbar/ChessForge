@@ -874,20 +874,12 @@ namespace ChessForge
         /// Expands the sector starting with the passed NodeId.
         /// </summary>
         /// <param name="nodeId"></param>
-        private void ExpandSector(TreeNode nd)
+        public void ExpandSector(TreeNode nd)
         {
             if (nd != null && nd.NodeId >= 0)
             {
                 // uncollapse the node and all descendants
-                ExpandNode(nd);
-
-                // make sure all above are not collapsed, as in some cases they may be
-                while (nd.Parent != null)
-                {
-                    nd.IsCollapsed = false;
-                    nd = nd.Parent;
-                }
-
+                TreeUtils.ExpandLine(nd);
 
                 BuildFlowDocumentForVariationTree(false);
                 TreeNode selNode = GetSelectedNode();
@@ -896,22 +888,6 @@ namespace ChessForge
                     SelectRun(_dictNodeToRun[selNode.NodeId], 1, MouseButton.Left);
                 }
                 BringSelectedRunIntoView();
-            }
-        }
-
-        /// <summary>
-        /// Marks the passed node and all its descendants as expanded.
-        /// </summary>
-        /// <param name="nd"></param>
-        private void ExpandNode(TreeNode nd)
-        {
-            if (nd != null)
-            {
-                nd.IsCollapsed = false;
-                foreach (TreeNode child in nd.Children)
-                {
-                    ExpandNode(child);
-                }
             }
         }
 
