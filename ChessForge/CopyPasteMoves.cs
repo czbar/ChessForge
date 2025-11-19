@@ -54,7 +54,7 @@ namespace ChessForge
         /// Pastes the passed list of nodes into the active tree.
         /// </summary>
         /// <param name="lstNodes"></param>
-        public static void PasteVariation(List<TreeNode> lstNodes)
+        public static void PasteVariation(List<TreeNode> lstNodes, TreeNode nodeToExpand = null)
         {
             try
             {
@@ -73,9 +73,13 @@ namespace ChessForge
                     
                     if (failedInsertions.Count == 0)
                     {
-                        // if we inserted an already existing line, do nothing
+                        // if we inserted anything go ahead, otherwise flash an announcement
                         if (insertedNewNodes.Count > 0)
                         {
+                            if (targetView is StudyTreeView studyView)
+                            {
+                                TreeUtils.ExpandLine(nodeToExpand);
+                            }
                             targetTree.BuildLines();
                             targetView.BuildFlowDocumentForVariationTree(false);
                             TreeNode insertedRoot = targetTree.GetNodeFromNodeId(firstInserted.NodeId);
