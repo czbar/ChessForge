@@ -145,14 +145,14 @@ namespace ChessForge
             {
                 case FoundArticlesDialog.Action.CopyLine:
                     nodelList = TreeUtils.CopyNodeList(item.TailLine);
-                    CopyPasteMoves.PasteVariation(nodelList, searchNode);
+                    CopyPasteMoves.PasteVariation(nodelList);
                     AppState.IsDirty = true;
                     break;
                 case FoundArticlesDialog.Action.CopyTree:
                     foreach (TreeNode node in item.TailLine[0].Parent.Children)
                     {
                         nodelList = TreeUtils.CopySubtree(node);
-                        CopyPasteMoves.PasteVariation(nodelList, searchNode);
+                        CopyPasteMoves.PasteVariation(nodelList);
                     }
                     AppState.IsDirty = true;
                     break;

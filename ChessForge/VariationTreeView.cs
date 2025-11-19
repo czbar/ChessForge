@@ -923,8 +923,9 @@ namespace ChessForge
         /// depending on the match/mismatch of side-to-move.
         /// </summary>
         /// <param name="nodesToInsert"></param>
-        public TreeNode InsertSubtree(List<TreeNode> nodesToInsert, ref List<TreeNode> insertedNodes, ref List<TreeNode> failedInsertions)
+        public TreeNode InsertSubtree(List<TreeNode> nodesToInsert, ref List<TreeNode> insertedNodes, ref List<TreeNode> failedInsertions, out TreeNode nodeToInsertAt)
         {
+            nodeToInsertAt = null;
             if (nodesToInsert == null || nodesToInsert.Count == 0)
             {
                 return null;
@@ -933,7 +934,6 @@ namespace ChessForge
             TreeNode node = null;
 
             // if the first node of nodes to insert has id = 0, we will insert it at the root of the tree, regardless of which node is currently selected
-            TreeNode nodeToInsertAt;
             if (nodesToInsert[0].NodeId == 0 || ShownVariationTree.Nodes.Count == 1)
             {
                 nodeToInsertAt = ShownVariationTree.RootNode;

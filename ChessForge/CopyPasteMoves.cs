@@ -54,7 +54,7 @@ namespace ChessForge
         /// Pastes the passed list of nodes into the active tree.
         /// </summary>
         /// <param name="lstNodes"></param>
-        public static void PasteVariation(List<TreeNode> lstNodes, TreeNode nodeToExpand = null)
+        public static void PasteVariation(List<TreeNode> lstNodes)
         {
             try
             {
@@ -66,7 +66,7 @@ namespace ChessForge
                     VariationTreeView targetView = AppState.MainWin.ActiveTreeView;
                     List<TreeNode> insertedNewNodes = new List<TreeNode>();
                     List<TreeNode> failedInsertions = new List<TreeNode>();
-                    TreeNode firstInserted = targetView.InsertSubtree(lstNodes, ref insertedNewNodes, ref failedInsertions);
+                    TreeNode firstInserted = targetView.InsertSubtree(lstNodes, ref insertedNewNodes, ref failedInsertions, out TreeNode nodeToExpand);
                     
                     // NOTE: if failed to insert the entire list nodes, we fail the whole process
                     //       i.e. we DO NOT keep the successfully inserted nodes
