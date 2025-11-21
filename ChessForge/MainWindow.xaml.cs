@@ -224,7 +224,7 @@ namespace ChessForge
                 ActiveTreeView.HighlightLineAndMove(ActiveTreeView.HostRtb.Document, lineId, nodeId);
 
                 ObservableCollection<TreeNode> lineToSelect = tree.GetNodesForLine(lineId);
-                SetActiveLine(lineToSelect, nodeId);
+                SetActiveLine(lineToSelect, nodeId, false);
 
                 if (tree.SelectedNode == null)
                 {
