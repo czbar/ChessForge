@@ -1120,9 +1120,10 @@ namespace ChessForge
             VariationTree activeTree = AppState.ActiveVariationTree;
 
             // prepare data for undo
-            EditOperation op = new EditOperation(EditOperation.EditType.SAVE_TRAINING_MOVES, activeTree.GetListOfNodeIds(false), null);
+            EditOperation op = new EditOperation(EditOperation.EditType.SAVE_TRAINING_MOVES, activeTree.GetListOfNewTrainingNodeIds(), null);
             activeTree.OpsManager.PushOperation(op);
 
+            TreeUtils.ExpandLine(TrainingSession.StartPosition);
             activeTree.ClearTrainingFlags();
             activeTree.BuildLines();
             if (isAppClosing)
@@ -1134,7 +1135,8 @@ namespace ChessForge
                 AppState.IsDirty = true;
             }
             AppState.MainWin.RebuildActiveTreeView();
-            AppState.MainWin.RefreshSelectedActiveLineAndNode();
+            //AppState.MainWin.RefreshSelectedActiveLineAndNode();
+            AppState.MainWin.RestoreSelectedLineAndMoveInActiveView();
         }
 
         /// <summary>
