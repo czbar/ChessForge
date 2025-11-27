@@ -983,6 +983,11 @@ namespace ChessForge
         /// </summary>
         public void ToggleDontSaveEvals()
         {
+            if (EvaluationManager.CurrentMode == EvaluationManager.Mode.IDLE)
+            {
+                Configuration.DontSavePositionEvals = false;
+            }
+
             _mainWin.SetDontSaveEvalsMenuItems(!Configuration.DontSavePositionEvals);
             string msg = Configuration.DontSavePositionEvals ? Properties.Resources.FlMsgUpdatePositionEvalOff : Properties.Resources.FlMsgUpdatePositionEvalOn;
             CommentBox.HintType ht = Configuration.DontSavePositionEvals ? CommentBox.HintType.PROGRESS : CommentBox.HintType.INFO;
