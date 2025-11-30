@@ -106,6 +106,10 @@ Description: Games from tournaments and matches.
       Description: All games from Men's World Championship Matches and Tournaments.
       File:Tournaments/Mens World Individual Championships.pgn
     
+	  Book:FIDE World Cup 2025
+      Description: All games of the FIDE World Cup, Goa 2025
+      File:Tournaments/FIDE World Cup 2025.pgn
+	  
 	  Book:FIDE Candidates 1953 (Men)
       Description: All games from the legendary Candidates Tournament, Zurich 1953.
       File:Tournaments/Candidates 1953 - Zurich.pgn

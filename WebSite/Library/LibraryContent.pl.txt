@@ -1,20 +1,20 @@
 Redirect:
 Message:
 
-      
+
 Bookcase:Openings
 Description:Teoria i praktyka debiutów szachowych.
-    
+
 	Shelf:Ogólne
     Description: Debiuty analizowane z obu stron.
-	
+
       Book:System Londyński (jęz. ang.)
       Description: Szczegółowy przegląd Systemu Londyńskiego.
       File: Openings/General/London System.pgn
-    
+
 	Shelf:Repertuar dla Białych
     Description: Debiuty analizowane z punktu widzenia białych.
-      
+
 	  Book:Obrona Królewsko-Indyjska, wariant Karpowa (jęz. ang.)
       Description:Bardzo popularny i efektywny wariant przeciw obronie Królewsko-Indyjskiej.
       File: Openings/White/King's Indian - Karpov variation for White.pgn
@@ -22,7 +22,7 @@ Description:Teoria i praktyka debiutów szachowych.
 	  Book:Obrona Królewsko-Indyjska, wariant Sämischa (jęz. ang.)
       Description:Klasyczny system oparty na solidnym centrum pionkowym.
       File: Openings/White/King's Indian - Sämisch for White.pgn
-          
+
 	  Book:Gambit Budapesztański (jęz. ang.)
       Description: Kilka metod okiełznania Gambitu Budapesztańskiego.
       File: Openings/White/Budapest for White.pgn
@@ -30,18 +30,18 @@ Description:Teoria i praktyka debiutów szachowych.
 	  Book:Gambit Morry (jęz. ang.)
       Description: Popularny oręż przeciwko Obronie Sycylijskiej.
       File: Openings/White/Smith Morra Gambit.pgn
-          
+
 	  Book:Gambit Evansa (jęz. ang.)
       Description: Zwięzłe opracowanie jednego z najsłynnniejszych, klasycznych gambitów.
       File: Openings/White/Evans Gambit Starter Kit.pgn
-	
+
 	Shelf:Repertuar dla Czarnych
     Description: Debiuty analizowane z punktu widzenia czarnych.
-        
+
 	  Book:Klasyczna Sycylijska 2...d6, 5...Sc6 (jęz. ang.)
       Description: Klasyczny, zawsze popularny na wszystkich szczeblach system w Obronie Syscylijskiej.
       File: Openings/Black/Classical Sicilian for Black.pgn
-    
+
 	  Book:Caro-Kann (jęz. ang.)
       Description: Wszystko co musisz wiedzieć, żeby grać Caro-Kann.
       File: Openings/Black/Caro-Kann for Black.pgn
@@ -49,30 +49,30 @@ Description:Teoria i praktyka debiutów szachowych.
 	  Book:Obrona Francuska (jęz. ang.)
       Description: Obrona Francuska od strony czarnych.
       File: Openings/Black/French for Black.pgn
-	  
+
 	  Book:Wariant Wymienny Obronny Francuskiej (jęz. ang.)
       Description: Jak przełamać symetrię grając czarnymi wariant wymienny Francuskiej.
       File: Openings/Black/French Exchange for Black.pgn
-	  
+
       Book:Obrona Ragozina (jęz. ang.)
       Description: Solidny element repertuaru czarnych przeciwko 1.d4.
       File: Openings/Black/Ragozin for Black.pgn
-      
+
 	  Book:Otwarcia Flankowe (jęz. ang.)
       Description: Szkice Debiutowe - Kilka idei jak odpowiadać na "boczne" otwarcia białych.
       File: Openings/Black/Flank Openings for Black.pgn
-      
+
 	  Book:Uniwersalne 1...b6 (jęz. ang.)
       Description: Szkice Debiutowe - 1...b6 niezaleznie od pierwszego ruchu białych.
       File: Openings/Black/1... b6 for Black.pgn
-      
+
 	  Book:Pułapki w Gambicie Stafforda (jęz. ang.)
       Description: Zabawna rozprawka Erica Rosena o Gambicie Stafforda.  Zaadoptowana ze studium Erica na lichess.
       File: Openings/Black/Stafford Gambit for Black.pgn
 
-	Shelf:Nietypowe Otwarcia 
-    Description: Krótkie podręczniki dla rzadkich i nietypowych debiutów. 
-    
+	Shelf:Nietypowe Otwarcia
+    Description: Krótkie podręczniki dla rzadkich i nietypowych debiutów.
+
 	  Book:The Gambit Słonia
       Description: Nie spotykany już w praktyce mistrzowskiej, ale każdy kto gra 1.e4 musi go znać.
       File: Openings/Unorthodox/Elephant Gambit.pgn
@@ -86,8 +86,8 @@ Bookcase: Końcówki i Ćwiczenia
 Description: Zbiory końcówek i ćwiczeń.
 
     Shelf:Końcówki
-    Description: 
-    
+    Description:
+
 	  Book:Zbiór końcówek autorstwa NoseKnowsAll@lichess (jęz. ang.)
       Description: Znakomity wybór końcówek importowany ze studium użytkownika NoseKnowsAll nalichess.
       File: Endgames/Endgames by NoseKnowsAll.pgn
@@ -95,16 +95,20 @@ Description: Zbiory końcówek i ćwiczeń.
       Book:Schematy matowe (jęz. ang.)
       Description: Podstawowe schematy matowe, nazwane i zilustrowane.
       File: Endgames/Checkmate Patterns.pgn
-        
+
 Bookcase:Tournaments
 Description: Partie z turniejów i meczów.
 
-    Shelf:Mistrzostwa Świata 
+    Shelf:Mistrzostwa Świata
     Description: Partie z meczów o mistrzostwo świata.
-    
+
 	  Book:Indywidualne mistrzostwa świata mężczyzn (jęz. ang.)
       Description: Wszystkie partie z meczów o mistrzostwo świata mężczyzn.
       File:Tournaments/Mens World Individual Championships.pgn
+
+      Book:Puchar Świata FIDE 2025
+      Description: Wszystkie partie Pucharu Świata FIDE, Goa 2025
+      File:Tournaments/FIDE World Cup 2025.pgn
 
 	  Book:Turniej Kandydatów - Zurych 1953
       Description: Partie turnieju Kandydatów do meczu o Mistrzostwo Świata, Zurych 1953.
@@ -125,36 +129,36 @@ Description: Partie z turniejów i meczów.
 	  Book:Mistrzostwa Świata Rapid 2023 (kobiety)
       Description: Mistrzostwa Świata w Grze Szybkiej Kobiet 2023, Samarkanda, grudzień 2023.
       File:Tournaments/World Rapid Chess Championship Women 2023.pgn
-	  
-    Shelf:Mistrzostwa Europy 
+
+    Shelf:Mistrzostwa Europy
     Description: Partie z mistrzostw Europy.
-    
+
 	  Book:Drużynowe Mistrzostwa Europy 2025 - Sekcja Otwarta
       Description: Wszystkie partie z mistrzostwo Europy w sekcji otwartej.
       File:Tournaments/European Team Championship 2025 - Open.pgn
-        
+
 	  Book:Drużynowe Mistrzostwa Europy 2025 - Sekcja Kobiet
       Description: Wszystkie partie z mistrzostwo Europy w sekcji kobiet.
       File:Tournaments/European Team Championship 2025 - Women.pgn
 
-Bookcase: Podręczniki Towarzyszące i Fragmenty Książek 
+Bookcase: Podręczniki Towarzyszące i Fragmenty Książek
 Description: Kolekcje partii z książek i fragmenty książek zaadoptowane dla Chess Forge'a.
 
     Shelf:
-    Description: 
-        
+    Description:
+
 	  Book:Winning, autor: Nigel Short (jęz. ang.)
       Description: Kompletny zestaw partii z książki.
       File: BookSamples/Nigel Short - Winning.pgn
-        
+
 	  Book:Magnus Carlsen, Współczesny Podręcznik Gry w Szachy, autor: Mikołaj Kaliniczenko
       Description: Kompletny zestaw partii z książki.
       File: BookSamples/Magnus Carlsen - Modern Chess Manual.pgn
-    
+
 	  Book:Elementy Startegii (jęz. ang.)
       Description: Mała próbka z książki arcymistrza Bartka Maciei i mistrza międzynarodowego Witalisa Sapisa.
       File: BookSamples/Chess Strategy Explained.pgn
-      
+
 	  Book:Kompletny Cwaniak Szachowy (jęz. ang.)
       Description: Mała próbka nagradzanej książki arcymistrza Dawida Smerdona.
       File: BookSamples/The Complete Chess Swindler.pgn
@@ -163,15 +167,15 @@ Bookcase:Strategia
 Description:Opracowania o strategii różnych faz gry.
 
     Shelf:Struktury Pionkowe
-    Description: 
-    
+    Description:
+
 	  Book:Struktura Maroczy'ego Idee w praktyce
       Description: Głębsze spojrzenie na strategiczne i taktyczne idee w strukturze Maroczy'ego. Wymaga ChessForge'a wersji 1.10.1 lub wyższej.
       File: Strategy/Maroczy Idee w praktyce.pgn
 
     Shelf:Szczególne Idee
-    Description: 
-    
+    Description:
+
 	  Book:Królem na linię ognia (jęz. ang.)
       Description: Czarny król wędruje na skrzydło hetmańskie gdzie białe mają półotwartą linię b.
       File: Strategy/Strategy Ke8-d8-c7.pgn
