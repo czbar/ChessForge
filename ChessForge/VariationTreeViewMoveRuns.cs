@@ -144,13 +144,6 @@ namespace ChessForge
                     AppLog.Message("ERROR: InsertOrUpdateCommentBeforeRun()- Run " + nd.NodeId.ToString() + " not found in _dictNodeToRun");
                     return null;
                 }
-                else
-                {
-                    if (IsMoveTextWithNumber(rMove.Text))
-                    {
-                        includeNumber = true;
-                    }
-                }
 
                 Paragraph parentPara = rMove.Parent as Paragraph;
 
@@ -194,7 +187,11 @@ namespace ChessForge
                     bool includeNo = isFirstInPara
                                      || !string.IsNullOrWhiteSpace(nd.CommentBeforeMove)
                                      || (nd.IsDiagram && nd.IsDiagramBeforeMove)
-                                     || (nd.Parent != null && (!string.IsNullOrEmpty(nd.Parent.Comment) || nd != nd.Parent.Children[0] || nd.Parent.NodeId == 0));
+                                     || (nd.Parent != null 
+                                         && (!string.IsNullOrEmpty(nd.Parent.Comment) 
+                                             || nd != nd.Parent.Children[0] 
+                                             || nd.Parent.NodeId == 0 
+                                             || (nd.Parent.IsDiagram && !nd.Parent.IsDiagramBeforeMove)));
                     UpdateRunText(rMove, nd, includeNo);
                 }
             }
