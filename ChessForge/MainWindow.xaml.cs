@@ -2011,7 +2011,11 @@ namespace ChessForge
         {
             if (ActiveTreeView != null)
             {
+                // if this is called after adding a new move, we want to save and then restore the scroll position
+                // so that view does not jump to the top and then back to the selected run.
+                ActiveTreeView.SaveScrollPosition();
                 ActiveTreeView.BuildFlowDocumentForVariationTree(true);
+                ActiveTreeView.RestoreScrollPosition();
             }
         }
 
