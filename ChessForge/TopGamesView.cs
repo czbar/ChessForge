@@ -302,6 +302,7 @@ namespace ChessForge
                     activeTab = TabViewType.MODEL_GAME;
                 }
                 GuiUtilities.ForceFocus(activeTab);
+                WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, AppState.MainWin.ActiveTreeView.GetSelectedNode());
             }
             catch (Exception ex)
             {
