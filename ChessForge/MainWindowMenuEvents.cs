@@ -573,29 +573,6 @@ namespace ChessForge
 
                 if (fullRebuild)
                 {
-                    AppState.ActiveVariationTree.BuildLines();
-                }
-
-                if (!noRefresh)
-                {
-                    if (!string.IsNullOrEmpty(selectedLineId))
-                    {
-                        AppState.MainWin.ActiveTreeView.SelectNode(selectedNode);
-                        AppState.MainWin.SetActiveLine(selectedLineId, selectedNodeId);
-                    }
-                    else if (selectedNodeId >= 0)
-                    {
-                        if (selectedNode != null)
-                        {
-                            selectedLineId = selectedNode.LineId;
-                            AppState.MainWin.ActiveTreeView.SelectNode(selectedNode);
-                            AppState.MainWin.SetActiveLine(selectedLineId, selectedNodeId);
-                        }
-                    }
-                }
-
-                if (fullRebuild)
-                {
                     AppState.MainWin.ActiveTreeView.BuildFlowDocumentForVariationTree(false);
                 }
                 else
@@ -605,6 +582,11 @@ namespace ChessForge
                         TreeNode node = AppState.ActiveVariationTree.GetNodeFromNodeId(nodeId);
                         AppState.MainWin.ActiveTreeView.InsertOrUpdateCommentRun(node);
                     }
+                }
+
+                if (!noRefresh)
+                {
+                    RefreshLineAndRunSelection(selectedLineId, selectedNode, selectedNodeId);
                 }
 
                 if (opType == EditOperation.EditType.UPDATE_ANNOTATION)
@@ -635,6 +617,30 @@ namespace ChessForge
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Refreshes/restores the line and runs selection after an undo operation.
+        /// </summary>
+        /// <param name="selectedLineId"></param>
+        /// <param name="selectedNode"></param>
+        /// <param name="selectedNodeId"></param>
+        private void RefreshLineAndRunSelection(string selectedLineId, TreeNode selectedNode, int selectedNodeId)
+        {
+            if (!string.IsNullOrEmpty(selectedLineId))
+            {
+                AppState.MainWin.ActiveTreeView.SelectNode(selectedNode);
+                AppState.MainWin.SetActiveLine(selectedLineId, selectedNodeId);
+            }
+            else if (selectedNodeId >= 0)
+            {
+                if (selectedNode != null)
+                {
+                    selectedLineId = selectedNode.LineId;
+                    AppState.MainWin.ActiveTreeView.SelectNode(selectedNode);
+                    AppState.MainWin.SetActiveLine(selectedLineId, selectedNodeId);
+                }
+            }
         }
 
         /// <summary>
