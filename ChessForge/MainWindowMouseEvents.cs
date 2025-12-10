@@ -1414,12 +1414,12 @@ namespace ChessForge
                 if (WorkbookManager.SessionWorkbook != null)
                 {
                     WorkbookLocationNavigator.SaveNewLocation(WorkbookManager.SessionWorkbook.ActiveChapter, GameData.ContentType.STUDY_TREE, -1);
+                    WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, AppState.MainWin.ActiveTreeView.GetSelectedNode());
                 }
             }
             catch
             {
             }
-
         }
 
         /// <summary>
