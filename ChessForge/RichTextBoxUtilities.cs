@@ -459,8 +459,10 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Checks if the previous Inline before the passed Run
+        /// Checks if an Inline before the passed Run
         /// is a Run ending with a new line character.
+        /// It checks the immediately preceding Inline or, if that one is empty,
+        /// the inline before it.
         /// </summary>
         /// <param name="run"></param>
         /// <returns></returns>
@@ -471,6 +473,13 @@ namespace ChessForge
             if (run != null)
             {
                 Inline inl = run.PreviousInline;
+                
+                // if this is an empty Run, check the one before it.
+                if (inl is Run r && string.IsNullOrEmpty(r.Text))
+                {
+                    inl = r.PreviousInline;
+                }
+
                 res = IsRunEndsWithNewLine(inl as Run);
             }
 
