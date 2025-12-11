@@ -147,7 +147,9 @@ namespace ChessForge
 
                 Paragraph parentPara = rMove.Parent as Paragraph;
 
-                bool isFirstInPara = RichTextBoxUtilities.IsFirstMoveRunInParagraph(parentPara, nd.NodeId);
+                // determine if the move is first in paragraph or followes a new line.
+                bool isFirstInPara = RichTextBoxUtilities.IsFirstMoveRunInParagraph(parentPara, nd.NodeId) 
+                    || RichTextBoxUtilities.IsPreviousRunNewLine(rMove);
 
                 // if there is an index name run (in a Study) and the diagram is to be first, reverse isFirstPara
                 if (isFirstInPara && RichTextBoxUtilities.ParagraphStartsWithIndexRun(parentPara))
