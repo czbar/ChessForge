@@ -922,7 +922,7 @@ namespace ChessForge
                     text += "\n";
                 }
             }
-            else if (nd.IsDiagram && !nd.IsDiagramPreComment 
+            else if (nd.IsDiagram && nd.IsDiagramPreComment && !nd.IsDiagramBeforeMove 
                      && (!string.IsNullOrEmpty(nd.Comment) || !string.IsNullOrEmpty(nd.References)))
             {
                 text += "\n";
