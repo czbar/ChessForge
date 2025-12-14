@@ -910,7 +910,7 @@ namespace ChessForge
             if (Configuration.MainLineCommentLF
                 && (ContentType == GameData.ContentType.MODEL_GAME || ContentType == GameData.ContentType.EXERCISE && !AppState.IsUserSolving())
                 && nd.IsMainLine()
-                && !string.IsNullOrEmpty(nd.Comment)
+                && (!string.IsNullOrEmpty(nd.Comment) || !string.IsNullOrEmpty(nd.References))
                 && (!nd.IsDiagram || nd.IsDiagramPreComment))
             {
                 if (Configuration.ExtraSpacing && !_isPrinting)
@@ -921,6 +921,11 @@ namespace ChessForge
                 {
                     text += "\n";
                 }
+            }
+            else if (nd.IsDiagram && !nd.IsDiagramPreComment 
+                     && (!string.IsNullOrEmpty(nd.Comment) || !string.IsNullOrEmpty(nd.References)))
+            {
+                text += "\n";
             }
             else
             {
