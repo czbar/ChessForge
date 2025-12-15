@@ -543,6 +543,13 @@ namespace ChessForge
             {
                 int moveIndex = (row * 2) + (column == _dgActiveLineWhitePlyColumn ? 0 : 1) + 1;
 
+                // if this is an Exercise that starts with Black move, adjust the index,
+                // as the first, top left cell, is not a move cell (but rather an empty one).
+                if (Line.NodeList[0].ColorToMove == PieceColor.Black)
+                {
+                    moveIndex--;
+                }
+
                 if (moveIndex < Line.GetPlyCount())
                 {
                     TreeNode nd = Line.GetNodeAtIndex(moveIndex);
