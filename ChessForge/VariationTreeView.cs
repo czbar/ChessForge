@@ -1303,7 +1303,8 @@ namespace ChessForge
         /// <returns></returns>
         private Paragraph BuildResultPara()
         {
-            if (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.NONE)
+            if (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.NONE
+                || _mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.EDITING)
             {
                 string result = ShownVariationTree.Header.GetResult(out _);
                 if (!string.IsNullOrWhiteSpace(result))
