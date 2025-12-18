@@ -88,6 +88,10 @@ Description: Collections of endgames and exercises.
     Shelf:Endgames
     Description: 
     
+	  Book:Endgame Tragicomedies
+      Description: Grandmasters blundering in textbook endgames.
+      File: Endgames/Rook Endgame Tragicommedies - World Cup 2025.pgn
+    
 	  Book:Endgames by NoseKnowsAll
       Description: Great selection of endgames imported from a lichess study by NoseKnowsAll@lichess.
       File: Endgames/Endgames by NoseKnowsAll.pgn
@@ -95,6 +99,7 @@ Description: Collections of endgames and exercises.
       Book:Checkmate Patterns
       Description: Basic checkmate patterns named and illustrated.
       File: Endgames/Checkmate Patterns.pgn
+
         
 Bookcase:Tournaments
 Description: Games from tournaments and matches.

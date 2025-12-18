@@ -87,6 +87,10 @@ Description: Zbiory końcówek i ćwiczeń.
 
     Shelf:Końcówki
     Description:
+    
+	  Book:Końcówkowe Tragikomedie
+      Description: Arcymistrzowie mylą się w ksiażkowych końcówkach.
+      File: Endgames/Rook Endgame Tragicommedies - World Cup 2025.pgn
 
 	  Book:Zbiór końcówek autorstwa NoseKnowsAll@lichess (jęz. ang.)
       Description: Znakomity wybór końcówek importowany ze studium użytkownika NoseKnowsAll nalichess.
