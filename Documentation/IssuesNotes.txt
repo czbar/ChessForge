@@ -22,4 +22,6 @@ Add Undo for CreateModelGame and CreateExercise.
 
 In Study, after some edit and CTRL+S, the view moves to highlight the selected move.
 
-If there is a move with an AFTER diagram and a comment, then the next move should be on a new line?
+Do not update checkbox on Do Not Update in the context menu
+
+Remember last sort crit within session
