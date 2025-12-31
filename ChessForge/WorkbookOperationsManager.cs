@@ -157,6 +157,12 @@ namespace ChessForge
                         SetActiveArticlePostArticlesUndelete(op.OpData_1);
                         AppState.MainWin.RebuildAllTreeViews();
                         break;
+                    case WorkbookOperationType.CREATE_MODEL_GAME:
+                        WorkbookManager.SessionWorkbook.UndoCreateModelGame(op.Chapter, op.Article);
+                        break;
+                    case WorkbookOperationType.CREATE_EXERCISE:
+                        WorkbookManager.SessionWorkbook.UndoCreateExercise(op.Chapter, op.Article);
+                        break;
                     case WorkbookOperationType.REGENERATE_STUDIES:
                         WorkbookManager.SessionWorkbook.UndoRegenerateStudies(op.OpData_1, op.OpData_2);
                         AppState.MainWin.SetupGuiForActiveStudyTree(true);

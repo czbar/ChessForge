@@ -117,6 +117,8 @@ namespace ChessForge
                     case WorkbookOperationType.EDIT_MODEL_GAME_HEADER:
                     case WorkbookOperationType.EDIT_EXERCISE_HEADER:
                     case WorkbookOperationType.IMPORT_LICHESS_GAME:
+                    case WorkbookOperationType.CREATE_MODEL_GAME:
+                    case WorkbookOperationType.CREATE_EXERCISE:
                         sb.Append(_operation.Article.Tree.Header.BuildGameHeaderLine(true));
                         break;
                     case WorkbookOperationType.DELETE_COMMENTS:
@@ -155,6 +157,8 @@ namespace ChessForge
             _dictOpTypeToTitle[WorkbookOperationType.CREATE_CHAPTER] = Properties.Resources.OpCreateChapter;
             _dictOpTypeToTitle[WorkbookOperationType.RENAME_CHAPTER] = Properties.Resources.OpRenameChapter;
             _dictOpTypeToTitle[WorkbookOperationType.IMPORT_LICHESS_GAME] = Properties.Resources.OpImportLichessGame;
+            _dictOpTypeToTitle[WorkbookOperationType.CREATE_MODEL_GAME] = Properties.Resources.OpCreateModelGame;
+            _dictOpTypeToTitle[WorkbookOperationType.CREATE_EXERCISE] = Properties.Resources.OpCreateExercise;
             _dictOpTypeToTitle[WorkbookOperationType.DELETE_MODEL_GAMES] = Properties.Resources.OpDeleteGames;
             _dictOpTypeToTitle[WorkbookOperationType.DELETE_EXERCISES] = Properties.Resources.OpDeleteExercises;
             _dictOpTypeToTitle[WorkbookOperationType.DELETE_ARTICLES] = Properties.Resources.OpDeleteArticles;

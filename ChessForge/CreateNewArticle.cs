@@ -33,16 +33,20 @@ namespace ChessForge
                 dlg.ShowDialog();
                 if (dlg.ExitOK)
                 {
-                    Article article = WorkbookManager.SessionWorkbook.ActiveChapter.AddModelGame(tree);
+                    Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
+                    Article article = chapter.AddModelGame(tree);
                     article.IsReady = true;
 
-                    WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex
-                        = WorkbookManager.SessionWorkbook.ActiveChapter.GetModelGameCount() - 1;
+                    WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.CREATE_MODEL_GAME, chapter, article, chapter.ModelGames.Count - 1);
+                    WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
+
+                    chapter.ActiveModelGameIndex
+                        = chapter.GetModelGameCount() - 1;
                     AppState.MainWin.ChaptersView.BuildFlowDocumentForChaptersView(false);
 
                     if (AppState.ActiveTab == TabViewType.MODEL_GAME)
                     {
-                        AppState.MainWin.SelectModelGame(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex, true);
+                        AppState.MainWin.SelectModelGame(chapter.ActiveModelGameIndex, true);
                     }
                     else
                     {
@@ -119,6 +123,9 @@ namespace ChessForge
 
                 exercise = WorkbookManager.SessionWorkbook.ActiveChapter.AddExercise(tree);
                 exercise.Tree.ShowTreeLines = chapter.ShowSolutionsOnOpen;
+
+                WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.CREATE_MODEL_GAME, chapter, exercise, chapter.Exercises.Count - 1);
+                WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
 
                 chapter.ActiveExerciseIndex = WorkbookManager.SessionWorkbook.ActiveChapter.GetExerciseCount() - 1;
                 AppState.MainWin.ChaptersView.BuildFlowDocumentForChaptersView(false);

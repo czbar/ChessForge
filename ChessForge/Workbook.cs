@@ -1011,11 +1011,11 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Undo creation of an Article as import from Lichess.
+        /// Undo creation of an Article.
         /// </summary>
         /// <param name="chapter"></param>
         /// <param name="article"></param>
-        public void UndoImportLichessGame(Chapter chapter, Article article)
+        public void UndoCreateArticle(Chapter chapter, Article article)
         {
             try
             {
@@ -1028,6 +1028,36 @@ namespace ChessForge
             catch
             {
             }
+        }
+
+        /// <summary>
+        /// Undo creation of an Article as import from Lichess.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="article"></param>
+        public void UndoImportLichessGame(Chapter chapter, Article article)
+        {
+            UndoCreateArticle(chapter, article);
+        }
+
+        /// <summary>
+        /// Undo creation of a Model Game
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="article"></param>
+        public void UndoCreateModelGame(Chapter chapter, Article article)
+        {
+            UndoCreateArticle(chapter, article);
+        }
+
+        /// <summary>
+        /// Undo creation of an Exercise.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="article"></param>
+        public void UndoCreateExercise(Chapter chapter, Article article)
+        {
+            UndoCreateArticle(chapter, article);
         }
 
         /// <summary>
