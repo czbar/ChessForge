@@ -140,6 +140,7 @@
     </Compile>
     <Compile Include="ContentTypeListItem.cs" />
     <Compile Include="CopyPasteMoves.cs" />
+    <Compile Include="CreateNewArticle.cs" />
     <Compile Include="CustomCommands.cs" />
     <Compile Include="DebugDumps.cs" />
     <Compile Include="DeleteArticlesUtils.cs" />

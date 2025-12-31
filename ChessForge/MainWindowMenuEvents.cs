@@ -1128,7 +1128,7 @@ namespace ChessForge
                             EngineGame.Line.Tree.Header.SetHeaderValue(key, Properties.Resources.Engine + " " + AppState.EngineName);
                         }
                         EngineGame.Line.Tree.Header.SetHeaderValue(PgnHeaders.KEY_DATE, PgnHeaders.FormatPgnDateString(DateTime.Now));
-                        CreateNewModelGame(EngineGame.Line.Tree);
+                        CreateNewArticle.CreateNewModelGame(EngineGame.Line.Tree);
                         UiTabModelGames.Focus();
                     }
 
@@ -2218,7 +2218,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnChpt_CreateModelGame_Click(object sender, RoutedEventArgs e)
         {
-            CreateNewModelGame();
+            CreateNewArticle.CreateNewModelGame();
         }
 
         /// <summary>
@@ -2228,7 +2228,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnGame_CreateModelGame_Click(object sender, RoutedEventArgs e)
         {
-            CreateNewModelGame();
+            CreateNewArticle.CreateNewModelGame();
         }
 
         /// <summary>
@@ -2304,7 +2304,7 @@ namespace ChessForge
 
                     // remember the currently active because the next call will change it
                     VariationTreeView startView = ActiveTreeView;
-                    CreateNewExerciseFromTree(tree);
+                    CreateNewArticle.CreateNewExerciseFromTree(tree);
 
                     // now SortReferenceString will find the just created exercise so we can go ahead and update refs
                     nd.AddArticleReference(tree.Header.GetGuid(out _));
@@ -2365,7 +2365,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnExerc_CreateExercise_Click(object sender, RoutedEventArgs e)
         {
-            CreateNewExercise();
+            CreateNewArticle.CreateNewExercise();
         }
 
         /// <summary>
@@ -2606,7 +2606,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnChpt_AddExercise_Click(object sender, RoutedEventArgs e)
         {
-            CreateNewExercise();
+            CreateNewArticle.CreateNewExercise();
         }
 
         /// <summary>
@@ -3739,133 +3739,6 @@ namespace ChessForge
                 MessageBox.Show(Properties.Resources.NoNewVersion, Properties.Resources.UpdateCheck, MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
-        }
-
-        /// <summary>
-        /// Creates a new Model Game and makes it "Active".
-        /// </summary>
-        public void CreateNewModelGame(VariationTree gameTree = null)
-        {
-            try
-            {
-                VariationTree tree;
-
-                if (gameTree != null)
-                {
-                    tree = TreeUtils.CopyVariationTree(gameTree);
-                    tree.Header.SetContentType(GameData.ContentType.MODEL_GAME);
-                }
-                else
-                {
-                    tree = new VariationTree(GameData.ContentType.MODEL_GAME);
-                }
-
-                GameHeaderDialog dlg = new GameHeaderDialog(tree, Properties.Resources.GameHeader);
-                GuiUtilities.PositionDialog(dlg, this, 100);
-                dlg.ShowDialog();
-                if (dlg.ExitOK)
-                {
-                    Article article = WorkbookManager.SessionWorkbook.ActiveChapter.AddModelGame(tree);
-                    article.IsReady = true;
-
-                    WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex
-                        = WorkbookManager.SessionWorkbook.ActiveChapter.GetModelGameCount() - 1;
-                    _chaptersView.BuildFlowDocumentForChaptersView(false);
-
-                    if (AppState.ActiveTab == TabViewType.MODEL_GAME)
-                    {
-                        SelectModelGame(WorkbookManager.SessionWorkbook.ActiveChapter.ActiveModelGameIndex, true);
-                        //RefreshGamesView(out Chapter chapter, out int articleIndex);
-                        //WorkbookLocationNavigator.SaveNewLocation(chapter, GameData.ContentType.MODEL_GAME, articleIndex);
-
-                    }
-                    else
-                    {
-                        // if ActiveTab is not MODEL_GAME, Focus() will call SelectModelGame()
-                        // Do not call it explicitly here!
-                        UiTabModelGames.Focus();
-                    }
-
-                    if (AppState.AreExplorersOn)
-                    {
-                        WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, ActiveVariationTree.SelectedNode, true);
-                    }
-                    AppState.IsDirty = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                AppLog.Message("_UiMnGame_CreateModelGame_Click()", ex);
-            }
-        }
-
-        /// <summary>
-        /// Creates a new Exercise and makes it "Active".
-        /// </summary>
-        private void CreateNewExercise()
-        {
-            try
-            {
-                PositionSetupDialog dlgPosSetup = new PositionSetupDialog(null);
-                GuiUtilities.PositionDialog(dlgPosSetup, AppState.MainWin, 100);
-                dlgPosSetup.ShowDialog();
-
-                if (dlgPosSetup.ExitOK)
-                {
-                    BoardPosition pos = dlgPosSetup.PositionSetup;
-
-                    VariationTree tree = new VariationTree(GameData.ContentType.EXERCISE);
-                    tree.CreateNew(pos);
-
-                    GameHeaderDialog dlgHeader = new GameHeaderDialog(tree, Properties.Resources.ResourceManager.GetString("ExerciseHeader"));
-                    GuiUtilities.PositionDialog(dlgHeader, AppState.MainWin, 100);
-
-                    dlgHeader.ShowDialog();
-                    if (dlgHeader.ExitOK)
-                    {
-                        CreateNewExerciseFromTree(tree);
-                        RefreshExercisesView(out Chapter chapter, out int articleIndex);
-                        WorkbookLocationNavigator.SaveNewLocation(chapter, GameData.ContentType.EXERCISE, articleIndex);
-                        if (AppState.AreExplorersOn)
-                        {
-                            WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, ActiveVariationTree.SelectedNode);
-                        }
-                        AppState.IsDirty = true;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                AppLog.Message("UiMnAddExercise_Click()", ex);
-            }
-        }
-
-        /// <summary>
-        /// Creates a new exercise from the passed VariationTree
-        /// </summary>
-        /// <param name="tree"></param>
-        private Article CreateNewExerciseFromTree(VariationTree tree)
-        {
-            Article exercise = null;
-
-            try
-            {
-                Chapter chapter = WorkbookManager.SessionWorkbook.ActiveChapter;
-
-                exercise = WorkbookManager.SessionWorkbook.ActiveChapter.AddExercise(tree);
-                exercise.Tree.ShowTreeLines = chapter.ShowSolutionsOnOpen;
-
-                chapter.ActiveExerciseIndex = WorkbookManager.SessionWorkbook.ActiveChapter.GetExerciseCount() - 1;
-                _chaptersView.BuildFlowDocumentForChaptersView(false);
-                SelectExercise(chapter.ActiveExerciseIndex, true);
-                AppState.IsDirty = true;
-            }
-            catch (Exception ex)
-            {
-                AppLog.Message("CreateNewExercise()", ex);
-            }
-
-            return exercise;
         }
 
         /// <summary>
