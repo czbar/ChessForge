@@ -1672,7 +1672,7 @@ namespace ChessForge
         /// <summary>
         /// Rebuilds the Exercise view
         /// </summary>
-        private void RefreshExercisesView(out Chapter chapter, out int articleIndex)
+        public void RefreshExercisesView(out Chapter chapter, out int articleIndex)
         {
             chapter = null;
             articleIndex = -1;
