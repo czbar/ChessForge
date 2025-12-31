@@ -40,11 +40,11 @@ namespace ChessForge
             UiComboBoxSortBy.Items.Add(new GameSortCriterion(GameSortCriterion.SortItem.ECO, Properties.Resources.SortByEco));
             UiComboBoxSortBy.Items.Add(new GameSortCriterion(GameSortCriterion.SortItem.WHITE_NAME, Properties.Resources.SortByWhiteName));
             UiComboBoxSortBy.Items.Add(new GameSortCriterion(GameSortCriterion.SortItem.BLACK_NAME, Properties.Resources.SortByBlackName));
-            UiComboBoxSortBy.SelectedIndex = 0;
+            UiComboBoxSortBy.SelectedIndex = Configuration.SortByCriterion;
 
             UiComboBoxSortDirection.Items.Add(new GameSortCriterion(GameSortCriterion.SortItem.ASCENDING, Properties.Resources.SortAsc));
             UiComboBoxSortDirection.Items.Add(new GameSortCriterion(GameSortCriterion.SortItem.DESCENDING, Properties.Resources.SortDesc));
-            UiComboBoxSortDirection.SelectedIndex = 0;
+            UiComboBoxSortDirection.SelectedIndex = Configuration.SortByDirection;
         }
 
         /// <summary>
@@ -75,8 +75,12 @@ namespace ChessForge
             GameSortCriterion crit = UiComboBoxSortBy.SelectedItem as GameSortCriterion;
             if (crit != null && crit.ItemId != GameSortCriterion.SortItem.NONE)
             {
+                Configuration.SortByCriterion = UiComboBoxSortBy.SelectedIndex;
+
                 SortGamesBy = crit.ItemId;
                 GameSortCriterion direction = UiComboBoxSortDirection.SelectedItem as GameSortCriterion;
+                Configuration.SortByDirection = UiComboBoxSortDirection.SelectedIndex;
+
                 if (direction == null || direction.ItemId == GameSortCriterion.SortItem.ASCENDING)
                 {
                     SortGamesDirection = GameSortCriterion.SortItem.ASCENDING;
