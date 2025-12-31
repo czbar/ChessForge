@@ -4288,6 +4288,10 @@ OpCreateArticle=Utwórz Partię/Ćwiczenie
 OpImportLichessGame=Importuj Partię z Lichess
 
 #description: Operation
+#english: OpCreateModelGame=Create Game
+OpCreateModelGame=Utwórz Partię
+
+#description: Operation
 #english: OpCreateExercise=Create Exercise
 OpCreateExercise=Utwórz Ćwiczenie
 

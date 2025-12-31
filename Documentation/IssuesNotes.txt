@@ -18,8 +18,6 @@ When importing from multiple PGN offer an option to create a separate chapter fr
 
 Test the game mode.
 
-Add Undo for CreateModelGame and CreateExercise.
-
 In Study, after some edit and CTRL+S, the view moves to highlight the selected move.
 
 Do not update checkbox on Do Not Update in the context menu

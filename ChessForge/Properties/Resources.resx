@@ -2969,6 +2969,9 @@ NOTE: Evaluations are not being updated (press F8 to allow).</value>
   <data name="OpImportLichessGame" xml:space="preserve">
     <value>Import Lichess Game</value>
   </data>
+  <data name="OpCreateModelGame" xml:space="preserve">
+    <value>Create Game</value>
+  </data>
   <data name="OpCreateExercise" xml:space="preserve">
     <value>Create Exercise</value>
   </data>

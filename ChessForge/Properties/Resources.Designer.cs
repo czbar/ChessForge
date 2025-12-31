@@ -5651,6 +5651,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create Game.
+        /// </summary>
+        public static string OpCreateModelGame {
+            get {
+                return ResourceManager.GetString("OpCreateModelGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete Games/Exercises.
         /// </summary>
         public static string OpDeleteArticles {

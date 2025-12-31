@@ -3338,6 +3338,9 @@ OpCreateArticle=Create
 OpImportLichessGame=Import Lichess Game
 
 #Operation
+OpCreateModelGame=Create Game
+
+#Operation
 OpCreateExercise=Create Exercise
 
 #Operation

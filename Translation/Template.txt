@@ -4288,6 +4288,10 @@ OpCreateArticle=
 OpImportLichessGame=
 
 #description: Operation
+#english: OpCreateModelGame=Create Game
+OpCreateModelGame=
+
+#description: Operation
 #english: OpCreateExercise=Create Exercise
 OpCreateExercise=
 
