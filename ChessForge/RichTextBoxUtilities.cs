@@ -447,7 +447,7 @@ namespace ChessForge
             {
                 foreach (Inline inl in para.Inlines)
                 {
-                    if (inl is Run run && run.Name.StartsWith(RunMovePrefix))
+                    if (inl is Run run && run.Name.StartsWith(RunMovePrefix) && run.Text != string.Empty)
                     {
                         res = (run.Name == NameMoveRun(nodeId));
                         break;
