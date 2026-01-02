@@ -1,5 +1,4 @@
-﻿using ChessPosition;
-using GameTree;
+﻿using GameTree;
 using System.Collections.Generic;
 using System.Windows;
 
