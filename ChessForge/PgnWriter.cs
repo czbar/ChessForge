@@ -124,6 +124,22 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Builds PGN text for a subtree starting at the given node.
+        /// This method is used for clipboard copy operations.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="moveNumberOffset"></param>
+        /// <returns></returns>
+        public static string BuildSubtreeText(TreeNode nd, uint moveNumberOffset)
+        {
+            _fileText = new StringBuilder();
+
+            TreeNode dummyRoot = new TreeNode();
+            dummyRoot.Children.Add(nd);
+            return BuildTreeLineText(dummyRoot, moveNumberOffset, true);
+        }
+
+        /// <summary>
         /// Checks if the target file is valid i.e. not a Workbook file.
         /// </summary>
         /// <param name="pgnFileName"></param>
