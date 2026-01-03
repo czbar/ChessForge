@@ -370,6 +370,12 @@ namespace ChessForge
             if (_selectedForCopy.Count > 0)
             {
                 List<TreeNode> lstNodes = TreeUtils.CopyNodeList(_selectedForCopy);
+
+                uint moveNumberOffset = AppState.ActiveVariationTree.MoveNumberOffset;
+                foreach (TreeNode nd in lstNodes)
+                {
+                    nd.MoveNumber += moveNumberOffset;
+                }
                 SystemClipboard.CopyMoveList(lstNodes, ShownVariationTree.MoveNumberOffset);
             }
         }
