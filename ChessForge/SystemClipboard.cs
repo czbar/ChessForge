@@ -117,7 +117,7 @@ namespace ChessForge
             try
             {
                 IDataObject dataObject = new DataObject();
-                dataObject.SetData(DataFormats.UnicodeText, PgnWriter.BuildSubtreeText(lst[0], moveNumberOffset));
+                dataObject.SetData(DataFormats.UnicodeText, PgnWriter.BuildSubtreeText(lst[0], 0));
                 dataObject.SetData(DataFormats.Serializable, lst);
                 Clipboard.SetDataObject(dataObject);
             }

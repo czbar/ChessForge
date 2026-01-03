@@ -107,7 +107,7 @@ namespace ChessForge
                         }
 
                         string msg = Properties.Resources.ErrClipboardLinePaste + " ("
-                            + MoveUtils.BuildSingleMoveText(failedInsertions[0], true, false, targetTree.MoveNumberOffset) + ")";
+                            + MoveUtils.BuildSingleMoveText(failedInsertions[0], true, false, 0) + ")";
                         AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(msg, CommentBox.HintType.ERROR, 14);
                     }
                 }
