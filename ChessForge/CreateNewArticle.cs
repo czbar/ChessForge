@@ -124,7 +124,7 @@ namespace ChessForge
                 exercise = WorkbookManager.SessionWorkbook.ActiveChapter.AddExercise(tree);
                 exercise.Tree.ShowTreeLines = chapter.ShowSolutionsOnOpen;
 
-                WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.CREATE_MODEL_GAME, chapter, exercise, chapter.Exercises.Count - 1);
+                WorkbookOperation op = new WorkbookOperation(WorkbookOperationType.CREATE_EXERCISE, chapter, exercise, chapter.Exercises.Count - 1);
                 WorkbookManager.SessionWorkbook.OpsManager.PushOperation(op);
 
                 chapter.ActiveExerciseIndex = WorkbookManager.SessionWorkbook.ActiveChapter.GetExerciseCount() - 1;
