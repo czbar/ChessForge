@@ -20,4 +20,6 @@ Test the game mode.
 
 In Study, after some edit and CTRL+S, the view moves to highlight the selected move.
 
-Do not update checkbox on Do Not Update in the context menu
+Restarting training game at an earlier move causes all sorts of confusion in the game notation, diagram and who is on the move.
+
+Better details of PGN parsing errors

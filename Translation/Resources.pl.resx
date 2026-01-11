@@ -2530,6 +2530,9 @@ UWAGA: Oceny nie są uaktualniane (zezwól naciskając F8).</value>
   <data name="StartingPosition" xml:space="preserve">
     <value>Pozycja początkowa</value>
   </data>
+  <data name="CurrentPosition" xml:space="preserve">
+    <value>Aktualna pozycja</value>
+  </data>
   <data name="ClearBoard" xml:space="preserve">
     <value>Wyczyść szachownicę</value>
   </data>

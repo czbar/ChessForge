@@ -3641,6 +3641,10 @@ Castling=
 #english: StartingPosition=Starting position
 StartingPosition=
 
+#description: Current position
+#english: CurrentPosition=Current position
+CurrentPosition=
+
 #description: Clear board
 #english: ClearBoard=Clear Board
 ClearBoard=
