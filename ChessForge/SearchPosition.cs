@@ -9,6 +9,11 @@ namespace ChessForge
     public class SearchPosition
     {
         /// <summary>
+        /// The last searched position.
+        /// </summary>
+        public static BoardPosition LastSearchPosition = null;
+
+        /// <summary>
         /// Finds nodes featuring the same Position as the passed node.
         /// </summary>
         /// <param name="tree"></param>
@@ -89,6 +94,49 @@ namespace ChessForge
             return nodeList;
         }
 
+        /// <summary>
+        /// Determines the position to use for search.
+        /// If there is a selected node its position will be used for search.
+        /// If not, the clipboard content will be tested if it contains a valid FEN.
+        /// If so, it will be used, otherwise we will set the starting position.
+        /// </summary>
+        /// <returns></returns>
+        public static BoardPosition PreparePositionForSearch()
+        {
+            BoardPosition position = null;
+
+            if (LastSearchPosition != null)
+            {
+                position = LastSearchPosition;
+            }
+            else
+            {
+                VariationTree tree = AppState.ActiveVariationTree;
+                TreeNode nd = tree == null ? null : tree.SelectedNode;
+                if (nd == null)
+                {
+                    string fen = PositionUtils.GetFenFromClipboard();
+                    if (string.IsNullOrEmpty(fen))
+                    {
+                        try
+                        {
+                            FenParser.ParseFenIntoBoard(fen, ref position);
+                        }
+                        catch
+                        {
+                            position = null;
+                            position = PositionUtils.SetupStartingPosition();
+                        }
+                    }
+                }
+                else
+                {
+                    position = nd.Position;
+                }
+            }
+
+            return position;
+        }
 
         /// <summary>
         /// Compares two byte arrays representing chess positions.

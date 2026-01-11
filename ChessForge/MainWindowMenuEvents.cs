@@ -984,7 +984,7 @@ namespace ChessForge
 
             try
             {
-                BoardPosition position = PreparePositionForSearch();
+                BoardPosition position = SearchPosition.PreparePositionForSearch();
                 TreeNode searchNode = new TreeNode(null, "", 1);
                 bool searchAgain = true;
                 while (searchAgain)
@@ -993,6 +993,7 @@ namespace ChessForge
                     GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
                     if (dlg.ShowDialog() == true)
                     {
+                        SearchPosition.LastSearchPosition = new BoardPosition(dlg.PositionSetup);
                         searchNode.Position = new BoardPosition(dlg.PositionSetup);
                         // store for another possible loop
                         position = searchNode.Position;
@@ -1016,41 +1017,6 @@ namespace ChessForge
             {
                 AppLog.Message("UiMnFindPositions_Click()", ex);
             }
-        }
-
-        /// <summary>
-        /// Determines the position to use for search.
-        /// If there is a selected node its position will be used for search.
-        /// If not, the clipboard content will be tested if it contains a valid FEN.
-        /// If so, it will be used, otherwise we will set the starting position.
-        /// </summary>
-        /// <returns></returns>
-        private BoardPosition PreparePositionForSearch()
-        {
-            BoardPosition position = null;
-            TreeNode nd = ActiveVariationTree == null ? null : ActiveVariationTree.SelectedNode;
-            if (nd == null)
-            {
-                string fen = PositionUtils.GetFenFromClipboard();
-                if (string.IsNullOrEmpty(fen))
-                {
-                    try
-                    {
-                        FenParser.ParseFenIntoBoard(fen, ref position);
-                    }
-                    catch
-                    {
-                        position = null;
-                        position = PositionUtils.SetupStartingPosition();
-                    }
-                }
-            }
-            else
-            {
-                position = nd.Position;
-            }
-
-            return position;
         }
 
         //**********************
