@@ -1,41 +1,25 @@
-Are we creating the Study *view* even if not displaying (test on SlowRead.pgn)
-			
-Help for Select Articles
-
-Indexing view: after copy and paste : selected move lost?  Also, how to handle collapsed/expanded sectors? See how we handle it after FindIdentical.
-
-When going from Chapters view to Exercise, we call DisplayPosition multiple times. Review the whole thing. 
-
-Training: when evaluating line does not bring Runs into view (when evaluating line). Also, maybe evaluate line experience should include making moves and eval chart?
-  While evaluating lines remove the move prompt para and the restore it.  Stop variation eval when any move is clicked.
+Training: evaluating line does not bring Runs into view. Also, maybe evaluate line experience should include making moves and eval chart?
+  While evaluating lines remove the move prompt para and then restore it.  Stop variation eval when any move is clicked.
   Changing to earlier engine move does not change the eval node for the engine.
-Training: when returning with save, check if the node is expanded.
 
 RTF: if everything in the paragraph is bold, set the font bold to the para instead of individual moves. Should dramatically reduce size.
-  
-When lichess is down:
- - a previously downloaded game may start playing.
- - the blue notification banner does not clear on error.
  
 Review checking if nodes are identical in various Paste contexts.
 
-Unify the implementation of SCOPE constants
+Unify the implementation of SCOPE constants.
 
 IntroView uses _rtb static reference to HostRtb. This is problematic. Try text change event handling as non-static.
 
 Speed up Undo delete move for simple cases. Same Undo for AddMove and for Delete move.
 
-Clicking on the next move takes much longer that using an arrow key.
-
 Look into that mysterious bottom margin = 5 in game layout.
 
 When importing from multiple PGN offer an option to create a separate chapter from each file.
 
-For German translation: FlMsgUpdatePositionEvalOff changed
-
-When 2 pieces can go to the target square but one actually cannot because it would put its king in check, 
-ChessForge still gives notation like Nge3.
-
-A gap is too big between a diagram inserted before move and the comment from the previous move (on a main line in a game)
-
 Test the game mode.
+
+In Study, after some edit and CTRL+S, the view moves to highlight the selected move.
+
+Restarting training game at an earlier move causes all sorts of confusion in the game notation, diagram and who is on the move.
+
+Better details of PGN parsing errors

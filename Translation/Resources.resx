@@ -552,6 +552,9 @@
   <data name="ErrGameNotFound" xml:space="preserve">
     <value>Game not found</value>
   </data>
+  <data name="ErrInternalGameNotFound" xml:space="preserve">
+    <value>Internal Error: Game not Found</value>
+  </data>
   <data name="ErrGamesNotFound" xml:space="preserve">
     <value>Games not found</value>
   </data>
@@ -2528,6 +2531,9 @@ NOTE: Evaluations are not being updated (press F8 to allow).</value>
   <data name="StartingPosition" xml:space="preserve">
     <value>Starting position</value>
   </data>
+  <data name="CurrentPosition" xml:space="preserve">
+    <value>Current position</value>
+  </data>
   <data name="ClearBoard" xml:space="preserve">
     <value>Clear Board</value>
   </data>
@@ -2963,7 +2969,10 @@ NOTE: Evaluations are not being updated (press F8 to allow).</value>
   <data name="OpCreateArticle" xml:space="preserve">
     <value>Create </value>
   </data>
-  <data name="OpCreateGame" xml:space="preserve">
+  <data name="OpImportLichessGame" xml:space="preserve">
+    <value>Import Lichess Game</value>
+  </data>
+  <data name="OpCreateModelGame" xml:space="preserve">
     <value>Create Game</value>
   </data>
   <data name="OpCreateExercise" xml:space="preserve">

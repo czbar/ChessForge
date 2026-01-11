@@ -1,7 +1,5 @@
 ﻿using ChessPosition;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace WebAccess
 {
@@ -43,7 +41,7 @@ namespace WebAccess
         {
             get
             {
-                return ConvertDateTimeToEpochTicks(StartDate);
+                return DateUtils.ConvertDateTimeToEpochTicks(StartDate, IsUtcTimes);
             }
         }
 
@@ -56,35 +54,12 @@ namespace WebAccess
             {
                 if (EndDate.HasValue)
                 {
-                    return ConvertDateTimeToEpochTicks(EndDate.Value.AddDays(1).AddMilliseconds(-1));
+                    return DateUtils.ConvertDateTimeToEpochTicks(EndDate.Value.AddDays(1).AddMilliseconds(-1), IsUtcTimes);
                 }
                 else
                 {
                     return null;
                 }
-            }
-        }
-
-        /// <summary>
-        /// Converts the passed datetime into Unix epoch milliseconds.
-        /// Depending on the value of IsUtcTimes considers the passed value
-        /// as UTC or Local.
-        /// </summary>
-        /// <param name="dt"></param>
-        /// <returns></returns>
-        private long? ConvertDateTimeToEpochTicks(DateTime? dt)
-        {
-            if (dt == null)
-            {
-                return null;
-            }
-            else
-            {
-                DateTime dtToConvert = new DateTime(dt.Value.Year, dt.Value.Month, dt.Value.Day, 
-                                                    dt.Value.Hour, dt.Value.Minute, dt.Value.Second, dt.Value.Millisecond, 
-                                                    IsUtcTimes ? DateTimeKind.Utc : DateTimeKind.Local);
-
-                return EncodingUtils.ConvertDateToEpoch(dtToConvert);
             }
         }
     }

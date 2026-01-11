@@ -1,5 +1,4 @@
-﻿using ChessPosition;
-using GameTree;
+﻿using GameTree;
 using System.Collections.Generic;
 using System.Windows;
 
@@ -118,7 +117,7 @@ namespace ChessForge
             try
             {
                 IDataObject dataObject = new DataObject();
-                dataObject.SetData(DataFormats.UnicodeText, TextUtils.BuildLineText(lst, moveNumberOffset));
+                dataObject.SetData(DataFormats.UnicodeText, PgnWriter.BuildSubtreeText(lst[0], 0));
                 dataObject.SetData(DataFormats.Serializable, lst);
                 Clipboard.SetDataObject(dataObject);
             }

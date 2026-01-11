@@ -552,6 +552,9 @@
   <data name="ErrGameNotFound" xml:space="preserve">
     <value>Partii nie znaleziono</value>
   </data>
+  <data name="ErrInternalGameNotFound" xml:space="preserve">
+    <value>Błąd wewnętrzny: Partii nie znaleziono</value>
+  </data>
   <data name="ErrGamesNotFound" xml:space="preserve">
     <value>Partii nie znaleziono</value>
   </data>
@@ -2527,6 +2530,9 @@ UWAGA: Oceny nie są uaktualniane (zezwól naciskając F8).</value>
   <data name="StartingPosition" xml:space="preserve">
     <value>Pozycja początkowa</value>
   </data>
+  <data name="CurrentPosition" xml:space="preserve">
+    <value>Aktualna pozycja</value>
+  </data>
   <data name="ClearBoard" xml:space="preserve">
     <value>Wyczyść szachownicę</value>
   </data>
@@ -2962,7 +2968,10 @@ UWAGA: Oceny nie są uaktualniane (zezwól naciskając F8).</value>
   <data name="OpCreateArticle" xml:space="preserve">
     <value>Utwórz Partię/Ćwiczenie</value>
   </data>
-  <data name="OpCreateGame" xml:space="preserve">
+  <data name="OpImportLichessGame" xml:space="preserve">
+    <value>Importuj Partię z Lichess</value>
+  </data>
+  <data name="OpCreateModelGame" xml:space="preserve">
     <value>Utwórz Partię</value>
   </data>
   <data name="OpCreateExercise" xml:space="preserve">

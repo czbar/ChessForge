@@ -77,6 +77,7 @@
     <Compile Include="Parsers\PgnMoveParser.cs" />
     <Compile Include="Parsers\PgnMultiGameParser.cs" />
     <Compile Include="Utils\AppLog.cs" />
+    <Compile Include="Utils\DateUtils.cs" />
     <Compile Include="Utils\SelectableString.cs" />
     <Compile Include="Utils\CommentPart.cs" />
     <Compile Include="Utils\CommentProcessor.cs" />

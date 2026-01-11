@@ -88,6 +88,10 @@ Description: Collections of endgames and exercises.
     Shelf:Endgames
     Description: 
     
+	  Book:Endgame Tragicomedies
+      Description: Grandmasters blundering in textbook endgames.
+      File: Endgames/Rook Endgame Tragicommedies - World Cup 2025.pgn
+    
 	  Book:Endgames by NoseKnowsAll
       Description: Great selection of endgames imported from a lichess study by NoseKnowsAll@lichess.
       File: Endgames/Endgames by NoseKnowsAll.pgn
@@ -95,6 +99,7 @@ Description: Collections of endgames and exercises.
       Book:Checkmate Patterns
       Description: Basic checkmate patterns named and illustrated.
       File: Endgames/Checkmate Patterns.pgn
+
         
 Bookcase:Tournaments
 Description: Games from tournaments and matches.
@@ -106,6 +111,10 @@ Description: Games from tournaments and matches.
       Description: All games from Men's World Championship Matches and Tournaments.
       File:Tournaments/Mens World Individual Championships.pgn
     
+	  Book:FIDE World Cup 2025
+      Description: All games of the FIDE World Cup, Goa 2025
+      File:Tournaments/FIDE World Cup 2025.pgn
+	  
 	  Book:FIDE Candidates 1953 (Men)
       Description: All games from the legendary Candidates Tournament, Zurich 1953.
       File:Tournaments/Candidates 1953 - Zurich.pgn

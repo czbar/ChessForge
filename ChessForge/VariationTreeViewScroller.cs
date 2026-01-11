@@ -9,6 +9,35 @@ namespace ChessForge
         // Cache the ScrollViewer reference for efficiency
         private ScrollViewer _scrollViewer = null;
 
+        // Keep track of the last known vertical offset
+        private double _lastKnownVerticalOffset = 0.0;
+
+        /// <summary>
+        /// Saves the current scroll position of the RichTextBox.
+        /// </summary>
+        public void SaveScrollPosition()
+        {
+            if (_scrollViewer == null)
+            {
+                _scrollViewer = GuiUtilities.GetVisualChild<ScrollViewer>(HostRtb);
+            }
+            if (_scrollViewer != null)
+            {
+                _lastKnownVerticalOffset = _scrollViewer.VerticalOffset;
+            }
+        }
+
+        /// <summary>
+        /// Restores the saved scroll position of the RichTextBox.
+        /// </summary>
+        public void RestoreScrollPosition()
+        {
+            if (_scrollViewer != null)
+            {
+                _scrollViewer.ScrollToVerticalOffset(_lastKnownVerticalOffset);
+            }
+        }
+
         /// <summary>
         /// Brings the specified Run into view within the RichTextBox.
         /// It is better than the built-in BringIntoView because it avoids

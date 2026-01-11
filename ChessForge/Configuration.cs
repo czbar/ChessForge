@@ -77,6 +77,15 @@ namespace ChessForge
         /// </summary>
         public static bool DontSavePositionEvals = false;
 
+        /// <summary>
+        /// The last used sort criterion for games in the chapter.
+        /// </summary>
+        public static int SortByCriterion = 0;
+
+        /// <summary>
+        /// The last used sort direction for games in the chapter.
+        /// </summary>
+        public static int SortByDirection = 0;
 
         //*********************************
         //

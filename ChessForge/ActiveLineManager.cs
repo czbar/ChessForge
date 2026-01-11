@@ -543,6 +543,13 @@ namespace ChessForge
             {
                 int moveIndex = (row * 2) + (column == _dgActiveLineWhitePlyColumn ? 0 : 1) + 1;
 
+                // if this is an Exercise that starts with Black move, adjust the index,
+                // as the first, top left cell, is not a move cell (but rather an empty one).
+                if (Line.NodeList[0].ColorToMove == PieceColor.Black)
+                {
+                    moveIndex--;
+                }
+
                 if (moveIndex < Line.GetPlyCount())
                 {
                     TreeNode nd = Line.GetNodeAtIndex(moveIndex);
@@ -983,6 +990,11 @@ namespace ChessForge
         /// </summary>
         public void ToggleDontSaveEvals()
         {
+            if (EvaluationManager.CurrentMode == EvaluationManager.Mode.IDLE)
+            {
+                Configuration.DontSavePositionEvals = false;
+            }
+
             _mainWin.SetDontSaveEvalsMenuItems(!Configuration.DontSavePositionEvals);
             string msg = Configuration.DontSavePositionEvals ? Properties.Resources.FlMsgUpdatePositionEvalOff : Properties.Resources.FlMsgUpdatePositionEvalOn;
             CommentBox.HintType ht = Configuration.DontSavePositionEvals ? CommentBox.HintType.PROGRESS : CommentBox.HintType.INFO;

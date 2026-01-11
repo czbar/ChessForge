@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
+        ResizeMode="NoResize"
         mc:Ignorable="d"
         Title="{x:Static p:Resources.SplitChapter}" Height="250" Width="365">
     <Grid>

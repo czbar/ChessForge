@@ -15,17 +15,25 @@ namespace ChessForge
         CREATE_CHAPTER,
         IMPORT_CHAPTERS,
         RENAME_CHAPTER,
-        CREATE_ARTICLE,
+        
+        IMPORT_LICHESS_GAME,
+
+        CREATE_MODEL_GAME,
+        CREATE_EXERCISE,
+
         DELETE_MODEL_GAMES,
         DELETE_EXERCISES,
         DELETE_ARTICLES,
+        
         REGENERATE_STUDIES,
         EDIT_MODEL_GAME_HEADER,
         EDIT_EXERCISE_HEADER,
+        
         MOVE_ARTICLES_MULTI_CHAPTER,
         MOVE_ARTICLES,
         COPY_ARTICLES,
         INSERT_ARTICLES,
+        
         DELETE_COMMENTS,
         DELETE_ENGINE_EVALS,
         CLEAN_LINES_AND_COMMENTS,

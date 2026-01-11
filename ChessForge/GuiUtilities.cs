@@ -432,13 +432,20 @@ namespace ChessForge
         {
             if (article != null)
             {
-                List<string> gameIdList = new List<string>();
-                List<Article> games = new List<Article> { article };
-                gameIdList.Add(article.Tree.Header.GetGuid(out _));
+                try
+                {
+                    List<string> gameIdList = new List<string>();
+                    List<Article> games = new List<Article> { article };
+                    gameIdList.Add(article.Tree.Header.GetGuid(out _));
 
-                SingleGamePreviewDialog dlg = new SingleGamePreviewDialog(gameIdList, games);
-                PositionDialog(dlg, owner, 20);
-                dlg.ShowDialog();
+                    SingleGamePreviewDialog dlg = new SingleGamePreviewDialog(gameIdList, games);
+                    PositionDialog(dlg, owner, 20);
+                    dlg.ShowDialog();
+                }
+                catch (Exception ex)
+                {
+                    AppLog.Message("InvokeGamePreviewDialog() ", ex);
+                }
             }
         }
 

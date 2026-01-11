@@ -1592,16 +1592,15 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Returns a list of NodeIds.
-        /// This will be used e.g. when undoing tree merge.
+        /// Returns a list of NodeIds marked as NewTrainingNodes.
         /// </summary>
         /// <returns></returns>
-        public List<int> GetListOfNodeIds(bool includeTrainingMoves)
+        public List<int> GetListOfNewTrainingNodeIds()
         {
             List<int> nodeIds = new List<int>();
             foreach (TreeNode nd in Nodes)
             {
-                if (includeTrainingMoves || !nd.IsNewTrainingMove)
+                if (nd.IsNewTrainingMove)
                 {
                     nodeIds.Add(nd.NodeId);
                 }

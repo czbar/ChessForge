@@ -1600,6 +1600,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current position.
+        /// </summary>
+        public static string CurrentPosition {
+            get {
+                return ResourceManager.GetString("CurrentPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The current version $0 will be backed up as.
         /// </summary>
         public static string CurrentVersion {
@@ -2748,6 +2757,15 @@ namespace ChessForge.Properties {
         public static string ErrInsteadOfMoveNumber {
             get {
                 return ResourceManager.GetString("ErrInsteadOfMoveNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Internal Error: Game not Found.
+        /// </summary>
+        public static string ErrInternalGameNotFound {
+            get {
+                return ResourceManager.GetString("ErrInternalGameNotFound", resourceCulture);
             }
         }
         
@@ -5644,9 +5662,9 @@ namespace ChessForge.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Create Game.
         /// </summary>
-        public static string OpCreateGame {
+        public static string OpCreateModelGame {
             get {
-                return ResourceManager.GetString("OpCreateGame", resourceCulture);
+                return ResourceManager.GetString("OpCreateModelGame", resourceCulture);
             }
         }
         
@@ -5872,6 +5890,15 @@ namespace ChessForge.Properties {
         public static string OpImportChapters {
             get {
                 return ResourceManager.GetString("OpImportChapters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import Lichess Game.
+        /// </summary>
+        public static string OpImportLichessGame {
+            get {
+                return ResourceManager.GetString("OpImportLichessGame", resourceCulture);
             }
         }
         

@@ -1,17 +1,12 @@
 ﻿using ChessPosition;
-using GameTree;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using WebAccess;
-using static ChessForge.WorkbookManager;
 using Label = System.Windows.Controls.Label;
 
 namespace ChessForge
@@ -291,20 +286,28 @@ namespace ChessForge
         /// </summary>
         public void OpenReplayDialog()
         {
-            // pass ActiveTab so that we can add a reference if this is a Study Tree
-            TabViewType activeTab = WorkbookManager.ActiveTab;
-
-            LichessGamesPreviewDialog dlg = new LichessGamesPreviewDialog(_clickedGameId, _gameIdList, 
-                                                AppState.ActiveTab, AppState.MainWin.ActiveTreeView, AppState.ActiveArticleIndex);
-            GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
-            dlg.ShowDialog();
-
-            WorkbookManager.ActiveTab = TabViewType.NONE;
-            if (dlg.GoToGamesOnExit)
+            try
             {
-                activeTab = TabViewType.MODEL_GAME;
+                // pass ActiveTab so that we can add a reference if this is a Study Tree
+                TabViewType activeTab = WorkbookManager.ActiveTab;
+
+                LichessGamesPreviewDialog dlg = new LichessGamesPreviewDialog(_clickedGameId, _gameIdList,
+                                                    AppState.ActiveTab, AppState.MainWin.ActiveTreeView, AppState.ActiveArticleIndex);
+                GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
+                dlg.ShowDialog();
+
+                WorkbookManager.ActiveTab = TabViewType.NONE;
+                if (dlg.GoToGamesOnExit)
+                {
+                    activeTab = TabViewType.MODEL_GAME;
+                }
+                GuiUtilities.ForceFocus(activeTab);
+                WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, AppState.MainWin.ActiveTreeView.GetSelectedNode());
             }
-            GuiUtilities.ForceFocus(activeTab);
+            catch (Exception ex)
+            {
+                AppLog.Message("OpenReplayDialog() ", ex); ;
+            }
         }
 
         /// <summary>

@@ -1,9 +1,7 @@
 ﻿using ChessPosition;
 using GameTree;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using WebAccess;
@@ -286,41 +284,48 @@ namespace ChessForge
             }
             else
             {
-                UpdateConfiguration();
-
-                EnableControls(true);
-                GamesFilter filter = new GamesFilter();
-                filter.User = UiTbUserName.Text;
-
-                int gameCount;
-                int.TryParse(UiTbMaxGames.Text, out gameCount);
-                if (gameCount <= 0 || gameCount > DownloadWebGamesManager.MAX_DOWNLOAD_GAME_COUNT)
+                try
                 {
-                    gameCount = DownloadWebGamesManager.MAX_DOWNLOAD_GAME_COUNT;
+                    UpdateConfiguration();
+
+                    EnableControls(true);
+                    GamesFilter filter = new GamesFilter();
+                    filter.User = UiTbUserName.Text;
+
+                    int gameCount;
+                    int.TryParse(UiTbMaxGames.Text, out gameCount);
+                    if (gameCount <= 0 || gameCount > DownloadWebGamesManager.MAX_DOWNLOAD_GAME_COUNT)
+                    {
+                        gameCount = DownloadWebGamesManager.MAX_DOWNLOAD_GAME_COUNT;
+                    }
+                    filter.MaxGames = gameCount;
+
+                    if (UiCbOnlyNew.IsChecked == true)
+                    {
+                        filter.StartDate = null;
+                        filter.EndDate = null;
+                    }
+                    else
+                    {
+                        filter.StartDate = DateUtils.ClearTime(UiDtStartDate.SelectedDate);
+                        filter.EndDate = DateUtils.ClearTime(UiDtEndDate.SelectedDate);
+
+                        VerifyDatesInFilter(filter);
+                    }
+                    filter.IsUtcTimes = UiCbUtc.IsChecked == true;
+
+                    if (IsChesscomDownload())
+                    {
+                        _ = WebAccess.ChesscomUserGames.GetChesscomUserGames(filter);
+                    }
+                    else
+                    {
+                        _ = WebAccess.LichessUserGames.GetLichessUserGames(filter);
+                    }
                 }
-                filter.MaxGames = gameCount;
-
-                if (UiCbOnlyNew.IsChecked == true)
+                catch (Exception ex)
                 {
-                    filter.StartDate = null;
-                    filter.EndDate = null;
-                }
-                else
-                {
-                    filter.StartDate = UiDtStartDate.SelectedDate;
-                    filter.EndDate = UiDtEndDate.SelectedDate;
-
-                    VerifyDatesInFilter(filter);
-                }
-                filter.IsUtcTimes = UiCbUtc.IsChecked == true;
-
-                if (IsChesscomDownload())
-                {
-                    _ = WebAccess.ChesscomUserGames.GetChesscomUserGames(filter);
-                }
-                else
-                {
-                    _ = WebAccess.LichessUserGames.GetLichessUserGames(filter);
+                    AppLog.Message("UiBtnDownload_Click()", ex);
                 }
             }
         }

@@ -83,8 +83,6 @@ namespace ChessForge
 
             InitializePosition(_position);
 
-            PositionSetup.HalfMove50Clock = 1;
-            SetFen();
             UiTbFen.Focus();
 
             SetPartialSearchControlsVisibility(Configuration.PartialSearch);
@@ -99,6 +97,8 @@ namespace ChessForge
         {
             PositionSetup = new BoardPosition(position);
             SetupImagesForPosition();
+            PositionSetup.HalfMove50Clock = 1;
+            SetFen();
         }
 
         /// <summary>
@@ -690,6 +690,21 @@ namespace ChessForge
             {
                 return position | colorToMove | castling | enpassant;
             }
+        }
+
+        /// <summary>
+        /// Sets up the current position from the calling view in the GUI.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnCurrentPos_Click(object sender, RoutedEventArgs e)
+        {
+            ClearAll();
+
+            TreeNode nd = AppState.ActiveVariationTree?.SelectedNode;
+            BoardPosition pos = nd == null ? SearchPosition.PreparePositionForSearch() : nd.Position;
+
+            InitializePosition(pos);
         }
 
         /// <summary>

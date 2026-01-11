@@ -183,8 +183,8 @@ namespace ChessForge
                         ret = true;
                     }
                 }
-                catch 
-                { 
+                catch
+                {
                 }
             }
 
@@ -995,7 +995,7 @@ namespace ChessForge
             try
             {
                 Dictionary<int, List<Article>> presortOrder = objPersortOrder as Dictionary<int, List<Article>>;
-                
+
                 foreach (int chapterIndex in presortOrder.Keys)
                 {
                     Chapter ch = Chapters[chapterIndex];
@@ -1011,7 +1011,7 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Undo creation/addition of an Article.
+        /// Undo creation of an Article.
         /// </summary>
         /// <param name="chapter"></param>
         /// <param name="article"></param>
@@ -1022,11 +1022,42 @@ namespace ChessForge
                 if (chapter != null && article != null)
                 {
                     chapter.DeleteArticle(article);
+                    WorkbookManager.RemoveArticleReferences(article.Guid);
                 }
             }
             catch
             {
             }
+        }
+
+        /// <summary>
+        /// Undo creation of an Article as import from Lichess.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="article"></param>
+        public void UndoImportLichessGame(Chapter chapter, Article article)
+        {
+            UndoCreateArticle(chapter, article);
+        }
+
+        /// <summary>
+        /// Undo creation of a Model Game
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="article"></param>
+        public void UndoCreateModelGame(Chapter chapter, Article article)
+        {
+            UndoCreateArticle(chapter, article);
+        }
+
+        /// <summary>
+        /// Undo creation of an Exercise.
+        /// </summary>
+        /// <param name="chapter"></param>
+        /// <param name="article"></param>
+        public void UndoCreateExercise(Chapter chapter, Article article)
+        {
+            UndoCreateArticle(chapter, article);
         }
 
         /// <summary>

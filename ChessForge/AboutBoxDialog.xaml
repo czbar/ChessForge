@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
+        ResizeMode="NoResize"
         mc:Ignorable="d"
         ShowInTaskbar="True"
         Title="Chess Forge" Height="300" Width="400" MouseDown="Window_MouseDown">
@@ -13,7 +14,7 @@
             <FlowDocument>
             </FlowDocument>
         </RichTextBox>
-        <Button x:Name="_btnOK" Content="{x:Static p:Resources.Ok}" IsDefault="True" HorizontalAlignment="Center" Margin="0,242,0,20" VerticalAlignment="Top" Width="74" Click="_btnOK_Click" Height="20"/>
+        <Button x:Name="_btnOK" Content="{x:Static p:Resources.Ok}" IsDefault="True" HorizontalAlignment="Center" Margin="0,0,0,22" VerticalAlignment="Bottom" Width="74" Click="_btnOK_Click" Height="20"/>
         <Button x:Name="_btnCancel" IsCancel="True" Content="" Width="0" Height="0"/>
 
     </Grid>

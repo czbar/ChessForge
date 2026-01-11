@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
+        ResizeMode="NoResize"
         mc:Ignorable="d"
         ShowInTaskbar="True"
         Title="{x:Static p:Resources.SelectReferences}" Height="460" Width="800">

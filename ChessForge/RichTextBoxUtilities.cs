@@ -168,7 +168,7 @@ namespace ChessForge
                             Run textRun = new Run(comment.Substring(firstUnprocessedChar, pos_start - firstUnprocessedChar));
                             para.Inlines.Add(textRun);
                         }
-                        
+
                         Hyperlink link = new Hyperlink(new Run(urls[i]));
                         link.NavigateUri = new Uri(urls[i]);
 
@@ -447,7 +447,7 @@ namespace ChessForge
             {
                 foreach (Inline inl in para.Inlines)
                 {
-                    if (inl is Run run && run.Name.StartsWith(RunMovePrefix))
+                    if (inl is Run run && run.Name.StartsWith(RunMovePrefix) && run.Text != string.Empty)
                     {
                         res = (run.Name == NameMoveRun(nodeId));
                         break;
@@ -455,6 +455,54 @@ namespace ChessForge
                 }
             }
 
+            return res;
+        }
+
+        /// <summary>
+        /// Checks if an Inline before the passed Run
+        /// is a Run ending with a new line character.
+        /// It checks the immediately preceding Inline or, if that one is empty,
+        /// the inline before it.
+        /// </summary>
+        /// <param name="run"></param>
+        /// <returns></returns>
+        public static bool IsPreviousRunNewLine(Run run)
+        {
+            bool res = false;
+
+            if (run != null)
+            {
+                Inline inl = run.PreviousInline;
+                
+                // if this is an empty Run, check the one before it.
+                if (inl is Run r && string.IsNullOrEmpty(r.Text))
+                {
+                    inl = r.PreviousInline;
+                }
+
+                res = IsRunEndsWithNewLine(inl as Run);
+            }
+
+            return res;
+        }
+
+        /// <summary>
+        /// Checks if the passed Run ends with a new line character.
+        /// </summary>
+        /// <param name="run"></param>
+        /// <returns></returns>
+        public static bool IsRunEndsWithNewLine(Run run)
+        {
+            bool res = false;
+            
+            if (run != null)
+            {
+                if (!string.IsNullOrEmpty(run.Text))
+                {
+                    res = run.Text.EndsWith("\n");
+                }
+            }
+         
             return res;
         }
 

@@ -479,6 +479,9 @@ ErrNotAllGamesCopied=Not all games were copied
 #Game not found
 ErrGameNotFound=Game not found
 
+#Internal error: Game not found
+ErrInternalGameNotFound=Internal Error: Game not Found
+
 #Games not found
 ErrGamesNotFound=Games not found
 
@@ -2834,6 +2837,9 @@ Castling=Castling
 #Starting position
 StartingPosition=Starting position
 
+#Current position
+CurrentPosition=Current position
+
 #Clear board
 ClearBoard=Clear Board
 
@@ -3332,7 +3338,10 @@ OpRenameChapter=Rename Chapter
 OpCreateArticle=Create 
 
 #Operation
-OpCreateGame=Create Game
+OpImportLichessGame=Import Lichess Game
+
+#Operation
+OpCreateModelGame=Create Game
 
 #Operation
 OpCreateExercise=Create Exercise

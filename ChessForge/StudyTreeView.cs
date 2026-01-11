@@ -317,7 +317,7 @@ namespace ChessForge
             bool create = true;
 
             if (sector == null
-                || sector.Nodes.Count == 0 
+                || sector.Nodes.Count == 0
                 || sector.Nodes.Count == 1 && sector.Nodes[0].NodeId == 0 && string.IsNullOrEmpty(sector.Nodes[0].Comment)
                )
             {
@@ -874,20 +874,12 @@ namespace ChessForge
         /// Expands the sector starting with the passed NodeId.
         /// </summary>
         /// <param name="nodeId"></param>
-        private void ExpandSector(TreeNode nd)
+        public void ExpandSector(TreeNode nd)
         {
             if (nd != null && nd.NodeId >= 0)
             {
                 // uncollapse the node and all descendants
-                ExpandNode(nd);
-
-                // make sure all above are not collapsed, as in some cases they may be
-                while (nd.Parent != null)
-                {
-                    nd.IsCollapsed = false;
-                    nd = nd.Parent;
-                }
-
+                TreeUtils.ExpandLine(nd);
 
                 BuildFlowDocumentForVariationTree(false);
                 TreeNode selNode = GetSelectedNode();
@@ -896,22 +888,6 @@ namespace ChessForge
                     SelectRun(_dictNodeToRun[selNode.NodeId], 1, MouseButton.Left);
                 }
                 BringSelectedRunIntoView();
-            }
-        }
-
-        /// <summary>
-        /// Marks the passed node and all its descendants as expanded.
-        /// </summary>
-        /// <param name="nd"></param>
-        private void ExpandNode(TreeNode nd)
-        {
-            if (nd != null)
-            {
-                nd.IsCollapsed = false;
-                foreach (TreeNode child in nd.Children)
-                {
-                    ExpandNode(child);
-                }
             }
         }
 
@@ -926,10 +902,9 @@ namespace ChessForge
 
             if (nd != null && nd.NodeId >= 0)
             {
-                nd.IsCollapsed = true;
-
                 //if collapsed, check if we need to update the selection
                 adjustedSelection = UpdateSelectedNodeAfterCollapse(nd);
+                nd.IsCollapsed = true;
                 if (adjustedSelection != null)
                 {
                     AppState.MainWin.SetActiveLine(adjustedSelection.LineId, adjustedSelection.NodeId, false);
@@ -951,9 +926,9 @@ namespace ChessForge
 
         /// <summary>
         /// The passed node was where the user requested a sector collapse.
-        /// If the currenly selected node is the node being collapsed or the
-        /// passed node is its ancestor then we need to update selection to the 
-        /// first expanded ancestor of the node that was clicked.
+        /// If the currenly selected node is a decendant of the node being collapsed 
+        /// then select the node being collapsed.
+        /// Otherwise keep the current selection.
         /// </summary>
         /// <param name="nd"></param>
         /// <returns></returns>
@@ -964,13 +939,9 @@ namespace ChessForge
             TreeNode selectedNode = GetSelectedNode();
             if (selectedNode != null && selectedNode.NodeId != 0)
             {
-                if (selectedNode == nd || TreeUtils.IsAncestor(selectedNode, nd))
+                if (TreeUtils.IsAncestor(selectedNode, nd))
                 {
-                    TreeNode ancestor = TreeUtils.GetFirstExpandedAncestor(nd);
-                    if (ancestor != null)
-                    {
-                        adjustedNode = ancestor;
-                    }
+                    adjustedNode = nd;
                 }
             }
             else

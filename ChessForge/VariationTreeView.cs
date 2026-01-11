@@ -288,123 +288,123 @@ namespace ChessForge
 
             try
             {
-                    GameData.ContentType contentType = GameData.ContentType.NONE;
+                GameData.ContentType contentType = GameData.ContentType.NONE;
 
-                    if (treeForPrint == null)
+                if (treeForPrint == null)
+                {
+                    if (_contentType == GameData.ContentType.STUDY_TREE)
                     {
-                        if (_contentType == GameData.ContentType.STUDY_TREE)
-                        {
-                            _mainVariationTree = WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree;
-                        }
-                        else
-                        {
-                            _mainVariationTree = _mainWin.ActiveVariationTree;
-                            if (_mainVariationTree != null && _mainVariationTree.AssociatedPrimary != null)
-                            {
-                                // ActiveVariationTree may return a secondary tree which we don't want so check for it
-                                _mainVariationTree = _mainVariationTree.AssociatedPrimary;
-                            }
-                        }
-
-                        if (_mainVariationTree == null || _mainVariationTree.ContentType != this.ContentType)
-                        {
-                            return;
-                        }
+                        _mainVariationTree = WorkbookManager.SessionWorkbook.ActiveChapter.StudyTree.Tree;
                     }
                     else
                     {
-                        _mainVariationTree = treeForPrint;
-                    }
-
-                    if (string.IsNullOrEmpty(_mainVariationTree.RootNode.LineId) || _mainVariationTree.Nodes.Count > 1 && string.IsNullOrEmpty(_mainVariationTree.Nodes[1].LineId))
-                    {
-                        _mainVariationTree.BuildLines();
-                    }
-
-                    contentType = _mainVariationTree.Header.GetContentType(out _);
-
-                    Clear(doc, GameData.ContentType.GENERIC);
-
-                    if (treeForPrint == null)
-                    {
-                        PreviousNextViewBars.BuildPreviousNextBar(contentType);
-                    }
-
-                    doc.Blocks.Add(BuildDummyPararaph());
-
-                    // do not print page header if this is RTF export (print) and the view is Study
-                    // NOTE: first, it is redundant; second, it will print the title of the active chapter
-                    if (treeForPrint == null || contentType != GameData.ContentType.STUDY_TREE)
-                    {
-                        PageHeaderParagraph = BuildPageHeader(_mainVariationTree, contentType);
-                        if (PageHeaderParagraph != null)
+                        _mainVariationTree = _mainWin.ActiveVariationTree;
+                        if (_mainVariationTree != null && _mainVariationTree.AssociatedPrimary != null)
                         {
-                            doc.Blocks.Add(PageHeaderParagraph);
+                            // ActiveVariationTree may return a secondary tree which we don't want so check for it
+                            _mainVariationTree = _mainVariationTree.AssociatedPrimary;
                         }
                     }
 
-                    BuildExerciseParagraphs(doc);
-
-                    Paragraph preamblePara = BuildPreamble();
-                    if (preamblePara != null)
+                    if (_mainVariationTree == null || _mainVariationTree.ContentType != this.ContentType)
                     {
-                        doc.Blocks.Add(preamblePara);
+                        return;
+                    }
+                }
+                else
+                {
+                    _mainVariationTree = treeForPrint;
+                }
+
+                if (string.IsNullOrEmpty(_mainVariationTree.RootNode.LineId) || _mainVariationTree.Nodes.Count > 1 && string.IsNullOrEmpty(_mainVariationTree.Nodes[1].LineId))
+                {
+                    _mainVariationTree.BuildLines();
+                }
+
+                contentType = _mainVariationTree.Header.GetContentType(out _);
+
+                Clear(doc, GameData.ContentType.GENERIC);
+
+                if (treeForPrint == null)
+                {
+                    PreviousNextViewBars.BuildPreviousNextBar(contentType);
+                }
+
+                doc.Blocks.Add(BuildDummyPararaph());
+
+                // do not print page header if this is RTF export (print) and the view is Study
+                // NOTE: first, it is redundant; second, it will print the title of the active chapter
+                if (treeForPrint == null || contentType != GameData.ContentType.STUDY_TREE)
+                {
+                    PageHeaderParagraph = BuildPageHeader(_mainVariationTree, contentType);
+                    if (PageHeaderParagraph != null)
+                    {
+                        doc.Blocks.Add(PageHeaderParagraph);
+                    }
+                }
+
+                BuildExerciseParagraphs(doc);
+
+                Paragraph preamblePara = BuildPreamble();
+                if (preamblePara != null)
+                {
+                    doc.Blocks.Add(preamblePara);
+                }
+
+                if (treeForPrint == null)
+                {
+                    Paragraph quizInfoPara = BuildQuizInfoPara();
+                    if (quizInfoPara != null)
+                    {
+                        doc.Blocks.Add(quizInfoPara);
                     }
 
-                    if (treeForPrint == null)
+                    Paragraph movePromptPara = BuildYourMovePrompt();
+                    if (movePromptPara != null)
                     {
-                        Paragraph quizInfoPara = BuildQuizInfoPara();
-                        if (quizInfoPara != null)
-                        {
-                            doc.Blocks.Add(quizInfoPara);
-                        }
+                        doc.Blocks.Add(movePromptPara);
+                    }
+                }
 
-                        Paragraph movePromptPara = BuildYourMovePrompt();
-                        if (movePromptPara != null)
+                if (contentType != GameData.ContentType.EXERCISE || ShownVariationTree.ShowTreeLines || treeForPrint != null)
+                {
+                    // we will traverse back from each leaf to the nearest parent fork (or root of we run out)
+                    // and note the distances in the Nodes so that we can use them when creating the document
+                    // in the forward traversing
+                    SetNodeDistances();
+
+                    TreeNode root;
+                    if (rootNodeId == 0)
+                    {
+                        root = ShownVariationTree.Nodes[0];
+                    }
+                    else
+                    {
+                        root = ShownVariationTree.GetNodeFromNodeId(rootNodeId);
+                        if (includeStem)
                         {
-                            doc.Blocks.Add(movePromptPara);
+                            Paragraph paraStem = BuildWorkbookStemLine(root, true);
+                            doc.Blocks.Add(paraStem);
                         }
                     }
 
-                    if (contentType != GameData.ContentType.EXERCISE || ShownVariationTree.ShowTreeLines || treeForPrint != null)
+                    // start by creating a level 1 paragraph.
+                    Paragraph para = CreateParagraph("0", true);
+                    doc.Blocks.Add(para);
+
+                    CreateRunForStartingNode(para, root);
+
+                    // if we have a stem (e.g. this is Browse view in training, we need to request a number printed too
+                    BuildTreeLineText(doc, root, para, includeStem);
+
+                    if (contentType == GameData.ContentType.MODEL_GAME || contentType == GameData.ContentType.EXERCISE)
                     {
-                        // we will traverse back from each leaf to the nearest parent fork (or root of we run out)
-                        // and note the distances in the Nodes so that we can use them when creating the document
-                        // in the forward traversing
-                        SetNodeDistances();
-
-                        TreeNode root;
-                        if (rootNodeId == 0)
+                        Paragraph resultPara = BuildResultPara();
+                        if (resultPara != null)
                         {
-                            root = ShownVariationTree.Nodes[0];
+                            RemoveEmptyParagraphs(doc);
+                            doc.Blocks.Add(resultPara);
                         }
-                        else
-                        {
-                            root = ShownVariationTree.GetNodeFromNodeId(rootNodeId);
-                            if (includeStem)
-                            {
-                                Paragraph paraStem = BuildWorkbookStemLine(root, true);
-                                doc.Blocks.Add(paraStem);
-                            }
-                        }
-
-                        // start by creating a level 1 paragraph.
-                        Paragraph para = CreateParagraph("0", true);
-                        doc.Blocks.Add(para);
-
-                        CreateRunForStartingNode(para, root);
-
-                        // if we have a stem (e.g. this is Browse view in training, we need to request a number printed too
-                        BuildTreeLineText(doc, root, para, includeStem);
-
-                        if (contentType == GameData.ContentType.MODEL_GAME || contentType == GameData.ContentType.EXERCISE)
-                        {
-                            Paragraph resultPara = BuildResultPara();
-                            if (resultPara != null)
-                            {
-                                RemoveEmptyParagraphs(doc);
-                                doc.Blocks.Add(resultPara);
-                            }
                     }
 
                     Paragraph guessFinished = BuildGuessingFinishedParagraph();
@@ -923,8 +923,9 @@ namespace ChessForge
         /// depending on the match/mismatch of side-to-move.
         /// </summary>
         /// <param name="nodesToInsert"></param>
-        public TreeNode InsertSubtree(List<TreeNode> nodesToInsert, ref List<TreeNode> insertedNodes, ref List<TreeNode> failedInsertions)
+        public TreeNode InsertSubtree(List<TreeNode> nodesToInsert, ref List<TreeNode> insertedNodes, ref List<TreeNode> failedInsertions, out TreeNode nodeToInsertAt)
         {
+            nodeToInsertAt = null;
             if (nodesToInsert == null || nodesToInsert.Count == 0)
             {
                 return null;
@@ -933,7 +934,6 @@ namespace ChessForge
             TreeNode node = null;
 
             // if the first node of nodes to insert has id = 0, we will insert it at the root of the tree, regardless of which node is currently selected
-            TreeNode nodeToInsertAt;
             if (nodesToInsert[0].NodeId == 0 || ShownVariationTree.Nodes.Count == 1)
             {
                 nodeToInsertAt = ShownVariationTree.RootNode;
@@ -1303,7 +1303,8 @@ namespace ChessForge
         /// <returns></returns>
         private Paragraph BuildResultPara()
         {
-            if (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.NONE)
+            if (_mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.NONE
+                || _mainVariationTree.CurrentSolvingMode == VariationTree.SolvingMode.EDITING)
             {
                 string result = ShownVariationTree.Header.GetResult(out _);
                 if (!string.IsNullOrWhiteSpace(result))
@@ -1343,7 +1344,7 @@ namespace ChessForge
                 {
                     para.Margin = new Thickness(20, 20, 20, 20);
                 }
-                
+
                 RichTextBoxUtilities.BuildInlinesForTextWithLinks(para, preamble);
 
                 para.BorderThickness = new Thickness(1, 1, 1, 1);
@@ -1864,7 +1865,8 @@ namespace ChessForge
             // or previous move was followed by a diagram.
             if (!includeNumber && (inclComment && IsLastRunPostMoveComment(para, nd)
                                     || !string.IsNullOrEmpty(nd.CommentBeforeMove)
-                                    || (nd.Parent != null && nd.Parent.IsDiagram && !nd.Parent.IsDiagramBeforeMove))
+                                    || (nd.Parent != null && nd.Parent.IsDiagram && !nd.Parent.IsDiagramBeforeMove)
+                                    || (nd.Parent != null && !string.IsNullOrEmpty(nd.Parent.References)))
                                     )
             {
                 includeNumber = true;

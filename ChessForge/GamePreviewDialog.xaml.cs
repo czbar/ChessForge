@@ -17,9 +17,6 @@ namespace ChessForge
         // chessboard object for game replay
         protected ChessBoardSmall _chessBoard;
 
-        // VariationTree into which the current game is loaded
-        protected VariationTree _tree;
-
         // the list of Nodes to replay
         protected ObservableCollection<TreeNode> _mainLine;
 
@@ -182,7 +179,7 @@ namespace ChessForge
         /// <param name="moveIndex"></param>
         protected void RequestMoveAnimation(int moveIndex)
         {
-            if (moveIndex > 0 && moveIndex < _mainLine.Count)
+            if (moveIndex > 0 && _mainLine != null && moveIndex < _mainLine.Count)
             {
                 _animator.AnimateMove(_mainLine[moveIndex]);
                 UiLblMoveText.Content = MoveUtils.BuildSingleMoveText(_mainLine[moveIndex], true, false, 0);
@@ -202,7 +199,10 @@ namespace ChessForge
         /// <param name="e"></param>
         protected void AnimationFinished(object sender, EventArgs e)
         {
-            _chessBoard.DisplayPosition(_mainLine[_currentNodeMoveIndex], false);
+            if (_mainLine != null)
+            {
+                _chessBoard.DisplayPosition(_mainLine[_currentNodeMoveIndex], false);
+            }
 
             if (_pauseRequested)
             {
@@ -241,7 +241,7 @@ namespace ChessForge
                 }
                 _queuedOperation = QueuedOperation.NONE;
             }
-            else if (_currentNodeMoveIndex < _mainLine.Count - 1)
+            else if (_mainLine != null && _currentNodeMoveIndex < _mainLine.Count - 1)
             {
                 _currentNodeMoveIndex++;
                 RequestMoveAnimation(_currentNodeMoveIndex);
@@ -373,7 +373,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiImgPause_MouseDown(object sender, MouseButtonEventArgs e)
+        protected void UiImgPause_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (_isAnimating)
             {
@@ -383,8 +383,17 @@ namespace ChessForge
             else
             {
                 ShowPlayPauseButtons();
-                _chessBoard.DisplayPosition(_mainLine[_currentNodeMoveIndex], false);
-                UiLblMoveText.Content = MoveUtils.BuildSingleMoveText(_mainLine[_currentNodeMoveIndex], true, false, 0);
+                if (_mainLine == null || _mainLine.Count == 0)
+                {
+                    _chessBoard.DisplayPosition(null, PositionUtils.SetupStartingPosition());
+                    UiLblMoveText.Content = "";
+                    _currentNodeMoveIndex = 0;
+                }
+                else
+                {
+                    _chessBoard.DisplayPosition(_mainLine[_currentNodeMoveIndex], false);
+                    UiLblMoveText.Content = MoveUtils.BuildSingleMoveText(_mainLine[_currentNodeMoveIndex], true, false, 0);
+                }
             }
         }
 

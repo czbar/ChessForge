@@ -19,6 +19,43 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Marks the passed node and all its descendants as expanded.
+        /// </summary>
+        /// <param name="nd"></param>
+        public static void ExpandNode(TreeNode nd)
+        {
+            if (nd != null)
+            {
+                nd.IsCollapsed = false;
+                foreach (TreeNode child in nd.Children)
+                {
+                    ExpandNode(child);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Marks the passed node, all its descendants and all its ancestors as expanded.
+        /// </summary>
+        /// <param name="nd"></param>
+        public static void ExpandLine(TreeNode nd)
+        {
+            if (nd != null && nd.NodeId >= 0)
+            {
+                // uncollapse the node and all descendants
+                ExpandNode(nd);
+
+                // make sure all above are not collapsed, as in some cases they may be
+                while (nd.Parent != null)
+                {
+                    nd.IsCollapsed = false;
+                    nd = nd.Parent;
+                }
+            }
+        }
+
+
+        /// <summary>
         /// Counts the number of non-null children of the passed node.
         /// </summary>
         /// <param name="node"></param>

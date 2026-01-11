@@ -624,6 +624,10 @@ ErrNotAllGamesCopied=Nie wszystkie partie zostały skopiowane
 #english: ErrGameNotFound=Game not found
 ErrGameNotFound=Partii nie znaleziono
 
+#description: Internal error: Game not found
+#english: ErrInternalGameNotFound=Internal Error: Game not Found
+ErrInternalGameNotFound=Błąd wewnętrzny: Partii nie znaleziono
+
 #description: Games not found
 #english: ErrGamesNotFound=Games not found
 ErrGamesNotFound=Partii nie znaleziono
@@ -933,7 +937,7 @@ MsgClipboardContainsPgn=Zawartość schowka
 MsgNoDiagramsFound=Nie znaleziono żadnych diagramów
 
 #description: Message: Invalid version number.
-#english: MsgInvalidVersionNumber=Version number must be in the form "X.Y" where X and Y are non-negative numbers.
+#english: MsgInvalidVersionNumber=Version number must be in the form 'X.Y' where X and Y are non-negative numbers.
 MsgInvalidVersionNumber=Wersja musi być w formacie 'X.Y' gdzie X i Y są liczbami.
 
 #description: Workbook Options dialog title
@@ -1109,7 +1113,7 @@ TurnEngineOff=Wyłącz silnik (F2)
 TurnEngineOn=Włącz silnik (F2)
 
 #description: Tool tip for allowing evakuation persistance
-#english: TtAllowEvalUpdate=Turn the Engine Off (F2)\nNOTE: Evaluations are not being updated (Ctrl+K to allow).
+#english: TtAllowEvalUpdate=Turn the Engine Off (F2)\nNOTE: Evaluations are not being updated (press F8 to allow).
 TtAllowEvalUpdate=Wyłącz silnik (F2)\nUWAGA: Oceny nie są uaktualniane (zezwól naciskając F8).
 
 #description: Tool tip for hiding Eval Chart
@@ -3637,6 +3641,10 @@ Castling=Roszada
 #english: StartingPosition=Starting position
 StartingPosition=Pozycja początkowa
 
+#description: Current position
+#english: CurrentPosition=Current position
+CurrentPosition=Aktualna pozycja
+
 #description: Clear board
 #english: ClearBoard=Clear Board
 ClearBoard=Wyczyść szachownicę
@@ -4280,8 +4288,12 @@ OpRenameChapter=Zmień Nazwę Rozdziału
 OpCreateArticle=Utwórz Partię/Ćwiczenie
 
 #description: Operation
-#english: OpCreateGame=Create Game
-OpCreateGame=Utwórz Partię
+#english: OpImportLichessGame=Import Lichess Game
+OpImportLichessGame=Importuj Partię z Lichess
+
+#description: Operation
+#english: OpCreateModelGame=Create Game
+OpCreateModelGame=Utwórz Partię
 
 #description: Operation
 #english: OpCreateExercise=Create Exercise

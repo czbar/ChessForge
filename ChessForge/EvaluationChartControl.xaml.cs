@@ -789,7 +789,7 @@ namespace ChessForge
                 Point? pt = GetPointForMove(nd);
                 if (pt.HasValue)
                 {
-                    Point p = GetPointForMove(nd).Value;
+                    Point p = pt.Value;
 
                     bool isValuePositive;
 
@@ -998,22 +998,21 @@ namespace ChessForge
         {
             Point? p = null;
 
-            if (node != null)
+            if (node != null && _nodeList != null)
             {
-                double numerator = (node.MoveNumber - 1) * 2;
-                if (node.ColorToMove == ChessPosition.PieceColor.White)
+                int plyIndex = _nodeList.IndexOf(node);
+
+                if (plyIndex > 0)
                 {
-                    numerator += 1.0;
+                    double x = _pixelsPerPly * (plyIndex - 1);
+
+                    double? dVal = ParseEval(node.EngineEvaluation, node.ColorToMove);
+                    // null will be returned if we fail to parse but we have to set it to something or the chart may look weird.
+                    double eval = dVal.HasValue ? dVal.Value : 0;
+                    double y = (eval / _evalScale) * _maxY;
+
+                    p = new Point(x, y);
                 }
-
-                double x = _pixelsPerPly * numerator;
-
-                double? dVal = ParseEval(node.EngineEvaluation, node.ColorToMove);
-                // null will be returned if we fail to parse but we have to set it to something or the chart may look weird.
-                double eval = dVal.HasValue ? dVal.Value : 0;
-                double y = (eval / _evalScale) * _maxY;
-
-                p = new Point(x, y);
             }
 
             return p;

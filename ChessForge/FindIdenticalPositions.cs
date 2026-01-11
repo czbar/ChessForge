@@ -115,7 +115,7 @@ namespace ChessForge
                 }
                 else if (dlgEx.ArticleIndexId >= 0 && dlgEx.ArticleIndexId < lstIdenticalPositions.Count)
                 {
-                    ProcessSelectedPosition(lstIdenticalPositions, dlgEx.Request, dlgEx.ArticleIndexId);
+                    ProcessSelectedPosition(searchNode, lstIdenticalPositions, dlgEx.Request, dlgEx.ArticleIndexId);
                 }
             }
             else
@@ -131,7 +131,7 @@ namespace ChessForge
         /// <param name="lstIdenticalPositions"></param>
         /// <param name="request"></param>
         /// <param name="articleIndexId"></param>
-        private static void ProcessSelectedPosition(ObservableCollection<ArticleListItem> lstIdenticalPositions, FoundArticlesDialog.Action request, int articleIndexId)
+        private static void ProcessSelectedPosition(TreeNode searchNode, ObservableCollection<ArticleListItem> lstIdenticalPositions, FoundArticlesDialog.Action request, int articleIndexId)
         {
             ArticleListItem item = lstIdenticalPositions[articleIndexId];
             uint moveNumberOffset = 0;
@@ -139,6 +139,7 @@ namespace ChessForge
             {
                 moveNumberOffset = item.Article.Tree.MoveNumberOffset;
             }
+
             List<TreeNode> nodelList = null;
             switch (request)
             {

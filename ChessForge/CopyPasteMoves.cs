@@ -66,16 +66,20 @@ namespace ChessForge
                     VariationTreeView targetView = AppState.MainWin.ActiveTreeView;
                     List<TreeNode> insertedNewNodes = new List<TreeNode>();
                     List<TreeNode> failedInsertions = new List<TreeNode>();
-                    TreeNode firstInserted = targetView.InsertSubtree(lstNodes, ref insertedNewNodes, ref failedInsertions);
+                    TreeNode firstInserted = targetView.InsertSubtree(lstNodes, ref insertedNewNodes, ref failedInsertions, out TreeNode nodeToExpand);
                     
                     // NOTE: if failed to insert the entire list nodes, we fail the whole process
                     //       i.e. we DO NOT keep the successfully inserted nodes
                     
                     if (failedInsertions.Count == 0)
                     {
-                        // if we inserted an already existing line, do nothing
+                        // if we inserted anything go ahead, otherwise flash an announcement
                         if (insertedNewNodes.Count > 0)
                         {
+                            if (targetView is StudyTreeView studyView)
+                            {
+                                TreeUtils.ExpandLine(nodeToExpand);
+                            }
                             targetTree.BuildLines();
                             targetView.BuildFlowDocumentForVariationTree(false);
                             TreeNode insertedRoot = targetTree.GetNodeFromNodeId(firstInserted.NodeId);
@@ -103,7 +107,7 @@ namespace ChessForge
                         }
 
                         string msg = Properties.Resources.ErrClipboardLinePaste + " ("
-                            + MoveUtils.BuildSingleMoveText(failedInsertions[0], true, false, targetTree.MoveNumberOffset) + ")";
+                            + MoveUtils.BuildSingleMoveText(failedInsertions[0], true, false, 0) + ")";
                         AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(msg, CommentBox.HintType.ERROR, 14);
                     }
                 }

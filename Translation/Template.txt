@@ -624,6 +624,10 @@ ErrNotAllGamesCopied=
 #english: ErrGameNotFound=Game not found
 ErrGameNotFound=
 
+#description: Internal error: Game not found
+#english: ErrInternalGameNotFound=Internal Error: Game not Found
+ErrInternalGameNotFound=
+
 #description: Games not found
 #english: ErrGamesNotFound=Games not found
 ErrGamesNotFound=
@@ -3637,6 +3641,10 @@ Castling=
 #english: StartingPosition=Starting position
 StartingPosition=
 
+#description: Current position
+#english: CurrentPosition=Current position
+CurrentPosition=
+
 #description: Clear board
 #english: ClearBoard=Clear Board
 ClearBoard=
@@ -4280,8 +4288,12 @@ OpRenameChapter=
 OpCreateArticle=
 
 #description: Operation
-#english: OpCreateGame=Create Game
-OpCreateGame=
+#english: OpImportLichessGame=Import Lichess Game
+OpImportLichessGame=
+
+#description: Operation
+#english: OpCreateModelGame=Create Game
+OpCreateModelGame=
 
 #description: Operation
 #english: OpCreateExercise=Create Exercise

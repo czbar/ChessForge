@@ -1,0 +1,255 @@
+[ChessForgeWorkbook "Rook Endgame Tragicomedies from the World Cup 2025"]
+[Annotator ""]
+[WorkbookVersion "1.0"]
+[Guid "Rfd1965694237446cbeebabe1cf249c3c"]
+[TrainingSide "White"]
+[StudyBoardOrientation "White"]
+[GameBoardOrientation "White"]
+[ExerciseBoardOrientation "None"]
+[White "CHESS FORGE"]
+[Black "WORKBOOK"]
+[Result "*"]
+{This PGN Workbook is optimized for viewing in Chess Forge https://sourceforge.net/projects/chessforge/.   Chess Forge is a Free and Open Source Windows application.}
+
+*
+
+[ChapterTitle "Endgame Tragicomedies"]
+[Guid "R362b05232f5d4779b8f36bd082200d63"]
+[Annotator ""]
+[ContentType "Study Tree"]
+[White "CHAPTER"]
+[Black "Endgame Tragicomedies"]
+[IndexDepth "3"]
+[ShowSolutionsOnOpen "1"]
+[Result "*"]
+[Preamble "Click the Exercises tab to browse the material."]
+
+
+ *
+
+[Guid "R362b05232f5d4779b8f36bd082200d63"]
+[ContentType "Intro"]
+[White "Chapter"]
+[Black "Introduction"]
+[Result "*"]
+
+{Rook endgames are notoriously difficult. Many a strong grandmaster has blundered even in the thoroughly researched Rook and Pawn versus Rook positions.  Mark Dvoretsky in his seminal Endgame Manual presents a number of such cases, from top grandmasters' practice, calling them tragicomedies.  In the recent World Cup 2025 there were 4 instances of such tragicomedies in Rook and Pawn versus Rook endings. To be fair to the highly rated players featuring in them, we must add that the endgames were played under severe time pressure. Two of them in blitz tie-breakers. However, let that not diminish the feeling of relief for an average club player who will see that even strong grandmasters may struggle in textbook endings.   (Click the Exercises tab to browse the material)}
+
+{[%xaml PEZsb3dEb2N1bWVudCBQYWdlUGFkZGluZz0iNSwwLDUsMCIgQWxsb3dEcm9wPSJGYWxzZSIg
+eG1sbnM9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd2luZngvMjAwNi94YW1sL3ByZXNlbnRh
+dGlvbiIgeG1sbnM6eD0iaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93aW5meC8yMDA2L3hhbWwi
+PjxQYXJhZ3JhcGggTmFtZT0iUjY3MDVhMTc0NjBhMzQyNDg4MTU4MGUyNWNiZjE5MmJhIiAvPjxQYXJh
+Z3JhcGggTmFtZT0iUmQ1YzUyZWMzYzA0NzRlNmE5YzhiMWFjOWNkN2FiNmVkIj48UnVuIHhtbDpsYW5n
+PSJwbC1wbCI+Um9vayBlbmRnYW1lcyBhcmUgbm90b3Jpb3VzbHkgZGlmZmljdWx0LiBNYW55IGEgc3Ry
+b25nIGdyYW5kbWFzdGVyIGhhcyBibHVuZGVyZWQgZXZlbiBpbiB0aGUgdGhvcm91Z2hseSByZXNlYXJj
+aGVkIFJvb2sgYW5kIFBhd24gdmVyc3VzIFJvb2sgcG9zaXRpb25zLjwvUnVuPjwvUGFyYWdyYXBoPjxQ
+YXJhZ3JhcGggTmFtZT0iUjViOWFkOGUxMjczNTQ2NTJhMWI0YmRmZWY2YTdmODQ4Ij48UnVuIHhtbDps
+YW5nPSJwbC1wbCIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgLz48L1BhcmFncmFwaD48UGFyYWdyYXBoIE5h
+bWU9IlJlODc3MzlhMTBjMDI0MzA3OWE0YzNiZDY4YTJlNjZhZCI+PFJ1biB4bWw6bGFuZz0icGwtcGwi
+IHhtbDpzcGFjZT0icHJlc2VydmUiPk1hcmsgRHZvcmV0c2t5IGluIGhpcyBzZW1pbmFsIDwvUnVuPjxS
+dW4gRm9udFN0eWxlPSJJdGFsaWMiIHhtbDpsYW5nPSJwbC1wbCI+RW5kZ2FtZSBNYW51YWw8L1J1bj48
+UnVuIHhtbDpsYW5nPSJwbC1wbCIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+IHByZXNlbnRzIGEgbnVtYmVy
+IG9mIHN1Y2ggY2FzZXMsIGZyb20gdG9wIGdyYW5kbWFzdGVycycgcHJhY3RpY2UsIGNhbGxpbmcgdGhl
+bSA8L1J1bj48UnVuIEZvbnRTdHlsZT0iSXRhbGljIiB4bWw6bGFuZz0icGwtcGwiPnRyYWdpY29tZWRp
+ZXM8L1J1bj48UnVuIHhtbDpsYW5nPSJwbC1wbCI+LjwvUnVuPjwvUGFyYWdyYXBoPjxQYXJhZ3JhcGgg
+TmFtZT0iUjdlYjY5Yzc3ZTU1NTRkN2FiMGUyOGIwOTNlODc0NzVjIj48UnVuIHhtbDpsYW5nPSJwbC1w
+bCIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgLz48L1BhcmFncmFwaD48UGFyYWdyYXBoIE1hcmdpbj0iMCww
+LDAsMCIgRm9udFdlaWdodD0iTm9ybWFsIiBGb250U2l6ZT0iMTQiIE5hbWU9IlIyYWQ3NzczYWU3ZmY0
+OTI4Yjc4NjU5NzJkNWQ1NTI0YSI+PFJ1biBGb250V2VpZ2h0PSJOb3JtYWwiIEZvbnRTaXplPSIxNCIg
+eG1sOnNwYWNlPSJwcmVzZXJ2ZSI+SW4gdGhlIHJlY2VudCBXb3JsZCBDdXAgMjAyNSB0aGVyZSA8L1J1
+bj48UnVuIEZvbnRXZWlnaHQ9Ik5vcm1hbCIgRm9udFNpemU9IjE0IiB4bWw6bGFuZz0icGwtcGwiPndl
+cmU8L1J1bj48UnVuIEZvbnRXZWlnaHQ9Ik5vcm1hbCIgRm9udFNpemU9IjE0IiB4bWw6c3BhY2U9InBy
+ZXNlcnZlIj4gNCBpbnN0YW5jZXMgb2YgPC9SdW4+PFJ1biBGb250V2VpZ2h0PSJOb3JtYWwiIEZvbnRT
+aXplPSIxNCIgeG1sOmxhbmc9InBsLXBsIiB4bWw6c3BhY2U9InByZXNlcnZlIj5zdWNoIDwvUnVuPjxS
+dW4gRm9udFdlaWdodD0iTm9ybWFsIiBGb250U2l6ZT0iMTQiIHhtbDpzcGFjZT0icHJlc2VydmUiPnRy
+YWdpY29tZWRpZXMgaW4gUm9vayBhbmQgUGF3biB2ZXJzdXMgUm9vayBlbmRpbmdzLiBUbyBiZSBmYWly
+IHRvIHRoZSA8L1J1bj48UnVuIEZvbnRXZWlnaHQ9Ik5vcm1hbCIgRm9udFNpemU9IjE0IiB4bWw6bGFu
+Zz0icGwtcGwiIHhtbDpzcGFjZT0icHJlc2VydmUiPmhpZ2hseSByYXRlZCA8L1J1bj48UnVuIEZvbnRX
+ZWlnaHQ9Ik5vcm1hbCIgRm9udFNpemU9IjE0Ij5wbGF5ZXJzPC9SdW4+PFJ1biBGb250V2VpZ2h0PSJO
+b3JtYWwiIEZvbnRTaXplPSIxNCIgeG1sOmxhbmc9InBsLXBsIiB4bWw6c3BhY2U9InByZXNlcnZlIj4g
+ZmVhdHVyaW5nIGluIHRoZW08L1J1bj48UnVuIEZvbnRXZWlnaHQ9Ik5vcm1hbCIgRm9udFNpemU9IjE0
+IiB4bWw6c3BhY2U9InByZXNlcnZlIj4sIDwvUnVuPjxSdW4gRm9udFdlaWdodD0iTm9ybWFsIiBGb250
+U2l6ZT0iMTQiIHhtbDpsYW5nPSJwbC1wbCI+d2UgbXVzdCBhZGQgdGhhdCB0aGU8L1J1bj48UnVuIEZv
+bnRXZWlnaHQ9Ik5vcm1hbCIgRm9udFNpemU9IjE0IiB4bWw6c3BhY2U9InByZXNlcnZlIj4gZW5kZ2Ft
+ZXMgd2VyZSBwbGF5ZWQgdW5kZXIgc2V2ZXJlIHRpbWUgcHJlc3N1cmU8L1J1bj48UnVuIEZvbnRXZWln
+aHQ9Ik5vcm1hbCIgRm9udFNpemU9IjE0IiB4bWw6bGFuZz0icGwtcGwiPi4gVDwvUnVuPjxSdW4gRm9u
+dFdlaWdodD0iTm9ybWFsIiBGb250U2l6ZT0iMTQiIHhtbDpzcGFjZT0icHJlc2VydmUiPndvIG9mIHRo
+ZW0gaW4gYmxpdHogdGllLWJyZWFrZXJzLiA8L1J1bj48UnVuIEZvbnRXZWlnaHQ9Ik5vcm1hbCIgRm9u
+dFNpemU9IjE0IiB4bWw6bGFuZz0icGwtcGwiIHhtbDpzcGFjZT0icHJlc2VydmUiPkhvd2V2ZXIsIGxl
+dCB0aGF0IG5vdCBkaW1pbmlzaCB0aGUgZmVlbGluZyBvZiByZWxpZWYgZm9yIGFuIGF2ZXJhZ2UgY2x1
+YiBwbGF5ZXIgd2hvIHdpbGwgc2VlIHRoYXQgZXZlbiBzdHJvbmcgZ3JhbmRtYXN0ZXJzIG1heSBzdHJ1
+Z2dsZSBpbiB0ZXh0Ym9vayBlbmRpbmdzLiA8L1J1bj48L1BhcmFncmFwaD48UGFyYWdyYXBoIE1hcmdp
+bj0iMCwwLDAsMCIgRm9udFdlaWdodD0iTm9ybWFsIiBGb250U2l6ZT0iMTQiIE5hbWU9IlI1ZTYyZDIw
+MzUwZjI0OTUwODVmYjQ1ZTcxNTVmMmVjZSI+PFJ1biBGb250V2VpZ2h0PSJOb3JtYWwiIEZvbnRTaXpl
+PSIxNCIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgLz48L1BhcmFncmFwaD48UGFyYWdyYXBoIE5hbWU9IlIz
+YjQ5MTgyYWJhNDQ0ZmM0YjU3NzBmYjEyMzI1NmUzZCI+PFJ1biBGb250U3R5bGU9Ikl0YWxpYyIgeG1s
+Omxhbmc9InBsLXBsIiB4bWw6c3BhY2U9InByZXNlcnZlIj4oQ2xpY2sgdGhlIDwvUnVuPjxSdW4gRm9u
+dFN0eWxlPSJJdGFsaWMiIEZvbnRXZWlnaHQ9IkJvbGQiIHhtbDpsYW5nPSJwbC1wbCI+RXhlcmNpc2Vz
+PC9SdW4+PFJ1biBGb250U3R5bGU9Ikl0YWxpYyIgeG1sOmxhbmc9InBsLXBsIiB4bWw6c3BhY2U9InBy
+ZXNlcnZlIj4gdGFiIHRvIGJyb3dzZSB0aGUgbWF0ZXJpYWwpPC9SdW4+PC9QYXJhZ3JhcGg+PC9GbG93
+RG9jdW1lbnQ+ node_id=0 text= fen=cm5icWtibnIvcHBwcHBwcHAvOC84LzgvOC9QUFBQUFBQUC9
+STkJRS0JOUiB3IEtRa3EgLSAwIDE= ]}
+ *
+
+[ContentType "Exercise"]
+[Event "FIDE World Cup 2025"]
+[Round "1.8"]
+[ECO "B06"]
+[Guid "R173adde2be014e62bb4680e1a64938a7"]
+[Date "2025.11.10"]
+[White "Adly, Ahmed"]
+[Black "Grigoryan, Karen H."]
+[WhiteElo "2600"]
+[BlackElo "2642"]
+[Annotator ""]
+[Result "1-0"]
+[FEN "8/8/2k5/8/r7/1R2KP2/8/8 w - - 0 47"]
+
+
+ {[%eval +4.80][%brsp Rd3][%clk 0:01:40]} 1. Rd3 {[%eval +4.83][%brsp Ra8][%clk 0:00:12]}  
+Ra7 {[%eval +4.83][%brsp Ke4][%clk 0:01:36]}  2. Kf4 {[%eval +4.84][%brsp Ra8][%clk 0:00:13]White is winning but he needs to find a way to push the pawn under the right circumstances. }  
+(2. f4 $4 {[%cbm Moving the pawn immediately]leads to a draw.}  Rd7 $1 {Exchanging the rooks leads to an elementary drawn pawn endgame.}  
+3. Rc3+ Kd5 $11 {[%eval 0.00]Now the black king gets in front of the pawn ensuring a draw.} 
+) 2... Ra8 {[%eval +4.78][%brsp Kf5][%clk 0:01:30]}  3. Ke5 {[%eval +4.89][%brsp Re8][%clk 0:00:09]}  
+Re8+ {[%eval +4.89][%brsp Kf5][%clk 0:01:32]}  4. Kf6 {[%eval +4.89][%brsp Rf8][%clk 0:00:11]}  
+Rf8+ {[%eval +4.89][%brsp Kg7][%clk 0:01:34]}  5. Ke7 {[%eval +4.83][%brsp Rf4][%clk 0:00:13]White has not spoiled anything yet but it looks like he is not finding the right plan.}  
+(5. Ke6 {[%cbm The most straightforward was]}  Re8+ (5... Rf4 {[%cbm If, as in the game]}  
+6. Ke5 {[%cbm then]}  Rf8 7. f4) 6. Kf7 Re5 7. Kg6 Re6+ 8. Kg5 Re8 9. f4 {and the pawn is on its way.} 
+) 5... Rf4 {[%eval +4.94][%brsp Ke6][%clk 0:01:34]}  6. Ke6 {[%eval +4.22][%brsp Rc4][%clk 0:00:15]}  
+Rf8 {[%diag 2][%eval +4.95][%brsp Rd6][%clk 0:01:28]}  7. Rc3+ $4 {[%eval 0.00][%brsp Kb5][%clk 0:00:17]Indeed, White could not find the correct plan and now allow Black to force a draw.}  
+Kb7 $4 {[%eval +7.00][%brsp Ke5][%clk 0:01:30]Black declines the opportunity!}  
+(7... Kb5 $1 {[%eval 0.00]Admittedly, the path to the draw is rather unusual.  Black king dominates the white rook on the third rank forcing it to keep moving along the rank ... or giving up the defense of the pawn.}  
+8. Ke5 {[%eval 0.00]}  Kb4 {[%eval 0.00]}  9. Rd3 {[%eval 0.00]}  Kc4 {[%eval 0.00]}  
+10. Rd4+ {[%eval 0.00]}  Kc5 $11 {[%eval 0.00]} ) 8. Ke5 {[%eval +5.84][%brsp Re8][%clk 0:00:14]}  
+Re8+ {[%eval +5.82][%brsp Kd4][%clk 0:01:31]}  9. Kf4 {[%eval +4.36][%brsp Kb6][%clk 0:00:11]}  
+Rf8+ {[%eval +5.75][%brsp Kg5][%clk 0:01:33]}  10. Kg3 {[%eval +5.56][%brsp Rg8][%clk 0:00:12]}  
+Rg8+ {[%eval +5.56][%brsp Kf2][%clk 0:01:35]}  11. Kf2 {[%eval +5.65][%brsp Rg7][%clk 0:00:14]}  
+Rf8 {[%eval +5.73][%brsp Rc1][%clk 0:01:30]}  12. Rc4 {[%eval +5.80][%brsp Kb6][%clk 0:00:13]}  
+Kb6 {[%diag 2][%eval +7.07][%brsp Rc2][%clk 0:01:24]}  13. f4 $4 {[%eval 0.00][%brsp Kb5][%clk 0:00:11]This push needed some preparation.}  
+(13. Rc1 {[%cbm Black king is cut off far enough to allow White to activate his king and then place the rook behind the pawn while preventing the black king from approaching.]}  
+Kb5 14. Ke3 Re8+ 15. Kd4 Rd8+ 16. Ke4 Re8+ 17. Kd5 Rd8+ 18. Ke6 Rf8 19. Rf1 $18) 
+13... Kb5 $1 {[%eval 0.00][%brsp Re4][%clk 0:01:26]Black gets it this time.  White is not able to push the pawn while the black king is harassing the rook.}  
+14. Rd4 {[%eval 0.00][%brsp Kc5][%clk 0:00:13]}  Kc5 {[%eval 0.00][%brsp Re4][%clk 0:01:27]}  
+15. Ke3 {[%eval 0.00][%brsp Re8][%clk 0:00:15]}  Re8+ {[%eval 0.00][%brsp Re4][%clk 0:01:29]}  
+16. Kd3 {[%eval 0.00][%brsp Re6][%clk 0:00:16]}  Rf8 {[%eval 0.00][%brsp Ke3][%clk 0:01:32]}  
+17. Ke3 {[%eval 0.00][%brsp Re8][%clk 0:00:14]}  Re8+ {[%eval 0.00][%brsp Re4][%clk 0:01:34]}  
+18. Re4 {[%eval 0.00][%brsp Rf8][%clk 0:00:16]}  Rf8 {[%eval 0.00][%brsp Re6][%clk 0:01:35]}  
+19. Kf3 {[%eval 0.00][%brsp Kd5][%clk 0:00:14]}  Kd5 {[%eval 0.00][%brsp Re1][%clk 0:01:33]}  
+20. Re1 {[%eval 0.00][%brsp Kd6][%clk 0:00:15]}  Kd6 {[%eval 0.00][%brsp Re3][%clk 0:01:27]}  
+21. Kg4 {[%eval 0.00][%brsp Rg8][%clk 0:00:16]}  Rg8+ {[%eval 0.00][%brsp Kf3][%clk 0:01:29]}  
+22. Kh5 {[%diag 2][%eval 0.00][%brsp Rf8][%clk 0:00:19]}  Rh8+ $4 {[%eval +44.62][%brsp Kg6][%clk 0:01:29]Black steps off the correct path.}  
+(22... Rf8 {[%eval 0.00][%cbm The rather obvious]led to a draw.}  23. Kg4 {[%eval 0.00]}  
+Rg8+ {[%eval 0.00]}  24. Kf3 {[%eval 0.00]}  Rf8 {[%eval 0.00]}  25. Re4 {[%eval 0.00]}  
+Kd5 {[%eval 0.00]}  26. Re2 {[%eval 0.00]}  Kd6 $11 {[%eval 0.00]} ) 23. Kg6 {[%eval +4.91][%brsp Kc5][%clk 0:00:20]Now we are heading towards the Lucena position where White can win in a number of ways that should be known to all club players. }  
+Rg8+ {[%eval +38.71][%brsp Kf7][%clk 0:01:11]}  24. Kf7 {[%eval +11.81][%brsp Rb8][%clk 0:00:21]}  
+Ra8 {[%eval +46.72][%brsp f5][%clk 0:01:11]}  25. f5 {[%eval +7.44][%brsp Kd7][%clk 0:00:23]}  
+Ra7+ {[%eval +7.55][%brsp Kf8][%clk 0:01:13]}  26. Kg6 {[%eval +7.74][%brsp Ra8][%clk 0:00:24]}  
+Ra2 {[%eval +7.27][%brsp Kf7][%clk 0:01:01]}  27. f6 {[%eval +6.58][%brsp Kd7][%clk 0:00:26]}  
+Rg2+ {[%eval +6.72][%brsp Kf7][%clk 0:01:03]}  28. Kf7 {[%eval +7.18][%brsp Rg5][%clk 0:00:28]}  
+Rf2 {[%eval +7.78][%brsp Kg7][%clk 0:01:04]}  29. Kg7 {[%eval +13.11][%brsp Kd7][%clk 0:00:19]}  
+Rg2+ {[%eval +39.64][%brsp Kh7][%clk 0:01:04]}  30. Kf8 {[%eval +23.73][%brsp Rg3][%clk 0:00:21]}  
+Kd7 {[%eval +46.72][%brsp f7][%clk 0:01:05]}  31. f7 {[%eval +10.21][%brsp Rg4][%clk 0:00:23]}  
+Rf2 {[%eval +26.92][%brsp Re7][%clk 0:01:05]}  32. Rd1+ {[%eval +27.89][%brsp Kc6][%clk 0:00:25]}  
+Kc7 {[%eval +17.60][%brsp Rg1][%clk 0:01:04]}  33. Rd4 {[%eval +#19][%brsp Rg2][%clk 0:00:26]White chooses to win by "building a bridge".}  
+Kc6 {[%eval +11.99][%brsp Rg4][%clk 0:01:01]}  34. Kg7 {[%eval +9.99][%brsp Rf1][%clk 0:00:24]}  
+Rg2+ {[%eval +29.54][%brsp Kf6][%clk 0:01:02]}  35. Kf6 {[%eval +11.30][%brsp Ra2][%clk 0:00:26]}  
+Rf2+ {[%eval +#17][%brsp Ke6][%clk 0:01:03]}  36. Ke6 {[%eval +#15][%brsp Rf3][%clk 0:00:27]}  
+Kc7 {[%eval +#12][%brsp Rd5][%clk 0:01:02]}  37. Rd5 {[%eval +#11][%brsp Re2][%clk 0:00:29]Black resigned.} 
+ 1-0
+
+[ContentType "Exercise"]
+[Event "FIDE World Cup 2025"]
+[Round "2.3"]
+[ECO "E12"]
+[Guid "Re192ac711bc64c4ab5e0d962d107b3de"]
+[Date "2025.11.10"]
+[White "Blohberger, Felix"]
+[Black "Yu, Yangyi"]
+[WhiteElo "2440"]
+[BlackElo "2696"]
+[Annotator ""]
+[Result "1-0"]
+[FEN "8/1r6/8/6K1/5R2/4k2P/8/8 w - - 0 63"]
+
+
+ {[%eval 0.00][%brsp Rf8][%clk 0:01:05]} 1. Rf6 {[%eval 0.00][%brsp Rb2][%clk 0:00:20]}  
+Rb5+ $4 {[%eval +3.97][%brsp Rf5][%clk 0:00:53]Under time pressure, a near 2700 grandmaster misses a textbook draw. }  
+(1... Rb1 {[%eval 0.00][%cbm The simplest way to draw was]}  2. h4 {[%eval 
+0.00]}  Rg1+ {[%eval 0.00]}  3. Kh6 {[%eval 0.00]}  Ke4 {[%eval 0.00]}  4. h5 {[%eval 0.00]}  
+Ke5 {[%eval 0.00]}  5. Rf8 {[%eval 0.00]}  Rb1 {[%eval 0.00]}  6. Kg7 {[%eval 0.00]}  
+Rg1+ {[%eval 0.00]}  7. Kh7 {[%eval 0.00]}  Rg2 {[%eval 0.00]}  8. Rg8 {[%eval 0.00]}  
+Rd2 {[%eval 0.00]}  9. h6 {[%eval 0.00]}  Rd1 {[%eval 0.00]}  10. Kg7 {[%eval 0.00]}  
+Rg1+ {[%eval 0.00]}  11. Kf7 {[%eval 0.00]}  Rf1+ {[%eval 0.00]}  12. Ke8 {[%eval 0.00]}  
+Rh1 {[%eval 0.00]}  13. Rg6 {[%eval 0.00]}  Kf5 $11 {[%eval 0.00]} ) 2. Rf5 {[%eval +3.99][%brsp Rb8][%clk 0:00:24]}  
+Rb8 {[%eval +5.61][%brsp h4][%clk 0:00:43]}  3. h4 {[%eval +5.68][%brsp Rg8][%clk 0:00:21]}  
+Rg8+ {[%eval +5.81][%brsp Kf6][%clk 0:00:28]}  4. Kf6 {[%eval +5.36][%brsp Rg1][%clk 0:00:27]}  
+Rf8+ {[%eval +5.62][%brsp Kg5][%clk 0:00:34]}  5. Kg6 {[%eval +5.62][%brsp Rg8][%clk 0:00:31]}  
+Rg8+ {[%eval +5.71][%brsp Kf6][%clk 0:00:39]}  6. Kf7 {[%eval +5.71][%brsp Ke4][%clk 0:00:34]}  
+Ke4 {[%eval +5.95][%brsp Rb5][%clk 0:00:47]}  7. Ra5 {[%eval +5.92][%brsp Rd8][%clk 0:00:19]}  
+Rb8 {[%eval +6.32][%brsp h5][%clk 0:00:32]}  8. h5 {[%eval +6.37][%brsp Kf4][%clk 0:00:18]}  
+Kf4 {[%eval +6.66][%brsp h6][%clk 0:00:40]}  9. h6 {[%eval +6.66][%brsp Rb7][%clk 0:00:17]}  
+Kg4 {[%eval +7.86][%brsp Re5][%clk 0:00:49]}  10. Ra7 {[%eval +8.47][%brsp Kf5][%clk 0:00:18]}  
+Kg5 {[%eval +16.32][%brsp Kg7][%clk 0:00:22]}  11. Kg7 {[%eval +9.62][%brsp Kf4][%clk 0:00:27]Black resigned.} 
+ 1-0
+
+[ContentType "Exercise"]
+[Event "FIDE World Cup 2025"]
+[Round "2.7"]
+[ECO "D58"]
+[Guid "R0d217bc609934c93bfc3affd7af7ad5a"]
+[Date "2025.11.10"]
+[White "Narayanan S L"]
+[Black "Vitiugov, Nikita"]
+[WhiteElo "2609"]
+[BlackElo "2596"]
+[Annotator ""]
+[Result "1-0"]
+[FEN "5R2/8/8/4P1k1/4K1r1/8/8/8 w - - 0 69"]
+
+
+ {[%eval +4.74][%brsp Kd5][%clk 0:00:26]} 1. Kd5 {[%eval +7.71][%brsp Ra4][%cbm The position is winning for White but requires precision.][%clk 0:00:25]}  
+Ra4 {[%eval +11.32][%brsp e6][%clk 0:00:28]}  2. e6 $1 {[%eval +8.56][%brsp Ra7][%clk 0:00:23]}  
+Ra5+ {[%eval +12.30][%brsp Kc6][%clk 0:00:30]}  3. Kd6 {[%eval +#26][%brsp Ra6][%clk 0:00:25]}  
+Ra6+ {[%diag 2][%eval +12.27][%brsp Ke5][%clk 0:00:32]}  4. Ke7 $4 {[%eval 0.00][%brsp Kg6][%clk 0:00:27]Under pressure, in a blitz tie-breaker, White chooses the wrong square for his king.}  
+(4. Kd7 {[%cbm The winning maneuver was]}  Ra7+ 5. Ke8 Kg6 6. e7 Kg7 7. Rf7+ Kg8 
+8. Rf1 Ra8+ 9. Kd7 Ra7+ 10. Ke6 Ra6+ 11. Ke5 Ra5+ 12. Kf6 Ra6+ 13. Kg5 Ra5+ 14. 
+Kg6 Ra8 15. Rf6 Re8 16. Rd6 {with checkmate coming.} ) 4... Kg6 $1 {[%eval 0.00][%brsp Rd8][%clk 0:00:19]Black finds the only drawing move.}  
+5. Rd8 {[%eval 0.00][%brsp Ra7][%clk 0:00:13]}  Kg7 {[%eval 0.00][%brsp Rd2][%clk 0:00:21]}  
+6. Rd6 {[%eval 0.00][%brsp Ra8][%clk 0:00:11]}  Ra8 {[%eval 0.00][%brsp Rd2][%clk 0:00:22]}  
+7. Rd2 {[%diag 2][%eval 0.00][%brsp Ra7][%clk 0:00:12]}  Kg6 $4 {[%eval +68.92][%brsp Rg2][%clk 0:00:16]Unexpectedly, Black falls at the last hurdle. }  
+(7... Ra7+ {led to a draw.}  8. Rd7 Ra8 9. Kd6+ Kf8 10. Ke5 Ra1 $11) 8. Rg2+ {[%eval +39.06][%brsp Kf5][%clk 0:00:14]}  
+Kf5 {[%eval +39.86][%brsp Rf2][%clk 0:00:06]}  9. Kf7 {[%eval +10.45][%brsp Ra3][%clk 0:00:16]Black resigned.} 
+ 1-0
+
+[ContentType "Exercise"]
+[Event "FIDE World Cup 2025"]
+[Round "5.2"]
+[ECO "E60"]
+[Guid "R0869fc5a5e57413291f23b7ef7266fc0"]
+[Date "2025.11.16"]
+[White "Le, Quang Liem"]
+[Black "Donchenko, Alexander"]
+[WhiteElo "2729"]
+[BlackElo "2641"]
+[Annotator ""]
+[Result "1/2-1/2"]
+[FEN "8/8/6R1/7p/4K3/1r6/8/5k2 b - - 0 66"]
+
+
+ {[%eval -6.06][%brsp h4][%clk 0:09:49]}  h4 {[%eval -6.86][%brsp Rf6][%clk 0:01:18]}  
+2. Rf6+ {[%eval -6.34][%brsp Kg1][%clk 0:08:11]}  Kg2 {[%eval -6.16][%brsp Rg6][%clk 0:01:42]Black seems to be cruising to a win.}  
+3. Rg6+ {[%eval -7.25][%brsp Kf2][%clk 0:08:34]}  Kf2 {[%eval -10.15][%brsp Rf6][%clk 0:02:06]Not spoiling anything yet but indicates that Black might not be on the right path.}  
+(3... Rg3 {[%cbm Perhaps Black was not sure if]was winning after}  4. Ra6 Rf3 {[%cbm But]}  
+5. Rg6+ Kf2 6. Rh6 h3 $19 {was indeed winning.} ) 4. Rf6+ {[%diag 2][%eval -20.46][%brsp Kg2][%clk 0:08:49]}  
+Ke2 $4 {[%eval 0.00][%brsp Rc6][%clk 0:01:49]Now the king is too far from the h-pawn and White gets the draw.}  
+5. Ra6 {[%eval -0.07][%brsp Kf1][%clk 0:09:07]}  Rb4+ {[%eval 0.00][%brsp Kf5][%clk 0:01:44]}  
+(5... Kf2 {[%eval 0.00][%cbm Or]}  6. Kf4 {[%eval 0.00]}  Rb4+ {[%eval 0.00]}  
+7. Kg5 {[%eval 0.00]}  h3 {[%eval 0.00]}  8. Ra2+ $11 {[%eval 0.00]} ) 6. Kf5 {[%eval 0.00][%brsp Kf3][%clk 0:09:30]}  
+h3 {[%eval 0.00][%brsp Rh6][%clk 0:01:05]}  7. Rh6 {[%eval 0.00][%brsp Rb3][%clk 0:09:43]}  
+Rb3 {[%eval 0.00][%brsp Kg4][%clk 0:00:50]}  8. Kg4 {[%eval 0.00][%brsp Ra3][%clk 0:10:07]}  
+Kf2 {[%eval 0.00][%brsp Rxh3][%clk 0:01:05]}  9. Rxh3 {[%eval 0.00][%brsp Rxh3][%clk 0:10:31]}  
+Rxh3 {[%eval 0.00][%brsp Kxh3][%clk 0:01:32]}  10. Kxh3 {[%eval 0.00][%brsp Kf3][%clk 0:10:22]Draw.} 
+ 1/2-1/2
+
+
+

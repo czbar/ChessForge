@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:p="clr-namespace:ChessForge.Properties"
         xmlns:local="clr-namespace:ChessForge"
+        ResizeMode="NoResize"
         mc:Ignorable="d"
         Title="{x:Static p:Resources.RemoveDuplicates}" Height="450" Width="800">
     <Grid>

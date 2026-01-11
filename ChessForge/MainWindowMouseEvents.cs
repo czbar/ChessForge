@@ -1414,12 +1414,12 @@ namespace ChessForge
                 if (WorkbookManager.SessionWorkbook != null)
                 {
                     WorkbookLocationNavigator.SaveNewLocation(WorkbookManager.SessionWorkbook.ActiveChapter, GameData.ContentType.STUDY_TREE, -1);
+                    WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, AppState.MainWin.ActiveTreeView.GetSelectedNode());
                 }
             }
             catch
             {
             }
-
         }
 
         /// <summary>
@@ -1672,7 +1672,7 @@ namespace ChessForge
         /// <summary>
         /// Rebuilds the Exercise view
         /// </summary>
-        private void RefreshExercisesView(out Chapter chapter, out int articleIndex)
+        public void RefreshExercisesView(out Chapter chapter, out int articleIndex)
         {
             chapter = null;
             articleIndex = -1;

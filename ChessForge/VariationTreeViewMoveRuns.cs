@@ -144,17 +144,12 @@ namespace ChessForge
                     AppLog.Message("ERROR: InsertOrUpdateCommentBeforeRun()- Run " + nd.NodeId.ToString() + " not found in _dictNodeToRun");
                     return null;
                 }
-                else
-                {
-                    if (IsMoveTextWithNumber(rMove.Text))
-                    {
-                        includeNumber = true;
-                    }
-                }
 
                 Paragraph parentPara = rMove.Parent as Paragraph;
 
-                bool isFirstInPara = RichTextBoxUtilities.IsFirstMoveRunInParagraph(parentPara, nd.NodeId);
+                // determine if the move is first in paragraph or followes a new line.
+                bool isFirstInPara = RichTextBoxUtilities.IsFirstMoveRunInParagraph(parentPara, nd.NodeId) 
+                    || RichTextBoxUtilities.IsPreviousRunNewLine(rMove);
 
                 // if there is an index name run (in a Study) and the diagram is to be first, reverse isFirstPara
                 if (isFirstInPara && RichTextBoxUtilities.ParagraphStartsWithIndexRun(parentPara))
@@ -194,7 +189,11 @@ namespace ChessForge
                     bool includeNo = isFirstInPara
                                      || !string.IsNullOrWhiteSpace(nd.CommentBeforeMove)
                                      || (nd.IsDiagram && nd.IsDiagramBeforeMove)
-                                     || (nd.Parent != null && (!string.IsNullOrEmpty(nd.Parent.Comment) || nd != nd.Parent.Children[0] || nd.Parent.NodeId == 0));
+                                     || (nd.Parent != null 
+                                         && (!string.IsNullOrEmpty(nd.Parent.Comment) 
+                                             || nd != nd.Parent.Children[0] 
+                                             || nd.Parent.NodeId == 0 
+                                             || (nd.Parent.IsDiagram && !nd.Parent.IsDiagramBeforeMove)));
                     UpdateRunText(rMove, nd, includeNo);
                 }
             }
@@ -236,8 +235,9 @@ namespace ChessForge
                         // take care of the special case where node 0 may have a comment
                         bool includeNumber = currNode.NodeId == 0
                             || !string.IsNullOrWhiteSpace(currNode.Comment)
+                            || !string.IsNullOrEmpty(currNode.References)
                             || !string.IsNullOrEmpty(nextNode.CommentBeforeMove)
-                            || currNode.IsDiagram
+                            || (currNode.IsDiagram && !currNode.IsDiagramBeforeMove)
                             || firstInPara;
                         UpdateRunText(nextMoveRun, nextNode, includeNumber);
                     }
@@ -676,6 +676,8 @@ namespace ChessForge
         private void PlaceCommentBeforeMovePartsIntoParagraph(Paragraph para, TreeNode nd, bool isFirstInPara, List<CommentPart> parts)
         {
             Inline inlPrevious = null;
+            bool isPrevLineEmpty = false;
+
             for (int i = 0; i < parts.Count; i++)
             {
                 CommentPart part = parts[i];
@@ -697,6 +699,9 @@ namespace ChessForge
                     // by at least START. 
                     Run rNode;
                     rNode = _dictNodeToRun[nd.NodeId];
+
+                    // set the flag for skipping double new lines
+                    isPrevLineEmpty = RichTextBoxUtilities.IsPreviousRunNewLine(rNode);
                     para.Inlines.InsertBefore(rNode, inlines[0]);
                     inlPrevious = inlines[0];
 
@@ -707,8 +712,19 @@ namespace ChessForge
                 {
                     foreach (Inline inline in inlines)
                     {
-                        para.Inlines.InsertAfter(inlPrevious, inline);
-                        inlPrevious = inline;
+                        if (isPrevLineEmpty && (inline is Run r) && r.Text == "\n")
+                        {
+                            // skip this inline as it would create double new line
+                            // this covers the case where we inserted a new line Run before diagram
+                            // so that it is always on a new line, but the previous inline already ended
+                            // with a new line.
+                            isPrevLineEmpty = false;
+                        }
+                        else
+                        {
+                            para.Inlines.InsertAfter(inlPrevious, inline);
+                            inlPrevious = inline;
+                        }
                     }
                 }
             }
@@ -894,7 +910,7 @@ namespace ChessForge
             if (Configuration.MainLineCommentLF
                 && (ContentType == GameData.ContentType.MODEL_GAME || ContentType == GameData.ContentType.EXERCISE && !AppState.IsUserSolving())
                 && nd.IsMainLine()
-                && !string.IsNullOrEmpty(nd.Comment)
+                && (!string.IsNullOrEmpty(nd.Comment) || !string.IsNullOrEmpty(nd.References))
                 && (!nd.IsDiagram || nd.IsDiagramPreComment))
             {
                 if (Configuration.ExtraSpacing && !_isPrinting)
@@ -905,6 +921,11 @@ namespace ChessForge
                 {
                     text += "\n";
                 }
+            }
+            else if (nd.IsDiagram && nd.IsDiagramPreComment && !nd.IsDiagramBeforeMove 
+                     && (!string.IsNullOrEmpty(nd.Comment) || !string.IsNullOrEmpty(nd.References)))
+            {
+                text += "\n";
             }
             else
             {

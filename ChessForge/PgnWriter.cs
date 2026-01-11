@@ -124,6 +124,22 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Builds PGN text for a subtree starting at the given node.
+        /// This method is used for clipboard copy operations.
+        /// </summary>
+        /// <param name="nd"></param>
+        /// <param name="moveNumberOffset"></param>
+        /// <returns></returns>
+        public static string BuildSubtreeText(TreeNode nd, uint moveNumberOffset)
+        {
+            _fileText = new StringBuilder();
+
+            TreeNode dummyRoot = new TreeNode();
+            dummyRoot.Children.Add(nd);
+            return BuildTreeLineText(dummyRoot, moveNumberOffset, true);
+        }
+
+        /// <summary>
         /// Checks if the target file is valid i.e. not a Workbook file.
         /// </summary>
         /// <param name="pgnFileName"></param>
@@ -291,7 +307,7 @@ namespace ChessForge
                 {
                     // There may be a comment or command before the first move. Add if so.
                     sb.Append(BuildCommandAndCommentText(root));
-                    sb.Append(BuildTreeLineText(root));
+                    sb.Append(BuildTreeLineText(root, article.Tree.MoveNumberOffset));
                 }
 
                 sbOutput.Append(headerText + WorkbookFileTextBuilder.DivideLine(sb.ToString(), 80));
@@ -390,7 +406,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd"></param>
         /// <param name="includeNumber"></param>
-        private static string BuildTreeLineText(TreeNode nd, bool includeNumber = false)
+        private static string BuildTreeLineText(TreeNode nd, uint moveNumberOffset, bool includeNumber = false)
         {
             while (true)
             {
@@ -407,8 +423,8 @@ namespace ChessForge
                 if (nd.Children.Count == 1)
                 {
                     TreeNode child = nd.Children[0];
-                    BuildNodeText(child, includeNumber);
-                    BuildTreeLineText(child);
+                    BuildNodeText(child, moveNumberOffset, includeNumber);
+                    BuildTreeLineText(child, moveNumberOffset);
                     return _fileText.ToString();
                 }
 
@@ -419,19 +435,19 @@ namespace ChessForge
                 if (nd.Children.Count > 1)
                 {
                     // the first child remains at the same level as the parent
-                    BuildNodeText(nd.Children[0], includeNumber);
+                    BuildNodeText(nd.Children[0], moveNumberOffset, includeNumber);
                     for (int i = 1; i < nd.Children.Count; i++)
                     {
                         // if there is more than 2 children, create a new para,
                         // otherwise just use parenthesis
 
                         _fileText.Append(" (");
-                        BuildNodeText(nd.Children[i], true);
-                        BuildTreeLineText(nd.Children[i]);
+                        BuildNodeText(nd.Children[i], moveNumberOffset, true);
+                        BuildTreeLineText(nd.Children[i], moveNumberOffset);
                         _fileText.Append(") ");
                     }
 
-                    BuildTreeLineText(nd.Children[0], true);
+                    BuildTreeLineText(nd.Children[0], moveNumberOffset, true);
                     return _fileText.ToString();
                 }
             }
@@ -442,7 +458,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="nd"></param>
         /// <param name="includeNumber"></param>
-        private static void BuildNodeText(TreeNode nd, bool includeNumber)
+        private static void BuildNodeText(TreeNode nd, uint moveNumberOffset, bool includeNumber)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -457,12 +473,12 @@ namespace ChessForge
                 {
                     sb.Append(" ");
                 }
-                sb.Append(nd.Position.MoveNumber.ToString() + ".");
+                sb.Append((nd.Position.MoveNumber + moveNumberOffset).ToString() + ".");
             }
 
             if (nd.Position.ColorToMove == PieceColor.White && includeNumber)
             {
-                sb.Append(nd.Position.MoveNumber.ToString() + "...");
+                sb.Append((nd.Position.MoveNumber + moveNumberOffset).ToString() + "...");
             }
 
             sb.Append(" " + nd.LastMoveAlgebraicNotation);

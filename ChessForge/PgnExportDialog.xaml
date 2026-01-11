@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChessForge"
+        ResizeMode="NoResize"
         mc:Ignorable="d"
         xmlns:p="clr-namespace:ChessForge.Properties"
         Title="{x:Static p:Resources.DlgExportPgn}" Height="245" Width="540">

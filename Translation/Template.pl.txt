@@ -624,6 +624,10 @@ ErrNotAllGamesCopied=Nie wszystkie partie zostały skopiowane
 #english: ErrGameNotFound=Game not found
 ErrGameNotFound=Partii nie znaleziono
 
+#description: Internal error: Game not found
+#english: ErrInternalGameNotFound=Internal Error: Game not Found
+ErrInternalGameNotFound=Błąd wewnętrzny: Partii nie znaleziono
+
 #description: Games not found
 #english: ErrGamesNotFound=Games not found
 ErrGamesNotFound=Partii nie znaleziono
@@ -3637,6 +3641,10 @@ Castling=Roszada
 #english: StartingPosition=Starting position
 StartingPosition=Pozycja początkowa
 
+#description: Current position
+#english: CurrentPosition=Current position
+CurrentPosition=Aktualna pozycja
+
 #description: Clear board
 #english: ClearBoard=Clear Board
 ClearBoard=Wyczyść szachownicę
@@ -4280,8 +4288,12 @@ OpRenameChapter=Zmień Nazwę Rozdziału
 OpCreateArticle=Utwórz Partię/Ćwiczenie
 
 #description: Operation
-#english: OpCreateGame=Create Game
-OpCreateGame=Utwórz Partię
+#english: OpImportLichessGame=Import Lichess Game
+OpImportLichessGame=Importuj Partię z Lichess
+
+#description: Operation
+#english: OpCreateModelGame=Create Game
+OpCreateModelGame=Utwórz Partię
 
 #description: Operation
 #english: OpCreateExercise=Create Exercise
