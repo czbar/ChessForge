@@ -812,18 +812,29 @@ namespace ChessForge
         public static string TranslateParseException(ParserException ex)
         {
             StringBuilder sb = new StringBuilder();
+            string prevMovetext = ex.PreviousMove != null ? ex.PreviousMove : "";
+
             switch (ex.ParseError)
             {
                 case ParserException.ParseErrorType.PGN_GAME_EXPECTED_MOVE_NUMBER:
                     sb.Append(Properties.Resources.ErrFound
                         + " \"" + ex.CurrentToken
-                        + "\" " + Properties.Resources.ErrInsteadOfMoveNumber
-                        + ", " + Properties.Resources.ErrAfterMove + " " + ex.PreviousMove);
+                        + "\" " + Properties.Resources.ErrInsteadOfMoveNumber);
+                    
+                    if (!string.IsNullOrEmpty(prevMovetext))
+                    {
+                        sb.Append(", " + Properties.Resources.ErrAfterMove + " \"" + prevMovetext + "\"");
+                    }
                     break;
                 case ParserException.ParseErrorType.PGN_INVALID_MOVE:
                     sb.Append(Properties.Resources.PgnParsingError
                         + ": " + Properties.Resources.InvalidMove + " "
                         + "\"" + ex.CurrentToken + "\"");
+                    
+                    if (ex.PreviousMove != null)
+                    {
+                        sb.Append(", " + Properties.Resources.ErrAfterMove + " \"" + prevMovetext + "\"");
+                    }
                     break;
                 default:
                     return ex.Message;
