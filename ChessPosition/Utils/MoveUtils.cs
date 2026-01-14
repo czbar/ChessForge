@@ -25,7 +25,6 @@ namespace ChessPosition
         /// <summary>
         /// Creates a new node in the game tree for the next move
         /// to be stored with the position.
-        /// TODO: remove dupe from PgnGameParser
         /// </summary>
         /// <param name="algMove"></param>
         /// <param name="move"></param>
