@@ -1,9 +1,7 @@
 ﻿using ChessPosition;
 using GameTree;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Text;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -57,6 +55,12 @@ namespace ChessForge
         // top offset between the the Board Image and Setup Canvas
         private double _boardTopOffset;
 
+        /// <summary>
+        /// Whether to process castling rights changes.
+        /// They should only be processed when the user changes the check boxes,
+        /// but not when they change as a result of processing data.
+        /// </summary>
+        private bool _processCastlingChange = true;
 
         /// <summary>
         /// Object representing the piece being dragged.
@@ -141,10 +145,14 @@ namespace ChessForge
         /// </summary>
         private void SetCastlingCheckboxes()
         {
+            _processCastlingChange = false;
+
             UiCbWhiteCastleShort.IsChecked = (PositionSetup.DynamicProperties & Constants.WhiteKingsideCastle) > 0;
             UiCbWhiteCastleLong.IsChecked = (PositionSetup.DynamicProperties & Constants.WhiteQueensideCastle) > 0;
             UiCbBlackCastleShort.IsChecked = (PositionSetup.DynamicProperties & Constants.BlackKingsideCastle) > 0;
             UiCbBlackCastleLong.IsChecked = (PositionSetup.DynamicProperties & Constants.BlackQueensideCastle) > 0;
+
+            _processCastlingChange = true;
         }
 
         /// <summary>
@@ -806,27 +814,30 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiCastleCheckBoxChanged(object sender, RoutedEventArgs e)
         {
-            PositionSetup.DynamicProperties = (byte)(PositionSetup.DynamicProperties
-                & ~(Constants.WhiteKingsideCastle | Constants.WhiteQueensideCastle | Constants.BlackKingsideCastle | Constants.BlackQueensideCastle));
+            if (_processCastlingChange)
+            {
+                PositionSetup.DynamicProperties = (byte)(PositionSetup.DynamicProperties
+                    & ~(Constants.WhiteKingsideCastle | Constants.WhiteQueensideCastle | Constants.BlackKingsideCastle | Constants.BlackQueensideCastle));
 
-            if (UiCbWhiteCastleShort.IsChecked == true)
-            {
-                PositionSetup.DynamicProperties |= Constants.WhiteKingsideCastle;
-            }
-            if (UiCbWhiteCastleLong.IsChecked == true)
-            {
-                PositionSetup.DynamicProperties |= Constants.WhiteQueensideCastle;
-            }
-            if (UiCbBlackCastleShort.IsChecked == true)
-            {
-                PositionSetup.DynamicProperties |= Constants.BlackKingsideCastle;
-            }
-            if (UiCbBlackCastleLong.IsChecked == true)
-            {
-                PositionSetup.DynamicProperties |= Constants.BlackQueensideCastle;
-            }
+                if (UiCbWhiteCastleShort.IsChecked == true)
+                {
+                    PositionSetup.DynamicProperties |= Constants.WhiteKingsideCastle;
+                }
+                if (UiCbWhiteCastleLong.IsChecked == true)
+                {
+                    PositionSetup.DynamicProperties |= Constants.WhiteQueensideCastle;
+                }
+                if (UiCbBlackCastleShort.IsChecked == true)
+                {
+                    PositionSetup.DynamicProperties |= Constants.BlackKingsideCastle;
+                }
+                if (UiCbBlackCastleLong.IsChecked == true)
+                {
+                    PositionSetup.DynamicProperties |= Constants.BlackQueensideCastle;
+                }
 
-            SetFen();
+                SetFen();
+            }
         }
 
         /// <summary>
