@@ -149,7 +149,7 @@ namespace ChessForge
 
                 // To establish if we need a leading space or not, we check
                 // if the move is the first move in the paragraph.
-                // Depending on whether there alreay is a comment-before-move,
+                // Depending on whether there already is a comment-before-move,
                 // we check the move's Run or the move's comment-before-move Run.
                 Run runToCheck = rMove;
                 _dictNodeToCommentBeforeMoveRun.TryGetValue(nd.NodeId, out Inline oldCommentInl);
