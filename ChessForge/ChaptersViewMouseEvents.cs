@@ -1023,48 +1023,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void EventModelGameRunDrop(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
-            {
-                Run run = e.Source as Run;
-                if (run != null)
-                {
-                    try
-                    {
-                        if (DraggedArticle.IsDragInProgress)
-                        {
-                            if (DraggedArticle.ContentType == GameData.ContentType.MODEL_GAME)
-                            {
-                                _mainWin.UiRtbChaptersView.Cursor = Cursors.Arrow;
-
-                                int targetChapterIndex = GetChapterIndexFromChildRun(run);
-                                int targetGameIndex = TextUtils.GetIdFromPrefixedString(run.Name);
-
-                                // figure out if we hit the upper or the lower half of the Run
-                                Point ptMousePos = e.GetPosition(_mainWin.UiRtbChaptersView);
-                                if (!RichTextBoxUtilities.IsUpperPartClicked(run, ptMousePos, _mainWin.UiRtbChaptersView))
-                                {
-                                    targetGameIndex++;
-                                }
-
-                                if (DraggedArticle.ChapterIndex != targetChapterIndex || DraggedArticle.ArticleIndex != targetGameIndex)
-                                {
-                                    MoveArticle(HostRtb.Document, targetChapterIndex, targetGameIndex);
-                                }
-                            }
-                            else if (DraggedArticle.IsChapterDragged())
-                            {
-                                EventChapterHeaderDrop(sender, e);
-                            }
-                        }
-                    }
-                    catch { }
-                }
-
-                e.Handled = true;
-            }
-
-            DraggedArticle.StopDragOperation();
-            _mainWin.UiRtbChaptersView.Cursor = Cursors.Arrow;
+            EventArticleRunDrop(sender, e, GameData.ContentType.MODEL_GAME);
         }
 
         /// <summary>
@@ -1076,6 +1035,19 @@ namespace ChessForge
         /// <param name="e"></param>
         private void EventExerciseRunDrop(object sender, MouseButtonEventArgs e)
         {
+            EventArticleRunDrop(sender, e, GameData.ContentType.EXERCISE);
+        }
+
+        /// <summary>
+        /// A mouse button was released over an article (game or exercise) run.
+        /// If drag-n-drop is in progress, insert the dragged run here, 
+        /// remove from the original spot and rebuild the chapter(s).
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <param name="contentType"></param>
+        private void EventArticleRunDrop(object sender, MouseButtonEventArgs e, GameData.ContentType contentType)
+        {
             if (e.ChangedButton == MouseButton.Left)
             {
                 Run run = e.Source as Run;
@@ -1085,23 +1057,23 @@ namespace ChessForge
                     {
                         if (DraggedArticle.IsDragInProgress)
                         {
-                            if (DraggedArticle.ContentType == GameData.ContentType.EXERCISE)
+                            if (DraggedArticle.ContentType == contentType)
                             {
                                 _mainWin.UiRtbChaptersView.Cursor = Cursors.Arrow;
 
                                 int targetChapterIndex = GetChapterIndexFromChildRun(run);
-                                int targetExerciseIndex = TextUtils.GetIdFromPrefixedString(run.Name);
+                                int targetArticleIndex = TextUtils.GetIdFromPrefixedString(run.Name);
 
                                 // figure out if we hit the upper or the lower half of the Run
                                 Point ptMousePos = e.GetPosition(_mainWin.UiRtbChaptersView);
                                 if (!RichTextBoxUtilities.IsUpperPartClicked(run, ptMousePos, _mainWin.UiRtbChaptersView))
                                 {
-                                    targetExerciseIndex++;
+                                    targetArticleIndex++;
                                 }
 
-                                if (DraggedArticle.ChapterIndex != targetChapterIndex || DraggedArticle.ArticleIndex != targetExerciseIndex)
+                                if (DraggedArticle.ChapterIndex != targetChapterIndex || DraggedArticle.ArticleIndex != targetArticleIndex)
                                 {
-                                    MoveArticle(HostRtb.Document, targetChapterIndex, targetExerciseIndex);
+                                    MoveArticle(HostRtb.Document, targetChapterIndex, targetArticleIndex);
                                 }
                             }
                             else if (DraggedArticle.IsChapterDragged())
