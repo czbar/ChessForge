@@ -255,7 +255,7 @@ namespace ChessForge
             }
             else
             {
-                if (_mode == Mode.IDENTICAL_ARTICLES)
+                if (_mode == Mode.IDENTICAL_ARTICLES && AppState.IsTreeViewTabActive())
                 {
                     InsertCopyMainLineButton(para, item, itemIndex);
                     InsertCopySubtreeButton(para, item, itemIndex);
