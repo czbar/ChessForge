@@ -446,25 +446,32 @@ namespace GameTree
         /// <returns></returns>
         private TreeNode FindParentForMove(TreeNode presumedParent, int moveNo, PieceColor color)
         {
-            int moveDistance = CalculateMoveDistance(presumedParent, moveNo, color);
-            if (moveDistance == 2)
+            try
             {
-                return presumedParent.Children[0];
-            }
-            else
-            {
-                TreeNode nd = presumedParent;
-                if (moveDistance < 2)
+                int moveDistance = CalculateMoveDistance(presumedParent, moveNo, color);
+                if (moveDistance == 2)
                 {
-                    for (int i = 1; i > moveDistance; i--)
+                    return presumedParent.Children[0];
+                }
+                else
+                {
+                    TreeNode nd = presumedParent;
+                    if (moveDistance < 2)
                     {
-                        if (nd != null)
+                        for (int i = 1; i > moveDistance; i--)
                         {
-                            nd = nd.Parent;
+                            if (nd != null)
+                            {
+                                nd = nd.Parent;
+                            }
                         }
                     }
+                    return nd;
                 }
-                return nd;
+            }
+            catch
+            {
+                return null;
             }
         }
 
