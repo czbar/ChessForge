@@ -891,9 +891,10 @@ namespace ChessForge
         /// <param name="pos"></param>
         /// <param name="errorText"></param>
         /// <returns></returns>
-        public static bool ValidatePosition(ref BoardPosition pos, out string errorText)
+        public static bool ValidatePosition(ref BoardPosition pos, out string errorText, out bool goodForPartialSearch)
         {
             StringBuilder sb = new StringBuilder();
+            goodForPartialSearch = true;
 
             bool result = true;
 
@@ -906,6 +907,7 @@ namespace ChessForge
                     if (whiteKings > 1)
                     {
                         sb.AppendLine(Properties.Resources.PosValTooManyWhiteKings);
+                        goodForPartialSearch = false;
                     }
                     else if (whiteKings == 0)
                     {
@@ -915,6 +917,7 @@ namespace ChessForge
                     if (blackKings > 1)
                     {
                         sb.AppendLine(Properties.Resources.PosValTooManyBlackKings);
+                        goodForPartialSearch = false;
                     }
                     else if (blackKings == 0)
                     {
