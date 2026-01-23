@@ -1029,7 +1029,7 @@ namespace ChessForge
                 PositionSetup.MoveNumber = 0;
             }
 
-            if (GuiUtilities.ValidatePosition(ref PositionSetup, out string errorText))
+            if (GuiUtilities.ValidatePosition(ref PositionSetup, out string errorText, out _))
             {
                 if (ValidateTree())
                 {
