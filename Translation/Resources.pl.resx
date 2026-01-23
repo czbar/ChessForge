@@ -1225,11 +1225,14 @@ UWAGA: Oceny nie są uaktualniane (zezwól naciskając F8).</value>
   <data name="SetupPositionToSearch" xml:space="preserve">
     <value>Ustaw szukaną pozycję</value>
   </data>
-  <data name="MsgNoPositionsFound" xml:space="preserve">
-    <value>Nie znaleziono takicj pozycji.</value>
-  </data>
   <data name="PartialMatch" xml:space="preserve">
     <value>Częściowa pozycja</value>
+  </data>
+  <data name="MsgNoPositionsFound" xml:space="preserve">
+    <value>Nie znaleziono takiej pozycji.</value>
+  </data>
+  <data name="MsgTryPartialSearch" xml:space="preserve">
+    <value>Uwaga: by wyszukiwać częściowe pozycje zaznacz pole "Częściowa pozycja".</value>
   </data>
   <data name="NumberOfDuplicatedItems" xml:space="preserve">
     <value>Liczba zduplikowanych elementów</value>
@@ -2859,6 +2862,9 @@ UWAGA: Oceny nie są uaktualniane (zezwól naciskając F8).</value>
   </data>
   <data name="OebWinning" xml:space="preserve">
     <value>Wygrywa</value>
+  </data>
+  <data name="PositionIsEmpty" xml:space="preserve">
+    <value>Pozycja jest pusta</value>
   </data>
   <data name="PosValTooManyWhiteKings" xml:space="preserve">
     <value>Za dużo białych króli</value>

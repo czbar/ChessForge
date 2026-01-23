@@ -5272,6 +5272,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Note: You can try partial match search by checking the Partial Match checkbox..
+        /// </summary>
+        public static string MsgTryPartialSearch {
+            get {
+                return ResourceManager.GetString("MsgTryPartialSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to $0  entities were valid.
         /// </summary>
         public static string MultiEntitiesValid {
@@ -6223,6 +6232,15 @@ namespace ChessForge.Properties {
         public static string Position {
             get {
                 return ResourceManager.GetString("Position", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Position Is Empty.
+        /// </summary>
+        public static string PositionIsEmpty {
+            get {
+                return ResourceManager.GetString("PositionIsEmpty", resourceCulture);
             }
         }
         

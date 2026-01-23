@@ -1225,11 +1225,14 @@ NOTE: Evaluations are not being updated (press F8 to allow).</value>
   <data name="SetupPositionToSearch" xml:space="preserve">
     <value>Set up position to search for</value>
   </data>
+  <data name="PartialMatch" xml:space="preserve">
+    <value>Partial Match</value>
+  </data>
   <data name="MsgNoPositionsFound" xml:space="preserve">
     <value>Specified position has not been found.</value>
   </data>
-  <data name="PartialMatch" xml:space="preserve">
-    <value>Partial Match</value>
+  <data name="MsgTryPartialSearch" xml:space="preserve">
+    <value>Note: You can try partial match search by checking the Partial Match checkbox.</value>
   </data>
   <data name="NumberOfDuplicatedItems" xml:space="preserve">
     <value>Number of duplicated items</value>
@@ -2860,6 +2863,9 @@ NOTE: Evaluations are not being updated (press F8 to allow).</value>
   </data>
   <data name="OebWinning" xml:space="preserve">
     <value>Winning</value>
+  </data>
+  <data name="PositionIsEmpty" xml:space="preserve">
+    <value>The Position Is Empty</value>
   </data>
   <data name="PosValTooManyWhiteKings" xml:space="preserve">
     <value>Too many White Kings</value>

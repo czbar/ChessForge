@@ -1714,13 +1714,17 @@ ShowIndex=
 #english: SetupPositionToSearch=Set up position to search for
 SetupPositionToSearch=
 
+#description: Partial match only
+#english: PartialMatch=Partial Match
+PartialMatch=
+
 #description: Message: no positions found
 #english: MsgNoPositionsFound=Specified position has not been found.
 MsgNoPositionsFound=
 
-#description: Partial match only
-#english: PartialMatch=Partial Match
-PartialMatch=
+#description: Message: try partial search
+#english: MsgTryPartialSearch=Note: You can try partial match search by checking the Partial Match checkbox.
+MsgTryPartialSearch=
 
 #######################################
 #
@@ -4123,6 +4127,10 @@ OebWinning=
 #
 # Header: Position Validation
 #
+
+#description: Position is empty
+#english: PositionIsEmpty=The Position Is Empty
+PositionIsEmpty=
 
 #description: Too many White Kings
 #english: PosValTooManyWhiteKings=Too many White Kings
