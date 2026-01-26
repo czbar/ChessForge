@@ -24,4 +24,3 @@ Restarting training game at an earlier move causes all sorts of confusion in the
 
 In Study, no spacing after the comment under a diagram before next line. Is this intentional?
 
-Add message to choose "partial match" if position stated as invalid.
