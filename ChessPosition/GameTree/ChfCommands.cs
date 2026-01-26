@@ -25,7 +25,7 @@ namespace GameTree
 
         // ChessBase diagram command
         public const string CHESS_BASE_DIAGRAM = "[#]";
-        public const string CHESS_BASE_DIAGRAM_LONG = "Diagram [#]";
+        public const string CHESS_BASE_DIAGRAM_LONG = "Diagram #";
 
         /// <summary>
         /// Command IDs
