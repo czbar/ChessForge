@@ -24,3 +24,4 @@ Restarting training game at an earlier move causes all sorts of confusion in the
 
 In Study, no spacing after the comment under a diagram before next line. Is this intentional?
 
+After a comment on the main line, adding comment before-move for the next move, inserts spurious leading space.
