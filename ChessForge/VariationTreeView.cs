@@ -1624,6 +1624,8 @@ namespace ChessForge
 
                 para.Inlines.InsertAfter(rPreviousInline, runMove);
                 _lastAddedRun = runMove;
+
+                InsertOrUpdateCommentRun(parent);
             }
             catch { }
         }

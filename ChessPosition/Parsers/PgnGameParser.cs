@@ -315,6 +315,11 @@ namespace GameTree
                         catch
                         {
                             ParserException ex = new ParserException(ParserException.ParseErrorType.PGN_INVALID_MOVE, token);
+                            if (parentNode != null)
+                            {
+                                string previousMoveText = MoveUtils.BuildSingleMoveText(parentNode, true, true, 0);
+                                ex.PreviousMove = previousMoveText;
+                            }
                             throw ex;
                         }
 
@@ -365,50 +370,6 @@ namespace GameTree
         }
 
         /// <summary>
-        /// Creates a new node in the game tree for the next move
-        /// to be stored with the position.
-        /// </summary>
-        /// <param name="algMove"></param>
-        /// <param name="move"></param>
-        /// <param name="parentNode"></param>
-        /// <param name="parentSideToMove"></param>
-        /// <returns></returns>
-        private TreeNode CreateNewNode(string algMove, MoveData move, TreeNode parentNode, PieceColor parentSideToMove, int nodeId)
-        {
-            TreeNode newNode = new TreeNode(parentNode, algMove, nodeId);
-
-            // copy the board from the parent
-            newNode.Position.Board = (byte[,])parentNode.Position.Board.Clone();
-
-            if (parentSideToMove == PieceColor.White)
-            {
-                newNode.Position.MoveNumber = parentNode.Position.MoveNumber + 1;
-                newNode.Position.ColorToMove = PieceColor.Black;
-            }
-            else
-            {
-                newNode.Position.MoveNumber = parentNode.Position.MoveNumber;
-                newNode.Position.ColorToMove = PieceColor.White;
-            }
-
-            if (move.IsCaptureOrPawnMove())
-            {
-                newNode.Position.HalfMove50Clock = 0;
-            }
-            else
-            {
-                newNode.Position.HalfMove50Clock += 1;
-            }
-
-            if (!string.IsNullOrEmpty(move.Nag))
-            {
-                newNode.AddNag(move.Nag);
-            }
-
-            return newNode;
-        }
-
-        /// <summary>
         /// Check that the move number is as expected.
         /// We have seen corrupt/illegal PGNs with moves missing.
         /// If the move has a wrong number do our best to find the correct parent
@@ -418,36 +379,58 @@ namespace GameTree
         /// <param name="previousNode"></param>
         private TreeNode ProcessMoveNumber(string token, TreeNode parent)
         {
-            // the token is in the format of integer followed by one or 3 dots
+            // the token is in the format of integer followed by one or 3 dots, or no dot.
             int dotPos = token.IndexOf('.');
+
+            string num;
             if (dotPos < 0)
             {
-                ParserException ex = new ParserException(ParserException.ParseErrorType.PGN_GAME_EXPECTED_MOVE_NUMBER, token);
-                ex.PreviousMove = parent.LastMoveAlgebraicNotation;
-                throw ex;
-            }
-
-            string num = token.Substring(0, dotPos);
-            uint moveNo = uint.Parse(num);
-            int dotCount = token.Length - dotPos;
-
-            // don't worry about the actual number, PGNs have been known to have them wrong.
-            if (parent.ColorToMove == PieceColor.White && dotCount == 1
-                || parent.ColorToMove == PieceColor.Black && dotCount >= 3)
-            {
-                return null;
+                num = token;
             }
             else
             {
-                // things seem out of order so try finding a good parent
-                TreeNode nd = FindParentForMove(parent, (int)moveNo, dotCount >= 3 ? PieceColor.Black : PieceColor.White);
-                if (nd != null)
+                num = token.Substring(0, dotPos);
+            }
+
+            bool valid = uint.TryParse(num, out uint moveNo);
+
+            if (!valid)
+            {
+                ParserException ex = new ParserException(ParserException.ParseErrorType.PGN_GAME_EXPECTED_MOVE_NUMBER, token);
+                if (parent != null)
                 {
-                    return nd;
+                    string previousMoveText = MoveUtils.BuildSingleMoveText(parent, true, true, 0);
+                    ex.PreviousMove = previousMoveText;
+                }
+                throw ex;
+            }
+            else
+            {
+                // if no dots we count it as one dot.
+                int dotCount = 1;
+                if (dotPos > 0)
+                {
+                    dotCount = token.Length - dotPos;
+                }
+
+                // don't worry about the actual number, PGNs have been known to have them wrong.
+                if (parent.ColorToMove == PieceColor.White && dotCount == 1
+                    || parent.ColorToMove == PieceColor.Black && dotCount >= 3)
+                {
+                    return null;
                 }
                 else
                 {
-                    throw new Exception(BuildMissingMoveErrorText(parent));
+                    // things seem out of order so try finding a good parent
+                    TreeNode nd = FindParentForMove(parent, (int)moveNo, dotCount >= 3 ? PieceColor.Black : PieceColor.White);
+                    if (nd != null)
+                    {
+                        return nd;
+                    }
+                    else
+                    {
+                        throw new Exception(BuildMissingMoveErrorText(parent));
+                    }
                 }
             }
         }
@@ -463,25 +446,32 @@ namespace GameTree
         /// <returns></returns>
         private TreeNode FindParentForMove(TreeNode presumedParent, int moveNo, PieceColor color)
         {
-            int moveDistance = CalculateMoveDistance(presumedParent, moveNo, color);
-            if (moveDistance == 2)
+            try
             {
-                return presumedParent.Children[0];
-            }
-            else
-            {
-                TreeNode nd = presumedParent;
-                if (moveDistance < 2)
+                int moveDistance = CalculateMoveDistance(presumedParent, moveNo, color);
+                if (moveDistance == 2)
                 {
-                    for (int i = 1; i > moveDistance; i--)
+                    return presumedParent.Children[0];
+                }
+                else
+                {
+                    TreeNode nd = presumedParent;
+                    if (moveDistance < 2)
                     {
-                        if (nd != null)
+                        for (int i = 1; i > moveDistance; i--)
                         {
-                            nd = nd.Parent;
+                            if (nd != null)
+                            {
+                                nd = nd.Parent;
+                            }
                         }
                     }
+                    return nd;
                 }
-                return nd;
+            }
+            catch
+            {
+                return null;
             }
         }
 

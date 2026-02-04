@@ -25,7 +25,6 @@ namespace ChessPosition
         /// <summary>
         /// Creates a new node in the game tree for the next move
         /// to be stored with the position.
-        /// TODO: remove dupe from PgnGameParser
         /// </summary>
         /// <param name="algMove"></param>
         /// <param name="move"></param>
@@ -105,7 +104,8 @@ namespace ChessPosition
             bool nullMove = false;
             bool proceed = true;
 
-            if (algMove == "Z0" || algMove == Constants.NULL_MOVE_NOTATION)
+            // check for null move in various notations (current CB, old CB, Chess Forge)
+            if (algMove == "Z0" || algMove == "--" || algMove == Constants.NULL_MOVE_NOTATION)
             {
                 algMove = Constants.NULL_MOVE_NOTATION;
                 move = new MoveData();

@@ -54,7 +54,7 @@ namespace ChessForge
             // Get the rectangle of the Run relative to the RichTextBox
             Rect runRect = run.ContentStart.GetCharacterRect(LogicalDirection.Forward);
 
-            double runTopYInViewport = runRect.Top;      
+            double runTopYInViewport = runRect.Top;
             double runBottomYInViewport = runRect.Bottom;
 
             double viewportHeight = _scrollViewer.ViewportHeight;      // visible height (DIP)
@@ -86,12 +86,12 @@ namespace ChessForge
             }
             else
             {
-                // If the run's top is within 2 lines of the top of the viewport, scroll down.
+                // If the run's top is within 1 line of the top of the viewport, scroll down a little.
                 double distanceFromTop = runTopYInViewport;
-                if (distanceFromTop < linesThreshold * lineHeight)
+                if (distanceFromTop < lineHeight)
                 {
-                    // Move the run to the middle of the viewport
-                    double desiredRunTopInViewport = viewportHeight / 2.0 - (lineHeight / 2.0);
+                    // Move down so that the distance to the top is the height of one line
+                    double desiredRunTopInViewport = lineHeight;
                     double delta = runTopYInViewport - desiredRunTopInViewport;
 
                     double newOffset = currentOffset + delta;

@@ -832,6 +832,7 @@
                                     <MenuItem x:Name="UiMnExerc_HideAllSolutions" Header="{x:Static p:Resources.HideSolutionsInChapter}" Click="UiMnExerc_HideSolutions_Click" />
                                     <Separator x:Name="UiMnExerc_Separator_8"/>
                                     <MenuItem x:Name="UiMnExercStartTrainingFromHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere" InputGestureText="T" />
+                                    <MenuItem x:Name="UiMnExercCreateExerciseFromHere" Header="{x:Static p:Resources.CreateExerciseFromHere}" Click="UiMnExerc_CreateExerciseFromHere_Click" />
                                     <MenuItem x:Name="_mnExerc_MarkThumbnail" Header="{x:Static p:Resources.MarkAsThumbnail}" Click="UiMn_ExerciseMarkThumbnail_Click" InputGestureText="Ctrl+T" />
                                     <MenuItem x:Name="UiMnExercMarkBookmark" Header="{x:Static p:Resources.BookmarkThisPosition}" Click="UiMnMarkBookmark_Click" />
                                     <MenuItem x:Name="UiMnExercDeleteBookmark" Visibility="Collapsed" Header="{x:Static p:Resources.DeleteThisBookmark}" Click="UiMnciDeleteBookmark_Click" />

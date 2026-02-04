@@ -22,4 +22,6 @@ In Study, after some edit and CTRL+S, the view moves to highlight the selected m
 
 Restarting training game at an earlier move causes all sorts of confusion in the game notation, diagram and who is on the move.
 
-Better details of PGN parsing errors
+In Study, no spacing after the comment under a diagram before next line. Is this intentional?
+
+After a comment on the main line, adding comment before-move for the next move, inserts spurious leading space.

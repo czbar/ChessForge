@@ -2220,6 +2220,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Creates a new Exercise from the Exercise View context menu.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnExerc_CreateExerciseFromHere_Click(object sender, RoutedEventArgs e)
+        {
+            UiMn_CreateExercise_Click(sender, e);
+        }
+
+        /// <summary>
         /// Creates a new Exercise starting from the position currently selected in the Active Tree.
         /// </summary>
         /// <param name="sender"></param>
@@ -2232,7 +2242,8 @@ namespace ChessForge
                 if (nd != null)
                 {
                     // get the move number offset
-                    uint moveNumberOffset = nd.MoveNumber;
+                    uint hostTreeMoveNumberOffset = (ActiveVariationTree == null) ? 0 : ActiveVariationTree.MoveNumberOffset;
+                    uint moveNumberOffset = nd.MoveNumber + ActiveVariationTree.MoveNumberOffset;
                     if (nd.Position.ColorToMove == PieceColor.Black && moveNumberOffset > 0)
                     {
                         moveNumberOffset--;

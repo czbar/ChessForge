@@ -1,5 +1,6 @@
 ﻿using ChessPosition;
 using GameTree;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -107,7 +108,7 @@ namespace ChessForge
         private void SetFen(bool checkEnpassant = true)
         {
             _currentFen = FenParser.GenerateFenFromPosition(PositionSetup, 0);
-            
+
             if (!_checkDynamicAttrs && _currentFen != null)
             {
                 string[] tokens = _currentFen.Split(' ');
@@ -747,13 +748,19 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnOk_Click(object sender, RoutedEventArgs e)
         {
-            if (CheckPosition(out string errorText))
+            if (CheckPosition(out string errorText, out bool goodForPartialSearch))
             {
                 DialogResult = true;
             }
             else
             {
-                MessageBox.Show(errorText, Properties.Resources.InvalidPositionSetup, MessageBoxButton.OK, MessageBoxImage.Error);
+                StringBuilder msg = new StringBuilder(errorText);
+                if (!Configuration.PartialSearch && goodForPartialSearch)
+                {
+                    msg.AppendLine();
+                    msg.Append(Properties.Resources.MsgTryPartialSearch);
+                }
+                MessageBox.Show(msg.ToString(), Properties.Resources.InvalidPositionSetup, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -764,28 +771,38 @@ namespace ChessForge
         /// </summary>
         /// <param name="errorText"></param>
         /// <returns></returns>
-        private bool CheckPosition(out string errorText)
+        private bool CheckPosition(out string errorText, out bool goodForPartialSearch)
         {
             bool result = true;
             errorText = string.Empty;
+            goodForPartialSearch = true;
 
-            if (Configuration.PartialSearch)
+            if (PositionUtils.IsPositionEmpty(ref PositionSetup.Board))
             {
-                PositionUtils.KingCount(out int whiteKings, out int blackKings, PositionSetup);
-                if (whiteKings > 1)
-                {
-                    errorText = Properties.Resources.PosValTooManyWhiteKings;
-                    result = false;
-                }
-                else if (blackKings > 1)
-                {
-                    errorText = Properties.Resources.PosValTooManyBlackKings;
-                    result = false;
-                }
+                result = false;
+                goodForPartialSearch = false;
+                errorText = Properties.Resources.PositionIsEmpty;
             }
             else
             {
-                result = GuiUtilities.ValidatePosition(ref PositionSetup, out errorText);
+                if (Configuration.PartialSearch)
+                {
+                    PositionUtils.KingCount(out int whiteKings, out int blackKings, PositionSetup);
+                    if (whiteKings > 1)
+                    {
+                        errorText = Properties.Resources.PosValTooManyWhiteKings;
+                        result = false;
+                    }
+                    else if (blackKings > 1)
+                    {
+                        errorText = Properties.Resources.PosValTooManyBlackKings;
+                        result = false;
+                    }
+                }
+                else
+                {
+                    result = GuiUtilities.ValidatePosition(ref PositionSetup, out errorText, out goodForPartialSearch);
+                }
             }
 
             return result;

@@ -1345,11 +1345,14 @@ ShowIndex=Click to Show Index
 #Dialog title: Setup position to search for
 SetupPositionToSearch=Set up position to search for
 
+#Partial match only
+PartialMatch=Partial Match
+
 #Message: no positions found
 MsgNoPositionsFound=Specified position has not been found.
 
-#Partial match only
-PartialMatch=Partial Match
+#Message: try partial search
+MsgTryPartialSearch=Note: You can try partial match search by checking the Partial Match checkbox.
 
 #######################################
 #
@@ -3209,6 +3212,9 @@ OebWinning=Winning
 #
 # Header: Position Validation
 #
+
+#Position is empty
+PositionIsEmpty=The Position Is Empty
 
 #Too many White Kings
 PosValTooManyWhiteKings=Too many White Kings

@@ -812,18 +812,29 @@ namespace ChessForge
         public static string TranslateParseException(ParserException ex)
         {
             StringBuilder sb = new StringBuilder();
+            string prevMovetext = ex.PreviousMove != null ? ex.PreviousMove : "";
+
             switch (ex.ParseError)
             {
                 case ParserException.ParseErrorType.PGN_GAME_EXPECTED_MOVE_NUMBER:
                     sb.Append(Properties.Resources.ErrFound
                         + " \"" + ex.CurrentToken
-                        + "\" " + Properties.Resources.ErrInsteadOfMoveNumber
-                        + ", " + Properties.Resources.ErrAfterMove + " " + ex.PreviousMove);
+                        + "\" " + Properties.Resources.ErrInsteadOfMoveNumber);
+                    
+                    if (!string.IsNullOrEmpty(prevMovetext))
+                    {
+                        sb.Append(", " + Properties.Resources.ErrAfterMove + " \"" + prevMovetext + "\"");
+                    }
                     break;
                 case ParserException.ParseErrorType.PGN_INVALID_MOVE:
                     sb.Append(Properties.Resources.PgnParsingError
                         + ": " + Properties.Resources.InvalidMove + " "
                         + "\"" + ex.CurrentToken + "\"");
+                    
+                    if (ex.PreviousMove != null)
+                    {
+                        sb.Append(", " + Properties.Resources.ErrAfterMove + " \"" + prevMovetext + "\"");
+                    }
                     break;
                 default:
                     return ex.Message;
@@ -880,9 +891,10 @@ namespace ChessForge
         /// <param name="pos"></param>
         /// <param name="errorText"></param>
         /// <returns></returns>
-        public static bool ValidatePosition(ref BoardPosition pos, out string errorText)
+        public static bool ValidatePosition(ref BoardPosition pos, out string errorText, out bool goodForPartialSearch)
         {
             StringBuilder sb = new StringBuilder();
+            goodForPartialSearch = true;
 
             bool result = true;
 
@@ -895,6 +907,7 @@ namespace ChessForge
                     if (whiteKings > 1)
                     {
                         sb.AppendLine(Properties.Resources.PosValTooManyWhiteKings);
+                        goodForPartialSearch = false;
                     }
                     else if (whiteKings == 0)
                     {
@@ -904,6 +917,7 @@ namespace ChessForge
                     if (blackKings > 1)
                     {
                         sb.AppendLine(Properties.Resources.PosValTooManyBlackKings);
+                        goodForPartialSearch = false;
                     }
                     else if (blackKings == 0)
                     {

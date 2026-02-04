@@ -147,9 +147,20 @@ namespace ChessForge
 
                 Paragraph parentPara = rMove.Parent as Paragraph;
 
-                // determine if the move is first in paragraph or followes a new line.
+                // To establish if we need a leading space or not, we check
+                // if the move is the first move in the paragraph.
+                // Depending on whether there already is a comment-before-move,
+                // we check the move's Run or the move's comment-before-move Run.
+                Run runToCheck = rMove;
+                _dictNodeToCommentBeforeMoveRun.TryGetValue(nd.NodeId, out Inline oldCommentInl);
+                if (oldCommentInl is Run rComment)
+                {
+                    runToCheck = rComment;
+                }
+
+                // determine if the move is first in paragraph or follows a new line.
                 bool isFirstInPara = RichTextBoxUtilities.IsFirstMoveRunInParagraph(parentPara, nd.NodeId) 
-                    || RichTextBoxUtilities.IsPreviousRunNewLine(rMove);
+                    || RichTextBoxUtilities.IsPreviousRunNewLine(runToCheck);
 
                 // if there is an index name run (in a Study) and the diagram is to be first, reverse isFirstPara
                 if (isFirstInPara && RichTextBoxUtilities.ParagraphStartsWithIndexRun(parentPara))

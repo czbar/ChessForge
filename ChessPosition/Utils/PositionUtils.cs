@@ -262,6 +262,35 @@ namespace ChessPosition
         }
 
         /// <summary>
+        /// Checks if the passed board position is empty.
+        /// </summary>
+        /// <param name="board"></param>
+        /// <returns></returns>
+        public static bool IsPositionEmpty(ref byte[,] board)
+        {
+            bool empty = true;
+
+            for (int x = 0; x <= 7; x++)
+            {
+                for (int y = 0; y <= 7; y++)
+                {
+                    if (board[x, y] > 0)
+                    {
+                        empty = false;
+                        break;
+                    }
+                }
+
+                if (!empty)
+                {
+                    break;
+                }
+            }
+
+            return empty;
+        }
+
+        /// <summary>
         /// Move a piece from one square to another.
         /// Does not perform checks of any kind.
         /// The caller must perform all such checks
