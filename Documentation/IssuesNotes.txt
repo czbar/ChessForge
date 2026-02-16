@@ -26,8 +26,6 @@ In Study, no spacing after the comment under a diagram before next line. Is this
 
 After a comment on the main line, adding comment before-move for the next move, inserts spurious leading space.
 
-After changing the index depth do not move the scrollbar back to active move.
-
 Search Position should not complain about the king in check - we don't specify who is on the move - or should we?
 
 A means to find out if a game/exercise is referenced somewhere already.
