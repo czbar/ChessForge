@@ -35,3 +35,5 @@ A means to find out if a game/exercise is referenced somewhere already.
 External cache of positions so that "too many requests" can be better handled. Note: add an exclam or something to indicate that the result is stale.
 
 Why is sound disappearing?
+
+When adjusting reference positions, give preference to the game's text even if it is shorter than the comment line.
