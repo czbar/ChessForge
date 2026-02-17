@@ -891,7 +891,7 @@ namespace ChessForge
         /// <param name="pos"></param>
         /// <param name="errorText"></param>
         /// <returns></returns>
-        public static bool ValidatePosition(ref BoardPosition pos, out string errorText, out bool goodForPartialSearch)
+        public static bool ValidatePosition(ref BoardPosition pos, out string errorText, out bool goodForPartialSearch, bool ignoreColorToMove = false)
         {
             StringBuilder sb = new StringBuilder();
             goodForPartialSearch = true;
@@ -928,15 +928,23 @@ namespace ChessForge
                 // only check if we know we have 1 king each side (otherwise we may get an exception)
                 if (result == true)
                 {
-                    if (pos.ColorToMove == PieceColor.White && PositionUtils.IsKingInCheck(pos, PieceColor.Black))
+                    if (!ignoreColorToMove)
                     {
-                        result = false;
-                        sb.AppendLine(Properties.Resources.PosValBlackKingInCheck);
+                        if (pos.ColorToMove == PieceColor.White && PositionUtils.IsKingInCheck(pos, PieceColor.Black))
+                        {
+                            result = false;
+                            sb.AppendLine(Properties.Resources.PosValBlackKingInCheck);
+                        }
+                        if (pos.ColorToMove == PieceColor.Black && PositionUtils.IsKingInCheck(pos, PieceColor.White))
+                        {
+                            result = false;
+                            sb.AppendLine(Properties.Resources.PosValWhiteKingInCheck);
+                        }
                     }
-                    if (pos.ColorToMove == PieceColor.Black && PositionUtils.IsKingInCheck(pos, PieceColor.White))
+                    else if (PositionUtils.IsKingInCheck(pos, PieceColor.White) && PositionUtils.IsKingInCheck(pos, PieceColor.Black))
                     {
                         result = false;
-                        sb.AppendLine(Properties.Resources.PosValWhiteKingInCheck);
+                        sb.AppendLine(Properties.Resources.PosValBothKingsInCheck);
                     }
                 }
 
