@@ -801,7 +801,7 @@ namespace ChessForge
                 }
                 else
                 {
-                    result = GuiUtilities.ValidatePosition(ref PositionSetup, out errorText, out goodForPartialSearch);
+                    result = GuiUtilities.ValidatePosition(ref PositionSetup, out errorText, out goodForPartialSearch, true);
                 }
             }
 
