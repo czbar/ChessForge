@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Threading.Tasks;
+﻿using ChessPosition;
 using Newtonsoft.Json;
-using ChessPosition;
-using System.Linq.Expressions;
+using System;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace WebAccess
 {
@@ -32,6 +29,7 @@ namespace WebAccess
                 // used only once so create a transient client
                 using (System.Net.Http.HttpClient client = new System.Net.Http.HttpClient())
                 {
+                    client.DefaultRequestHeaders.Add("User-Agent", RestApiRequest.UserAgentLichess);
                     var json = await client.GetStringAsync("https://chessforge.sourceforge.io/Releases/Releases.json");
 
                     dynamic obj = JsonConvert.DeserializeObject<dynamic>(json);
