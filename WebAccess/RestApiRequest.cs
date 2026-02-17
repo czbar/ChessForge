@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net.Http;
 
 namespace WebAccess
 {
@@ -12,7 +7,8 @@ namespace WebAccess
     /// </summary>
     public class RestApiRequest
     {
-        public const string UserAgent = "ChessForge/1 (contact robert.rozycki@gmail.com; czbar on chess.com)";
+        public const string UserAgentChesscom = "ChessForge/1.14 (contact robert.rozycki@gmail.com; czbar on chess.com)";
+        public const string UserAgentLichess = "ChessForge/1.14 (robert.rozycki@gmail.com)";
         public const string STATUS_CODE = "StatusCode:";
 
         static public HttpClient OpeningStatsClient = new HttpClient();
