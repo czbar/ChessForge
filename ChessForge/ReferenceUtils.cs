@@ -557,7 +557,7 @@ namespace ChessForge
 
                 if (article.ContentType == GameData.ContentType.STUDY_TREE || (guidRef != null && article.Guid != guidRef))
                 {
-                    // this a chapter reference or not a guid we are after so just keep it.
+                    // this is a chapter reference or not a guid we are after so just keep it.
                     updatedReferencingNodes.Add(hostReferencingNodes[i]);
                 }
                 else
