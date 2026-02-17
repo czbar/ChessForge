@@ -3234,6 +3234,10 @@ PosValBlackKingMissing=The Black King is missing
 #Black King cannot be in check on Black's move
 PosValBlackKingInCheck=Black King cannot be in check on Black's move
 
+#Both Kings cannot be in check
+PosValBothKingsInCheck=Both Kings cannot be in check
+
+
 ##################################
 #
 # Header: MESSAGES / WARNINGS / NOTIFICATIONS

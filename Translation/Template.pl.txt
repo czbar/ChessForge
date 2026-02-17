@@ -4156,6 +4156,11 @@ PosValBlackKingMissing=Brak czarnego króla
 #english: PosValBlackKingInCheck=Black King cannot be in check on Black's move
 PosValBlackKingInCheck=Czarny król nie może być w szachu przy ruchu białych
 
+#description: Both Kings cannot be in check
+#english: PosValBothKingsInCheck=Both Kings cannot be in check
+PosValBothKingsInCheck=Oba króle nie mogą być w szachu
+
+
 ##################################
 #
 # Header: MESSAGES / WARNINGS / NOTIFICATIONS

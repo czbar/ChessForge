@@ -6272,6 +6272,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Both Kings cannot be in check.
+        /// </summary>
+        public static string PosValBothKingsInCheck {
+            get {
+                return ResourceManager.GetString("PosValBothKingsInCheck", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Too many Black Kings.
         /// </summary>
         public static string PosValTooManyBlackKings {
