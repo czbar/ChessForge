@@ -1,9 +1,6 @@
-﻿using ChessPosition;
-using GameTree;
+﻿using GameTree;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,7 +33,7 @@ namespace WebAccess
             {
                 string url = BuildLichessUserGamesUrl(filter);
                 HttpClient httpClient = RestApiRequest.GameImportClient;
-                httpClient.DefaultRequestHeaders.Add("User-Agent", RestApiRequest.UserAgent);
+                httpClient.DefaultRequestHeaders.Add("User-Agent", RestApiRequest.UserAgentLichess);
                 var response = await httpClient.GetAsync(url);
                 int statusCode = RestApiRequest.GetResponseCode(response.ToString());
                 if (statusCode != 200)

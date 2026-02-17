@@ -1,15 +1,10 @@
 ﻿using ChessForge;
-using ChessPosition;
-using ChessPosition.Utils;
 using GameTree;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using WebAccess;
 
 namespace WebAccess
 {
@@ -81,13 +76,16 @@ namespace WebAccess
             eventArgs.TreeId = treeId;
             eventArgs.NodeId = nd.NodeId;
 
-            string json;
             try
             {
                 AppLog.Message(2, "HttpClient sending OpeningStats request for FEN: " + fen);
 
-                HttpResponseMessage response = await RestApiRequest.OpeningStatsClient.GetAsync("https://explorer.lichess.ovh/masters?" + "fen=" + fen);
-                json = await response.Content.ReadAsStringAsync();
+                HttpClient httpClient = RestApiRequest.OpeningStatsClient;
+                httpClient.DefaultRequestHeaders.Add("User-Agent", RestApiRequest.UserAgentLichess);
+                
+                string request = "https://explorer.lichess.ovh/masters?" + "fen=" + fen;
+                HttpResponseMessage response = await httpClient.GetAsync(request);
+                string json = await response.Content.ReadAsStringAsync();
 
                 if (response.IsSuccessStatusCode)
                 {

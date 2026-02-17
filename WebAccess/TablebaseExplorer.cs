@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -37,7 +38,11 @@ namespace WebAccess
             try
             {
                 AppLog.Message(2, "HttpClient sending Tablebase request for FEN: " + fen);
-                var json = await RestApiRequest.TablebaseClient.GetStringAsync("http://tablebase.lichess.ovh/standard?" + "fen=" + fen);
+
+                HttpClient httpClient = RestApiRequest.TablebaseClient;
+                httpClient.DefaultRequestHeaders.Add("User-Agent", RestApiRequest.UserAgentLichess);
+
+                var json = await httpClient.GetStringAsync("http://tablebase.lichess.ovh/standard?" + "fen=" + fen);
                 Response = JsonConvert.DeserializeObject<LichessTablebaseResponse>(json);
                 eventArgs.Success = true;
                 TablebaseReceived?.Invoke(null, eventArgs);
