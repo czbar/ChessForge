@@ -2884,6 +2884,9 @@ UWAGA: Oceny nie są uaktualniane (zezwól naciskając F8).</value>
   <data name="PosValBlackKingInCheck" xml:space="preserve">
     <value>Czarny król nie może być w szachu przy ruchu białych</value>
   </data>
+  <data name="PosValBothKingsInCheck" xml:space="preserve">
+    <value>Oba króle nie mogą być w szachu</value>
+  </data>
   <data name="InfoLineEvalInProgress" xml:space="preserve">
     <value>Trwa ocenianie wariantu!</value>
   </data>

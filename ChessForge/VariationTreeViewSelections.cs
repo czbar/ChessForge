@@ -238,7 +238,12 @@ namespace ChessForge
         /// </summary>
         /// <param name="nodeId"></param>
         /// <param name="lineId"></param>
-        public void HighlightLineAndMove(FlowDocument doc, string lineId, int nodeId)
+        /// <param name="nodeId"></param>
+        /// <param name="scrollToMove">
+        /// Allows the view to bring the selected move into view. 
+        /// Typically, this is desired but not when we change the depth of the index.
+        /// </param>
+        public void HighlightLineAndMove(FlowDocument doc, string lineId, int nodeId, bool scrollToMove = true)
         {
             if (!IsSelectionEnabled())
             {
@@ -312,7 +317,7 @@ namespace ChessForge
                         _selectedRun.Background = ChessForgeColors.CurrentTheme.RtbSelectRunBackground;
                         _selectedRun.Foreground = ChessForgeColors.CurrentTheme.RtbSelectRunForeground;
 
-                        if (nodeId != 0)
+                        if (nodeId != 0 && scrollToMove)
                         {
                             PulseManager.BringSelectedRunIntoView();
                         }

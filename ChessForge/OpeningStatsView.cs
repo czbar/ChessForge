@@ -314,16 +314,21 @@ namespace ChessForge
         {
             Paragraph para = new Paragraph();
 
-            if (string.IsNullOrEmpty(errorMessage) || !errorMessage.ToLower().Contains("too many requests"))
+            // lichess returns "Too Many Requests" error in case of rate limit being hit
+            // but the message is not consistent and may contain additional text.
+            // So we check if the message contains "too many requests" and if it does we show a consistent message.
+            if (errorMessage != null && errorMessage.ToLower().Contains("too many requests"))
             {
-                Run rIntro = new Run(Properties.Resources.ErrorLichess + ": ");
-                rIntro.FontSize = 14 + Configuration.FontSizeDiff;
-                para.Inlines.Add(rIntro);
-
-                Run rError = new Run("    " + errorMessage ?? ("[" + Properties.Resources.UnknownError + "]"));
-                rError.FontSize = 12 + Configuration.FontSizeDiff;
-                para.Inlines.Add(rError);
+                errorMessage = "Too Many Requests";
             }
+
+            Run rIntro = new Run(Properties.Resources.ErrorLichess);
+            rIntro.FontSize = 14 + Configuration.FontSizeDiff;
+            para.Inlines.Add(rIntro);
+
+            Run rError = new Run(":  " + errorMessage ?? ("[" + Properties.Resources.UnknownError + "]"));
+            rError.FontSize = 12 + Configuration.FontSizeDiff;
+            para.Inlines.Add(rError);
 
             AppLog.Message("Error in lichess access: " + errorMessage ?? "[empty message]");
 

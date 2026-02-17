@@ -971,7 +971,7 @@ namespace ChessForge
                     }
                 }
                 BuildFlowDocumentForVariationTree(false);
-                HighlightLineAndMove(HostRtb.Document, _mainVariationTree.SelectedLineId, _mainVariationTree.SelectedNodeId);
+                HighlightLineAndMove(HostRtb.Document, _mainVariationTree.SelectedLineId, _mainVariationTree.SelectedNodeId, false);
             }
             e.Handled = true;
         }
@@ -995,7 +995,7 @@ namespace ChessForge
                     }
                 }
                 BuildFlowDocumentForVariationTree(false);
-                HighlightLineAndMove(HostRtb.Document, _mainVariationTree.SelectedLineId, _mainVariationTree.SelectedNodeId);
+                HighlightLineAndMove(HostRtb.Document, _mainVariationTree.SelectedLineId, _mainVariationTree.SelectedNodeId, false);
             }
             e.Handled = true;
         }

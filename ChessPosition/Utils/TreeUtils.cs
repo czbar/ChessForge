@@ -1135,6 +1135,7 @@ namespace ChessPosition
                         retNode.Comment = nodeToInsert.Comment;
                         retNode.CommentBeforeMove = nodeToInsert.CommentBeforeMove;
                         retNode.Nags = nodeToInsert.Nags;
+                        retNode.References = nodeToInsert.References;
                         retNode.IsDiagram = nodeToInsert.IsDiagram;
                         retNode.IsDiagramFlipped = nodeToInsert.IsDiagramFlipped;
                         retNode.IsDiagramPreComment = nodeToInsert.IsDiagramPreComment;

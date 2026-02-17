@@ -1,15 +1,12 @@
-﻿using System;
+﻿using ChessPosition;
+using GameTree;
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics.Tracing;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using ChessPosition;
-using GameTree;
 
 namespace WebAccess
 {
@@ -120,7 +117,7 @@ namespace WebAccess
             string text = "";
 
             HttpClient httpClient = RestApiRequest.GameImportClient;
-            httpClient.DefaultRequestHeaders.Add("User-Agent", RestApiRequest.UserAgent);
+            httpClient.DefaultRequestHeaders.Add("User-Agent", RestApiRequest.UserAgentChesscom);
             var response = await httpClient.GetAsync(rest);
             int statusCode = RestApiRequest.GetResponseCode(response.ToString());
             if (statusCode != 200)

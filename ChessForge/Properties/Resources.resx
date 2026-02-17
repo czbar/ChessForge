@@ -2885,6 +2885,9 @@ NOTE: Evaluations are not being updated (press F8 to allow).</value>
   <data name="PosValBlackKingInCheck" xml:space="preserve">
     <value>Black King cannot be in check on Black's move</value>
   </data>
+  <data name="PosValBothKingsInCheck" xml:space="preserve">
+    <value>Both Kings cannot be in check</value>
+  </data>
   <data name="InfoLineEvalInProgress" xml:space="preserve">
     <value>Line evaluation in progress!</value>
   </data>
