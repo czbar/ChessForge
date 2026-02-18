@@ -576,6 +576,12 @@
   <data name="ErrNoTextReceived" xml:space="preserve">
     <value>no text received.</value>
   </data>
+  <data name="ErrGameNotReferenced" xml:space="preserve">
+    <value>No references to this game found.</value>
+  </data>
+  <data name="ErrExerciseNotReferenced" xml:space="preserve">
+    <value>No references to this exercise found.</value>
+  </data>
   <data name="ClipboardOperation" xml:space="preserve">
     <value>Clipboard Operation</value>
   </data>
@@ -1774,6 +1780,9 @@ NOTE: Evaluations are not being updated (press F8 to allow).</value>
   <data name="MoveGameToChapter" xml:space="preserve">
     <value>Move Game to Chapter...</value>
   </data>
+  <data name="ReferencesToGame" xml:space="preserve">
+    <value>References to This Game...</value>
+  </data>
   <data name="MoveExerciseUp" xml:space="preserve">
     <value>Move Exercise Up</value>
   </data>
@@ -1782,6 +1791,9 @@ NOTE: Evaluations are not being updated (press F8 to allow).</value>
   </data>
   <data name="MoveExerciseToChapter" xml:space="preserve">
     <value>Move Exercise to Chapter...</value>
+  </data>
+  <data name="ReferencesToExercise" xml:space="preserve">
+    <value>References to This Exercise...</value>
   </data>
   <data name="DeleteSelectedChapter" xml:space="preserve">
     <value>Delete Selected Chapter</value>

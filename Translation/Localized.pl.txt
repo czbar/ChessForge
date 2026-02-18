@@ -656,6 +656,14 @@ ErrHttpStatus=Błąd w odpowiedzi serwera. Kod: $0
 #english: ErrNoTextReceived=no text received.
 ErrNoTextReceived=brak tekstu partii.
 
+#description: Game not referenced  
+#english: ErrGameNotReferenced=No references to this game found.
+ErrGameNotReferenced=Nie znaleziono odsyłaczy do tej partii.
+
+#description: Exercise not referenced  
+#english: ErrExerciseNotReferenced=No references to this exercise found.
+ErrExerciseNotReferenced=Nie znaleziono odsyłaczy do tego ćwiczenia.
+
 #description: Clipboard operation
 #english: ClipboardOperation=Clipboard Operation
 ClipboardOperation=Operacja Schowka
@@ -2546,6 +2554,10 @@ MoveGameDown=Przesuń Rozdział na Dół
 #english: MoveGameToChapter=Move Game to Chapter...
 MoveGameToChapter=Przenieś Partię do Rozdziału...
 
+#description: Find refeences to this game
+#english: ReferencesToGame=References to This Game...
+ReferencesToGame=Odsyłacze do tej partii...
+
 #description: Move exercise one position up
 #english: MoveExerciseUp=Move Exercise Up
 MoveExerciseUp=Przesuń Ćwiczenie do Góry
@@ -2557,6 +2569,10 @@ MoveExerciseDown=Przesuń Ćwiczenie na Dół
 #description: Move exercise to another chapter
 #english: MoveExerciseToChapter=Move Exercise to Chapter...
 MoveExerciseToChapter=Przenieś Ćwiczenie do Rozdziału
+
+#description: Find refeences to this exercise
+#english: ReferencesToExercise=References to This Exercise...
+ReferencesToExercise=Odsyłacze do tego ćwiczenia...
 
 #description: Deleted selected chapter
 #english: DeleteSelectedChapter=Delete Selected Chapter

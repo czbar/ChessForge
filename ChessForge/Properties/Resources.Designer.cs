@@ -2707,6 +2707,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No references to this exercise found..
+        /// </summary>
+        public static string ErrExerciseNotReferenced {
+            get {
+                return ResourceManager.GetString("ErrExerciseNotReferenced", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File corrupted or in the wrong format..
         /// </summary>
         public static string ErrFileFormatOrCorrupt {
@@ -2730,6 +2739,15 @@ namespace ChessForge.Properties {
         public static string ErrGameNotFound {
             get {
                 return ResourceManager.GetString("ErrGameNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No references to this game found..
+        /// </summary>
+        public static string ErrGameNotReferenced {
+            get {
+                return ResourceManager.GetString("ErrGameNotReferenced", resourceCulture);
             }
         }
         
@@ -6538,6 +6556,24 @@ namespace ChessForge.Properties {
         public static string References {
             get {
                 return ResourceManager.GetString("References", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to References to This Exercise....
+        /// </summary>
+        public static string ReferencesToExercise {
+            get {
+                return ResourceManager.GetString("ReferencesToExercise", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to References to This Game....
+        /// </summary>
+        public static string ReferencesToGame {
+            get {
+                return ResourceManager.GetString("ReferencesToGame", resourceCulture);
             }
         }
         
