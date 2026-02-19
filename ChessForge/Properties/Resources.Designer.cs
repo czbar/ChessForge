@@ -2095,6 +2095,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Referenced From.
+        /// </summary>
+        public static string DlgTitleReferencesUsage {
+            get {
+                return ResourceManager.GetString("DlgTitleReferencesUsage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Workbook Options.
         /// </summary>
         public static string DlgTitleWorkbookOptions {

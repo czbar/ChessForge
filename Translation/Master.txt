@@ -698,6 +698,9 @@ AnalysisEngine=Analysis Engine
 #Engine Options dialog title
 DlgTitleEngineOptions=Engine Options
 
+#Dialog title for References Usage
+DlgTitleReferencesUsage=Referenced From
+
 #Parsing Errors
 DlgParseErrors=Parsing Errors
 

@@ -907,6 +907,10 @@ AnalysisEngine=
 #english: DlgTitleEngineOptions=Engine Options
 DlgTitleEngineOptions=
 
+#description: Dialog title for References Usage
+#english: DlgTitleReferencesUsage=Referenced From
+DlgTitleReferencesUsage=
+
 #description: Parsing Errors
 #english: DlgParseErrors=Parsing Errors
 DlgParseErrors=

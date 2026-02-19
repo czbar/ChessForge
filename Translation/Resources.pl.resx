@@ -744,6 +744,9 @@
   <data name="DlgTitleEngineOptions" xml:space="preserve">
     <value>Opcje Silnika</value>
   </data>
+  <data name="DlgTitleReferencesUsage" xml:space="preserve">
+    <value>Wywołania odsyłacza.</value>
+  </data>
   <data name="DlgParseErrors" xml:space="preserve">
     <value>Błędy przetwarzania zapisu</value>
   </data>

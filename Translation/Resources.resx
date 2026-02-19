@@ -744,6 +744,9 @@
   <data name="DlgTitleEngineOptions" xml:space="preserve">
     <value>Engine Options</value>
   </data>
+  <data name="DlgTitleReferencesUsage" xml:space="preserve">
+    <value>Referenced From</value>
+  </data>
   <data name="DlgParseErrors" xml:space="preserve">
     <value>Parsing Errors</value>
   </data>

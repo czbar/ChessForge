@@ -907,6 +907,10 @@ AnalysisEngine=Wybór Silnika
 #english: DlgTitleEngineOptions=Engine Options
 DlgTitleEngineOptions=Opcje Silnika
 
+#description: Dialog title for References Usage
+#english: DlgTitleReferencesUsage=Referenced From
+DlgTitleReferencesUsage=Wywołania odsyłacza.
+
 #description: Parsing Errors
 #english: DlgParseErrors=Parsing Errors
 DlgParseErrors=Błędy przetwarzania zapisu
