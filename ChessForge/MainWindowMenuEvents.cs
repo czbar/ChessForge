@@ -2380,7 +2380,7 @@ namespace ChessForge
             try
             {
                 string refGuid = ActiveArticle.Guid;
-                ObservableCollection<ArticleListItem> lstRefsUsage = ReferenceUtils.BuildRefrenceUsageList(refGuid);
+                ObservableCollection<ArticleListItem> lstRefsUsage = ReferenceUtils.BuildReferenceUsageList(refGuid);
 
                 if (lstRefsUsage.Count == 0)
                 {

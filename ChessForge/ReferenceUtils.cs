@@ -303,7 +303,7 @@ namespace ChessForge
         /// <param name="reference">The reference identifier to search for. Cannot be null or empty.</param>
         /// <returns>An ObservableCollection containing ArticleListItem objects for each occurrence of the reference. The
         /// collection will be empty if the reference is not found.</returns>
-        public static ObservableCollection<ArticleListItem> BuildRefrenceUsageList(string reference)
+        public static ObservableCollection<ArticleListItem> BuildReferenceUsageList(string reference)
         {
             ObservableCollection<ArticleListItem> lstRefsUsage = new ObservableCollection<ArticleListItem>();
 
