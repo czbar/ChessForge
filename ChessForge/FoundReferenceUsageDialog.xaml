@@ -1,0 +1,21 @@
+﻿<Window x:Class="ChessForge.FoundReferenceUsageDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:p="clr-namespace:ChessForge.Properties"
+        xmlns:local="clr-namespace:ChessForge"
+        ResizeMode="NoResize"
+        mc:Ignorable="d"
+        ShowInTaskbar="True"
+        Title="{x:Static p:Resources.DlgTitleReferencesUsage}" Height="450" Width="800">
+    <Grid>
+        <RichTextBox x:Name="UiRtbReferenceUsage" Margin="10,10,10,50">
+            <FlowDocument>
+            </FlowDocument>
+        </RichTextBox>
+        <Button x:Name="UiBtnClose" IsCancel="True" Content="{x:Static p:Resources.Close}" HorizontalAlignment="Right" Margin="0,0,140,15" VerticalAlignment="Bottom" Width="100"  />
+        <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Right" Margin="0,0,20,15" VerticalAlignment="Bottom" Width="100" />
+
+    </Grid>
+</Window>
