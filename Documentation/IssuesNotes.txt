@@ -26,8 +26,4 @@ In Study, no spacing after the comment under a diagram before next line. Is this
 
 After a comment on the main line, adding comment before-move for the next move, inserts spurious leading space.
 
-A means to find out if a game/exercise is referenced somewhere already.
-
-External cache of positions so that "too many requests" can be better handled. Note: add an exclam or something to indicate that the result is stale.
-
 Why is sound disappearing?
