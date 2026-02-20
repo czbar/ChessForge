@@ -184,6 +184,9 @@
     <Compile Include="FindDuplicates.cs" />
     <Compile Include="FindGames.cs" />
     <Compile Include="FindIdenticalPositions.cs" />
+    <Compile Include="FoundReferenceUsageDialog.xaml.cs">
+      <DependentUpon>FoundReferenceUsageDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GameHeaderDialog.xaml.cs">
       <DependentUpon>GameHeaderDialog.xaml</DependentUpon>
     </Compile>
@@ -507,6 +510,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ExerciseSolutionsDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FoundReferenceUsageDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -2370,6 +2370,56 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Finds usage of the references to the Active Article.
+        /// Invoked from Games View menu.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnReferenceUsage_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string refGuid = ActiveArticle.Guid;
+                ObservableCollection<ArticleListItem> lstRefsUsage = ReferenceUtils.BuildReferenceUsageList(refGuid);
+
+                if (lstRefsUsage.Count == 0)
+                {
+                    string errMsg = ActiveArticle.ContentType == GameData.ContentType.EXERCISE 
+                        ? Properties.Resources.ErrExerciseNotReferenced : Properties.Resources.ErrGameNotReferenced;
+                    MessageBox.Show(errMsg, Properties.Resources.Information, MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    FoundReferenceUsageDialog dlg = new FoundReferenceUsageDialog(lstRefsUsage);
+                    GuiUtilities.PositionDialog(dlg, AppState.MainWin, 100);
+                    if (dlg.ShowDialog() == true)
+                    {
+                        if (dlg.Request == FoundReferenceUsageDialog.Action.OpenView && dlg.ArticleIndexId >= 0)
+                        {
+                            ArticleListItem item = lstRefsUsage[dlg.ArticleIndexId];
+                            WorkbookLocationNavigator.GotoArticle(item.ChapterIndex, item.Article.Tree.ContentType, item.ArticleIndex);
+                            if (AppState.MainWin.ActiveTreeView != null)
+                            {
+                                AppState.MainWin.ActiveTreeView.UnhighlightActiveLine();
+                            }
+                            AppState.MainWin.SetActiveLine(item.Node.LineId, item.Node.NodeId);
+                            if (AppState.MainWin.ActiveTreeView is StudyTreeView view)
+                            {
+                                if (view.UncollapseMove(item.Node))
+                                {
+                                    view.BuildFlowDocumentForVariationTree(false);
+                                }
+                            }
+                            AppState.MainWin.ActiveTreeView.SelectLineAndMoveInWorkbookViews(item.Node.LineId,
+                                AppState.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false), true);
+                        }
+                    }
+                }
+            }
+            catch { }
+        }
+
+        /// <summary>
         /// Shows all solutions in the current chapter.
         /// </summary>
         /// <param name="sender"></param>

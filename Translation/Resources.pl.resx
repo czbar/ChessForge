@@ -576,6 +576,12 @@
   <data name="ErrNoTextReceived" xml:space="preserve">
     <value>brak tekstu partii.</value>
   </data>
+  <data name="ErrGameNotReferenced" xml:space="preserve">
+    <value>Nie znaleziono odsyłaczy do tej partii.</value>
+  </data>
+  <data name="ErrExerciseNotReferenced" xml:space="preserve">
+    <value>Nie znaleziono odsyłaczy do tego ćwiczenia.</value>
+  </data>
   <data name="ClipboardOperation" xml:space="preserve">
     <value>Operacja Schowka</value>
   </data>
@@ -737,6 +743,9 @@
   </data>
   <data name="DlgTitleEngineOptions" xml:space="preserve">
     <value>Opcje Silnika</value>
+  </data>
+  <data name="DlgTitleReferencesUsage" xml:space="preserve">
+    <value>Wywołania odsyłacza.</value>
   </data>
   <data name="DlgParseErrors" xml:space="preserve">
     <value>Błędy przetwarzania zapisu</value>
@@ -1774,6 +1783,9 @@ UWAGA: Oceny nie są uaktualniane (zezwól naciskając F8).</value>
   <data name="MoveGameToChapter" xml:space="preserve">
     <value>Przenieś Partię do Rozdziału...</value>
   </data>
+  <data name="ReferencesToGame" xml:space="preserve">
+    <value>Odsyłacze do tej partii...</value>
+  </data>
   <data name="MoveExerciseUp" xml:space="preserve">
     <value>Przesuń Ćwiczenie do Góry</value>
   </data>
@@ -1782,6 +1794,9 @@ UWAGA: Oceny nie są uaktualniane (zezwól naciskając F8).</value>
   </data>
   <data name="MoveExerciseToChapter" xml:space="preserve">
     <value>Przenieś Ćwiczenie do Rozdziału</value>
+  </data>
+  <data name="ReferencesToExercise" xml:space="preserve">
+    <value>Odsyłacze do tego ćwiczenia...</value>
   </data>
   <data name="DeleteSelectedChapter" xml:space="preserve">
     <value>Usuń Wybrany Rozdział</value>

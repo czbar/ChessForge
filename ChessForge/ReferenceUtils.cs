@@ -1,6 +1,7 @@
 ﻿using ChessPosition;
 using GameTree;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace ChessForge
@@ -294,6 +295,56 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Builds a collection of article list items representing all usages of the specified reference within the
+        /// workbook.
+        /// </summary>
+        /// <remarks>The search includes all chapters, model games, exercises, and study trees in the
+        /// workbook. This method does not modify the workbook or its contents.</remarks>
+        /// <param name="reference">The reference identifier to search for. Cannot be null or empty.</param>
+        /// <returns>An ObservableCollection containing ArticleListItem objects for each occurrence of the reference. The
+        /// collection will be empty if the reference is not found.</returns>
+        public static ObservableCollection<ArticleListItem> BuildReferenceUsageList(string reference)
+        {
+            ObservableCollection<ArticleListItem> lstRefsUsage = new ObservableCollection<ArticleListItem>();
+
+            try
+            {
+                for (int ch = 0; ch < AppState.Workbook.Chapters.Count; ch++)
+                {
+                    Chapter chapter = AppState.Workbook.Chapters[ch];
+
+                    // create a "chapter line" item that will be removed if nothing found in the chapter
+                    ArticleListItem chapterLine = new ArticleListItem(chapter, ch);
+                    chapterLine.IsSelected = true;
+
+                    lstRefsUsage.Add(chapterLine);
+                    int currentItemCount = lstRefsUsage.Count;
+                    
+                    FindReferenceUsage(reference, ch, chapter.StudyTree, -1, ref lstRefsUsage);
+
+                    for (int art = 0; art < chapter.ModelGames.Count; art++)
+                    {
+                        FindReferenceUsage(reference, ch, chapter.ModelGames[art], art, ref lstRefsUsage);
+                    }
+
+                    for (int art = 0; art < chapter.Exercises.Count; art++)
+                    {
+                        FindReferenceUsage(reference, ch, chapter.Exercises[art], art, ref lstRefsUsage);
+                    }
+
+                    if (currentItemCount == lstRefsUsage.Count)
+                    {
+                        // nothing added for this chapter so remove the chapter "line"
+                        lstRefsUsage.Remove(chapterLine);
+                    }
+                }
+            }
+            catch { }
+
+            return lstRefsUsage;
+        }
+
+        /// <summary>
         /// Splits a '|' separated list of references into Game/Exercise refs
         /// and Chapter refs.
         /// </summary>
@@ -361,6 +412,27 @@ namespace ChessForge
         {
             SplitReferencesString(refGuids, out string gameExerciseRefGuids, out string chapterRefGuids);
             return CombineReferences(gameExerciseRefGuids, chapterRefGuids);
+        }
+
+        /// <summary>
+        /// Finds a node or nodes using the specified reference and adds them as ArticleListItems
+        /// to the passed list.
+        /// </summary>
+        /// <param name="reference"></param>
+        /// <param name="chapterIndex"></param>
+        /// <param name="article"></param>
+        /// <param name="articleIndex"></param>
+        /// <param name="lstRefsUsage"></param>
+        private static void FindReferenceUsage(string reference, int chapterIndex, Article article, int articleIndex, ref ObservableCollection<ArticleListItem> lstRefsUsage)
+        {
+            foreach (TreeNode node in article.Tree.Nodes)
+            {
+                if (node.References != null && node.References.Contains(reference))
+                {
+                    ArticleListItem ali = new ArticleListItem(null, chapterIndex, article, articleIndex, node);
+                    lstRefsUsage.Add(ali);
+                }
+            }
         }
 
         /// <summary>

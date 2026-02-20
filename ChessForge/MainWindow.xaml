@@ -715,6 +715,8 @@
                                         <MenuItem x:Name="UiMnGameDeleteModelGame" Header="{x:Static p:Resources.DeleteThisGame}" Click="UiMnGame_DeleteModelGame_Click" />
                                         <Separator />
                                         <MenuItem x:Name="UiMnGamesImportGames" Header="{x:Static p:Resources.ImportGames}" Click="UiMnImportModelGames_Click"  />
+                                        <Separator />
+                                        <MenuItem x:Name="UiMnGameReferenceUsage" Header="{x:Static p:Resources.ReferencesToGame}"  Click="UiMnReferenceUsage_Click" />
                                     </MenuItem>
                                     <Separator />
                                     <MenuItem x:Name="UiMnGameStartTrainingFromHere"  Header="{x:Static p:Resources.StartTrainingFromHere}" Click="UiMnStartTrainingHere" InputGestureText="T" />
@@ -826,6 +828,8 @@
                                         <MenuItem x:Name="UiMnExercDeleteThisExercise" Header="{x:Static p:Resources.DeleteThisExercise}" Click="UiMnExerc_DeleteExercise_Click" />
                                         <Separator x:Name="UiMnExerc_Separator_6"/>
                                         <MenuItem x:Name="UiMnExerc_ImportExercises" Header="{x:Static p:Resources.ImportExercises}" Click="UiMnImportExercises_Click"  />
+                                        <Separator />
+                                        <MenuItem x:Name="UiMnExerciseReferenceUsage" Header="{x:Static p:Resources.ReferencesToExercise}" Click="UiMnReferenceUsage_Click" />
                                     </MenuItem>
                                     <Separator />
                                     <MenuItem x:Name="UiMnExerc_ShowAllSolutions" Header="{x:Static p:Resources.ShowSolutionsInChapter}" Click="UiMnExerc_ShowSolutions_Click" />

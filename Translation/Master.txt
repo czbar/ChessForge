@@ -503,6 +503,12 @@ ErrHttpStatus=Bad response from the server. Error: $0
 #No text in the downloaded game
 ErrNoTextReceived=no text received.
 
+#Game not referenced  
+ErrGameNotReferenced=No references to this game found.
+
+#Exercise not referenced  
+ErrExerciseNotReferenced=No references to this exercise found.
+
 #Clipboard operation
 ClipboardOperation=Clipboard Operation
 
@@ -691,6 +697,9 @@ AnalysisEngine=Analysis Engine
 
 #Engine Options dialog title
 DlgTitleEngineOptions=Engine Options
+
+#Dialog title for References Usage
+DlgTitleReferencesUsage=Referenced From
 
 #Parsing Errors
 DlgParseErrors=Parsing Errors
@@ -1994,6 +2003,9 @@ MoveGameDown=Move Game Down
 #Move game to another chapter
 MoveGameToChapter=Move Game to Chapter...
 
+#Find refeences to this game
+ReferencesToGame=References to This Game...
+
 #Move exercise one position up
 MoveExerciseUp=Move Exercise Up
 
@@ -2002,6 +2014,9 @@ MoveExerciseDown=Move Exercise Down
 
 #Move exercise to another chapter
 MoveExerciseToChapter=Move Exercise to Chapter...
+
+#Find refeences to this exercise
+ReferencesToExercise=References to This Exercise...
 
 #Deleted selected chapter
 DeleteSelectedChapter=Delete Selected Chapter

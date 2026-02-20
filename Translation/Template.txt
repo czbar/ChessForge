@@ -656,6 +656,14 @@ ErrHttpStatus=
 #english: ErrNoTextReceived=no text received.
 ErrNoTextReceived=
 
+#description: Game not referenced  
+#english: ErrGameNotReferenced=No references to this game found.
+ErrGameNotReferenced=
+
+#description: Exercise not referenced  
+#english: ErrExerciseNotReferenced=No references to this exercise found.
+ErrExerciseNotReferenced=
+
 #description: Clipboard operation
 #english: ClipboardOperation=Clipboard Operation
 ClipboardOperation=
@@ -898,6 +906,10 @@ AnalysisEngine=
 #description: Engine Options dialog title
 #english: DlgTitleEngineOptions=Engine Options
 DlgTitleEngineOptions=
+
+#description: Dialog title for References Usage
+#english: DlgTitleReferencesUsage=Referenced From
+DlgTitleReferencesUsage=
 
 #description: Parsing Errors
 #english: DlgParseErrors=Parsing Errors
@@ -2546,6 +2558,10 @@ MoveGameDown=
 #english: MoveGameToChapter=Move Game to Chapter...
 MoveGameToChapter=
 
+#description: Find refeences to this game
+#english: ReferencesToGame=References to This Game...
+ReferencesToGame=
+
 #description: Move exercise one position up
 #english: MoveExerciseUp=Move Exercise Up
 MoveExerciseUp=
@@ -2557,6 +2573,10 @@ MoveExerciseDown=
 #description: Move exercise to another chapter
 #english: MoveExerciseToChapter=Move Exercise to Chapter...
 MoveExerciseToChapter=
+
+#description: Find refeences to this exercise
+#english: ReferencesToExercise=References to This Exercise...
+ReferencesToExercise=
 
 #description: Deleted selected chapter
 #english: DeleteSelectedChapter=Delete Selected Chapter
