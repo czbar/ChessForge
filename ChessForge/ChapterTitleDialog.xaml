@@ -11,7 +11,7 @@
         Title="{x:Static p:Resources.Chapter}" Height="335" Width="570">
     <Grid>
         <Label x:Name="UiLblTitle" Margin="15,6" VerticalAlignment="Top" Content="{x:Static p:Resources.Title}">  </Label>
-        <TextBox x:Name="UiTbChapterTitle" TabIndex="0" HorizontalAlignment="Left" Margin="100,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="428" PreviewKeyDown="UiTbChapterTitle_PreviewKeyDown"/>
+        <TextBox x:Name="UiTbChapterTitle" TabIndex="0" HorizontalAlignment="Left" Margin="100,10,0,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Width="428" PreviewKeyDown="UiTbChapterTitle_PreviewKeyDown"/>
         <Label x:Name="UiLblAuthor" Margin="15,36" VerticalAlignment="Top" Content="{x:Static p:Resources.Author}"></Label>
         <TextBox x:Name="UiTbAuthor" TabIndex="1" HorizontalAlignment="Left" Margin="100,40,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="428" PreviewKeyDown="UiTbChapterTitle_PreviewKeyDown"/>
         <GroupBox x:Name="UiGbPreamble" HorizontalAlignment="Left" Height="165" Header="{x:Static p:Resources.Preamble}" Margin="100,70,0,0" VerticalAlignment="Top" Width="428">
