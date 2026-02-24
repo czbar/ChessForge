@@ -33,7 +33,10 @@ namespace WebAccess
             {
                 string url = BuildLichessUserGamesUrl(filter);
                 HttpClient httpClient = RestApiRequest.GameImportClient;
-                httpClient.DefaultRequestHeaders.Add("User-Agent", RestApiRequest.UserAgentLichess);
+                if (!httpClient.DefaultRequestHeaders.Contains("User-Agent"))
+                {
+                    httpClient.DefaultRequestHeaders.Add("User-Agent", RestApiRequest.UserAgentLichess);
+                }
                 var response = await httpClient.GetAsync(url);
                 int statusCode = RestApiRequest.GetResponseCode(response.ToString());
                 if (statusCode != 200)

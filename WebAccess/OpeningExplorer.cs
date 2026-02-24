@@ -81,7 +81,10 @@ namespace WebAccess
                 AppLog.Message(2, "HttpClient sending OpeningStats request for FEN: " + fen);
 
                 HttpClient httpClient = RestApiRequest.OpeningStatsClient;
-                httpClient.DefaultRequestHeaders.Add("User-Agent", RestApiRequest.UserAgentLichess);
+                if (!httpClient.DefaultRequestHeaders.Contains("User-Agent"))
+                {
+                    httpClient.DefaultRequestHeaders.Add("User-Agent", RestApiRequest.UserAgentLichess);
+                }
                 
                 string request = "https://explorer.lichess.ovh/masters?" + "fen=" + fen;
                 HttpResponseMessage response = await httpClient.GetAsync(request);
