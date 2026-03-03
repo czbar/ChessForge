@@ -39,11 +39,6 @@ namespace WebAccess
         private static object _lockCacheAccess = new object();
 
         /// <summary>
-        /// Number of retries to do if we get 429 Too Many Requests response from lichess API.
-        /// </summary>
-        public static int LichessApiRetries = 10;
-
-        /// <summary>
         /// Returns opening stats for the passed position
         /// or null if stats not found.
         /// </summary>
@@ -81,23 +76,20 @@ namespace WebAccess
             eventArgs.TreeId = treeId;
             eventArgs.NodeId = nd.NodeId;
 
+            HttpResponseMessage response = null;
             try
             {
                 AppLog.Message(2, "HttpClient sending OpeningStats request for FEN: " + fen);
 
                 HttpClient httpClient = RestApiRequest.OpeningStatsClient;
-                if (!httpClient.DefaultRequestHeaders.Contains("User-Agent"))
-                {
-                    httpClient.DefaultRequestHeaders.Add("User-Agent", RestApiRequest.UserAgentLichess);
-                }
+                RestApiRequest.SetHttpClientLichessDefaultHeaders(httpClient);
 
                 string request = "https://explorer.lichess.ovh/masters?" + "fen=" + fen;
 
-                HttpResponseMessage response = null;
                 string json = "";
 
                 // retry up to [LichessApiRetries] times if we get 429 Too Many Requests response, which is common with lichess API
-                for (int i = 0; i < LichessApiRetries; i++)
+                for (int i = 0; i < RestApiRequest.LichessApiRetries; i++)
                 {
                     response = await httpClient.GetAsync(request);
                     json = await response.Content.ReadAsStringAsync();
@@ -126,6 +118,7 @@ namespace WebAccess
                 {
                     eventArgs.Success = false;
                     eventArgs.Message = json;
+                    eventArgs.ResponseCode = response == null ? 0 : (int)response.StatusCode;
                     AppLog.Message(LogLevel.DETAIL, "Http Explorer Query FAILED");
                     OpeningStatsErrorReceived?.Invoke(null, eventArgs);
                 }
@@ -135,6 +128,7 @@ namespace WebAccess
             {
                 eventArgs.Success = false;
                 eventArgs.Message = ex.Message;
+                eventArgs.ResponseCode = response == null ? 0  : (int)response.StatusCode;
                 OpeningStatsErrorReceived?.Invoke(null, eventArgs);
                 AppLog.Message("RequestOpeningStats()", ex);
             }
