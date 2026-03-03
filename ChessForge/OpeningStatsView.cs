@@ -132,7 +132,30 @@ namespace ChessForge
         /// <param name="message"></param>
         public void OpeningStatsErrorReceived(object sender, WebAccessEventArgs e)
         {
-            BuildFlowDocument(DataMode.NO_DATA, null, e.Message);
+            BuildFlowDocument(DataMode.NO_DATA, null, e);
+            if (e.Message != null && e.ResponseCode == 401)
+            {
+                Configuration.LichessIsAuthErrorPresent = true;
+
+                bool enterToken = true;
+
+                if (Configuration.LichessAuthTokenRequestCount > 0)
+                {
+                    if (MessageBox.Show(Properties.Resources.MsgReenterAuthToken, Properties.Resources.MsgBadAuthorizationToken,
+                        MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
+                    {
+                        enterToken = false;
+                        AppState.MainWin.TurnExplorersOff(true);
+                        Configuration.LichessAuthTokenRequestCount = 0;
+                    }
+                }
+
+                if (enterToken)
+                {
+                    GuiUtilities.InvokeAuthorizeTokenDialog();
+                    Configuration.LichessIsAuthErrorPresent = false;
+                }
+            }
         }
 
         /// <summary>
@@ -169,7 +192,7 @@ namespace ChessForge
             }
             else
             {
-                BuildFlowDocument(DataMode.NO_DATA, null, e.Message);
+                BuildFlowDocument(DataMode.NO_DATA, null, e);
             }
         }
 
@@ -229,10 +252,10 @@ namespace ChessForge
             _lstRows.Clear();
 
             CreateOpeningStatsTable();
-            if ( _lastDataMode == DataMode.OPENINGS && _lastOpeningStats != null
+            if (_lastDataMode == DataMode.OPENINGS && _lastOpeningStats != null
                 || _lastDataMode == DataMode.TABLEBASE && TablebaseExplorer.Response.Moves != null)
             {
-                BuildFlowDocument(_lastDataMode, _lastOpeningStats, _lasterrorMessage);
+                BuildFlowDocument(_lastDataMode, _lastOpeningStats, null, _lasterrorMessage);
             }
         }
 
@@ -301,7 +324,7 @@ namespace ChessForge
             }
             else
             {
-                BuildFlowDocument(DataMode.NO_DATA, null, e.Message);
+                BuildFlowDocument(DataMode.NO_DATA, null, e);
             }
         }
 
@@ -310,16 +333,30 @@ namespace ChessForge
         /// </summary>
         /// <param name="errorMessage"></param>
         /// <returns></returns>
-        private Paragraph BuildErrorMessagePara(string errorMessage)
+        private Paragraph BuildErrorMessagePara(WebAccessEventArgs e)
         {
             Paragraph para = new Paragraph();
 
             // lichess returns "Too Many Requests" error in case of rate limit being hit
             // but the message is not consistent and may contain additional text.
             // So we check if the message contains "too many requests" and if it does we show a consistent message.
-            if (errorMessage != null && errorMessage.ToLower().Contains("too many requests"))
+
+            string errorMessage = "";
+
+            if (e != null)
             {
-                errorMessage = "Too Many Requests";
+                switch (e.ResponseCode)
+                {
+                    case 429:
+                        errorMessage = Properties.Resources.ErrTooManyRequests;
+                        break;
+                    case 401:
+                        errorMessage = Properties.Resources.ErrAuthorizationRequired;
+                        break;
+                    default:
+                        errorMessage = e.Message;
+                        break;
+                }
             }
 
             Run rIntro = new Run(Properties.Resources.ErrorLichess);
@@ -349,7 +386,7 @@ namespace ChessForge
         /// Queries the Web Client for Openings Stats data to show in the 
         /// main table.
         /// </summary>
-        private void BuildFlowDocument(DataMode mode, LichessOpeningsStats openingStats, string errorMessage = "")
+        private void BuildFlowDocument(DataMode mode, LichessOpeningsStats openingStats, WebAccessEventArgs e = null, string msg = "")
         {
             try
             {
@@ -357,7 +394,7 @@ namespace ChessForge
 
                 _lastDataMode = mode;
                 _lastOpeningStats = openingStats;
-                _lasterrorMessage = errorMessage;
+                _lasterrorMessage = e == null ? msg : e.Message;
 
                 doc.Blocks.Clear();
                 doc.PageWidth = OpeningStatsViewLayout.ViewAreaWidth + 10;
@@ -397,7 +434,7 @@ namespace ChessForge
                             {
                                 doc.Blocks.Add(_openingNameTable);
                             }
-                            doc.Blocks.Add(BuildErrorMessagePara(errorMessage));
+                            doc.Blocks.Add(BuildErrorMessagePara(e));
                             break;
                     }
                 }
