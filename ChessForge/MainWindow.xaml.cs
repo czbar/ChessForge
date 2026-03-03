@@ -501,7 +501,8 @@ namespace ChessForge
 
             InitializeLayout();
 
-            OpeningExplorer.LichessApiRetries = Configuration.LichessApiRetries;
+            RestApiRequest.LichessAuthToken = SecureTokenStore.Load();
+            RestApiRequest.LichessApiRetries = Configuration.LichessApiRetries;
 
             if (Configuration.LargeMenuFont)
             {
