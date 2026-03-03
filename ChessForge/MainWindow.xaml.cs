@@ -501,7 +501,14 @@ namespace ChessForge
 
             InitializeLayout();
 
-            RestApiRequest.LichessAuthToken = SecureTokenStore.Load();
+            if (Configuration.LichessAuthTokenSavedInConfig)
+            {
+                RestApiRequest.LichessAuthToken = Configuration.LichessAuthToken;
+            }
+            else
+            {
+                RestApiRequest.LichessAuthToken = SecureTokenStore.Load();
+            }
             RestApiRequest.LichessApiRetries = Configuration.LichessApiRetries;
 
             if (Configuration.LargeMenuFont)
