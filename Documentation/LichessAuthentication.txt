@@ -1,0 +1,25 @@
+Lichess API
+https://lichess.org/api
+
+===
+
+Discord discussion (28 Feb 2026)
+https://discord.com/channels/280713822073913354/693123651272179793/1475952807407517828
+
+429 means throttling/rate limiting, so one should back off for a while before retrying.
+
+In addition, that specific endpoint in question is also in the process of being relocated,
+from explorer.lichess.ovh to explorer.lichess.org,
+and it will be needing an oauth token, i.e you'll need to add a header `Authorization: Bearer lip_...`
+One way to create a token is at https://lichess.org/account/oauth/token/create  (no scopes needed, i.e leave all toggles off)
+
+===
+
+Authentication examples: https://github.com/lichess-org/api/tree/master/example/
+
+===
+
+GitHub Issue
+
+https://github.com/lichess-org/lila/issues/19610
+
