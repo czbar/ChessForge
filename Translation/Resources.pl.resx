@@ -519,6 +519,12 @@
   <data name="DecreaseIndent" xml:space="preserve">
     <value>Zmniejsz wcięcie</value>
   </data>
+  <data name="ErrTooManyRequests" xml:space="preserve">
+    <value>Błąd 429 - Zbyt wiele żądań</value>
+  </data>
+  <data name="ErrAuthorizationRequired" xml:space="preserve">
+    <value>Błąd 401 — Wymagana autoryzacja</value>
+  </data>
   <data name="ErrFound" xml:space="preserve">
     <value>Znaleziono</value>
   </data>
@@ -581,6 +587,12 @@
   </data>
   <data name="ErrExerciseNotReferenced" xml:space="preserve">
     <value>Nie znaleziono odsyłaczy do tego ćwiczenia.</value>
+  </data>
+  <data name="ErrAuthTokenSave_1" xml:space="preserve">
+    <value>Błąd przy zapisie tokena. Upewnij się, że masz niezbędne uprawnienia.</value>
+  </data>
+  <data name="ErrAuthTokenSave_2" xml:space="preserve">
+    <value>Będziesz proszony o podanie tego tokena jeszcze raz kiedy otworzysz Chess Forge ponownie.</value>
   </data>
   <data name="ClipboardOperation" xml:space="preserve">
     <value>Operacja Schowka</value>
@@ -1023,6 +1035,18 @@ UWAGA: Oceny nie są uaktualniane (zezwól naciskając F8).</value>
   </data>
   <data name="OperationCompleted" xml:space="preserve">
     <value>Przetwarzanie zakończone</value>
+  </data>
+  <data name="DlgTitleAuthorizationToken" xml:space="preserve">
+    <value>Token dostępu do lichess.</value>
+  </data>
+  <data name="AuthTokenInfo_1" xml:space="preserve">
+    <value>Aby uzyskać statystyki debiutowe Chess Forge potrzebuje tokenu dostępu do lichess.org.</value>
+  </data>
+  <data name="AuthTokenInfo_2" xml:space="preserve">
+    <value>W celu utworzenia tokenu, otwórz następujacy adres</value>
+  </data>
+  <data name="AuthTokenInfo_3" xml:space="preserve">
+    <value>Kliknij klawisz "Utwórz" na dole strony. Skopiuj wygenerowany token do okienka poniżej i kliknij "Ok".</value>
   </data>
   <data name="DlgBlunderDetection" xml:space="preserve">
     <value>Detekcja Słabych Posunięć</value>

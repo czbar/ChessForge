@@ -250,6 +250,33 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to To obtain opening stats, Chess Forge needs an authorization token to access lichess..
+        /// </summary>
+        public static string AuthTokenInfo_1 {
+            get {
+                return ResourceManager.GetString("AuthTokenInfo_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To obtain the token, navigate to.
+        /// </summary>
+        public static string AuthTokenInfo_2 {
+            get {
+                return ResourceManager.GetString("AuthTokenInfo_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click &quot;Create&quot; at the bottom of the page. Copy the generated token, paste it below and click OK..
+        /// </summary>
+        public static string AuthTokenInfo_3 {
+            get {
+                return ResourceManager.GetString("AuthTokenInfo_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Adjust All References&apos; Positions.
         /// </summary>
         public static string AutoPlaceAllReferences {
@@ -2059,6 +2086,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lichess Authorization Token.
+        /// </summary>
+        public static string DlgTitleAuthorizationToken {
+            get {
+                return ResourceManager.GetString("DlgTitleAuthorizationToken", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit FEN.
         /// </summary>
         public static string DlgTitleEditFen {
@@ -2689,6 +2725,33 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error 401 - Authorization Required.
+        /// </summary>
+        public static string ErrAuthorizationRequired {
+            get {
+                return ResourceManager.GetString("ErrAuthorizationRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to save the token securely. Please make sure you have the necessary permissions..
+        /// </summary>
+        public static string ErrAuthTokenSave_1 {
+            get {
+                return ResourceManager.GetString("ErrAuthTokenSave_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You will be asked to enter this token again when you start Chess Forge next time..
+        /// </summary>
+        public static string ErrAuthTokenSave_2 {
+            get {
+                return ResourceManager.GetString("ErrAuthTokenSave_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error pasting variation from the Clipboard .
         /// </summary>
         public static string ErrClipboardLinePaste {
@@ -2928,6 +2991,15 @@ namespace ChessForge.Properties {
         public static string ErrorParsingIntro {
             get {
                 return ResourceManager.GetString("ErrorParsingIntro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error 429 - Too Many Requests.
+        /// </summary>
+        public static string ErrTooManyRequests {
+            get {
+                return ResourceManager.GetString("ErrTooManyRequests", resourceCulture);
             }
         }
         
@@ -3427,7 +3499,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to $0 is already open.&quot;.
+        ///   Looks up a localized string similar to $0 is already open..
         /// </summary>
         public static string FileAlreadyOpen {
             get {
