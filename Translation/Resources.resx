@@ -747,6 +747,9 @@
   <data name="EngineOptions" xml:space="preserve">
     <value>Engine Options</value>
   </data>
+  <data name="LichessAuthToken" xml:space="preserve">
+    <value>Lichess Authorization Token</value>
+  </data>
   <data name="DarkMode" xml:space="preserve">
     <value>Dark Mode</value>
   </data>
@@ -1046,7 +1049,7 @@ NOTE: Evaluations are not being updated (press F8 to allow).</value>
     <value>To create the token, navigate to</value>
   </data>
   <data name="AuthTokenInfo_3" xml:space="preserve">
-    <value>Click "Create" at the bottom of the page. Copy the generated token, paste it below and click "Ok".</value>
+    <value>Click "Create" at the bottom of the page. Copy the generated token, paste it below and click "OK".</value>
   </data>
   <data name="DlgBlunderDetection" xml:space="preserve">
     <value>Bad Move Detection</value>
@@ -2178,6 +2181,12 @@ NOTE: Evaluations are not being updated (press F8 to allow).</value>
   </data>
   <data name="FlMsgNumberOfChaptersCreated" xml:space="preserve">
     <value>Number of New Chapters</value>
+  </data>
+  <data name="MsgBadAuthorizationToken" xml:space="preserve">
+    <value>Bad Authorization Token</value>
+  </data>
+  <data name="MsgReenterAuthToken" xml:space="preserve">
+    <value>Do you want to re-enter the token</value>
   </data>
   <data name="MsgNoDuplicatesFound" xml:space="preserve">
     <value>No duplicates found.</value>

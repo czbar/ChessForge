@@ -747,6 +747,9 @@
   <data name="EngineOptions" xml:space="preserve">
     <value>Opcje Silnika</value>
   </data>
+  <data name="LichessAuthToken" xml:space="preserve">
+    <value>Token Dostępu do Lichess</value>
+  </data>
   <data name="DarkMode" xml:space="preserve">
     <value>Tryb Ciemny</value>
   </data>
@@ -1046,7 +1049,7 @@ UWAGA: Oceny nie są uaktualniane (zezwól naciskając F8).</value>
     <value>W celu utworzenia tokenu, otwórz następujacy adres</value>
   </data>
   <data name="AuthTokenInfo_3" xml:space="preserve">
-    <value>Kliknij klawisz "Utwórz" na dole strony. Skopiuj wygenerowany token do okienka poniżej i kliknij "Ok".</value>
+    <value>Kliknij klawisz "Utwórz" na dole strony. Skopiuj wygenerowany token do okienka poniżej i kliknij "OK".</value>
   </data>
   <data name="DlgBlunderDetection" xml:space="preserve">
     <value>Detekcja Słabych Posunięć</value>
@@ -2178,6 +2181,12 @@ UWAGA: Oceny nie są uaktualniane (zezwól naciskając F8).</value>
   </data>
   <data name="FlMsgNumberOfChaptersCreated" xml:space="preserve">
     <value>Liczba nowych rozdziałów</value>
+  </data>
+  <data name="MsgBadAuthorizationToken" xml:space="preserve">
+    <value>Niewłaściwy token dostępu</value>
+  </data>
+  <data name="MsgReenterAuthToken" xml:space="preserve">
+    <value>Czy chcesz ponownie wprowadzić token</value>
   </data>
   <data name="MsgNoDuplicatesFound" xml:space="preserve">
     <value>Nie znaleziono duplikatów.</value>

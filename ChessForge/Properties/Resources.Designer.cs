@@ -259,7 +259,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to To obtain the token, navigate to.
+        ///   Looks up a localized string similar to To create the token, navigate to.
         /// </summary>
         public static string AuthTokenInfo_2 {
             get {
@@ -268,7 +268,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Click &quot;Create&quot; at the bottom of the page. Copy the generated token, paste it below and click OK..
+        ///   Looks up a localized string similar to Click &quot;Create&quot; at the bottom of the page. Copy the generated token, paste it below and click &quot;OK&quot;..
         /// </summary>
         public static string AuthTokenInfo_3 {
             get {
@@ -4732,6 +4732,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lichess Authorization Token.
+        /// </summary>
+        public static string LichessAuthToken {
+            get {
+                return ResourceManager.GetString("LichessAuthToken", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Limits.
         /// </summary>
         public static string Limits {
@@ -5164,6 +5173,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bad Authorization Token.
+        /// </summary>
+        public static string MsgBadAuthorizationToken {
+            get {
+                return ResourceManager.GetString("MsgBadAuthorizationToken", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clipboard&apos;s content.
         /// </summary>
         public static string MsgClipboardContainsPgn {
@@ -5313,6 +5331,15 @@ namespace ChessForge.Properties {
         public static string MsgNothingSelectedForEvaluation {
             get {
                 return ResourceManager.GetString("MsgNothingSelectedForEvaluation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to re-enter the token.
+        /// </summary>
+        public static string MsgReenterAuthToken {
+            get {
+                return ResourceManager.GetString("MsgReenterAuthToken", resourceCulture);
             }
         }
         

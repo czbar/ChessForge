@@ -911,6 +911,9 @@ Chessboards=
 #english: EngineOptions=Engine Options
 EngineOptions=
 
+#description: Opens Authorization Token dialog
+#english: LichessAuthToken=Lichess Authorization Token
+LichessAuthToken=
 
 #description: Dark mode
 #english: DarkMode=Dark Mode
@@ -1404,7 +1407,7 @@ AuthTokenInfo_1=
 AuthTokenInfo_2=
 
 #description: Auth token info 3
-#english: AuthTokenInfo_3=Click "Create" at the bottom of the page. Copy the generated token, paste it below and click "Ok".
+#english: AuthTokenInfo_3=Click "Create" at the bottom of the page. Copy the generated token, paste it below and click "OK".
 AuthTokenInfo_3=
 
 
@@ -3167,6 +3170,14 @@ FlMsgNumberOfChaptersCreated=
 #
 # Header: MESSAGES
 #
+
+#description: Bad Authorization Token
+#english: MsgBadAuthorizationToken=Bad Authorization Token
+MsgBadAuthorizationToken=
+
+#description: Re-enter authorization token
+#english: MsgReenterAuthToken=Do you want to re-enter the token
+MsgReenterAuthToken=
 
 #description: No duplicates found
 #english: MsgNoDuplicatesFound=No duplicates found.

@@ -701,6 +701,8 @@ Chessboards=Chessboards
 #Opens the Engine Options dialog
 EngineOptions=Engine Options
 
+#Opens Authorization Token dialog
+LichessAuthToken=Lichess Authorization Token
 
 #Dark mode
 DarkMode=Dark Mode
@@ -1095,7 +1097,7 @@ AuthTokenInfo_1=To obtain opening stats, Chess Forge needs an authorization toke
 AuthTokenInfo_2=To create the token, navigate to
 
 #Auth token info 3
-AuthTokenInfo_3=Click "Create" at the bottom of the page. Copy the generated token, paste it below and click "Ok".
+AuthTokenInfo_3=Click "Create" at the bottom of the page. Copy the generated token, paste it below and click "OK".
 
 
 #######################################
@@ -2480,6 +2482,12 @@ FlMsgNumberOfChaptersCreated=Number of New Chapters
 #
 # Header: MESSAGES
 #
+
+#Bad Authorization Token
+MsgBadAuthorizationToken=Bad Authorization Token
+
+#Re-enter authorization token
+MsgReenterAuthToken=Do you want to re-enter the token
 
 #No duplicates found
 MsgNoDuplicatesFound=No duplicates found.
