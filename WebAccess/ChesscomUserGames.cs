@@ -117,10 +117,8 @@ namespace WebAccess
             string text = "";
 
             HttpClient httpClient = RestApiRequest.GameImportClient;
-            if (!httpClient.DefaultRequestHeaders.Contains("User-Agent"))
-            {
-                httpClient.DefaultRequestHeaders.Add("User-Agent", RestApiRequest.UserAgentChesscom);
-            }
+            RestApiRequest.SetHttpClientChesscomDefaultHeaders(httpClient);
+
             var response = await httpClient.GetAsync(rest);
             int statusCode = RestApiRequest.GetResponseCode(response.ToString());
             if (statusCode != 200)
