@@ -39,6 +39,11 @@ namespace WebAccess
         private static object _lockCacheAccess = new object();
 
         /// <summary>
+        /// Number of retries to do if we get 429 Too Many Requests response from lichess API.
+        /// </summary>
+        public static int LichessApiRetries = 10;
+
+        /// <summary>
         /// Returns opening stats for the passed position
         /// or null if stats not found.
         /// </summary>
@@ -85,12 +90,25 @@ namespace WebAccess
                 {
                     httpClient.DefaultRequestHeaders.Add("User-Agent", RestApiRequest.UserAgentLichess);
                 }
-                
-                string request = "https://explorer.lichess.ovh/masters?" + "fen=" + fen;
-                HttpResponseMessage response = await httpClient.GetAsync(request);
-                string json = await response.Content.ReadAsStringAsync();
 
-                if (response.IsSuccessStatusCode)
+                string request = "https://explorer.lichess.ovh/masters?" + "fen=" + fen;
+
+                HttpResponseMessage response = null;
+                string json = "";
+
+                // retry up to [LichessApiRetries] times if we get 429 Too Many Requests response, which is common with lichess API
+                for (int i = 0; i < LichessApiRetries; i++)
+                {
+                    response = await httpClient.GetAsync(request);
+                    json = await response.Content.ReadAsStringAsync();
+                    if ((int)response.StatusCode != 429)
+                    {
+                        AppLog.Message(LogLevel.DETAIL, "Http Explorer Query succeeded on attempt " + (i+1).ToString());
+                        break;
+                    }
+                }
+
+                if (response != null && response.IsSuccessStatusCode)
                 {
                     LichessOpeningsStats stats = JsonConvert.DeserializeObject<LichessOpeningsStats>(json);
 
@@ -108,6 +126,7 @@ namespace WebAccess
                 {
                     eventArgs.Success = false;
                     eventArgs.Message = json;
+                    AppLog.Message(LogLevel.DETAIL, "Http Explorer Query FAILED");
                     OpeningStatsErrorReceived?.Invoke(null, eventArgs);
                 }
                 AppLog.Message(2, "HttpClient received OpeningStats response for FEN: " + fen);
