@@ -87,6 +87,16 @@ namespace ChessForge
         /// </summary>
         public static int SortByDirection = 0;
 
+        /// <summary>
+        /// How many times the user has been asked to enter the authorization token.
+        /// </summary>
+        public static int LichessAuthTokenRequestCount = 0;
+
+        /// <summary>
+        /// Whether the user has been notified about failure to save the token.
+        /// </summary>
+        public static bool LichessAuthTokenSaveFailNotified = false;
+
         //*********************************
         //
         //   CONFIGURATION ITEMS
@@ -339,7 +349,7 @@ namespace ChessForge
         /// <summary>
         /// Number of retries for Lichess API calls.
         /// </summary>
-        private static int _lichessApiRetries = 10;
+        private static int _lichessApiRetries = 3;
 
         /// <summary>
         /// Number of retries for Lichess API calls
