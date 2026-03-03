@@ -93,11 +93,6 @@ namespace ChessForge
         public static int LichessAuthTokenRequestCount = 0;
 
         /// <summary>
-        /// Whether the user has been notified about failure to save the token.
-        /// </summary>
-        public static bool LichessAuthTokenSaveFailNotified = false;
-
-        /// <summary>
         /// Whether we are seeing the Authorization Error 401.
         /// </summary>
         public static bool LichessIsAuthErrorPresent = false;
@@ -198,6 +193,11 @@ namespace ChessForge
         /// rather than relying on the host OS.
         /// </summary>
         public static bool ForceTls12 = false;
+
+        /// <summary>
+        /// Whether the Lichess API authorization token is saved in the configuration file.
+        /// </summary>
+        public static bool LichessAuthTokenSavedInConfig = false;
 
         /// <summary>
         /// Path to the engine executable
@@ -351,6 +351,13 @@ namespace ChessForge
         /// User name for the lichess site
         /// </summary>
         public static string WebGamesLichessUser = "";
+
+        /// <summary>
+        /// Lichess API authorization token. 
+        /// Normally it is stored securely in a separate file 
+        /// but if that fails it si stored in the config file.
+        /// </summary>
+        public static string LichessAuthToken = "";
 
         /// <summary>
         /// Number of retries for Lichess API calls.
@@ -767,6 +774,8 @@ namespace ChessForge
 
         private const string CFG_WG_SITE = "WebGamesSite";
         private const string CFG_WG_LICHESS_USER = "WebGamesLichessUser";
+        private const string CFG_LICHESS_AUTH_TOKEN = "LichessAuthToken";
+        private const string CFG_LICHESS_AUTH_TOKEN_SAVED_IN_CONFIG = "LichessAuthTokenSavedInConfig";        
         private const string CFG_LICHESS_API_RETRIES = "LichessApiRetries";
         private const string CFG_WG_CHESSCOM_USER = "WebGamesChessComUser";
         private const string CFG_WG_MAX_GAMES = "WebGamesMaxCount";
@@ -970,6 +979,8 @@ namespace ChessForge
 
                 sb.AppendLine(CFG_WG_SITE + "=" + WebGamesSite);
                 sb.AppendLine(CFG_WG_LICHESS_USER + "=" + WebGamesLichessUser);
+                sb.AppendLine(CFG_LICHESS_AUTH_TOKEN + "=" + LichessAuthToken);
+                sb.AppendLine(CFG_LICHESS_AUTH_TOKEN_SAVED_IN_CONFIG + "=" + (LichessAuthTokenSavedInConfig ? "1" : "0"));
                 sb.AppendLine(CFG_LICHESS_API_RETRIES + "=" + _lichessApiRetries);
                 sb.AppendLine(CFG_WG_CHESSCOM_USER + "=" + WebGamesChesscomUser);
                 sb.AppendLine(CFG_WG_MAX_GAMES + "=" + WebGamesMaxCount);
@@ -1446,6 +1457,12 @@ namespace ChessForge
                             break;
                         case CFG_WG_LICHESS_USER:
                             WebGamesLichessUser = value;
+                            break;
+                        case CFG_LICHESS_AUTH_TOKEN:
+                            LichessAuthToken = value;
+                            break;
+                        case CFG_LICHESS_AUTH_TOKEN_SAVED_IN_CONFIG:
+                            LichessAuthTokenSavedInConfig = value != "0" ? true : false;
                             break;
                         case CFG_LICHESS_API_RETRIES:
                             int.TryParse(value, out _lichessApiRetries);
