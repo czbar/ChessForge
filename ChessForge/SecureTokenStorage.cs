@@ -34,16 +34,14 @@ namespace ChessForge
                     DataProtectionScope.CurrentUser);
 
                 File.WriteAllBytes(_path, encrypted);
+
+                Configuration.LichessAuthToken = "";
+                Configuration.LichessAuthTokenSavedInConfig = false;
             }
             catch
             {
-                if (!Configuration.LichessAuthTokenSaveFailNotified)
-                {
-                    // tell the user that we failed to save the token
-                    MessageBox.Show(Properties.Resources.ErrAuthTokenSave_1 + "\n" + Properties.Resources.ErrAuthTokenSave_2,
-                    Properties.Resources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                Configuration.LichessAuthTokenSaveFailNotified = true;
+                Configuration.LichessAuthToken = token;
+                Configuration.LichessAuthTokenSavedInConfig = true;
             }
         }
 
