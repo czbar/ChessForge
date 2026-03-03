@@ -97,6 +97,12 @@ namespace ChessForge
         /// </summary>
         public static bool LichessAuthTokenSaveFailNotified = false;
 
+        /// <summary>
+        /// Whether we are seeing the Authorization Error 401.
+        /// </summary>
+        public static bool LichessIsAuthErrorPresent = false;
+
+
         //*********************************
         //
         //   CONFIGURATION ITEMS
