@@ -501,6 +501,8 @@ namespace ChessForge
 
             InitializeLayout();
 
+            OpeningExplorer.LichessApiRetries = Configuration.LichessApiRetries;
+
             if (Configuration.LargeMenuFont)
             {
                 DefaultMenuFontSize = Constants.DEAFULT_MENU_FONT_SIZE;

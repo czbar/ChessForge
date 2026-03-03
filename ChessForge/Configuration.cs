@@ -337,6 +337,20 @@ namespace ChessForge
         public static string WebGamesLichessUser = "";
 
         /// <summary>
+        /// Number of retries for Lichess API calls.
+        /// </summary>
+        private static int _lichessApiRetries = 10;
+
+        /// <summary>
+        /// Number of retries for Lichess API calls
+        /// </summary>
+        public static int LichessApiRetries
+        {
+            get => Math.Max(1, (Math.Min(10, _lichessApiRetries)));
+            set => _lichessApiRetries = value;
+        }
+
+        /// <summary>
         /// User name for the chess.com site
         /// </summary>
         public static string WebGamesChesscomUser = "";
@@ -737,6 +751,7 @@ namespace ChessForge
 
         private const string CFG_WG_SITE = "WebGamesSite";
         private const string CFG_WG_LICHESS_USER = "WebGamesLichessUser";
+        private const string CFG_LICHESS_API_RETRIES = "LichessApiRetries";
         private const string CFG_WG_CHESSCOM_USER = "WebGamesChessComUser";
         private const string CFG_WG_MAX_GAMES = "WebGamesMaxCount";
         private const string CFG_WG_MOST_RECENT = "WebGamesMostRecent";
@@ -939,6 +954,7 @@ namespace ChessForge
 
                 sb.AppendLine(CFG_WG_SITE + "=" + WebGamesSite);
                 sb.AppendLine(CFG_WG_LICHESS_USER + "=" + WebGamesLichessUser);
+                sb.AppendLine(CFG_LICHESS_API_RETRIES + "=" + _lichessApiRetries);
                 sb.AppendLine(CFG_WG_CHESSCOM_USER + "=" + WebGamesChesscomUser);
                 sb.AppendLine(CFG_WG_MAX_GAMES + "=" + WebGamesMaxCount);
                 sb.AppendLine(CFG_WG_MOST_RECENT + "=" + (WebGamesMostRecent ? "1" : "0"));
@@ -1414,6 +1430,9 @@ namespace ChessForge
                             break;
                         case CFG_WG_LICHESS_USER:
                             WebGamesLichessUser = value;
+                            break;
+                        case CFG_LICHESS_API_RETRIES:
+                            int.TryParse(value, out _lichessApiRetries);
                             break;
                         case CFG_WG_CHESSCOM_USER:
                             WebGamesChesscomUser = value;
