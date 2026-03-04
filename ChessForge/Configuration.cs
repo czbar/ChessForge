@@ -215,6 +215,11 @@ namespace ChessForge
         public static string CultureName = "";
 
         /// <summary>
+        /// Id of the last web message read by the user. If 0, no message has been read.
+        /// </summary>
+        public static int LastWebMessageRead = 0;
+
+        /// <summary>
         /// The time in milliseconds that it takes
         /// to animate a move on the board
         /// </summary>
@@ -690,6 +695,7 @@ namespace ChessForge
         // CONFIGURATION ITEM NAMES
         //*********************************
 
+        private const string CFG_LAST_MESSAGE_READ = "LastWebMessageRead";
         private const string CFG_MOVE_SPEED = "MoveSpeed";
         private const string CFG_CHESSBOARD_SIZE_ADJUSTMENT = "ChessboardSizeAdjustment";
         private const string CFG_DEFAULT_INDEX_DEPTH = "DefaultIndexDepth";
@@ -906,6 +912,8 @@ namespace ChessForge
 
                 sb.Append(CFG_AUTOGEN_TREE_DEPTH + "=" + AutogenTreeDepth.ToString() + Environment.NewLine);
                 sb.Append(CFG_MOVE_SPEED + "=" + MoveSpeed.ToString() + Environment.NewLine);
+                sb.Append(CFG_LAST_MESSAGE_READ + "=" + LastWebMessageRead.ToString() + Environment.NewLine);
+                
                 sb.Append(CFG_CHESSBOARD_SIZE_ADJUSTMENT + "=" + ChessboardSizeAdjustment.ToString() + Environment.NewLine);
                 sb.Append(CFG_DEFAULT_INDEX_DEPTH + "=" + DefaultIndexDepth.ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_DIRECTORY + "=" + (LastOpenDirectory ?? "").ToString() + Environment.NewLine);
@@ -1274,6 +1282,9 @@ namespace ChessForge
                     {
                         case CFG_AUTOGEN_TREE_DEPTH:
                             uint.TryParse(value, out _autogenTreeDepth);
+                            break;
+                        case CFG_LAST_MESSAGE_READ:
+                            int.TryParse(value, out LastWebMessageRead);
                             break;
                         case CFG_MOVE_SPEED:
                             int.TryParse(value, out MoveSpeed);
