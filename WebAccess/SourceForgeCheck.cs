@@ -19,6 +19,23 @@ namespace WebAccess
         public static Version VersionAtMicrosoftAppStore = null;
 
         /// <summary>
+        /// Id of the message to be displayed to the user. If 0, no message is displayed.
+        /// </summary>
+        public static int MessageId = 0;
+
+        /// <summary>
+        /// Message to be displayed to the user. 
+        /// It can be used for any purpose, e.g. to inform about a problem with the current version, etc.
+        /// </summary>
+        public static string Message = "";
+
+        /// <summary>
+        /// If Culture==pl this the Message to be displayed to the user. 
+        /// It can be used for any purpose, e.g. to inform about a problem with the current version, etc.
+        /// </summary>
+        public static string MessagePl = "";
+
+        /// <summary>
         /// Gets the version number of Chess Forge currently available from Source Forge.
         /// </summary>
         /// <returns></returns>
@@ -42,7 +59,15 @@ namespace WebAccess
 
                     VersionAtSourceForge = GetVersionFromString(verAtSourceForge);
                     VersionAtMicrosoftAppStore = GetVersionFromString(verAtMicrosoftAppStore);
-                    
+
+                    // message for "en" and all mon-specified Cultures
+                    Message = obj.Message;
+                    // message for "pl" Culture
+                    MessagePl = obj.MessagePl;
+
+                    string messageIdText = obj.MessageId;
+                    int.TryParse(messageIdText, out MessageId);
+
                     return json;
                 }
             }
