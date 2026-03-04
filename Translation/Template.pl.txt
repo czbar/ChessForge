@@ -3025,8 +3025,8 @@ Confirmation=Potwierdzenie
 UnexpectedError=Nieoczekiwany Błąd
 
 #description: Update Check
-#english: UpdateCheck=Updated Check
-UpdateCheck=Sprawdzenie Nowej Wersji
+#english: UpdateCheck=Message from Chess Forge
+UpdateCheck=Informacja Chess Forge'a
 
 #description: Position Setup
 #english: PositionSetup=Position Setup

@@ -3026,7 +3026,7 @@ UnexpectedError=Nieoczekiwany Błąd
 
 #description: Update Check
 #english: UpdateCheck=Updated Check
-UpdateCheck=Sprawdzenie Nowej Wersji
+UpdateCheck=Informacja Chess Forge'a
 
 #description: Position Setup
 #english: PositionSetup=Position Setup

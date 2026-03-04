@@ -2371,7 +2371,7 @@ Confirmation=Confirmation
 UnexpectedError=Unexpected Error
 
 #Update Check
-UpdateCheck=Updated Check
+UpdateCheck=Message from Chess Forge
 
 #Position Setup
 PositionSetup=Position Setup

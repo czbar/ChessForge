@@ -2081,7 +2081,7 @@ UWAGA: Oceny nie są uaktualniane (zezwól naciskając F8).</value>
     <value>Nieoczekiwany Błąd</value>
   </data>
   <data name="UpdateCheck" xml:space="preserve">
-    <value>Sprawdzenie Nowej Wersji</value>
+    <value>Informacja Chess Forge'a</value>
   </data>
   <data name="PositionSetup" xml:space="preserve">
     <value>Ustaw Pozycję</value>

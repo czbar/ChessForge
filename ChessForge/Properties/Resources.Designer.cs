@@ -8721,7 +8721,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Updated Check.
+        ///   Looks up a localized string similar to Message from Chess Forge.
         /// </summary>
         public static string UpdateCheck {
             get {

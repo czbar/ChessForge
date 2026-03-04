@@ -3025,7 +3025,7 @@ Confirmation=
 UnexpectedError=
 
 #description: Update Check
-#english: UpdateCheck=Updated Check
+#english: UpdateCheck=Message from Chess Forge
 UpdateCheck=
 
 #description: Position Setup
