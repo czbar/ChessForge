@@ -13,7 +13,8 @@
             </FlowDocument>
         </RichTextBox>
         <TextBox x:Name="UiTbToken" HorizontalAlignment="Center" Margin="0,195,0,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Width="260"/>
-        <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Ok}" IsDefault="True" HorizontalAlignment="Center" Margin="-110,235,0,0" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
-        <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="110,235,0,0" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
+        <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Ok}" IsDefault="True" HorizontalAlignment="Center" Margin="-220,235,0,0" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
+        <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" HorizontalAlignment="Center" Margin="0,235,0,0" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
+        <Button x:Name="UiBtnHelp" IsCancel="True" Content="{x:Static p:Resources.Help}" HorizontalAlignment="Center" Margin="220,235,0,0" Width="80" Height="20" VerticalAlignment="Top" Click="UiBtnHelp_Click"/>
     </Grid>
 </Window>

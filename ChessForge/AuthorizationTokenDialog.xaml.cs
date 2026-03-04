@@ -42,7 +42,7 @@ namespace ChessForge
             Paragraph para2 = new Paragraph();
             para2.Inlines.Add(new Run(Properties.Resources.AuthTokenInfo_2 + " "));
 
-            string urlCreateToken = "https://lichess.org/account/oauth/token/create";
+            string urlCreateToken = "https://lichess.org/account/oauth/token/create" + "?description=Chess Forge Authorization";
             Hyperlink link = new Hyperlink(new Run(urlCreateToken + "."));
             link.Foreground = ChessForgeColors.CurrentTheme.HyperlinkForeground;
             link.NavigateUri = new Uri(urlCreateToken);
@@ -85,6 +85,16 @@ namespace ChessForge
         private void UiBtnCancel_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
+        }
+
+        /// <summary>
+        /// Links to the relevant Wiki page.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Authorization-Token");
         }
     }
 }
