@@ -845,24 +845,46 @@ namespace ChessForge
 
             try
             {
-                Version ver = SelectAvailableUpdate(out int updSource);
-                if (updSource != 0)
+                bool showMessage = SourceForgeCheck.MessageId > Configuration.LastWebMessageRead;
+                string message = "";
+                if (showMessage)
                 {
-                    this.Dispatcher.Invoke(() =>
+                    Configuration.LastWebMessageRead = SourceForgeCheck.MessageId;
+                    if (CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "pl")
+                    {
+                        message = SourceForgeCheck.MessagePl;
+                    }
+                    else
+                    {
+                        message = SourceForgeCheck.Message;
+                    }
+                }
+
+                bool showVersion = false;
+
+                this.Dispatcher.Invoke(() =>
+                {
+                    Version ver = SelectAvailableUpdate(out int updSource);
+                    if (updSource != 0)
                     {
                         if (!suppress || ver.ToString() != Configuration.DoNotShowVersion)
                         {
                             int verCompare = AppState.GetAssemblyVersion().CompareTo(ver);
                             if (verCompare < 0)
                             {
-                                UpdateAvailableDialog dlg = new UpdateAvailableDialog(ver, updSource);
-                                GuiUtilities.PositionDialog(dlg, this, 100);
-                                dlg.ShowDialog();
-                                res = true;
+                                showVersion = true;
                             }
                         }
-                    });
-                }
+                    }
+
+                    if (showMessage && !string.IsNullOrWhiteSpace(message) || showVersion)
+                    {
+                        UpdateAvailableDialog dlg = new UpdateAvailableDialog(showVersion ? ver : null, updSource, message);
+                        GuiUtilities.PositionDialog(dlg, this, 100);
+                        dlg.ShowDialog();
+                        res = true;
+                    }
+                });
             }
             catch
             {
@@ -2589,7 +2611,7 @@ namespace ChessForge
                 AppState.SwapCommentBoxForEngineLines(true);
             }
 
-            if(TrainingSession.IsRandomLinesMode)
+            if (TrainingSession.IsRandomLinesMode)
             {
                 UiMnTrainRandomLine(null, null);
             }
@@ -2604,7 +2626,7 @@ namespace ChessForge
             TrainingSession.PrepareGuiForTraining(startNode, TrainingSession.IsContinuousEvaluation);
 
             UiTrainingView.Reset(startNode);
-            
+
             EngineGame.InitializeGameObject(startNode, false, false);
             UiDgEngineGame.ItemsSource = EngineGame.Line.MoveList;
             Timers.Start(AppTimers.TimerId.CHECK_FOR_USER_MOVE);
