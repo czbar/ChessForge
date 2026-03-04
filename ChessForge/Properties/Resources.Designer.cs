@@ -250,7 +250,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to To obtain opening stats, Chess Forge needs an authorization token to access lichess..
+        ///   Looks up a localized string similar to For access to opening statistics, Lichess requires an authorization token..
         /// </summary>
         public static string AuthTokenInfo_1 {
             get {

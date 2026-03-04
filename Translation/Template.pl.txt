@@ -1399,12 +1399,12 @@ OperationCompleted=Przetwarzanie zakończone
 DlgTitleAuthorizationToken=Token dostępu do lichess.
 
 #description: Auth token info 1
-#english: AuthTokenInfo_1=To obtain opening stats, Chess Forge needs an authorization token to access lichess.
-AuthTokenInfo_1=Aby uzyskać statystyki debiutowe Chess Forge potrzebuje tokenu dostępu do lichess.org.
+#english: AuthTokenInfo_1=For access to opening statistics, Lichess requires an authorization token.
+AuthTokenInfo_1=Dla uzyskania statystyk debiutowych, Lichess wymaga obecnie tokenu dostępu.
 
 #description: Auth token info 2
 #english: AuthTokenInfo_2=To create the token, navigate to
-AuthTokenInfo_2=W celu utworzenia tokenu, otwórz następujacy adres
+AuthTokenInfo_2=W celu utworzenia takiego tokenu, otwórz następujacy adres
 
 #description: Auth token info 3
 #english: AuthTokenInfo_3=Click "Create" at the bottom of the page. Copy the generated token, paste it below and click "OK".

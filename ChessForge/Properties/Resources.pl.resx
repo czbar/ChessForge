@@ -1043,10 +1043,10 @@ UWAGA: Oceny nie są uaktualniane (zezwól naciskając F8).</value>
     <value>Token dostępu do lichess.</value>
   </data>
   <data name="AuthTokenInfo_1" xml:space="preserve">
-    <value>Aby uzyskać statystyki debiutowe Chess Forge potrzebuje tokenu dostępu do lichess.org.</value>
+    <value>Dla uzyskania statystyk debiutowych, Lichess wymaga obecnie tokenu dostępu.</value>
   </data>
   <data name="AuthTokenInfo_2" xml:space="preserve">
-    <value>W celu utworzenia tokenu, otwórz następujacy adres</value>
+    <value>W celu utworzenia takiego tokenu, otwórz następujacy adres</value>
   </data>
   <data name="AuthTokenInfo_3" xml:space="preserve">
     <value>Kliknij klawisz "Utwórz" na dole strony. Skopiuj wygenerowany token do okienka poniżej i kliknij "OK".</value>

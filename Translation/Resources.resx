@@ -1043,7 +1043,7 @@ NOTE: Evaluations are not being updated (press F8 to allow).</value>
     <value>Lichess Authorization Token</value>
   </data>
   <data name="AuthTokenInfo_1" xml:space="preserve">
-    <value>To obtain opening stats, Chess Forge needs an authorization token to access lichess.</value>
+    <value>For access to opening statistics, Lichess requires an authorization token.</value>
   </data>
   <data name="AuthTokenInfo_2" xml:space="preserve">
     <value>To create the token, navigate to</value>

@@ -1399,7 +1399,7 @@ OperationCompleted=
 DlgTitleAuthorizationToken=
 
 #description: Auth token info 1
-#english: AuthTokenInfo_1=To obtain opening stats, Chess Forge needs an authorization token to access lichess.
+#english: AuthTokenInfo_1=For access to opening statistics, Lichess requires an authorization token.
 AuthTokenInfo_1=
 
 #description: Auth token info 2
