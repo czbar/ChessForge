@@ -446,6 +446,13 @@ DecreaseIndent=Decrease Indent
 # Header: ERRORS
 #
 
+#Too many requests
+ErrTooManyRequests=Error 429 - Too Many Requests
+
+#Authorization required
+ErrAuthorizationRequired=Error 401 - Authorization Required
+
+
 #Found
 ErrFound=Found
 
@@ -508,6 +515,12 @@ ErrGameNotReferenced=No references to this game found.
 
 #Exercise not referenced  
 ErrExerciseNotReferenced=No references to this exercise found.
+
+#Auth token not saved - part 1.
+ErrAuthTokenSave_1=Failed to save the token securely. Please make sure you have the necessary permissions.
+
+#Auth token not saved - part 2.
+ErrAuthTokenSave_2=You will be asked to enter this token again when you start Chess Forge next time.
 
 #Clipboard operation
 ClipboardOperation=Clipboard Operation
@@ -688,6 +701,8 @@ Chessboards=Chessboards
 #Opens the Engine Options dialog
 EngineOptions=Engine Options
 
+#Opens Authorization Token dialog
+LichessAuthToken=Lichess Authorization Token
 
 #Dark mode
 DarkMode=Dark Mode
@@ -1066,6 +1081,23 @@ OperationInProgress=Operation in Progress
 
 #Operation completed
 OperationCompleted=Operation Completed
+
+#######################################
+#
+# Header: DIALOG Authorization Token
+#
+
+#Title Authorization Token
+DlgTitleAuthorizationToken=Lichess Authorization Token
+
+#Auth token info 1
+AuthTokenInfo_1=For access to opening statistics, Lichess requires an authorization token.
+
+#Auth token info 2
+AuthTokenInfo_2=To create the token, navigate to
+
+#Auth token info 3
+AuthTokenInfo_3=Click "Create" at the bottom of the page. Copy the generated token, paste it below and click "OK".
 
 
 #######################################
@@ -2339,7 +2371,7 @@ Confirmation=Confirmation
 UnexpectedError=Unexpected Error
 
 #Update Check
-UpdateCheck=Updated Check
+UpdateCheck=Message from Chess Forge
 
 #Position Setup
 PositionSetup=Position Setup
@@ -2450,6 +2482,12 @@ FlMsgNumberOfChaptersCreated=Number of New Chapters
 #
 # Header: MESSAGES
 #
+
+#Bad Authorization Token
+MsgBadAuthorizationToken=Bad Authorization Token
+
+#Re-enter authorization token
+MsgReenterAuthToken=Do you want to re-enter the token
 
 #No duplicates found
 MsgNoDuplicatesFound=No duplicates found.
@@ -2619,7 +2657,7 @@ FileNotFound=File $0 could not be found.
 SaveWorkbook=Save the Workbook?
 
 #File already open
-FileAlreadyOpen=$0 is already open."
+FileAlreadyOpen=$0 is already open.
 
 #(Move) no longer valid 
 NoLongerValid=is no longer valid
@@ -3115,7 +3153,7 @@ cbRightClickEditExercise=Right click to open menu to edit or create exercises
 cbShowSolution=Show the solution to view or edit
 
 #DUPE: Select Solving Mode
-#DUPE: Right click to open menu to edit or create exercises";
+#DUPE: Right click to open menu to edit or create exercises;
 
 #Make move on main board
 cbMakeMovesOnMainBoard=Make your moves on the main board

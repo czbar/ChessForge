@@ -18,6 +18,11 @@ namespace WebAccess
         public bool Success { get; set; }
 
         /// <summary>
+        /// Response code from the server
+        /// </summary>
+        public int ResponseCode { get; set; }
+
+        /// <summary>
         /// Id of the tree to which the handled Node belongs
         /// </summary>
         public int TreeId { get; set; }

@@ -519,6 +519,12 @@
   <data name="DecreaseIndent" xml:space="preserve">
     <value>Decrease Indent</value>
   </data>
+  <data name="ErrTooManyRequests" xml:space="preserve">
+    <value>Error 429 - Too Many Requests</value>
+  </data>
+  <data name="ErrAuthorizationRequired" xml:space="preserve">
+    <value>Error 401 - Authorization Required</value>
+  </data>
   <data name="ErrFound" xml:space="preserve">
     <value>Found</value>
   </data>
@@ -581,6 +587,12 @@
   </data>
   <data name="ErrExerciseNotReferenced" xml:space="preserve">
     <value>No references to this exercise found.</value>
+  </data>
+  <data name="ErrAuthTokenSave_1" xml:space="preserve">
+    <value>Failed to save the token securely. Please make sure you have the necessary permissions.</value>
+  </data>
+  <data name="ErrAuthTokenSave_2" xml:space="preserve">
+    <value>You will be asked to enter this token again when you start Chess Forge next time.</value>
   </data>
   <data name="ClipboardOperation" xml:space="preserve">
     <value>Clipboard Operation</value>
@@ -734,6 +746,9 @@
   </data>
   <data name="EngineOptions" xml:space="preserve">
     <value>Engine Options</value>
+  </data>
+  <data name="LichessAuthToken" xml:space="preserve">
+    <value>Lichess Authorization Token</value>
   </data>
   <data name="DarkMode" xml:space="preserve">
     <value>Dark Mode</value>
@@ -1023,6 +1038,18 @@ NOTE: Evaluations are not being updated (press F8 to allow).</value>
   </data>
   <data name="OperationCompleted" xml:space="preserve">
     <value>Operation Completed</value>
+  </data>
+  <data name="DlgTitleAuthorizationToken" xml:space="preserve">
+    <value>Lichess Authorization Token</value>
+  </data>
+  <data name="AuthTokenInfo_1" xml:space="preserve">
+    <value>For access to opening statistics, Lichess requires an authorization token.</value>
+  </data>
+  <data name="AuthTokenInfo_2" xml:space="preserve">
+    <value>To create the token, navigate to</value>
+  </data>
+  <data name="AuthTokenInfo_3" xml:space="preserve">
+    <value>Click "Create" at the bottom of the page. Copy the generated token, paste it below and click "OK".</value>
   </data>
   <data name="DlgBlunderDetection" xml:space="preserve">
     <value>Bad Move Detection</value>
@@ -2054,7 +2081,7 @@ NOTE: Evaluations are not being updated (press F8 to allow).</value>
     <value>Unexpected Error</value>
   </data>
   <data name="UpdateCheck" xml:space="preserve">
-    <value>Updated Check</value>
+    <value>Message from Chess Forge</value>
   </data>
   <data name="PositionSetup" xml:space="preserve">
     <value>Position Setup</value>
@@ -2154,6 +2181,12 @@ NOTE: Evaluations are not being updated (press F8 to allow).</value>
   </data>
   <data name="FlMsgNumberOfChaptersCreated" xml:space="preserve">
     <value>Number of New Chapters</value>
+  </data>
+  <data name="MsgBadAuthorizationToken" xml:space="preserve">
+    <value>Bad Authorization Token</value>
+  </data>
+  <data name="MsgReenterAuthToken" xml:space="preserve">
+    <value>Do you want to re-enter the token</value>
   </data>
   <data name="MsgNoDuplicatesFound" xml:space="preserve">
     <value>No duplicates found.</value>
@@ -2322,7 +2355,7 @@ NOTE: Evaluations are not being updated (press F8 to allow).</value>
     <value>Save the Workbook?</value>
   </data>
   <data name="FileAlreadyOpen" xml:space="preserve">
-    <value>$0 is already open."</value>
+    <value>$0 is already open.</value>
   </data>
   <data name="NoLongerValid" xml:space="preserve">
     <value>is no longer valid</value>

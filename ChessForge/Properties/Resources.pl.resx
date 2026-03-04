@@ -519,6 +519,12 @@
   <data name="DecreaseIndent" xml:space="preserve">
     <value>Zmniejsz wcięcie</value>
   </data>
+  <data name="ErrTooManyRequests" xml:space="preserve">
+    <value>Błąd 429 - Zbyt wiele żądań</value>
+  </data>
+  <data name="ErrAuthorizationRequired" xml:space="preserve">
+    <value>Błąd 401 — Wymagana autoryzacja</value>
+  </data>
   <data name="ErrFound" xml:space="preserve">
     <value>Znaleziono</value>
   </data>
@@ -581,6 +587,12 @@
   </data>
   <data name="ErrExerciseNotReferenced" xml:space="preserve">
     <value>Nie znaleziono odsyłaczy do tego ćwiczenia.</value>
+  </data>
+  <data name="ErrAuthTokenSave_1" xml:space="preserve">
+    <value>Błąd przy zapisie tokena. Upewnij się, że masz niezbędne uprawnienia.</value>
+  </data>
+  <data name="ErrAuthTokenSave_2" xml:space="preserve">
+    <value>Będziesz proszony o podanie tego tokena jeszcze raz kiedy otworzysz Chess Forge ponownie.</value>
   </data>
   <data name="ClipboardOperation" xml:space="preserve">
     <value>Operacja Schowka</value>
@@ -734,6 +746,9 @@
   </data>
   <data name="EngineOptions" xml:space="preserve">
     <value>Opcje Silnika</value>
+  </data>
+  <data name="LichessAuthToken" xml:space="preserve">
+    <value>Token Dostępu do Lichess</value>
   </data>
   <data name="DarkMode" xml:space="preserve">
     <value>Tryb Ciemny</value>
@@ -1023,6 +1038,18 @@ UWAGA: Oceny nie są uaktualniane (zezwól naciskając F8).</value>
   </data>
   <data name="OperationCompleted" xml:space="preserve">
     <value>Przetwarzanie zakończone</value>
+  </data>
+  <data name="DlgTitleAuthorizationToken" xml:space="preserve">
+    <value>Token dostępu do lichess.</value>
+  </data>
+  <data name="AuthTokenInfo_1" xml:space="preserve">
+    <value>Dla uzyskania statystyk debiutowych, Lichess wymaga obecnie tokenu dostępu.</value>
+  </data>
+  <data name="AuthTokenInfo_2" xml:space="preserve">
+    <value>W celu utworzenia takiego tokenu, otwórz następujacy adres</value>
+  </data>
+  <data name="AuthTokenInfo_3" xml:space="preserve">
+    <value>Kliknij klawisz "Utwórz" na dole strony. Skopiuj wygenerowany token do okienka poniżej i kliknij "OK".</value>
   </data>
   <data name="DlgBlunderDetection" xml:space="preserve">
     <value>Detekcja Słabych Posunięć</value>
@@ -2054,7 +2081,7 @@ UWAGA: Oceny nie są uaktualniane (zezwól naciskając F8).</value>
     <value>Nieoczekiwany Błąd</value>
   </data>
   <data name="UpdateCheck" xml:space="preserve">
-    <value>Sprawdzenie Nowej Wersji</value>
+    <value>Informacja Chess Forge'a</value>
   </data>
   <data name="PositionSetup" xml:space="preserve">
     <value>Ustaw Pozycję</value>
@@ -2154,6 +2181,12 @@ UWAGA: Oceny nie są uaktualniane (zezwól naciskając F8).</value>
   </data>
   <data name="FlMsgNumberOfChaptersCreated" xml:space="preserve">
     <value>Liczba nowych rozdziałów</value>
+  </data>
+  <data name="MsgBadAuthorizationToken" xml:space="preserve">
+    <value>Niewłaściwy token dostępu</value>
+  </data>
+  <data name="MsgReenterAuthToken" xml:space="preserve">
+    <value>Czy chcesz ponownie wprowadzić token</value>
   </data>
   <data name="MsgNoDuplicatesFound" xml:space="preserve">
     <value>Nie znaleziono duplikatów.</value>

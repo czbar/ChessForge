@@ -40,10 +40,7 @@ namespace WebAccess
                 AppLog.Message(2, "HttpClient sending Tablebase request for FEN: " + fen);
 
                 HttpClient httpClient = RestApiRequest.TablebaseClient;
-                if (!httpClient.DefaultRequestHeaders.Contains("User-Agent"))
-                {
-                    httpClient.DefaultRequestHeaders.Add("User-Agent", RestApiRequest.UserAgentLichess);
-                }
+                RestApiRequest.SetHttpClientLichessDefaultHeaders(httpClient);
 
                 var json = await httpClient.GetStringAsync("http://tablebase.lichess.ovh/standard?" + "fen=" + fen);
                 Response = JsonConvert.DeserializeObject<LichessTablebaseResponse>(json);

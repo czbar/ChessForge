@@ -60,6 +60,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -97,6 +98,9 @@
     </Compile>
     <Compile Include="ArticleSearchCriteriaDialog.xaml.cs">
       <DependentUpon>ArticleSearchCriteriaDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AuthorizationTokenDialog.xaml.cs">
+      <DependentUpon>AuthorizationTokenDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="BackgroundPgnParserData.cs" />
     <Compile Include="BackgroundPgnProcessingManager.cs" />
@@ -297,6 +301,7 @@
     <Compile Include="RepositionPieceProcessor.cs" />
     <Compile Include="Resources\ThemeColorSet.cs" />
     <Compile Include="ResourceUtils.cs" />
+    <Compile Include="SecureTokenStorage.cs" />
     <Compile Include="VariationTreeViewScroller.cs" />
     <Compile Include="RichTextBoxUtilities.cs" />
     <Compile Include="RichTextPara.cs" />
@@ -450,6 +455,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ArticleSearchCriteriaDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AuthorizationTokenDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

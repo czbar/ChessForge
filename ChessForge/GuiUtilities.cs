@@ -34,6 +34,60 @@ namespace ChessForge
             Constants.CHAR_THUMBNAIL,
           };
 
+
+        // lock and flag to ensure that only one instance of the auth token dialog is open at a time.
+        private static object _authTokenDialogLock = new object();
+        private static bool _authTokenDialogAlreadyOpen = false;
+
+        /// <summary>
+        /// Invokes the dialog for entering the authorization token for Lichess API 
+        /// and if successful, triggers the web access to update the explorers.
+        /// </summary>
+        public static void InvokeAuthorizeTokenDialog()
+        {
+            lock (_authTokenDialogLock)
+            {
+                if (_authTokenDialogAlreadyOpen)
+                {
+                    return;
+                }
+                else
+                {
+                    _authTokenDialogAlreadyOpen = true;
+                }
+            }
+
+            try
+            {
+                AuthorizationTokenDialog dlg = new AuthorizationTokenDialog();
+                PositionDialog(dlg, AppState.MainWin, 100);
+                if (dlg.ShowDialog() == true)
+                {
+                    if (AppState.AreExplorersOn && AppState.MainWin.ActiveVariationTree != null)
+                    {
+                        WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, AppState.MainWin.ActiveVariationTree.SelectedNode, true);
+                    }
+                }
+                else
+                {
+                    // the user cancelled the dialog,
+                    // but if there is an active 401 error we will turn off the Explorers.
+                    if (Configuration.LichessIsAuthErrorPresent)
+                    {
+                        AppState.MainWin.TurnExplorersOff(true);
+                    }
+                }
+            }
+            catch
+            {
+            }
+
+            lock (_authTokenDialogLock)
+            {
+                _authTokenDialogAlreadyOpen = false;
+            }
+        }
+
         /// <summary>
         /// An event handler that opens a hyperlink in the default browser
         /// </summary>
@@ -820,7 +874,7 @@ namespace ChessForge
                     sb.Append(Properties.Resources.ErrFound
                         + " \"" + ex.CurrentToken
                         + "\" " + Properties.Resources.ErrInsteadOfMoveNumber);
-                    
+
                     if (!string.IsNullOrEmpty(prevMovetext))
                     {
                         sb.Append(", " + Properties.Resources.ErrAfterMove + " \"" + prevMovetext + "\"");
@@ -830,7 +884,7 @@ namespace ChessForge
                     sb.Append(Properties.Resources.PgnParsingError
                         + ": " + Properties.Resources.InvalidMove + " "
                         + "\"" + ex.CurrentToken + "\"");
-                    
+
                     if (ex.PreviousMove != null)
                     {
                         sb.Append(", " + Properties.Resources.ErrAfterMove + " \"" + prevMovetext + "\"");

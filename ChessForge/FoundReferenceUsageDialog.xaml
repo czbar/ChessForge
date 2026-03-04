@@ -10,7 +10,7 @@
         ShowInTaskbar="True"
         Title="{x:Static p:Resources.DlgTitleReferencesUsage}" Height="450" Width="800">
     <Grid>
-        <RichTextBox x:Name="UiRtbReferenceUsage" Margin="10,10,10,50">
+        <RichTextBox x:Name="UiRtbReferenceUsage" Margin="10,10,10,50" IsReadOnly="True">
             <FlowDocument>
             </FlowDocument>
         </RichTextBox>

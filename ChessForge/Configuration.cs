@@ -87,6 +87,17 @@ namespace ChessForge
         /// </summary>
         public static int SortByDirection = 0;
 
+        /// <summary>
+        /// How many times the user has been asked to enter the authorization token.
+        /// </summary>
+        public static int LichessAuthTokenRequestCount = 0;
+
+        /// <summary>
+        /// Whether we are seeing the Authorization Error 401.
+        /// </summary>
+        public static bool LichessIsAuthErrorPresent = false;
+
+
         //*********************************
         //
         //   CONFIGURATION ITEMS
@@ -184,6 +195,11 @@ namespace ChessForge
         public static bool ForceTls12 = false;
 
         /// <summary>
+        /// Whether the Lichess API authorization token is saved in the configuration file.
+        /// </summary>
+        public static bool LichessAuthTokenSavedInConfig = false;
+
+        /// <summary>
         /// Path to the engine executable
         /// </summary>
         public static string EngineExePath = "";
@@ -197,6 +213,11 @@ namespace ChessForge
         /// Culture name, if not using System's
         /// </summary>
         public static string CultureName = "";
+
+        /// <summary>
+        /// Id of the last web message read by the user. If 0, no message has been read.
+        /// </summary>
+        public static int LastWebMessageRead = 0;
 
         /// <summary>
         /// The time in milliseconds that it takes
@@ -335,6 +356,27 @@ namespace ChessForge
         /// User name for the lichess site
         /// </summary>
         public static string WebGamesLichessUser = "";
+
+        /// <summary>
+        /// Lichess API authorization token. 
+        /// Normally it is stored securely in a separate file 
+        /// but if that fails it si stored in the config file.
+        /// </summary>
+        public static string LichessAuthToken = "";
+
+        /// <summary>
+        /// Number of retries for Lichess API calls.
+        /// </summary>
+        private static int _lichessApiRetries = 3;
+
+        /// <summary>
+        /// Number of retries for Lichess API calls
+        /// </summary>
+        public static int LichessApiRetries
+        {
+            get => Math.Max(1, (Math.Min(10, _lichessApiRetries)));
+            set => _lichessApiRetries = value;
+        }
 
         /// <summary>
         /// User name for the chess.com site
@@ -653,6 +695,7 @@ namespace ChessForge
         // CONFIGURATION ITEM NAMES
         //*********************************
 
+        private const string CFG_LAST_MESSAGE_READ = "LastWebMessageRead";
         private const string CFG_MOVE_SPEED = "MoveSpeed";
         private const string CFG_CHESSBOARD_SIZE_ADJUSTMENT = "ChessboardSizeAdjustment";
         private const string CFG_DEFAULT_INDEX_DEPTH = "DefaultIndexDepth";
@@ -737,6 +780,9 @@ namespace ChessForge
 
         private const string CFG_WG_SITE = "WebGamesSite";
         private const string CFG_WG_LICHESS_USER = "WebGamesLichessUser";
+        private const string CFG_LICHESS_AUTH_TOKEN = "LichessAuthToken";
+        private const string CFG_LICHESS_AUTH_TOKEN_SAVED_IN_CONFIG = "LichessAuthTokenSavedInConfig";        
+        private const string CFG_LICHESS_API_RETRIES = "LichessApiRetries";
         private const string CFG_WG_CHESSCOM_USER = "WebGamesChessComUser";
         private const string CFG_WG_MAX_GAMES = "WebGamesMaxCount";
         private const string CFG_WG_MOST_RECENT = "WebGamesMostRecent";
@@ -866,6 +912,8 @@ namespace ChessForge
 
                 sb.Append(CFG_AUTOGEN_TREE_DEPTH + "=" + AutogenTreeDepth.ToString() + Environment.NewLine);
                 sb.Append(CFG_MOVE_SPEED + "=" + MoveSpeed.ToString() + Environment.NewLine);
+                sb.Append(CFG_LAST_MESSAGE_READ + "=" + LastWebMessageRead.ToString() + Environment.NewLine);
+                
                 sb.Append(CFG_CHESSBOARD_SIZE_ADJUSTMENT + "=" + ChessboardSizeAdjustment.ToString() + Environment.NewLine);
                 sb.Append(CFG_DEFAULT_INDEX_DEPTH + "=" + DefaultIndexDepth.ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_DIRECTORY + "=" + (LastOpenDirectory ?? "").ToString() + Environment.NewLine);
@@ -939,6 +987,9 @@ namespace ChessForge
 
                 sb.AppendLine(CFG_WG_SITE + "=" + WebGamesSite);
                 sb.AppendLine(CFG_WG_LICHESS_USER + "=" + WebGamesLichessUser);
+                sb.AppendLine(CFG_LICHESS_AUTH_TOKEN + "=" + LichessAuthToken);
+                sb.AppendLine(CFG_LICHESS_AUTH_TOKEN_SAVED_IN_CONFIG + "=" + (LichessAuthTokenSavedInConfig ? "1" : "0"));
+                sb.AppendLine(CFG_LICHESS_API_RETRIES + "=" + _lichessApiRetries);
                 sb.AppendLine(CFG_WG_CHESSCOM_USER + "=" + WebGamesChesscomUser);
                 sb.AppendLine(CFG_WG_MAX_GAMES + "=" + WebGamesMaxCount);
                 sb.AppendLine(CFG_WG_MOST_RECENT + "=" + (WebGamesMostRecent ? "1" : "0"));
@@ -1232,6 +1283,9 @@ namespace ChessForge
                         case CFG_AUTOGEN_TREE_DEPTH:
                             uint.TryParse(value, out _autogenTreeDepth);
                             break;
+                        case CFG_LAST_MESSAGE_READ:
+                            int.TryParse(value, out LastWebMessageRead);
+                            break;
                         case CFG_MOVE_SPEED:
                             int.TryParse(value, out MoveSpeed);
                             break;
@@ -1414,6 +1468,15 @@ namespace ChessForge
                             break;
                         case CFG_WG_LICHESS_USER:
                             WebGamesLichessUser = value;
+                            break;
+                        case CFG_LICHESS_AUTH_TOKEN:
+                            LichessAuthToken = value;
+                            break;
+                        case CFG_LICHESS_AUTH_TOKEN_SAVED_IN_CONFIG:
+                            LichessAuthTokenSavedInConfig = value != "0" ? true : false;
+                            break;
+                        case CFG_LICHESS_API_RETRIES:
+                            int.TryParse(value, out _lichessApiRetries);
                             break;
                         case CFG_WG_CHESSCOM_USER:
                             WebGamesChesscomUser = value;

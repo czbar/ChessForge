@@ -580,6 +580,15 @@ DecreaseIndent=
 # Header: ERRORS
 #
 
+#description: Too many requests
+#english: ErrTooManyRequests=Error 429 - Too Many Requests
+ErrTooManyRequests=
+
+#description: Authorization required
+#english: ErrAuthorizationRequired=Error 401 - Authorization Required
+ErrAuthorizationRequired=
+
+
 #description: Found
 #english: ErrFound=Found
 ErrFound=
@@ -663,6 +672,14 @@ ErrGameNotReferenced=
 #description: Exercise not referenced  
 #english: ErrExerciseNotReferenced=No references to this exercise found.
 ErrExerciseNotReferenced=
+
+#description: Auth token not saved - part 1.
+#english: ErrAuthTokenSave_1=Failed to save the token securely. Please make sure you have the necessary permissions.
+ErrAuthTokenSave_1=
+
+#description: Auth token not saved - part 2.
+#english: ErrAuthTokenSave_2=You will be asked to enter this token again when you start Chess Forge next time.
+ErrAuthTokenSave_2=
 
 #description: Clipboard operation
 #english: ClipboardOperation=Clipboard Operation
@@ -894,6 +911,9 @@ Chessboards=
 #english: EngineOptions=Engine Options
 EngineOptions=
 
+#description: Opens Authorization Token dialog
+#english: LichessAuthToken=Lichess Authorization Token
+LichessAuthToken=
 
 #description: Dark mode
 #english: DarkMode=Dark Mode
@@ -1368,6 +1388,27 @@ OperationInProgress=
 #description: Operation completed
 #english: OperationCompleted=Operation Completed
 OperationCompleted=
+
+#######################################
+#
+# Header: DIALOG Authorization Token
+#
+
+#description: Title Authorization Token
+#english: DlgTitleAuthorizationToken=Lichess Authorization Token
+DlgTitleAuthorizationToken=
+
+#description: Auth token info 1
+#english: AuthTokenInfo_1=For access to opening statistics, Lichess requires an authorization token.
+AuthTokenInfo_1=
+
+#description: Auth token info 2
+#english: AuthTokenInfo_2=To create the token, navigate to
+AuthTokenInfo_2=
+
+#description: Auth token info 3
+#english: AuthTokenInfo_3=Click "Create" at the bottom of the page. Copy the generated token, paste it below and click "OK".
+AuthTokenInfo_3=
 
 
 #######################################
@@ -2984,7 +3025,7 @@ Confirmation=
 UnexpectedError=
 
 #description: Update Check
-#english: UpdateCheck=Updated Check
+#english: UpdateCheck=Message from Chess Forge
 UpdateCheck=
 
 #description: Position Setup
@@ -3129,6 +3170,14 @@ FlMsgNumberOfChaptersCreated=
 #
 # Header: MESSAGES
 #
+
+#description: Bad Authorization Token
+#english: MsgBadAuthorizationToken=Bad Authorization Token
+MsgBadAuthorizationToken=
+
+#description: Re-enter authorization token
+#english: MsgReenterAuthToken=Do you want to re-enter the token
+MsgReenterAuthToken=
 
 #description: No duplicates found
 #english: MsgNoDuplicatesFound=No duplicates found.
@@ -3353,7 +3402,7 @@ FileNotFound=
 SaveWorkbook=
 
 #description: File already open
-#english: FileAlreadyOpen=$0 is already open."
+#english: FileAlreadyOpen=$0 is already open.
 FileAlreadyOpen=
 
 #description: (Move) no longer valid 
@@ -4004,7 +4053,7 @@ cbRightClickEditExercise=
 cbShowSolution=
 
 #DUPE: Select Solving Mode
-#DUPE: Right click to open menu to edit or create exercises";
+#DUPE: Right click to open menu to edit or create exercises;
 
 #description: Make move on main board
 #english: cbMakeMovesOnMainBoard=Make your moves on the main board

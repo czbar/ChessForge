@@ -3495,6 +3495,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Invokes the Authorization Token dialog.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiMnLichessAuthToken_Click(object sender, RoutedEventArgs e)
+        {
+            GuiUtilities.InvokeAuthorizeTokenDialog();
+        }
+
+        /// <summary>
         /// Invokes the dialog for configuring chessboard colors
         /// </summary>
         /// <param name="sender"></param>
