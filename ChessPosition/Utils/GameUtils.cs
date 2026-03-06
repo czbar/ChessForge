@@ -2,10 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChessPosition
 {
@@ -137,7 +133,7 @@ namespace ChessPosition
 
             if (dt1.HasValue && dt2.HasValue)
             {
-                return (DateTime.Compare(dt1.Value, dt2.Value));
+                return (DateTime.Compare(dt2.Value, dt1.Value));
             }
             else
             {
