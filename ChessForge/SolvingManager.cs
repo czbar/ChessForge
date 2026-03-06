@@ -308,7 +308,7 @@ namespace ChessForge
                     TreeNode response = inPrimaryTree.Children[0].CloneMe(true);
                     AppState.MainWin.Dispatcher.Invoke(() =>
                     {
-                        SoundPlayer.PlayMoveSound(response.LastMoveAlgebraicNotation);
+                        SoundManager.PlayMoveSound(response.LastMoveAlgebraicNotation);
                         response.Parent = guess;
                         guess.Children.Add(response);
                         secondaryTree.AddNode(response);
@@ -360,7 +360,7 @@ namespace ChessForge
 
                 AppState.MainWin.DisplayPosition(guess.Parent);
             });
-            SoundPlayer.PlayWrongMoveSound();
+            SoundManager.PlayInvalidMove();
         }
 
         /// <summary>

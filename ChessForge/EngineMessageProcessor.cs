@@ -524,7 +524,7 @@ namespace ChessForge
             _mainWin.Dispatcher.Invoke(() =>
             {
                 pos = EngineGame.ProcessEngineMove(out nd, nd.EngineEvaluation);
-                SoundPlayer.PlayMoveSound(nd.LastMoveAlgebraicNotation);
+                SoundManager.PlayMoveSound(nd.LastMoveAlgebraicNotation);
                 _mainWin.BoardCommentBox.GameMoveMade(nd, false);
             });
 

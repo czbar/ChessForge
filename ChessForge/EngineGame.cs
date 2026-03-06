@@ -103,7 +103,7 @@ namespace ChessForge
                 _mainWin.Timers.Stop(AppTimers.TimerId.CHECK_FOR_TRAINING_WORKBOOK_MOVE_MADE);
 
                 _mainWin.DisplayPosition(GetLastGameNode());
-                SoundPlayer.PlayMoveSound(GetLastGameNode().LastMoveAlgebraicNotation);
+                SoundManager.PlayMoveSound(GetLastGameNode().LastMoveAlgebraicNotation);
                 _mainWin.ColorMoveSquares(GetLastGameNode().LastMoveEngineNotation);
 
 

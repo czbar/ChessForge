@@ -147,7 +147,7 @@ namespace ChessForge
         /// <param name="reportDupe"></param>
         public static void PostMoveReporting(TreeNode nd, bool reportDupe)
         {
-            SoundPlayer.PlayMoveSound(nd.LastMoveAlgebraicNotation);
+            SoundManager.PlayMoveSound(nd.LastMoveAlgebraicNotation);
 
             if (AppState.CurrentLearningMode == LearningMode.Mode.ENGINE_GAME)
             {

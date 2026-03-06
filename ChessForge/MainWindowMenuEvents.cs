@@ -794,7 +794,7 @@ namespace ChessForge
                 WorkbookViewState wvs = new WorkbookViewState(SessionWorkbook);
                 wvs.SaveState();
 
-                SoundPlayer.CloseAll();
+                //SoundPlayerEx.CloseAll();
 
                 EvaluationManager.ChangeCurrentMode(EvaluationManager.Mode.IDLE);
                 EngineMessageProcessor.ChessEngineService.StopEngine();
@@ -2736,7 +2736,7 @@ namespace ChessForge
                     else
                     {
                         AppState.IsDirty = true;
-                        SoundPlayer.PlayConfirmationSound();
+                        SoundManager.PlayConfirmation();
                         BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.BookmarkAdded, CommentBox.HintType.INFO);
                         //  UiTabBookmarks.Focus();
                     }
@@ -2767,7 +2767,7 @@ namespace ChessForge
 
                 if (BookmarkManager.DeleteBookmark(chapterIndex, articleType, articleIndex, nodeId) != null)
                 {
-                    SoundPlayer.PlayConfirmationSound();
+                    SoundManager.PlayConfirmation();
                     BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.BookmarkDeleted, CommentBox.HintType.INFO);
                 }
             }

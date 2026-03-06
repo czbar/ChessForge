@@ -439,7 +439,7 @@ namespace ChessForge
                 EngineGame.RollbackGame(rollbackNode);
                 TrainingSession.AdjustTrainingLine(rollbackNode);
 
-                SoundPlayer.PlayMoveSound(rollbackNode.LastMoveAlgebraicNotation);
+                SoundManager.PlayMoveSound(rollbackNode.LastMoveAlgebraicNotation);
 
                 TrainingSession.ChangeCurrentState(TrainingSession.State.USER_MOVE_COMPLETED);
 
@@ -481,7 +481,7 @@ namespace ChessForge
                 TrainingSession.RemoveTrainingMoves(ndToRollbackTo);
                 TrainingSession.AdjustTrainingLine(ndToRollbackTo);
 
-                SoundPlayer.PlayMoveSound(ndToRollbackTo.LastMoveAlgebraicNotation);
+                SoundManager.PlayMoveSound(ndToRollbackTo.LastMoveAlgebraicNotation);
                 TrainingSession.ChangeCurrentState(TrainingSession.State.AWAITING_USER_TRAINING_MOVE);
 
                 LearningMode.ChangeCurrentMode(LearningMode.Mode.TRAINING);
@@ -1081,7 +1081,7 @@ namespace ChessForge
         /// <param name="nd"></param>
         private void RestartGameAtUserMove(TreeNode nd)
         {
-            SoundPlayer.PlayMoveSound(nd.LastMoveAlgebraicNotation);
+            SoundManager.PlayMoveSound(nd.LastMoveAlgebraicNotation);
             EngineGame.RestartAtUserMove(nd);
             _mainWin.BoardCommentBox.GameMoveMade(nd, true);
         }
@@ -1092,7 +1092,7 @@ namespace ChessForge
         /// <param name="nd"></param>
         private void RestartGameAtEngineMove(TreeNode nd, bool isEngineMoveReplacement = false)
         {
-            SoundPlayer.PlayMoveSound(nd.LastMoveAlgebraicNotation);
+            SoundManager.PlayMoveSound(nd.LastMoveAlgebraicNotation);
             EngineGame.RestartAtEngineMove(nd);
             if (TrainingSession.IsContinuousEvaluation)
             {

@@ -378,7 +378,7 @@ namespace ChessForge
                             if (userMove.Parent.Children.Count > 1 || userMove.Parent == TrainingSession.StartPosition)
                             {
                                 sbAlignmentNote.Append(Properties.Resources.TrnLineEnded + ". ");
-                                SoundPlayer.PlayTrainingSound(SoundPlayer.Sound.END_OF_LINE);
+                                SoundManager.PlayEndOfLine();
                             }
                         }
                         wbAlignmentNoteRun.Text = sbAlignmentNote.ToString();
@@ -388,7 +388,7 @@ namespace ChessForge
                     {
                         if (!isWorkbookMove)
                         {
-                            SoundPlayer.PlayTrainingSound(SoundPlayer.Sound.NOT_IN_WORKBOOK);
+                            SoundManager.PlayNotInWorkbook();
                             TrainingSession.IsTakebackAvailable = true;
 
                             BuildTakebackParagraph();
@@ -519,7 +519,7 @@ namespace ChessForge
                 wbAlignmentNoteRun.FontSize = para.FontSize - 1;
 
                 sbAlignmentNote.Append(Properties.Resources.TrnLineEnded + ". ");
-                SoundPlayer.PlayTrainingSound(SoundPlayer.Sound.END_OF_LINE);
+                SoundManager.PlayEndOfLine();
                 wbAlignmentNoteRun.Text = sbAlignmentNote.ToString();
                 para.Inlines.Add(wbAlignmentNoteRun);
             }
