@@ -379,6 +379,11 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Last time the version check was performed. It is used to avoid checking for new version too often.
+        /// </summary>
+        public static DateTime? LastVersionCheckDate = null;
+
+        /// <summary>
         /// User name for the chess.com site
         /// </summary>
         public static string WebGamesChesscomUser = "";
@@ -750,7 +755,7 @@ namespace ChessForge
 
         private const string CFG_AUTO_THUMBNAIL_MOVE_NO = "AutoThumbnailMoveNo";
         private const string CFG_AUTO_THUMBNAIL_COLOR = "AutoThumbnailColor";
-        
+
 
         /// <summary>
         /// PGN export configuration.
@@ -781,8 +786,9 @@ namespace ChessForge
         private const string CFG_WG_SITE = "WebGamesSite";
         private const string CFG_WG_LICHESS_USER = "WebGamesLichessUser";
         private const string CFG_LICHESS_AUTH_TOKEN = "LichessAuthToken";
-        private const string CFG_LICHESS_AUTH_TOKEN_SAVED_IN_CONFIG = "LichessAuthTokenSavedInConfig";        
+        private const string CFG_LICHESS_AUTH_TOKEN_SAVED_IN_CONFIG = "LichessAuthTokenSavedInConfig";
         private const string CFG_LICHESS_API_RETRIES = "LichessApiRetries";
+        private const string CFG_LAST_VERSION_CHECK = "LastVersionCheckDate";
         private const string CFG_WG_CHESSCOM_USER = "WebGamesChessComUser";
         private const string CFG_WG_MAX_GAMES = "WebGamesMaxCount";
         private const string CFG_WG_MOST_RECENT = "WebGamesMostRecent";
@@ -913,7 +919,7 @@ namespace ChessForge
                 sb.Append(CFG_AUTOGEN_TREE_DEPTH + "=" + AutogenTreeDepth.ToString() + Environment.NewLine);
                 sb.Append(CFG_MOVE_SPEED + "=" + MoveSpeed.ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_MESSAGE_READ + "=" + LastWebMessageRead.ToString() + Environment.NewLine);
-                
+
                 sb.Append(CFG_CHESSBOARD_SIZE_ADJUSTMENT + "=" + ChessboardSizeAdjustment.ToString() + Environment.NewLine);
                 sb.Append(CFG_DEFAULT_INDEX_DEPTH + "=" + DefaultIndexDepth.ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_DIRECTORY + "=" + (LastOpenDirectory ?? "").ToString() + Environment.NewLine);
@@ -949,9 +955,9 @@ namespace ChessForge
                 sb.Append(CFG_DIAGRAM_IMAGE_SIZE + "=" + DiagramImageSize.ToString() + Environment.NewLine);
                 sb.Append(CFG_DIAGRAM_IMAGE_COLORS + "=" + DiagramImageColors.ToString() + Environment.NewLine);
                 sb.Append(CFG_DIAGRAM_IMAGE_BORDER_WIDTH + "=" + DiagramImageBorderWidth.ToString() + Environment.NewLine);
-                
+
                 sb.Append(CFG_AUTO_THUMBNAIL_MOVE_NO + "=" + AutoThumbnailMoveNo.ToString() + Environment.NewLine);
-                sb.AppendLine(CFG_AUTO_THUMBNAIL_COLOR + "=" + (AutoThumbnailColor ? "1" : "0"));                
+                sb.AppendLine(CFG_AUTO_THUMBNAIL_COLOR + "=" + (AutoThumbnailColor ? "1" : "0"));
 
                 sb.Append(CFG_VIABLE_MOVE_CP_DIFF + "=" + ViableMoveCpDiff.ToString() + Environment.NewLine);
                 sb.Append(CFG_BLUNDER_DET_EVAL_DROP + "=" + BlunderDetectEvalDrop.ToString() + Environment.NewLine);
@@ -979,7 +985,7 @@ namespace ChessForge
                 sb.Append(CFG_SHOW_MOVES_AT_FORK + "=" + (ShowMovesAtFork ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_SHOW_MATERIAL + "=" + (ShowMaterial ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_SHOW_EXPLORERS + "=" + (ShowExplorers ? "1" : "0") + Environment.NewLine);
-                sb.Append(CFG_SHOW_EVALUATION_CHART + "=" + (ShowEvaluationChart? "1" : "0") + Environment.NewLine);
+                sb.Append(CFG_SHOW_EVALUATION_CHART + "=" + (ShowEvaluationChart ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_SHOW_INTRO_TAB + "=" + (ShowIntroTab ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_ALLOW_MOUSE_WHEEL_FOR_MOVES + "=" + (AllowMouseWheelForMoves ? "1" : "0") + Environment.NewLine);
 
@@ -990,6 +996,7 @@ namespace ChessForge
                 sb.AppendLine(CFG_LICHESS_AUTH_TOKEN + "=" + LichessAuthToken);
                 sb.AppendLine(CFG_LICHESS_AUTH_TOKEN_SAVED_IN_CONFIG + "=" + (LichessAuthTokenSavedInConfig ? "1" : "0"));
                 sb.AppendLine(CFG_LICHESS_API_RETRIES + "=" + _lichessApiRetries);
+                sb.AppendLine(CFG_LAST_VERSION_CHECK + "=" + LastVersionCheckDate);
                 sb.AppendLine(CFG_WG_CHESSCOM_USER + "=" + WebGamesChesscomUser);
                 sb.AppendLine(CFG_WG_MAX_GAMES + "=" + WebGamesMaxCount);
                 sb.AppendLine(CFG_WG_MOST_RECENT + "=" + (WebGamesMostRecent ? "1" : "0"));
@@ -1167,7 +1174,7 @@ namespace ChessForge
                     {
                         searchPath = Path.GetDirectoryName(EngineExePath);
                     }
-                    catch 
+                    catch
                     {
                         // there was no path set
                     }
@@ -1358,7 +1365,7 @@ namespace ChessForge
                             break;
                         case CFG_DIAGRAM_IMAGE_BORDER_WIDTH:
                             int.TryParse(value, out DiagramImageBorderWidth);
-                            break;                            
+                            break;
                         case CFG_AUTO_THUMBNAIL_MOVE_NO:
                             int.TryParse(value, out AutoThumbnailMoveNo);
                             break;
@@ -1477,6 +1484,9 @@ namespace ChessForge
                             break;
                         case CFG_LICHESS_API_RETRIES:
                             int.TryParse(value, out _lichessApiRetries);
+                            break;
+                        case CFG_LAST_VERSION_CHECK:
+                            LastVersionCheckDate = GetDate(value);
                             break;
                         case CFG_WG_CHESSCOM_USER:
                             WebGamesChesscomUser = value;
