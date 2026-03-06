@@ -39,7 +39,7 @@ namespace WebAccess
         /// Gets the version number of Chess Forge currently available from Source Forge.
         /// </summary>
         /// <returns></returns>
-        public static async Task<string> GetVersion()
+        public static async Task<string> GetVersion(DateTime? lastCheck)
         {
             try
             {
@@ -67,6 +67,15 @@ namespace WebAccess
 
                     string messageIdText = obj.MessageId;
                     int.TryParse(messageIdText, out MessageId);
+
+                    try
+                    {
+                        if (!lastCheck.HasValue || (DateTime.Now.Date != lastCheck.Value.Date))
+                        {
+                            var txt = await client.GetStringAsync("https://sourceforge.net/projects/chessforge/files/ping.txt");
+                        }
+                    }
+                    catch { }
 
                     return json;
                 }
