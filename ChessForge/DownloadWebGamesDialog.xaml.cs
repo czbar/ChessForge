@@ -64,6 +64,13 @@ namespace ChessForge
             {
                 if (e.Success)
                 {
+                    if (e.VariantGamesCount > 0)
+                    {
+                        string msg = Properties.Resources.FlMsgVariantGamesSkipped;
+                        msg = msg.Replace("$0", e.VariantGamesCount.ToString());
+                        AppState.MainWin.BoardCommentBox.ShowFlashAnnouncement(msg, CommentBox.HintType.ERROR);
+                    }
+
                     if (string.IsNullOrEmpty(e.TextData))
                     {
                         MessageBox.Show(Properties.Resources.ErrGamesNotFound, Properties.Resources.Information, MessageBoxButton.OK, MessageBoxImage.Information);
@@ -77,7 +84,7 @@ namespace ChessForge
 
                         var lstGames = e.GameData;
 
-                        // sort games from earliest to latest
+                        // sort games from latest to earliest
                         lstGames = GameUtils.SortGamesByDateTime(lstGames);
                         lstGames = GameUtils.RemoveGamesOutOfDateRange(lstGames, e.GamesFilter.StartDateEpochTicks, e.GamesFilter.EndDateEpochTicks);
 
@@ -113,7 +120,14 @@ namespace ChessForge
                         }
                         else
                         {
-                            MessageBox.Show(Properties.Resources.NoGamesFound, Properties.Resources.Information, MessageBoxButton.OK, MessageBoxImage.Information);
+                            if (e.VariantGamesCount == 0)
+                            {
+                                MessageBox.Show(Properties.Resources.NoGamesFound, Properties.Resources.Information, MessageBoxButton.OK, MessageBoxImage.Warning);
+                            }
+                            else
+                            {
+                                MessageBox.Show(Properties.Resources.ErrVariantGamesOnly, Properties.Resources.Information, MessageBoxButton.OK, MessageBoxImage.Warning);
+                            }
                         }
                     }
                 }
