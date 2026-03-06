@@ -431,7 +431,6 @@ namespace ChessForge
 
             InitializeComponent();
             UiTabIntro.Visibility = Configuration.ShowIntroTab ? Visibility.Visible : Visibility.Collapsed;
-            SoundPlayer.Initialize();
 
             ApplyLayoutConfiguration();
 

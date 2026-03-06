@@ -41,6 +41,8 @@ namespace ChessForge
                 typeof(TextBox),
                 new CommandBinding(ApplicationCommands.Paste, OnExecutedPaste, OnCanExecutePaste)
             );
+
+            SoundManager.Initialize();
         }
 
         /// <summary>
