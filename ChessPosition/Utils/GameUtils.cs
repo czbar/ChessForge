@@ -46,7 +46,8 @@ namespace ChessPosition
         }
 
         /// <summary>
-        /// Remove games that are not in the passed date range.
+        /// Remove games that are not of STANDARD CHESS type
+        /// or are not in the passed date range.
         /// </summary>
         /// <param name="games"></param>
         /// <param name="startDate"></param>
@@ -57,10 +58,13 @@ namespace ChessPosition
             List<GameData> lstGames = new List<GameData>();
             foreach (GameData game in games)
             {
-                if ((!startDate.HasValue || CompareGameDateToDate(game, startDate.Value) >= 0)
-                    && (!endDate.HasValue || CompareGameDateToDate(game, endDate.Value) <= 0))
+                if (game.Header.IsStandardChess())
                 {
-                    lstGames.Add(game);
+                    if ((!startDate.HasValue || CompareGameDateToDate(game, startDate.Value) >= 0)
+                        && (!endDate.HasValue || CompareGameDateToDate(game, endDate.Value) <= 0))
+                    {
+                        lstGames.Add(game);
+                    }
                 }
             }
             return lstGames;
