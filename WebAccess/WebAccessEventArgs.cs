@@ -1,9 +1,6 @@
 ﻿using GameTree;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WebAccess
 {
@@ -31,6 +28,12 @@ namespace WebAccess
         /// Id of the Node being handled.
         /// </summary>
         public int NodeId { get; set; }
+
+        /// <summary>
+        /// Number of variant (i.e. non-standard chess games)
+        /// received.
+        /// </summary>
+        public int VariantGamesCount { get; set; }
 
         /// <summary>
         /// Lichess Id of a game 
