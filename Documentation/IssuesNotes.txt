@@ -27,9 +27,3 @@ In Study, no spacing after the comment under a diagram before next line. Is this
 After a comment on the main line, adding comment before-move for the next move, inserts spurious leading space.
 
 Reordering lines in a game on a move with multi-comment has a strange effect (selected move disappears?).
-
-When opening Intro and other tabs, the token dialog shows up twice. Needs blocking.
-
-How many games to download if number not specified.
-
-Game download request works if all is specified https://lichess.org/@/czbar/all
