@@ -92,7 +92,7 @@ namespace WebAccess
                 string text = await ExecuteHttpCall(url);
 
                 allGames.AppendLine(text);
-                var newGames = PgnMultiGameParser.ParsePgnMultiGameText(text);
+                var newGames = PgnMultiGameParser.ParsePgnMultiGameText(text, out _);
                 games.AddRange(newGames);
 
                 // remove games out of date range before checking the count!
