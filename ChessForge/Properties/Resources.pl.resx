@@ -573,6 +573,9 @@
   <data name="ErrNotStandardChessVariant" xml:space="preserve">
     <value>Niestandardowy wariant szachów</value>
   </data>
+  <data name="ErrVariantGamesOnly" xml:space="preserve">
+    <value>Znaleziono tylko partie szachów niestandardowych.</value>
+  </data>
   <data name="PromptCorrectData" xml:space="preserve">
     <value>Niewłaściwe Dane</value>
   </data>
@@ -2181,6 +2184,9 @@ UWAGA: Oceny nie są uaktualniane (zezwól naciskając F8).</value>
   </data>
   <data name="FlMsgNumberOfChaptersCreated" xml:space="preserve">
     <value>Liczba nowych rozdziałów</value>
+  </data>
+  <data name="FlMsgVariantGamesSkipped" xml:space="preserve">
+    <value>Pominięto partie szachów niestandardowych (liczba</value>
   </data>
   <data name="MsgBadAuthorizationToken" xml:space="preserve">
     <value>Niewłaściwy token dostępu</value>

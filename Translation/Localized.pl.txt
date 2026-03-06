@@ -653,6 +653,10 @@ ErrEmptyUserName=Brak nazwy użytkownika
 #english: ErrNotStandardChessVariant=Non Standard Chess variant
 ErrNotStandardChessVariant=Niestandardowy wariant szachów
 
+#description: Only chess variant games found.
+#english: ErrVariantGamesOnly=Only chess variant games found.
+ErrVariantGamesOnly=Znaleziono tylko partie szachów niestandardowych.
+
 #description: Title of the dialog reporting incomplete data
 #english: PromptCorrectData=Incorrect Input Data
 PromptCorrectData=Niewłaściwe Dane
@@ -1399,7 +1403,7 @@ OperationCompleted=Przetwarzanie zakończone
 DlgTitleAuthorizationToken=Token dostępu do lichess.
 
 #description: Auth token info 1
-#english: AuthTokenInfo_1=To obtain opening stats, Chess Forge needs an authorization token to access lichess.
+#english: AuthTokenInfo_1=For access to opening statistics, Lichess requires an authorization token.
 AuthTokenInfo_1=Dla uzyskania statystyk debiutowych, Lichess wymaga obecnie tokenu dostępu.
 
 #description: Auth token info 2
@@ -3025,7 +3029,7 @@ Confirmation=Potwierdzenie
 UnexpectedError=Nieoczekiwany Błąd
 
 #description: Update Check
-#english: UpdateCheck=Updated Check
+#english: UpdateCheck=Message from Chess Forge
 UpdateCheck=Informacja Chess Forge'a
 
 #description: Position Setup
@@ -3165,6 +3169,10 @@ FlMsgNumberGamesMoved=Liczba przesuniętych partii
 #description: Flash message: Number of chapters created
 #english: FlMsgNumberOfChaptersCreated=Number of New Chapters
 FlMsgNumberOfChaptersCreated=Liczba nowych rozdziałów
+
+#description: Flash message: variant games skipped
+#english: FlMsgVariantGamesSkipped=Chess variant games skipped (count=$0)
+FlMsgVariantGamesSkipped=Pominięto partie szachów niestandardowych (liczba
 
 ##################################
 #
