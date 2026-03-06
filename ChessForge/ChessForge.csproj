@@ -302,6 +302,7 @@
     <Compile Include="Resources\ThemeColorSet.cs" />
     <Compile Include="ResourceUtils.cs" />
     <Compile Include="SecureTokenStorage.cs" />
+    <Compile Include="SoundManager.cs" />
     <Compile Include="VariationTreeViewScroller.cs" />
     <Compile Include="RichTextBoxUtilities.cs" />
     <Compile Include="RichTextPara.cs" />
@@ -404,7 +405,6 @@
     <Compile Include="Resources\Colors.cs" />
     <Compile Include="Resources\ImageSources.cs" />
     <Compile Include="Resources\Pieces.cs" />
-    <Compile Include="Resources\SoundSources.cs" />
     <Compile Include="Resources\Strings.cs" />
     <Compile Include="RichTextBuilder.cs" />
     <Compile Include="SelectChaptersDialog.xaml.cs">
@@ -414,7 +414,6 @@
       <DependentUpon>SelectGamesDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="SolvingManager.cs" />
-    <Compile Include="SoundPlayer.cs" />
     <Compile Include="TextBoxDialog.xaml.cs">
       <DependentUpon>TextBoxDialog.xaml</DependentUpon>
     </Compile>
@@ -770,6 +769,7 @@
     <Resource Include="ChessForge2.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\Sounds\NotInWorkbook.wav" />
     <Resource Include="Resources\Images\ChessBoardGrey.png" />
     <Resource Include="Resources\Images\arrow-left.png" />
     <Resource Include="Resources\Images\arrow-right.png" />
@@ -872,12 +872,11 @@
     <Resource Include="Resources\Images\ChessBoardVistula.png" />
     <Resource Include="Resources\Images\ChessBoardVistulaSmall.png" />
     <Resource Include="Resources\Images\ChessBoardVistulaIcon.png" />
-    <Content Include="Resources\Sounds\Confirmation.mp3">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Sounds\NotInWorkbook.mp3">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Resource Include="Resources\Sounds\Capture.wav" />
+    <Resource Include="Resources\Sounds\Confirmation.wav" />
+    <Resource Include="Resources\Sounds\EndOfLine.wav" />
+    <Resource Include="Resources\Sounds\InvalidMove.wav" />
+    <Resource Include="Resources\Sounds\Move.wav" />
     <Resource Include="Resources\Images\exit.png" />
     <Resource Include="Resources\Images\FirstMove.png" />
     <Resource Include="Resources\Images\LastMove.png" />
@@ -934,12 +933,6 @@
     <Resource Include="Resources\Images\left_indent.png" />
     <Resource Include="Resources\Images\right_indent.png" />
     <Resource Include="Resources\Images\format_underline.png" />
-    <Content Include="Resources\Sounds\EndOfLine.mp3">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Sounds\InvalidMove.mp3">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Resource Include="Resources\Images\Stop.png" />
     <Resource Include="Resources\Images\BlackPromo.png" />
     <Resource Include="Resources\Images\WhitePromo.png" />
@@ -998,12 +991,6 @@
     <Resource Include="Resources\Images\solve_complete.png" />
     <Resource Include="Resources\Images\checkmark.png" />
     <Resource Include="Resources\Images\cross_red 16.png" />
-    <Content Include="Resources\Sounds\Capture.mp3">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Sounds\Move.mp3">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6">
