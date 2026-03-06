@@ -60,7 +60,7 @@ namespace WebAccess
                     VersionAtSourceForge = GetVersionFromString(verAtSourceForge);
                     VersionAtMicrosoftAppStore = GetVersionFromString(verAtMicrosoftAppStore);
 
-                    // message for "en" and all mon-specified Cultures
+                    // message for "en" and all non-specified Cultures
                     Message = obj.Message;
                     // message for "pl" Culture
                     MessagePl = obj.MessagePl;
