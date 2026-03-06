@@ -8,10 +8,3 @@ ChessForge.exe.config
 Newtonsoft.Json.xml
 
 stockfish_16_x86-64.exe
-
-Resources/Sounds/Capture.mp3
-Resources/Sounds/InvalidMove.mp3
-Resources/Sounds/Move.mp3
-Resources/Sounds/NotInWorkbook.mp3
-Resources/Sounds/EndOfLine.mp3
-Resources/Sounds/Confirmation.mp3

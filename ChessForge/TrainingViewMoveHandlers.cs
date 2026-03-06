@@ -227,7 +227,7 @@ namespace ChessForge
                         if (foundMove != null)
                         {
                             Run rWbEnded = new Run("\n" + Properties.Resources.TrnLineEnded + ".");
-                            SoundPlayer.PlayTrainingSound(SoundPlayer.Sound.END_OF_LINE);
+                            SoundManager.PlayEndOfLine();
                             rWbEnded.Name = _run_wb_ended_;
                             _paraCurrentEngineGame.Inlines.Add(rWbEnded);
                         }

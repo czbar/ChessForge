@@ -15,18 +15,6 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_070F20AEE4156FF8A1EDCB6F32B33AB5"
-        "OwnerKey" = "8:_0B816B9828BC4414A662D7186EC23E8C"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_070F20AEE4156FF8A1EDCB6F32B33AB5"
-        "OwnerKey" = "8:_B31923E79F360E25A9908EEE60355755"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_0B816B9828BC4414A662D7186EC23E8C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -40,7 +28,7 @@
         "Entry"
         {
         "MsmKey" = "8:_141BD59E5BD35C4DA1EEFA2B8334EEBE"
-        "OwnerKey" = "8:_B31923E79F360E25A9908EEE60355755"
+        "OwnerKey" = "8:_6E6BB6421D92411DB785E1508210A5D1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -52,7 +40,7 @@
         "Entry"
         {
         "MsmKey" = "8:_1A25FFA80898053D472B1E2FEA13F6FD"
-        "OwnerKey" = "8:_B31923E79F360E25A9908EEE60355755"
+        "OwnerKey" = "8:_6E6BB6421D92411DB785E1508210A5D1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -63,14 +51,20 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_3A481BA820F80DDB75A02811800AC4B3"
+        "MsmKey" = "8:_285CAB6BDDA418CA7D3102167BDE9809"
         "OwnerKey" = "8:_0B816B9828BC4414A662D7186EC23E8C"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_3B386A17D515444898974880387A5AFF"
-        "OwnerKey" = "8:_UNDEFINED"
+        "MsmKey" = "8:_38B54FF529574FC487FA98804E607F6D"
+        "OwnerKey" = "8:_0B816B9828BC4414A662D7186EC23E8C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_38B54FF529574FC487FA98804E607F6D"
+        "OwnerKey" = "8:_6E6BB6421D92411DB785E1508210A5D1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -93,6 +87,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_6E6BB6421D92411DB785E1508210A5D1"
+        "OwnerKey" = "8:_0B816B9828BC4414A662D7186EC23E8C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_7269021437CF4398B5AD0BEF5D242C11"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -100,12 +100,6 @@
         "Entry"
         {
         "MsmKey" = "8:_80222B20D77142AE8FD9531585409EF6"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_81FF48536F2E4C3BB902799FBBB54948"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -123,12 +117,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_A8AE5E58653641E78305A9F7805C7FD1"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_AA34AAD8CA0841CB9BA022578E9F2C63"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -141,25 +129,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_B31923E79F360E25A9908EEE60355755"
-        "OwnerKey" = "8:_0B816B9828BC4414A662D7186EC23E8C"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_BD11FA20DF6540DCA25E0E7D29167290"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_BF4A54625A78471A902A6FB567EC607E"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_CC7710676BE840B6B8E311CBE65B95A2"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -172,12 +142,6 @@
         "Entry"
         {
         "MsmKey" = "8:_D71E872AA1FB45B992C8EA8810F0FECE"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_E011FFC2F6824FE9B73083B2F4B2BE94"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -202,25 +166,25 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B31923E79F360E25A9908EEE60355755"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_3A481BA820F80DDB75A02811800AC4B3"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_070F20AEE4156FF8A1EDCB6F32B33AB5"
+        "OwnerKey" = "8:_6E6BB6421D92411DB785E1508210A5D1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_1A25FFA80898053D472B1E2FEA13F6FD"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_285CAB6BDDA418CA7D3102167BDE9809"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_38B54FF529574FC487FA98804E607F6D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -324,37 +288,6 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_070F20AEE4156FF8A1EDCB6F32B33AB5"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:ChessPosition, Version=1.14.2.0, Culture=neutral, processorArchitecture=AMD64"
-                "ScatterAssemblies"
-                {
-                    "_070F20AEE4156FF8A1EDCB6F32B33AB5"
-                    {
-                    "Name" = "8:ChessPosition.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:ChessPosition.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_76196FC40D204F0E9D2F09E6D29AAF54"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_141BD59E5BD35C4DA1EEFA2B8334EEBE"
             {
             "AssemblyRegister" = "3:1"
@@ -437,14 +370,14 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3A481BA820F80DDB75A02811800AC4B3"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_285CAB6BDDA418CA7D3102167BDE9809"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:EngineService, Version=1.14.2.0, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:EngineService, Version=1.14.3.0, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
-                    "_3A481BA820F80DDB75A02811800AC4B3"
+                    "_285CAB6BDDA418CA7D3102167BDE9809"
                     {
                     "Name" = "8:EngineService.dll"
                     "Attributes" = "3:512"
@@ -468,12 +401,23 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3B386A17D515444898974880387A5AFF"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_38B54FF529574FC487FA98804E607F6D"
             {
-            "SourcePath" = "8:..\\ChessForge\\Resources\\Sounds\\InvalidMove.mp3"
-            "TargetName" = "8:InvalidMove.mp3"
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:ChessPosition, Version=1.14.3.0, Culture=neutral, processorArchitecture=AMD64"
+                "ScatterAssemblies"
+                {
+                    "_38B54FF529574FC487FA98804E607F6D"
+                    {
+                    "Name" = "8:ChessPosition.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:ChessPosition.dll"
+            "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_95CA9216F4F648DCB6BFB59BD2DBB64E"
+            "Folder" = "8:_76196FC40D204F0E9D2F09E6D29AAF54"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -485,7 +429,7 @@
             "PackageAs" = "3:1"
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_58F043B94A2D46689C41FBC44BB20B4F"
@@ -548,6 +492,37 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_6E6BB6421D92411DB785E1508210A5D1"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:WebAccess, Version=1.14.3.0, Culture=neutral, processorArchitecture=AMD64"
+                "ScatterAssemblies"
+                {
+                    "_6E6BB6421D92411DB785E1508210A5D1"
+                    {
+                    "Name" = "8:WebAccess.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:WebAccess.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_76196FC40D204F0E9D2F09E6D29AAF54"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7269021437CF4398B5AD0BEF5D242C11"
             {
             "SourcePath" = "8:..\\Workbooks\\Distribution\\Ridiculous Sacrifices.pgn"
@@ -581,26 +556,6 @@
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
             "Permanent" = "11:TRUE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_81FF48536F2E4C3BB902799FBBB54948"
-            {
-            "SourcePath" = "8:..\\ChessForge\\Resources\\Sounds\\Confirmation.mp3"
-            "TargetName" = "8:Confirmation.mp3"
-            "Tag" = "8:"
-            "Folder" = "8:_95CA9216F4F648DCB6BFB59BD2DBB64E"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -648,26 +603,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A8AE5E58653641E78305A9F7805C7FD1"
-            {
-            "SourcePath" = "8:..\\ChessForge\\Resources\\Sounds\\NotInWorkbook.mp3"
-            "TargetName" = "8:NotInWorkbook.mp3"
-            "Tag" = "8:"
-            "Folder" = "8:_95CA9216F4F648DCB6BFB59BD2DBB64E"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_AA34AAD8CA0841CB9BA022578E9F2C63"
             {
             "SourcePath" = "8:..\\Workbooks\\Distribution\\Endgame Selection.pgn"
@@ -708,37 +643,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B31923E79F360E25A9908EEE60355755"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:WebAccess, Version=1.14.2.0, Culture=neutral, processorArchitecture=AMD64"
-                "ScatterAssemblies"
-                {
-                    "_B31923E79F360E25A9908EEE60355755"
-                    {
-                    "Name" = "8:WebAccess.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:WebAccess.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_76196FC40D204F0E9D2F09E6D29AAF54"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BD11FA20DF6540DCA25E0E7D29167290"
             {
             "SourcePath" = "8:..\\Workbooks\\Distribution\\French Exchange for Black.pgn"
@@ -752,46 +656,6 @@
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
             "Permanent" = "11:TRUE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BF4A54625A78471A902A6FB567EC607E"
-            {
-            "SourcePath" = "8:..\\ChessForge\\Resources\\Sounds\\Capture.mp3"
-            "TargetName" = "8:Capture.mp3"
-            "Tag" = "8:"
-            "Folder" = "8:_95CA9216F4F648DCB6BFB59BD2DBB64E"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CC7710676BE840B6B8E311CBE65B95A2"
-            {
-            "SourcePath" = "8:..\\ChessForge\\Resources\\Sounds\\Move.mp3"
-            "TargetName" = "8:Move.mp3"
-            "Tag" = "8:"
-            "Folder" = "8:_95CA9216F4F648DCB6BFB59BD2DBB64E"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -832,26 +696,6 @@
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
             "Permanent" = "11:TRUE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E011FFC2F6824FE9B73083B2F4B2BE94"
-            {
-            "SourcePath" = "8:..\\ChessForge\\Resources\\Sounds\\EndOfLine.mp3"
-            "TargetName" = "8:EndOfLine.mp3"
-            "Tag" = "8:"
-            "Folder" = "8:_95CA9216F4F648DCB6BFB59BD2DBB64E"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -959,28 +803,6 @@
             "Property" = "8:TARGETDIR"
                 "Folders"
                 {
-                    "{9EF0B969-E518-4E46-987F-47570745A589}:_D12A4F48C74C4319BAE3E65173A8AC0F"
-                    {
-                    "Name" = "8:Resources"
-                    "AlwaysCreate" = "11:FALSE"
-                    "Condition" = "8:"
-                    "Transitive" = "11:FALSE"
-                    "Property" = "8:_26AA20701AB44C779043FF6D9AC6BC87"
-                        "Folders"
-                        {
-                            "{9EF0B969-E518-4E46-987F-47570745A589}:_95CA9216F4F648DCB6BFB59BD2DBB64E"
-                            {
-                            "Name" = "8:Sounds"
-                            "AlwaysCreate" = "11:FALSE"
-                            "Condition" = "8:"
-                            "Transitive" = "11:FALSE"
-                            "Property" = "8:_896CEDE372E84413BF5D1773C47B73E8"
-                                "Folders"
-                                {
-                                }
-                            }
-                        }
-                    }
                 }
             }
         }
@@ -999,15 +821,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Chess Forge"
-        "ProductCode" = "8:{B914D69C-4D4A-4722-8FDD-918ED029DFDC}"
-        "PackageCode" = "8:{5B7258E2-1A50-4E44-8E64-2FF80C732822}"
+        "ProductCode" = "8:{AFEC824A-B222-47EC-8AF8-E31FA582C492}"
+        "PackageCode" = "8:{E1F8322C-A69E-4736-B8B4-57CDA763C3E7}"
         "UpgradeCode" = "8:{8FBE368E-7FA2-4112-9D18-7A5CD1CE504C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:FALSE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.14.3"
+        "ProductVersion" = "8:1.14.4"
         "Manufacturer" = "8:Mindrose Pty Ltd"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1549,7 +1371,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_0B816B9828BC4414A662D7186EC23E8C"
             {
-            "SourcePath" = "8:..\\ChessForge\\obj\\Release\\ChessForge.exe"
+            "SourcePath" = "8:..\\ChessForge\\obj\\Debug\\ChessForge.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_76196FC40D204F0E9D2F09E6D29AAF54"

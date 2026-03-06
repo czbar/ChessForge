@@ -65,7 +65,7 @@ namespace ChessForge
 
                 AppState.MainWin.MainChessBoard.GetPieceImage(destSquare.Xcoord, destSquare.Ycoord, true).Source = imgSrc;
                 AppState.MainWin.ReturnDraggedPiece(true);
-                SoundPlayer.PlayMoveSound("");
+                SoundManager.PlayMoveSound("");
 
                 bool isCastle = TryCompleteCastle(movingPieceType, movingPieceColor, origSquareNorm, destSquareNorm, ref nd);
                 bool isEnpassant = TryCompleteEnpassant(movingPieceType, movingPieceColor, origSquareNorm, destSquareNorm, ref nd);
