@@ -51,9 +51,11 @@ namespace WebAccess
                 eventArgs.GameData = PgnMultiGameParser.ParsePgnMultiGameText(eventArgs.TextData, out int variantGamesCount);
                 eventArgs.Success = true;
 
-                // if there are variant games and the filter does not specify date range (i.e. the user asked for N latest games),
+                // if there are variant games and the filter specifies MaxGames 
                 // include the count of variant games in the event args so that we can report it to the user.
-                if (variantGamesCount > 0 && filter.StartDate == null && filter.EndDate == null)
+                // Otherwise the user may be confused when they see that the number of downloaded games is smaller than the MaxGames specified in the filter,
+                // without understanding that some games were filtered out because they are variant games.
+                if (variantGamesCount > 0 && filter.MaxGames > 0)
                 {
                     eventArgs.VariantGamesCount = variantGamesCount;
                 }
