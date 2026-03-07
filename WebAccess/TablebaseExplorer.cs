@@ -42,7 +42,7 @@ namespace WebAccess
                 HttpClient httpClient = RestApiRequest.TablebaseClient;
                 RestApiRequest.SetHttpClientLichessDefaultHeaders(httpClient);
 
-                var json = await httpClient.GetStringAsync("http://tablebase.lichess.ovh/standard?" + "fen=" + fen);
+                var json = await httpClient.GetStringAsync(UrlTarget.LichessTablebaseLookup + "fen=" + fen);
                 Response = JsonConvert.DeserializeObject<LichessTablebaseResponse>(json);
                 eventArgs.Success = true;
                 TablebaseReceived?.Invoke(null, eventArgs);

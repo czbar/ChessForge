@@ -42,7 +42,7 @@ namespace ChessForge
             Paragraph para2 = new Paragraph();
             para2.Inlines.Add(new Run(Properties.Resources.AuthTokenInfo_2 + " "));
 
-            string urlCreateToken = "https://lichess.org/account/oauth/token/create" + "?description=Chess Forge Authorization";
+            string urlCreateToken = UrlTarget.LichessCreateAuthToken;
             Hyperlink link = new Hyperlink(new Run(urlCreateToken + "."));
             link.Foreground = ChessForgeColors.CurrentTheme.HyperlinkForeground;
             link.NavigateUri = new Uri(urlCreateToken);

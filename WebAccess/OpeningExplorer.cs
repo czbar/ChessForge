@@ -84,7 +84,7 @@ namespace WebAccess
                 HttpClient httpClient = RestApiRequest.OpeningStatsClient;
                 RestApiRequest.SetHttpClientLichessDefaultHeaders(httpClient);
 
-                string request = "https://explorer.lichess.ovh/masters?" + "fen=" + fen;
+                string request = UrlTarget.LichessOpeningExplorer + "fen=" + fen;
 
                 string json = "";
 

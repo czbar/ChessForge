@@ -47,7 +47,7 @@ namespace WebAccess
                 using (System.Net.Http.HttpClient client = new System.Net.Http.HttpClient())
                 {
                     client.DefaultRequestHeaders.Add("User-Agent", RestApiRequest.UserAgentLichess);
-                    var json = await client.GetStringAsync("https://chessforge.sourceforge.io/Releases/Releases.json");
+                    var json = await client.GetStringAsync(UrlTarget.ChessForgeReleasesFile);
 
                     dynamic obj = JsonConvert.DeserializeObject<dynamic>(json);
                     
@@ -72,7 +72,7 @@ namespace WebAccess
                     {
                         if (!lastCheck.HasValue || (DateTime.Now.Date != lastCheck.Value.Date))
                         {
-                            var txt = await client.GetStringAsync("https://sourceforge.net/projects/chessforge/files/ping.txt");
+                            var txt = await client.GetStringAsync(UrlTarget.ChessForgePingFile);
                         }
                     }
                     catch { }
