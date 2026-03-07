@@ -421,6 +421,7 @@ namespace ChessForge
             {
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             }
+            Configuration.SetUrlTargets();
 
             Languages.UseFigurines = Configuration.UseFigurines;
             SetCultureInfo(Configuration.CultureName);
