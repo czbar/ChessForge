@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using WebAccess;
 using static ChessForge.ChessBoards;
 
 namespace ChessForge
@@ -45,6 +46,57 @@ namespace ChessForge
         /// </summary>
         public static int CoreCount;
 
+
+        //*********************************
+        //
+        //   URLs to access services
+        //   on chess.com and lichess.
+        //
+        //*********************************
+
+        public static string UrlChesscomArchiveList = UrlTarget.ChesscomArchiveList;
+        public static string UrlChesscomGames = UrlTarget.ChesscomGames;
+        public static string UrlLichessCreateAuthToken = UrlTarget.LichessCreateAuthToken;
+        public static string UrlLichessGameDownload = UrlTarget.LichessGameDownload;
+        public static string UrlLichessUserGames = UrlTarget.LichessUserGames;
+        public static string UrlLichessOpeningExplorer = UrlTarget.LichessOpeningExplorer;
+        public static string UrlLichessTablebaseLookup = UrlTarget.LichessTablebaseLookup;
+
+        /// <summary>
+        /// Sets the UrlTarget static variables to the values currently in the configuration
+        /// unless they are empty.
+        /// </summary>
+        public static void SetUrlTargets()
+        {
+            if (!string.IsNullOrWhiteSpace(UrlChesscomArchiveList))
+            {
+                UrlTarget.ChesscomArchiveList = UrlChesscomArchiveList;
+            }
+            if (!string.IsNullOrWhiteSpace(UrlChesscomGames))
+            {
+                 UrlTarget.ChesscomGames = UrlChesscomGames;
+            }
+            if (!string.IsNullOrWhiteSpace(UrlLichessCreateAuthToken))
+            {
+                UrlTarget.LichessCreateAuthToken = UrlLichessCreateAuthToken;
+            }
+            if (!string.IsNullOrWhiteSpace(UrlLichessGameDownload))
+            {
+                UrlTarget.LichessGameDownload = UrlLichessGameDownload;
+            }
+            if (!string.IsNullOrWhiteSpace(UrlLichessUserGames))
+            {
+                UrlTarget.LichessUserGames = UrlLichessUserGames;
+            }
+            if (!string.IsNullOrWhiteSpace(UrlLichessOpeningExplorer))
+            {
+                UrlTarget.LichessOpeningExplorer = UrlLichessOpeningExplorer;
+            }
+            if (!string.IsNullOrWhiteSpace(UrlLichessTablebaseLookup))
+            {
+                UrlTarget.LichessTablebaseLookup = UrlLichessTablebaseLookup;
+            }   
+        }
 
         //*********************************
         //
@@ -694,6 +746,14 @@ namespace ChessForge
         //*********************************
         // CONFIGURATION ITEM NAMES
         //*********************************
+
+        private const string CFG_URL_CHESSCOM_ARCHIVE_LIST = "UrlChesscomArchiveList";
+        private const string CFG_URL_CHESSCOM_GAMES = "UrlChesscomGames";
+        private const string CFG_URL_LICHESS_CREATE_AUTH_TOKEN = "UrlLichessCreateAuthToken";
+        private const string CFG_URL_LICHESS_GAME_DOWNLOAD = "UrlLichessGameDownload";
+        private const string CFG_URL_LICHESS_USER_GAMES = "UrlLichessUserGames";
+        private const string CFG_URL_LICHESS_OPENING_EXPLORER = "UrlLichessOpeningExplorer";
+        private const string CFG_URL_LICHESS_TABLEBASE_LOOKUP = "UrlLichessTablebaseLookup";
 
         private const string CFG_LAST_MESSAGE_READ = "LastWebMessageRead";
         private const string CFG_MOVE_SPEED = "MoveSpeed";
@@ -1516,6 +1576,28 @@ namespace ChessForge
                                 {
                                 }
                             }
+                            break;
+
+                        case CFG_URL_CHESSCOM_ARCHIVE_LIST:
+                            UrlChesscomArchiveList = value;
+                            break;
+                        case CFG_URL_CHESSCOM_GAMES:
+                            UrlChesscomGames = value;
+                            break;
+                        case CFG_URL_LICHESS_CREATE_AUTH_TOKEN:
+                            UrlLichessCreateAuthToken = value;
+                            break;
+                        case CFG_URL_LICHESS_GAME_DOWNLOAD:
+                            UrlLichessGameDownload = value;
+                            break;
+                        case CFG_URL_LICHESS_USER_GAMES:
+                            UrlLichessUserGames = value;
+                            break;
+                        case CFG_URL_LICHESS_OPENING_EXPLORER:
+                            UrlLichessOpeningExplorer = value;
+                            break;
+                        case CFG_URL_LICHESS_TABLEBASE_LOOKUP:
+                            UrlLichessTablebaseLookup = value;
                             break;
                     }
                 }
