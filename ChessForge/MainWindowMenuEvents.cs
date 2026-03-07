@@ -216,7 +216,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnOnlineLibrary_Click(object sender, RoutedEventArgs e)
         {
-            ShowLibraryContent(Configuration.PUBLIC_LIBRARY_URL);
+            ShowLibraryContent(WebAccess.UrlTarget.PublicLibrary);
         }
 
         /// <summary>

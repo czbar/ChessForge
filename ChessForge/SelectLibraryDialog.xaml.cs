@@ -222,7 +222,7 @@ namespace ChessForge
         {
             if (ProceedOnOpen(false))
             {
-                LibraryToOpen = Configuration.PUBLIC_LIBRARY_URL;
+                LibraryToOpen = WebAccess.UrlTarget.PublicLibrary;
                 DialogResult = true;
             }
         }

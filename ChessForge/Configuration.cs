@@ -20,11 +20,6 @@ namespace ChessForge
 
 
         /// <summary>
-        /// hard coded root URL for the public library.
-        /// </summary>
-        public static string PUBLIC_LIBRARY_URL = "https://chessforge.sourceforge.io/Library/";
-
-        /// <summary>
         /// Url to the currently configured private library.
         /// </summary>
         public static string LastPrivateLibrary = "";
