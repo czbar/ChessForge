@@ -82,6 +82,13 @@ namespace ChessForge
             UpdateReferenceTextInView(guid, AppState.MainWin.ExerciseTreeView);
         }
 
+        /// <summary>
+        /// Aggregates references from the given list of nodes and adds them to the given node.
+        /// This is used when repositioning references to make sure that all references 
+        /// from the original referencing nodes are preserved.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="otherNodes"></param>
         public static void AddOtherNodeReferences(TreeNode node, List<TreeNode> otherNodes)
         {
             try
