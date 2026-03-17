@@ -903,7 +903,14 @@ namespace ChessForge
 
                 TreeNode nd = GetSelectedNode();
                 TreeNode parent = nd.Parent;
-                ShownVariationTree.DeleteRemainingMoves(nd);
+
+                ShownVariationTree.DeleteRemainingMoves(nd, out List<TreeNode> deletedNodes);
+
+                if (parent != null && deletedNodes != null)
+                {
+                    ReferenceUtils.AddOtherNodeReferences(parent, deletedNodes);
+                }
+
                 ShownVariationTree.BuildLines();
                 _mainWin.SetActiveLine(parent.LineId, parent.NodeId);
                 BuildFlowDocumentForVariationTree(false);
