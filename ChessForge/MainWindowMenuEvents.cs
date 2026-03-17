@@ -3262,7 +3262,7 @@ namespace ChessForge
         /// <summary>
         /// Deletes the subtree having checked with the user.
         /// </summary>
-        public void DeleteRemainingMoves()
+        public void DeleteRemainingMoves(bool shiftReferences)
         {
             if (ActiveTreeView != null && AppState.IsVariationTreeTabType)
             {
@@ -3273,7 +3273,7 @@ namespace ChessForge
                         MessageBox.Show(Properties.Resources.MsgConfirmDeleteSubtree, Properties.Resources.Confirmation,
                            MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
-                        ActiveTreeView.DeleteRemainingMoves();
+                        ActiveTreeView.DeleteRemainingMoves(shiftReferences);
                     }
                 }
             }
@@ -3286,7 +3286,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnDeleteMovesFromHere_Click(object sender, RoutedEventArgs e)
         {
-            ActiveTreeView.DeleteRemainingMoves();
+            ActiveTreeView.DeleteRemainingMoves(true);
         }
 
         /// <summary>
@@ -3296,7 +3296,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnExerc_DeleteMovesFromHere_Click(object sender, RoutedEventArgs e)
         {
-            ActiveTreeView.DeleteRemainingMoves();
+            ActiveTreeView.DeleteRemainingMoves(true);
         }
 
         /// <summary>
@@ -3306,7 +3306,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnGame_DeleteMovesFromHere_Click(object sender, RoutedEventArgs e)
         {
-            ActiveTreeView.DeleteRemainingMoves();
+            ActiveTreeView.DeleteRemainingMoves(true);
         }
 
         /// <summary>
@@ -3340,7 +3340,7 @@ namespace ChessForge
                 ActiveTreeView.PlaceSelectedForCopyInClipboard();
                 if (ActiveTreeView.HasMovesSelectedForCopy)
                 {
-                    ActiveTreeView.DeleteRemainingMoves();
+                    ActiveTreeView.DeleteRemainingMoves(false);
                     BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgCopiedMoves, CommentBox.HintType.INFO);
                 }
             }
