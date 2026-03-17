@@ -82,6 +82,28 @@ namespace ChessForge
             UpdateReferenceTextInView(guid, AppState.MainWin.ExerciseTreeView);
         }
 
+        public static void AddOtherNodeReferences(TreeNode node, List<TreeNode> otherNodes)
+        {
+            try
+            {
+                foreach (TreeNode nd in otherNodes)
+                {
+                    if (!string.IsNullOrEmpty(nd.References))
+                    {
+                        string[] refs = nd.References.Split('|');
+                        foreach (string guid in refs)
+                        {
+                            AddReferenceToNode(node, guid);
+                        }
+                    }
+                }
+                SortReferenceString(node.References);
+            }
+            catch
+            {
+            }
+        }
+
         /// <summary>
         /// Adds a reference to the given node.
         /// TODO: refactor: replace calls to TreeNode.AddArticleReference with this one.
