@@ -2,6 +2,7 @@
 using GameTree;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -145,6 +146,11 @@ namespace ChessForge
             {
                 case FoundArticlesDialog.Action.CopyLine:
                     nodelList = TreeUtils.CopyNodeList(item.TailLine);
+                    if (item.Article != null && nodelList != null && nodelList.Count > 0)
+                    {
+                        string guid = item.Article.Guid;
+                        ReferenceUtils.AddReferenceToNode(nodelList.Last(), guid);
+                    }
                     CopyPasteMoves.PasteVariation(nodelList);
                     AppState.IsDirty = true;
                     break;
