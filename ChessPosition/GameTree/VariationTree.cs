@@ -1555,24 +1555,33 @@ namespace GameTree
         /// </summary>
         /// <param name="nd"></param>
         /// <returns></returns>
-        public bool DeleteRemainingMoves(TreeNode nd)
+        public bool DeleteRemainingMoves(TreeNode nd, out List<TreeNode> deletedNodes)
         {
-            // need child index for undo
-            int childIndex = GetChildIndex(nd);
-
-            // identify moves to delete
-            _subTree.Clear();
-            nd.Parent.Children.Remove(nd);
-            GetSubTree(nd);
-
-            // Store info about this deletion for a possible undo
-            EditOperation op = new EditOperation(EditOperation.EditType.DELETE_LINE, nd, CopySubtree(_subTree), childIndex);
-            OpsManager.PushOperation(op);
-
-            foreach (TreeNode node in _subTree)
+            try
             {
-                Nodes.Remove(node);
-                DeleteBookmark(node);
+                // need child index for undo
+                int childIndex = GetChildIndex(nd);
+
+                // identify moves to delete
+                _subTree.Clear();
+                nd.Parent.Children.Remove(nd);
+                GetSubTree(nd);
+
+                // Store info about this deletion for a possible undo
+                deletedNodes = CopySubtree(_subTree);
+                string origParentRefs = nd.Parent.References;
+                EditOperation op = new EditOperation(EditOperation.EditType.DELETE_LINE, nd, deletedNodes, origParentRefs, childIndex);
+                OpsManager.PushOperation(op);
+
+                foreach (TreeNode node in _subTree)
+                {
+                    Nodes.Remove(node);
+                    DeleteBookmark(node);
+                }
+            }
+            catch
+            {
+                deletedNodes = null;
             }
 
             return _subTree.Count > 0;
