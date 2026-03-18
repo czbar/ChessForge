@@ -410,15 +410,18 @@ namespace ChessForge
         public MainWindow()
         {
             AppState.MainWin = this;
-            _ = WebAccess.SourceForgeCheck.GetVersion();
 
             // the next lines pertain to localization, must be invoked here (before InitializeComponent) and in this order
             ReadConfiguration();
+
+            _ = WebAccess.SourceForgeCheck.GetVersion(Configuration.LastVersionCheckDate);
+            Configuration.LastVersionCheckDate = DateTime.Now;
 
             if (Configuration.ForceTls12)
             {
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             }
+            Configuration.SetUrlTargets();
 
             Languages.UseFigurines = Configuration.UseFigurines;
             SetCultureInfo(Configuration.CultureName);

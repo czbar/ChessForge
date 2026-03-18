@@ -547,7 +547,7 @@ namespace ChessForge
                     TreeNode nd = _mainWin.ActiveVariationTree.Nodes[i];
                     if (nd.IsNewTrainingMove && EngineGame.Line.NodeList.FirstOrDefault(x => x.NodeId == nd.NodeId) == null)
                     {
-                        _mainWin.ActiveVariationTree.DeleteRemainingMoves(nd);
+                        _mainWin.ActiveVariationTree.DeleteRemainingMoves(nd, out _);
                         allClear = false;
                         break;
                     }

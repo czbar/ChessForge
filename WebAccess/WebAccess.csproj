@@ -57,6 +57,7 @@
     <Compile Include="SourceForgeCheck.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TablebaseExplorer.cs" />
+    <Compile Include="UrlTarget.cs" />
     <Compile Include="WebAccessEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>

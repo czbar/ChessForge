@@ -185,7 +185,7 @@ namespace ChessForge
                 {
                     if (child.IsNewTrainingMove)
                     {
-                        AppState.MainWin.ActiveVariationTree.DeleteRemainingMoves(child);
+                        AppState.MainWin.ActiveVariationTree.DeleteRemainingMoves(child, out _);
                     }
                     break;
                 }

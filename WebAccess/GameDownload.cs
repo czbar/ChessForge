@@ -59,7 +59,7 @@ namespace WebAccess
                 }
                 else
                 {
-                    var response = await RestApiRequest.GameImportClient.GetAsync("https://lichess.org/game/export/" + gameId);
+                    var response = await RestApiRequest.GameImportClient.GetAsync(UrlTarget.LichessGameDownload + gameId);
                     using (var fs = new MemoryStream())
                     {
                         await response.Content.CopyToAsync(fs);

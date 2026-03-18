@@ -653,6 +653,10 @@ ErrEmptyUserName=Brak nazwy użytkownika
 #english: ErrNotStandardChessVariant=Non Standard Chess variant
 ErrNotStandardChessVariant=Niestandardowy wariant szachów
 
+#description: Only chess variant games found.
+#english: ErrVariantGamesOnly=Only chess variant games found.
+ErrVariantGamesOnly=Znaleziono tylko partie szachów niestandardowych.
+
 #description: Title of the dialog reporting incomplete data
 #english: PromptCorrectData=Incorrect Input Data
 PromptCorrectData=Niewłaściwe Dane
@@ -3165,6 +3169,10 @@ FlMsgNumberGamesMoved=Liczba przesuniętych partii
 #description: Flash message: Number of chapters created
 #english: FlMsgNumberOfChaptersCreated=Number of New Chapters
 FlMsgNumberOfChaptersCreated=Liczba nowych rozdziałów
+
+#description: Flash message: variant games skipped
+#english: FlMsgVariantGamesSkipped=Chess variant games skipped (count=$0)
+FlMsgVariantGamesSkipped=Pominięto partie szachów niestandardowych (liczba
 
 ##################################
 #

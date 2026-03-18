@@ -216,7 +216,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnOnlineLibrary_Click(object sender, RoutedEventArgs e)
         {
-            ShowLibraryContent(Configuration.PUBLIC_LIBRARY_URL);
+            ShowLibraryContent(WebAccess.UrlTarget.PublicLibrary);
         }
 
         /// <summary>
@@ -1128,7 +1128,7 @@ namespace ChessForge
         {
             bool? save = false;
 
-            if (!TrainingSession.IsTrainingInProgress 
+            if (!TrainingSession.IsTrainingInProgress
                 && (EngineGame.ActiveTabOnStart == TabViewType.MODEL_GAME || EngineGame.ActiveTabOnStart == TabViewType.STUDY)
                 && EngineGame.HasNewMoves())
             {
@@ -1603,25 +1603,32 @@ namespace ChessForge
             {
                 if (gd.IsSelected)
                 {
-                    if (gd.GetContentType(false) == GameData.ContentType.EXERCISE)
+                    if (gd.Header.IsStandardChess())
                     {
-                        if (PgnArticleUtils.AddArticle(chapter, gd, GameData.ContentType.EXERCISE, out error, out _, GameData.ContentType.EXERCISE) >= 0)
+                        if (gd.GetContentType(false) == GameData.ContentType.EXERCISE)
                         {
-                            copiedCount++;
-                            copiedExercises++;
+                            if (PgnArticleUtils.AddArticle(chapter, gd, GameData.ContentType.EXERCISE, out error, out _, GameData.ContentType.EXERCISE) >= 0)
+                            {
+                                copiedCount++;
+                                copiedExercises++;
+                            }
+                            chapter.StudyTree.Tree.ContentType = GameData.ContentType.STUDY_TREE;
                         }
-                        chapter.StudyTree.Tree.ContentType = GameData.ContentType.STUDY_TREE;
+                        else if (copyGames && (gd.GetContentType(false) == GameData.ContentType.GENERIC || gd.GetContentType(false) == GameData.ContentType.MODEL_GAME))
+                        {
+                            if (PgnArticleUtils.AddArticle(chapter, gd, GameData.ContentType.MODEL_GAME, out error, out _, GameData.ContentType.MODEL_GAME) >= 0)
+                            {
+                                copiedCount++;
+                            }
+                            if (!string.IsNullOrEmpty(error))
+                            {
+                                sbErrors.Append(GuiUtilities.BuildGameProcessingErrorText(gd, gameIndex + 1, error));
+                            }
+                        }
                     }
-                    else if (copyGames && (gd.GetContentType(false) == GameData.ContentType.GENERIC || gd.GetContentType(false) == GameData.ContentType.MODEL_GAME))
+                    else
                     {
-                        if (PgnArticleUtils.AddArticle(chapter, gd, GameData.ContentType.MODEL_GAME, out error, out _, GameData.ContentType.MODEL_GAME) >= 0)
-                        {
-                            copiedCount++;
-                        }
-                        if (!string.IsNullOrEmpty(error))
-                        {
-                            sbErrors.Append(GuiUtilities.BuildGameProcessingErrorText(gd, gameIndex + 1, error));
-                        }
+                        sbErrors.Append(GuiUtilities.BuildGameProcessingErrorText(gd, gameIndex + 1, Properties.Resources.ErrNotStandardChessVariant));
                     }
 
                     gameIndex++;
@@ -2384,7 +2391,7 @@ namespace ChessForge
 
                 if (lstRefsUsage.Count == 0)
                 {
-                    string errMsg = ActiveArticle.ContentType == GameData.ContentType.EXERCISE 
+                    string errMsg = ActiveArticle.ContentType == GameData.ContentType.EXERCISE
                         ? Properties.Resources.ErrExerciseNotReferenced : Properties.Resources.ErrGameNotReferenced;
                     MessageBox.Show(errMsg, Properties.Resources.Information, MessageBoxButton.OK, MessageBoxImage.Information);
                 }
@@ -3255,7 +3262,7 @@ namespace ChessForge
         /// <summary>
         /// Deletes the subtree having checked with the user.
         /// </summary>
-        public void DeleteRemainingMoves()
+        public void DeleteRemainingMoves(bool shiftReferences)
         {
             if (ActiveTreeView != null && AppState.IsVariationTreeTabType)
             {
@@ -3266,7 +3273,7 @@ namespace ChessForge
                         MessageBox.Show(Properties.Resources.MsgConfirmDeleteSubtree, Properties.Resources.Confirmation,
                            MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
-                        ActiveTreeView.DeleteRemainingMoves();
+                        ActiveTreeView.DeleteRemainingMoves(shiftReferences);
                     }
                 }
             }
@@ -3279,7 +3286,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnDeleteMovesFromHere_Click(object sender, RoutedEventArgs e)
         {
-            ActiveTreeView.DeleteRemainingMoves();
+            ActiveTreeView.DeleteRemainingMoves(true);
         }
 
         /// <summary>
@@ -3289,7 +3296,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnExerc_DeleteMovesFromHere_Click(object sender, RoutedEventArgs e)
         {
-            ActiveTreeView.DeleteRemainingMoves();
+            ActiveTreeView.DeleteRemainingMoves(true);
         }
 
         /// <summary>
@@ -3299,7 +3306,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnGame_DeleteMovesFromHere_Click(object sender, RoutedEventArgs e)
         {
-            ActiveTreeView.DeleteRemainingMoves();
+            ActiveTreeView.DeleteRemainingMoves(true);
         }
 
         /// <summary>
@@ -3333,7 +3340,7 @@ namespace ChessForge
                 ActiveTreeView.PlaceSelectedForCopyInClipboard();
                 if (ActiveTreeView.HasMovesSelectedForCopy)
                 {
-                    ActiveTreeView.DeleteRemainingMoves();
+                    ActiveTreeView.DeleteRemainingMoves(false);
                     BoardCommentBox.ShowFlashAnnouncement(Properties.Resources.FlMsgCopiedMoves, CommentBox.HintType.INFO);
                 }
             }

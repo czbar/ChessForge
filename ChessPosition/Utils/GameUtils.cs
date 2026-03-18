@@ -2,10 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChessPosition
 {
@@ -50,7 +46,8 @@ namespace ChessPosition
         }
 
         /// <summary>
-        /// Remove games that are not in the passed date range.
+        /// Remove games that are not of STANDARD CHESS type
+        /// or are not in the passed date range.
         /// </summary>
         /// <param name="games"></param>
         /// <param name="startDate"></param>
@@ -61,10 +58,13 @@ namespace ChessPosition
             List<GameData> lstGames = new List<GameData>();
             foreach (GameData game in games)
             {
-                if ((!startDate.HasValue || CompareGameDateToDate(game, startDate.Value) >= 0)
-                    && (!endDate.HasValue || CompareGameDateToDate(game, endDate.Value) <= 0))
+                if (game.Header.IsStandardChess())
                 {
-                    lstGames.Add(game);
+                    if ((!startDate.HasValue || CompareGameDateToDate(game, startDate.Value) >= 0)
+                        && (!endDate.HasValue || CompareGameDateToDate(game, endDate.Value) <= 0))
+                    {
+                        lstGames.Add(game);
+                    }
                 }
             }
             return lstGames;
@@ -137,7 +137,7 @@ namespace ChessPosition
 
             if (dt1.HasValue && dt2.HasValue)
             {
-                return (DateTime.Compare(dt1.Value, dt2.Value));
+                return (DateTime.Compare(dt2.Value, dt1.Value));
             }
             else
             {

@@ -983,7 +983,7 @@ namespace ChessPosition
 
             foreach (TreeNode nd in nodesToRemove)
             {
-                fixedTree.DeleteRemainingMoves(nd);
+                fixedTree.DeleteRemainingMoves(nd, out _);
             }
             SetCheckAndMates(ref fixedTree);
 

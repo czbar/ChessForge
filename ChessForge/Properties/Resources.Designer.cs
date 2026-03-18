@@ -3004,6 +3004,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Only chess variant games found..
+        /// </summary>
+        public static string ErrVariantGamesOnly {
+            get {
+                return ResourceManager.GetString("ErrVariantGamesOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Estimated evaluation time.
         /// </summary>
         public static string EstimatedEvalTime {
@@ -3810,6 +3819,15 @@ namespace ChessForge.Properties {
         public static string FlMsgUpdatePositionEvalOn {
             get {
                 return ResourceManager.GetString("FlMsgUpdatePositionEvalOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chess variant games skipped (count=$0).
+        /// </summary>
+        public static string FlMsgVariantGamesSkipped {
+            get {
+                return ResourceManager.GetString("FlMsgVariantGamesSkipped", resourceCulture);
             }
         }
         

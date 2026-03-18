@@ -630,7 +630,7 @@ namespace ChessForge
                 switch (e.Key)
                 {
                     case Key.Delete:
-                        _mainWin.DeleteRemainingMoves();
+                        _mainWin.DeleteRemainingMoves(true);
                         e.Handled = true;
                         break;
                     case Key.F2:
@@ -791,6 +791,10 @@ namespace ChessForge
                         {
                             switch (e.Key)
                             {
+                                case Key.Delete:
+                                    _mainWin.DeleteRemainingMoves(false);
+                                    e.Handled = true;
+                                    break;
                                 case Key.F3:
                                     _mainWin.UiMnFindPositions_Click(null, null);
                                     e.Handled = true;

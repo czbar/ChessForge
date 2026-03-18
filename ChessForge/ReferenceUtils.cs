@@ -83,6 +83,35 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Aggregates references from the given list of nodes and adds them to the given node.
+        /// This is used when repositioning references to make sure that all references 
+        /// from the original referencing nodes are preserved.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="otherNodes"></param>
+        public static void AddOtherNodeReferences(TreeNode node, List<TreeNode> otherNodes)
+        {
+            try
+            {
+                foreach (TreeNode nd in otherNodes)
+                {
+                    if (!string.IsNullOrEmpty(nd.References))
+                    {
+                        string[] refs = nd.References.Split('|');
+                        foreach (string guid in refs)
+                        {
+                            AddReferenceToNode(node, guid);
+                        }
+                    }
+                }
+                SortReferenceString(node.References);
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
         /// Adds a reference to the given node.
         /// TODO: refactor: replace calls to TreeNode.AddArticleReference with this one.
         /// </summary>

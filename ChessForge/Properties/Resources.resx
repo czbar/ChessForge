@@ -573,6 +573,9 @@
   <data name="ErrNotStandardChessVariant" xml:space="preserve">
     <value>Non Standard Chess variant</value>
   </data>
+  <data name="ErrVariantGamesOnly" xml:space="preserve">
+    <value>Only chess variant games found.</value>
+  </data>
   <data name="PromptCorrectData" xml:space="preserve">
     <value>Incorrect Input Data</value>
   </data>
@@ -2181,6 +2184,9 @@ NOTE: Evaluations are not being updated (press F8 to allow).</value>
   </data>
   <data name="FlMsgNumberOfChaptersCreated" xml:space="preserve">
     <value>Number of New Chapters</value>
+  </data>
+  <data name="FlMsgVariantGamesSkipped" xml:space="preserve">
+    <value>Chess variant games skipped (count=$0)</value>
   </data>
   <data name="MsgBadAuthorizationToken" xml:space="preserve">
     <value>Bad Authorization Token</value>

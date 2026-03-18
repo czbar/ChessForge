@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Shapes;
 
 namespace GameTree
 {
@@ -21,8 +16,10 @@ namespace GameTree
         /// <param name="text"></param>
         /// <param name="games"></param>
         /// <returns></returns>
-        public static List<GameData> ParsePgnMultiGameText(string text)
+        public static List<GameData> ParsePgnMultiGameText(string text, out int variantGamesCount)
         {
+            variantGamesCount = 0;
+
             List<GameData> games = new List<GameData>();
 
             // read line by line, fishing for lines with PGN headers i.e. beginning with "[" followed by a keyword.
@@ -38,7 +35,7 @@ namespace GameTree
 
                 while ((line = reader.ReadLine()) != null)
                 {
-                    ProcessMultiPgnTextLine(line, lineNo, ref gameText, ref gm, ref games);
+                    ProcessMultiPgnTextLine(line, lineNo, ref gameText, ref gm, ref games, ref variantGamesCount);
                 }
 
                 if (games.Count > 0)
@@ -66,7 +63,8 @@ namespace GameTree
                                          int lineNo,
                                          ref StringBuilder sbGameText,
                                          ref GameData gm,
-                                         ref List<GameData> games)
+                                         ref List<GameData> games,
+                                         ref int variantGamesCount)
         {
             bool headerLine = true;
 
@@ -89,6 +87,10 @@ namespace GameTree
                     if (gm.Header.DetermineContentType() != GameData.ContentType.UNKNOWN)
                     {
                         games.Add(gm);
+                    }
+                    else
+                    {
+                        variantGamesCount++;
                     }
                     gm = new GameData();
                 }

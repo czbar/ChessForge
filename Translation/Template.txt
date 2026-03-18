@@ -653,6 +653,10 @@ ErrEmptyUserName=
 #english: ErrNotStandardChessVariant=Non Standard Chess variant
 ErrNotStandardChessVariant=
 
+#description: Only chess variant games found.
+#english: ErrVariantGamesOnly=Only chess variant games found.
+ErrVariantGamesOnly=
+
 #description: Title of the dialog reporting incomplete data
 #english: PromptCorrectData=Incorrect Input Data
 PromptCorrectData=
@@ -3165,6 +3169,10 @@ FlMsgNumberGamesMoved=
 #description: Flash message: Number of chapters created
 #english: FlMsgNumberOfChaptersCreated=Number of New Chapters
 FlMsgNumberOfChaptersCreated=
+
+#description: Flash message: variant games skipped
+#english: FlMsgVariantGamesSkipped=Chess variant games skipped (count=$0)
+FlMsgVariantGamesSkipped=
 
 ##################################
 #

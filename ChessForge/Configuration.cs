@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using WebAccess;
 using static ChessForge.ChessBoards;
 
 namespace ChessForge
@@ -18,11 +19,6 @@ namespace ChessForge
         //
         //*********************************
 
-
-        /// <summary>
-        /// hard coded root URL for the public library.
-        /// </summary>
-        public static string PUBLIC_LIBRARY_URL = "https://chessforge.sourceforge.io/Library/";
 
         /// <summary>
         /// Url to the currently configured private library.
@@ -50,6 +46,57 @@ namespace ChessForge
         /// </summary>
         public static int CoreCount;
 
+
+        //*********************************
+        //
+        //   URLs to access services
+        //   on chess.com and lichess.
+        //
+        //*********************************
+
+        public static string UrlChesscomArchiveList = UrlTarget.ChesscomArchiveList;
+        public static string UrlChesscomGames = UrlTarget.ChesscomGames;
+        public static string UrlLichessCreateAuthToken = UrlTarget.LichessCreateAuthToken;
+        public static string UrlLichessGameDownload = UrlTarget.LichessGameDownload;
+        public static string UrlLichessUserGames = UrlTarget.LichessUserGames;
+        public static string UrlLichessOpeningExplorer = UrlTarget.LichessOpeningExplorer;
+        public static string UrlLichessTablebaseLookup = UrlTarget.LichessTablebaseLookup;
+
+        /// <summary>
+        /// Sets the UrlTarget static variables to the values currently in the configuration
+        /// unless they are empty.
+        /// </summary>
+        public static void SetUrlTargets()
+        {
+            if (!string.IsNullOrWhiteSpace(UrlChesscomArchiveList))
+            {
+                UrlTarget.ChesscomArchiveList = UrlChesscomArchiveList;
+            }
+            if (!string.IsNullOrWhiteSpace(UrlChesscomGames))
+            {
+                 UrlTarget.ChesscomGames = UrlChesscomGames;
+            }
+            if (!string.IsNullOrWhiteSpace(UrlLichessCreateAuthToken))
+            {
+                UrlTarget.LichessCreateAuthToken = UrlLichessCreateAuthToken;
+            }
+            if (!string.IsNullOrWhiteSpace(UrlLichessGameDownload))
+            {
+                UrlTarget.LichessGameDownload = UrlLichessGameDownload;
+            }
+            if (!string.IsNullOrWhiteSpace(UrlLichessUserGames))
+            {
+                UrlTarget.LichessUserGames = UrlLichessUserGames;
+            }
+            if (!string.IsNullOrWhiteSpace(UrlLichessOpeningExplorer))
+            {
+                UrlTarget.LichessOpeningExplorer = UrlLichessOpeningExplorer;
+            }
+            if (!string.IsNullOrWhiteSpace(UrlLichessTablebaseLookup))
+            {
+                UrlTarget.LichessTablebaseLookup = UrlLichessTablebaseLookup;
+            }   
+        }
 
         //*********************************
         //
@@ -379,6 +426,11 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Last time the version check was performed. It is used to avoid checking for new version too often.
+        /// </summary>
+        public static DateTime? LastVersionCheckDate = null;
+
+        /// <summary>
         /// User name for the chess.com site
         /// </summary>
         public static string WebGamesChesscomUser = "";
@@ -695,6 +747,14 @@ namespace ChessForge
         // CONFIGURATION ITEM NAMES
         //*********************************
 
+        private const string CFG_URL_CHESSCOM_ARCHIVE_LIST = "UrlChesscomArchiveList";
+        private const string CFG_URL_CHESSCOM_GAMES = "UrlChesscomGames";
+        private const string CFG_URL_LICHESS_CREATE_AUTH_TOKEN = "UrlLichessCreateAuthToken";
+        private const string CFG_URL_LICHESS_GAME_DOWNLOAD = "UrlLichessGameDownload";
+        private const string CFG_URL_LICHESS_USER_GAMES = "UrlLichessUserGames";
+        private const string CFG_URL_LICHESS_OPENING_EXPLORER = "UrlLichessOpeningExplorer";
+        private const string CFG_URL_LICHESS_TABLEBASE_LOOKUP = "UrlLichessTablebaseLookup";
+
         private const string CFG_LAST_MESSAGE_READ = "LastWebMessageRead";
         private const string CFG_MOVE_SPEED = "MoveSpeed";
         private const string CFG_CHESSBOARD_SIZE_ADJUSTMENT = "ChessboardSizeAdjustment";
@@ -750,7 +810,7 @@ namespace ChessForge
 
         private const string CFG_AUTO_THUMBNAIL_MOVE_NO = "AutoThumbnailMoveNo";
         private const string CFG_AUTO_THUMBNAIL_COLOR = "AutoThumbnailColor";
-        
+
 
         /// <summary>
         /// PGN export configuration.
@@ -781,8 +841,9 @@ namespace ChessForge
         private const string CFG_WG_SITE = "WebGamesSite";
         private const string CFG_WG_LICHESS_USER = "WebGamesLichessUser";
         private const string CFG_LICHESS_AUTH_TOKEN = "LichessAuthToken";
-        private const string CFG_LICHESS_AUTH_TOKEN_SAVED_IN_CONFIG = "LichessAuthTokenSavedInConfig";        
+        private const string CFG_LICHESS_AUTH_TOKEN_SAVED_IN_CONFIG = "LichessAuthTokenSavedInConfig";
         private const string CFG_LICHESS_API_RETRIES = "LichessApiRetries";
+        private const string CFG_LAST_VERSION_CHECK = "LastVersionCheckDate";
         private const string CFG_WG_CHESSCOM_USER = "WebGamesChessComUser";
         private const string CFG_WG_MAX_GAMES = "WebGamesMaxCount";
         private const string CFG_WG_MOST_RECENT = "WebGamesMostRecent";
@@ -913,7 +974,7 @@ namespace ChessForge
                 sb.Append(CFG_AUTOGEN_TREE_DEPTH + "=" + AutogenTreeDepth.ToString() + Environment.NewLine);
                 sb.Append(CFG_MOVE_SPEED + "=" + MoveSpeed.ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_MESSAGE_READ + "=" + LastWebMessageRead.ToString() + Environment.NewLine);
-                
+
                 sb.Append(CFG_CHESSBOARD_SIZE_ADJUSTMENT + "=" + ChessboardSizeAdjustment.ToString() + Environment.NewLine);
                 sb.Append(CFG_DEFAULT_INDEX_DEPTH + "=" + DefaultIndexDepth.ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_DIRECTORY + "=" + (LastOpenDirectory ?? "").ToString() + Environment.NewLine);
@@ -949,9 +1010,9 @@ namespace ChessForge
                 sb.Append(CFG_DIAGRAM_IMAGE_SIZE + "=" + DiagramImageSize.ToString() + Environment.NewLine);
                 sb.Append(CFG_DIAGRAM_IMAGE_COLORS + "=" + DiagramImageColors.ToString() + Environment.NewLine);
                 sb.Append(CFG_DIAGRAM_IMAGE_BORDER_WIDTH + "=" + DiagramImageBorderWidth.ToString() + Environment.NewLine);
-                
+
                 sb.Append(CFG_AUTO_THUMBNAIL_MOVE_NO + "=" + AutoThumbnailMoveNo.ToString() + Environment.NewLine);
-                sb.AppendLine(CFG_AUTO_THUMBNAIL_COLOR + "=" + (AutoThumbnailColor ? "1" : "0"));                
+                sb.AppendLine(CFG_AUTO_THUMBNAIL_COLOR + "=" + (AutoThumbnailColor ? "1" : "0"));
 
                 sb.Append(CFG_VIABLE_MOVE_CP_DIFF + "=" + ViableMoveCpDiff.ToString() + Environment.NewLine);
                 sb.Append(CFG_BLUNDER_DET_EVAL_DROP + "=" + BlunderDetectEvalDrop.ToString() + Environment.NewLine);
@@ -979,7 +1040,7 @@ namespace ChessForge
                 sb.Append(CFG_SHOW_MOVES_AT_FORK + "=" + (ShowMovesAtFork ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_SHOW_MATERIAL + "=" + (ShowMaterial ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_SHOW_EXPLORERS + "=" + (ShowExplorers ? "1" : "0") + Environment.NewLine);
-                sb.Append(CFG_SHOW_EVALUATION_CHART + "=" + (ShowEvaluationChart? "1" : "0") + Environment.NewLine);
+                sb.Append(CFG_SHOW_EVALUATION_CHART + "=" + (ShowEvaluationChart ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_SHOW_INTRO_TAB + "=" + (ShowIntroTab ? "1" : "0") + Environment.NewLine);
                 sb.Append(CFG_ALLOW_MOUSE_WHEEL_FOR_MOVES + "=" + (AllowMouseWheelForMoves ? "1" : "0") + Environment.NewLine);
 
@@ -990,6 +1051,7 @@ namespace ChessForge
                 sb.AppendLine(CFG_LICHESS_AUTH_TOKEN + "=" + LichessAuthToken);
                 sb.AppendLine(CFG_LICHESS_AUTH_TOKEN_SAVED_IN_CONFIG + "=" + (LichessAuthTokenSavedInConfig ? "1" : "0"));
                 sb.AppendLine(CFG_LICHESS_API_RETRIES + "=" + _lichessApiRetries);
+                sb.AppendLine(CFG_LAST_VERSION_CHECK + "=" + LastVersionCheckDate);
                 sb.AppendLine(CFG_WG_CHESSCOM_USER + "=" + WebGamesChesscomUser);
                 sb.AppendLine(CFG_WG_MAX_GAMES + "=" + WebGamesMaxCount);
                 sb.AppendLine(CFG_WG_MOST_RECENT + "=" + (WebGamesMostRecent ? "1" : "0"));
@@ -1167,7 +1229,7 @@ namespace ChessForge
                     {
                         searchPath = Path.GetDirectoryName(EngineExePath);
                     }
-                    catch 
+                    catch
                     {
                         // there was no path set
                     }
@@ -1358,7 +1420,7 @@ namespace ChessForge
                             break;
                         case CFG_DIAGRAM_IMAGE_BORDER_WIDTH:
                             int.TryParse(value, out DiagramImageBorderWidth);
-                            break;                            
+                            break;
                         case CFG_AUTO_THUMBNAIL_MOVE_NO:
                             int.TryParse(value, out AutoThumbnailMoveNo);
                             break;
@@ -1478,6 +1540,9 @@ namespace ChessForge
                         case CFG_LICHESS_API_RETRIES:
                             int.TryParse(value, out _lichessApiRetries);
                             break;
+                        case CFG_LAST_VERSION_CHECK:
+                            LastVersionCheckDate = GetDate(value);
+                            break;
                         case CFG_WG_CHESSCOM_USER:
                             WebGamesChesscomUser = value;
                             break;
@@ -1511,6 +1576,28 @@ namespace ChessForge
                                 {
                                 }
                             }
+                            break;
+
+                        case CFG_URL_CHESSCOM_ARCHIVE_LIST:
+                            UrlChesscomArchiveList = value;
+                            break;
+                        case CFG_URL_CHESSCOM_GAMES:
+                            UrlChesscomGames = value;
+                            break;
+                        case CFG_URL_LICHESS_CREATE_AUTH_TOKEN:
+                            UrlLichessCreateAuthToken = value;
+                            break;
+                        case CFG_URL_LICHESS_GAME_DOWNLOAD:
+                            UrlLichessGameDownload = value;
+                            break;
+                        case CFG_URL_LICHESS_USER_GAMES:
+                            UrlLichessUserGames = value;
+                            break;
+                        case CFG_URL_LICHESS_OPENING_EXPLORER:
+                            UrlLichessOpeningExplorer = value;
+                            break;
+                        case CFG_URL_LICHESS_TABLEBASE_LOOKUP:
+                            UrlLichessTablebaseLookup = value;
                             break;
                     }
                 }

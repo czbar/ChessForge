@@ -550,6 +550,29 @@ namespace ChessForge
                         nd.Comment = CleanupCommentText(nd.Comment);
                         sb.Append(nd.Comment);
                     }
+
+                    // Reference to text
+                    if (!string.IsNullOrEmpty(nd.References))
+                    {
+                        List<Article> articles = ReferenceUtils.BuildReferencedArticlesList(nd.References);
+                        bool isFirst = true;
+                        foreach (Article article in articles)
+                        {
+                            if (!isFirst)
+                            {
+                                sb.Append(", ");
+                            }
+                            else
+                            {
+                                if (!string.IsNullOrEmpty(nd.Comment))
+                                {
+                                    sb.Append(" ");
+                                }
+                                isFirst = false;
+                            }
+                            sb.Append(article.Tree.Header.BuildGameReferenceTitle(false));
+                        }
+                    }
                 }
 
                 sb.Append("} ");
@@ -562,6 +585,11 @@ namespace ChessForge
             }
         }
 
+        /// <summary>
+        /// Replaces certain characters in the comment text that may interfere with PGN parsing.
+        /// </summary>
+        /// <param name="comment"></param>
+        /// <returns></returns>
         private static string CleanupCommentText(string comment)
         {
             if (string.IsNullOrEmpty(comment))

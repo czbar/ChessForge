@@ -345,7 +345,7 @@ namespace ChessForge
 
             AppState.MainWin.Dispatcher.Invoke(() =>
             {
-                secondaryTree.DeleteRemainingMoves(guess);
+                secondaryTree.DeleteRemainingMoves(guess, out _);
                 TreeNode lastNode = AppState.MainWin.ActiveLine.GetLastNode();
                 if (lastNode.Parent != null)
                 {

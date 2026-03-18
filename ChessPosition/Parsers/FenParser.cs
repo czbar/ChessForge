@@ -1,10 +1,7 @@
-﻿using System;
+﻿using ChessPosition;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using ChessPosition;
 //
 // Documentation: https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation
 //

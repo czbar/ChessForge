@@ -849,7 +849,7 @@ namespace ChessForge
                             chapter.SetTitle(dlg.ChapterTitle);
                             if (dlg.DeleteOriginal)
                             {
-                                DeleteRemainingMoves();
+                                DeleteRemainingMoves(false);
                                 viewRebuilt = true;
                             }
                             _mainWin.RebuildChaptersView();
@@ -891,7 +891,7 @@ namespace ChessForge
         /// <summary>
         /// Deletes the current move and all moves that follow it.
         /// </summary>
-        public void DeleteRemainingMoves()
+        public void DeleteRemainingMoves(bool shiftReferences)
         {
             try
             {
@@ -903,7 +903,14 @@ namespace ChessForge
 
                 TreeNode nd = GetSelectedNode();
                 TreeNode parent = nd.Parent;
-                ShownVariationTree.DeleteRemainingMoves(nd);
+
+                ShownVariationTree.DeleteRemainingMoves(nd, out List<TreeNode> deletedNodes);
+
+                if (shiftReferences && parent != null && deletedNodes != null)
+                {
+                    ReferenceUtils.AddOtherNodeReferences(parent, deletedNodes);
+                }
+
                 ShownVariationTree.BuildLines();
                 _mainWin.SetActiveLine(parent.LineId, parent.NodeId);
                 BuildFlowDocumentForVariationTree(false);

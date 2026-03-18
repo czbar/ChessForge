@@ -88,11 +88,11 @@ namespace WebAccess
                 DecodeYearMonth(yearMonth, out uint year, out uint month);
                 string sYear = year.ToString("0000");
                 string sMonth = month.ToString("00");
-                string url = string.Format("https://api.chess.com/pub/player/{0}/games/{1}/{2}/pgn", filter.User, sYear, sMonth);
+                string url = string.Format(UrlTarget.ChesscomGames, filter.User, sYear, sMonth);
                 string text = await ExecuteHttpCall(url);
 
                 allGames.AppendLine(text);
-                var newGames = PgnMultiGameParser.ParsePgnMultiGameText(text);
+                var newGames = PgnMultiGameParser.ParsePgnMultiGameText(text, out _);
                 games.AddRange(newGames);
 
                 // remove games out of date range before checking the count!
@@ -211,7 +211,7 @@ namespace WebAccess
         /// <returns></returns>
         private static string GetArchiveListUrl(string user)
         {
-            string url = string.Format("https://api.chess.com/pub/player/{0}/games/archives", user);
+            string url = string.Format(UrlTarget.ChesscomArchiveList, user);
             return url;
         }
 

@@ -39,7 +39,7 @@ namespace WebAccess
         /// Gets the version number of Chess Forge currently available from Source Forge.
         /// </summary>
         /// <returns></returns>
-        public static async Task<string> GetVersion()
+        public static async Task<string> GetVersion(DateTime? lastCheck)
         {
             try
             {
@@ -47,7 +47,7 @@ namespace WebAccess
                 using (System.Net.Http.HttpClient client = new System.Net.Http.HttpClient())
                 {
                     client.DefaultRequestHeaders.Add("User-Agent", RestApiRequest.UserAgentLichess);
-                    var json = await client.GetStringAsync("https://chessforge.sourceforge.io/Releases/Releases.json");
+                    var json = await client.GetStringAsync(UrlTarget.ChessForgeReleasesFile);
 
                     dynamic obj = JsonConvert.DeserializeObject<dynamic>(json);
                     
@@ -67,6 +67,15 @@ namespace WebAccess
 
                     string messageIdText = obj.MessageId;
                     int.TryParse(messageIdText, out MessageId);
+
+                    try
+                    {
+                        if (!lastCheck.HasValue || (DateTime.Now.Date != lastCheck.Value.Date))
+                        {
+                            var txt = await client.GetStringAsync(UrlTarget.ChessForgePingFile);
+                        }
+                    }
+                    catch { }
 
                     return json;
                 }

@@ -57,6 +57,11 @@ namespace GameTree
         public EditType OpType { get { return _opType; } }
 
         /// <summary>
+        /// Original references of the parent node. This is required for undoing delete line operation.
+        /// </summary>
+        public string OrigParentRefs { get { return _origParentRefs; } }
+
+        /// <summary>
         /// Type of this operation.
         /// </summary>
         private EditType _opType;
@@ -79,15 +84,19 @@ namespace GameTree
         // Child index 
         private int _childIndex;
 
+        // original references of the parent node
+        private string _origParentRefs;
+
         /// <summary>
         /// Constructor for DELETE_LINE.
         /// </summary>
-        public EditOperation(EditType tp, TreeNode deletionRoot, List<TreeNode> deletedNodes, int childIndex) : base()
+        public EditOperation(EditType tp, TreeNode deletionRoot, List<TreeNode> deletedNodes, string origParentRefs, int childIndex) : base()
         {
             _opType = tp;
             _node = deletionRoot;
             _nodeList = deletedNodes;
             _childIndex = childIndex;
+            _origParentRefs = origParentRefs;
         }
 
         /// <summary>

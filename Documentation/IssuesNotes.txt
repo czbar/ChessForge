@@ -26,12 +26,6 @@ In Study, no spacing after the comment under a diagram before next line. Is this
 
 After a comment on the main line, adding comment before-move for the next move, inserts spurious leading space.
 
-Why is sound disappearing?
-
 Reordering lines in a game on a move with multi-comment has a strange effect (selected move disappears?).
 
-Add ability to show a current message to the user (same as notification about a new version).
-
-Switch off Explorer if user doe snot provide token.
-
-When opening Intro and other tabs, the token dialog shows up twice. Needs blocking.
+Double click on c5 after 1.d4 in the Study, removes select background, leaving the move white on yellow. 

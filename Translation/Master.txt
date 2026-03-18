@@ -501,6 +501,9 @@ ErrEmptyUserName=Provide User Name
 #PGN is not for the Standard Chess variant
 ErrNotStandardChessVariant=Non Standard Chess variant
 
+#Only chess variant games found.
+ErrVariantGamesOnly=Only chess variant games found.
+
 #Title of the dialog reporting incomplete data
 PromptCorrectData=Incorrect Input Data
 
@@ -2477,6 +2480,9 @@ FlMsgNumberGamesMoved=Number of Games Moved
 
 #Flash message: Number of chapters created
 FlMsgNumberOfChaptersCreated=Number of New Chapters
+
+#Flash message: variant games skipped
+FlMsgVariantGamesSkipped=Chess variant games skipped (count=$0)
 
 ##################################
 #
