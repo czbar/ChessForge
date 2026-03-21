@@ -1266,7 +1266,7 @@ namespace ChessForge
                     _chaptersView.BuildFlowDocumentForChaptersView(false);
                 }
                 _chaptersView.HighlightActiveChapter(_chaptersView.HostRtb.Document);
-                _chaptersView.BringActiveChapterIntoView();
+                _chaptersView.ScrollToRecentItem();
                 _chaptersView.UpdateIntroHeaders(_chaptersView.HostRtb.Document);
             }
 
