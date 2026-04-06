@@ -188,6 +188,7 @@
     <Compile Include="FindDuplicates.cs" />
     <Compile Include="FindGames.cs" />
     <Compile Include="FindIdenticalPositions.cs" />
+    <Compile Include="FolderPicker.cs" />
     <Compile Include="FoundReferenceUsageDialog.xaml.cs">
       <DependentUpon>FoundReferenceUsageDialog.xaml</DependentUpon>
     </Compile>
@@ -304,6 +305,7 @@
     <Compile Include="SearchPgnFilesDialog.xaml.cs">
       <DependentUpon>SearchPgnFilesDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SearchPositionInFiles.cs" />
     <Compile Include="SecureTokenStorage.cs" />
     <Compile Include="SoundManager.cs" />
     <Compile Include="VariationTreeViewScroller.cs" />
@@ -710,6 +712,7 @@
     <EmbeddedResource Include="Properties\OpeningNames.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>OpeningNames.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.pl.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
