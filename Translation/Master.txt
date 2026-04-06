@@ -180,6 +180,16 @@ Copy=Copy
 #Cut
 Cut=Cut
 
+#Progress
+Progress=Progress
+
+#Not started
+NotStarted=Not Started
+
+#Completed
+Completed=Completed
+
+
 #Paste
 Paste=Paste
 
@@ -1649,6 +1659,21 @@ CritsInvalid=No valid criteria have been specified.
 
 #No games found
 MsgNoGamesFound=No games matching search criteria found.
+
+#######################################
+#
+# Header: DIALOG Search in PGN Files
+#
+
+#Search in PGN files
+SearchInPgnFiles=Search in PGN files
+
+#Searching
+Searching=Searching
+
+#File folder
+FileFolder=Directory
+
 
 #######################################
 #

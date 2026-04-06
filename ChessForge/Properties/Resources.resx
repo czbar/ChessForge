@@ -279,6 +279,15 @@
   <data name="Cut" xml:space="preserve">
     <value>Cut</value>
   </data>
+  <data name="Progress" xml:space="preserve">
+    <value>Progress</value>
+  </data>
+  <data name="NotStarted" xml:space="preserve">
+    <value>Not Started</value>
+  </data>
+  <data name="Completed" xml:space="preserve">
+    <value>Completed</value>
+  </data>
   <data name="Paste" xml:space="preserve">
     <value>Paste</value>
   </data>
@@ -1473,6 +1482,15 @@ NOTE: Evaluations are not being updated (press F8 to allow).</value>
   </data>
   <data name="MsgNoGamesFound" xml:space="preserve">
     <value>No games matching search criteria found.</value>
+  </data>
+  <data name="SearchInPgnFiles" xml:space="preserve">
+    <value>Search in PGN files</value>
+  </data>
+  <data name="Searching" xml:space="preserve">
+    <value>Searching</value>
+  </data>
+  <data name="FileFolder" xml:space="preserve">
+    <value>Directory</value>
   </data>
   <data name="InEvaluation" xml:space="preserve">
     <value>During Evaluations</value>

@@ -33,5 +33,3 @@ Double click on c5 after 1.d4 in the Study, removes select background, leaving t
 Translate all server errors.
 
 Add a tool to search a directory for workbook or a PGN file with a given position.
-
-Add option to view lichess non-master games.
