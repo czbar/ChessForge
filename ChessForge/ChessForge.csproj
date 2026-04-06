@@ -301,6 +301,9 @@
     <Compile Include="RepositionPieceProcessor.cs" />
     <Compile Include="Resources\ThemeColorSet.cs" />
     <Compile Include="ResourceUtils.cs" />
+    <Compile Include="SearchPgnFilesDialog.xaml.cs">
+      <DependentUpon>SearchPgnFilesDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SecureTokenStorage.cs" />
     <Compile Include="SoundManager.cs" />
     <Compile Include="VariationTreeViewScroller.cs" />
@@ -602,6 +605,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DiagramImageSizeDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SearchPgnFilesDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
