@@ -8,7 +8,7 @@
         ResizeMode="NoResize"
         mc:Ignorable="d"
         ShowInTaskbar="True"
-        Title="{x:Static p:Resources.SetupPositionToSearch}" Height="541" Width="580" MouseUp="Window_MouseUp" MouseMove="Window_MouseMove" MouseLeave="Window_MouseLeave" >
+        Title="{x:Static p:Resources.SetupPositionToSearch}" Height="573" Width="580" MouseUp="Window_MouseUp" MouseMove="Window_MouseMove" MouseLeave="Window_MouseLeave" >
     <Grid x:Name="_grdDialog" >
         <Canvas x:Name="UiCnvSetup" Margin="63,10,0,0" Width="268" Height="368" HorizontalAlignment="Left" VerticalAlignment="Top" MouseDown="UiCnvSetup_MouseDown" >
             <Canvas x:Name="UiCnvBoard" Background="Black" Height="268" Width="268" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="0" Canvas.Top="50"  >
@@ -38,5 +38,6 @@
         <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Search}" Width="100" HorizontalAlignment="Center" Margin="-250,453,0,0" VerticalAlignment="Top" Click="UiBtnOk_Click"/>
         <Button x:Name="UiBtnCancel" IsCancel="True" Content="{x:Static p:Resources.Cancel}" Width="100"  HorizontalAlignment="Center" Margin="0,453,0,0" VerticalAlignment="Top" Click="UiBtnCancel_Click"/>
         <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" Width="100"  HorizontalAlignment="Center" Margin="250,453,0,0" VerticalAlignment="Top" Click="UiBtnHelp_Click" />
+        <Button x:Name="UiBtnSearchInFiles" Content="{x:Static p:Resources.SearchInPgnFiles}" Width="350"  HorizontalAlignment="Center" Margin="0,490,0,0" VerticalAlignment="Top" Click="UiBtnSearchInFiles_Click" />
     </Grid>
 </Window>

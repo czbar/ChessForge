@@ -64,12 +64,19 @@ namespace ChessForge
         private BoardPosition _position;
 
         /// <summary>
+        /// Whether the user wants to search for the position in files after pressing the Search in Files button.
+        /// </summary>
+        public bool SearchInFiles { get; private set; }
+
+        /// <summary>
         /// Constructs the dialog.
         /// Sets up offset values.
         /// </summary>
         public SearchPositionDialog(BoardPosition position)
         {
             InitializeComponent();
+            SearchInFiles = false;
+
             _position = position;
 
             _boardCanvasToSetupCanvasLeftOffset = Canvas.GetLeft(UiCnvBoard);
@@ -747,6 +754,27 @@ namespace ChessForge
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void UiBtnOk_Click(object sender, RoutedEventArgs e)
+        {
+            SearchInFiles = false;
+            ProcessExitRequest();
+        }
+
+        /// <summary>
+        /// Exits the dialog on user pressing the Search in Files button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnSearchInFiles_Click(object sender, RoutedEventArgs e)
+        {
+            SearchInFiles = true;
+            ProcessExitRequest();
+        }
+
+        /// <summary>
+        /// Checks if the position is valid and if so, exits the dialog.
+        /// Otherwise, shows an error message and keeps the dialog open.
+        /// </summary>
+        private void ProcessExitRequest()
         {
             if (CheckPosition(out string errorText, out bool goodForPartialSearch))
             {
