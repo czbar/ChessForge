@@ -7,17 +7,20 @@
         xmlns:local="clr-namespace:ChessForge"
         ResizeMode="NoResize"
         mc:Ignorable="d"
-        Title="{x:Static p:Resources.SearchInPgnFiles}" Height="450" Width="540">
+        Title="{x:Static p:Resources.SearchInPgnFiles}" Height="450" Width="450">
     <Grid>
-        <Label x:Name="UiLblDirectory" Content="{x:Static p:Resources.FileFolder}" HorizontalAlignment="Right" Margin="0,20,475,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="UiTbDirectory" IsEnabled="False" HorizontalAlignment="Center" Margin="0,25,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="400"/>
-        <Button x:Name="UiBtnSelectFolder" Content=". . ." HorizontalAlignment="Center" Margin="470,23,15,0" VerticalAlignment="Top" Width="28" />
-        <Button x:Name="UiBtnStartStop" Content="{x:Static p:Resources.Search}" Width="80" HorizontalAlignment="Center" Margin="0,55,0,0" VerticalAlignment="Top"/>
-        <GroupBox x:Name="UiGbProgress" Header="{x:Static p:Resources.Progress}" HorizontalAlignment="Center" Height="60" Width="400" Margin="0,80" VerticalAlignment="Top" >
+        <GroupBox x:Name="UiGbFolder" Header="{x:Static p:Resources.FileFolder}" HorizontalAlignment="Center" Height="86" Width="400" Margin="0,10" VerticalAlignment="Top" >
+            <StackPanel>
+                <TextBox x:Name="UiTbDirectory" IsEnabled="True" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="10,10,0,0" Width="330" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" />
+                <Button x:Name="UiBtnSelectFolder" Content=". . ." HorizontalAlignment="Right" Margin="0,-20,10,0" VerticalAlignment="Top" Width="28" Click="UiBtnSelectFolder_Click" />
+                <Button x:Name="UiBtnStartStop" Content="{x:Static p:Resources.Search}" Width="80" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Click="UiBtnStartStop_Click"/>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox x:Name="UiGbProgress" Header="{x:Static p:Resources.Progress}" HorizontalAlignment="Center" Height="60" Width="400" Margin="0,100" VerticalAlignment="Top" >
             <Label x:Name="UiLblSearchProgress" Content="{x:Static p:Resources.NotStarted}" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top"/>
         </GroupBox>
-        <ListBox x:Name="UiLbFiles" Width="400" Margin="0,160,0,85"/>
-        <Button x:Name="UiBtnClose" Content="{x:Static p:Resources.Close}" Width="80" HorizontalAlignment="Center" Margin="0,0,0,45" VerticalAlignment="Bottom"/>
+        <ListBox x:Name="UiLbFiles" Width="400" Margin="0,172,0,55"/>
+        <Button x:Name="UiBtnClose" Content="{x:Static p:Resources.Close}" Width="80" HorizontalAlignment="Center" Margin="0,0,0,20" VerticalAlignment="Bottom" Click="UiBtnClose_Click"/>
         <Button x:Name="UiBtnCancel" IsCancel="True" Content="" Width="0" Height="0" />
     </Grid>
 </Window>
