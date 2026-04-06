@@ -1490,7 +1490,10 @@ NOTE: Evaluations are not being updated (press F8 to allow).</value>
     <value>Searching</value>
   </data>
   <data name="FileFolder" xml:space="preserve">
-    <value>Directory</value>
+    <value>Folder</value>
+  </data>
+  <data name="SelectFolder" xml:space="preserve">
+    <value>Select a folder</value>
   </data>
   <data name="InEvaluation" xml:space="preserve">
     <value>During Evaluations</value>

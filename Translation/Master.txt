@@ -1672,7 +1672,10 @@ SearchInPgnFiles=Search in PGN files
 Searching=Searching
 
 #File folder
-FileFolder=Directory
+FileFolder=Folder
+
+#Select a folder
+SelectFolder=Select a Folder
 
 
 #######################################

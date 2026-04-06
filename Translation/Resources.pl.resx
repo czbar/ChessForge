@@ -1490,7 +1490,10 @@ UWAGA: Oceny nie są uaktualniane (zezwól naciskając F8).</value>
     <value>Trwa wyszukiwanie</value>
   </data>
   <data name="FileFolder" xml:space="preserve">
-    <value>Katalog</value>
+    <value>Folder</value>
+  </data>
+  <data name="SelectFolder" xml:space="preserve">
+    <value>Wybierz folder</value>
   </data>
   <data name="InEvaluation" xml:space="preserve">
     <value>Podczas Oceniania</value>

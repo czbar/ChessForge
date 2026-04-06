@@ -2129,8 +2129,12 @@ SearchInPgnFiles=
 Searching=
 
 #description: File folder
-#english: FileFolder=Directory
+#english: FileFolder=Folder
 FileFolder=
+
+#description: Select a folder
+#english: SelectFolder=Select a folder
+SelectFolder=
 
 
 #######################################

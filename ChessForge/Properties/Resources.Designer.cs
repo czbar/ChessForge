@@ -3553,7 +3553,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Directory.
+        ///   Looks up a localized string similar to Folder.
         /// </summary>
         public static string FileFolder {
             get {
@@ -7231,6 +7231,15 @@ namespace ChessForge.Properties {
         public static string SelectExercisesToImport {
             get {
                 return ResourceManager.GetString("SelectExercisesToImport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select a folder.
+        /// </summary>
+        public static string SelectFolder {
+            get {
+                return ResourceManager.GetString("SelectFolder", resourceCulture);
             }
         }
         
