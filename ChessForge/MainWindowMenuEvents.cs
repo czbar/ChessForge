@@ -1005,7 +1005,16 @@ namespace ChessForge
                         crits.ExcludeCurrentNode = false;
                         crits.ReportNoFind = true;
 
-                        FindIdenticalPositions.Search(true, crits, out searchAgain);
+                        // check whether we search in the current files or in multiple files
+                        if (dlg.SearchInFiles)
+                        {
+                            searchAgain = false;
+                            SearchPositionInFiles.Search(crits);
+                        }
+                        else
+                        {
+                            FindIdenticalPositions.Search(true, crits, out searchAgain);
+                        }
                     }
                     else
                     {
