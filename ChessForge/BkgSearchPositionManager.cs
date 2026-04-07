@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows.Controls;
 
 namespace ChessForge
 {
@@ -133,7 +134,11 @@ namespace ChessForge
                 if (positionFound)
                 {
                     _fileList[fileIndex].PositionFound = true;
-                    _parentDialog.UiLbFiles.Items.Add(Path.GetFileName(_fileList[fileIndex].FilePath));
+
+                    ListBoxItem item = new ListBoxItem();
+                    item.Content = Path.GetFileName(_fileList[fileIndex].FilePath);
+                    item.ToolTip = _fileList[fileIndex].FilePath;
+                    _parentDialog.UiLbFiles.Items.Add(item);
                 }
 
                 UpdateProgressUI();
