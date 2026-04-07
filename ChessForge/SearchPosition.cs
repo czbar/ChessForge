@@ -22,15 +22,15 @@ namespace ChessForge
         /// <param name="checkEnpassant"></param>
         /// <param name="checkCastleRights"></param>
         /// <returns></returns>
-        public static List<TreeNode> FindIdenticalNodes(VariationTree tree, SearchPositionCriteria crits)
+        public static List<TreeNode> FindIdenticalNodes(VariationTree tree, SearchPositionCriteria crits, bool firstOnly = false)
         {
             if (crits.IsPartialSearch)
             {
-                return FilterPositions(tree, crits);
+                return FilterPositions(tree, crits, firstOnly);
             }
             else
             {
-                return FindNodesWithPosition(tree, crits);
+                return FindNodesWithPosition(tree, crits, firstOnly);
             }
         }
 
@@ -40,7 +40,7 @@ namespace ChessForge
         /// <param name="tree"></param>
         /// <param name="crits"></param>
         /// <returns></returns>
-        public static List<TreeNode> FindNodesWithPosition(VariationTree tree, SearchPositionCriteria crits)
+        public static List<TreeNode> FindNodesWithPosition(VariationTree tree, SearchPositionCriteria crits, bool firstOnly = false)
         {
             List<TreeNode> nodeList = new List<TreeNode>();
 
@@ -57,6 +57,10 @@ namespace ChessForge
                             nodeList = new List<TreeNode>();
                         }
                         nodeList.Add(nd);
+                        if (firstOnly)
+                        {
+                            break;
+                        }
                     }
                 }
             }
@@ -70,7 +74,7 @@ namespace ChessForge
         /// <param name="tree"></param>
         /// <param name="crits"></param>
         /// <returns></returns>
-        public static List<TreeNode> FilterPositions(VariationTree tree, SearchPositionCriteria crits)
+        public static List<TreeNode> FilterPositions(VariationTree tree, SearchPositionCriteria crits, bool firstOnly = false)
         {
             List<TreeNode> nodeList = new List<TreeNode>();
 
@@ -87,6 +91,10 @@ namespace ChessForge
                             nodeList = new List<TreeNode>();
                         }
                         nodeList.Add(nd);
+                        if (firstOnly)
+                        {
+                            break;
+                        }
                     }
                 }
             }
