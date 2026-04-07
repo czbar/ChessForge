@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace ChessForge
 {
@@ -28,6 +28,12 @@ namespace ChessForge
         /// and set to false when the user clicks the stop button or when the search finishes.
         /// </summary>
         public bool IsSearchInProgress = false;
+
+        /// <summary>
+        /// Selected PGN file containing the searched position. 
+        /// This is set when the user double-clicks a file in the list of found files.
+        /// </summary>
+        public string SelectedPgnFile;
 
         /// <summary>
         /// Constructor.
@@ -138,6 +144,26 @@ namespace ChessForge
         private void UiBtnClose_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
+        }
+
+        /// <summary>
+        /// The user double-clicks a file in the list of found files, we set the selected file and close the dialog with a positive result.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiLbFiles_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            ListBoxItem item = GuiUtilities.GetListBoxItemFromPoint(UiLbFiles, e.GetPosition(UiLbFiles));
+
+            if (item != null && item.ToolTip is string path)
+            {
+                if (path != null)
+                {
+                    SelectedPgnFile = path;
+                    DialogResult = true;
+                }
+            }
+
         }
     }
 }

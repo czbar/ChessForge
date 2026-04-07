@@ -19,7 +19,7 @@
         <GroupBox x:Name="UiGbProgress" Header="{x:Static p:Resources.Progress}" HorizontalAlignment="Center" Height="60" Width="400" Margin="0,100" VerticalAlignment="Top" >
             <Label x:Name="UiLblSearchProgress" Content="{x:Static p:Resources.NotStarted}" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top"/>
         </GroupBox>
-        <ListBox x:Name="UiLbFiles" Width="400" Margin="0,172,0,55"/>
+        <ListBox x:Name="UiLbFiles" Width="400" Margin="0,172,0,55" MouseDoubleClick="UiLbFiles_MouseDoubleClick"/>
         <Button x:Name="UiBtnClose" Content="{x:Static p:Resources.Close}" Width="80" HorizontalAlignment="Center" Margin="0,0,0,20" VerticalAlignment="Bottom" Click="UiBtnClose_Click"/>
         <Button x:Name="UiBtnCancel" IsCancel="True" Content="" Width="0" Height="0" />
     </Grid>
