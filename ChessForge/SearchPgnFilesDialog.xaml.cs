@@ -147,6 +147,16 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Links to the relevant Wiki page.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Finding-Position-In-PGN-Files");
+        }
+
+        /// <summary>
         /// The user double-clicks a file in the list of found files, we set the selected file and close the dialog with a positive result.
         /// </summary>
         /// <param name="sender"></param>
