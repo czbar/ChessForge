@@ -110,6 +110,28 @@ namespace ChessForge
         // 
         //**********************
 
+
+        /// <summary>
+        /// Opens a Workbook given its file path.
+        /// Do nothing if the file is already open.
+        /// </summary>
+        /// <param name="path"></param>
+        public void OpenWorkbook(string path)
+        {
+            if (path != AppState.WorkbookFilePath)
+            {
+                if (PrepareToReadWorkbook())
+                {
+                    try
+                    {
+                        Configuration.LastOpenDirectory = Path.GetDirectoryName(path);
+                    }
+                    catch { }
+                    ReadWorkbookFile(path, false, ref WorkbookManager.VariationTreeList);
+                }
+            }
+        }
+
         /// <summary>
         /// Loads a new Workbook file.
         /// If the application is NOT in the IDLE mode, it will ask the user:
@@ -174,16 +196,20 @@ namespace ChessForge
         /// <param name="e"></param>
         private void OpenRecentWorkbookFile(object sender, RoutedEventArgs e)
         {
-            if (PrepareToReadWorkbook())
+            string menuItemName = ((MenuItem)e.Source).Name;
+            string path = Configuration.GetRecentFile(menuItemName);
+
+            if (path != AppState.WorkbookFilePath)
             {
-                string menuItemName = ((MenuItem)e.Source).Name;
-                string path = Configuration.GetRecentFile(menuItemName);
-                try
+                if (PrepareToReadWorkbook())
                 {
-                    Configuration.LastOpenDirectory = Path.GetDirectoryName(path);
+                    try
+                    {
+                        Configuration.LastOpenDirectory = Path.GetDirectoryName(path);
+                    }
+                    catch { }
+                    ReadWorkbookFile(path, false, ref WorkbookManager.VariationTreeList);
                 }
-                catch { }
-                ReadWorkbookFile(path, false, ref WorkbookManager.VariationTreeList);
             }
         }
 
