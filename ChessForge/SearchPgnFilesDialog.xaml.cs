@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -10,11 +11,23 @@ namespace ChessForge
     /// </summary>
     public partial class SearchPgnFilesDialog : Window
     {
+        /// <summary>
+        /// Object that manages the background search for the position in the PGN files.
+        /// </summary>
+        private BkgSearchPositionManager _bkgSearchManager;
+
         // root folder to search for PGN files in
         private string _rootFolder;
 
-        // whether a search is in progress
-        private bool _isSearchInProgress = false;
+        // the criteria for searching for the position in the PGN files
+        private SearchPositionCriteria _searchCrits;
+
+        /// <summary>
+        /// Whether the search for the position in the PGN files is in progress. 
+        /// This is set to true when the user clicks the start button 
+        /// and set to false when the user clicks the stop button or when the search finishes.
+        /// </summary>
+        public bool IsSearchInProgress = false;
 
         /// <summary>
         /// Constructor.
@@ -24,6 +37,7 @@ namespace ChessForge
         {
             InitializeComponent();
             _rootFolder = Configuration.LastOpenDirectory;
+            _searchCrits = crits;
             UiTbDirectory.Text = _rootFolder;
         }
 
@@ -80,7 +94,11 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnSelectFolder_Click(object sender, RoutedEventArgs e)
         {
-            _rootFolder = FolderPicker.ShowDialog(this, Properties.Resources.SelectFolder, UiTbDirectory.Text);
+            string folder = FolderPicker.ShowDialog(this, Properties.Resources.SelectFolder, UiTbDirectory.Text);
+            if (folder != null)
+            {
+                _rootFolder = folder;
+            }
         }
 
         /// <summary>
@@ -91,22 +109,23 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnStartStop_Click(object sender, RoutedEventArgs e)
         {
-            if (_isSearchInProgress)
+            if (IsSearchInProgress)
             {
                 // stop the search
-                _isSearchInProgress = false;
+                IsSearchInProgress = false;
                 UiBtnStartStop.Content = Properties.Resources.Search;
             }
             else
             {
 
-                UiBtnStartStop.Content = Properties.Resources.Stop;
-                List<string> files = GetPgnFilesSafe(_rootFolder).ToList();
+                ObservableCollection<string> files = new ObservableCollection<string>(GetPgnFilesSafe(_rootFolder));
                 if (files.Count > 0)
                 {
-                    _isSearchInProgress = true;
-                    // begin background search for the position in the files
-                    //TODO: implement the search and report the results in the dialog
+                    UiBtnStartStop.Content = Properties.Resources.Stop;
+                    IsSearchInProgress = true;
+                    UiLbFiles.Items.Clear();
+                    _bkgSearchManager = new BkgSearchPositionManager(this, _searchCrits);
+                    _bkgSearchManager.Execute(files);
                 }
             }
         }
