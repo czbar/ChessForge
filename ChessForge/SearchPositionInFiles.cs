@@ -1,11 +1,13 @@
-﻿using GameTree;
-using System.Collections.Generic;
-using System.IO;
-
-namespace ChessForge
+﻿namespace ChessForge
 {
     public class SearchPositionInFiles
     {
+        /// <summary>
+        /// Invoke a dialog to search for a position in PGN files. 
+        /// The dialog may return the name of the PGN file where the position is found
+        /// and user requested to open it.
+        /// </summary>
+        /// <param name="crits"></param>
         public static void Search(SearchPositionCriteria crits)
         {
             SearchPgnFilesDialog dlg = new SearchPgnFilesDialog(crits);
@@ -13,45 +15,16 @@ namespace ChessForge
 
             if (dlg.ShowDialog() == true)
             {
-                // Open a PGN file marked as selected.
-                // TODO: implement
-            }
-        }
-
-        public static List<string> FindFilesWithPosition(List<string> paths, SearchPositionCriteria crits)
-        {
-            List<string> filesWithPosition = new List<string>();
-            foreach (string path in paths)
-            {
-                List<GameData> games = PgnMultiGameParser.ParsePgnMultiGameText(File.ReadAllText(path), out _);
-
-                foreach (GameData gm in games)
+                if (!string.IsNullOrEmpty(dlg.SelectedPgnFile))
                 {
-                    string fen = gm.Header.GetFenString();
-                    if (!gm.Header.IsExercise())
+                    // Open a PGN file marked as selected.
+                    if (dlg.SelectedPgnFile != AppState.WorkbookFilePath)
                     {
-                        fen = null;
-                    }
-
-                    try
-                    {
-                        VariationTree tree = new VariationTree(gm.GetContentType(false));
-                        PgnGameParser parser = new PgnGameParser(gm.GameText, tree, fen);
-                        List<TreeNode> lstNodes = SearchPosition.FindIdenticalNodes(tree, crits, true);
-                        if (lstNodes.Count > 0)
-                        {
-                            filesWithPosition.Add(path);
-                            break;
-                        }
-                    }
-                    catch
-                    {
-                        continue;
+                        AppState.MainWin.OpenWorkbook(dlg.SelectedPgnFile);
                     }
                 }
             }
-
-            return filesWithPosition;
         }
+
     }
 }
