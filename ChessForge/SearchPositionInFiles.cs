@@ -20,7 +20,7 @@
                     // Open a PGN file marked as selected.
                     if (dlg.SelectedPgnFile != AppState.WorkbookFilePath)
                     {
-                        AppState.MainWin.OpenWorkbook(dlg.SelectedPgnFile);
+                        AppState.MainWin.OpenWorkbook(dlg.SelectedPgnFile, true);
                     }
                 }
             }

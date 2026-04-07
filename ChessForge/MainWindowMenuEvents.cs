@@ -116,7 +116,7 @@ namespace ChessForge
         /// Do nothing if the file is already open.
         /// </summary>
         /// <param name="path"></param>
-        public void OpenWorkbook(string path)
+        public void OpenWorkbook(string path, bool openPositionSearch = false)
         {
             if (path != AppState.WorkbookFilePath)
             {
@@ -128,6 +128,11 @@ namespace ChessForge
                     }
                     catch { }
                     ReadWorkbookFile(path, false, ref WorkbookManager.VariationTreeList);
+
+                    if (openPositionSearch)
+                    {
+                        UiMnFindPositions_Click(null, null);
+                    }
                 }
             }
         }
