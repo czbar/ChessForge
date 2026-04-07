@@ -108,6 +108,9 @@
     <Compile Include="BackupVersionDialog.xaml.cs">
       <DependentUpon>BackupVersionDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BkgSearchPosition.cs" />
+    <Compile Include="BkgSearchPositionData.cs" />
+    <Compile Include="BkgSearchPositionManager.cs" />
     <Compile Include="BlunderDetectionDialog.xaml.cs">
       <DependentUpon>BlunderDetectionDialog.xaml</DependentUpon>
     </Compile>
