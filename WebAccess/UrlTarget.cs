@@ -47,12 +47,12 @@
         /// Url for lichess opening explorer. 
         /// It is followed by the FEN of the position we want to get stats for.
         /// </summary>
-        public static string LichessOpeningExplorer = @"https://explorer.lichess.ovh/masters?";
+        public static string LichessOpeningExplorer = @"https://explorer.lichess.org/masters?";
 
         /// <summary>
         /// Url for lichess tablebase lookup. It is followed by the FEN of the position we want to look up.
         /// </summary>
-        public static string LichessTablebaseLookup = @"http://tablebase.lichess.ovh/standard?";
+        public static string LichessTablebaseLookup = @"http://tablebase.lichess.org/standard?";
 
         /// <summary>
         /// Url of Chess Forge's public library.

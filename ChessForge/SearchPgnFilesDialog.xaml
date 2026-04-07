@@ -1,0 +1,27 @@
+﻿<Window x:Class="ChessForge.SearchPgnFilesDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:p="clr-namespace:ChessForge.Properties"
+        xmlns:local="clr-namespace:ChessForge"
+        ResizeMode="NoResize"
+        mc:Ignorable="d"
+        Title="{x:Static p:Resources.SearchInPgnFiles}" Height="450" Width="450">
+    <Grid>
+        <GroupBox x:Name="UiGbFolder" Header="{x:Static p:Resources.FileFolder}" HorizontalAlignment="Center" Height="86" Width="400" Margin="0,10" VerticalAlignment="Top" >
+            <StackPanel>
+                <TextBox x:Name="UiTbDirectory" IsEnabled="True" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="10,10,0,0" Width="330" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" />
+                <Button x:Name="UiBtnSelectFolder" Content=". . ." HorizontalAlignment="Right" Margin="0,-20,10,0" VerticalAlignment="Top" Width="28" Click="UiBtnSelectFolder_Click" />
+                <Button x:Name="UiBtnStartStop" Content="{x:Static p:Resources.Search}" Width="80" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Click="UiBtnStartStop_Click"/>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox x:Name="UiGbProgress" Header="{x:Static p:Resources.Progress}" HorizontalAlignment="Center" Height="60" Width="400" Margin="0,100" VerticalAlignment="Top" >
+            <Label x:Name="UiLblSearchProgress" Content="{x:Static p:Resources.NotStarted}" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top"/>
+        </GroupBox>
+        <ListBox x:Name="UiLbFiles" Width="400" Margin="0,172,0,55" MouseDoubleClick="UiLbFiles_MouseDoubleClick"/>
+        <Button x:Name="UiBtnClose" Content="{x:Static p:Resources.Close}" Width="80" HorizontalAlignment="Center" Margin="-120,0,0,20" VerticalAlignment="Bottom" Click="UiBtnClose_Click"/>
+        <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" Width="80" HorizontalAlignment="Center" Margin="120,0,0,20" VerticalAlignment="Bottom" Click="UiBtnHelp_Click"/>
+        <Button x:Name="UiBtnCancel" IsCancel="True" Content="" Width="0" Height="0" />
+    </Grid>
+</Window>

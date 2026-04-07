@@ -308,7 +308,7 @@ namespace ChessForge
 
                     int gameCount;
                     int.TryParse(UiTbMaxGames.Text, out gameCount);
-                    if (gameCount <= 0 || gameCount > DownloadWebGamesManager.MAX_DOWNLOAD_GAME_COUNT)
+                    if (gameCount <= 0)
                     {
                         gameCount = DownloadWebGamesManager.MAX_DOWNLOAD_GAME_COUNT;
                     }

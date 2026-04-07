@@ -1,6 +1,5 @@
-﻿using GameTree;
-using ChessPosition;
-using System;
+﻿using ChessPosition;
+using GameTree;
 using System.Collections.Generic;
 
 namespace ChessForge
@@ -169,6 +168,7 @@ namespace ChessForge
             }
             catch { }
         }
+
         /// <summary>
         /// Creates a new location object and saves it to the list of locations.
         /// </summary>
@@ -219,6 +219,37 @@ namespace ChessForge
                 {
                 }
             }
+        }
+
+        /// <summary>
+        /// Finds the most recent location of type Study, Model Game or Exercise and returns it.
+        /// </summary>
+        /// <returns></returns>
+        public static WorkbookLocation GetMostRecentArticleLocation()
+        {
+            WorkbookLocation location = null;
+
+            try
+            {
+                int locationIndex = _currentLocationIndex;
+                while (locationIndex >= 0)
+                {
+                    WorkbookLocation lastArticleLoc = _locations[locationIndex];
+                    if (IsLocationValid(lastArticleLoc) &&
+                        (lastArticleLoc.ViewType == TabViewType.STUDY
+                         || lastArticleLoc.ViewType == TabViewType.MODEL_GAME
+                         || lastArticleLoc.ViewType == TabViewType.EXERCISE))
+                    {
+                        location = lastArticleLoc;
+                        break;
+                    }
+
+                    locationIndex--;
+                }
+            }
+            catch { }
+
+            return location;
         }
 
         /// <summary>

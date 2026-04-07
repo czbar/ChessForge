@@ -3,7 +3,6 @@ Remove-Item -Recurse -Force .\Temp 2>$null
 Remove-Item -Recurse -Force .\ReleaseDebug 2>$null
 
 # Create required directory structure
-New-Item -Type dir .\Temp\Resources\Sounds
 New-Item -Type dir .\Temp\pl
 New-Item -Type dir .\ReleaseDebug
 

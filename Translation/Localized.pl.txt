@@ -234,6 +234,19 @@ Copy=Kopiuj
 #english: Cut=Cut
 Cut=Wytnij
 
+#description: Progress
+#english: Progress=Progress
+Progress=Postęp 
+
+#description: Not started
+#english: NotStarted=Not Started
+NotStarted=Nie rozpoczęte
+
+#description: Completed
+#english: Completed=Completed
+Completed=Zakończone
+
+
 #description: Paste
 #english: Paste=Paste
 Paste=Wklej
@@ -2101,6 +2114,28 @@ CritsInvalid=Nie podano kryteriów wyszukiwania.
 #description: No games found
 #english: MsgNoGamesFound=No games matching search criteria found.
 MsgNoGamesFound=Nie znaleziono partii spełniających podane kryteria.
+
+#######################################
+#
+# Header: DIALOG Search in PGN Files
+#
+
+#description: Search in PGN files
+#english: SearchInPgnFiles=Search in PGN files
+SearchInPgnFiles=Search in PGN files
+
+#description: Searching
+#english: Searching=Searching
+Searching=Trwa wyszukiwanie
+
+#description: File folder
+#english: FileFolder=Folder
+FileFolder=Folder
+
+#description: Select a folder
+#english: SelectFolder=Select a folder
+SelectFolder=Wybierz folder
+
 
 #######################################
 #

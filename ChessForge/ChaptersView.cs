@@ -189,6 +189,51 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Scrolls to the most recent article if it is in the Chapters view. Otherwise, scrolls to the ActiveChapter.
+        /// First we check if we have the most recent viewed article in the navigation stack.
+        /// If there is none, we check if there is saved info about the most recent article.
+        /// If the above fails, we scroll to the ActiveChapter. 
+        /// This method is called when the Chapters view is opened to ensure that the most relevant content is in view.
+        /// </summary>
+        public void ScrollToRecentItem()
+        {
+            Chapter activeChapter = AppState.ActiveChapter;
+
+            if (activeChapter != null)
+            {
+                bool handled = false;
+
+                WorkbookLocation recentArticle = WorkbookLocationNavigator.GetMostRecentArticleLocation();
+                if (recentArticle == null)
+                {
+                    if (activeChapter.ActiveModelGameIndex >= 0)
+                    {
+                        PulseManager.SetArticleToBringIntoView(activeChapter.Index, GameData.ContentType.MODEL_GAME, activeChapter.ActiveModelGameIndex);
+                        handled = true;
+                    }
+                    else if (activeChapter.ActiveExerciseIndex >= 0)
+                    {
+                        PulseManager.SetArticleToBringIntoView(activeChapter.Index, GameData.ContentType.EXERCISE, AppState.ActiveChapter.ActiveExerciseIndex);
+                        handled = true;
+                    }
+                }
+
+                if (!handled && recentArticle != null && (recentArticle.ViewType == TabViewType.MODEL_GAME || recentArticle.ViewType == TabViewType.EXERCISE))
+                {
+                    int chapterIndex = activeChapter.Index;
+                    GameData.ContentType contentType = recentArticle.ViewType == TabViewType.MODEL_GAME ? GameData.ContentType.MODEL_GAME : GameData.ContentType.EXERCISE;
+                    PulseManager.SetArticleToBringIntoView(chapterIndex, contentType, recentArticle.ArticleIndex);
+                    handled = true;
+                }
+
+                if (!handled)
+                {
+                    BringActiveChapterIntoView();
+                }
+            }
+        }
+
+        /// <summary>
         /// Left mouse button has been released.
         /// Stop any drag operation that may be in progress.
         /// </summary>
@@ -628,7 +673,7 @@ namespace ChessForge
                     para.Inlines.Add(new Run("\n"));
                 }
 
-                    string chapterNo = (WorkbookManager.SessionWorkbook.GetChapterIndex(chapter) + 1).ToString();
+                string chapterNo = (WorkbookManager.SessionWorkbook.GetChapterIndex(chapter) + 1).ToString();
                 Run rChapter = CreateRun(STYLE_CHAPTER_TITLE, "[" + chapterNo + ".] " + chapter.GetTitle(), true);
                 if (chapter.Index == WorkbookManager.SessionWorkbook.ActiveChapter.Index && !_isPrinting)
                 {
@@ -881,8 +926,8 @@ namespace ChessForge
                     rGame.PreviewMouseUp += EventModelGameRunDrop;
                     rGame.MouseMove += EventModelGameRunHovered;
                     rGame.MouseLeave += EventModelGameRunLeft;
-                    if (LastClickedItemType == WorkbookManager.ItemType.MODEL_GAME 
-                        && i == chapter.ActiveModelGameIndex 
+                    if (LastClickedItemType == WorkbookManager.ItemType.MODEL_GAME
+                        && i == chapter.ActiveModelGameIndex
                         && chapter == WorkbookManager.SessionWorkbook.ActiveChapter)
                     {
                         ShowSelectionMark(ref rGame, true, SELECTED_ARTICLE_PREFIX, NON_SELECTED_ARTICLE_PREFIX);
@@ -943,8 +988,8 @@ namespace ChessForge
                     rExercise.PreviewMouseUp += EventExerciseRunDrop;
                     rExercise.MouseMove += EventExerciseRunHovered;
                     rExercise.MouseLeave += EventExerciseRunLeft;
-                    if (LastClickedItemType == WorkbookManager.ItemType.EXERCISE 
-                        && i == chapter.ActiveExerciseIndex 
+                    if (LastClickedItemType == WorkbookManager.ItemType.EXERCISE
+                        && i == chapter.ActiveExerciseIndex
                         && chapter == WorkbookManager.SessionWorkbook.ActiveChapter)
                     {
                         ShowSelectionMark(ref rExercise, true, SELECTED_ARTICLE_PREFIX, NON_SELECTED_ARTICLE_PREFIX);
