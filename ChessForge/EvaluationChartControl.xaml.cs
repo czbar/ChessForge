@@ -857,7 +857,14 @@ namespace ChessForge
             if (nd != null && !string.IsNullOrEmpty(nd.EngineEvaluation) && nd.NodeId != 0)
             {
                 lbl.Visibility = Visibility.Visible;
-                lbl.Content = nd.EngineEvaluation;
+
+                string content = nd.EngineEvaluation;
+                // strip the leading "+" or "-" if it is for checkmate; makes it look better without it.
+                if (!string.IsNullOrEmpty(content) && (content.StartsWith("+#") || content.StartsWith("-#")))
+                {
+                    content = content.Substring(1);
+                }
+                lbl.Content = content;
             }
             else
             {
@@ -960,16 +967,9 @@ namespace ChessForge
 
             if (!string.IsNullOrEmpty(eval))
             {
-                if (eval.StartsWith("#+") || eval.StartsWith("+#"))
+                if (eval == "#")
                 {
-                    dVal = _evalScale + 5;
-                }
-                else if (eval.StartsWith("-#") || eval.StartsWith("#-"))
-                {
-                    dVal = -(_evalScale + 5);
-                }
-                else if (eval.StartsWith("#"))
-                {
+                    // a checkmate is marked with just a "#" so we need to work out which side it applies to.
                     if (color == PieceColor.White)
                     {
                         dVal = -(_evalScale + 6);
@@ -978,6 +978,18 @@ namespace ChessForge
                     {
                         dVal = _evalScale + 6;
                     }
+                }
+                else if (eval.StartsWith("-#") || eval.StartsWith("#-"))
+                {
+                    // the checkmate is looming for White
+                    // "#-" is coming from lichess and "-#" may be coming from other sources.
+                    dVal = -(_evalScale + 5);
+                }
+                else if (eval.StartsWith("#") || eval.StartsWith("+#") || eval.StartsWith("#+"))
+                {
+                    // the checkmate is looming for Black
+                    // plain "#" is coming from lichess and "+#" may be coming from other sources.
+                    dVal = _evalScale + 5;
                 }
                 else
                 {
