@@ -104,6 +104,7 @@ namespace ChessForge
             if (folder != null)
             {
                 _rootFolder = folder;
+                UiTbDirectory.Text = _rootFolder;
             }
         }
 
