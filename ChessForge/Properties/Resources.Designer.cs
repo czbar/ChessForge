@@ -7235,7 +7235,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select a folder.
+        ///   Looks up a localized string similar to Select a Folder.
         /// </summary>
         public static string SelectFolder {
             get {

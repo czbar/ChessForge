@@ -2133,7 +2133,7 @@ Searching=
 FileFolder=
 
 #description: Select a folder
-#english: SelectFolder=Select a folder
+#english: SelectFolder=Select a Folder
 SelectFolder=
 
 

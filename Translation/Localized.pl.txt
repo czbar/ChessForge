@@ -2122,7 +2122,7 @@ MsgNoGamesFound=Nie znaleziono partii spełniających podane kryteria.
 
 #description: Search in PGN files
 #english: SearchInPgnFiles=Search in PGN files
-SearchInPgnFiles=Search in PGN files
+SearchInPgnFiles=Szukaj w plikach PGN
 
 #description: Searching
 #english: Searching=Searching
@@ -2133,7 +2133,7 @@ Searching=Trwa wyszukiwanie
 FileFolder=Folder
 
 #description: Select a folder
-#english: SelectFolder=Select a folder
+#english: SelectFolder=Select a Folder
 SelectFolder=Wybierz folder
 
 

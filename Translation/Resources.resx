@@ -1493,7 +1493,7 @@ NOTE: Evaluations are not being updated (press F8 to allow).</value>
     <value>Folder</value>
   </data>
   <data name="SelectFolder" xml:space="preserve">
-    <value>Select a folder</value>
+    <value>Select a Folder</value>
   </data>
   <data name="InEvaluation" xml:space="preserve">
     <value>During Evaluations</value>

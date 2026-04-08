@@ -1484,7 +1484,7 @@ UWAGA: Oceny nie są uaktualniane (zezwól naciskając F8).</value>
     <value>Nie znaleziono partii spełniających podane kryteria.</value>
   </data>
   <data name="SearchInPgnFiles" xml:space="preserve">
-    <value>Search in PGN files</value>
+    <value>Szukaj w plikach PGN</value>
   </data>
   <data name="Searching" xml:space="preserve">
     <value>Trwa wyszukiwanie</value>
