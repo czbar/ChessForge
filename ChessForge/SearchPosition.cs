@@ -103,6 +103,39 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Checks if two positions are identical, 
+        /// meaning they have the same pieces on the same squares, 
+        /// the same side to move, 
+        /// the same castling rights 
+        /// and the same enpassant possibilities.
+        /// </summary>
+        /// <param name="pos1"></param>
+        /// <param name="pos2"></param>
+        /// <returns></returns>
+        public static bool ArePositionsIdentical(BoardPosition pos1, BoardPosition pos2)
+        {
+            bool res = false;
+
+            try
+            {
+                if (pos1.Board.Cast<byte>().SequenceEqual(pos2.Board.Cast<byte>()))
+                {
+                    if (IsSameEnpassantPossibilities(pos1, pos2)
+                        && (pos1.ColorToMove == pos2.ColorToMove)
+                        && (pos1.CastlingRights == pos2.CastlingRights))
+                    {
+                        res = true;
+                    }
+                }
+            }
+            catch
+            {
+            }
+
+            return res;
+        }
+
+        /// <summary>
         /// Determines the position to use for search.
         /// If there is a selected node its position will be used for search.
         /// If not, the clipboard content will be tested if it contains a valid FEN.
