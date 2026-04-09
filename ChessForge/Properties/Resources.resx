@@ -2610,7 +2610,7 @@ NOTE: Evaluations are not being updated (press F8 to allow).</value>
     <value>Starting position</value>
   </data>
   <data name="CurrentPosition" xml:space="preserve">
-    <value>Current position</value>
+    <value>Reset to current position</value>
   </data>
   <data name="ClearBoard" xml:space="preserve">
     <value>Clear Board</value>

@@ -3759,7 +3759,7 @@ StartingPosition=Pozycja początkowa
 
 #description: Current position
 #english: CurrentPosition=Current position
-CurrentPosition=Aktualna pozycja
+CurrentPosition=Ustaw aktualną pozycję
 
 #description: Clear board
 #english: ClearBoard=Clear Board

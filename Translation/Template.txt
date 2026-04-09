@@ -3758,7 +3758,7 @@ Castling=
 StartingPosition=
 
 #description: Current position
-#english: CurrentPosition=Current position
+#english: CurrentPosition=Reset to current position
 CurrentPosition=
 
 #description: Clear board

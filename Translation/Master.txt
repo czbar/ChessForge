@@ -2928,7 +2928,7 @@ Castling=Castling
 StartingPosition=Starting position
 
 #Current position
-CurrentPosition=Current position
+CurrentPosition=Reset to current position
 
 #Clear board
 ClearBoard=Clear Board

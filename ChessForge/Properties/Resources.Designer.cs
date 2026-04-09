@@ -1636,7 +1636,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Current position.
+        ///   Looks up a localized string similar to Reset to current position.
         /// </summary>
         public static string CurrentPosition {
             get {

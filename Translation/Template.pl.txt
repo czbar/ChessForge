@@ -3758,8 +3758,8 @@ Castling=Roszada
 StartingPosition=Pozycja początkowa
 
 #description: Current position
-#english: CurrentPosition=Current position
-CurrentPosition=Aktualna pozycja
+#english: CurrentPosition=Reset to current position
+CurrentPosition=Ustaw aktualną pozycję
 
 #description: Clear board
 #english: ClearBoard=Clear Board
