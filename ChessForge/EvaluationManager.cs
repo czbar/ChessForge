@@ -265,11 +265,11 @@ namespace ChessForge
                 int intEval = colorToMove == PieceColor.White ? line.ScoreCp : -1 * line.ScoreCp;
                 if (intEval > 0)
                 {
-                    eval = "+" + (((double)intEval) / 100.0).ToString("F2");
+                    eval = "+" + (((double)intEval) / 100.0).ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
                 }
                 else
                 {
-                    eval = (((double)intEval) / 100.0).ToString("F2");
+                    eval = (((double)intEval) / 100.0).ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
                 }
             }
             else
