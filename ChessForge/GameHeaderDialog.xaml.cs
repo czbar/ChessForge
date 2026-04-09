@@ -1,6 +1,7 @@
 ﻿using ChessPosition;
 using GameTree;
 using System;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Input;
 
@@ -140,9 +141,9 @@ namespace ChessForge
 
             _tree.Header.SetHeaderValue(PgnHeaders.KEY_DATE, TextUtils.AdjustPgnDateString(UiTbPgnDate.Text, out _, out _));
 
-            if (double.TryParse(UiTbRound.Text, out double round))
+            if (double.TryParse(UiTbRound.Text, NumberStyles.Float, CultureInfo.InvariantCulture, out double round))
             {
-                _tree.Header.SetHeaderValue(PgnHeaders.KEY_ROUND, round.ToString("0.#####"));
+                _tree.Header.SetHeaderValue(PgnHeaders.KEY_ROUND, round.ToString("0.#####", CultureInfo.InvariantCulture));
             }
             else
             {
