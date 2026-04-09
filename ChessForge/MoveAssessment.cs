@@ -1,9 +1,6 @@
 ﻿using ChessForge;
 using GameTree;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace ChessPosition.Utils
 {
@@ -55,7 +52,7 @@ namespace ChessPosition.Utils
             {
                 // we know that we don't have a checkmate in the child node (that was filtered above)
                 // so the eval  must parse unless something got corrupted.
-                if (double.TryParse(nd.EngineEvaluation, out double eval))
+                if (NumberUtils.ParseDouble(nd.EngineEvaluation, out double eval))
                 {
                     if (nd.Parent.ColorToMove == PieceColor.Black && eval > -IGNORE_BLUNDER_THRESHOLD
                         || nd.Parent.ColorToMove == PieceColor.White && eval < +IGNORE_BLUNDER_THRESHOLD)
@@ -68,7 +65,7 @@ namespace ChessPosition.Utils
             // if we now have a mate by our opponent but parent's eval was not so bad.
             else if (IsMateByColor(nd.EngineEvaluation, nd.ColorToMove))
             {
-                if (double.TryParse(nd.Parent.EngineEvaluation, out double evalParent))
+                if (NumberUtils.ParseDouble(nd.Parent.EngineEvaluation, out double evalParent))
                 {
                     if (nd.Parent.ColorToMove == PieceColor.White && evalParent > -IGNORE_BLUNDER_THRESHOLD
                         || nd.Parent.ColorToMove == PieceColor.Black && evalParent < +IGNORE_BLUNDER_THRESHOLD)
@@ -80,9 +77,9 @@ namespace ChessPosition.Utils
             else
             {
                 // now we have two numerical evals, assess the difference
-                if (double.TryParse(nd.Parent.EngineEvaluation, out double evalParent))
+                if (NumberUtils.ParseDouble(nd.Parent.EngineEvaluation, out double evalParent))
                 {
-                    if (double.TryParse(nd.EngineEvaluation, out double evalChild))
+                    if (NumberUtils.ParseDouble(nd.EngineEvaluation, out double evalChild))
                     {
                         if (IsBlunder(evalParent, evalChild, nd.Parent.ColorToMove, true))
                         {

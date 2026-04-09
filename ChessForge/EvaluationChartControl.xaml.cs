@@ -993,7 +993,7 @@ namespace ChessForge
                 }
                 else
                 {
-                    parsed = double.TryParse(eval, out dVal);
+                    parsed = NumberUtils.ParseDouble(eval, out dVal);
                 }
             }
 

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Net;
+﻿using ChessPosition;
 using GameTree;
-using System.Xml;
+using System;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace ChessForge
@@ -77,7 +73,7 @@ namespace ChessForge
                         && (!string.IsNullOrEmpty(nd.EngineEvaluation) || nd.Position.IsCheckmate || nd.Position.IsStalemate || EvaluationManager.IsRunning)
                    )
                 {
-                    bool res = double.TryParse(nd.EngineEvaluation, out double dVal);
+                    bool res = NumberUtils.ParseDouble(nd.EngineEvaluation, out double dVal);
                     if (res)
                     {
                         // parsed successfully so format the result
