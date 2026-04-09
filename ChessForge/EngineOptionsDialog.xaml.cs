@@ -175,12 +175,12 @@ namespace ChessForge
             int iVal;
             long lVal;
 
-            if (double.TryParse(UiTbEngTimeInGame.Text, out dval))
+            if (NumberUtils.ParseDouble(UiTbEngTimeInGame.Text, out dval))
             {
                 Configuration.EngineMoveTime = (int)(dval * 1000);
             }
 
-            if (double.TryParse(UiTbEngEvalTime.Text, out dval))
+            if (NumberUtils.ParseDouble(UiTbEngEvalTime.Text, out dval))
             {
                 Configuration.EngineEvaluationTime = (int)(dval * 1000);
             }

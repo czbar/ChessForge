@@ -679,7 +679,7 @@ namespace ChessForge
                         SelectedNode.LastMoveAlgebraicNotation = dlg.MoveText;
                         run.Text = PadOutMoveRunText(dlg.MoveText);
 
-                        if (double.TryParse(dlg.MoveFontSize, out double fontSize))
+                        if (NumberUtils.ParseDouble(dlg.MoveFontSize, out double fontSize))
                         {
                             // make sure it is a reasonable value
                             fontSize = Math.Max(fontSize, 8);

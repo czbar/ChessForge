@@ -305,7 +305,7 @@ namespace ChessForge
 
             double dval;
 
-            if (double.TryParse(UiTbReplaySpeed.Text, out dval))
+            if (NumberUtils.ParseDouble(UiTbReplaySpeed.Text, out dval))
             {
                 Configuration.MoveSpeed = (int)(dval * 1000);
             }

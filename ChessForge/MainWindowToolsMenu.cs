@@ -116,7 +116,7 @@ namespace ChessForge
 
                     if (dlg.ShowDialog() == true)
                     {
-                        if (double.TryParse(dlg.UiTbEngEvalTime.Text, out double dval))
+                        if (NumberUtils.ParseDouble(dlg.UiTbEngEvalTime.Text, out double dval))
                         {
                             Configuration.EngineEvaluationTime = (int)(dval * 1000);
                         }
