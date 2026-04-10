@@ -144,6 +144,10 @@ namespace ChessForge
         /// </summary>
         public static bool LichessIsAuthErrorPresent = false;
 
+        /// <summary>
+        /// Last directory from which a PGN file was searched for a position.
+        /// </summary>
+        public static string LastPgnSearchDirectory = "";
 
         //*********************************
         //

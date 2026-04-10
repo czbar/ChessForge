@@ -42,7 +42,14 @@ namespace ChessForge
         public SearchPgnFilesDialog(SearchPositionCriteria crits)
         {
             InitializeComponent();
-            _rootFolder = Configuration.LastOpenDirectory;
+            if (string.IsNullOrEmpty(Configuration.LastPgnSearchDirectory))
+            {
+                _rootFolder = Configuration.LastOpenDirectory;
+            }
+            else
+            {
+                _rootFolder = Configuration.LastPgnSearchDirectory;
+            }
             _searchCrits = crits;
             UiTbDirectory.Text = _rootFolder;
         }
@@ -144,6 +151,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnClose_Click(object sender, RoutedEventArgs e)
         {
+            Configuration.LastPgnSearchDirectory = _rootFolder;
             DialogResult = false;
         }
 
@@ -172,6 +180,7 @@ namespace ChessForge
                 {
                     SelectedPgnFile = path;
                     DialogResult = true;
+                    Configuration.LastPgnSearchDirectory = _rootFolder;
                 }
             }
 
