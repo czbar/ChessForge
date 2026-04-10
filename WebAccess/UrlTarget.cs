@@ -58,5 +58,10 @@
         /// Url of Chess Forge's public library.
         /// </summary>
         public static string PublicLibrary = @"https://chessforge.sourceforge.io/Library/";
+
+        /// <summary>
+        /// Url of Chess Forge's wiki, which contains Help articles.
+        /// </summary>
+        public static string HelpFolder = @"https://github.com/czbar/ChessForge/wiki/";
     }
 }
