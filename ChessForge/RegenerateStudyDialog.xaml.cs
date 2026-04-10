@@ -60,7 +60,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Regenerating-Study-from-Games");
+            System.Diagnostics.Process.Start(WebAccess.UrlTarget.HelpFolder + "Regenerating-Study-from-Games");
         }
     }
 

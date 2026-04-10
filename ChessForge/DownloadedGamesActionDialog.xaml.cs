@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Input;
+﻿using System.Windows;
 
 namespace ChessForge
 {
@@ -109,7 +101,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Importing-or-Downloading-Games#downloading-games-of-a-player-from-chesscom-or-lichess");
+            System.Diagnostics.Process.Start(WebAccess.UrlTarget.HelpFolder + "Importing-or-Downloading-Games#downloading-games-of-a-player-from-chesscom-or-lichess");
         }
 
         /// <summary>

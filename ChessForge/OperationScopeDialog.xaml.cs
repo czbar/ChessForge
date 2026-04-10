@@ -299,13 +299,13 @@ namespace ChessForge
             switch (Action)
             {
                 case ScopedAction.ASSIGN_ECO:
-                    System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Assigning-ECOs-to-Chapter-Items");
+                    System.Diagnostics.Process.Start(WebAccess.UrlTarget.HelpFolder + "Assigning-ECOs-to-Chapter-Items");
                     break;
                 case ScopedAction.SAVE_DIAGRAM:
-                    System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Diagrams#save-diagrams-as-pictures");
+                    System.Diagnostics.Process.Start(WebAccess.UrlTarget.HelpFolder + "Diagrams#save-diagrams-as-pictures");
                     break;
                 default:
-                    System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/User's-Manual");
+                    System.Diagnostics.Process.Start(WebAccess.UrlTarget.HelpFolder + "User's-Manual");
                     break;
             }
         }

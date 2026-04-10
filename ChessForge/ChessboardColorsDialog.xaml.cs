@@ -1,8 +1,5 @@
 ﻿using ChessPosition;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -303,7 +300,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Chessboard-Selection-Dialog");
+            System.Diagnostics.Process.Start(WebAccess.UrlTarget.HelpFolder + "Chessboard-Selection-Dialog");
         }
 
     }

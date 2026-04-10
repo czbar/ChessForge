@@ -186,7 +186,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Finding-Position-In-PGN-Files");
+            System.Diagnostics.Process.Start(WebAccess.UrlTarget.HelpFolder + "Finding-Position-In-PGN-Files");
         }
 
         /// <summary>

@@ -1,5 +1,4 @@
-﻿using ChessPosition;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace ChessForge
@@ -103,7 +102,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Sorting-Games-across-Chapters");
+            System.Diagnostics.Process.Start(WebAccess.UrlTarget.HelpFolder + "Sorting-Games-across-Chapters");
         }
     }
 

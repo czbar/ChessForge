@@ -1,5 +1,4 @@
 ﻿using ChessPosition;
-using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -225,7 +224,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Statistics");
+            System.Diagnostics.Process.Start(WebAccess.UrlTarget.HelpFolder + "Statistics");
         }
     }
 }

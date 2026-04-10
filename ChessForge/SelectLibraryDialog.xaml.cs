@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace ChessForge
@@ -260,7 +257,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Online-Libraries");
+            System.Diagnostics.Process.Start(WebAccess.UrlTarget.HelpFolder + "Online-Libraries");
         }
 
         /// <summary>

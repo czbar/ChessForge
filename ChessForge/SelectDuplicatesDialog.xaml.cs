@@ -1,10 +1,7 @@
 ﻿using ChessPosition;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 
 namespace ChessForge
 {
@@ -111,7 +108,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Deleting-Games#removing-duplicates");
+            System.Diagnostics.Process.Start(WebAccess.UrlTarget.HelpFolder + "Deleting-Games#removing-duplicates");
         }
 
     }

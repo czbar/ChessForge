@@ -130,15 +130,15 @@ namespace ChessForge
         {
             if (_mode == Mode.IMPORT)
             {
-                System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Importing-Data-into-Chess-Forge#importing-chapters");
+                System.Diagnostics.Process.Start(WebAccess.UrlTarget.HelpFolder + "Importing-Data-into-Chess-Forge#importing-chapters");
             }
             else if (_mode == Mode.MERGE)
             {
-                System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Merging-Chapters");
+                System.Diagnostics.Process.Start(WebAccess.UrlTarget.HelpFolder + "Merging-Chapters");
             }
             else
             {
-                System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/User's-Manual");
+                System.Diagnostics.Process.Start(WebAccess.UrlTarget.HelpFolder + "User's-Manual");
             }
         }
 

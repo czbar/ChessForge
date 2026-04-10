@@ -210,7 +210,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Game-Header-Editor");
+            System.Diagnostics.Process.Start(WebAccess.UrlTarget.HelpFolder + "Game-Header-Editor");
         }
 
         /// <summary>

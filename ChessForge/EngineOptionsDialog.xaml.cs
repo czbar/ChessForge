@@ -1,14 +1,7 @@
 ﻿using ChessPosition;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.IO;
+using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Input;
 
 namespace ChessForge
 {
@@ -233,7 +226,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Engine-Options-Dialog");
+            System.Diagnostics.Process.Start(WebAccess.UrlTarget.HelpFolder + "Engine-Options-Dialog");
         }
 
         /// <summary>
