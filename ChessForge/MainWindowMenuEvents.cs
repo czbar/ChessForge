@@ -127,9 +127,10 @@ namespace ChessForge
                         Configuration.LastOpenDirectory = Path.GetDirectoryName(path);
                     }
                     catch { }
-                    ReadWorkbookFile(path, false, ref WorkbookManager.VariationTreeList);
+                    
+                    bool success = ReadWorkbookFile(path, false, ref WorkbookManager.VariationTreeList);
 
-                    if (openPositionSearch)
+                    if (success && openPositionSearch)
                     {
                         UiMnFindPositions_Click(null, null);
                     }
