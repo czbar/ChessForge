@@ -1589,16 +1589,17 @@ namespace ChessForge
         /// </summary>
         /// <param name="fileName">path to the file</param>
         /// <param name="isLastOpen">were we asked to open the file that was open last in the previous session</param>
-        private void ReadWorkbookFile(string fileName, bool isLastOpen, ref ObservableCollection<GameData> GameList)
+        private bool ReadWorkbookFile(string fileName, bool isLastOpen, ref ObservableCollection<GameData> GameList)
         {
             Cursor prevCursor = Cursor;
 
+            bool acceptFile = false;
             try
             {
                 if (!WorkbookManager.CheckFileExists(fileName, isLastOpen))
                 {
                     BoardCommentBox.ShowTabHints();
-                    return;
+                    return false;
                 }
                 BoardCommentBox.ReadingFile();
 
@@ -1607,7 +1608,6 @@ namespace ChessForge
 
                 string fileExtension = Path.GetExtension(fileName).ToLower();
 
-                bool acceptFile = false;
                 bool isChessForgeFile = false;
 
                 switch (fileExtension)
@@ -1656,6 +1656,7 @@ namespace ChessForge
             }
 
             Cursor = prevCursor;
+            return acceptFile;
         }
 
         /// <summary>
