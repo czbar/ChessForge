@@ -1487,7 +1487,7 @@ NOTE: Evaluations are not being updated (press F8 to allow).</value>
     <value>Search in PGN files</value>
   </data>
   <data name="Searching" xml:space="preserve">
-    <value>Searching</value>
+    <value>Processing. Please wait...</value>
   </data>
   <data name="FileFolder" xml:space="preserve">
     <value>Folder</value>

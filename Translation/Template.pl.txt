@@ -2125,8 +2125,8 @@ MsgNoGamesFound=Nie znaleziono partii spełniających podane kryteria.
 SearchInPgnFiles=Szukaj w plikach PGN
 
 #description: Searching
-#english: Searching=Searching
-Searching=Trwa wyszukiwanie
+#english: Searching=Processing. Please wait...
+Searching=Trwa wyszukiwanie. Proszę czekać...
 
 #description: File folder
 #english: FileFolder=Folder

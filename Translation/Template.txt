@@ -2125,7 +2125,7 @@ MsgNoGamesFound=
 SearchInPgnFiles=
 
 #description: Searching
-#english: Searching=Searching
+#english: Searching=Processing. Please wait...
 Searching=
 
 #description: File folder

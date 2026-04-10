@@ -1669,7 +1669,7 @@ MsgNoGamesFound=No games matching search criteria found.
 SearchInPgnFiles=Search in PGN files
 
 #Searching
-Searching=Searching
+Searching=Processing. Please wait...
 
 #File folder
 FileFolder=Folder

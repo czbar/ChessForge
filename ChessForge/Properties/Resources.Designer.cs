@@ -7109,7 +7109,7 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Searching.
+        ///   Looks up a localized string similar to Processing. Please wait....
         /// </summary>
         public static string Searching {
             get {

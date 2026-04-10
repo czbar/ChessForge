@@ -2126,7 +2126,7 @@ SearchInPgnFiles=Szukaj w plikach PGN
 
 #description: Searching
 #english: Searching=Searching
-Searching=Trwa wyszukiwanie
+Searching=Trwa wyszukiwanie. Proszę czekać...
 
 #description: File folder
 #english: FileFolder=Folder
