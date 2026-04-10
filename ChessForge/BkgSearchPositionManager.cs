@@ -143,7 +143,7 @@ namespace ChessForge
 
             AppState.MainWin.Dispatcher.Invoke(() =>
             {
-                if (positionFound)
+                if (positionFound && _state != ProcessState.CANCELED)
                 {
                     ListBoxItem item = new ListBoxItem();
                     item.Content = Path.GetFileName(_fileList[fileIndex].FilePath);
@@ -155,9 +155,7 @@ namespace ChessForge
 
                 if (_state == ProcessState.FINISHED)
                 {
-                    _parentDialog.IsSearchInProgress = false;
-                    _parentDialog.UiLblSearchProgress.Content = Properties.Resources.Completed;
-                    _parentDialog.UiBtnStartStop.Content = Properties.Resources.Search;
+                    _parentDialog.SearchFinished(false);
                 }
             });
         }
@@ -183,21 +181,24 @@ namespace ChessForge
 
             try
             {
-                foreach (BkgSearchPosition bkgProcess in _workerPool)
+                if (_state != ProcessState.CANCELED)
                 {
-                    if (bkgProcess != null && bkgProcess.WorkerState == ProcessState.RUNNING)
+                    foreach (BkgSearchPosition bkgProcess in _workerPool)
                     {
-                        if (bkgProcess.StartTime > startTime)
+                        if (bkgProcess != null && bkgProcess.WorkerState == ProcessState.RUNNING)
                         {
-                            startTime = bkgProcess.StartTime;
-                            indexToReport = bkgProcess.FileIndex;
+                            if (bkgProcess.StartTime > startTime)
+                            {
+                                startTime = bkgProcess.StartTime;
+                                indexToReport = bkgProcess.FileIndex;
+                            }
                         }
                     }
-                }
 
-                if (indexToReport >= 0)
-                {
-                    _parentDialog.UiLblSearchProgress.Content = Path.GetFileName(_fileList[indexToReport].FilePath);
+                    if (indexToReport >= 0)
+                    {
+                        _parentDialog.UiLblSearchProgress.Content = Path.GetFileName(_fileList[indexToReport].FilePath);
+                    }
                 }
             }
             catch { }

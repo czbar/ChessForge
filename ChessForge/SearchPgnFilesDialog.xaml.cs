@@ -55,6 +55,26 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Updates the UI when the search for the position in the PGN files finishes, 
+        /// either because it was stopped by the user or because it completed.
+        /// </summary>
+        public void SearchFinished(bool isCancelled)
+        {
+            IsSearchInProgress = false;
+
+            if (isCancelled)
+            {
+                UiLblSearchProgress.Content = Properties.Resources.NotStarted;
+            }
+            else
+            {
+                UiLblSearchProgress.Content = Properties.Resources.Completed;
+            }
+            UiBtnStartStop.Content = Properties.Resources.Search;
+            UiGbProgress.Header = Properties.Resources.Progress;
+        }
+
+        /// <summary>
         /// Gets the list of PGN files in the passed folder and its subfolders.
         /// </summary>
         /// <param name="rootFolder"></param>
@@ -82,7 +102,9 @@ namespace ChessForge
                 }
 
                 foreach (string subfolder in subfolders)
+                {
                     pending.Push(subfolder);
+                }
 
                 string[] files;
                 try
@@ -95,7 +117,9 @@ namespace ChessForge
                 }
 
                 foreach (string file in files)
+                {
                     yield return file;
+                }
             }
         }
 
@@ -126,17 +150,17 @@ namespace ChessForge
             if (IsSearchInProgress)
             {
                 // stop the search
-                IsSearchInProgress = false;
-                UiBtnStartStop.Content = Properties.Resources.Search;
+                _bkgSearchManager.CancelAll();
+                SearchFinished(true);
             }
             else
             {
-
                 ObservableCollection<string> files = new ObservableCollection<string>(GetPgnFilesSafe(_rootFolder));
                 if (files.Count > 0)
                 {
-                    UiBtnStartStop.Content = Properties.Resources.Stop;
                     IsSearchInProgress = true;
+                    UiBtnStartStop.Content = Properties.Resources.Stop;
+                    UiGbProgress.Header = Properties.Resources.Searching;
                     UiLbFiles.Items.Clear();
                     _bkgSearchManager = new BkgSearchPositionManager(this, _searchCrits);
                     _bkgSearchManager.Execute(files);
