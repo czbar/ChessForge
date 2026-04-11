@@ -2125,7 +2125,7 @@ MsgNoGamesFound=Nie znaleziono partii spełniających podane kryteria.
 SearchInPgnFiles=Szukaj w plikach PGN
 
 #description: Searching
-#english: Searching=Searching
+#english: Searching=Processing. Please wait...
 Searching=Trwa wyszukiwanie. Proszę czekać...
 
 #description: File folder
@@ -3758,7 +3758,7 @@ Castling=Roszada
 StartingPosition=Pozycja początkowa
 
 #description: Current position
-#english: CurrentPosition=Current position
+#english: CurrentPosition=Reset to current position
 CurrentPosition=Ustaw aktualną pozycję
 
 #description: Clear board
@@ -4514,7 +4514,6 @@ OpSortGames=Sortuj Partie
 
 
 
-
 ##################################
 #
 # Header: Library exceptions
@@ -4547,7 +4546,6 @@ FenTooFewRows=Błąd: FEN pokrywa $0 rzędów
 FenRowIncomplete=Błąd: rząd $0 nie definiuje 8 pól
 
 
-
 #description: Invalid Engine Move Received
 #english: InvalidEngineMoveReceived=Invalid engine move received
 InvalidEngineMoveReceived=Nieważny ruch otrzymany od silnika
@@ -4563,6 +4561,61 @@ AmbiguousMove=Dwuznaczna notacja ruchu
 #description: Illegal Castling
 #english: IllegalCastling=Illegal castling attempted
 IllegalCastling=Niedozwolona roszada.
+
+
+##################################
+#
+# Header: HtppClient Errors
+#
+
+#description: HttpError400
+#english: HttpError400=Invalid request
+HttpError400=Nieprawidłowe żądanie
+
+#description: HttpError401
+#english: HttpError401=Please sign in
+HttpError401=Zaloguj się
+
+#description: HttpError403
+#english: HttpError403=Access denied
+HttpError403=Brak dostępu
+
+#description: HttpError404
+#english: HttpError404=Not found
+HttpError404=Nie znaleziono
+
+#description: HttpError408
+#english: HttpError408=Request timeout
+HttpError408=Przekroczono czas oczekiwania
+
+#description: HttpError409
+#english: HttpError409=Conflict
+HttpError409=Konflikt danych
+
+#description: HttpError422
+#english: HttpError422=Validation error
+HttpError422=Błąd walidacji danych
+
+#description: HttpError429
+#english: HttpError429=Too many requests
+HttpError429=Zbyt wiele żądań
+
+#description: HttpError500
+#english: HttpError500=Server error
+HttpError500=Błąd serwera
+
+#description: HttpError503
+#english: HttpError503=Service unavailable
+HttpError503=Usługa niedostępna
+
+#description: HttpError504
+#english: HttpError504=Gateway timeout
+HttpError504=Przekroczono czas odpowiedzi serwera
+
+#description: HttpErrorNoCode
+#english: HttpErrorNoCode=Network or connection errorBłąd sieci lub połączenia
+HttpErrorNoCode=Błąd sieci lub połączenia
+
 
 ##################################
 #

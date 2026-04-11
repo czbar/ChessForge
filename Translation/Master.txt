@@ -3511,7 +3511,6 @@ OpSortGames=Sort Games
 
 
 
-
 ##################################
 #
 # Header: Library exceptions
@@ -3538,7 +3537,6 @@ FenTooFewRows=Error: FEN string has $0 rows
 FenRowIncomplete=Error: row $0 does not define 8 squares
 
 
-
 #Invalid Engine Move Received
 InvalidEngineMoveReceived=Invalid engine move received
 
@@ -3550,6 +3548,49 @@ AmbiguousMove=Ambiguous move notation
 
 #Illegal Castling
 IllegalCastling=Illegal castling attempted
+
+
+##################################
+#
+# Header: HtppClient Errors
+#
+
+#HttpError400
+HttpError400=Invalid request
+
+#HttpError401
+HttpError401=Please sign in
+
+#HttpError403
+HttpError403=Access denied
+
+#HttpError404
+HttpError404=Not found
+
+#HttpError408
+HttpError408=Request timeout
+
+#HttpError409
+HttpError409=Conflict
+
+#HttpError422
+HttpError422=Validation error
+
+#HttpError429
+HttpError429=Too many requests
+
+#HttpError500
+HttpError500=Server error
+
+#HttpError503
+HttpError503=Service unavailable
+
+#HttpError504
+HttpError504=Gateway timeout
+
+#HttpErrorNoCode
+HttpErrorNoCode=Network or connection errorBłąd sieci lub połączenia
+
 
 ##################################
 #

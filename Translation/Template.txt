@@ -4514,7 +4514,6 @@ OpSortGames=
 
 
 
-
 ##################################
 #
 # Header: Library exceptions
@@ -4547,7 +4546,6 @@ FenTooFewRows=
 FenRowIncomplete=
 
 
-
 #description: Invalid Engine Move Received
 #english: InvalidEngineMoveReceived=Invalid engine move received
 InvalidEngineMoveReceived=
@@ -4563,6 +4561,61 @@ AmbiguousMove=
 #description: Illegal Castling
 #english: IllegalCastling=Illegal castling attempted
 IllegalCastling=
+
+
+##################################
+#
+# Header: HtppClient Errors
+#
+
+#description: HttpError400
+#english: HttpError400=Invalid request
+HttpError400=
+
+#description: HttpError401
+#english: HttpError401=Please sign in
+HttpError401=
+
+#description: HttpError403
+#english: HttpError403=Access denied
+HttpError403=
+
+#description: HttpError404
+#english: HttpError404=Not found
+HttpError404=
+
+#description: HttpError408
+#english: HttpError408=Request timeout
+HttpError408=
+
+#description: HttpError409
+#english: HttpError409=Conflict
+HttpError409=
+
+#description: HttpError422
+#english: HttpError422=Validation error
+HttpError422=
+
+#description: HttpError429
+#english: HttpError429=Too many requests
+HttpError429=
+
+#description: HttpError500
+#english: HttpError500=Server error
+HttpError500=
+
+#description: HttpError503
+#english: HttpError503=Service unavailable
+HttpError503=
+
+#description: HttpError504
+#english: HttpError504=Gateway timeout
+HttpError504=
+
+#description: HttpErrorNoCode
+#english: HttpErrorNoCode=Network or connection errorBłąd sieci lub połączenia
+HttpErrorNoCode=
+
 
 ##################################
 #

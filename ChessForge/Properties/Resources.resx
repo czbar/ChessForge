@@ -3158,6 +3158,42 @@ NOTE: Evaluations are not being updated (press F8 to allow).</value>
   <data name="IllegalCastling" xml:space="preserve">
     <value>Illegal castling attempted</value>
   </data>
+  <data name="HttpError400" xml:space="preserve">
+    <value>Invalid request</value>
+  </data>
+  <data name="HttpError401" xml:space="preserve">
+    <value>Please sign in</value>
+  </data>
+  <data name="HttpError403" xml:space="preserve">
+    <value>Access denied</value>
+  </data>
+  <data name="HttpError404" xml:space="preserve">
+    <value>Not found</value>
+  </data>
+  <data name="HttpError408" xml:space="preserve">
+    <value>Request timeout</value>
+  </data>
+  <data name="HttpError409" xml:space="preserve">
+    <value>Conflict</value>
+  </data>
+  <data name="HttpError422" xml:space="preserve">
+    <value>Validation error</value>
+  </data>
+  <data name="HttpError429" xml:space="preserve">
+    <value>Too many requests</value>
+  </data>
+  <data name="HttpError500" xml:space="preserve">
+    <value>Server error</value>
+  </data>
+  <data name="HttpError503" xml:space="preserve">
+    <value>Service unavailable</value>
+  </data>
+  <data name="HttpError504" xml:space="preserve">
+    <value>Gateway timeout</value>
+  </data>
+  <data name="HttpErrorNoCode" xml:space="preserve">
+    <value>Network or connection errorBłąd sieci lub połączenia</value>
+  </data>
   <data name="AboutWorkbook" xml:space="preserve">
     <value>This PGN Workbook is optimized for viewing in Chess Forge https://sourceforge.net/projects/chessforge/.   Chess Forge is a Free and Open Source Windows application.</value>
   </data>
