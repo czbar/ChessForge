@@ -4237,6 +4237,114 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid request.
+        /// </summary>
+        public static string HttpError400 {
+            get {
+                return ResourceManager.GetString("HttpError400", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please sign in.
+        /// </summary>
+        public static string HttpError401 {
+            get {
+                return ResourceManager.GetString("HttpError401", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Access denied.
+        /// </summary>
+        public static string HttpError403 {
+            get {
+                return ResourceManager.GetString("HttpError403", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not found.
+        /// </summary>
+        public static string HttpError404 {
+            get {
+                return ResourceManager.GetString("HttpError404", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request timeout.
+        /// </summary>
+        public static string HttpError408 {
+            get {
+                return ResourceManager.GetString("HttpError408", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Conflict.
+        /// </summary>
+        public static string HttpError409 {
+            get {
+                return ResourceManager.GetString("HttpError409", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Validation error.
+        /// </summary>
+        public static string HttpError422 {
+            get {
+                return ResourceManager.GetString("HttpError422", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Too many requests.
+        /// </summary>
+        public static string HttpError429 {
+            get {
+                return ResourceManager.GetString("HttpError429", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Server error.
+        /// </summary>
+        public static string HttpError500 {
+            get {
+                return ResourceManager.GetString("HttpError500", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service unavailable.
+        /// </summary>
+        public static string HttpError503 {
+            get {
+                return ResourceManager.GetString("HttpError503", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gateway timeout.
+        /// </summary>
+        public static string HttpError504 {
+            get {
+                return ResourceManager.GetString("HttpError504", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Network or connection errorBłąd sieci lub połączenia.
+        /// </summary>
+        public static string HttpErrorNoCode {
+            get {
+                return ResourceManager.GetString("HttpErrorNoCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ignore Colors.
         /// </summary>
         public static string IgnoreColors {
