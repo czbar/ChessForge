@@ -680,7 +680,9 @@ namespace ChessForge
             Languages.SetSessionLanguage(Configuration.CultureName);
 
             Languages.InitializeChessSymbolMapping(Properties.Resources.PieceSymbolMap);
+            GuiUtilities.InitializeHttpErrorMapping();
         }
+
 
         /// <summary>
         /// Selects the requested Chapter and Article
