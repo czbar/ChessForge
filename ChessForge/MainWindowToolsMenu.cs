@@ -32,6 +32,7 @@ namespace ChessForge
             UiLblAutoSave.FontSize = size;
             UiLblExplorers.FontSize = size;
             UiLblEngine.FontSize = size;
+            UiLblChart.FontSize = size;
         }
 
         /// <summary>
