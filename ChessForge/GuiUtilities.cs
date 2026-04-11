@@ -1,4 +1,5 @@
-﻿using ChessPosition;
+﻿using ChessForge.Properties;
+using ChessPosition;
 using ChessPosition.Utils;
 using EngineService;
 using GameTree;
@@ -21,6 +22,12 @@ namespace ChessForge
     /// </summary>
     public class GuiUtilities
     {
+        /// <summary>
+        /// Mapping of HTTP error codes to UI messages.
+        /// </summary>
+        public static Dictionary<int, string> HttpErrorMapping = new Dictionary<int, string>();
+
+
         /// <summary>
         /// List of chars that should be removed when processing a view for export 
         /// into a file. 
@@ -85,6 +92,43 @@ namespace ChessForge
             lock (_authTokenDialogLock)
             {
                 _authTokenDialogAlreadyOpen = false;
+            }
+        }
+
+        /// <summary>
+        /// Initializes the mapping of HTTP error codes to UI messages.
+        /// </summary>
+        public static void InitializeHttpErrorMapping()
+        {
+            HttpErrorMapping.Clear();
+
+            HttpErrorMapping[400] = Resources.HttpError400;
+            HttpErrorMapping[401] = Resources.HttpError401;
+            HttpErrorMapping[403] = Resources.HttpError403;
+            HttpErrorMapping[404] = Resources.HttpError404;
+            HttpErrorMapping[408] = Resources.HttpError408;
+            HttpErrorMapping[409] = Resources.HttpError409;
+            HttpErrorMapping[422] = Resources.HttpError422;
+            HttpErrorMapping[429] = Resources.HttpError429;
+            HttpErrorMapping[500] = Resources.HttpError500;
+            HttpErrorMapping[503] = Resources.HttpError503;
+            HttpErrorMapping[504] = Resources.HttpError504;
+        }
+
+        /// <summary>
+        /// Returns the UI message corresponding to the passed HTTP error code.
+        /// </summary>
+        /// <param name="err"></param>
+        /// <returns></returns>
+        public static string GetHttpErrorText(int err)
+        {
+            if (HttpErrorMapping.ContainsKey(err))
+            {
+                return HttpErrorMapping[err];
+            }
+            else
+            {
+                return "";
             }
         }
 
