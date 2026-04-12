@@ -28,7 +28,7 @@ namespace ChessForge
         private readonly double MAIN_WINDOW_HEIGHT = 600;
 
         // Default increment for the main window height when the font size is increased/decreased.
-        private readonly double WINDOW_HEIGHT_INCREMENT = 20;
+        private readonly double WINDOW_HEIGHT_INCREMENT = 6;
 
         // Default increment for the font size of the buttons in the NAG StackPanel when the "Large Menu Font" option is toggled.
         private readonly double NAG_FONT_SIZE_INCREMENT = 4;
