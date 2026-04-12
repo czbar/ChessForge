@@ -29,5 +29,3 @@ After a comment on the main line, adding comment before-move for the next move, 
 Reordering lines in a game on a move with multi-comment has a strange effect (selected move disappears?).
 
 Double click on c5 after 1.d4 in the Study, removes select background, leaving the move white on yellow. 
-
-Translate all server errors.
