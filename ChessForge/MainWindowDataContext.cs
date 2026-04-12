@@ -196,13 +196,13 @@ namespace ChessForge
         public void InitializeDataContext()
         {
             DataContext = this;
-            SetNagButtonSizes();
+            ResizeNagStackPanels();
         }
 
         /// <summary>
         /// Sets the sizes of the NAG buttons and the height of the main view based on the "Large Menu Font" option in the configuration. If the option is enabled, it increases the font size of the buttons and adjusts the height of the main view accordingly. If the option is disabled, it resets the font size to the default value.
         /// </summary>
-        public void SetNagButtonSizes()
+        public void ResizeNagStackPanels()
         {
             bool b = Configuration.LargeMenuFont;
 

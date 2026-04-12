@@ -433,6 +433,8 @@ namespace ChessForge
             EvaluationMgr = new EvaluationManager();
 
             InitializeComponent();
+            InitializeDataContext();
+
             UiTabIntro.Visibility = Configuration.ShowIntroTab ? Visibility.Visible : Visibility.Collapsed;
 
             ApplyLayoutConfiguration();

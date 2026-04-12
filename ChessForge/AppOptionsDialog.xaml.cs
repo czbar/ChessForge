@@ -363,6 +363,7 @@ namespace ChessForge
                 EngineParamsChanged = true;
             }
 
+            AppState.MainWin.ResizeNagStackPanels();
             DialogResult = true;
         }
 
