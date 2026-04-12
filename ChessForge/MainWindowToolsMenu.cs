@@ -1,6 +1,5 @@
 ﻿using ChessPosition;
 using GameTree;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 
@@ -32,6 +31,7 @@ namespace ChessForge
             UiLblAutoSave.FontSize = size;
             UiLblExplorers.FontSize = size;
             UiLblEngine.FontSize = size;
+            UiLblChart.FontSize = size;
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace ChessForge
 
                     if (dlg.ShowDialog() == true)
                     {
-                        if (double.TryParse(dlg.UiTbEngEvalTime.Text, out double dval))
+                        if (NumberUtils.ParseDouble(dlg.UiTbEngEvalTime.Text, out double dval))
                         {
                             Configuration.EngineEvaluationTime = (int)(dval * 1000);
                         }

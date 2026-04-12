@@ -409,7 +409,7 @@ namespace ChessForge
         public static void EnableNagBar()
         {
             bool enable = !IsUserSolving();
-            foreach (var child in MainWin.UiStpExNags.Children)
+            foreach (var child in MainWin.UiSpExercNagPanel.Children)
             {
                 if (child is Button button)
                 {

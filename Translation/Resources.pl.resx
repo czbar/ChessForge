@@ -1484,10 +1484,10 @@ UWAGA: Oceny nie są uaktualniane (zezwól naciskając F8).</value>
     <value>Nie znaleziono partii spełniających podane kryteria.</value>
   </data>
   <data name="SearchInPgnFiles" xml:space="preserve">
-    <value>Search in PGN files</value>
+    <value>Szukaj w plikach PGN</value>
   </data>
   <data name="Searching" xml:space="preserve">
-    <value>Trwa wyszukiwanie</value>
+    <value>Trwa wyszukiwanie. Proszę czekać...</value>
   </data>
   <data name="FileFolder" xml:space="preserve">
     <value>Folder</value>
@@ -2609,7 +2609,7 @@ UWAGA: Oceny nie są uaktualniane (zezwól naciskając F8).</value>
     <value>Pozycja początkowa</value>
   </data>
   <data name="CurrentPosition" xml:space="preserve">
-    <value>Aktualna pozycja</value>
+    <value>Ustaw aktualną pozycję</value>
   </data>
   <data name="ClearBoard" xml:space="preserve">
     <value>Wyczyść szachownicę</value>
@@ -3156,6 +3156,42 @@ UWAGA: Oceny nie są uaktualniane (zezwól naciskając F8).</value>
   </data>
   <data name="IllegalCastling" xml:space="preserve">
     <value>Niedozwolona roszada.</value>
+  </data>
+  <data name="HttpError400" xml:space="preserve">
+    <value>Nieprawidłowe żądanie</value>
+  </data>
+  <data name="HttpError401" xml:space="preserve">
+    <value>Zaloguj się</value>
+  </data>
+  <data name="HttpError403" xml:space="preserve">
+    <value>Brak dostępu</value>
+  </data>
+  <data name="HttpError404" xml:space="preserve">
+    <value>Nie znaleziono</value>
+  </data>
+  <data name="HttpError408" xml:space="preserve">
+    <value>Przekroczono czas oczekiwania</value>
+  </data>
+  <data name="HttpError409" xml:space="preserve">
+    <value>Konflikt danych</value>
+  </data>
+  <data name="HttpError422" xml:space="preserve">
+    <value>Błąd walidacji danych</value>
+  </data>
+  <data name="HttpError429" xml:space="preserve">
+    <value>Zbyt wiele żądań</value>
+  </data>
+  <data name="HttpError500" xml:space="preserve">
+    <value>Błąd serwera</value>
+  </data>
+  <data name="HttpError503" xml:space="preserve">
+    <value>Usługa niedostępna</value>
+  </data>
+  <data name="HttpError504" xml:space="preserve">
+    <value>Przekroczono czas odpowiedzi serwera</value>
+  </data>
+  <data name="HttpErrorNoCode" xml:space="preserve">
+    <value>Błąd sieci lub połączenia</value>
   </data>
   <data name="AboutWorkbook" xml:space="preserve">
     <value>Ten podręcznik PGN najlepiej oglądać w programie Chess Forge https://sourceforge.net/projects/chessforge/.   Chess Forge to Wolne i Otwarte Oprogramowanie do systemu Windows.</value>

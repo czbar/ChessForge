@@ -63,6 +63,9 @@ namespace ChessForge
         // position to start with
         private BoardPosition _position;
 
+        // position on the board at the moment when the dialog was opened.
+        private BoardPosition _currentBoardPosition;
+
         /// <summary>
         /// Whether the user wants to search for the position in files after pressing the Search in Files button.
         /// </summary>
@@ -89,11 +92,20 @@ namespace ChessForge
 
             ShowCoordinates();
 
+            // set up the current position for the dialog.
+            TreeNode nd = AppState.ActiveVariationTree?.SelectedNode;
+            _currentBoardPosition = nd == null ? null : nd.Position;
+
             InitializePosition(_position);
 
             UiTbFen.Focus();
 
             SetPartialSearchControlsVisibility(Configuration.PartialSearch);
+
+            if (SearchPosition.ArePositionsIdentical(_currentBoardPosition, PositionSetup))
+            {
+                UiBtnCurrentPos.IsEnabled = false;
+            }
         }
 
         /// <summary>
@@ -124,6 +136,8 @@ namespace ChessForge
             }
 
             UiTbFen.Text = _currentFen;
+
+            UiBtnCurrentPos.IsEnabled = !SearchPosition.ArePositionsIdentical(_currentBoardPosition, PositionSetup);
         }
 
         /// <summary>
@@ -709,10 +723,7 @@ namespace ChessForge
         {
             ClearAll();
 
-            TreeNode nd = AppState.ActiveVariationTree?.SelectedNode;
-            BoardPosition pos = nd == null ? SearchPosition.PreparePositionForSearch() : nd.Position;
-
-            InitializePosition(pos);
+            InitializePosition(_currentBoardPosition);
         }
 
         /// <summary>
@@ -853,7 +864,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Finding-Positions#partial-match-positions");
+            System.Diagnostics.Process.Start(WebAccess.UrlTarget.HelpFolder + "Finding-Positions#partial-match-positions");
         }
 
         //************************************************************

@@ -10,7 +10,6 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace ChessForge
 {
@@ -127,9 +126,10 @@ namespace ChessForge
                         Configuration.LastOpenDirectory = Path.GetDirectoryName(path);
                     }
                     catch { }
-                    ReadWorkbookFile(path, false, ref WorkbookManager.VariationTreeList);
+                    
+                    bool success = ReadWorkbookFile(path, false, ref WorkbookManager.VariationTreeList);
 
-                    if (openPositionSearch)
+                    if (success && openPositionSearch)
                     {
                         UiMnFindPositions_Click(null, null);
                     }
@@ -3800,7 +3800,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiMnHelpWiki_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/User's-Manual");
+            System.Diagnostics.Process.Start(WebAccess.UrlTarget.HelpFolder + "User's-Manual");
         }
 
 

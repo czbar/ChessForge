@@ -305,7 +305,7 @@ namespace ChessForge
 
             double dval;
 
-            if (double.TryParse(UiTbReplaySpeed.Text, out dval))
+            if (NumberUtils.ParseDouble(UiTbReplaySpeed.Text, out dval))
             {
                 Configuration.MoveSpeed = (int)(dval * 1000);
             }
@@ -363,6 +363,7 @@ namespace ChessForge
                 EngineParamsChanged = true;
             }
 
+            AppState.MainWin.ResizeNagStackPanels();
             DialogResult = true;
         }
 
@@ -415,7 +416,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Application-Options-Dialog");
+            System.Diagnostics.Process.Start(WebAccess.UrlTarget.HelpFolder + "Application-Options-Dialog");
         }
 
         /// <summary>

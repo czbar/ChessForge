@@ -1,9 +1,5 @@
-﻿using ChessPosition;
-using GameTree;
-using System;
-using System.Collections.Generic;
+﻿using GameTree;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace ChessForge
 {
@@ -59,7 +55,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Comment-Before-Move-Editor");
+            System.Diagnostics.Process.Start(WebAccess.UrlTarget.HelpFolder + "Comment-Before-Move-Editor");
         }
 
         /// <summary>

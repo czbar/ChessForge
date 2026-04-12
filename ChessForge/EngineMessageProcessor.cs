@@ -1039,7 +1039,7 @@ namespace ChessForge
                                 nd.Position.IsStalemate = true;
                                 if (AppState.EngineEvaluationsUpdateble)
                                 {
-                                    nd.SetEngineEvaluation(0.ToString("F2"));
+                                    nd.SetEngineEvaluation(0.ToString("F2", System.Globalization.CultureInfo.InvariantCulture));
                                 }
                             }
                             EngineLinesBox.ShowEngineLines(nd, null);

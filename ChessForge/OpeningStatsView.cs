@@ -337,25 +337,13 @@ namespace ChessForge
         {
             Paragraph para = new Paragraph();
 
-            // lichess returns "Too Many Requests" error in case of rate limit being hit
-            // but the message is not consistent and may contain additional text.
-            // So we check if the message contains "too many requests" and if it does we show a consistent message.
-
             string errorMessage = "";
-
             if (e != null)
             {
-                switch (e.ResponseCode)
+                errorMessage = GuiUtilities.GetHttpErrorText(e.ResponseCode);
+                if (string.IsNullOrEmpty(errorMessage))
                 {
-                    case 429:
-                        errorMessage = Properties.Resources.ErrTooManyRequests;
-                        break;
-                    case 401:
-                        errorMessage = Properties.Resources.ErrAuthorizationRequired;
-                        break;
-                    default:
-                        errorMessage = e.Message;
-                        break;
+                    errorMessage = e.Message;
                 }
             }
 

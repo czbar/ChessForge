@@ -36,6 +36,9 @@ namespace ChessForge
         // used as a lock to access state variables
         private object _lockState = new object();
 
+        // used as a lock to access the lists of files
+        private object _fileListLock = new object();
+
         /// <summary>
         /// Position search criteria. This is used by the background workers 
         /// to determine whether the position in the file being processed matches the searched one.
@@ -110,13 +113,22 @@ namespace ChessForge
         /// <param name="fileIndex"></param>
         public void JobFinished(int fileIndex, bool positionFound)
         {
+            try
+            {
+                lock (_fileListLock)
+                {
+                    if (positionFound)
+                    {
+                        _filesFound.Add(_fileList[fileIndex].FilePath);
+                        _fileList[fileIndex].PositionFound = true;
+                    }
+                }
+            }
+            catch { }
+
             BkgSearchPosition processor = _workerPool.Find(x => x.FileIndex == fileIndex);
             if (processor != null)
             {
-                if (positionFound)
-                {
-                    _filesFound.Add(_fileList[fileIndex].FilePath);
-                }
                 UpdateVariablesOnJobFinish(fileIndex);
                 if (FilesNotStarted > 0)
                 {
@@ -131,10 +143,8 @@ namespace ChessForge
 
             AppState.MainWin.Dispatcher.Invoke(() =>
             {
-                if (positionFound)
+                if (positionFound && _state != ProcessState.CANCELED)
                 {
-                    _fileList[fileIndex].PositionFound = true;
-
                     ListBoxItem item = new ListBoxItem();
                     item.Content = Path.GetFileName(_fileList[fileIndex].FilePath);
                     item.ToolTip = _fileList[fileIndex].FilePath;
@@ -145,9 +155,7 @@ namespace ChessForge
 
                 if (_state == ProcessState.FINISHED)
                 {
-                    _parentDialog.IsSearchInProgress = false;
-                    _parentDialog.UiLblSearchProgress.Content = Properties.Resources.Completed;
-                    _parentDialog.UiBtnStartStop.Content = Properties.Resources.Search;
+                    _parentDialog.SearchFinished(false);
                 }
             });
         }
@@ -173,21 +181,24 @@ namespace ChessForge
 
             try
             {
-                foreach (BkgSearchPosition bkgProcess in _workerPool)
+                if (_state != ProcessState.CANCELED)
                 {
-                    if (bkgProcess != null && bkgProcess.WorkerState == ProcessState.RUNNING)
+                    foreach (BkgSearchPosition bkgProcess in _workerPool)
                     {
-                        if (bkgProcess.StartTime > startTime)
+                        if (bkgProcess != null && bkgProcess.WorkerState == ProcessState.RUNNING)
                         {
-                            startTime = bkgProcess.StartTime;
-                            indexToReport = bkgProcess.FileIndex;
+                            if (bkgProcess.StartTime > startTime)
+                            {
+                                startTime = bkgProcess.StartTime;
+                                indexToReport = bkgProcess.FileIndex;
+                            }
                         }
                     }
-                }
 
-                if (indexToReport >= 0)
-                {
-                    _parentDialog.UiLblSearchProgress.Content = Path.GetFileName(_fileList[indexToReport].FilePath);
+                    if (indexToReport >= 0)
+                    {
+                        _parentDialog.UiLblSearchProgress.Content = Path.GetFileName(_fileList[indexToReport].FilePath);
+                    }
                 }
             }
             catch { }
@@ -325,7 +336,7 @@ namespace ChessForge
                         if (_filesCompleted >= _fileList.Count)
                         {
                             _state = ProcessState.FINISHED;
-                            AppState.DoEvents();
+                            //AppState.DoEvents();
                         }
                     }
                 }

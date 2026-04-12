@@ -42,9 +42,36 @@ namespace ChessForge
         public SearchPgnFilesDialog(SearchPositionCriteria crits)
         {
             InitializeComponent();
-            _rootFolder = Configuration.LastOpenDirectory;
+            if (string.IsNullOrEmpty(Configuration.LastPgnSearchDirectory))
+            {
+                _rootFolder = Configuration.LastOpenDirectory;
+            }
+            else
+            {
+                _rootFolder = Configuration.LastPgnSearchDirectory;
+            }
             _searchCrits = crits;
             UiTbDirectory.Text = _rootFolder;
+        }
+
+        /// <summary>
+        /// Updates the UI when the search for the position in the PGN files finishes, 
+        /// either because it was stopped by the user or because it completed.
+        /// </summary>
+        public void SearchFinished(bool isCancelled)
+        {
+            IsSearchInProgress = false;
+
+            if (isCancelled)
+            {
+                UiLblSearchProgress.Content = Properties.Resources.NotStarted;
+            }
+            else
+            {
+                UiLblSearchProgress.Content = Properties.Resources.Completed;
+            }
+            UiBtnStartStop.Content = Properties.Resources.Search;
+            UiGbProgress.Header = Properties.Resources.Progress;
         }
 
         /// <summary>
@@ -75,7 +102,9 @@ namespace ChessForge
                 }
 
                 foreach (string subfolder in subfolders)
+                {
                     pending.Push(subfolder);
+                }
 
                 string[] files;
                 try
@@ -88,7 +117,9 @@ namespace ChessForge
                 }
 
                 foreach (string file in files)
+                {
                     yield return file;
+                }
             }
         }
 
@@ -104,6 +135,7 @@ namespace ChessForge
             if (folder != null)
             {
                 _rootFolder = folder;
+                UiTbDirectory.Text = _rootFolder;
             }
         }
 
@@ -118,17 +150,17 @@ namespace ChessForge
             if (IsSearchInProgress)
             {
                 // stop the search
-                IsSearchInProgress = false;
-                UiBtnStartStop.Content = Properties.Resources.Search;
+                _bkgSearchManager.CancelAll();
+                SearchFinished(true);
             }
             else
             {
-
                 ObservableCollection<string> files = new ObservableCollection<string>(GetPgnFilesSafe(_rootFolder));
                 if (files.Count > 0)
                 {
-                    UiBtnStartStop.Content = Properties.Resources.Stop;
                     IsSearchInProgress = true;
+                    UiBtnStartStop.Content = Properties.Resources.Stop;
+                    UiGbProgress.Header = Properties.Resources.Searching;
                     UiLbFiles.Items.Clear();
                     _bkgSearchManager = new BkgSearchPositionManager(this, _searchCrits);
                     _bkgSearchManager.Execute(files);
@@ -143,6 +175,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnClose_Click(object sender, RoutedEventArgs e)
         {
+            Configuration.LastPgnSearchDirectory = _rootFolder;
             DialogResult = false;
         }
 
@@ -153,7 +186,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Finding-Position-In-PGN-Files");
+            System.Diagnostics.Process.Start(WebAccess.UrlTarget.HelpFolder + "Finding-Position-In-PGN-Files");
         }
 
         /// <summary>
@@ -171,6 +204,7 @@ namespace ChessForge
                 {
                     SelectedPgnFile = path;
                     DialogResult = true;
+                    Configuration.LastPgnSearchDirectory = _rootFolder;
                 }
             }
 

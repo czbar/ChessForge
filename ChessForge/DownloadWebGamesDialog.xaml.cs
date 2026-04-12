@@ -514,7 +514,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnHelp_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Importing-Data-into-Chess-Forge#downloading-games-of-a-player-from-lichess-or-chesscom");        
+            System.Diagnostics.Process.Start(WebAccess.UrlTarget.HelpFolder + "Importing-Data-into-Chess-Forge#downloading-games-of-a-player-from-lichess-or-chesscom");        
         }
     }
 }

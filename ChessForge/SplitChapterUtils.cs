@@ -72,10 +72,9 @@ namespace ChessForge
 
         /// <summary>
         /// Performs comparison of 2 round numbers.
-        /// If both strings represent an int or both are strings
-        /// if we compare them normally against each other.
-        /// If one represents an integer and the other does not,
-        /// the former gets preference.
+        /// If both strings represent a double (e.g. 8.2 - round 8, table 2)
+        /// or both are strings, we compare them normally against each other.
+        /// If one represents a double and the other does not, the former gets preference.
         /// </summary>
         /// <param name="sRoundNo1"></param>
         /// <param name="sRoundNo2"></param>
@@ -84,20 +83,20 @@ namespace ChessForge
         {
             double res;
 
-            bool isInt1 = double.TryParse(sRoundNo1, out double intRoundNo1);
-            bool isInt2 = double.TryParse(sRoundNo2, out double intRoundNo2);
+            bool isDbl1 = double.TryParse(sRoundNo1, out double dblRoundNo1);
+            bool isDbl2 = double.TryParse(sRoundNo2, out double dblRoundNo2);
 
-            if (isInt1 && isInt2)
+            if (isDbl1 && isDbl2)
             {
-                res = intRoundNo1 - intRoundNo2;
+                res = dblRoundNo1 - dblRoundNo2;
             }
-            else if (!isInt1 && !isInt2)
+            else if (!isDbl1 && !isDbl2)
             {
                 res = string.Compare(sRoundNo1, sRoundNo2);
             }
             else
             {
-                res = isInt1 ? -1 : 1;
+                res = isDbl1 ? -1 : 1;
             }
 
             int intRes = 0;

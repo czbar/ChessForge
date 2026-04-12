@@ -939,32 +939,32 @@ namespace ChessForge
             switch (ActionOnArticles)
             {
                 case ArticlesAction.COPY_OR_MOVE_FOUND_GAMES:
-                    System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Finding-Games");
+                    System.Diagnostics.Process.Start(WebAccess.UrlTarget.HelpFolder + "Finding-Games");
                     break;
                 case ArticlesAction.COPY_OR_MOVE_FOUND_POSITIONS:
-                    System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Copying-Games-and-Exercises-between-Chapters#Copy-Games-and-Exercises-from-Identical-Positions");
+                    System.Diagnostics.Process.Start(WebAccess.UrlTarget.HelpFolder + "Copying-Games-and-Exercises-between-Chapters#Copy-Games-and-Exercises-from-Identical-Positions");
                     break;
                 case ArticlesAction.DELETE:
                     if (_articleType == GameData.ContentType.EXERCISE)
                     {
-                        System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Deleting-Exercises#deleting-multiple-exercises");
+                        System.Diagnostics.Process.Start(WebAccess.UrlTarget.HelpFolder + "Deleting-Exercises#deleting-multiple-exercises");
                     }
                     else
                     {
-                        System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Deleting-Games#deleting-multiple-games");
+                        System.Diagnostics.Process.Start(WebAccess.UrlTarget.HelpFolder + "Deleting-Games#deleting-multiple-games");
                     }
                     break;
                 case ArticlesAction.COPY:
-                    System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Copying-Games-and-Exercises-between-Chapters");
+                    System.Diagnostics.Process.Start(WebAccess.UrlTarget.HelpFolder + "Copying-Games-and-Exercises-between-Chapters");
                     break;
                 case ArticlesAction.MOVE:
-                    System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Moving-Games-and-Exercises-between-Chapters");
+                    System.Diagnostics.Process.Start(WebAccess.UrlTarget.HelpFolder + "Moving-Games-and-Exercises-between-Chapters");
                     break;
                 case ArticlesAction.EVALUATE:
-                    System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Engine-and-Evaluation#evaluate-games");
+                    System.Diagnostics.Process.Start(WebAccess.UrlTarget.HelpFolder + "Engine-and-Evaluation#evaluate-games");
                     break;
                 default:
-                    System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/User's-Manual");
+                    System.Diagnostics.Process.Start(WebAccess.UrlTarget.HelpFolder + "User's-Manual");
                     break;
             }
         }

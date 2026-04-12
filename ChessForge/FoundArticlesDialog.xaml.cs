@@ -1,12 +1,9 @@
 ﻿using ChessPosition;
 using GameTree;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -779,15 +776,15 @@ namespace ChessForge
         {
             if (_mode == Mode.FILTER_GAMES)
             {
-                System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Finding-Games");
+                System.Diagnostics.Process.Start(WebAccess.UrlTarget.HelpFolder + "Finding-Games");
             }
             else if (_mode == Mode.IDENTICAL_ARTICLES)
             {
-                System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/Finding-Positions");
+                System.Diagnostics.Process.Start(WebAccess.UrlTarget.HelpFolder + "Finding-Positions");
             }
             else
             {
-                System.Diagnostics.Process.Start("https://github.com/czbar/ChessForge/wiki/User's-Manual");            
+                System.Diagnostics.Process.Start(WebAccess.UrlTarget.HelpFolder + "User's-Manual");            
             }
         }
     }
