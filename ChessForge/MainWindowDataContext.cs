@@ -40,7 +40,7 @@ namespace ChessForge
         private readonly double NAG_ICON_HEIGHT_INCREMENT = 4;
 
         // Default increment for the width of the comment icons in the NAG StackPanel when the "Large Menu Font" option is toggled.
-        private readonly double NAG_COMMENT_ICON_WIDTH_INCREMENT = 4;
+        private readonly double NAG_COMMENT_ICON_WIDTH_INCREMENT = 12;
 
 
 
@@ -206,10 +206,18 @@ namespace ChessForge
         {
             bool b = Configuration.LargeMenuFont;
 
+            UiRtbStudyTreeView.Height = b ? MAIN_WINDOW_HEIGHT - WINDOW_HEIGHT_INCREMENT : MAIN_WINDOW_HEIGHT;
             UiRtbModelGamesView.Height = b ? MAIN_WINDOW_HEIGHT - WINDOW_HEIGHT_INCREMENT : MAIN_WINDOW_HEIGHT;
+            UiRtbExercisesView.Height = b ? MAIN_WINDOW_HEIGHT - WINDOW_HEIGHT_INCREMENT : MAIN_WINDOW_HEIGHT;
 
             UiSpGameNagPanel.Margin = b ? new Thickness(0, NAG_PANEL_TOP_MARGIN - WINDOW_HEIGHT_INCREMENT, 0, 0) : new Thickness(0, NAG_PANEL_TOP_MARGIN, 0, 0);
             UiSpGameNagPanel.Height = b ? NAG_PANEL_HEIGHT + WINDOW_HEIGHT_INCREMENT : NAG_PANEL_HEIGHT;
+
+            UiSpStudyNagPanel.Margin = b ? new Thickness(0, NAG_PANEL_TOP_MARGIN - WINDOW_HEIGHT_INCREMENT, 0, 0) : new Thickness(0, NAG_PANEL_TOP_MARGIN, 0, 0);
+            UiSpStudyNagPanel.Height = b ? NAG_PANEL_HEIGHT + WINDOW_HEIGHT_INCREMENT : NAG_PANEL_HEIGHT;
+
+            UiSpExercNagPanel.Margin = b ? new Thickness(0, NAG_PANEL_TOP_MARGIN - WINDOW_HEIGHT_INCREMENT, 0, 0) : new Thickness(0, NAG_PANEL_TOP_MARGIN, 0, 0);
+            UiSpExercNagPanel.Height = b ? NAG_PANEL_HEIGHT + WINDOW_HEIGHT_INCREMENT : NAG_PANEL_HEIGHT;
 
             NagButtonFontSize = b ? NAG_BUTTON_FONT_SIZE + NAG_FONT_SIZE_INCREMENT : NAG_BUTTON_FONT_SIZE;
             NagIconWidth = b ? NAG_ICON_WIDTH + NAG_ICON_WIDTH_INCREMENT : NAG_ICON_WIDTH;
