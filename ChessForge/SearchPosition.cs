@@ -116,20 +116,23 @@ namespace ChessForge
         {
             bool res = false;
 
-            try
+            if (pos1 != null && pos2 != null)
             {
-                if (pos1.Board.Cast<byte>().SequenceEqual(pos2.Board.Cast<byte>()))
+                try
                 {
-                    if (IsSameEnpassantPossibilities(pos1, pos2)
-                        && (pos1.ColorToMove == pos2.ColorToMove)
-                        && (pos1.CastlingRights == pos2.CastlingRights))
+                    if (pos1.Board.Cast<byte>().SequenceEqual(pos2.Board.Cast<byte>()))
                     {
-                        res = true;
+                        if (IsSameEnpassantPossibilities(pos1, pos2)
+                            && (pos1.ColorToMove == pos2.ColorToMove)
+                            && (pos1.CastlingRights == pos2.CastlingRights))
+                        {
+                            res = true;
+                        }
                     }
                 }
-            }
-            catch
-            {
+                catch
+                {
+                }
             }
 
             return res;

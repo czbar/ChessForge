@@ -115,10 +115,13 @@ namespace ChessForge
         /// <param name="nd"></param>
         private void InitializePosition(BoardPosition position)
         {
-            PositionSetup = new BoardPosition(position);
-            SetupImagesForPosition();
-            PositionSetup.HalfMove50Clock = 1;
-            SetFen();
+            if (position != null)
+            {
+                PositionSetup = new BoardPosition(position);
+                SetupImagesForPosition();
+                PositionSetup.HalfMove50Clock = 1;
+                SetFen();
+            }
         }
 
         /// <summary>
@@ -137,7 +140,7 @@ namespace ChessForge
 
             UiTbFen.Text = _currentFen;
 
-            UiBtnCurrentPos.IsEnabled = !SearchPosition.ArePositionsIdentical(_currentBoardPosition, PositionSetup);
+            UiBtnCurrentPos.IsEnabled = _currentBoardPosition != null && !SearchPosition.ArePositionsIdentical(_currentBoardPosition, PositionSetup);
         }
 
         /// <summary>

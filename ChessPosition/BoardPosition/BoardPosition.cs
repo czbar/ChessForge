@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChessPosition
 {
@@ -136,18 +132,25 @@ namespace ChessPosition
         /// <param name="position"></param>
         public BoardPosition(BoardPosition position)
         {
-            Board = (byte[,])position.Board.Clone();
+            if (position != null)
+            {
+                Board = (byte[,])position.Board.Clone();
 
-            this.DynamicProperties = position.DynamicProperties;
-            this.InheritedEnPassantSquare = position.InheritedEnPassantSquare;
-            this.EnPassantSquare = position.EnPassantSquare;
-            this.HalfMove50Clock = position.HalfMove50Clock;
-            this.MoveNumber = position.MoveNumber;
+                this.DynamicProperties = position.DynamicProperties;
+                this.InheritedEnPassantSquare = position.InheritedEnPassantSquare;
+                this.EnPassantSquare = position.EnPassantSquare;
+                this.HalfMove50Clock = position.HalfMove50Clock;
+                this.MoveNumber = position.MoveNumber;
 
-            this.IsCheck = position.IsCheck;
-            this.IsCheckmate = position.IsCheckmate;
+                this.IsCheck = position.IsCheck;
+                this.IsCheckmate = position.IsCheckmate;
 
-            this.LastMove = position.LastMove.CloneMe();
+                this.LastMove = position.LastMove.CloneMe();
+            }
+            else
+            {
+                Board = new byte[8, 8];
+            }
         }
 
         /// <summary>
