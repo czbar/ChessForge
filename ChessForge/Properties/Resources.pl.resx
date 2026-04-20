@@ -1327,6 +1327,9 @@ UWAGA: Oceny nie są uaktualniane (zezwól naciskając F8).</value>
   <data name="Granularity" xml:space="preserve">
     <value>Rozdzielczość</value>
   </data>
+  <data name="ChapterTitlePrefix" xml:space="preserve">
+    <value>Tytuły nowych rozdziałow zaczynaj od</value>
+  </data>
   <data name="MoveGamesPerEco" xml:space="preserve">
     <value>Przenieś partie do innych rozdziałów wg ECO</value>
   </data>

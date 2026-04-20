@@ -1327,6 +1327,9 @@ NOTE: Evaluations are not being updated (press F8 to allow).</value>
   <data name="Granularity" xml:space="preserve">
     <value>Granularity</value>
   </data>
+  <data name="ChapterTitlePrefix" xml:space="preserve">
+    <value>Start new chapter titles with</value>
+  </data>
   <data name="MoveGamesPerEco" xml:space="preserve">
     <value>Move games to other chapters per ECO</value>
   </data>
