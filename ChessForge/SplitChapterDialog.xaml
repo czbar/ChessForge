@@ -7,10 +7,10 @@
         xmlns:local="clr-namespace:ChessForge"
         ResizeMode="NoResize"
         mc:Ignorable="d"
-        Title="{x:Static p:Resources.SplitChapter}" Height="250" Width="365">
+        Title="{x:Static p:Resources.SplitChapter}" Height="310" Width="365">
     <Grid>
-        <Label x:Name="UiLabelChapterTitle" Content="{x:Static p:Resources.Chapter}" HorizontalAlignment="Center" HorizontalContentAlignment="Left" Margin="-15,6,0,0" Padding="35,0,20,0" VerticalAlignment="Top"/>
-        <GroupBox x:Name="UiGbSplitBy" Header="{x:Static p:Resources.SplitBy}" Margin="14,34,0,0" Width="155" HorizontalAlignment="Left" VerticalAlignment="Top" Height="115">
+        <Label x:Name="UiLabelChapterTitle" Content="{x:Static p:Resources.Chapter}" HorizontalAlignment="Center" HorizontalContentAlignment="Left" Margin="15,6,15,0" VerticalAlignment="Top"/>
+        <GroupBox x:Name="UiGbSplitBy" Header="{x:Static p:Resources.SplitBy}" HorizontalAlignment="Left" Margin="14,34,0,0" Width="155" VerticalAlignment="Top" Height="115">
             <StackPanel>
                 <RadioButton x:Name="UiRbSplitByEco" Content="{x:Static p:Resources.ECO}" HorizontalAlignment="Left" Margin="10,15,0,0" Checked="UiRbSplitByEco_Checked"/>
                 <RadioButton x:Name="UiRbSplitByDate" Content="{x:Static p:Resources.Date}" HorizontalAlignment="Left" Margin="10,10,0,0" Checked="UiRbSplitByDate_Checked"/>
@@ -35,6 +35,11 @@
             <StackPanel>
                 <RadioButton x:Name="UiRbCrit_12" Content="1,2,3..." HorizontalAlignment="Left" Margin="10,22,0,0"/>
                 <RadioButton x:Name="UiRbCrit_11_12" Content="1.1,1.2,1.3..." HorizontalAlignment="Left" Margin="10,16,0,0"/>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox x:Name="UiGbTitlePrefix" Header="{x:Static p:Resources.ChapterTitlePrefix}" Margin="14,154,14,0" VerticalAlignment="Top" Height="55">
+            <StackPanel>
+                <TextBox x:Name="UiTbTitlePrefix" Margin="10,6,10,0"></TextBox>
             </StackPanel>
         </GroupBox>
         <Button x:Name="UiBtnOk" IsDefault="True" Content="{x:Static p:Resources.Ok}" HorizontalAlignment="Center" Margin="-220,0,0,20" Width="90" VerticalAlignment="Bottom" Click="UiBtnOk_Click"  />
