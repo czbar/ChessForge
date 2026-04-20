@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         Title="{x:Static p:Resources.SplitChapter}" Height="310" Width="365">
     <Grid>
-        <Label x:Name="UiLabelChapterTitle" Content="{x:Static p:Resources.Chapter}" HorizontalAlignment="Center" HorizontalContentAlignment="Left" Margin="15,6,15,0" VerticalAlignment="Top"/>
+        <Label x:Name="UiLabelChapterTitle" Background="WhiteSmoke" Content="{x:Static p:Resources.Chapter}" HorizontalAlignment="Center" HorizontalContentAlignment="Left" Margin="15,6,15,0" VerticalAlignment="Top"/>
         <GroupBox x:Name="UiGbSplitBy" Header="{x:Static p:Resources.SplitBy}" HorizontalAlignment="Left" Margin="14,34,0,0" Width="155" VerticalAlignment="Top" Height="115">
             <StackPanel>
                 <RadioButton x:Name="UiRbSplitByEco" Content="{x:Static p:Resources.ECO}" HorizontalAlignment="Left" Margin="10,15,0,0" Checked="UiRbSplitByEco_Checked"/>
