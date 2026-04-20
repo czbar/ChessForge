@@ -26,20 +26,18 @@ namespace ChessForge
 
             List<Chapter> createdChapters = null;
 
-            string origTitle = chapter.Title;
-
             if (dlg.ShowDialog() == true)
             {
                 switch (SplitChapterDialog.LastSplitBy)
                 {
                     case SplitBy.ECO:
-                        createdChapters = SplitChapterByECO(SplitChapterDialog.LastSplitByCrtierion, chapter, origTitle);
+                        createdChapters = SplitChapterByECO(SplitChapterDialog.LastSplitByCrtierion, chapter, dlg.NewChapterTitlePrefix);
                         break;
                     case SplitBy.DATE:
-                        createdChapters = SplitChapterByDate(SplitChapterDialog.LastSplitByCrtierion, chapter, origTitle);
+                        createdChapters = SplitChapterByDate(SplitChapterDialog.LastSplitByCrtierion, chapter, dlg.NewChapterTitlePrefix);
                         break;
                     case SplitBy.ROUND:
-                        createdChapters = SplitChapterByRound(SplitChapterDialog.LastSplitByCrtierion, chapter, origTitle);
+                        createdChapters = SplitChapterByRound(SplitChapterDialog.LastSplitByCrtierion, chapter, dlg.NewChapterTitlePrefix);
                         break;
                 }
 
@@ -301,9 +299,9 @@ namespace ChessForge
         /// </summary>
         /// <param name="crit"></param>
         /// <param name="chapter"></param>
-        /// <param name="origTitle"></param>
+        /// <param name="titlePrefix"></param>
         /// <returns></returns>
-        private static List<Chapter> SplitChapterByECO(SplitByCriterion crit, Chapter chapter, string origTitle)
+        private static List<Chapter> SplitChapterByECO(SplitByCriterion crit, Chapter chapter, string titlePrefix)
         {
             List<Chapter> resChapters = new List<Chapter>();
 
@@ -317,10 +315,10 @@ namespace ChessForge
                     if (!_dictResChapters.ContainsKey(critPart))
                     {
                         _dictResChapters[critPart] = new Chapter();
-                        origTitle = RemoveEcoFromOriginalChapterTitle(origTitle);
-                        if (!string.IsNullOrWhiteSpace(origTitle))
+                        titlePrefix = RemoveEcoFromOriginalChapterTitle(titlePrefix);
+                        if (!string.IsNullOrWhiteSpace(titlePrefix))
                         {
-                            _dictResChapters[critPart].SetTitle(origTitle + " (" + critPart + ")");
+                            _dictResChapters[critPart].SetTitle(titlePrefix + " (" + critPart + ")");
                         }
                         else
                         {
@@ -349,9 +347,9 @@ namespace ChessForge
                     Chapter exercChapter = new Chapter();
                     exercChapter.StudyTree.Tree.CreateNew();
                     exercChapter.Exercises = chapter.Exercises;
-                    if (!string.IsNullOrWhiteSpace(origTitle))
+                    if (!string.IsNullOrWhiteSpace(titlePrefix))
                     {
-                        exercChapter.SetTitle(origTitle + " - " + Properties.Resources.Exercises);
+                        exercChapter.SetTitle(titlePrefix + " - " + Properties.Resources.Exercises);
                     }
                     else
                     {
@@ -378,23 +376,23 @@ namespace ChessForge
         /// Removes the ECO code if found in parenthesis at the end
         /// of the chapter's name
         /// </summary>
-        /// <param name="origTitle"></param>
+        /// <param name="titlePrefix"></param>
         /// <returns></returns>
-        private static string RemoveEcoFromOriginalChapterTitle(string origTitle)
+        private static string RemoveEcoFromOriginalChapterTitle(string titlePrefix)
         {
-            origTitle = origTitle.TrimEnd();
+            titlePrefix = titlePrefix.TrimEnd();
 
             Regex ecoRegex = new Regex(@"\((?:A|B|C|D|E)\d{0,2}\)$", RegexOptions.Compiled);
-            if (ecoRegex.Match(origTitle).Success)
+            if (ecoRegex.Match(titlePrefix).Success)
             {
-                int pos = origTitle.LastIndexOf('(');
+                int pos = titlePrefix.LastIndexOf('(');
                 if (pos > 0)
                 {
-                    origTitle = origTitle.Substring(0, pos);
+                    titlePrefix = titlePrefix.Substring(0, pos);
                 }
             }
 
-            return origTitle;
+            return titlePrefix;
         }
 
 
@@ -428,9 +426,9 @@ namespace ChessForge
         /// </summary>
         /// <param name="crit"></param>
         /// <param name="chapter"></param>
-        /// <param name="origTitle"></param>
+        /// <param name="titlePrefix"></param>
         /// <returns></returns>
-        private static List<Chapter> SplitChapterByDate(SplitByCriterion crit, Chapter chapter, string origTitle)
+        private static List<Chapter> SplitChapterByDate(SplitByCriterion crit, Chapter chapter, string titlePrefix)
         {
             List<Chapter> resChapters = new List<Chapter>();
 
@@ -444,9 +442,9 @@ namespace ChessForge
                     if (!_dictResChapters.ContainsKey(critPart))
                     {
                         _dictResChapters[critPart] = new Chapter();
-                        if (!string.IsNullOrWhiteSpace(origTitle))
+                        if (!string.IsNullOrWhiteSpace(titlePrefix))
                         {
-                            _dictResChapters[critPart].SetTitle(origTitle + " " + critPart);
+                            _dictResChapters[critPart].SetTitle(titlePrefix + " " + critPart);
                         }
                         else
                         {
@@ -462,9 +460,9 @@ namespace ChessForge
                     if (!_dictResChapters.ContainsKey(critPart))
                     {
                         _dictResChapters[critPart] = new Chapter();
-                        if (!string.IsNullOrWhiteSpace(origTitle))
+                        if (!string.IsNullOrWhiteSpace(titlePrefix))
                         {
-                            _dictResChapters[critPart].SetTitle(origTitle + " " + critPart);
+                            _dictResChapters[critPart].SetTitle(titlePrefix + " " + critPart);
                         }
                         else
                         {
@@ -500,9 +498,9 @@ namespace ChessForge
         /// the articles' round numbers
         /// </summary>
         /// <param name="chapter"></param>
-        /// <param name="origTitle"></param>
+        /// <param name="titlePrefix"></param>
         /// <returns></returns>
-        private static List<Chapter> SplitChapterByRound(SplitByCriterion crit, Chapter chapter, string origTitle)
+        private static List<Chapter> SplitChapterByRound(SplitByCriterion crit, Chapter chapter, string titlePrefix)
         {
             List<Chapter> resChapters = new List<Chapter>();
 
@@ -525,9 +523,9 @@ namespace ChessForge
                     if (!_dictResChapters.ContainsKey(round))
                     {
                         _dictResChapters[round] = new Chapter();
-                        if (!string.IsNullOrWhiteSpace(origTitle))
+                        if (!string.IsNullOrWhiteSpace(titlePrefix))
                         {
-                            _dictResChapters[round].SetTitle(origTitle + " - " + Properties.Resources.Round + " " + round);
+                            _dictResChapters[round].SetTitle(titlePrefix + " - " + Properties.Resources.Round + " " + round);
                         }
                         else
                         {
@@ -543,9 +541,9 @@ namespace ChessForge
                     if (!_dictResChapters.ContainsKey(round))
                     {
                         _dictResChapters[round] = new Chapter();
-                        if (!string.IsNullOrWhiteSpace(origTitle))
+                        if (!string.IsNullOrWhiteSpace(titlePrefix))
                         {
-                            _dictResChapters[round].SetTitle(origTitle + " - " + Properties.Resources.Round + " " + round);
+                            _dictResChapters[round].SetTitle(titlePrefix + " - " + Properties.Resources.Round + " " + round);
                         }
                         else
                         {
