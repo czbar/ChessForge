@@ -430,6 +430,8 @@ namespace ChessForge
 
             AppLog.Initialize(Configuration.DebugLevel);
 
+            InitializeLayoutConstants();
+
             EvaluationMgr = new EvaluationManager();
 
             InitializeComponent();
@@ -502,8 +504,6 @@ namespace ChessForge
                 Configuration.CoreCount = Environment.ProcessorCount;
             }
             catch { }
-
-            InitializeLayout();
 
             if (Configuration.LichessAuthTokenSavedInConfig)
             {
@@ -578,7 +578,7 @@ namespace ChessForge
             }
 
 
-            AdjustPanelWidths(Configuration.ChessboardSizeAdjustment);
+            UpdateMainChessboardWidths(Configuration.ChessboardSizeAdjustment);
 
             Timers.Start(AppTimers.TimerId.APP_START);
 
