@@ -88,7 +88,7 @@ namespace ChessForge
         /// <summary>
         /// Sets and stores the default sizes and margins of the main window controls.
         /// </summary>
-        public void InitializeLayout()
+        public void InitializeLayoutConstants()
         {
             // The main tab control in all learning modes, has the width and height determined
             // by the margins. The width and the height are not set explicitly.
@@ -170,7 +170,7 @@ namespace ChessForge
         {
             ThicknessUtils.SetControlLeftMargin(UiDgActiveLine, 0);
             ThicknessUtils.SetControlLeftMargin(UiDgEngineGame, SCORESHEET_NO_EVALS_LEFT_MARGIN);
-            
+
             UiTrainingSessionBox.Margin = new Thickness(MAIN_TAB_PAD, SECOND_ROW_TOP_PAD, RIGHT_MARGIN_WITH_SCORESHEET_NO_EVALS, 0);
 
             switch (sizeMode)
@@ -215,11 +215,12 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Adjusts the widths of the main tab control and the controls
+        /// Adjusts the widths of the main main chessboard control and the main view window
         /// according to the currently selected adjustment value.
+        /// When the chessboard is made wider, the main view window is made narrower so that the overall layout remains balanced.
         /// </summary>
-        /// <param name="adjustment"></param>
-        private void AdjustPanelWidths(double adjustment)
+        /// <param name="adjustment">The adjustment value to be applied to the widths.</param>
+        private void UpdateMainChessboardWidths(double adjustment)
         {
             // calculate the adjustment relative to the default boundary between the first and second column.
             double absoluteAdjustment = adjustment + (_gridMain.ColumnDefinitions[0].Width.Value - MAIN_GRID_COLUMNS[0]);
@@ -234,20 +235,26 @@ namespace ChessForge
             _gridMain.ColumnDefinitions[0].Width = new GridLength(_gridMain.ColumnDefinitions[0].Width.Value + adjustment);
             _gridMain.ColumnDefinitions[1].Width = new GridLength(_gridMain.ColumnDefinitions[1].Width.Value - adjustment);
 
-            UiRtbBoardComment.Document.PageWidth = _gridMain.ColumnDefinitions[0].Width.Value;
-
             MainBoard.Width = CHESSBOARD_DEFAULT_WIDTH + absoluteAdjustment;
             MainBoard.Height = CHESSBOARD_DEFAULT_WIDTH + absoluteAdjustment;
+            return;
+        }
 
+        /// <summary>
+        /// Refreshes the controls affected by a change in the main chessboard width, which are:
+        /// - The board comment RichTextBox
+        /// - The opening stats view (if explorers are on)
+        /// - The evaluation chart
+        /// </summary>
+        private void RefreshAffectedControls()
+        {
+            UiRtbBoardComment.Document.PageWidth = _gridMain.ColumnDefinitions[0].Width.Value;
             if (_openingStatsView != null && AppState.AreExplorersOn)
             {
-                _openingStatsView.RebuildView(absoluteAdjustment);
+                _openingStatsView.RebuildView(Configuration.ChessboardSizeAdjustment);
             }
-
             UiEvalChart.InitSizes();
             UiEvalChart.Refresh();
-
-            return;
         }
 
         /// <summary>
@@ -326,23 +333,30 @@ namespace ChessForge
         /// <param name="e"></param>
         private void ManualSplitter_MouseMove(object sender, MouseEventArgs e)
         {
-            if (_isResizingTab)
+            if (_isResizingTab && e.LeftButton == MouseButtonState.Pressed)
             {
-                Point current = e.GetPosition(_gridMain);
-                // check if the mouse is within the limits of the allowed resizing
-                if (current.X > MAIN_GRID_COLUMNS[0] - MAX_USER_WIDTH_ADJUSTMENT && current.X <= MAIN_GRID_COLUMNS[0])
+                double currX = e.GetPosition(_gridMain).X;
+
+                // make sure that the user cannot move the splitter beyond the allowed limits.
+                if (currX <= MAIN_GRID_COLUMNS[0] - MAX_USER_WIDTH_ADJUSTMENT)
                 {
-                    ManualSplitter.Fill = Brushes.Gray;
-                    ManualSplitter.Opacity = 0.8;
-
-                    _runningAdjustment = current.X - _resizeStartPointX;
-
-                    ManualSplitter.Margin = new Thickness(
-                        _splitterDefaultThickness.Left + _runningAdjustment,
-                        _splitterDefaultThickness.Top,
-                        _splitterDefaultThickness.Right - _runningAdjustment,
-                        _splitterDefaultThickness.Bottom);
+                    currX = MAIN_GRID_COLUMNS[0] - MAX_USER_WIDTH_ADJUSTMENT;
                 }
+                else if (currX > MAIN_GRID_COLUMNS[0])
+                {
+                    currX = MAIN_GRID_COLUMNS[0];
+                }
+
+                ManualSplitter.Fill = Brushes.Gray;
+                ManualSplitter.Opacity = 0.8;
+
+                _runningAdjustment = currX - _resizeStartPointX;
+
+                ManualSplitter.Margin = new Thickness(
+                    _splitterDefaultThickness.Left + _runningAdjustment,
+                    _splitterDefaultThickness.Top,
+                    _splitterDefaultThickness.Right - _runningAdjustment,
+                    _splitterDefaultThickness.Bottom);
             }
         }
 
@@ -363,7 +377,8 @@ namespace ChessForge
                 ManualSplitter.ReleaseMouseCapture();
                 ManualSplitter.Margin = _splitterDefaultThickness;
 
-                AdjustPanelWidths(_runningAdjustment);
+                UpdateMainChessboardWidths(_runningAdjustment);
+                RefreshAffectedControls();
             }
         }
     }
