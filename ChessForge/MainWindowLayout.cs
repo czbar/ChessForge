@@ -1,4 +1,5 @@
 ﻿using ChessPosition;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -28,6 +29,15 @@ namespace ChessForge
 
         // Right margin of the main tab control in the presence of the scoresheet.
         private const int RIGHT_MARGIN_WITH_SCORESHEET = 275;
+
+        // Default width of the main window, used for resizing calculations.
+        private double DEFAULT_MAIN_WIN_WIDTH;
+
+        // Default height of the main window, used for resizing calculations.
+        private double DEFAULT_MAIN_WIN_HEIGHT;
+
+        // Default width/height ratio of the main window, used for resizing calculations.
+        private double DEFAULT_MAIN_WIN_WIDTH_HEIGHT_RATIO;
 
         // original grid row/column height/width definitions for the main grid.
         private double[] MAIN_GRID_ROWS = { 1.0, 680.0, 160.0, 20.0 };
@@ -87,6 +97,12 @@ namespace ChessForge
             _rtbOpeningsDefaultThickness = new Thickness(MAIN_TAB_PAD, SECOND_ROW_TOP_PAD, RIGHT_MARGIN_WITH_SCORESHEET, 0);
 
             _splitterDefaultThickness = new Thickness(0, 0, 0, 0);
+
+            // calculate the default main window width and height based on the grid definitions.
+            DEFAULT_MAIN_WIN_WIDTH = MAIN_GRID_COLUMNS.Sum();
+            DEFAULT_MAIN_WIN_HEIGHT = MAIN_GRID_ROWS.Sum();
+
+            DEFAULT_MAIN_WIN_WIDTH_HEIGHT_RATIO = DEFAULT_MAIN_WIN_WIDTH / DEFAULT_MAIN_WIN_HEIGHT;
         }
 
         /// <summary>
@@ -234,6 +250,34 @@ namespace ChessForge
             return;
         }
 
+        /// <summary>
+        /// Calculates the width and height adjustments to be applied to the main window controls
+        /// based on the current size of the main window and the default width/height ratio.
+        /// </summary>
+        /// <param name="widthAdjustment"></param>
+        /// <param name="heightAdjustment"></param>
+        private void CalcMainWinWidthHeightAdjustments(out double widthAdjustment, out double heightAdjustment)
+        {
+            double currentRatio = this.Width / this.Height;
+            if (currentRatio > DEFAULT_MAIN_WIN_WIDTH_HEIGHT_RATIO)
+            {
+                // the window is wider than the default ratio, so we need to adjust the height.
+                heightAdjustment = 0;
+
+                double overWidth = this.Width - this.Height * DEFAULT_MAIN_WIN_WIDTH_HEIGHT_RATIO;
+                double overWidthRatio = overWidth / _gridMain.ColumnDefinitions[1].Width.Value;
+                widthAdjustment = overWidthRatio * DEFAULT_MAIN_WIN_WIDTH;
+            }
+            else
+            {
+                // the window is taller than the default ratio, so we need to adjust the width.
+                widthAdjustment = 0;
+
+                double overHeight = this.Height - this.Width / DEFAULT_MAIN_WIN_WIDTH_HEIGHT_RATIO;
+                double overHeightRatio = overHeight / _gridMain.RowDefinitions[1].Height.Value;
+                heightAdjustment = overHeightRatio * DEFAULT_MAIN_WIN_HEIGHT;
+            }
+        }
 
         //**************************************************
         //
