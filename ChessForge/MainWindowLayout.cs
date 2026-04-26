@@ -54,6 +54,18 @@ namespace ChessForge
         // Width of the scoresheet in the absence of evals.
         public double SCORESHEET_WIDTH_NO_EVALS = 160;
 
+        // Default height of the bottom half controls (Top Games, Openings, Eval Chart).
+        private double BOTTOM_HALF_DEFAULT_CONTROL_HEIGHT = 150;
+
+        // Index of the bottom half row in the main grid.
+        private int BOTTOM_HALF_ROW_INDEX = 2;
+
+        // Index of the main tab control column in the main grid.
+        private int TAB_CONTROL_COLUMN_INDEX = 1;
+
+        // The current adjustment applied to the chessboard size.
+        private double chessboardSizeAdjustment = 0;
+
         /// <summary>
         /// Right margin of the main tab control in the presence of the scoresheet without evals.
         /// The scoresheet to the right of the main tab control is narrower here so we need
@@ -84,6 +96,18 @@ namespace ChessForge
 
         // Default margins for the Openings control.
         private Thickness _splitterDefaultThickness;
+
+        /// <summary>
+        /// Handler for the main window SizeChanged event.
+        /// Updates the widths and heights of the main window controls according to the new size of the main window.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            UpdateTabControlWidthHeight(e.NewSize);
+            RefreshAffectedControls();
+        }
 
         /// <summary>
         /// Sets and stores the default sizes and margins of the main window controls.
@@ -235,9 +259,103 @@ namespace ChessForge
             _gridMain.ColumnDefinitions[0].Width = new GridLength(_gridMain.ColumnDefinitions[0].Width.Value + adjustment);
             _gridMain.ColumnDefinitions[1].Width = new GridLength(_gridMain.ColumnDefinitions[1].Width.Value - adjustment);
 
+            chessboardSizeAdjustment = absoluteAdjustment;
+
             MainBoard.Width = CHESSBOARD_DEFAULT_WIDTH + absoluteAdjustment;
             MainBoard.Height = CHESSBOARD_DEFAULT_WIDTH + absoluteAdjustment;
             return;
+        }
+
+        /// <summary>
+        /// Updates the widths and heights of the main window controls according to the current size of the main window.
+        /// </summary>
+        private void UpdateTabControlWidthHeight(Size windowSize)
+        {
+            try
+            {
+                // calculate the current width/height ratio of the main window client area.
+                // the width is straight forward , but the height is taken as the height of the second row of the main grid,
+                // so that we skip the menus.
+                double actualWidthHightRatio = windowSize.Width / _gridUber.RowDefinitions[1].ActualHeight;
+
+                // using actualWidthHightRatio update the sizes so that the client area remains fully utilized.
+                UpdateTabControlWidth(actualWidthHightRatio);
+                UpdateBottomHalfControlHeights(actualWidthHightRatio);
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// Updates the width of the main tab control according to the current size of the main window.
+        /// </summary>
+        /// <param name="actualWidthHeightRatio"></param>
+        private void UpdateTabControlWidth(double actualWidthHeightRatio)
+        {
+            double defaultWidth = DEFAULT_MAIN_WIN_HEIGHT * actualWidthHeightRatio;
+
+            // calculate the total width currently defined for the main window,
+            // excluding the main tab control, and add the default width of the main tab control.
+            double currentDefinedWidth = 0;
+            for (int i = 0; i < _gridMain.ColumnDefinitions.Count; i++)
+            {
+                if (i != TAB_CONTROL_COLUMN_INDEX)
+                {
+                    currentDefinedWidth += _gridMain.ColumnDefinitions[i].Width.Value;
+                }
+            }
+            currentDefinedWidth += (MAIN_GRID_COLUMNS[TAB_CONTROL_COLUMN_INDEX]);
+
+            // by how much to adjust the defined width of the main tab control.
+            double widthGapScaled = defaultWidth - currentDefinedWidth;
+            if (actualWidthHeightRatio <= DEFAULT_MAIN_WIN_WIDTH_HEIGHT_RATIO)
+            {
+                // in this case we need to adjust the heights so don't adjust the width of the main tab control.
+                widthGapScaled = -1 * chessboardSizeAdjustment;
+            }
+
+            _gridMain.ColumnDefinitions[TAB_CONTROL_COLUMN_INDEX].Width = new GridLength(MAIN_GRID_COLUMNS[TAB_CONTROL_COLUMN_INDEX] + widthGapScaled);
+        }
+
+        /// <summary>
+        /// Updates the heights of the controls in the bottom half of the main window according to the current size of the main window.
+        /// </summary>
+        /// <param name="actualWidthHightRatio"></param>
+        private void UpdateBottomHalfControlHeights(double actualWidthHightRatio)
+        {
+            double defaultHeight = DEFAULT_MAIN_WIN_WIDTH / actualWidthHightRatio;
+
+            double currentDefinedHeight = 0;
+            for (int i = 0; i < _gridMain.RowDefinitions.Count; i++)
+            {
+                if (i != BOTTOM_HALF_ROW_INDEX)
+                {
+                    currentDefinedHeight += _gridMain.RowDefinitions[i].Height.Value;
+                }
+            }
+            currentDefinedHeight += MAIN_GRID_ROWS[BOTTOM_HALF_ROW_INDEX];
+
+            double heightGapScaled = defaultHeight - currentDefinedHeight;
+            if (actualWidthHightRatio >= DEFAULT_MAIN_WIN_WIDTH_HEIGHT_RATIO)
+            {
+                heightGapScaled = 0;
+            }
+
+            _gridMain.RowDefinitions[BOTTOM_HALF_ROW_INDEX].Height = new GridLength(MAIN_GRID_ROWS[BOTTOM_HALF_ROW_INDEX] + heightGapScaled);
+            AdjustBottomHalfControlHeights(heightGapScaled);
+        }
+
+        /// <summary>
+        /// Adjusts the heights of the controls in the bottom half of the main window according to the given adjustment value.
+        /// </summary>
+        /// <param name="adjustment"></param>
+        private void AdjustBottomHalfControlHeights(double adjustment)
+        {
+            UiRtbTopGames.Height = BOTTOM_HALF_DEFAULT_CONTROL_HEIGHT + adjustment;
+            UiRtbOpenings.Height = BOTTOM_HALF_DEFAULT_CONTROL_HEIGHT + adjustment;
+            UiRtbBoardComment.Height = BOTTOM_HALF_DEFAULT_CONTROL_HEIGHT + adjustment;
+            UiTbEngineLines.Height = BOTTOM_HALF_DEFAULT_CONTROL_HEIGHT + adjustment;
+
+            UiEvalChart.Height = BOTTOM_HALF_DEFAULT_CONTROL_HEIGHT + adjustment;
         }
 
         /// <summary>
@@ -255,35 +373,6 @@ namespace ChessForge
             }
             UiEvalChart.InitSizes();
             UiEvalChart.Refresh();
-        }
-
-        /// <summary>
-        /// Calculates the width and height adjustments to be applied to the main window controls
-        /// based on the current size of the main window and the default width/height ratio.
-        /// </summary>
-        /// <param name="widthAdjustment"></param>
-        /// <param name="heightAdjustment"></param>
-        private void CalcMainWinWidthHeightAdjustments(out double widthAdjustment, out double heightAdjustment)
-        {
-            double currentRatio = this.Width / this.Height;
-            if (currentRatio > DEFAULT_MAIN_WIN_WIDTH_HEIGHT_RATIO)
-            {
-                // the window is wider than the default ratio, so we need to adjust the height.
-                heightAdjustment = 0;
-
-                double overWidth = this.Width - this.Height * DEFAULT_MAIN_WIN_WIDTH_HEIGHT_RATIO;
-                double overWidthRatio = overWidth / _gridMain.ColumnDefinitions[1].Width.Value;
-                widthAdjustment = overWidthRatio * DEFAULT_MAIN_WIN_WIDTH;
-            }
-            else
-            {
-                // the window is taller than the default ratio, so we need to adjust the width.
-                widthAdjustment = 0;
-
-                double overHeight = this.Height - this.Width / DEFAULT_MAIN_WIN_WIDTH_HEIGHT_RATIO;
-                double overHeightRatio = overHeight / _gridMain.RowDefinitions[1].Height.Value;
-                heightAdjustment = overHeightRatio * DEFAULT_MAIN_WIN_HEIGHT;
-            }
         }
 
         //**************************************************
