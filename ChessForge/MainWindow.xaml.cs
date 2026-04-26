@@ -410,6 +410,7 @@ namespace ChessForge
         public MainWindow()
         {
             AppState.MainWin = this;
+            this.SizeChanged += MainWindow_SizeChanged;
 
             // the next lines pertain to localization, must be invoked here (before InitializeComponent) and in this order
             ReadConfiguration();
@@ -577,8 +578,8 @@ namespace ChessForge
                 UiImgChartOff.Visibility = Visibility.Hidden;
             }
 
-
             UpdateMainChessboardWidths(Configuration.ChessboardSizeAdjustment);
+            UpdateTabControlWidthHeight(new Size(this.Width, this.Height));
 
             Timers.Start(AppTimers.TimerId.APP_START);
 
