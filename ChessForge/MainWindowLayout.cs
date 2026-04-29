@@ -40,7 +40,7 @@ namespace ChessForge
         private double DEFAULT_MAIN_WIN_WIDTH_HEIGHT_RATIO;
 
         // original grid row/column height/width definitions for the main grid.
-        private double[] MAIN_GRID_ROWS = { 1.0, 680.0, 160.0, 20.0 };
+        private double[] MAIN_GRID_ROWS = { 1.0, 680.0, 160.0, 0 };
         private double[] MAIN_GRID_COLUMNS = { 680.0, 600.0, 270.0, 1.0 };
 
         // how far to move the scoresheet to the right when it has no evals and
@@ -53,12 +53,6 @@ namespace ChessForge
 
         // Width of the scoresheet in the absence of evals.
         public double SCORESHEET_WIDTH_NO_EVALS = 160;
-
-        // Default height of the bottom half controls (Top Games, Openings, Eval Chart).
-        private double BOTTOM_HALF_DEFAULT_CONTROL_HEIGHT = 150;
-
-        // Index of the bottom half row in the main grid.
-        private int BOTTOM_HALF_ROW_INDEX = 2;
 
         // Index of the main tab control column in the main grid.
         private int TAB_CONTROL_COLUMN_INDEX = 1;
@@ -327,12 +321,12 @@ namespace ChessForge
             double currentDefinedHeight = 0;
             for (int i = 0; i < _gridMain.RowDefinitions.Count; i++)
             {
-                if (i != BOTTOM_HALF_ROW_INDEX)
+                if (i != LayoutUtils.EXPLORER_ROW_INDEX)
                 {
                     currentDefinedHeight += _gridMain.RowDefinitions[i].Height.Value;
                 }
             }
-            currentDefinedHeight += MAIN_GRID_ROWS[BOTTOM_HALF_ROW_INDEX];
+            currentDefinedHeight += MAIN_GRID_ROWS[LayoutUtils.EXPLORER_ROW_INDEX];
 
             double heightGapScaled = defaultHeight - currentDefinedHeight;
             if (actualWidthHightRatio >= DEFAULT_MAIN_WIN_WIDTH_HEIGHT_RATIO)
@@ -340,22 +334,7 @@ namespace ChessForge
                 heightGapScaled = 0;
             }
 
-            _gridMain.RowDefinitions[BOTTOM_HALF_ROW_INDEX].Height = new GridLength(MAIN_GRID_ROWS[BOTTOM_HALF_ROW_INDEX] + heightGapScaled);
-            AdjustBottomHalfControlHeights(heightGapScaled);
-        }
-
-        /// <summary>
-        /// Adjusts the heights of the controls in the bottom half of the main window according to the given adjustment value.
-        /// </summary>
-        /// <param name="adjustment"></param>
-        private void AdjustBottomHalfControlHeights(double adjustment)
-        {
-            UiRtbTopGames.Height = BOTTOM_HALF_DEFAULT_CONTROL_HEIGHT + adjustment;
-            UiRtbOpenings.Height = BOTTOM_HALF_DEFAULT_CONTROL_HEIGHT + adjustment;
-            UiRtbBoardComment.Height = BOTTOM_HALF_DEFAULT_CONTROL_HEIGHT + adjustment;
-            UiTbEngineLines.Height = BOTTOM_HALF_DEFAULT_CONTROL_HEIGHT + adjustment;
-
-            UiEvalChart.Height = BOTTOM_HALF_DEFAULT_CONTROL_HEIGHT + adjustment;
+            _gridMain.RowDefinitions[LayoutUtils.EXPLORER_ROW_INDEX].Height = new GridLength(MAIN_GRID_ROWS[LayoutUtils.EXPLORER_ROW_INDEX] + heightGapScaled);
         }
 
         /// <summary>
@@ -373,6 +352,8 @@ namespace ChessForge
             }
             UiEvalChart.InitSizes();
             UiEvalChart.Refresh();
+
+            EngineLinesBox.InitSizes();
         }
 
         //**************************************************
