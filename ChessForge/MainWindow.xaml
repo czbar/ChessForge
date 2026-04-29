@@ -1198,19 +1198,25 @@
                     </DataGrid.Columns>
                 </DataGrid>
                 <uc:EvaluationChartControl x:Name="UiEvalChart" Panel.ZIndex="1"  FontSize="12"
-                                           Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top"
-                                           Height="150" Margin="4,10,4,0" 
+                                           Grid.Row="2"
+                                           Margin="4,10,4,0" 
+                                           HorizontalAlignment="Stretch" 
+                                           VerticalAlignment="Stretch" 
                                            BorderThickness="1" BorderBrush="Black"
                                            Visibility="Hidden">
                 </uc:EvaluationChartControl>
                 <TextBox x:Name="UiTbEngineLines" TextWrapping="NoWrap" Text="" 
-                         Height="150" Margin="4,10,4,0" 
-                         Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Stretch"   
+                         Margin="4,10,4,0" 
+                         HorizontalAlignment="Stretch" 
+                         VerticalAlignment="Stretch" 
+                         Grid.Row="2" 
                          BorderThickness="1" Background="#FFF2F5F3" BorderBrush="Black" Visibility="Hidden" VerticalScrollBarVisibility="Auto" 
                          PreviewMouseRightButtonUp="UiTbEngineLines_MouseRightButtonUp" PreviewMouseDoubleClick="UiTbEngineLines_PreviewMouseDoubleClick" />
                 <RichTextBox x:Name="UiRtbBoardComment"  ContextMenu="{x:Null}" IsUndoEnabled="False" Panel.ZIndex="0" 
-                             Grid.Row="2" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" 
-                             Height="150" Margin="4,10,4,0" 
+                             Grid.Row="2" Grid.Column="0" 
+                             Margin="4,10,4,0" 
+                             HorizontalAlignment="Stretch" 
+                             VerticalAlignment="Stretch" 
                              BorderThickness="1" BorderBrush="Black" IsReadOnly="True">
                     <RichTextBox.Resources>
                         <Style TargetType="{x:Type Paragraph}">
@@ -1231,10 +1237,12 @@
                 </RichTextBox>
                 <RichTextBox x:Name="UiRtbOpenings" IsUndoEnabled="False"  ContextMenu="{x:Null}" 
                              Panel.ZIndex="0" 
-                             Height="150" Margin="4,10,4,0"
+                             Margin="4,10,4,0"
+                             HorizontalAlignment="Stretch" 
+                             VerticalAlignment="Stretch" 
                              Grid.Column="1" Grid.Row="2" 
                              VerticalScrollBarVisibility="Auto"
-                             VerticalAlignment="Top" BorderThickness="1" IsReadOnly="True">
+                             BorderThickness="1" IsReadOnly="True">
                     <RichTextBox.Resources>
                         <Style TargetType="{x:Type Paragraph}">
                             <Setter Property="Margin" Value="0" />
@@ -1243,13 +1251,18 @@
                 </RichTextBox>
                 <uc:TrainingSessionControl x:Name="UiTrainingSessionBox" FontSize="12"
                                            Panel.ZIndex="0" 
-                                           Height="150" Margin="5,10,0,0" 
+                                           Margin="5,10,0,0" 
+                                           HorizontalAlignment="Stretch" 
+                                           VerticalAlignment="Stretch" 
                                            Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" 
-                                           VerticalAlignment="Top" BorderThickness="1" BorderBrush="Black"
+                                           BorderThickness="1" BorderBrush="Black"
                                            Visibility="Hidden">
                 </uc:TrainingSessionControl>
-                <RichTextBox x:Name="UiRtbTopGames" IsUndoEnabled="False" Panel.ZIndex="0" HorizontalAlignment="Left" Height="150" Margin="4,10,4,0" Grid.Row="2" VerticalScrollBarVisibility="Auto"
-                             Grid.Column="2" VerticalAlignment="Top" BorderThickness="1" IsReadOnly="True">
+                <RichTextBox x:Name="UiRtbTopGames" IsUndoEnabled="False" Panel.ZIndex="0" 
+                             HorizontalAlignment="Stretch" 
+                             VerticalAlignment="Stretch" 
+                             Margin="4,10,4,0" Grid.Row="2" VerticalScrollBarVisibility="Auto"
+                             Grid.Column="2" BorderThickness="1" IsReadOnly="True">
                     <RichTextBox.Resources>
                         <Style TargetType="{x:Type Paragraph}">
                             <Setter Property="Margin" Value="0" />
