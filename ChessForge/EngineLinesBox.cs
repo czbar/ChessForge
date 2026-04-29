@@ -33,6 +33,9 @@ namespace ChessForge
         // A flag indicating whether ShowEngineLines() is currently running
         private static bool _isShowEngineLinesRunning = false;
 
+        // whether the Engine Lines box is now in full or half size mode
+        public static bool? IsFullSize = null;
+
         /// <summary>
         /// Initializes the object with GUI references.
         /// </summary>
@@ -45,6 +48,14 @@ namespace ChessForge
 
             _tbEvalLines = textBox;
             _pbEngineEval = progBar;
+        }
+
+        /// <summary>
+        /// Initializes the sizes of the controls in the Engine Lines box based on the current size mode (full or half).
+        /// </summary>
+        public static void InitSizes()
+        {
+            LayoutUtils.SetEngineLinesBoxMargins(IsFullSize == true);
         }
 
         /// <summary>
