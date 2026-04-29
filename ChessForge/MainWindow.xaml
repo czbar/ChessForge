@@ -313,15 +313,15 @@
                     </Canvas>
                 </Viewbox>
 
-                <Viewbox x:Name="UiVbManualSplitter" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0" Width="6" Height="980" Panel.ZIndex="10" >
+                <Viewbox x:Name="UiVbManualSplitter" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2"  HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="0,0,0,0" Width="6" Panel.ZIndex="10" >
                     <Rectangle x:Name="ManualSplitter"
-                               Panel.ZIndex="10"
+                        Panel.ZIndex="10"
                         Margin="0,0,0,0"
                         Width="6"
-                        Height="840"
                         Fill="Transparent"
                         Cursor="SizeWE"                       
                         HorizontalAlignment="Left" 
+                        VerticalAlignment="Stretch"
                         MouseDown="ManualSplitter_MouseDown"
                         MouseMove="ManualSplitter_MouseMove"
                         MouseUp="ManualSplitter_MouseUp">

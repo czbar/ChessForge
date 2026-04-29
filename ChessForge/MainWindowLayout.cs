@@ -354,6 +354,8 @@ namespace ChessForge
             UiEvalChart.Refresh();
 
             EngineLinesBox.InitSizes();
+
+            ManualSplitter.Height = _gridMain.RowDefinitions[1].Height.Value + _gridMain.RowDefinitions[2].Height.Value;
         }
 
         //**************************************************
