@@ -30,5 +30,7 @@ Reordering lines in a game on a move with multi-comment has a strange effect (se
 
 Double click on c5 after 1.d4 in the Study, removes select background, leaving the move white on yellow. 
 
+Text in the comments box remains from the read-in. Make sure Hints are displayed instead.
+
 Layout resizing:
  - make sure the splitter heigth is adjusted (ManualSplitter.Height)
