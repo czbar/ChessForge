@@ -217,6 +217,7 @@
     </Compile>
     <Compile Include="ImportFromPgn.cs" />
     <Compile Include="ImportFromPgnMenuEvents.cs" />
+    <Compile Include="LayoutUtils.cs" />
     <Compile Include="MainWindowDataContext.cs" />
     <Compile Include="MainWindowEngineLines.cs" />
     <Compile Include="MainWindowEvalButtons.cs" />
