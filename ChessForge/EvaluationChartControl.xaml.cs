@@ -137,8 +137,6 @@ namespace ChessForge
         {
             double widthAdjustment = (double)Configuration.ChessboardSizeAdjustment;
 
-            CanvasWidth = LayoutUtils.AvailableWidthInChessboardColumn() - (2 * LayoutUtils.DEFAULT_BORDER_THICKNESS);
-
             double availableHeight = LayoutUtils.AvailableHeightInExplorerRow();
             if (IsFullSize)
             {
