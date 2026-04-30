@@ -300,8 +300,7 @@ namespace ChessForge
             HasSpecialMessage = false;
 
             if (WorkbookManager.SessionWorkbook != null && WorkbookManager.SessionWorkbook.GamesManager.State == ProcessState.RUNNING
-                || _mainWin.ActiveLineReplay.IsReplayActive
-                || MultiTextBoxManager.CanShowEvaluationChart(false, out _) )
+                || _mainWin.ActiveLineReplay.IsReplayActive)
             {
                 return;
             }
@@ -381,7 +380,12 @@ namespace ChessForge
                     }
                     catch { }
                 }
-                AppState.SwapCommentBoxForEngineLines(false);
+
+                // keep the box hidden if we are showing evaluation chart
+                if (!MultiTextBoxManager.CanShowEvaluationChart(false, out _))
+                {
+                    AppState.SwapCommentBoxForEngineLines(false);
+                }
             });
         }
 
