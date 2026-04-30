@@ -24,9 +24,6 @@ namespace ChessForge
         // Left and right padding of the Scoresheet / Game Line control.
         private const int SCORESHEET_HORIZ_PAD = 4;
 
-        // Top padding of the CommentBox / EngineLines / EvalChart and Explorer controls.
-        private const int SECOND_ROW_TOP_PAD = 10;
-
         // Right margin of the main tab control in the presence of the scoresheet.
         private const int RIGHT_MARGIN_WITH_SCORESHEET = 275;
 
@@ -113,12 +110,6 @@ namespace ChessForge
         /// </summary>
         public void InitializeLayoutConstants()
         {
-            // The main tab control in all learning modes, has the width and height determined
-            // by the margins. The width and the height are not set explicitly.
-            _mainTabCtrlDefaultThickness = new Thickness(MAIN_TAB_PAD, MAIN_TAB_PAD, MAIN_TAB_PAD, MAIN_TAB_PAD);
-            _wndCommentBoxDefaultThickness = new Thickness(COMMENT_BOX_HORIZ_PAD, SECOND_ROW_TOP_PAD, COMMENT_BOX_HORIZ_PAD, 0);
-            _rtbOpeningsDefaultThickness = new Thickness(MAIN_TAB_PAD, SECOND_ROW_TOP_PAD, RIGHT_MARGIN_WITH_SCORESHEET, 0);
-
             _splitterDefaultThickness = new Thickness(0, 0, 0, 0);
 
             // calculate the default main window width and height based on the grid definitions.
@@ -171,15 +162,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Return the default top margin (padding) for the controls in the second row.
-        /// </summary>
-        /// <returns></returns>
-        public double GetSecondRowTopPad()
-        {
-            return SECOND_ROW_TOP_PAD;
-        }
-
-        /// <summary>
         /// Resizes the main tab control to show/hide ActiveLine/GameLine controls.
         /// 
         /// The main tab control exists in the following learning modes:
@@ -194,7 +176,7 @@ namespace ChessForge
             ThicknessUtils.SetControlLeftMargin(UiDgActiveLine, 0);
             ThicknessUtils.SetControlLeftMargin(UiDgEngineGame, SCORESHEET_NO_EVALS_LEFT_MARGIN);
 
-            UiTrainingSessionBox.Margin = new Thickness(MAIN_TAB_PAD, SECOND_ROW_TOP_PAD, RIGHT_MARGIN_WITH_SCORESHEET_NO_EVALS, 0);
+            UiTrainingSessionBox.Margin = new Thickness(MAIN_TAB_PAD, LayoutUtils.EXPLORER_ROW_TOP_MARGIN, RIGHT_MARGIN_WITH_SCORESHEET_NO_EVALS, 0);
 
             switch (sizeMode)
             {
