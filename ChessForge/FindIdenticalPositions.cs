@@ -164,24 +164,7 @@ namespace ChessForge
                     break;
                 case FoundArticlesDialog.Action.OpenView:
                     WorkbookLocationNavigator.GotoArticle(item.ChapterIndex, item.Article.Tree.ContentType, item.ArticleIndex);
-                    if (item.Article.Tree.ContentType == GameData.ContentType.STUDY_TREE)
-                    {
-                        AppState.MainWin.SetupGuiForActiveStudyTree(true);
-                    }
-                    if (AppState.MainWin.ActiveTreeView != null)
-                    {
-                        AppState.MainWin.ActiveTreeView.UnhighlightActiveLine();
-                    }
-                    AppState.MainWin.SetActiveLine(item.Node.LineId, item.Node.NodeId);
-                    if (AppState.MainWin.ActiveTreeView is StudyTreeView view)
-                    {
-                        if (view.UncollapseMove(item.Node))
-                        {
-                            view.BuildFlowDocumentForVariationTree(false);
-                        }
-                    }
-                    AppState.MainWin.ActiveTreeView.SelectLineAndMoveInWorkbookViews(item.Node.LineId,
-                        AppState.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false), true);
+                    VariationTreeViewUtils.SetSelectionsForNode(item.Article.Tree.ContentType, item.Node);
                     break;
             }
         }
