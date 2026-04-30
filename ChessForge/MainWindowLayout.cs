@@ -75,9 +75,14 @@ namespace ChessForge
         private const int RIGHT_MARGIN_DEFAULT = 190;
 
         /// <summary>
-        /// The maximum adjustment that the user can apply to the main tab control.
+        /// The maximum width adjustment that the user can apply to the main tab control.
         /// </summary>
         private int MAX_USER_WIDTH_ADJUSTMENT = 400;
+
+        /// <summary>
+        /// The maximum height adjustment that the user can apply to the main tab control.
+        /// </summary>
+        private int MAX_USER_HEIGHT_ADJUSTMENT = 400;
 
         // Default margins for the main window controls (Manual Review, Training, Game).
         private Thickness _mainTabCtrlDefaultThickness;
@@ -356,6 +361,7 @@ namespace ChessForge
             EngineLinesBox.InitSizes();
 
             ManualSplitterVertical.Height = _gridMain.RowDefinitions[1].Height.Value + _gridMain.RowDefinitions[2].Height.Value;
+            ManualSplitterHorizontal.Width = _gridMain.ColumnDefinitions[0].Width.Value + _gridMain.ColumnDefinitions[1].Width.Value + _gridMain.ColumnDefinitions[2].Width.Value;
         }
 
         //******************************************************************************************
@@ -451,6 +457,105 @@ namespace ChessForge
 
                 UpdateMainChessboardWidths(_runningAdjustment);
                 RefreshAffectedControls();
+            }
+        }
+
+
+        //******************************************************************************************
+        //
+        // Event handlers for the Horizontal Splitter between the chessboard and the main tab control.
+        //
+        //******************************************************************************************
+
+        // whether resizing is in progress
+        private bool _isHorizontalResizing = false;
+
+        // position of the splitter when resizing started (equals the height of the first row)
+        private double _resizeStartPointY;
+
+        // The adjustment implied by the current position of the mouse cursor.
+        // This is the position of the mouse cursor minus the position of the splitter.
+        // It needs to be tracked across the mouse events as if the mouse goes too far
+        // we want to keep to the last valid adjustment.
+        private double _runningVerticalAdjustment = 0;
+
+        /// <summary>
+        /// A mouse click event occured over the splitter.
+        /// The resizing starts here.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ManualSplitterHorizontal_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            _runningVerticalAdjustment = 0;
+
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                // flag that resizing is in progress
+                _isHorizontalResizing = true;
+                // set the initial position of the splitter
+                _resizeStartPointY = _gridMain.RowDefinitions[0].Height.Value + _gridMain.RowDefinitions[1].Height.Value;
+
+                ManualSplitterHorizontal.CaptureMouse();
+            }
+        }
+
+        /// <summary>
+        /// If the mouse is moved while resizing is in progress,
+        /// update the position of the splitter and the _runningHorizontalAdjustment value.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ManualSplitterHorizontal_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (_isHorizontalResizing && e.LeftButton == MouseButtonState.Pressed)
+            {
+                double currY = e.GetPosition(_gridMain).Y;
+
+                double topRowsCombinedHeight = MAIN_GRID_ROWS[0] + MAIN_GRID_ROWS[1];
+
+                // make sure that the user cannot move the splitter beyond the allowed limits.
+                if (currY <= topRowsCombinedHeight - MAX_USER_HEIGHT_ADJUSTMENT)
+                {
+                    currY = topRowsCombinedHeight - MAX_USER_HEIGHT_ADJUSTMENT;
+                }
+                else if (currY > topRowsCombinedHeight + 100)
+                {
+                    currY = topRowsCombinedHeight + 100;
+                }
+
+                ManualSplitterHorizontal.Fill = Brushes.Gray;
+                ManualSplitterHorizontal.Opacity = 0.8;
+
+                _runningVerticalAdjustment = currY - _resizeStartPointY;
+
+                ManualSplitterHorizontal.Margin = new Thickness(
+                    _splitterDefaultThickness.Left,
+                    _splitterDefaultThickness.Top + _runningVerticalAdjustment,
+                    _splitterDefaultThickness.Right,
+                    _splitterDefaultThickness.Bottom - _runningVerticalAdjustment);
+            }
+        }
+
+        /// <summary>
+        /// Mouse button released while resizing is in progress.
+        /// Tidy up and resize the affected controls.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ManualSplitterHorizontal_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (_isHorizontalResizing)
+            {
+                ManualSplitterHorizontal.Fill = Brushes.Transparent;
+                ManualSplitterHorizontal.Opacity = 0;
+
+                _isHorizontalResizing = false;
+                ManualSplitterHorizontal.ReleaseMouseCapture();
+                ManualSplitterHorizontal.Margin = _splitterDefaultThickness;
+
+                //UpdateMainChessboardWidths(_runningAdjustment);
+                //RefreshAffectedControls();
             }
         }
     }

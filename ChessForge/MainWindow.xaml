@@ -313,7 +313,12 @@
                     </Canvas>
                 </Viewbox>
 
-                <Viewbox x:Name="UiVbManualSplitter" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2"  HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="0,0,0,0" Width="6" Panel.ZIndex="10" >
+                <Viewbox x:Name="UiVbManualSplitterVertical" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2"  
+                         HorizontalAlignment="Left" 
+                         VerticalAlignment="Stretch" 
+                         Margin="0,0,0,0" 
+                         Width="6" 
+                         Panel.ZIndex="10" >
                     <Rectangle x:Name="ManualSplitterVertical"
                         Panel.ZIndex="10"
                         Margin="0,0,0,0"
@@ -325,6 +330,25 @@
                         MouseDown="ManualSplitterVertical_MouseDown"
                         MouseMove="ManualSplitterVertical_MouseMove"
                         MouseUp="ManualSplitterVertical_MouseUp">
+                    </Rectangle>
+                </Viewbox>
+
+                <Viewbox x:Name="UiVbManualSplitterHorizontal" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"  
+                         HorizontalAlignment="Stretch" 
+                         VerticalAlignment="Top" 
+                         Margin="0,0,0,0" 
+                         Height="6" 
+                         Panel.ZIndex="10" >
+                    <Rectangle x:Name="ManualSplitterHorizontal"
+                        Panel.ZIndex="10"
+                        Margin="0,0,0,0"
+                        Height="6"
+                        Fill="Transparent"
+                        Cursor="SizeNS"                       
+                        HorizontalAlignment="Stretch" 
+                        MouseDown="ManualSplitterHorizontal_MouseDown"
+                        MouseMove="ManualSplitterHorizontal_MouseMove"
+                        MouseUp="ManualSplitterHorizontal_MouseUp">
                     </Rectangle>
                 </Viewbox>
 
