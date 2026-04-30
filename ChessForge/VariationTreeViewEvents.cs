@@ -2,6 +2,7 @@
 using ChessPosition.Utils;
 using GameTree;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -149,6 +150,15 @@ namespace ChessForge
                             if (article.ContentType == GameData.ContentType.MODEL_GAME || article.ContentType == GameData.ContentType.EXERCISE)
                             {
                                 _mainWin.SelectArticle(chapterIndex, article.ContentType, articleIndex);
+
+                                // try to find the same position in the selected article and select it
+                                var crits = new SearchPositionCriteria(node);
+                                crits.SetCheckDynamicAttrs(true);
+                                List<TreeNode> nodes = SearchPosition.FindNodesWithPosition(article.Tree, crits, true);
+                                if (nodes.Count > 0)
+                                {
+                                    VariationTreeViewUtils.SetSelectionsForNode(article.ContentType, nodes[0]);
+                                }
                             }
                             else
                             {
