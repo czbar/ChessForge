@@ -355,14 +355,14 @@ namespace ChessForge
 
             EngineLinesBox.InitSizes();
 
-            ManualSplitter.Height = _gridMain.RowDefinitions[1].Height.Value + _gridMain.RowDefinitions[2].Height.Value;
+            ManualSplitterVertical.Height = _gridMain.RowDefinitions[1].Height.Value + _gridMain.RowDefinitions[2].Height.Value;
         }
 
-        //**************************************************
+        //******************************************************************************************
         //
-        // Manual splitter event handlers
+        // Event handlers for the Vertical Splitter between the chessboard and the main tab control.
         //
-        //**************************************************
+        //******************************************************************************************
 
         // whether resizing is in progress
         private bool _isResizingTab = false;
@@ -382,7 +382,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ManualSplitter_MouseDown(object sender, MouseButtonEventArgs e)
+        private void ManualSplitterVertical_MouseDown(object sender, MouseButtonEventArgs e)
         {
             _runningAdjustment = 0;
 
@@ -393,7 +393,7 @@ namespace ChessForge
                 // set the initial position of the splitter
                 _resizeStartPointX = _gridMain.ColumnDefinitions[0].Width.Value;
 
-                ManualSplitter.CaptureMouse();
+                ManualSplitterVertical.CaptureMouse();
             }
         }
 
@@ -403,7 +403,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ManualSplitter_MouseMove(object sender, MouseEventArgs e)
+        private void ManualSplitterVertical_MouseMove(object sender, MouseEventArgs e)
         {
             if (_isResizingTab && e.LeftButton == MouseButtonState.Pressed)
             {
@@ -419,12 +419,12 @@ namespace ChessForge
                     currX = MAIN_GRID_COLUMNS[0];
                 }
 
-                ManualSplitter.Fill = Brushes.Gray;
-                ManualSplitter.Opacity = 0.8;
+                ManualSplitterVertical.Fill = Brushes.Gray;
+                ManualSplitterVertical.Opacity = 0.8;
 
                 _runningAdjustment = currX - _resizeStartPointX;
 
-                ManualSplitter.Margin = new Thickness(
+                ManualSplitterVertical.Margin = new Thickness(
                     _splitterDefaultThickness.Left + _runningAdjustment,
                     _splitterDefaultThickness.Top,
                     _splitterDefaultThickness.Right - _runningAdjustment,
@@ -438,16 +438,16 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ManualSplitter_MouseUp(object sender, MouseButtonEventArgs e)
+        private void ManualSplitterVertical_MouseUp(object sender, MouseButtonEventArgs e)
         {
             if (_isResizingTab)
             {
-                ManualSplitter.Fill = Brushes.Transparent;
-                ManualSplitter.Opacity = 0;
+                ManualSplitterVertical.Fill = Brushes.Transparent;
+                ManualSplitterVertical.Opacity = 0;
 
                 _isResizingTab = false;
-                ManualSplitter.ReleaseMouseCapture();
-                ManualSplitter.Margin = _splitterDefaultThickness;
+                ManualSplitterVertical.ReleaseMouseCapture();
+                ManualSplitterVertical.Margin = _splitterDefaultThickness;
 
                 UpdateMainChessboardWidths(_runningAdjustment);
                 RefreshAffectedControls();

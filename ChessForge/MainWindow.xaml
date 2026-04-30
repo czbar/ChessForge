@@ -314,7 +314,7 @@
                 </Viewbox>
 
                 <Viewbox x:Name="UiVbManualSplitter" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2"  HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="0,0,0,0" Width="6" Panel.ZIndex="10" >
-                    <Rectangle x:Name="ManualSplitter"
+                    <Rectangle x:Name="ManualSplitterVertical"
                         Panel.ZIndex="10"
                         Margin="0,0,0,0"
                         Width="6"
@@ -322,9 +322,9 @@
                         Cursor="SizeWE"                       
                         HorizontalAlignment="Left" 
                         VerticalAlignment="Stretch"
-                        MouseDown="ManualSplitter_MouseDown"
-                        MouseMove="ManualSplitter_MouseMove"
-                        MouseUp="ManualSplitter_MouseUp">
+                        MouseDown="ManualSplitterVertical_MouseDown"
+                        MouseMove="ManualSplitterVertical_MouseMove"
+                        MouseUp="ManualSplitterVertical_MouseUp">
                     </Rectangle>
                 </Viewbox>
 
