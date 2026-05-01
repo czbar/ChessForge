@@ -284,6 +284,11 @@ namespace ChessForge
         public static int ChessboardSizeAdjustment = 0;
 
         /// <summary>
+        /// Adjustment to apply to the height of the explorer row.
+        /// </summary>
+        public static int ExplorerRowHeightAdjustment = 0;
+
+        /// <summary>
         /// Depth of the study tree automatically built
         /// from the games of the chapter or the downloaded list.
         /// </summary>
@@ -762,6 +767,7 @@ namespace ChessForge
         private const string CFG_LAST_MESSAGE_READ = "LastWebMessageRead";
         private const string CFG_MOVE_SPEED = "MoveSpeed";
         private const string CFG_CHESSBOARD_SIZE_ADJUSTMENT = "ChessboardSizeAdjustment";
+        private const string CFG_EXPLORER_HEIGHT_ADJUSTMENT = "ExplorerHeightAdjustment";
         private const string CFG_DEFAULT_INDEX_DEPTH = "DefaultIndexDepth";
         private const string CFG_AUTOGEN_TREE_DEPTH = "AutogenTreeDepth";
         private const string CFG_LAST_DIRECTORY = "LastDirectory";
@@ -980,6 +986,7 @@ namespace ChessForge
                 sb.Append(CFG_LAST_MESSAGE_READ + "=" + LastWebMessageRead.ToString() + Environment.NewLine);
 
                 sb.Append(CFG_CHESSBOARD_SIZE_ADJUSTMENT + "=" + ChessboardSizeAdjustment.ToString() + Environment.NewLine);
+                sb.Append(CFG_EXPLORER_HEIGHT_ADJUSTMENT + "=" + ExplorerRowHeightAdjustment.ToString() + Environment.NewLine);
                 sb.Append(CFG_DEFAULT_INDEX_DEPTH + "=" + DefaultIndexDepth.ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_DIRECTORY + "=" + (LastOpenDirectory ?? "").ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_IMPORT_DIRECTORY + "=" + (LastImportDirectory ?? "").ToString() + Environment.NewLine);
@@ -1357,6 +1364,9 @@ namespace ChessForge
                             break;
                         case CFG_CHESSBOARD_SIZE_ADJUSTMENT:
                             int.TryParse(value, out ChessboardSizeAdjustment);
+                            break;
+                        case CFG_EXPLORER_HEIGHT_ADJUSTMENT:
+                            int.TryParse(value, out ExplorerRowHeightAdjustment);
                             break;
                         case CFG_DEFAULT_INDEX_DEPTH:
                             int.TryParse(value, out _defaultIndexDepth);
