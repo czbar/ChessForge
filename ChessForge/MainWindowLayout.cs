@@ -257,11 +257,11 @@ namespace ChessForge
                 // calculate the current width/height ratio of the main window client area.
                 // the width is straight forward , but the height is taken as the height of the second row of the main grid,
                 // so that we skip the menus.
-                double actualWidthHightRatio = windowSize.Width / _gridUber.RowDefinitions[1].ActualHeight;
+                double actualWidthHeightRatio = windowSize.Width / _gridUber.RowDefinitions[1].ActualHeight;
 
                 // using actualWidthHightRatio update the sizes so that the client area remains fully utilized.
-                UpdateTabControlWidth(actualWidthHightRatio);
-                UpdateBottomHalfControlHeights(actualWidthHightRatio);
+                UpdateTabControlWidth(actualWidthHeightRatio);
+                UpdateExplorerRowHeights(actualWidthHeightRatio);
             }
             catch { }
         }
@@ -300,10 +300,10 @@ namespace ChessForge
         /// <summary>
         /// Updates the heights of the controls in the bottom half of the main window according to the current size of the main window.
         /// </summary>
-        /// <param name="actualWidthHightRatio"></param>
-        private void UpdateBottomHalfControlHeights(double actualWidthHightRatio)
+        /// <param name="actualWidthHeightRatio"></param>
+        private void UpdateExplorerRowHeights(double actualWidthHeightRatio)
         {
-            double defaultHeight = DEFAULT_MAIN_WIN_WIDTH / actualWidthHightRatio;
+            double defaultHeight = DEFAULT_MAIN_WIN_WIDTH / actualWidthHeightRatio;
 
             double currentDefinedHeight = 0;
             for (int i = 0; i < _gridMain.RowDefinitions.Count; i++)
@@ -316,7 +316,7 @@ namespace ChessForge
             currentDefinedHeight += MAIN_GRID_ROWS[LayoutUtils.EXPLORER_ROW_INDEX];
 
             double heightGapScaled = defaultHeight - currentDefinedHeight;
-            if (actualWidthHightRatio >= DEFAULT_MAIN_WIN_WIDTH_HEIGHT_RATIO)
+            if (actualWidthHeightRatio >= DEFAULT_MAIN_WIN_WIDTH_HEIGHT_RATIO)
             {
                 heightGapScaled = 0;
             }
