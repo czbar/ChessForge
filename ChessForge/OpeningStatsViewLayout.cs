@@ -18,7 +18,8 @@ namespace ChessForge
         {
             get
             {
-                return INITIAL_VIEW_AREA_WIDTH - (double)Configuration.ChessboardSizeAdjustment;
+                return AppState.MainWin._gridMain.ColumnDefinitions[1].Width.Value
+                                       - (LayoutUtils.EXPLORER_ROW_LEFT_MARGIN + LayoutUtils.EXPLORER_ROW_RIGHT_MARGIN + 30);
             }
         }
 
