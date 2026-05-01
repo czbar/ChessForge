@@ -335,7 +335,7 @@ namespace ChessForge
             UiRtbBoardComment.Document.PageWidth = _gridMain.ColumnDefinitions[0].Width.Value;
             if (_openingStatsView != null && AppState.AreExplorersOn)
             {
-                _openingStatsView.RebuildView(Configuration.ChessboardSizeAdjustment);
+                _openingStatsView.RebuildView();
             }
             UiEvalChart.InitSizes();
             UiEvalChart.Refresh();

@@ -245,7 +245,7 @@ namespace ChessForge
         /// This will be called in response to user selecting the DarkMode
         /// menu item.
         /// </summary>
-        public void RebuildView(double absoluteAdjustment = 0)
+        public void RebuildView()
         {
             // reset variables that, if set, block proper re-build.
             _openingNameTable = null;
