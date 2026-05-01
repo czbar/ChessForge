@@ -526,6 +526,11 @@ namespace ChessForge
                 DefaultMenuFontSize = UiMainMenu.FontSize;
             }
 
+            // sets the window/control sizes so must be called before other UI initializations.
+            UpdateMainChessboardWidths(Configuration.ChessboardSizeAdjustment);
+            UpdateTabControlWidthHeight(new Size(this.Width, this.Height));
+            UiRtbBoardComment.Document.PageWidth = _gridMain.ColumnDefinitions[0].Width.Value;
+
             UiTbEngineLines.FontSize = Constants.BASE_ENGINE_LINES_FONT_SIZE + Configuration.FontSizeDiff;
 
             if (Configuration.WideScrollbar)
@@ -577,9 +582,6 @@ namespace ChessForge
                 UiImgChartOn.Visibility = Visibility.Visible;
                 UiImgChartOff.Visibility = Visibility.Hidden;
             }
-
-            UpdateMainChessboardWidths(Configuration.ChessboardSizeAdjustment);
-            UpdateTabControlWidthHeight(new Size(this.Width, this.Height));
 
             Timers.Start(AppTimers.TimerId.APP_START);
 
