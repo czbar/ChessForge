@@ -528,7 +528,10 @@ namespace ChessForge
 
             // sets the window/control sizes so must be called before other UI initializations.
             UpdateMainChessboardWidths(Configuration.ChessboardSizeAdjustment);
+            SetExplorerRowHeights(Configuration.ExplorerRowHeightAdjustment);
             UpdateTabControlWidthHeight(new Size(this.Width, this.Height));
+
+            // now set the page width of the Comment Box
             UiRtbBoardComment.Document.PageWidth = _gridMain.ColumnDefinitions[0].Width.Value;
 
             UiTbEngineLines.FontSize = Constants.BASE_ENGINE_LINES_FONT_SIZE + Configuration.FontSizeDiff;
