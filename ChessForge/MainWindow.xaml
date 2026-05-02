@@ -263,7 +263,7 @@
                     <RowDefinition Height="1"/>
                     <RowDefinition Height="680" />
                     <RowDefinition Height="160" />
-                    <RowDefinition Height="20" />
+                    <RowDefinition Height="10" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="680" />
@@ -352,7 +352,10 @@
                     </Rectangle>
                 </Viewbox>
 
-                <DataGrid x:Name="UiDgEngineGame" Grid.Column="2" HorizontalAlignment="Left" Height="648" Margin="4,27,4,0" VerticalAlignment="Top"
+                <DataGrid x:Name="UiDgEngineGame" Grid.Column="2" 
+                  HorizontalAlignment="Left"  
+                  VerticalAlignment="Stretch"
+                  Margin="4,27,4,0"
                   SelectionMode="Single" SelectionUnit="Cell" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" CanUserSortColumns="False"
                   GridLinesVisibility="None" Grid.Row="1" Background="White" PreviewMouseDown="EngineGame_OnPreviewMouseDown"  PreviewMouseUp="EngineGame_OnPreviewMouseUp"   >
                     <DataGrid.Resources>
@@ -1189,7 +1192,10 @@
                     </TabItem>
                 </TabControl>
                 <Label x:Name="UiLblScoresheet" FontWeight="Bold" Content="{x:Static p:Resources.Scoresheet}"  Grid.Column="2" HorizontalAlignment="Left" VerticalContentAlignment="Center" Height="24" Margin="4,0" VerticalAlignment="Top" Visibility="Visible" Grid.Row="1" />
-                <DataGrid x:Name="UiDgActiveLine" Grid.Column="2" HorizontalAlignment="Left" Height="648" Margin="4,27,4,0" VerticalAlignment="Top" Width="260"  
+                <DataGrid x:Name="UiDgActiveLine" Grid.Column="2" 
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Stretch" 
+                  Margin="4,27,4,0"
                   SelectionMode="Single" SelectionUnit="Cell" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" 
                   VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden"
                   CanUserSortColumns="False" GridLinesVisibility="None" Grid.Row="1" 
