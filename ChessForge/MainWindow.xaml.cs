@@ -532,7 +532,7 @@ namespace ChessForge
             UpdateTabControlWidthHeight(new Size(this.Width, this.Height));
 
             // now set the page width of the Comment Box
-            UiRtbBoardComment.Document.PageWidth = _gridMain.ColumnDefinitions[0].Width.Value;
+            UiRtbBoardComment.Document.PageWidth = UiMainGrid.ColumnDefinitions[0].Width.Value;
 
             UiTbEngineLines.FontSize = Constants.BASE_ENGINE_LINES_FONT_SIZE + Configuration.FontSizeDiff;
 

@@ -113,15 +113,15 @@ namespace ChessForge
             MainBoard.Height = LayoutUtils.CHESSBOARD_DEFAULT_WIDTH;
 
             // set the main grid's row and column definitions
-            _gridMain.RowDefinitions[0].Height = new GridLength(LayoutUtils.MAIN_GRID_ROWS[0]);
-            _gridMain.RowDefinitions[1].Height = new GridLength(LayoutUtils.MAIN_GRID_ROWS[1]);
-            _gridMain.RowDefinitions[2].Height = new GridLength(LayoutUtils.MAIN_GRID_ROWS[2]);
-            _gridMain.RowDefinitions[3].Height = new GridLength(LayoutUtils.MAIN_GRID_ROWS[3]);
+            UiMainGrid.RowDefinitions[0].Height = new GridLength(LayoutUtils.MAIN_GRID_ROWS[0]);
+            UiMainGrid.RowDefinitions[1].Height = new GridLength(LayoutUtils.MAIN_GRID_ROWS[1]);
+            UiMainGrid.RowDefinitions[2].Height = new GridLength(LayoutUtils.MAIN_GRID_ROWS[2]);
+            UiMainGrid.RowDefinitions[3].Height = new GridLength(LayoutUtils.MAIN_GRID_ROWS[3]);
 
-            _gridMain.ColumnDefinitions[0].Width = new GridLength(LayoutUtils.MAIN_GRID_COLUMNS[0]);
-            _gridMain.ColumnDefinitions[1].Width = new GridLength(LayoutUtils.MAIN_GRID_COLUMNS[1]);
-            _gridMain.ColumnDefinitions[2].Width = new GridLength(LayoutUtils.MAIN_GRID_COLUMNS[2]);
-            _gridMain.ColumnDefinitions[3].Width = new GridLength(LayoutUtils.MAIN_GRID_COLUMNS[3]);
+            UiMainGrid.ColumnDefinitions[0].Width = new GridLength(LayoutUtils.MAIN_GRID_COLUMNS[0]);
+            UiMainGrid.ColumnDefinitions[1].Width = new GridLength(LayoutUtils.MAIN_GRID_COLUMNS[1]);
+            UiMainGrid.ColumnDefinitions[2].Width = new GridLength(LayoutUtils.MAIN_GRID_COLUMNS[2]);
+            UiMainGrid.ColumnDefinitions[3].Width = new GridLength(LayoutUtils.MAIN_GRID_COLUMNS[3]);
 
             // setup control positions
             UiDgActiveLine.HorizontalAlignment = HorizontalAlignment.Left;
@@ -206,7 +206,7 @@ namespace ChessForge
             if (!isAbsoluteAdjustment)
             {
                 // calculate the adjustment relative to the default boundary between the first and second column.
-                absoluteAdjustment = adjustment + (_gridMain.ColumnDefinitions[0].Width.Value - LayoutUtils.MAIN_GRID_COLUMNS[0]);
+                absoluteAdjustment = adjustment + (UiMainGrid.ColumnDefinitions[0].Width.Value - LayoutUtils.MAIN_GRID_COLUMNS[0]);
             }
 
             if (absoluteAdjustment > 0 || absoluteAdjustment < -LayoutUtils.MAX_USER_WIDTH_ADJUSTMENT)
@@ -217,8 +217,8 @@ namespace ChessForge
 
             Configuration.ChessboardSizeAdjustment = (int)absoluteAdjustment;
 
-            _gridMain.ColumnDefinitions[0].Width = new GridLength(_gridMain.ColumnDefinitions[0].Width.Value + adjustment);
-            _gridMain.ColumnDefinitions[1].Width = new GridLength(_gridMain.ColumnDefinitions[1].Width.Value - adjustment);
+            UiMainGrid.ColumnDefinitions[0].Width = new GridLength(UiMainGrid.ColumnDefinitions[0].Width.Value + adjustment);
+            UiMainGrid.ColumnDefinitions[1].Width = new GridLength(UiMainGrid.ColumnDefinitions[1].Width.Value - adjustment);
 
             chessboardSizeAdjustment = absoluteAdjustment;
 
@@ -236,13 +236,13 @@ namespace ChessForge
             adjustment = Math.Min(adjustment, LayoutUtils.MAX_USER_HEIGHT_ADJUSTMENT);
             adjustment = Math.Max(adjustment, LayoutUtils.MIN_USER_HEIGHT_ADJUSTMENT);
 
-            //_gridMain.RowDefinitions[LayoutUtils.EXPLORER_ROW_INDEX].Height = new GridLength(MAIN_GRID_ROWS[LayoutUtils.EXPLORER_ROW_INDEX] + adjustment);
-            _gridMain.RowDefinitions[LayoutUtils.EXPLORER_ROW_INDEX].Height = new GridLength(_gridMain.RowDefinitions[LayoutUtils.EXPLORER_ROW_INDEX].Height.Value + adjustment);
-            _gridMain.RowDefinitions[LayoutUtils.CHESSBOARD_ROW_INDEX].Height = new GridLength(_gridMain.RowDefinitions[LayoutUtils.CHESSBOARD_ROW_INDEX].Height.Value - adjustment);
+            //UiMainGrid.RowDefinitions[LayoutUtils.EXPLORER_ROW_INDEX].Height = new GridLength(MAIN_GRID_ROWS[LayoutUtils.EXPLORER_ROW_INDEX] + adjustment);
+            UiMainGrid.RowDefinitions[LayoutUtils.EXPLORER_ROW_INDEX].Height = new GridLength(UiMainGrid.RowDefinitions[LayoutUtils.EXPLORER_ROW_INDEX].Height.Value + adjustment);
+            UiMainGrid.RowDefinitions[LayoutUtils.CHESSBOARD_ROW_INDEX].Height = new GridLength(UiMainGrid.RowDefinitions[LayoutUtils.CHESSBOARD_ROW_INDEX].Height.Value - adjustment);
 
-            if (_gridMain.RowDefinitions[LayoutUtils.CHESSBOARD_ROW_INDEX].Height.Value < (LayoutUtils.CHESSBOARD_DEFAULT_WIDTH + Configuration.ChessboardSizeAdjustment))
+            if (UiMainGrid.RowDefinitions[LayoutUtils.CHESSBOARD_ROW_INDEX].Height.Value < (LayoutUtils.CHESSBOARD_DEFAULT_WIDTH + Configuration.ChessboardSizeAdjustment))
             {
-                double absoluteAdjustment = _gridMain.RowDefinitions[LayoutUtils.CHESSBOARD_ROW_INDEX].Height.Value - LayoutUtils.CHESSBOARD_DEFAULT_WIDTH;
+                double absoluteAdjustment = UiMainGrid.RowDefinitions[LayoutUtils.CHESSBOARD_ROW_INDEX].Height.Value - LayoutUtils.CHESSBOARD_DEFAULT_WIDTH;
                 UpdateMainChessboardWidths(absoluteAdjustment, true);
             }
         }
@@ -277,11 +277,11 @@ namespace ChessForge
             // calculate the total width currently defined for the main window,
             // excluding the main tab control, and add the default width of the main tab control.
             double currentDefinedWidth = 0;
-            for (int i = 0; i < _gridMain.ColumnDefinitions.Count; i++)
+            for (int i = 0; i < UiMainGrid.ColumnDefinitions.Count; i++)
             {
                 if (i != TAB_CONTROL_COLUMN_INDEX)
                 {
-                    currentDefinedWidth += _gridMain.ColumnDefinitions[i].Width.Value;
+                    currentDefinedWidth += UiMainGrid.ColumnDefinitions[i].Width.Value;
                 }
             }
             currentDefinedWidth += (LayoutUtils.MAIN_GRID_COLUMNS[TAB_CONTROL_COLUMN_INDEX]);
@@ -294,7 +294,7 @@ namespace ChessForge
                 widthGapScaled = -1 * chessboardSizeAdjustment;
             }
 
-            _gridMain.ColumnDefinitions[TAB_CONTROL_COLUMN_INDEX].Width = new GridLength(LayoutUtils.MAIN_GRID_COLUMNS[TAB_CONTROL_COLUMN_INDEX] + widthGapScaled);
+            UiMainGrid.ColumnDefinitions[TAB_CONTROL_COLUMN_INDEX].Width = new GridLength(LayoutUtils.MAIN_GRID_COLUMNS[TAB_CONTROL_COLUMN_INDEX] + widthGapScaled);
         }
 
         /// <summary>
@@ -306,15 +306,15 @@ namespace ChessForge
             double defaultHeight = DEFAULT_MAIN_WIN_WIDTH / actualWidthHeightRatio;
 
             double currentDefinedHeight = 0;
-            for (int i = 0; i < _gridMain.RowDefinitions.Count; i++)
+            for (int i = 0; i < UiMainGrid.RowDefinitions.Count; i++)
             {
                 if (i != LayoutUtils.EXPLORER_ROW_INDEX)
                 {
-                    currentDefinedHeight += _gridMain.RowDefinitions[i].Height.Value;
+                    currentDefinedHeight += UiMainGrid.RowDefinitions[i].Height.Value;
                 }
             }
 
-            currentDefinedHeight += _gridMain.RowDefinitions[LayoutUtils.EXPLORER_ROW_INDEX].Height.Value;
+            currentDefinedHeight += UiMainGrid.RowDefinitions[LayoutUtils.EXPLORER_ROW_INDEX].Height.Value;
             //currentDefinedHeight += MAIN_GRID_ROWS[LayoutUtils.EXPLORER_ROW_INDEX];
 
             double heightGapScaled = defaultHeight - currentDefinedHeight;
@@ -323,8 +323,8 @@ namespace ChessForge
                 heightGapScaled = 0;
             }
 
-            _gridMain.RowDefinitions[LayoutUtils.EXPLORER_ROW_INDEX].Height = new GridLength(_gridMain.RowDefinitions[LayoutUtils.EXPLORER_ROW_INDEX].Height.Value + heightGapScaled);
-            //_gridMain.RowDefinitions[LayoutUtils.EXPLORER_ROW_INDEX].Height = new GridLength(MAIN_GRID_ROWS[LayoutUtils.EXPLORER_ROW_INDEX] + heightGapScaled);
+            UiMainGrid.RowDefinitions[LayoutUtils.EXPLORER_ROW_INDEX].Height = new GridLength(UiMainGrid.RowDefinitions[LayoutUtils.EXPLORER_ROW_INDEX].Height.Value + heightGapScaled);
+            //UiMainGrid.RowDefinitions[LayoutUtils.EXPLORER_ROW_INDEX].Height = new GridLength(MAIN_GRID_ROWS[LayoutUtils.EXPLORER_ROW_INDEX] + heightGapScaled);
         }
 
         /// <summary>
@@ -335,7 +335,7 @@ namespace ChessForge
         /// </summary>
         private void RefreshAffectedControls()
         {
-            UiRtbBoardComment.Document.PageWidth = _gridMain.ColumnDefinitions[0].Width.Value;
+            UiRtbBoardComment.Document.PageWidth = UiMainGrid.ColumnDefinitions[0].Width.Value;
             if (_openingStatsView != null && AppState.AreExplorersOn)
             {
                 _openingStatsView.RebuildView();
@@ -345,8 +345,8 @@ namespace ChessForge
 
             EngineLinesBox.InitSizes();
 
-            ManualSplitterVertical.Height = _gridMain.RowDefinitions[1].Height.Value + _gridMain.RowDefinitions[2].Height.Value;
-            ManualSplitterHorizontal.Width = _gridMain.ColumnDefinitions[0].Width.Value + _gridMain.ColumnDefinitions[1].Width.Value + _gridMain.ColumnDefinitions[2].Width.Value;
+            ManualSplitterVertical.Height = UiMainGrid.RowDefinitions[1].Height.Value + UiMainGrid.RowDefinitions[2].Height.Value;
+            ManualSplitterHorizontal.Width = UiMainGrid.ColumnDefinitions[0].Width.Value + UiMainGrid.ColumnDefinitions[1].Width.Value + UiMainGrid.ColumnDefinitions[2].Width.Value;
         }
 
         //******************************************************************************************
@@ -382,7 +382,7 @@ namespace ChessForge
                 // flag that resizing is in progress
                 _isResizingTab = true;
                 // set the initial position of the splitter
-                _resizeStartPointX = _gridMain.ColumnDefinitions[0].Width.Value;
+                _resizeStartPointX = UiMainGrid.ColumnDefinitions[0].Width.Value;
 
                 ManualSplitterVertical.CaptureMouse();
             }
@@ -398,7 +398,7 @@ namespace ChessForge
         {
             if (_isResizingTab && e.LeftButton == MouseButtonState.Pressed)
             {
-                double currX = e.GetPosition(_gridMain).X;
+                double currX = e.GetPosition(UiMainGrid).X;
 
                 // make sure that the user cannot move the splitter beyond the allowed limits.
                 if (currX <= LayoutUtils.MAIN_GRID_COLUMNS[0] - LayoutUtils.MAX_USER_WIDTH_ADJUSTMENT)
@@ -440,11 +440,11 @@ namespace ChessForge
                 ManualSplitterVertical.ReleaseMouseCapture();
                 ManualSplitterVertical.Margin = _splitterDefaultThickness;
 
-                double absoluteAdjustmentWidth = _gridMain.ColumnDefinitions[LayoutUtils.CHESSBOARD_COLUMN_INDEX].Width.Value
+                double absoluteAdjustmentWidth = UiMainGrid.ColumnDefinitions[LayoutUtils.CHESSBOARD_COLUMN_INDEX].Width.Value
                                   - LayoutUtils.MAIN_GRID_COLUMNS[LayoutUtils.CHESSBOARD_COLUMN_INDEX] + _runningHorizontalAdjustment;
 
                 double absoluteAdjustmentHeight =
-                    (_gridMain.RowDefinitions[LayoutUtils.EXPLORER_ROW_INDEX].Height.Value - LayoutUtils.MAIN_GRID_ROWS[LayoutUtils.EXPLORER_ROW_INDEX]);
+                    (UiMainGrid.RowDefinitions[LayoutUtils.EXPLORER_ROW_INDEX].Height.Value - LayoutUtils.MAIN_GRID_ROWS[LayoutUtils.EXPLORER_ROW_INDEX]);
 
                 LayoutUtils.CoordinateChessboardExplorerRowAdjustments(ref absoluteAdjustmentWidth, ref absoluteAdjustmentHeight, false);
 
@@ -488,7 +488,7 @@ namespace ChessForge
                 // flag that resizing is in progress
                 _isHorizontalResizing = true;
                 // set the initial position of the splitter
-                _resizeStartPointY = _gridMain.RowDefinitions[0].Height.Value + _gridMain.RowDefinitions[1].Height.Value;
+                _resizeStartPointY = UiMainGrid.RowDefinitions[0].Height.Value + UiMainGrid.RowDefinitions[1].Height.Value;
 
                 ManualSplitterHorizontal.CaptureMouse();
             }
@@ -504,7 +504,7 @@ namespace ChessForge
         {
             if (_isHorizontalResizing && e.LeftButton == MouseButtonState.Pressed)
             {
-                double currY = e.GetPosition(_gridMain).Y;
+                double currY = e.GetPosition(UiMainGrid).Y;
 
                 double topRowsCombinedHeight = LayoutUtils.MAIN_GRID_ROWS[0] + LayoutUtils.MAIN_GRID_ROWS[1];
 
@@ -548,11 +548,11 @@ namespace ChessForge
                 ManualSplitterHorizontal.ReleaseMouseCapture();
                 ManualSplitterHorizontal.Margin = _splitterDefaultThickness;
 
-                double absoluteAdjustmentWidth = _gridMain.ColumnDefinitions[LayoutUtils.CHESSBOARD_COLUMN_INDEX].Width.Value
+                double absoluteAdjustmentWidth = UiMainGrid.ColumnDefinitions[LayoutUtils.CHESSBOARD_COLUMN_INDEX].Width.Value
                                                   - LayoutUtils.MAIN_GRID_COLUMNS[LayoutUtils.CHESSBOARD_COLUMN_INDEX];
 
                 double absoluteAdjustmentHeight = 
-                    (_gridMain.RowDefinitions[LayoutUtils.EXPLORER_ROW_INDEX].Height.Value - LayoutUtils.MAIN_GRID_ROWS[LayoutUtils.EXPLORER_ROW_INDEX])
+                    (UiMainGrid.RowDefinitions[LayoutUtils.EXPLORER_ROW_INDEX].Height.Value - LayoutUtils.MAIN_GRID_ROWS[LayoutUtils.EXPLORER_ROW_INDEX])
                     + _runningVerticalAdjustment;
 
                 LayoutUtils.CoordinateChessboardExplorerRowAdjustments(ref absoluteAdjustmentWidth, ref absoluteAdjustmentHeight, false);
@@ -569,13 +569,13 @@ namespace ChessForge
         /// <param name="explorerRowAdjustmentHeight"></param>
         private void AdjustAllControlSizes(double chessboardAdjustmentWidth, double explorerRowAdjustmentHeight)
         {
-            _gridMain.RowDefinitions[LayoutUtils.EXPLORER_ROW_INDEX].Height = new GridLength(LayoutUtils.MAIN_GRID_ROWS[LayoutUtils.EXPLORER_ROW_INDEX] + explorerRowAdjustmentHeight);
-            _gridMain.RowDefinitions[LayoutUtils.CHESSBOARD_ROW_INDEX].Height = new GridLength(LayoutUtils.MAIN_GRID_ROWS[LayoutUtils.CHESSBOARD_ROW_INDEX] - explorerRowAdjustmentHeight);
+            UiMainGrid.RowDefinitions[LayoutUtils.EXPLORER_ROW_INDEX].Height = new GridLength(LayoutUtils.MAIN_GRID_ROWS[LayoutUtils.EXPLORER_ROW_INDEX] + explorerRowAdjustmentHeight);
+            UiMainGrid.RowDefinitions[LayoutUtils.CHESSBOARD_ROW_INDEX].Height = new GridLength(LayoutUtils.MAIN_GRID_ROWS[LayoutUtils.CHESSBOARD_ROW_INDEX] - explorerRowAdjustmentHeight);
 
-            _gridMain.ColumnDefinitions[0].Width = new GridLength(LayoutUtils.MAIN_GRID_COLUMNS[LayoutUtils.CHESSBOARD_COLUMN_INDEX] + chessboardAdjustmentWidth);
-            _gridMain.ColumnDefinitions[1].Width = new GridLength(LayoutUtils.MAIN_GRID_COLUMNS[1] - chessboardAdjustmentWidth);
+            UiMainGrid.ColumnDefinitions[0].Width = new GridLength(LayoutUtils.MAIN_GRID_COLUMNS[LayoutUtils.CHESSBOARD_COLUMN_INDEX] + chessboardAdjustmentWidth);
+            UiMainGrid.ColumnDefinitions[1].Width = new GridLength(LayoutUtils.MAIN_GRID_COLUMNS[1] - chessboardAdjustmentWidth);
 
-            MainBoard.Width = Math.Min(_gridMain.ColumnDefinitions[0].Width.Value, _gridMain.RowDefinitions[1].Height.Value);
+            MainBoard.Width = Math.Min(UiMainGrid.ColumnDefinitions[0].Width.Value, UiMainGrid.RowDefinitions[1].Height.Value);
             MainBoard.Height = MainBoard.Width;
 
             UpdateTabControlWidthHeight(new Size(this.Width, this.Height));

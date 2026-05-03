@@ -58,7 +58,7 @@ namespace ChessForge
             LimitChessboardAdjustment(ref chessboardAdjustment);
             LimitExplorerRowAdjustment(ref explorerRowAdjustment);
 
-            Grid mainGrid = AppState.MainWin._gridMain;
+            Grid mainGrid = AppState.MainWin.UiMainGrid;
 
             // depending on the priority, we adjust the chessboard or the explorer row first.
             if (prioritizeBoard)
@@ -133,7 +133,7 @@ namespace ChessForge
         /// <returns></returns>
         public static double AvailableHeightInExplorerRow()
         {
-            return AppState.MainWin._gridMain.RowDefinitions[EXPLORER_ROW_INDEX].Height.Value
+            return AppState.MainWin.UiMainGrid.RowDefinitions[EXPLORER_ROW_INDEX].Height.Value
                                       - (EXPLORER_ROW_TOP_MARGIN + EXPLORER_ROW_BOTTOM_MARGIN);
         }
 
@@ -143,7 +143,7 @@ namespace ChessForge
         /// <returns></returns>
         public static double AvailableWidthInChessboardColumn()
         {
-            return AppState.MainWin._gridMain.ColumnDefinitions[CHESSBOARD_COLUMN_INDEX].Width.Value
+            return AppState.MainWin.UiMainGrid.ColumnDefinitions[CHESSBOARD_COLUMN_INDEX].Width.Value
                                       - (EXPLORER_ROW_LEFT_MARGIN + EXPLORER_ROW_RIGHT_MARGIN);
         }
 
