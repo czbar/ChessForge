@@ -263,67 +263,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Updates the width of the main tab control according to the current size of the main window.
-        /// </summary>
-        /// <param name="actualWidthHeightRatio"></param>
-        private void UpdateTabControlWidth(double actualWidthHeightRatio)
-        {
-            double defaultWidth = LayoutUtils.DEFAULT_GRID_HEIGHT * actualWidthHeightRatio;
-
-            // calculate the total width currently defined for the main window,
-            // excluding the main tab control, and add the default width of the main tab control.
-            double currentDefinedWidth = 0;
-            for (int i = 0; i < UiMainGrid.ColumnDefinitions.Count; i++)
-            {
-                if (i != TAB_CONTROL_COLUMN_INDEX)
-                {
-                    currentDefinedWidth += UiMainGrid.ColumnDefinitions[i].Width.Value;
-                }
-            }
-            currentDefinedWidth += (LayoutUtils.MAIN_GRID_COLUMNS[TAB_CONTROL_COLUMN_INDEX]);
-
-            // by how much to adjust the defined width of the main tab control.
-            double widthGapScaled = defaultWidth - currentDefinedWidth;
-            if (actualWidthHeightRatio <= LayoutUtils.DEFAULT_GRID_WIDTH_HEIGHT_RATIO)
-            {
-                // in this case we need to adjust the heights so don't adjust the width of the main tab control.
-                widthGapScaled = -1 * chessboardSizeAdjustment;
-            }
-
-            UiMainGrid.ColumnDefinitions[TAB_CONTROL_COLUMN_INDEX].Width = new GridLength(LayoutUtils.MAIN_GRID_COLUMNS[TAB_CONTROL_COLUMN_INDEX] + widthGapScaled);
-        }
-
-        /// <summary>
-        /// Updates the heights of the controls in the Explorer row according to the current size of the main window.
-        /// </summary>
-        /// <param name="actualWidthHeightRatio"></param>
-        private void UpdateExplorerRowHeights(double actualWidthHeightRatio)
-        {
-            double defaultHeight = LayoutUtils.DEFAULT_GRID_WIDTH / actualWidthHeightRatio;
-
-            double currentDefinedHeight = 0;
-            for (int i = 0; i < UiMainGrid.RowDefinitions.Count; i++)
-            {
-                if (i != LayoutUtils.EXPLORER_ROW_INDEX)
-                {
-                    currentDefinedHeight += UiMainGrid.RowDefinitions[i].Height.Value;
-                }
-            }
-
-            currentDefinedHeight += UiMainGrid.RowDefinitions[LayoutUtils.EXPLORER_ROW_INDEX].Height.Value;
-            //currentDefinedHeight += MAIN_GRID_ROWS[LayoutUtils.EXPLORER_ROW_INDEX];
-
-            double heightGapScaled = defaultHeight - currentDefinedHeight;
-            if (actualWidthHeightRatio >= LayoutUtils.DEFAULT_GRID_WIDTH_HEIGHT_RATIO)
-            {
-                heightGapScaled = 0;
-            }
-
-            UiMainGrid.RowDefinitions[LayoutUtils.EXPLORER_ROW_INDEX].Height = new GridLength(UiMainGrid.RowDefinitions[LayoutUtils.EXPLORER_ROW_INDEX].Height.Value + heightGapScaled);
-            //UiMainGrid.RowDefinitions[LayoutUtils.EXPLORER_ROW_INDEX].Height = new GridLength(MAIN_GRID_ROWS[LayoutUtils.EXPLORER_ROW_INDEX] + heightGapScaled);
-        }
-
-        /// <summary>
         /// Refreshes the controls affected by a change in the main chessboard width, which are:
         /// - The board comment RichTextBox
         /// - The opening stats view (if explorers are on)
@@ -542,25 +481,6 @@ namespace ChessForge
                 UpdateGridElementSizes(new Size(this.Width, this.Height));
                 RefreshAffectedControls();
             }
-        }
-
-        /// <summary>
-        /// Adjusts the widths and heights of the main window controls according to the given adjustments.
-        /// </summary>
-        /// <param name="chessboardAdjustmentWidth"></param>
-        /// <param name="explorerRowAdjustmentHeight"></param>
-        private void AdjustAllControlSizes(double chessboardAdjustmentWidth, double explorerRowAdjustmentHeight)
-        {
-            UiMainGrid.RowDefinitions[LayoutUtils.EXPLORER_ROW_INDEX].Height = new GridLength(LayoutUtils.MAIN_GRID_ROWS[LayoutUtils.EXPLORER_ROW_INDEX] + explorerRowAdjustmentHeight);
-            UiMainGrid.RowDefinitions[LayoutUtils.CHESSBOARD_ROW_INDEX].Height = new GridLength(LayoutUtils.MAIN_GRID_ROWS[LayoutUtils.CHESSBOARD_ROW_INDEX] - explorerRowAdjustmentHeight);
-
-            UiMainGrid.ColumnDefinitions[0].Width = new GridLength(LayoutUtils.MAIN_GRID_COLUMNS[LayoutUtils.CHESSBOARD_COLUMN_INDEX] + chessboardAdjustmentWidth);
-            UiMainGrid.ColumnDefinitions[1].Width = new GridLength(LayoutUtils.MAIN_GRID_COLUMNS[1] - chessboardAdjustmentWidth);
-
-            MainBoard.Width = Math.Min(UiMainGrid.ColumnDefinitions[0].Width.Value, UiMainGrid.RowDefinitions[1].Height.Value);
-            MainBoard.Height = MainBoard.Width;
-
-            UpdateGridElementSizes(new Size(this.Width, this.Height));
         }
     }
 }

@@ -91,40 +91,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Coordinates the adjustments to the chessboard and explorer row heights, depending on the user input and the priority.
-        /// Note that the non-prioritized adjustment must have the value of 0 on entry, it may be changed if required.
-        /// </summary>
-        /// <param name="chessboardAdjustment"></param>
-        /// <param name="explorerRowAdjustment"></param>
-        /// <param name="prioritizeBoard"></param>
-        public static void CoordinateChessboardExplorerRowAdjustments(ref double chessboardAdjustment, ref double explorerRowAdjustment, bool prioritizeBoard)
-        {
-            LimitChessboardAdjustment(ref chessboardAdjustment);
-            LimitExplorerRowAdjustment(ref explorerRowAdjustment);
-
-            Grid mainGrid = AppState.MainWin.UiMainGrid;
-
-            // depending on the priority, we adjust the chessboard or the explorer row first.
-            if (prioritizeBoard)
-            {
-                // if the chessboard would not fit in the available space, we adjust the explorer row to create more space for the chessboard.
-                if (mainGrid.RowDefinitions[CHESSBOARD_ROW_INDEX].Height.Value < CHESSBOARD_DEFAULT_WIDTH + chessboardAdjustment)
-                {
-                    // need room below in the explorer row
-                    explorerRowAdjustment = -1 * chessboardAdjustment;
-                }
-            }
-            else
-            {
-                // squeeze the chessboard if needed.
-                if (explorerRowAdjustment > MAIN_GRID_ROWS[CHESSBOARD_ROW_INDEX] - AppState.MainWin.MainBoard.Width) //mainGrid.RowDefinitions[CHESSBOARD_ROW_INDEX].Height.Value)
-                {
-                    chessboardAdjustment = -1 * explorerRowAdjustment;
-                }
-            }
-        }
-
-        /// <summary>
         /// Limits the chessboard adjustment to ensure that the chessboard does not become too small or too large.
         /// </summary>
         /// <param name="chessboardAdjustment"></param>
@@ -137,22 +103,6 @@ namespace ChessForge
             else if (chessboardAdjustment < -MAX_USER_WIDTH_ADJUSTMENT)
             {
                 chessboardAdjustment = -MAX_USER_WIDTH_ADJUSTMENT;
-            }
-        }
-
-        /// <summary>
-        /// Limits the explorer row adjustment to ensure that the explorer row does not become too small or too large.
-        /// </summary>
-        /// <param name="explorerRowAdjustment"></param>
-        public static void LimitExplorerRowAdjustment(ref double explorerRowAdjustment)
-        {
-            if (explorerRowAdjustment > MAX_USER_HEIGHT_ADJUSTMENT)
-            {
-                explorerRowAdjustment = MAX_USER_HEIGHT_ADJUSTMENT;
-            }
-            else if (explorerRowAdjustment < MIN_USER_HEIGHT_ADJUSTMENT)
-            {
-                explorerRowAdjustment = MIN_USER_HEIGHT_ADJUSTMENT;
             }
         }
 
