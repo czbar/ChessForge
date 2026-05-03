@@ -375,7 +375,7 @@
                     </DataGrid.Columns>
                 </DataGrid>
                 <TabControl x:Name="UiTabCtrlTraining" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="5,5,5,5" Grid.Row="1" 
-                    VerticalAlignment="Top" Grid.RowSpan="1" Visibility="Hidden">
+                    VerticalAlignment="Stretch" Grid.RowSpan="1" Visibility="Hidden">
                     <TabItem x:Name="UiTabTrainingProgress"  Header="{x:Static p:Resources.Training}" IsVisibleChanged="UiTabTrainingProgress_IsVisibleChanged">
                         <Grid Background="#FFE5E5E5">
                             <Grid.ContextMenu>
@@ -446,7 +446,12 @@
                         </Grid>
                     </TabItem>
                 </TabControl>
-                <TabControl x:Name="UiTabCtrlManualReview"  Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="5,5,5,5" Grid.Row="1" VerticalAlignment="Top" Grid.RowSpan="1" IsVisibleChanged="UiTabCtrlManualReview_IsVisibleChanged"  PreviewMouseWheel="OnPreviewMouseWheel">
+                <TabControl x:Name="UiTabCtrlManualReview"  Grid.Column="1" Grid.ColumnSpan="2" 
+                            HorizontalAlignment="Left" Grid.Row="1" 
+                            VerticalAlignment="Stretch"
+                            Margin="5,5,5,5" 
+                            Grid.RowSpan="1" 
+                            IsVisibleChanged="UiTabCtrlManualReview_IsVisibleChanged"  PreviewMouseWheel="OnPreviewMouseWheel">
                     <TabItem x:Name="UiTabChapters"  Header="{x:Static p:Resources.Chapters}" GotFocus="UiTabChapters_GotFocus" 
                              PreviewKeyDown="ChessForgeMain_PreviewKeyDown" PreviewKeyUp="ChessForgeMain_PreviewKeyUp">
                         <Grid Background="#FFE5E5E5" PreviewMouseDown="Chapters_PreviewMouseDown" ContextMenuOpening="SupressContextMenu" PreviewMouseUp="Chapters_PreviewMouseUp" >
@@ -494,11 +499,19 @@
                                     <MenuItem x:Name="UiMnChptCollapseAll" Header="{x:Static p:Resources.CollapseAll}" Click="UiMnChptCollapseAll_Click" InputGestureText="Ctrl -" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
-                            <RichTextBox x:Name="UiRtbChaptersView" Grid.Row="1"  ContextMenu="{x:Null}" IsUndoEnabled="False" HorizontalAlignment="Left" 
-                                         Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
-                                         SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                                         Height="640" MinHeight="500" IsReadOnly="True" MouseLeftButtonUp="UiRtbChaptersView_MouseLeftButtonUp" 
-                                         MouseEnter="UiRtbChaptersView_MouseEnter" MouseLeave="UiRtbChaptersView_MouseLeave" MouseMove="UiRtbChaptersView_MouseMove" LayoutUpdated="UiRtbChaptersView_LayoutUpdated" >
+                            <RichTextBox x:Name="UiRtbChaptersView" Grid.Row="1"  ContextMenu="{x:Null}" IsUndoEnabled="False" 
+                                         HorizontalAlignment="Left" 
+                                         VerticalAlignment="Stretch" 
+                                         Margin="2,2,2,2" 
+                                         Grid.ColumnSpan="3" FontSize="14"
+                                         SelectionOpacity="0" Cursor="Arrow" Background="White" 
+                                         VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                                         MinHeight="500" IsReadOnly="True" 
+                                         MouseLeftButtonUp="UiRtbChaptersView_MouseLeftButtonUp" 
+                                         MouseEnter="UiRtbChaptersView_MouseEnter" 
+                                         MouseLeave="UiRtbChaptersView_MouseLeave" 
+                                         MouseMove="UiRtbChaptersView_MouseMove" 
+                                         LayoutUpdated="UiRtbChaptersView_LayoutUpdated" >
                                 <RichTextBox.Resources>
                                     <Style TargetType="{x:Type Paragraph}">
                                         <Setter Property="Margin" Value="0" />
@@ -637,9 +650,12 @@
                             </RichTextBox>
                         </Grid>
                     </TabItem>
-                    <TabItem x:Name="UiTabStudyTree"  Header="{x:Static p:Resources.Study}" GotFocus="UiTabStudyTree_GotFocus" PreviewKeyDown="ChessForgeMain_PreviewKeyDown" PreviewKeyUp="ChessForgeMain_PreviewKeyUp">
-                        <Grid x:Name="UiGridStudyTree"  Background="#FFE5E5E5" PreviewMouseDown="VariationTreeView_OnPreviewMouseDown" ContextMenuOpening="SupressContextMenu"
-                              >
+                    <TabItem x:Name="UiTabStudyTree"  Header="{x:Static p:Resources.Study}" 
+                             GotFocus="UiTabStudyTree_GotFocus" 
+                             PreviewKeyDown="ChessForgeMain_PreviewKeyDown" 
+                             PreviewKeyUp="ChessForgeMain_PreviewKeyUp">
+                        <Grid x:Name="UiGridStudyTree"  Background="#FFE5E5E5" 
+                              PreviewMouseDown="VariationTreeView_OnPreviewMouseDown" ContextMenuOpening="SupressContextMenu">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="20"/>
                                 <RowDefinition />
@@ -694,9 +710,15 @@
                                 <Label x:Name="UiLblChapterCounter" Grid.Column="1" Content="" HorizontalAlignment="Right" HorizontalContentAlignment="Left" Margin="0,-3,10,0" FontWeight="Bold"/>
                                 <Image x:Name="UiImgChapterRightArrow" Grid.Column="2" Cursor="Hand"  HorizontalAlignment="Right" Margin="0,0,10,0" Source="Resources/Images/RightArrowChapters.png" PreviewMouseLeftButtonDown="UiImgChapterRightArrow_PreviewMouseLeftButtonDown"  />
                             </Grid>
-                            <RichTextBox x:Name="UiRtbStudyTreeView"  ContextMenu="{x:Null}" IsUndoEnabled="False"  Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
-                                 SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                                   Height="600" MinHeight="500" IsReadOnly="True" PreviewKeyDown="UiRtbStudyTree_PreviewKeyDown">
+                            <RichTextBox x:Name="UiRtbStudyTreeView" ContextMenu="{x:Null}" IsUndoEnabled="False"  Grid.Row="1" 
+                                         HorizontalAlignment="Left"  
+                                         VerticalAlignment="Stretch"
+                                         Margin="2,2,2,22"
+                                         Grid.ColumnSpan="3" FontSize="14"
+                                         SelectionOpacity="0" Cursor="Arrow" Background="White" 
+                                         VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                                         MinHeight="500" IsReadOnly="True" 
+                                         PreviewKeyDown="UiRtbStudyTree_PreviewKeyDown">
                                 <RichTextBox.Resources>
                                     <Style TargetType="{x:Type Paragraph}">
                                         <Setter Property="Margin" Value="0" />
@@ -705,7 +727,11 @@
                                 <FlowDocument>
                                 </FlowDocument>
                             </RichTextBox>
-                            <StackPanel x:Name="UiSpStudyNagPanel" Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" Height="48" Margin="0,588,0,0" VerticalAlignment="Top">
+                            <StackPanel x:Name="UiSpStudyNagPanel" Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="3" 
+                                        HorizontalAlignment="Center" 
+                                        Height="22" 
+                                        Margin="0,0,0,0" 
+                                        VerticalAlignment="Bottom">
                                 <Button x:Name="UiBtnStPencil" Background="Transparent" Margin="0,0,0,0" Width="{Binding NagCommentIconWidth}" Height="{Binding NagIconHeight}" BorderThickness="0" FontSize="{Binding NagButtonFontSize}" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnPencil_Click"  />
                                     <Button x:Name="UiBtnStCommentBeforeMove" Background="Transparent" Margin="0,0,0,0" Width="{Binding NagCommentIconWidth}" Height="{Binding NagIconHeight}" BorderThickness="0" FontSize="{Binding NagButtonFontSize}" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnCommentBeforeMove_Click"  />
                                 <Button x:Name="UiBtnStEvalWin" Background="Transparent" Margin="30,0,0,0" Width="{Binding NagIconWidth}" Height="{Binding NagIconHeight}" BorderThickness="0" FontSize="{Binding NagButtonFontSize}" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalWin_Click" />
@@ -725,7 +751,10 @@
                             </StackPanel>
                         </Grid>
                     </TabItem>
-                    <TabItem x:Name="UiTabModelGames"  Header="{x:Static p:Resources.Games}" GotFocus="UiTabModelGames_GotFocus" PreviewKeyDown="UiTabModelGames_PreviewKeyDown" LostFocus="UiTabModelGames_LostFocus" >
+                    <TabItem x:Name="UiTabModelGames"  Header="{x:Static p:Resources.Games}" 
+                             GotFocus="UiTabModelGames_GotFocus" 
+                             PreviewKeyDown="UiTabModelGames_PreviewKeyDown" 
+                             LostFocus="UiTabModelGames_LostFocus" >
                         <Grid x:Name="UiGridModelGames"  Background="#FFE5E5E5"  PreviewMouseDown="VariationTreeView_OnPreviewMouseDown" ContextMenuOpening="SupressContextMenu"
                               PreviewKeyDown="ChessForgeMain_PreviewKeyDown" PreviewKeyUp="ChessForgeMain_PreviewKeyUp">
                             <Grid.RowDefinitions>
@@ -805,9 +834,14 @@
                                 <Label x:Name="UiGamesLblCounterChapter" Grid.Column="1" Content="" HorizontalAlignment="Right" HorizontalContentAlignment="Left" Margin="0,-3,10,0" FontWeight="Bold"/>
                                 <Image x:Name="UiGamesImgRightArrowChapter" Grid.Column="2" Cursor="Hand"  HorizontalAlignment="Right" Margin="0,0,10,0" Source="Resources/Images/RightArrowChapters.png" PreviewMouseLeftButtonDown="UiImgChapterRightArrow_PreviewMouseLeftButtonDown"  />
                             </Grid>
-                            <RichTextBox x:Name="UiRtbModelGamesView"  ContextMenu="{x:Null}" IsUndoEnabled="False" Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
-                                 SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                                   Height="600" MinHeight="500" IsReadOnly="True" >
+                            <RichTextBox x:Name="UiRtbModelGamesView"  ContextMenu="{x:Null}" IsUndoEnabled="False" Grid.Row="1" 
+                                         HorizontalAlignment="Left" 
+                                         VerticalAlignment="Stretch" 
+                                         Margin="2,2,2,22" 
+                                         Grid.ColumnSpan="3" FontSize="14"
+                                         SelectionOpacity="0" Cursor="Arrow" Background="White" 
+                                         VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                                         MinHeight="500" IsReadOnly="True" >
                                 <RichTextBox.Resources>
                                     <Style TargetType="{x:Type Paragraph}">
                                         <Setter Property="Margin" Value="0" />
@@ -816,7 +850,11 @@
                                 <FlowDocument>
                                 </FlowDocument>
                             </RichTextBox>
-                            <StackPanel x:Name="UiSpGameNagPanel" Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" Height="48" Margin="0,588,0,0" VerticalAlignment="Top">
+                            <StackPanel x:Name="UiSpGameNagPanel" Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="3" 
+                                        Height="22"
+                                        HorizontalAlignment="Center" 
+                                        Margin="0,0,0,0" 
+                                        VerticalAlignment="Bottom">
                                 <Button x:Name="UiBtnGmPencil" Background="Transparent" Margin="0,0,0,0" Width="{Binding NagCommentIconWidth}" Height="{Binding NagIconHeight}" BorderThickness="0" FontSize="{Binding NagButtonFontSize}" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnPencil_Click"  />
                                 <Button x:Name="UiBtnGmCommentBeforeMove" Background="Transparent" Margin="0,0,0,0" Width="{Binding NagCommentIconWidth}" Height="{Binding NagIconHeight}" BorderThickness="0" FontSize="{Binding NagButtonFontSize}" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnCommentBeforeMove_Click"  />
                                 <Button x:Name="UiBtnGmEvalWin" Background="Transparent" Margin="30,0,0,0" Width="{Binding NagIconWidth}" Height="{Binding NagIconHeight}" BorderThickness="0" FontSize="{Binding NagButtonFontSize}" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalWin_Click" />
@@ -836,7 +874,9 @@
                             </StackPanel>
                         </Grid>
                     </TabItem>
-                    <TabItem x:Name="UiTabExercises"  Header="{x:Static p:Resources.Exercises}"  ContextMenu="{x:Null}" GotFocus="UiTabExercises_GotFocus" PreviewKeyDown="UiTabExercises_PreviewKeyDown" LostFocus="UiTabExercises_LostFocus" >
+                    <TabItem x:Name="UiTabExercises"  Header="{x:Static p:Resources.Exercises}"  ContextMenu="{x:Null}" 
+                             GotFocus="UiTabExercises_GotFocus" 
+                             PreviewKeyDown="UiTabExercises_PreviewKeyDown" LostFocus="UiTabExercises_LostFocus" >
                         <Grid x:Name="UiGridExercises" Background="#FFE5E5E5"  PreviewMouseDown="VariationTreeView_OnPreviewMouseDown" ContextMenuOpening="SupressContextMenu"
                               PreviewKeyDown="ChessForgeMain_PreviewKeyDown" PreviewKeyUp="ChessForgeMain_PreviewKeyUp">
                             <Grid.RowDefinitions>
@@ -922,9 +962,14 @@
                                 <Label x:Name="UiExerciseLblCounterChapter" Grid.Column="1" Content="" HorizontalAlignment="Right" HorizontalContentAlignment="Left" Margin="0,-3,10,0" FontWeight="Bold"/>
                                 <Image x:Name="UiExerciseImgRightArrowChapter" Grid.Column="2" Cursor="Hand"  HorizontalAlignment="Right" Margin="0,0,10,0" Source="Resources/Images/RightArrowChapters.png" PreviewMouseLeftButtonDown="UiImgChapterRightArrow_PreviewMouseLeftButtonDown"  />
                             </Grid>
-                            <RichTextBox x:Name="UiRtbExercisesView" IsUndoEnabled="False" Grid.Row="1" HorizontalAlignment="Left" Margin="2,2,2,2" VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="14"
-                                 SelectionOpacity="0" Cursor="Arrow" Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                                   Height="600" MinHeight="500" IsReadOnly="True"  BorderThickness="0">
+                            <RichTextBox x:Name="UiRtbExercisesView" IsUndoEnabled="False" Grid.Row="1" 
+                                         HorizontalAlignment="Left" 
+                                         VerticalAlignment="Stretch" 
+                                         Margin="2,2,2,22" 
+                                         Grid.ColumnSpan="3" FontSize="14"
+                                         SelectionOpacity="0" Cursor="Arrow" Background="White" 
+                                         VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                                         MinHeight="500" IsReadOnly="True"  BorderThickness="0">
                                 <RichTextBox.Resources>
                                     <Style TargetType="{x:Type Paragraph}">
                                         <Setter Property="Margin" Value="0" />
@@ -933,7 +978,11 @@
                                 <FlowDocument>
                                 </FlowDocument>
                             </RichTextBox>
-                            <StackPanel x:Name="UiSpExercNagPanel" Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" Height="48" Margin="0,588,0,0" VerticalAlignment="Top">
+                            <StackPanel x:Name="UiSpExercNagPanel" Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="3" 
+                                        HorizontalAlignment="Center" 
+                                        Height="22" 
+                                        Margin="0,588,0,0" 
+                                        VerticalAlignment="Bottom">
                                 <Button x:Name="UiBtnExPencil" Background="Transparent" Margin="0,0,0,0" Width="{Binding NagCommentIconWidth}" Height="{Binding NagIconHeight}" BorderThickness="0" FontSize="{Binding NagButtonFontSize}" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnPencil_Click"  />
                                 <Button x:Name="UiBtnExCommentBeforeMove" Background="Transparent" Margin="0,0,0,0" Width="{Binding NagCommentIconWidth}" Height="{Binding NagIconHeight}" BorderThickness="0" FontSize="{Binding NagButtonFontSize}" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnCommentBeforeMove_Click"  />
                                 <Button x:Name="UiBtnExEvalWin" Background="Transparent" Margin="30,0,0,0" Width="{Binding NagIconWidth}" Height="{Binding NagIconHeight}" BorderThickness="0" FontSize="{Binding NagButtonFontSize}" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnEvalWin_Click" />
