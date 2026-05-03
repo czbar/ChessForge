@@ -25,15 +25,6 @@ namespace ChessForge
         // Right margin of the main tab control in the presence of the scoresheet.
         private const int RIGHT_MARGIN_WITH_SCORESHEET = 275;
 
-        // Default width of the main window, used for resizing calculations.
-        private double DEFAULT_MAIN_WIN_WIDTH;
-
-        // Default height of the main window, used for resizing calculations.
-        private double DEFAULT_MAIN_WIN_HEIGHT;
-
-        // Default width/height ratio of the main window, used for resizing calculations.
-        private double DEFAULT_MAIN_WIN_WIDTH_HEIGHT_RATIO;
-
         // how far to move the scoresheet to the right when it has no evals and
         // therefore the control to the left (e.g. Training Tab Conbtrol) is made wider.
         public double SCORESHEET_NO_EVALS_LEFT_MARGIN = 90;
@@ -76,7 +67,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            UpdateTabControlWidthHeight(e.NewSize);
+            UpdateGridElementSizes(e.NewSize);
             RefreshAffectedControls();
         }
 
@@ -88,10 +79,10 @@ namespace ChessForge
             _splitterDefaultThickness = new Thickness(0, 0, 0, 0);
 
             // calculate the default main window width and height based on the grid definitions.
-            DEFAULT_MAIN_WIN_WIDTH = LayoutUtils.MAIN_GRID_COLUMNS.Sum();
-            DEFAULT_MAIN_WIN_HEIGHT = LayoutUtils.MAIN_GRID_ROWS.Sum();
+            LayoutUtils.DEFAULT_GRID_WIDTH = LayoutUtils.MAIN_GRID_COLUMNS.Sum();
+            LayoutUtils.DEFAULT_GRID_HEIGHT = LayoutUtils.MAIN_GRID_ROWS.Sum();
 
-            DEFAULT_MAIN_WIN_WIDTH_HEIGHT_RATIO = DEFAULT_MAIN_WIN_WIDTH / DEFAULT_MAIN_WIN_HEIGHT;
+            LayoutUtils.DEFAULT_GRID_WIDTH_HEIGHT_RATIO = LayoutUtils.DEFAULT_GRID_WIDTH / LayoutUtils.DEFAULT_GRID_HEIGHT;
         }
 
         /// <summary>
@@ -250,7 +241,7 @@ namespace ChessForge
         /// <summary>
         /// Updates the widths and heights of the main window controls according to the current size of the main window.
         /// </summary>
-        private void UpdateTabControlWidthHeight(Size windowSize)
+        private void UpdateGridElementSizes(Size windowSize)
         {
             try
             {
@@ -259,9 +250,14 @@ namespace ChessForge
                 // so that we skip the menus.
                 double actualWidthHeightRatio = windowSize.Width / _gridUber.RowDefinitions[1].ActualHeight;
 
-                // using actualWidthHightRatio update the sizes so that the client area remains fully utilized.
-                UpdateTabControlWidth(actualWidthHeightRatio);
-                UpdateExplorerRowHeights(actualWidthHeightRatio);
+                double extraWidth = LayoutUtils.CalcExtraGridWidth(actualWidthHeightRatio);
+                double extraHeight = LayoutUtils.CalcExtraGridHeight(actualWidthHeightRatio);
+
+                LayoutUtils.AdjustColumnWidths(extraWidth);
+                LayoutUtils.AdjustRowHeights(extraHeight);
+
+                MainBoard.Width = Math.Min(UiMainGrid.ColumnDefinitions[0].Width.Value, UiMainGrid.RowDefinitions[1].Height.Value);
+                MainBoard.Height = MainBoard.Width;
             }
             catch { }
         }
@@ -272,7 +268,7 @@ namespace ChessForge
         /// <param name="actualWidthHeightRatio"></param>
         private void UpdateTabControlWidth(double actualWidthHeightRatio)
         {
-            double defaultWidth = DEFAULT_MAIN_WIN_HEIGHT * actualWidthHeightRatio;
+            double defaultWidth = LayoutUtils.DEFAULT_GRID_HEIGHT * actualWidthHeightRatio;
 
             // calculate the total width currently defined for the main window,
             // excluding the main tab control, and add the default width of the main tab control.
@@ -288,7 +284,7 @@ namespace ChessForge
 
             // by how much to adjust the defined width of the main tab control.
             double widthGapScaled = defaultWidth - currentDefinedWidth;
-            if (actualWidthHeightRatio <= DEFAULT_MAIN_WIN_WIDTH_HEIGHT_RATIO)
+            if (actualWidthHeightRatio <= LayoutUtils.DEFAULT_GRID_WIDTH_HEIGHT_RATIO)
             {
                 // in this case we need to adjust the heights so don't adjust the width of the main tab control.
                 widthGapScaled = -1 * chessboardSizeAdjustment;
@@ -303,7 +299,7 @@ namespace ChessForge
         /// <param name="actualWidthHeightRatio"></param>
         private void UpdateExplorerRowHeights(double actualWidthHeightRatio)
         {
-            double defaultHeight = DEFAULT_MAIN_WIN_WIDTH / actualWidthHeightRatio;
+            double defaultHeight = LayoutUtils.DEFAULT_GRID_WIDTH / actualWidthHeightRatio;
 
             double currentDefinedHeight = 0;
             for (int i = 0; i < UiMainGrid.RowDefinitions.Count; i++)
@@ -318,7 +314,7 @@ namespace ChessForge
             //currentDefinedHeight += MAIN_GRID_ROWS[LayoutUtils.EXPLORER_ROW_INDEX];
 
             double heightGapScaled = defaultHeight - currentDefinedHeight;
-            if (actualWidthHeightRatio >= DEFAULT_MAIN_WIN_WIDTH_HEIGHT_RATIO)
+            if (actualWidthHeightRatio >= LayoutUtils.DEFAULT_GRID_WIDTH_HEIGHT_RATIO)
             {
                 heightGapScaled = 0;
             }
@@ -440,16 +436,9 @@ namespace ChessForge
                 ManualSplitterVertical.ReleaseMouseCapture();
                 ManualSplitterVertical.Margin = _splitterDefaultThickness;
 
-                double absoluteAdjustmentWidth = UiMainGrid.ColumnDefinitions[LayoutUtils.CHESSBOARD_COLUMN_INDEX].Width.Value
-                                  - LayoutUtils.MAIN_GRID_COLUMNS[LayoutUtils.CHESSBOARD_COLUMN_INDEX] + _runningHorizontalAdjustment;
+                Configuration.ChessboardSizeAdjustment = (int)_runningHorizontalAdjustment + Configuration.ChessboardSizeAdjustment;
 
-                double absoluteAdjustmentHeight =
-                    (UiMainGrid.RowDefinitions[LayoutUtils.EXPLORER_ROW_INDEX].Height.Value - LayoutUtils.MAIN_GRID_ROWS[LayoutUtils.EXPLORER_ROW_INDEX]);
-
-                LayoutUtils.CoordinateChessboardExplorerRowAdjustments(ref absoluteAdjustmentWidth, ref absoluteAdjustmentHeight, false);
-
-                AdjustAllControlSizes(absoluteAdjustmentWidth, absoluteAdjustmentHeight);
-
+                UpdateGridElementSizes(new Size(this.Width, this.Height));
                 RefreshAffectedControls();
             }
         }
@@ -548,16 +537,9 @@ namespace ChessForge
                 ManualSplitterHorizontal.ReleaseMouseCapture();
                 ManualSplitterHorizontal.Margin = _splitterDefaultThickness;
 
-                double absoluteAdjustmentWidth = UiMainGrid.ColumnDefinitions[LayoutUtils.CHESSBOARD_COLUMN_INDEX].Width.Value
-                                                  - LayoutUtils.MAIN_GRID_COLUMNS[LayoutUtils.CHESSBOARD_COLUMN_INDEX];
+                Configuration.ExplorerRowHeightAdjustment = (int)_runningVerticalAdjustment + Configuration.ExplorerRowHeightAdjustment;
 
-                double absoluteAdjustmentHeight = 
-                    (UiMainGrid.RowDefinitions[LayoutUtils.EXPLORER_ROW_INDEX].Height.Value - LayoutUtils.MAIN_GRID_ROWS[LayoutUtils.EXPLORER_ROW_INDEX])
-                    + _runningVerticalAdjustment;
-
-                LayoutUtils.CoordinateChessboardExplorerRowAdjustments(ref absoluteAdjustmentWidth, ref absoluteAdjustmentHeight, false);
-
-                AdjustAllControlSizes(absoluteAdjustmentWidth, absoluteAdjustmentHeight);
+                UpdateGridElementSizes(new Size(this.Width, this.Height));
                 RefreshAffectedControls();
             }
         }
@@ -578,7 +560,7 @@ namespace ChessForge
             MainBoard.Width = Math.Min(UiMainGrid.ColumnDefinitions[0].Width.Value, UiMainGrid.RowDefinitions[1].Height.Value);
             MainBoard.Height = MainBoard.Width;
 
-            UpdateTabControlWidthHeight(new Size(this.Width, this.Height));
+            UpdateGridElementSizes(new Size(this.Width, this.Height));
         }
     }
 }
