@@ -10,7 +10,7 @@ namespace ChessForge
         private readonly double NAG_BUTTON_FONT_SIZE = 12;
 
         // Default height of the NAG StackPanel.
-        private readonly double NAG_PANEL_HEIGHT = 48;
+        private readonly double NAG_PANEL_HEIGHT = 22;
 
         // Default top margin for the NAG StackPanel when the "Large Menu Font" option is not enabled.
         private readonly double NAG_PANEL_TOP_MARGIN = 588;
@@ -24,11 +24,8 @@ namespace ChessForge
         // Default height of the icons in the NAG StackPanel.
         private readonly double NAG_ICON_HEIGHT = 18;
 
-        // Default height of the main view (above StackPanel).
-        private readonly double MAIN_WINDOW_HEIGHT = 600;
-
         // Default increment for the main window height when the font size is increased/decreased.
-        private readonly double WINDOW_HEIGHT_INCREMENT = 6;
+        private readonly double NAG_ROW_INCREMENT = 6;
 
         // Default increment for the font size of the buttons in the NAG StackPanel when the "Large Menu Font" option is toggled.
         private readonly double NAG_FONT_SIZE_INCREMENT = 4;
@@ -206,18 +203,15 @@ namespace ChessForge
         {
             bool b = Configuration.LargeMenuFont;
 
-            UiRtbStudyTreeView.Height = b ? MAIN_WINDOW_HEIGHT - WINDOW_HEIGHT_INCREMENT : MAIN_WINDOW_HEIGHT;
-            UiRtbModelGamesView.Height = b ? MAIN_WINDOW_HEIGHT - WINDOW_HEIGHT_INCREMENT : MAIN_WINDOW_HEIGHT;
-            UiRtbExercisesView.Height = b ? MAIN_WINDOW_HEIGHT - WINDOW_HEIGHT_INCREMENT : MAIN_WINDOW_HEIGHT;
+            double bottomMargin = b ? LayoutUtils.TAB_ITEM_BOTTOM_MARGIN + NAG_ROW_INCREMENT : LayoutUtils.TAB_ITEM_BOTTOM_MARGIN;
 
-            UiSpGameNagPanel.Margin = b ? new Thickness(0, NAG_PANEL_TOP_MARGIN - WINDOW_HEIGHT_INCREMENT, 0, 0) : new Thickness(0, NAG_PANEL_TOP_MARGIN, 0, 0);
-            UiSpGameNagPanel.Height = b ? NAG_PANEL_HEIGHT + WINDOW_HEIGHT_INCREMENT : NAG_PANEL_HEIGHT;
+            LayoutUtils.AdjustTabItemBottomMargin(UiRtbStudyTreeView, bottomMargin);
+            LayoutUtils.AdjustTabItemBottomMargin(UiRtbModelGamesView, bottomMargin);
+            LayoutUtils.AdjustTabItemBottomMargin(UiRtbExercisesView, bottomMargin);
 
-            UiSpStudyNagPanel.Margin = b ? new Thickness(0, NAG_PANEL_TOP_MARGIN - WINDOW_HEIGHT_INCREMENT, 0, 0) : new Thickness(0, NAG_PANEL_TOP_MARGIN, 0, 0);
-            UiSpStudyNagPanel.Height = b ? NAG_PANEL_HEIGHT + WINDOW_HEIGHT_INCREMENT : NAG_PANEL_HEIGHT;
-
-            UiSpExercNagPanel.Margin = b ? new Thickness(0, NAG_PANEL_TOP_MARGIN - WINDOW_HEIGHT_INCREMENT, 0, 0) : new Thickness(0, NAG_PANEL_TOP_MARGIN, 0, 0);
-            UiSpExercNagPanel.Height = b ? NAG_PANEL_HEIGHT + WINDOW_HEIGHT_INCREMENT : NAG_PANEL_HEIGHT;
+            UiSpGameNagPanel.Height = b ? NAG_PANEL_HEIGHT + NAG_ROW_INCREMENT : NAG_PANEL_HEIGHT;
+            UiSpStudyNagPanel.Height = b ? NAG_PANEL_HEIGHT + NAG_ROW_INCREMENT : NAG_PANEL_HEIGHT;
+            UiSpExercNagPanel.Height = b ? NAG_PANEL_HEIGHT + NAG_ROW_INCREMENT : NAG_PANEL_HEIGHT;
 
             NagButtonFontSize = b ? NAG_BUTTON_FONT_SIZE + NAG_FONT_SIZE_INCREMENT : NAG_BUTTON_FONT_SIZE;
             NagIconWidth = b ? NAG_ICON_WIDTH + NAG_ICON_WIDTH_INCREMENT : NAG_ICON_WIDTH;
