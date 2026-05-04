@@ -12,9 +12,6 @@ namespace ChessForge
         // Default height of the NAG StackPanel.
         private readonly double NAG_PANEL_HEIGHT = 22;
 
-        // Default top margin for the NAG StackPanel when the "Large Menu Font" option is not enabled.
-        private readonly double NAG_PANEL_TOP_MARGIN = 588;
-
         // Default width of the icons in the NAG StackPanel.
         private readonly double NAG_ICON_WIDTH = 18;
 
