@@ -245,26 +245,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Adjusts the heights of the controls in the bottom half (explorer row) of the main window
-        /// </summary>
-        /// <param name="adjustment"></param>
-        private void SetExplorerRowHeights(double adjustment)
-        {
-            adjustment = Math.Min(adjustment, LayoutUtils.MAX_USER_HEIGHT_ADJUSTMENT);
-            adjustment = Math.Max(adjustment, LayoutUtils.MIN_USER_HEIGHT_ADJUSTMENT);
-
-            //UiMainGrid.RowDefinitions[LayoutUtils.EXPLORER_ROW_INDEX].Height = new GridLength(MAIN_GRID_ROWS[LayoutUtils.EXPLORER_ROW_INDEX] + adjustment);
-            UiMainGrid.RowDefinitions[LayoutUtils.EXPLORER_ROW_INDEX].Height = new GridLength(UiMainGrid.RowDefinitions[LayoutUtils.EXPLORER_ROW_INDEX].Height.Value + adjustment);
-            UiMainGrid.RowDefinitions[LayoutUtils.CHESSBOARD_ROW_INDEX].Height = new GridLength(UiMainGrid.RowDefinitions[LayoutUtils.CHESSBOARD_ROW_INDEX].Height.Value - adjustment);
-
-            if (UiMainGrid.RowDefinitions[LayoutUtils.CHESSBOARD_ROW_INDEX].Height.Value < (LayoutUtils.CHESSBOARD_DEFAULT_WIDTH + Configuration.ChessboardSizeAdjustment))
-            {
-                double absoluteAdjustment = UiMainGrid.RowDefinitions[LayoutUtils.CHESSBOARD_ROW_INDEX].Height.Value - LayoutUtils.CHESSBOARD_DEFAULT_WIDTH;
-                UpdateMainChessboardWidths(absoluteAdjustment, true);
-            }
-        }
-
-        /// <summary>
         /// Updates the widths and heights of the main window controls according to the current size of the main window.
         /// </summary>
         private void UpdateGridElementSizes(Size windowSize)
