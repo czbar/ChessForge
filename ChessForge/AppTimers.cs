@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Timers;
 using System.Diagnostics;
+using System.Timers;
+using System.Windows.Threading;
 
 namespace ChessForge
 {
@@ -45,6 +43,12 @@ namespace ChessForge
             DUMMY,
             EVALUATION_ELAPSED_TIME
         };
+
+        /// <summary>
+        /// This timer is used to delay processing of the main window size change event 
+        /// until the user finishes resizing the window.
+        /// </summary>
+        public DispatcherTimer AppWindowSizeChangedTimer;
 
         /// <summary>
         /// Controls the frequency of automatic save.
@@ -144,6 +148,9 @@ namespace ChessForge
         public AppTimers(MainWindow mainWin)
         {
             _mainWin = mainWin;
+
+            AppWindowSizeChangedTimer = new DispatcherTimer();
+            InitAppWindowSizeChangedTimer();
 
             _evaluationLinesDisplayTimer = new Timer();
             InitEvaluationLinesDisplayTimer();
@@ -321,6 +328,15 @@ namespace ChessForge
         public long GetElapsedTime(StopwatchId sw)
         {
             return _dictStopwatches[sw].ElapsedMilliseconds;
+        }
+
+        /// <summary>
+        /// Configures the timer for the main window size change event. 
+        /// </summary>
+        private void InitAppWindowSizeChangedTimer()
+        {
+            AppWindowSizeChangedTimer.Interval = TimeSpan.FromMilliseconds(100);
+            AppWindowSizeChangedTimer.Tick += AppState.MainWin.ResizeTimer_Tick;
         }
 
         /// <summary>
