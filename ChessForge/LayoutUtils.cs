@@ -91,36 +91,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Limits the chessboard adjustment to ensure that the chessboard does not become too small or too large.
-        /// </summary>
-        /// <param name="chessboardAdjustment"></param>
-        public static void LimitChessboardAdjustment(ref double chessboardAdjustment)
-        {
-            if (chessboardAdjustment > 0)
-            {
-                chessboardAdjustment = 0;
-            }
-            else if (chessboardAdjustment < -MAX_USER_WIDTH_ADJUSTMENT)
-            {
-                chessboardAdjustment = -MAX_USER_WIDTH_ADJUSTMENT;
-            }
-        }
-
-        /// <summary>
-        /// Sets the default thickness for controls in the explorer row. 
-        /// This is used to ensure that all controls in the explorer row have the same margins.
-        /// </summary>
-        /// <param name="ctrl"></param>
-        public static void SetExplorerRowDefaultControlThickness(Control ctrl)
-        {
-            ThicknessUtils.SetControlThickness(ctrl, new Thickness(
-                EXPLORER_ROW_LEFT_MARGIN,
-                EXPLORER_ROW_TOP_MARGIN,
-                EXPLORER_ROW_RIGHT_MARGIN,
-                EXPLORER_ROW_BOTTOM_MARGIN));
-        }
-
-        /// <summary>
         /// Returns the height available for controls in the explorer row, after subtracting the margins.
         /// The height will vary as the user resizes the window.
         /// </summary>
