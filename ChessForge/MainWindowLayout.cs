@@ -36,9 +36,6 @@ namespace ChessForge
         // Width of the scoresheet in the absence of evals.
         public double SCORESHEET_WIDTH_NO_EVALS = 160;
 
-        // Index of the main tab control column in the main grid.
-        private int TAB_CONTROL_COLUMN_INDEX = 1;
-
         // The current adjustment applied to the chessboard size.
         private double chessboardSizeAdjustment = 0;
 
@@ -59,6 +56,9 @@ namespace ChessForge
         // Default margins for the Openings control.
         private Thickness _splitterDefaultThickness;
 
+        // The new size of the main window after resizing is completed.
+        private static Size _newAppWindowSize = new Size(0, 0);
+
         /// <summary>
         /// Handler for the main window SizeChanged event.
         /// Updates the widths and heights of the main window controls according to the new size of the main window.
@@ -67,7 +67,33 @@ namespace ChessForge
         /// <param name="e"></param>
         private void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            UpdateGridElementSizes(e.NewSize);
+            Timers.AppWindowSizeChangedTimer.Stop();
+            
+            _newAppWindowSize.Width = e.NewSize.Width;
+            _newAppWindowSize.Height = e.NewSize.Height;
+
+            Timers.AppWindowSizeChangedTimer.Start();
+        }
+
+        /// <summary>
+        /// Handler for the AppWindowSizeChangedTimer Tick event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void ResizeTimer_Tick(object sender, EventArgs e)
+        {
+            Timers.AppWindowSizeChangedTimer.Stop();
+
+            // Perform the resizing operations after a short delay to avoid doing them multiple times during a single resizing action by the user.
+            ProcessFinalWindowSize();
+        }
+
+        /// <summary>
+        /// Performs the resizing operations.
+        /// </summary>
+        private void ProcessFinalWindowSize()
+        {
+            UpdateGridElementSizes(_newAppWindowSize);
             RefreshAffectedControls();
         }
 
@@ -208,8 +234,8 @@ namespace ChessForge
 
             Configuration.ChessboardSizeAdjustment = (int)absoluteAdjustment;
 
-            UiMainGrid.ColumnDefinitions[0].Width = new GridLength(UiMainGrid.ColumnDefinitions[0].Width.Value + adjustment);
-            UiMainGrid.ColumnDefinitions[1].Width = new GridLength(UiMainGrid.ColumnDefinitions[1].Width.Value - adjustment);
+            UiMainGrid.ColumnDefinitions[LayoutUtils.CHESSBOARD_COLUMN_INDEX].Width = new GridLength(UiMainGrid.ColumnDefinitions[LayoutUtils.CHESSBOARD_COLUMN_INDEX].Width.Value + adjustment);
+            UiMainGrid.ColumnDefinitions[LayoutUtils.TAB_CTRL_COLUMN_INDEX].Width = new GridLength(UiMainGrid.ColumnDefinitions[LayoutUtils.TAB_CTRL_COLUMN_INDEX].Width.Value - adjustment);
 
             chessboardSizeAdjustment = absoluteAdjustment;
 
