@@ -1471,6 +1471,9 @@ Decade=Decade
 #Granularity
 Granularity=Granularity
 
+#Chapter title prefix
+ChapterTitlePrefix=Start new chapter titles with
+
 #Move games to other chapters per ECO
 MoveGamesPerEco=Move games to other chapters per ECO
 

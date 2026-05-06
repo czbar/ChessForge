@@ -997,6 +997,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Start new chapter titles with.
+        /// </summary>
+        public static string ChapterTitlePrefix {
+            get {
+                return ResourceManager.GetString("ChapterTitlePrefix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chart.
         /// </summary>
         public static string Chart {

@@ -1874,6 +1874,10 @@ Decade=Dekada
 #english: Granularity=Granularity
 Granularity=Rozdzielczość
 
+#description: Chapter title prefix
+#english: ChapterTitlePrefix=Start new chapter titles with
+ChapterTitlePrefix=Tytuły nowych rozdziałow zaczynaj od
+
 #description: Move games to other chapters per ECO
 #english: MoveGamesPerEco=Move games to other chapters per ECO
 MoveGamesPerEco=Przenieś partie do innych rozdziałów wg ECO

@@ -410,6 +410,7 @@ namespace ChessForge
         public MainWindow()
         {
             AppState.MainWin = this;
+            this.SizeChanged += MainWindow_SizeChanged;
 
             // the next lines pertain to localization, must be invoked here (before InitializeComponent) and in this order
             ReadConfiguration();
@@ -429,6 +430,8 @@ namespace ChessForge
             InitializeLanguages();
 
             AppLog.Initialize(Configuration.DebugLevel);
+
+            InitializeLayoutConstants();
 
             EvaluationMgr = new EvaluationManager();
 
@@ -503,8 +506,6 @@ namespace ChessForge
             }
             catch { }
 
-            InitializeLayout();
-
             if (Configuration.LichessAuthTokenSavedInConfig)
             {
                 RestApiRequest.LichessAuthToken = Configuration.LichessAuthToken;
@@ -524,6 +525,12 @@ namespace ChessForge
             {
                 DefaultMenuFontSize = UiMainMenu.FontSize;
             }
+
+            // sets the window/control sizes so must be called before other UI initializations.
+            UpdateGridElementSizes(new Size(this.Width, this.Height));
+
+            // now set the page width of the Comment Box
+            UiRtbBoardComment.Document.PageWidth = UiMainGrid.ColumnDefinitions[0].Width.Value;
 
             UiTbEngineLines.FontSize = Constants.BASE_ENGINE_LINES_FONT_SIZE + Configuration.FontSizeDiff;
 
@@ -576,9 +583,6 @@ namespace ChessForge
                 UiImgChartOn.Visibility = Visibility.Visible;
                 UiImgChartOff.Visibility = Visibility.Hidden;
             }
-
-
-            AdjustPanelWidths(Configuration.ChessboardSizeAdjustment);
 
             Timers.Start(AppTimers.TimerId.APP_START);
 

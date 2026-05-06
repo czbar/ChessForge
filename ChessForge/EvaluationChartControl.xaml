@@ -14,12 +14,12 @@
         </Grid.RowDefinitions>
 
         <Canvas x:Name="UiCnvWhite" Grid.Row="0" Background="LightGreen" ClipToBounds="True" Grid.ColumnSpan="2" 
-                Height="74" Width="670" 
-                HorizontalAlignment="Left" VerticalAlignment="Top">
+                HorizontalAlignment="Stretch" 
+                VerticalAlignment="Stretch">
         </Canvas>
         <Canvas x:Name="UiCnvBlack" Grid.Row="1" Background="Green" ClipToBounds="True" Grid.ColumnSpan="2" 
-                Height="74" Width="670" 
-                HorizontalAlignment="Left" VerticalAlignment="Top">
+                HorizontalAlignment="Stretch" 
+                VerticalAlignment="Stretch">
         </Canvas>
     </Grid>
 

@@ -5,11 +5,6 @@ namespace ChessForge
     public class OpeningStatsViewLayout
     {
         /// <summary>
-        /// Initial width of the view area in the Opening Stats View.
-        /// </summary>
-        private static double INITIAL_VIEW_AREA_WIDTH = 560;
-
-        /// <summary>
         /// Width of the view area in the Opening Stats View.
         /// The initial value would not be used as it will be
         /// recalculated from the ActualWidth.
@@ -18,7 +13,8 @@ namespace ChessForge
         {
             get
             {
-                return INITIAL_VIEW_AREA_WIDTH - (double)Configuration.ChessboardSizeAdjustment;
+                return AppState.MainWin.UiMainGrid.ColumnDefinitions[1].Width.Value
+                                       - (LayoutUtils.EXPLORER_ROW_LEFT_MARGIN + LayoutUtils.EXPLORER_ROW_RIGHT_MARGIN + 30);
             }
         }
 

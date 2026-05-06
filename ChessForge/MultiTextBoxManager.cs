@@ -11,14 +11,12 @@ namespace ChessForge
     /// </summary>
     public class MultiTextBoxManager
     {
-        // full size of Eval Chart
-        private static double EVAL_CHART_FULL_HEIGHT = 150;
-
         // shortcut reference to the Main Window
         private static MainWindow MainWin = AppState.MainWin;
 
         // whether the MultiBox is now in full or half size mode
-        private static bool IsFullSize = true;
+        // null means that the size has not been set yet, so it will be set to full size by default.
+        private static bool? IsFullSize = null;
 
         /// <summary>
         /// Show or hide the evaluation chart depending on 
@@ -141,6 +139,8 @@ namespace ChessForge
         {
             ResizeEvaluationChart(fullSize);
             ResizeEngineLinesBox(fullSize);
+
+            IsFullSize = fullSize;
         }
 
         /// <summary>
@@ -154,23 +154,6 @@ namespace ChessForge
         {
             if (fullSize != IsFullSize)
             {
-                if (fullSize)
-                {
-                    MainWin.UiEvalChart.Height = EVAL_CHART_FULL_HEIGHT;
-                    MainWin.UiEvalChart.INITIAL_CANVAS_HEIGHT = (EVAL_CHART_FULL_HEIGHT - 2) / 2;
-                    MainWin.UiEvalChart.INITIAL_MARKER_SIZE = 8;
-                    MainWin.UiEvalChart.BASE_FONT_SIZE = 12;
-                }
-                else
-                {
-                    MainWin.UiEvalChart.Height = (EVAL_CHART_FULL_HEIGHT / 2);
-                    MainWin.UiEvalChart.INITIAL_CANVAS_HEIGHT = (EVAL_CHART_FULL_HEIGHT - 2) / 4;
-                    MainWin.UiEvalChart.INITIAL_MARKER_SIZE = 5;
-                    MainWin.UiEvalChart.BASE_FONT_SIZE = 10;
-                }
-
-                IsFullSize = fullSize;
-
                 MainWin.UiEvalChart.IsFullSize = fullSize;
                 MainWin.UiEvalChart.InitSizes();
             }
@@ -184,22 +167,12 @@ namespace ChessForge
         /// if the latter is visible.
         /// </summary>
         /// <param name="fullSize"></param>
-        private static void ResizeEngineLinesBox(bool fullSize)
+        public static void ResizeEngineLinesBox(bool fullSize)
         {
-            // restore the default top margin which we will then adjust
-            // for the half size mode.
-            ThicknessUtils.SetControlTopMargin(MainWin.UiTbEngineLines, MainWin.GetSecondRowTopPad());
-
-            if (fullSize)
+            if (fullSize != IsFullSize)
             {
-                MainWin.UiTbEngineLines.Height = EVAL_CHART_FULL_HEIGHT;
-                MainWin.UiTbEngineLines.FontSize = Constants.BASE_ENGINE_LINES_FONT_SIZE + Configuration.FontSizeDiff;
-            }
-            else
-            {
-                ThicknessUtils.AdjustControlTopMargin(MainWin.UiTbEngineLines, EVAL_CHART_FULL_HEIGHT / 2);
-                MainWin.UiTbEngineLines.Height = EVAL_CHART_FULL_HEIGHT / 2;
-                MainWin.UiTbEngineLines.FontSize = (Constants.BASE_ENGINE_LINES_FONT_SIZE + Configuration.FontSizeDiff) - 2;
+                EngineLinesBox.IsFullSize = fullSize;
+                EngineLinesBox.InitSizes();
             }
         }
     }

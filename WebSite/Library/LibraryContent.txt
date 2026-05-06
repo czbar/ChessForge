@@ -111,13 +111,17 @@ Description: Games from tournaments and matches.
       Description: All games from Men's World Championship Matches and Tournaments.
       File:Tournaments/Mens World Individual Championships.pgn
     
+	  Book:FIDE Candidates 2026 (Men)
+      Description: All games of the Men's World Chamionship Candidates, Toronto 2024
+      File:Tournaments/FIDE Candidates 2026 - Men.pgn
+
+	  Book:FIDE Candidates 2025 (Women)
+      Description: All games of the Women's World Chamionship Candidates, Toronto 2024
+      File:Tournaments/FIDE Candidates 2026 - Women.pgn
+
 	  Book:FIDE World Cup 2025
       Description: All games of the FIDE World Cup, Goa 2025
       File:Tournaments/FIDE World Cup 2025.pgn
-	  
-	  Book:FIDE Candidates 1953 (Men)
-      Description: All games from the legendary Candidates Tournament, Zurich 1953.
-      File:Tournaments/Candidates 1953 - Zurich.pgn
 
 	  Book:FIDE Candidates 2024 (Men)
       Description: All games of the Men's World Chamionship Candidates, Toronto 2024
@@ -134,6 +138,10 @@ Description: Games from tournaments and matches.
 	  Book:World Rapid Championship 2023 (Women)
       Description: World Rapid Championship (Women), Samarkand, December 2023.
       File:Tournaments/World Rapid Chess Championship Women 2023.pgn
+	  
+	  Book:FIDE Candidates 1953 (Men)
+      Description: All games from the legendary Candidates Tournament, Zurich 1953.
+      File:Tournaments/Candidates 1953 - Zurich.pgn
 
     Shelf:European Championships 
     Description: Games from European Championships.

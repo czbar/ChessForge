@@ -245,18 +245,22 @@ namespace ChessForge
         /// This will be called in response to user selecting the DarkMode
         /// menu item.
         /// </summary>
-        public void RebuildView(double absoluteAdjustment = 0)
+        public void RebuildView()
         {
-            // reset variables that, if set, block proper re-build.
-            _openingNameTable = null;
-            _lstRows.Clear();
-
-            CreateOpeningStatsTable();
-            if (_lastDataMode == DataMode.OPENINGS && _lastOpeningStats != null
-                || _lastDataMode == DataMode.TABLEBASE && TablebaseExplorer.Response.Moves != null)
+            try
             {
-                BuildFlowDocument(_lastDataMode, _lastOpeningStats, null, _lasterrorMessage);
+                // reset variables that, if set, block proper re-build.
+                _openingNameTable = null;
+                _lstRows.Clear();
+
+                CreateOpeningStatsTable();
+                if (_lastDataMode == DataMode.OPENINGS && _lastOpeningStats != null
+                    || _lastDataMode == DataMode.TABLEBASE && TablebaseExplorer.Response.Moves != null)
+                {
+                    BuildFlowDocument(_lastDataMode, _lastOpeningStats, null, _lasterrorMessage);
+                }
             }
+            catch { }
         }
 
         /// <summary>

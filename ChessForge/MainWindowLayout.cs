@@ -1,4 +1,6 @@
 ﻿using ChessPosition;
+using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -11,9 +13,6 @@ namespace ChessForge
     /// </summary>
     public partial class MainWindow : Window
     {
-        // Default width (and height) of the main chessboard.
-        private const double CHESSBOARD_DEFAULT_WIDTH = 680;
-
         // Padding around the main tab control.
         private const int MAIN_TAB_PAD = 5;
 
@@ -23,15 +22,8 @@ namespace ChessForge
         // Left and right padding of the Scoresheet / Game Line control.
         private const int SCORESHEET_HORIZ_PAD = 4;
 
-        // Top padding of the CommentBox / EngineLines / EvalChart and Explorer controls.
-        private const int SECOND_ROW_TOP_PAD = 10;
-
         // Right margin of the main tab control in the presence of the scoresheet.
         private const int RIGHT_MARGIN_WITH_SCORESHEET = 275;
-
-        // original grid row/column height/width definitions for the main grid.
-        private double[] MAIN_GRID_ROWS = { 1.0, 680.0, 160.0, 20.0 };
-        private double[] MAIN_GRID_COLUMNS = { 680.0, 600.0, 270.0, 1.0 };
 
         // how far to move the scoresheet to the right when it has no evals and
         // therefore the control to the left (e.g. Training Tab Conbtrol) is made wider.
@@ -43,6 +35,9 @@ namespace ChessForge
 
         // Width of the scoresheet in the absence of evals.
         public double SCORESHEET_WIDTH_NO_EVALS = 160;
+
+        // The current adjustment applied to the chessboard size.
+        private double chessboardSizeAdjustment = 0;
 
         /// <summary>
         /// Right margin of the main tab control in the presence of the scoresheet without evals.
@@ -58,35 +53,62 @@ namespace ChessForge
         /// </summary>
         private const int RIGHT_MARGIN_DEFAULT = 190;
 
-        /// <summary>
-        /// The maximum adjustment that the user can apply to the main tab control.
-        /// </summary>
-        private int MAX_USER_WIDTH_ADJUSTMENT = 400;
-
-        // Default margins for the main window controls (Manual Review, Training, Game).
-        private Thickness _mainTabCtrlDefaultThickness;
-
-        // Default margins for the CommentBox, EngineLines and EvalChart controls.
-        private Thickness _wndCommentBoxDefaultThickness;
-
-        // Default margins for the Openings control.
-        private Thickness _rtbOpeningsDefaultThickness;
-
         // Default margins for the Openings control.
         private Thickness _splitterDefaultThickness;
+
+        // The new size of the main window after resizing is completed.
+        private static Size _newAppWindowSize = new Size(0, 0);
+
+        /// <summary>
+        /// Handler for the main window SizeChanged event.
+        /// Updates the widths and heights of the main window controls according to the new size of the main window.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            Timers.AppWindowSizeChangedTimer.Stop();
+            
+            _newAppWindowSize.Width = e.NewSize.Width;
+            _newAppWindowSize.Height = e.NewSize.Height;
+
+            Timers.AppWindowSizeChangedTimer.Start();
+        }
+
+        /// <summary>
+        /// Handler for the AppWindowSizeChangedTimer Tick event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void ResizeTimer_Tick(object sender, EventArgs e)
+        {
+            Timers.AppWindowSizeChangedTimer.Stop();
+
+            // Perform the resizing operations after a short delay to avoid doing them multiple times during a single resizing action by the user.
+            ProcessFinalWindowSize();
+        }
+
+        /// <summary>
+        /// Performs the resizing operations.
+        /// </summary>
+        private void ProcessFinalWindowSize()
+        {
+            UpdateGridElementSizes(_newAppWindowSize);
+            RefreshAffectedControls();
+        }
 
         /// <summary>
         /// Sets and stores the default sizes and margins of the main window controls.
         /// </summary>
-        public void InitializeLayout()
+        public void InitializeLayoutConstants()
         {
-            // The main tab control in all learning modes, has the width and height determined
-            // by the margins. The width and the height are not set explicitly.
-            _mainTabCtrlDefaultThickness = new Thickness(MAIN_TAB_PAD, MAIN_TAB_PAD, MAIN_TAB_PAD, MAIN_TAB_PAD);
-            _wndCommentBoxDefaultThickness = new Thickness(COMMENT_BOX_HORIZ_PAD, SECOND_ROW_TOP_PAD, COMMENT_BOX_HORIZ_PAD, 0);
-            _rtbOpeningsDefaultThickness = new Thickness(MAIN_TAB_PAD, SECOND_ROW_TOP_PAD, RIGHT_MARGIN_WITH_SCORESHEET, 0);
-
             _splitterDefaultThickness = new Thickness(0, 0, 0, 0);
+
+            // calculate the default main window width and height based on the grid definitions.
+            LayoutUtils.DEFAULT_GRID_WIDTH = LayoutUtils.MAIN_GRID_COLUMNS.Sum();
+            LayoutUtils.DEFAULT_GRID_HEIGHT = LayoutUtils.MAIN_GRID_ROWS.Sum();
+
+            LayoutUtils.DEFAULT_GRID_WIDTH_HEIGHT_RATIO = LayoutUtils.DEFAULT_GRID_WIDTH / LayoutUtils.DEFAULT_GRID_HEIGHT;
         }
 
         /// <summary>
@@ -104,19 +126,19 @@ namespace ChessForge
 
             DebugUtils.DebugLevel = Configuration.DebugLevel;
 
-            MainBoard.Width = CHESSBOARD_DEFAULT_WIDTH;
-            MainBoard.Height = CHESSBOARD_DEFAULT_WIDTH;
+            MainBoard.Width = LayoutUtils.CHESSBOARD_DEFAULT_WIDTH;
+            MainBoard.Height = LayoutUtils.CHESSBOARD_DEFAULT_WIDTH;
 
             // set the main grid's row and column definitions
-            _gridMain.RowDefinitions[0].Height = new GridLength(MAIN_GRID_ROWS[0]);
-            _gridMain.RowDefinitions[1].Height = new GridLength(MAIN_GRID_ROWS[1]);
-            _gridMain.RowDefinitions[2].Height = new GridLength(MAIN_GRID_ROWS[2]);
-            _gridMain.RowDefinitions[3].Height = new GridLength(MAIN_GRID_ROWS[3]);
+            UiMainGrid.RowDefinitions[0].Height = new GridLength(LayoutUtils.MAIN_GRID_ROWS[0]);
+            UiMainGrid.RowDefinitions[1].Height = new GridLength(LayoutUtils.MAIN_GRID_ROWS[1]);
+            UiMainGrid.RowDefinitions[2].Height = new GridLength(LayoutUtils.MAIN_GRID_ROWS[2]);
+            UiMainGrid.RowDefinitions[3].Height = new GridLength(LayoutUtils.MAIN_GRID_ROWS[3]);
 
-            _gridMain.ColumnDefinitions[0].Width = new GridLength(MAIN_GRID_COLUMNS[0]);
-            _gridMain.ColumnDefinitions[1].Width = new GridLength(MAIN_GRID_COLUMNS[1]);
-            _gridMain.ColumnDefinitions[2].Width = new GridLength(MAIN_GRID_COLUMNS[2]);
-            _gridMain.ColumnDefinitions[3].Width = new GridLength(MAIN_GRID_COLUMNS[3]);
+            UiMainGrid.ColumnDefinitions[0].Width = new GridLength(LayoutUtils.MAIN_GRID_COLUMNS[0]);
+            UiMainGrid.ColumnDefinitions[1].Width = new GridLength(LayoutUtils.MAIN_GRID_COLUMNS[1]);
+            UiMainGrid.ColumnDefinitions[2].Width = new GridLength(LayoutUtils.MAIN_GRID_COLUMNS[2]);
+            UiMainGrid.ColumnDefinitions[3].Width = new GridLength(LayoutUtils.MAIN_GRID_COLUMNS[3]);
 
             // setup control positions
             UiDgActiveLine.HorizontalAlignment = HorizontalAlignment.Left;
@@ -129,15 +151,6 @@ namespace ChessForge
             UiDgEngineGame.Margin = new Thickness(COMMENT_BOX_HORIZ_PAD, 27, COMMENT_BOX_HORIZ_PAD, 0);
 
             SetupMenuBarControls();
-        }
-
-        /// <summary>
-        /// Return the default top margin (padding) for the controls in the second row.
-        /// </summary>
-        /// <returns></returns>
-        public double GetSecondRowTopPad()
-        {
-            return SECOND_ROW_TOP_PAD;
         }
 
         /// <summary>
@@ -154,8 +167,8 @@ namespace ChessForge
         {
             ThicknessUtils.SetControlLeftMargin(UiDgActiveLine, 0);
             ThicknessUtils.SetControlLeftMargin(UiDgEngineGame, SCORESHEET_NO_EVALS_LEFT_MARGIN);
-            
-            UiTrainingSessionBox.Margin = new Thickness(MAIN_TAB_PAD, SECOND_ROW_TOP_PAD, RIGHT_MARGIN_WITH_SCORESHEET_NO_EVALS, 0);
+
+            UiTrainingSessionBox.Margin = new Thickness(MAIN_TAB_PAD, LayoutUtils.EXPLORER_ROW_TOP_MARGIN, RIGHT_MARGIN_WITH_SCORESHEET_NO_EVALS, 0);
 
             switch (sizeMode)
             {
@@ -199,15 +212,21 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Adjusts the widths of the main tab control and the controls
+        /// Adjusts the widths of the main main chessboard control and the main view window
         /// according to the currently selected adjustment value.
+        /// When the chessboard is made wider, the main view window is made narrower so that the overall layout remains balanced.
         /// </summary>
-        /// <param name="adjustment"></param>
-        private void AdjustPanelWidths(double adjustment)
+        /// <param name="adjustment">The adjustment value to be applied to the widths.</param>
+        private void UpdateMainChessboardWidths(double adjustment, bool isAbsoluteAdjustment = false)
         {
-            // calculate the adjustment relative to the default boundary between the first and second column.
-            double absoluteAdjustment = adjustment + (_gridMain.ColumnDefinitions[0].Width.Value - MAIN_GRID_COLUMNS[0]);
-            if (absoluteAdjustment > 0 || absoluteAdjustment < -MAX_USER_WIDTH_ADJUSTMENT)
+            double absoluteAdjustment = adjustment;
+            if (!isAbsoluteAdjustment)
+            {
+                // calculate the adjustment relative to the default boundary between the first and second column.
+                absoluteAdjustment = adjustment + (UiMainGrid.ColumnDefinitions[0].Width.Value - LayoutUtils.MAIN_GRID_COLUMNS[0]);
+            }
+
+            if (absoluteAdjustment > 0 || absoluteAdjustment < -LayoutUtils.MAX_USER_WIDTH_ADJUSTMENT)
             {
                 // An invalid adjustment should have been caught earlier so this is just a defensive measure.
                 return;
@@ -215,31 +234,67 @@ namespace ChessForge
 
             Configuration.ChessboardSizeAdjustment = (int)absoluteAdjustment;
 
-            _gridMain.ColumnDefinitions[0].Width = new GridLength(_gridMain.ColumnDefinitions[0].Width.Value + adjustment);
-            _gridMain.ColumnDefinitions[1].Width = new GridLength(_gridMain.ColumnDefinitions[1].Width.Value - adjustment);
+            UiMainGrid.ColumnDefinitions[LayoutUtils.CHESSBOARD_COLUMN_INDEX].Width = new GridLength(UiMainGrid.ColumnDefinitions[LayoutUtils.CHESSBOARD_COLUMN_INDEX].Width.Value + adjustment);
+            UiMainGrid.ColumnDefinitions[LayoutUtils.TAB_CTRL_COLUMN_INDEX].Width = new GridLength(UiMainGrid.ColumnDefinitions[LayoutUtils.TAB_CTRL_COLUMN_INDEX].Width.Value - adjustment);
 
-            UiRtbBoardComment.Document.PageWidth = _gridMain.ColumnDefinitions[0].Width.Value;
+            chessboardSizeAdjustment = absoluteAdjustment;
 
-            MainBoard.Width = CHESSBOARD_DEFAULT_WIDTH + absoluteAdjustment;
-            MainBoard.Height = CHESSBOARD_DEFAULT_WIDTH + absoluteAdjustment;
-
-            if (_openingStatsView != null && AppState.AreExplorersOn)
-            {
-                _openingStatsView.RebuildView(absoluteAdjustment);
-            }
-
-            UiEvalChart.InitSizes();
-            UiEvalChart.Refresh();
-
+            MainBoard.Width = LayoutUtils.CHESSBOARD_DEFAULT_WIDTH + absoluteAdjustment;
+            MainBoard.Height = LayoutUtils.CHESSBOARD_DEFAULT_WIDTH + absoluteAdjustment;
             return;
         }
 
+        /// <summary>
+        /// Updates the widths and heights of the main window controls according to the current size of the main window.
+        /// </summary>
+        private void UpdateGridElementSizes(Size windowSize)
+        {
+            try
+            {
+                // calculate the current width/height ratio of the main window client area.
+                // the width is straight forward , but the height is taken as the height of the second row of the main grid,
+                // so that we skip the menus.
+                double actualWidthHeightRatio = windowSize.Width / _gridUber.RowDefinitions[1].ActualHeight;
 
-        //**************************************************
+                double extraWidth = LayoutUtils.CalcExtraGridWidth(actualWidthHeightRatio);
+                double extraHeight = LayoutUtils.CalcExtraGridHeight(actualWidthHeightRatio);
+
+                LayoutUtils.AdjustColumnWidths(extraWidth);
+                LayoutUtils.AdjustRowHeights(extraHeight);
+
+                MainBoard.Width = Math.Min(UiMainGrid.ColumnDefinitions[0].Width.Value, UiMainGrid.RowDefinitions[1].Height.Value);
+                MainBoard.Height = MainBoard.Width;
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// Refreshes the controls affected by a change in the main chessboard width, which are:
+        /// - The board comment RichTextBox
+        /// - The opening stats view (if explorers are on)
+        /// - The evaluation chart
+        /// </summary>
+        private void RefreshAffectedControls()
+        {
+            UiRtbBoardComment.Document.PageWidth = UiMainGrid.ColumnDefinitions[0].Width.Value;
+            if (_openingStatsView != null && AppState.AreExplorersOn)
+            {
+                _openingStatsView.RebuildView();
+            }
+            UiEvalChart.InitSizes();
+            UiEvalChart.Refresh();
+
+            EngineLinesBox.InitSizes();
+
+            ManualSplitterVertical.Height = UiMainGrid.RowDefinitions[1].Height.Value + UiMainGrid.RowDefinitions[2].Height.Value;
+            ManualSplitterHorizontal.Width = UiMainGrid.ColumnDefinitions[0].Width.Value + UiMainGrid.ColumnDefinitions[1].Width.Value + UiMainGrid.ColumnDefinitions[2].Width.Value;
+        }
+
+        //******************************************************************************************
         //
-        // Manual splitter event handlers
+        // Event handlers for the Vertical Splitter between the chessboard and the main tab control.
         //
-        //**************************************************
+        //******************************************************************************************
 
         // whether resizing is in progress
         private bool _isResizingTab = false;
@@ -251,7 +306,7 @@ namespace ChessForge
         // This is the position of the mouse cursor minus the position of the splitter.
         // It needs to be tracked across the mouse events as if the mouse goes too far
         // we want to keep to the last valid adjustment.
-        private double _runningAdjustment = 0;
+        private double _runningHorizontalAdjustment = 0;
 
         /// <summary>
         /// A mouse click event occured over the splitter.
@@ -259,18 +314,18 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ManualSplitter_MouseDown(object sender, MouseButtonEventArgs e)
+        private void ManualSplitterVertical_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            _runningAdjustment = 0;
+            _runningHorizontalAdjustment = 0;
 
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 // flag that resizing is in progress
                 _isResizingTab = true;
                 // set the initial position of the splitter
-                _resizeStartPointX = _gridMain.ColumnDefinitions[0].Width.Value;
+                _resizeStartPointX = UiMainGrid.ColumnDefinitions[0].Width.Value;
 
-                ManualSplitter.CaptureMouse();
+                ManualSplitterVertical.CaptureMouse();
             }
         }
 
@@ -280,25 +335,32 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ManualSplitter_MouseMove(object sender, MouseEventArgs e)
+        private void ManualSplitterVertical_MouseMove(object sender, MouseEventArgs e)
         {
-            if (_isResizingTab)
+            if (_isResizingTab && e.LeftButton == MouseButtonState.Pressed)
             {
-                Point current = e.GetPosition(_gridMain);
-                // check if the mouse is within the limits of the allowed resizing
-                if (current.X > MAIN_GRID_COLUMNS[0] - MAX_USER_WIDTH_ADJUSTMENT && current.X <= MAIN_GRID_COLUMNS[0])
+                double currX = e.GetPosition(UiMainGrid).X;
+
+                // make sure that the user cannot move the splitter beyond the allowed limits.
+                if (currX <= LayoutUtils.MAIN_GRID_COLUMNS[0] - LayoutUtils.MAX_USER_WIDTH_ADJUSTMENT)
                 {
-                    ManualSplitter.Fill = Brushes.Gray;
-                    ManualSplitter.Opacity = 0.8;
-
-                    _runningAdjustment = current.X - _resizeStartPointX;
-
-                    ManualSplitter.Margin = new Thickness(
-                        _splitterDefaultThickness.Left + _runningAdjustment,
-                        _splitterDefaultThickness.Top,
-                        _splitterDefaultThickness.Right - _runningAdjustment,
-                        _splitterDefaultThickness.Bottom);
+                    currX = LayoutUtils.MAIN_GRID_COLUMNS[0] - LayoutUtils.MAX_USER_WIDTH_ADJUSTMENT;
                 }
+                else if (currX > LayoutUtils.MAIN_GRID_COLUMNS[0])
+                {
+                    currX = LayoutUtils.MAIN_GRID_COLUMNS[0];
+                }
+
+                ManualSplitterVertical.Fill = Brushes.Gray;
+                ManualSplitterVertical.Opacity = 0.8;
+
+                _runningHorizontalAdjustment = currX - _resizeStartPointX;
+
+                ManualSplitterVertical.Margin = new Thickness(
+                    _splitterDefaultThickness.Left + _runningHorizontalAdjustment,
+                    _splitterDefaultThickness.Top,
+                    _splitterDefaultThickness.Right - _runningHorizontalAdjustment,
+                    _splitterDefaultThickness.Bottom);
             }
         }
 
@@ -308,18 +370,122 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ManualSplitter_MouseUp(object sender, MouseButtonEventArgs e)
+        private void ManualSplitterVertical_MouseUp(object sender, MouseButtonEventArgs e)
         {
             if (_isResizingTab)
             {
-                ManualSplitter.Fill = Brushes.Transparent;
-                ManualSplitter.Opacity = 0;
+                ManualSplitterVertical.Fill = Brushes.Transparent;
+                ManualSplitterVertical.Opacity = 0;
 
                 _isResizingTab = false;
-                ManualSplitter.ReleaseMouseCapture();
-                ManualSplitter.Margin = _splitterDefaultThickness;
+                ManualSplitterVertical.ReleaseMouseCapture();
+                ManualSplitterVertical.Margin = _splitterDefaultThickness;
 
-                AdjustPanelWidths(_runningAdjustment);
+                Configuration.ChessboardSizeAdjustment = (int)_runningHorizontalAdjustment + Configuration.ChessboardSizeAdjustment;
+
+                UpdateGridElementSizes(new Size(this.Width, this.Height));
+                RefreshAffectedControls();
+            }
+        }
+
+
+        //******************************************************************************************
+        //
+        // Event handlers for the Horizontal Splitter between the chessboard and the main tab control.
+        //
+        //******************************************************************************************
+
+        // whether resizing is in progress
+        private bool _isHorizontalResizing = false;
+
+        // position of the splitter when resizing started (equals the height of the first row)
+        private double _resizeStartPointY;
+
+        // The adjustment implied by the current position of the mouse cursor.
+        // This is the position of the mouse cursor minus the position of the splitter.
+        // It needs to be tracked across the mouse events as if the mouse goes too far
+        // we want to keep to the last valid adjustment.
+        private double _runningVerticalAdjustment = 0;
+
+        /// <summary>
+        /// A mouse click event occured over the splitter.
+        /// The resizing starts here.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ManualSplitterHorizontal_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            _runningVerticalAdjustment = 0;
+
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                // flag that resizing is in progress
+                _isHorizontalResizing = true;
+                // set the initial position of the splitter
+                _resizeStartPointY = UiMainGrid.RowDefinitions[0].Height.Value + UiMainGrid.RowDefinitions[1].Height.Value;
+
+                ManualSplitterHorizontal.CaptureMouse();
+            }
+        }
+
+        /// <summary>
+        /// If the mouse is moved while resizing is in progress,
+        /// update the position of the splitter and the _runningHorizontalAdjustment value.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ManualSplitterHorizontal_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (_isHorizontalResizing && e.LeftButton == MouseButtonState.Pressed)
+            {
+                double currY = e.GetPosition(UiMainGrid).Y;
+
+                double topRowsCombinedHeight = LayoutUtils.MAIN_GRID_ROWS[0] + LayoutUtils.MAIN_GRID_ROWS[1];
+
+                // make sure that the user cannot move the splitter beyond the allowed limits.
+                if (currY <= topRowsCombinedHeight - LayoutUtils.MAX_USER_HEIGHT_ADJUSTMENT)
+                {
+                    currY = topRowsCombinedHeight - LayoutUtils.MAX_USER_HEIGHT_ADJUSTMENT;
+                }
+                else if (currY > topRowsCombinedHeight - LayoutUtils.MIN_USER_HEIGHT_ADJUSTMENT)
+                {
+                    currY = topRowsCombinedHeight - LayoutUtils.MIN_USER_HEIGHT_ADJUSTMENT;
+                }
+
+                ManualSplitterHorizontal.Fill = Brushes.Gray;
+                ManualSplitterHorizontal.Opacity = 0.8;
+
+                _runningVerticalAdjustment = _resizeStartPointY - currY;
+
+                ManualSplitterHorizontal.Margin = new Thickness(
+                    _splitterDefaultThickness.Left,
+                    _splitterDefaultThickness.Top - _runningVerticalAdjustment,
+                    _splitterDefaultThickness.Right,
+                    _splitterDefaultThickness.Bottom + _runningVerticalAdjustment);
+            }
+        }
+
+        /// <summary>
+        /// Mouse button released while resizing is in progress.
+        /// Tidy up and resize the affected controls.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ManualSplitterHorizontal_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (_isHorizontalResizing)
+            {
+                ManualSplitterHorizontal.Fill = Brushes.Transparent;
+                ManualSplitterHorizontal.Opacity = 0;
+
+                _isHorizontalResizing = false;
+                ManualSplitterHorizontal.ReleaseMouseCapture();
+                ManualSplitterHorizontal.Margin = _splitterDefaultThickness;
+
+                Configuration.ExplorerRowHeightAdjustment = (int)_runningVerticalAdjustment + Configuration.ExplorerRowHeightAdjustment;
+
+                UpdateGridElementSizes(new Size(this.Width, this.Height));
+                RefreshAffectedControls();
             }
         }
     }

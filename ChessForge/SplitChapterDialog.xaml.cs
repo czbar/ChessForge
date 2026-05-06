@@ -45,13 +45,20 @@ namespace ChessForge
         public static SplitByCriterion LastSplitByCrtierion = SplitByCriterion.ECO_AE;
 
         /// <summary>
+        /// New chapters' title prefix.
+        /// </summary>
+        public string NewChapterTitlePrefix = "";
+
+        /// <summary>
         /// Sets default selection and visibility
         /// </summary>
         public SplitChapterDialog(Chapter chapter)
         {
             InitializeComponent();
 
-            UiLabelChapterTitle.Content = Properties.Resources.Chapter + ": " + chapter.GetTitle(); 
+            UiLabelChapterTitle.Content = Properties.Resources.Chapter + ": " + chapter.GetTitle();
+            UiTbTitlePrefix.Text = chapter.GetTitle();
+
             SetSplitBySelection(LastSplitBy);
             SetDefaultCriterionButton(LastSplitBy);
             SetActiveCriterionButton(LastSplitBy);
@@ -184,6 +191,8 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnOk_Click(object sender, RoutedEventArgs e)
         {
+            NewChapterTitlePrefix = UiTbTitlePrefix.Text;
+
             if (UiRbSplitByEco.IsChecked == true)
             {
                 LastSplitBy = SplitBy.ECO;
