@@ -1,4 +1,5 @@
 ﻿using ChessPosition;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -10,9 +11,25 @@ namespace ChessForge
         /// The default margins for controls in the Explorer row.
         /// </summary>
         public static double EXPLORER_ROW_LEFT_MARGIN = 4;
-        public static double EXPLORER_ROW_TOP_MARGIN = 10;
+        public static double EXPLORER_ROW_TOP_MARGIN = 4;
         public static double EXPLORER_ROW_RIGHT_MARGIN = 4;
         public static double EXPLORER_ROW_BOTTOM_MARGIN = 0;
+
+        // Padding around the main tab control.
+        public static int MAIN_TAB_PAD = 5;
+
+        // Left and right margins of the Scoresheet column.
+        public static int SCORESHEET_COL_LEFT_MARGIN = 4;
+        public static int SCORESHEET_COL_RIGHT_MARGIN = 4;
+
+        // Margins for the controls in the tab control's row. 
+        public static double TAB_CTRL_ROW_BOTTOM_MARGIN = 0;
+
+        // Top margin for the Scoresheet DataGrids.
+        public static int SCORESHEET_TOP_MARGIN = 27;
+
+        // The extra width to subtract from the scoresheet column if not showing evals.
+        public static int SCORESHEET_EXTRA_WIDTH_FOR_EVALS = 80;
 
         /// <summary>
         /// The default margins for the tab items in the main tab control.
@@ -40,6 +57,8 @@ namespace ChessForge
         // The margin for the chessboard in the main grid.
         public static double MAIN_CHESSBOARD_MARGIN = 20;
 
+        // The left margin for the comment box in the explorer row.
+        public static double COMMENT_BOX_LEFT_MARGIN = 1;
 
         //**********************************************************
         // Indexes of the rows and columns in the main grid, used for resizing calculations.
@@ -79,6 +98,57 @@ namespace ChessForge
 
         // The default thickness for controls in the explorer row.
         public static double DEFAULT_BORDER_THICKNESS = 1;
+
+        /// <summary>
+        /// Sets the default positions and margins for the controls in the scoresheet and explorer rows.
+        /// </summary>
+        public static void SetDefaultControlPositions()
+        {
+            MainWindow mainWin = AppState.MainWin;
+
+            // DataGrid for active line
+            mainWin.UiDgActiveLine.HorizontalAlignment = HorizontalAlignment.Stretch;
+            mainWin.UiDgActiveLine.Margin = new Thickness(SCORESHEET_COL_LEFT_MARGIN, SCORESHEET_TOP_MARGIN, SCORESHEET_COL_RIGHT_MARGIN, TAB_CTRL_ROW_BOTTOM_MARGIN);
+
+            // Scoresheet label
+            mainWin.UiLblScoresheet.HorizontalAlignment = HorizontalAlignment.Left;
+            mainWin.UiLblScoresheet.Margin = new Thickness(SCORESHEET_COL_LEFT_MARGIN, 0, SCORESHEET_COL_RIGHT_MARGIN, 0);
+
+            // DataGrid for engine game
+            mainWin.UiDgEngineGame.HorizontalAlignment = HorizontalAlignment.Stretch;
+            mainWin.UiDgEngineGame.Margin = new Thickness(SCORESHEET_COL_LEFT_MARGIN, SCORESHEET_TOP_MARGIN, SCORESHEET_COL_RIGHT_MARGIN, TAB_CTRL_ROW_BOTTOM_MARGIN);
+
+            mainWin.UiTbEngineLines.Margin = new Thickness(COMMENT_BOX_LEFT_MARGIN, EXPLORER_ROW_TOP_MARGIN, 0, 0);
+            mainWin.UiRtbBoardComment.Margin = new Thickness(COMMENT_BOX_LEFT_MARGIN, EXPLORER_ROW_TOP_MARGIN, 0, 0);
+            mainWin.UiEvalChart.Margin = new Thickness(COMMENT_BOX_LEFT_MARGIN, EXPLORER_ROW_TOP_MARGIN, 0, 0);
+
+            mainWin.UiRtbOpenings.Margin = new Thickness(MAIN_TAB_PAD, EXPLORER_ROW_TOP_MARGIN, 4, 0);
+            mainWin.UiTrainingSessionBox.Margin = new Thickness(MAIN_TAB_PAD, EXPLORER_ROW_TOP_MARGIN, 4, 0);
+
+            mainWin.UiRtbTopGames.HorizontalAlignment = HorizontalAlignment.Stretch;
+            mainWin.UiRtbTopGames.Margin = new Thickness(SCORESHEET_COL_LEFT_MARGIN, EXPLORER_ROW_TOP_MARGIN, SCORESHEET_COL_RIGHT_MARGIN, 0);
+
+            SetDefaultTabCtrlMargins(mainWin.UiTabCtrlManualReview);
+            SetDefaultTabCtrlMargins(mainWin.UiTabCtrlTraining);
+            SetDefaultTabCtrlMargins(mainWin.UiTabCtrlEngineGame);
+
+            SetDefaultTabItemMargins(mainWin.UiRtbChaptersView, false);
+            SetDefaultTabItemMargins(mainWin.UiRtbIntroView, false);
+            SetDefaultTabItemMargins(mainWin.UiRtbStudyTreeView, true);
+            SetDefaultTabItemMargins(mainWin.UiRtbModelGamesView, true);
+            SetDefaultTabItemMargins(mainWin.UiRtbExercisesView, true);
+        }
+
+        private static void SetDefaultTabCtrlMargins(TabControl tabCtrl)
+        {
+            tabCtrl.Margin = new Thickness(MAIN_TAB_PAD, MAIN_TAB_PAD, MAIN_TAB_PAD, 0);
+        }
+
+        private static void SetDefaultTabItemMargins(RichTextBox rtb, bool isVariationTreeView)
+        {
+            rtb.Margin = new Thickness(TAB_ITEM_LEFT_MARGIN, TAB_ITEM_TOP_MARGIN, TAB_ITEM_RIGHT_MARGIN,
+                isVariationTreeView ? TAB_ITEM_BOTTOM_MARGIN : 2);
+        }
 
         /// <summary>
         /// Adjusts the bottom margin of the tab items in the main tab control.
@@ -155,36 +225,39 @@ namespace ChessForge
         /// If the extra width is positive, we give it to the tab control column, 
         /// if it is negative, we keep the default width as we do not want the tab control to become too narrow.
         /// </summary>
-        /// <param name="extraWidth"></param>
-        public static void AdjustColumnWidths(double extraWidth)
+        public static void AdjustColumnWidths()
         {
+            double extraWidth = LayoutState.WidthCorrectionForShape;
+
             Grid mainGrid = AppState.MainWin.UiMainGrid;
-            double adj = Configuration.ChessboardSizeAdjustment;
+            double chessboardAdj = LayoutState.ChessboardSizeAdjustment;
+            double scoresheetAdj = LayoutState.ScoresheetWidthAdjustment;
 
             if (extraWidth > 0)
             {
                 // add the extraWidth to the tab control column
-                mainGrid.ColumnDefinitions[CHESSBOARD_COLUMN_INDEX].Width = new GridLength(MAIN_GRID_COLUMNS[CHESSBOARD_COLUMN_INDEX] + adj);
-                mainGrid.ColumnDefinitions[TAB_CTRL_COLUMN_INDEX].Width = new GridLength(MAIN_GRID_COLUMNS[TAB_CTRL_COLUMN_INDEX] - adj + extraWidth);
-                mainGrid.ColumnDefinitions[SCORESHEET_COLUMN_INDEX].Width = new GridLength(MAIN_GRID_COLUMNS[SCORESHEET_COLUMN_INDEX]);
+                mainGrid.ColumnDefinitions[CHESSBOARD_COLUMN_INDEX].Width = new GridLength(MAIN_GRID_COLUMNS[CHESSBOARD_COLUMN_INDEX] + chessboardAdj);
+                mainGrid.ColumnDefinitions[TAB_CTRL_COLUMN_INDEX].Width = new GridLength(MAIN_GRID_COLUMNS[TAB_CTRL_COLUMN_INDEX] - chessboardAdj + extraWidth - scoresheetAdj);
+                mainGrid.ColumnDefinitions[SCORESHEET_COLUMN_INDEX].Width = new GridLength(MAIN_GRID_COLUMNS[SCORESHEET_COLUMN_INDEX] + scoresheetAdj);
             }
             else
             {
                 // we use the default widths with the chessboard size adjustment
-                mainGrid.ColumnDefinitions[CHESSBOARD_COLUMN_INDEX].Width = new GridLength(MAIN_GRID_COLUMNS[CHESSBOARD_COLUMN_INDEX] + adj);
-                mainGrid.ColumnDefinitions[TAB_CTRL_COLUMN_INDEX].Width = new GridLength(MAIN_GRID_COLUMNS[TAB_CTRL_COLUMN_INDEX] - adj);
-                mainGrid.ColumnDefinitions[SCORESHEET_COLUMN_INDEX].Width = new GridLength(MAIN_GRID_COLUMNS[SCORESHEET_COLUMN_INDEX]);
+                mainGrid.ColumnDefinitions[CHESSBOARD_COLUMN_INDEX].Width = new GridLength(MAIN_GRID_COLUMNS[CHESSBOARD_COLUMN_INDEX] + chessboardAdj);
+                mainGrid.ColumnDefinitions[TAB_CTRL_COLUMN_INDEX].Width = new GridLength(MAIN_GRID_COLUMNS[TAB_CTRL_COLUMN_INDEX] - chessboardAdj - scoresheetAdj);
+                mainGrid.ColumnDefinitions[SCORESHEET_COLUMN_INDEX].Width = new GridLength(MAIN_GRID_COLUMNS[SCORESHEET_COLUMN_INDEX] + scoresheetAdj);
             }
         }
 
         /// <summary>
         /// Adjusts the row heights of the main grid to maintain the chessboard size and the overall height of the main grid,
         /// </summary>
-        /// <param name="extraHeight"></param>
-        public static void AdjustRowHeights(double extraHeight)
+        public static void AdjustRowHeights()
         {
+            double extraHeight = LayoutState.HeightCorrectionForShape;
+
             Grid mainGrid = AppState.MainWin.UiMainGrid;
-            double adj = Configuration.ExplorerRowHeightAdjustment;
+            double adj = LayoutState.ExplorerRowHeightAdjustment;
 
             if (extraHeight > 0)
             {
@@ -205,6 +278,39 @@ namespace ChessForge
                 mainGrid.RowDefinitions[CHESSBOARD_ROW_INDEX].Height = new GridLength(MAIN_GRID_ROWS[CHESSBOARD_ROW_INDEX] - adj);
                 mainGrid.RowDefinitions[EXPLORER_ROW_INDEX].Height = new GridLength(MAIN_GRID_ROWS[EXPLORER_ROW_INDEX] + adj);
             }
+        }
+
+        /// <summary>
+        /// Adjusts the column width of the Tab Control and Scoresheet columns
+        /// depending on the size mode of the tab control.
+        /// </summary>
+        /// <param name="sizeMode"></param>
+        public static void AdjustScoresheetColumnWidth(TabControlSizeMode sizeMode)
+        {
+            switch (sizeMode)
+            {
+                case TabControlSizeMode.SHOW_ACTIVE_LINE:
+                    LayoutState.ScoresheetWidthAdjustment = 0;
+                    break;
+                case TabControlSizeMode.HIDE_ACTIVE_LINE:
+                    LayoutState.ScoresheetWidthAdjustment = -MAIN_GRID_COLUMNS[SCORESHEET_COLUMN_INDEX];
+                    break;
+                case TabControlSizeMode.SHOW_ACTIVE_LINE_NO_EVAL:
+                case TabControlSizeMode.SHOW_ENGINE_GAME_LINE:
+                    LayoutState.ScoresheetWidthAdjustment = -SCORESHEET_EXTRA_WIDTH_FOR_EVALS;
+                    break;
+                default:
+                    LayoutState.ScoresheetWidthAdjustment = 0;
+                    break;
+            }
+
+            Grid mainGrid = AppState.MainWin.UiMainGrid;
+            double chessboardAdj = LayoutState.ChessboardSizeAdjustment;
+            double scoresheetAdj = LayoutState.ScoresheetWidthAdjustment;
+            double extraWidth = Math.Max(0, LayoutState.WidthCorrectionForShape);
+
+            mainGrid.ColumnDefinitions[TAB_CTRL_COLUMN_INDEX].Width = new GridLength(MAIN_GRID_COLUMNS[TAB_CTRL_COLUMN_INDEX] + extraWidth - chessboardAdj - scoresheetAdj);
+            mainGrid.ColumnDefinitions[SCORESHEET_COLUMN_INDEX].Width = new GridLength(MAIN_GRID_COLUMNS[SCORESHEET_COLUMN_INDEX] + scoresheetAdj);
         }
     }
 }
