@@ -12,33 +12,6 @@ namespace ChessForge
     /// </summary>
     public partial class MainWindow : Window
     {
-        // Right margin of the main tab control in the presence of the scoresheet.
-        private const int RIGHT_MARGIN_WITH_SCORESHEET = 275;
-
-        // how far to move the scoresheet to the right when it has no evals and
-        // therefore the control to the left (e.g. Training Tab Conbtrol) is made wider.
-        public double SCORESHEET_NO_EVALS_LEFT_MARGIN = 90;
-
-        // Width of the scoresheet in the absence of evals.
-        public double SCORESHEET_WIDTH_NO_EVALS = 160;
-
-        /// <summary>
-        /// Right margin of the main tab control in the presence of the scoresheet without evals.
-        /// The scoresheet to the right of the main tab control is narrower here so we need
-        /// a greater right margin.
-        /// </summary>
-        private const int RIGHT_MARGIN_WITH_SCORESHEET_NO_EVALS = 195;
-
-        /// <summary>
-        /// Default right margin of the main tab control.
-        /// NOTE: it seems spurious as this method is never called 
-        ///       with an unknown sizeMode.
-        /// </summary>
-        private const int RIGHT_MARGIN_DEFAULT = 190;
-
-        // Default margins for the Openings control.
-        private Thickness _splitterDefaultThickness;
-
         // The new size of the main window after resizing is completed.
         private static Size _newAppWindowSize = new Size(0, 0);
 
@@ -85,8 +58,6 @@ namespace ChessForge
         /// </summary>
         public void InitializeLayoutConstants()
         {
-            _splitterDefaultThickness = new Thickness(0, 0, 0, 0);
-
             // calculate the default main window width and height based on the grid definitions.
             LayoutUtils.DEFAULT_GRID_WIDTH = LayoutUtils.MAIN_GRID_COLUMNS.Sum();
             LayoutUtils.DEFAULT_GRID_HEIGHT = LayoutUtils.MAIN_GRID_ROWS.Sum();
@@ -139,47 +110,32 @@ namespace ChessForge
         /// <param name="sizeMode"></param>
         public void ResizeTabControl(TabControl tabControl, TabControlSizeMode sizeMode)
         {
-            ThicknessUtils.SetControlLeftMargin(UiDgActiveLine, LayoutUtils.SCORESHEET_COL_LEFT_MARGIN);
-            ThicknessUtils.SetControlRightMargin(UiDgActiveLine, LayoutUtils.SCORESHEET_COL_RIGHT_MARGIN);
-
-            ThicknessUtils.SetControlLeftMargin(UiDgEngineGame, SCORESHEET_NO_EVALS_LEFT_MARGIN);
-
-            UiTrainingSessionBox.Margin = new Thickness(LayoutUtils.MAIN_TAB_PAD, LayoutUtils.EXPLORER_ROW_TOP_MARGIN, RIGHT_MARGIN_WITH_SCORESHEET_NO_EVALS, 0);
-
             switch (sizeMode)
             {
                 case TabControlSizeMode.SHOW_ACTIVE_LINE:
-                    tabControl.Margin = new Thickness(LayoutUtils.MAIN_TAB_PAD, LayoutUtils.MAIN_TAB_PAD, RIGHT_MARGIN_WITH_SCORESHEET, 0);
-
                     UiDgActiveLine.Visibility = Visibility.Visible;
                     UiLblScoresheet.Visibility = Visibility.Visible;
                     break;
                 case TabControlSizeMode.HIDE_ACTIVE_LINE:
-                    tabControl.Margin = new Thickness(LayoutUtils.MAIN_TAB_PAD, LayoutUtils.MAIN_TAB_PAD, LayoutUtils.MAIN_TAB_PAD, 0);
                     UiDgActiveLine.Visibility = Visibility.Hidden;
                     UiLblScoresheet.Visibility = Visibility.Hidden;
                     break;
                 case TabControlSizeMode.SHOW_ACTIVE_LINE_NO_EVAL:
-                    tabControl.Margin = new Thickness(LayoutUtils.MAIN_TAB_PAD, LayoutUtils.MAIN_TAB_PAD, RIGHT_MARGIN_WITH_SCORESHEET_NO_EVALS, 0);
                     UiDgActiveLine.Visibility = Visibility.Visible;
                     UiLblScoresheet.Visibility = Visibility.Visible;
-                    ThicknessUtils.SetControlLeftMargin(UiDgActiveLine, SCORESHEET_NO_EVALS_LEFT_MARGIN);
-                    ThicknessUtils.SetControlLeftMargin(UiDgEngineGame, SCORESHEET_NO_EVALS_LEFT_MARGIN);
                     break;
                 case TabControlSizeMode.SHOW_ENGINE_GAME_LINE:
-                    tabControl.Margin = new Thickness(LayoutUtils.MAIN_TAB_PAD, LayoutUtils.MAIN_TAB_PAD, RIGHT_MARGIN_WITH_SCORESHEET_NO_EVALS, 0);
                     UiDgActiveLine.Visibility = Visibility.Hidden;
                     UiLblScoresheet.Visibility = Visibility.Visible;
                     UiDgEngineGame.Visibility = Visibility.Visible;
-                    ThicknessUtils.SetControlLeftMargin(UiDgActiveLine, SCORESHEET_NO_EVALS_LEFT_MARGIN);
-                    ThicknessUtils.SetControlLeftMargin(UiDgEngineGame, SCORESHEET_NO_EVALS_LEFT_MARGIN);
                     break;
                 default:
-                    tabControl.Margin = new Thickness(LayoutUtils.MAIN_TAB_PAD, LayoutUtils.MAIN_TAB_PAD, RIGHT_MARGIN_DEFAULT, 0);
                     UiDgActiveLine.Visibility = Visibility.Visible;
                     UiLblScoresheet.Visibility = Visibility.Hidden;
                     break;
             }
+
+            LayoutUtils.AdjustScoresheetColumnWidth(sizeMode);
         }
 
         /// <summary>
