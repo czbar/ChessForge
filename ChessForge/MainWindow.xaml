@@ -374,7 +374,7 @@
                         <DataGridTextColumn Header="{x:Static p:Resources.Black}" Width="60" Binding="{Binding BlackPly}" CanUserReorder="False"/>
                     </DataGrid.Columns>
                 </DataGrid>
-                <TabControl x:Name="UiTabCtrlTraining" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="5,5,5,0" Grid.Row="1" 
+                <TabControl x:Name="UiTabCtrlTraining" Grid.Column="1" Grid.ColumnSpan="1" HorizontalAlignment="Left" Margin="5,5,5,0" Grid.Row="1" 
                     VerticalAlignment="Stretch" Grid.RowSpan="1" Visibility="Hidden">
                     <TabItem x:Name="UiTabTrainingProgress"  Header="{x:Static p:Resources.Training}" IsVisibleChanged="UiTabTrainingProgress_IsVisibleChanged">
                         <Grid Background="#FFE5E5E5">
@@ -418,7 +418,7 @@
                         </Grid>
                     </TabItem>
                 </TabControl>
-                <TabControl x:Name="UiTabCtrlEngineGame" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="5,5,5,0" Grid.Row="1" 
+                <TabControl x:Name="UiTabCtrlEngineGame" Grid.Column="1" Grid.ColumnSpan="1" HorizontalAlignment="Left" Margin="5,5,5,0" Grid.Row="1" 
                     VerticalAlignment="Top" Grid.RowSpan="1" Visibility="Hidden">
                     <TabItem x:Name="UiTabEngineGame"  Header="{x:Static p:Resources.GameAgainstEngine}" IsVisibleChanged="UiTabEngineGame_IsVisibleChanged" 
                              PreviewKeyDown="UiTabEngineGame_PreviewKeyDown" PreviewKeyUp="UiTabEngineGame_PreviewKeyUp" PreviewMouseDown="UiTabEngineGame_PreviewMouseDown"  >
@@ -446,7 +446,7 @@
                         </Grid>
                     </TabItem>
                 </TabControl>
-                <TabControl x:Name="UiTabCtrlManualReview"  Grid.Column="1" Grid.ColumnSpan="2" 
+                <TabControl x:Name="UiTabCtrlManualReview"  Grid.Column="1" Grid.ColumnSpan="1" 
                             HorizontalAlignment="Left" Grid.Row="1" 
                             VerticalAlignment="Stretch"
                             Margin="5,5,5,0" 
@@ -1335,7 +1335,7 @@
                                            Margin="5,4,0,0" 
                                            HorizontalAlignment="Stretch" 
                                            VerticalAlignment="Stretch" 
-                                           Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" 
+                                           Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" 
                                            BorderThickness="1" BorderBrush="Black"
                                            Visibility="Hidden">
                 </uc:TrainingSessionControl>
@@ -1359,7 +1359,7 @@
                 </RichTextBox>
                 <Button x:Name="UiBtnExitTraining" Panel.ZIndex="1" Grid.Column="1" Content="{x:Static p:Resources.ExitTraining}" FontWeight="Bold" FontSize="18" HorizontalAlignment="Left" Margin="70,50,0,0" Width="160" Height="40" Grid.Row="2" VerticalAlignment="Top" Click="UiBtnExitTraining_Click" Visibility="Collapsed" />
                 <Button x:Name="UiBtnExitGame" Panel.ZIndex="1" Grid.Column="1" Content="{x:Static p:Resources.ExitGame}" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center" Margin="0,50,0,0" Width="160" Height="40" Grid.Row="2" VerticalAlignment="Top" Click="UiBtnExitGame_Click" Visibility="Collapsed" />
-                <Button x:Name="UiBtnShowExplorer" Panel.ZIndex="0" Grid.Column="1" Grid.ColumnSpan="2" Content="{x:Static p:Resources.ShowExplorer}" FontWeight="Bold" FontSize="12" HorizontalAlignment="Left" Margin="235,50,20,0" Width="100" Height="24" Grid.Row="2" VerticalAlignment="Top" Click="UiBtnShowExplorer_Click" Visibility="Collapsed" />
+                <Button x:Name="UiBtnShowExplorer" Panel.ZIndex="0" Grid.Column="1" Grid.ColumnSpan="1" Content="{x:Static p:Resources.ShowExplorer}" FontWeight="Bold" FontSize="12" HorizontalAlignment="Left" Margin="235,50,20,0" Width="100" Height="24" Grid.Row="2" VerticalAlignment="Top" Click="UiBtnShowExplorer_Click" Visibility="Collapsed" />
 
             </Grid>
         </Viewbox>
