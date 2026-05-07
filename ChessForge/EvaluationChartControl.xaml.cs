@@ -22,7 +22,7 @@ namespace ChessForge
         public double CanvasHeight = 74;
 
         // width of the 2 canvases
-        private double CanvasWidth = 670;
+        private double CanvasWidth = 676;
 
         /// <summary>
         /// Diameter if the move marker.
