@@ -1588,7 +1588,7 @@ namespace ChessForge
                 _mainWin.UiTrainingSessionBox.Visibility = Visibility.Collapsed;
                 _mainWin.UiBtnExitGame.Visibility = Visibility.Collapsed;
 
-                ShowGuiActiveLine(true);
+                ShowGuiActiveLine();
                 ShowEvaluationControlsForCurrentStates();
 
                 ConfigureMenusForManualReview();
@@ -2191,7 +2191,7 @@ namespace ChessForge
         /// we are showing evaluations as well.
         /// </summary>
         /// <param name="includeEvals"></param>
-        private static void ShowGuiActiveLine(bool includeEvals)
+        private static void ShowGuiActiveLine()
         {
             _mainWin.Dispatcher.Invoke(() =>
             {
@@ -2201,19 +2201,9 @@ namespace ChessForge
                 {
                     _mainWin.UiDgActiveLine.Visibility = Visibility.Visible;
                     _mainWin.UiLblScoresheet.Visibility = Visibility.Visible;
-                    _mainWin.UiDgActiveLine.Columns[2].Visibility = includeEvals ? Visibility.Visible : Visibility.Hidden;
-                    _mainWin.UiDgActiveLine.Columns[4].Visibility = includeEvals ? Visibility.Visible : Visibility.Hidden;
-                    _mainWin.UiDgActiveLine.Width = includeEvals ? MainWin.SCORESHEET_WIDTH_WITH_EVALS : MainWin.SCORESHEET_WIDTH_NO_EVALS;
-                    ThicknessUtils.SetControlLeftMargin(_mainWin.UiDgActiveLine, includeEvals ? 0 : MainWin.SCORESHEET_NO_EVALS_LEFT_MARGIN);
-
-                    if (includeEvals)
-                    {
-                        _mainWin.ResizeTabControl(_mainWin.UiTabCtrlManualReview, TabControlSizeMode.SHOW_ACTIVE_LINE);
-                    }
-                    else
-                    {
-                        _mainWin.ResizeTabControl(_mainWin.UiTabCtrlManualReview, TabControlSizeMode.SHOW_ACTIVE_LINE_NO_EVAL);
-                    }
+                    _mainWin.UiDgActiveLine.Columns[2].Visibility = Visibility.Visible;
+                    _mainWin.UiDgActiveLine.Columns[4].Visibility = Visibility.Visible;
+                    _mainWin.ResizeTabControl(_mainWin.UiTabCtrlManualReview, TabControlSizeMode.SHOW_ACTIVE_LINE);
                 }
             });
         }
