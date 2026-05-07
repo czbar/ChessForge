@@ -135,7 +135,7 @@ namespace ChessForge
         /// </summary>
         public void InitSizes()
         {
-            double widthAdjustment = (double)Configuration.ChessboardSizeAdjustment;
+            double widthAdjustment = (double)LayoutState.ChessboardSizeAdjustment;
 
             double availableHeight = LayoutUtils.AvailableHeightInExplorerRow();
             if (IsFullSize)
@@ -474,7 +474,7 @@ namespace ChessForge
         /// <returns></returns>
         private bool UseConciseLabels()
         {
-            return (double)Configuration.ChessboardSizeAdjustment < -(CanvasWidth / 3);
+            return (double)LayoutState.ChessboardSizeAdjustment < -(CanvasWidth / 3);
         }
 
         //*****************************************************

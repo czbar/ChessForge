@@ -985,8 +985,8 @@ namespace ChessForge
                 sb.Append(CFG_MOVE_SPEED + "=" + MoveSpeed.ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_MESSAGE_READ + "=" + LastWebMessageRead.ToString() + Environment.NewLine);
 
-                sb.Append(CFG_CHESSBOARD_SIZE_ADJUSTMENT + "=" + ChessboardSizeAdjustment.ToString() + Environment.NewLine);
-                sb.Append(CFG_EXPLORER_HEIGHT_ADJUSTMENT + "=" + ExplorerRowHeightAdjustment.ToString() + Environment.NewLine);
+                sb.Append(CFG_CHESSBOARD_SIZE_ADJUSTMENT + "=" + LayoutState.ChessboardSizeAdjustment.ToString() + Environment.NewLine);
+                sb.Append(CFG_EXPLORER_HEIGHT_ADJUSTMENT + "=" + LayoutState.ExplorerRowHeightAdjustment.ToString() + Environment.NewLine);
                 sb.Append(CFG_DEFAULT_INDEX_DEPTH + "=" + DefaultIndexDepth.ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_DIRECTORY + "=" + (LastOpenDirectory ?? "").ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_IMPORT_DIRECTORY + "=" + (LastImportDirectory ?? "").ToString() + Environment.NewLine);
