@@ -121,8 +121,7 @@ namespace ChessPosition
         SHOW_ACTIVE_LINE,
         HIDE_ACTIVE_LINE,
         SHOW_ACTIVE_LINE_NO_EVAL,
-        SHOW_ENGINE_GAME_LINE,
-        HIDE_ENGINE_GAME_LINE
+        SHOW_ENGINE_GAME_LINE
     }
 
     /// <summary>
