@@ -15,14 +15,14 @@ namespace ChessForge
         public static double EXPLORER_ROW_RIGHT_MARGIN = 4;
         public static double EXPLORER_ROW_BOTTOM_MARGIN = 0;
 
-        // Padding around the main tab control.
-        public static int MAIN_TAB_PAD = 5;
-
         // Left and right margins of the Scoresheet column.
         public static int SCORESHEET_COL_LEFT_MARGIN = 4;
         public static int SCORESHEET_COL_RIGHT_MARGIN = 4;
 
-        // Margins for the controls in the tab control's row. 
+        // Margins of the tab control column.
+        public static double TAB_CTRL_COL_LEFT_MARGIN = 4;
+        public static double TAB_CTRL_COL_RIGHT_MARGIN = 4;
+        public static double TAB_CTRL_ROW_TOP_MARGIN = 5;
         public static double TAB_CTRL_ROW_BOTTOM_MARGIN = 0;
 
         // Top margin for the Scoresheet DataGrids.
@@ -108,7 +108,7 @@ namespace ChessForge
 
             // DataGrid for active line
             mainWin.UiDgActiveLine.HorizontalAlignment = HorizontalAlignment.Stretch;
-            mainWin.UiDgActiveLine.Margin = new Thickness(SCORESHEET_COL_LEFT_MARGIN, SCORESHEET_TOP_MARGIN, SCORESHEET_COL_RIGHT_MARGIN, TAB_CTRL_ROW_BOTTOM_MARGIN);
+            mainWin.UiDgActiveLine.Margin = new Thickness(SCORESHEET_COL_LEFT_MARGIN, SCORESHEET_TOP_MARGIN, SCORESHEET_COL_RIGHT_MARGIN, 0);
 
             // Scoresheet label
             mainWin.UiLblScoresheet.HorizontalAlignment = HorizontalAlignment.Left;
@@ -116,14 +116,14 @@ namespace ChessForge
 
             // DataGrid for engine game
             mainWin.UiDgEngineGame.HorizontalAlignment = HorizontalAlignment.Stretch;
-            mainWin.UiDgEngineGame.Margin = new Thickness(SCORESHEET_COL_LEFT_MARGIN, SCORESHEET_TOP_MARGIN, SCORESHEET_COL_RIGHT_MARGIN, TAB_CTRL_ROW_BOTTOM_MARGIN);
+            mainWin.UiDgEngineGame.Margin = new Thickness(SCORESHEET_COL_LEFT_MARGIN, SCORESHEET_TOP_MARGIN, SCORESHEET_COL_RIGHT_MARGIN, 0);
 
             mainWin.UiTbEngineLines.Margin = new Thickness(COMMENT_BOX_LEFT_MARGIN, EXPLORER_ROW_TOP_MARGIN, 0, 0);
             mainWin.UiRtbBoardComment.Margin = new Thickness(COMMENT_BOX_LEFT_MARGIN, EXPLORER_ROW_TOP_MARGIN, 0, 0);
             mainWin.UiEvalChart.Margin = new Thickness(COMMENT_BOX_LEFT_MARGIN, EXPLORER_ROW_TOP_MARGIN, 0, 0);
 
-            mainWin.UiRtbOpenings.Margin = new Thickness(MAIN_TAB_PAD, EXPLORER_ROW_TOP_MARGIN, 4, 0);
-            mainWin.UiTrainingSessionBox.Margin = new Thickness(MAIN_TAB_PAD, EXPLORER_ROW_TOP_MARGIN, 4, 0);
+            mainWin.UiRtbOpenings.Margin = new Thickness(TAB_CTRL_COL_LEFT_MARGIN, EXPLORER_ROW_TOP_MARGIN, TAB_CTRL_COL_RIGHT_MARGIN, 0);
+            mainWin.UiTrainingSessionBox.Margin = new Thickness(TAB_CTRL_COL_LEFT_MARGIN, EXPLORER_ROW_TOP_MARGIN, TAB_CTRL_COL_RIGHT_MARGIN, 0);
 
             mainWin.UiRtbTopGames.HorizontalAlignment = HorizontalAlignment.Stretch;
             mainWin.UiRtbTopGames.Margin = new Thickness(SCORESHEET_COL_LEFT_MARGIN, EXPLORER_ROW_TOP_MARGIN, SCORESHEET_COL_RIGHT_MARGIN, 0);
@@ -139,11 +139,20 @@ namespace ChessForge
             SetDefaultTabItemMargins(mainWin.UiRtbExercisesView, true);
         }
 
+        /// <summary>
+        /// Sets the default margins for the tab controls in the main grid.
+        /// </summary>
+        /// <param name="tabCtrl"></param>
         private static void SetDefaultTabCtrlMargins(TabControl tabCtrl)
         {
-            tabCtrl.Margin = new Thickness(MAIN_TAB_PAD, MAIN_TAB_PAD, MAIN_TAB_PAD, 0);
+            tabCtrl.Margin = new Thickness(TAB_CTRL_COL_LEFT_MARGIN, TAB_CTRL_ROW_TOP_MARGIN, TAB_CTRL_COL_RIGHT_MARGIN, 0);
         }
 
+        /// <summary>
+        /// Sets the default margins for the tab items in the main tab control.
+        /// </summary>
+        /// <param name="rtb"></param>
+        /// <param name="isVariationTreeView"></param>
         private static void SetDefaultTabItemMargins(RichTextBox rtb, bool isVariationTreeView)
         {
             rtb.Margin = new Thickness(TAB_ITEM_LEFT_MARGIN, TAB_ITEM_TOP_MARGIN, TAB_ITEM_RIGHT_MARGIN,
