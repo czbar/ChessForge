@@ -59,13 +59,13 @@ namespace ChessForge
                 double currX = e.GetPosition(win.UiMainGrid).X;
 
                 // make sure that the user cannot move the splitter beyond the allowed limits.
-                if (currX <= LayoutUtils.MAIN_GRID_COLUMNS[0] - LayoutUtils.MAX_USER_WIDTH_ADJUSTMENT)
+                if (currX <= LayoutUtils.DEFAULT_COLUMN_WIDTHS[0] - LayoutUtils.MAX_USER_WIDTH_ADJUSTMENT)
                 {
-                    currX = LayoutUtils.MAIN_GRID_COLUMNS[0] - LayoutUtils.MAX_USER_WIDTH_ADJUSTMENT;
+                    currX = LayoutUtils.DEFAULT_COLUMN_WIDTHS[0] - LayoutUtils.MAX_USER_WIDTH_ADJUSTMENT;
                 }
-                else if (currX > LayoutUtils.MAIN_GRID_COLUMNS[0])
+                else if (currX > LayoutUtils.DEFAULT_COLUMN_WIDTHS[0])
                 {
-                    currX = LayoutUtils.MAIN_GRID_COLUMNS[0];
+                    currX = LayoutUtils.DEFAULT_COLUMN_WIDTHS[0];
                 }
 
                 win.ManualSplitterVertical.Fill = Brushes.Gray;

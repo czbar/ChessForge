@@ -59,8 +59,8 @@ namespace ChessForge
         public void InitializeLayoutConstants()
         {
             // calculate the default main window width and height based on the grid definitions.
-            LayoutUtils.DEFAULT_GRID_WIDTH = LayoutUtils.MAIN_GRID_COLUMNS.Sum();
-            LayoutUtils.DEFAULT_GRID_HEIGHT = LayoutUtils.MAIN_GRID_ROWS.Sum();
+            LayoutUtils.DEFAULT_GRID_WIDTH = LayoutUtils.DEFAULT_COLUMN_WIDTHS.Sum();
+            LayoutUtils.DEFAULT_GRID_HEIGHT = LayoutUtils.DEFAULT_ROW_HEIGHTS.Sum();
 
             LayoutUtils.DEFAULT_GRID_WIDTH_HEIGHT_RATIO = LayoutUtils.DEFAULT_GRID_WIDTH / LayoutUtils.DEFAULT_GRID_HEIGHT;
         }
@@ -84,15 +84,15 @@ namespace ChessForge
             MainBoard.Height = LayoutUtils.CHESSBOARD_DEFAULT_WIDTH;
 
             // set the main grid's row and column definitions
-            UiMainGrid.RowDefinitions[0].Height = new GridLength(LayoutUtils.MAIN_GRID_ROWS[0]);
-            UiMainGrid.RowDefinitions[1].Height = new GridLength(LayoutUtils.MAIN_GRID_ROWS[1]);
-            UiMainGrid.RowDefinitions[2].Height = new GridLength(LayoutUtils.MAIN_GRID_ROWS[2]);
-            UiMainGrid.RowDefinitions[3].Height = new GridLength(LayoutUtils.MAIN_GRID_ROWS[3]);
+            UiMainGrid.RowDefinitions[0].Height = new GridLength(LayoutUtils.DEFAULT_ROW_HEIGHTS[0]);
+            UiMainGrid.RowDefinitions[1].Height = new GridLength(LayoutUtils.DEFAULT_ROW_HEIGHTS[1]);
+            UiMainGrid.RowDefinitions[2].Height = new GridLength(LayoutUtils.DEFAULT_ROW_HEIGHTS[2]);
+            UiMainGrid.RowDefinitions[3].Height = new GridLength(LayoutUtils.DEFAULT_ROW_HEIGHTS[3]);
 
-            UiMainGrid.ColumnDefinitions[0].Width = new GridLength(LayoutUtils.MAIN_GRID_COLUMNS[0]);
-            UiMainGrid.ColumnDefinitions[1].Width = new GridLength(LayoutUtils.MAIN_GRID_COLUMNS[1]);
-            UiMainGrid.ColumnDefinitions[2].Width = new GridLength(LayoutUtils.MAIN_GRID_COLUMNS[2]);
-            UiMainGrid.ColumnDefinitions[3].Width = new GridLength(LayoutUtils.MAIN_GRID_COLUMNS[3]);
+            UiMainGrid.ColumnDefinitions[0].Width = new GridLength(LayoutUtils.DEFAULT_COLUMN_WIDTHS[0]);
+            UiMainGrid.ColumnDefinitions[1].Width = new GridLength(LayoutUtils.DEFAULT_COLUMN_WIDTHS[1]);
+            UiMainGrid.ColumnDefinitions[2].Width = new GridLength(LayoutUtils.DEFAULT_COLUMN_WIDTHS[2]);
+            UiMainGrid.ColumnDefinitions[3].Width = new GridLength(LayoutUtils.DEFAULT_COLUMN_WIDTHS[3]);
 
             LayoutUtils.SetDefaultControlPositions();
             SetupMenuBarControls();

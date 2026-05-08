@@ -58,7 +58,7 @@ namespace ChessForge
             {
                 double currY = e.GetPosition(win.UiMainGrid).Y;
 
-                double topRowsCombinedHeight = LayoutUtils.MAIN_GRID_ROWS[0] + LayoutUtils.MAIN_GRID_ROWS[1];
+                double topRowsCombinedHeight = LayoutUtils.DEFAULT_ROW_HEIGHTS[0] + LayoutUtils.DEFAULT_ROW_HEIGHTS[1];
 
                 // make sure that the user cannot move the splitter beyond the allowed limits.
                 if (currY <= topRowsCombinedHeight - LayoutUtils.MAX_USER_HEIGHT_ADJUSTMENT)
