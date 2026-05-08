@@ -98,7 +98,7 @@ namespace ChessForge
 
                 LayoutState.ChessboardSizeAdjustment = (int)_runningHorizontalAdjustment + LayoutState.ChessboardSizeAdjustment;
 
-                win.UpdateGridElementSizes(new Size(win.Width, win.Height));
+                win.UpdateGridElementSizes(new Size(win.ActualWidth, win.ActualHeight));
                 win.RefreshAffectedControls();
             }
         }
