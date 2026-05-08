@@ -80,8 +80,8 @@ namespace ChessForge
 
             DebugUtils.DebugLevel = Configuration.DebugLevel;
 
-            MainBoard.Width = LayoutUtils.CHESSBOARD_DEFAULT_WIDTH;
-            MainBoard.Height = LayoutUtils.CHESSBOARD_DEFAULT_WIDTH;
+            MainBoard.Width = LayoutUtils.DEFAULT_CHESSBOARD_SIZE;
+            MainBoard.Height = LayoutUtils.DEFAULT_CHESSBOARD_SIZE;
 
             // set the main grid's row and column definitions
             UiMainGrid.RowDefinitions[0].Height = new GridLength(LayoutUtils.DEFAULT_ROW_HEIGHTS[0]);
