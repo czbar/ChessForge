@@ -1323,7 +1323,7 @@
                              Grid.Row="2"  
                              Grid.Column="1"
                              Stroke="LightGray"
-                             StrokeThickness="2"
+                             StrokeThickness="1"
                              />
                 <RichTextBox x:Name="UiRtbOpenings" IsUndoEnabled="False"  ContextMenu="{x:Null}" 
                              Panel.ZIndex="0" 
@@ -1355,7 +1355,7 @@
                              Grid.Row="2"  
                              Grid.Column="2"
                              Stroke="LightGray"
-                             StrokeThickness="2"
+                             StrokeThickness="1"
                              />
                 <RichTextBox x:Name="UiRtbTopGames" IsUndoEnabled="False" Panel.ZIndex="0" 
                              HorizontalAlignment="Stretch" 
