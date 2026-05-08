@@ -197,9 +197,11 @@ namespace ChessForge
 
             mainWin.UiRtbOpenings.Margin = new Thickness(TAB_CTRL_COL_LEFT_MARGIN, EXPLORER_ROW_TOP_MARGIN, TAB_CTRL_COL_RIGHT_MARGIN, 0);
             mainWin.UiTrainingSessionBox.Margin = new Thickness(TAB_CTRL_COL_LEFT_MARGIN, EXPLORER_ROW_TOP_MARGIN, TAB_CTRL_COL_RIGHT_MARGIN, 0);
+            mainWin.UiRectDummyOpenings.Margin = new Thickness(TAB_CTRL_COL_LEFT_MARGIN, EXPLORER_ROW_TOP_MARGIN, TAB_CTRL_COL_RIGHT_MARGIN, 0);
 
             mainWin.UiRtbTopGames.HorizontalAlignment = HorizontalAlignment.Stretch;
             mainWin.UiRtbTopGames.Margin = new Thickness(SCORESHEET_COL_LEFT_MARGIN, EXPLORER_ROW_TOP_MARGIN, SCORESHEET_COL_RIGHT_MARGIN, 0);
+            mainWin.UiRectDummyTopGames.Margin = new Thickness(SCORESHEET_COL_LEFT_MARGIN, EXPLORER_ROW_TOP_MARGIN, SCORESHEET_COL_RIGHT_MARGIN, 0);
 
             SetDefaultTabCtrlMargins(mainWin.UiTabCtrlManualReview);
             SetDefaultTabCtrlMargins(mainWin.UiTabCtrlTraining);

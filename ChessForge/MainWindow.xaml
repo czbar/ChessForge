@@ -1316,9 +1316,18 @@
                         </Paragraph>
                     </FlowDocument>
                 </RichTextBox>
+                <Rectangle x:Name="UiRectDummyOpenings" Panel.ZIndex="-1" 
+                             HorizontalAlignment="Stretch" 
+                             VerticalAlignment="Stretch" 
+                             Margin="4,4,2,0" 
+                             Grid.Row="2"  
+                             Grid.Column="1"
+                             Stroke="LightGray"
+                             StrokeThickness="2"
+                             />
                 <RichTextBox x:Name="UiRtbOpenings" IsUndoEnabled="False"  ContextMenu="{x:Null}" 
                              Panel.ZIndex="0" 
-                             Margin="5,4,4,0"
+                             Margin="4,4,2,0"
                              HorizontalAlignment="Stretch" 
                              VerticalAlignment="Stretch" 
                              Grid.Column="1" Grid.Row="2" 
@@ -1339,6 +1348,15 @@
                                            BorderThickness="1" BorderBrush="Black"
                                            Visibility="Hidden">
                 </uc:TrainingSessionControl>
+                <Rectangle x:Name="UiRectDummyTopGames" Panel.ZIndex="-1" 
+                             HorizontalAlignment="Stretch" 
+                             VerticalAlignment="Stretch" 
+                             Margin="2,4,4,0" 
+                             Grid.Row="2"  
+                             Grid.Column="2"
+                             Stroke="LightGray"
+                             StrokeThickness="2"
+                             />
                 <RichTextBox x:Name="UiRtbTopGames" IsUndoEnabled="False" Panel.ZIndex="0" 
                              HorizontalAlignment="Stretch" 
                              VerticalAlignment="Stretch" 
@@ -1358,8 +1376,8 @@
                     </RichTextBox.ContextMenu>
                 </RichTextBox>
                 <Button x:Name="UiBtnExitTraining" Panel.ZIndex="1" Grid.Column="1" Content="{x:Static p:Resources.ExitTraining}" FontWeight="Bold" FontSize="18" HorizontalAlignment="Left" Margin="70,50,0,0" Width="160" Height="40" Grid.Row="2" VerticalAlignment="Top" Click="UiBtnExitTraining_Click" Visibility="Collapsed" />
-                <Button x:Name="UiBtnExitGame" Panel.ZIndex="1" Grid.Column="1" Content="{x:Static p:Resources.ExitGame}" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center" Margin="0,50,0,0" Width="160" Height="40" Grid.Row="2" VerticalAlignment="Top" Click="UiBtnExitGame_Click" Visibility="Collapsed" />
-                <Button x:Name="UiBtnShowExplorer" Panel.ZIndex="0" Grid.Column="1" Grid.ColumnSpan="1" Content="{x:Static p:Resources.ShowExplorer}" FontWeight="Bold" FontSize="12" HorizontalAlignment="Left" Margin="235,50,20,0" Width="100" Height="24" Grid.Row="2" VerticalAlignment="Top" Click="UiBtnShowExplorer_Click" Visibility="Collapsed" />
+                <Button x:Name="UiBtnExitGame" Panel.ZIndex="1" Grid.Column="1" Content="{x:Static p:Resources.ExitGame}" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" Width="160" Height="40" Grid.Row="2" Click="UiBtnExitGame_Click" Visibility="Collapsed" />
+                <Button x:Name="UiBtnShowExplorer" Panel.ZIndex="0" Grid.Column="1" Grid.ColumnSpan="1" Content="{x:Static p:Resources.ShowExplorer}" FontWeight="Bold" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" Width="100" Height="24" Grid.Row="2" Click="UiBtnShowExplorer_Click" Visibility="Collapsed" />
 
             </Grid>
         </Viewbox>
