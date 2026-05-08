@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -58,16 +59,18 @@ namespace ChessForge
             {
                 double currY = e.GetPosition(win.UiMainGrid).Y;
 
-                double topRowsCombinedHeight = LayoutUtils.DEFAULT_ROW_HEIGHTS[0] + LayoutUtils.DEFAULT_ROW_HEIGHTS[1];
+                double topRowsDefaultHeight = LayoutUtils.DEFAULT_ROW_HEIGHTS[0] + LayoutUtils.DEFAULT_ROW_HEIGHTS[1];
+                double minAllowedY = topRowsDefaultHeight - LayoutUtils.MAX_USER_HEIGHT_ADJUSTMENT;
+                double maxAllowedY = (topRowsDefaultHeight + Math.Max(0, LayoutState.HeightCorrectionForShape)) - LayoutUtils.MIN_USER_HEIGHT_ADJUSTMENT;
 
                 // make sure that the user cannot move the splitter beyond the allowed limits.
-                if (currY <= topRowsCombinedHeight - LayoutUtils.MAX_USER_HEIGHT_ADJUSTMENT)
+                if (currY <= minAllowedY)
                 {
-                    currY = topRowsCombinedHeight - LayoutUtils.MAX_USER_HEIGHT_ADJUSTMENT;
+                    currY = minAllowedY;
                 }
-                else if (currY > topRowsCombinedHeight - LayoutUtils.MIN_USER_HEIGHT_ADJUSTMENT)
+                else if (currY > maxAllowedY)
                 {
-                    currY = topRowsCombinedHeight - LayoutUtils.MIN_USER_HEIGHT_ADJUSTMENT;
+                    currY = maxAllowedY;
                 }
 
                 win.ManualSplitterHorizontal.Fill = Brushes.Gray;
@@ -100,7 +103,7 @@ namespace ChessForge
 
                 LayoutState.ExplorerRowHeightAdjustment = (int)_runningVerticalAdjustment + LayoutState.ExplorerRowHeightAdjustment;
 
-                win.UpdateGridElementSizes(new Size(win.Width, win.Height));
+                win.UpdateGridElementSizes(new Size(win.ActualWidth, win.ActualHeight));
                 win.RefreshAffectedControls();
             }
         }
