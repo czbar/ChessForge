@@ -22,6 +22,9 @@ namespace ChessForge
         // we want to keep to the last valid adjustment.
         private static double _runningVerticalAdjustment = 0;
 
+        // The last position of the mouse cursor during resizing.
+        private static double _lastMousePosition;
+        
         /// <summary>
         /// A mouse click event occured over the splitter.
         /// The resizing starts here.
@@ -39,7 +42,7 @@ namespace ChessForge
                 // flag that resizing is in progress
                 _isHorizontalResizing = true;
                 // set the initial position of the splitter
-                _resizeStartPointY = win.UiMainGrid.RowDefinitions[0].Height.Value + win.UiMainGrid.RowDefinitions[1].Height.Value;
+                _resizeStartPointY = LayoutUtils.GetExplorerRowTop();
 
                 win.ManualSplitterHorizontal.CaptureMouse();
             }
@@ -57,27 +60,26 @@ namespace ChessForge
 
             if (_isHorizontalResizing && e.LeftButton == MouseButtonState.Pressed)
             {
-                double currY = e.GetPosition(win.UiMainGrid).Y;
+                _lastMousePosition = e.GetPosition(win.UiMainGrid).Y;
 
-                double topRowsDefaultHeight = LayoutUtils.DEFAULT_ROW_HEIGHTS[0] + LayoutUtils.DEFAULT_ROW_HEIGHTS[1];
-                double minAllowedY = topRowsDefaultHeight - LayoutUtils.MAX_USER_HEIGHT_ADJUSTMENT;
-                double maxAllowedY = (topRowsDefaultHeight + Math.Max(0, LayoutState.HeightCorrectionForShape)) - LayoutUtils.MIN_USER_HEIGHT_ADJUSTMENT;
+                double maxAllowedY = (LayoutUtils.GetExplorerRowBottom() - LayoutUtils.DEFAULT_ROW_HEIGHTS[2]);
+                double minAllowedY = Math.Min(LayoutUtils.GetExplorerRowTop(), maxAllowedY - LayoutUtils.MAX_EXPLORER_ROW_HEIGHT_ADJUSTMENT);
 
                 // make sure that the user cannot move the splitter beyond the allowed limits.
-                if (currY <= minAllowedY)
+                if (_lastMousePosition <= minAllowedY)
                 {
-                    currY = minAllowedY;
+                    _lastMousePosition = minAllowedY;
                 }
-                else if (currY > maxAllowedY)
+                else if (_lastMousePosition > maxAllowedY)
                 {
-                    currY = maxAllowedY;
+                    _lastMousePosition = maxAllowedY;
                 }
 
                 win.ManualSplitterHorizontal.Fill = Brushes.Gray;
                 win.ManualSplitterHorizontal.Opacity = 0.8;
 
-                _runningVerticalAdjustment = _resizeStartPointY - currY;
-
+                _runningVerticalAdjustment = LayoutUtils.GetExplorerRowTop() - _lastMousePosition;
+                
                 win.ManualSplitterHorizontal.Margin = new Thickness(0, -1 * _runningVerticalAdjustment, 0, _runningVerticalAdjustment);
             }
         }
@@ -101,7 +103,9 @@ namespace ChessForge
                 win.ManualSplitterHorizontal.ReleaseMouseCapture();
                 win.ManualSplitterHorizontal.Margin = new Thickness(0, 0, 0, 0);
 
-                LayoutState.ExplorerRowHeightAdjustment = (int)_runningVerticalAdjustment + LayoutState.ExplorerRowHeightAdjustment;
+                double currentHeightAdjustment = (LayoutUtils.GetExplorerRowBottom() - LayoutUtils.GetExplorerRowTop()) - LayoutUtils.DEFAULT_ROW_HEIGHTS[2];
+                LayoutState.ExplorerRowHeightAdjustment = (LayoutUtils.GetExplorerRowTop() - _lastMousePosition) 
+                                                          + currentHeightAdjustment;
 
                 win.UpdateGridElementSizes(new Size(win.ActualWidth, win.ActualHeight));
                 win.RefreshAffectedControls();
