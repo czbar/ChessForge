@@ -66,16 +66,16 @@ namespace ChessForge
         //
 
         // The maximum width adjustment that the user can apply to the main tab control.
-        public static int MAX_USER_WIDTH_ADJUSTMENT = 400;
+        public static int MAX_CHESSBOARD_ROW_WIDTH_ADJUSTMENT = 400;
 
         // The minimum width adjustment that the user can apply to the main tab control.
-        public static int MIN_USER_WIDTH_ADJUSTMENT = 0;
+        public static int MIN_CHESSBOARD_ROW_WIDTH_ADJUSTMENT = 0;
 
         // The maximum height adjustment that the user can apply to the main tab control.
-        public static int MAX_USER_HEIGHT_ADJUSTMENT = 200;
+        public static int MAX_EXPLORER_ROW_HEIGHT_ADJUSTMENT = 200;
 
         // The minimum height adjustment that the user can apply to the main tab control.
-        public static int MIN_USER_HEIGHT_ADJUSTMENT = 0;
+        public static int MIN_EXPLORER_ROW_HEIGHT_ADJUSTMENT = 0;
 
 
         //**********************************************************
@@ -113,26 +113,26 @@ namespace ChessForge
 
         // Default width of the scoresheet column in the main grid.
         public static double DEFAULT_SCORESHEET_COL_WIDTH = 270;
-        
+
         // Default height of the explorer row in the main grid.
         public static double DEFAULT_EXPLORER_ROW_HEIGHT = 160;
 
         /// <summary>
         /// Array of default widths of the columns in the main grid.
         /// </summary>
-        public static double[] DEFAULT_COLUMN_WIDTHS = 
+        public static double[] DEFAULT_COLUMN_WIDTHS =
         {
           DEFAULT_CHESSBOARD_SIZE,
           DEFAULT_TAB_CTRL_ROW_WIDTH,
-          DEFAULT_SCORESHEET_COL_WIDTH, 
-          1.0 
+          DEFAULT_SCORESHEET_COL_WIDTH,
+          1.0
         };
 
         /// <summary>
         /// The default heights of the rows in the main grid.
         /// </summary>
         public static double[] DEFAULT_ROW_HEIGHTS =
-        {   
+        {
           1.0,
           DEFAULT_CHESSBOARD_SIZE,
           DEFAULT_EXPLORER_ROW_HEIGHT,
@@ -169,8 +169,10 @@ namespace ChessForge
         // The default thickness for controls in the explorer row.
         public static double DEFAULT_BORDER_THICKNESS = 1;
 
-        // The default width of the empty space in the Openings Explorer.
-        public static double EMPTY_WIDTH_IN_OPENINGS_EXPLORER = 12;
+        // The default width of the unused space in the Openings Explorer.
+        // This space is needed to avoid the ugly effect of the text merging with the border of the control
+        // or the scrollbar esp. if set to "wider".
+        public static double EMPTY_WIDTH_IN_OPENINGS_EXPLORER = 20;
 
         /// <summary>
         /// Sets the default positions and margins for the controls in the scoresheet and explorer rows.
@@ -275,32 +277,96 @@ namespace ChessForge
             }
             else
             {
-                ThicknessUtils.SetControlTopMargin(tb, (availableHeight / 2) + (10 - 1));
+                // need to lower the text box to allow for 2 borders of the eval chart above it 
+                // and rounding error when dividing the available height by 2.
+                double marginCompensation = 3;
+                ThicknessUtils.SetControlTopMargin(tb, (availableHeight / 2) + marginCompensation);
                 tb.FontSize = (Constants.BASE_ENGINE_LINES_FONT_SIZE + Configuration.FontSizeDiff) - 2;
                 tb.BorderThickness = new Thickness(1, 0, 1, 1);
             }
         }
 
         /// <summary>
-        /// Calculates the extra width of the chessboard row compared to what the default ratio would demand.
-        /// The value can be negative. 
+        /// Calculates the extra width and height that the chessboard row needs to have compared to the default values,
         /// </summary>
         /// <param name="actualWidthHeightRatio"></param>
-        /// <returns></returns>
-        public static double CalcExtraGridWidth(double actualWidthHeightRatio)
+        /// <param name="extraWidth"></param>
+        /// <param name="extraHeight"></param>
+        public static void CalcExtraGridWidthAndHeight(double actualWidthHeightRatio, out double extraWidth, out double extraHeight)
         {
-            return actualWidthHeightRatio * DEFAULT_GRID_HEIGHT - DEFAULT_GRID_WIDTH;
+            extraWidth = actualWidthHeightRatio * DEFAULT_GRID_HEIGHT - DEFAULT_GRID_WIDTH;
+            extraHeight = DEFAULT_GRID_WIDTH / actualWidthHeightRatio - DEFAULT_GRID_HEIGHT;
+
+            // one value will be positive and the other negative.
+            // We take the positive one and set the negative one to zero.
+            // That way we ensure that there is always room for deafult values
+            // and we keep the exact ratio as the actual one.
+            // We want to keep the ratio as otherwise the ViewBox inside the MainGrid will not scale exactly as it should.
+            extraWidth = Math.Max(extraWidth, 0);
+            extraHeight = Math.Max(extraHeight, 0);
         }
 
         /// <summary>
-        /// Calculates the extra height of the chessboard row compared to what the default ratio would demand.
-        /// The value can be negative.
+        /// Returns the Y coordinate of the bottom of the explorer row.
         /// </summary>
-        /// <param name="actualWidthHeightRatio"></param>
         /// <returns></returns>
-        public static double CalcExtraGridHeight(double actualWidthHeightRatio)
+        public static double GetExplorerRowBottom()
         {
-            return DEFAULT_GRID_WIDTH / actualWidthHeightRatio - DEFAULT_GRID_HEIGHT;
+            Grid mainGrid = AppState.MainWin.UiMainGrid;
+
+            double y;
+
+            try
+            {
+                y = mainGrid.RowDefinitions[0].Height.Value
+                    + mainGrid.RowDefinitions[1].Height.Value
+                    + mainGrid.RowDefinitions[2].Height.Value;
+            }
+            catch
+            {
+                y = DEFAULT_GRID_HEIGHT;
+            }
+
+            return y;
+        }
+
+        /// <summary>
+        /// Returns the Y coordinate of the top of the explorer row, which is also the bottom of the chessboard row.
+        /// </summary>
+        /// <returns></returns>
+        public static double GetExplorerRowTop()
+        {
+            Grid mainGrid = AppState.MainWin.UiMainGrid;
+
+            double y;
+
+            try
+            {
+                y = mainGrid.RowDefinitions[0].Height.Value
+                    + mainGrid.RowDefinitions[1].Height.Value;
+            }
+            catch
+            {
+                y = DEFAULT_ROW_HEIGHTS[0] + DEFAULT_ROW_HEIGHTS[1];
+            }
+
+            return y;
+        }
+
+        /// <summary>
+        /// Corrects the row heights of the main grid to ensure that the chessboard row has 
+        /// the minimum acceptable height.
+        /// </summary>
+        public static void CorrectRowHeights()
+        {
+            Grid mainGrid = AppState.MainWin.UiMainGrid;
+
+            double diff = mainGrid.RowDefinitions[CHESSBOARD_ROW_INDEX].Height.Value - (DEFAULT_CHESSBOARD_SIZE - LayoutState.ExplorerRowHeightAdjustment);
+            if (diff < 0)
+            {
+                mainGrid.RowDefinitions[CHESSBOARD_ROW_INDEX].Height = new GridLength(mainGrid.RowDefinitions[CHESSBOARD_ROW_INDEX].Height.Value + diff);
+                mainGrid.RowDefinitions[EXPLORER_ROW_INDEX].Height = new GridLength(mainGrid.RowDefinitions[EXPLORER_ROW_INDEX].Height.Value - diff);
+            }
         }
 
         /// <summary>
@@ -311,9 +377,10 @@ namespace ChessForge
         /// </summary>
         public static void AdjustColumnWidths()
         {
+            Grid mainGrid = AppState.MainWin.UiMainGrid;
+
             double extraWidth = LayoutState.WidthCorrectionForShape;
 
-            Grid mainGrid = AppState.MainWin.UiMainGrid;
             double chessboardAdj = LayoutState.ChessboardSizeAdjustment;
             double scoresheetAdj = LayoutState.ScoresheetWidthAdjustment;
 
@@ -334,33 +401,43 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Adjusts the row heights of the main grid to maintain the chessboard size and the overall height of the main grid,
+        /// Adjusts the row heights of the main grid to maintain the chessboard size and the overall height of the main grid.
         /// </summary>
         public static void AdjustRowHeights()
         {
-            double extraHeight = LayoutState.HeightCorrectionForShape;
-
             Grid mainGrid = AppState.MainWin.UiMainGrid;
-            double adj = LayoutState.ExplorerRowHeightAdjustment;
 
-            if (extraHeight > 0)
+            try
             {
-                double extraChessboardRowHeight = 0;
-                if (extraHeight > MAX_USER_HEIGHT_ADJUSTMENT)
+                double extraTotalHeight = LayoutState.HeightCorrectionForShape;
+
+                if (extraTotalHeight > 0)
                 {
-                    extraChessboardRowHeight = extraHeight - MAX_USER_HEIGHT_ADJUSTMENT;
-                    extraHeight = MAX_USER_HEIGHT_ADJUSTMENT;
-                }
+                    // divide between the chessboard row and the explorer row per the current Chessboard/Explorer row heights ratio
+                    double currRowHeightsRatio = mainGrid.RowDefinitions[CHESSBOARD_ROW_INDEX].Height.Value
+                        / (mainGrid.RowDefinitions[CHESSBOARD_ROW_INDEX].Height.Value + mainGrid.RowDefinitions[EXPLORER_ROW_INDEX].Height.Value);
 
-                // add the extraHeight to the explorer row
-                mainGrid.RowDefinitions[CHESSBOARD_ROW_INDEX].Height = new GridLength(DEFAULT_ROW_HEIGHTS[CHESSBOARD_ROW_INDEX] - adj + extraChessboardRowHeight);
-                mainGrid.RowDefinitions[EXPLORER_ROW_INDEX].Height = new GridLength(DEFAULT_ROW_HEIGHTS[EXPLORER_ROW_INDEX] + adj + extraHeight);
+                    double extraTabCtrlRowHeight = extraTotalHeight * currRowHeightsRatio;
+                    double extraExplorerRowHeight = extraTotalHeight * (1 - currRowHeightsRatio);
+
+                    // add the extra heights
+                    mainGrid.RowDefinitions[CHESSBOARD_ROW_INDEX].Height
+                        = new GridLength(DEFAULT_ROW_HEIGHTS[CHESSBOARD_ROW_INDEX] - LayoutState.ExplorerRowHeightAdjustment + extraTabCtrlRowHeight);
+                    mainGrid.RowDefinitions[EXPLORER_ROW_INDEX].Height
+                        = new GridLength(DEFAULT_ROW_HEIGHTS[EXPLORER_ROW_INDEX] + LayoutState.ExplorerRowHeightAdjustment + extraExplorerRowHeight);
+                }
+                else
+                {
+                    // we use the default heights with the explorer row height adjustment
+                    mainGrid.RowDefinitions[CHESSBOARD_ROW_INDEX].Height = new GridLength(DEFAULT_ROW_HEIGHTS[CHESSBOARD_ROW_INDEX] - LayoutState.ExplorerRowHeightAdjustment);
+                    mainGrid.RowDefinitions[EXPLORER_ROW_INDEX].Height = new GridLength(DEFAULT_ROW_HEIGHTS[EXPLORER_ROW_INDEX] + LayoutState.ExplorerRowHeightAdjustment);
+                }
             }
-            else
+            catch
             {
-                // we use the default heights with the explorer row height adjustment
-                mainGrid.RowDefinitions[CHESSBOARD_ROW_INDEX].Height = new GridLength(DEFAULT_ROW_HEIGHTS[CHESSBOARD_ROW_INDEX] - adj);
-                mainGrid.RowDefinitions[EXPLORER_ROW_INDEX].Height = new GridLength(DEFAULT_ROW_HEIGHTS[EXPLORER_ROW_INDEX] + adj);
+                // in case of any error, we use the default heights
+                mainGrid.RowDefinitions[CHESSBOARD_ROW_INDEX].Height = new GridLength(DEFAULT_ROW_HEIGHTS[CHESSBOARD_ROW_INDEX]);
+                mainGrid.RowDefinitions[EXPLORER_ROW_INDEX].Height = new GridLength(DEFAULT_ROW_HEIGHTS[EXPLORER_ROW_INDEX]);
             }
         }
 
