@@ -8,7 +8,7 @@
         xmlns:uc="clr-namespace:ChessForge"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="Chess Forge" Height="900" Width="1676" Loaded="Window_Loaded" MouseDown="OnMouseDown" MouseUp="OnMouseUp" MouseMove="OnMouseMove" Closing="ChessForgeMain_Closing" 
+        Title="Chess Forge" Height="876" Width="1551" Loaded="Window_Loaded" MouseDown="OnMouseDown" MouseUp="OnMouseUp" MouseMove="OnMouseMove" Closing="ChessForgeMain_Closing" 
         PreviewKeyDown="MainWindow_PreviewKeyDown"
         PreviewKeyUp="MainWindow_PreviewKeyUp"         
         MouseEnter="ChessForgeMain_MouseEnter" >
@@ -76,7 +76,7 @@
     <Grid x:Name="_gridUber" ShowGridLines="False">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
-            <RowDefinition Height="900*" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width= "*" />
@@ -257,13 +257,13 @@
             </Grid>
         </StackPanel>
 
-        <Viewbox x:Name="vbMainWindow" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Panel.ZIndex="0">
+        <Viewbox x:Name="vbMainWindow" HorizontalAlignment="Left" Stretch="Fill" VerticalAlignment="Top" Grid.Row="1" Panel.ZIndex="0">
             <Grid x:Name="UiMainGrid" ShowGridLines="False">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1"/>
                     <RowDefinition Height="680" />
                     <RowDefinition Height="160" />
-                    <RowDefinition Height="10" />
+                    <RowDefinition Height="5" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="680" />
