@@ -169,11 +169,8 @@ namespace ChessForge
         /// <param name="fullSize"></param>
         public static void ResizeEngineLinesBox(bool fullSize)
         {
-            if (fullSize != IsFullSize)
-            {
-                EngineLinesBox.IsFullSize = fullSize;
-                EngineLinesBox.InitSizes();
-            }
+            EngineLinesBox.IsFullSize = fullSize;
+            EngineLinesBox.InitSizes();
         }
     }
 }
