@@ -23,6 +23,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
         {
+            vbMainWindow.Stretch = System.Windows.Media.Stretch.Uniform;
             Timers.AppWindowSizeChangedTimer.Stop();
             
             _newAppWindowSize.Width = e.NewSize.Width;
@@ -42,6 +43,7 @@ namespace ChessForge
 
             // Perform the resizing operations after a short delay to avoid doing them multiple times during a single resizing action by the user.
             ProcessFinalWindowSize();
+            vbMainWindow.Stretch = System.Windows.Media.Stretch.Fill;
         }
 
         /// <summary>
@@ -150,14 +152,15 @@ namespace ChessForge
                 // so that we skip the menus.
                 double actualWidthHeightRatio = windowSize.Width / _gridUber.RowDefinitions[1].ActualHeight;
 
-                double extraWidth = LayoutUtils.CalcExtraGridWidth(actualWidthHeightRatio);
-                double extraHeight = LayoutUtils.CalcExtraGridHeight(actualWidthHeightRatio);
+                LayoutUtils.CalcExtraGridWidthAndHeight(actualWidthHeightRatio, out double extraWidth, out double extraHeight);
 
                 LayoutState.WidthCorrectionForShape = extraWidth;
                 LayoutState.HeightCorrectionForShape = extraHeight;
 
                 LayoutUtils.AdjustColumnWidths();
                 LayoutUtils.AdjustRowHeights();
+
+                LayoutUtils.CorrectRowHeights();
 
                 MainBoard.Width = Math.Min(UiMainGrid.ColumnDefinitions[0].Width.Value, UiMainGrid.RowDefinitions[1].Height.Value);
                 MainBoard.Height = MainBoard.Width;
