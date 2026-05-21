@@ -131,7 +131,7 @@ namespace ChessForge
 
                     if (success && openPositionSearch)
                     {
-                        UiMnFindPositions_Click(null, null);
+                        Timers.OpenPositionSearchTimer.Start();
                     }
                 }
             }
