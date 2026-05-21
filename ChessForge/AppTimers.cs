@@ -51,6 +51,13 @@ namespace ChessForge
         public DispatcherTimer AppWindowSizeChangedTimer;
 
         /// <summary>
+        /// This timer is used to detect when a Workbook is ready after being opened as a result 
+        /// of multi-file search for positions.
+        /// Once the Wokbook is ready, the search can be started.
+        /// </summary>
+        public DispatcherTimer OpenPositionSearchTimer;
+
+        /// <summary>
         /// Controls the frequency of automatic save.
         /// </summary>
         private Timer _autoSaveTimer;
@@ -151,6 +158,9 @@ namespace ChessForge
 
             AppWindowSizeChangedTimer = new DispatcherTimer();
             InitAppWindowSizeChangedTimer();
+
+            OpenPositionSearchTimer = new DispatcherTimer();
+            InitSearchPositionTimer();
 
             _evaluationLinesDisplayTimer = new Timer();
             InitEvaluationLinesDisplayTimer();
@@ -337,6 +347,15 @@ namespace ChessForge
         {
             AppWindowSizeChangedTimer.Interval = TimeSpan.FromMilliseconds(100);
             AppWindowSizeChangedTimer.Tick += AppState.MainWin.ResizeTimer_Tick;
+        }
+
+        /// <summary>
+        /// Configures the timer for the multi-file search for positions.
+        /// </summary>
+        private void InitSearchPositionTimer()
+        {
+            OpenPositionSearchTimer.Interval = TimeSpan.FromMilliseconds(100);
+            OpenPositionSearchTimer.Tick += FindIdenticalPositions.OpenPositionSearchTimer_Tick;
         }
 
         /// <summary>
