@@ -135,6 +135,11 @@ namespace ChessForge
         public static int SortByDirection = 0;
 
         /// <summary>
+        /// The move number at which to place a thumbnail.
+        /// </summary>
+        public static int ThumbnailMove = 8;
+
+        /// <summary>
         /// How many times the user has been asked to enter the authorization token.
         /// </summary>
         public static int LichessAuthTokenRequestCount = 0;
