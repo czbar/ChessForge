@@ -38,7 +38,10 @@ namespace ChessForge
 
             UiLabelChapterTitle.Content = Properties.Resources.Chapter + ": " + chapter.GetTitle();
 
-            UiTbThumbMove.Text = "";
+            UiTbThumbMove.Text = Configuration.ThumbnailMove > 0 ? Configuration.ThumbnailMove.ToString() : "";
+            UiCbOverwriteThumb.IsEnabled = true;
+            UiCbOverwriteThumb.IsChecked = true;
+
             EnableThumbnailControls(false);
         }
 
@@ -49,7 +52,7 @@ namespace ChessForge
         /// <param name="e"></param>
         private void UiBtnOk_Click(object sender, RoutedEventArgs e)
         {
-            ThumbnailMove = -1;
+            ThumbnailMove = Configuration.ThumbnailMove;
             if (int.TryParse(UiTbThumbMove.Text, out int moveNo))
             {
                 if (moveNo > 0)
@@ -57,6 +60,8 @@ namespace ChessForge
                     ThumbnailMove = moveNo;
                     ThumbnailMoveColor = UiRbBlack.IsChecked == true ? PieceColor.Black : PieceColor.White;
                     OverwriteThumbnails = UiCbOverwriteThumb.IsChecked == true;
+
+                    Configuration.ThumbnailMove = ThumbnailMove;
                 }
             }
 
@@ -102,7 +107,6 @@ namespace ChessForge
         {
             UiRbWhite.IsEnabled = enable;
             UiRbBlack.IsEnabled = enable;
-            UiCbOverwriteThumb.IsEnabled = enable;
         }
     }
 }
