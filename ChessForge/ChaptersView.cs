@@ -409,11 +409,19 @@ namespace ChessForge
         /// with a scroll bar if needed.
         /// </summary>
         /// <param name="doc"></param>
-        private void SetRtbPageWidth(FlowDocument doc)
+        public void SetRtbPageWidth(FlowDocument doc)
         {
             if (doc != null)
             {
-                doc.PageWidth = 1000;
+                try
+                {
+                    Grid mainGrid = AppState.MainWin.UiMainGrid;
+                    doc.PageWidth = Math.Max(mainGrid.ColumnDefinitions[1].Width.Value, 1000);
+                }
+                catch
+                {
+                    doc.PageWidth = 2000;
+                }
             }
         }
 

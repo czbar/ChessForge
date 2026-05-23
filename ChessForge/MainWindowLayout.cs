@@ -186,6 +186,11 @@ namespace ChessForge
 
             EngineLinesBox.InitSizes();
 
+            if (ChaptersView != null)
+            {
+                ChaptersView.SetRtbPageWidth(UiRtbChaptersView.Document);
+            }
+
             ManualSplitterVertical.Height = UiMainGrid.RowDefinitions[1].Height.Value + UiMainGrid.RowDefinitions[2].Height.Value;
             ManualSplitterHorizontal.Width = UiMainGrid.ColumnDefinitions[0].Width.Value + UiMainGrid.ColumnDefinitions[1].Width.Value + UiMainGrid.ColumnDefinitions[2].Width.Value;
         }
