@@ -24,7 +24,7 @@ namespace ChessForge
 
         // The last position of the mouse cursor during resizing.
         private static double _lastMousePosition;
-        
+
         /// <summary>
         /// A mouse click event occured over the splitter.
         /// The resizing starts here.
@@ -42,7 +42,7 @@ namespace ChessForge
                 // flag that resizing is in progress
                 _isHorizontalResizing = true;
                 // set the initial position of the splitter
-                _resizeStartPointY = LayoutUtils.GetExplorerRowTop();
+                _resizeStartPointY = LayoutUtils.GetCurrentExplorerRowTop();
 
                 win.ManualSplitterHorizontal.CaptureMouse();
             }
@@ -62,24 +62,18 @@ namespace ChessForge
             {
                 _lastMousePosition = e.GetPosition(win.UiMainGrid).Y;
 
-                double maxAllowedY = (LayoutUtils.GetExplorerRowBottom() - LayoutUtils.DEFAULT_ROW_HEIGHTS[2]);
-                double minAllowedY = Math.Min(LayoutUtils.GetExplorerRowTop(), maxAllowedY - LayoutUtils.MAX_EXPLORER_ROW_HEIGHT_ADJUSTMENT);
+                double minAllowedY = GetMinAllowedMouseY();
+                double maxAllowedY = GetMaxAllowedMouseY();
 
                 // make sure that the user cannot move the splitter beyond the allowed limits.
-                if (_lastMousePosition <= minAllowedY)
-                {
-                    _lastMousePosition = minAllowedY;
-                }
-                else if (_lastMousePosition > maxAllowedY)
-                {
-                    _lastMousePosition = maxAllowedY;
-                }
+                _lastMousePosition = Math.Max(_lastMousePosition, minAllowedY);
+                _lastMousePosition = Math.Min(_lastMousePosition, maxAllowedY);
 
                 win.ManualSplitterHorizontal.Fill = Brushes.Gray;
                 win.ManualSplitterHorizontal.Opacity = 0.8;
 
-                _runningVerticalAdjustment = LayoutUtils.GetExplorerRowTop() - _lastMousePosition;
-                
+                _runningVerticalAdjustment = LayoutUtils.GetCurrentExplorerRowTop() - _lastMousePosition;
+
                 win.ManualSplitterHorizontal.Margin = new Thickness(0, -1 * _runningVerticalAdjustment, 0, _runningVerticalAdjustment);
             }
         }
@@ -103,14 +97,51 @@ namespace ChessForge
                 win.ManualSplitterHorizontal.ReleaseMouseCapture();
                 win.ManualSplitterHorizontal.Margin = new Thickness(0, 0, 0, 0);
 
-                double explorerRowTop = LayoutUtils.GetExplorerRowTop();
-                double currentHeightAdjustment = (LayoutUtils.GetExplorerRowBottom() - LayoutUtils.GetExplorerRowTop()) - LayoutUtils.DEFAULT_ROW_HEIGHTS[2];
-                LayoutState.ExplorerRowHeightUserAdjustment = (LayoutUtils.GetExplorerRowTop() - _lastMousePosition) 
-                                                          + currentHeightAdjustment;
+                double currentHeightAdjustment = LayoutUtils.GetExplorerRowCurrentHeight() - LayoutUtils.DEFAULT_ROW_HEIGHTS[2];
+                double currentMouseDelta = LayoutUtils.GetCurrentExplorerRowTop() - _lastMousePosition;
+                LayoutState.ExplorerRowHeightUserAdjustment = Math.Max(currentMouseDelta + currentHeightAdjustment - LayoutState.HeightCorrectionForShape, 0);
 
                 win.UpdateGridElementSizes(new Size(win.ActualWidth, win.ActualHeight));
                 win.RefreshAffectedControls();
             }
         }
+
+        /// <summary>
+        /// The maximum allowed height of the Explorer row is the default height 
+        /// plus the maximum adjustment plus the correction for the shape.
+        /// </summary>
+        /// <returns></returns>
+        private static double GetMaxAllowedCurrentExplorerRowHeight()
+        {
+            return LayoutUtils.DEFAULT_ROW_HEIGHTS[2] + LayoutUtils.MAX_EXPLORER_ROW_HEIGHT_ADJUSTMENT + LayoutState.HeightCorrectionForShape;
+        }
+
+        /// <summary>
+        /// The minimum allowed height of the Explorer row is the default height.
+        /// </summary>
+        /// <returns></returns>
+        private static double GetMinAllowedCurrentExplorerRowHeight()
+        {
+            return LayoutUtils.DEFAULT_ROW_HEIGHTS[2] + LayoutState.HeightCorrectionForShape;
+        }
+
+        /// <summary>
+        /// The minimum allowed position of the mouse cursor is the bottom of the Explorer row minus the maximum allowed height of the Explorer row.
+        /// </summary>
+        /// <returns></returns>
+        private static double GetMinAllowedMouseY()
+        {
+            return LayoutUtils.GetCurrentExplorerRowBottom() - GetMaxAllowedCurrentExplorerRowHeight();
+        }
+
+        /// <summary>
+        /// The maximum allowed position of the mouse cursor is the bottom of the Explorer row minus the minimum allowed height of the Explorer row.
+        /// </summary>
+        /// <returns></returns>
+        private static double GetMaxAllowedMouseY()
+        {
+            return LayoutUtils.GetCurrentExplorerRowBottom() - GetMinAllowedCurrentExplorerRowHeight();
+        }
+
     }
 }
