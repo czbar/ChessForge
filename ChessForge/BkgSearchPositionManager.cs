@@ -21,6 +21,9 @@ namespace ChessForge
         // list of background processors
         private List<BkgSearchPosition> _workerPool = new List<BkgSearchPosition>();
 
+        // background worker for finding PGN files in the specified folder
+        private BkgFindPgnFiles _findFilesWorker;
+
         // number of files to process
         private int _filesToProcess;
 
@@ -79,9 +82,25 @@ namespace ChessForge
 
         /// <summary>
         /// Prepares the process of parsing articles from the passed list.
+        /// First a background worker is started to find all PGN files 
+        /// and then the second stage of processing is started when the list of files is ready.
         /// </summary>
         /// <param name="articleDataList"></param>
-        public void Execute(ObservableCollection<string> fileList)
+        public void Execute(string rootFolder)
+        {
+            _state = ProcessState.RUNNING;
+
+            _findFilesWorker = new BkgFindPgnFiles(this);
+            _findFilesWorker.Run(rootFolder);
+        }
+
+        /// <summary>
+        /// Prepares the process of parsing articles from the passed list.
+        /// This is called after the first stage of processing is finished 
+        /// and the list of files to process is ready.
+        /// </summary>
+        /// <param name="fileList"></param>
+        private void ExecuteSecondStage(ObservableCollection<string> fileList)
         {
             _state = ProcessState.RUNNING;
             foreach (var file in fileList)
@@ -105,6 +124,16 @@ namespace ChessForge
             {
                 StartProcessing();
             }
+        }
+
+        /// <summary>
+        /// Called by the background worker to report completion of the first stage of processing - finding PGN files in the specified folder.
+        /// Kicks off the second stage of processing - parsing the found PGN files for the searched position.
+        /// </summary>
+        /// <param name="data"></param>
+        public void FindPgnFilesFinished(BkgFindPgnFilesData data)
+        {
+            ExecuteSecondStage(data.FoundFiles);
         }
 
         /// <summary>
@@ -161,6 +190,31 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Called by the background workers to show the name of the file currently 
+        /// being processed in the parent dialog.
+        /// </summary>
+        /// <param name="folder"></param>
+        public void ReportCurrentFolder(string folder)
+        {
+            AppState.MainWin.Dispatcher.Invoke(() =>
+            {
+                _parentDialog.UiLblSearchProgress.Content = folder;
+            });
+        }
+
+        /// <summary>
+        /// Called by the background workers to report that 
+        /// the process has received a cancellation request.
+        /// </summary>
+        public void ClearUIReport()
+        {
+            AppState.MainWin.Dispatcher.Invoke(() =>
+            {
+                _parentDialog.SearchFinished(true);
+            });
+        }
+
+        /// <summary>
         /// Resets the state so that we no longer accept jobs.
         /// </summary>
         public void CancelAll()
@@ -168,6 +222,11 @@ namespace ChessForge
             if (_state != ProcessState.FINISHED)
             {
                 _state = ProcessState.CANCELED;
+
+                if (_findFilesWorker != null)
+                {
+                    _findFilesWorker.Cancel();
+                }
             }
         }
 
