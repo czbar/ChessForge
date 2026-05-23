@@ -103,8 +103,9 @@ namespace ChessForge
                 win.ManualSplitterHorizontal.ReleaseMouseCapture();
                 win.ManualSplitterHorizontal.Margin = new Thickness(0, 0, 0, 0);
 
+                double explorerRowTop = LayoutUtils.GetExplorerRowTop();
                 double currentHeightAdjustment = (LayoutUtils.GetExplorerRowBottom() - LayoutUtils.GetExplorerRowTop()) - LayoutUtils.DEFAULT_ROW_HEIGHTS[2];
-                LayoutState.ExplorerRowHeightAdjustment = (LayoutUtils.GetExplorerRowTop() - _lastMousePosition) 
+                LayoutState.ExplorerRowHeightUserAdjustment = (LayoutUtils.GetExplorerRowTop() - _lastMousePosition) 
                                                           + currentHeightAdjustment;
 
                 win.UpdateGridElementSizes(new Size(win.ActualWidth, win.ActualHeight));

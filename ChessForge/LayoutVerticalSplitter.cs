@@ -96,7 +96,7 @@ namespace ChessForge
                 win.ManualSplitterVertical.ReleaseMouseCapture();
                 win.ManualSplitterVertical.Margin = new Thickness(0, 0, 0, 0);
 
-                LayoutState.ChessboardSizeAdjustment = (int)_runningHorizontalAdjustment + LayoutState.ChessboardSizeAdjustment;
+                LayoutState.ChessboardSizeUserAdjustment = (int)_runningHorizontalAdjustment + LayoutState.ChessboardSizeUserAdjustment;
 
                 win.UpdateGridElementSizes(new Size(win.ActualWidth, win.ActualHeight));
                 win.RefreshAffectedControls();

@@ -361,7 +361,7 @@ namespace ChessForge
         {
             Grid mainGrid = AppState.MainWin.UiMainGrid;
 
-            double diff = mainGrid.RowDefinitions[CHESSBOARD_ROW_INDEX].Height.Value - (DEFAULT_CHESSBOARD_SIZE - LayoutState.ExplorerRowHeightAdjustment);
+            double diff = mainGrid.RowDefinitions[CHESSBOARD_ROW_INDEX].Height.Value - (DEFAULT_CHESSBOARD_SIZE - LayoutState.ExplorerRowHeightUserAdjustment);
             if (diff < 0)
             {
                 mainGrid.RowDefinitions[CHESSBOARD_ROW_INDEX].Height = new GridLength(mainGrid.RowDefinitions[CHESSBOARD_ROW_INDEX].Height.Value + diff);
@@ -381,7 +381,7 @@ namespace ChessForge
 
             double extraWidth = LayoutState.WidthCorrectionForShape;
 
-            double chessboardAdj = LayoutState.ChessboardSizeAdjustment;
+            double chessboardAdj = LayoutState.ChessboardSizeUserAdjustment;
             double scoresheetAdj = LayoutState.ScoresheetWidthAdjustment;
 
             if (extraWidth > 0)
@@ -422,15 +422,15 @@ namespace ChessForge
 
                     // add the extra heights
                     mainGrid.RowDefinitions[CHESSBOARD_ROW_INDEX].Height
-                        = new GridLength(DEFAULT_ROW_HEIGHTS[CHESSBOARD_ROW_INDEX] - LayoutState.ExplorerRowHeightAdjustment + extraTabCtrlRowHeight);
+                        = new GridLength(DEFAULT_ROW_HEIGHTS[CHESSBOARD_ROW_INDEX] - LayoutState.ExplorerRowHeightUserAdjustment + extraTabCtrlRowHeight);
                     mainGrid.RowDefinitions[EXPLORER_ROW_INDEX].Height
-                        = new GridLength(DEFAULT_ROW_HEIGHTS[EXPLORER_ROW_INDEX] + LayoutState.ExplorerRowHeightAdjustment + extraExplorerRowHeight);
+                        = new GridLength(DEFAULT_ROW_HEIGHTS[EXPLORER_ROW_INDEX] + LayoutState.ExplorerRowHeightUserAdjustment + extraExplorerRowHeight);
                 }
                 else
                 {
                     // we use the default heights with the explorer row height adjustment
-                    mainGrid.RowDefinitions[CHESSBOARD_ROW_INDEX].Height = new GridLength(DEFAULT_ROW_HEIGHTS[CHESSBOARD_ROW_INDEX] - LayoutState.ExplorerRowHeightAdjustment);
-                    mainGrid.RowDefinitions[EXPLORER_ROW_INDEX].Height = new GridLength(DEFAULT_ROW_HEIGHTS[EXPLORER_ROW_INDEX] + LayoutState.ExplorerRowHeightAdjustment);
+                    mainGrid.RowDefinitions[CHESSBOARD_ROW_INDEX].Height = new GridLength(DEFAULT_ROW_HEIGHTS[CHESSBOARD_ROW_INDEX] - LayoutState.ExplorerRowHeightUserAdjustment);
+                    mainGrid.RowDefinitions[EXPLORER_ROW_INDEX].Height = new GridLength(DEFAULT_ROW_HEIGHTS[EXPLORER_ROW_INDEX] + LayoutState.ExplorerRowHeightUserAdjustment);
                 }
             }
             catch
@@ -466,7 +466,7 @@ namespace ChessForge
             }
 
             Grid mainGrid = AppState.MainWin.UiMainGrid;
-            double chessboardAdj = LayoutState.ChessboardSizeAdjustment;
+            double chessboardAdj = LayoutState.ChessboardSizeUserAdjustment;
             double scoresheetAdj = LayoutState.ScoresheetWidthAdjustment;
             double extraWidth = Math.Max(0, LayoutState.WidthCorrectionForShape);
 

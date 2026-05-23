@@ -12,7 +12,7 @@
         /// It does not affect the heights.
         /// The value is determined by the user when using the Vertical Splitter.
         /// </summary>
-        public static double ChessboardSizeAdjustment { get; set; }
+        public static double ChessboardSizeUserAdjustment { get; set; }
 
         /// <summary>
         /// The adjustment factor for the row height in the Explorer row.
@@ -20,7 +20,7 @@
         /// heights are adjusted by the same amount in the opposite directions.
         /// This value is determined by the user when using the Horizontal Splitter.
         /// </summary>
-        public static double ExplorerRowHeightAdjustment { get; set; }
+        public static double ExplorerRowHeightUserAdjustment { get; set; }
 
         /// <summary>
         /// The adjustment factor for the column width in the Scoresheet column.
@@ -53,8 +53,8 @@
         /// <param name="mainWindow"></param>
         public static void Initialize(MainWindow mainWindow)
         {
-            ChessboardSizeAdjustment = Configuration.ChessboardSizeAdjustment;
-            ExplorerRowHeightAdjustment = Configuration.ExplorerRowHeightAdjustment;
+            ChessboardSizeUserAdjustment = Configuration.ChessboardSizeAdjustment;
+            ExplorerRowHeightUserAdjustment = Configuration.ExplorerRowHeightAdjustment;
             ScoresheetWidthAdjustment = 0;
         }
     }
