@@ -503,7 +503,7 @@
                                          HorizontalAlignment="Left" 
                                          VerticalAlignment="Stretch" 
                                          Margin="2,2,2,2" 
-                                         Grid.ColumnSpan="3" FontSize="14"
+                                         FontSize="14"
                                          SelectionOpacity="0" Cursor="Arrow" Background="White" 
                                          VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                                          MinHeight="500" IsReadOnly="True" 
