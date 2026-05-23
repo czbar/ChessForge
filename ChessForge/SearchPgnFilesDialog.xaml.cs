@@ -75,55 +75,6 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Gets the list of PGN files in the passed folder and its subfolders.
-        /// </summary>
-        /// <param name="rootFolder"></param>
-        /// <returns></returns>
-        private static IEnumerable<string> GetPgnFilesSafe(string rootFolder)
-        {
-            if (string.IsNullOrWhiteSpace(rootFolder))
-                yield break;
-
-            var pending = new Stack<string>();
-            pending.Push(rootFolder);
-
-            while (pending.Count > 0)
-            {
-                string currentFolder = pending.Pop();
-
-                string[] subfolders;
-                try
-                {
-                    subfolders = Directory.GetDirectories(currentFolder);
-                }
-                catch
-                {
-                    continue;
-                }
-
-                foreach (string subfolder in subfolders)
-                {
-                    pending.Push(subfolder);
-                }
-
-                string[] files;
-                try
-                {
-                    files = Directory.GetFiles(currentFolder, "*.pgn");
-                }
-                catch
-                {
-                    continue;
-                }
-
-                foreach (string file in files)
-                {
-                    yield return file;
-                }
-            }
-        }
-
-        /// <summary>
         /// Sets the selected PGN file based on the passed list box item and returns whether the selection was successful.
         /// </summary>
         /// <param name="item"></param>
@@ -177,16 +128,12 @@ namespace ChessForge
             }
             else
             {
-                ObservableCollection<string> files = new ObservableCollection<string>(GetPgnFilesSafe(_rootFolder));
-                if (files.Count > 0)
-                {
-                    IsSearchInProgress = true;
-                    UiBtnStartStop.Content = Properties.Resources.Stop;
-                    UiGbProgress.Header = Properties.Resources.Searching;
-                    UiLbFiles.Items.Clear();
-                    _bkgSearchManager = new BkgSearchPositionManager(this, _searchCrits);
-                    _bkgSearchManager.Execute(files);
-                }
+                IsSearchInProgress = true;
+                UiBtnStartStop.Content = Properties.Resources.Stop;
+                UiGbProgress.Header = Properties.Resources.FindingPgnFiles;
+                UiLbFiles.Items.Clear();
+                _bkgSearchManager = new BkgSearchPositionManager(this, _searchCrits);
+                _bkgSearchManager.Execute(_rootFolder);
             }
         }
 
