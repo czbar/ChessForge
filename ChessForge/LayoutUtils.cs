@@ -307,10 +307,19 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Returns the current height of the explorer row.
+        /// </summary>
+        /// <returns></returns>
+        public static double GetExplorerRowCurrentHeight()
+        {
+            return GetCurrentExplorerRowBottom() - GetCurrentExplorerRowTop();
+        }
+
+        /// <summary>
         /// Returns the Y coordinate of the bottom of the explorer row.
         /// </summary>
         /// <returns></returns>
-        public static double GetExplorerRowBottom()
+        public static double GetCurrentExplorerRowBottom()
         {
             Grid mainGrid = AppState.MainWin.UiMainGrid;
 
@@ -334,7 +343,7 @@ namespace ChessForge
         /// Returns the Y coordinate of the top of the explorer row, which is also the bottom of the chessboard row.
         /// </summary>
         /// <returns></returns>
-        public static double GetExplorerRowTop()
+        public static double GetCurrentExplorerRowTop()
         {
             Grid mainGrid = AppState.MainWin.UiMainGrid;
 
@@ -413,18 +422,11 @@ namespace ChessForge
 
                 if (extraTotalHeight > 0)
                 {
-                    // divide between the chessboard row and the explorer row per the current Chessboard/Explorer row heights ratio
-                    double currRowHeightsRatio = mainGrid.RowDefinitions[CHESSBOARD_ROW_INDEX].Height.Value
-                        / (mainGrid.RowDefinitions[CHESSBOARD_ROW_INDEX].Height.Value + mainGrid.RowDefinitions[EXPLORER_ROW_INDEX].Height.Value);
-
-                    double extraTabCtrlRowHeight = extraTotalHeight * currRowHeightsRatio;
-                    double extraExplorerRowHeight = extraTotalHeight * (1 - currRowHeightsRatio);
-
-                    // add the extra heights
+                    // apply the extra heights
                     mainGrid.RowDefinitions[CHESSBOARD_ROW_INDEX].Height
-                        = new GridLength(DEFAULT_ROW_HEIGHTS[CHESSBOARD_ROW_INDEX] - LayoutState.ExplorerRowHeightUserAdjustment + extraTabCtrlRowHeight);
+                        = new GridLength(DEFAULT_ROW_HEIGHTS[CHESSBOARD_ROW_INDEX] - LayoutState.ExplorerRowHeightUserAdjustment);
                     mainGrid.RowDefinitions[EXPLORER_ROW_INDEX].Height
-                        = new GridLength(DEFAULT_ROW_HEIGHTS[EXPLORER_ROW_INDEX] + LayoutState.ExplorerRowHeightUserAdjustment + extraExplorerRowHeight);
+                        = new GridLength(DEFAULT_ROW_HEIGHTS[EXPLORER_ROW_INDEX] + LayoutState.ExplorerRowHeightUserAdjustment + extraTotalHeight);
                 }
                 else
                 {
