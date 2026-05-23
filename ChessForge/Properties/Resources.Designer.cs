@@ -3607,6 +3607,15 @@ namespace ChessForge.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Looking for PGN files....
+        /// </summary>
+        public static string FindingPgnFiles {
+            get {
+                return ResourceManager.GetString("FindingPgnFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to first file.
         /// </summary>
         public static string FirstFile {
