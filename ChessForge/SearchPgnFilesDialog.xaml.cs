@@ -124,6 +124,28 @@ namespace ChessForge
         }
 
         /// <summary>
+        /// Sets the selected PGN file based on the passed list box item and returns whether the selection was successful.
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        private bool SetSelectionValues(ListBoxItem item)
+        {
+            bool result = false;
+
+            if (item != null && item.ToolTip is string path)
+            {
+                if (path != null)
+                {
+                    SelectedPgnFile = path;
+                    result = true;
+                    Configuration.LastPgnSearchDirectory = _rootFolder;
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// In response to the user clicking the select button,
         /// opens the dialog to select the root folder to search for PGN files in.
         /// </summary>
@@ -173,7 +195,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiBtnClose_Click(object sender, RoutedEventArgs e)
+        private void UiBtnCancel_Click(object sender, RoutedEventArgs e)
         {
             Configuration.LastPgnSearchDirectory = _rootFolder;
             DialogResult = false;
@@ -197,17 +219,26 @@ namespace ChessForge
         private void UiLbFiles_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             ListBoxItem item = GuiUtilities.GetListBoxItemFromPoint(UiLbFiles, e.GetPosition(UiLbFiles));
+            DialogResult = SetSelectionValues(item);
+        }
 
-            if (item != null && item.ToolTip is string path)
+        /// <summary>
+        /// The user clicks the OK button, 
+        /// we note the selection.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnOk_Click(object sender, RoutedEventArgs e)
+        {
+            try
             {
-                if (path != null)
-                {
-                    SelectedPgnFile = path;
-                    DialogResult = true;
-                    Configuration.LastPgnSearchDirectory = _rootFolder;
-                }
+                ListBoxItem item = UiLbFiles.SelectedItem as ListBoxItem;
+                DialogResult = SetSelectionValues(item);
             }
-
+            catch
+            {
+                DialogResult = false;
+            }
         }
     }
 }

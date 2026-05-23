@@ -20,8 +20,8 @@
             <Label x:Name="UiLblSearchProgress" Content="{x:Static p:Resources.NotStarted}" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top"/>
         </GroupBox>
         <ListBox x:Name="UiLbFiles" Width="400" Margin="0,172,0,55" MouseDoubleClick="UiLbFiles_MouseDoubleClick"/>
-        <Button x:Name="UiBtnClose" Content="{x:Static p:Resources.Close}" Width="80" HorizontalAlignment="Center" Margin="-120,0,0,20" VerticalAlignment="Bottom" Click="UiBtnClose_Click"/>
-        <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" Width="80" HorizontalAlignment="Center" Margin="120,0,0,20" VerticalAlignment="Bottom" Click="UiBtnHelp_Click"/>
-        <Button x:Name="UiBtnCancel" IsCancel="True" Content="" Width="0" Height="0" />
+        <Button x:Name="UiBtnOk" Content="{x:Static p:Resources.Ok}" IsDefault="True" Width="80" HorizontalAlignment="Center" Margin="-200,0,0,20" VerticalAlignment="Bottom" Click="UiBtnOk_Click" />
+        <Button x:Name="UiBtnCancel" Content="{x:Static p:Resources.Cancel}" IsCancel="True" Width="80" HorizontalAlignment="Center" Margin="0,0,0,20" VerticalAlignment="Bottom" Click="UiBtnCancel_Click"/>
+        <Button x:Name="UiBtnHelp" Content="{x:Static p:Resources.Help}" Width="80" HorizontalAlignment="Center" Margin="200,0,0,20" VerticalAlignment="Bottom" Click="UiBtnHelp_Click"/>
     </Grid>
 </Window>
