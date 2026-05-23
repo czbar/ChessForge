@@ -961,6 +961,11 @@ namespace GameTree
                         _headers.Remove(header);
                     }
 
+                    if (name == PgnHeaders.KEY_GUID)
+                    {
+                        value = TextUtils.ConvertOldGuid(value);
+                    }
+
                     header = new KeyValuePair<string, string>(name, value);
                     _headers.Add(header);
                 }
