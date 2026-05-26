@@ -113,6 +113,9 @@ namespace ChessForge
         /// <param name="diagrams"></param>
         private static void WriteOutFile(string fileName, FlowDocument printDoc, ref List<RtfDiagram> diagrams)
         {
+            // set the font recommended by ChatGPT for printing books.
+            printDoc.FontFamily = new FontFamily("Palatino Linotype");
+
             TextRange textRange = new TextRange(printDoc.ContentStart, printDoc.ContentEnd);
             string rtfContent;
 
