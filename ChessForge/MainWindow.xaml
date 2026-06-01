@@ -981,7 +981,7 @@
                             <StackPanel x:Name="UiSpExercNagPanel" Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="3" 
                                         HorizontalAlignment="Center" 
                                         Height="22" 
-                                        Margin="0,588,0,0" 
+                                        Margin="0,0,0,0" 
                                         VerticalAlignment="Bottom">
                                 <Button x:Name="UiBtnExPencil" Background="Transparent" Margin="0,0,0,0" Width="{Binding NagCommentIconWidth}" Height="{Binding NagIconHeight}" BorderThickness="0" FontSize="{Binding NagButtonFontSize}" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnPencil_Click"  />
                                 <Button x:Name="UiBtnExCommentBeforeMove" Background="Transparent" Margin="0,0,0,0" Width="{Binding NagCommentIconWidth}" Height="{Binding NagIconHeight}" BorderThickness="0" FontSize="{Binding NagButtonFontSize}" Content="" VerticalContentAlignment="Center" Padding="0" Click="UiBtnCommentBeforeMove_Click"  />
