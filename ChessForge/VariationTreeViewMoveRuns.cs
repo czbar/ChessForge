@@ -100,13 +100,23 @@ namespace ChessForge
                     RemoveTrailingNewLinesInPara(para);
                 }
 
-                // the next move in para may need to be redrawn if it was black on move
-                if (nd.ColorToMove == PieceColor.Black)
+                TreeNode nextMove = null;
+                if (nd.Children.Count > 0)
                 {
-                    if (nd.Children.Count > 0)
-                    {
-                        UpdateNextMoveText(r, nd, nd.Children[0]);
-                    }
+                    nextMove = nd.Children[0];
+                }
+
+                // the next move in para may need to be redrawn if it was black on move
+                if (nd.ColorToMove == PieceColor.Black && nextMove != null)
+                {
+                    UpdateNextMoveText(r, nd, nd.Children[0]);
+                }
+
+                // if a node with a diagram before move follows the current one
+                // we need to fully update its as the layout may have been affected by the above.
+                if (nextMove != null && nextMove.IsDiagram && nextMove.IsDiagramBeforeMove)
+                {
+                    InsertOrUpdateCommentBeforeMoveRun(nextMove);
                 }
             }
             catch
@@ -159,7 +169,7 @@ namespace ChessForge
                 }
 
                 // determine if the move is first in paragraph or follows a new line.
-                bool isFirstInPara = RichTextBoxUtilities.IsFirstMoveRunInParagraph(parentPara, nd.NodeId) 
+                bool isFirstInPara = RichTextBoxUtilities.IsFirstMoveRunInParagraph(parentPara, nd.NodeId)
                     || RichTextBoxUtilities.IsPreviousRunNewLine(runToCheck);
 
                 // if there is an index name run (in a Study) and the diagram is to be first, reverse isFirstPara
@@ -200,10 +210,10 @@ namespace ChessForge
                     bool includeNo = isFirstInPara
                                      || !string.IsNullOrWhiteSpace(nd.CommentBeforeMove)
                                      || (nd.IsDiagram && nd.IsDiagramBeforeMove)
-                                     || (nd.Parent != null 
-                                         && (!string.IsNullOrEmpty(nd.Parent.Comment) 
-                                             || nd != nd.Parent.Children[0] 
-                                             || nd.Parent.NodeId == 0 
+                                     || (nd.Parent != null
+                                         && (!string.IsNullOrEmpty(nd.Parent.Comment)
+                                             || nd != nd.Parent.Children[0]
+                                             || nd.Parent.NodeId == 0
                                              || (nd.Parent.IsDiagram && !nd.Parent.IsDiagramBeforeMove)));
                     UpdateRunText(rMove, nd, includeNo);
                 }
@@ -723,12 +733,13 @@ namespace ChessForge
                 {
                     foreach (Inline inline in inlines)
                     {
-                        if (isPrevLineEmpty && (inline is Run r) && r.Text == "\n")
+                        if (isPrevLineEmpty && part.Type != CommentPartType.DIAGRAM && (inline is Run r) && r.Text == "\n")
                         {
-                            // skip this inline as it would create double new line
-                            // this covers the case where we inserted a new line Run before diagram
+                            // Skip this inline if it would create double new line.
+                            // This covers the case where we inserted a new line Run before diagram
                             // so that it is always on a new line, but the previous inline already ended
                             // with a new line.
+                            // However, if the new line is part of the diagram, we do want to insert it.
                             isPrevLineEmpty = false;
                         }
                         else
@@ -933,7 +944,7 @@ namespace ChessForge
                     text += "\n";
                 }
             }
-            else if (nd.IsDiagram && nd.IsDiagramPreComment && !nd.IsDiagramBeforeMove 
+            else if (nd.IsDiagram && nd.IsDiagramPreComment && !nd.IsDiagramBeforeMove
                      && (!string.IsNullOrEmpty(nd.Comment) || !string.IsNullOrEmpty(nd.References)))
             {
                 text += "\n";
