@@ -11,7 +11,6 @@ namespace ChessForge
 {
     public partial class VariationTreeView : RichTextBuilder
     {
-
         /// <summary>
         /// Sets a line and move in the VariationTree view.
         /// This only sets and highlights the selected line and move, it does not update the ActiveLine.
@@ -19,12 +18,12 @@ namespace ChessForge
         /// in the Scoresheet or the Evaluation Chart (since those actions do not change the ActiveLine).
         /// </summary>
         /// <param name="lineId"></param>
-        /// <param name="index"></param>
-        public void SelectLineAndMoveInWorkbookViews(string lineId, int index, bool queryExplorer)
+        /// <param name="nd"></param>
+        /// <param name="queryExplorer"></param>
+        public void SelectLineAndMoveInWorkbookViews(string lineId, TreeNode nd, bool queryExplorer)
         {
             try
             {
-                TreeNode nd = _mainWin.ActiveLine.GetNodeAtIndex(index);
                 if (nd == null)
                 {
                     // try the node at index 0
@@ -53,6 +52,26 @@ namespace ChessForge
                         WebAccessManager.ExplorerRequest(AppState.ActiveTreeId, ShownVariationTree.SelectedNode);
                     }
                 }
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// Sets a line and move in the VariationTree view.
+        /// This only sets and highlights the selected line and move, it does not update the ActiveLine.
+        /// It is called when left/right arrow or Home/End keys are pressed or when a move is clicked
+        /// in the Scoresheet or the Evaluation Chart (since those actions do not change the ActiveLine).
+        /// </summary>
+        /// <param name="lineId"></param>
+        /// <param name="index"></param>
+        public void SelectLineAndMoveInWorkbookViews(string lineId, int index, bool queryExplorer)
+        {
+            try
+            {
+                TreeNode nd = _mainWin.ActiveLine.GetNodeAtIndex(index);
+                SelectLineAndMoveInWorkbookViews(lineId, nd, queryExplorer);
             }
             catch
             {
