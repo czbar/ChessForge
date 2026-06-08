@@ -411,7 +411,7 @@ namespace ChessForge
                     {
                         AppState.MainWin.RebuildActiveTreeView();
                     }
-                    AppState.MainWin.ActiveTreeView.SelectLineAndMoveInWorkbookViews(AppState.MainWin.ActiveLine.GetLineId(), AppState.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false), true);
+                    AppState.MainWin.ActiveTreeView.SelectLineAndMoveInWorkbookViews(nd.LineId, nd, true);
                 }
 
                 try
