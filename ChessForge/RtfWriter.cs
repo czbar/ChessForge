@@ -839,7 +839,7 @@ namespace ChessForge
             string exercisesHeader = Properties.Resources.Exercises;
             if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.USE_CUSTOM_EXERCISES))
             {
-                exercisesHeader = ConfigurationRtfExport.GetStringValue(ConfigurationRtfExport.USE_CUSTOM_EXERCISES);
+                exercisesHeader = ConfigurationRtfExport.GetStringValue(ConfigurationRtfExport.CUSTOM_TERM_EXERCISES);
             }
 
             if (!string.IsNullOrWhiteSpace(exercisesHeader))
