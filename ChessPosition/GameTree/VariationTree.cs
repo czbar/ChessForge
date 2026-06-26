@@ -545,7 +545,19 @@ namespace GameTree
                     case ChfCommands.Command.ARTICLE_REFS:
                         if (tokens.Length > 1)
                         {
-                            nd.References = tokens[1];
+                            // check for legacy refrence format and convert to new format if needed
+                            if (tokens[1].IndexOf('-') > 0)
+                            {
+                                string[] refs = tokens[1].Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+                                foreach (string r in refs)
+                                {
+                                    nd.AddArticleReference(TextUtils.ConvertOldGuid(r));
+                                }
+                            }
+                            else
+                            {
+                                nd.References = tokens[1];
+                            }
                         }
                         break;
                     case ChfCommands.Command.ENGINE_EVALUATION:

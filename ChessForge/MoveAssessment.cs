@@ -226,14 +226,16 @@ namespace ChessPosition.Utils
 
             if (colorToMove == PieceColor.White)
             {
-                if ((currEval - prevEval < -evalDiff) && ((Math.Abs(prevEval) <= ignoreLevel) || Math.Abs(currEval) <= ignoreLevel))
+                if ((currEval - prevEval < -evalDiff) 
+                    && ((Math.Abs(prevEval) <= ignoreLevel) || Math.Abs(currEval) <= ignoreLevel || Math.Sign(prevEval) != Math.Sign(currEval)))
                 {
                     res = true;
                 }
             }
             else
             {
-                if ((currEval - prevEval > evalDiff) && ((Math.Abs(prevEval) <= ignoreLevel) || Math.Abs(currEval) <= ignoreLevel))
+                if ((currEval - prevEval > evalDiff) 
+                    && ((Math.Abs(prevEval) <= ignoreLevel) || Math.Abs(currEval) <= ignoreLevel || Math.Sign(prevEval) != Math.Sign(currEval)))
                 {
                     res = true;
                 }

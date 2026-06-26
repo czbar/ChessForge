@@ -74,7 +74,7 @@ namespace ChessForge
             }
             if (!string.IsNullOrWhiteSpace(UrlChesscomGames))
             {
-                 UrlTarget.ChesscomGames = UrlChesscomGames;
+                UrlTarget.ChesscomGames = UrlChesscomGames;
             }
             if (!string.IsNullOrWhiteSpace(UrlLichessCreateAuthToken))
             {
@@ -95,7 +95,7 @@ namespace ChessForge
             if (!string.IsNullOrWhiteSpace(UrlLichessTablebaseLookup))
             {
                 UrlTarget.LichessTablebaseLookup = UrlLichessTablebaseLookup;
-            }   
+            }
         }
 
         //*********************************
@@ -133,6 +133,11 @@ namespace ChessForge
         /// The last used sort direction for games in the chapter.
         /// </summary>
         public static int SortByDirection = 0;
+
+        /// <summary>
+        /// The move number at which to place a thumbnail.
+        /// </summary>
+        public static int ThumbnailMove = 8;
 
         /// <summary>
         /// How many times the user has been asked to enter the authorization token.
@@ -276,17 +281,52 @@ namespace ChessForge
         /// </summary>
         public static int MoveSpeed = 200;
 
+        // adjustment to apply to the chessboard size and the first column where it lives.
+        private static double _chessboardSizeAdjustment;
+
+        // adjustment to apply to the height of the explorer row.
+        private static double _explorerRowHeightAdjustment;
+
         /// <summary>
         /// Adjustment to apply to the chessboard size and the first column 
         /// where it lives.
         /// It should be 0 or negative.
         /// </summary>
-        public static int ChessboardSizeAdjustment = 0;
+        public static double ChessboardSizeAdjustment
+        {
+            get
+            {
+                if (_chessboardSizeAdjustment > LayoutUtils.MAX_CHESSBOARD_ROW_WIDTH_ADJUSTMENT)
+                {
+                    _chessboardSizeAdjustment = LayoutUtils.MAX_CHESSBOARD_ROW_WIDTH_ADJUSTMENT;
+                }
+                else if (_chessboardSizeAdjustment < LayoutUtils.MIN_CHESSBOARD_ROW_WIDTH_ADJUSTMENT)
+                {
+                    _chessboardSizeAdjustment = LayoutUtils.MIN_CHESSBOARD_ROW_WIDTH_ADJUSTMENT;
+                }
+                return _chessboardSizeAdjustment;
+            }
+            set { _chessboardSizeAdjustment = value; }
+        }
 
         /// <summary>
         /// Adjustment to apply to the height of the explorer row.
         /// </summary>
-        public static int ExplorerRowHeightAdjustment = 0;
+        public static double ExplorerRowHeightAdjustment
+        {
+            get
+            {   if (_explorerRowHeightAdjustment > LayoutUtils.MAX_EXPLORER_ROW_HEIGHT_ADJUSTMENT)
+                {
+                    _explorerRowHeightAdjustment = LayoutUtils.MAX_EXPLORER_ROW_HEIGHT_ADJUSTMENT;
+                }
+                else if (_explorerRowHeightAdjustment < LayoutUtils.MIN_EXPLORER_ROW_HEIGHT_ADJUSTMENT)
+                {
+                    _explorerRowHeightAdjustment = LayoutUtils.MIN_EXPLORER_ROW_HEIGHT_ADJUSTMENT;
+                }
+                return _explorerRowHeightAdjustment;
+            }
+            set { _explorerRowHeightAdjustment = value; }
+        }
 
         /// <summary>
         /// Depth of the study tree automatically built
@@ -985,8 +1025,8 @@ namespace ChessForge
                 sb.Append(CFG_MOVE_SPEED + "=" + MoveSpeed.ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_MESSAGE_READ + "=" + LastWebMessageRead.ToString() + Environment.NewLine);
 
-                sb.Append(CFG_CHESSBOARD_SIZE_ADJUSTMENT + "=" + ChessboardSizeAdjustment.ToString() + Environment.NewLine);
-                sb.Append(CFG_EXPLORER_HEIGHT_ADJUSTMENT + "=" + ExplorerRowHeightAdjustment.ToString() + Environment.NewLine);
+                sb.Append(CFG_CHESSBOARD_SIZE_ADJUSTMENT + "=" + LayoutState.ChessboardSizeUserAdjustment.ToString() + Environment.NewLine);
+                sb.Append(CFG_EXPLORER_HEIGHT_ADJUSTMENT + "=" + LayoutState.ExplorerRowHeightUserAdjustment.ToString() + Environment.NewLine);
                 sb.Append(CFG_DEFAULT_INDEX_DEPTH + "=" + DefaultIndexDepth.ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_DIRECTORY + "=" + (LastOpenDirectory ?? "").ToString() + Environment.NewLine);
                 sb.Append(CFG_LAST_IMPORT_DIRECTORY + "=" + (LastImportDirectory ?? "").ToString() + Environment.NewLine);
@@ -1363,10 +1403,10 @@ namespace ChessForge
                             int.TryParse(value, out MoveSpeed);
                             break;
                         case CFG_CHESSBOARD_SIZE_ADJUSTMENT:
-                            int.TryParse(value, out ChessboardSizeAdjustment);
+                            double.TryParse(value, out _chessboardSizeAdjustment);
                             break;
                         case CFG_EXPLORER_HEIGHT_ADJUSTMENT:
-                            int.TryParse(value, out ExplorerRowHeightAdjustment);
+                            double.TryParse(value, out _explorerRowHeightAdjustment);
                             break;
                         case CFG_DEFAULT_INDEX_DEPTH:
                             int.TryParse(value, out _defaultIndexDepth);

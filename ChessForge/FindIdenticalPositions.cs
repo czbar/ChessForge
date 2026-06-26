@@ -1,5 +1,6 @@
 ﻿using ChessPosition;
 using GameTree;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -23,6 +24,35 @@ namespace ChessForge
 
             // Finds postions fully matching the specified position.
             POSITION_MATCH,
+        }
+
+        /// <summary>
+        /// Timer tick handler for the timer that is used to delay search 
+        /// for the last searched position until the workbook is fully loaded and ready.
+        /// The timer is started when a workbook is being opened due to a user selecting it
+        /// in a multi-file search. We wait for the workbook to be fully loaded
+        /// before performing the search for the last searched position.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public static void OpenPositionSearchTimer_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+                if (WorkbookManager.SessionWorkbook == null)
+                {
+                    AppState.MainWin.Timers.OpenPositionSearchTimer.Stop();
+                }
+                else if (WorkbookManager.SessionWorkbook.IsReady)
+                {
+                    AppState.MainWin.Timers.OpenPositionSearchTimer.Stop();
+                    SearchLastSearchedPosition();
+                }
+            }
+            catch 
+            {
+                AppState.MainWin.Timers.OpenPositionSearchTimer.Stop();
+            }
         }
 
         /// <summary>
@@ -89,6 +119,29 @@ namespace ChessForge
             }
 
             return anyFound;
+        }
+
+        /// <summary>
+        /// Searches for the last searched position.
+        /// This method is invoked started when a workbook is being opened due to a user selecting it
+        /// in a multi-file search. 
+        /// (We use a time to wait for the workbook to be fully loaded before calling this method, see OpenPositionSearchTimer_Tick).
+        /// </summary>
+        /// <returns></returns>
+        public static bool SearchLastSearchedPosition()
+        {
+            TreeNode searchNode = new TreeNode();
+            searchNode.Position = new BoardPosition(SearchPosition.LastSearchPosition);
+            
+            SearchPositionCriteria crits = new SearchPositionCriteria(searchNode);
+            crits.FindMode = FindIdenticalPositions.Mode.POSITION_MATCH;
+            crits.IsPartialSearch = Configuration.PartialSearch;
+            crits.SetCheckDynamicAttrs(false);
+            crits.ExcludeCurrentNode = false;
+            crits.ReportNoFind = false;
+
+            // check whether we search in the current files or in multiple files
+            return Search(false, crits, out _);
         }
 
         /// <summary>

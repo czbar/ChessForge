@@ -1492,6 +1492,9 @@ NOTE: Evaluations are not being updated (press F8 to allow).</value>
   <data name="Searching" xml:space="preserve">
     <value>Processing. Please wait...</value>
   </data>
+  <data name="FindingPgnFiles" xml:space="preserve">
+    <value>Looking for PGN files...</value>
+  </data>
   <data name="FileFolder" xml:space="preserve">
     <value>Folder</value>
   </data>

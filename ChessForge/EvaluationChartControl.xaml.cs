@@ -22,7 +22,7 @@ namespace ChessForge
         public double CanvasHeight = 74;
 
         // width of the 2 canvases
-        private double CanvasWidth = 670;
+        private double CanvasWidth = 676;
 
         /// <summary>
         /// Diameter if the move marker.
@@ -135,7 +135,7 @@ namespace ChessForge
         /// </summary>
         public void InitSizes()
         {
-            double widthAdjustment = (double)Configuration.ChessboardSizeAdjustment;
+            double widthAdjustment = (double)LayoutState.ChessboardSizeUserAdjustment;
 
             double availableHeight = LayoutUtils.AvailableHeightInExplorerRow();
             if (IsFullSize)
@@ -474,7 +474,7 @@ namespace ChessForge
         /// <returns></returns>
         private bool UseConciseLabels()
         {
-            return (double)Configuration.ChessboardSizeAdjustment < -(CanvasWidth / 3);
+            return (double)LayoutState.ChessboardSizeUserAdjustment < -(CanvasWidth / 3);
         }
 
         //*****************************************************

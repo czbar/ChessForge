@@ -526,6 +526,13 @@ namespace ChessForge
                 DefaultMenuFontSize = UiMainMenu.FontSize;
             }
 
+            if (Configuration.IsMainWinMaximized())
+            {
+                this.WindowState = WindowState.Maximized;
+            }
+
+            LayoutState.Initialize(this);
+
             // sets the window/control sizes so must be called before other UI initializations.
             UpdateGridElementSizes(new Size(this.Width, this.Height));
 
@@ -541,11 +548,6 @@ namespace ChessForge
             else
             {
                 GuiUtilities.SetNarrowScrollbar();
-            }
-
-            if (Configuration.IsMainWinMaximized())
-            {
-                this.WindowState = WindowState.Maximized;
             }
 
             InitializeContentTypeSelectionComboBox();

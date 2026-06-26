@@ -13,8 +13,8 @@ namespace ChessForge
         {
             get
             {
-                return AppState.MainWin.UiMainGrid.ColumnDefinitions[1].Width.Value
-                                       - (LayoutUtils.EXPLORER_ROW_LEFT_MARGIN + LayoutUtils.EXPLORER_ROW_RIGHT_MARGIN + 30);
+                return AppState.MainWin.UiMainGrid.ColumnDefinitions[LayoutUtils.TAB_CTRL_COLUMN_INDEX].Width.Value
+                           - (LayoutUtils.TAB_CTRL_COL_LEFT_MARGIN + LayoutUtils.TAB_CTRL_COL_RIGHT_MARGIN + LayoutUtils.EMPTY_WIDTH_IN_OPENINGS_EXPLORER);
             }
         }
 

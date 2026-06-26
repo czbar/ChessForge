@@ -113,6 +113,9 @@ namespace ChessForge
         /// <param name="diagrams"></param>
         private static void WriteOutFile(string fileName, FlowDocument printDoc, ref List<RtfDiagram> diagrams)
         {
+            // set the font recommended by ChatGPT for printing books.
+            printDoc.FontFamily = new FontFamily("Palatino Linotype");
+
             TextRange textRange = new TextRange(printDoc.ContentStart, printDoc.ContentEnd);
             string rtfContent;
 
@@ -210,10 +213,10 @@ namespace ChessForge
 
             PrintChaptersToFlowDoc(printDoc, scope, ref diagrams, isFirstPrintPage);
 
-            if ((scope == PrintScope.CHAPTER || scope == PrintScope.WORKBOOK) 
+            if ((scope == PrintScope.CHAPTER || scope == PrintScope.WORKBOOK)
                  && ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.INCLUDE_BOOKMARKS))
             {
-                PrintBookmarks(printDoc, scope, ref diagrams);  
+                PrintBookmarks(printDoc, scope, ref diagrams);
             }
 
             if (scope == PrintScope.WORKBOOK)
@@ -408,7 +411,10 @@ namespace ChessForge
             }
 
             FlowDocument doc = PrintIntro(chapter);
-            CreateDocumentForPrint(printDoc, doc, chapter.Intro.Tree, ref diagrams);
+            if (doc != null)
+            {
+                CreateDocumentForPrint(printDoc, doc, chapter.Intro.Tree, ref diagrams);
+            }
         }
 
         /// <summary>
@@ -833,7 +839,7 @@ namespace ChessForge
             string exercisesHeader = Properties.Resources.Exercises;
             if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.USE_CUSTOM_EXERCISES))
             {
-                exercisesHeader = ConfigurationRtfExport.GetStringValue(ConfigurationRtfExport.USE_CUSTOM_EXERCISES);
+                exercisesHeader = ConfigurationRtfExport.GetStringValue(ConfigurationRtfExport.CUSTOM_TERM_EXERCISES);
             }
 
             if (!string.IsNullOrWhiteSpace(exercisesHeader))
@@ -888,49 +894,56 @@ namespace ChessForge
         /// <returns></returns>
         private static FlowDocument PrintIntro(Chapter chapter)
         {
-            if (AppState.ActiveTab == TabViewType.INTRO)
+            try
             {
-                // Intro is a special case where we need to save it to update the underlying data.
-                AppState.MainWin.SaveIntro();
+                if (AppState.ActiveTab == TabViewType.INTRO)
+                {
+                    // Intro is a special case where we need to save it to update the underlying data.
+                    AppState.MainWin.SaveIntro();
+                }
+
+                RichTextBox rtbIntro = new RichTextBox();
+                IntroView introView = new IntroView(rtbIntro, chapter, true);
+
+                RichTextBox rtb = introView.HostRtb;
+                // the user may have placed an empty line at the start.
+                // we don't want it in print so remove it
+                Block first = rtb.Document.Blocks.FirstBlock;
+                if (first is Paragraph para)
+                {
+                    if (!RichTextBoxUtilities.HasNonEmptyInline(para))
+                    {
+                        rtb.Document.Blocks.Remove(first);
+                    }
+                }
+
+                if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.TWO_COLUMN_INTRO))
+                {
+                    Paragraph paraBeginCols2 = new Paragraph();
+                    Run runBeginCols2 = new Run(BeginTwoColumns());
+                    paraBeginCols2.Inlines.Add(runBeginCols2);
+
+                    Paragraph paraEndCols2 = new Paragraph();
+                    Run runEndCols2 = new Run(EndTwoColumns());
+                    paraEndCols2.Inlines.Add(runEndCols2);
+
+                    if (rtb.Document.Blocks.FirstBlock == null)
+                    {
+                        rtb.Document.Blocks.Add(paraBeginCols2);
+                    }
+                    else
+                    {
+                        rtb.Document.Blocks.InsertBefore(rtb.Document.Blocks.FirstBlock, paraBeginCols2);
+                    }
+                    rtb.Document.Blocks.Add(paraEndCols2);
+                }
+
+                return rtb.Document;
             }
-
-            RichTextBox rtbIntro = new RichTextBox();
-            IntroView introView = new IntroView(rtbIntro, chapter, true);
-
-            RichTextBox rtb = introView.HostRtb;
-            // the user may have placed an empty line at the start.
-            // we don't want it in print so remove it
-            Block first = rtb.Document.Blocks.FirstBlock;
-            if (first is Paragraph para)
+            catch 
             {
-                if (!RichTextBoxUtilities.HasNonEmptyInline(para))
-                {
-                    rtb.Document.Blocks.Remove(first);
-                }
+                return null;
             }
-
-            if (ConfigurationRtfExport.GetBoolValue(ConfigurationRtfExport.TWO_COLUMN_INTRO))
-            {
-                Paragraph paraBeginCols2 = new Paragraph();
-                Run runBeginCols2 = new Run(BeginTwoColumns());
-                paraBeginCols2.Inlines.Add(runBeginCols2);
-
-                Paragraph paraEndCols2 = new Paragraph();
-                Run runEndCols2 = new Run(EndTwoColumns());
-                paraEndCols2.Inlines.Add(runEndCols2);
-
-                if (rtb.Document.Blocks.FirstBlock == null)
-                {
-                    rtb.Document.Blocks.Add(paraBeginCols2);
-                }
-                else
-                {
-                    rtb.Document.Blocks.InsertBefore(rtb.Document.Blocks.FirstBlock, paraBeginCols2);
-                }
-                rtb.Document.Blocks.Add(paraEndCols2);
-            }
-
-            return rtb.Document;
         }
 
         /// <summary>
@@ -1423,6 +1436,14 @@ namespace ChessForge
                             {
                                 lastRunWasIntroMove = false;
                                 printPara = CreateTextRuns(printDoc, printPara, run);
+                            }
+                            else if (inl is Hyperlink hl)
+                            {
+                                lastRunWasIntroMove = false;
+                                if (hl.Inlines.FirstInline is Run hlRun && hlRun.Text != null)
+                                {
+                                    printPara = CreateTextRuns(printDoc, printPara, hlRun);
+                                }
                             }
                             else if (inl is InlineUIContainer uic)
                             {

@@ -1674,6 +1674,9 @@ SearchInPgnFiles=Search in PGN files
 #Searching
 Searching=Processing. Please wait...
 
+#Listing PGN files
+FindingPgnFiles=Looking for PGN files...
+
 #File folder
 FileFolder=Folder
 

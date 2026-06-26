@@ -25,14 +25,14 @@ namespace ChessPosition
         {
             major = 0;
             minor = 0;
-            
+
             bool result = false;
 
             if (!string.IsNullOrEmpty(txt))
             {
                 string[] tokens = txt.Split('.');
                 int tokenCount = tokens.Length;
-                switch(tokenCount)
+                switch (tokenCount)
                 {
                     case 1:
                         result = uint.TryParse(tokens[0], out major);
@@ -749,7 +749,14 @@ namespace ChessPosition
         {
             if (!string.IsNullOrEmpty(oldGuid))
             {
-                return "R" + oldGuid.Replace("-", "");
+                if (oldGuid.Contains("-") || !oldGuid.StartsWith("R"))
+                {
+                    return "R" + oldGuid.Replace("-", "");
+                }
+                else
+                {
+                    return oldGuid;
+                }
             }
             else
             {

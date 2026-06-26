@@ -54,17 +54,20 @@ namespace ChessPosition
         public static Dictionary<char, char> ReverseWhiteFigurinesMapping = new Dictionary<char, char>();
 
         /// <summary>
-        /// Mapping of Unicode chess symbols.
+        /// DEPRECATION NOTE: used to map black pieces to white Unicode symbols for display purposes. 
+        /// It was decided for text white piece symbols should be used for both white and black moves.
+        /// Therefore, now this mapping is identical to WhiteFigurinesMapping.
         /// </summary>
         public static Dictionary<char, char> BlackFigurinesMapping = new Dictionary<char, char>()
         {
-            ['K'] = '♚',
-            ['Q'] = '♛',
-            ['R'] = '♜',
-            ['B'] = '♝',
-            ['N'] = '♞',
-            ['P'] = '♟'
+            ['K'] = '♔',
+            ['Q'] = '♕',
+            ['R'] = '♖',
+            ['B'] = '♗',
+            ['N'] = '♘',
+            ['P'] = '♙'
         };
+
 
         /// <summary>
         /// Reverse mapping of Unicode chess symbols

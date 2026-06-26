@@ -1492,6 +1492,9 @@ UWAGA: Oceny nie są uaktualniane (zezwól naciskając F8).</value>
   <data name="Searching" xml:space="preserve">
     <value>Trwa wyszukiwanie. Proszę czekać...</value>
   </data>
+  <data name="FindingPgnFiles" xml:space="preserve">
+    <value>Trwa wyszukiwanie plików PGN...</value>
+  </data>
   <data name="FileFolder" xml:space="preserve">
     <value>Folder</value>
   </data>

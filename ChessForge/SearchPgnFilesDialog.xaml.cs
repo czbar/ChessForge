@@ -75,52 +75,25 @@ namespace ChessForge
         }
 
         /// <summary>
-        /// Gets the list of PGN files in the passed folder and its subfolders.
+        /// Sets the selected PGN file based on the passed list box item and returns whether the selection was successful.
         /// </summary>
-        /// <param name="rootFolder"></param>
+        /// <param name="item"></param>
         /// <returns></returns>
-        private static IEnumerable<string> GetPgnFilesSafe(string rootFolder)
+        private bool SetSelectionValues(ListBoxItem item)
         {
-            if (string.IsNullOrWhiteSpace(rootFolder))
-                yield break;
+            bool result = false;
 
-            var pending = new Stack<string>();
-            pending.Push(rootFolder);
-
-            while (pending.Count > 0)
+            if (item != null && item.ToolTip is string path)
             {
-                string currentFolder = pending.Pop();
-
-                string[] subfolders;
-                try
+                if (path != null)
                 {
-                    subfolders = Directory.GetDirectories(currentFolder);
-                }
-                catch
-                {
-                    continue;
-                }
-
-                foreach (string subfolder in subfolders)
-                {
-                    pending.Push(subfolder);
-                }
-
-                string[] files;
-                try
-                {
-                    files = Directory.GetFiles(currentFolder, "*.pgn");
-                }
-                catch
-                {
-                    continue;
-                }
-
-                foreach (string file in files)
-                {
-                    yield return file;
+                    SelectedPgnFile = path;
+                    result = true;
+                    Configuration.LastPgnSearchDirectory = _rootFolder;
                 }
             }
+
+            return result;
         }
 
         /// <summary>
@@ -155,16 +128,12 @@ namespace ChessForge
             }
             else
             {
-                ObservableCollection<string> files = new ObservableCollection<string>(GetPgnFilesSafe(_rootFolder));
-                if (files.Count > 0)
-                {
-                    IsSearchInProgress = true;
-                    UiBtnStartStop.Content = Properties.Resources.Stop;
-                    UiGbProgress.Header = Properties.Resources.Searching;
-                    UiLbFiles.Items.Clear();
-                    _bkgSearchManager = new BkgSearchPositionManager(this, _searchCrits);
-                    _bkgSearchManager.Execute(files);
-                }
+                IsSearchInProgress = true;
+                UiBtnStartStop.Content = Properties.Resources.Stop;
+                UiGbProgress.Header = Properties.Resources.FindingPgnFiles;
+                UiLbFiles.Items.Clear();
+                _bkgSearchManager = new BkgSearchPositionManager(this, _searchCrits);
+                _bkgSearchManager.Execute(_rootFolder);
             }
         }
 
@@ -173,7 +142,7 @@ namespace ChessForge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UiBtnClose_Click(object sender, RoutedEventArgs e)
+        private void UiBtnCancel_Click(object sender, RoutedEventArgs e)
         {
             Configuration.LastPgnSearchDirectory = _rootFolder;
             DialogResult = false;
@@ -197,17 +166,26 @@ namespace ChessForge
         private void UiLbFiles_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             ListBoxItem item = GuiUtilities.GetListBoxItemFromPoint(UiLbFiles, e.GetPosition(UiLbFiles));
+            DialogResult = SetSelectionValues(item);
+        }
 
-            if (item != null && item.ToolTip is string path)
+        /// <summary>
+        /// The user clicks the OK button, 
+        /// we note the selection.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UiBtnOk_Click(object sender, RoutedEventArgs e)
+        {
+            try
             {
-                if (path != null)
-                {
-                    SelectedPgnFile = path;
-                    DialogResult = true;
-                    Configuration.LastPgnSearchDirectory = _rootFolder;
-                }
+                ListBoxItem item = UiLbFiles.SelectedItem as ListBoxItem;
+                DialogResult = SetSelectionValues(item);
             }
-
+            catch
+            {
+                DialogResult = false;
+            }
         }
     }
 }

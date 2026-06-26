@@ -51,29 +51,24 @@ namespace ChessForge
         {
             if (node != null)
             {
-                VariationTreeView treeView = AppState.MainWin.ActiveTreeView;
                 if (contentType == GameData.ContentType.STUDY_TREE)
                 {
                     AppState.MainWin.SetupGuiForActiveStudyTree(true);
                 }
 
-                if (treeView != null)
+                if (AppState.MainWin.ActiveTreeView != null)
                 {
-                    treeView.UnhighlightActiveLine();
-                }
-
-                AppState.MainWin.SetActiveLine(node.LineId, node.NodeId);
-
-                if (treeView != null)
-                {
-                    if (treeView is StudyTreeView study)
+                    AppState.MainWin.ActiveTreeView.UnhighlightActiveLine();
+                    AppState.MainWin.SetActiveLine(node.LineId, node.NodeId);
+                    if (AppState.MainWin.ActiveTreeView is StudyTreeView study)
                     {
                         if (study.UncollapseMove(node))
                         {
                             study.BuildFlowDocumentForVariationTree(false);
                         }
                     }
-                    treeView.SelectLineAndMoveInWorkbookViews(node.LineId, AppState.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false), true);
+                    AppState.MainWin.ActiveTreeView
+                        .SelectLineAndMoveInWorkbookViews(node.LineId, AppState.MainWin.ActiveLine.GetSelectedPlyNodeIndex(false), true);
                 }
             }
         }

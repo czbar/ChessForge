@@ -22,6 +22,10 @@
                     {
                         AppState.MainWin.OpenWorkbook(dlg.SelectedPgnFile, true);
                     }
+                    else
+                    {
+                        AppState.MainWin.Timers.OpenPositionSearchTimer.Start();
+                    }
                 }
             }
         }
