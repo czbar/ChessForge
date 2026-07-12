@@ -922,13 +922,13 @@ namespace ChessPosition
                         nd.Assessment > 0
                     ||
                         (attrTypes & (int)MoveAttribute.SIDELINE) != 0 &&
-                        nd.IsMainLine() == false
+                        !IsTopLine(nd)
                     )
                 {
 
                     MoveAttributes moveAttrs = new MoveAttributes(nd);
 
-                    bool isDeleted = (attrTypes & (int)MoveAttribute.SIDELINE) != 0 && nd.IsMainLine() == false;
+                    bool isDeleted = (attrTypes & (int)MoveAttribute.SIDELINE) != 0 && !IsTopLine(nd);
                     if (isDeleted)
                     {
                         moveAttrs.IsDeleted = true;
