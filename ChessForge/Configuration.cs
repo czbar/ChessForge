@@ -171,22 +171,22 @@ namespace ChessForge
         /// <summary>
         /// The scope of the cleanup operation (Study, Games, Exercises).
         /// </summary>
-        public static OperationScope CleanupScope { get; set; }
+        public static OperationScope CleanupScope = OperationScope.ACTIVE_ITEM;
 
         /// <summary>
         /// Whether to apply the operation to Study/Studies.
         /// </summary>
-        public static bool CleanupApplyToStudies { get; set; }
+        public static bool CleanupApplyToStudies = true;
 
         /// <summary>
         /// Whether to apply the operation to Model Games.
         /// </summary>
-        public static bool CleanupApplyToGames { get; set; }
+        public static bool CleanupApplyToGames = true;
 
         /// <summary>
         /// Whether to apply the operation to Exercises.
         /// </summary>
-        public static bool CleanupApplyToExercises { get; set; }
+        public static bool CleanupApplyToExercises = true;
 
 
         //*********************************
